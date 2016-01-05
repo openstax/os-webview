@@ -1,0 +1,66 @@
+<style scoped>@import url(/app/components/shell/footer/footer.css);</style>
+<footer class="footer">
+    <div class="copyright">
+        <nav>
+            <ul>
+                <li><a href="/license">Licensing</a></li>
+                <li><a href="/tos">Terms of Use</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div>
+            Supported by William &amp; Flora Hewlett Foundation, Bill &amp; Melinda Gates Foundation,
+            20 Million Minds Foundation, Maxfield Foundation, Open Society Foundations, and Rice University.
+            Powered by OpenStax CNX.
+        </div>
+
+        <div>
+            <a class="cc-logo-link" href="http://creativecommons.org">
+                <img src="/images/cc.png" width="125" height="30" alt="Creative Commons" />
+            </a>
+            <span>
+                © 1999-{{!date 'year'}}, Rice University. Except where otherwise noted,
+                content created on this site is licensed under a Creative Commons Attribution 4.0 License.
+            </span>
+        </div>
+    </div>
+
+    <div class="connect">
+        <span class="small-header">Connect</span>
+        <ul>
+            <li><a href="https://play.google.com/store/apps/details?id=org.cnx.android">Android App</a></li>
+            <li><a href="//devblog.cnx.org">Dev Blog</a></li>
+            <li><a href="http://itunes.apple.com/us/institution/connexions/id375198208">iTunes U</a></li>
+        </ul>
+    </div>
+
+    <div class="share">
+        <span class="small-header">Share</span>
+        <ul>
+            <li>
+                <a class="btn btn-secondary btn-focus-yellow btn-social facebook"
+                   href="https://facebook.com/sharer/sharer.php?u={{share.url}}">
+                    Facebook
+                </a>
+            </li>
+            <li>
+                <a class="btn btn-secondary btn-focus-yellow btn-social twitter"
+                   href="https://twitter.com/share?url={{share.url}}&amp;text={{share.title}}&amp;via={{share.via}}">
+                    Twitter
+                </a>
+            </li>
+            <li>
+                <a class="btn btn-secondary btn-focus-yellow btn-social google"
+                   href="https://plus.google.com/share?url={{share.url}}">
+                    Google+
+                </a>
+            </li>
+            <li>
+                <a class="btn btn-secondary btn-focus-yellow btn-social" href="mailto:{{webmaster}}">
+                    E-mail
+                </a>
+            </li>
+        </ul>
+    </div>
+</footer>

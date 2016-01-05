@@ -1,0 +1,42 @@
+@import 'variables';
+@import 'mixins';
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: color(primary);
+    margin: 0;
+}
+
+h1,
+.extra-large-header {
+    font-size: 3.5rem;
+    font-weight: normal;
+}
+
+h2,
+.large-header {
+    font-size: 2.8rem;
+    font-weight: 300;
+}
+
+h3,
+.medium-header {
+    font-size: 2.1rem;
+    font-weight: 300;
+}
+
+h4,
+.small-header {
+    font-size: 1.7rem;
+    font-weight: 300;
+}
+
+h5,
+.extra-small-header {
+    font-size: 1.4rem;
+    font-weight: 300;
+}

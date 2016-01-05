@@ -1,0 +1,37 @@
+@import 'variables';
+@import 'mixins';
+
+.btn-social {
+    background-image: url('/images/social/mail.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 67%;
+    border-radius: 50%;
+    display: inline-block;
+    font-size: 0;
+    height: 2.8rem;
+    line-height: 2.4rem;
+    overflow: hidden;
+    width: 2.8rem;
+}
+
+.facebook {
+    background-image: url('/images/social/facebook.png');
+    background-size: 0.9rem 2rem;
+}
+
+.twitter {
+    background-image: url('/images/social/twitter.png');
+}
+
+.google {
+    background-image: url('/images/social/google.png');
+    background-position: 0 0.5rem;
+    background-size: 2.4rem 2.4rem;
+}
+
+.linkedin {
+    background-image: url('/images/social/linkedin.png');
+    background-position: 50% 45%;
+    background-size: 60%;
+}

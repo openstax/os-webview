@@ -1,0 +1,123 @@
+@import 'variables';
+@import 'mixins';
+
+.footer {
+    align-items: stretch;
+    background-color: color(neutral-dark);
+    color: color(neutral-light);
+    display: flex;
+    font-size: 1.2rem;
+    font-weight: 400;
+    justify-content: space-around;
+    padding: 2rem;
+
+    a {
+        color: color(neutral-light);
+
+        &:active,
+        &:hover,
+        &:focus {
+            text-decoration: underline;
+        };
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .copyright,
+    .connect,
+    .share {
+        padding: 0 1.5rem;
+    }
+
+    .copyright,
+    .connect {
+        border-right: 0.1rem solid color(neutral-medium);
+
+        @include phone {
+            border-right: 0;
+        }
+    }
+
+    .connect,
+    .share {
+        flex: 1 0 16.5%;
+        text-align: center;
+
+        @include phone {
+            display: none;
+        }
+
+        .small-header {
+            display: block;
+            margin-bottom: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        li {
+            line-height: 2rem;
+        }
+    }
+
+    .share {
+        ul {
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        li {
+            flex: 0 1 50%;
+            padding-left: 0.5rem;
+            text-align: left;
+        }
+
+        // Top Two
+        li:nth-child(-n+2) {
+            padding-bottom: 1rem;
+        }
+
+        // Left Two
+        li:nth-child(odd) {
+            padding-left: 0;
+            padding-right: 0.5rem;
+            text-align: right;
+        }
+    }
+
+    .copyright {
+        display: flex;
+        flex: 2 1 67%;
+        flex-direction: column;
+        line-height: 1.7rem;
+
+        li {
+            border-right: 0.1rem solid color(neutral-medium);
+            display: inline-block;
+            padding-left: 0.3rem;
+            padding-right: 0.7rem;
+
+            &:first-child {
+                padding-left: 0;
+            };
+
+            &:last-child {
+                border: 0;
+                padding-right: 0;
+            };
+        }
+
+        > nav,
+        > div {
+            padding: 0.8rem 0;
+        }
+
+        .cc-logo-link {
+            float: left;
+            margin-right: 1.5rem;
+        }
+    }
+}

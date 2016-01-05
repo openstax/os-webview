@@ -1,0 +1,25 @@
+linters:
+    ColorKeyword:
+        enabled: false
+
+    ColorVariable:
+        enabled: false
+
+    Comment:
+        enabled: false
+
+    Indentation:
+        width: 4
+
+    LeadingZero:
+        enabled: true
+        style: include_zero
+
+    NestingDepth:
+        max_depth: 4
+
+    PropertyUnits:
+      global: ['em', 'rem', '%', 'vw', 'vh', 'vmin', 'vmax', 's']
+
+    SelectorDepth:
+        max_depth: 4
