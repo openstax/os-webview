@@ -1,0 +1,39 @@
+@import 'variables';
+@import 'mixins';
+
+.btn {
+    border-radius: 0.4rem;
+    cursor: pointer;
+    display: inline-block;
+    outline: 0;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    touch-action: manipulation;
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    };
+}
+
+@each $name, $type in $color-types {
+    .btn-#{$name} {
+        background-color: color($name);
+        color: color($name, 'overlay');
+
+        &:active,
+        &:hover,
+        &:focus {
+            background-color: darken(color($name), 5%);
+        };
+    }
+}
+
+@each $name, $color in $os-colors {
+    .btn-focus-#{$name} {
+        &:focus {
+            box-shadow: 0 0 2pt 2pt $color;
+            outline: 0;
+        }
+    }
+}

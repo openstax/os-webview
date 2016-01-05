@@ -1,0 +1,19 @@
+@import 'variables';
+
+@mixin phone {
+    @media (max-width: #{breakpoints(phone)}) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (min-width: #{breakpoints(phone) + 1}) and (max-width: #{breakpoints(tablet)}) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: #{breakpoints(tablet) + 1}) {
+        @content;
+    }
+}

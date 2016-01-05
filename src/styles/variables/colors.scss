@@ -1,0 +1,100 @@
+// CNX Color Scheme
+$os-colors: (
+    red: rgb(196, 35, 55),
+    orange: rgb(242, 124, 84),
+    yellow: rgb(240, 206, 68),
+    green: rgb(116, 181, 89),
+    cyan: rgb(47, 192, 219),
+    blue: rgb(33, 55, 106),
+    gray: rgb(88, 92, 95)
+);
+
+@function os-color($color) {
+    @if map-has-key($os-colors, $color) {
+        @return map-get($os-colors, $color);
+    }
+
+    @warn 'Unknown `#{$color}` in $os-color.';
+    @return null;
+}
+
+// CNX Grayscale Scheme
+$neutral-colors: (
+    darkest: black,
+    dark: rgb(51, 51, 51),
+    medium: os-color(gray),
+    light: rgb(220, 220, 220),
+    lightest: white
+);
+
+@function neutral-color($color) {
+    @if map-has-key($neutral-colors, $color) {
+        @return map-get($neutral-colors, $color);
+    }
+
+    @warn 'Unknown `#{$color}` in $neutral-colors.';
+    @return null;
+}
+
+$color-types: (
+    primary: (
+        color: os-color(blue),
+        overlay: neutral-color(lightest)
+    ),
+    secondary: (
+        color: os-color(green),
+        overlay: neutral-color(lightest)
+    ),
+    success: (
+        color: os-color(green),
+        overlay: neutral-color(lightest)
+    ),
+    info: (
+        color: os-color(cyan),
+        overlay: neutral-color(darkest)
+    ),
+    warning: (
+        color: os-color(yellow),
+        overlay: neutral-color(darkest)
+    ),
+    danger: (
+        color: os-color(red),
+        overlay: neutral-color(lightest)
+    )
+);
+
+@function color($color, $overlay: false) {
+    @if map-has-key($os-colors, $color) {
+        @return map-get($os-colors, $color);
+    }
+
+    @if str-index($color, 'neutral-') {
+        $neutral-color: str-slice($color, 9);
+        @if map-has-key($neutral-colors, $neutral-color) {
+            @return map-get($neutral-colors, $neutral-color);
+        }
+    }
+
+    @if map-has-key($color-types, $color) {
+        @if $overlay {
+            @return map-get(map-get($color-types, $color), overlay);
+        } @else {
+            @return map-get(map-get($color-types, $color), color);
+        }
+    }
+
+    @warn 'Unknown `#{$color}` in $colors.';
+    @return null;
+}
+
+// Text Colors
+$text-color-light: color(neutral-light);
+$text-color-dark: color(neutral-dark);
+
+// Link Colors
+$link-color-light: $text-color-light;
+$link-color-dark: color(primary);
+
+// Background Colors
+$background-color-light: color(neutral-lightest);
+$background-color-dark: color(neutral-dark);

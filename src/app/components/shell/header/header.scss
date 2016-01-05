@@ -1,0 +1,165 @@
+@import 'variables';
+@import 'mixins';
+
+.page-header {
+    border-bottom: 0.2rem solid color(neutral-light);
+    max-height: 8rem;
+    min-height: 8rem;
+    overflow: hidden;
+    transition: max-height 0.5s;
+
+    &.active {
+        max-height: 40rem;
+
+        @include tablet {
+            max-height: 13.1rem;
+        }
+
+        @include phone {
+            max-height: 31.6rem;
+        }
+    }
+
+    > .skiptocontent {
+        a {
+            background-color: color(primary);
+            border-bottom-right-radius: 1rem;
+            clip: rect(0.1rem, 0.1rem, 0.1rem, 0.1rem);
+            color: color(neutral-lightest);
+            height: 0.1rem;
+            left: 0;
+            outline: 0;
+            position: absolute;
+            top: 0;
+            width: 0.1rem;
+
+            &:focus {
+                clip: auto;
+                font-size: 2rem;
+                height: auto;
+                padding: 0.5rem 1rem;
+                transition: top 0.1s ease-in, background 0.5s linear;
+                width: auto;
+            }
+        }
+    }
+
+    .nav {
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding: 1.9rem;
+        text-align: center;
+        user-select: none;
+    }
+
+    .logo-wrapper {
+        line-height: 0;
+
+        > a {
+            display: inline-block;
+        }
+    }
+
+    .logo {
+        display: inline-block;
+    }
+
+    .os-logo {
+        background-image: url('/images/logo-home.png');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 13.2rem 4rem;
+
+        &:focus > img,
+        &:hover > img {
+            opacity: 0;
+        }
+
+        > img {
+            background-color: white;
+            transition: opacity 0.3s linear;
+            user-select: none;
+
+            &:focus,
+            &:hover {
+                opacity: 0;
+            }
+        }
+    }
+
+    .rice-logo {
+        display: none;
+        margin-bottom: -0.2rem;
+        padding-top: 0.5rem;
+
+        @include desktop {
+            display: inline-block;
+        }
+    }
+
+    .expand-nav {
+        background-color: white;
+        border: 0;
+        color: color(primary);
+        display: inline-block;
+        flex: 1 0 auto;
+        font-size: 2.5rem;
+        transition: transform 0.5s;
+
+        &:hover,
+        &:active,
+        &.active {
+            color: color(primary);
+        }
+
+        &.active {
+            transform: rotate(-90deg);
+        }
+    }
+
+    .nav-menu {
+        display: flex;
+        flex-basis: 100%;
+        flex-wrap: wrap;
+        list-style-type: none;
+        margin: 1rem 0;
+        padding: 0;
+
+        @include desktop {
+            flex-basis: auto;
+            margin: 0.3rem 0 0;
+        }
+    }
+
+    .nav-menu-item {
+        flex: 1 0 auto;
+        font-size: 1.5rem;
+
+        @include phone {
+            flex-basis: 100%;
+            padding: 1rem 0;
+        }
+
+        > a {
+            color: color(primary);
+            display: inline-block;
+            font-weight: 500;
+            margin-bottom: -3px;
+            padding: 1rem;
+
+            @include phone {
+                padding: 1rem 0;
+                width: 100%;
+            }
+
+            &:active,
+            &:focus,
+            &:hover {
+                color: color(primary);
+                text-decoration: underline;
+            }
+        }
+    }
+}

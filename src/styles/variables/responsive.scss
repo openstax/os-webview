@@ -1,0 +1,13 @@
+$breakpoints: (
+    phone: 480px,
+    tablet: 768px
+);
+
+@function breakpoints($breakpoint) {
+    @if map-has-key($breakpoints, $breakpoint) {
+        @return map-get($breakpoints, $breakpoint);
+    }
+
+    @warn 'Unknown `#{$breakpoint}` in $breakpoints.';
+    @return null;
+}

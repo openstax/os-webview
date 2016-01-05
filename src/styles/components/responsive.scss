@@ -1,0 +1,59 @@
+@import 'variables';
+@import 'mixins';
+
+@for $i from 0 through 3 {
+    @for $j from 0 through 3 {
+        .flex-#{$i}-#{$j} {
+            flex-grow: $i;
+            flex-shrink: $j;
+        }
+    }
+}
+
+.hidden-desktop {
+    @include desktop {
+        display: none;
+    }
+}
+
+.hidden-tablet {
+    @include tablet {
+        display: none;
+    }
+}
+
+.hidden-phone {
+    @include phone {
+        display: none;
+    }
+}
+
+.visible-desktop {
+    @include phone {
+        display: none;
+    }
+
+    @include tablet {
+        display: none;
+    }
+}
+
+.visible-tablet {
+    @include desktop {
+        display: none;
+    }
+
+    @include phone {
+        display: none;
+    }
+}
+
+.visible-phone {
+    @include tablet {
+        display: none;
+    }
+
+    @include desktop {
+        display: none;
+    }
+}
