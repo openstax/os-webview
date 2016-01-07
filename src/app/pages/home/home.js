@@ -9,9 +9,7 @@ import {template} from './home.hbs';
     }
 })
 export default class Home extends BaseView {
-
     onRender() {
         // this.regions.featured.show(new CarouselView());
     }
-
 }

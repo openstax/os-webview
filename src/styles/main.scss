@@ -12,7 +12,8 @@ body {
     display: flex;
     flex-direction: column;
     font-size: 1.4rem;
-    margin: 0;
+    max-width: 1200px;
+    margin: 0 auto;
     min-height: 100vh;
 
     #main {
