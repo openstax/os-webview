@@ -2,10 +2,22 @@
 @import 'mixins';
 
 .page-header {
+    background-color: color(neutral-lightest);
     overflow: hidden;
     position: relative;
     transition: max-height 0.5s;
     z-index: 1;
+
+    &.fixed {
+        left: 0;
+        position: fixed;
+        right: 0;
+        top: 0;
+    }
+
+    &.transparent {
+        background-color: transparent;
+    }
 
     > .skiptocontent {
         a {
@@ -34,7 +46,11 @@
     .secondary-nav {
         display: flex;
         justify-content: flex-end;
-        padding-right: 5vw;
+        padding-right: 8vw;
+
+        @at-root .collapsed#{&} {
+            display: none;
+        }
 
         a {
             color: color(neutral-dark);
@@ -52,23 +68,32 @@
 
     .nav {
         align-items: center;
-        backdrop-filter: blur(1rem);
-        background-color: rgba(color(neutral-darkest), 0.05);
-        color: white;
+        background-color: transparent;
+        color: color(neutral-medium);
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-around;
-        padding: 2rem 0;
-        text-shadow: 0 0 0.6rem color(neutral-dark);
+        justify-content: space-between;
+        padding: 2rem 8vw;
         user-select: none;
 
-        a {
+        @at-root .transparent#{&} {
+            backdrop-filter: blur(1rem);
+            background-color: rgba(color(neutral-darkest), 0.05);
             color: color(neutral-lightest);
+            text-shadow: 0 0 0.6rem color(neutral-dark);
+        }
 
-            &:active,
-            &:focus,
-            &:hover {
-                text-shadow: 0 0 0.6rem color(neutral-light);
+        a {
+            color: color(neutral-medium);
+
+            @at-root .transparent#{&} {
+                color: color(neutral-lightest);
+
+                &:active,
+                &:focus,
+                &:hover {
+                    text-shadow: 0 0 0.6rem color(neutral-light);
+                }
             }
         }
 
@@ -76,6 +101,10 @@
             flex: 1 1 auto;
             font-size: 1.8rem;
             font-weight: 600;
+
+            @at-root .collapsed#{&} {
+                font-size: 1.6rem;
+            }
         }
     }
 
@@ -90,39 +119,56 @@
         > a {
             display: inline-block;
         }
-
-        .logo-quote {
-            display: inline-block;
-            font-size: 1.4rem;
-            margin-top: 0.3rem;
-        }
     }
 
     .logo {
         display: inline-block;
         margin-right: 2.5rem;
+
+        .logo-color {
+            display: inline-block;
+
+            @at-root .transparent#{&} {
+                display: none;
+            }
+        }
+
+        .logo-white {
+            display: none;
+
+            @at-root .transparent#{&} {
+                display: inline-block;
+            }
+        }
     }
 
-    .os-logo {
-        background-image: url('/images/logo-home.png');
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: 13.2rem 4rem;
+    .os-logo > a {
+        > img {
+            background-color: transparent;
+            background-position: 72.5% bottom;
+            background-repeat: no-repeat;
+            background-size: 1.2rem 1.2rem;
+            transition: opacity 0.3s linear;
+            user-select: none;
+        }
 
         &:focus > img,
         &:hover > img {
-            opacity: 0;
-        }
+            background-image: url('/images/home.svg');
 
-        > img {
-            background-color: transparent;
-            transition: opacity 0.3s linear;
-            user-select: none;
-
-            &:focus,
-            &:hover {
-                opacity: 0;
+            @at-root .transparent#{&} {
+                background-image: url('/images/home-white.svg');
             }
+        }
+    }
+
+    .logo-quote {
+        display: none;
+        font-size: 1.4rem;
+        margin-top: 0.3rem;
+
+        @media (min-width: 107rem) {
+            display: inline-block;
         }
     }
 
