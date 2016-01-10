@@ -2,5 +2,136 @@
 @import 'mixins';
 
 .home-page {
+    background-image: url('/images/home/subjects/us-history/background.jpg');
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: 100vw 55.7vw;
+    flex: 1 0 auto;
+    margin-top: -8rem;
+    min-height: 55.7vw;
+    padding-top: 8rem;
+    position: relative;
 
+    &.us-history {
+        background-image: url('/images/home/subjects/us-history/background.jpg');
+    }
+
+    .sacajawea,
+    .john-adams,
+    .clermont,
+    .book,
+    .video-banner {
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        z-index: 1;
+    }
+
+    .sacajawea,
+    .john-adams,
+    .clermont {
+        opacity: 0.7;
+    }
+
+    .sacajawea {
+        background-image: url('/images/home/subjects/us-history/sacajawea.png');
+        height: 7.25vw;
+        left: 26.4vw;
+        position: absolute;
+        top: 23.7vw;
+        width: 8.9vw;
+    }
+
+    .john-adams {
+        background-image: url('/images/home/subjects/us-history/john-adams.png');
+        height: 5.94vw;
+        left: 78.6vw;
+        position: absolute;
+        top: 16.8vw;
+        width: 5.07vw;
+    }
+
+    .clermont {
+        background-image: url('/images/home/subjects/us-history/clermont.png');
+        height: 17.4vw;
+        left: 70.66vw;
+        position: absolute;
+        top: 27.95vw;
+        width: 26.39vw;
+    }
+
+    .book {
+        background-image: url('/images/subjects/us-history.svg');
+        background-size: 57.4vw; // HACK: need properly trimmed SVG
+        height: 25.5vw;
+        left: 37.8vw;
+        position: absolute;
+        top: 7.8vw;
+        width: 25.5vw;
+    }
+
+    .video-banner {
+        background-image: url('/images/home/subjects/us-history/student.png');
+        height: 41.7vw;
+        left: 45.9vw;
+        position: absolute;
+        top: 14vw;
+        width: 39.85vw;
+        z-index: 2;
+    }
+
+    .now-i-can {
+        background-color: rgba(color(turqoise), 0.85);
+        color: color(neutral-lightest);
+        font-size: 2.3vw;
+        font-weight: 600;
+        height: 7.25vw;
+        left: 12.35vw;
+        line-height: 7.25vw;
+        padding: 0;
+        position: absolute;
+        text-transform: none;
+        top: 33.7vw;
+        width: 42.17vw;
+        z-index: 3;
+
+        .quote {
+            display: inline-block;
+            font-family: 'Permanent Marker', cursive;
+            transform: rotate(-1.2deg) translate(0.75vw, -0.45vw);
+        }
+
+        &::after {
+            border-bottom: 0.18vw solid color(neutral-lightest);
+            content: '';
+            left: 15.4vw;
+            position: absolute;
+            top: 5vw;
+            width: 24.6vw;
+        }
+    }
+
+    .subject-links {
+        left: 18.05vw;
+        letter-spacing: 0.078vw;
+        position: absolute;
+        top: 41.5vw;
+        z-index: 3;
+
+        .btn {
+            font-size: 1.1vw;
+            height: 4.5vw;
+            line-height: 4.5vw;
+            padding: 0;
+        }
+
+        > .explore-subject {
+            margin-right: 0.2vw;
+            width: 17.5vw;
+        }
+
+        > .explore-all {
+            width: 18.55vw;
+        }
+    }
 }
