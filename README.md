@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://openstax.org">
-        <img height="51" width="251" src="https://raw.githubusercontent.com/openstax/os-webview/master/src/images/logo.png">
+        <img height="51" width="251" src="https://cdn.rawgit.com/openstax/os-webview/master/src/images/logo.svg">
     </a>
 </p>
 
