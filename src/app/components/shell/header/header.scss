@@ -2,23 +2,10 @@
 @import 'mixins';
 
 .page-header {
-    border-bottom: 0.2rem solid color(neutral-light);
-    max-height: 8rem;
-    min-height: 8rem;
     overflow: hidden;
+    position: relative;
     transition: max-height 0.5s;
-
-    &.active {
-        max-height: 40rem;
-
-        @include tablet {
-            max-height: 13.1rem;
-        }
-
-        @include phone {
-            max-height: 31.6rem;
-        }
-    }
+    z-index: 1;
 
     > .skiptocontent {
         a {
@@ -44,26 +31,67 @@
         }
     }
 
+    .secondary-nav {
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 5vw;
+
+        a {
+            color: color(neutral-dark);
+            padding-bottom: 1rem;
+            padding-top: 1rem;
+        }
+
+        .nav-menu-item {
+            flex: 0 0 auto;
+            font-size: 1.4rem;
+            font-weight: 400;
+            line-height: 0;
+        }
+    }
+
     .nav {
         align-items: center;
+        color: white;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
-        padding: 1.9rem;
-        text-align: center;
+        padding: 2rem 0;
         user-select: none;
+
+        a {
+            color: color(neutral-lightest);
+        }
+
+        .nav-menu-item {
+            flex: 1 1 auto;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
     }
 
     .logo-wrapper {
+        flex: 0 0 auto;
         line-height: 0;
+
+        span {
+            vertical-align: middle;
+        }
 
         > a {
             display: inline-block;
+        }
+
+        .logo-quote {
+            display: inline-block;
+            font-size: 1.4rem;
+            margin-top: 0.3rem;
         }
     }
 
     .logo {
         display: inline-block;
+        margin-right: 2.5rem;
     }
 
     .os-logo {
@@ -78,7 +106,7 @@
         }
 
         > img {
-            background-color: white;
+            background-color: transparent;
             transition: opacity 0.3s linear;
             user-select: none;
 
@@ -89,77 +117,35 @@
         }
     }
 
-    .rice-logo {
-        display: none;
-        margin-bottom: -0.2rem;
-        padding-top: 0.5rem;
-
-        @include desktop {
-            display: inline-block;
-        }
-    }
-
-    .expand-nav {
-        background-color: white;
-        border: 0;
-        color: color(primary);
-        display: inline-block;
-        flex: 1 0 auto;
-        font-size: 2.5rem;
-        transition: transform 0.5s;
-
-        &:hover,
-        &:active,
-        &.active {
-            color: color(primary);
-        }
-
-        &.active {
-            transform: rotate(-90deg);
-        }
-    }
-
     .nav-menu {
+        align-items: center;
         display: flex;
-        flex-basis: 100%;
+        flex: 0 0 auto;
         flex-wrap: wrap;
         list-style-type: none;
-        margin: 1rem 0;
+        margin: 0;
         padding: 0;
-
-        @include desktop {
-            flex-basis: auto;
-            margin: 0.3rem 0 0;
-        }
     }
 
     .nav-menu-item {
-        flex: 1 0 auto;
-        font-size: 1.5rem;
-
-        @include phone {
-            flex-basis: 100%;
-            padding: 1rem 0;
-        }
-
         > a {
-            color: color(primary);
             display: inline-block;
-            font-weight: 500;
-            margin-bottom: -3px;
-            padding: 1rem;
-
-            @include phone {
-                padding: 1rem 0;
-                width: 100%;
-            }
+            padding-left: 2rem;
+            padding-right: 2rem;
 
             &:active,
             &:focus,
             &:hover {
-                color: color(primary);
-                text-decoration: underline;
+                color: color(blue);
             }
+        }
+
+        &:first-child > a {
+            margin-left: -2rem;
+        }
+
+        &:last-child > a {
+            margin-right: -2rem;
         }
     }
 }
