@@ -1,12 +1,13 @@
-// CNX Color Scheme
+// OpenStax Color Scheme
 $os-colors: (
     red: rgb(196, 35, 55),
-    orange: rgb(242, 124, 84),
-    yellow: rgb(240, 206, 68),
-    green: rgb(116, 181, 89),
+    orange: rgb(226, 111, 74),
+    yellow: rgb(239, 202, 63),
+    green: rgb(115, 165, 72),
+    turqoise: rgb(45, 151, 147),
     cyan: rgb(47, 192, 219),
-    blue: rgb(33, 55, 106),
-    gray: rgb(88, 92, 95)
+    blue: rgb(34, 43, 80),
+    gray: rgb(88, 90, 89)
 );
 
 @function os-color($color) {
@@ -18,7 +19,7 @@ $os-colors: (
     @return null;
 }
 
-// CNX Grayscale Scheme
+// OpenStax Grayscale Scheme
 $neutral-colors: (
     darkest: black,
     dark: rgb(51, 51, 51),
@@ -42,7 +43,11 @@ $color-types: (
         overlay: neutral-color(lightest)
     ),
     secondary: (
-        color: os-color(green),
+        color: os-color(orange),
+        overlay: neutral-color(lightest)
+    ),
+    tertiary: (
+        color: os-color(yellow),
         overlay: neutral-color(lightest)
     ),
     success: (
