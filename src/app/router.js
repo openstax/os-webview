@@ -9,11 +9,18 @@ class Router extends Backbone.Router {
         });
 
         this.route('', 'home', () => {
+            console.debug("Rendering home by default");
+            shell.render('home');
+        });
+
+        this.route('home', 'home', () => {
+            console.debug("Rendering home explicitly");
             shell.render('home');
         });
 
         this.route('about', 'about', () => {
-            shell.render('about');
+            console.debug("Trying to render adoption");
+            shell.render('adoption');
         });
 
         this.route('books', 'books', () => {
