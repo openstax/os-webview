@@ -16,7 +16,13 @@ body {
     min-height: 100vh;
 
     #main {
+        display: flex;
         flex: 1 1 auto;
+
+        > div {
+            display: flex;
+            width: 100vw;
+        }
     }
 }
 
@@ -38,6 +44,11 @@ a {
     padding: 0;
     position: absolute;
     width: 0.1rem;
+}
+
+.text-content {
+    margin: 0 auto;
+    max-width: 120rem;
 }
 
 #main {

@@ -12,8 +12,12 @@ class Router extends Backbone.Router {
             shell.render('home');
         });
 
+        this.route('home', 'home', () => {
+            shell.render('home');
+        });
+
         this.route('about', 'about', () => {
-            shell.render('about');
+            shell.render('adoption');
         });
 
         this.route('books', 'books', () => {
