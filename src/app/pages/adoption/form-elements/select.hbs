@@ -1,0 +1,13 @@
+<p>{{label}}
+    {{#if required}}
+        <span class="required-marker"></span>
+    {{/if}}
+</p>
+<div class="field">
+  <select id="{{id}}" name="{{name}}">
+      <option value="">Please Select</option>
+      {{#each options}}
+        <option value="{{this}}">{{this}}</option>
+      {{/each}}
+  </select>
+</div>

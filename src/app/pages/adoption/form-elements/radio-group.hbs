@@ -1,0 +1,16 @@
+<p>{{label}}
+    {{#if required}}
+        <span class="required-marker"></span>
+    {{/if}}
+</p>
+<div class="section">
+  <div class="field">
+      {{#each options}}
+      <div>
+          <input {{#if checked}}checked="checked"{{/if}}
+           id="{{id}}" name="{{name}}" type="radio" value="{{value}}" />
+          <label for="{{id}}">{{label}}</label>
+      </div>
+      {{/each}}
+  </div>
+</div>

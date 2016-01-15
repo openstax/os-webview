@@ -1,3 +1,6 @@
+<style scoped>
+    @import url(/app/pages/adoption/adoption.css);
+</style>
 <div class="adoption-page text-content">
     <h1>OpenStax College Adoption Form</h1>
     <p>
@@ -10,32 +13,61 @@
         Not using OpenStax College yet? Please complete the OpenStax interest
         form so we may send you the information you need.
     </p>
-    <h2>Contact Information</h2>
-    <div class="section">
-      <div class="field">
-        <label for="adoption_first_name">First name</label><span class="required"> *</span><br>
-        <input id="adoption_first_name" name="adoption[first_name]" size="30" type="text" style="cursor: auto; background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABHklEQVQ4EaVTO26DQBD1ohQWaS2lg9JybZ+AK7hNwx2oIoVf4UPQ0Lj1FdKktevIpel8AKNUkDcWMxpgSaIEaTVv3sx7uztiTdu2s/98DywOw3Dued4Who/M2aIx5lZV1aEsy0+qiwHELyi+Ytl0PQ69SxAxkWIA4RMRTdNsKE59juMcuZd6xIAFeZ6fGCdJ8kY4y7KAuTRNGd7jyEBXsdOPE3a0QGPsniOnnYMO67LgSQN9T41F2QGrQRRFCwyzoIF2qyBuKKbcOgPXdVeY9rMWgNsjf9ccYesJhk3f5dYT1HX9gR0LLQR30TnjkUEcx2uIuS4RnI+aj6sJR0AM8AaumPaM/rRehyWhXqbFAA9kh3/8/NvHxAYGAsZ/il8IalkCLBfNVAAAAABJRU5ErkJggg==&quot;); background-attachment: scroll; background-position: 100% 50%; background-repeat: no-repeat;">
-      </div>
-      <div class="field">
-        <label for="adoption_last_name">Last name</label><span class="required"> *</span><br>
-        <input id="adoption_last_name" name="adoption[last_name]" size="30" type="text">
-      </div>
-      <div class="field">
-        <label for="adoption_school_name">School name</label><span class="required"> *</span><br>
-        <input id="adoption_school_name" name="adoption[school_name]" size="30" type="text">
-      </div>
-        <div class="field">
-          <label for="adoption_school_url">School url</label><span class="required"> *</span><br>
-          <input id="adoption_school_url" name="adoption[school_url]" size="30" type="text">
+    <form id="adoption-form" accept-charset="UTF-8" action="/adoptions" method="post">
+        <div style="margin:0;padding:0;display:inline">
+            <input name="utf8" type="hidden" value="✓">
+            <input name="authenticity_token" type="hidden" value="Xi14qRzCbSy2zkso1VEjKU4bEUfFWOrhWbQnh7tlO3c=">
         </div>
-      <div class="field">
-        <label for="adoption_email_address">Email address</label><span class="required"> *</span><br>
-        <input id="adoption_email_address" name="adoption[email_address]" size="30" type="text">
-      </div>
-        <div class="field">
-          <label for="adoption_phone_number">Phone number</label><span class="required"> *</span><br>
-          <input id="adoption_phone_number" name="adoption[phone_number]" size="30" type="text">
+        <h2>Contact Information</h2>
+        <div id="adoption-form-contact-section" class="section">
         </div>
-    </div>
-    <h2>Textbook Adoption</h2>
+        <hr />
+        <h2>Textbook Adoption</h2>
+        <div id="adoption-form-textbook-adoption-section" class="section">
+        </div>
+        <div>
+        <div class="section">
+          <p>
+              Haven't adopted yet, but highly interested in doing so? Please fill out
+              our <a href="/adoption_interests">interest form</a>.
+          </p>
+        </div>
+        <div class="section">
+            <div id="adoption-form-partners-section" class="section">
+            </div>
+            <div id="adoption-form-info-share-section" class="section">
+            </div>
+            <div id="adoption-form-student-count-section" class="section">
+            </div>
+            <div id="adoption-form-yes-no" class="section">
+            </div>
+            <div id="adoption-form-other-contact">
+              <p>
+                  Do you know of any other faculty using OpenStax College books? If
+                  so, would you be willing to provide their contact information below?
+              </p>
+            </div>
+            <hr />
+            <div class="section">
+                <h3>Have you adopted a second OpenStax College book?</h3>
+                <a id="additional-book-link" href="#"></a>
+                <div id="adoption-form-second-textbook">
+                </div>
+            </div>
+            <hr />
+            <div class="section">
+              <div class="field">
+                <label for="adoption_feedback">Any feedback you'd like to share
+                     with us?
+                 </label>
+                 <br>
+                <textarea cols="50" id="adoption_feedback" name="adoption[feedback]" rows="6"></textarea>
+              </div>
+            </div>
+        </div>
+        <div class="actions">
+            <input name="commit" type="submit" value="Submit"
+             role="button" aria-disabled="false">
+        </div>
+    </form>
 </div>
