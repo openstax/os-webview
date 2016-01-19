@@ -13,7 +13,7 @@ class Router extends Backbone.Router {
         });
 
         ['about', 'books', 'contact', 'news', 'license', 'subjects', 'details',
-        'interest', 'adoption']
+        'interest', 'adoption', 'adoption-confirmation', 'comp-copy']
         .forEach(this.standardRoute, this);
 
         this.route(/to[u|s]/, 'tos', () => {
@@ -25,11 +25,8 @@ class Router extends Backbone.Router {
         this.route(name, name, () => {
             shell.load(name);
         });
-
-        this.route('comp-copy', 'comp-copy', () => {
-            shell.load('comp-copy');
-        });
     }
+
 }
 
 let router = new Router();

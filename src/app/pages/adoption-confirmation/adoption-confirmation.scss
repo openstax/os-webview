@@ -1,0 +1,122 @@
+@import 'variables';
+
+$table-background: lighten(neutral-color(light), 30%);
+$attention: color(green);
+$text-secondary: rgba(color(neutral-darkest), 0.7);
+
+.confirmation-page {
+    color: $text-color-dark;
+
+    h1 {
+        margin-bottom: auto;
+    }
+
+    .subhead {
+        font-size: 1.7rem;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    input:not([type="submit"]) {
+        font-size: 100%;
+        font-weight: 500;
+        height: 3rem;
+        margin-right: 1rem;
+        width: 8rem;
+    }
+
+    table {
+        background-color: $table-background;
+        line-height: 4rem;
+
+        td {
+            font-weight: 500;
+            padding: 0 1rem;
+        }
+
+        .savings {
+            color: $attention;
+            font-size: 1.6rem;
+        }
+
+    }
+
+    .footnote::after {
+        content: '*';
+    }
+
+    tfoot {
+        background-color: color(neutral-lightest);
+        color: $text-secondary;
+        font-size: 1rem;
+        text-align: right;
+
+        td {
+            padding: 0.5rem;
+
+            > p {
+                line-height: 1rem;
+                margin: 0;
+            }
+        }
+    }
+
+    .table-notes {
+        color: neutral-color(dark);
+        text-align: right;
+    }
+
+    .support-box {
+        background-color: $table-background;
+        color: color(neutral-darkest);
+        display: inline-block;
+        margin: 2rem 0;
+        padding: 1rem;
+
+        h2 {
+            font-variant: small-caps;
+            font-weight: bold;
+            text-transform: lowercase;
+        }
+
+        .slider-with-ends {
+            align-items: center;
+            display: flex;
+            width: 100%;
+
+            [type="range"] {
+                flex-grow: 1;
+            }
+
+            .invalid[type="number"] {
+                background-color: color(danger);
+            }
+
+            .amount-box {
+                margin-left: 2rem;
+            }
+        }
+
+        .amount-message {
+            color: $attention;
+            font-weight: 500;
+            text-transform: uppercase;
+            width: 45rem;
+        }
+
+    }
+
+    .cta {
+        display: flex;
+        justify-content: center;
+        padding-top: 3rem;
+    }
+
+    [type="submit"] {
+        background-color: $attention;
+        border: 0;
+        color: color(neutral-lightest);
+        font-size: initial;
+        padding: 1rem 2rem;
+    }
+}
