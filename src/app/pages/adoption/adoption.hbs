@@ -13,10 +13,9 @@
 <form accept-charset="UTF-8" class="new_adoption"
  action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="post">
     <div>
+        <input name="utf8" type="hidden" value="✓" />
         <!-- This is our organization id -->
         <input type=hidden name="oid" value="00DU0000000Kwch">
-        <input type=hidden name="retURL" value="{{urlOrigin}}/adoption-confirmation">
-        <input name="lead_source" type="hidden" value="OS Adoption Form" />
     </div>
     <h2>Faculty/Administrator Contact Information</h2>
     <fieldset class="labeled-inputs">
