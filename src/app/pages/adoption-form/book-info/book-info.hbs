@@ -1,0 +1,97 @@
+<p>OpenStax College textbook you are using: </p>
+<select name="{{prefix}}[textbook]" required>
+    <option value="">Please Select</option>
+    <option value="Algebra and Trigonometry">Algebra and Trigonometry</option>
+    <option value="Anatomy and Physiology">Anatomy and Physiology</option>
+    <option value="Biology">Biology</option>
+    <option value="Chemistry">Chemistry</option>
+    <option value="College Algebra">College Algebra</option>
+    <option value="College Physics">College Physics</option>
+    <option value="College Physics for AP® Courses ">College Physics for AP® Courses </option>
+    <option value="Concepts of Biology">Concepts of Biology</option>
+    <option value="Introduction to Sociology">Introduction to Sociology</option>
+    <option value="Introduction to Sociology 2e">Introduction to Sociology 2e</option>
+    <option value="Introductory Statistics">Introductory Statistics</option>
+    <option value="Prealgebra">Prealgebra</option>
+    <option value="Precalculus">Precalculus</option>
+    <option value="Principles of Economics">Principles of Economics</option>
+    <option value="Principles of Macroeconomics">Principles of Macroeconomics</option>
+    <option value="Principles of Macroeconomics for AP® Courses">Principles of Macroeconomics for AP® Courses</option>
+    <option value="Principles of Microeconomics">Principles of Microeconomics</option>
+    <option value="Principles of Microeconomics for AP® Courses">Principles of Microeconomics for AP® Courses</option>
+    <option value="Psychology">Psychology</option>
+    <option value="U.S. History">U.S. History</option>
+</select>
+<p>How are you using this title?</p>
+<fieldset class="labeled-buttons">
+    <label>
+        <input checked="checked" name="{{prefix}}[adoption_status]" type="radio" value="Adopted">
+        Fully adopted and using it. The students don't have to pay for a book.
+    </label>
+    <label>
+        <input name="{{prefix}}[adoption_status]" type="radio" value="Recommending book as adoption">
+        Recommending the book as an option. The students purchase a different book.
+    </label>
+</fieldset>
+Which partner resources are you using with the OpenStax College book?
+<fieldset class="labeled-buttons require-one" >
+    <div class="validation-message">
+        Select at least one
+    </div>
+    <label>
+        <input name="{{prefix}}[partner_resources][]" type="checkbox" value="None">
+        None
+    </label>
+     <label>
+         <input name="{{prefix}}[partner_resources][]" type="checkbox" value="Cerego">
+         Cerego
+     </label>
+     <label>
+         <input name="{{prefix}}[partner_resources][]" type="checkbox" value="Courseweaver">
+         Courseweaver
+     </label>
+     <label>
+         <input name="{{prefix}}[partner_resources][]" type="checkbox" value="Expert TA">
+         Expert TA
+     </label>
+     <label>
+         <input name="{{prefix}}[partner_resources][]" type="checkbox" value="Lrnr ">
+         Lrnr
+     </label>
+     <label>
+         <input name="{{prefix}}[partner_resources][]" type="checkbox" value="Sapling Learning">
+         Sapling Learning
+     </label>
+     <label>
+         <input name="{{prefix}}[partner_resources][]" type="checkbox" value="SimBio">
+         SimBio
+     </label>
+     <label>
+         <input name="{{prefix}}[partner_resources][]" type="checkbox" value="WebAssign">
+         WebAssign
+     </label>
+     <label>
+         <input name="{{prefix}}[partner_resources][]" type="checkbox" value="Wiley Plus">
+         Wiley Plus
+     </label>
+     <label>
+         <input name="{{prefix}}[partner_resources][]" type="checkbox" value="XYZ Homework">
+         XYZ Homework
+     </label>
+   <label>
+       <input class="other" name="{{prefix}}[partner_resources][]" type="checkbox" value="other">
+       Other
+       <input name="{{prefix}}[other]" type="text">
+   </label>
+</fieldset>
+<p>
+    Approximately how many students in your classes will be using this book per
+    semester?
+</p>
+<input name="{{prefix}}[students_per_semester]" type="number" required />
+<p>
+    If there are other faculty in your department who will also be using this
+    book, approximately how many students in your department will be using this
+    book per semester?
+</p>
+<input name="{{prefix}}[other_faculty_usage_count]" type="number" />
