@@ -39,6 +39,10 @@ class Router extends Backbone.Router {
         this.route('adoptions', 'adoption-form', () => {
             shell.render('adoption-form');
         });
+
+        this.route('interest', 'interest-form', () => {
+            shell.render('interest-form');
+        });
     }
 
 }
