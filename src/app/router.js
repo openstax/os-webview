@@ -30,6 +30,7 @@ class Router extends Backbone.Router {
 
         this.route(/to[u|s]/, 'tos', () => {
             shell.render('tos');
+        });
 
         this.route('license', 'license', () => {
             shell.render('license');
