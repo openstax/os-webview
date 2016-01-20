@@ -14,7 +14,11 @@ function toggleClass(el, name) {
     el: '#header',
     template: template
 })
+
+
 export default class Header extends BaseView {
+
+
 
     @on('click nav > a')
     blurLogo(e) {
@@ -23,11 +27,14 @@ export default class Header extends BaseView {
 
     @on('click .expand-nav')
     toggleNavMenu(e) {
-        let button = e.target;
+        let button = this.el.querySelector('.expand-nav');
         let header = this.el.querySelector('.page-header');
+        let body = document.body;
 
         toggleClass(button, 'active');
         toggleClass(header, 'active');
+        toggleClass(body, 'active');
+
     }
 
     @on('click .skiptocontent a')
@@ -51,4 +58,4 @@ export default class Header extends BaseView {
         }
     }
 
-}
+  }

@@ -1,24 +1,116 @@
 @import 'variables';
 @import 'mixins';
 
+$button-size : 3.0rem;
+$transition: .3s; // increase this to see the transformations in slow-motion
+html, html a {
+    -webkit-font-smoothing: antialiased;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+}
+
+#header {
+      @include desktop {
+          background: #F0F0F0;
+      }
+      &.sticky > div {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        //max-width: 1200px;
+        //margin: auto;
+        background: #F0F0F0;
+        z-index: 1;
+        margin-top: -50px;
+
+        .st0{fill:#FFFFFF;}
+        .st1{fill:#424242;}
+        .st2{fill:none;stroke:#5E6062;stroke-miterlimit:10;}
+        .st3{fill:#0DC0DC;}
+        .st4{fill:#9A9A9B;}
+        .st5{fill:#5E6062;}
+        .st6{fill-rule:evenodd;clip-rule:evenodd;fill:#E5E5E5;}
+        .st7{fill:#E5E5E5;}
+        .st8{fill:#F47641;}
+        .st9{opacity:0.88;fill:#F47641;}
+        .st10{fill:#FFBD3E;}
+        .st11{fill:#77AF42;}
+        .st12{fill:#F4D019;}
+        .st13{clip-path:url(#SVGID_2_);}
+        .st14{opacity:0.9;fill:#F47641;}
+        .st15{clip-path:url(#SVGID_5_);}
+        .st16{clip-path:url(#SVGID_7_);}
+        .st17{clip-path:url(#SVGID_8_);}
+        .st18{fill:#00246A;fill-opacity:0.2;}
+        .st19{opacity:0.6;fill:#0DC0DC;}
+        .st20{filter:url(#Adobe_OpacityMaskFilter);}
+        .st21{clip-path:url(#SVGID_12_);fill:url(#SVGID_14_);}
+        .st22{clip-path:url(#SVGID_12_);mask:url(#SVGID_13_);}
+        .st23{filter:url(#Adobe_OpacityMaskFilter_1_);}
+        .st24{clip-path:url(#SVGID_18_);fill:url(#SVGID_20_);}
+        .st25{clip-path:url(#SVGID_18_);mask:url(#SVGID_19_);}
+        .st26{fill:#F0F0F0;}
+        .st27{opacity:0.1;fill:#00246A;stroke:#231F20;stroke-miterlimit:10;}
+        .st28{opacity:0.1;fill:#00246A;}
+        .st29{clip-path:url(#SVGID_26_);fill:#222E65;}
+        .st30{clip-path:url(#SVGID_26_);fill:#FFFFFF;}
+        .st31{clip-path:url(#SVGID_26_);}
+        .st32{clip-path:url(#SVGID_28_);fill:#FFFFFF;}
+        .st33{clip-path:url(#SVGID_28_);fill:#F47640;}
+        .st34{fill:#0C9390;fill-opacity:0.9;}
+        .st35{fill:none;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
+        .st36{fill:#00246A;}
+        .st37{fill:#222C65;}
+        .st38{fill:#F37640;}
+        .st39{fill:#0C9390;}
+        .st40{fill:none;}
+        .st41{opacity:0.2;fill:#E5E5E5;}
+        .st42{opacity:0.5;fill:none;stroke:#E5E5E5;}
+        .st43{fill:#555759;}
+        .st44{opacity:0.8;fill:#FFFFFF;fill-opacity:0.8;}
+        .st45{display:none;}
+        .st46{display:inline;}
+        .st47{opacity:0.1;fill:#E20613;}
+        .st48{fill:none;stroke:#00A651;stroke-width:0.1;}
+      }
+
+        svg * {
+          //fill: currentColor;
+          transition: fill 0.5s;
+
+        }
+
+      .stuck {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        //width: 100%;
+        //margin: auto;
+      }
+}
 .page-header {
-    border-bottom: 0.2rem solid color(neutral-light);
-    max-height: 8rem;
-    min-height: 8rem;
     overflow: hidden;
-    transition: max-height 0.5s;
+    //transition: max-height 0.5s;
 
-    &.active {
-        max-height: 40rem;
+    //transition: background 0.3s linear;
+    display: flex;
+    flex-flow: row wrap;
 
-        @include tablet {
-            max-height: 13.1rem;
-        }
-
-        @include phone {
-            max-height: 31.6rem;
-        }
+    max-width: 1200px;
+    margin: auto;
+    z-index: 99;
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    background: #fff;
+    @include desktop {
+        background: transparent;
+        position: relative;
     }
+
 
     > .skiptocontent {
         a {
@@ -43,123 +135,256 @@
             }
         }
     }
-
-    .nav {
-        align-items: center;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        padding: 1.9rem;
-        text-align: center;
-        user-select: none;
-    }
-
-    .logo-wrapper {
-        line-height: 0;
-
-        > a {
-            display: inline-block;
-        }
-    }
-
-    .logo {
-        display: inline-block;
-    }
-
     .os-logo {
-        background-image: url('/images/logo-home.png');
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: 13.2rem 4rem;
+      width: 176px;
+      height: 40px;
+      transition: all 0.3s linear;
+      svg * {
+        //fill: auto;
+        transition: fill 0.5s;
 
-        &:focus > img,
-        &:hover > img {
-            opacity: 0;
+      }
+      @include desktop {
+        svg * {
+          fill: #fff;
+
         }
+      }
 
-        > img {
-            background-color: white;
-            transition: opacity 0.3s linear;
-            user-select: none;
-
-            &:focus,
-            &:hover {
-                opacity: 0;
-            }
-        }
     }
-
-    .rice-logo {
-        display: none;
-        margin-bottom: -0.2rem;
-        padding-top: 0.5rem;
-
-        @include desktop {
-            display: inline-block;
-        }
-    }
-
-    .expand-nav {
-        background-color: white;
-        border: 0;
-        color: color(primary);
-        display: inline-block;
-        flex: 1 0 auto;
-        font-size: 2.5rem;
-        transition: transform 0.5s;
-
-        &:hover,
-        &:active,
-        &.active {
-            color: color(primary);
-        }
-
-        &.active {
-            transform: rotate(-90deg);
-        }
-    }
-
-    .nav-menu {
+    .meta-nav {
+      //position:relative;
+      //top: -500px;
+      display: none;
+      order: 2;
+      flex: 1 100%;
+      padding: 1.9rem;
+      transition: all 0.3s linear;
+      @include desktop {
+        //top: auto;
+        order: 0;
         display: flex;
-        flex-basis: 100%;
-        flex-wrap: wrap;
-        list-style-type: none;
-        margin: 1rem 0;
-        padding: 0;
-
-        @include desktop {
-            flex-basis: auto;
-            margin: 0.3rem 0 0;
-        }
+        flex-flow: row wrap;
+        justify-content: flex-end;
+        background: #F0F0F0;
+        padding: 0.9rem 1.9rem;
+      }
+      .logo-wrapper {
+        //display:none;
+        padding-left: 1.9rem;
+      }
     }
+    .logo-quote {
+      vertical-align: top;
+      line-height: 41px;
+      display: inline-block;
+      margin-left: 3rem;
+      color: #fff;
+      @include mobile {
+        display: none;
+      }
+    }
+    .nav {
+      order: 1;
+      flex: 1 100%;
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-between;
+      padding: 1.9rem;
+      transition: all 1.2s;
+      top: auto;
 
+      .nav-menu-item a {
+        color: #fff;
+        font-weight: 600;
+      }
+
+    }
+    .nav-menu {
+      display: none;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      @include desktop {
+        display: flex;
+        flex-flow: row wrap;
+        flex: 0 auto;
+        align-items: center;
+      }
+    }
+    @include desktop {
     .nav-menu-item {
-        flex: 1 0 auto;
-        font-size: 1.5rem;
-
-        @include phone {
-            flex-basis: 100%;
-            padding: 1rem 0;
-        }
-
         > a {
-            color: color(primary);
             display: inline-block;
-            font-weight: 500;
-            margin-bottom: -3px;
-            padding: 1rem;
-
-            @include phone {
-                padding: 1rem 0;
-                width: 100%;
-            }
-
+            padding-left: 2rem;
+            padding-right: 2rem;
+            color: #555759;
             &:active,
             &:focus,
             &:hover {
-                color: color(primary);
-                text-decoration: underline;
+                color: color(blue);
             }
         }
+        &:first-child > a {
+            margin-left: -2rem;
+        }
+
+        &:last-child > a {
+            margin-right: -2rem;
+        }
     }
+  }
+    .logo-wrapper {
+        line-height: 0;
+        height: 100%;
+        > a {
+            display: inline-block;
+        }
+    }
+    .logo {
+      order: 1;
+        display: inline-block;
+    }
+    .expand-nav {
+      align-self: flex-start;
+      margin-top: 10px;
+      order: 2;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      box-shadow: none;
+      border-radius: none;
+      border: none;
+      display: inline-block;
+      padding: 0;
+      transition: .3s;
+      cursor: pointer;
+      user-select: none;
+      background: transparent;
+
+      &:hover,
+      &:focus,
+      &:active {
+        outline: none;
+      }
+      @include desktop {
+          display: none;
+      }
+    }
+    .expand-nav span {
+      //create middle line
+      @include line;
+      position: relative;
+      transition: background .3s .6s ease;
+
+      /*create the upper and lower lines as pseudo-elements of the middle line*/
+      &:before,
+      &:after {
+        @include line;
+        position: absolute;
+        left:0;
+        content: '';
+        //set transform origin back to center
+        transform-origin: 50% 50%;
+        transition: top .3s .6s ease, transform .3s ease;
+      }
+      &:before { top: $button-size/4; }
+      &:after { top: -$button-size/4; }
+    }
+    .expand-nav.active span {
+      transition: background .3s 0s ease;
+      background: transparent;
+      &:before,
+      &:after {
+        transition: top .3s ease, transform .3s .5s ease;
+        top:0;
+        width: $button-size;
+      }
+      &:before {
+        transform: rotate3d(0,0,1,45deg);
+      }
+      &:after {
+        transform: rotate3d(0,0,1,-45deg);
+      }
+
+    }
+}
+@include mobile {
+.page-header.active {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width:100%;
+  height:100%;
+  overflow: auto;
+  background: #fff;
+  .os-logo {
+    //width: 65px;
+    overflow: hidden;
+
+    svg #Logo_2_1_ > g {
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+  }
+  .nav  {
+    // flex:0 0 100%;
+    // align-items: flex-start;
+    // align-content: flex-start;
+    .nav-menu {
+       order: 3;
+       flex: 1 100%;
+       list-style: none;
+       margin: 0;
+       padding: 0;
+       display: flex;
+       flex-flow: column nowrap;
+       font-size: 2.2rem;
+       font-weight: 600;
+       a {color: #00246A;}
+     .nav-menu-item {
+       flex: 1 auto;
+    }
+  }
+}
+  .meta-nav {
+     display: flex;
+     order: 4;
+     flex-flow: row wrap;
+     .nav-menu {
+       list-style: none;
+       margin: 0;
+       padding: 0;
+       display: flex;
+       flex-flow: column wrap;
+       flex: 1 100%;
+       .nav-menu-item {
+         flex: 1 auto;
+
+       }
+       a {color: #0DC0DC;}
+     }
+     .logo-wrapper {
+       margin: -1.9rem;
+       flex: 1 100%;
+       align-self: flex-end;
+       background: transparentize(#E5E5E5, 0.8);
+       padding: 1.9rem;
+       border-top: 1px solid transparentize(#E5E5E5, 0.5);
+       display: flex;
+       flex-flow: row nowrap;
+       justify-content: space-between;
+       align-items: center;
+       &::after {
+         content: "\00a9  Rice University";
+         color: #9A9A9B;
+         order: 2;
+         //display: block;
+         //text-align: right;
+       }
+     }
+   }
+}
 }
