@@ -1,7 +1,7 @@
 import BaseView from '~/helpers/backbone/view';
 import {props} from '~/helpers/backbone/decorators';
 import {template} from './footer.hbs';
-require('~/sticky');
+//require('~/sticky');
 
 @props({
     el: '#footer',
