@@ -2,5 +2,17 @@
 @import 'mixins';
 
 .home-page {
-
+background: #AD918F;
+min-width:100vw;
+min-height: 100vh;
+z-index: 1;
+padding-top: 79px;
+@include desktop {
+  margin-top: -79px;
+}
+  #maincontent {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 2rem;
+  }
 }
