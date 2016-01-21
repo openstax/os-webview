@@ -46,6 +46,7 @@
     "gulp-scss-lint": "0.3.9",
     "gulp-sourcemaps": "1.6.0",
     "gulp-uglify": "1.5.1",
+    "gulp-util": "3.0.7",
     "gulp-wrap": "0.11.0",
     "handlebars": "4.0.5",
     "jspm": "0.16.24",
