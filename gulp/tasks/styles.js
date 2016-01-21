@@ -10,7 +10,33 @@ function scsslint() {
         since: gulp.lastRun('scsslint')
     })
     .pipe(pi.scssLint({
-        config: 'gulp/.scss-lint.yml'
+        config: 'gulp/.scss-lint.yml',
+        customReport: (file) => {
+            /* eslint prefer-template:0 */
+            var colors = pi.util.colors;
+
+            if (!file.scsslint.success) {
+                process.exitCode = 1;
+
+                pi.util.log(
+                    colors.cyan(file.scsslint.issues.length) +
+                    ' issues found in ' +
+                    colors.magenta(file.path)
+                );
+
+                file.scsslint.issues.forEach((issue) => {
+                    var severity = issue.severity === 'warning' ? colors.yellow(' [W] ') : colors.red(' [E] ');
+                    var linter = issue.linter ? (`${issue.linter}: `) : '';
+                    var logMsg = `${colors.cyan(file.relative)}:` +
+                        colors.magenta(issue.line) +
+                        severity +
+                        colors.green(linter) +
+                        issue.reason;
+
+                    pi.util.log(logMsg);
+                });
+            }
+        }
     }));
 }
 
