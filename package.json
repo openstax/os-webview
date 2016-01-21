@@ -52,7 +52,7 @@
     "jspm": "0.16.24",
     "require-dir": "0.3.0",
     "sw-precache": "2.3.0",
-    "systemjs-builder": "0.15.4"
+    "systemjs-builder": "0.14.15"
   },
   "jspm": {
     "directories": {
