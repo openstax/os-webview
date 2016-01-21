@@ -141,7 +141,12 @@ function eslint() {
             'es6'
         ]
     }))
-    .pipe(pi.eslint.format());
+    .pipe(pi.eslint.format())
+    .pipe(pi.eslint.results((results) => {
+        if (results.errorCount > 0) {
+            process.exitCode = 1;
+        }
+    }));
 }
 
 function compileScripts() {

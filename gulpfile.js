@@ -29,6 +29,4 @@ gulp.task('lint', gulp.parallel(
     'eslint'
 ));
 
-gulp.task('test', gulp.parallel(
-    'lint'
-));
+gulp.task('test', gulp.series('lint'));
