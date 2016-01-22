@@ -33,6 +33,7 @@ function eslint() {
             'dot-location': [2, 'property'],
             'dot-notation': 2,
             'eqeqeq': 2,
+            'global-require': 2,
             'guard-for-in': 2,
             'no-alert': 2,
             'no-caller': 2,
