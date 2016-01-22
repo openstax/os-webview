@@ -1,14 +1,7 @@
+import $ from '~/helpers/$';
 import BaseView from '~/helpers/backbone/view';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './header.hbs';
-
-function toggleClass(el, name) {
-    if (el.classList.contains(name)) {
-        el.classList.remove(name);
-    } else {
-        el.classList.add(name);
-    }
-}
 
 @props({
     el: '#header',
@@ -26,8 +19,8 @@ export default class Header extends BaseView {
         let button = e.target;
         let header = this.el.querySelector('.page-header');
 
-        toggleClass(button, 'active');
-        toggleClass(header, 'active');
+        $.toggleClass(button, 'active');
+        $.toggleClass(header, 'active');
     }
 
     @on('click .skiptocontent a')
