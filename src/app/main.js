@@ -13,6 +13,8 @@ function rootEl(path, Element) {
             }
         }
     }
+
+    return null;
 }
 
 if ('@ENV@' === 'production' && 'serviceWorker' in navigator) {
@@ -58,18 +60,19 @@ class App {
             pushState: true
         });
 
+        function ignoreUrl(url) {
+            return typeof url !== 'string' || url.charAt(0) === '#' || MAILTO.test(url);
+        }
+
+        function ignoreClick(e) {
+            return e.defaultPrevented || e.metaKey || e.which !== 1;
+        }
+
         document.addEventListener('click', (e) => {
-            var el;
-
-            if (e.metaKey || e.which !== 1) {
-                return;
-            }
-
-            el = rootEl(e.path, HTMLAnchorElement) || e.target;
-
+            var el = rootEl(e.path, HTMLAnchorElement) || e.target;
             let href = el.getAttribute('href');
 
-            if (!href || href.charAt(0) === '#' || e.defaultPrevented || MAILTO.test(href)) {
+            if (ignoreClick(e) || ignoreUrl(href)) {
                 return;
             }
 
