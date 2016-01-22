@@ -26,7 +26,7 @@ function eslint() {
             // Best Practices
             'accessor-pairs': [2, {'getWithoutSet': false}],
             'block-scoped-var': 2,
-            'complexity': [2, 10],
+            'complexity': [2, 5],
             'consistent-return': 2,
             'curly': 2,
             'default-case': 2,
