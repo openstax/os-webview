@@ -3,10 +3,14 @@
 fieldset {
     border-color: neutral-color(lightest);
 
+    legend {
+        background-color: neutral-color(lightest);
+    }
+
     &.invalid,
     input:invalid,
     select:invalid {
-        box-shadow: 0 0 5px color(danger);
+        box-shadow: 0 0 0.5rem color(danger);
     }
 
     &.labeled-inputs {
