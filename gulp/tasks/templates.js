@@ -1,5 +1,6 @@
 var path = require('path');
 var gulp = require('gulp');
+var handlebars = require('handlebars');
 var config = require('../config');
 var bs = require('browser-sync').get(config.name);
 var pi = require('gulp-load-plugins')({
@@ -16,7 +17,7 @@ function precompileHandlebars(src, wrapper) {
         }))
         .pipe(pi.if(config.env !== 'production', pi.sourcemaps.init()))
         .pipe(pi.handlebars({
-            handlebars: require('handlebars')
+            handlebars: handlebars
         }))
         .pipe(wrapper)
         .pipe(pi.babel({
