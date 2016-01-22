@@ -17,6 +17,7 @@
 * Ruby v1.9.3+
 * Gulp v4.0.0-alpha.2+
 * JSPM v0.16.19+
+* SCSS-Lint v0.44.0+ (for testing)
 
 ## Installation
 
