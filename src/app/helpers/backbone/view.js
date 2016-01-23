@@ -38,6 +38,7 @@ class Region {
         this.el.appendChild(view.el);
         view._setElement(view.el);
         view.render();
+        view.delegateEvents();
         view.onShow();
     }
 
@@ -73,7 +74,7 @@ class Regions {
 class BaseView extends Backbone.View {
 
     constructor() {
-        super();
+        super(...arguments);
         this.regions = new Regions(this.regions, this);
     }
 
