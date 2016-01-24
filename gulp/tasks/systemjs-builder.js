@@ -7,7 +7,7 @@ var Builder = require('systemjs-builder');
 function systemjs() {
     var builder = new Builder('./', path.join(config.dest, '/app/config.js'));
     var appPath = path.join(config.dest, '/app/**/*');
-    var dependencies = `${appPath} - [${appPath}]`;
+    var dependencies = `${appPath}.js - [${appPath}]`;
     var output = path.join(config.dest, '/dependencies.js');
 
     builder.config({
