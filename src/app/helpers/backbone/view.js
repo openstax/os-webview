@@ -106,9 +106,9 @@ class BaseView extends Backbone.View {
                     data[key] = value;
                 }
             });
-
-            return data;
         }
+
+        return data;
     }
 
     _render() {
