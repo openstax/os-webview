@@ -17,7 +17,8 @@ System.config({
 
   map: {
     "babel": "npm:babel-core@5.8.34",
-    "babel-runtime": "npm:babel-runtime@5.8.34",
+    "babel-polyfill": "npm:babel-polyfill@6.3.14",
+    "babel-runtime": "npm:babel-runtime@5.8.35",
     "backbone": "npm:backbone@1.2.3",
     "backbone.nativeajax": "github:akre54/Backbone.NativeAjax@0.4.3",
     "backbone.nativeview": "github:akre54/Backbone.NativeView@0.3.3",
@@ -39,7 +40,16 @@ System.config({
     "npm:assert@1.3.0": {
       "util": "npm:util@0.10.3"
     },
-    "npm:babel-runtime@5.8.34": {
+    "npm:babel-polyfill@6.3.14": {
+      "babel-regenerator-runtime": "npm:babel-regenerator-runtime@6.3.13",
+      "babel-runtime": "npm:babel-runtime@5.8.35",
+      "core-js": "npm:core-js@1.2.6",
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:babel-regenerator-runtime@6.3.13": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:babel-runtime@5.8.35": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:backbone@1.2.3": {

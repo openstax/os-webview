@@ -60,6 +60,7 @@
     },
     "configFile": "src/app/config.js",
     "dependencies": {
+      "babel-polyfill": "npm:babel-polyfill@^6.3.14",
       "backbone": "npm:backbone@^1.2.3",
       "backbone.nativeajax": "github:akre54/Backbone.NativeAjax@^0.4.3",
       "backbone.nativeview": "github:akre54/Backbone.NativeView@^0.3.3",
