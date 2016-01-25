@@ -2,18 +2,25 @@
 @import 'mixins';
 
 .btn {
-    border-radius: 0.4rem;
+    background-color: color(neutral-medium);
+    color: color(neutral-light);
     cursor: pointer;
     display: inline-block;
+    font-weight: 500;
     outline: 0;
-    padding: 0.5rem 1rem;
+    padding: 1rem;
     text-align: center;
+    text-transform: uppercase;
     touch-action: manipulation;
 
     &:hover,
     &:focus {
         text-decoration: none;
     };
+}
+
+.btn-large {
+    padding: 2.5rem;
 }
 
 @each $name, $type in $color-types {

@@ -7,6 +7,7 @@
 # OpenStax
 
 [![Build Status](https://travis-ci.org/openstax/os-webview.svg?branch=master)](https://travis-ci.org/openstax/os-webview)
+[![Code Climate](https://codeclimate.com/github/openstax/os-webview/badges/gpa.svg)](https://codeclimate.com/github/openstax/os-webview)
 [![dependency Status](https://david-dm.org/openstax/os-webview.svg)](https://david-dm.org/openstax/os-webview#info=dependencies)
 [![devDependency Status](https://david-dm.org/openstax/os-webview/dev-status.svg)](https://david-dm.org/openstax/os-webview#info=devDependencies)
 
@@ -16,6 +17,7 @@
 * Ruby v1.9.3+
 * Gulp v4.0.0-alpha.2+
 * JSPM v0.16.19+
+* SCSS-Lint v0.44.0+ (for testing)
 
 ## Installation
 

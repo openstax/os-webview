@@ -2,22 +2,21 @@
 @import 'mixins';
 
 .page-header {
-    border-bottom: 0.2rem solid color(neutral-light);
-    max-height: 8rem;
-    min-height: 8rem;
+    background-color: color(neutral-lightest);
     overflow: hidden;
+    position: relative;
     transition: max-height 0.5s;
+    z-index: 1;
 
-    &.active {
-        max-height: 40rem;
+    &.fixed {
+        left: 0;
+        position: fixed;
+        right: 0;
+        top: 0;
+    }
 
-        @include tablet {
-            max-height: 13.1rem;
-        }
-
-        @include phone {
-            max-height: 31.6rem;
-        }
+    &.transparent {
+        background-color: transparent;
     }
 
     > .skiptocontent {
@@ -44,18 +43,78 @@
         }
     }
 
+    .secondary-nav {
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 8vw;
+
+        @at-root .collapsed#{&} {
+            display: none;
+        }
+
+        a {
+            color: color(neutral-dark);
+            padding-bottom: 1rem;
+            padding-top: 1rem;
+        }
+
+        .nav-menu-item {
+            flex: 0 0 auto;
+            font-size: 1.4rem;
+            font-weight: 400;
+            line-height: 0;
+        }
+    }
+
     .nav {
         align-items: center;
+        background-color: transparent;
+        color: color(neutral-medium);
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-around;
-        padding: 1.9rem;
-        text-align: center;
+        justify-content: space-between;
+        padding: 2rem 8vw;
         user-select: none;
+
+        @at-root .transparent#{&} {
+            backdrop-filter: blur(1rem);
+            background-color: rgba(color(neutral-darkest), 0.05);
+            color: color(neutral-lightest);
+            text-shadow: 0 0 0.6rem color(neutral-dark);
+        }
+
+        a {
+            color: color(neutral-medium);
+
+            @at-root .transparent#{&} {
+                color: color(neutral-lightest);
+
+                &:active,
+                &:focus,
+                &:hover {
+                    text-shadow: 0 0 0.6rem color(neutral-light);
+                }
+            }
+        }
+
+        .nav-menu-item {
+            flex: 1 1 auto;
+            font-size: 1.8rem;
+            font-weight: 600;
+
+            @at-root .collapsed#{&} {
+                font-size: 1.6rem;
+            }
+        }
     }
 
     .logo-wrapper {
+        flex: 0 0 auto;
         line-height: 0;
+
+        span {
+            vertical-align: middle;
+        }
 
         > a {
             display: inline-block;
@@ -64,102 +123,87 @@
 
     .logo {
         display: inline-block;
-    }
+        margin-right: 2.5rem;
 
-    .os-logo {
-        background-image: url('/images/logo-home.png');
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: 13.2rem 4rem;
+        .logo-color {
+            display: inline-block;
 
-        &:focus > img,
-        &:hover > img {
-            opacity: 0;
+            @at-root .transparent#{&} {
+                display: none;
+            }
         }
 
-        > img {
-            background-color: white;
-            transition: opacity 0.3s linear;
-            user-select: none;
+        .logo-white {
+            display: none;
 
-            &:focus,
-            &:hover {
-                opacity: 0;
+            @at-root .transparent#{&} {
+                display: inline-block;
             }
         }
     }
 
-    .rice-logo {
-        display: none;
-        margin-bottom: -0.2rem;
-        padding-top: 0.5rem;
+    .os-logo > a {
+        > img {
+            background-color: transparent;
+            background-position: 72.5% bottom;
+            background-repeat: no-repeat;
+            background-size: 1.2rem 1.2rem;
+            transition: opacity 0.3s linear;
+            user-select: none;
+        }
 
-        @include desktop {
-            display: inline-block;
+        &:focus > img,
+        &:hover > img {
+            background-image: url('/images/home.svg');
+        }
+
+        @at-root .transparent#{&} {
+            &:focus > img,
+            &:hover > img {
+                background-image: url('/images/home-white.svg');
+            }
         }
     }
 
-    .expand-nav {
-        background-color: white;
-        border: 0;
-        color: color(primary);
-        display: inline-block;
-        flex: 1 0 auto;
-        font-size: 2.5rem;
-        transition: transform 0.5s;
+    .logo-quote {
+        display: none;
+        font-size: 1.4rem;
+        margin-top: 0.3rem;
 
-        &:hover,
-        &:active,
-        &.active {
-            color: color(primary);
-        }
-
-        &.active {
-            transform: rotate(-90deg);
+        @media (min-width: 107rem) {
+            display: inline-block;
         }
     }
 
     .nav-menu {
+        align-items: center;
         display: flex;
-        flex-basis: 100%;
+        flex: 0 0 auto;
         flex-wrap: wrap;
         list-style-type: none;
-        margin: 1rem 0;
+        margin: 0;
         padding: 0;
-
-        @include desktop {
-            flex-basis: auto;
-            margin: 0.3rem 0 0;
-        }
     }
 
     .nav-menu-item {
-        flex: 1 0 auto;
-        font-size: 1.5rem;
-
-        @include phone {
-            flex-basis: 100%;
-            padding: 1rem 0;
-        }
-
         > a {
-            color: color(primary);
             display: inline-block;
-            font-weight: 500;
-            margin-bottom: -3px;
-            padding: 1rem;
-
-            @include phone {
-                padding: 1rem 0;
-                width: 100%;
-            }
+            padding-left: 2rem;
+            padding-right: 2rem;
 
             &:active,
             &:focus,
             &:hover {
-                color: color(primary);
-                text-decoration: underline;
+                color: color(blue);
             }
+        }
+
+        &:first-child > a {
+            margin-left: -2rem;
+        }
+
+        &:last-child > a {
+            margin-right: -2rem;
         }
     }
 }

@@ -1,3 +1,5 @@
+// scss-lint:disable ImportantRule
+
 @import 'variables';
 @import 'mixins';
 
@@ -12,48 +14,48 @@
 
 .hidden-desktop {
     @include desktop {
-        display: none;
+        display: none !important;
     }
 }
 
 .hidden-tablet {
     @include tablet {
-        display: none;
+        display: none !important;
     }
 }
 
 .hidden-phone {
     @include phone {
-        display: none;
+        display: none !important;
     }
 }
 
 .visible-desktop {
     @include phone {
-        display: none;
+        display: none !important;
     }
 
     @include tablet {
-        display: none;
+        display: none !important;
     }
 }
 
 .visible-tablet {
     @include desktop {
-        display: none;
+        display: none !important;
     }
 
     @include phone {
-        display: none;
+        display: none !important;
     }
 }
 
 .visible-phone {
     @include tablet {
-        display: none;
+        display: none !important;
     }
 
     @include desktop {
-        display: none;
+        display: none !important;
     }
 }

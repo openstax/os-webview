@@ -15,10 +15,11 @@ function eslint() {
     })
     .pipe(pi.eslint({
         parser: 'babel-eslint',
-        extends: 'eslint:recommended',
-        ecmaFeatures: {
-            modules: true
+        parserOptions: {
+            ecmaVersion: 6,
+            sourceType: 'module'
         },
+        extends: 'eslint:recommended',
         globals: {
             require: false
         },
@@ -26,13 +27,14 @@ function eslint() {
             // Best Practices
             'accessor-pairs': [2, {'getWithoutSet': false}],
             'block-scoped-var': 2,
-            'complexity': [2, 10],
+            'complexity': [2, 5],
             'consistent-return': 2,
-            'curly': 2,
+            'curly': [2, 'all'],
             'default-case': 2,
             'dot-location': [2, 'property'],
-            'dot-notation': 2,
+            'dot-notation': [2, { 'allowKeywords': true }],
             'eqeqeq': 2,
+            'global-require': 2,
             'guard-for-in': 2,
             'no-alert': 2,
             'no-caller': 2,
@@ -67,7 +69,7 @@ function eslint() {
             'no-useless-call': 2,
             'no-useless-concat': 2,
             'no-void': 2,
-            'no-warning-comments': [1, {'location': 'anywhere'}],
+            'no-warning-comments': [1, {'terms': ['fixme', 'hack', 'todo', 'xxx'], 'location': 'anywhere'}],
             'no-with': 2,
             'radix': [2, 'always'],
             'vars-on-top': 2,
@@ -92,6 +94,7 @@ function eslint() {
             'eol-last': 2,
             'indent': [2, 4, {'SwitchCase': 0}],
             'key-spacing': [2, {'beforeColon': false, 'afterColon': true}],
+            'keyword-spacing': 2,
             'linebreak-style': [2, 'unix'],
             'max-depth': [2, 4],
             'max-len': [2, 120, 4, {'ignoreUrls': true}],
@@ -101,22 +104,24 @@ function eslint() {
             'new-parens': 2,
             'newline-after-var': [2, 'always'],
             'no-array-constructor': 2,
+            'no-implicit-globals': 2,
             'no-lonely-if': 2,
-            'no-mixed-spaces-and-tabs': 2,
+            'no-mixed-spaces-and-tabs': [2, false],
             'no-multiple-empty-lines': [2, {'max': 2, 'maxEOF': 1}],
             'no-nested-ternary': 2,
             'no-new-object': 2,
             'no-spaced-func': 2,
             'no-trailing-spaces': 2,
+            'no-whitespace-before-property': 2,
             'operator-linebreak': [2, 'after'],
             'padded-blocks': [2, 'never'],
             'quotes': [2, 'single'],
             'semi-spacing': [2, {'before': false, 'after': true}],
             'semi': [2, 'always'],
-            'space-after-keywords': [2, 'always'],
-            'space-before-blocks': 2,
+            'space-before-blocks': [2, 'always'],
             'space-before-function-paren': [2, {'anonymous': 'always', 'named': 'never'}],
             'spaced-comment': [2, 'always', { 'exceptions': ['-*'] }],
+            'space-in-parens': [2, 'never'],
             'wrap-regex': 2,
 
             // ECMAScript 2015
@@ -128,12 +133,15 @@ function eslint() {
             'no-class-assign': 2,
             'no-const-assign': 2,
             'no-dupe-class-members': 2,
+            'no-new-symbol': 2,
             'no-this-before-super': 2,
+            'no-useless-constructor': 2,
             'prefer-arrow-callback': 2,
             'prefer-reflect': [2, {'exceptions': ['delete']}],
             'prefer-spread': 2,
             'prefer-template': 2,
-            'require-yield': 2
+            'require-yield': 2,
+            'yield-star-spacing': [2, {'before': false, 'after': true}]
         },
         envs: [
             'browser',
