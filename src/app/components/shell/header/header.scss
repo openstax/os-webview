@@ -155,8 +155,11 @@
         &:focus > img,
         &:hover > img {
             background-image: url('/images/home.svg');
+        }
 
-            @at-root .transparent#{&} {
+        @at-root .transparent#{&} {
+            &:focus > img,
+            &:hover > img {
                 background-image: url('/images/home-white.svg');
             }
         }

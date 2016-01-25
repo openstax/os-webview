@@ -21,13 +21,13 @@ class AppView extends BaseView {
         System.import('~/components/shell/header/header').then((m) => {
             let Header = m.default;
 
-            view.regions.header.show(new Header());
+            view.regions.header.show(view.header = new Header());
         });
 
         System.import('~/components/shell/footer/footer').then((m) => {
             let Footer = m.default;
 
-            view.regions.footer.show(new Footer());
+            view.regions.footer.show(view.footer = new Footer());
         });
     }
 
