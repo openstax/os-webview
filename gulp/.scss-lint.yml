@@ -18,10 +18,12 @@ linters:
         style: include_zero
 
     NestingDepth:
-        max_depth: 4
+        max_depth: 5
+        ignore_parent_selectors: true
 
     PropertyUnits:
-      global: ['em', 'rem', '%', 'vw', 'vh', 'vmin', 'vmax', 's']
+        global: ['em', 'rem', '%', 'vw', 'vh', 'vmin', 'vmax', 's']
 
     SelectorDepth:
-        max_depth: 4
+        max_depth: 5
+        ignore_parent_selectors: true
