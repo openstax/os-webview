@@ -36,9 +36,8 @@ class Region {
         this.views = this.views || [];
         this.views.push(view);
         this.el.appendChild(view.el);
-        view._setElement(view.el);
+        view.setElement(view.el);
         view.render();
-        view.delegateEvents();
         view.onShow();
     }
 
