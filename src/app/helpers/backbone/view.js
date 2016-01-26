@@ -93,14 +93,15 @@ class BaseView extends Backbone.View {
 
     getTemplateData() {
         let data = this.model ? this.model.toJSON() : {};
+        let view = this;
 
         if (typeof this.templateHelpers === 'function') {
             _.extend(data, this.templateHelpers());
-        } else {
+        } else if (typeof this.templateHelpers === 'object') {
             // Add data from template helpers to the model's data
-            _.each(this.templateHelpers, function (value, key) {
+            _.each(this.templateHelpers, (value, key) => {
                 if (typeof value === 'function') {
-                    data[key] = Reflect.apply(value, this);
+                    data[key] = Reflect.apply(value, view, []);
                 } else {
                     data[key] = value;
                 }

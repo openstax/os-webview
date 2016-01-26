@@ -17,6 +17,10 @@ export default class Home extends BaseView {
     }
 
     updateHeaderStyle() {
+        if (!appView.header) {
+            return;
+        }
+
         let secondaryNavHeight = appView.header.secondaryNavHeight;
 
         if (window.pageYOffset > secondaryNavHeight && !appView.header.isPinned()) {

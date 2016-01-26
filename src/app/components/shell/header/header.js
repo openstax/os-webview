@@ -76,7 +76,7 @@ export default class Header extends BaseView {
         let header = this.el.querySelector('.page-header');
         let height = 0;
 
-        if (typeof header === 'object') {
+        if (header && typeof header === 'object') {
             height = header.offsetHeight;
         }
 
@@ -87,7 +87,7 @@ export default class Header extends BaseView {
         let secondaryNav = this.el.querySelector('.secondary-nav');
         let height = 0;
 
-        if (typeof secondaryNav === 'object') {
+        if (secondaryNav && typeof secondaryNav === 'object') {
             height = secondaryNav.offsetHeight;
         }
 
