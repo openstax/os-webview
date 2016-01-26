@@ -100,8 +100,8 @@
     }
 
     .book {
+        background-color: color(blue);
         background-image: url('/images/subjects/us-history.svg');
-        background-size: 57.4vw; // HACK: need properly trimmed SVG
         height: 25.607vw;
         left: 38.12vw;
         position: absolute;
