@@ -50,7 +50,7 @@ function compileStyles(src, dest) {
             ]
         }))
         .pipe(pi.autoprefixer(config.browsers))
-        .pipe(pi.if(config.env === 'production', pi.minifyCss()))
+        .pipe(pi.if(config.env === 'production', pi.cssnano()))
         .pipe(pi.if(config.env !== 'production', pi.sourcemaps.write('.', {
             includeContent: false,
             sourceRoot: './'
