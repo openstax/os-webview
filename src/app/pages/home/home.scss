@@ -192,58 +192,73 @@
 	background: #f0f0f0;
 	display: flex;
 	padding: 8rem 0;
-	
+
 	.container {
 		display: inherit;
 		margin: 0 auto;
 		padding: 0 1.5rem;
 		max-width: $boxed-width;
-		flex-wrap: nowrap; 
-		flex-direction: column;
-		justify-content: space-between;		
-		
-		@include tablet-up {
-	        flex-direction: row;
-	    }		
-	    
-		@include tablet-sm {
-	        color: red
+		flex-flow: column nowrap;
+		justify-content: space-between;
+		@include medium {
+	        color: purple
 	    }
-	    		
+
+		@include medium-up {
+	        flex-flow: row wrap
+	    }
+
 		.col {
-			width: 32%;
+			flex-basis: 100%;
 			background: color(neutral-lighter);
 			display: flex;
 			flex-flow: row nowrap;
-			justify-content: space-between;
-			align-items: stretch;
-			
+			margin: .75rem 0;
+
+			&:not(:last-child) {
+				@include medium-up {
+					flex-basis: 49%
+			    }
+				@include large {
+					flex-basis: 32%
+			    }
+			}
+
+			&:last-child {
+				@include medium-up {
+					flex-basis: 100%
+			    }
+				@include large {
+					flex-basis: 32%
+			    }
+			}
+
 			> div  {
 				width: 50%;
-			}	
-					
+			}
+
 			.b-img {
 				position: relative;
 				min-height: 240px;
 				background-color: color(green);
-				background-repeat: no-repeat; 
+				background-repeat: no-repeat;
 				background-position: center top;
-				background-size: cover; 
-				
+				background-size: cover;
+
 			}
-			
+
 			&:first-child  {
 				.b-img {
 					background-image: url('/images/home/bucket-juan.jpg');
-					
+
 					&:after {	// Parent should have position: relative
-					    @include triangle( 
-					      $direction: right, 
-					      $position: top 50% right 0, 
+					    @include triangle(
+					      $direction: right,
+					      $position: top 50% right 0,
 					      $color: white,
 					      $size: 2.4rem
 					    );
-					}						
+					}
 				}
 			}
 
@@ -251,41 +266,41 @@
 				.b-img {
 					background-color: color(cyan);
 					background-image: url('/images/home/bucket-school.jpg');
-					
+
 					&:after {
 					    @include triangle(
-					      $direction : left, 
-					      $position: top 50% left -1px, 
+					      $direction : left,
+					      $position: top 50% left -1px,
 					      $color: white,
 					      $size: 2.4rem
 					    );
-					}						
+					}
 				}
-			}			
-			
+			}
+
 			&:last-child {
 				flex-direction: column;
 				justify-content: flex-start;
 				padding: 1.5rem 4rem;
 				color: white;
 				background-color: color(secondary);
-				
+
 				p {
 					font-size: 2.4rem;
 				}
 			}
-						
+
 			.b-text {
 				padding: 3rem 1.5rem;
-				background: white;	
+				background: white;
 				position: relative;
-				
+
 				blockquote {
-					
-				}						
-			}			
+					margin: 1rem 0;
+				}
+			}
 		}
-		
+
 	}
 }
 

@@ -2,6 +2,12 @@
 @import 'variables';
 @import 'mixins';
 
+// General overrides
+
+p {
+	margin: 1rem 0;
+}
+
 html {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 62.5%;
@@ -16,7 +22,7 @@ body {
     margin: 0;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;    
+	-moz-osx-font-smoothing: grayscale;
 
     #main {
         display: flex;

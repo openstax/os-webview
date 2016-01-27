@@ -1,31 +1,31 @@
 @import 'variables';
 
-@mixin phone {
-    @media (max-width: #{breakpoints(phone)}) {
+@mixin small { // <= 640
+    @media (max-width: #{breakpoints(small)}) {
         @content;
     }
 }
 
-@mixin tablet {
-    @media (min-width: #{breakpoints(phone) + 1}) and (max-width: #{breakpoints(tablet)}) {
+@mixin medium-down {	// 641 - 767
+    @media (min-width: #{breakpoints(small) + 1}) and (max-width: #{breakpoints(medium) - 1}) {
         @content;
     }
 }
 
-@mixin desktop {
-    @media (min-width: #{breakpoints(tablet) + 1}) {
+@mixin medium {	// 641 - 768
+    @media (min-width: #{breakpoints(small) + 1}) and (max-width: #{breakpoints(medium)}) {
         @content;
     }
 }
 
-@mixin tablet-sm {
-    @media (min-width: #{breakpoints(phone) + 1}) and (max-width: #{breakpoints(tablet) - 1}) {
+@mixin medium-up { // >= 769
+    @media (min-width: #{breakpoints(medium) + 1}) {
         @content;
     }
 }
 
-@mixin tablet-up {
-    @media (min-width: #{breakpoints(phone) + 1}) {
+@mixin large { // >= 1024
+    @media (min-width: #{breakpoints(large)}) {
         @content;
     }
 }
