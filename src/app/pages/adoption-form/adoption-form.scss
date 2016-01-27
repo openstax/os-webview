@@ -1,0 +1,49 @@
+@import 'variables';
+
+fieldset {
+    border-color: neutral-color(lightest);
+
+    legend {
+        background-color: neutral-color(lightest);
+    }
+
+    &.invalid,
+    input:invalid,
+    select:invalid {
+        box-shadow: 0 0 0.5rem color(danger);
+    }
+
+    &.labeled-inputs {
+        border: 0;
+
+        border-spacing: 0.5rem;
+
+        display: table;
+
+        > label {
+            display: table-row;
+
+            > span,
+            > input {
+                display: table-cell;
+            }
+        }
+    }
+
+    &.labeled-buttons {
+        border: 0;
+
+        > label {
+            display: block;
+        }
+    }
+
+    > .validation-message {
+        display: none;
+    }
+
+    &.invalid > .validation-message {
+        color: color(danger);
+        display: block;
+    }
+}

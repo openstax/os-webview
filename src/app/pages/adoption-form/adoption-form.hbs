@@ -1,0 +1,136 @@
+<style scoped>@import url(/app/pages/adoption-form/adoption-form.css);</style>
+<h1>OpenStax College Adoption Form</h1>
+<p>
+    Future funding from the <a href="/about">generous foundation donors</a> who
+    support our work is based on the number of faculty who adopt and the impact
+    our resources have on students. Please complete the form below to help us
+    demonstrate how OpenStax College textbooks are making education more accessible!
+</p>
+<p>
+    Not using OpenStax College yet? Please complete the OpenStax
+    <a href="/adoption_interests">interest form</a> so we may send you the
+    information you need.
+</p>
+<form accept-charset="UTF-8" action="/adoptions" class="new_adoption"
+ id="new_adoption" method="post">
+    <div>
+        <input name="utf8" type="hidden" value="✓" />
+        <input name="authenticity_token" type="hidden" value="Xi14qRzCbSy2zkso1VEjKU4bEUfFWOrhWbQnh7tlO3c=" />
+    </div>
+    <h2>Faculty/Administrator Contact Information</h2>
+    <fieldset class="labeled-inputs">
+        <label>
+            <span>First name</span>
+            <input name="adoption[first_name]" type="text" required />
+        </label>
+        <label>
+            <span>Last name</span>
+            <input name="adoption[last_name]" type="text" required />
+        </label>
+        <label>
+            <span>School name</span>
+            <input name="adoption[school_name]" type="text" required />
+        </label>
+        <label>
+            <span>School url</span>
+            <input name="adoption[school_url]" type="text" required />
+        </label>
+        <label>
+            <span>Email address</span>
+            <input name="adoption[email_address]" pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text" required />
+        </label>
+        <label>
+            <span>Phone number</span>
+            <input name="adoption[phone_number]" type="text" required />
+        </label>
+    </fieldset>
+
+<h2>Textbook Adoption</h2>
+<fieldset id="primary-book">
+</fieldset>
+
+<p>
+    Which partners may we share your information with so they may contact you
+    about additional resources supporting the OpenStax College books?
+</p>
+<fieldset class="labeled-buttons">
+    <label>
+        <input name="adoption[partner_resource_type][]" type="checkbox"
+         value="Online homework providers">
+        Online homework providers
+    </label>
+    <label>
+        <input name="adoption[partner_resource_type][]" type="checkbox"
+         value="Courseware providers">
+        Courseware providers
+    </label>
+    <label>
+        <input name="adoption[partner_resource_type][]" type="checkbox"
+         value="Print custom editions">
+        Print custom editions
+    </label>
+</fieldset>
+
+<p>Are you interested in being featured in our newsletter as a Textbook Hero?</p>
+<fieldset class="labeled-buttons">
+    <label>
+        <input checked="checked" name="adoption[interested_in_newsletter_feature]" type="radio" value="true">
+        Yes
+    </label>
+    <label>
+        <input name="adoption[interested_in_newsletter_feature]" type="radio" value="false">
+        No
+    </label>
+</fieldset>
+
+<p>
+    OpenStax and Rice University researchers conduct several pilots and research
+    studies. May we contact you about opportunities to participate in future
+    pilots or studies?
+</p>
+<fieldset class="labeled-buttons">
+    <label>
+        <input checked="checked" name="adoption[interested_in_research]" type="radio" value="true">
+        Yes
+    </label>
+    <label>
+        <input name="adoption[interested_in_research]" type="radio" value="false">
+        No
+    </label>
+</fieldset>
+<p>
+    Do you know of any other faculty using OpenStax College books? If so, would
+    you be willing to provide their contact information below?
+</p>
+<fieldset class="labeled-inputs">
+    <label>
+        <span>First name</span>
+        <input name="adoption[hint_first_name]" type="text">
+    </label>
+    <label>
+        <span>Last name</span>
+        <input name="adoption[hint_last_name]" type="text">
+    </label>
+    <label>
+        <span>Email address</span>
+        <input name="adoption[hint_email_address]" pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text">
+    </label>
+    <label>
+        <span>Phone number</span>
+        <input name="adoption[hint_phone_number]" type="text">
+    </label>
+</fieldset>
+
+<h3>Have you adopted a second OpenStax College book?</h3>
+<a class="toggle-section" href="#"></a>
+<fieldset id="secondary-book">
+</fieldset>
+
+<div>
+    <label>
+        <p>Any feedback you'd like to share with us?</p>
+        <textarea cols="50" name="adoption[feedback]" rows="6"></textarea>
+    </label>
+</div>
+
+<input name="commit" type="submit" value="Submit" role="button" aria-disabled="false">
