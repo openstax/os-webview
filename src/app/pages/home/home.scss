@@ -172,6 +172,7 @@
             height: 4.5vw;
             line-height: 4.5vw;
             padding: 0;
+            text-align: center;
         }
 
         .explore-subject {
@@ -191,7 +192,11 @@
 	position: relative;
 	background: #f0f0f0;
 	display: flex;
-	padding: 8rem 0;
+	padding: 1rem 0;
+
+	@include medium-up {
+		padding: 8rem 0;
+    }
 
 	.container {
 		display: inherit;
@@ -220,7 +225,7 @@
 					flex-basis: 49%
 			    }
 				@include large {
-					flex-basis: 32%
+					flex-basis: 32.33%
 			    }
 			}
 
@@ -229,7 +234,7 @@
 					flex-basis: 100%
 			    }
 				@include large {
-					flex-basis: 32%
+					flex-basis: 32.33%
 			    }
 			}
 
@@ -280,13 +285,21 @@
 
 			&:last-child {
 				flex-direction: column;
-				justify-content: flex-start;
-				padding: 1.5rem 4rem;
+				align-items: flex-start;
+				padding: 3rem 4rem;
 				color: white;
 				background-color: color(secondary);
+				@include medium-up {
+					padding: 1.5rem 4rem;
+			    }
 
 				p {
 					font-size: 2.4rem;
+				}
+
+				.btn {
+					color: color(orange);
+					background-color: white;
 				}
 			}
 

@@ -6,8 +6,8 @@
     }
 }
 
-@mixin medium-down {	// 641 - 767
-    @media (min-width: #{breakpoints(small) + 1}) and (max-width: #{breakpoints(medium) - 1}) {
+@mixin medium-down {	// 767
+    @media (max-width: #{breakpoints(medium) - 1}) {
         @content;
     }
 }

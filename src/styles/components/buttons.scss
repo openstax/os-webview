@@ -9,7 +9,6 @@
     font-weight: 500;
     outline: 0;
     padding: 1rem;
-    text-align: center;
     text-transform: uppercase;
     touch-action: manipulation;
 
@@ -21,8 +20,7 @@
 
 .btn-small {
     padding: .5rem .75rem;
-    background-color: color(orange);
-    color: white
+    font-weight: 700;
 }
 
 .btn-large {
