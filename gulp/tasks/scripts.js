@@ -168,7 +168,8 @@ function compileScripts() {
         presets: ['es2015'],
         plugins: [
             'transform-decorators-legacy',
-            'transform-class-properties'
+            'transform-class-properties',
+            'transform-async-to-generator'
         ]
     }))
     .pipe(pi.if(config.env !== 'production', pi.sourcemaps.write('.')))
