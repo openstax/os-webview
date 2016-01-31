@@ -1,0 +1,174 @@
+@import 'variables';
+@import 'mixins';
+
+.biology {
+    background-image: url('/images/home/subjects/biology/background.jpg');
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: 100vw 55.695vw;
+    height: 55.695vw;
+    margin-top: -8rem;
+    overflow: hidden;
+    padding-top: 8rem;
+    position: relative;
+
+    .square-1,
+    .square-2,
+    .square-3,
+    .square-4 {
+        background-color: rgba(color(green), 0.2);
+        position: absolute;
+        z-index: 0;
+    }
+
+    .square-1 {
+        height: 26.429vw;
+        left: 12.14vw;
+        top: 15.714vw;
+        width: 26.429vw;
+    }
+
+    .square-2 {
+        height: 3.57vw;
+        left: 15.714vw;
+        top: 10vw;
+        width: 3.57vw;
+    }
+
+    .square-3 {
+        height: 25.714vw;
+        left: 42.14vw;
+        top: 11.429vw;
+        width: 50.714vw;
+    }
+
+    .square-4 {
+        height: 2.143vw;
+        left: 86.86vw;
+        top: 20.714vw;
+        width: 2.143vw;
+    }
+
+    .diagram,
+    .leaf,
+    .book,
+    .video-banner {
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        z-index: 1;
+    }
+
+    .diagram,
+    .leaf {
+        opacity: 0.7;
+    }
+
+    .diagram {
+        background-image: url('/images/home/subjects/biology/diagram.png');
+        height: 14.286vw;
+        left: 7.857vw;
+        position: absolute;
+        top: 21.5vw;
+        width: 20.357vw;
+    }
+
+    .leaf {
+        background-image: url('/images/home/subjects/biology/leaf.png');
+        height: 10vw;
+        left: 69.286vw;
+        position: absolute;
+        top: 19.286vw;
+        width: 10vw;
+    }
+
+    .book {
+        background-color: color(green);
+        background-image: url('/images/subjects/biology.svg');
+        height: 25.607vw;
+        left: 38.12vw;
+        position: absolute;
+        top: 7.726vw;
+        width: 25.607vw;
+    }
+
+    .video-banner {
+        background-image: url('/images/home/subjects/biology/student.png');
+        height: 42vw;
+        left: 9.5vw;
+        position: absolute;
+        top: 13.68vw;
+        width: 39.85vw;
+        z-index: 2;
+    }
+
+    .now-i-can {
+        background-color: rgba(color(neutral-medium), 0.85);
+        color: color(neutral-lightest);
+        font-size: 2.5vw;
+        font-weight: 600;
+        height: 7.064vw;
+        left: 45vw;
+        line-height: 7.064vw;
+        padding: 0;
+        position: absolute;
+        text-transform: none;
+        top: 34vw;
+        width: 42.08vw;
+        z-index: 3;
+
+        .quote {
+            display: inline-block;
+            font-family: 'Permanent Marker', cursive;
+            transform: rotate(-1.2deg) translate(0.75vw, -0.45vw);
+        }
+
+        &::after {
+            border-bottom: 0.18vw solid color(neutral-lightest);
+            content: '';
+            left: 16vw;
+            position: absolute;
+            top: 5vw;
+            width: 23.5vw;
+        }
+    }
+
+    .subject-links {
+        left: 45vw;
+        letter-spacing: 0.078vw;
+        position: absolute;
+        top: 41.8vw;
+        z-index: 3;
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+                display: inline-block;
+            }
+        }
+
+        .btn {
+            font-size: 1.1vw;
+            height: 4.5vw;
+            line-height: 4.5vw;
+            padding: 0;
+        }
+
+        .explore-subject,
+        .explore-all {
+            box-shadow: 0 0 1rem color(neutral-dark);
+        }
+
+        .explore-subject {
+            margin-right: 0.2vw;
+            width: 17.5vw;
+        }
+
+        .explore-all {
+            width: 18.55vw;
+        }
+    }
+}

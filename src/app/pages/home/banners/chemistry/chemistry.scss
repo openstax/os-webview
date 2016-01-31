@@ -1,0 +1,160 @@
+@import 'variables';
+@import 'mixins';
+
+.chemistry {
+    background-image: url('/images/home/subjects/chemistry/background.jpg');
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: 100vw 55.695vw;
+    height: 55.695vw;
+    margin-top: -8rem;
+    overflow: hidden;
+    padding-top: 8rem;
+    position: relative;
+
+    .square-1,
+    .square-2,
+    .square-3,
+    .square-4 {
+        background-color: rgba(color(orange), 0.2);
+        position: absolute;
+        z-index: 0;
+    }
+
+    .square-1 {
+        height: 3.62vw;
+        left: 12vw;
+        top: 23.77vw;
+        width: 3.62vw;
+    }
+
+    .square-2 {
+        height: 16.67vw;
+        left: 20.07vw;
+        top: 25.14vw;
+        width: 27.25vw;
+    }
+
+    .square-3 {
+        height: 25.8vw;
+        left: 62.75vw;
+        top: 10.87vw;
+        width: 25.8vw;
+    }
+
+    .square-4 {
+        height: 1.5vw;
+        left: 81.67vw;
+        top: 13.62vw;
+        width: 1.5vw;
+    }
+
+    .element,
+    .book,
+    .video-banner {
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        z-index: 1;
+    }
+
+    .element {
+        background-image: url('/images/home/subjects/chemistry/element.png');
+        height: 8.57vw;
+        left: 25.286vw;
+        position: absolute;
+        top: 17.857vw;
+        width: 7.21vw;
+    }
+
+    .book {
+        background-color: color(orange);
+        background-image: url('/images/subjects/chemistry.svg');
+        background-position: bottom center;
+        height: 25.607vw;
+        left: 38.12vw;
+        position: absolute;
+        top: 7.726vw;
+        width: 25.607vw;
+    }
+
+    .video-banner {
+        background-image: url('/images/home/subjects/chemistry/student.png');
+        height: 33.7vw;
+        left: 37vw;
+        position: absolute;
+        top: 22vw;
+        width: 54.64vw;
+        z-index: 2;
+    }
+
+    .now-i-can {
+        background-color: rgba(color(neutral-medium), 0.85);
+        color: color(neutral-lightest);
+        font-size: 2.4vw;
+        font-weight: 600;
+        height: 7.064vw;
+        left: 12.8vw;
+        line-height: 7.064vw;
+        padding: 0;
+        position: absolute;
+        text-transform: none;
+        top: 33.8484vw;
+        width: 28.6vw;
+        z-index: 3;
+
+        .quote {
+            display: inline-block;
+            font-family: 'Permanent Marker', cursive;
+            transform: rotate(-1.2deg) translate(0.75vw, -0.45vw);
+        }
+
+        &::after {
+            border-bottom: 0.18vw solid color(neutral-lightest);
+            content: '';
+            left: 15vw;
+            position: absolute;
+            top: 5vw;
+            width: 12vw;
+        }
+    }
+
+    .subject-links {
+        left: 18.3vw;
+        letter-spacing: 0.078vw;
+        position: absolute;
+        top: 41.5vw;
+        z-index: 3;
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+                display: inline-block;
+            }
+        }
+
+        .btn {
+            font-size: 1.1vw;
+            height: 4.5vw;
+            line-height: 4.5vw;
+            padding: 0;
+        }
+
+        .explore-subject,
+        .explore-all {
+            box-shadow: 0 0 1rem color(neutral-dark);
+        }
+
+        .explore-subject {
+            margin-right: 0.2vw;
+            width: 17.5vw;
+        }
+
+        .explore-all {
+            width: 18.55vw;
+        }
+    }
+}
