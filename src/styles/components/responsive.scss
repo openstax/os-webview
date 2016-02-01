@@ -31,17 +31,17 @@
 }
 
 .visible-large {
-    @include small {
+    @include medium {
         display: none !important;
     }
 
-    @include medium {
+    @include medium-down {
         display: none !important;
     }
 }
 
 .visible-medium {
-    @include large {
+    @include large-up {
         display: none !important;
     }
 
@@ -51,11 +51,7 @@
 }
 
 .visible-small {
-    @include medium {
-        display: none !important;
-    }
-
-    @include large {
+    @include medium-up {
         display: none !important;
     }
 }

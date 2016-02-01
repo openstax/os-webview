@@ -6,26 +6,32 @@
     }
 }
 
-@mixin medium-down {	// 767
-    @media (max-width: #{breakpoints(medium) - 1}) {
-        @content;
-    }
-}
-
 @mixin medium {	// 641 - 768
     @media (min-width: #{breakpoints(small) + 1}) and (max-width: #{breakpoints(medium)}) {
         @content;
     }
 }
 
-@mixin medium-up { // >= 769
-    @media (min-width: #{breakpoints(medium) + 1}) {
+@mixin medium-up { // >= 641
+    @media (min-width: #{breakpoints(small) + 1}) {
+        @content;
+    }
+}
+
+@mixin medium-down { // <= 767
+    @media (max-width: #{breakpoints(medium) - 1}) {
         @content;
     }
 }
 
 @mixin large { // >= 1024
     @media (min-width: #{breakpoints(large)}) {
+        @content;
+    }
+}
+
+@mixin large-up { // >= 769
+    @media (min-width: #{breakpoints(medium) + 1}) {
         @content;
     }
 }

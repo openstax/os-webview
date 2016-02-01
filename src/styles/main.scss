@@ -4,8 +4,12 @@
 
 // General overrides
 
-p {
-	margin: 1rem 0;
+p, .btn {
+	margin: 1rem 0 0;
+}
+
+.larger {
+	font-size: 2.4rem
 }
 
 html {
