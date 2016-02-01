@@ -1,0 +1,61 @@
+<style scoped>@import url(/app/pages/comp-copy/comp-copy.css);</style>
+<h1>Request a copy of "Principles of Economics"</h1>
+<div class="comp-copy">
+    <div class="book-blurb">
+        <img class="book-cover" />
+        <div class="book-description">
+        </div>
+    </div>
+    <div>
+        <form>
+            <h2>Comp Copy Request Form</h2>
+            <p>Which comp would you like?</p>
+            <fieldset class="labeled-buttons">
+                <label>
+                    <input checked="checked" name="book_format" type="radio" value="true" />
+                    Premium iBooks Textbook Comp
+                </label>
+                <label>
+                    <input name="book_format" type="radio" value="false" />
+                    Printed Textbook Comp
+                </label>
+            </fieldset>
+            <fieldset class="labeled-inputs no-inset">
+                <label>
+                    <span>Course Name</span>
+                    <input name="course_name" type="text" required />
+                </label>
+                <label>
+                    <span>Current Book</span>
+                    <input name="book_name" type="text" required />
+                </label>
+            </fieldset>
+            <label>
+                <input name="have_adopted" type="checkbox"
+                value="adopted">
+                I have adopted this OpenStax College book.
+            </label>
+            <fieldset class="labeled-inputs no-inset">
+                <label>
+                    <span>Decision Date</span>
+                    <input name="decision_date" type="date" />
+                </label>
+                <label>
+                    <span>Technology in Use</span>
+                    <input name="technology" type="text" required />
+                </label>
+                <label>
+                    <span>Number of students this semester</span>
+                    <input name="number_students" type="number" required />
+                </label>
+            </fieldset>
+            <label>
+                <p>Other Committee Members</p>
+                <textarea cols="50" name="other_members" rows="4"></textarea>
+            </label>
+            <div>
+                <input type="submit" value="Submit" role="button" />
+            </div>
+        </form>
+    </div>
+</div>

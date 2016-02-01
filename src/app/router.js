@@ -25,6 +25,10 @@ class Router extends Backbone.Router {
         this.route(name, name, () => {
             shell.load(name);
         });
+
+        this.route('comp-copy', 'comp-copy', () => {
+            shell.load('comp-copy');
+        });
     }
 }
 
