@@ -210,7 +210,7 @@
 	    }
 
 		.col {
-			flex-basis: 100%;
+			flex-basis: 1 100%;
 			background: color(neutral-lighter);
 			display: flex;
 			flex-flow: row nowrap;
@@ -397,7 +397,7 @@
 
 	    p {
 		    margin-bottom: 0;
-		    color: white
+		    color: white;
 	    }
 
 	    h1 {
