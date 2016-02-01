@@ -1,0 +1,15 @@
+@import 'variables';
+
+.get-this-title {
+    background-color: white;
+
+    .option {
+        color: color(cyan);
+        cursor: pointer;
+        width: 25rem;
+
+        .fa {
+            color: darken(color(cyan), 10%);
+        }
+    }
+}

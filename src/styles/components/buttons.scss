@@ -26,7 +26,16 @@
     padding: 2.5rem;
 }
 
-@each $name, $type in $os-colors {
+.cta > .btn {
+    background-color: color(orange);
+    border: 0;
+    color: white;
+    font-variant: small-caps;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+}
+
+@each $name, $type in $color-types {
     .btn-#{$name} {
         background-color: color($name);
         color: color(neutral-lightest);

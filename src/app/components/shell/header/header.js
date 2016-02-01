@@ -1,4 +1,3 @@
-import $ from '~/helpers/$';
 import BaseView from '~/helpers/backbone/view';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './header.hbs';
@@ -21,7 +20,7 @@ class Header extends BaseView {
     }
 
     classList(action, ...args) {
-        var result = null;
+        let result = null;
         let header = this.el.querySelector('.page-header');
 
         if (header && typeof header.classList === 'object') {
@@ -103,8 +102,8 @@ class Header extends BaseView {
         let button = e.target;
         let header = this.el.querySelector('.page-header');
 
-        $.toggleClass(button, 'active');
-        $.toggleClass(header, 'active');
+        button.classList.toggle('active');
+        header.classList.toggle('active');
     }
 
     @on('click .skiptocontent a')

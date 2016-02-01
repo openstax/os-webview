@@ -12,28 +12,11 @@ class Router extends Backbone.Router {
             shell.load('home');
         });
 
-        this.route('about', 'about', () => {
-            shell.load('about');
-        });
-
-        this.route('books', 'books', () => {
-            shell.load('books');
-        });
-
-        this.route('contact', 'contact', () => {
-            shell.load('contact');
-        });
-
-        this.route('news', 'news', () => {
-            shell.load('news');
-        });
+        ['about', 'books', 'contact', 'news', 'license', 'subjects', 'details']
+        .forEach(this.standardRoute.bind(this));
 
         this.route(/to[u|s]/, 'tos', () => {
             shell.load('tos');
-        });
-
-        this.route('license', 'license', () => {
-            shell.load('license');
         });
 
         this.route('adoptions', 'adoption-form', () => {
@@ -45,6 +28,11 @@ class Router extends Backbone.Router {
         });
     }
 
+    standardRoute(name) {
+        this.route(name, name, () => {
+            shell.load(name);
+        });
+    }
 }
 
 let router = new Router();

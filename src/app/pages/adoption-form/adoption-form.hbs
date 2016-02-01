@@ -1,3 +1,4 @@
+<style scoped>@import url(/app/pages/adoption-form/adoption-form.css);</style>
 <h1>OpenStax College Adoption Form</h1>
 <p>
     Future funding from the <a href="/about">generous foundation donors</a> who
@@ -112,8 +113,7 @@
     </label>
     <label>
         <span>Email address</span>
-        <input name="adoption[hint_email_address]" type="email"
-         pattern="[^@]+@([^@\.]+\.)+[^@\.]+">
+        <input name="adoption[hint_email_address]" pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text">
     </label>
     <label>
         <span>Phone number</span>
