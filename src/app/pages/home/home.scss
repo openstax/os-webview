@@ -370,22 +370,26 @@
 	    right: 3.571vw;
     }
 
-    .square-3 {
+    .br-text--wrap {
 	    position: relative;
-	    width: 100%;
-	    left: 0;
-	    padding: 4rem;
+	    max-width: $boxed-width;
+	    margin: 0 auto;
+	    padding: 0 1.5rem;
 
-	    @include medium-up {
-		    width: 45.714vw;
-		    left: 8.214vw;
-			background-color: rgba(color(cyan), 0.6);
+	    .br-text {
+		    padding: 4rem 4rem 0 4rem;
+		    left: 0;
+
+		    @include medium-up {
+			    max-width: 60%;
+			    padding: 4rem;
+				background-color: rgba(color(cyan), 0.6);
+		    }
+
+		    @include large {
+			    padding-right: 18rem;
+		    }
 	    }
-
-	    @include large {
-		    padding-right: 18rem;
-	    }
-
 
 	    * {
 		    position: relative;
@@ -429,7 +433,7 @@
 			position: absolute;
 			right: 0;
 			background-position: left bottom;
-			width: 65.357vw;
+			width: 60vw;
 			height: 100%;
 
 	    }
@@ -445,7 +449,7 @@
 
 		@include medium-up {
 			flex-flow: row nowrap;
-			padding: 2rem 1rem;
+			padding: 2rem 1.5rem;
 		}
 
 		.col {
