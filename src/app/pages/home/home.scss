@@ -1,6 +1,10 @@
 @import 'variables';
 @import 'mixins';
 
+h2 {
+	font-size: 6rem;
+}
+
 .home-page {
     flex: 1 0 auto;
 
@@ -192,7 +196,7 @@
 	position: relative;
 	background: #f0f0f0;
 	display: flex;
-	padding: 1rem 0;
+	padding: 3rem 0;
 
 	@include large-up {
 		padding: 8rem 0;
@@ -210,11 +214,11 @@
 	    }
 
 		.col {
-			flex-basis: 1 100%;
-			background: color(neutral-lighter);
 			display: flex;
 			flex-flow: row nowrap;
+			background: color(neutral-lighter);
 			margin: .75rem 0;
+			font-size: 1.6rem;
 
 			&:not(:last-child) {
 				@include large-up {
@@ -325,6 +329,7 @@
 	background-image:  url('/images/home/br-education-bg-sm.jpg');
 	background-repeat: no-repeat;
 	background-size: cover;
+	overflow: hidden;
 
 	@include medium-up {
 		padding: 9rem 0;
@@ -374,7 +379,10 @@
 	    position: relative;
 	    max-width: $boxed-width;
 	    margin: 0 auto;
-	    padding: 0 1.5rem;
+
+	    @include medium-up {
+		    padding: 0 1.5rem;
+	    }
 
 	    .br-text {
 		    padding: 4rem 4rem 0 4rem;
@@ -410,6 +418,10 @@
 		    @include medium-up {
 				font-size: 9vmin;
 				letter-spacing: -.6rem;
+		    }
+
+		    @include large {
+				letter-spacing: -.4rem;
 		    }
 	    }
 
@@ -449,7 +461,8 @@
 
 		@include medium-up {
 			flex-flow: row nowrap;
-			padding: 2rem 1.5rem;
+			margin: 2rem auto;
+			padding: 0 1.5rem;
 		}
 
 		.col {
@@ -470,7 +483,11 @@
 			a {
 				width: 100%;
 				display: block;
-				padding: 2rem;
+				padding: 4rem;
+
+				@include medium-up {
+					padding: 2rem;
+				}
 			}
 
 			&:first-child {
@@ -498,7 +515,200 @@
 				margin-top: .5rem;
 				color: white;
 			}
+
+			p:not(.larger) {
+				font-size: 1.6rem;
+			}
 		}
+	}
+
+}
+
+.fs-buckets--wrap {
+	display: flex;
+	flex-flow: column nowrap;
+	max-width: $boxed-width;
+	margin: 3rem auto;
+
+	@include medium-up {
+		margin: 9rem auto;
+	}
+
+	> div {
+		width: 100%;
+	}
+
+	// common styles
+	.container {
+		position: relative;
+		display: flex;
+		flex-flow: column nowrap;
+		padding: 0 1.5rem;
+		margin-bottom: 1.5rem;
+
+		@include medium-up {
+			margin-bottom: 5rem;
+			flex-flow: row nowrap;
+			min-height: 32rem;
+		}
+
+		.col-img {
+			position: relative;
+			background-color: color(blue);
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-size: cover;
+			flex: 1;
+			min-height: 32rem;
+		}
+
+		.col-text {
+			color: white;
+			padding: 4rem 3rem;
+			flex: 1;
+
+			@include medium-up {
+				flex: 2 0;
+			}
+
+			p {
+				margin-top: 0;
+			}
+		}
+
+	}
+
+	// Give
+	.give-wrap {
+
+		.col-img {
+			background-image: url('/images/home/cta-give.jpg');
+
+			@include small {
+				&:before {	// Parent should have position: relative
+				    @include triangle(
+				      $direction: bottom,
+				      $position: bottom 0 right 17%,
+				      $color: color(green),
+				      $size: 2.4rem
+				    );
+				}
+			}
+
+			@include medium-up {
+				flex: 1 17rem;
+				max-width: 47rem;
+
+				&:before {
+				    @include triangle(
+				      $direction: right,
+				      $position: top 27% right 0,
+				      $color: color(green),
+				      $size: 2.4rem
+				    );
+				}
+			}
+
+		}
+
+		.col-text {
+			background-color: color(green);
+
+			h2 {
+				color: color(yellow);
+			}
+
+		}
+
+	}
+
+	// Our Impact
+	.our-impact--wrap {
+
+	    .col-img {
+	    	background-image: url('/images/home/cta-our-impact.jpg');
+
+	    	@include small {
+	    		&:before {
+	    		    @include triangle(
+	    		      $direction: bottom,
+	    		      $position: bottom 0 right 17%,
+	    		      $color: color(gray),
+	    		      $size: 2.4rem
+	    		    );
+	    		}
+	    	}
+
+	    	@include medium-up {
+	    		order: 2;
+	    		flex: 1 18rem;
+	    		max-width: 47rem;
+
+	    		&:before {
+	    		    @include triangle(
+	    		      $direction: left,
+	    		      $position: top 27% left 0,
+	    		      $color: color(gray),
+	    		      $size: 2.4rem
+	    		    );
+	    		}
+	    	}
+
+	  	}
+
+	  	.col-text {
+	    	background-color: color(gray);
+
+	    	@include medium-up {
+	    		order: 1;
+	    		flex: 2 0;
+	    	}
+
+	    	h2 {
+	    		line-height: 1;
+	    		color: color(cyan);
+	    		margin-bottom: 1rem;
+	    	}
+
+	    }
+
+	}
+
+	// OpenStax Allies
+	.allies-wrap {
+		margin-bottom: 0;
+
+		.col-text {
+			position: relative;
+			width: inherit;
+			margin: 0 auto;
+			background-color: color(orange);
+			background-image: url('/images/home/allies-sm.jpg');
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-size: cover;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+	    	@include medium-up {
+	    		background-image: url('/images/home/allies-lg.jpg');
+	    	}
+
+	    	.caption {
+
+		    	@include medium-up {
+			    	max-width: 60%;
+			    	text-align: center;
+		    	}
+
+				h2 {
+					color: white;
+					line-height: 1
+				}
+	    	}
+		}
+
 	}
 
 }

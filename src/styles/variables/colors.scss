@@ -8,7 +8,7 @@ $os-colors: (
     turqoise: rgb(45, 151, 147),
     cyan: rgb(47, 192, 219),
     blue: rgb(34, 43, 80),
-    gray: rgb(88, 90, 89)
+    gray: rgb(94, 96, 98)
 );
 
 @function os-color($color) {
@@ -58,7 +58,7 @@ $color-types: (
     ),
     info: (
         color: os-color(cyan),
-        overlay: neutral-color(darkest)
+        overlay: neutral-color(lightest)
     ),
     warning: (
         color: os-color(yellow),
