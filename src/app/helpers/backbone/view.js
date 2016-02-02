@@ -45,8 +45,11 @@ class Region {
         _.each(this.views, (view) => view.close());
 
         if (this.el instanceof Element) {
-            this.el.innerHTML = '';
+            while (this.el.firstChild) {
+                this.el.removeChild(this.el.firstChild);
+            }
         }
+
         this.views = null;
     }
 
@@ -78,9 +81,27 @@ class BaseView extends Backbone.View {
     }
 
     renderDom() {
-        if (this.el) {
-            this.el.innerHTML = this.getTemplate();
-        }
+        return new Promise((resolve) => {
+            if (this.el) {
+                let template = this.getTemplate();
+                let range = document.createRange();
+
+                range.selectNode(this.el);
+
+                let documentFragment = range.createContextualFragment(template);
+
+                window.requestAnimationFrame(() => {
+                    while (this.el.firstChild) {
+                        this.el.removeChild(this.el.firstChild);
+                    }
+
+                    this.el.appendChild(documentFragment);
+                    resolve(this);
+                });
+            } else {
+                resolve(this);
+            }
+        });
     }
 
     getTemplate() {
@@ -113,19 +134,25 @@ class BaseView extends Backbone.View {
 
     _render() {
         _.each(this.regions, (region) => region.empty());
-        window.requestAnimationFrame(this.renderDom.bind(this));
+        return this.renderDom();
     }
 
     render() {
-        this.onBeforeRender();
-        this._render();
-        window.requestAnimationFrame(this.onRender.bind(this));
-        if (this._rendered) {
-            window.requestAnimationFrame(this.onDomRefresh.bind(this));
-        } else {
-            this._rendered = true;
-        }
-        window.requestAnimationFrame(this.onAfterRender.bind(this));
+        let view = this;
+
+        (async function() {
+            view.onBeforeRender();
+            await view._render();
+            view.onRender();
+
+            if (view._rendered) {
+                view.onDomRefresh();
+            } else {
+                view._rendered = true;
+            }
+
+            view.onAfterRender();
+        })();
 
         return this;
     }
