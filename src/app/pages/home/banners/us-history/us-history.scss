@@ -1,0 +1,187 @@
+@import 'variables';
+@import 'mixins';
+
+.us-history {
+    background-image: url('/images/home/subjects/us-history/background.jpg');
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: 100vw 55.695vw;
+    height: 55.695vw;
+    margin-top: -8rem;
+    overflow: hidden;
+    padding-top: 8rem;
+    position: relative;
+
+    .square-1,
+    .square-2,
+    .square-3,
+    .square-4 {
+        background-color: rgba(color(blue), 0.1);
+        position: absolute;
+        z-index: 0;
+    }
+
+    .square-1,
+    .square-4 {
+        height: 1.77vw;
+        width: 1.77vw;
+    }
+
+    .square-1 {
+        left: 4.56vw;
+        top: 29.43vw;
+    }
+
+    .square-2 {
+        height: 37.9vw;
+        left: 9.2vw;
+        top: 9.5vw;
+        width: 37.9vw;
+    }
+
+    .square-3 {
+        height: 26.27vw;
+        left: 62.9vw;
+        top: 21.49vw;
+        width: 26.27vw;
+    }
+
+    .square-4 {
+        left: 74.17vw;
+        top: 11.48vw;
+    }
+
+    .sacajawea,
+    .john-adams,
+    .clermont,
+    .book,
+    .video-banner {
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        z-index: 1;
+    }
+
+    .sacajawea,
+    .john-adams,
+    .clermont {
+        opacity: 0.7;
+    }
+
+    .sacajawea {
+        background-image: url('/images/home/subjects/us-history/sacajawea.png');
+        height: 7.1376vw;
+        left: 26.637vw;
+        position: absolute;
+        top: 23.7vw;
+        width: 8.83vw;
+    }
+
+    .john-adams {
+        background-image: url('/images/home/subjects/us-history/john-adams.png');
+        height: 5.94vw;
+        left: 78.44vw;
+        position: absolute;
+        top: 16.85vw;
+        width: 5.07vw;
+    }
+
+    .clermont {
+        background-image: url('/images/home/subjects/us-history/clermont.png');
+        height: 17.4vw;
+        left: 70.37vw;
+        position: absolute;
+        top: 28.4vw;
+        width: 26.39vw;
+    }
+
+    .book {
+        background-color: color(blue);
+        background-image: url('/images/subjects/us-history.svg');
+        height: 25.607vw;
+        left: 38.12vw;
+        position: absolute;
+        top: 7.726vw;
+        width: 25.607vw;
+    }
+
+    .video-banner {
+        background-image: url('/images/home/subjects/us-history/student.png');
+        height: 41.7vw;
+        left: 46.2vw;
+        position: absolute;
+        top: 14vw;
+        width: 39.85vw;
+        z-index: 2;
+    }
+
+    .now-i-can {
+        background-color: rgba(color(turqoise), 0.85);
+        color: color(neutral-lightest);
+        font-size: 2.4vw;
+        font-weight: 600;
+        height: 7.064vw;
+        left: 12.8vw;
+        line-height: 7.064vw;
+        padding: 0;
+        position: absolute;
+        text-transform: none;
+        top: 33.8484vw;
+        width: 42.09vw;
+        z-index: 3;
+
+        .quote {
+            display: inline-block;
+            font-family: 'Permanent Marker', cursive;
+            transform: rotate(-1.2deg) translate(0.75vw, -0.45vw);
+        }
+
+        &::after {
+            border-bottom: 0.18vw solid color(neutral-lightest);
+            content: '';
+            left: 15.4vw;
+            position: absolute;
+            top: 5vw;
+            width: 24.6vw;
+        }
+    }
+
+    .subject-links {
+        left: 18.3vw;
+        letter-spacing: 0.078vw;
+        position: absolute;
+        top: 41.5vw;
+        z-index: 3;
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+                display: inline-block;
+            }
+        }
+
+        .btn {
+            font-size: 1.1vw;
+            height: 4.5vw;
+            line-height: 4.5vw;
+            padding: 0;
+        }
+
+        .explore-subject,
+        .explore-all {
+            box-shadow: 0 0 1rem color(neutral-dark);
+        }
+
+        .explore-subject {
+            margin-right: 0.2vw;
+            width: 17.5vw;
+        }
+
+        .explore-all {
+            width: 18.55vw;
+        }
+    }
+}

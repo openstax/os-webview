@@ -1,0 +1,175 @@
+@import 'variables';
+@import 'mixins';
+
+.astronomy {
+    background-image: url('/images/home/subjects/astronomy/background.jpg');
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: 100vw 55.695vw;
+    height: 55.695vw;
+    margin-top: -8rem;
+    overflow: hidden;
+    padding-top: 8rem;
+    position: relative;
+
+    .square-1,
+    .square-2,
+    .square-3,
+    .square-4 {
+        background-color: rgba(color(blue), 0.5);
+        position: absolute;
+        z-index: 0;
+    }
+
+    .square-1 {
+        height: 2.786vw;
+        left: 12.143vw;
+        top: 26.143vw;
+        width: 2.786vw;
+    }
+
+    /*.square-2 {
+        height: 9vw;
+        left: 16.43vw;
+        top: 13.57vw;
+        width: 9vw;
+    }*/
+
+    .square-3 {
+        height: 19.29vw;
+        left: 27.07vw;
+        top: 23.64vw;
+        width: 27.79vw;
+    }
+
+    .square-4 {
+        height: 29.29vw;
+        left: 60.5vw;
+        top: 11.48vw;
+        width: 29.29vw;
+    }
+
+    .chart,
+    .equation,
+    .book,
+    .video-banner {
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        z-index: 1;
+    }
+
+    .chart,
+    .equation {
+        opacity: 0.7;
+    }
+
+    .chart {
+        background-image: url('/images/home/subjects/astronomy/chart.png');
+        height: 17vw;
+        left: 78vw;
+        position: absolute;
+        top: 24.64vw;
+        width: 17vw;
+    }
+
+    .equation {
+        background-image: url('/images/home/subjects/astronomy/equation.png');
+        height: 9vw;
+        left: 16.43vw;
+        position: absolute;
+        top: 13.57vw;
+        width: 9vw;
+    }
+
+    .book {
+        background-color: color(blue);
+        background-image: url('/images/subjects/astronomy.svg');
+        background-position: top center;
+        height: 25.607vw;
+        left: 38.12vw;
+        position: absolute;
+        top: 7.726vw;
+        width: 25.607vw;
+    }
+
+    .video-banner {
+        background-image: url('/images/home/subjects/astronomy/student.png');
+        height: 46.2vw;
+        left: 46vw;
+        position: absolute;
+        top: 9.5vw;
+        width: 39.85vw;
+        z-index: 2;
+    }
+
+    .now-i-can {
+        background-color: rgba(color(cyan), 0.85);
+        color: color(neutral-lightest);
+        font-size: 2.4vw;
+        font-weight: 600;
+        height: 7.064vw;
+        left: 6.86vw;
+        line-height: 7.064vw;
+        padding: 0;
+        position: absolute;
+        text-transform: none;
+        top: 33.8484vw;
+        width: 49.5vw;
+        z-index: 3;
+
+        .quote {
+            display: inline-block;
+            font-family: 'Permanent Marker', cursive;
+            transform: rotate(-1.2deg) translate(0.75vw, -0.45vw);
+        }
+
+        &::after {
+            border-bottom: 0.18vw solid color(neutral-lightest);
+            content: '';
+            left: 15vw;
+            position: absolute;
+            top: 5vw;
+            width: 33vw;
+        }
+    }
+
+    .subject-links {
+        left: 19.755vw;
+        letter-spacing: 0.078vw;
+        position: absolute;
+        top: 41.5vw;
+        z-index: 3;
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+                display: inline-block;
+            }
+        }
+
+        .btn {
+            font-size: 1.1vw;
+            height: 4.5vw;
+            line-height: 4.5vw;
+            padding: 0;
+        }
+
+        .explore-subject,
+        .explore-all {
+            box-shadow: 0 0 1rem color(neutral-dark);
+        }
+
+        .explore-subject {
+            margin-right: 0.2vw;
+            width: 17.5vw;
+        }
+
+        .explore-all {
+            width: 18.55vw;
+        }
+    }
+}

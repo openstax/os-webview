@@ -31,6 +31,7 @@
             position: absolute;
             top: 0;
             width: 0.1rem;
+            z-index: 1;
 
             &:focus {
                 clip: auto;
@@ -85,16 +86,8 @@
 
         a {
             color: color(neutral-medium);
-
-            @at-root .transparent#{&} {
-                color: color(neutral-lightest);
-
-                &:active,
-                &:focus,
-                &:hover {
-                    text-shadow: 0 0 0.6rem color(neutral-light);
-                }
-            }
+            outline: 0;
+            position: relative;
         }
 
         .nav-menu-item {
@@ -104,6 +97,35 @@
 
             @at-root .collapsed#{&} {
                 font-size: 1.6rem;
+            }
+
+            > a {
+                &:active,
+                &:focus,
+                &:hover {
+                    &::after {
+                        background-color: color(green);
+                        bottom: -1rem;
+                        content: '';
+                        height: 0.5rem;
+                        left: 1rem;
+                        outline: 0;
+                        position: absolute;
+                        right: 1rem;
+                    }
+                }
+
+                @at-root .transparent#{&} {
+                    color: color(neutral-lightest);
+
+                    &:active,
+                    &:focus,
+                    &:hover {
+                        &::after {
+                            box-shadow: 0 0 0.1rem rgba(color(neutral-dark), 0.6);
+                        }
+                    }
+                }
             }
         }
     }
@@ -190,12 +212,6 @@
             display: inline-block;
             padding-left: 2rem;
             padding-right: 2rem;
-
-            &:active,
-            &:focus,
-            &:hover {
-                color: color(blue);
-            }
         }
 
         &:first-child > a {

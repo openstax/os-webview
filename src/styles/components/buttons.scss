@@ -23,10 +23,10 @@
     padding: 2.5rem;
 }
 
-@each $name, $type in $color-types {
+@each $name, $type in $os-colors {
     .btn-#{$name} {
         background-color: color($name);
-        color: color($name, 'overlay');
+        color: color(neutral-lightest);
 
         &:active,
         &:hover,
