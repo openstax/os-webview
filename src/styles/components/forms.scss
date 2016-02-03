@@ -1,12 +1,13 @@
 @import 'variables';
 
+[type="submit"] {
+    background-color: color(primary);
+    color: color(neutral-lightest);
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
+}
+
 fieldset {
-    border-color: neutral-color(lightest);
-
-    legend {
-        background-color: neutral-color(lightest);
-    }
-
     &.invalid,
     input:invalid,
     select:invalid {
@@ -15,9 +16,7 @@ fieldset {
 
     &.labeled-inputs {
         border: 0;
-
         border-spacing: 0.5rem;
-
         display: table;
 
         > label {
@@ -43,7 +42,9 @@ fieldset {
     }
 
     &.invalid > .validation-message {
+        background-color: color(neutral-lightest);
         color: color(danger);
         display: block;
     }
+
 }
