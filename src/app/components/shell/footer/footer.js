@@ -1,7 +1,6 @@
 import BaseView from '~/helpers/backbone/view';
 import {props} from '~/helpers/backbone/decorators';
 import {template} from './footer.hbs';
-//require('~/sticky');
 
 @props({
     el: '#footer',
@@ -16,11 +15,12 @@ export default class Footer extends BaseView {
 
     function cloneElement() {
       var element = document.getElementsByClassName('nav-menu')[0];
-      var header = document.getElementsByClassName('nav-menu')[1].parentNode;
+      var header = document.getElementById('main-nav');
+      var parentEl = header.parentNode;
       console.log(header);
       var clone = element.cloneNode(true);
       clone.classList.add('clone');
-      header.insertBefore(clone, header.childNodes[2]);
+      parentEl.insertBefore(clone, parentEl.childNodes[2]);
 
     }
 
@@ -49,8 +49,22 @@ export default class Footer extends BaseView {
       scrollD();
 
     });
-    document.addEventListener("DOMContentLoaded", cloneElement());
+    // window.onload = function() {
+    //   cloneElement();
+    // }
+    if (document.readyState == "complete") {
+    console.log(document.readyState);
+    //console.log(cloneElement());
+    cloneElement();
+  }
 
+    // document.onreadystatechange = function () {
+    //   console.log(document.readyState);
+    //      if (document.readyState == "complete") {
+    //      //document is ready. Do your stuff here
+    //      cloneElement();
+    //    }
+    //  }
 
   }
 }
