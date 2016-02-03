@@ -56,7 +56,7 @@ export default class Home extends BaseView {
     }
 
     onBeforeClose() {
-        window.removeEventListner('scroll', this.updateHeaderStyle.bind(this));
+        window.removeEventListener('scroll', this.updateHeaderStyle.bind(this));
     }
 
 }
