@@ -9,8 +9,7 @@ System.config({
     ]
   },
   paths: {
-    "~/*": "app/*.js",
-    "settings": "settings.js",
+    "~/*": "app/*",
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
