@@ -1,3 +1,5 @@
+// scss-lint:disable PropertySortOrder SelectorDepth IdSelector NestingDepth
+
 @import 'variables';
 @import 'mixins';
 
@@ -13,15 +15,15 @@
     display: flex;
     flex-flow: column;
     width: 100%;
-    height: 70px;
+    height: 7rem;
 
     @include medium-up {
-      height: 120px;
-      position: absolute;
-      top: auto;
-      left: auto;
-      right:auto;
-      overflow: visible;
+        height: 12rem;
+        position: absolute;
+        top: auto;
+        left: auto;
+        right: auto;
+        overflow: visible;
     }
 
     &.fixed {
@@ -37,15 +39,16 @@
 
     //zach class styles
     &.active {
-      @include small {
-        right: 0;
-        bottom: 0;
-        width:100%;
-        height:100%;
-        background: #fff;
-        transition: all 0.5s;
-      }
+        @include small {
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background: color(neutral-lightest);
+            transition: all 0.5s;
+        }
     }
+
     > .skiptocontent {
         a {
             background-color: color(primary);
@@ -73,581 +76,583 @@
 
     //Generic styles
     .container {
-      display: inherit;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-      max-width: $boxed-width;
-      flex-flow: row wrap;
-      flex: 1 100%;
+        display: inherit;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        max-width: $boxed-width;
+        flex-flow: row wrap;
+        flex: 1 100%;
     }
 
     .nav-menu {
-      @include small {
-        opacity: 0;
-        @at-root .active#{&} {
-          display: flex;
-          opacity: 1;
-          transition: opacity 0.5s 0.7s;
-          flex-flow: column nowrap;
+        @include small {
+            opacity: 0;
+
+            @at-root .active#{&} {
+                display: flex;
+                opacity: 1;
+                transition: opacity 0.5s 0.7s;
+                flex-flow: column nowrap;
+            }
         }
-      }
-      .nav-menu-item {
-        &.parent > a {
-          position: relative;
-          &::before,
-          &::after {
-            border-right: 2px solid;
-            content: '';
-            display: block;
-            height: 10px;
-            margin-top: -7px;
-            position: absolute;
-            transform: rotate3d(0,0,1,135deg);
-            right: -20px;
-            top: 50%;
-            width: 0;
-          }
 
-          &::after {
-            margin-top: -1px;
-            transform: rotate3d(0,0,1,45deg);
-          }
+        .nav-menu-item {
 
-          @include medium-up {
-            &::before,
-            &::after {
-              height: 7px;
-              right: 10px;
-              margin-top: -7px;
+            &.parent > a {
+                position: relative;
+
+                &::before,
+                &::after {
+                    border-right: 0.2rem solid;
+                    content: '';
+                    display: block;
+                    height: 1rem;
+                    margin-top: -0.7rem;
+                    position: absolute;
+                    transform: rotate3d(0, 0, 1, 135deg);
+                    right: -2rem;
+                    top: 50%;
+                    width: 0;
+
+                    @include medium-up {
+                        height: 0.7rem;
+                        right: 1rem;
+                        margin-top: -0.7rem;
+                    }
+                }
+
+                &::after {
+                    margin-top: -1px;
+                    transform: rotate3d(0, 0, 1, 45deg);
+
+                    @include medium-up {
+                        margin-top: -0.7rem;
+                        right: 0.6rem;
+                    }
+                }
             }
 
-            &::after {
-              right: 6px;
+            &:first-child > a {
+                @include medium-up {
+                    margin-left: -2rem;
+                }
             }
+
+            > a {
+                white-space: nowrap;
+
+                @include medium-up {
+                    padding-left: 2rem;
+                    padding-right: 2rem;
+                }
           }
-
-        }
-
-        &:first-child > a {
-          @include medium-up {
-            margin-left: -2rem;
-          }
-        }
-
-        &:last-child > a {}
-
-        > a {
-          white-space: nowrap;
-          @include medium-up {
-            padding-left: 2rem;
-            padding-right: 2rem;
-
-          }
-        }
       } //end .nav-menu-item
     }
 
     //Navigation with Rice Logo row
     .meta-nav {
-      order: 2;
-
-      @include medium-up {
-        order: 1;
-        background: #F0F0F0;
-        height: 50px;
-
-        @at-root .sticky#{&} {
-          position: fixed;
-          top: -70px;
-          left: 0;
-          right: 0;
-          z-index: 1;
-          height: 70px;
-          transform: translate3d(-5rem, 0px, 0);
-          background: transparent;
-        }
-      }
-
-      .container {
-        @include medium-up {
-          display: flex;
-          flex-direction: row nowrap;
-          justify-content: flex-end;
-          height: 100%;
-          align-items: center;
-        }
-      }
-      .nav-menu {
-        padding: 0 0 0 8rem;
-        margin: 0;
-        list-style: none;
-        flex: 1 100%;
-        margin: 0;
-        list-style: none;
-
-        @include small {
-          @at-root .active.open#{&} {
-            transform: translate3d(-1000px, 0, 0);
-            transition: transform 0.5s;
-          }
-
-        }
+        order: 2;
 
         @include medium-up {
-          flex: 0 0 auto;
-          display: flex;
-          padding: 0;
+            order: 1;
+            background: color(neutral-lighter);
+            height: 5rem;
 
-          @at-root .sticky.visible.active#{&} {
-            transform: translate3d(0,70px,0);
-            transition: transform 0.5s 0.6s;
+            @at-root .sticky#{&} {
+                position: fixed;
+                top: -7rem;
+                left: 0;
+                right: 0;
+                z-index: 1;
+                height: 7rem;
+                transform: translate3d(-5rem, 0, 0);
+                background: transparent;
           }
+      }
 
-        }
-
-        .nav-menu-item {
-          margin: 0 0 0.5rem;
-
-          @include medium-up {
-            margin: 0;
-          }
-
-          > a {
-            color: #0DC0DC;
-            display: block;
-
+        .container {
             @include medium-up {
-              color: #555759;
-              font-size: 1.4rem;
-              &:active,
-              &:focus,
-              &:hover {
-                  color: color(blue);
-              }
+                display: flex;
+                flex-direction: row nowrap;
+                justify-content: flex-end;
+                height: 100%;
+                align-items: center;
+            }
+      }
+
+        .nav-menu {
+            padding: 0 0 0 8rem;
+            margin: 0;
+            list-style: none;
+            flex: 1 100%;
+
+            @include small {
+                @at-root .active.open#{&} {
+                    transform: translate3d(-1000px, 0, 0);
+                    transition: transform 0.5s;
+                }
             }
 
-          }
+            @include medium-up {
+                flex: 0 0 auto;
+                display: flex;
+                padding: 0;
+
+                @at-root .sticky.visible.active#{&} {
+                    transform: translate3d(0, 7rem, 0);
+                    transition: transform 0.5s 0.6s;
+                }
+
         }
+
+            .nav-menu-item {
+                margin: 0 0 0.5rem;
+
+                @include medium-up {
+                    margin: 0;
+                }
+
+                > a {
+                    color: color(cyan);
+                    display: block;
+
+                    @include medium-up {
+                        color: color(gray);
+                        font-size: 1.4rem;
+
+                        &:active,
+                        &:focus,
+                        &:hover {
+                            color: color(blue);
+                        }
+                  }
+
+              }
+          }
 
 
 
       } //end nav-menu
 
-      .logo-wrapper {
-        flex: 1 100%;
-        background: transparentize(#E5E5E5, 0.8);
-        padding: 1.5rem;
-        border-top: 1px solid transparentize(#E5E5E5, 0.5);
-        position: absolute;
-        bottom: 0px;
-        left: 0;
-        width: 100%;
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: space-between;
-        align-items: center;
+        .logo-wrapper {
+            flex: 1 100%;
+            background: rgba(color(neutral-lighter), 0.2);
+            padding: 1.5rem;
+            border-top: 1px solid rgba(color(neutral-lighter), 0.5);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+            align-items: center;
 
-        @include small {
-          transform: translate3d(0, 100%, 0);
+            @include small {
+                transform: translate3d(0, 100%, 0);
 
-          @at-root .active#{&} {
-            transform: translate3d(0, 0, 0);
-            transition: transform 0.3s 0.6s;
-          }
-        }
+                @at-root .active#{&} {
+                    transform: translate3d(0, 0, 0);
+                    transition: transform 0.3s 0.6s;
+                }
+            }
 
-        @include medium-up {
-          position: static;
-          left: auto;
-          bottom: auto;
-          background: transparent;
-          border: none;
-          width: auto;
-          flex: 0 0 auto;
-          padding: 0 0 0 2rem;
+            @include medium-up {
+                position: static;
+                left: auto;
+                bottom: auto;
+                background: transparent;
+                border: 0;
+                width: auto;
+                flex: 0 0 auto;
+                padding: 0 0 0 2rem;
 
-          @at-root .sticky.visible.active#{&} {
-            transform: translate3d(0,70px,0);
-            transition: transform 0.5s 0.6s;
-          }
-
-        }
-
-        &::after {
-          content: "\00a9  Rice University";
-          color: #9A9A9B;
-          order: 2;
-
-          @include medium-up {
-            display: none;
-          }
+                @at-root .sticky.visible.active#{&} {
+                    transform: translate3d(0, 7rem, 0);
+                    transition: transform 0.5s 0.6s;
+                }
 
         }
-        a {
-          background:transparent url('/images/rice.png') 0 0 no-repeat;
-          display: inline-block;
-          width:74px;
-          height:32px;
-          background-size:100% auto;
-        }
+
+            &::after {
+                content: '\00a9  Rice University';
+                color: color(gray);
+                order: 2;
+
+                @include medium-up {
+                    display: none;
+                }
+            }
+
+            a {
+                background: transparent url('/images/rice.png') 0 0 no-repeat;
+                display: inline-block;
+                width: 7.4rem;
+                height: 3.2rem;
+                background-size: 100% auto;
+            }
       } //end logo-wrapper
 
     } //end meta-nav
 
     //main header navigation row
     .main-nav {
-      height: 70px;
-      width: 100%;
-      order: 1;
-      background: #fff;
-
-      @include small {
-        @at-root .active#{&} {
-          height: auto;
-          position:relative;
-        }
-      }
-
-
-      @include medium-up {
-        order: 2;
-        height: 70px;
-
-        @at-root .sticky#{&} {
-          position: fixed;
-          top: -80px;
-          left: 0;
-          width: 100%;
-          transition: all 0.5s;
-          background: #fff;
-        }
-        @at-root .visible#{&} {
-          top: 0px;
-          transition: top 0.5s 0.3s;
-        }
-      }
-
-      > .container {
-        display: flex;
-        justify-content: space-between;
-        padding: 1.5rem;
-        height: 100%;
-
-        @include medium-up {
-          align-items: center;
-          position: relative;
-        }
-
-      }
-
-      .logo-wrapper {
-          line-height: 0;
-          order: 1;
-
-          > a {
-              display: inline-block;
-              width: 145px;
-              transition: all 0.3s linear;
-          }
-
-          svg .st5 {
-            opacity: 1;
-            transition: opacity 0.5s;
-
-            @include small {
-              @at-root .active#{&} {
-                opacity: 0;
-                transition: opacity 0.5s;
-              }
-            }
-          }
-          svg #grey {
-            @include small {
-              @at-root .active#{&} {
-                opacity: 1;
-              }
-            }
-          }
-
-          .logo-quote {
-            display: inline-block;
-            transform: scale3d(0,0,0);
-            color: #5E6062;
-            font-size: 1.4rem;
-            position: absolute;
-            vertical-align: text-top;
-            margin-left: 20px;
-            top: 1px;
-
-            @include large {
-              position: relative;
-              transform: scale3d(1,1,1);
-              transition: transform 0.3s;
-            }
-          }
-      } //end logo-wrapper
-
-      .nav-menu {
-        padding: 0 0 0 8rem;
-        list-style: none;
-        flex: 1 100%;
-        order: 3;
-        margin: 1.5rem 0 0;
-        //transform: translate3d(0, 0, 0);
+        height: 7rem;
+        width: 100%;
+        order: 1;
+        background: color(neutral-lightest);
 
         @include small {
-          @at-root .active.open#{&} {
-            transform:translate3d(-1000px, 0, 0);
-            transition: transform 0.2s;
-          }
+            @at-root .active#{&} {
+                height: auto;
+                position: relative;
+            }
         }
+
 
         @include medium-up {
-          order: 2;
-          flex: 0 0 auto;
-          display: flex;
-          margin-top: 0px;
-          margin-left: auto;
-          padding: 0;
-          transform: translate3d(0, 0, 0);
-          transition: 0.3s transform cubic-bezier(.3,.73,.3,.74);
+            order: 2;
+            height: 7rem;
 
-          @at-root .sticky#{&} {
-            opacity: 1;
-            transition: 0.3s transform cubic-bezier(.3,.73,.3,.74), opacity 0.5s;
-          }
-          @at-root .sticky.active#{&} {
-            transform: translate3d(0, 70px, 0) scale3d(0,0,0);
-            transition: 0.3s transform cubic-bezier(.3,.73,.3,.74), opacity 0.1s;
-            opacity: 0;
-          }
+            @at-root .sticky#{&} {
+                position: fixed;
+                top: -8rem;
+                left: 0;
+                width: 100%;
+                transition: all 0.5s;
+                background: color(neutral-lightest);
+            }
+
+            @at-root .visible#{&} {
+                top: 0;
+                transition: top 0.5s 0.3s;
+            }
         }
 
-        .nav-menu-item {
-          margin: 0 0 1rem;
+        > .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 1.5rem;
+            height: 100%;
 
-          @include medium-up {
-            margin: 0px;
-            //padding: 1rem 0;
-          }
-
-          &.parent {
             @include medium-up {
-              position: relative;
+                align-items: center;
+                position: relative;
             }
-            &.open {
-              @include small {
-                @at-root .active.open#{&} {
-                  position: absolute;
-                  top: 0px;
-                  transform: translate3d(1000px,0,0);
-                  transition: transform;
-                }
-              }
-              .back {
+        }
+
+        .logo-wrapper {
+            line-height: 0;
+            order: 1;
+
+            > a {
+                display: inline-block;
+                width: 14.5rem;
+                transition: all 0.3s linear;
+            }
+
+            svg .st5 {
+                opacity: 1;
+                transition: opacity 0.5s;
+
                 @include small {
-                  @at-root .active.open#{&} {
-                    width: 27px;
-                    height: 26px;
-                    text-indent: -9999px;
-                    position: absolute;
-                    left:-27px;
-                    top: 50%;
-                    transform:translate3d(0,-13px,0);
-                    &::before,
-                    &::after {
-                      border-right: 2px solid;
-                      content: '';
-                      display: block;
-                      height: 10px;
-                      margin-top: -7px;
-                      position: absolute;
-                      transform: rotate3d(0,0,1,45deg);
-                      left: 5px;
-                      top: 50%;
-                      width: 0;
-                      cursor: pointer;
-                      transition: opacity 0s 0.6s;
-
+                    @at-root .active#{&} {
+                        opacity: 0;
+                        transition: opacity 0.5s;
                     }
-
-                    &::after {
-                      margin-top: -1px;
-                      transform: rotate3d(0,0,1,135deg);
-                    }
-                  }
                 }
-              } // end .back
-              > a {
-                &::before,
-                &::after {
-                  @include small {
-                    @at-root .active.open#{&} {
-                      opacity: 0;
-                      transition: opacity 0s 0.2s;
-                    }
-                  }
-                }
-              }
-
             }
 
-            //dropdown
-            &:hover .secondary-nav {
-              @include medium-up {
-                transform: scale3d(1,1,1) translate3d(-50%, 0, 0);
-                visibility: visible;
-              }
+            svg #grey {
+                @include small {
+                    @at-root .active#{&} {
+                        opacity: 1;
+                    }
+                }
             }
-          }
 
-        }
+            .logo-quote {
+                display: inline-block;
+                transform: scale3d(0, 0, 0);
+                color: color(gray);
+                font-size: 1.4rem;
+                position: absolute;
+                vertical-align: text-top;
+                margin-left: 2rem;
+                top: 0.1rem;
 
-        a {
-          color: #00246A;
-          font-size: 2.2rem;
-          font-weight: 600;
-          @include medium-up {
-            color: #5E6062;
-            font-size: 1.8rem;
-            padding-bottom: 1rem;
-          }
-        }
+                @include large {
+                    position: relative;
+                    transform: scale3d(1, 1, 1);
+                    transition: transform 0.3s;
+                }
+            }
+        } //end logo-wrapper
 
-        .secondary-nav {
-          transform: scale3d(0,0,0);
-          position: absolute;
-          top: 40px;
-
-          @include medium-up {
-            position: absolute;
-            top: 30px;
-            left: 50%;
-            background: #fff;
+        .nav-menu {
+            padding: 0 0 0 8rem;
             list-style: none;
-            margin: 0;
-            padding: 0;
-            border-top: 4px solid #F0F0F0;
-          }
+            flex: 1 100%;
+            order: 3;
+            margin: 1.5rem 0 0;
+            //transform: translate3d(0, 0, 0);
 
-          &.open {
             @include small {
-              @at-root .active.open#{&} {
-                transform: scale3d(1,1,1);
-                transition: transform 0.2s;
-              }
+                @at-root .active.open#{&} {
+                    transform: translate3d(-1000px, 0, 0);
+                    transition: transform 0.2s;
+                }
             }
-          }
 
-          .nav-menu-item {
-            @include small {
-              @at-root .active.open#{&} {
-                  opacity: 1;
-              }
-            }
             @include medium-up {
-              white-space: nowrap;
-              padding: 0;
-              margin: 0.5rem 0;
+                order: 2;
+                flex: 0 0 auto;
+                display: flex;
+                margin-top: 0;
+                margin-left: auto;
+                padding: 0;
+                transform: translate3d(0, 0, 0);
+                transition: 0.3s transform cubic-bezier(0.3, 0.73, 0.3, 0.74);
+
+                @at-root .sticky#{&} {
+                    opacity: 1;
+                    transition: 0.3s transform cubic-bezier(0.3, 0.73, 0.3, 0.74), opacity 0.5s;
+                }
+
+                @at-root .sticky.active#{&} {
+                    transform: translate3d(0, 7rem, 0) scale3d(0, 0, 0);
+                    transition: 0.3s transform cubic-bezier(0.3, 0.73, 0.3, 0.74), opacity 0.1s;
+                    opacity: 0;
+                }
+            }
+
+            .nav-menu-item {
+                margin: 0 0 1rem;
+
+                @include medium-up {
+                    margin: 0;
+                }
+
+                &.parent {
+                    @include medium-up {
+                        position: relative;
+                }
+
+                    &.open {
+                        @include small {
+                            @at-root .active.open#{&} {
+                                position: absolute;
+                                top: 0;
+                                transform: translate3d(100rem, 0, 0);
+                                transition: transform;
+                            }
+                        }
+
+                        .back {
+                            @include small {
+                                @at-root .active.open#{&} {
+                                    width: 2.7rem;
+                                    height: 2.6rem;
+                                    text-indent: -9999rem;
+                                    position: absolute;
+                                    left: -2.7rem;
+                                    top: 50%;
+                                    transform: translate3d(0, -1.3rem, 0);
+
+                                    &::before,
+                                    &::after {
+                                        border-right: 0.2rem solid;
+                                        content: '';
+                                        display: block;
+                                        height: 1rem;
+                                        margin-top: -0.7rem;
+                                        position: absolute;
+                                        transform: rotate3d(0, 0, 1, 45deg);
+                                        left: 0.5rem;
+                                        top: 50%;
+                                        width: 0;
+                                        cursor: pointer;
+                                        transition: opacity 0s 0.6s;
+
+                                }
+
+                                    &::after {
+                                        margin-top: -0.1rem;
+                                        transform: rotate3d(0, 0, 1, 135deg);
+                                    }
+                                }
+                            }
+                        } // end .back
+
+                        > a {
+                            &::before,
+                            &::after {
+                                @include small {
+                                    @at-root .active.open#{&} {
+                                        opacity: 0;
+                                        transition: opacity 0s 0.2s;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    //dropdown
+                    &:hover .secondary-nav {
+                        @include medium-up {
+                            transform: scale3d(1, 1, 1) translate3d(-50%, 0, 0);
+                            visibility: visible;
+                        }
+                    }
+                }
             }
 
             a {
-              @include medium-up {
-                display: block;
-                width:100%;
-                margin:0;
-                padding-bottom: 0;
-                font-weight: 300;
-                font-size: 1.6rem;
-              }
+                color: color(blue);
+                font-size: 2.2rem;
+                font-weight: 600;
+
+                @include medium-up {
+                    color: color(gray);
+                    font-size: 1.8rem;
+                    padding-bottom: 1rem;
+                }
             }
-          }
 
-          .clone {
-            @include small {
-              @at-root .active.open#{&} {
-                margin-left: -67px;
-                list-style: none;
-              }
-            }
-          }
+            .secondary-nav {
+                transform: scale3d(0, 0, 0);
+                position: absolute;
+                top: 4rem;
 
+                @include medium-up {
+                    position: absolute;
+                    top: 3rem;
+                    left: 50%;
+                    background: color(neutral-lightest);
+                    list-style: none;
+                    margin: 0;
+                    padding: 0;
+                    border-top: 0.4rem solid color(neutral-lighter);
+                }
 
-        } //end .secondary-nav
+                &.open {
+                    @include small {
+                        @at-root .active.open#{&} {
+                            transform: scale3d(1, 1, 1);
+                            transition: transform 0.2s;
+                        }
+                    }
+                }
 
-      } //end .nav-menu
+                .nav-menu-item {
+                    @include small {
+                        @at-root .active.open#{&} {
+                            opacity: 1;
+                        }
+                    }
 
-      .expand-nav {
-        align-self: flex-start;
-        margin-top: 10px;
-        order: 2;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        box-shadow: none;
-        border-radius: none;
-        border: none;
-        display: inline-block;
-        padding: 0;
-        transition: .3s;
-        cursor: pointer;
-        user-select: none;
-        background: transparent;
+                    @include medium-up {
+                        white-space: nowrap;
+                        padding: 0;
+                        margin: 0.5rem 0;
+                    }
 
-        @include medium-up {
-            display: none;
+                    a {
+                        @include medium-up {
+                            display: block;
+                            width: 100%;
+                            margin: 0;
+                            padding-bottom: 0;
+                            font-weight: 300;
+                            font-size: 1.6rem;
+                        }
+                    }
+                }
 
-            @at-root .sticky#{&} {
-              display:block;
-              order: 3;
-              margin-left: 2rem;
-            }
-        }
+                .clone {
+                    @include small {
+                        @at-root .active.open#{&} {
+                            margin-left: -67px;
+                            list-style: none;
+                        }
+                    }
+                }
+            } //end .secondary-nav
+        } //end .nav-menu
 
-        &:hover,
-        &:focus,
-        &:active {
-          outline: none;
-        }
-        span {
-          //create middle line
-          @include line;
-          position: relative;
-          transition: background .3s .2s ease;
-
-          /*create the upper and lower lines as pseudo-elements of the middle line*/
-          &:before,
-          &:after {
-            @include line;
-            position: absolute;
-            left:0;
-            content: '';
-            //set transform origin back to center
-            transform-origin: 50% 50%;
-            transition: top .3s .2s ease, transform .3s ease;
-          }
-          &:before { top: $button-size/4; }
-          &:after { top: -$button-size/4; }
-
-          @at-root .active#{&} {
-            transition: background .3s 0s ease;
+        .expand-nav {
+            align-self: flex-start;
+            margin-top: 1rem;
+            order: 2;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            box-shadow: none;
+            border-radius: none;
+            border: 0;
+            display: inline-block;
+            padding: 0;
+            transition: 0.3s;
+            cursor: pointer;
+            user-select: none;
             background: transparent;
-            &:before,
-            &:after {
-              transition: top .3s ease, transform .3s .2s ease;
-              top:0;
-              width: $button-size;
-            }
-            &:before {
-              transform: rotate3d(0,0,1,45deg);
-            }
-            &:after {
-              transform: rotate3d(0,0,1,-45deg);
-            }
-          }
-        }
 
-      } //end expand-nav button
+            @include medium-up {
+                display: none;
 
+                @at-root .sticky#{&} {
+                    display: block;
+                    order: 3;
+                    margin-left: 2rem;
+                }
+            }
+
+            &:hover,
+            &:focus,
+            &:active {
+                outline: none;
+            }
+
+            span {
+                //create middle line
+                @include line;
+                position: relative;
+                transition: background 0.3s 0.2s ease;
+
+                /*create the upper and lower lines as pseudo-elements of the middle line*/
+                &::before,
+                &::after {
+                    @include line;
+                    position: absolute;
+                    left: 0;
+                    content: '';
+                    //set transform origin back to center
+                    transform-origin: 50% 50%;
+                    transition: top 0.3s 0.2s ease, transform 0.3s ease;
+                }
+
+                &::before { top: $button-size / 4; }
+                &::after { top: -$button-size / 4; }
+
+                @at-root .active#{&} {
+                    transition: background 0.3s 0s ease;
+                    background: transparent;
+
+                    &::before,
+                    &::after {
+                        transition: top 0.3s ease, transform 0.3s 0.2s ease;
+                        top: 0;
+                        width: $button-size;
+                    }
+
+                    &::before {
+                        transform: rotate3d(0, 0, 1, 45deg);
+                    }
+
+                    &::after {
+                        transform: rotate3d(0, 0, 1, -45deg);
+                    }
+                }
+            }
+        } //end expand-nav button
     } //main-nav
 }
