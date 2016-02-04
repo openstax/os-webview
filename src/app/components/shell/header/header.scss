@@ -116,7 +116,28 @@
             }
           }
         }
-      }
+
+        &:first-child > a {
+          @include medium-up {
+            margin-left: -2rem;
+          }
+        }
+
+        &:last-child > a {
+          @include medium-up {
+            margin-right: -2rem;
+          }
+        }
+
+        > a {
+          @include medium-up {
+            display: inline-block;
+            padding-left: 2rem;
+            padding-right: 2rem;
+
+          }
+        }
+      } //end .nav-menu-item
     }
 
     //Navigation with Rice Logo row
@@ -125,6 +146,17 @@
 
       @include medium-up {
         order: 1;
+        background: #F0F0F0;
+        height: 50px;
+      }
+      .container {
+        @include medium-up {
+          display: flex;
+          flex-direction: row nowrap;
+          justify-content: flex-end;
+          height: 100%;
+          align-items: center;
+        }
       }
       .nav-menu {
         padding: 0 0 0 8rem;
@@ -142,11 +174,35 @@
 
         }
 
-        .nav-menu-item {
-          margin: 0 0 0.5rem;
+        @include medium-up {
+          flex: 0 0 auto;
+          display: flex;
+          padding: 0;
         }
 
-        a {color: #0DC0DC;}
+        .nav-menu-item {
+          margin: 0 0 0.5rem;
+
+          @include medium-up {
+            margin: 0;
+          }
+
+          > a {
+            color: #0DC0DC;
+
+            @include medium-up {
+              color: #555759;
+              &:active,
+              &:focus,
+              &:hover {
+                  color: color(blue);
+              }
+            }
+
+          }
+        }
+
+
 
       } //end nav-menu
 
@@ -165,20 +221,34 @@
         align-items: center;
 
         @include small {
+          transform: translate3d(0, 100%, 0);
+
           @at-root .active#{&} {
             transform: translate3d(0, 0, 0);
             transition: transform 0.3s 0.6s;
           }
         }
 
+        @include medium-up {
+          position: static;
+          left: auto;
+          bottom: auto;
+          background: transparent;
+          border: none;
+          width: auto;
+          flex: 0 0 auto;
+          padding: 0 0 0 2rem;
+        }
+
         &::after {
           content: "\00a9  Rice University";
           color: #9A9A9B;
           order: 2;
-        }
 
-        @include small {
-          transform: translate3d(0, 100%, 0);
+          @include medium-up {
+            display: none;
+          }
+
         }
 
       } //end logo-wrapper
@@ -202,12 +272,19 @@
 
       @include medium-up {
         order: 2;
+        height: 70px;
       }
 
       > .container {
         display: flex;
         justify-content: space-between;
         padding: 1.5rem;
+
+        @include medium-up {
+          align-items: center;
+          position: relative;
+        }
+
       }
 
       .logo-wrapper {
@@ -260,6 +337,18 @@
           }
         }
 
+        @include medium-up {
+          order: 2;
+          flex: 0 0 auto;
+          display: flex;
+          margin-top: 0px;
+          flex: 1 auto;
+          justify-content: flex-end;
+          padding: 0;
+          transform: translate3d(0, 0, 0);
+          transition: 0.3s transform cubic-bezier(.3,.73,.3,.74);
+        }
+
         &.clone {
           position:absolute;
           right: 6rem;
@@ -271,16 +360,44 @@
             transform: scale3d(0, 0, 0);
           }
 
+          @include medium-up {
+            transform: translate3d(0, -200%, 0);
+            transition: 0.3s transform cubic-bezier(.3,.73,.3,.74);
+          }
+
         }
 
         .nav-menu-item {
           margin: 0 0 1rem;
+
+          @include medium-up {
+            margin: 0px;
+            padding: 1rem 0;
+          }
+
+          &.parent {
+            @include medium-up {
+              position: relative;
+            }
+            //dropdown
+            &:hover .secondary-nav {
+              @include medium-up {
+                transform: scale3d(1,1,1) translate3d(-50%, 0, 0);
+                visibility: visible;
+              }
+            }
+          }
+
         }
 
         a {
           color: #00246A;
           font-size: 2.2rem;
           font-weight: 600;
+          @include medium-up {
+            color: #555759;
+            font-size: 1.8rem;
+          }
         }
 
         .secondary-nav {
@@ -293,6 +410,34 @@
             @at-root .active.open#{&} {
               visibility: visible;
               transform: scale3d(1,1,1) translate3d(1000px,0,0);
+            }
+          }
+
+          @include medium-up {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            background: #fff;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            border-top: 4px solid #F0F0F0;
+          }
+
+          .nav-menu-item {
+            @include medium-up {
+              white-space: nowrap;
+              margin:1rem 0;
+            }
+
+            a {
+              @include medium-up {
+                display: block;
+                width:100%;
+                margin:0;
+                font-weight: 300;
+                font-size: 1.6rem;
+              }
             }
           }
 
@@ -334,10 +479,10 @@
                 }
               }
             }
-          }
-        } //end secondary-nav
+          } // end .back
+        } //end .secondary-nav
 
-      } //end nav-menu
+      } //end .nav-menu
 
       .expand-nav {
         align-self: flex-start;
