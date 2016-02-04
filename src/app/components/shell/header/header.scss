@@ -12,6 +12,16 @@
     top: 0;
     display: flex;
     flex-flow: column;
+    width: 100%;
+
+    @include medium-up {
+      height: 120px;
+      position: absolute;
+      top: auto;
+      left: auto;
+      right:auto;
+      overflow: visible;
+    }
 
     &.fixed {
         left: 0;
@@ -24,6 +34,17 @@
         background-color: transparent;
     }
 
+    //zach class styles
+    &.active {
+      @include small {
+        right: 0;
+        bottom: 0;
+        width:100%;
+        height:100%;
+        background: #fff;
+        transition: all 0.5s;
+      }
+    }
     > .skiptocontent {
         a {
             background-color: color(primary);
@@ -60,7 +81,42 @@
     }
 
     .nav-menu {
+      @include small {
+        opacity: 0;
+        @at-root .active#{&} {
+          display: flex;
+          opacity: 1;
+          transition: opacity 0.5s 0.7s;
+          flex-flow: column nowrap;
+        }
+      }
+      .nav-menu-item {
+        &.parent > a {
+          @include small {
+            @at-root .active#{&} {
+              position: relative;
+              &::before,
+              &::after {
+                border-right: 2px solid;
+                content: '';
+                display: block;
+                height: 10px;
+                margin-top: -7px;
+                position: absolute;
+                transform: rotate3d(0,0,1,135deg);
+                right: -20px;
+                top: 50%;
+                width: 0;
+              }
 
+              &::after {
+                margin-top: -1px;
+                transform: rotate3d(0,0,1,45deg);
+              }
+            }
+          }
+        }
+      }
     }
 
     //Navigation with Rice Logo row
@@ -78,12 +134,21 @@
         margin: 0;
         list-style: none;
 
+        @include small {
+          @at-root .active.open#{&} {
+            transform: translate3d(-1000px, 0, 0);
+            transition: transform 0.5s;
+          }
+
+        }
+
         .nav-menu-item {
           margin: 0 0 0.5rem;
         }
 
         a {color: #0DC0DC;}
-      }
+
+      } //end nav-menu
 
       .logo-wrapper {
         flex: 1 100%;
@@ -98,13 +163,25 @@
         flex-flow: row nowrap;
         justify-content: space-between;
         align-items: center;
+
+        @include small {
+          @at-root .active#{&} {
+            transform: translate3d(0, 0, 0);
+            transition: transform 0.3s 0.6s;
+          }
+        }
+
         &::after {
           content: "\00a9  Rice University";
           color: #9A9A9B;
           order: 2;
         }
 
-      }
+        @include small {
+          transform: translate3d(0, 100%, 0);
+        }
+
+      } //end logo-wrapper
 
     } //end meta-nav
 
@@ -114,6 +191,14 @@
       width: 100%;
       order: 1;
       background: #fff;
+
+      @include small {
+        @at-root .active#{&} {
+          height: auto;
+          position:relative;
+        }
+      }
+
 
       @include medium-up {
         order: 2;
@@ -140,12 +225,26 @@
           svg .st5 {
             opacity: 1;
             transition: opacity 0.5s;
+
+            @include small {
+              @at-root .active#{&} {
+                opacity: 0;
+                transition: opacity 0.5s;
+              }
+            }
+          }
+          svg #grey {
+            @include small {
+              @at-root .active#{&} {
+                opacity: 1;
+              }
+            }
           }
 
           .logo-quote {
             display: none;
           }
-      }
+      } //end logo-wrapper
 
       .nav-menu {
         padding: 0 0 0 8rem;
@@ -154,12 +253,24 @@
         order: 3;
         margin: 1.5rem 0 0;
 
+        @include small {
+          @at-root .active.open#{&} {
+            transform: translate3d(-1000px, 0, 0);
+            transition: transform 0.5s;
+          }
+        }
+
         &.clone {
           position:absolute;
           right: 6rem;
           top: 0;
           height: 70px;
           align-items: center;
+
+          @include small {
+            transform: scale3d(0, 0, 0);
+          }
+
         }
 
         .nav-menu-item {
@@ -172,14 +283,61 @@
           font-weight: 600;
         }
 
-      }
+        .secondary-nav {
+          visibility: hidden;
+          transform: scale3d(0,0,0);
+          position: absolute;
+          top:0;
 
-      .secondary-nav {
-        visibility: hidden;
-        transform: scale3d(0,0,0);
-        position: absolute;
-        top:0;
-      }
+          @include small {
+            @at-root .active.open#{&} {
+              visibility: visible;
+              transform: scale3d(1,1,1) translate3d(1000px,0,0);
+            }
+          }
+
+          .clone {
+            @include small {
+              @at-root .active.open#{&} {
+                margin-left: -67px;
+                list-style: none;
+              }
+            }
+          }
+
+          .back {
+            @include small {
+              @at-root .active.open#{&} {
+                position: relative;
+                display: inline-block;
+                width: 27px;
+                height: 27px;
+                text-indent: -9999px;
+                &::before,
+                &::after {
+                  border-right: 2px solid;
+                  content: '';
+                  display: block;
+                  height: 10px;
+                  margin-top: -7px;
+                  position: absolute;
+                  transform: rotate3d(0,0,1,45deg);
+                  left: 5px;
+                  top: 50%;
+                  width: 0;
+                  cursor: pointer;
+                }
+
+                &::after {
+                  margin-top: -1px;
+                  transform: rotate3d(0,0,1,135deg);
+                }
+              }
+            }
+          }
+        } //end secondary-nav
+
+      } //end nav-menu
 
       .expand-nav {
         align-self: flex-start;
@@ -207,7 +365,43 @@
         &:active {
           outline: none;
         }
-      }
+        span {
+          //create middle line
+          @include line;
+          position: relative;
+          transition: background .3s .6s ease;
+
+          /*create the upper and lower lines as pseudo-elements of the middle line*/
+          &:before,
+          &:after {
+            @include line;
+            position: absolute;
+            left:0;
+            content: '';
+            //set transform origin back to center
+            transform-origin: 50% 50%;
+            transition: top .3s .6s ease, transform .3s ease;
+          }
+          &:before { top: $button-size/4; }
+          &:after { top: -$button-size/4; }
+        }
+        &.active span {
+          transition: background .3s 0s ease;
+          background: transparent;
+          &:before,
+          &:after {
+            transition: top .3s ease, transform .3s .5s ease;
+            top:0;
+            width: $button-size;
+          }
+          &:before {
+            transform: rotate3d(0,0,1,45deg);
+          }
+          &:after {
+            transform: rotate3d(0,0,1,-45deg);
+          }
+        }
+      } //end expand-nav button
 
     } //main-nav
 }

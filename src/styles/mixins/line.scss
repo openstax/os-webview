@@ -1,0 +1,8 @@
+
+@mixin line {
+  display: inline-block;
+  width: $button-size;
+  height: $button-size/7;
+  background: #5E6062;
+  transition: $transition;
+}
