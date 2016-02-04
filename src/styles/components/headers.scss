@@ -9,19 +9,20 @@ h5,
 h6 {
     color: color(primary);
     margin: 0;
+    line-height: 1;
 }
 
 h1,
 .extra-large-header {
     font-size: 3.5rem;
-    font-weight: 400;
+    font-weight: 700;
     margin-bottom: 2.5rem;
 }
 
 h2,
 .large-header {
     font-size: 2.8rem;
-    font-weight: 300;
+    font-weight: 700;
     margin-bottom: 1.8rem;
 }
 
