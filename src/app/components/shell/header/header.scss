@@ -4,9 +4,14 @@
 .page-header {
     background-color: color(neutral-lightest);
     overflow: hidden;
-    position: relative;
     transition: max-height 0.5s;
     z-index: 1;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    display: flex;
+    flex-flow: column;
 
     &.fixed {
         left: 0;
@@ -44,182 +49,165 @@
         }
     }
 
-    .secondary-nav {
-        display: flex;
-        justify-content: flex-end;
-        padding-right: 8vw;
-
-        @at-root .collapsed#{&} {
-            display: none;
-        }
-
-        a {
-            color: color(neutral-dark);
-            padding-bottom: 1rem;
-            padding-top: 1rem;
-        }
-
-        .nav-menu-item {
-            flex: 0 0 auto;
-            font-size: 1.4rem;
-            font-weight: 400;
-            line-height: 0;
-        }
-    }
-
-    .nav {
-        align-items: center;
-        background-color: transparent;
-        color: color(neutral-medium);
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        padding: 2rem 8vw;
-        user-select: none;
-
-        @at-root .transparent#{&} {
-            backdrop-filter: blur(1rem);
-            background-color: rgba(color(neutral-darkest), 0.05);
-            color: color(neutral-lightest);
-            text-shadow: 0 0 0.6rem color(neutral-dark);
-        }
-
-        a {
-            color: color(neutral-medium);
-            outline: 0;
-            position: relative;
-        }
-
-        .nav-menu-item {
-            flex: 1 1 auto;
-            font-size: 1.8rem;
-            font-weight: 600;
-
-            @at-root .collapsed#{&} {
-                font-size: 1.6rem;
-            }
-
-            > a {
-                &:active,
-                &:focus,
-                &:hover {
-                    &::after {
-                        background-color: color(green);
-                        bottom: -1rem;
-                        content: '';
-                        height: 0.5rem;
-                        left: 1rem;
-                        outline: 0;
-                        position: absolute;
-                        right: 1rem;
-                    }
-                }
-
-                @at-root .transparent#{&} {
-                    color: color(neutral-lightest);
-
-                    &:active,
-                    &:focus,
-                    &:hover {
-                        &::after {
-                            box-shadow: 0 0 0.1rem rgba(color(neutral-dark), 0.6);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    .logo-wrapper {
-        flex: 0 0 auto;
-        line-height: 0;
-
-        span {
-            vertical-align: middle;
-        }
-
-        > a {
-            display: inline-block;
-        }
-    }
-
-    .logo {
-        display: inline-block;
-        margin-right: 2.5rem;
-
-        .logo-color {
-            display: inline-block;
-
-            @at-root .transparent#{&} {
-                display: none;
-            }
-        }
-
-        .logo-white {
-            display: none;
-
-            @at-root .transparent#{&} {
-                display: inline-block;
-            }
-        }
-    }
-
-    .os-logo > a {
-        > img {
-            background-color: transparent;
-            background-position: 72.5% bottom;
-            background-repeat: no-repeat;
-            background-size: 1.2rem 1.2rem;
-            transition: opacity 0.3s linear;
-            user-select: none;
-        }
-
-        &:focus > img,
-        &:hover > img {
-            background-image: url('/images/home.svg');
-        }
-
-        @at-root .transparent#{&} {
-            &:focus > img,
-            &:hover > img {
-                background-image: url('/images/home-white.svg');
-            }
-        }
-    }
-
-    .logo-quote {
-        display: none;
-        font-size: 1.4rem;
-        margin-top: 0.3rem;
-
-        @media (min-width: 107rem) {
-            display: inline-block;
-        }
+    //Generic styles
+    .container {
+      display: inherit;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      max-width: $boxed-width;
+      flex-flow: row wrap;
+      flex: 1 100%;
     }
 
     .nav-menu {
-        align-items: center;
-        display: flex;
-        flex: 0 0 auto;
-        flex-wrap: wrap;
-        list-style-type: none;
+
+    }
+
+    //Navigation with Rice Logo row
+    .meta-nav {
+      order: 2;
+
+      @include medium-up {
+        order: 1;
+      }
+      .nav-menu {
+        padding: 0 0 0 8rem;
         margin: 0;
+        list-style: none;
+        flex: 1 100%;
+        margin: 0;
+        list-style: none;
+
+        .nav-menu-item {
+          margin: 0 0 0.5rem;
+        }
+
+        a {color: #0DC0DC;}
+      }
+
+      .logo-wrapper {
+        flex: 1 100%;
+        background: transparentize(#E5E5E5, 0.8);
+        padding: 1.5rem;
+        border-top: 1px solid transparentize(#E5E5E5, 0.5);
+        position: absolute;
+        bottom: 0px;
+        left: 0;
+        width: 100%;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+        &::after {
+          content: "\00a9  Rice University";
+          color: #9A9A9B;
+          order: 2;
+        }
+
+      }
+
+    } //end meta-nav
+
+    //main header navigation row
+    .main-nav {
+      height: 70px;
+      width: 100%;
+      order: 1;
+      background: #fff;
+
+      @include medium-up {
+        order: 2;
+      }
+
+      > .container {
+        display: flex;
+        justify-content: space-between;
+        padding: 1.5rem;
+      }
+
+      .logo-wrapper {
+          line-height: 0;
+          height: 100%;
+          order: 1;
+
+          > a {
+              display: inline-block;
+              width: 176px;
+              height: 40px;
+              transition: all 0.3s linear;
+          }
+
+          svg .st5 {
+            opacity: 1;
+            transition: opacity 0.5s;
+          }
+
+          .logo-quote {
+            display: none;
+          }
+      }
+
+      .nav-menu {
+        padding: 0 0 0 8rem;
+        list-style: none;
+        flex: 1 100%;
+        order: 3;
+        margin: 1.5rem 0 0;
+
+        &.clone {
+          position:absolute;
+          right: 6rem;
+          top: 0;
+          height: 70px;
+          align-items: center;
+        }
+
+        .nav-menu-item {
+          margin: 0 0 1rem;
+        }
+
+        a {
+          color: #00246A;
+          font-size: 2.2rem;
+          font-weight: 600;
+        }
+
+      }
+
+      .secondary-nav {
+        visibility: hidden;
+        transform: scale3d(0,0,0);
+        position: absolute;
+        top:0;
+      }
+
+      .expand-nav {
+        align-self: flex-start;
+        margin-top: 10px;
+        order: 2;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        box-shadow: none;
+        border-radius: none;
+        border: none;
+        display: inline-block;
         padding: 0;
-    }
+        transition: .3s;
+        cursor: pointer;
+        user-select: none;
+        background: transparent;
 
-    .nav-menu-item {
-        > a {
-            display: inline-block;
-            padding-left: 2rem;
-            padding-right: 2rem;
+        @include medium-up {
+            display: none;
         }
 
-        &:first-child > a {
-            margin-left: -2rem;
+        &:hover,
+        &:focus,
+        &:active {
+          outline: none;
         }
+      }
 
-        &:last-child > a {
-            margin-right: -2rem;
-        }
-    }
+    } //main-nav
 }
