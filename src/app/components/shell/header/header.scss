@@ -273,6 +273,19 @@
       @include medium-up {
         order: 2;
         height: 70px;
+
+        @at-root .sticky#{&} {
+          position: fixed;
+          top: -80px;
+          left: 0;
+          width: 100%;
+          transition: all 0.5s;
+          background: #fff;
+        }
+        @at-root .is-visible#{&} {
+          top: 0px;
+          transition: top 0.5s 0.3s;
+        }
       }
 
       > .container {
@@ -347,6 +360,16 @@
           padding: 0;
           transform: translate3d(0, 0, 0);
           transition: 0.3s transform cubic-bezier(.3,.73,.3,.74);
+
+          @at-root .sticky#{&} {
+            opacity: 1;
+            transition: 0.3s transform cubic-bezier(.3,.73,.3,.74), opacity 0.5s;
+          }
+          @at-root .sticky.active#{&} {
+            transform: translate3d(0, 70px, 0) scale3d(0,0,0);
+            transition: 0.3s transform cubic-bezier(.3,.73,.3,.74), opacity 0.1s;
+            opacity: 0;
+          }
         }
 
         &.clone {
@@ -363,6 +386,15 @@
           @include medium-up {
             transform: translate3d(0, -200%, 0);
             transition: 0.3s transform cubic-bezier(.3,.73,.3,.74);
+
+            @at-root .sticky#{&} {
+              transform: translate3d(0, -70px, 0);
+            }
+            @at-root .sticky.active#{&} {
+              opacity: 1;
+              transform: translate3d(0, 0, 0);
+              transition: opacity 0.3s, 0.3s transform cubic-bezier(.3,.73,.3,.74);
+            }
           }
 
         }
@@ -395,7 +427,7 @@
           font-size: 2.2rem;
           font-weight: 600;
           @include medium-up {
-            color: #555759;
+            color: #5E6062;
             font-size: 1.8rem;
           }
         }
@@ -503,6 +535,12 @@
 
         @include medium-up {
             display: none;
+
+            @at-root .sticky#{&} {
+              display:block;
+              order: 3;
+              margin-left: 2rem;
+            }
         }
 
         &:hover,
