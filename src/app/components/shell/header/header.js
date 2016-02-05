@@ -4,10 +4,9 @@ import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './header.hbs';
 
 @props({
-    el: '#header',
     template: template
 })
-export default class Header extends BaseView {
+class Header extends BaseView {
 
     constructor() {
         super(...arguments);
@@ -130,3 +129,7 @@ export default class Header extends BaseView {
     }
 
 }
+
+let header = new Header();
+
+export default header;
