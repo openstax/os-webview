@@ -65,7 +65,6 @@ class Header extends BaseView {
         this.classList('remove', 'sticky');
         this.classList('remove', 'transparent');
         this.classList('remove', 'visible');
-        this.classList('remove', 'active');
 
         return this;
     }
@@ -118,6 +117,7 @@ class Header extends BaseView {
         let header = this.el.querySelector('.page-header');
 
         $.toggleClass(header, 'active');
+
     }
 
     @on('click .active:not(.open) .main-nav .parent > a')
