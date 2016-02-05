@@ -6,18 +6,6 @@ import appView from '~/components/shell/shell';
 const EXTERNAL = /^((f|ht)tps?:)?\/\//;
 const MAILTO = /^mailto:(.+)/;
 
-function rootEl(path, Element) {
-    if (path instanceof Array) {
-        for (let i=0, len=path.length; i < len; i++) {
-            if (path[i] instanceof Element) {
-                return path[i];
-            }
-        }
-    }
-
-    return null;
-}
-
 if ('@ENV@' === 'production' && 'serviceWorker' in navigator) {
     /* eslint no-console: 0 */
     navigator.serviceWorker.register('sw.js').then((registration) => {
@@ -61,6 +49,16 @@ class App {
             pushState: true
         });
 
+        function findAncestor(el, Element) {
+            let parent = el;
+
+            while (parent && !(parent instanceof Element)) {
+                parent = parent.parentNode;
+            }
+
+            return parent;
+        }
+
         function ignoreUrl(url) {
             return typeof url !== 'string' || url.charAt(0) === '#' || MAILTO.test(url);
         }
@@ -70,7 +68,7 @@ class App {
         }
 
         document.addEventListener('click', (e) => {
-            var el = rootEl(e.path, HTMLAnchorElement) || e.target;
+            let el = findAncestor(e.target, HTMLAnchorElement) || e.target;
             let href = el.getAttribute('href');
 
             if (ignoreClick(e) || ignoreUrl(href)) {
