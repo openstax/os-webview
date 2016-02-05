@@ -65,6 +65,7 @@ class Header extends BaseView {
         this.classList('remove', 'sticky');
         this.classList('remove', 'transparent');
         this.classList('remove', 'visible');
+        this.classList('remove', 'active');
 
         return this;
     }
