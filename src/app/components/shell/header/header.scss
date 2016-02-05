@@ -283,7 +283,7 @@
           transition: all 0.5s;
           background: #fff;
         }
-        @at-root .is-visible#{&} {
+        @at-root .visible#{&} {
           top: 0px;
           transition: top 0.5s 0.3s;
         }
@@ -569,23 +569,25 @@
           }
           &:before { top: $button-size/4; }
           &:after { top: -$button-size/4; }
+
+          @at-root .active#{&} {
+            transition: background .3s 0s ease;
+            background: transparent;
+            &:before,
+            &:after {
+              transition: top .3s ease, transform .3s .5s ease;
+              top:0;
+              width: $button-size;
+            }
+            &:before {
+              transform: rotate3d(0,0,1,45deg);
+            }
+            &:after {
+              transform: rotate3d(0,0,1,-45deg);
+            }
+          }
         }
-        &.active span {
-          transition: background .3s 0s ease;
-          background: transparent;
-          &:before,
-          &:after {
-            transition: top .3s ease, transform .3s .5s ease;
-            top:0;
-            width: $button-size;
-          }
-          &:before {
-            transform: rotate3d(0,0,1,45deg);
-          }
-          &:after {
-            transform: rotate3d(0,0,1,-45deg);
-          }
-        }
+
       } //end expand-nav button
 
     } //main-nav
