@@ -132,7 +132,6 @@
 
         > a {
           @include medium-up {
-            display: block;
             padding-left: 2rem;
             padding-right: 2rem;
 
@@ -208,6 +207,7 @@
 
           > a {
             color: #0DC0DC;
+            display: block;
 
             @include medium-up {
               color: #555759;
@@ -448,6 +448,7 @@
           @include medium-up {
             color: #5E6062;
             font-size: 1.8rem;
+            padding-bottom: 1rem;
           }
         }
 
@@ -466,7 +467,7 @@
 
           @include medium-up {
             position: absolute;
-            top: 40px;
+            top: 30px;
             left: 50%;
             background: #fff;
             list-style: none;
@@ -487,6 +488,7 @@
                 display: block;
                 width:100%;
                 margin:0;
+                padding-bottom: 0;
                 font-weight: 300;
                 font-size: 1.6rem;
               }
