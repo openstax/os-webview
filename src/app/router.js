@@ -5,43 +5,43 @@ class Router extends Backbone.Router {
 
     initialize() {
         this.route('*actions', 'default', () => {
-            shell.render('404');
+            shell.load('404');
         });
 
         this.route('', 'home', () => {
-            shell.render('home');
+            shell.load('home');
         });
 
         this.route('about', 'about', () => {
-            shell.render('about');
+            shell.load('about');
         });
 
         this.route('books', 'books', () => {
-            shell.render('books');
+            shell.load('books');
         });
 
         this.route('contact', 'contact', () => {
-            shell.render('contact');
+            shell.load('contact');
         });
 
         this.route('news', 'news', () => {
-            shell.render('news');
+            shell.load('news');
         });
 
         this.route(/to[u|s]/, 'tos', () => {
-            shell.render('tos');
+            shell.load('tos');
         });
 
         this.route('license', 'license', () => {
-            shell.render('license');
+            shell.load('license');
         });
 
         this.route('adoptions', 'adoption-form', () => {
-            shell.render('adoption-form');
+            shell.load('adoption-form');
         });
 
         this.route('interest', 'interest-form', () => {
-            shell.render('interest-form');
+            shell.load('interest-form');
         });
     }
 

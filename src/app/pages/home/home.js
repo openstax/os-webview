@@ -38,7 +38,7 @@ export default class Home extends BaseView {
     }
 
     updateHeaderStyle() {
-        if (!appView.header) {
+        if (!appView.header || !this.el) {
             return;
         }
 
@@ -57,6 +57,10 @@ export default class Home extends BaseView {
 
     onBeforeClose() {
         window.removeEventListener('scroll', this.updateHeaderStyle.bind(this));
+
+        if (appView.header) {
+            appView.header.reset();
+        }
     }
 
 }

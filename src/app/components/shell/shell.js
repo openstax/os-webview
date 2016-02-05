@@ -1,5 +1,7 @@
 import BaseView from '~/helpers/backbone/view';
 import {props} from '~/helpers/backbone/decorators';
+import header from './header/header';
+import footer from './footer/footer';
 import {template} from './shell.hbs';
 
 @props({
@@ -13,25 +15,21 @@ import {template} from './shell.hbs';
 })
 class AppView extends BaseView {
 
-    initialize() {
-        let view = this;
+    constructor() {
+        super();
 
-        this.el.innerHTML = this.getTemplate();
+        this.header = header;
+        this.footer = footer;
 
-        System.import('~/components/shell/header/header').then((m) => {
-            let Header = m.default;
-
-            view.regions.header.show(view.header = new Header());
-        });
-
-        System.import('~/components/shell/footer/footer').then((m) => {
-            let Footer = m.default;
-
-            view.regions.footer.show(view.footer = new Footer());
-        });
+        this.render();
     }
 
-    render(pageName, options) {
+    onRender() {
+        this.regions.header.show(header);
+        this.regions.footer.show(footer);
+    }
+
+    load(pageName, options) {
         let view = this;
 
         // Lazy-load the page

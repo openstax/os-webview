@@ -1,4 +1,4 @@
-require('babel-polyfill');
+import 'babel-polyfill';
 import Backbone from 'backbone';
 import router from '~/router';
 import appView from '~/components/shell/shell';
