@@ -93,29 +93,39 @@
       }
       .nav-menu-item {
         &.parent > a {
-          @include small {
-            @at-root .active#{&} {
-              position: relative;
-              &::before,
-              &::after {
-                border-right: 2px solid;
-                content: '';
-                display: block;
-                height: 10px;
-                margin-top: -7px;
-                position: absolute;
-                transform: rotate3d(0,0,1,135deg);
-                right: -20px;
-                top: 50%;
-                width: 0;
-              }
+          position: relative;
+          &::before,
+          &::after {
+            border-right: 2px solid;
+            content: '';
+            display: block;
+            height: 10px;
+            margin-top: -7px;
+            position: absolute;
+            transform: rotate3d(0,0,1,135deg);
+            right: -20px;
+            top: 50%;
+            width: 0;
+          }
 
-              &::after {
-                margin-top: -1px;
-                transform: rotate3d(0,0,1,45deg);
-              }
+          &::after {
+            margin-top: -1px;
+            transform: rotate3d(0,0,1,45deg);
+          }
+
+          @include medium-up {
+            &::before,
+            &::after {
+              height: 7px;
+              right: 10px;
+              margin-top: -7px;
+            }
+
+            &::after {
+              right: 6px;
             }
           }
+
         }
 
         &:first-child > a {
@@ -124,13 +134,10 @@
           }
         }
 
-        &:last-child > a {
-          @include medium-up {
-            margin-right: -2rem;
-          }
-        }
+        &:last-child > a {}
 
         > a {
+          white-space: nowrap;
           @include medium-up {
             padding-left: 2rem;
             padding-right: 2rem;
@@ -363,21 +370,19 @@
           }
 
           .logo-quote {
-            opacity: 0;
+            display: inline-block;
             transform: scale3d(0,0,0);
             color: #5E6062;
             font-size: 1.4rem;
             position: absolute;
-            top: -1000px;
+            vertical-align: text-top;
+            margin-left: 20px;
+            top: 1px;
 
             @include large {
-              vertical-align: text-top;
-              margin-left: 20px;
               position: relative;
-              top: 1px;
-              opacity: 1;
               transform: scale3d(1,1,1);
-              transition: opacity 0.3s;
+              transition: transform 0.3s;
             }
           }
       } //end logo-wrapper
@@ -401,8 +406,7 @@
           flex: 0 0 auto;
           display: flex;
           margin-top: 0px;
-          flex: 1 1 auto;
-          justify-content: flex-end;
+          margin-left: auto;
           padding: 0;
           transform: translate3d(0, 0, 0);
           transition: 0.3s transform cubic-bezier(.3,.73,.3,.74);
