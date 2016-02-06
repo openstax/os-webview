@@ -52,18 +52,12 @@ export default class Home extends BaseView {
             return;
         }
 
-        if (window.pageYOffset >= 250 ) {
-
+        if (window.pageYOffset >= 250) {
             appView.header.pin().visible();
-
         } else if (window.pageYOffset <= 249 && window.pageYOffset >= 150) {
-
             appView.header.reset().pin();
-
         } else {
-
             appView.header.reset();
-
         }
     }
 
@@ -74,5 +68,4 @@ export default class Home extends BaseView {
             appView.header.reset();
         }
     }
-
 }
