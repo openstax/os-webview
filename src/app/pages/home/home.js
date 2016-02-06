@@ -51,6 +51,7 @@ export default class Home extends BaseView {
         if (!appView.header || !this.el) {
             return;
         }
+
         if (window.pageYOffset >= 250) {
             appView.header.pin().visible();
         } else if (window.pageYOffset <= 249 && window.pageYOffset >= 150) {

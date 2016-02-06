@@ -117,7 +117,6 @@ class Header extends BaseView {
         let header = this.el.querySelector('.page-header');
 
         $.toggleClass(header, 'active');
-
     }
 
     @on('click .active:not(.open) .main-nav .parent > a')
