@@ -2,6 +2,9 @@ import BaseView from '~/helpers/backbone/view';
 import {props} from '~/helpers/backbone/decorators';
 import appView from '~/components/shell/shell';
 import {template} from './home.hbs';
+import Quotes from './quotes/quotes';
+import Education from './education/education';
+import Buckets from './buckets/buckets';
 
 const books = [
     'astronomy',
@@ -13,7 +16,10 @@ const books = [
 @props({
     template: template,
     regions: {
-        bookBanner: '.book-banner'
+        bookBanner: '.book-banner',
+        quotes: '.quote-buckets',
+        education: '.education',
+        buckets: '.buckets'
     }
 })
 export default class Home extends BaseView {
@@ -24,6 +30,10 @@ export default class Home extends BaseView {
 
         // Lazy-load a random book
         this.showBookBanner(books[Math.floor(Math.random()*books.length)]);
+
+        this.regions.quotes.show(new Quotes());
+        this.regions.education.show(new Education());
+        this.regions.buckets.show(new Buckets());
     }
 
     showBookBanner(book) {

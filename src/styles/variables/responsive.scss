@@ -1,6 +1,7 @@
 $breakpoints: (
     phone: 480px,
-    tablet: 768px
+    tablet: 768px,
+    desktop: 1280px
 );
 
 @function breakpoints($breakpoint) {

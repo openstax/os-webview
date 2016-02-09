@@ -17,3 +17,9 @@
         @content;
     }
 }
+
+@mixin widescreen {
+    @media (min-width: #{breakpoints(desktop) + 1}) {
+        @content;
+    }
+}

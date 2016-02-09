@@ -1,0 +1,152 @@
+@import 'variables';
+@import 'mixins';
+
+.education {
+    background-image: url('/images/home/education/background.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 100vw 47.5vw;
+    height: 47.5vw;
+    overflow: hidden;
+    position: relative;
+
+    .square-1,
+    .square-2,
+    .student,
+    .quote,
+    .links {
+        position: absolute;
+    }
+
+    .square-1,
+    .square-2 {
+        background-color: rgba(color(blue), 0.2);
+        position: absolute;
+        z-index: 0;
+    }
+
+    .square-1 {
+        height: 8.14vw;
+        left: 13.93vw;
+        top: 36.07vw;
+        width: 23.79vw;
+    }
+
+    .square-2 {
+        height: 35.36vw;
+        left: 47.78vw;
+        top: 2.86vw;
+        width: 43.5vw;
+    }
+
+    .student {
+        background-image: url('/images/home/education/student.png');
+        background-position: center bottom;
+        background-repeat: no-repeat;
+        background-size: 43.36vw 47.5vw;
+        bottom: 0;
+        left: calc(50rem - 5vw);
+        top: 0;
+        width: 43.36vw;
+        z-index: 2;
+
+        @include widescreen {
+            left: 33.07vw;
+        }
+    }
+
+    .quote {
+        background-color: rgba(color(cyan), 0.7);
+        color: color(neutral-lightest);
+        height: 26.64vw;
+        left: 7.86vw;
+        padding: 2vw 2.5vw;
+        top: 6.07vw;
+        width: calc(61rem - 5vw);
+        z-index: 1;
+
+        @include widescreen {
+            width: 42.64vw;
+        }
+
+        .opening {
+            display: block;
+            font-size: calc(0.8rem + 1.08vw);
+            max-width: calc(49rem - 5vw);
+
+            @include widescreen {
+                font-size: 1.85vw;
+                max-width: 33vw;
+            }
+        }
+
+        .blurb {
+            display: block;
+            font-size: calc(0.5rem + 1.08vw);
+            max-width: calc(49rem - 5vw);
+
+            @include widescreen {
+                font-size: 1.35vw;
+                max-width: 33vw;
+            }
+        }
+
+        > strong {
+            color: color(yellow);
+            display: block;
+            font-size: calc(1.5rem + 3.5vw);
+            line-height: calc(1.7rem + 3.5vw);
+            max-width: calc(49rem - 5vw);
+
+            @include widescreen {
+                font-size: calc(5.3rem + 1.35vw);
+                line-height: calc(5.5rem + 1.35vw);
+                max-width: 33vw;
+            }
+        }
+    }
+
+    .links {
+        left: 50%;
+        top: 34.43vw;
+        z-index: 3;
+
+        ul {
+            display: flex;
+            left: -50%;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
+        .btn {
+            box-shadow: 0 0 1rem rgba(color(neutral-dark), 0.5);
+            height: 7.88vw;
+            margin: 0 1.15vw;
+            min-height: 10.5rem;
+            min-width: 37rem;
+            padding: 1.5rem 2.5rem;
+            text-align: left;
+            text-transform: none;
+            width: 27.76vw;
+
+            .title {
+                display: block;
+                font-size: 2.4rem;
+            }
+
+            &.higher-ed > .title {
+                color: color(yellow);
+            }
+
+            &.k-12 > .title {
+                color: color(orange);
+            }
+
+            .blurb {
+                font-weight: 400;
+            }
+        }
+    }
+}
