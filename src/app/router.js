@@ -12,19 +12,12 @@ class Router extends Backbone.Router {
             shell.load('home');
         });
 
-        ['about', 'books', 'contact', 'news', 'license', 'subjects', 'details']
-        .forEach(this.standardRoute.bind(this));
+        ['about', 'books', 'contact', 'news', 'license', 'subjects', 'details',
+        'interest', 'adoption']
+        .forEach(this.standardRoute, this);
 
         this.route(/to[u|s]/, 'tos', () => {
             shell.load('tos');
-        });
-
-        this.route('adoptions', 'adoption-form', () => {
-            shell.load('adoption-form');
-        });
-
-        this.route('interest', 'interest-form', () => {
-            shell.load('interest-form');
         });
     }
 

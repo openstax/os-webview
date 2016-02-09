@@ -1,10 +1,10 @@
 @import 'variables';
 
-$light-gray: #f5f5f5;
+$light-gray: lighten(color(neutral-light), 36%);
 $get-this-book-width: 25rem;
-$secondary-button: #555;
-$text-black: rgba(0, 0, 0, 0.87);
-$text-secondary: rgba(0, 0, 0, 0.7);
+$secondary-button: lighten(color(neutral-dark), 12%);
+$text-black: rgba(color(neutral-darkest), 0.87);
+$text-secondary: rgba(color(neutral-darkest), 0.7);
 
 .text-content {
     color: $text-black;
@@ -43,9 +43,9 @@ blockquote {
     position: relative;
 
     &::before {
-        color: gold;
+        color: color(yellow);
         content: '\201C';
-        font-size: 700%;
+        font-size: 21rem;
         left: 5rem;
         position: absolute;
         top: -2rem;
@@ -91,9 +91,9 @@ blockquote {
 }
 
 .endorsement .endorsement {
-    color: white;
+    color: color(neutral-lightest);
     font-family: Lato;
-    font-size: 180%;
+    font-size: 3rem;
     font-style: italic;
     margin: 0;
     padding: 5rem 17rem;
@@ -110,12 +110,12 @@ blockquote {
 
     h2 {
         color: $text-black;
-        font-size: 115%;
+        font-size: 1.9rem;
     }
 
     h3 {
         color: $text-secondary;
-        font-size: 110%;
+        font-size: 1.8rem;
         font-style: italic;
     }
 
@@ -132,7 +132,7 @@ blockquote {
         }
 
         .resource-box {
-            background-color: white;
+            background-color: color(neutral-lightest);
             padding-bottom: 4rem;
             position: relative;
 
@@ -153,10 +153,10 @@ blockquote {
         }
 
         .blurb {
-            background-color: white;
+            background-color: color(neutral-lightest);
 
             .text {
-                font-size: 87%;
+                font-size: 1.47rem;
             }
         }
     }
@@ -175,13 +175,13 @@ blockquote {
     }
 
     h2 {
-        font-size: 120%;
+        font-size: 2rem;
         font-weight: bold;
     }
 }
 
 .floating-menu {
-    background-color: white;
+    background-color: color(neutral-lightest);
     padding: 1rem 2rem;
     position: fixed;
     right: calc(50vw - 72rem);
@@ -194,14 +194,14 @@ blockquote {
     }
 
     > .title {
-        font-size: 120%;
+        font-size: 2rem;
         font-weight: 900;
         margin-bottom: 1rem;
     }
 
     > .notes {
         border-bottom: 0.2rem solid $divider-gray;
-        font-size: 80%;
+        font-size: 1.2rem;
         font-style: italic;
         opacity: 0.57;
         padding-bottom: 1rem;

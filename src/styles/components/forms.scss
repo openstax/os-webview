@@ -1,10 +1,17 @@
 @import 'variables';
 
+[type="submit"] {
+    background-color: color(primary);
+    color: color(neutral-lightest);
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
+}
+
 fieldset {
-    border-color: neutral-color(lightest);
+    border-color: color(neutral-lightest);
 
     legend {
-        background-color: neutral-color(lightest);
+        background-color: color(neutral-lightest);
     }
 
     &.invalid,
@@ -41,7 +48,9 @@ fieldset {
     }
 
     &.invalid > .validation-message {
+        background-color: color(neutral-lightest);
         color: color(danger);
         display: block;
     }
+
 }
