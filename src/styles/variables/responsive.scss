@@ -4,7 +4,10 @@ $breakpoints: (
     desktop: 1280px
     small: 640px,
     medium: 768px,
-    large: 1024px
+    large: 1024px,
+    phone: 480px,
+    tablet: 768px,
+    desktop: 1280px
 );
 
 @function breakpoints($breakpoint) {
