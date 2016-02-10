@@ -6,16 +6,19 @@
     color: color(neutral-light);
     cursor: pointer;
     display: inline-block;
+    -webkit-font-smoothing: subpixel-antialiased;
     font-weight: 500;
     outline: 0;
     padding: 1rem;
     text-align: center;
     text-transform: uppercase;
     touch-action: manipulation;
+    transition: all 0.2s ease-in-out;
 
     &:hover,
     &:focus {
         text-decoration: none;
+        transform: scale(1.05);
     };
 }
 
