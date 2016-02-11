@@ -35,7 +35,7 @@
     padding: 1.5rem 2rem;
 }
 
-@each $name, $type in $color-types {
+@each $name, $type in $os-colors {
     .btn-#{$name} {
         background-color: color($name);
         color: color(neutral-lightest);
