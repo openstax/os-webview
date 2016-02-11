@@ -2,171 +2,173 @@
     @import url(/app/pages/details/details.css);
     @import url(https://fonts.googleapis.com/css?family=Lato:400,900);
 </style>
-<section class="floating-menu">
-    <div class="title">Get this title</div>
-    <div class="get-this-book"></div>
-    <div class="notes">
-        <sup>*</sup>Our web view is Section 508 Level AA accessible.
-    </div>
-    <div class="cta">
-        <p class="interested-text">
-            Using this book, or interested in adopting it for your
-            course?
+<div class="details-page">
+    <section class="floating-menu">
+        <div class="title">Get this title</div>
+        <div class="get-this-book"></div>
+        <div class="notes">
+            <sup>*</sup>Our web view is Section 508 Level AA accessible.
+        </div>
+        <div class="cta">
+            <p class="interested-text">
+                Using this book, or interested in adopting it for your
+                course?
+            </p>
+            <a href="/adoptions?{{title}}" class="btn">adopt this book</a>
+            <a class="secondary btn">get interested</a>
+        </div>
+    </section>
+    <section class="block book-info">
+        <div class="info-row">
+            <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Sub-ject&w=200&h=180" />
+            <section class="details">
+                <h1 class="title">{{title}}</h1>
+                <div class="tabs">
+                    <a class="tab"><label>Table of Contents</label></a>
+                    <a href="#resources" class="tab"><label>Resources</label></a>
+                    <a href="#details" class="tab"><label>Details</label></a>
+                    <a href="#errata" class="tab"><label>Errata</label></a>
+                </div>
+                <p class="blurb">{{bookInfo.blurb}}</p>
+                <h2>{{bookInfo.mainAuthorTitle}}</h2>
+                {{{bookInfo.mainAuthorHtml}}}
+                <div class="links">
+                    <a href="#details">See all authors &gt;</a>
+                </div>
+            </section>
+        </div>
+    </section>
+    <section class="block endorsement">
+        <blockquote class="endorsement">
+            {{endorsement}}
+            <footer class="attribution">
+                &mdash; {{attribution}}
+            </footer>
+        </blockquote>
+    </section>
+    <section class="resources block">
+        <h1>Resources</h1>
+        <p>
+            Access doesn't end with the book. OpenStax has compiled additional
+            resources for both faculty and students, from online homework tools and
+            interactive study guides, to faculty-only resources that coincide with
+            Physics.
         </p>
-        <a href="/adoptions?{{title}}" class="btn">adopt this book</a>
-        <a class="secondary btn">get interested</a>
-    </div>
-</section>
-<section class="block book-info">
-    <div class="info-row">
-        <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Sub-ject&w=200&h=180" />
-        <section class="details">
-            <h1 class="title">{{title}}</h1>
-            <div class="tabs">
-                <a class="tab"><label>Table of Contents</label></a>
-                <a href="#resources" class="tab"><label>Resources</label></a>
-                <a href="#details" class="tab"><label>Details</label></a>
-                <a href="#errata" class="tab"><label>Errata</label></a>
+        <h2>OpenStax Faculty Resources</h2>
+        <p>
+            Get started with free resources to support your course. (Verified faculty
+            account required.)
+        </p>
+        <div class="resource-row">
+            {{#each bookInfo.facultyResources}}
+            <div class="resource-box">
+                <h3>{{title}}</h3>
+                <a href="{{downloadUrl}}"><img src="{{iconUrl}}" />Download</a>
             </div>
-            <p class="blurb">{{bookInfo.blurb}}</p>
-            <h2>{{bookInfo.mainAuthorTitle}}</h2>
-            {{{bookInfo.mainAuthorHtml}}}
+            {{/each}}
+        </div>
+        <h2>Ally Resources</h2>
+        <p>Learn more about our <a href="/allies">allies</a>.</p>
+        <h3>Online Homework</h3>
+        <div class="resource-row">
+            <div class="blurb">
+                <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Logo&w=200&h=45" />
+                <h4>Sapling Learning</h4>
+                <p class="text">
+                    Bacon ipsum dolor amet incididunt aliqua salami tongue fugiat
+                    anim. Andouille sunt labore sint, incididunt turkey tri-tip
+                    swine pork chop jowl cow fatback spare ribs shank enim. Commodo
+                    cow laborum ad adipisicing spare ribs excepteur.
+                </p>
+            </div>
+            <div class="blurb">
+                <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Logo&w=200&h=45" />
+                <h4>Sapling Learning</h4>
+                <p class="text">
+                    Bacon ipsum dolor amet incididunt aliqua salami tongue fugiat
+                    anim. Andouille sunt labore sint, incididunt turkey tri-tip
+                    swine pork chop jowl cow fatback spare ribs shank enim. Commodo
+                    cow laborum ad adipisicing spare ribs excepteur.
+                </p>
+            </div>
+            <div class="blurb">
+                <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Logo&w=200&h=45" />
+                <h4>Sapling Learning</h4>
+                <p class="text">
+                    Bacon ipsum dolor amet incididunt aliqua salami tongue fugiat
+                    anim. Andouille sunt labore sint, incididunt turkey tri-tip
+                    swine pork chop jowl cow fatback spare ribs shank enim. Commodo
+                    cow laborum ad adipisicing spare ribs excepteur.
+                </p>
+            </div>
+        </div>
+        <h3>Adaptive Courseware</h3>
+        <div class="resource-row">
+            <div class="blurb">
+                <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Logo&w=200&h=45" />
+                <h4>Sapling Learning</h4>
+                <p class="text">
+                    Bacon ipsum dolor amet incididunt aliqua salami tongue fugiat
+                    anim. Andouille sunt labore sint, incididunt turkey tri-tip
+                    swine pork chop jowl cow fatback spare ribs shank enim. Commodo
+                    cow laborum ad adipisicing spare ribs excepteur.
+                </p>
+            </div>
+            <div class="blurb">
+                <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Logo&w=200&h=45" />
+                <h4>Sapling Learning</h4>
+                <p class="text">
+                    Bacon ipsum dolor amet incididunt aliqua salami tongue fugiat
+                    anim. Andouille sunt labore sint, incididunt turkey tri-tip
+                    swine pork chop jowl cow fatback spare ribs shank enim. Commodo
+                    cow laborum ad adipisicing spare ribs excepteur.
+                </p>
+            </div>
+            <div class="blurb">
+                <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Logo&w=200&h=45" />
+                <h4>Sapling Learning</h4>
+                <p class="text">
+                    Bacon ipsum dolor amet incididunt aliqua salami tongue fugiat
+                    anim. Andouille sunt labore sint, incididunt turkey tri-tip
+                    swine pork chop jowl cow fatback spare ribs shank enim. Commodo
+                    cow laborum ad adipisicing spare ribs excepteur.
+                </p>
+            </div>
+        </div>
+        <h2>Student Resources</h2>
+        <div class="resource-row">
+            <a class="resource-box">
+                Getting Started Guide
+            </a>
+            <a class="resource-box">
+                Student Solution Manual
+            </a>
+            <a class="resource-box">
+                Free! Veritas Tutors How to Succeed in Physics
+            </a>
+        </div>
+        <div class="cta">
+            <a class="btn">learn how you can tell your instructor about openstax!</a>
+        </div>
+    </section>
+    <div class="block">
+        <section class="details">
+            <h1>Details</h1>
+            {{{bookInfo.allAuthorsHtml}}}
+        </section>
+        <section class="errata">
+            <h1>Errata</h1>
+            <p>
+                All OpenStax textbooks undergo a rigorous review process. However, like
+                any professional-grade textbook, errors sometimes occur. The good part
+                is, since our books are web-based, we can make updates periodically. If
+                you have a correction to suggest, submit it here. We'll review your
+                suggestion and make necessary changes.
+            </p>
             <div class="links">
-                <a href="#details">See all authors &gt;</a>
+                <a>Errata list &gt;</a>
+                <a>Suggest a correction &gt;</a>
             </div>
         </section>
     </div>
-</section>
-<section class="block endorsement">
-    <blockquote class="endorsement">
-        {{endorsement}}
-        <footer class="attribution">
-            &mdash; {{attribution}}
-        </footer>
-    </blockquote>
-</section>
-<section class="resources block">
-    <h1>Resources</h1>
-    <p>
-        Access doesn't end with the book. OpenStax has compiled additional
-        resources for both faculty and students, from online homework tools and
-        interactive study guides, to faculty-only resources that coincide with
-        Physics.
-    </p>
-    <h2>OpenStax Faculty Resources</h2>
-    <p>
-        Get started with free resources to support your course. (Verified faculty
-        account required.)
-    </p>
-    <div class="resource-row">
-        {{#each bookInfo.facultyResources}}
-        <div class="resource-box">
-            <h3>{{title}}</h3>
-            <a href="{{downloadUrl}}"><img src="{{iconUrl}}" />Download</a>
-        </div>
-        {{/each}}
-    </div>
-    <h2>Ally Resources</h2>
-    <p>Learn more about our <a href="/allies">allies</a>.</p>
-    <h3>Online Homework</h3>
-    <div class="resource-row">
-        <div class="blurb">
-            <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Logo&w=200&h=45" />
-            <h4>Sapling Learning</h4>
-            <p class="text">
-                Bacon ipsum dolor amet incididunt aliqua salami tongue fugiat
-                anim. Andouille sunt labore sint, incididunt turkey tri-tip
-                swine pork chop jowl cow fatback spare ribs shank enim. Commodo
-                cow laborum ad adipisicing spare ribs excepteur.
-            </p>
-        </div>
-        <div class="blurb">
-            <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Logo&w=200&h=45" />
-            <h4>Sapling Learning</h4>
-            <p class="text">
-                Bacon ipsum dolor amet incididunt aliqua salami tongue fugiat
-                anim. Andouille sunt labore sint, incididunt turkey tri-tip
-                swine pork chop jowl cow fatback spare ribs shank enim. Commodo
-                cow laborum ad adipisicing spare ribs excepteur.
-            </p>
-        </div>
-        <div class="blurb">
-            <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Logo&w=200&h=45" />
-            <h4>Sapling Learning</h4>
-            <p class="text">
-                Bacon ipsum dolor amet incididunt aliqua salami tongue fugiat
-                anim. Andouille sunt labore sint, incididunt turkey tri-tip
-                swine pork chop jowl cow fatback spare ribs shank enim. Commodo
-                cow laborum ad adipisicing spare ribs excepteur.
-            </p>
-        </div>
-    </div>
-    <h3>Adaptive Courseware</h3>
-    <div class="resource-row">
-        <div class="blurb">
-            <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Logo&w=200&h=45" />
-            <h4>Sapling Learning</h4>
-            <p class="text">
-                Bacon ipsum dolor amet incididunt aliqua salami tongue fugiat
-                anim. Andouille sunt labore sint, incididunt turkey tri-tip
-                swine pork chop jowl cow fatback spare ribs shank enim. Commodo
-                cow laborum ad adipisicing spare ribs excepteur.
-            </p>
-        </div>
-        <div class="blurb">
-            <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Logo&w=200&h=45" />
-            <h4>Sapling Learning</h4>
-            <p class="text">
-                Bacon ipsum dolor amet incididunt aliqua salami tongue fugiat
-                anim. Andouille sunt labore sint, incididunt turkey tri-tip
-                swine pork chop jowl cow fatback spare ribs shank enim. Commodo
-                cow laborum ad adipisicing spare ribs excepteur.
-            </p>
-        </div>
-        <div class="blurb">
-            <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Logo&w=200&h=45" />
-            <h4>Sapling Learning</h4>
-            <p class="text">
-                Bacon ipsum dolor amet incididunt aliqua salami tongue fugiat
-                anim. Andouille sunt labore sint, incididunt turkey tri-tip
-                swine pork chop jowl cow fatback spare ribs shank enim. Commodo
-                cow laborum ad adipisicing spare ribs excepteur.
-            </p>
-        </div>
-    </div>
-    <h2>Student Resources</h2>
-    <div class="resource-row">
-        <a class="resource-box">
-            Getting Started Guide
-        </a>
-        <a class="resource-box">
-            Student Solution Manual
-        </a>
-        <a class="resource-box">
-            Free! Veritas Tutors How to Succeed in Physics
-        </a>
-    </div>
-    <div class="cta">
-        <a class="btn">learn how you can tell your instructor about openstax!</a>
-    </div>
-</section>
-<div class="block">
-    <section class="details">
-        <h1>Details</h1>
-        {{{bookInfo.allAuthorsHtml}}}
-    </section>
-    <section class="errata">
-        <h1>Errata</h1>
-        <p>
-            All OpenStax textbooks undergo a rigorous review process. However, like
-            any professional-grade textbook, errors sometimes occur. The good part
-            is, since our books are web-based, we can make updates periodically. If
-            you have a correction to suggest, submit it here. We'll review your
-            suggestion and make necessary changes.
-        </p>
-        <div class="links">
-            <a>Errata list &gt;</a>
-            <a>Suggest a correction &gt;</a>
-        </div>
-    </section>
 </div>
