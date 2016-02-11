@@ -1,0 +1,228 @@
+@import 'variables';
+
+$light-gray: lighten(color(neutral-light), 36%);
+$get-this-book-width: 25rem;
+$secondary-button: lighten(color(neutral-dark), 12%);
+$text-black: rgba(color(neutral-darkest), 0.87);
+$text-secondary: rgba(color(neutral-darkest), 0.7);
+
+.text-content {
+    color: $text-black;
+    font-family: Lato;
+    font-size: 1.7rem;
+    max-width: (120rem + #{$get-this-book-width});
+    position: relative;
+
+    > .block {
+        padding: 5rem (2rem + #{$get-this-book-width}) 5rem 10rem;
+
+        &.book-info {
+            background-image: $page-top-gradient;
+        }
+
+        &.endorsement {
+            background-color: color(green);
+        }
+
+        .links > a {
+            display: block;
+            margin-top: 1rem;
+        }
+    }
+}
+
+a,
+.tab > label,
+.option {
+    color: color(cyan);
+    cursor: pointer;
+}
+
+blockquote {
+    margin-left: 20rem;
+    position: relative;
+
+    &::before {
+        color: color(yellow);
+        content: '\201C';
+        font-size: 21rem;
+        left: 5rem;
+        position: absolute;
+        top: -2rem;
+    }
+}
+
+.info-row {
+    align-items: flex-start;
+    display: flex;
+
+    > .details {
+        flex-grow: 1;
+        font-family: Lato;
+        margin: 0 2.5rem;
+        padding: 0;
+
+        h1 {
+            font-weight: 900;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: flex-start;
+
+            > .tab {
+                display: inline;
+
+                > label {
+                    border-right: 0.2rem solid $divider-gray;
+                    padding: 0 2rem;
+                }
+
+                &:first-child > label {
+                    padding-left: 0;
+                }
+
+                &:last-child > label {
+                    border: 0;
+                }
+            }
+        }
+    }
+}
+
+.endorsement .endorsement {
+    color: color(neutral-lightest);
+    font-family: Lato;
+    font-size: 3rem;
+    font-style: italic;
+    margin: 0;
+    padding: 5rem 17rem;
+
+    .attribution {
+        text-align: right;
+    }
+}
+
+.resources {
+    background-color: $light-gray;
+    color: $text-secondary;
+    padding: 5rem 10rem;
+
+    h2 {
+        color: $text-black;
+        font-size: 1.9rem;
+    }
+
+    h3 {
+        color: $text-secondary;
+        font-size: 1.8rem;
+        font-style: italic;
+    }
+
+    .resource-row {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+
+        > div,
+        > a {
+            flex: 0 1 24rem;
+            margin-bottom: 2rem;
+            padding: 1rem 2rem;
+        }
+
+        .resource-box {
+            background-color: color(neutral-lightest);
+            padding-bottom: 4rem;
+            position: relative;
+
+            h3 {
+                color: color(green);
+                font-style: normal;
+            }
+
+            a {
+                bottom: 0;
+                position: absolute;
+            }
+
+            img {
+                margin-right: 1rem;
+                max-height: 3.2rem;
+            }
+        }
+
+        .blurb {
+            background-color: color(neutral-lightest);
+
+            .text {
+                font-size: 1.47rem;
+            }
+        }
+    }
+
+    .cta {
+        margin: 0 auto;
+        max-width: 30rem;
+        position: relative;
+        transform: translateY(120%);
+    }
+}
+
+.block > section {
+    h1 {
+        font-weight: bold;
+    }
+
+    h2 {
+        font-size: 2rem;
+        font-weight: bold;
+    }
+}
+
+.floating-menu {
+    background-color: color(neutral-lightest);
+    padding: 1rem 2rem;
+    position: fixed;
+    right: calc(50vw - 72rem);
+    top: 13rem;
+    width: $get-this-book-width;
+    z-index: 2;
+
+    @media (max-width: 1450px) {
+        right: 0;
+    }
+
+    > .title {
+        font-size: 2rem;
+        font-weight: 900;
+        margin-bottom: 1rem;
+    }
+
+    > .notes {
+        border-bottom: 0.2rem solid $divider-gray;
+        font-size: 1.2rem;
+        font-style: italic;
+        opacity: 0.57;
+        padding-bottom: 1rem;
+    }
+
+    .options {
+        line-height: 3rem;
+        padding-bottom: 1rem;
+    }
+
+    .interested-text {
+        font-size: smaller;
+    }
+
+    .btn {
+        font-size: smaller;
+        width: 18rem;
+
+        &.secondary {
+            background-color: $secondary-button;
+            margin-top: 1rem;
+        }
+    }
+}

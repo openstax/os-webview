@@ -1,7 +1,7 @@
 import BaseView from '~/helpers/backbone/view';
 import BookInfoView from './book-info/book-info';
 import {on, props} from '~/helpers/backbone/decorators';
-import {template} from './adoption-form.hbs';
+import {template} from './adoption.hbs';
 
 function sectionToggler(options) {
     let isOpen = false,

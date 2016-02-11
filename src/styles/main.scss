@@ -53,6 +53,10 @@ a {
     width: 0.1rem;
 }
 
+.hidden {
+    display: none;
+}
+
 #main {
     animation: fadeIn ease-in 1;
     animation-delay: 0.2s;

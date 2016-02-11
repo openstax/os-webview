@@ -12,39 +12,20 @@ class Router extends Backbone.Router {
             shell.load('home');
         });
 
-        this.route('about', 'about', () => {
-            shell.load('about');
-        });
-
-        this.route('books', 'books', () => {
-            shell.load('books');
-        });
-
-        this.route('contact', 'contact', () => {
-            shell.load('contact');
-        });
-
-        this.route('news', 'news', () => {
-            shell.load('news');
-        });
+        ['about', 'books', 'contact', 'news', 'license', 'subjects', 'details',
+        'interest', 'adoption']
+        .forEach(this.standardRoute, this);
 
         this.route(/to[u|s]/, 'tos', () => {
             shell.load('tos');
         });
-
-        this.route('license', 'license', () => {
-            shell.load('license');
-        });
-
-        this.route('adoptions', 'adoption-form', () => {
-            shell.load('adoption-form');
-        });
-
-        this.route('interest', 'interest-form', () => {
-            shell.load('interest-form');
-        });
     }
 
+    standardRoute(name) {
+        this.route(name, name, () => {
+            shell.load(name);
+        });
+    }
 }
 
 let router = new Router();

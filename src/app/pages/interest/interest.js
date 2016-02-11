@@ -1,6 +1,6 @@
 import BaseView from '~/helpers/backbone/view';
 import {on, props} from '~/helpers/backbone/decorators';
-import {template} from './interest-form.hbs';
+import {template} from './interest.hbs';
 
 const otherBoxSelector = '.other[type="checkbox"]',
     otherTextSelector = 'input[name$="[other]"]';

@@ -1,10 +1,10 @@
 let $ = {};
 
-$.toggleClass = function toggleClass(el, name) {
-    if (el.classList.contains(name)) {
-        el.classList.remove(name);
+$.setAttr = (node, name, value) => {
+    if (value === false || value === null) {
+        node.removeAttribute(name);
     } else {
-        el.classList.add(name);
+        node.setAttribute(name, value === true ? '' : value);
     }
 };
 

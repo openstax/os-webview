@@ -79,3 +79,12 @@ $link-color-dark: color(primary);
 // Background Colors
 $background-color-light: color(neutral-lightest);
 $background-color-dark: color(neutral-dark);
+
+// Other things
+$divider-gray: rgba(0, 0, 0, 0.12);
+
+$page-top-gradient: linear-gradient(to bottom,
+    lighten(color(neutral-lighter), 9.7%) 0%,
+    lighten(color(neutral-lighter), 11.7%) 2%,
+    color(neutral-lightest) 5%
+);

@@ -14,7 +14,7 @@ if ('@ENV@' === 'production' && 'serviceWorker' in navigator) {
         }
 
         registration.onupdatefound = function () {
-            var installingWorker = registration.installing;
+            let installingWorker = registration.installing;
 
             installingWorker.onstatechange = function () {
                 switch (installingWorker.state) {
