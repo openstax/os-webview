@@ -7,33 +7,36 @@ $text-black: rgba(color(neutral-darkest), 0.87);
 $text-secondary: rgba(color(neutral-darkest), 0.7);
 
 .details-page {
-    .text-content {
-        color: $text-black;
-        font-family: Lato;
-        font-size: 1.7rem;
-        max-width: (120rem + #{$get-this-book-width});
-        position: relative;
+    color: $text-black;
+    font-family: Lato;
+    font-size: 1.7rem;
+    margin: 0 auto;
+    max-width: calc(120rem + #{$get-this-book-width});
+    padding-right: $get-this-book-width;
+    position: relative;
 
-        > .block {
-            padding: 5rem (2rem + #{$get-this-book-width}) 5rem 10rem;
+    > .block {
+        padding: 5rem (2rem + #{$get-this-book-width}) 5rem 10rem;
 
-            &.book-info {
-                background-image: $page-top-gradient;
-            }
+        &.book-info {
+            background-image: $page-top-gradient;
+        }
+    }
 
-            &.endorsement {
-                background-color: color(green);
-            }
+    .endorsement-container {
+        background-color: color(green);
+    }
 
-            .links > a {
-                display: block;
-                margin-top: 1rem;
-            }
+    .links > a {
+        display: block;
+        margin-top: 1rem;
+
+        &.go-to::after {
+            content: ' >';
         }
     }
 
     a,
-    .tab > label,
     .option {
         color: color(cyan);
         cursor: pointer;
@@ -75,7 +78,7 @@ $text-secondary: rgba(color(neutral-darkest), 0.7);
             > .tab {
                 display: inline;
 
-                > label {
+                > span {
                     border-right: 0.2rem solid $divider-gray;
                     padding: 0 2rem;
                 }
@@ -91,7 +94,7 @@ $text-secondary: rgba(color(neutral-darkest), 0.7);
         }
     }
 
-    .endorsement .endorsement {
+    .endorsement {
         color: color(neutral-lightest);
         font-family: Lato;
         font-size: 3rem;
@@ -163,6 +166,7 @@ $text-secondary: rgba(color(neutral-darkest), 0.7);
         }
 
         .cta {
+            font-size: 1.8rem;
             margin: 0 auto;
             max-width: 30rem;
             position: relative;
@@ -213,12 +217,8 @@ $text-secondary: rgba(color(neutral-darkest), 0.7);
             padding-bottom: 1rem;
         }
 
-        .interested-text {
-            font-size: smaller;
-        }
-
         .btn {
-            font-size: smaller;
+            font-size: 1.8rem;
             width: 18rem;
 
             &.secondary {
