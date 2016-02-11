@@ -17,11 +17,9 @@ import GetThisTitle from '~/components/get-this-title/get-this-title';
 export default class Subjects extends BaseView {
     constructor() {
         super(...arguments);
-        let title = decodeURIComponent(window.location.search.substr(1));
-
-        this.getThisTitle = new GetThisTitle(title);
+        this.title = decodeURIComponent(window.location.search.substr(1));
         this.model.set('bookInfo', {
-            title,
+            title: this.title,
             blurb: `College Physics meets standard scope and sequence requirements for a
                 two-semester introductory alegabra-based physics course. The text is
                 grounded aliqua salami tongue fugiat anim. Andouille sunt labore sint,
@@ -70,7 +68,6 @@ export default class Subjects extends BaseView {
     }
 
     onRender() {
-        this.el.classList.add('text-content');
-        this.regions.getThisTitle.show(this.getThisTitle);
+        this.regions.getThisTitle.show(new GetThisTitle(this.title));
     }
 }
