@@ -7,7 +7,7 @@ $text-black: rgba(0, 0, 0, 0.87);
 $text-black2: rgba(0, 0, 0, 0.7);
 $text-black3: rgba(0, 0, 0, 0.54);
 
-.text-content {
+.subjects-page {
     color: $text-black;
     font-family: Lato;
 
@@ -53,16 +53,16 @@ $text-black3: rgba(0, 0, 0, 0.54);
             font-size: 120%;
             position: relative;
             transform: translateY(50%);
+        }
 
-            .filter-button {
-                border: thin solid $light-line;
-                cursor: pointer;
-                display: table-cell;
-                padding: 1rem 2rem;
+        .filter-button {
+            border: thin solid $light-line;
+            cursor: pointer;
+            display: table-cell;
+            padding: 1rem 2rem;
 
-                &.selected {
-                    color: $text-black;
-                }
+            &.selected {
+                color: $text-black;
             }
         }
     }
