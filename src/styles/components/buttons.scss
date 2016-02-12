@@ -26,6 +26,7 @@
     padding: 2.5rem;
 }
 
+// Call-to-action buttons generally have this style
 .cta > .btn {
     background-color: color(orange);
     border: 0;
@@ -33,6 +34,7 @@
     font-variant: small-caps;
     margin: 0 auto;
     padding: 1.5rem 2rem;
+    text-transform: lowercase;
 }
 
 @each $name, $type in $os-colors {
