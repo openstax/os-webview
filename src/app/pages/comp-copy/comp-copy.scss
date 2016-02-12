@@ -1,0 +1,27 @@
+@import 'variables';
+
+.comp-copy {
+    display: flex;
+    flex-flow: row wrap;
+
+    > h1 {
+        flex: 1 100%;
+    }
+
+    img {
+        min-height: 20rem;
+        min-width: 15rem;
+    }
+
+    > div {
+        flex-grow: 1;
+        margin: 1rem;
+        max-width: 50%;
+    }
+
+    form {
+        border: thin solid color(neutral-light);
+        margin: 1rem;
+        padding: 1rem;
+    }
+}
