@@ -1,0 +1,148 @@
+#os-green {fill: #77af42}
+#os-orange {fill: #f47641}
+#os-grey {fill: #5e6062}
+#os-yellow {fill: #f4d019}
+#os-blue {fill: #00246a}
+
+.os-loader {
+	position: relative;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	background-color: white;
+	background-image: url('circle.svg');
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 300%;
+	animation: loader 800ms ease-out;
+}
+
+@keyframes loader {
+    from {
+		background-size: 2%;
+	  }
+
+    to {
+		background-size: 300%;
+	  }
+
+}
+
+.os-loader--inner {
+	position: absolute;
+	width: 100px;
+	height: 100px;
+	top: 50%;
+	left: 50%;
+	margin-top: -60px;
+	margin-left: -60px;
+	background: white;
+	border-radius: 50%;
+	box-shadow: 0 1px 0px #e7e7e7;
+	animation: loaderInner 200ms ease-out;
+	-webkit-animation-delay: 100ms;
+	animation-delay: 100ms;
+	transform: scale(1);
+
+}
+
+@keyframes loaderInner {
+    from {
+		transform: scale(0);
+	  }
+
+    to {
+		transform: scale(1);
+	  }
+
+}
+
+svg {
+	position: relative;
+	display: block;
+	width: 60px;
+	height: 100%;
+	padding: 10px;
+	margin: 0 auto;
+}
+
+#os-green,
+#os-orange,
+#os-grey,
+#os-yellow,
+#os-blue {
+	transform-style: preserve-3D;
+	-webkit-animation-delay: 500ms;
+	animation-delay: 500ms;
+}
+
+#os-green {
+	animation: moveGreen .6s cubic-bezier(0.81, 0.41, 0.13, 0.74) 300ms infinite alternate;
+	transform-origin: center left;
+}
+
+#os-orange {
+	animation: moveOrange .6s cubic-bezier(0.81, 0.41, 0.13, 0.74) 300ms infinite alternate;
+	transform-origin: center right;
+}
+
+#os-grey {
+	animation: moveGrey .6s cubic-bezier(0.81, 0.41, 0.13, 0.74) 300ms infinite alternate;
+	transform-origin: center right;
+}
+
+#os-yellow {
+	animation: moveYellow .6s cubic-bezier(0.81, 0.41, 0.13, 0.74) 400ms infinite alternate;
+	transform-origin: center right;
+}
+
+#os-blue {
+	animation: moveBlue .6s cubic-bezier(0.81, 0.41, 0.13, 0.74) 500ms infinite alternate;
+	transform-origin: center center;
+}
+
+
+@keyframes moveGreen {
+    from {
+			transform: matrix(1, 0, 0, 1, 0, 0);
+	  }
+    to {
+			transform: matrix(0.965926, -0.258819, 0.258819, 0.965926, 0, -18);
+	  }
+}
+
+@keyframes moveOrange {
+    from {
+			transform: matrix(1, 0, 0, 1, 0, 0);
+	  }
+    to {
+			transform: matrix(0.994522, 0.104528, -0.104528, 0.994522, 0, -14);
+	  }
+}
+
+@keyframes moveGrey {
+    from {
+			transform: matrix(1, 0, 0, 1, 0, 0);
+	  }
+    to {
+			transform: matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, -8);
+	  }
+}
+
+@keyframes moveYellow{
+    from {
+			transform: matrix(1, 0, 0, 1, 0, 0);
+	  }
+    to {
+			transform: matrix(1, 0, 0, 1, 0, -8);
+	  }
+}
+
+@keyframes moveBlue{
+    from {
+			transform: matrix(1, 0, 0, 1, 0, 0);
+	  }
+    to {
+			transform: matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, -4);
+	  }
+}

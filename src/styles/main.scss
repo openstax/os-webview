@@ -2,6 +2,188 @@
 @import 'variables';
 @import 'mixins';
 
+//loader
+.os-loader {
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	background-color: #efefef;
+	z-index: 200;
+	overflow: hidden;
+	perspective: 1000;
+
+	@at-root html.loaded {
+		.os-loader {
+			z-index: -1;
+			transform: scale(0);
+		}
+	}
+
+	.os-overlay {
+		position: absolute;
+		width: 100vw;
+		height: 100vh;
+		top: 0;
+		left: 0;
+	    background-size: 200% 100%;
+	    background-image: linear-gradient(to right, color(orange) 50%, color(cyan) 50%);
+	    animation: loaderBubble 1s forwards;
+
+		@keyframes loaderBubble {
+		    0 {
+				background-position: 0;
+			  }
+		    25% {
+				background-position: -100% 0;
+			  }
+		    50% {
+				background-position: -100% 0;
+			  }
+			100%  {
+				background-position: 0;
+				background-image: transparent;
+			  }
+		}
+
+	}
+
+
+	.os-loader--inner {
+		position: absolute;
+		width: 100px;
+		height: 100px;
+		top: 50%;
+		left: 50%;
+		margin-top: -50px;
+		margin-left: -50px;
+		background-color: transparent;
+		animation: loaderInner 500ms forwards 75ms;
+		transform-style: preserve-3d;
+		transform: rotateY(90deg);
+
+		@keyframes loaderInner {
+		    from {
+
+			  }
+
+		    to {
+			    transform: rotateY(180deg);
+				background-color: white;
+				box-shadow: 0 1px 0 rgba(color(gray), .6);
+			  }
+		}
+
+		svg {
+			position: relative;
+			display: block;
+			width: 50px;
+			height: 100%;
+			margin: 0 auto;
+			opacity: 0;
+			animation: loadSvg 300ms forwards 500ms;
+			transform: scale(0) rotateY(180deg);
+			transform-origin: center;
+
+			@keyframes loadSvg {
+			    from {
+					transform: scale(0) rotateY(180deg);
+				  }
+
+			    to {
+					transform: scale(1) rotateY(180deg);
+					opacity: 1
+				  }
+			}
+
+			* {
+				animation: fadeIn 500ms forwards;
+			}
+
+			#os-green,
+			#os-orange,
+			#os-gray,
+			#os-yellow,
+			#os-blue {
+				-webkit-animation-delay: 500ms;
+				animation-delay: 500ms;
+			}
+
+			#os-green {
+				animation: moveGreen .6s cubic-bezier(0.81, 0.41, 0.13, 0.74) 500ms infinite alternate;
+				transform-origin: center left;
+
+				@keyframes moveGreen {
+				    from {
+							transform: matrix(1, 0, 0, 1, 0, 0);
+					  }
+				    to {
+							transform: matrix(0.965926, -0.258819, 0.258819, 0.965926, 0, -18);
+					  }
+				}
+			}
+
+			#os-orange {
+				animation: moveOrange .6s cubic-bezier(0.81, 0.41, 0.13, 0.74) 500ms infinite alternate;
+				transform-origin: center right;
+
+				@keyframes moveOrange {
+				    from {
+							transform: matrix(1, 0, 0, 1, 0, 0);
+					  }
+				    to {
+							transform: matrix(0.994522, 0.104528, -0.104528, 0.994522, 0, -14);
+					  }
+				}
+			}
+
+			#os-gray {
+				animation: moveGray .6s cubic-bezier(0.81, 0.41, 0.13, 0.74) 500ms infinite alternate;
+				transform-origin: center right;
+
+				@keyframes moveGray {
+				    from {
+							transform: matrix(1, 0, 0, 1, 0, 0);
+					  }
+				    to {
+							transform: matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, -8);
+					  }
+				}
+			}
+
+			#os-yellow {
+				animation: moveYellow .6s cubic-bezier(0.81, 0.41, 0.13, 0.74) 600ms infinite alternate;
+				transform-origin: center right;
+
+				@keyframes moveYellow{
+				    from {
+							transform: matrix(1, 0, 0, 1, 0, 0);
+					  }
+				    to {
+							transform: matrix(1, 0, 0, 1, 0, -8);
+					  }
+				}
+			}
+
+			#os-blue {
+				animation: moveBlue .6s cubic-bezier(0.81, 0.41, 0.13, 0.74) 500ms infinite alternate;
+				transform-origin: center;
+
+				@keyframes moveBlue{
+				    from {
+							transform: matrix(1, 0, 0, 1, 0, 0);
+					  }
+				    to {
+							transform: matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, -4);
+					  }
+				}
+			}
+
+		}
+
+	}
+
+}
+
 html {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 62.5%;
