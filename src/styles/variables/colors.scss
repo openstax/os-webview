@@ -1,14 +1,13 @@
 // OpenStax Color Scheme
 $os-colors: (
     red: rgb(196, 35, 55),
-    orange: rgb(226, 111, 74),
+    orange: rgb(242, 118, 73),
     yellow: rgb(239, 202, 63),
-    gold: rgb(255, 189, 62),
     green: rgb(115, 165, 72),
     turqoise: rgb(45, 151, 147),
     cyan: rgb(47, 192, 219),
     blue: rgb(34, 43, 80),
-    gray: rgb(94, 96, 98)
+    gray: rgb(88, 90, 89)
 );
 
 @function os-color($color) {
@@ -40,34 +39,13 @@ $neutral-colors: (
 }
 
 $color-types: (
-    primary: (
-        color: os-color(blue),
-        overlay: neutral-color(lightest)
-    ),
-    secondary: (
-        color: os-color(orange),
-        overlay: neutral-color(lightest)
-    ),
-    tertiary: (
-        color: os-color(yellow),
-        overlay: neutral-color(lightest)
-    ),
-    success: (
-        color: os-color(green),
-        overlay: neutral-color(lightest)
-    ),
-    info: (
-        color: os-color(cyan),
-        overlay: neutral-color(lightest)
-    ),
-    warning: (
-        color: os-color(yellow),
-        overlay: neutral-color(darkest)
-    ),
-    danger: (
-        color: os-color(red),
-        overlay: neutral-color(lightest)
-    )
+    primary: os-color(blue),
+    secondary: os-color(orange),
+    tertiary: os-color(yellow),
+    success: os-color(green),
+    info: os-color(cyan),
+    warning: os-color(yellow),
+    danger: os-color(red)
 );
 
 @function color($color, $overlay: false) {
@@ -83,11 +61,7 @@ $color-types: (
     }
 
     @if map-has-key($color-types, $color) {
-        @if $overlay {
-            @return map-get(map-get($color-types, $color), overlay);
-        } @else {
-            @return map-get(map-get($color-types, $color), color);
-        }
+        @return map-get($color-types, $color);
     }
 
     @warn 'Unknown `#{$color}` in $colors.';

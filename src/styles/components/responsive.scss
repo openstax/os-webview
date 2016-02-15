@@ -12,46 +12,50 @@
     }
 }
 
-.hidden-large {
-    @include large {
+.hidden-desktop {
+    @include desktop {
         display: none !important;
     }
 }
 
-.hidden-medium {
-    @include medium {
+.hidden-tablet {
+    @include tablet {
         display: none !important;
     }
 }
 
-.hidden-small {
-    @include small {
+.hidden-phone {
+    @include phone {
         display: none !important;
     }
 }
 
-.visible-large {
-    @include medium {
+.visible-desktop {
+    @include phone {
         display: none !important;
     }
 
-    @include medium-down {
-        display: none !important;
-    }
-}
-
-.visible-medium {
-    @include large-up {
-        display: none !important;
-    }
-
-    @include small {
+    @include tablet {
         display: none !important;
     }
 }
 
-.visible-small {
-    @include medium-up {
+.visible-tablet {
+    @include desktop {
+        display: none !important;
+    }
+
+    @include phone {
+        display: none !important;
+    }
+}
+
+.visible-phone {
+    @include tablet {
+        display: none !important;
+    }
+
+    @include desktop {
         display: none !important;
     }
 }
