@@ -85,11 +85,10 @@
         @if $direction == top or $direction == bottom {
             border-left: $perpendicular-borders;
             border-right: $perpendicular-borders;
-            transform: translateX(-50%);
+            transform: translateY(-50%);
         } @else if $direction == right or $direction == left {
             border-bottom: $perpendicular-borders;
             border-top: $perpendicular-borders;
-            transform: translateY(-50%);
         }
     }
 }

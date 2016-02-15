@@ -1,6 +1,18 @@
 @import 'variables';
 @import 'mixins';
 
+@mixin desktop {
+    @media (min-width: 1025px) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (min-width: #{breakpoints(phone) + 1}) and (max-width: 1024px) {
+        @content;
+    }
+}
+
 .astronomy {
     background-image: url('/images/home/subjects/astronomy/background.jpg');
     background-position: center top;
@@ -12,13 +24,23 @@
     padding-top: 8rem;
     position: relative;
 
+    @include tablet {
+        background-size: 100vw 81.4vw;
+        height: 81.4vw;
+    }
+
     .square-1,
     .square-2,
     .square-3,
     .square-4 {
         background-color: rgba(color(blue), 0.5);
+        display: none;
         position: absolute;
         z-index: 0;
+
+        @include desktop {
+            display: block;
+        }
     }
 
     .square-1 {
@@ -61,7 +83,12 @@
 
     .chart,
     .equation {
+        display: none;
         opacity: 0.7;
+
+        @include desktop {
+            display: block;
+        }
     }
 
     .chart {
@@ -91,6 +118,13 @@
         position: absolute;
         top: 7.726vw;
         width: 25.607vw;
+
+        @include tablet {
+            height: 36.08vw;
+            left: 32.91vw;
+            top: 18.35vw;
+            width: 36.08vw;
+        }
     }
 
     .video-banner {
@@ -101,6 +135,13 @@
         top: 9.5vw;
         width: 39.85vw;
         z-index: 2;
+
+        @include tablet {
+            height: 59.75vw;
+            left: 46.5vw;
+            top: 21.65vw;
+            width: 51.538vw;
+        }
     }
 
     .now-i-can {
@@ -119,6 +160,15 @@
         width: 49.5vw;
         z-index: 3;
 
+        @include tablet {
+            font-size: 3.8vw;
+            height: 10.89vw;
+            left: 2.66vw;
+            line-height: 10.89vw;
+            top: 55.7vw;
+            width: 74.43vw;
+        }
+
         .quote {
             display: inline-block;
             font-family: 'Permanent Marker', cursive;
@@ -132,6 +182,13 @@
             position: absolute;
             top: 5vw;
             width: 33vw;
+
+            @include tablet {
+                border-bottom-width: 0.36vw;
+                left: 21vw;
+                top: 8vw;
+                width: 52.5vw;
+            }
         }
     }
 
@@ -141,6 +198,11 @@
         position: absolute;
         top: 41.5vw;
         z-index: 3;
+
+        @include tablet {
+            left: 21.85vw;
+            top: 67.47vw;
+        }
 
         ul {
             list-style-type: none;
@@ -157,6 +219,12 @@
             height: 4.5vw;
             line-height: 4.5vw;
             padding: 0;
+
+            @include tablet {
+                font-size: 1.7vw;
+                height: 6.33vw;
+                line-height: 6.33vw;
+            }
         }
 
         .explore-subject,
@@ -167,10 +235,18 @@
         .explore-subject {
             margin-right: 0.2vw;
             width: 17.5vw;
+
+            @include tablet {
+                width: 26.46vw;
+            }
         }
 
         .explore-all {
             width: 18.55vw;
+
+            @include tablet {
+                width: 27.97vw;
+            }
         }
     }
 }

@@ -1,6 +1,12 @@
 @import 'variables';
 @import 'mixins';
 
+@mixin collapsed {
+    @media (max-width: 760px) {
+        @content;
+    }
+}
+
 .buckets {
     padding: 3.8vw;
     width: 100vw;
@@ -8,9 +14,14 @@
     .bucket {
         color: color(neutral-lightest);
         display: flex;
-        height: 30rem;
         margin: 0 auto 3.8vw;
-        width: 85vw;
+        max-width: 120rem;
+        min-height: 30rem;
+        width: 100%;
+
+        @include collapsed {
+            flex-direction: column;
+        }
 
         &:last-child {
             margin-bottom: 0;
@@ -34,6 +45,15 @@
                         $color: color(green),
                         $size: 2.4rem
                     );
+
+                    @include collapsed {
+                        @include triangle(
+                            $direction: top,
+                            $position: top -2.4rem left 17%,
+                            $color: color(green),
+                            $size: 2.4rem
+                        );
+                    }
                 }
 
                 .title {
@@ -60,6 +80,15 @@
                         $color: color(gray),
                         $size: 2.4rem
                     );
+
+                    @include collapsed {
+                        @include triangle(
+                            $direction: top,
+                            $position: top -2.4rem left 17%,
+                            $color: color(gray),
+                            $size: 2.4rem
+                        );
+                    }
                 }
 
                 .title {
@@ -92,8 +121,12 @@
         }
 
         &.left {
-            > img {
+            > .image {
                 order: 2;
+
+                @include collapsed {
+                    order: 1;
+                }
             }
 
             > .quote {
@@ -102,7 +135,7 @@
         }
 
         &.right {
-            > img {
+            > .image {
                 order: 1;
             }
 
@@ -111,12 +144,18 @@
             }
         }
 
-        img {
-            flex: 0 0 48rem;
+        .image {
+            flex: 1 1 17rem;
+            max-width: 47rem;
+
+            @include collapsed {
+                max-width: none;
+                min-height: 32rem;
+            }
         }
 
         .quote {
-            flex: 1 1 auto;
+            flex: 2 0 0;
             padding: 3rem;
             position: relative;
 
@@ -124,6 +163,8 @@
                 display: block;
                 font-size: 4.8rem;
                 font-weight: 700;
+                line-height: 4.8rem;
+                margin-bottom: 1.2rem;
             }
 
             .blurb {
@@ -133,7 +174,9 @@
             }
 
             .btn {
+                font-size: 1.8rem;
                 margin-top: 2.5rem;
+                padding: 1.5rem 2rem;
             }
         }
     }
