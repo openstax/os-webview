@@ -1,4 +1,3 @@
-import $ from '~/helpers/$';
 import BaseView from '~/helpers/backbone/view';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './header.hbs';
@@ -116,7 +115,7 @@ class Header extends BaseView {
         e.stopPropagation();
         let header = this.el.querySelector('.page-header');
 
-        $.toggleClass(header, 'active');
+        header.classList.toggle('active');
     }
 
     @on('click .active:not(.open) .main-nav .parent > a')
