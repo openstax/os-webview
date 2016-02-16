@@ -19,16 +19,52 @@
         &.give {
             background-color: color(green);
 
-            .title {
-                color: color(yellow);
+            > .image {
+                background-image: url('/images/home/buckets/give.jpg');
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+
+            > .quote {
+                &::before {
+                    @include triangle(
+                        $direction: left,
+                        $position: top 27% left -2.4rem,
+                        $color: color(green),
+                        $size: 2.4rem
+                    );
+                }
+
+                .title {
+                    color: color(yellow);
+                }
             }
         }
 
         &.our-impact {
             background-color: color(neutral-medium);
 
-            .title {
-                color: color(cyan);
+            > .image {
+                background-image: url('/images/home/buckets/our-impact.jpg');
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+
+            > .quote {
+                &::before {
+                    @include triangle(
+                        $direction: right,
+                        $position: top 27% right -2.4rem,
+                        $color: color(gray),
+                        $size: 2.4rem
+                    );
+                }
+
+                .title {
+                    color: color(cyan);
+                }
             }
         }
 
@@ -82,6 +118,7 @@
         .quote {
             flex: 1 1 auto;
             padding: 3rem;
+            position: relative;
 
             .title {
                 display: block;

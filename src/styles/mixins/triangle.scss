@@ -1,0 +1,95 @@
+@mixin size($width, $height: $width) {
+    width: $width;
+    height: $height;
+}
+
+// From: http://hugogiraudel.com/2014/05/19/new-offsets-sass-mixin/
+@mixin position($position, $args: ()) {
+    $offsets: top right bottom left;
+    position: $position;
+
+    @each $offset in $offsets {
+        $index: index($args, $offset);
+
+        @if $index {
+            @if $index == length($args) {
+                #{$offset}: 0;
+            } @else {
+                $next: nth($args, $index + 1);
+                @if is-valid-length($next) {
+                    #{$offset}: $next;
+                } @else if index($offsets, $next) {
+                    #{$offset}: 0;
+                } @else {
+                    @warn 'Invalid value `#{$next}` for offset `#{$offset}`.';
+                }
+            }
+        }
+    }
+}
+
+@mixin absolute($args: ()) {
+    @include position(absolute, $args);
+}
+
+@mixin fixed($args: ()) {
+    @include position(fixed, $args);
+}
+
+@mixin relative($args: ()) {
+    @include position(relative, $args);
+}
+
+/// Returns the opposite direction of each direction in a list
+/// @author Hugo Giraudel
+/// @param {List} $directions - List of initial directions
+/// @return {List} - List of opposite directions
+@function opposite-direction($directions) {
+    $opposite-directions: ();
+    $direction-map: (
+        'top':    'bottom',
+        'right':  'left',
+        'bottom': 'top',
+        'left':   'right',
+        'center': 'center',
+        'ltr':    'rtl',
+        'rtl':    'ltr'
+    );
+
+    @each $direction in $directions {
+        $direction: to-lower-case($direction);
+
+        @if map-has-key($direction-map, $direction) {
+            $opposite-directions: append($opposite-directions, unquote(map-get($direction-map, $direction)));
+        } @else {
+            @warn 'No opposite direction can be found for `#{$direction}`. Direction omitted.';
+        }
+    }
+
+    @return $opposite-directions;
+}
+
+@mixin triangle($direction, $position, $color: white, $size: 1rem) {
+    @if not index(top right bottom left, $direction) {
+        @warn 'Direction must be one of top, right, bottom or left.';
+    } @else {
+        $opposite-direction: opposite-direction($direction);
+        @include absolute($position);
+        @include size(0);
+        content: '';
+        z-index: 2;
+
+        border-#{$opposite-direction}: $size solid $color;
+        $perpendicular-borders: $size solid transparent;
+
+        @if $direction == top or $direction == bottom {
+            border-left: $perpendicular-borders;
+            border-right: $perpendicular-borders;
+            transform: translateX(-50%);
+        } @else if $direction == right or $direction == left {
+            border-bottom: $perpendicular-borders;
+            border-top: $perpendicular-borders;
+            transform: translateY(-50%);
+        }
+    }
+}
