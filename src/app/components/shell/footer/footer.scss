@@ -2,60 +2,58 @@
 @import 'mixins';
 
 .footer {
-    align-items: center;
     background-color: color(neutral-dark);
     color: color(neutral-light);
     display: flex;
-    flex-wrap: wrap;
+    flex-flow: column wrap;
+    justify-content: center;
     padding: 5.8vw 7vw 7.25vw;
+    text-align: center;
+
+    @include phone {
+        text-align: left;
+    }
 
     ul {
         display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
         list-style-type: none;
         margin: 0;
         padding: 0;
 
-        li {
-            flex: 0 0 auto;
+        @include phone {
+            justify-content: flex-start;
         }
     }
 
     a {
-        color: color(neutral-light);
+        color: color(cyan);
 
         &:active,
         &:focus,
         &:hover {
-            text-decoration: underline;
+            color: rgba(color(cyan), 0.5);
         }
     }
 
     .hero-quote {
-        flex: 1 0 100%;
-        font-size: 5.3vw;
+        font-size: calc(4.8rem + 1.05vw);
         font-weight: bold;
-        padding-bottom: 4.8vw;
-        text-align: center;
+        line-height: 1;
+        padding-bottom: 4rem;
     }
 
     .copyright {
-        border-right: 0.1rem solid color(neutral-medium);
-        flex: 3 0 60%;
-        padding-right: 4.5vw;
+        flex-wrap: wrap;
+        padding-bottom: 4rem;
 
-        ul a {
-            margin-right: 1vw;
-        }
-
-        > div {
-            line-height: 2rem;
-            padding-top: 2rem;
+        li > a {
+            padding: 1rem;
         }
     }
 
     .social {
-        flex: 2 0 40%;
-        padding-left: 4.5vw;
 
         a {
             height: 7rem;
