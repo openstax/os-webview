@@ -14,8 +14,9 @@ class Header extends BaseView {
 
         this.templateHelpers = {
             collapsed: () => this.meta.collapsed,
-            fixed: () => this.meta.fixed,
-            transparent: () => this.meta.transparent
+            sticky: () => this.meta.sticky,
+            transparent: () => this.meta.transparent,
+            visible: () => this.meta.visible
         };
     }
 
@@ -37,8 +38,8 @@ class Header extends BaseView {
     }
 
     pin() {
-        this.meta.fixed = true;
-        this.classList('add', 'fixed');
+        this.meta.sticky = true;
+        this.classList('add', 'sticky');
         return this;
     }
 
@@ -48,13 +49,22 @@ class Header extends BaseView {
         return this;
     }
 
+    visible() {
+        this.meta.visible = true;
+        this.classList('add', 'visible');
+        return this;
+    }
+
     reset() {
         this.meta.collapsed = false;
         this.meta.pinned = false;
         this.meta.transparent = false;
+        this.meta.visible = false;
         this.classList('remove', 'collapsed');
-        this.classList('remove', 'fixed');
+        this.classList('remove', 'sticky');
         this.classList('remove', 'transparent');
+        this.classList('remove', 'visible');
+
         return this;
     }
 
@@ -63,11 +73,14 @@ class Header extends BaseView {
     }
 
     isPinned() {
-        return !!this.classList('contains', 'fixed');
+        return !!this.classList('contains', 'sticky');
     }
 
     isTransparent() {
         return !!this.classList('contains', 'transparent');
+    }
+    isVisible() {
+        return !!this.classList('contains', 'visible');
     }
 
     get height() {
@@ -82,7 +95,7 @@ class Header extends BaseView {
     }
 
     get secondaryNavHeight() {
-        let secondaryNav = this.el.querySelector('.secondary-nav');
+        let secondaryNav = this.el.querySelector('.meta-nav');
         let height = 0;
 
         if (secondaryNav && typeof secondaryNav === 'object') {
@@ -98,12 +111,40 @@ class Header extends BaseView {
     }
 
     @on('click .expand-nav')
-    toggleNavMenu(e) {
-        let button = e.target;
+    toggleNavMenu() {
         let header = this.el.querySelector('.page-header');
 
-        button.classList.toggle('active');
         header.classList.toggle('active');
+    }
+
+    @on('click .active:not(.open) .main-nav .parent > a')
+    addOpen(e) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        let header = this.el.querySelector('.page-header');
+        let $this = e.target;
+        let parentItem = $this.parentNode;
+        let secondaryNav = e.delegateTarget.nextElementSibling;
+
+        header.classList.add('open');
+        parentItem.classList.add('open');
+        secondaryNav.classList.add('open');
+    }
+
+    @on('click .active .nav-menu-item .back')
+    removeOpen(e) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        let header = this.el.querySelector('.page-header');
+        let $this = e.target;
+        let secondaryNav = this.el.querySelector('.secondary-nav.open');
+        let parentItem = $this.parentNode;
+
+        header.classList.remove('open');
+        parentItem.classList.remove('open');
+        secondaryNav.classList.remove('open');
     }
 
     @on('click .skiptocontent a')
