@@ -1,5 +1,6 @@
 import BaseView from '~/helpers/backbone/view';
 import BaseModel from '~/helpers/backbone/model';
+import pageCollection from '~/models/pagecollection';
 import {props} from '~/helpers/backbone/decorators';
 import {template} from './subjects.hbs';
 import FilterButton from './filter-button/filter-button';
@@ -12,10 +13,6 @@ function makeBook(title, categories) {
         coverUrl: `https://placeholdit.imgix.net/~text?txtsize=33&txt=${title}&w=200&h=180`
     };
 }
-
-const BookInfoModel = BaseModel.extend({
-    url: 'https://oscms-dev.openstax.org/api/v1/pages/7/'
-});
 
 @props({
     template: template,
@@ -73,24 +70,22 @@ export default class Subjects extends BaseView {
     onRender() {
         this.el.classList.add('text-content');
 
-        let bookInfoModel = new BookInfoModel();
+        let populateBookInfoFields = (page) => {
+            let setHtmlToMember = (nodeName, memberName) => {
+                this.el.querySelector(`[data-manager="${nodeName}"]`)
+                .innerHTML = page.get(memberName);
+            };
 
-        bookInfoModel.fetch({
-            success: () => {
-                let setHtmlToMember = (nodeName, memberName) => {
-                    this.el.querySelector(`[data-manager="${nodeName}"]`)
-                    .innerHTML = bookInfoModel.get(memberName);
-                };
+            setHtmlToMember('page-description', 'page_description');
+            setHtmlToMember('ds1-head', 'dev_standard_1_heading');
+            setHtmlToMember('ds1-body', 'dev_standard_1_description');
+            setHtmlToMember('ds2-head', 'dev_standard_2_heading');
+            setHtmlToMember('ds2-body', 'dev_standard_2_description');
+            setHtmlToMember('ds3-head', 'dev_standard_3_heading');
+            setHtmlToMember('ds3-body', 'dev_standard_3_description');
+        };
 
-                setHtmlToMember('page-description', 'page_description');
-                setHtmlToMember('ds1-head', 'dev_standard_1_heading');
-                setHtmlToMember('ds1-body', 'dev_standard_1_description');
-                setHtmlToMember('ds2-head', 'dev_standard_2_heading');
-                setHtmlToMember('ds2-body', 'dev_standard_2_description');
-                setHtmlToMember('ds3-head', 'dev_standard_3_heading');
-                setHtmlToMember('ds3-body', 'dev_standard_3_description');
-            }
-        });
+        pageCollection.withPage('books.BookIndex', populateBookInfoFields);
 
         let buttons = this.model.get('filterButtons');
 
