@@ -79,7 +79,7 @@ class Header extends BaseView {
     isTransparent() {
         return !!this.classList('contains', 'transparent');
     }
-    
+
     isVisible() {
         return !!this.classList('contains', 'visible');
     }
