@@ -18,7 +18,8 @@ fieldset {
         border-spacing: 0.5rem;
         display: table;
 
-        > label {
+        > label,
+        > .form-item {
             display: table-row;
 
             > span,
