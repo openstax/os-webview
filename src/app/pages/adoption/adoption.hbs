@@ -10,37 +10,39 @@
     <a href="/adoption_interests">interest form</a> so we may send you the
     information you need.
 </p>
-<form accept-charset="UTF-8" action="/adoptions" class="new_adoption"
- id="new_adoption" method="post">
+<form accept-charset="UTF-8" class="new_adoption"
+ action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="post">
     <div>
-        <input name="utf8" type="hidden" value="✓" />
-        <input name="authenticity_token" type="hidden" value="Xi14qRzCbSy2zkso1VEjKU4bEUfFWOrhWbQnh7tlO3c=" />
+        <!-- This is our organization id -->
+        <input type=hidden name="oid" value="00DU0000000Kwch">
+        <input type=hidden name="retURL" value="{{urlOrigin}}/adoption-confirmation">
+        <input name="lead_source" type="hidden" value="OS Adoption Form" />
     </div>
     <h2>Faculty/Administrator Contact Information</h2>
     <fieldset class="labeled-inputs">
         <label>
             <span>First name</span>
-            <input name="adoption[first_name]" type="text" required />
+            <input name="first_name" type="text" required />
         </label>
         <label>
             <span>Last name</span>
-            <input name="adoption[last_name]" type="text" required />
+            <input name="last_name" type="text" required />
         </label>
         <label>
             <span>School name</span>
-            <input name="adoption[school_name]" type="text" required />
+            <input name="company" type="text" required />
         </label>
         <label>
             <span>School url</span>
-            <input name="adoption[school_url]" type="text" required />
+            <input name="URL" type="text" required />
         </label>
         <label>
             <span>Email address</span>
-            <input name="adoption[email_address]" pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text" required />
+            <input name="email" pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text" required />
         </label>
         <label>
             <span>Phone number</span>
-            <input name="adoption[phone_number]" type="text" required />
+            <input name="phone" type="text" required />
         </label>
     </fieldset>
 
@@ -54,17 +56,17 @@
 </p>
 <fieldset class="labeled-buttons">
     <label>
-        <input name="adoption[partner_resource_type][]" type="checkbox"
+        <input name="00NU00000055spm" type="checkbox"
          value="Online homework providers">
         Online homework providers
     </label>
     <label>
-        <input name="adoption[partner_resource_type][]" type="checkbox"
+        <input name="00NU00000055spm" type="checkbox"
          value="Courseware providers">
         Courseware providers
     </label>
     <label>
-        <input name="adoption[partner_resource_type][]" type="checkbox"
+        <input name="00NU00000055spm" type="checkbox"
          value="Print custom editions">
         Print custom editions
     </label>
@@ -73,11 +75,11 @@
 <p>Are you interested in being featured in our newsletter as a Textbook Hero?</p>
 <fieldset class="labeled-buttons">
     <label>
-        <input checked="checked" name="adoption[interested_in_newsletter_feature]" type="radio" value="true">
+        <input checked="checked" name="00NU00000055sq6" type="radio" value="1">
         Yes
     </label>
     <label>
-        <input name="adoption[interested_in_newsletter_feature]" type="radio" value="false">
+        <input name="00NU00000055sq6" type="radio" value="0">
         No
     </label>
 </fieldset>
@@ -89,14 +91,15 @@
 </p>
 <fieldset class="labeled-buttons">
     <label>
-        <input checked="checked" name="adoption[interested_in_research]" type="radio" value="true">
+        <input checked="checked" name="00NU00000055sqB" type="radio" value="1">
         Yes
     </label>
     <label>
-        <input name="adoption[interested_in_research]" type="radio" value="false">
+        <input name="00NU00000055sqB" type="radio" value="0">
         No
     </label>
 </fieldset>
+<!-- Doesn't look like Salesforce can store this information
 <p>
     Do you know of any other faculty using OpenStax College books? If so, would
     you be willing to provide their contact information below?
@@ -119,16 +122,19 @@
         <input name="adoption[hint_phone_number]" type="text">
     </label>
 </fieldset>
+-->
 
+<!-- Can't handle more than one book on a form
 <h3>Have you adopted a second OpenStax College book?</h3>
 <a class="toggle-section" href="#"></a>
 <fieldset id="secondary-book">
 </fieldset>
+-->
 
 <div>
     <label>
         <p>Any feedback you'd like to share with us?</p>
-        <textarea cols="50" name="adoption[feedback]" rows="6"></textarea>
+        <textarea cols="50" name="00NU00000056Rls" rows="6"></textarea>
     </label>
 </div>
 
