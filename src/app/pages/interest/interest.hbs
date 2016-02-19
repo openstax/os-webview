@@ -3,34 +3,41 @@
     Thank you for your interest in OpenStax College textbooks! Please complete the form below so that we may provide
     you with the information you need to start saving your students thousands of dollars each semester.
 </p>
-<form accept-charset="UTF-8" action="/adoption_interests" class="new_adoption_interest" method="post">
-    <p>Have you already adopted an OpenStax College textbook? <a href="/adoptions">Let us know!</a></p>
+<form accept-charset="UTF-8" action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8"
+ class="new_adoption_interest" method="post">
+    <p>Have you already adopted an OpenStax College textbook? <a href="/adoption">Let us know!</a></p>
     <h2>Contact Information</h2>
+    <div>
+        <input type=hidden name="oid" value="00DU0000000Kwch">
+        <input type=hidden name="retURL" value="{{urlOrigin}}/home">
+        <input type=hidden name="lead_source" value="OS Interest Form">
+        <input type=hidden name="00NU00000055spw" value="High Interest in Adopting">
+    </div>
     <fieldset class="labeled-inputs">
         <label>
             <span>First name</span>
-            <input name="adoption_interest[first_name]" type="text" required />
+            <input name="first_name" type="text" required />
         </label>
         <label>
             <span>Last name</span>
-            <input name="adoption_interest[last_name]" type="text" required />
+            <input name="last_name" type="text" required />
         </label>
         <label>
             <span>School name</span>
-            <input name="adoption_interest[school_name]" type="text" required />
+            <input name="company" type="text" required />
         </label>
         <label>
             <span>School url</span>
-            <input name="adoption_interest[school_url]" type="text" required />
+            <input name="URL" type="text" required />
         </label>
         <label>
             <span>Email address</span>
-            <input name="adoption_interest[email_address]" type="email"
+            <input name="email" type="email"
              pattern="[^@]+@([^@\.]+\.)+[^@\.]+" required />
         </label>
         <label>
             <span>Phone number</span>
-            <input name="adoption_interest[phone_number]" type="text" required />
+            <input name="phone" type="text" required />
         </label>
     </fieldset>
     <h2>Textbook Interest</h2>
@@ -41,7 +48,7 @@
         </legend>
         {{#each titles}}
             <label>
-                <input name="adoption_interest[textbook_interests][]" type="checkbox" value="{{this}}">
+                <input name="00NU00000053nzR" type="checkbox" value="{{this}}">
                 {{this}}
             </label>
         {{/each}}
@@ -49,7 +56,7 @@
     <fieldset class="labeled-inputs">
         <label>
             <span>Students per semester</span>
-            <input name="adoption_interest[students_per_semester]" type="number" required>
+            <input name="00NU00000052VId" type="number" required>
         </label>
     </fieldset>
     <p>
@@ -58,15 +65,15 @@
     </p>
     <fieldset class="labeled-buttons">
         <label>
-            <input name="adoption_interest[partner_resource][]" type="checkbox" value="Online homework providers">
+            <input name="00NU00000055spm" type="checkbox" value="Online homework providers">
             Online homework providers
         </label>
         <label>
-            <input name="adoption_interest[partner_resource][]" type="checkbox" value="Courseware providers">
+            <input name="00NU00000055spm" type="checkbox" value="Courseware providers">
             Courseware providers
         </label>
         <label>
-            <input name="adoption_interest[partner_resource][]" type="checkbox" value="Print custom editions">
+            <input name="00NU00000055spm" type="checkbox" value="Print custom editions">
             Print custom editions
         </label>
     </fieldset>
@@ -76,47 +83,47 @@
             Select at least one
         </legend>
         <label>
-            <input name="adoption_interest[referral][]" type="checkbox" value="Web search">
+            <input name="00NU00000055spr" type="checkbox" value="Web search">
             Web search
         </label>
         <label>
-            <input name="adoption_interest[referral][]" type="checkbox" value="Colleague">
+            <input name="00NU00000055spr" type="checkbox" value="Colleague">
             Colleague
         </label>
         <label>
-            <input name="adoption_interest[referral][]" type="checkbox" value="Conference">
+            <input name="00NU00000055spr" type="checkbox" value="Conference">
             Conference
         </label>
         <label>
-            <input name="adoption_interest[referral][]" type="checkbox" value="Email">
+            <input name="00NU00000055spr" type="checkbox" value="Email">
             Email
         </label>
         <label>
-            <input name="adoption_interest[referral][]" type="checkbox" value="Facebook">
+            <input name="00NU00000055spr" type="checkbox" value="Facebook">
             Facebook
         </label>
         <label>
-            <input name="adoption_interest[referral][]" type="checkbox" value="Twitter">
+            <input name="00NU00000055spr" type="checkbox" value="Twitter">
             Twitter
         </label>
         <label>
-            <input name="adoption_interest[referral][]" type="checkbox" value="Webinar">
+            <input name="00NU00000055spr" type="checkbox" value="Webinar">
             Webinar
         </label>
         <label>
-            <input name="adoption_interest[referral][]" type="checkbox" value="Partner organization">
+            <input name="00NU00000055spr" type="checkbox" value="Partner organization">
             Partner organization
         </label>
         <label>
-            <input class="other" name="adoption_interest[referral][]" type="checkbox" value="">
+            <input class="other" type="checkbox" value="">
             Other:
-            <input  name="adoption_interest[other]" type="text">
+            <input  name="00NU00000055spr" type="text">
         </label>
     </fieldset>
     <div>
         <label>
             <p>Any feedback you'd like to share with us?</p>
-            <textarea cols="50" name="adoption_interest[feedback]" rows="6"></textarea>
+            <textarea cols="50" name="00NU00000056Rls" rows="6"></textarea>
         </label>
     </div>
     <input name="commit" type="submit" value="Submit" role="button" aria-disabled="false" />
