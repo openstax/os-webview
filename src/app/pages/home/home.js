@@ -1,10 +1,10 @@
 import BaseView from '~/helpers/backbone/view';
 import {props} from '~/helpers/backbone/decorators';
+import appView from '~/components/shell/shell';
 import {template} from './home.hbs';
-import Quotes from './quotes/quotes';
+import Quotes from '~/components/quotes/quotes';
+import Buckets from '~/components/buckets/buckets';
 import Education from './education/education';
-import Buckets from './buckets/buckets';
-
 
 const books = [
     'astronomy',
@@ -25,6 +25,9 @@ const books = [
 export default class Home extends BaseView {
 
     onRender() {
+        this.updateHeaderStyle();
+        window.addEventListener('scroll', this.updateHeaderStyle.bind(this));
+
         // Lazy-load a random book
         this.showBookBanner(books[Math.floor(Math.random()*books.length)]);
 
@@ -43,4 +46,31 @@ export default class Home extends BaseView {
             view.currentBookBanner = book;
         });
     }
+
+    updateHeaderStyle() {
+        if (!appView.header || !this.el) {
+            return;
+        }
+
+        let metaNavHeight = appView.header.metaNavHeight;
+
+        if (window.pageYOffset > metaNavHeight && !appView.header.isPinned()) {
+            let height = appView.header.height;
+
+            appView.header.reset().collapse().pin();
+            this.el.style.paddingTop = `${height / 10}rem`;
+        } else if (window.pageYOffset <= metaNavHeight && !appView.header.isTransparent()) {
+            appView.header.reset().transparent();
+            this.el.style.paddingTop = '0';
+        }
+    }
+
+    onBeforeClose() {
+        window.removeEventListener('scroll', this.updateHeaderStyle.bind(this));
+
+        if (appView.header) {
+            appView.header.reset();
+        }
+    }
+
 }

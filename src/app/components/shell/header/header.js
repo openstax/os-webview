@@ -14,9 +14,8 @@ class Header extends BaseView {
 
         this.templateHelpers = {
             collapsed: () => this.meta.collapsed,
-            sticky: () => this.meta.sticky,
-            transparent: () => this.meta.transparent,
-            visible: () => this.meta.visible
+            fixed: () => this.meta.fixed,
+            transparent: () => this.meta.transparent
         };
     }
 
@@ -38,8 +37,8 @@ class Header extends BaseView {
     }
 
     pin() {
-        this.meta.sticky = true;
-        this.classList('add', 'sticky');
+        this.meta.fixed = true;
+        this.classList('add', 'fixed');
         return this;
     }
 
@@ -49,22 +48,13 @@ class Header extends BaseView {
         return this;
     }
 
-    visible() {
-        this.meta.visible = true;
-        this.classList('add', 'visible');
-        return this;
-    }
-
     reset() {
         this.meta.collapsed = false;
         this.meta.pinned = false;
         this.meta.transparent = false;
-        this.meta.visible = false;
         this.classList('remove', 'collapsed');
-        this.classList('remove', 'sticky');
+        this.classList('remove', 'fixed');
         this.classList('remove', 'transparent');
-        this.classList('remove', 'visible');
-
         return this;
     }
 
@@ -73,15 +63,11 @@ class Header extends BaseView {
     }
 
     isPinned() {
-        return !!this.classList('contains', 'sticky');
+        return !!this.classList('contains', 'fixed');
     }
 
     isTransparent() {
         return !!this.classList('contains', 'transparent');
-    }
-
-    isVisible() {
-        return !!this.classList('contains', 'visible');
     }
 
     get height() {
@@ -95,57 +81,15 @@ class Header extends BaseView {
         return height;
     }
 
-    get secondaryNavHeight() {
-        let secondaryNav = this.el.querySelector('.meta-nav');
+    get metaNavHeight() {
+        let metaNav = this.el.querySelector('.meta-nav');
         let height = 0;
 
-        if (secondaryNav && typeof secondaryNav === 'object') {
-            height = secondaryNav.offsetHeight;
+        if (metaNav && typeof metaNav === 'object') {
+            height = metaNav.offsetHeight;
         }
 
         return height;
-    }
-
-    @on('click nav > a')
-    blurLogo(e) {
-        e.delegateTarget.blur();
-    }
-
-    @on('click .expand-nav')
-    toggleNavMenu() {
-        let header = this.el.querySelector('.page-header');
-
-        header.classList.toggle('active');
-    }
-
-    @on('click .active:not(.open) .main-nav .parent > a')
-    addOpen(e) {
-        e.stopPropagation();
-        e.preventDefault();
-
-        let header = this.el.querySelector('.page-header');
-        let $this = e.target;
-        let parentItem = $this.parentNode;
-        let secondaryNav = e.delegateTarget.nextElementSibling;
-
-        header.classList.add('open');
-        parentItem.classList.add('open');
-        secondaryNav.classList.add('open');
-    }
-
-    @on('click .active .nav-menu-item .back')
-    removeOpen(e) {
-        e.stopPropagation();
-        e.preventDefault();
-
-        let header = this.el.querySelector('.page-header');
-        let $this = e.target;
-        let secondaryNav = this.el.querySelector('.secondary-nav.open');
-        let parentItem = $this.parentNode;
-
-        header.classList.remove('open');
-        parentItem.classList.remove('open');
-        secondaryNav.classList.remove('open');
     }
 
     @on('click .skiptocontent a')
@@ -169,34 +113,69 @@ class Header extends BaseView {
         }
     }
 
-    onRender() {
-        this.updateHeaderStyle();
-        window.addEventListener('scroll', this.updateHeaderStyle.bind(this));
+    toggleMetaNav(e) {
+        let button = e.currentTarget;
+
+        button.classList.toggle('expanded');
+        button.setAttribute('aria-expanded', !!button.classList.contains('expanded'));
+
+        for (let a of button.querySelectorAll('a')) {
+            if (button.classList.contains('expanded')) {
+                a.setAttribute('tabindex', '0');
+            } else {
+                a.setAttribute('tabindex', '-1');
+            }
+        }
     }
 
-    updateHeaderStyle() {
-        if (!this || !this.el) {
-            return;
-        }
+    @on('click .expand')
+    onClickToggleMetaNav(e) {
+        this.toggleMetaNav(e);
+    }
 
-        let headerHeight = this.height;
-
-        if (window.pageYOffset >= headerHeight + 20) {
-            this.pin().visible();
-        } else if (window.pageYOffset < headerHeight + 19 && window.pageYOffset >= headerHeight + 10) {
-            this.reset().pin();
-        } else {
-            this.reset();
+    @on('keydown .expand')
+    onKeydownToggleMetaNav(e) {
+        if (document.activeElement === e.currentTarget && (e.keyCode === 13 || e.keyCode === 32)) {
+            e.preventDefault();
+            this.toggleMetaNav(e);
         }
+    }
+
+    @on('focus a[aria-haspopup="true"]')
+    openDropdownMenu(e) {
+        let menu = e.currentTarget.nextElementSibling;
+
+        menu.setAttribute('aria-expanded', 'true');
+
+        for (let a of menu.querySelectorAll('a')) {
+            a.setAttribute('tabindex', '0');
+        }
+    }
+
+    closeDropdownMenus() {
+        let menus = this.el.querySelectorAll('.dropdown-menu');
+
+        for (let menu of menus) {
+            if (!menu.contains(document.activeElement)) {
+                menu.setAttribute('aria-expanded', 'false');
+
+                for (let a of menu.querySelectorAll('a')) {
+                    a.setAttribute('tabindex', '-1');
+                }
+            }
+        }
+    }
+
+    onRender() {
+        document.addEventListener('focus', this.closeDropdownMenus.bind(this), true);
+        document.addEventListener('click', this.closeDropdownMenus.bind(this), true);
     }
 
     onBeforeClose() {
-        window.removeEventListener('scroll', this.updateHeaderStyle.bind(this));
-
-        if (this) {
-            this.reset();
-        }
+        document.removeEventListener('focus', this.closeDropdownMenus.bind(this), true);
+        document.removeEventListener('click', this.closeDropdownMenus.bind(this), true);
     }
+
 }
 
 let header = new Header();

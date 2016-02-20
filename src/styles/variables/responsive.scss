@@ -4,9 +4,6 @@ $breakpoints: (
     desktop: 1280px
 );
 
-// boxed view 1200px
-$boxed-width: 120rem;
-
 @function breakpoints($breakpoint) {
     @if map-has-key($breakpoints, $breakpoint) {
         @return map-get($breakpoints, $breakpoint);
