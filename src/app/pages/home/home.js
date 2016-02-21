@@ -52,16 +52,14 @@ export default class Home extends BaseView {
             return;
         }
 
-        let secondaryNavHeight = appView.header.secondaryNavHeight;
+        let headerHeight = appView.header.height;
 
-        if (window.pageYOffset > secondaryNavHeight && !appView.header.isPinned()) {
-            let height = appView.header.height;
-
-            appView.header.reset().collapse().pin();
-            this.el.style.paddingTop = `${height / 10}rem`;
-        } else if (window.pageYOffset <= secondaryNavHeight && !appView.header.isTransparent()) {
-            appView.header.reset().transparent();
-            this.el.style.paddingTop = '0';
+        if (window.pageYOffset >= headerHeight + 20) {
+            appView.header.pin().visible();
+        } else if (window.pageYOffset < headerHeight + 19 && window.pageYOffset >= headerHeight + 10) {
+            appView.header.reset().pin();
+        } else {
+            appView.header.reset();
         }
     }
 
