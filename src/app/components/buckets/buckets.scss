@@ -7,17 +7,18 @@
     }
 }
 
-.buckets {
+.buckets-section {
     padding: 3.8vw;
-    width: 100vw;
+    margin: 0 auto;
+    max-width: 120rem;
 
     .bucket {
         color: color(neutral-lightest);
         display: flex;
         margin: 0 auto 3.8vw;
-        max-width: 120rem;
+        max-width: 100%;
         min-height: 30rem;
-        width: 100%;
+        width: 90vw;
 
         @include collapsed {
             flex-direction: column;
@@ -155,7 +156,7 @@
         }
 
         .quote {
-            flex: 2 0 0;
+            flex: 2 0;
             padding: 3rem;
             position: relative;
 

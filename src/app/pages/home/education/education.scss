@@ -19,7 +19,7 @@
     }
 }
 
-.education {
+.education-banner {
     background-image: url('/images/home/education/background.jpg');
     background-position: center center;
     background-repeat: no-repeat;
@@ -27,7 +27,6 @@
     height: 47.5vw;
     overflow: hidden;
     position: relative;
-    width: 100vw;
 
     @include collapsed {
         background-size: cover;
@@ -164,13 +163,14 @@
     }
 
     .links {
-        left: 50%;
+        left: 0;
+        right: 0;
         top: 34.43vw;
         z-index: 3;
 
         ul {
             display: flex;
-            left: -50%;
+            justify-content: center;
             list-style-type: none;
             margin: 0;
             padding: 0;
