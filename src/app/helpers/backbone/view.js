@@ -36,7 +36,6 @@ class Region {
         this.views = this.views || [];
         this.views.push(view);
         this.el.appendChild(view.el);
-        view.setElement(view.el);
         view.render();
         view.onShow();
     }
@@ -78,6 +77,70 @@ class BaseView extends Backbone.View {
     constructor() {
         super(...arguments);
         this.regions = new Regions(this.regions, this);
+    }
+
+    delegate(eventName, selector, listener) {
+        /* eslint no-param-reassign: 0 */
+
+        if (typeof selector === 'function') {
+            listener = selector;
+            selector = null;
+        }
+
+        if (selector) {
+            let nodes = this.el.querySelectorAll(selector);
+
+            for (let node of nodes) {
+                node.addEventListener(eventName, listener, true);
+                this._domEvents.push({el: node, eventName: eventName, listener: listener, selector: selector});
+            }
+        } else {
+            this.el.addEventListener(eventName, listener, true);
+            this._domEvents.push({el: this.el, eventName: eventName, listener: listener});
+        }
+
+        return this;
+    }
+
+    undelegate(eventName, selector, listener) {
+        /* eslint no-param-reassign: 0 */
+
+        if (typeof selector === 'function') {
+            listener = selector;
+            selector = null;
+        }
+
+        let handlers = this._domEvents.slice();
+
+        for (let i = 0, len = handlers.length; i < len; i++) {
+            let item = handlers[i];
+            let match = item.eventName === eventName &&
+                item.listener === listener &&
+                (selector ? item.selector === selector : true);
+
+            if (!match) {
+                continue;
+            }
+
+            item.el.removeEventListener(eventName, listener, true);
+            this._domEvents.splice(handlers.indexOf(item), 1);
+        }
+
+        return this;
+    }
+
+    undelegateEvents() {
+        if (this.el) {
+            for (let i = 0, len = this._domEvents.length; i < len; i++) {
+                let item = this._domEvents[i];
+
+                item.el.removeEventListener(item.eventName, item.handler);
+            }
+
+            this._domEvents.length = 0;
+        }
+
+        return this;
     }
 
     renderDom() {
@@ -143,6 +206,7 @@ class BaseView extends Backbone.View {
         (async function() {
             view.onBeforeRender();
             await view._render();
+            view.setElement(view.el);
             view.onRender();
 
             if (view._rendered) {
