@@ -40,7 +40,7 @@ export default class InterestForm extends BaseView {
     @on(`change ${otherBoxSelector}`)
     otherBoxChange(e) {
         let otherText = this.el.querySelector(otherTextSelector),
-            otherBox = e.delegateTarget;
+            otherBox = e.currentTarget;
 
         if (!otherBox.checked) {
             otherText.value = '';
