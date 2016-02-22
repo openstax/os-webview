@@ -169,6 +169,34 @@ class Header extends BaseView {
         }
     }
 
+    onRender() {
+        this.updateHeaderStyle();
+        window.addEventListener('scroll', this.updateHeaderStyle.bind(this));
+    }
+
+    updateHeaderStyle() {
+        if (!this || !this.el) {
+            return;
+        }
+
+        let headerHeight = this.height;
+
+        if (window.pageYOffset >= headerHeight + 20) {
+            this.pin().visible();
+        } else if (window.pageYOffset < headerHeight + 19 && window.pageYOffset >= headerHeight + 10) {
+            this.reset().pin();
+        } else {
+            this.reset();
+        }
+    }
+
+    onBeforeClose() {
+        window.removeEventListener('scroll', this.updateHeaderStyle.bind(this));
+
+        if (this) {
+            this.reset();
+        }
+    }
 }
 
 let header = new Header();

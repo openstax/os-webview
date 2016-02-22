@@ -155,7 +155,7 @@
 
         @include desktop {
             order: 1;
-            background: color(neutral-lighter);
+            background-color: lighten(color(neutral-lighter), 8%);
             height: 5rem;
 
             @at-root .sticky#{&} {
@@ -326,7 +326,7 @@
                 width: 100%;
                 transform: translate3d(0, 0, 0);
                 transition: transform 0.2s;
-                background: color(neutral-lightest);
+                background-color: rgba(color(neutral-lightest), 0.97);
                 text-shadow: none;
             }
 
