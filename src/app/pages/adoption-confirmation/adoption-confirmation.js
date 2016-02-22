@@ -19,12 +19,10 @@ function hookUpCalculator(tableBody) {
             tPrice *= (0.9 + 0.5 + 0.25)/3 + (0.1 + 0.5 + 0.75)/6;
         }
 
-        tds[3].textContent = ((tPrice - osPrice) * stuCount * 6).toLocaleString(
-            'en-US',
-            {
-                style: 'currency',
-                currency: 'USD'
-            });
+        tds[3].textContent = ((tPrice - osPrice) * stuCount * 6).toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD'
+        });
     }
 
     studentCountEl.addEventListener('change', () => {
@@ -43,13 +41,11 @@ function hookUpCalculator(tableBody) {
         node.addEventListener('change', () => {
             calculateRow(row, Array.from(rows).indexOf(row));
             if (!(row === rows[0] && node === inputs[1])) {
-                node.value = (+node.value).toLocaleString(
-                    'en-US',
-                    {
-                        style: 'decimal',
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                    });
+                node.value = (+node.value).toLocaleString('en-US', {
+                    style: 'decimal',
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
             }
         });
     };
