@@ -52,9 +52,9 @@ export default class Subjects extends BaseView {
                 Kinematics chapters, but wow, what a great way to get this information to
                 people in our field.`,
             attribution: 'Maureen Caroll, ASET',
-            facultyResources: [
+            instructorResources: [
                 {
-                    title: 'Getting Started Guide for Faculty',
+                    title: 'Getting Started Guide for Instructors',
                     iconUrl: 'http://wwwimages.adobe.com/content/dam/acom/en/legal/images/badges/Adobe_PDF_file_icon_32x32.png',
                     downloadUrl: '/downloads'
                 },
