@@ -1,19 +1,2 @@
 @import 'variables';
 @import 'mixins';
-
-.accessibility-page {
-    display: flex;
-    flex-flow: column nowrap;
-    width: 100vw;
-
-    .boxed {
-        display: flex;
-        flex-flow: column nowrap;
-        max-width: $boxed-width;
-        margin: 0 auto 4rem;
-        padding: 0 1.5rem;
-    }
-
-}
-
-
