@@ -1,6 +1,9 @@
 import BaseView from '~/helpers/backbone/view';
 import {on, props} from '~/helpers/backbone/decorators';
+import linkHelper from '~/helpers/link';
 import {template} from './header.hbs';
+
+// NOTE: This needs to be refactored into multiple views
 
 @props({
     template: template
@@ -113,31 +116,46 @@ class Header extends BaseView {
         }
     }
 
-    toggleMetaNav(e) {
+    toggleFullScreenNav(e) {
         let button = e.currentTarget;
+        let menus = this.el.querySelector('.menus');
 
-        button.classList.toggle('expanded');
-        button.setAttribute('aria-expanded', !!button.classList.contains('expanded'));
+        menus.classList.toggle('hidden');
+        document.body.classList.toggle('no-scroll');
 
-        for (let a of button.querySelectorAll('a')) {
-            if (button.classList.contains('expanded')) {
-                a.setAttribute('tabindex', '0');
-            } else {
-                a.setAttribute('tabindex', '-1');
-            }
-        }
+        window.requestAnimationFrame(() => {
+            button.classList.toggle('expanded');
+            button.setAttribute('aria-expanded', !!button.classList.contains('expanded'));
+        });
+    }
+
+    closeFullScreenNav() {
+        let button = this.el.querySelector('.expand');
+        let menus = this.el.querySelector('.menus');
+
+        menus.classList.add('hidden');
+        document.body.classList.remove('no-scroll');
+
+        window.requestAnimationFrame(() => {
+            button.classList.remove('expanded');
+            button.setAttribute('aria-expanded', 'false');
+        });
     }
 
     @on('click .expand')
-    onClickToggleMetaNav(e) {
-        this.toggleMetaNav(e);
+    onClickToggleFullScreenNav(e) {
+        let menus = this.el.querySelector('.menus');
+
+        if (!menus.contains(document.activeElement)) {
+            this.toggleFullScreenNav(e);
+        }
     }
 
     @on('keydown .expand')
-    onKeydownToggleMetaNav(e) {
+    onKeydownToggleFullScreenNav(e) {
         if (document.activeElement === e.currentTarget && (e.keyCode === 13 || e.keyCode === 32)) {
             e.preventDefault();
-            this.toggleMetaNav(e);
+            this.toggleFullScreenNav(e);
         }
     }
 
@@ -152,11 +170,18 @@ class Header extends BaseView {
         }
     }
 
-    closeDropdownMenus() {
+    resetHeader(e) {
+        if (linkHelper.validUrlClick(e)) {
+            this.closeDropdownMenus(true);
+            this.closeFullScreenNav();
+        }
+    }
+
+    closeDropdownMenus(all) {
         let menus = this.el.querySelectorAll('.dropdown-menu');
 
         for (let menu of menus) {
-            if (!menu.contains(document.activeElement)) {
+            if (all || !menu.contains(document.activeElement)) {
                 menu.setAttribute('aria-expanded', 'false');
 
                 for (let a of menu.querySelectorAll('a')) {
@@ -169,11 +194,32 @@ class Header extends BaseView {
     onRender() {
         document.addEventListener('focus', this.closeDropdownMenus.bind(this), true);
         document.addEventListener('click', this.closeDropdownMenus.bind(this), true);
+
+        let metaMenu = document.createDocumentFragment();
+        let mainMenu = document.createDocumentFragment();
+        let expandedMenu = this.el.querySelector('.expanded-menu');
+        let expandedMetaMenu = this.el.querySelector('.expanded-meta-menu');
+        let mainNavMenu = this.el.querySelector('.main-menu').querySelectorAll('.nav-menu-item:not(.expand)');
+        let metaNavMenu = this.el.querySelector('.meta-menu').querySelectorAll('.nav-menu-item:not(:last-child)');
+
+        for (let li of mainNavMenu) {
+            mainMenu.appendChild(li.cloneNode(true));
+        }
+
+        for (let li of metaNavMenu) {
+            metaMenu.appendChild(li.cloneNode(true));
+        }
+
+        expandedMenu.appendChild(mainMenu);
+        expandedMetaMenu.appendChild(metaMenu);
+
+        this.el.addEventListener('click', this.resetHeader.bind(this), true);
     }
 
     onBeforeClose() {
         document.removeEventListener('focus', this.closeDropdownMenus.bind(this), true);
         document.removeEventListener('click', this.closeDropdownMenus.bind(this), true);
+        this.el.removeEventListener('click', this.resetHeader.bind(this), true);
     }
 
 }

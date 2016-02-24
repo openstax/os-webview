@@ -47,6 +47,10 @@ a {
     display: none;
 }
 
+.no-scroll {
+    overflow: hidden;
+}
+
 #main {
     animation: fadeIn ease-in 1;
     animation-delay: 0.2s;

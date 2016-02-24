@@ -53,10 +53,9 @@ export default class Home extends BaseView {
         }
 
         let metaNavHeight = appView.header.metaNavHeight;
+        let height = appView.header.height;
 
         if (window.pageYOffset > metaNavHeight && !appView.header.isPinned()) {
-            let height = appView.header.height;
-
             appView.header.reset().collapse().pin();
             this.el.style.paddingTop = `${height / 10}rem`;
         } else if (window.pageYOffset <= metaNavHeight && !appView.header.isTransparent()) {

@@ -5,7 +5,7 @@
     </div>
 
     <nav class="meta-nav">
-        <ul class="nav-menu" role="menu" aria-label="Meta navigation menu">
+        <ul class="nav-menu meta-menu" role="menu" aria-label="Meta navigation menu">
             <li class="nav-menu-item"><a href="/news" role="menuitem">News</a></li>
             <li class="nav-menu-item"><a href="/contact" role="menuitem">Contact</a></li>
             <li class="nav-menu-item"><a href="/give" role="menuitem">Give</a></li>
@@ -30,7 +30,7 @@
             <span class="logo-quote">Access. The future of education.</span>
         </span>
 
-        <ul class="nav-menu">
+        <ul class="nav-menu main-menu">
             <li class="nav-menu-item dropdown" role="presentation">
                 <a href="/subjects" role="menuitem" aria-haspopup="true">
                     Subjects <span class="caret"></span>
@@ -63,16 +63,15 @@
             </li>
             <li class="nav-menu-item expand" role="menuitem" aria-haspopup="true" aria-label="Toggle Meta Navigation Menu" tabindex="0">
                 <span class="cls"></span>
-                <span>
-                    <ul class="sub-menu" role="menu" aria-expanded="false" aria-label="Meta navigation menu">
-                        <li><a href="/news" role="menuitem" tabindex="-1">News</a></li>
-                        <li><a href="/contact" role="menuitem" tabindex="-1">Contact</a></li>
-                        <li><a href="/give" role="menuitem" tabindex="-1">Give</a></li>
-                        <li><a href="/login" role="menuitem" tabindex="-1">Login</a></li>
-                    </ul>
-                </span>
+                <span></span>
                 <span class="cls"></span>
             </li>
+            <div class="menu-wrap">
+                <div class="menus hidden">
+                    <ul class="expanded-menu" role="menu"></ul>
+                    <ul class="expanded-meta-menu" role="menu"></ul>
+                </div>
+            </div>
         </ul>
     </nav>
 </header>
