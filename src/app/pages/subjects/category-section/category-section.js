@@ -11,14 +11,14 @@ import Book from './book/book';
 })
 export default class CategorySection extends BaseView {
 
-    constructor(data, model) {
+    constructor(category, books, model) {
         super();
 
-        this.books = data.books;
-        this.category = data.category;
+        this.category = category;
+        this.books = books;
         this.model = model;
         this.templateHelpers = {
-            categoryName: data.category
+            categoryName: category
         };
 
         this.model.on('change:selectedFilter', () => this.setState());

@@ -12,14 +12,15 @@ import GetThisTitle from '~/components/get-this-title/get-this-title';
 })
 export default class Book extends BaseView {
 
-    @on('click img')
-    selectMe() {
+    @on('click')
+    selectMe(event) {
         this.model.set('selectedBook', this.isSelected() ? false : this.data);
+        event.stopPropagation();
     }
 
     @on('click .cta > .btn')
     goToDetails() {
-        router.navigate(`/details?${ this.data.title}`, {
+        router.navigate(`/details?${this.data.id}`, {
             trigger: true
         });
     }
@@ -28,7 +29,7 @@ export default class Book extends BaseView {
         super();
 
         this.templateHelpers = {
-            coverUrl: data.coverUrl
+            coverUrl: data.cover_url || `https://placeholdit.imgix.net/~text?txtsize=33&txt=${data.title}&w=220&h=220`
         };
         this.data = data;
         this.model = model;

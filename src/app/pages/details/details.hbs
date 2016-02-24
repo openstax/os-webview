@@ -21,7 +21,7 @@
     <div class="text-content">
         <section class="block book-info">
             <div class="info-row">
-                <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Sub-ject&w=200&h=180" />
+                <img src="{{cover}}" />
                 <section class="details">
                     <h1 class="title">{{title}}</h1>
                     <div class="tabs">
@@ -30,8 +30,8 @@
                         <a href="#details" class="tab"><span>Details</span></a>
                         <a href="#errata" class="tab"><span>Errata</span></a>
                     </div>
-                    <p class="blurb">{{bookInfo.blurb}}</p>
-                    <h2>{{bookInfo.mainAuthorTitle}}</h2>
+                    <p class="blurb">{{{description}}}</p>
+                    <h2>Senior Contributing Authors</h2>
                     {{{bookInfo.mainAuthorHtml}}}
                     <div class="links">
                         <a class="go-to" href="#details">See all authors</a>

@@ -67,7 +67,7 @@ $text-black3: rgba(0, 0, 0, 0.54);
         }
     }
 
-    .book-viewer {
+    .books-by-category {
         background-color: $light-gray;
         padding: 5rem 10rem;
 
@@ -95,6 +95,10 @@ $text-black3: rgba(0, 0, 0, 0.54);
                 img {
                     box-shadow: 0 0 1rem neutral-color(light);
                 }
+            }
+
+            > img {
+                width: 22rem;
             }
         }
 
