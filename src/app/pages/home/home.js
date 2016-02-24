@@ -7,9 +7,9 @@ import Buckets from '~/components/buckets/buckets';
 import Education from './education/education';
 
 const books = [
-    'astronomy',
-    'biology',
-    'chemistry',
+    // 'astronomy',
+    // 'biology',
+    // 'chemistry',
     'us-history'
 ];
 

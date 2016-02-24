@@ -139,21 +139,30 @@
         }
     }
 
+    canvas,
+    .video,
     .video-banner {
-        background-image: url('/images/home/subjects/us-history/student.png');
         height: 41.7vw;
         left: 46.2vw;
         position: absolute;
         top: 14vw;
-        width: 39.85vw;
+        width: 35.72vw;
         z-index: 2;
 
         @include tablet {
             height: 56.2vw;
             left: 50.13vw;
             top: 25.32vw;
-            width: 53.7vw;
+            width: 48.14vw;
         }
+    }
+
+    .video {
+        display: none;
+    }
+
+    .video-banner {
+        background-image: url('/images/home/subjects/us-history/student.png');
     }
 
     .now-i-can {
