@@ -1,3 +1,4 @@
+import Backbone from 'backbone';
 import BaseView from '~/helpers/backbone/view';
 import {on, props} from '~/helpers/backbone/decorators';
 import linkHelper from '~/helpers/link';
@@ -171,9 +172,15 @@ class Header extends BaseView {
     }
 
     resetHeader(e) {
-        if (linkHelper.validUrlClick(e)) {
+        let urlClick = linkHelper.validUrlClick(e);
+
+        this.reset();
+
+        if (urlClick) {
             this.closeDropdownMenus(true);
             this.closeFullScreenNav();
+        } else if (Backbone.history.location.pathname === '/') {
+            this.updateHeaderStyle();
         }
     }
 
@@ -191,7 +198,25 @@ class Header extends BaseView {
         }
     }
 
+    updateHeaderStyle() {
+        let metaNavHeight = this.metaNavHeight;
+        let height = this.height;
+
+        if (window.pageYOffset > metaNavHeight && !this.isPinned()) {
+            this.reset().collapse().pin();
+            document.body.style.paddingTop = `${height / 10}rem`;
+        } else if (window.pageYOffset <= metaNavHeight) {
+            if (Backbone.history.location.pathname === '/' && !this.isTransparent()) {
+                this.reset().transparent();
+            }
+
+            document.body.style.paddingTop = '0';
+        }
+    }
+
     onRender() {
+        this.updateHeaderStyle();
+
         document.addEventListener('focus', this.closeDropdownMenus.bind(this), true);
         document.addEventListener('click', this.closeDropdownMenus.bind(this), true);
 
@@ -214,9 +239,12 @@ class Header extends BaseView {
         expandedMetaMenu.appendChild(metaMenu);
 
         this.el.addEventListener('click', this.resetHeader.bind(this), true);
+
+        window.addEventListener('scroll', this.updateHeaderStyle.bind(this));
     }
 
     onBeforeClose() {
+        window.removeEventListener('scroll', this.updateHeaderStyle.bind(this));
         document.removeEventListener('focus', this.closeDropdownMenus.bind(this), true);
         document.removeEventListener('click', this.closeDropdownMenus.bind(this), true);
         this.el.removeEventListener('click', this.resetHeader.bind(this), true);

@@ -25,8 +25,7 @@ const books = [
 export default class Home extends BaseView {
 
     onRender() {
-        this.updateHeaderStyle();
-        window.addEventListener('scroll', this.updateHeaderStyle.bind(this));
+        appView.header.updateHeaderStyle();
 
         // Lazy-load a random book
         this.showBookBanner(books[Math.floor(Math.random()*books.length)]);
@@ -45,31 +44,6 @@ export default class Home extends BaseView {
             view.regions.bookBanner.show(new Page());
             view.currentBookBanner = book;
         });
-    }
-
-    updateHeaderStyle() {
-        if (!appView.header || !this.el) {
-            return;
-        }
-
-        let metaNavHeight = appView.header.metaNavHeight;
-        let height = appView.header.height;
-
-        if (window.pageYOffset > metaNavHeight && !appView.header.isPinned()) {
-            appView.header.reset().collapse().pin();
-            this.el.style.paddingTop = `${height / 10}rem`;
-        } else if (window.pageYOffset <= metaNavHeight && !appView.header.isTransparent()) {
-            appView.header.reset().transparent();
-            this.el.style.paddingTop = '0';
-        }
-    }
-
-    onBeforeClose() {
-        window.removeEventListener('scroll', this.updateHeaderStyle.bind(this));
-
-        if (appView.header) {
-            appView.header.reset();
-        }
     }
 
 }

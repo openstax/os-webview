@@ -66,6 +66,7 @@ class App {
                 router.navigate(href, {
                     trigger: (el.getAttribute('data-trigger') !== false)
                 });
+                window.scrollTo(0, 0);
             }
         });
     }

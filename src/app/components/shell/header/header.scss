@@ -120,6 +120,37 @@
             padding-bottom: 0.5rem;
             padding-top: 0.5rem;
             position: relative;
+
+            &:active,
+            &:focus,
+            &:hover {
+                &::after {
+                    background-color: color(green);
+                    bottom: -0.5rem;
+                    content: '';
+                    height: 0.5rem;
+                    left: 1rem;
+                    outline: 0;
+                    position: absolute;
+                    right: 1rem;
+                }
+
+                + .dropdown-menu {
+                    display: block;
+                }
+            }
+
+            @at-root .transparent#{&} {
+                color: color(neutral-lightest);
+
+                &:active,
+                &:focus,
+                &:hover {
+                    &::after {
+                        box-shadow: 0 0 0.1rem rgba(color(neutral-dark), 0.6);
+                    }
+                }
+            }
         }
 
         .nav-menu-item {
@@ -145,39 +176,6 @@
                 font-size: 2.4rem;
                 margin-left: 2rem;
             }
-
-            a {
-                &:active,
-                &:focus,
-                &:hover {
-                    &::after {
-                        background-color: color(green);
-                        bottom: -0.5rem;
-                        content: '';
-                        height: 0.5rem;
-                        left: 1rem;
-                        outline: 0;
-                        position: absolute;
-                        right: 1rem;
-                    }
-
-                    + .dropdown-menu {
-                        display: block;
-                    }
-                }
-
-                @at-root .transparent#{&} {
-                    color: color(neutral-lightest);
-
-                    &:active,
-                    &:focus,
-                    &:hover {
-                        &::after {
-                            box-shadow: 0 0 0.1rem rgba(color(neutral-dark), 0.6);
-                        }
-                    }
-                }
-            }
         }
     }
 
@@ -192,25 +190,36 @@
         > a {
             display: inline-block;
         }
-    }
 
-    .logo {
-        display: inline-block;
-        margin-right: 2.5rem;
-
-        .logo-color {
+        .logo {
             display: inline-block;
+            margin-right: 2.5rem;
 
-            @at-root .transparent#{&} {
-                display: none;
-            }
-        }
-
-        .logo-white {
-            display: none;
-
-            @at-root .transparent#{&} {
+            .logo-color {
                 display: inline-block;
+
+                @at-root .transparent#{&} {
+                    display: none;
+                }
+            }
+
+            .logo-white {
+                display: none;
+
+                @at-root .transparent#{&} {
+                    display: inline-block;
+                }
+            }
+
+            a {
+                &:active,
+                &:focus,
+                &:hover {
+                    &::after {
+                        background-color: transparent;
+                        box-shadow: none;
+                    }
+                }
             }
         }
     }
@@ -300,6 +309,7 @@
 
                         &::after {
                             background-color: transparent;
+                            box-shadow: none;
                         }
                     }
                 }
