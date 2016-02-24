@@ -12,6 +12,13 @@ class Router extends Backbone.Router {
             shell.load('home');
         });
 
+        this.route(/subjects\/.*/, 'subjects', () => {
+            if (!(shell.regions.main.views &&
+                shell.regions.main.views[0].constructor.name === 'Subjects')) {
+                shell.load('subjects');
+            }
+        });
+
         ['about', 'books', 'contact', 'news', 'license', 'subjects', 'details',
         'interest', 'adoption', 'adoption-confirmation', 'comp-copy', 'accessibility-statement']
         .forEach(this.standardRoute, this);
