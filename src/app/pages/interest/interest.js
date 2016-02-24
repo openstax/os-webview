@@ -31,7 +31,8 @@ let bookTitles = [
 @props({
     template: template,
     templateHelpers: {
-        titles: bookTitles
+        titles: bookTitles,
+        urlOrigin: window.location.origin
     }
 })
 export default class InterestForm extends BaseView {
