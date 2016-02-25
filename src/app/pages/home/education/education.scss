@@ -1,7 +1,25 @@
 @import 'variables';
 @import 'mixins';
 
-.education {
+@mixin collapsed {
+    @media (max-width: 760px) {
+        @content;
+    }
+}
+
+@mixin expanded {
+    @media (min-width: 761px) {
+        @content;
+    }
+}
+
+@mixin widescreen {
+    @media (min-width: 1281px) {
+        @content;
+    }
+}
+
+.education-banner {
     background-image: url('/images/home/education/background.jpg');
     background-position: center center;
     background-repeat: no-repeat;
@@ -10,12 +28,24 @@
     overflow: hidden;
     position: relative;
 
+    @include collapsed {
+        background-size: cover;
+        height: auto;
+
+        > div {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
     .square-1,
     .square-2,
     .student,
     .quote,
     .links {
-        position: absolute;
+        @include expanded {
+            position: absolute;
+        }
     }
 
     .square-1,
@@ -23,6 +53,10 @@
         background-color: rgba(color(blue), 0.2);
         position: absolute;
         z-index: 0;
+
+        @include collapsed {
+            display: none;
+        }
     }
 
     .square-1 {
@@ -58,12 +92,20 @@
     .quote {
         background-color: rgba(color(cyan), 0.7);
         color: color(neutral-lightest);
-        height: 26.64vw;
-        left: 7.86vw;
         padding: 2vw 2.5vw;
-        top: 6.07vw;
-        width: calc(61rem - 5vw);
         z-index: 1;
+
+        @include collapsed {
+            background-color: rgba(color(cyan), 0.9);
+            padding: 9.375vw 6.25vw;
+        }
+
+        @include expanded {
+            height: 26.64vw;
+            left: 7.86vw;
+            top: 6.07vw;
+            width: calc(61rem - 5vw);
+        }
 
         @include widescreen {
             width: 42.64vw;
@@ -73,6 +115,10 @@
             display: block;
             font-size: calc(0.8rem + 1.08vw);
             max-width: calc(49rem - 5vw);
+
+            @include collapsed {
+                font-size: 2.4rem;
+            }
 
             @include widescreen {
                 font-size: 1.85vw;
@@ -84,6 +130,10 @@
             display: block;
             font-size: calc(0.5rem + 1.08vw);
             max-width: calc(49rem - 5vw);
+
+            @include collapsed {
+                font-size: 1.8rem;
+            }
 
             @include widescreen {
                 font-size: 1.35vw;
@@ -98,6 +148,12 @@
             line-height: calc(1.7rem + 3.5vw);
             max-width: calc(49rem - 5vw);
 
+            @include collapsed {
+                font-size: 6.9rem;
+                line-height: 0.9;
+                margin-bottom: 1rem;
+            }
+
             @include widescreen {
                 font-size: calc(5.3rem + 1.35vw);
                 line-height: calc(5.5rem + 1.35vw);
@@ -107,22 +163,29 @@
     }
 
     .links {
-        left: 50%;
+        left: 0;
+        right: 0;
         top: 34.43vw;
         z-index: 3;
 
         ul {
             display: flex;
-            left: -50%;
+            justify-content: center;
             list-style-type: none;
             margin: 0;
             padding: 0;
             position: relative;
+
+            @include collapsed {
+                align-items: stretch;
+                display: flex;
+                flex-direction: column;
+                left: 0;
+            }
         }
 
         .btn {
             box-shadow: 0 0 1rem rgba(color(neutral-dark), 0.5);
-            height: 7.88vw;
             margin: 0 1.15vw;
             min-height: 10.5rem;
             min-width: 37rem;
@@ -130,6 +193,13 @@
             text-align: left;
             text-transform: none;
             width: 27.76vw;
+
+            @include collapsed {
+                display: block;
+                margin: 0;
+                padding: 2.5rem 3.5rem;
+                width: auto;
+            }
 
             .title {
                 display: block;

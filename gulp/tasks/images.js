@@ -5,7 +5,7 @@ var pi = require('gulp-load-plugins')({
 });
 
 function images() {
-    return gulp.src(`${config.src}/**/*.{png,jpg,jpeg,gif,svg}`, {
+    return gulp.src(`${config.src}/**/*.{png,jpg,jpeg,gif,svg,mp4}`, {
         since: gulp.lastRun('images')
     })
     .pipe(pi.if(config.env === 'production', pi.imagemin({
@@ -23,5 +23,5 @@ function images() {
 gulp.task(images);
 
 gulp.task('images:watch', () => {
-    gulp.watch(`${config.src}/**/*.{png,jpg,jpeg,gif,svg}`, images);
+    gulp.watch(`${config.src}/**/*.{png,jpg,jpeg,gif,svg,mp4}`, images);
 });

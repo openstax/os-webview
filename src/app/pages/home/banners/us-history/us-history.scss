@@ -1,6 +1,18 @@
 @import 'variables';
 @import 'mixins';
 
+@mixin desktop {
+    @media (min-width: 1025px) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (min-width: #{breakpoints(phone) + 1}) and (max-width: 1024px) {
+        @content;
+    }
+}
+
 .us-history {
     background-image: url('/images/home/subjects/us-history/background.jpg');
     background-position: center top;
@@ -12,13 +24,23 @@
     padding-top: 8rem;
     position: relative;
 
+    @include tablet {
+        background-size: 100vw 81.4vw;
+        height: 81.4vw;
+    }
+
     .square-1,
     .square-2,
     .square-3,
     .square-4 {
         background-color: rgba(color(blue), 0.1);
+        display: none;
         position: absolute;
         z-index: 0;
+
+        @include desktop {
+            display: block;
+        }
     }
 
     .square-1,
@@ -65,7 +87,12 @@
     .sacajawea,
     .john-adams,
     .clermont {
+        display: none;
         opacity: 0.7;
+
+        @include desktop {
+            display: block;
+        }
     }
 
     .sacajawea {
@@ -103,16 +130,39 @@
         position: absolute;
         top: 7.726vw;
         width: 25.607vw;
+
+        @include tablet {
+            height: 36.46vw;
+            left: 36.96vw;
+            top: 18.35vw;
+            width: 36.46vw;
+        }
     }
 
+    canvas,
+    .video,
     .video-banner {
-        background-image: url('/images/home/subjects/us-history/student.png');
         height: 41.7vw;
         left: 46.2vw;
         position: absolute;
         top: 14vw;
-        width: 39.85vw;
+        width: 35.72vw;
         z-index: 2;
+
+        @include tablet {
+            height: 56.2vw;
+            left: 50.13vw;
+            top: 25.32vw;
+            width: 48.14vw;
+        }
+    }
+
+    .video {
+        display: none;
+    }
+
+    .video-banner {
+        background-image: url('/images/home/subjects/us-history/student.png');
     }
 
     .now-i-can {
@@ -131,6 +181,15 @@
         width: 42.09vw;
         z-index: 3;
 
+        @include tablet {
+            font-size: 3.8vw;
+            left: 2.53vw;
+            line-height: 10.76vw;
+            height: 10.76vw;
+            top: 55.82vw;
+            width: 63.3vw;
+        }
+
         .quote {
             display: inline-block;
             font-family: 'Permanent Marker', cursive;
@@ -144,6 +203,13 @@
             position: absolute;
             top: 5vw;
             width: 24.6vw;
+
+            @include tablet {
+                border-bottom-width: 0.36vw;
+                left: 22.5vw;
+                top: 8vw;
+                width: 39.24vw;
+            }
         }
     }
 
@@ -153,6 +219,11 @@
         position: absolute;
         top: 41.5vw;
         z-index: 3;
+
+        @include tablet {
+            left: 10.76vw;
+            top: 67.6vw;
+        }
 
         ul {
             list-style-type: none;
@@ -169,6 +240,12 @@
             height: 4.5vw;
             line-height: 4.5vw;
             padding: 0;
+
+            @include tablet {
+                font-size: 1.7vw;
+                height: 6.33vw;
+                line-height: 6.33vw;
+            }
         }
 
         .explore-subject,
@@ -179,10 +256,18 @@
         .explore-subject {
             margin-right: 0.2vw;
             width: 17.5vw;
+
+            @include tablet {
+                width: 26.33vw;
+            }
         }
 
         .explore-all {
             width: 18.55vw;
+
+            @include tablet {
+                width: 27.97vw;
+            }
         }
     }
 }

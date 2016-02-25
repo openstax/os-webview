@@ -1,0 +1,122 @@
+@import 'variables';
+@import 'mixins';
+
+.quote-buckets {
+    background-color: lighten(color(neutral-lighter), 8%);
+
+    > div {
+        margin: 0 auto;
+        width: 90vw;
+    }
+}
+
+.quotes {
+    align-items: stretch;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: calc(1vw + 5rem) 0 calc(1vw + 2rem);
+    width: 100%;
+
+    .quote-bucket {
+        align-items: stretch;
+        background-color: color(neutral-lightest);
+        display: flex;
+        flex: 1 1 32rem;
+        min-height: 23rem;
+        margin: 0 1.25vw 3rem;
+        min-width: (breakpoints(phone) * 0.67);
+
+        &.left {
+            > .image {
+                order: 2;
+            }
+
+            > .quote {
+                order: 1;
+
+                &::before {
+                    @include triangle(
+                        $direction: right,
+                        $position: top calc(50% - 2.4rem) right -2.4rem,
+                        $color: color(neutral-lightest),
+                        $size: 2.4rem
+                    );
+                }
+            }
+        }
+
+        &.right {
+            .image {
+                order: 1;
+            }
+
+            > .quote {
+                order: 2;
+
+                &::before {
+                    @include triangle(
+                        $direction: left,
+                        $position: top calc(50% - 2.4rem) left -2.4rem,
+                        $color: color(neutral-lightest),
+                        $size: 2.4rem
+                    );
+                }
+            }
+        }
+
+        &.full {
+            background-color: color(orange);
+
+            .quote {
+                padding: 2rem 3rem;
+            }
+
+            blockquote {
+                color: white;
+                font-size: 2.1rem;
+                font-weight: 400;
+            }
+
+            .btn {
+                background-color: color(neutral-lightest);
+                color: color(orange);
+            }
+        }
+    }
+
+    .image {
+        background-position: center top;
+        background-size: cover;
+        display: block;
+        flex: 0 0 50%;
+
+        &.juan {
+            background-image: url('/images/home/quotes/juan.jpg');
+        }
+
+        &.school {
+            background-image: url('/images/home/quotes/school.jpg');
+        }
+    }
+
+    .quote {
+        flex: 1 1 auto;
+        padding: 2rem;
+        position: relative;
+
+        blockquote {
+            display: block;
+            line-height: 2.7rem;
+            margin: 1rem 0;
+
+            cite {
+                font-weight: bold;
+            }
+        }
+
+        .btn {
+            margin-top: 1.5rem;
+        }
+    }
+}

@@ -15,17 +15,6 @@ body {
     font-size: 1.4rem;
     margin: 0;
     min-height: 100vh;
-
-    #main {
-        display: flex;
-        flex: 1 1 auto;
-        padding-top: 12rem;
-
-        > div {
-            display: flex;
-            width: 100vw;
-        }
-    }
 }
 
 * {
@@ -56,6 +45,10 @@ a {
 
 .hidden {
     display: none;
+}
+
+.no-scroll {
+    overflow: hidden;
 }
 
 #main {

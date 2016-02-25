@@ -1,15 +1,15 @@
 import BaseView from '~/helpers/backbone/view';
 import {props} from '~/helpers/backbone/decorators';
+import appView from '~/components/shell/shell';
 import {template} from './home.hbs';
-import Quotes from './quotes/quotes';
+import Quotes from '~/components/quotes/quotes';
+import Buckets from '~/components/buckets/buckets';
 import Education from './education/education';
-import Buckets from './buckets/buckets';
-
 
 const books = [
-    'astronomy',
-    'biology',
-    'chemistry',
+    // 'astronomy',
+    // 'biology',
+    // 'chemistry',
     'us-history'
 ];
 
@@ -25,6 +25,8 @@ const books = [
 export default class Home extends BaseView {
 
     onRender() {
+        appView.header.updateHeaderStyle();
+
         // Lazy-load a random book
         this.showBookBanner(books[Math.floor(Math.random()*books.length)]);
 
@@ -43,4 +45,5 @@ export default class Home extends BaseView {
             view.currentBookBanner = book;
         });
     }
+
 }

@@ -1,6 +1,10 @@
+import Backbone from 'backbone';
 import BaseView from '~/helpers/backbone/view';
 import {on, props} from '~/helpers/backbone/decorators';
+import linkHelper from '~/helpers/link';
 import {template} from './header.hbs';
+
+// NOTE: This needs to be refactored into multiple views
 
 @props({
     template: template
@@ -14,9 +18,8 @@ class Header extends BaseView {
 
         this.templateHelpers = {
             collapsed: () => this.meta.collapsed,
-            sticky: () => this.meta.sticky,
-            transparent: () => this.meta.transparent,
-            visible: () => this.meta.visible
+            fixed: () => this.meta.fixed,
+            transparent: () => this.meta.transparent
         };
     }
 
@@ -38,8 +41,8 @@ class Header extends BaseView {
     }
 
     pin() {
-        this.meta.sticky = true;
-        this.classList('add', 'sticky');
+        this.meta.fixed = true;
+        this.classList('add', 'fixed');
         return this;
     }
 
@@ -49,22 +52,13 @@ class Header extends BaseView {
         return this;
     }
 
-    visible() {
-        this.meta.visible = true;
-        this.classList('add', 'visible');
-        return this;
-    }
-
     reset() {
         this.meta.collapsed = false;
         this.meta.pinned = false;
         this.meta.transparent = false;
-        this.meta.visible = false;
         this.classList('remove', 'collapsed');
-        this.classList('remove', 'sticky');
+        this.classList('remove', 'fixed');
         this.classList('remove', 'transparent');
-        this.classList('remove', 'visible');
-
         return this;
     }
 
@@ -73,15 +67,11 @@ class Header extends BaseView {
     }
 
     isPinned() {
-        return !!this.classList('contains', 'sticky');
+        return !!this.classList('contains', 'fixed');
     }
 
     isTransparent() {
         return !!this.classList('contains', 'transparent');
-    }
-
-    isVisible() {
-        return !!this.classList('contains', 'visible');
     }
 
     get height() {
@@ -95,57 +85,15 @@ class Header extends BaseView {
         return height;
     }
 
-    get secondaryNavHeight() {
-        let secondaryNav = this.el.querySelector('.meta-nav');
+    get metaNavHeight() {
+        let metaNav = this.el.querySelector('.meta-nav');
         let height = 0;
 
-        if (secondaryNav && typeof secondaryNav === 'object') {
-            height = secondaryNav.offsetHeight;
+        if (metaNav && typeof metaNav === 'object') {
+            height = metaNav.offsetHeight;
         }
 
         return height;
-    }
-
-    @on('click nav > a')
-    blurLogo(e) {
-        e.delegateTarget.blur();
-    }
-
-    @on('click .expand-nav')
-    toggleNavMenu() {
-        let header = this.el.querySelector('.page-header');
-
-        header.classList.toggle('active');
-    }
-
-    @on('click .active:not(.open) .main-nav .parent > a')
-    addOpen(e) {
-        e.stopPropagation();
-        e.preventDefault();
-
-        let header = this.el.querySelector('.page-header');
-        let $this = e.target;
-        let parentItem = $this.parentNode;
-        let secondaryNav = e.delegateTarget.nextElementSibling;
-
-        header.classList.add('open');
-        parentItem.classList.add('open');
-        secondaryNav.classList.add('open');
-    }
-
-    @on('click .active .nav-menu-item .back')
-    removeOpen(e) {
-        e.stopPropagation();
-        e.preventDefault();
-
-        let header = this.el.querySelector('.page-header');
-        let $this = e.target;
-        let secondaryNav = this.el.querySelector('.secondary-nav.open');
-        let parentItem = $this.parentNode;
-
-        header.classList.remove('open');
-        parentItem.classList.remove('open');
-        secondaryNav.classList.remove('open');
     }
 
     @on('click .skiptocontent a')
@@ -169,34 +117,139 @@ class Header extends BaseView {
         }
     }
 
-    onRender() {
-        this.updateHeaderStyle();
-        window.addEventListener('scroll', this.updateHeaderStyle.bind(this));
+    toggleFullScreenNav(e) {
+        let button = e.currentTarget;
+        let menus = this.el.querySelector('.menus');
+
+        menus.classList.toggle('hidden');
+        document.body.classList.toggle('no-scroll');
+
+        window.requestAnimationFrame(() => {
+            button.classList.toggle('expanded');
+            button.setAttribute('aria-expanded', !!button.classList.contains('expanded'));
+        });
+    }
+
+    closeFullScreenNav() {
+        let button = this.el.querySelector('.expand');
+        let menus = this.el.querySelector('.menus');
+
+        menus.classList.add('hidden');
+        document.body.classList.remove('no-scroll');
+
+        window.requestAnimationFrame(() => {
+            button.classList.remove('expanded');
+            button.setAttribute('aria-expanded', 'false');
+        });
+    }
+
+    @on('click .expand')
+    onClickToggleFullScreenNav(e) {
+        let menus = this.el.querySelector('.menus');
+
+        if (!menus.contains(document.activeElement)) {
+            this.toggleFullScreenNav(e);
+        }
+    }
+
+    @on('keydown .expand')
+    onKeydownToggleFullScreenNav(e) {
+        if (document.activeElement === e.currentTarget && (e.keyCode === 13 || e.keyCode === 32)) {
+            e.preventDefault();
+            this.toggleFullScreenNav(e);
+        }
+    }
+
+    @on('focus a[aria-haspopup="true"]')
+    openDropdownMenu(e) {
+        let menu = e.currentTarget.nextElementSibling;
+
+        menu.setAttribute('aria-expanded', 'true');
+
+        for (let a of menu.querySelectorAll('a')) {
+            a.setAttribute('tabindex', '0');
+        }
+    }
+
+    resetHeader(e) {
+        let urlClick = linkHelper.validUrlClick(e);
+
+        this.reset();
+
+        if (urlClick) {
+            this.closeDropdownMenus(true);
+            this.closeFullScreenNav();
+        } else if (Backbone.history.location.pathname === '/') {
+            this.updateHeaderStyle();
+        }
+    }
+
+    closeDropdownMenus(all) {
+        let menus = this.el.querySelectorAll('.dropdown-menu');
+
+        for (let menu of menus) {
+            if (all || !menu.contains(document.activeElement)) {
+                menu.setAttribute('aria-expanded', 'false');
+
+                for (let a of menu.querySelectorAll('a')) {
+                    a.setAttribute('tabindex', '-1');
+                }
+            }
+        }
     }
 
     updateHeaderStyle() {
-        if (!this || !this.el) {
-            return;
+        let metaNavHeight = this.metaNavHeight;
+        let height = this.height;
+
+        if (window.pageYOffset > metaNavHeight && !this.isPinned()) {
+            this.reset().collapse().pin();
+            document.body.style.paddingTop = `${height / 10}rem`;
+        } else if (window.pageYOffset <= metaNavHeight) {
+            if (Backbone.history.location.pathname === '/' && !this.isTransparent()) {
+                this.reset().transparent();
+            }
+
+            document.body.style.paddingTop = '0';
+        }
+    }
+
+    onRender() {
+        this.updateHeaderStyle();
+
+        document.addEventListener('focus', this.closeDropdownMenus.bind(this), true);
+        document.addEventListener('click', this.closeDropdownMenus.bind(this), true);
+
+        let metaMenu = document.createDocumentFragment();
+        let mainMenu = document.createDocumentFragment();
+        let expandedMenu = this.el.querySelector('.expanded-menu');
+        let expandedMetaMenu = this.el.querySelector('.expanded-meta-menu');
+        let mainNavMenu = this.el.querySelector('.main-menu').querySelectorAll('.nav-menu-item:not(.expand)');
+        let metaNavMenu = this.el.querySelector('.meta-menu').querySelectorAll('.nav-menu-item:not(:last-child)');
+
+        for (let li of mainNavMenu) {
+            mainMenu.appendChild(li.cloneNode(true));
         }
 
-        let headerHeight = this.height;
-
-        if (window.pageYOffset >= headerHeight + 20) {
-            this.pin().visible();
-        } else if (window.pageYOffset < headerHeight + 19 && window.pageYOffset >= headerHeight + 10) {
-            this.reset().pin();
-        } else {
-            this.reset();
+        for (let li of metaNavMenu) {
+            metaMenu.appendChild(li.cloneNode(true));
         }
+
+        expandedMenu.appendChild(mainMenu);
+        expandedMetaMenu.appendChild(metaMenu);
+
+        this.el.addEventListener('click', this.resetHeader.bind(this), true);
+
+        window.addEventListener('scroll', this.updateHeaderStyle.bind(this));
     }
 
     onBeforeClose() {
         window.removeEventListener('scroll', this.updateHeaderStyle.bind(this));
-
-        if (this) {
-            this.reset();
-        }
+        document.removeEventListener('focus', this.closeDropdownMenus.bind(this), true);
+        document.removeEventListener('click', this.closeDropdownMenus.bind(this), true);
+        this.el.removeEventListener('click', this.resetHeader.bind(this), true);
     }
+
 }
 
 let header = new Header();

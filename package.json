@@ -20,9 +20,9 @@
   "license": "AGPL-3.0",
   "dependencies": {},
   "devDependencies": {
-    "babel-eslint": "4.1.8",
+    "babel-eslint": "5.0.0",
     "babel-plugin-transform-async-to-generator": "6.5.0",
-    "babel-plugin-transform-class-properties": "6.5.0",
+    "babel-plugin-transform-class-properties": "6.5.2",
     "babel-plugin-transform-decorators": "6.5.0",
     "babel-plugin-transform-decorators-legacy": "1.3.4",
     "babel-preset-es2015": "6.5.0",
@@ -33,9 +33,9 @@
     "gulp-autoprefixer": "3.1.0",
     "gulp-babel": "6.1.2",
     "gulp-clip-empty-files": "0.1.1",
-    "gulp-cssnano": "2.1.0",
+    "gulp-cssnano": "2.1.1",
     "gulp-env": "0.4.0",
-    "gulp-eslint": "2.0.0-rc-3",
+    "gulp-eslint": "2.0.0",
     "gulp-handlebars": "4.0.0",
     "gulp-htmlmin": "1.3.0",
     "gulp-if": "2.0.0",
@@ -50,10 +50,10 @@
     "gulp-util": "3.0.7",
     "gulp-wrap": "0.11.0",
     "handlebars": "4.0.5",
-    "jspm": "0.16.27",
+    "jspm": "0.16.29",
     "require-dir": "0.3.0",
-    "sw-precache": "2.3.0",
-    "systemjs-builder": "0.15.7"
+    "sw-precache": "3.1.0",
+    "systemjs-builder": "0.15.9"
   },
   "jspm": {
     "directories": {
@@ -66,6 +66,7 @@
       "backbone.nativeajax": "github:akre54/Backbone.NativeAjax@^0.4.3",
       "backbone.nativeview": "github:akre54/Backbone.NativeView@^0.3.3",
       "handlebars": "github:components/handlebars.js@^4.0.5",
+      "seeThru": "github:m90/seeThru@^3.0.0",
       "underscore": "npm:underscore@^1.8.3"
     },
     "devDependencies": {

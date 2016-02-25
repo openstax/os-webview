@@ -1,10 +1,10 @@
 import 'babel-polyfill';
 import Backbone from 'backbone';
+import linkHelper from '~/helpers/link';
 import router from '~/router';
 import appView from '~/components/shell/shell';
 
 const EXTERNAL = /^((f|ht)tps?:)?\/\//;
-const MAILTO = /^mailto:(.+)/;
 
 if ('@ENV@' === 'production' && 'serviceWorker' in navigator) {
     /* eslint no-console: 0 */
@@ -49,31 +49,14 @@ class App {
             pushState: true
         });
 
-        function findAncestor(el, Element) {
-            let parent = el;
-
-            while (parent && !(parent instanceof Element)) {
-                parent = parent.parentNode;
-            }
-
-            return parent;
-        }
-
-        function ignoreUrl(url) {
-            return typeof url !== 'string' || url.charAt(0) === '#' || MAILTO.test(url);
-        }
-
-        function ignoreClick(e) {
-            return e.defaultPrevented || e.metaKey || e.which !== 1;
-        }
-
         document.addEventListener('click', (e) => {
-            let el = findAncestor(e.target, HTMLAnchorElement) || e.target;
-            let href = el.getAttribute('href');
+            let el = linkHelper.validUrlClick(e);
 
-            if (ignoreClick(e) || ignoreUrl(href)) {
+            if (!el) {
                 return;
             }
+
+            let href = el.getAttribute('href');
 
             e.preventDefault();
 
@@ -83,6 +66,7 @@ class App {
                 router.navigate(href, {
                     trigger: (el.getAttribute('data-trigger') !== false)
                 });
+                window.scrollTo(0, 0);
             }
         });
     }
