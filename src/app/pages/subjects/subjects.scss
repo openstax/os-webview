@@ -1,4 +1,6 @@
 @import 'variables';
+@import 'mixins';
+
 
 $light-gray: #f5f5f5;
 $lightest-gray: #fafafa;
@@ -11,8 +13,29 @@ $text-black3: rgba(0, 0, 0, 0.54);
     color: $text-black;
     font-family: Lato;
 
+    .container {
+        display: inherit;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        max-width: 120rem;
+        -webkit-flex-flow: row wrap;
+        -ms-flex-flow: row wrap;
+        flex-flow: row wrap;
+        -webkit-flex: 1 100%;
+        -ms-flex: 1 100%;
+        flex: 1 100%;
+    }
+
     h1 {
         font-weight: 900;
+        color: color(gray);
+        font-size: 2rem;
+        text-align: center;
+
+        @include desktop {
+            font-size: 4.8rem;
+        }
+
     }
 
     header {
@@ -20,6 +43,16 @@ $text-black3: rgba(0, 0, 0, 0.54);
         font-size: large;
         padding: 5rem 10rem;
         text-align: center;
+
+        p {
+            position: absolute;
+            transform: scale3d(0,0,0);
+
+            @include desktop {
+                position: relative;
+                transform: scale3d(1,1,1);
+            }
+        }
     }
 
     .subhead {
