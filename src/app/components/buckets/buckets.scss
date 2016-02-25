@@ -10,7 +10,7 @@
 .buckets-section {
     padding: 3.8vw;
     margin: 0 auto;
-    max-width: 120rem;
+    max-width: $boxed-width;
 
     .bucket {
         color: color(neutral-lightest);
@@ -50,7 +50,7 @@
                     @include collapsed {
                         @include triangle(
                             $direction: top,
-                            $position: top -2.4rem left 17%,
+                            $position: top -2.4rem right 5rem left auto,
                             $color: color(green),
                             $size: 2.4rem
                         );
@@ -85,7 +85,7 @@
                     @include collapsed {
                         @include triangle(
                             $direction: top,
-                            $position: top -2.4rem left 17%,
+                            $position: top -2.4rem right 5rem left auto,
                             $color: color(gray),
                             $size: 2.4rem
                         );
@@ -108,15 +108,30 @@
         &.full {
             text-align: center;
 
+            @include collapsed {
+                text-align: left;
+            }
+
+
             .quote {
                 align-items: center;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
 
+                @include collapsed {
+                    align-items: flex-start;
+                    justify-content: flex-start;
+                }
+
                 .blurb {
                     margin: 0 auto;
                     max-width: 50%;
+
+                    @include collapsed {
+                        margin: 0;
+                        max-width: 100%;
+                    }
                 }
             }
         }
