@@ -12,7 +12,7 @@ import GetThisTitle from '~/components/get-this-title/get-this-title';
 })
 export default class Book extends BaseView {
 
-    @on('click')
+    @on('click img')
     selectMe(event) {
         this.model.set('selectedBook', this.isSelected() ? false : this.data);
         event.stopPropagation();
