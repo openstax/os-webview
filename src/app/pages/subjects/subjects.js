@@ -5,6 +5,7 @@ import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './subjects.hbs';
 import FilterButton from './filter-button/filter-button';
 import CategorySection from './category-section/category-section';
+import router from '~/router';
 
 const categories = ['Math', 'Science', 'Social Sciences', 'History', 'AP®'];
 
@@ -26,6 +27,10 @@ function organizeBooksByCategory(books) {
     return result;
 }
 
+function canonicalSubject(string) {
+    return string.toLowerCase().match(/(\w+)/g).join(' ');
+}
+
 @props({
     template: template,
     regions: {
@@ -41,11 +46,31 @@ export default class Subjects extends BaseView {
 
     constructor() {
         super();
+
         this.model = new BaseModel({
             filterButtons: ['View All', ...categories],
             selectedFilter: 'View All',
             selectedBook: null
         });
+
+        let updateSelectedFilterFromPath = () => {
+            let pathMatch = window.location.pathname.match(/\/subjects\/(.+)/),
+                selectedFilter = 'View All';
+
+            if (pathMatch) {
+                let subject = canonicalSubject(pathMatch[1]);
+
+                for (let c of categories) {
+                    if (canonicalSubject(c) === subject) {
+                        selectedFilter = c;
+                    }
+                }
+            }
+            this.model.set('selectedFilter', selectedFilter);
+        };
+
+        this.listenTo(router, 'route', updateSelectedFilterFromPath);
+        updateSelectedFilterFromPath();
     }
 
     renderCategorySections(booksByCategory) {
