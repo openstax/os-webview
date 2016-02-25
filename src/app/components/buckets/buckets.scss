@@ -1,12 +1,6 @@
 @import 'variables';
 @import 'mixins';
 
-@mixin collapsed {
-    @media (max-width: 760px) {
-        @content;
-    }
-}
-
 .buckets-section {
     padding: 3.8vw;
     margin: 0 auto;
@@ -14,7 +8,6 @@
 
     .bucket {
         color: color(neutral-lightest);
-        display: flex;
         margin: 0 auto 3.8vw;
         max-width: 100%;
         min-height: 30rem;
@@ -105,95 +98,5 @@
             background-size: cover;
         }
 
-        &.full {
-            text-align: center;
-
-            @include collapsed {
-                text-align: left;
-            }
-
-
-            .quote {
-                align-items: center;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-
-                @include collapsed {
-                    align-items: flex-start;
-                    justify-content: flex-start;
-                }
-
-                .blurb {
-                    margin: 0 auto;
-                    max-width: 50%;
-
-                    @include collapsed {
-                        margin: 0;
-                        max-width: 100%;
-                    }
-                }
-            }
-        }
-
-        &.left {
-            > .image {
-                order: 2;
-
-                @include collapsed {
-                    order: 1;
-                }
-            }
-
-            > .quote {
-                order: 1;
-            }
-        }
-
-        &.right {
-            > .image {
-                order: 1;
-            }
-
-            > .quote {
-                order: 2;
-            }
-        }
-
-        .image {
-            flex: 1 1 17rem;
-            max-width: 47rem;
-
-            @include collapsed {
-                max-width: none;
-                min-height: 32rem;
-            }
-        }
-
-        .quote {
-            flex: 2 0;
-            padding: 3rem;
-            position: relative;
-
-            .title {
-                display: block;
-                font-size: 4.8rem;
-                font-weight: 700;
-                line-height: 4.8rem;
-                margin-bottom: 1.2rem;
-            }
-
-            .blurb {
-                display: block;
-                font-size: 1.8rem;
-                line-height: 1.75;
-            }
-
-            .btn {
-                font-size: 1.8rem;
-                margin-top: 2.5rem;
-                padding: 1.5rem 2rem;
-            }
-        }
     }
 }
