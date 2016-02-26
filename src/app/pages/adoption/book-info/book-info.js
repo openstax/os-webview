@@ -30,7 +30,9 @@ export default class BookInfoView extends BaseView {
                 box.checked = false;
                 box.dispatchEvent(new Event('change'));
             }
-            box.disabled = noneBox.checked;
+            if (box) {
+                box.disabled = noneBox.checked;
+            }
         }
     }
 
@@ -42,7 +44,9 @@ export default class BookInfoView extends BaseView {
         if (!otherBox.checked) {
             otherText.value = '';
         }
-        otherText.disabled = !otherBox.checked;
+        if (otherText) {
+            otherText.disabled = !otherBox.checked;
+        }
     }
 
     constructor(prefix) {
@@ -61,6 +65,8 @@ export default class BookInfoView extends BaseView {
         let otherBox = this.el.querySelector(otherBoxSelector),
             otherText = this.el.querySelector(this.otherTextSelector);
 
-        otherText.disabled = !otherBox.checked;
+        if (otherText) {
+            otherText.disabled = !otherBox.checked;
+        }
     }
 }
