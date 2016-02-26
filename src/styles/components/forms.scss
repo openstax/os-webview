@@ -1,10 +1,34 @@
 @import 'variables';
 
-fieldset {
-    border-color: color(neutral-lightest);
+$text-black: rgba(color(neutral-darkest), 0.87);
+$text-secondary: rgba(color(neutral-darkest), 0.7);
 
-    legend {
-        background-color: color(neutral-lightest);
+form {
+    color: $text-black;
+    line-height: 3rem;
+
+    select,
+    option {
+        background: none;
+        display: inline-block;
+        margin: 0;
+        padding: 1.5rem;
+    }
+
+    [type="submit"] {
+        background-color: color(primary);
+        border: 0;
+        color: color(neutral-lightest);
+        font-size: 1.7rem;
+        padding: 1rem 2rem;
+    }
+
+    fieldset {
+        border: 0;
+
+        legend {
+            background-color: color(neutral-lightest);
+        }
     }
 
     &.invalid,
@@ -18,13 +42,22 @@ fieldset {
         border-spacing: 0.5rem;
         display: table;
 
-        > label,
-        > .form-item {
-            display: table-row;
+        label,
+        .form-item {
+            color: color(primary);
+            display: flex;
 
             > span,
             > input {
-                display: table-cell;
+                font-weight: 500;
+            }
+
+            > span {
+                flex-basis: 11rem;
+            }
+
+            > input {
+                flex-grow: 1;
             }
         }
     }
@@ -34,6 +67,15 @@ fieldset {
 
         > label {
             display: block;
+        }
+    }
+
+    .labeled-buttons label {
+        display: block;
+
+        .short {
+            height: 2.1rem;
+            width: 8rem;
         }
     }
 
@@ -47,4 +89,21 @@ fieldset {
         display: block;
     }
 
+    [type="text"],
+    [type="number"],
+    [type="email"],
+    select {
+        color: $text-secondary;
+        font-size: 1.7rem;
+        font-weight: 500;
+        height: 5rem;
+        margin: 0.5rem 0;
+        padding: 1rem;
+        width: 100%;
+
+        &:focus {
+            outline: 0;
+            border-bottom: solid color(cyan) 0.2rem;
+        }
+    }
 }

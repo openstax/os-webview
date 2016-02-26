@@ -1,0 +1,61 @@
+@import 'variables';
+
+$text-secondary: rgba(color(neutral-darkest), 0.7);
+
+.adoption-form {
+    font-size: 1.5rem;
+    font-weight: 400;
+
+    label,
+    p {
+        color: color(primary);
+    }
+
+    h1 {
+        font-weight: bold;
+        text-align: center;
+    }
+
+    h2 {
+        color: $text-secondary;
+        font-size: 1.7rem;
+        font-weight: 500;
+        text-align: center;
+    }
+
+    a {
+        color: color(cyan);
+        text-decoration: none;
+    }
+
+    .subhead {
+        font-size: 1.7rem;
+        font-weight: 400;
+        text-align: center;
+    }
+
+    .two-column {
+        display: flex;
+        justify-content: space-between;
+
+        .column {
+            display: inline-block;
+            flex-grow: 1;
+
+            &:first-child {
+                padding-right: 5%;
+            }
+        }
+    }
+
+    label span {
+        display: block;
+    }
+
+    [type="submit"] {
+        float: right;
+        font-size: 2rem;
+        margin: 1rem 0;
+        width: 15rem;
+    }
+}

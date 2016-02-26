@@ -2,43 +2,13 @@ import BaseView from '~/helpers/backbone/view';
 import BookInfoView from './book-info/book-info';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './adoption.hbs';
-
-/* Not used, now, but saving just in case
-function sectionToggler(options) {
-    let isOpen = false,
-        toggleControl = options.toggleControl,
-        toggleArea = options.toggleArea,
-        openText = options.openText,
-        closeText = options.closeText,
-        region = options.region,
-        updateToggleRegion = () => {
-            if (isOpen) {
-                let secondaryBookView = new BookInfoView('adoption_two');
-
-                toggleControl.innerHTML = closeText;
-                region.append(secondaryBookView);
-                toggleArea.style.display = '';
-            } else {
-                toggleControl.innerHTML = openText;
-                region.empty();
-                toggleArea.style.display = 'none';
-            }
-        };
-
-    return {
-        toggle: () => {
-            isOpen = !isOpen;
-            updateToggleRegion();
-        },
-        update: updateToggleRegion
-    };
-}
-*/
+import {template as strips} from '~/components/strips/strips.hbs';
 
 @props({
     template: template,
     templateHelpers: {
-        urlOrigin: window.location.origin
+        urlOrigin: window.location.origin,
+        strips
     },
     regions: {
         primaryBook: '#primary-book',
@@ -63,20 +33,10 @@ export default class AdoptionForm extends BaseView {
     }
 
     onRender() {
-        this.el.classList.add('text-content');
+        this.el.classList.add('adoption-form');
         let bookInfoView = new BookInfoView('adoption');
 
         this.regions.primaryBook.append(bookInfoView);
-        /*
-        this.toggler = sectionToggler({
-            toggleControl: this.el.querySelector('.toggle-section'),
-            toggleArea: document.getElementById('secondary-book'),
-            openText: '+ Add a second book',
-            closeText: '- Remove the second book',
-            region: this.regions.secondaryBook
-        });
-        this.toggler.update();
-        */
     }
 
 }
