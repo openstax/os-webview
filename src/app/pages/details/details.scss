@@ -15,6 +15,10 @@ $text-secondary: rgba(color(neutral-darkest), 0.7);
     padding-right: $get-this-book-width;
     position: relative;
 
+    .book-cover {
+        max-width: 22rem;
+    }
+
     > .block {
         padding: 5rem (2rem + #{$get-this-book-width}) 5rem 10rem;
 
