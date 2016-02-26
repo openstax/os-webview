@@ -77,13 +77,6 @@ export default class AdoptionForm extends BaseView {
         });
         this.toggler.update();
         */
-        document.getElementById('form-target-iframe')
-        .addEventListener('onload', this.iframeLoaded);
-    }
-
-    onBeforeClose() {
-        document.getElementById('form-target-iframe')
-        .removeEventListener('onload', this.iframeLoaded);
     }
 
 }

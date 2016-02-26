@@ -14,7 +14,7 @@ import GetThisTitle from '~/components/get-this-title/get-this-title';
         getThisTitle: '.get-this-book'
     }
 })
-export default class Subjects extends BaseView {
+export default class Details extends BaseView {
     constructor() {
         super(...arguments);
         this.id = decodeURIComponent(window.location.search.substr(1));
@@ -30,6 +30,9 @@ export default class Subjects extends BaseView {
     }
 
     onRender() {
-        this.regions.getThisTitle.show(new GetThisTitle(this.title));
+        // For some reason this is getting stuck in the shadow dom
+        if (typeof this.regions.getThisTitle !== 'string') {
+            this.regions.getThisTitle.append(new GetThisTitle(this.title, this.model));
+        }
     }
 }
