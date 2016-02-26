@@ -30,13 +30,15 @@ class AppView extends BaseView {
     }
 
     load(pageName, options) {
-        let view = this;
+        let view = this,
+            headTitle = document.querySelector('head title');
 
         // Lazy-load the page
         System.import(`~/pages/${pageName}/${pageName}`).then((m) => {
             let Page = m.default;
 
             view.regions.main.show(new Page(options));
+            headTitle.textContent = `${pageName[0].toUpperCase()}${pageName.slice(1)} - OpenStax`;
         });
 
         return this;
