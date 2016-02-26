@@ -21,18 +21,19 @@
     <div class="text-content">
         <section class="block book-info">
             <div class="info-row">
-                <img src="{{cover}}" />
+                <img class="book-cover" />
                 <section class="details">
-                    <h1 class="title">{{title}}</h1>
+                    <h1 class="title"></h1>
                     <div class="tabs">
                         <a class="tab"><span>Table of Contents</span></a>
                         <a href="#resources" class="tab"><span>Resources</span></a>
                         <a href="#details" class="tab"><span>Details</span></a>
                         <a href="#errata" class="tab"><span>Errata</span></a>
                     </div>
-                    <p class="blurb">{{{description}}}</p>
+                    <p class="blurb"></p>
                     <h2>Senior Contributing Authors</h2>
-                    {{{bookInfo.mainAuthorHtml}}}
+                    <div id="top-authors">
+                    </div>
                     <div class="links">
                         <a class="go-to" href="#details">See all authors</a>
                     </div>
@@ -41,9 +42,10 @@
         </section>
         <div class="block endorsement-container">
             <blockquote class="endorsement">
-                {{endorsement}}
+                <div id="endorsement"></div>
                 <footer class="attribution">
-                    &mdash; {{attribution}}
+                    &mdash; <span id="attribution"></span><br>
+                    <span id="attribution-school"></span>
                 </footer>
             </blockquote>
         </div>
@@ -107,9 +109,11 @@
             </div>
         </section>
         <div class="block">
-            <section class="details">
+            <section id="details">
                 <h1>Details</h1>
-                {{{bookInfo.allAuthorsHtml}}}
+                <h2>Authors</h2>
+                <div id="all-authors">
+                </div>
             </section>
             <section class="errata">
                 <h1>Errata</h1>
