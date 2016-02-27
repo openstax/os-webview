@@ -29,6 +29,15 @@
         height: 81.4vw;
     }
 
+    @include phone {
+        background-color: color(blue);
+        background-image: none;
+        background-position: left top;
+        background-size: 53.66vw 53.66vw;
+        height: 128.13vw;
+        margin-top: 0;
+    }
+
     .square-1,
     .square-2,
     .square-3,
@@ -137,6 +146,13 @@
             top: 18.35vw;
             width: 36.46vw;
         }
+
+        @include phone {
+            height: 61vw;
+            left: 0;
+            top: 0;
+            width: 61vw;
+        }
     }
 
     canvas,
@@ -154,6 +170,13 @@
             left: 50.13vw;
             top: 25.32vw;
             width: 48.14vw;
+        }
+
+        @include phone {
+            height: 71.87vw;
+            left: 33vw;
+            top: 25vw;
+            width: 61.56vw;
         }
     }
 
@@ -188,6 +211,10 @@
             height: 10.76vw;
             top: 55.82vw;
             width: 63.3vw;
+        }
+
+        @include phone {
+            display: none;
         }
 
         .quote {
@@ -225,6 +252,12 @@
             top: 67.6vw;
         }
 
+        @include phone {
+            bottom: 4.5vw;
+            left: 4.5vw;
+            top: auto;
+        }
+
         ul {
             list-style-type: none;
             margin: 0;
@@ -246,11 +279,12 @@
                 height: 6.33vw;
                 line-height: 6.33vw;
             }
-        }
 
-        .explore-subject,
-        .explore-all {
-            box-shadow: 0 0 1rem color(neutral-dark);
+            @include phone {
+                font-size: 4.5vw;
+                height: 15.63vw;
+                line-height: 15.63vw;
+            }
         }
 
         .explore-subject {
@@ -260,6 +294,10 @@
             @include tablet {
                 width: 26.33vw;
             }
+
+            @include phone {
+                background-color: color(yellow);
+            }
         }
 
         .explore-all {
@@ -267,6 +305,20 @@
 
             @include tablet {
                 width: 27.97vw;
+            }
+
+            @include phone {
+                background-color: color(turquoise);
+                margin-top: 4.5vw;
+            }
+        }
+
+        .explore-subject,
+        .explore-all {
+            box-shadow: 0 0 1rem color(neutral-dark);
+
+            @include phone {
+                width: 91vw;
             }
         }
     }
