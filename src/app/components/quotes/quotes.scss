@@ -16,7 +16,8 @@
     flex-wrap: wrap;
     justify-content: space-around;
     padding: calc(1vw + 5rem) 0 calc(1vw + 2rem);
-    width: 100%;
+    max-width: $boxed-width;
+    margin: 0 auto;
 
     .quote-bucket {
         align-items: stretch;
