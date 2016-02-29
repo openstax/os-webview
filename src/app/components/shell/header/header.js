@@ -17,7 +17,7 @@ class Header extends BaseView {
         this.meta = {};
 
         this.templateHelpers = {
-            collapsed: () => this.meta.collapsed,
+            visible: () => this.meta.visible,
             fixed: () => this.meta.fixed,
             transparent: () => this.meta.transparent
         };
@@ -34,9 +34,9 @@ class Header extends BaseView {
         return result;
     }
 
-    collapse() {
-        this.meta.collapsed = true;
-        this.classList('add', 'collapsed');
+    visible() {
+        this.meta.visible = true;
+        this.classList('add', 'visible');
         return this;
     }
 
@@ -53,17 +53,17 @@ class Header extends BaseView {
     }
 
     reset() {
-        this.meta.collapsed = false;
+        this.meta.visible = false;
         this.meta.pinned = false;
         this.meta.transparent = false;
-        this.classList('remove', 'collapsed');
+        this.classList('remove', 'visible');
         this.classList('remove', 'fixed');
         this.classList('remove', 'transparent');
         return this;
     }
 
-    isCollapsed() {
-        return !!this.classList('contains', 'collapsed');
+    isVisible() {
+        return !!this.classList('contains', 'visible');
     }
 
     isPinned() {
@@ -119,25 +119,62 @@ class Header extends BaseView {
 
     toggleFullScreenNav(e) {
         let button = e.currentTarget;
-        let menus = this.el.querySelector('.menus');
+        let header = this.el.querySelector('.page-header');
 
-        menus.classList.toggle('hidden');
         document.body.classList.toggle('no-scroll');
 
         window.requestAnimationFrame(() => {
+            header.classList.toggle('active');
+            this.removeAllOpenClasses(e);
+
             button.classList.toggle('expanded');
             button.setAttribute('aria-expanded', !!button.classList.contains('expanded'));
         });
     }
 
+    removeClass(array, className) {
+        let i = 0,
+            len = array.length;
+
+        for (; i < len; i++) {
+            if (array[i].classList) {
+                array[i].classList.remove(className);
+            } else {
+                let names = array[i].className.split(' '),
+                    j = 0,
+                    sublen = names.length;
+
+                for (; j < sublen; j++) {
+                    if (names[j] === className) {
+                        names[j] = '';
+                    }
+                }
+                array[i].className = names.join('');
+            }
+        }
+    }
+
+    removeAllOpenClasses() {
+        let header = this.el.querySelector('.page-header');
+        let parentItem = this.el.querySelectorAll('.dropdown');
+        let dropDownMenu = this.el.querySelectorAll('.dropdown-menu');
+
+        header.classList.remove('open');
+        this.removeClass(parentItem, 'open');
+        this.removeClass(dropDownMenu, 'open');
+        this.updateHeaderStyle();
+    }
+
     closeFullScreenNav() {
         let button = this.el.querySelector('.expand');
-        let menus = this.el.querySelector('.menus');
+        let header = this.el.querySelector('.page-header');
 
-        menus.classList.add('hidden');
         document.body.classList.remove('no-scroll');
 
         window.requestAnimationFrame(() => {
+            header.classList.remove('active');
+            this.removeAllOpenClasses();
+
             button.classList.remove('expanded');
             button.setAttribute('aria-expanded', 'false');
         });
@@ -145,11 +182,33 @@ class Header extends BaseView {
 
     @on('click .expand')
     onClickToggleFullScreenNav(e) {
-        let menus = this.el.querySelector('.menus');
+        this.toggleFullScreenNav(e);
+    }
 
-        if (!menus.contains(document.activeElement)) {
-            this.toggleFullScreenNav(e);
+    @on('click .page-header .dropdown > a')
+    flyOutMenu(e) {
+        let w = window.innerWidth;
+
+        let header = this.el.querySelector('.page-header');
+        let $this = e.currentTarget;
+        let parentItem = $this.parentNode;
+        let dropDownMenu = $this.nextElementSibling;
+
+        if (w <= 768) {
+            if (!dropDownMenu.classList.contains('open')) {
+                e.preventDefault();
+                header.classList.add('open');
+                parentItem.classList.add('open');
+                dropDownMenu.classList.add('open');
+            } else if (!e.target.classList.contains('caret')) {
+                this.closeFullScreenNav(e);
+            }
         }
+    }
+
+    @on('click .nav-menu-item .caret')
+    removeOpen(e) {
+        this.removeAllOpenClasses(e);
     }
 
     @on('keydown .expand')
@@ -177,8 +236,10 @@ class Header extends BaseView {
         this.reset();
 
         if (urlClick) {
-            this.closeDropdownMenus(true);
-            this.closeFullScreenNav();
+            if (!urlClick.parentNode.classList.contains('dropdown')) {
+                this.closeDropdownMenus(true);
+                this.closeFullScreenNav();
+            }
         } else if (Backbone.history.location.pathname === '/') {
             this.updateHeaderStyle();
         }
@@ -199,18 +260,16 @@ class Header extends BaseView {
     }
 
     updateHeaderStyle() {
-        let metaNavHeight = this.metaNavHeight;
         let height = this.height;
 
-        if (window.pageYOffset > metaNavHeight && !this.isPinned()) {
-            this.reset().collapse().pin();
-            document.body.style.paddingTop = `${height / 10}rem`;
-        } else if (window.pageYOffset <= metaNavHeight) {
-            if (Backbone.history.location.pathname === '/' && !this.isTransparent()) {
+        if (window.pageYOffset > height && !this.isPinned()) {
+            this.reset().pin().visible();
+        } else if (window.pageYOffset <= height) {
+            if (Backbone.history.location.pathname === '/') {
                 this.reset().transparent();
+            } else {
+                this.reset();
             }
-
-            document.body.style.paddingTop = '0';
         }
     }
 
@@ -220,36 +279,21 @@ class Header extends BaseView {
         document.addEventListener('focus', this.closeDropdownMenus.bind(this), true);
         document.addEventListener('click', this.closeDropdownMenus.bind(this), true);
 
-        let metaMenu = document.createDocumentFragment();
-        let mainMenu = document.createDocumentFragment();
-        let expandedMenu = this.el.querySelector('.expanded-menu');
-        let expandedMetaMenu = this.el.querySelector('.expanded-meta-menu');
-        let mainNavMenu = this.el.querySelector('.main-menu').querySelectorAll('.nav-menu-item:not(.expand)');
-        let metaNavMenu = this.el.querySelector('.meta-menu').querySelectorAll('.nav-menu-item:not(:last-child)');
-
-        for (let li of mainNavMenu) {
-            mainMenu.appendChild(li.cloneNode(true));
-        }
-
-        for (let li of metaNavMenu) {
-            metaMenu.appendChild(li.cloneNode(true));
-        }
-
-        expandedMenu.appendChild(mainMenu);
-        expandedMetaMenu.appendChild(metaMenu);
-
         this.el.addEventListener('click', this.resetHeader.bind(this), true);
 
+
         window.addEventListener('scroll', this.updateHeaderStyle.bind(this));
+        window.addEventListener('resize', this.closeFullScreenNav.bind(this));
     }
 
     onBeforeClose() {
         window.removeEventListener('scroll', this.updateHeaderStyle.bind(this));
+        window.removeEventListener('resize', this.closeFullScreenNav.bind(this));
+
         document.removeEventListener('focus', this.closeDropdownMenus.bind(this), true);
         document.removeEventListener('click', this.closeDropdownMenus.bind(this), true);
         this.el.removeEventListener('click', this.resetHeader.bind(this), true);
     }
-
 }
 
 let header = new Header();

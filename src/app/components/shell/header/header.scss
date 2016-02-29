@@ -1,21 +1,43 @@
 @import 'variables';
 @import 'mixins';
 
-.page-header {
-    background-color: color(neutral-lightest);
-    position: relative;
-    z-index: 1;
+$button-size: 2.8rem;
+$transition: 0.3s;
 
-    &.fixed {
-        left: 0;
-        position: fixed;
+.page-header {
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+    height: 7rem;
+    background-color: rgba(color(neutral-lightest), 0.97);
+
+    @at-root .active#{&} {
         right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        transition: height 0.5s;
+    }
+
+    @include desktop {
+        height: 12rem;
+        position: absolute;
         top: 0;
+        left: 0;
+        right: 0;
     }
 
     &.transparent {
-        background-color: transparent;
+        @include desktop {
+            background: transparent;
+        }
     }
+
 
     > .skiptocontent {
         a {
@@ -42,176 +64,419 @@
         }
     }
 
-    .meta-nav {
-        background-color: color(neutral-lighter);
+    .container {
         display: flex;
-        justify-content: flex-end;
-        padding-right: 8vw;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        width: 100%;
+        max-width: $boxed-width;
+        flex-flow: row wrap;
+        flex: 1 100%;
+    }
 
-        @media (max-width: 890px) {
-            display: none;
+    .nav-menu {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        transform: scale3d(0, 0, 0);
+        flex: 1 100%;
+        opacity: 0;
+        transition: opacity 0.3s 0.2s;
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+
+        @at-root .active#{&} {
+            transform: scale3d(1, 1, 1);
+            opacity: 1;
         }
 
-        @at-root .collapsed#{&} {
-            display: none;
+        @at-root .active.open#{&} {
+            transform: translate3d(-100rem, 0, 0);
+            transition: transform 0.2s;
         }
 
-        a {
-            color: color(neutral-dark);
-            padding-bottom: 1rem;
-            padding-top: 1rem;
+        @include desktop {
+            opacity: 1;
+            transform: scale3d(1, 1, 1);
+            flex-flow: row wrap;
+            justify-content: flex-end;
+            flex: 0 auto;
         }
 
         .nav-menu-item {
-            flex: 0 0 auto;
-            font-size: 1.4rem;
-            font-weight: 400;
-            line-height: 0;
-        }
-    }
-
-    .dropdown > a {
-        margin-right: 1rem;
-    }
-
-    .caret {
-        &::before,
-        &::after {
-            border-right: 0.2rem solid;
-            content: '';
-            height: 0.8rem;
-            margin-top: -0.3rem;
-            position: absolute;
-            top: 50%;
-            transform: rotate3d(0, 0, 1, 135deg);
+            @include desktop {
+                margin: 0 2rem;
+            }
         }
 
-        &::before {
-            height: 0.7rem;
-            right: 1rem;
-        }
-
-        &::after {
-            right: 0.5rem;
-            transform: rotate3d(0, 0, 1, 45deg);
-        }
-    }
-
-    .nav {
-        align-items: center;
-        background-color: transparent;
-        color: color(neutral-medium);
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        padding: 2rem 8vw;
-        user-select: none;
-
-        @at-root .transparent#{&} {
-            backdrop-filter: blur(1rem);
-            background-color: rgba(color(neutral-darkest), 0.05);
-            color: color(neutral-lightest);
-            text-shadow: 0 0 0.6rem color(neutral-dark);
-        }
-
-        a {
-            color: color(neutral-medium);
-            outline: 0;
-            padding-bottom: 0.5rem;
-            padding-top: 0.5rem;
+        .dropdown {
+            text-align: center;
+            display: inline-block;
             position: relative;
 
-            &:active,
-            &:focus,
-            &:hover {
-                &::after {
-                    background-color: color(green);
-                    bottom: -0.5rem;
-                    content: '';
-                    height: 0.5rem;
-                    left: 1rem;
-                    outline: 0;
-                    position: absolute;
-                    right: 1rem;
+            > a {
+                position: relative;
+
+                @at-root .open#{&} {
+                    display: inline-block;
+                    margin: 0 0 1rem;
                 }
 
-                + .dropdown-menu {
+                &::before,
+                &::after {
+                    opacity: 1;
+                    border-right: 0.2rem solid;
+                    content: '';
                     display: block;
+                    height: 1rem;
+                    margin-top: -0.7rem;
+                    position: absolute;
+                    transform: rotate3d(0, 0, 1, 135deg);
+                    right: -2rem;
+                    top: 50%;
+                    width: 0;
+
+                    @at-root .open#{&} {
+                        opacity: 0;
+                    }
+
+                    @include desktop {
+                        height: 0.7rem;
+                        right: -1rem;
+                    }
+                }
+
+                &::after {
+                    opacity: 1;
+                    margin-top: -0.1rem;
+                    transform: rotate3d(0, 0, 1, 45deg);
+
+                    @include desktop {
+                        margin-top: -0.7rem;
+                        right: -1.4rem;
+                    }
+
+                    @at-root .open#{&} {
+                        opacity: 0;
+                    }
                 }
             }
 
-            @at-root .transparent#{&} {
-                color: color(neutral-lightest);
+            &:hover .dropdown-menu {
+                @include desktop {
+                    width: auto;
+                    height: auto;
+                    z-index: 1;
+                }
+            }
+
+            &.open {
+                position: absolute;
+                top: 0;
+                transform: translate3d(100rem, 0, 0);
+                transition: transform;
+                width: 100%;
+            }
+
+            .caret {
+                @at-root .active.open#{&} {
+                    width: 2.7rem;
+                    height: 2.6rem;
+                    text-indent: -9999rem;
+                    position: absolute;
+                    left: -2.7rem;
+                    top: 50%;
+                    transform: translate3d(0, -1.3rem, 0);
+
+                    &::before,
+                    &::after {
+                        border-right: 0.2rem solid;
+                        content: '';
+                        display: block;
+                        height: 1rem;
+                        margin-top: -0.7rem;
+                        position: absolute;
+                        transform: rotate3d(0, 0, 1, 45deg);
+                        left: 0.5rem;
+                        top: 50%;
+                        width: 0;
+                        cursor: pointer;
+                        transition: opacity 0s 0.6s;
+
+                    }
+
+                    &::after {
+                        margin-top: -0.1rem;
+                        transform: rotate3d(0, 0, 1, 135deg);
+                    }
+                }
+            } // end .caret
+        }
+
+        .dropdown-menu {
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            list-style: none;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+
+            @at-root .active.open#{&} {
+                width: auto;
+                height: auto;
+            }
+
+            @include desktop {
+                position: absolute;
+                top: 3rem;
+                left: 50%;
+                transform: translate3d(-50%, 0, 0);
+                border-top: 0.4rem solid color(neutral-lighter);
+                font-size: 1.6rem;
+                font-weight: 300;
+                white-space: nowrap;
+                background: color(neutral-lightest);
+                text-align: left;
+
+
+                @at-root .fixed#{&} {
+                    background: color(neutral-lightest);
+                }
+            }
+
+            li {
+                margin: 0 0 1rem;
+
+                @include desktop {
+                    margin: 1rem;
+                }
+            }
+
+            a {
+                @include desktop {
+                    color: color(gray);
+
+                    &:hover {
+                        color: color(blue);
+                    }
+                }
+            }
+        }
+    }
+
+    .meta-nav {
+        order: 2;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        font-size: 1.6rem;
+
+        @at-root .active#{&} {
+            width: auto;
+            height: auto;
+        }
+
+        @include desktop {
+            order: 1;
+            width: 100%;
+            height: 5rem;
+            overflow: inherit;
+            background-color: lighten(color(neutral-lighter), 8%);
+            font-size: 1.4rem;
+        }
+
+        .container {
+            height: 100%;
+            justify-content: flex-end;
+        }
+
+        .nav-menu-item {
+            a {
+
+                color: color(cyan);
+                display: block;
+
+                @include desktop {
+                    color: color(gray);
+                }
 
                 &:active,
                 &:focus,
                 &:hover {
-                    &::after {
-                        box-shadow: 0 0 0.1rem rgba(color(neutral-dark), 0.6);
+                    color: color(blue);
+                }
+            }
+        }
+
+        .logo-wrapper {
+            flex: 1 100%;
+            background: rgba(color(neutral-lighter), 0.2);
+
+            border-top: 0.1rem solid rgba(color(neutral-lighter), 0.5);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+            align-items: center;
+            transform: translate3d(0, 100%, 0);
+            opacity: 0;
+
+            @at-root .active#{&} {
+                padding: 1.5rem;
+                width: 100%;
+                transform: translate3d(0, 0, 0);
+                opacity: 1;
+                transition: opacity 0.2s 0.5s, transform 0.3s 0.6s;
+            }
+
+            @include desktop {
+                flex: 0 auto;
+                width: auto;
+                position: static;
+                bottom: auto;
+                left: auto;
+                opacity: 1;
+                background: transparent;
+                border: 0;
+                transform: translate3d(0, 0, 0);
+
+            }
+
+            &::after {
+                content: '\00a9  Rice University';
+                color: color(gray);
+                order: 2;
+
+                @include desktop {
+                    display: none;
+                }
+            }
+        }
+    } //end .meta-nav
+
+    .nav {
+        order: 1;
+        height: 100%;
+        width: 100%;
+        position: relative;
+        box-shadow: 0 0.8rem 0.3rem -0.6rem rgba(color(gray), 0.3);
+
+        @at-root .active#{&} {
+            height: auto;
+            box-shadow: none;
+        }
+
+        @include desktop {
+            order: 2;
+            height: 7rem;
+
+            @at-root .transparent#{&} {
+                background-color: rgba(color(neutral-darkest), 0.2);
+            }
+
+            @at-root .fixed#{&} {
+                position: fixed;
+                top: -7rem;
+                left: 0;
+                width: 100%;
+                transform: translate3d(0, 0, 0);
+                transition: transform 0.2s;
+                background-color: rgba(color(neutral-lightest), 0.97);
+            }
+
+            @at-root .visible#{&} {
+                transform: translate3d(0, 100%, 0);
+                transition: transform 0.2s;
+            }
+        }
+
+        .container {
+            justify-content: space-between;
+            padding: 1.5rem;
+
+            @include desktop {
+                height: 100%;
+            }
+        }
+
+        .main-menu {
+            order: 3;
+            margin-top: 2.5rem;
+            font-size: 1.8rem;
+            font-weight: 600;
+
+            @include desktop {
+                margin: 0;
+            }
+        }
+
+        .nav-menu-item {
+            margin: 0 0 1rem;
+
+            @include desktop {
+                padding: 0 2rem;
+                margin: 0;
+                position: relative;
+
+                &:not(.dropdown) {
+                    &:hover {
+                        &::after {
+                            background-color: color(green);
+                            bottom: -0.5rem;
+                            content: '';
+                            height: 0.5rem;
+                            left: 1rem;
+                            outline: 0;
+                            position: absolute;
+                            right: 1rem;
+                        }
+                    }
+                }
+            }
+
+            > a {
+                @include desktop {
+                    color: color(gray);
+                    padding-bottom: 1rem;
+
+                    @at-root .transparent#{&} {
+                        color: color(neutral-lightest);
                     }
                 }
             }
         }
 
-        .nav-menu-item {
-            flex: 1 1 auto;
-            font-size: 1.8rem;
-            font-weight: 600;
+        .logo-wrapper {
+            order: 1;
+            flex: 0 auto;
+            line-height: 0;
+            height: 100%;
+            display: flex;
+            align-items: center;
 
-            @at-root .collapsed#{&} {
-                font-size: 1.6rem;
+            span {
+                vertical-align: middle;
             }
 
-            @media (max-width: 890px) {
-                &:not(.expand) {
-                    display: none;
-                }
+            > a {
+                display: inline-block;
             }
-
-            &:not(.expand) {
-                position: relative;
-            }
-
-            &.expand {
-                font-size: 2.4rem;
-                margin-left: 2rem;
-            }
-        }
-    }
-
-    .logo-wrapper {
-        flex: 0 0 auto;
-        line-height: 0;
-
-        span {
-            vertical-align: middle;
-        }
-
-        > a {
-            display: inline-block;
         }
 
         .logo {
             display: inline-block;
             margin-right: 2.5rem;
 
-            .logo-color {
-                display: inline-block;
-
-                @at-root .transparent#{&} {
-                    display: none;
-                }
-            }
-
-            .logo-white {
-                display: none;
-
-                @at-root .transparent#{&} {
-                    display: inline-block;
-                }
-            }
-
             a {
+                display: inline-block;
+                width: 15rem;
+
                 &:active,
                 &:focus,
                 &:hover {
@@ -221,312 +486,130 @@
                     }
                 }
             }
-        }
-    }
 
-    .os-logo > a {
-        > img {
-            background-color: transparent;
-            background-position: 72.5% bottom;
-            background-repeat: no-repeat;
-            background-size: 1.2rem 1.2rem;
-            transition: opacity 0.3s linear;
-            user-select: none;
-        }
-
-        &:focus > img,
-        &:hover > img {
-            background-image: url('/images/home.svg');
-        }
-
-        @at-root .transparent#{&} {
-            &:focus > img,
-            &:hover > img {
-                background-image: url('/images/home-white.svg');
-            }
-        }
-    }
-
-    .logo-quote {
-        display: none;
-        font-size: 1.4rem;
-        margin-top: 0.3rem;
-
-        @media (min-width: 1130px) {
-            display: inline-block;
-        }
-    }
-
-    .nav-menu {
-        align-items: center;
-        display: flex;
-        flex: 0 0 auto;
-        flex-wrap: wrap;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-
-        .dropdown-menu {
-            background-color: color(neutral-lightest);
-            border-top: 0.5rem solid color(neutral-lighter);
-            display: none;
-            font-size: 1.6rem;
-            font-weight: normal;
-            left: -1rem;
-            line-height: 2;
-            list-style-type: none;
-            padding: 1rem 0;
-            position: absolute;
-            top: 3.2rem;
-            white-space: nowrap;
-            z-index: 6;
-
-            @at-root .transparent#{&} {
-                backdrop-filter: blur(1.5rem);
-                background-color: rgba(color(neutral-darkest), 0.5);
-                top: 3.5rem;
+            img {
+                width: 100%;
+                height: 100%;
             }
 
-            &[aria-expanded='true'] {
-                display: block;
-            }
+            .logo-color {
+                display: inline-block;
 
-            &:active,
-            &:focus,
-            &:hover {
-                display: block;
-            }
-
-            > li {
-                > a {
-                    padding-left: 1.5rem;
-                    padding-right: 1.5rem;
-
-                    &:active,
-                    &:focus,
-                    &:hover {
-                        color: color(cyan);
-
-                        &::after {
-                            background-color: transparent;
-                            box-shadow: none;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    .nav-menu-item {
-        > a {
-            display: inline-block;
-            padding-left: 2rem;
-            padding-right: 2rem;
-        }
-
-        &:first-child > a {
-            margin-left: -2rem;
-        }
-
-        &:last-child > a {
-            margin-right: -2rem;
-        }
-    }
-
-    .expand {
-        cursor: pointer;
-        display: none;
-        outline: 0;
-        padding: 1.5rem 0;
-        position: static;
-        width: 3rem;
-
-        @media (max-width: 890px) {
-            display: block;
-        }
-
-        &:not(.expanded) {
-            &:focus,
-            &:hover {
-                > span {
-                    background-color: color(green);
-                }
-            }
-
-            > span {
-                right: 8vw;
-            }
-
-            > span:nth-child(2) {
-                top: 4rem;
-            }
-        }
-
-        > span {
-            background-color: color(neutral-medium);
-            display: block;
-            height: 0.4rem;
-            position: absolute;
-            transition: all 0.4s ease;
-            width: 3rem;
-
-            @at-root .transparent#{&} {
-                background-color: color(neutral-lightest);
-            }
-
-            &:nth-child(1) {
-                margin-top: -1rem;
-                z-index: 9;
-            }
-
-            &:nth-child(3) {
-                margin-top: 1rem;
-            }
-
-            > ul {
-                list-style-type: none;
-                padding: 0;
-            }
-        }
-    }
-
-    .menu-wrap {
-        height: 0;
-        position: absolute;
-        top: 8rem;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        overflow: hidden;
-    }
-
-    .menus {
-        display: none;
-        height: 0;
-        left: -80rem;
-        overflow-y: scroll;
-        position: absolute;
-        text-align: center;
-        top: 2rem;
-        transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        width: 100vw;
-
-        @media (max-width: 890px) {
-            display: block;
-        }
-
-        > .expanded-menu,
-        > .expanded-meta-menu {
-            height: 0;
-            position: relative;
-            width: 0;
-            z-index: 5;
-
-            .nav-menu-item {
-                display: block;
-
-                a {
-                    color: color(neutral-medium);
-                    display: inline-block;
-                    margin: 1.25rem 0 0.5rem -1rem;
-                    padding: 0.5rem 2rem;
-                    text-shadow: none;
-                }
-            }
-        }
-
-        > .expanded-menu .nav-menu-item {
-            > a {
-                font-size: 2.4rem;
-
-                &:active,
-                &:focus,
-                &:hover {
-                    + .dropdown-menu {
+                @include desktop {
+                    @at-root .transparent#{&} {
                         display: none;
                     }
                 }
             }
 
-            .caret {
+            .logo-white {
+                display: none;
+
+                @include desktop {
+                    @at-root .transparent#{&} {
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+
+        .logo-quote {
+            transform: scale3d(0, 0, 0);
+            display: inline-block;
+            color: color(gray);
+            width: 0;
+            height: 0;
+
+            @media (min-width: 1000px) {
+                transform: scale3d(1, 1, 1);
+                width: auto;
+                height: auto;
+            }
+
+            @at-root .transparent#{&} {
+                color: color(neutral-lightest);
+            }
+
+        }
+    } //end .nav
+
+    .expand {
+        order: 2;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        box-shadow: none;
+        border-radius: none;
+        border: 0;
+        display: inline-block;
+        padding: 0;
+        transition: 0.3s;
+        cursor: pointer;
+        user-select: none;
+        background: transparent;
+
+        @include desktop {
+            display: none;
+
+            @at-root .sticky#{&} {
+                display: block;
+                order: 3;
+                margin-left: 2rem;
+            }
+        }
+
+        &:hover,
+        &:focus,
+        &:active {
+            outline: none;
+        }
+
+        span {
+            //create middle line
+            display: inline-block;
+            width: $button-size;
+            height: $button-size / 7;
+            background: color(gray);
+            position: relative;
+            transition: background 0.3s 0.2s ease;
+
+            /*create the upper and lower lines as pseudo-elements of the middle line*/
+            &::before,
+            &::after {
+                display: inline-block;
+                width: $button-size;
+                height: $button-size / 7;
+                background: color(gray);
+                position: absolute;
+                left: 0;
+                content: '';
+                //set transform origin back to center
+                transform-origin: 50% 50%;
+                transition: top 0.3s 0.2s ease, transform 0.3s ease;
+            }
+
+            &::before { top: $button-size / 4; }
+            &::after { top: -$button-size / 4; }
+
+            @at-root .active#{&} {
+                transition: background 0.3s 0s ease;
+                background: transparent;
+
                 &::before,
                 &::after {
-                    margin-top: -0.4rem;
+                    transition: top 0.3s ease, transform 0.3s 0.2s ease;
+                    top: 0;
+                    width: $button-size;
                 }
 
                 &::before {
-                    height: 0.7rem;
-                    right: 0.5rem;
+                    transform: rotate3d(0, 0, 1, 45deg);
                 }
 
                 &::after {
-                    right: 0.5rem;
-                    top: 2.6rem;
+                    transform: rotate3d(0, 0, 1, -45deg);
                 }
             }
         }
-
-        > .expanded-meta-menu .nav-menu-item > a {
-            color: color(cyan);
-            font-size: 1.6rem;
-
-            &:active,
-            &:focus,
-            &:hover {
-                color: darken(color(cyan), 10%);
-
-                &::after {
-                    background-color: transparent;
-                    box-shadow: none;
-                }
-            }
-        }
-    }
-
-    .expanded {
-        &:active,
-        &:focus,
-        &:hover {
-            span:nth-child(1),
-            span:nth-child(3) {
-                background-color: color(red);
-            }
-        }
-
-        span:nth-child(1),
-        span:nth-child(3) {
-            margin-top: 0;
-            right: 8vw;
-            transform: rotate(45deg);
-            z-index: 100;
-        }
-
-        span:nth-child(2) {
-            background-color: rgba(color(neutral-lightest), 0.95);
-            height: 100vh;
-            pointer-events: none;
-            right: 0;
-            top: 8rem;
-            width: 100vw;
-        }
-
-        span:nth-child(3) {
-            transform: rotate(-45deg);
-        }
-
-        + .menu-wrap {
-            height: 100vh;
-
-            .menus {
-                height: 100vh;
-                left: 0;
-
-                .expanded-menu,
-                .expanded-meta-menu {
-                    height: auto;
-                    width: auto;
-                }
-            }
-        }
-    }
+    } //end .expand button
 }
