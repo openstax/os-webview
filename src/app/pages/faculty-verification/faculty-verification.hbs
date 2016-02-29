@@ -1,0 +1,60 @@
+<style scoped>@import url(/app/pages/faculty-verification/faculty-verification.css);</style>
+<h1>Faculty Verification</h1>
+<div class="faculty-verification">
+    <div class="book-blurb">
+        <p>
+            Please fill out the form below....
+        </p>
+    </div>
+    <div>
+        <form accept-charset="UTF-8"
+         action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="post">
+            <div>
+                <input name="utf8" type="hidden" value="✓" />
+                <!-- This is our organization id -->
+                <input type=hidden name="oid" value="00DU0000000Kwch">
+                <input type=hidden name="retURL" value="{{urlOrigin}}">
+                <input type=hidden name="lead_source" value="OSC Faculty">
+            </div>
+            <fieldset class="labeled-inputs">
+                <label>
+                    <span>First name</span>
+                    <input name="first_name" type="text" required />
+                </label>
+                <label>
+                    <span>Last name</span>
+                    <input name="last_name" type="text" required />
+                </label>
+                <label>
+                    <span>School name</span>
+                    <input name="company" type="text" required />
+                </label>
+                <label>
+                    <span>School url</span>
+                    <input name="URL" type="text" required />
+                </label>
+                <label>
+                    <span>Institutional email address</span>
+                    <input name="email" pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text" required />
+                </label>
+                <label>
+                    <span>Phone number</span>
+                    <input name="phone" type="text" required />
+                </label>
+            </fieldset>
+            <fieldset class="labeled-inputs no-inset">
+                <label>
+                    <span>Number of students this semester</span>
+                    <input name="00NU00000052VId" type="number" min="1" required />
+                </label>
+                <label>
+                    <span>Your department</span>
+                    <input name="department" type="text" />
+                </label>
+            </fieldset>
+            <div>
+                <input type="submit" value="Submit" role="button" />
+            </div>
+        </form>
+    </div>
+</div>

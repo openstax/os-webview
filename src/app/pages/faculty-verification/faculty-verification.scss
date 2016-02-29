@@ -1,0 +1,26 @@
+@import 'variables';
+
+.faculty-verification {
+    > h1 {
+        flex: 1 100%;
+    }
+
+    img {
+        min-height: 20rem;
+        min-width: 15rem;
+    }
+
+    form {
+        border: thin solid color(neutral-light);
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+    [type="submit"] {
+        background-color: color(primary);
+        border: 0;
+        color: color(neutral-lightest);
+        font-size: 1.7rem;
+        padding: 1rem 2rem;
+    }
+}

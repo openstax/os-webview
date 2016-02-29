@@ -12,51 +12,72 @@
         </p>
     </div>
     <div>
-        <form>
-            <fieldset class="labeled-inputs no-inset">
+        <form accept-charset="UTF-8"
+         action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="post">
+            <div>
+                <input name="utf8" type="hidden" value="✓" />
+                <!-- This is our organization id -->
+                <input type=hidden name="oid" value="00DU0000000Kwch">
+                <input type=hidden name="retURL" value="{{urlOrigin}}">
+                <input type=hidden name="lead_source" value="Comp Request">
+            </div>
+            <fieldset class="labeled-inputs">
                 <label>
-                    <span>Name</span>
-                    <input name="person_name" type="text" required />
+                    <span>First name</span>
+                    <input name="first_name" type="text" required />
                 </label>
                 <label>
-                    <span>Email Address</span>
-                    <input name="person_email" type="email" required />
+                    <span>Last name</span>
+                    <input name="last_name" type="text" required />
                 </label>
                 <label>
-                    <span>Phone</span>
-                    <input name="person_phone" type="text" />
+                    <span>School name</span>
+                    <input name="company" type="text" required />
+                </label>
+                <label>
+                    <span>School url</span>
+                    <input name="URL" type="text" required />
+                </label>
+                <label>
+                    <span>Email address</span>
+                    <input name="email" pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text" required />
+                </label>
+                <label>
+                    <span>Phone number</span>
+                    <input name="phone" type="text" required />
                 </label>
                 <label>
                     <span>Book Requested</span>
-                    <select name="book_title" type="text" required />
-                        <option value="" disabled selected>Select a title</option>
-                        <option>Anatomy and Physiology</option>
-                        <option>Biology</option>
-                        <option>Chemistry</option>
-                        <option>College Physics</option>
-                        <option>Concepts of Biology</option>
-                        <option>Introduction to Sociology 2e</option>
-                        <option>Introductory Statistics</option>
-                        <option>Principles of Economics</option>
-                        <option>Principles of Microeconomics</option>
-                        <option>Principles of Macroeconomics</option>
-                        <option>Psychology</option>
-                        <option>U.S. History</option>
+                    <select name="00NU00000053nzR" required />
+                        <option value="" disabled selected>Please Select</option>
+                        <option value="Anatomy and Physiology">Anatomy and Physiology</option>
+                        <option value="Biology">Biology</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="College Physics">College Physics</option>
+                        <option value="Concepts of Biology">Concepts of Biology</option>
+                        <option value="Introduction to Sociology 2e">Introduction to Sociology 2e</option>
+                        <option value="Introductory Statistics">Introductory Statistics</option>
+                        <option value="Principles of Economics">Principles of Economics</option>
+                        <option value="Principles of Macroeconomics">Principles of Macroeconomics</option>
+                        <option value="Principles of Microeconomics">Principles of Microeconomics</option>
+                        <option value="Psychology">Psychology</option>
+                        <option value="U.S. History">U.S. History</option>
                     </select>
                 </label>
             </fieldset>
             <fieldset class="labeled-inputs no-inset">
                 <label>
                     <span>Number of students this semester</span>
-                    <input name="number_students" type="number" required />
-                </label>
-                <label>
-                    <span>Your school</span>
-                    <input name="school" type="text" required />
+                    <input name="00NU00000052VId" type="number" required />
                 </label>
                 <label>
                     <span>Your department</span>
                     <input name="department" type="text" />
+                </label>
+                <label>
+                    <span>Decision date</span>
+                    <input id="decision-date" type="date" />
+                    <input id="hidden-decision-date" type="hidden" name="00NU00000052i3K" />
                 </label>
                 <div class="form-item">
                     <span>Have you adopted an OpenStax textbook?</span>
