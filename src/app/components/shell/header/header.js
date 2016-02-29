@@ -273,51 +273,16 @@ class Header extends BaseView {
         }
     }
 
-    throttle(func, ms) {
-        var timeout, last = 0;
-
-        return function () {
-            var a = arguments,
-                t = this,
-                now = +(new Date()),
-                exe = function () {
-                    last = now;
-                    func.apply(t, a);
-                };
-
-            clearTimeout(timeout)
-            ;(now >= last + ms) ? exe() : timeout = setTimeout(exe, ms);
-        };
-    }
-
     onRender() {
         this.updateHeaderStyle();
 
         document.addEventListener('focus', this.closeDropdownMenus.bind(this), true);
         document.addEventListener('click', this.closeDropdownMenus.bind(this), true);
 
-        // let metaMenu = document.createDocumentFragment();
-        // let mainMenu = document.createDocumentFragment();
-        // let expandedMenu = this.el.querySelector('.expanded-menu');
-        // let expandedMetaMenu = this.el.querySelector('.expanded-meta-menu');
-        // let mainNavMenu = this.el.querySelector('.main-menu').querySelectorAll('.nav-menu-item:not(.expand)');
-        // let metaNavMenu = this.el.querySelector('.meta-menu').querySelectorAll('.nav-menu-item:not(:last-child)');
-        //
-        // for (let li of mainNavMenu) {
-        //     mainMenu.appendChild(li.cloneNode(true));
-        // }
-        //
-        // for (let li of metaNavMenu) {
-        //     metaMenu.appendChild(li.cloneNode(true));
-        // }
-        //
-        // expandedMenu.appendChild(mainMenu);
-        // expandedMetaMenu.appendChild(metaMenu);
-
         this.el.addEventListener('click', this.resetHeader.bind(this), true);
 
 
-        window.addEventListener('scroll', this.throttle(this.updateHeaderStyle.bind(this), 25));
+        window.addEventListener('scroll', this.updateHeaderStyle.bind(this));
         window.addEventListener('resize', this.closeFullScreenNav.bind(this));
     }
 
