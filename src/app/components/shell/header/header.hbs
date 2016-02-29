@@ -1,77 +1,73 @@
 <style scoped>@import url(/app/components/shell/header/header.css);</style>
-<header class="page-header {{#if collapsed}}collapsed{{/if}} {{#if fixed}}fixed{{/if}} {{#if transparent}}transparent{{/if}}">
+<header class="page-header{{#if visible}}visible{{/if}} {{#if fixed}}fixed{{/if}} {{#if transparent}}transparent{{/if}}">
     <div class="skiptocontent">
         <a href="#maincontent">skip to main content</a>
     </div>
 
     <nav class="meta-nav">
-        <ul class="nav-menu meta-menu" role="menu" aria-label="Meta navigation menu">
-            <li class="nav-menu-item"><a href="/news" role="menuitem">News</a></li>
-            <li class="nav-menu-item"><a href="/contact" role="menuitem">Contact</a></li>
-            <li class="nav-menu-item"><a href="/give" role="menuitem">Give</a></li>
-            <li class="nav-menu-item"><a href="/login" role="menuitem">Login</a></li>
-            <li class="nav-menu-item">
-                <a href="http://www.rice.edu" role="menuitem">
+        <div class="container">
+            <ul class="nav-menu meta-menu" role="menu" aria-label="Meta navigation menu">
+                <li class="nav-menu-item"><a href="/news" role="menuitem">News</a></li>
+                <li class="nav-menu-item"><a href="/contact" role="menuitem">Contact</a></li>
+                <li class="nav-menu-item"><a href="/give" role="menuitem">Give</a></li>
+                <li class="nav-menu-item"><a href="/login" role="menuitem">Login</a></li>
+            </ul>
+            <span class="logo-wrapper">
+                <a class="logo rice-logo" href="http://www.rice.edu" role="menuitem">
                     <img src="/images/rice.png" alt="Rice University logo" height="30" />
                 </a>
-            </li>
-        </ul>
+            </span>
+        </div>
     </nav>
 
     <nav class="nav" role="menubar" aria-label="Main menu">
-        <span class="logo-wrapper">
-            <span class="logo os-logo">
-                <a href="/" aria-label="Home Page">
-                    <img class="logo-color" src="/images/logo.svg" alt="OpenStax logo" height="40" />
-                    <img class="logo-white" src="/images/logo-white.svg" alt="OpenStax logo" height="40" />
-                </a>
-            </span>
-            
-            <span class="logo-quote">Access. The future of education.</span>
-        </span>
+        <div class="container">
+            <span class="logo-wrapper">
+                <span class="logo os-logo">
+                    <a href="/" aria-label="Home Page">
+                        <img class="logo-color" src="/images/logo.svg" alt="OpenStax logo" />
+                        <img class="logo-white" src="/images/logo-white.svg" alt="OpenStax logo" />
+                    </a>
+                </span>
 
-        <ul class="nav-menu main-menu">
-            <li class="nav-menu-item dropdown" role="presentation">
-                <a href="/subjects" role="menuitem" aria-haspopup="true">
-                    Subjects <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" role="menu" aria-expanded="false" aria-label="Subjects menu">
-                    <li role="presentation"><a href="/subjects" role="menuitem" tabindex="-1">All</a></li>
-                    <li role="presentation"><a href="/subjects/math" role="menuitem" tabindex="-1">Math</a></li>
-                    <li role="presentation"><a href="/subjects/science" role="menuitem" tabindex="-1">Science</a></li>
-                    <li role="presentation"><a href="/subjects/social-sciences" role="menuitem" tabindex="-1">Social Sciences</a></li>
-                    <li role="presentation"><a href="/subjects/history" role="menuitem" tabindex="-1">History</a></li>
-                    <li role="presentation"><a href="/subjects/ap" role="menuitem" tabindex="-1">AP</a></li>
-                </ul>
-            </li>
-            <li class="nav-menu-item" role="presentation">
-                <a href="/higher-ed" role="menuitem">Higher Education</a>
-            </li>
-            <li class="nav-menu-item" role="presentation">
-                <a href="/k-12" role="menuitem">K-12</a>
-            </li>
-            <li class="nav-menu-item dropdown" role="presentation">
-                <a href="/impact" role="menuitem" aria-haspopup="true">
-                    Our Impact <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" role="menu" aria-expanded="false" aria-label="Our Impact menu">
-                    <li><a href="/stories" role="menuitem" tabindex="-1">Success Stories</a></li>
-                    <li><a href="/team" role="menuitem" tabindex="-1">Our Team</a></li>
-                    <li><a href="/allies" role="menuitem" tabindex="-1">Allies</a></li>
-                    <li><a href="/careers" role="menuitem" tabindex="-1">Careers</a></li>
-                </ul>
-            </li>
-            <li class="nav-menu-item expand" role="menuitem" aria-haspopup="true" aria-label="Toggle Meta Navigation Menu" tabindex="0">
-                <span class="cls"></span>
-                <span></span>
-                <span class="cls"></span>
-            </li>
-            <div class="menu-wrap">
-                <div class="menus hidden">
-                    <ul class="expanded-menu" role="menu"></ul>
-                    <ul class="expanded-meta-menu" role="menu"></ul>
-                </div>
-            </div>
-        </ul>
+                <span class="logo-quote">Access. The future of education.</span>
+            </span>
+
+            <ul class="nav-menu main-menu">
+                <li class="nav-menu-item dropdown" role="presentation">
+                    <a href="/subjects" role="menuitem" aria-haspopup="true">
+                        Subjects <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-expanded="false" aria-label="Subjects menu">
+                        <li role="presentation"><a href="/subjects" role="menuitem" tabindex="-1">All</a></li>
+                        <li role="presentation"><a href="/subjects/math" role="menuitem" tabindex="-1">Math</a></li>
+                        <li role="presentation"><a href="/subjects/science" role="menuitem" tabindex="-1">Science</a></li>
+                        <li role="presentation"><a href="/subjects/social-sciences" role="menuitem" tabindex="-1">Social Sciences</a></li>
+                        <li role="presentation"><a href="/subjects/history" role="menuitem" tabindex="-1">History</a></li>
+                        <li role="presentation"><a href="/subjects/ap" role="menuitem" tabindex="-1">AP</a></li>
+                    </ul>
+                </li>
+                <li class="nav-menu-item" role="presentation">
+                    <a href="/higher-ed" role="menuitem">Higher Education</a>
+                </li>
+                <li class="nav-menu-item" role="presentation">
+                    <a href="/k-12" role="menuitem">K-12</a>
+                </li>
+                <li class="nav-menu-item dropdown" role="presentation">
+                    <a href="/impact" role="menuitem" aria-haspopup="true">
+                        Our Impact <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-expanded="false" aria-label="Our Impact menu">
+                        <!-- <li><a href="/stories" role="menuitem" tabindex="-1">Success Stories</a></li>
+                        <li><a href="/team" role="menuitem" tabindex="-1">Our Team</a></li> -->
+                        <li><a href="/allies" role="menuitem" tabindex="-1">Allies</a></li>
+                        <li><a href="/foundation-support" role="menuitem" tabindex="-1">Foundation Support</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <button class="expand" type="button" role="button" aria-haspopup="true" aria-label="Toggle Meta Navigation Menu" tabindex="0">
+              <span></span>
+            </button>
+        </div>
     </nav>
 </header>
