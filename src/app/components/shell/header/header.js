@@ -163,6 +163,7 @@ class Header extends BaseView {
         this.removeClass(parentItem, 'open');
         this.removeClass(dropDownMenu, 'open');
         this.updateHeaderStyle();
+        this.closeDropdownMenus(true);
     }
 
     closeFullScreenNav() {
@@ -195,6 +196,7 @@ class Header extends BaseView {
         let dropDownMenu = $this.nextElementSibling;
 
         if (w <= 768) {
+            this.cloneDropdownParent(e);
             if (!dropDownMenu.classList.contains('open')) {
                 e.preventDefault();
                 header.classList.add('open');
@@ -219,8 +221,12 @@ class Header extends BaseView {
         }
     }
 
-    @on('focus a[aria-haspopup="true"]')
+    @on('click a[aria-haspopup="true"]')
     openDropdownMenu(e) {
+        this.openThisDropdown(e);
+    }
+
+    openThisDropdown(e) {
         let menu = e.currentTarget.nextElementSibling;
 
         menu.setAttribute('aria-expanded', 'true');
@@ -271,6 +277,15 @@ class Header extends BaseView {
                 this.reset();
             }
         }
+    }
+
+    cloneDropdownParent(e) {
+        let $this = e.currentTarget;
+        let dropdown = $this.nextElementSibling;
+        var thisLi = document.createElement('li');
+        let parent = $this.cloneNode(true);
+
+        dropdown.insertBefore(parent, dropdown.childNodes[0]);
     }
 
     onRender() {

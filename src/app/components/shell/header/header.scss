@@ -15,6 +15,8 @@ $transition: 0.3s;
     width: 100%;
     height: 7rem;
     background-color: rgba(color(neutral-lightest), 0.97);
+    justify-content: center;
+    align-items: center;
 
     @at-root .active#{&} {
         right: 0;
@@ -81,7 +83,7 @@ $transition: 0.3s;
         transform: scale3d(0, 0, 0);
         flex: 1 100%;
         opacity: 0;
-        transition: opacity 0.3s 0.2s;
+        transition: opacity 0.3s 0.4s;
         display: flex;
         flex-flow: column nowrap;
         align-items: center;
@@ -173,8 +175,9 @@ $transition: 0.3s;
 
             &.open {
                 position: absolute;
-                top: 0;
-                transform: translate3d(100rem, 0, 0);
+                top: 50%;
+                left: 0;
+                transform: translate3d(100rem, -50%, 0);
                 transition: transform;
                 width: 100%;
             }
@@ -222,6 +225,8 @@ $transition: 0.3s;
             text-align: center;
             margin: 0;
             padding: 0;
+            font-size: 1.6rem;
+            font-weight: 300;
 
             @at-root .active.open#{&} {
                 width: auto;
@@ -234,8 +239,6 @@ $transition: 0.3s;
                 left: 50%;
                 transform: translate3d(-50%, 0, 0);
                 border-top: 0.4rem solid color(neutral-lighter);
-                font-size: 1.6rem;
-                font-weight: 300;
                 white-space: nowrap;
                 background: color(neutral-lightest);
                 text-align: left;
@@ -255,12 +258,10 @@ $transition: 0.3s;
             }
 
             a {
-                @include desktop {
-                    color: color(gray);
+                color: color(gray);
 
-                    &:hover {
-                        color: color(blue);
-                    }
+                &:hover {
+                    color: color(blue);
                 }
             }
         }
@@ -364,7 +365,6 @@ $transition: 0.3s;
         order: 1;
         height: 100%;
         width: 100%;
-        position: relative;
         box-shadow: 0 0.8rem 0.3rem -0.6rem rgba(color(gray), 0.3);
 
         @at-root .active#{&} {
@@ -375,6 +375,7 @@ $transition: 0.3s;
         @include desktop {
             order: 2;
             height: 7rem;
+            transform: translate3d(0, 0, 0);
 
             @at-root .transparent#{&} {
                 background-color: rgba(color(neutral-darkest), 0.2);
@@ -407,12 +408,16 @@ $transition: 0.3s;
 
         .main-menu {
             order: 3;
-            margin-top: 2.5rem;
+            margin-top: -6.6rem;
             font-size: 1.8rem;
             font-weight: 600;
 
             @include desktop {
                 margin: 0;
+            }
+
+            @at-root .open#{&} {
+                margin-top: 0;
             }
         }
 
@@ -456,9 +461,17 @@ $transition: 0.3s;
             order: 1;
             flex: 0 auto;
             line-height: 0;
-            height: 100%;
             display: flex;
             align-items: center;
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+
+            @include desktop {
+                position: static;
+                top: auto;
+                left: auto;
+            }
 
             span {
                 vertical-align: middle;
@@ -547,6 +560,9 @@ $transition: 0.3s;
         cursor: pointer;
         user-select: none;
         background: transparent;
+        position: absolute;
+        top: 2rem;
+        right: 1.5rem;
 
         @include desktop {
             display: none;
