@@ -60,28 +60,79 @@
 {{{strips}}}
 <div class="text-content labeled-inputs two-column book-info">
     <fieldset id="primary-book" class="column">
+        <p>OpenStax College textbook you are using:</p>
+        <select name="00NU00000053nzR" required>
+            <option value="">Please Select</option>
+            <option value="Algebra and Trigonometry">Algebra and Trigonometry</option>
+            <option value="Anatomy and Physiology">Anatomy and Physiology</option>
+            <option value="Biology">Biology</option>
+            <option value="Chemistry">Chemistry</option>
+            <option value="College Algebra">College Algebra</option>
+            <option value="College Physics">College Physics</option>
+            <option value="College Physics for AP® Courses ">College Physics for AP® Courses </option>
+            <option value="Concepts of Biology">Concepts of Biology</option>
+            <option value="Introduction to Sociology">Introduction to Sociology</option>
+            <option value="Introduction to Sociology 2e">Introduction to Sociology 2e</option>
+            <option value="Introductory Statistics">Introductory Statistics</option>
+            <option value="Prealgebra">Prealgebra</option>
+            <option value="Precalculus">Precalculus</option>
+            <option value="Principles of Economics">Principles of Economics</option>
+            <option value="Principles of Macroeconomics">Principles of Macroeconomics</option>
+            <option value="Principles of Macroeconomics for AP® Courses">Principles of Macroeconomics for AP® Courses</option>
+            <option value="Principles of Microeconomics">Principles of Microeconomics</option>
+            <option value="Principles of Microeconomics for AP® Courses">Principles of Microeconomics for AP® Courses</option>
+            <option value="Psychology">Psychology</option>
+            <option value="U.S. History">U.S. History</option>
+        </select>
+        <p>How are you using this title?</p>
+        <select name="00NU00000055spw">
+            <option value="Fully adopted">Fully adopted and using it. The students
+                don't have to pay for a book.
+            </option>
+            <option value="Recommending book as an option">
+                Recommending the book as an option. The students purchase a different book.
+            </option>
+        </select>
+        <p>Which partner resources are you using with the OpenStax College book?</p>
+        <fieldset>
+            <select multiple name="00NU0000005VmTu">
+                 <option value="None">None</option>
+                 <option value="Cerego">Cerego</option>
+                 <option value="Courseweaver">Courseweaver</option>
+                 <option value="Expert TA">Expert TA</option>
+                 <option value="Lrnr">Lrnr</option>
+                 <option value="Sapling Learning">Sapling Learning</option>
+                 <option value="SimBio">SimBio</option>
+                 <option value="WebAssign">WebAssign</option>
+                 <option value="Wiley Plus">Wiley Plus</option>
+                 <option value="XYZ Homework">XYZ Homework</option>
+            </select>
+            Other
+            <input name="00NU0000005Vls8" class="short" type="text">
+        </fieldset>
+        <p>
+            Approximately how many students in your classes will be using this book per
+            semester?
+        </p>
+        <input name="00NU00000052VId" type="number" required />
+        <p>
+            If there are other instructors in your department who will also be using this
+            book, approximately how many students in your department will be using this
+            book per semester?
+        </p>
+        <input name="00NU00000055sq1" type="number" />
     </fieldset>
     <fieldset class="column">
         <p class="question">
             Which partners may we share your information with so they may contact you
             about additional resources supporting the OpenStax College books?
         </p>
-        <fieldset class="labeled-buttons">
-            <label>
-                <input name="00NU00000055spm" type="checkbox"
-                 value="Online homework providers">
-                Online homework providers
-            </label>
-            <label>
-                <input name="00NU00000055spm" type="checkbox"
-                 value="Courseware providers">
-                Courseware providers
-            </label>
-            <label>
-                <input name="00NU00000055spm" type="checkbox"
-                 value="Print custom editions">
-                Print custom editions
-            </label>
+        <fieldset>
+            <select multiple name="00NU00000055spm">
+                <option value="Online homework providers">Online homework providers</option>
+                <option value="Courseware providers">Courseware providers</option>
+                <option value="Print custom editions">Print custom editions</option>
+            </select>
         </fieldset>
 
         <p class="question">Are you interested in being featured in our newsletter as a Textbook Hero?</p>

@@ -1,5 +1,6 @@
 import BaseView from '~/helpers/backbone/view';
-import BookInfoView from './book-info/book-info';
+import TagMultiSelect from '~/components/tag-multi-select/tag-multi-select';
+import SingleSelect from '~/components/single-select/single-select';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './adoption.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
@@ -34,9 +35,12 @@ export default class AdoptionForm extends BaseView {
 
     onRender() {
         this.el.classList.add('adoption-form');
-        let bookInfoView = new BookInfoView('adoption');
-
-        this.regions.primaryBook.append(bookInfoView);
+        for (let ms of this.el.querySelectorAll('select[multiple]')) {
+            new TagMultiSelect().replace(ms);
+        }
+        for (let ss of this.el.querySelectorAll('select:not([multiple])')) {
+            new SingleSelect().replace(ss);
+        }
     }
 
 }

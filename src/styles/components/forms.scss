@@ -7,14 +7,6 @@ form {
     color: $text-black;
     line-height: 3rem;
 
-    select,
-    option {
-        background: none;
-        display: inline-block;
-        margin: 0;
-        padding: 1.5rem;
-    }
-
     [type="submit"] {
         background-color: color(primary);
         border: 0;
@@ -94,6 +86,7 @@ form {
     [type="email"],
     select {
         color: $text-secondary;
+        display: inline-block;
         font-size: 1.7rem;
         font-weight: 500;
         height: 5rem;
@@ -105,5 +98,12 @@ form {
             outline: 0;
             border-bottom: solid color(cyan) 0.2rem;
         }
+    }
+
+    select,
+    option {
+        background: none;
+        margin: 0;
+        padding: 1.5rem;
     }
 }

@@ -1,0 +1,21 @@
+@import 'variables';
+
+$faint-gray: rgba(color(gray), 0.33);
+
+.option-list {
+    background-color: color(neutral-lightest);
+    border: outset thin $faint-gray;
+    cursor: pointer;
+    padding: 0 1rem;
+    position: absolute;
+    right: 3rem;
+    z-index: 30;
+
+    > .option {
+        background-color: color(neutral-lightest);
+
+        &:hover {
+            background-color: $faint-gray;
+        }
+    }
+}
