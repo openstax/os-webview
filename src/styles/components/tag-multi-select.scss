@@ -35,17 +35,4 @@ $faint-gray: rgba(color(gray), 0.33);
     .activate-pulldown {
         flex-grow: 0;
     }
-
-    .option-list {
-        background-color: color(neutral-lightest);
-        border: outset thin $faint-gray;
-        cursor: pointer;
-        padding: 0 1rem;
-        position: absolute;
-        right: 3rem;
-
-        .option:hover {
-            background-color: $faint-gray;
-        }
-    }
 }

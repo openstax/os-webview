@@ -2,7 +2,7 @@ import BaseView from '~/helpers/backbone/view';
 import BaseModel from '~/helpers/backbone/model';
 import BaseCollection from '~/helpers/backbone/collection';
 import Tag from './tag/tag';
-import Option from './option/option';
+import Option from '../select-option/select-option';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './tag-multi-select.hbs';
 

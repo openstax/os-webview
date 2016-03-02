@@ -1,12 +1,14 @@
 import BaseView from '~/helpers/backbone/view';
 import {on, props} from '~/helpers/backbone/decorators';
-import {template} from './option.hbs';
+import {template} from './select-option.hbs';
 
 @props({template})
 export default class Option extends BaseView {
     @on('click')
     selectOption() {
-        this.model.set('selected', true);
+        // Recognize re-selection as a change, too
+        this.model.attributes.selected = true;
+        this.model.trigger('change:selected', this.model);
     }
     constructor(model) {
         super();
