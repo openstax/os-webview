@@ -1,4 +1,5 @@
 import BaseView from '~/helpers/backbone/view';
+import salesforceModel from '~/models/salesforce-model';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './interest.hbs';
 
@@ -57,9 +58,24 @@ export default class InterestForm extends BaseView {
         }
     }
 
+    @on('change [type=text],[type=email]')
+    saveSetting(event) {
+        let varName = event.target.name;
+
+        if (varName) {
+            salesforceModel.set(varName, event.target.value);
+        }
+    }
+
     onRender() {
         this.el.classList.add('text-content');
-        this.el.querySelector(otherTextSelector).disabled = true;
+
+        let ots = this.el.querySelector(otherTextSelector);
+
+        if (ots) {
+            ots.disabled = true;
+        }
+        salesforceModel.prefill(this.el);
         this.checkValid();
     }
 }
