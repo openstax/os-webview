@@ -21,7 +21,7 @@ class Router extends Backbone.Router {
 
         ['about', 'books', 'contact', 'news', 'license', 'subjects', 'details',
         'interest', 'adoption', 'adoption-confirmation', 'comp-copy',
-        'accessibility-statement', 'faculty-verification']
+        'accessibility-statement', 'faculty-verification', 'k-12']
         .forEach(this.standardRoute, this);
 
         this.route(/to[u|s]/, 'tos', () => {

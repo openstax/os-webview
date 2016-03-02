@@ -1,0 +1,43 @@
+@import 'variables';
+@import 'mixins';
+
+.k-12-page {
+    flex: 1 0 auto;
+
+    .banner {
+        width: 100%;
+        height: 60rem;
+        background-color: color(deep-green);
+    }
+
+    .quotes-buckets {
+        background-color: lighten(color(neutral-lighter), 8%);
+
+        .quotes {
+            padding: 8rem 0;
+            width: 90vw;
+
+            .quote-bucket {
+                margin: 0;
+                max-width: 97rem;
+
+                .image {
+                    background: color(blue);
+                    max-width: 40rem;
+                }
+            }
+        }
+    }
+
+    .tutor-banner {
+        width: 100%;
+        min-height: 70vh;
+        background-color: color(cyan);
+        background-image: url('/images/k-12/k12-tutor-bg.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+    }
+}
+
+
