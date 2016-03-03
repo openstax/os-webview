@@ -62,13 +62,7 @@
                 Get started with free resources to support your course. (Verified instructor
                 account required.)
             </p>
-            <div class="resource-row">
-                {{#each bookInfo.instructorResources}}
-                <div class="resource-box">
-                    <h3>{{title}}</h3>
-                    <a href="{{downloadUrl}}"><img src="{{iconUrl}}" />Download</a>
-                </div>
-                {{/each}}
+            <div id="instructor-resources" class="resource-row">
             </div>
             <h2>Ally Resources</h2>
             <p>Learn more about our <a href="/allies">allies</a>.</p>
@@ -93,16 +87,7 @@
                 {{/each}}
             </div>
             <h2>Student Resources</h2>
-            <div class="resource-row">
-                <a class="resource-box">
-                    Getting Started Guide
-                </a>
-                <a class="resource-box">
-                    Student Solution Manual
-                </a>
-                <a class="resource-box">
-                    Free! Veritas Tutors How to Succeed in Physics
-                </a>
+            <div id="student-resources" class="resource-row">
             </div>
             <div class="cta">
                 <a class="btn">Learn how you can tell your instructor about OpenStax!</a>

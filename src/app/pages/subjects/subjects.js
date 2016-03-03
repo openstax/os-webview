@@ -44,6 +44,22 @@ export default class Subjects extends BaseView {
         this.model.set('selectedBook', false);
     }
 
+    updateSelectedFilterFromPath() {
+        let pathMatch = window.location.pathname.match(/\/subjects\/(.+)/),
+            selectedFilter = 'View All';
+
+        if (pathMatch) {
+            let subject = canonicalSubject(pathMatch[1]);
+
+            for (let c of categories) {
+                if (canonicalSubject(c) === subject) {
+                    selectedFilter = c;
+                }
+            }
+        }
+        this.model.set('selectedFilter', selectedFilter);
+    }
+
     constructor() {
         super();
 
@@ -53,24 +69,8 @@ export default class Subjects extends BaseView {
             selectedBook: null
         });
 
-        let updateSelectedFilterFromPath = () => {
-            let pathMatch = window.location.pathname.match(/\/subjects\/(.+)/),
-                selectedFilter = 'View All';
-
-            if (pathMatch) {
-                let subject = canonicalSubject(pathMatch[1]);
-
-                for (let c of categories) {
-                    if (canonicalSubject(c) === subject) {
-                        selectedFilter = c;
-                    }
-                }
-            }
-            this.model.set('selectedFilter', selectedFilter);
-        };
-
-        this.listenTo(router, 'route', updateSelectedFilterFromPath);
-        updateSelectedFilterFromPath();
+        this.listenTo(router, 'route', this.updateSelectedFilterFromPath);
+        this.updateSelectedFilterFromPath();
     }
 
     renderCategorySections(booksByCategory) {
@@ -108,7 +108,7 @@ export default class Subjects extends BaseView {
 
         new PageModel().fetch({data: {
             type: 'books.Book',
-            fields: 'title,subject_name,is_ap,cover_url'
+            fields: 'title,subject_name,is_ap,cover_url,high_resolution_pdf_url,ibook_link,webview_link,slug'
         }}).then((result) => {
             this.renderCategorySections(organizeBooksByCategory(result.pages));
         });

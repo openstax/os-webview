@@ -4,14 +4,22 @@
 </style>
 <div class="get-this-title">
     <div class="options">
-        <div class="option">
-            <span class="fa fa-laptop"></span>
-            View online*
-        </div>
-        <div class="option">
-            <span class="fa fa-cloud-download"></span>
-            Download a PDF
-        </div>
+        {{#if webviewLink}}
+            <div class="option">
+                <a href="{{webviewLink}}">
+                    <span class="fa fa-laptop"></span>
+                    View online*
+                </a>
+            </div>
+        {{/if}}
+        {{#if pdfLink}}
+            <div class="option">
+                <a href="{{pdfLink}}">
+                    <span class="fa fa-cloud-download"></span>
+                    Download a PDF
+                </a>
+            </div>
+        {{/if}}
         <div class="option">
             <span class="fa fa-book"></span>
             Order a print copy
@@ -20,9 +28,13 @@
             <span class="fa fa-wheelchair"></span>
             DAISY or BRF
         </div>
-        <div class="option">
-            <span class="fa fa-bookmark-o"></span>
-            iBook
-        </div>
+        {{#if ibookLink}}
+            <div class="option">
+                <a href="{{ibookLink}}">
+                    <span class="fa fa-bookmark-o"></span>
+                    iBook
+                </a>
+            </div>
+        {{/if}}
     </div>
 </div>
