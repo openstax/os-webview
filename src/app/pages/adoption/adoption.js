@@ -11,20 +11,9 @@ import {template as strips} from '~/components/strips/strips.hbs';
     templateHelpers: {
         urlOrigin: window.location.origin,
         strips
-    },
-    regions: {
-        primaryBook: '#primary-book',
-        secondaryBook: '#secondary-book'
     }
 })
 export default class AdoptionForm extends BaseView {
-
-    @on('click .toggle-section')
-    toggleSection() {
-        event.preventDefault();
-        this.toggler.toggle();
-    }
-
     @on('change [type=text],[type=email]')
     saveSetting(event) {
         let varName = event.target.name;

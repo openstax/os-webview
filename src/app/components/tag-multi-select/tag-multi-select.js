@@ -21,13 +21,30 @@ export default class TagMultiSelect extends BaseView {
         this.togglePulldown();
     }
 
+    @on('blur .option-list')
+    closePulldown() {
+        this.togglePulldown(true);
+    }
+
     togglePulldown() {
-        this.el.querySelector('.option-list').classList.toggle('hidden', ...arguments);
+        let optionList = this.el.querySelector('.option-list');
+
+        optionList.classList.toggle('hidden', ...arguments);
     }
 
     constructor() {
         super();
         this.stateCollection = new BaseCollection();
+    }
+
+    checkValid(originalOpt) {
+        let parentWidget = originalOpt.parentNode;
+
+        if (parentWidget.required) {
+            let someSelected = this.stateCollection.some((item) => item.get('selected') === true);
+
+            this.el.classList.toggle('invalid', !someSelected);
+        }
     }
 
     synchronizeModel(what) {
@@ -64,6 +81,7 @@ export default class TagMultiSelect extends BaseView {
                 noneItem.set('selected', true);
             }
         }
+        this.checkValid(originalOpt);
     }
 
     replace(originalMs) {
@@ -92,7 +110,7 @@ export default class TagMultiSelect extends BaseView {
     }
 
     onRender() {
-        this.el.classList.add('tag-multi-select');
+        this.el.classList.add('proxy-widget', 'tag-multi-select');
         this.stateCollection.each((model) => {
             let msOption = new Option(model),
                 tag = new Tag(model);

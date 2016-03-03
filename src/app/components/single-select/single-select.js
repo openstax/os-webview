@@ -13,8 +13,9 @@ import {template} from './single-select.hbs';
 })
 export default class SingleSelect extends BaseView {
     @on('click .selected-button')
-    activate() {
+    activate(e) {
         this.togglePulldown();
+        e.stopPropagation();
     }
 
     constructor() {
@@ -39,6 +40,19 @@ export default class SingleSelect extends BaseView {
                     option.selected = false;
                 }
             });
+
+            let originalSelect = originalOption.parentNode;
+
+            if (originalSelect.required) {
+                let valid = false;
+
+                for (let opt of originalSelect.options) {
+                    if (opt.selected && opt.value) {
+                        valid = true;
+                    }
+                }
+                this.el.classList.toggle('invalid', !valid);
+            }
         }
     }
 
@@ -69,7 +83,7 @@ export default class SingleSelect extends BaseView {
     onRender() {
         this.selectedButtonEl = this.el.querySelector('.selected-button');
         this.optionListEl = this.el.querySelector('.option-list');
-        this.el.classList.add('single-select');
+        this.el.classList.add('proxy-widget', 'single-select');
         this.stateCollection.each((model) => {
             let ssOption = new Option(model);
 

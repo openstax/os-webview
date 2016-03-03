@@ -13,45 +13,45 @@
         <input type=hidden name="lead_source" value="OS Interest Form">
         <input type=hidden name="00NU00000055spw" value="High Interest in Adopting">
     </div>
-    <fieldset class="labeled-inputs">
-        <label>
-            <span>First name</span>
-            <input name="first_name" type="text" required />
-        </label>
-        <label>
-            <span>Last name</span>
-            <input name="last_name" type="text" required />
-        </label>
-        <label>
-            <span>School name</span>
-            <input name="company" type="text" required />
-        </label>
-        <label>
-            <span>School url</span>
-            <input name="URL" type="text" required />
-        </label>
-        <label>
-            <span>Email address</span>
-            <input name="email" type="email"
-             pattern="[^@]+@([^@\.]+\.)+[^@\.]+" required />
-        </label>
-        <label>
-            <span>Phone number</span>
-            <input name="phone" type="text" required />
-        </label>
-    </fieldset>
-    <h2>Textbook Interest</h2>
-    <p>OpenStax College textbook are you interested in adopting:</p>
-    <fieldset class="labeled-buttons require-one">
-        <legend class="validation-message">
-            Select at least one
-        </legend>
-        {{#each titles}}
+    <div class="labeled-inputs two-column">
+        <fieldset class="column">
             <label>
-                <input name="00NU00000053nzR" type="checkbox" value="{{this}}">
-                {{this}}
+                <span>First name</span>
+                <input name="first_name" type="text" required />
             </label>
-        {{/each}}
+            <label>
+                <span>Last name</span>
+                <input name="last_name" type="text" required />
+            </label>
+            <label>
+                <span>School name</span>
+                <input name="company" type="text" required />
+            </label>
+        </fieldset>
+        <fieldset class="column">
+            <label>
+                <span>School url</span>
+                <input name="URL" type="text" required />
+            </label>
+            <label>
+                <span>Email address</span>
+                <input name="email" type="email"
+                 pattern="[^@]+@([^@\.]+\.)+[^@\.]+" required />
+            </label>
+            <label>
+                <span>Phone number</span>
+                <input name="phone" type="text" required />
+            </label>
+        </fieldset>
+    </div>
+    <h2>Textbook Interest</h2>
+    <p>OpenStax College textbook(s) are you interested in adopting (select at least one):</p>
+    <fieldset>
+        <select name="00NU00000053nzR" multiple required>
+            {{#each titles}}
+            <option value="{{this}}">{{this}}</option>
+            {{/each}}
+        </select>
     </fieldset>
     <fieldset class="labeled-inputs">
         <label>
@@ -59,63 +59,36 @@
             <input name="00NU00000052VId" type="number" required>
         </label>
     </fieldset>
-    <p>
+    <p class="question">
         Which partners may we share your information with so they may contact you about
         additional resources supporting the OpenStax College books?
     </p>
     <fieldset class="labeled-buttons">
-        <label>
-            <input name="00NU00000055spm" type="checkbox" value="Online homework providers">
-            Online homework providers
-        </label>
-        <label>
-            <input name="00NU00000055spm" type="checkbox" value="Courseware providers">
-            Courseware providers
-        </label>
-        <label>
-            <input name="00NU00000055spm" type="checkbox" value="Print custom editions">
-            Print custom editions
-        </label>
+        <select name="00NU00000055spm" multiple>
+            <option value="Online homework providers">
+                Online homework providers
+            </option>
+            <option value="Courseware providers">
+                Courseware providers
+            </option>
+            <option value="Print custom editions">
+                Print custom editions
+            </option>
+        </select>
     </fieldset>
-    <p class="">How did you hear about OpenStax College?</p>
+    <p class="question">How did you hear about OpenStax College? (select at least one)</p>
     <fieldset class="labeled-buttons require-one">
-        <legend class="validation-message">
-            Select at least one
-        </legend>
+        <select name="00NU00000055spr" multiple required>
+            <option value="Web search">Web search</option>
+            <option value="Colleague">Colleague</option>
+            <option value="Conference">Conference</option>
+            <option value="Email">Email</option>
+            <option value="Facebook">Facebook</option>
+            <option value="Twitter">Twitter</option>
+            <option value="Webinar">Webinar</option>
+            <option value="Partner organization">Partner organization</option>
+        </select>
         <label>
-            <input name="00NU00000055spr" type="checkbox" value="Web search">
-            Web search
-        </label>
-        <label>
-            <input name="00NU00000055spr" type="checkbox" value="Colleague">
-            Colleague
-        </label>
-        <label>
-            <input name="00NU00000055spr" type="checkbox" value="Conference">
-            Conference
-        </label>
-        <label>
-            <input name="00NU00000055spr" type="checkbox" value="Email">
-            Email
-        </label>
-        <label>
-            <input name="00NU00000055spr" type="checkbox" value="Facebook">
-            Facebook
-        </label>
-        <label>
-            <input name="00NU00000055spr" type="checkbox" value="Twitter">
-            Twitter
-        </label>
-        <label>
-            <input name="00NU00000055spr" type="checkbox" value="Webinar">
-            Webinar
-        </label>
-        <label>
-            <input name="00NU00000055spr" type="checkbox" value="Partner organization">
-            Partner organization
-        </label>
-        <label>
-            <input class="other" type="checkbox" value="">
             Other:
             <input  name="00NU00000055spr" type="text">
         </label>

@@ -1,10 +1,8 @@
 import BaseView from '~/helpers/backbone/view';
 import salesforceModel from '~/models/salesforce-model';
+import TagMultiSelect from '~/components/tag-multi-select/tag-multi-select';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './interest.hbs';
-
-const otherBoxSelector = '.other[type="checkbox"]',
-    otherTextSelector = 'input[name$="[other]"]';
 
 let bookTitles = [
     'Algebra and Trigonometry',
@@ -37,27 +35,6 @@ let bookTitles = [
     }
 })
 export default class InterestForm extends BaseView {
-
-    @on(`change ${otherBoxSelector}`)
-    otherBoxChange(e) {
-        let otherText = this.el.querySelector(otherTextSelector),
-            otherBox = e.currentTarget;
-
-        if (!otherBox.checked) {
-            otherText.value = '';
-        }
-        otherText.disabled = !otherBox.checked;
-    }
-
-    @on('change .require-one input[type=checkbox]')
-    checkValid() {
-        for (let group of this.el.querySelectorAll('.require-one')) {
-            let oneChecked = group.querySelector('input:checked');
-
-            group.classList.toggle('invalid', oneChecked === null);
-        }
-    }
-
     @on('change [type=text],[type=email]')
     saveSetting(event) {
         let varName = event.target.name;
@@ -69,13 +46,9 @@ export default class InterestForm extends BaseView {
 
     onRender() {
         this.el.classList.add('text-content');
-
-        let ots = this.el.querySelector(otherTextSelector);
-
-        if (ots) {
-            ots.disabled = true;
-        }
         salesforceModel.prefill(this.el);
-        this.checkValid();
+        for (let ms of this.el.querySelectorAll('select[multiple]')) {
+            new TagMultiSelect().replace(ms);
+        }
     }
 }

@@ -34,20 +34,6 @@ $text-secondary: rgba(color(neutral-darkest), 0.7);
         text-align: center;
     }
 
-    .two-column {
-        display: flex;
-        justify-content: space-between;
-
-        .column {
-            display: inline-block;
-            flex-grow: 1;
-
-            &:first-child {
-                padding-right: 5%;
-            }
-        }
-    }
-
     label span {
         display: block;
     }
