@@ -1,6 +1,7 @@
 import BaseView from '~/helpers/backbone/view';
 import TagMultiSelect from '~/components/tag-multi-select/tag-multi-select';
 import SingleSelect from '~/components/single-select/single-select';
+import salesforceModel from '~/models/salesforce-model';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './adoption.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
@@ -24,6 +25,15 @@ export default class AdoptionForm extends BaseView {
         this.toggler.toggle();
     }
 
+    @on('change [type=text],[type=email]')
+    saveSetting(event) {
+        let varName = event.target.name;
+
+        if (varName) {
+            salesforceModel.set(varName, event.target.value);
+        }
+    }
+
     @on('submit form')
     failIfInvalid(event) {
         let invalid = this.el.querySelectorAll('.invalid');
@@ -41,6 +51,7 @@ export default class AdoptionForm extends BaseView {
         for (let ss of this.el.querySelectorAll('select:not([multiple])')) {
             new SingleSelect().replace(ss);
         }
+        salesforceModel.prefill(this.el);
     }
 
 }
