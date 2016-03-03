@@ -126,6 +126,8 @@ class Header extends BaseView {
         window.requestAnimationFrame(() => {
             header.classList.toggle('active');
             this.removeAllOpenClasses(e);
+            this.removeCloneDropdownParent();
+
 
             button.classList.toggle('expanded');
             button.setAttribute('aria-expanded', !!button.classList.contains('expanded'));
@@ -162,8 +164,8 @@ class Header extends BaseView {
         header.classList.remove('open');
         this.removeClass(parentItem, 'open');
         this.removeClass(dropDownMenu, 'open');
-        this.updateHeaderStyle();
         this.closeDropdownMenus(true);
+        this.updateHeaderStyle();
     }
 
     closeFullScreenNav() {
@@ -175,6 +177,7 @@ class Header extends BaseView {
         window.requestAnimationFrame(() => {
             header.classList.remove('active');
             this.removeAllOpenClasses();
+            this.removeCloneDropdownParent();
 
             button.classList.remove('expanded');
             button.setAttribute('aria-expanded', 'false');
@@ -202,15 +205,18 @@ class Header extends BaseView {
                 header.classList.add('open');
                 parentItem.classList.add('open');
                 dropDownMenu.classList.add('open');
-            } else if (!e.target.classList.contains('caret')) {
+            } else if (!e.target.classList.contains('back')) {
                 this.closeFullScreenNav(e);
             }
         }
     }
 
-    @on('click .nav-menu-item .caret')
-    removeOpen(e) {
-        this.removeAllOpenClasses(e);
+    @on('click .login')
+    appendURL(e) {
+        let $this = e.target;
+        let href = $this.href + Backbone.history.location.href;
+
+        $this.href = href;
     }
 
     @on('keydown .expand')
@@ -282,10 +288,35 @@ class Header extends BaseView {
     cloneDropdownParent(e) {
         let $this = e.currentTarget;
         let dropdown = $this.nextElementSibling;
-        var thisLi = document.createElement('li');
         let parent = $this.cloneNode(true);
+        let thisLi = document.createElement('li');
+        let back = document.createElement('a');
+        var element = dropdown.querySelector('.clone');
 
-        dropdown.insertBefore(parent, dropdown.childNodes[0]);
+        thisLi.setAttribute('role', 'presentation');
+        thisLi.setAttribute('class', 'clone');
+
+        back.setAttribute('class', 'back');
+        back.text = 'Back';
+        thisLi.appendChild(back);
+        thisLi.appendChild(parent);
+
+        if (!element) {
+            back.addEventListener('click', this.removeAllOpenClasses.bind(this), true);
+
+            dropdown.insertBefore(thisLi, dropdown.childNodes[0]);
+        }
+    }
+
+    removeCloneDropdownParent() {
+        let clone = this.el.querySelectorAll('.clone');
+
+        for (let thisClone of clone) {
+            let back = thisClone.querySelector('.back');
+
+            back.removeEventListener('click', this.removeAllOpenClasses.bind(this), true);
+            thisClone.parentNode.removeChild(thisClone);
+        }
     }
 
     onRender() {
