@@ -59,10 +59,10 @@ a {
     animation-duration: 0.5s;
     animation-fill-mode: forwards;
     opacity: 0;
-    padding-top: 7rem;
+    padding-top: 6rem;
 
     @include desktop {
-        padding-top: 12rem;
+        padding-top: 11rem;
     }
 }
 
