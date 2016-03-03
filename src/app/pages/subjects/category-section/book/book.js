@@ -1,5 +1,4 @@
 import BaseView from '~/helpers/backbone/view';
-import router from '~/router';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './book.hbs';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
@@ -18,18 +17,12 @@ export default class Book extends BaseView {
         event.stopPropagation();
     }
 
-    @on('click .cta > .btn')
-    goToDetails() {
-        router.navigate(`/details?${this.data.id}`, {
-            trigger: true
-        });
-    }
-
     constructor(data, model) {
         super();
 
         this.templateHelpers = {
-            coverUrl: data.cover_url || `https://placeholdit.imgix.net/~text?txtsize=33&txt=${data.title}&w=220&h=220`
+            coverUrl: data.cover_url || `https://placeholdit.imgix.net/~text?txtsize=33&txt=${data.title}&w=220&h=220`,
+            slug: data.slug
         };
         this.data = data;
         this.model = model;
@@ -43,7 +36,7 @@ export default class Book extends BaseView {
 
     onRender() {
         this.el.classList.add('cover');
-        this.regions.getThis.append(new GetThisTitle(this.data, this.model));
+        this.regions.getThis.append(new GetThisTitle(this.data));
         this.setState();
     }
 

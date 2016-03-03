@@ -4,9 +4,11 @@
     background-color: color(neutral-lightest);
 
     .option {
-        color: color(cyan);
-        cursor: pointer;
-        width: 25rem;
+        a {
+            color: color(cyan);
+            cursor: pointer;
+            width: 25rem;
+        }
 
         .fa {
             color: darken(color(cyan), 10%);
