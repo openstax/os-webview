@@ -15,6 +15,20 @@ form {
         padding: 1rem 2rem;
     }
 
+    .two-column {
+        display: flex;
+        justify-content: space-between;
+
+        .column {
+            display: inline-block;
+            flex-grow: 1;
+
+            &:first-child {
+                padding-right: 5%;
+            }
+        }
+    }
+
     fieldset {
         border: 0;
 
@@ -25,7 +39,8 @@ form {
 
     &.invalid,
     input:invalid,
-    select:invalid {
+    select:invalid,
+    .proxy-widget.invalid {
         box-shadow: 0 0 0.5rem color(danger);
     }
 

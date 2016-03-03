@@ -5,10 +5,11 @@ import {template} from './select-option.hbs';
 @props({template})
 export default class Option extends BaseView {
     @on('click')
-    selectOption() {
+    selectOption(e) {
         // Recognize re-selection as a change, too
         this.model.attributes.selected = true;
         this.model.trigger('change:selected', this.model);
+        e.stopPropagation();
     }
     constructor(model) {
         super();
