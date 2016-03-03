@@ -62,11 +62,16 @@
                     background: url('/images/k-12/people.svg') 0 1rem no-repeat;
                     background-size: 26.7rem;
                     display: block;
-                    flex: 1 1 11rem;
+                    flex: 1 1 auto;
+                    min-height: 10rem;
+
+                    @include phone {
+                        background-size: 80%;
+                    }
                 }
 
                 > .caption {
-                    flex: 2 1 100%;
+                    flex: 2 1 auto;
                     padding-left: 3rem;
 
                     @media (max-width: 840px) {
@@ -86,6 +91,10 @@
                     display: block;
                     font-size: 1.6rem;
                     margin-bottom: 2rem;
+                }
+
+                .btn {
+                    padding: 1.5rem;
                 }
             }
         }
