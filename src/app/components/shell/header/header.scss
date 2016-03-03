@@ -404,7 +404,6 @@ $transition: 0.3s;
             @at-root .visible#{&} {
                 transform: translate3d(0, 100%, 0);
                 transition: transform 0.2s 0.1s;
-
             }
         }
 
