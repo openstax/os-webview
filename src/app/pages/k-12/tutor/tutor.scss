@@ -1,0 +1,73 @@
+@import 'variables';
+@import 'mixins';
+
+.tutor-banner {
+    width: 100%;
+    min-height: 70vh;
+    background-color: color(cyan);
+    background-image: url('/images/k-12/k12-tutor-bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    display: flex;
+    align-items: flex-end;
+
+    .tutor {
+        width: 90vw;
+        margin: 0 auto;
+
+        > .tutor-caption {
+            margin: inherit;
+            max-width: 76.6rem;
+            display: flex;
+            padding: 6.7rem 0;
+            color: white;
+
+            @media (max-width: 840px) {
+                flex-direction: column;
+                padding: 6.7rem 3rem;
+                align-content: flex-end;
+            }
+
+            > .image {
+                min-width: 26.7rem;
+                background: url('/images/k-12/people.svg') 0 1rem no-repeat;
+                background-size: 26.7rem;
+                display: block;
+                flex: 1 1 auto;
+                min-height: 10rem;
+
+                @include phone {
+                    background-size: 80%;
+                }
+            }
+
+            > .caption {
+                flex: 2 1 auto;
+                padding-left: 3rem;
+
+                @media (max-width: 840px) {
+                    padding-left: 0;
+                }
+            }
+
+            .title {
+                display: block;
+                font-size: 6rem;
+                font-weight: 700;
+                line-height: 1;
+                margin-bottom: 2rem;
+            }
+
+            .blurb {
+                display: block;
+                font-size: 1.6rem;
+                margin-bottom: 2rem;
+            }
+
+            .btn {
+                padding: 1.5rem;
+            }
+        }
+    }
+}
