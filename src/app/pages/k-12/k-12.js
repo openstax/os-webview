@@ -4,13 +4,15 @@ import appView from '~/components/shell/shell';
 import {template} from './k-12.hbs';
 import Bucket from '~/components/bucket/bucket';
 import Tutor from './tutor/tutor';
+import Boxes from './boxes/boxes';
 
 @props({
     template: template,
     regions: {
         quotes: '.quote-buckets',
         buckets: '.buckets-section',
-        tutor: '.tutor-banner'
+        tutor: '.tutor-banner',
+        boxes: '.boxes'
     }
 })
 export default class K12 extends BaseView {
@@ -32,6 +34,7 @@ export default class K12 extends BaseView {
         }));
 
         this.regions.tutor.show(new Tutor());
+        this.regions.boxes.show(new Boxes());
     }
 
 }
