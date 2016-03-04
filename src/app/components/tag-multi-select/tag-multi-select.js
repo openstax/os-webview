@@ -21,6 +21,13 @@ export default class TagMultiSelect extends BaseView {
         this.togglePulldown();
     }
 
+    @on('click .tag-list')
+    displayPulldownIfNotTag(e) {
+        if (e.target.classList.contains('tag-list')) {
+            this.displayPulldown(e);
+        }
+    }
+
     @on('blur .option-list')
     closePulldown() {
         this.togglePulldown(true);
