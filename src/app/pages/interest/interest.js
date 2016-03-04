@@ -6,16 +6,22 @@ import {template} from './interest.hbs';
 
 let bookTitles = [
     'Algebra and Trigonometry',
+    'American Government',
     'Anatomy and Physiology',
+    'Astronomy',
     'Biology',
+    'Calculus',
     'Chemistry',
     'College Algebra',
     'College Physics',
     'College Physics for AP® Courses',
     'Concepts of Biology',
+    'Elementary Algebra',
+    'Intermediate Algebra',
     'Introduction to Sociology',
     'Introduction to Sociology 2e',
     'Introductory Statistics',
+    'Microbiology',
     'Prealgebra',
     'Precalculus',
     'Principles of Economics',
@@ -24,6 +30,7 @@ let bookTitles = [
     'Principles of Microeconomics',
     'Principles of Microeconomics for AP® Courses',
     'Psychology',
+    'University Physics',
     'U.S. History'
 ];
 
