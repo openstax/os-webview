@@ -275,7 +275,10 @@ class Header extends BaseView {
         let height = this.height;
 
         if (window.pageYOffset > height && !this.isPinned()) {
-            this.reset().pin().visible();
+            this.reset().pin();
+            setTimeout(() => {
+                this.reset().pin().visible();
+            }, 100);
         } else if (window.pageYOffset <= height) {
             if (Backbone.history.location.pathname === '/') {
                 this.reset().transparent();

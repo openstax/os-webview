@@ -35,7 +35,7 @@ function canonicalSubject(string) {
     template: template,
     regions: {
         filterButtons: '.filter-buttons',
-        bookViewer: '.books-by-category'
+        bookViewer: '.books-by-category .container'
     }
 })
 export default class Subjects extends BaseView {
@@ -86,14 +86,14 @@ export default class Subjects extends BaseView {
             let findNode = (name) =>
                 this.el.querySelector(`[data-manager="${name}"]`);
 
-            findNode('page-description').innerHTML = data.page_description;
-            findNode('ds1-head').textContent = data.dev_standard_1_heading;
-            findNode('ds2-head').textContent = data.dev_standard_2_heading;
-            findNode('ds3-head').textContent = data.dev_standard_3_heading;
-            findNode('ds1-body').innerHTML= data.dev_standard_1_description;
-            findNode('ds2-body').innerHTML= data.dev_standard_2_description;
-            findNode('ds3-body').innerHTML= data.dev_standard_3_description;
-        };
+            // findNode('page-description').innerHTML = data.page_description;
+            // findNode('ds1-head').textContent = data.dev_standard_1_heading;
+            // findNode('ds2-head').textContent = data.dev_standard_2_heading;
+            // findNode('ds3-head').textContent = data.dev_standard_3_heading;
+            // findNode('ds1-body').innerHTML= data.dev_standard_1_description;
+            // findNode('ds2-body').innerHTML= data.dev_standard_2_description;
+            // findNode('ds3-body').innerHTML= data.dev_standard_3_description;
+         };
 
         new PageModel().fetch({data: {type: 'books.BookIndex'}}).then((result) => {
             let id = result.pages[0].id,
