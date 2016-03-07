@@ -1,0 +1,33 @@
+@import 'variables';
+
+$light-line: #e0e0e0;
+$lightest-gray: #fafafa;
+$text-black: rgba(0, 0, 0, 0.87);
+$text-black3: rgba(0, 0, 0, 0.54);
+
+.button-row {
+    transform: translateY(50%);
+
+    .filter-buttons {
+        color: $text-black3;
+        display: flex;
+        flex-wrap: wrap;
+        font-size: 1.8rem;
+        font-weight: 400;
+        justify-content: center;
+        position: relative;
+    }
+
+    .filter-button {
+        background-color: $lightest-gray;
+        border: thin solid $light-line;
+        cursor: pointer;
+        display: table-cell;
+        padding: 1rem 2rem;
+
+        &.selected {
+            background-color: color(neutral-lightest);
+            color: $text-black;
+        }
+    }
+}

@@ -1,11 +1,8 @@
 @import 'variables';
 
 $light-gray: #f5f5f5;
-$lightest-gray: #fafafa;
-$light-line: #e0e0e0;
 $text-black: rgba(0, 0, 0, 0.87);
 $text-black2: rgba(0, 0, 0, 0.7);
-$text-black3: rgba(0, 0, 0, 0.54);
 
 .subjects-page {
     color: $text-black;
@@ -39,30 +36,6 @@ $text-black3: rgba(0, 0, 0, 0.54);
 
             .text {
                 max-width: 30rem;
-            }
-        }
-    }
-
-    .button-row {
-        display: flex;
-        justify-content: center;
-
-        .filter-buttons {
-            background-color: $lightest-gray;
-            color: $text-black3;
-            font-size: 120%;
-            position: relative;
-            transform: translateY(50%);
-        }
-
-        .filter-button {
-            border: thin solid $light-line;
-            cursor: pointer;
-            display: table-cell;
-            padding: 1rem 2rem;
-
-            &.selected {
-                color: $text-black;
             }
         }
     }

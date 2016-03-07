@@ -3,11 +3,12 @@ import BaseModel from '~/helpers/backbone/model';
 import PageModel from '~/models/pagemodel';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './subjects.hbs';
-import FilterButton from './filter-button/filter-button';
+import FilterButton from '~/components/filter-button/filter-button';
 import CategorySection from './category-section/category-section';
 import router from '~/router';
 
-const categories = ['Math', 'Science', 'Social Sciences', 'History', 'AP®'];
+const categories = ['Math', 'Science', 'Social Sciences', 'History', 'AP®'],
+    filterButtons = ['View All', ...categories];
 
 function organizeBooksByCategory(books) {
     let result = {
@@ -64,7 +65,6 @@ export default class Subjects extends BaseView {
         super();
 
         this.model = new BaseModel({
-            filterButtons: ['View All', ...categories],
             selectedFilter: 'View All',
             selectedBook: null
         });
@@ -102,7 +102,7 @@ export default class Subjects extends BaseView {
             detailPage.fetch().then(populateBookInfoFields);
         });
 
-        for (let button of this.model.get('filterButtons')) {
+        for (let button of filterButtons) {
             this.regions.filterButtons.append(new FilterButton(button, this.model));
         }
 

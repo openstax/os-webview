@@ -1,0 +1,104 @@
+@import 'variables';
+@import 'mixins';
+
+$text-black: rgba(0, 0, 0, 0.87);
+$text-black2: rgba(0, 0, 0, 0.7);
+
+.allies-page {
+    line-height: 3rem;
+
+    .hero {
+        background-color: color(green);
+        color: color(neutral-lightest);
+        font-size: 1.7rem;
+        font-weight: 100;
+        letter-spacing: 0.11rem;
+        padding: 5rem 10rem;
+        text-align: center;
+
+        h1 {
+            color: color(neutral-lightest);
+            font-weight: bold;
+            font-size: 6rem;
+            letter-spacing: -0.1rem;
+            line-height: 5.5rem;
+            margin-bottom: 3rem;
+        }
+    }
+
+    h2 {
+        margin-bottom: 0;
+    }
+
+    .button-row {
+        height: 0;
+        transform: translateY(calc(-0.7rem - 0.5vw));
+    }
+
+    .blurbs {
+        background-color: lighten(color(neutral-light), 35%);
+        line-height: 2.3rem;
+        min-height: 10rem;
+        padding: 2rem 3rem;
+    }
+
+    .strips {
+        margin-bottom: 0;
+    }
+
+    .ally-info {
+        align-items: center;
+        background-color: color(neutral-lightest);
+        color: $text-black2;
+        display: flex;
+        font-size: 1.7rem;
+        font-weight: 400;
+        margin: 5rem;
+
+        &.hidden {
+            display: none;
+        }
+
+        h2 {
+            color: $text-black;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .logo {
+            padding: 3vw;
+
+            @include tablet {
+                display: none;
+            }
+
+            @include phone {
+                display: none;
+            }
+
+            img {
+                width: calc(9rem + 6vw);
+            }
+        }
+
+        .text {
+            display: flex;
+            flex-direction: column;
+            padding: 3rem;
+        }
+
+        a {
+            color: color(cyan);
+            font-size: 2rem;
+            font-variant: small-caps;
+            font-weight: 500;
+            text-transform: lowercase;
+
+            &::after {
+                content: '►';
+                font-size: 1.3rem;
+                margin-left: 1rem;
+            }
+        }
+    }
+}
