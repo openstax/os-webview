@@ -1,107 +1,247 @@
 @import 'variables';
-
-$light-gray: #f5f5f5;
-$text-black: rgba(0, 0, 0, 0.87);
-$text-black2: rgba(0, 0, 0, 0.7);
+@import 'mixins';
 
 .subjects-page {
-    color: $text-black;
-    font-family: Lato;
-
-    h1 {
-        font-weight: 900;
+    .container {
+        display: flex;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        width: 100%;
+        height: 100%;
+        max-width: $boxed-width;
+        flex-flow: row wrap;
+        flex: 1 100%;
     }
 
     header {
-        background: $page-top-gradient;
-        font-size: large;
-        padding: 5rem 10rem;
-        text-align: center;
-    }
+        margin: 6rem 0;
 
-    .subhead {
-        font-size: 1.5rem;
+        @include desktop {
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 4rem;
+            font-weight: 600;
+            color: color(neutral-dark);
+        }
+
+        p {
+            font-size: 1.8rem;
+            color: color(neutral-dark);
+        }
     }
 
     .feature-block {
-        display: flex;
-        font-size: initial;
-        justify-content: space-around;
-        margin-top: 3rem;
+        opacity: 0;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        transition: opacity 0.2s;
 
-        > .blurb {
-            .title {
-                font-weight: bold;
-            }
-
-            .text {
-                max-width: 30rem;
-            }
+        @include desktop {
+            width: auto;
+            height: auto;
+            opacity: 1;
         }
     }
 
-    .books-by-category {
-        background-color: $light-gray;
-        padding: 5rem 10rem;
+    .blurb {
+        flex: 1 28%;
+        font-size: 1.6rem;
+        color: color(neutral-dark);
 
-        .subject {
-            color: $text-black2;
-            font-size: 120%;
-            font-style: italic;
-            font-weight: 500;
+        &:nth-child(2) {
+            margin: 0 2rem;
         }
 
-        .row-of-covers {
+        .title {
+            font-size: 1.8rem;
+            color: color(neutral-dark);
+            font-weight: 600;
+        }
+    }
+
+    .filter {
+        position: relative;
+        max-width: 70rem;
+        margin: 0 auto 4rem;
+        color: color(gray);
+        top: -2.5rem;
+        z-index: 1;
+
+        &::before,
+        &::after {
+            color: color(neutral-lighter);
+            border-right: 0.2rem solid;
+            content: '';
+            display: block;
+            height: 1.2rem;
+            right: 4.3rem;
+            position: absolute;
+            transform: rotate3d(0, 0, 1, 135deg);
+            top: 2.2rem;
+            width: 0;
+            z-index: 1;
+
+            @include desktop {
+                display: none;
+            }
+        }
+
+        &::after {
+            right: 3.5rem;
+            transform: rotate3d(0, 0, 1, 45deg);
+         }
+    }
+
+    .filter-buttons {
+        display: flex;
+        margin: 0 1.5rem;
+        border: 0.1rem solid color(neutral-lighter);
+        flex-flow: column nowrap;
+        font-size: 1.8rem;
+        background-color: color(neutral-lightest);
+
+        @include desktop {
+            flex-flow: row nowrap;
+            margin: 0;
+            border-right: 0;
+        }
+    }
+
+    .filter-button {
+        overflow: hidden;
+        padding: 1.5rem;
+        cursor: pointer;
+
+        @include desktop {
+            flex: 1 auto;
+            border-right: 0.1rem solid color(neutral-lighter);
+            text-align: center;
+        }
+
+
+        &.selected {
+            order: -1;
+
+            @include desktop {
+                order: 0;
+                background-color: lighten(color(neutral-lighter), 8%);
+            }
+
+            &::before {
+                content: 'Filter By: ';
+                font-weight: 500;
+                display: inline;
+                color: color(neutral-lighter);
+
+                @include desktop {
+                    content: '';
+                }
+            }
+       }
+
+        &:not(.selected) {
+            width: 0;
+            height: 0;
+            padding: 0;
+            opacity: 0;
+            transition: opacity 0.3s;
+
+            @include desktop {
+                width: auto;
+                height: auto;
+                opacity: 1;
+                padding: 1.5rem;
+            }
+
+            &:hover {
+                background-color: lighten(color(neutral-lighter), 8%);
+            }
+        }
+
+        @at-root .subjects-page .filter-buttons.active .filter-button {
+            padding: 1.5rem;
+            width: 100%;
+            height: 100%;
+            opacity: 1;
+        }
+    }
+
+    .books {
+        background-color: lighten(color(neutral-lighter), 8%);
+        padding: 0 0 8rem;
+        position: relative;
+
+        @include desktop {
+            margin-top: 8.5rem;
+        }
+
+        .strips {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+
+        }
+
+        .book-category {
+            flex: 1 100%;
+
+            .subject {
+                color: color(gray);
+                font-weight: 500;
+            }
+        }
+
+        .row {
             display: flex;
-            justify-content: flex-start;
+            flex-flow: row wrap;
+            justify-content: space-around;
+            margin: 0 -1rem;
+
+            @include tablet {
+                justify-content: space-between;
+            }
+
+            @include desktop {
+                justify-content: flex-start;
+            }
         }
 
         .cover {
+            width: 21rem;
+            margin: 1rem;
+            flex: 1 100%;
+            position: relative;
             cursor: pointer;
-            padding-right: 2rem;
 
-            &.selected {
-                .tooltip {
-                    display: block;
-                }
-
-                img {
-                    box-shadow: 0 0 1rem neutral-color(light);
-                }
+            @include tablet {
+                flex: 0 45%;
             }
 
-            > img {
-                width: 22rem;
+            @include desktop {
+                flex: 0 auto;
+            }
+
+            img {
+                width: 100%;
             }
         }
 
-        .options {
-            font-size: initial;
-            line-height: 3rem;
-
-            .option {
-                border-bottom: 0.2rem solid $divider-gray;
-                padding: 1rem 2rem;
-
-                &:last-child {
-                    border: 0;
-                }
-            }
-
-            .fa {
-                font-size: larger;
-            }
-        }
-
-        .tooltip {
-            background-color: color(neutral-lightest);
-            display: none;
-            filter: drop-shadow(rgba(color(neutral-lightest), 0.4) 0 0.2rem 0.5rem);
-            max-width: 25rem;
-            min-height: 10rem;
-            min-width: 10rem;
+        .details {
+            width: 0;
+            height: 0;
+            overflow: hidden;
             position: absolute;
-            z-index: 2;
+            top: 98%;
+            left: -10%;
+            background: color(neutral-lightest);
+            transform: translate3d(0, -1rem, 0);
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.2s;
+            box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(94, 96, 98, 0.1);
 
             &::before {
                 border: 2rem solid;
@@ -112,22 +252,66 @@ $text-black2: rgba(0, 0, 0, 0.7);
                 margin-left: -2rem;
                 position: absolute;
             }
-        }
-
-        .book-info {
-            background-color: color(neutral-lightest);
-            height: 10rem;
-            position: relative;
-            z-index: 2;
 
             .option {
                 color: color(cyan);
+                cursor: pointer;
+                font-size: 1.6rem;
+                padding: 0.5rem 0;
+                border-bottom: 0.1rem solid color(neutral-lighter);
+
+                &:hover {
+                    color: darken(color(cyan), 10%);
+                }
+
+                &:last-child {
+                    border-bottom: 0;
+                }
+
+                a {
+                    color: color(cyan);
+
+                    &:hover {
+                        color: darken(color(cyan), 10%);
+                    }
+                }
+            }
+
+            .fa {
+                color: darken(color(cyan), 10%);
+                margin-left: 3rem;
+                font-size: 1.8rem;
+
+                &::before {
+                    margin-left: -2.5rem;
+                }
+            }
+
+            .cta > .btn {
+                width: 100%;
+                font-variant: normal;
+                margin: 1rem 0 0;
+                padding: 1.5rem;
+                text-transform: uppercase;
+            }
+
+            .btn:hover,
+            .btn:focus {
+                transform: scale3d(1, 1, 1);
+                background-color: darken(color(orange), 5%);
             }
         }
 
-        .cta {
-            font-size: large;
-            padding: 2rem;
+        .cover:hover .details {
+            @include desktop {
+                overflow: initial;
+                width: 120%;
+                height: auto;
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+                padding: 1.5rem;
+                z-index: 1;
+            }
         }
     }
 }

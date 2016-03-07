@@ -6,7 +6,7 @@ import Book from './book/book';
 @props({
     template: template,
     regions: {
-        books: '.row-of-covers'
+        books: '.book-category .row'
     }
 })
 export default class CategorySection extends BaseView {
