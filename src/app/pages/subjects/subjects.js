@@ -4,6 +4,7 @@ import PageModel from '~/models/pagemodel';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './subjects.hbs';
 import FilterButton from '~/components/filter-button/filter-button';
+import {template as strips} from '~/components/strips/strips.hbs';
 import CategorySection from './category-section/category-section';
 import router from '~/router';
 
@@ -34,9 +35,10 @@ function canonicalSubject(string) {
 
 @props({
     template: template,
+    templateHelpers: {strips},
     regions: {
         filterButtons: '.filter-buttons',
-        bookViewer: '.books-by-category'
+        bookViewer: '.books .container'
     }
 })
 export default class Subjects extends BaseView {
@@ -79,9 +81,25 @@ export default class Subjects extends BaseView {
         }
     }
 
-    onRender() {
-        this.el.classList.add('text-content');
+    @on('click .filter')
+    openCategories() {
+        this.toggleOpenCategories();
+    }
 
+    toggleOpenCategories() {
+        let w = window.innerWidth;
+
+        if (w<=768) {
+            this.el.querySelector('.filter-buttons').classList.toggle('active');
+        }
+    }
+
+    removeOpenCategories() {
+        document.querySelector('.filter-buttons').classList.remove('active');
+    }
+
+
+    onRender() {
         let populateBookInfoFields = (data) => {
             let findNode = (name) =>
                 this.el.querySelector(`[data-manager="${name}"]`);
@@ -112,5 +130,11 @@ export default class Subjects extends BaseView {
         }}).then((result) => {
             this.renderCategorySections(organizeBooksByCategory(result.pages));
         });
+
+        window.addEventListener('resize', this.removeOpenCategories.bind(this));
+    }
+
+    onBeforeClose() {
+        window.removeEventListener('resize', this.removeOpenCategories.bind(this));
     }
 }

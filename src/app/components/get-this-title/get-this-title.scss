@@ -1,17 +1,1 @@
 @import 'variables';
-
-.get-this-title {
-    background-color: color(neutral-lightest);
-
-    .option {
-        a {
-            color: color(cyan);
-            cursor: pointer;
-            width: 25rem;
-        }
-
-        .fa {
-            color: darken(color(cyan), 10%);
-        }
-    }
-}

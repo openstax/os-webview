@@ -3,23 +3,30 @@
     @import url(https://fonts.googleapis.com/css?family=Lato:400,900);
 </style>
 <div class="subjects-page">
-    <header data-manager="page-description"></header>
+    <div class="container">
+        <header data-manager="page-description"></header>
+    </div>
     <div class="feature-block">
-        <div class="blurb">
-            <div class="title" data-manager="ds1-head"></div>
-            <div class="text" data-manager="ds1-body"></div>
-        </div>
-        <div class="blurb">
-            <div class="title" data-manager="ds2-head"></div>
-            <div class="text" data-manager="ds2-body"></div>
-        </div>
-        <div class="blurb">
-            <div class="title" data-manager="ds3-head"></div>
-            <div class="text" data-manager="ds3-body"></div>
+        <div class="container">
+            <div class="blurb">
+                <h3 class="title" data-manager="ds1-head"></h3>
+                <p class="text" data-manager="ds1-body"></p>
+            </div>
+            <div class="blurb">
+                <h3 class="title" data-manager="ds2-head"></h3>
+                <p class="text" data-manager="ds2-body"></p>
+            </div>
+            <div class="blurb">
+                <h3 class="title" data-manager="ds3-head"></h3>
+                <p class="text" data-manager="ds3-body"></p>
+            </div>
         </div>
     </div>
-    <div class="button-row">
-        <div class="filter-buttons"></div>
+    <div class="books">
+        <div class="filter">
+            <div class="filter-buttons"></div>
+        </div>
+        {{{strips}}}
+        <div class="container"></div>
     </div>
-    <div class="books-by-category"></div>
 </div>
