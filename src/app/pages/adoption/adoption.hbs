@@ -15,7 +15,7 @@
         information you need.
     </p>
 </div>
-<form accept-charset="UTF-8" class="new_adoption"
+<form accept-charset="UTF-8" class="new_adoption form"
  action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="post">
     <div class="text-content">
         <div>
@@ -25,9 +25,8 @@
             <input type=hidden name="retURL" value="{{urlOrigin}}/adoption-confirmation">
             <input type=hidden name="lead_source" value="OS Adoption Form">
         </div>
-        <h2>Instructor/Administrator Contact Information</h2>
-        <div class="labeled-inputs two-column">
-            <fieldset class="column">
+        <div class="labeled-inputs row">
+            <div class="col">
                 <label>
                     <span>First name</span>
                     <input name="first_name" type="text" required />
@@ -40,8 +39,8 @@
                     <span>School name</span>
                     <input name="company" type="text" required />
                 </label>
-            </fieldset>
-            <fieldset class="column">
+            </div>
+            <div class="col">
                 <label>
                     <span>School url</span>
                     <input name="URL" type="text" required />
@@ -54,142 +53,157 @@
                     <span>Phone number</span>
                     <input name="phone" type="text" required />
                 </label>
-            </fieldset>
+            </div>
         </div>
     </div>
-{{{strips}}}
-<div class="text-content labeled-inputs two-column book-info">
-    <fieldset id="primary-book" class="column">
-        <p>OpenStax College textbook you are using:</p>
-        <select name="00NU00000053nzR" required>
-            <option value="">Please Select</option>
-            <option value="Algebra and Trigonometry">Algebra and Trigonometry</option>
-            <option value="Anatomy and Physiology">Anatomy and Physiology</option>
-            <option value="Biology">Biology</option>
-            <option value="Chemistry">Chemistry</option>
-            <option value="College Algebra">College Algebra</option>
-            <option value="College Physics">College Physics</option>
-            <option value="College Physics for AP® Courses ">College Physics for AP® Courses </option>
-            <option value="Concepts of Biology">Concepts of Biology</option>
-            <option value="Introduction to Sociology">Introduction to Sociology</option>
-            <option value="Introduction to Sociology 2e">Introduction to Sociology 2e</option>
-            <option value="Introductory Statistics">Introductory Statistics</option>
-            <option value="Prealgebra">Prealgebra</option>
-            <option value="Precalculus">Precalculus</option>
-            <option value="Principles of Economics">Principles of Economics</option>
-            <option value="Principles of Macroeconomics">Principles of Macroeconomics</option>
-            <option value="Principles of Macroeconomics for AP® Courses">Principles of Macroeconomics for AP® Courses</option>
-            <option value="Principles of Microeconomics">Principles of Microeconomics</option>
-            <option value="Principles of Microeconomics for AP® Courses">Principles of Microeconomics for AP® Courses</option>
-            <option value="Psychology">Psychology</option>
-            <option value="U.S. History">U.S. History</option>
-        </select>
-        <p>How are you using this title?</p>
-        <select name="00NU00000055spw">
-            <option value="Fully adopted">Fully adopted and using it. The students
-                don't have to pay for a book.
-            </option>
-            <option value="Recommending book as an option">
-                Recommending the book as an option. The students purchase a different book.
-            </option>
-        </select>
-        <p>Which partner resources are you using with the OpenStax College book?</p>
-        <fieldset>
-            <select multiple name="00NU0000005VmTu">
-                 <option value="None">None</option>
-                 <option value="Cerego">Cerego</option>
-                 <option value="Courseweaver">Courseweaver</option>
-                 <option value="Expert TA">Expert TA</option>
-                 <option value="Lrnr">Lrnr</option>
-                 <option value="Sapling Learning">Sapling Learning</option>
-                 <option value="SimBio">SimBio</option>
-                 <option value="WebAssign">WebAssign</option>
-                 <option value="Wiley Plus">Wiley Plus</option>
-                 <option value="XYZ Homework">XYZ Homework</option>
-            </select>
-            Other
-            <input name="00NU0000005Vls8" class="short" type="text">
-        </fieldset>
-        <p>
-            Approximately how many students in your classes will be using this book per
-            semester?
-        </p>
-        <input name="00NU00000052VId" type="number" required />
-        <p>
-            If there are other instructors in your department who will also be using this
-            book, approximately how many students in your department will be using this
-            book per semester?
-        </p>
-        <input name="00NU00000055sq1" type="number" />
-    </fieldset>
-    <fieldset class="column">
-        <p class="question">
-            Which partners may we share your information with so they may contact you
-            about additional resources supporting the OpenStax College books?
-        </p>
-        <fieldset>
-            <select multiple name="00NU00000055spm">
-                <option value="Online homework providers">Online homework providers</option>
-                <option value="Courseware providers">Courseware providers</option>
-                <option value="Print custom editions">Print custom editions</option>
-            </select>
-        </fieldset>
 
-        <p class="question">Are you interested in being featured in our newsletter as a Textbook Hero?</p>
-        <select name="00NU00000055sq6">
-            <option value="1">Yes</option>
-            <option value="0">No</option>
-        </select>
+<div class="wrapper">
+    {{{strips}}}
+    <div class="text-content labeled-inputs row book-info">
+        <div id="primary-book" class="col">
 
-        <p class="question">
-            OpenStax and Rice University researchers conduct several pilots and research
-            studies. May we contact you about opportunities to participate in future
-            pilots or studies?
-        </p>
-        <select name="00NU00000055sqB">
-            <option value="1">Yes</option>
-            <option value="0">No</option>
-        </select>
-        <!-- Doesn't look like Salesforce can store this information
-        <p>
-            Do you know of any other instructors using OpenStax College books? If so, would
-            you be willing to provide their contact information below?
-        </p>
-        <fieldset class="labeled-inputs">
-            <label>
-                <span>First name</span>
-                <input name="adoption[hint_first_name]" type="text">
+            <label>OpenStax College textbook you are using:
+                <select name="00NU00000053nzR" required>
+                    <option value="">Please Select</option>
+                    <option value="Algebra and Trigonometry">Algebra and Trigonometry</option>
+                    <option value="Anatomy and Physiology">Anatomy and Physiology</option>
+                    <option value="Biology">Biology</option>
+                    <option value="Chemistry">Chemistry</option>
+                    <option value="College Algebra">College Algebra</option>
+                    <option value="College Physics">College Physics</option>
+                    <option value="College Physics for AP® Courses ">College Physics for AP® Courses </option>
+                    <option value="Concepts of Biology">Concepts of Biology</option>
+                    <option value="Introduction to Sociology">Introduction to Sociology</option>
+                    <option value="Introduction to Sociology 2e">Introduction to Sociology 2e</option>
+                    <option value="Introductory Statistics">Introductory Statistics</option>
+                    <option value="Prealgebra">Prealgebra</option>
+                    <option value="Precalculus">Precalculus</option>
+                    <option value="Principles of Economics">Principles of Economics</option>
+                    <option value="Principles of Macroeconomics">Principles of Macroeconomics</option>
+                    <option value="Principles of Macroeconomics for AP® Courses">Principles of Macroeconomics for AP® Courses</option>
+                    <option value="Principles of Microeconomics">Principles of Microeconomics</option>
+                    <option value="Principles of Microeconomics for AP® Courses">Principles of Microeconomics for AP® Courses</option>
+                    <option value="Psychology">Psychology</option>
+                    <option value="U.S. History">U.S. History</option>
+                </select>
             </label>
-            <label>
-                <span>Last name</span>
-                <input name="adoption[hint_last_name]" type="text">
-            </label>
-            <label>
-                <span>Email address</span>
-                <input name="adoption[hint_email_address]" pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text">
-            </label>
-            <label>
-                <span>Phone number</span>
-                <input name="adoption[hint_phone_number]" type="text">
-            </label>
-        </fieldset>
-        -->
 
-        <!-- Can't handle more than one book on a form
-        <h3>Have you adopted a second OpenStax College book?</h3>
-        <a class="toggle-section" href="#"></a>
-        <fieldset id="secondary-book">
-        </fieldset>
-        -->
+            <label>How are you using this title?
+                <select name="00NU00000055spw">
+                    <option value="Fully adopted">Fully adopted and using it. The students
+                        don't have to pay for a book.
+                    </option>
+                    <option value="Recommending book as an option">
+                        Recommending the book as an option. The students purchase a different book.
+                    </option>
+                </select>
+            </label>
 
-        <div>
+            <label>Which partner resources are you using with the OpenStax College book?
+                <select multiple name="00NU0000005VmTu">
+                     <option value="None">None</option>
+                     <option value="Cerego">Cerego</option>
+                     <option value="Courseweaver">Courseweaver</option>
+                     <option value="Expert TA">Expert TA</option>
+                     <option value="Lrnr">Lrnr</option>
+                     <option value="Sapling Learning">Sapling Learning</option>
+                     <option value="SimBio">SimBio</option>
+                     <option value="WebAssign">WebAssign</option>
+                     <option value="Wiley Plus">Wiley Plus</option>
+                     <option value="XYZ Homework">XYZ Homework</option>
+                </select>
+            </label>
+
+            <label>Other
+                <input name="00NU0000005Vls8" class="short" type="text">
+            </label>
+
             <label>
-                <p class="question">Any feedback you'd like to share with us?</p>
+                Approximately how many students in your classes will be using this book per semester?
+                <input name="00NU00000052VId" type="number" required />
+            </label>
+
+            <label>
+                If there are other instructors in your department who will also be using this
+                book, approximately how many students in your department will be using this
+                book per semester?
+                <input name="00NU00000055sq1" type="number" />
+            </label>
+
+        </div>
+
+        <div class="col">
+
+            <label class="question">
+                Which partners may we share your information with so they may contact you
+                about additional resources supporting the OpenStax College books?
+                <select multiple name="00NU00000055spm">
+                    <option value="Online homework providers">Online homework providers</option>
+                    <option value="Courseware providers">Courseware providers</option>
+                    <option value="Print custom editions">Print custom editions</option>
+                </select>
+            </label>
+
+            <label class="question">Are you interested in being featured in our newsletter as a Textbook Hero?
+                <select name="00NU00000055sq6">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </label>
+
+            <label class="question">
+                OpenStax and Rice University researchers conduct several pilots and research
+                studies. May we contact you about opportunities to participate in future
+                pilots or studies?
+                <select name="00NU00000055sqB">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </label>
+
+            <!-- Doesn't look like Salesforce can store this information
+            <p>
+                Do you know of any other instructors using OpenStax College books? If so, would
+                you be willing to provide their contact information below?
+            </p>
+            <fieldset class="labeled-inputs">
+                <label>
+                    <span>First name</span>
+                    <input name="adoption[hint_first_name]" type="text">
+                </label>
+                <label>
+                    <span>Last name</span>
+                    <input name="adoption[hint_last_name]" type="text">
+                </label>
+                <label>
+                    <span>Email address</span>
+                    <input name="adoption[hint_email_address]" pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text">
+                </label>
+                <label>
+                    <span>Phone number</span>
+                    <input name="adoption[hint_phone_number]" type="text">
+                </label>
+            </fieldset>
+            -->
+
+            <!-- Can't handle more than one book on a form
+            <h3>Have you adopted a second OpenStax College book?</h3>
+            <a class="toggle-section" href="#"></a>
+            <fieldset id="secondary-book">
+            </fieldset>
+            -->
+
+
+            <label>
+                Any feedback you'd like to share with us?
                 <textarea cols="50" name="00NU00000056Rls" rows="6"></textarea>
             </label>
+
+            <div class="cta">
+                <input name="commit" class="btn" type="submit" value="Submit" role="button" aria-disabled="false">
+            </div>
+
         </div>
-        <div class="cta">
-            <input name="commit" class="btn" type="submit" value="Submit" role="button" aria-disabled="false">
-        </div>
-    </fieldset>
+    </div>
 </div>
+</form>

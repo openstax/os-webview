@@ -1,7 +1,14 @@
 @import 'variables';
 
+@mixin phone {
+    @media (max-width: 640px) {
+        @content;
+    }
+}
+
 $text-black: rgba(color(neutral-darkest), 0.87);
 $text-secondary: rgba(color(neutral-darkest), 0.7);
+
 
 form {
     color: $text-black;
@@ -15,33 +22,38 @@ form {
         padding: 1rem 2rem;
     }
 
-    .two-column {
+    .row {
         display: flex;
         justify-content: space-between;
+        margin: 0 auto;
+        flex-flow: row wrap;
+        padding: 8rem 0;
 
-        .column {
+        .col {
             display: inline-block;
-            flex-grow: 1;
+            flex: 1 1 50%;
+            padding: 0 1.5rem;
 
-            &:first-child {
-                padding-right: 5%;
+            @include phone {
+                flex: 1 1 auto;
             }
         }
     }
 
     fieldset {
         border: 0;
-
-        legend {
-            background-color: color(neutral-lightest);
-        }
     }
 
-    &.invalid,
-    input:invalid,
-    select:invalid,
-    .proxy-widget.invalid {
-        box-shadow: 0 0 0.5rem color(danger);
+//    &.invalid,
+//    input:invalid,
+//    select:invalid,
+//    .proxy-widget.invalid {
+//
+//    }
+
+    label {
+        display: block;
+        margin: 2rem 0;
     }
 
     &.labeled-inputs {
@@ -100,12 +112,12 @@ form {
     [type="number"],
     [type="email"],
     select {
+        border: 1px solid rgba(color(gray) , 0.2);
         color: $text-secondary;
         display: inline-block;
         font-size: 1.7rem;
-        font-weight: 500;
-        height: 5rem;
-        margin: 0.5rem 0;
+        font-weight: 600;
+        height: 4.8rem;
         padding: 1rem;
         width: 100%;
 
@@ -120,5 +132,9 @@ form {
         background: none;
         margin: 0;
         padding: 1.5rem;
+    }
+
+    .wrapper {
+        background-color: #f1f2f2;
     }
 }

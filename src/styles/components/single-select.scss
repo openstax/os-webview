@@ -11,9 +11,8 @@ $faint-gray: rgba(color(gray), 0.33);
 
     .selected-button {
         border: thin solid $faint-gray;
-        border-radius: 0.3rem;
         cursor: pointer;
-        min-height: 2rem;
+        min-height: 5rem;
     }
 
 }

@@ -4,9 +4,8 @@ $faint-gray: rgba(color(gray), 0.33);
 
 .tag-multi-select {
     border: thin solid $faint-gray;
-    border-radius: 0.3rem;
     display: flex;
-    min-height: 3rem;
+    min-height: 5rem;
     min-width: 12rem;
     position: relative;
 
