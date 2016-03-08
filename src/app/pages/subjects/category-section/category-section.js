@@ -33,8 +33,10 @@ export default class CategorySection extends BaseView {
     onRender() {
         this.el.classList.add('book-category');
 
-        for (let book of this.books) {
-            this.regions.books.append(new Book(book, this.model));
+        if (this.books) {
+            for (let book of this.books) {
+                this.regions.books.append(new Book(book, this.model));
+            }
         }
 
         this.setState();

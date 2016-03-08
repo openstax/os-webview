@@ -114,6 +114,9 @@ export default class Subjects extends BaseView {
         };
 
         new PageModel().fetch({data: {type: 'books.BookIndex'}}).then((result) => {
+            if (result.pages.length === 0) {
+                return;
+            }
             let id = result.pages[0].id,
                 detailPage = new PageModel({id});
 
