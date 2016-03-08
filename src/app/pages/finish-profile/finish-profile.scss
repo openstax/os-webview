@@ -1,0 +1,40 @@
+@import 'variables';
+
+.finish-profile {
+    h1 {
+        flex: 1 100%;
+        margin-bottom: 0;
+    }
+
+    h2 {
+        color: rgba(color(neutral-darkest), 0.87);
+        font-size: 1.7rem;
+        font-weight: 500;
+        margin-bottom: 0;
+    }
+
+    img {
+        min-height: 20rem;
+        min-width: 15rem;
+    }
+
+    form {
+        border: thin solid color(neutral-light);
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+    .note {
+        color: rgba(color(neutral-darkest), 0.57);
+        font-style: italic;
+        margin-top: 0;
+    }
+
+    [type="submit"] {
+        background-color: color(primary);
+        border: 0;
+        color: color(neutral-lightest);
+        font-size: 1.7rem;
+        padding: 1rem 2rem;
+    }
+}

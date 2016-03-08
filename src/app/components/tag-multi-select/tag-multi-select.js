@@ -26,6 +26,7 @@ export default class TagMultiSelect extends BaseView {
         if (e.target.classList.contains('tag-list')) {
             this.displayPulldown(e);
         }
+        e.preventDefault();
     }
 
     @on('blur .option-list')
