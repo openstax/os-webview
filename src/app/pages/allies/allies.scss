@@ -30,11 +30,6 @@ $text-black2: rgba(0, 0, 0, 0.7);
         margin-bottom: 0;
     }
 
-    .button-row {
-        height: 0;
-        transform: translateY(calc(-0.7rem - 0.5vw));
-    }
-
     .blurbs {
         background-color: lighten(color(neutral-light), 35%);
         line-height: 2.3rem;

@@ -1,33 +1,113 @@
 @import 'variables';
+@import 'mixins';
 
 $light-line: #e0e0e0;
 $lightest-gray: #fafafa;
 $text-black: rgba(0, 0, 0, 0.87);
 $text-black3: rgba(0, 0, 0, 0.54);
 
-.button-row {
-    transform: translateY(50%);
+.filter {
+    position: relative;
+    max-width: 70rem;
+    margin: 0 auto 4rem;
+    color: color(gray);
+    top: -2.5rem;
+    z-index: 1;
 
-    .filter-buttons {
-        color: $text-black3;
-        display: flex;
-        flex-wrap: wrap;
-        font-size: 1.8rem;
-        font-weight: 400;
-        justify-content: center;
-        position: relative;
+    &::before,
+    &::after {
+        color: color(neutral-lighter);
+        border-right: 0.2rem solid;
+        content: '';
+        display: block;
+        height: 1.2rem;
+        right: 4.3rem;
+        position: absolute;
+        transform: rotate3d(0, 0, 1, 135deg);
+        top: 2.2rem;
+        width: 0;
+        z-index: 1;
+
+        @include desktop {
+            display: none;
+        }
+    }
+
+    &::after {
+        right: 3.5rem;
+        transform: rotate3d(0, 0, 1, 45deg);
+     }
+}
+
+.filter-buttons {
+    display: flex;
+    margin: 0 1.5rem;
+    border: 0.1rem solid color(neutral-lighter);
+    flex-flow: column nowrap;
+    font-size: 1.8rem;
+    background-color: color(neutral-lightest);
+
+    @include desktop {
+        flex-flow: row nowrap;
+        margin: 0;
+        border-right: 0;
     }
 
     .filter-button {
-        background-color: $lightest-gray;
-        border: thin solid $light-line;
+        overflow: hidden;
+        padding: 1.5rem;
         cursor: pointer;
-        display: table-cell;
-        padding: 1rem 2rem;
+
+        @include desktop {
+            flex: 1 auto;
+            border-right: 0.1rem solid color(neutral-lighter);
+            text-align: center;
+        }
 
         &.selected {
-            background-color: color(neutral-lightest);
-            color: $text-black;
+            order: -1;
+
+            @include desktop {
+                order: 0;
+                background-color: lighten(color(neutral-lighter), 8%);
+            }
+
+            &::before {
+                content: 'Filter By: ';
+                font-weight: 500;
+                display: inline;
+                color: color(neutral-lighter);
+
+                @include desktop {
+                    content: '';
+                }
+            }
+       }
+
+        &:not(.selected) {
+            width: 0;
+            height: 0;
+            padding: 0;
+            opacity: 0;
+            transition: opacity 0.3s;
+
+            @include desktop {
+                width: auto;
+                height: auto;
+                opacity: 1;
+                padding: 1.5rem;
+            }
+
+            &:hover {
+                background-color: lighten(color(neutral-lighter), 8%);
+            }
+        }
+
+        @at-root .subjects-page .filter-buttons.active .filter-button {
+            padding: 1.5rem;
+            width: 100%;
+            height: 100%;
+            opacity: 1;
         }
     }
 }
