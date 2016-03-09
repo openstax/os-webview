@@ -37,7 +37,6 @@ function dataToTemplateHelper(data) {
 export default class Details extends BaseView {
     constructor() {
         super(...arguments);
-        this.id = decodeURIComponent(window.location.search.substr(1));
         this.templateHelpers = {};
     }
 
@@ -51,6 +50,10 @@ export default class Details extends BaseView {
                     }
                 }
             };
+
+        if (slug === '') {
+            slug = window.location.pathname.replace(/.*\//, '');
+        }
 
         pageModel.fetch({
             data: {type: 'books.Book', slug}

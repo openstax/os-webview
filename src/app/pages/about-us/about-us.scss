@@ -1,0 +1,97 @@
+@import 'variables';
+@import 'mixins';
+
+.about-us-page {
+    .hero {
+        background-color: color(gray);
+        color: color(neutral-lightest);
+
+        h1 {
+            color: color(orange);
+        }
+    }
+
+    section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    h2 {
+        color: color(gray);
+        font-size: 3.5rem;
+        font-weight: bold;
+    }
+
+    .headshots {
+        align-items: baseline;
+        display: flex;
+        flex-wrap: wrap;
+
+        .headshot {
+            display: flex;
+            flex-direction: column;
+            height: 24rem;
+            padding: 2rem;
+            position: relative;
+
+            img {
+                max-height: 100%;
+                max-width: 100%;
+            }
+
+            .name,
+            .title {
+                text-align: center;
+            }
+
+            .details {
+                width: 0;
+                height: 0;
+                overflow: hidden;
+                position: absolute;
+                top: 80%;
+                left: -10rem;
+                background: color(neutral-lightest);
+                transform: translate3d(0, -1rem, 0);
+                opacity: 0;
+                transition: opacity 0.2s, transform 0.2s;
+                box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(94, 96, 98, 0.1);
+
+                &::before {
+                    border: 2rem solid;
+                    border-color: transparent transparent color(neutral-lightest);
+                    bottom: 100%;
+                    content: '';
+                    left: 50%;
+                    margin-left: -2rem;
+                    position: absolute;
+                }
+
+                .name {
+                    color: color(orange);
+                    font-size: 1.8rem;
+                    font-weight: 500;
+                }
+
+                .title {
+                    font-weight: 500;
+                    font-variant: small-caps;
+                    text-transform: lowercase;
+                }
+            }
+
+            &:hover .details {
+                @include desktop {
+                    overflow: initial;
+                    width: 45rem;
+                    height: auto;
+                    opacity: 1;
+                    transform: translate3d(0, 0, 0);
+                    padding: 1.5rem;
+                    z-index: 1;
+                }
+            }
+        }
+    }
+}

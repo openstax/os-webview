@@ -19,10 +19,14 @@ class Router extends Backbone.Router {
             }
         });
 
+        this.route(/details\/.*/, 'details', () => {
+            shell.load('details');
+        });
+
         ['about', 'books', 'contact', 'news', 'license', 'subjects', 'details',
         'interest', 'adoption', 'adoption-confirmation', 'comp-copy',
         'accessibility-statement', 'faculty-verification', 'k-12', 'allies',
-        'finish-profile', 'finished-verify', 'finished-no-verify']
+        'finish-profile', 'finished-verify', 'finished-no-verify', 'about-us']
         .forEach(this.standardRoute, this);
 
         this.route(/to[u|s]/, 'tos', () => {
