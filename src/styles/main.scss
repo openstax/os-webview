@@ -33,6 +33,22 @@ a {
     max-width: 120rem;
 }
 
+.hero {
+    font-size: 1.7rem;
+    font-weight: 100;
+    letter-spacing: 0.11rem;
+    padding: 5rem 10rem;
+    text-align: center;
+
+    h1 {
+        font-weight: bold;
+        font-size: 6rem;
+        letter-spacing: -0.1rem;
+        line-height: 5.5rem;
+        margin-bottom: 3rem;
+    }
+}
+
 .sr-only {
     border: 0;
     clip: rect(0, 0, 0, 0);

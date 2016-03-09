@@ -10,19 +10,9 @@ $text-black2: rgba(0, 0, 0, 0.7);
     .hero {
         background-color: color(green);
         color: color(neutral-lightest);
-        font-size: 1.7rem;
-        font-weight: 100;
-        letter-spacing: 0.11rem;
-        padding: 5rem 10rem;
-        text-align: center;
 
         h1 {
             color: color(neutral-lightest);
-            font-weight: bold;
-            font-size: 6rem;
-            letter-spacing: -0.1rem;
-            line-height: 5.5rem;
-            margin-bottom: 3rem;
         }
     }
 
