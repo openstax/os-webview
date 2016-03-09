@@ -81,24 +81,6 @@ export default class Subjects extends BaseView {
         }
     }
 
-    @on('click .filter')
-    openCategories() {
-        this.toggleOpenCategories();
-    }
-
-    toggleOpenCategories() {
-        let w = window.innerWidth;
-
-        if (w<=768) {
-            this.el.querySelector('.filter-buttons').classList.toggle('active');
-        }
-    }
-
-    removeOpenCategories() {
-        document.querySelector('.filter-buttons').classList.remove('active');
-    }
-
-
     onRender() {
         let populateBookInfoFields = (data) => {
             let findNode = (name) =>
@@ -133,11 +115,5 @@ export default class Subjects extends BaseView {
         }}).then((result) => {
             this.renderCategorySections(organizeBooksByCategory(result.pages));
         });
-
-        window.addEventListener('resize', this.removeOpenCategories.bind(this));
-    }
-
-    onBeforeClose() {
-        window.removeEventListener('resize', this.removeOpenCategories.bind(this));
     }
 }
