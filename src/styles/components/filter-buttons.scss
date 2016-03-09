@@ -24,7 +24,7 @@ $text-black3: rgba(0, 0, 0, 0.54);
         right: 4.3rem;
         position: absolute;
         transform: rotate3d(0, 0, 1, 135deg);
-        top: 2.2rem;
+        top: 2rem;
         width: 0;
         z-index: 1;
 
@@ -45,6 +45,7 @@ $text-black3: rgba(0, 0, 0, 0.54);
     border: 0.1rem solid color(neutral-lighter);
     flex-flow: column nowrap;
     font-size: 1.8rem;
+    line-height: 1.8rem;
     background-color: color(neutral-lightest);
 
     @include desktop {
@@ -80,6 +81,7 @@ $text-black3: rgba(0, 0, 0, 0.54);
 
                 @include desktop {
                     content: '';
+                    font-weight: 300;
                 }
             }
        }
@@ -101,13 +103,17 @@ $text-black3: rgba(0, 0, 0, 0.54);
             &:hover {
                 background-color: lighten(color(neutral-lighter), 8%);
             }
-        }
 
-        @at-root .subjects-page .filter-buttons.active .filter-button {
-            padding: 1.5rem;
-            width: 100%;
-            height: 100%;
-            opacity: 1;
+            @at-root .active#{&} {
+                padding: 1rem 1.5rem;
+                width: 100%;
+                height: inherit;
+                opacity: 1;
+
+                &:last-child {
+                    margin-bottom: 0.5rem;
+                }
+            }
         }
     }
 }

@@ -6,6 +6,7 @@ export default class FilterButton extends BaseView {
     @on('click')
     selectMe() {
         this.model.set('selectedFilter', this.data);
+        this.toggleOpenCategories();
     }
 
     constructor(data, model) {
@@ -25,9 +26,25 @@ export default class FilterButton extends BaseView {
         );
     }
 
+    toggleOpenCategories() {
+        let w = window.innerWidth;
+
+        if (w<=768) {
+            document.querySelector('.filter-buttons').classList.toggle('active');
+        }
+    }
+
+    removeOpenCategories() {
+        document.querySelector('.filter-buttons').classList.remove('active');
+    }
+
     onRender() {
         this.el.classList.add('filter-button');
         this.setState();
+        window.addEventListener('resize', this.removeOpenCategories.bind(this));
     }
 
+    onBeforeClose() {
+        window.removeEventListener('resize', this.removeOpenCategories.bind(this));
+    }
 }
