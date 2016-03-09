@@ -28,7 +28,7 @@ class Router extends Backbone.Router {
         'accessibility-statement', 'faculty-verification', 'k-12', 'allies',
         'finish-profile', 'finished-verify', 'finished-no-verify', 'about-us',
         'interest-confirmation', 'faculty-confirmation', 'comp-copy-confirmation',
-        'foundation', 'renewal']
+        'foundation', 'renewal', 'contact']
         .forEach(this.standardRoute, this);
 
         this.route(/to[u|s]/, 'tos', () => {
