@@ -1,20 +1,14 @@
 <style scoped>
     @import url(/app/pages/adoption/adoption.css);
 </style>
-<div class="text-content">
-    <h1>OpenStax College Adoption Form</h1>
-    <p class="subhead">
-        Future funding from the <a href="/about">generous foundation donors</a> who
-        support our work is based on the number of instructors who adopt and the impact
-        our resources have on students. Please complete the form below to help us
-        demonstrate how OpenStax College textbooks are making education more accessible!
-    </p>
-    <p class="subhead">
-        Not using OpenStax College yet? Please complete the OpenStax
-        <a href="/interest">interest form</a> so we may send you the
-        information you need.
-    </p>
+
+<div class="text-content subhead">
+    <h1>Let us know you’re using OpenStax</h1>
+    <p>To get started with an OpenStax book, fill out this form and paste the book URL in your syllabus. Our books and their accompanying resources are yours to use, free.</p>
+    <p>Help us continue to make high-quality educational materials accessible by letting us know you’ve adopted! Our future grant funding is based on faculty adoptions and the number of students we impact. </p>
+    <p>Not using OpenStax yet? Go to our OpenStax <a href="/interest">interest form</a> and we’ll send you the information you need.</p>
 </div>
+
 <form accept-charset="UTF-8" class="new_adoption form"
  action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="post">
     <div class="text-content">
@@ -61,10 +55,9 @@
     {{{strips}}}
     <div class="text-content labeled-inputs row book-info">
         <div id="primary-book" class="col">
-
-            <label>OpenStax College textbook you are using:
+            <label>Your OpenStax book:
                 <select name="00NU00000053nzR" required>
-                    <option value="">Please Select</option>
+                    <option value="" disabled selected></option>
                     <option value="Algebra and Trigonometry">Algebra and Trigonometry</option>
                     <option value="Anatomy and Physiology">Anatomy and Physiology</option>
                     <option value="Biology">Biology</option>
@@ -88,20 +81,17 @@
                 </select>
             </label>
 
-            <label>How are you using this title?
+            <label>How are you using this book?
                 <select name="00NU00000055spw">
-                    <option value="Fully adopted">Fully adopted and using it. The students
-                        don't have to pay for a book.
-                    </option>
-                    <option value="Recommending book as an option">
-                        Recommending the book as an option. The students purchase a different book.
-                    </option>
+                    <option value="None" disabled selected></option>
+                    <option value="Fully adopted">Fully adopted and using it as our main text.</option>
+                    <option value="Recommending book as an option">Recommending the book as an option. The students purchase a different book.</option>
                 </select>
             </label>
 
-            <label>Which partner resources are you using with the OpenStax College book?
+            <label>Which ally resources are you using with your book?
                 <select multiple name="00NU0000005VmTu">
-                     <option value="None">None</option>
+                     <option value="None" disabled selected>None</option>
                      <option value="Cerego">Cerego</option>
                      <option value="Courseweaver">Courseweaver</option>
                      <option value="Expert TA">Expert TA</option>
@@ -119,7 +109,7 @@
             </label>
 
             <label>
-                Approximately how many students in your classes will be using this book per semester?
+                How many students are using this book in your courses each semester?
                 <input name="00NU00000052VId" type="number" required />
             </label>
 
@@ -135,16 +125,16 @@
         <div class="col">
 
             <label class="question">
-                Which partners may we share your information with so they may contact you
-                about additional resources supporting the OpenStax College books?
+                Which of our allies would you like to give permission to contact you about additional resources to support our books?
                 <select multiple name="00NU00000055spm">
+                    <option value="None" disabled selected>None</option>
                     <option value="Online homework providers">Online homework providers</option>
                     <option value="Courseware providers">Courseware providers</option>
                     <option value="Print custom editions">Print custom editions</option>
                 </select>
             </label>
 
-            <label class="question">Are you interested in being featured in our newsletter as a Textbook Hero?
+            <label class="question">Are you interested in having your OpenStax experience featured on our website, social media, and/or emails?
                 <select name="00NU00000055sq6">
                     <option value="1">Yes</option>
                     <option value="0">No</option>
@@ -152,9 +142,7 @@
             </label>
 
             <label class="question">
-                OpenStax and Rice University researchers conduct several pilots and research
-                studies. May we contact you about opportunities to participate in future
-                pilots or studies?
+                May we contact you about opportunities to participate in future pilots or research studies?
                 <select name="00NU00000055sqB">
                     <option value="1">Yes</option>
                     <option value="0">No</option>
@@ -196,7 +184,7 @@
 
             <label>
                 Any feedback you'd like to share with us?
-                <textarea cols="50" name="00NU00000056Rls" rows="6"></textarea>
+                <textarea cols="50" name="00NU00000056Rls" rows="10"></textarea>
             </label>
 
             <div class="cta">

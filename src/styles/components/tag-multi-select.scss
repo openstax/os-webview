@@ -3,35 +3,19 @@
 $faint-gray: rgba(color(gray), 0.33);
 
 .tag-multi-select {
-    border: thin solid $faint-gray;
+    border: 0.1rem solid $faint-gray;
+    background-color: white;
     display: flex;
-    min-height: 5rem;
+    min-height: 4.8rem;
     min-width: 12rem;
     position: relative;
 
     .tag-list {
         flex-grow: 1;
-
-        > div {
-            border: thin solid $faint-gray;
-            display: inline-block;
-        }
-
-        .label {
-            margin: 0 0.3rem;
-        }
-
-        .remover {
-            background-color: color(primary);
-            color: color(neutral-lightest);
-            cursor: pointer;
-            font-size: 2rem;
-            font-weight: 500;
-            padding: 0 0.3rem;
-        }
     }
 
     .activate-pulldown {
         flex-grow: 0;
     }
+
 }

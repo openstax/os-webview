@@ -1,4 +1,5 @@
 @import 'variables';
+@import 'mixins';
 
 @mixin phone {
     @media (max-width: 640px) {
@@ -31,11 +32,13 @@ form {
 
         .col {
             display: inline-block;
-            flex: 1 1 50%;
+            flex: 1 1 32rem;
             padding: 0 1.5rem;
+            max-width: 50%; // imprtant for ellipsis on inputs
 
             @include phone {
                 flex: 1 1 auto;
+                max-width: 100%;
             }
         }
     }
@@ -48,7 +51,12 @@ form {
 //    input:invalid,
 //    select:invalid,
 //    .proxy-widget.invalid {
-//
+//        border: 0.1rem solid color(danger);
+//    }
+
+//    input[required]::after {
+//        content: '*';
+//        position: absolute;
 //    }
 
     label {
@@ -111,20 +119,31 @@ form {
     [type="text"],
     [type="number"],
     [type="email"],
-    select {
-        border: 1px solid rgba(color(gray) , 0.2);
-        color: $text-secondary;
+    textarea,
+    select,
+    .selected-button {
+        border: 0.1rem solid rgba(color(gray) , 0.2);
+        color: color(neutral-dark);
         display: inline-block;
-        font-size: 1.7rem;
+        font-size: 1.6rem;
         font-weight: 600;
         height: 4.8rem;
-        padding: 1rem;
+        padding: 0.84rem;
         width: 100%;
+        border-radius: 0;
+        appearance: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
 
         &:focus {
             outline: 0;
             border-bottom: solid color(cyan) 0.2rem;
         }
+    }
+
+    textarea {
+        height: 21.42rem;
     }
 
     select,
@@ -134,7 +153,63 @@ form {
         padding: 1.5rem;
     }
 
+    .proxy-widget {
+        cursor: pointer;
+
+        .has-dropdown {
+            &::before {
+                content: '';
+                position: absolute;
+                display: block;
+                top: 0;
+                right: 0;
+                width: 4.8rem;
+                height: 4.8rem;
+                background-color: rgba(color(neutral-lighter), 0.2);
+            }
+
+            &::after {
+                @include triangle(
+                    $direction: bottom,
+                    $position: top 50% right 1.8rem,
+                    $color: color(gray),
+                    $size: 0.5rem
+                );
+                z-index: 0;
+            }
+        }
+
+        .tag-list {
+
+            > div {
+                display: inline-block;
+                margin: 0.84rem;
+            }
+
+            span {
+                display: inline-block;
+                padding: 0 1rem;
+
+                &.label {
+                    background-color: rgba(color(gray), 0.2);
+
+                }
+
+                &.remover {
+                    background-color: color(cyan);
+                    color: color(neutral-lightest);
+                    cursor: cursor;
+                }
+            }
+        }
+
+    }
+
     .wrapper {
-        background-color: #f1f2f2;
+        background-color: rgba(color(neutral-lighter), 0.2);
+
+        .strips {
+            margin-bottom: 0;
+        }
     }
 }
