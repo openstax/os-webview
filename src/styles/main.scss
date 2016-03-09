@@ -104,6 +104,15 @@ a {
 
 }
 
+.subhead {
+    padding: 8rem 1.5rem 0;
+    text-align: center;
+
+    h1 {
+        line-height: 1;
+    }
+}
+
 @import 'components/bucket';
 @import 'components/buttons';
 @import 'components/filter-buttons';

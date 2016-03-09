@@ -1,7 +1,15 @@
 @import 'variables';
+@import 'mixins';
+
+@mixin phone {
+    @media (max-width: 640px) {
+        @content;
+    }
+}
 
 $text-black: rgba(color(neutral-darkest), 0.87);
 $text-secondary: rgba(color(neutral-darkest), 0.7);
+
 
 form {
     color: $text-black;
@@ -15,33 +23,45 @@ form {
         padding: 1rem 2rem;
     }
 
-    .two-column {
+    .row {
         display: flex;
         justify-content: space-between;
+        margin: 0 auto;
+        flex-flow: row wrap;
+        padding: 8rem 0;
 
-        .column {
+        .col {
             display: inline-block;
-            flex-grow: 1;
+            flex: 1 1 32rem;
+            padding: 0 1.5rem;
+            max-width: 50%; // imprtant for ellipsis on inputs
 
-            &:first-child {
-                padding-right: 5%;
+            @include phone {
+                flex: 1 1 auto;
+                max-width: 100%;
             }
         }
     }
 
     fieldset {
         border: 0;
-
-        legend {
-            background-color: color(neutral-lightest);
-        }
     }
 
-    &.invalid,
-    input:invalid,
-    select:invalid,
-    .proxy-widget.invalid {
-        box-shadow: 0 0 0.5rem color(danger);
+//    &.invalid,
+//    input:invalid,
+//    select:invalid,
+//    .proxy-widget.invalid {
+//        border: 0.1rem solid color(danger);
+//    }
+
+//    input[required]::after {
+//        content: '*';
+//        position: absolute;
+//    }
+
+    label {
+        display: block;
+        margin: 2rem 0;
     }
 
     &.labeled-inputs {
@@ -99,15 +119,22 @@ form {
     [type="text"],
     [type="number"],
     [type="email"],
-    select {
-        color: $text-secondary;
+    textarea,
+    select,
+    .selected-button {
+        border: 0.1rem solid rgba(color(gray) , 0.2);
+        color: color(neutral-dark);
         display: inline-block;
-        font-size: 1.7rem;
-        font-weight: 500;
-        height: 5rem;
-        margin: 0.5rem 0;
-        padding: 1rem;
+        font-size: 1.6rem;
+        font-weight: 600;
+        height: 4.8rem;
+        padding: 0.84rem;
         width: 100%;
+        border-radius: 0;
+        appearance: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
 
         &:focus {
             outline: 0;
@@ -115,10 +142,74 @@ form {
         }
     }
 
+    textarea {
+        height: 21.42rem;
+    }
+
     select,
     option {
         background: none;
         margin: 0;
         padding: 1.5rem;
+    }
+
+    .proxy-widget {
+        cursor: pointer;
+
+        .has-dropdown {
+            &::before {
+                content: '';
+                position: absolute;
+                display: block;
+                top: 0;
+                right: 0;
+                width: 4.8rem;
+                height: 4.8rem;
+                background-color: rgba(color(neutral-lighter), 0.2);
+            }
+
+            &::after {
+                @include triangle(
+                    $direction: bottom,
+                    $position: top 50% right 1.8rem,
+                    $color: color(gray),
+                    $size: 0.5rem
+                );
+                z-index: 0;
+            }
+        }
+
+        .tag-list {
+
+            > div {
+                display: inline-block;
+                margin: 0.84rem;
+            }
+
+            span {
+                display: inline-block;
+                padding: 0 1rem;
+
+                &.label {
+                    background-color: rgba(color(gray), 0.2);
+
+                }
+
+                &.remover {
+                    background-color: color(cyan);
+                    color: color(neutral-lightest);
+                    cursor: cursor;
+                }
+            }
+        }
+
+    }
+
+    .wrapper {
+        background-color: rgba(color(neutral-lighter), 0.2);
+
+        .strips {
+            margin-bottom: 0;
+        }
     }
 }
