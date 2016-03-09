@@ -228,7 +228,7 @@ $transition: 0.3s;
                 white-space: nowrap;
                 background: color(neutral-lightest);
                 opacity: 0;
-                transition: transform 0.2s, opacity 0.2s;
+                transition: transform 0.2s 0.01s, opacity 0.2s;
 
 
                 @at-root .fixed#{&} {
@@ -253,6 +253,8 @@ $transition: 0.3s;
 
             a {
                 color: color(gray);
+                display: block;
+                outline: none;
 
                 &:hover {
                     color: color(cyan);
