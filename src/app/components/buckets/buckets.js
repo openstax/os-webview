@@ -11,18 +11,18 @@ import Bucket from '../bucket/bucket';
 })
 export default class Buckets extends BaseView {
     onRender() {
-        this.regions.buckets.append(new Bucket({
-            orientation: 'right',
-            bucketClass: 'give',
-            hasImage: true,
-            titleText: 'Give',
-            blurbHtml: `Tanaya is a single mother and first generation college
-            student. Your donations helped create the free Biology textbook
-            she is now using on her path to become a nurse.`,
-            btnClass: 'btn-yellow',
-            linkUrl: '/give',
-            linkText: 'Give Today'
-        }));
+        // this.regions.buckets.append(new Bucket({
+        //     orientation: 'right',
+        //     bucketClass: 'give',
+        //     hasImage: true,
+        //     titleText: 'Give',
+        //     blurbHtml: `Tanaya is a single mother and first generation college
+        //     student. Your donations helped create the free Biology textbook
+        //     she is now using on her path to become a nurse.`,
+        //     btnClass: 'btn-yellow',
+        //     linkUrl: '/give',
+        //     linkText: 'Give Today'
+        // }));
         this.regions.buckets.append(new Bucket({
             orientation: 'left',
             bucketClass: 'our-impact',
