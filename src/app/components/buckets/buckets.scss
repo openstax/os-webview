@@ -2,16 +2,15 @@
 @import 'mixins';
 
 .buckets-section {
-    padding: 3.8vw 0;
     margin: 0 auto;
     max-width: $boxed-width;
+    padding: 3rem 1.5rem;
 
     .bucket {
         color: color(neutral-lightest);
-        margin: 0 auto 3.8vw;
+        margin: 0 auto;
         max-width: 100%;
         min-height: 30rem;
-        width: 90vw;
 
         @include collapsed {
             flex-direction: column;
@@ -58,6 +57,7 @@
 
         &.our-impact {
             background-color: color(neutral-medium);
+            margin-bottom: 1.5rem;
 
             > .image {
                 background-image: url('/images/home/buckets/our-impact.jpg');
