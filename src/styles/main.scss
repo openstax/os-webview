@@ -49,6 +49,16 @@ a {
     }
 }
 
+.go-to {
+    color: color(cyan);
+    font-size: 1.7rem;
+    font-weight: 500;
+
+    &::after {
+        content: ' >';
+    }
+}
+
 .sr-only {
     border: 0;
     clip: rect(0, 0, 0, 0);
