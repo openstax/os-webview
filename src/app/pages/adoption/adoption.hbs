@@ -4,9 +4,14 @@
 
 <div class="text-content subhead">
     <h1>Let us know you’re using OpenStax</h1>
-    <p>To get started with an OpenStax book, fill out this form and paste the book URL in your syllabus. Our books and their accompanying resources are yours to use, free.</p>
-    <p>Help us continue to make high-quality educational materials accessible by letting us know you’ve adopted! Our future grant funding is based on faculty adoptions and the number of students we impact. </p>
-    <p>Not using OpenStax yet? Go to our OpenStax <a href="/interest">interest form</a> and we’ll send you the information you need.</p>
+    <p>To get started with an OpenStax book, fill out this form and paste the
+        book URL in your syllabus. Our books and their accompanying resources
+        are yours to use, free.</p>
+    <p>Help us continue to make high-quality educational materials accessible by
+        letting us know you’ve adopted! Our future grant funding is based on
+        faculty adoptions and the number of students we impact. </p>
+    <p>Not using OpenStax yet? Go to our OpenStax <a href="/interest">interest
+        form</a> and we’ll send you the information you need.</p>
 </div>
 
 <form accept-charset="UTF-8" class="new_adoption form"
@@ -19,6 +24,7 @@
             <input type=hidden name="retURL" value="{{urlOrigin}}/adoption-confirmation">
             <input type=hidden name="lead_source" value="OS Adoption Form">
         </div>
+        <h2>About You</h2>
         <div class="labeled-inputs row">
             <div class="col">
                 <label>
@@ -53,6 +59,7 @@
 
 <div class="wrapper">
     {{{strips}}}
+    <h2>About Your Book</h2>
     <div class="text-content labeled-inputs row book-info">
         <div id="primary-book" class="col">
             <label>Your OpenStax book:
@@ -80,6 +87,9 @@
                     <option value="U.S. History">U.S. History</option>
                 </select>
             </label>
+            <p>
+                Don't see your book? Fill out our <a href="/interest">interest form</a>.
+            </p>
 
             <label>How are you using this book?
                 <select name="00NU00000055spw">
@@ -87,6 +97,11 @@
                     <option value="Fully adopted">Fully adopted and using it as our main text.</option>
                     <option value="Recommending book as an option">Recommending the book as an option. The students purchase a different book.</option>
                 </select>
+            </label>
+
+            <label>
+                How many students are using this book in your courses each semester?
+                <input name="00NU00000052VId" type="number" required />
             </label>
 
             <label>Which ally resources are you using with your book?
@@ -109,11 +124,6 @@
             </label>
 
             <label>
-                How many students are using this book in your courses each semester?
-                <input name="00NU00000052VId" type="number" required />
-            </label>
-
-            <label>
                 If there are other instructors in your department who will also be using this
                 book, approximately how many students in your department will be using this
                 book per semester?
@@ -123,14 +133,13 @@
         </div>
 
         <div class="col">
-
             <label class="question">
                 Which of our allies would you like to give permission to contact you about additional resources to support our books?
                 <select multiple name="00NU00000055spm">
                     <option value="None" disabled selected>None</option>
-                    <option value="Online homework providers">Online homework providers</option>
-                    <option value="Courseware providers">Courseware providers</option>
-                    <option value="Print custom editions">Print custom editions</option>
+                    <option value="Online homework allies">Online homework allies</option>
+                    <option value="Adaptive courseware allies">Adaptive courseware allies</option>
+                    <option value="Customization tool allies">Customization tool allies</option>
                 </select>
             </label>
 
@@ -173,14 +182,6 @@
                 </label>
             </fieldset>
             -->
-
-            <!-- Can't handle more than one book on a form
-            <h3>Have you adopted a second OpenStax College book?</h3>
-            <a class="toggle-section" href="#"></a>
-            <fieldset id="secondary-book">
-            </fieldset>
-            -->
-
 
             <label>
                 Any feedback you'd like to share with us?
