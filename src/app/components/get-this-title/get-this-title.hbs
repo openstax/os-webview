@@ -8,7 +8,7 @@
             <div class="option">
                 <a href="{{webviewLink}}">
                     <span class="fa fa-laptop"></span>
-                    View online*
+                    View online
                 </a>
             </div>
         {{/if}}
@@ -20,14 +20,18 @@
                 </a>
             </div>
         {{/if}}
-        <div class="option">
-            <span class="fa fa-book"></span>
-            Order a print copy
-        </div>
+        {{#if printCopy}}
+            <div class="option">
+                <span class="fa fa-book"></span>
+                Order a print copy
+            </div>
+        {{/if}}
+        {{#if daisyLink}}
         <div class="option">
             <span class="fa fa-wheelchair"></span>
             DAISY or BRF
         </div>
+        {{/if}}
         {{#if ibookLink}}
             <div class="option">
                 <a href="{{ibookLink}}">

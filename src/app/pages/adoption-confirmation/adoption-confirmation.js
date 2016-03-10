@@ -121,7 +121,7 @@ function hookUpDonationBox(el) {
 @props({
     template: template
 })
-export default class Home extends BaseView {
+export default class AdoptionConfirmation extends BaseView {
 
     onRender() {
         this.el.classList.add('confirmation-page');
