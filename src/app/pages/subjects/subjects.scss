@@ -145,54 +145,6 @@
                 margin-left: -2rem;
                 position: absolute;
             }
-
-            .option {
-                color: color(cyan);
-                cursor: pointer;
-                font-size: 1.6rem;
-                padding: 0.5rem 0;
-                border-bottom: 0.1rem solid color(neutral-lighter);
-
-                &:hover {
-                    color: darken(color(cyan), 10%);
-                }
-
-                &:last-child {
-                    border-bottom: 0;
-                }
-
-                a {
-                    color: color(cyan);
-
-                    &:hover {
-                        color: darken(color(cyan), 10%);
-                    }
-                }
-            }
-
-            .fa {
-                color: darken(color(cyan), 10%);
-                margin-left: 3rem;
-                font-size: 1.8rem;
-
-                &::before {
-                    margin-left: -2.5rem;
-                }
-            }
-
-            .cta > .btn {
-                width: 100%;
-                font-variant: normal;
-                margin: 1rem 0 0;
-                padding: 1.5rem;
-                text-transform: uppercase;
-            }
-
-            .btn:hover,
-            .btn:focus {
-                transform: scale3d(1, 1, 1);
-                background-color: darken(color(orange), 5%);
-            }
         }
 
         .cover:hover .details {

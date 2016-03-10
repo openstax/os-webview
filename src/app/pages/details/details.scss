@@ -1,230 +1,283 @@
 @import 'variables';
+@import 'mixins';
 
-$light-gray: lighten(color(neutral-light), 36%);
-$get-this-book-width: 25rem;
-$secondary-button: lighten(color(neutral-dark), 12%);
-$text-black: rgba(color(neutral-darkest), 0.87);
-$text-secondary: rgba(color(neutral-darkest), 0.7);
 
 .details-page {
-    color: $text-black;
-    font-family: Lato;
-    font-size: 1.7rem;
-    margin: 0 auto;
-    max-width: calc(120rem + #{$get-this-book-width});
-    padding-right: $get-this-book-width;
     position: relative;
 
-    .book-cover {
-        max-width: 22rem;
-    }
-
-    > .block {
-        padding: 5rem (2rem + #{$get-this-book-width}) 5rem 10rem;
-
-        &.book-info {
-            background-image: $page-top-gradient;
-        }
-    }
-
-    .endorsement-container {
-        background-color: color(green);
-    }
-
-    .links > a {
-        display: block;
-        margin-top: 1rem;
-    }
-
-    a,
-    .option {
-        color: color(cyan);
-        cursor: pointer;
-    }
-
-    blockquote {
-        margin-left: 20rem;
-        position: relative;
-
-        &::before {
-            color: color(yellow);
-            content: '\201C';
-            font-size: 21rem;
-            left: 5rem;
-            position: absolute;
-            top: -2rem;
-        }
-    }
-
-    .info-row {
-        align-items: flex-start;
+    .container {
         display: flex;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        position: relative;
+        max-width: $boxed-width;
+        flex-flow: column wrap;
+
+        @include tablet {
+            flex-flow: row wrap;
+        }
+
+        @include desktop {
+            flex-flow: row wrap;
+        }
     }
 
-    .details {
-        flex-grow: 1;
-        font-family: Lato;
-        margin: 0 2.5rem;
-        padding: 0;
+    .book-info {
+        justify-content: space-between;
+        margin-bottom: 6rem;
 
-        h1 {
-            font-weight: 900;
+        @media (min-width: 500px) {
+            margin: 6rem auto;
+        }
+
+        .book-cover {
+            width: 100vw;
+            order: 1;
+            align-self: flex-start;
+            margin: 0 -1.5rem 3rem;
+
+            @media (min-width: 500px) {
+                margin: 0 1.5rem 3rem 0;
+                width: 25rem;
+            }
+
+            @include desktop {
+                width: 25rem;
+            }
+        }
+
+        .floating-menu {
+            order: 2;
+            flex: 1 100%;
+            margin-bottom: 3rem;
+
+            @media (min-width: 500px) {
+                flex: 0 0 auto;
+                width: 20rem;
+            }
+
+            @include desktop {
+                order: 3;
+                position: fixed;
+                left: 50%;
+                top: 15rem;
+                max-width: 120rem;
+                width: 100%;
+                transform: translate3d(-50%, 0, 0);
+                z-index: 1;
+            }
+
+            .box {
+                @include desktop {
+                    width: 25rem;
+                    position: absolute;
+                    right: 0;
+                    background-color: rgba(color(neutral-lightest), 0.95);
+                    padding: 1.5rem;
+                }
+            }
+
+            .notes {
+                color: color(gray);
+            }
+
+            .cta {
+                color: color(gray);
+
+                a:last-child {
+                    background-color: color(neutral-medium);
+
+                    &:hover,
+                    &:focus {
+                        transform: scale3d(1, 1, 1);
+                        background-color: darken(color(neutral-medium), 5%);
+                    }
+                }
+            }
+        }
+
+        .details {
+            order: 3;
+            font-size: 1.6rem;
+            line-height: 2.6rem;
+            color: color(neutral-dark);
+
+            @include tablet {
+                flex: 1 100%;
+            }
+
+
+
+            @include desktop {
+                order: 2;
+                padding: 0 25rem 0 0;
+                flex: 1 0;
+            }
+
+            @media (min-width: 830px) {
+                padding-left: 1.5rem;
+            }
+
+            h1 {
+                line-height: 1;
+            }
+
+            a {
+                color: color(cyan);
+
+                &:hover {
+                    color: darken(color(cyan), 10%);
+                }
+            }
         }
 
         .tabs {
-            display: flex;
-            justify-content: flex-start;
-
-            > .tab {
+            a:not(:last-child)::after {
+                content: ' | ';
                 display: inline;
+                color: color(neutral-dark);
+            }
+        }
 
-                > span {
-                    border-right: 0.2rem solid $divider-gray;
-                    padding: 0 2rem;
+        .links {
+            margin: 1rem 0;
+
+            a {
+                position: relative;
+
+                &::before,
+                &::after {
+                    border-right: 0.2rem solid;
+                    content: '';
+                    display: block;
+                    height: 0.7rem;
+                    margin-top: -0.2rem;
+                    position: absolute;
+                    transform: rotate3d(0, 0, 1, 135deg);
+                    right: -1.3rem;
+                    top: 50%;
+                    width: 0;
                 }
 
-                &:first-child > label {
-                    padding-left: 0;
-                }
-
-                &:last-child > label {
-                    border: 0;
+                &::after {
+                    right: -1.7rem;
+                    transform: rotate3d(0, 0, 1, 45deg);
                 }
             }
         }
     }
 
     .endorsement {
+        background-color: color(green);
         color: color(neutral-lightest);
-        font-family: Lato;
-        font-size: 3rem;
-        font-style: italic;
-        margin: 0;
-        padding: 5rem 17rem;
 
-        .attribution {
-            text-align: right;
+        blockquote {
+            position: relative;
+            quotes: '\201C''\201D''\2018''\2019';
+
+            @include desktop {
+                margin-left: 7.5rem;
+
+            }
+
+            &::before {
+                color: color(gold);
+                content: open-quote;
+                font-size: 15rem;
+                line-height: 0;
+                position: absolute;
+                top: 6rem;
+                left: -5.5rem;
+
+                @include desktop {
+                    font-size: 18rem;
+                    top: 7rem;
+                    left: -9rem;
+                }
+            }
+
+            p {
+                font-size: 2.4rem;
+                font-weight: 500;
+                font-style: italic;
+                margin: 0;
+
+                @include desktop {
+                    font-size: 3.2rem;
+                }
+            }
+
+            .attribution {
+                display: inline-block;
+                font-size: 1.6rem;
+                margin-top: 2.5rem;
+                text-align: right;
+
+
+                @include desktop {
+                    font-size: 2.2rem;
+                }
+            }
         }
+
+        .container {
+            padding: 6rem 1.5rem;
+
+            @include desktop {
+                padding: 6rem 25rem 6rem 1.5rem;
+            }
+        }
+    }
+
+    .strips {
+        margin: 0;
     }
 
     .resources {
-        background-color: $light-gray;
-        color: $text-secondary;
-        padding: 5rem 10rem;
+        font-size: 1.6rem;
+        line-height: 2.6rem;
+        color: color(neutral-dark);
+        background-color: lighten(color(neutral-lighter), 8%);
 
-        h2 {
-            color: $text-black;
-            font-size: 1.9rem;
-        }
-
+        h2,
         h3 {
-            color: $text-secondary;
-            font-size: 1.8rem;
-            font-style: italic;
+            margin-bottom: 0;
         }
 
-        .resource-row {
+        .container {
+            padding: 6rem 1.5rem;
+
+            @include desktop {
+                padding: 6rem 27.5rem 6rem 1.5rem;
+            }
+        }
+
+        .row {
+            flex: 1 100%;
             display: flex;
-            flex-flow: row wrap;
-            justify-content: space-between;
-
-            > div,
-            > a {
-                flex: 0 1 24rem;
-                margin-bottom: 2rem;
-                padding: 1rem 2rem;
-            }
-
-            .resource-box {
-                background-color: color(neutral-lightest);
-                padding-bottom: 4rem;
-                position: relative;
-
-                h3 {
-                    color: color(green);
-                    font-style: normal;
-                }
-
-                a {
-                    bottom: 0;
-                    position: absolute;
-                }
-
-                img {
-                    margin-right: 1rem;
-                    max-height: 3.2rem;
-                }
-            }
-
-            .blurb {
-                background-color: color(neutral-lightest);
-
-                .text {
-                    font-size: 1.47rem;
-                }
-            }
+            flex-flow: column nowrap;
         }
 
         .cta {
-            font-size: 1.6rem;
-            margin: 0 auto;
-            max-width: 30rem;
-            position: relative;
-            transform: translateY(120%);
+            flex: 1 auto;
+            display: flex;
+            flex-flow: column nowrap;
         }
     }
 
-    .block > section {
-        h1 {
-            font-weight: bold;
-        }
+    .authors {
+        padding: 6rem 0;
 
-        h2 {
-            font-size: 2rem;
-            font-weight: bold;
+        @include desktop {
+            padding: 6rem 27.5rem 6rem 0;
         }
     }
 
-    .floating-menu {
-        background-color: color(neutral-lightest);
-        padding: 1rem 2rem;
-        position: fixed;
-        right: calc(50vw - 72rem);
-        top: 13rem;
-        width: $get-this-book-width;
-        z-index: 2;
+    .errata {
+        padding: 0 0 6rem;
 
-        @media (max-width: 1450px) {
-            right: 0;
-        }
-
-        > .title {
-            font-size: 2rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-        }
-
-        > .notes {
-            border-bottom: 0.2rem solid $divider-gray;
-            font-size: 1.2rem;
-            font-style: italic;
-            opacity: 0.57;
-            padding-bottom: 1rem;
-        }
-
-        .options {
-            line-height: 3rem;
-            padding-bottom: 1rem;
-        }
-
-        .btn {
-            font-size: 1.6rem;
-            width: 22rem;
-
-            &.secondary {
-                background-color: $secondary-button;
-                margin-top: 1rem;
-            }
+        @include desktop {
+            padding: 0 27.5rem 6rem 0;
         }
     }
 }

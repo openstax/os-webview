@@ -3,25 +3,8 @@
     @import url(https://fonts.googleapis.com/css?family=Lato:400,900);
 </style>
 <div class="details-page">
-    <section class="floating-menu">
-        <div class="title">Get this title</div>
-        <div class="get-this-book"></div>
-        <div class="notes">
-            <sup>*</sup>Our website is Section 508 Level A accessible.
-        </div>
-        <div class="cta">
-            <p class="interested-text">
-                Using this book, or interested in adopting it for your
-                course?
-            </p>
-            <a href="/adoption?{{title}}" class="btn">Adopt This Book</a>
-            <a href="/interest?{{title}}" class="secondary btn">get interested</a>
-        </div>
-    </section>
-    <div class="text-content">
-        <section class="block book-info">
-            <div class="info-row">
-                <img class="book-cover" />
+        <section class="container book-info">
+            <img class="book-cover" />
                 <section class="details">
                     <h1 class="title"></h1>
                     <div class="tabs">
@@ -32,24 +15,43 @@
                     </div>
                     <p class="blurb"></p>
                     <h2>Senior Contributing Authors</h2>
-                    <div id="top-authors">
-                    </div>
+                    <div id="top-authors"></div>
                     <div class="links">
                         <a class="go-to" href="#details">See all authors</a>
                     </div>
                 </section>
-            </div>
+                <section class="floating-menu">
+                    <div class="box">
+                    <h3>Get this title</h3>
+                    <div class="get-this-book"></div>
+                    <div class="notes">
+                        <sup>*</sup>Our website is Section 508 Level A accessible.
+                    </div>
+                    <div class="cta">
+                        <p class="interested-text">
+                            Using this book, or interested in adopting it for your
+                            course?
+                        </p>
+                        <a href="/adoption?{{title}}" class="btn">Adopt This Book</a>
+                        <a href="/interest?{{title}}" class="secondary btn">get interested</a>
+                    </div>
+                </div>
+                </section>
         </section>
-        <div class="block endorsement-container">
-            <blockquote class="endorsement">
-                <div id="endorsement"></div>
-                <footer class="attribution">
-                    &mdash; <span id="attribution"></span><br>
-                    <span id="attribution-school"></span>
-                </footer>
-            </blockquote>
+        <div class="endorsement">
+            <div class="container">
+                <blockquote>
+                    <p id="endorsement"></p>
+                    <p>
+                        &mdash; <span id="attribution"></span>
+                        <span id="attribution-school"></span>
+                    </p>
+                </blockquote>
+            </div>
         </div>
         <section id="resources" class="resources block">
+            <div class="container">
+
             <h1>Resources</h1>
             <p>
                 Access doesn't end with the book. OpenStax has compiled additional
@@ -92,15 +94,18 @@
             <div class="cta">
                 <a class="btn">Learn how you can tell your instructor about OpenStax!</a>
             </div>
+        </div>
         </section>
-        <div class="block">
             <section id="details">
+                <div class="container">
                 <h1>Details</h1>
                 <h2>Authors</h2>
                 <div id="all-authors">
                 </div>
+            </div>
             </section>
             <section id="errata" class="errata">
+                <div class="container">
                 <h1>Errata</h1>
                 <p>
                     All OpenStax textbooks undergo a rigorous review process. However, like
@@ -113,7 +118,6 @@
                     <a class="go-to">Errata list</a>
                     <a class="go-to">Suggest a correction</a>
                 </div>
+            </div>
             </section>
-        </div>
-    </div>
 </div>
