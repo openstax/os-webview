@@ -211,10 +211,10 @@ class Header extends BaseView {
         }
     }
 
-    @on('click .login')
-    appendURL(e) {
-        let $this = e.target;
-        let href = $this.href + Backbone.history.location.href;
+    appendURL() {
+        let $this = this.el.querySelector('.login>a');
+        let loginLink = 'https://oscms-dev.openstax.org/accounts/login/openstax/?next=';
+        let href = loginLink + Backbone.history.location.href;
 
         $this.href = href;
     }
@@ -322,20 +322,18 @@ class Header extends BaseView {
     onRender() {
         this.updateHeaderStyle();
 
+        document.addEventListener('load', this.appendURL.bind(this), true);
         document.addEventListener('focus', this.closeDropdownMenus.bind(this), true);
         document.addEventListener('click', this.closeDropdownMenus.bind(this), true);
-
         this.el.addEventListener('click', this.resetHeader.bind(this), true);
-
-
         window.addEventListener('scroll', this.updateHeaderStyle.bind(this));
         window.addEventListener('resize', this.closeFullScreenNav.bind(this));
     }
 
     onBeforeClose() {
+        document.removeEventListener('load', this.appendURL.bind(this), true);
         window.removeEventListener('scroll', this.updateHeaderStyle.bind(this));
         window.removeEventListener('resize', this.closeFullScreenNav.bind(this));
-
         document.removeEventListener('focus', this.closeDropdownMenus.bind(this), true);
         document.removeEventListener('click', this.closeDropdownMenus.bind(this), true);
         this.el.removeEventListener('click', this.resetHeader.bind(this), true);
