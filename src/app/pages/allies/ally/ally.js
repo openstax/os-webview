@@ -13,6 +13,14 @@ export default class Ally extends BaseView {
                 this.templateHelpers.subjects.indexOf(subject) >= 0);
 
             this.el.classList.toggle('hidden', !visible);
+            if (visible) {
+                for (let link of this.el.querySelectorAll('[data-subject]')) {
+                    let linkSubject = link.dataset.subject;
+
+                    link.classList.toggle('hidden',
+                    !(subject === 'View All' || subject === linkSubject));
+                }
+            }
         });
     }
 
