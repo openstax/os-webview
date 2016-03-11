@@ -23,8 +23,10 @@ export default class AdoptionForm extends BaseView {
         }
     }
 
-    @on('submit form')
     failIfInvalid(event) {
+        for (let widget of this.selectWidgets) {
+            widget.doValidChecks();
+        }
         let invalid = this.el.querySelectorAll('.invalid');
 
         if (invalid.length > 0) {
@@ -34,13 +36,25 @@ export default class AdoptionForm extends BaseView {
 
     onRender() {
         this.el.classList.add('adoption-form');
+        this.selectWidgets = [];
         for (let ms of this.el.querySelectorAll('select[multiple]')) {
-            new TagMultiSelect().replace(ms);
+            let widget = new TagMultiSelect();
+
+            widget.replace(ms);
+            this.selectWidgets.push(widget);
         }
         for (let ss of this.el.querySelectorAll('select:not([multiple])')) {
-            new SingleSelect().replace(ss);
+            let widget = new SingleSelect();
+
+            widget.replace(ss);
+            this.selectWidgets.push(widget);
         }
         salesforceModel.prefill(this.el);
+        this.el.querySelector('[type=submit]').addEventListener('click', this.failIfInvalid.bind(this));
+    }
+
+    onBeforeClose() {
+        this.el.querySelector('[type=submit]').removeEventListener('click', this.failIfInvalid.bind(this));
     }
 
 }

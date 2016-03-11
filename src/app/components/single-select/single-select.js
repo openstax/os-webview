@@ -40,20 +40,28 @@ export default class SingleSelect extends BaseView {
                     option.selected = false;
                 }
             });
-
-            let originalSelect = originalOption.parentNode;
-
-            if (originalSelect.required) {
-                let valid = false;
-
-                for (let opt of originalSelect.options) {
-                    if (opt.selected && opt.value) {
-                        valid = true;
-                    }
-                }
-                this.el.classList.toggle('invalid', !valid);
-            }
         }
+    }
+
+    checkValid(originalOption) {
+        let originalSelect = originalOption.parentNode;
+
+        if (originalSelect.required) {
+            let valid = false;
+
+            for (let opt of originalSelect.options) {
+                if (opt.selected && opt.value) {
+                    valid = true;
+                }
+            }
+            this.el.classList.toggle('invalid', !valid);
+        }
+    }
+
+    doValidChecks() {
+        this.stateCollection.each((model) => {
+            this.checkValid(model.get('originalOption'));
+        });
     }
 
     replace(originalSelect) {

@@ -55,6 +55,12 @@ export default class TagMultiSelect extends BaseView {
         }
     }
 
+    doValidChecks() {
+        this.stateCollection.each((model) => {
+            this.checkValid(model.get('originalOption'));
+        });
+    }
+
     synchronizeModel(what) {
         let tagItem = what.get('tagItem'),
             listItem = what.get('listItem'),
@@ -89,7 +95,6 @@ export default class TagMultiSelect extends BaseView {
                 noneItem.set('selected', true);
             }
         }
-        this.checkValid(originalOpt);
     }
 
     replace(originalMs) {
