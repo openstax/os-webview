@@ -33,6 +33,17 @@ export default class NewAccountForm extends BaseView {
         }
     }
 
+    failIfInvalid(event) {
+        for (let widget of this.selectWidgets) {
+            widget.doValidChecks();
+        }
+        let invalid = this.el.querySelectorAll('.invalid');
+
+        if (invalid.length > 0) {
+            event.preventDefault();
+        }
+    }
+
     onRender() {
         this.facultySection = new FacultySection();
         this.el.classList.add('text-content', 'finish-profile');
@@ -47,11 +58,23 @@ export default class NewAccountForm extends BaseView {
             alert('Something went wrong. Cannot find your user information.');
             window.location.pathname = '/';
         });
+        this.selectWidgets = [];
         for (let ss of this.el.querySelectorAll('select:not([multiple])')) {
-            new SingleSelect().replace(ss);
+            let widget = new SingleSelect();
+
+            widget.replace(ss);
+            this.selectWidgets.push(widget);
         }
         for (let ms of this.el.querySelectorAll('select[multiple]')) {
-            new TagMultiSelect().replace(ms);
+            let widget = new TagMultiSelect();
+
+            widget.replace(ms);
+            this.selectWidgets.push(widget);
         }
+        this.el.querySelector('[type=submit]').addEventListener('click', this.failIfInvalid.bind(this));
+    }
+
+    onBeforeClose() {
+        this.el.querySelector('[type=submit]').removeEventListener('click', this.failIfInvalid.bind(this));
     }
 }
