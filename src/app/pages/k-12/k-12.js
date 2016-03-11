@@ -3,12 +3,14 @@ import {props} from '~/helpers/backbone/decorators';
 import appView from '~/components/shell/shell';
 import {template} from './k-12.hbs';
 import Bucket from '~/components/bucket/bucket';
+import Banner from './banner/banner';
 import Tutor from './tutor/tutor';
 import Boxes from './boxes/boxes';
 
 @props({
     template: template,
     regions: {
+        banner: '.banner',
         quotes: '.quote-buckets',
         buckets: '.buckets-section',
         tutor: '.tutor-banner',
@@ -33,6 +35,7 @@ export default class K12 extends BaseView {
             linkText: 'View Allies'
         }));
 
+        this.regions.banner.show(new Banner());
         this.regions.tutor.show(new Tutor());
         this.regions.boxes.show(new Boxes());
     }

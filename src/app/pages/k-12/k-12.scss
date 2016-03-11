@@ -4,12 +4,6 @@
 .k-12-page {
     flex: 1 0 auto;
 
-    .banner {
-        width: 100%;
-        height: 60rem;
-        background-color: color(deep-green);
-    }
-
     .quotes-buckets {
         background-color: lighten(color(neutral-lighter), 8%);
 
@@ -22,7 +16,11 @@
                 max-width: 97rem;
 
                 .image {
-                    background: color(blue);
+                    background-color: color(blue);
+                    background-image: url('/images/home/quotes/teacher.jpg');
+                    background-position: center center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
                     max-width: 40rem;
                 }
             }
