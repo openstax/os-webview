@@ -2,5 +2,7 @@
 <div class="text">
     <h2>{{name}}</h2>
     {{{blurb}}}
-    <a href="{{linkUrl}}">{{linkText}}</a>
+    {{#each bookLinks}}
+    <a href="{{url}}" data-subject="{{subject}}">{{title}}</a>
+    {{/each}}
 </div>

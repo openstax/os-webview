@@ -7,10 +7,11 @@ $text-black: rgba(0, 0, 0, 0.87);
 $text-black3: rgba(0, 0, 0, 0.54);
 
 .filter {
-    position: relative;
-    max-width: 70rem;
-    margin: 0 auto 4rem;
     color: color(gray);
+    height: 0;
+    margin: 0 auto 4rem;
+    max-width: 70rem;
+    position: relative;
     top: -2.5rem;
     z-index: 1;
 

@@ -17,7 +17,7 @@ let alliesData = {},
 alliesDataPromise = new PageModel().fetch({
     data: {
         type: 'books.Book',
-        fields: ['subject_name', 'book_allies']
+        fields: ['subject_name', 'title', 'book_allies']
     }
 }).then((data) => {
     let imageModel = new BaseModel();
@@ -26,16 +26,12 @@ alliesDataPromise = new PageModel().fetch({
         for (let ally of page.book_allies) {
             let name = ally.ally_heading;
 
-            /* The link is a book link; go to the top-level */
-            let siteLink = ally.book_link_url.replace(/(\.[^/]+)\/.*$/, '$1');
-
             if (!(name in alliesData)) {
                 alliesData[name] = {
                     name: ally.ally_heading,
                     blurb: ally.ally_short_description,
-                    linkUrl: siteLink,
-                    linkText: ally.book_link_text,
-                    subjects: []
+                    subjects: [],
+                    bookLinks: []
                 };
                 if (ally.ally_logo) {
                     logoPromises.push(
@@ -46,6 +42,11 @@ alliesDataPromise = new PageModel().fetch({
                 }
             }
             alliesData[name].subjects.push(page.subject_name);
+            alliesData[name].bookLinks.push({
+                title: page.title,
+                url: ally.book_link_url,
+                subject: page.subject_name
+            });
         }
     }
 });
@@ -65,12 +66,11 @@ export default class Subjects extends BaseView {
             selectedFilter: 'View All',
             selectedBook: null
         });
-        this.allyPromise = new PageModel({id: 6}).fetch();
         this.imageModel = new BaseModel();
     }
 
     onRender() {
-        this.el.classList.add('allies-page', 'text-content');
+        this.el.classList.add('allies-page');
         for (let button of filterButtons) {
             this.regions.filterButtons.append(new FilterButton(button, this.stateModel));
         }
