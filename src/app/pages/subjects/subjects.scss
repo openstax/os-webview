@@ -13,8 +13,8 @@
         flex: 1 100%;
     }
 
-    header {
-        margin: 6rem 0;
+    .container[data-manager="page-description"] {
+        margin: 6rem auto;
 
         @include desktop {
             text-align: center;
@@ -24,6 +24,7 @@
             font-size: 4rem;
             font-weight: 600;
             color: color(neutral-dark);
+            width: 100%;
         }
 
         p {

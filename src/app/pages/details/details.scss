@@ -268,16 +268,22 @@
     .authors {
         padding: 6rem 0;
 
-        @include desktop {
-            padding: 6rem 27.5rem 6rem 0;
+        .container {
+
+            @include desktop {
+                padding: 6rem 27.5rem 6rem 1.5rem;
+            }
         }
     }
 
     .errata {
         padding: 0 0 6rem;
 
-        @include desktop {
-            padding: 0 27.5rem 6rem 0;
+        .container {
+
+            @include desktop {
+                padding: 0 27.5rem 6rem 1.5rem;
+            }
         }
     }
 }

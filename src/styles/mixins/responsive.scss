@@ -23,14 +23,3 @@
         @content;
     }
 }
-
-@mixin tablet-up {
-
-    @include tablet {
-        @content;
-    }
-
-    @include desktop {
-        @content;
-    }
-}
