@@ -5,6 +5,7 @@ import Resource from './resource/resource';
 import {props} from '~/helpers/backbone/decorators';
 import {template} from './details.hbs';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
+import {template as strips} from '~/components/strips/strips.hbs';
 
 function dataToTemplateHelper(data) {
     let quotes = data.book_quotes[0],
@@ -37,7 +38,7 @@ function dataToTemplateHelper(data) {
 export default class Details extends BaseView {
     constructor() {
         super(...arguments);
-        this.templateHelpers = {};
+        this.templateHelpers = {strips};
     }
 
     onRender() {
