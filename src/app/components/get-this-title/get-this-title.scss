@@ -34,6 +34,7 @@
         font-size: 1.6rem;
         padding: 0.5rem 0;
         border-bottom: 0.1rem solid color(neutral-lighter);
+        display: block;
 
         &:hover {
             color: darken(color(cyan), 10%);
