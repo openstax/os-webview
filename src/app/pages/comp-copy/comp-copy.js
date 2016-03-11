@@ -4,7 +4,10 @@ import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './comp-copy.hbs';
 
 @props({
-    template: template
+    template: template,
+    templateHelpers: {
+        urlOrigin: window.location.origin
+    }
 })
 export default class CompCopyForm extends BaseView {
     @on('change #decision-date')

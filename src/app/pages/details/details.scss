@@ -34,10 +34,6 @@ $text-secondary: rgba(color(neutral-darkest), 0.7);
     .links > a {
         display: block;
         margin-top: 1rem;
-
-        &.go-to::after {
-            content: ' >';
-        }
     }
 
     a,

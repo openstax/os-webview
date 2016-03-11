@@ -3,7 +3,10 @@ import {props} from '~/helpers/backbone/decorators';
 import {template} from './faculty-verification.hbs';
 
 @props({
-    template: template
+    template: template,
+    templateHelpers: {
+        urlOrigin: window.location.origin
+    }
 })
 export default class FacultyVerificationForm extends BaseView {
     onRender() {
