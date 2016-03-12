@@ -25,6 +25,7 @@ export default class SingleSelect extends BaseView {
 
     togglePulldown() {
         this.optionListEl.classList.toggle('hidden', ...arguments);
+        this.hasDropdownEl.classList.toggle('open', ...arguments);
     }
 
     synchronizeModel(what) {
@@ -91,6 +92,7 @@ export default class SingleSelect extends BaseView {
     onRender() {
         this.selectedButtonEl = this.el.querySelector('.selected-button');
         this.optionListEl = this.el.querySelector('.option-list');
+        this.hasDropdownEl = this.el.querySelector('.has-dropdown');
         this.el.classList.add('proxy-widget', 'single-select');
         this.stateCollection.each((model) => {
             let ssOption = new Option(model);

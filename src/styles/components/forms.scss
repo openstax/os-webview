@@ -171,11 +171,19 @@ form {
             &::after {
                 @include triangle(
                     $direction: bottom,
-                    $position: top 50% right 1.8rem,
+                    $position: top 2.4rem right 1.8rem,
                     $color: color(gray),
                     $size: 0.5rem
                 );
                 z-index: 0;
+                transition: All 0.3s ease-in-out;
+            }
+
+            &.open {
+                &::after {
+                    transform: rotate(180deg);
+                    transform-origin: center top;
+                }
             }
         }
 
