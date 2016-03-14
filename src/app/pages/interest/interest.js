@@ -23,12 +23,7 @@ export default class InterestForm extends BaseView {
     }
 
     failIfInvalid(event) {
-        for (let nativeInvalid of this.el.querySelectorAll('input:invalid')) {
-            nativeInvalid.classList.add('invalid');
-        }
-        for (let nativeValid of this.el.querySelectorAll('input:not(:invalid)')) {
-            nativeInvalid.classList.remove('invalid');
-        }
+        this.el.querySelector('form').classList.add('has-been-submitted');
         for (let widget of this.selectWidgets) {
             widget.doValidChecks();
         }

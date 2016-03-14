@@ -41,6 +41,7 @@ export default class SingleSelect extends BaseView {
                     option.selected = false;
                 }
             });
+            this.checkValid(originalOption);
         }
     }
 

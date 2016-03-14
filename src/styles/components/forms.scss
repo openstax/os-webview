@@ -47,17 +47,18 @@ form {
         border: 0;
     }
 
-//    &.invalid,
-//    input:invalid,
-//    select:invalid,
-//    .proxy-widget.invalid {
-//        border: 0.1rem solid color(danger);
-//    }
+    &.has-been-submitted {
+        input:invalid,
+        select:invalid,
+        .proxy-widget.invalid {
+            border: 0.1rem solid color(danger);
+        }
+    }
 
-//    input[required]::after {
-//        content: '*';
-//        position: absolute;
-//    }
+    [required]::after {
+        content: '*';
+        position: absolute;
+    }
 
     label {
         display: block;

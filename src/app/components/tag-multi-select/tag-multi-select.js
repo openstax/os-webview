@@ -96,6 +96,7 @@ export default class TagMultiSelect extends BaseView {
                 noneItem.set('selected', true);
             }
         }
+        this.checkValid(originalOpt);
     }
 
     replace(originalMs) {
