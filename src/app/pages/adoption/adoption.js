@@ -24,6 +24,12 @@ export default class AdoptionForm extends BaseView {
     }
 
     failIfInvalid(event) {
+        for (let nativeInvalid of this.el.querySelectorAll('input:invalid')) {
+            nativeInvalid.classList.add('invalid');
+        }
+        for (let nativeValid of this.el.querySelectorAll('input:not(:invalid)')) {
+            nativeInvalid.classList.remove('invalid');
+        }
         for (let widget of this.selectWidgets) {
             widget.doValidChecks();
         }
