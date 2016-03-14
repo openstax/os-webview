@@ -1,103 +1,119 @@
+<div class="text-content subhead">
 <h1>OpenStax College Interest Form</h1>
-<p>
-    Thank you for your interest in OpenStax College textbooks! Please complete the form below so that we may provide
-    you with the information you need to start saving your students thousands of dollars each semester.
-</p>
-<form accept-charset="UTF-8" action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8"
- class="new_adoption_interest" method="post">
-    <p>Have you already adopted an OpenStax College textbook? <a href="/adoption">Let us know!</a></p>
-    <h2>Contact Information</h2>
-    <div>
-        <input type=hidden name="oid" value="00DU0000000Kwch">
-        <input type=hidden name="retURL" value="{{urlOrigin}}/interest-confirmation">
-        <input type=hidden name="lead_source" value="OS Interest Form">
-        <input type=hidden name="00NU00000055spw" value="High Interest in Adopting">
-    </div>
-    <div class="labeled-inputs two-column">
-        <fieldset class="column">
-            <label>
-                <span>First name</span>
-                <input name="first_name" type="text" required />
-            </label>
-            <label>
-                <span>Last name</span>
-                <input name="last_name" type="text" required />
-            </label>
-            <label>
-                <span>School name</span>
-                <input name="company" type="text" required />
-            </label>
-        </fieldset>
-        <fieldset class="column">
-            <label>
-                <span>School url</span>
-                <input name="URL" type="text" required />
-            </label>
-            <label>
-                <span>Email address</span>
-                <input name="email" type="email"
-                 pattern="[^@]+@([^@\.]+\.)+[^@\.]+" required />
-            </label>
-            <label>
-                <span>Phone number</span>
-                <input name="phone" type="text" required />
-            </label>
-        </fieldset>
-    </div>
-    <h2>Textbook Interest</h2>
-    <p>OpenStax College textbook(s) are you interested in adopting (select at least one):</p>
-    <fieldset>
-        <select name="00NU00000053nzR" multiple required>
-            {{#each titles}}
-            <option value="{{this}}">{{this}}</option>
-            {{/each}}
-        </select>
-    </fieldset>
-    <fieldset class="labeled-inputs">
-        <label>
-            <span>Students per semester</span>
-            <input name="00NU00000052VId" type="number" required>
-        </label>
-    </fieldset>
-    <p class="question">
-        Which partners may we share your information with so they may contact you about
-        additional resources supporting the OpenStax College books?
+    <p>
+        Thank you for your interest in OpenStax College textbooks! Please complete the form below so that we may provide
+        you with the information you need to start saving your students thousands of dollars each semester.
     </p>
-    <fieldset class="labeled-buttons">
-        <select name="00NU00000055spm" multiple>
-            <option value="Online homework providers">
-                Online homework providers
-            </option>
-            <option value="Courseware providers">
-                Courseware providers
-            </option>
-            <option value="Print custom editions">
-                Print custom editions
-            </option>
-        </select>
-    </fieldset>
-    <p class="question">How did you hear about OpenStax College? (select at least one)</p>
-    <fieldset class="labeled-buttons require-one">
-        <select name="00NU00000055spr" multiple required>
-            <option value="Web search">Web search</option>
-            <option value="Colleague">Colleague</option>
-            <option value="Conference">Conference</option>
-            <option value="Email">Email</option>
-            <option value="Facebook">Facebook</option>
-            <option value="Twitter">Twitter</option>
-            <option value="Webinar">Webinar</option>
-            <option value="Partner organization">Partner organization</option>
-        </select>
-        <label>
-            Other:
-            <input  name="00NU00000055spr" type="text">
-        </label>
-    </fieldset>
-    <div>
-        <label>
-            <p>Any feedback you'd like to share with us?</p>
-            <textarea cols="50" name="00NU00000056Rls" rows="6"></textarea>
-        </label>
+    <p>Have you already adopted an OpenStax College textbook? <a href="/adoption">Let us know!</a></p>
+</div>
+
+<form accept-charset="UTF-8" action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8"
+ class="new_adoption_interest form" method="post">
+    <div class="text-content">
+        <div>
+            <input type=hidden name="oid" value="00DU0000000Kwch">
+            <input type=hidden name="retURL" value="{{urlOrigin}}/interest-confirmation">
+            <input type=hidden name="lead_source" value="OS Interest Form">
+            <input type=hidden name="00NU00000055spw" value="High Interest in Adopting">
+        </div>
+        <div class="labeled-inputs row">
+            <div class="col">
+                <label>
+                    <span>First name</span>
+                    <input name="first_name" type="text" required />
+                </label>
+                <label>
+                    <span>Last name</span>
+                    <input name="last_name" type="text" required />
+                </label>
+                <label>
+                    <span>School name</span>
+                    <input name="company" type="text" required />
+                </label>
+            </div>
+
+            <div class="col">
+                <label>
+                    <span>School url</span>
+                    <input name="URL" type="text" required />
+                </label>
+                <label>
+                    <span>Email address</span>
+                    <input name="email" type="email"
+                     pattern="[^@]+@([^@\.]+\.)+[^@\.]+" required />
+                </label>
+                <label>
+                    <span>Phone number</span>
+                    <input name="phone" type="text" required />
+                </label>
+            </div>
+        </div>
     </div>
-    <input name="commit" type="submit" value="Submit" role="button" aria-disabled="false" />
+
+    <div class="wrapper">
+        {{{strips}}}
+        <div class="text-content labeled-inputs row book-info">
+
+            <div class="col">
+                <label>OpenStax College textbook(s) are you interested in adopting (select at least one):
+                    <select name="00NU00000053nzR" multiple required>
+                        {{#each titles}}
+                        <option value="{{this}}">{{this}}</option>
+                        {{/each}}
+                    </select>
+                </label>
+
+                <label>
+                    <span>Students per semester</span>
+                    <input name="00NU00000052VId" type="number" required>
+                </label>
+
+                <label class="question">
+                    Which partners may we share your information with so they may contact you about
+                    additional resources supporting the OpenStax College books?
+                    <select name="00NU00000055spm" multiple>
+                        <option value="Online homework providers">
+                            Online homework providers
+                        </option>
+                        <option value="Courseware providers">
+                            Courseware providers
+                        </option>
+                        <option value="Print custom editions">
+                            Print custom editions
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="col">
+
+                <label class="question">How did you hear about OpenStax College? (select at least one)
+                    <select name="00NU00000055spr" multiple required>
+                        <option value="Web search">Web search</option>
+                        <option value="Colleague">Colleague</option>
+                        <option value="Conference">Conference</option>
+                        <option value="Email">Email</option>
+                        <option value="Facebook">Facebook</option>
+                        <option value="Twitter">Twitter</option>
+                        <option value="Webinar">Webinar</option>
+                        <option value="Partner organization">Partner organization</option>
+                    </select>
+                </label>
+
+                <label>
+                    Other:
+                    <input  name="00NU00000055spr" type="text">
+                </label>
+
+                <label>
+                    Any feedback you'd like to share with us?
+                    <textarea cols="50" name="00NU00000056Rls" rows="4"></textarea>
+                </label>
+
+                <div class="cta">
+                    <input name="commit" class="btn" type="submit" value="Submit" role="button" aria-disabled="false" />
+                </div>
+            </div>
+        </div>
+    </div>
 </form>
