@@ -22,11 +22,31 @@ export default class InterestForm extends BaseView {
         }
     }
 
+    failIfInvalid(event) {
+        for (let widget of this.selectWidgets) {
+            widget.doValidChecks();
+        }
+        let invalid = this.el.querySelectorAll('.invalid');
+
+        if (invalid.length > 0) {
+            event.preventDefault();
+        }
+    }
+
     onRender() {
         this.el.classList.add('text-content');
         salesforceModel.prefill(this.el);
+        this.selectWidgets = [];
         for (let ms of this.el.querySelectorAll('select[multiple]')) {
-            new TagMultiSelect().replace(ms);
+            let widget = new TagMultiSelect();
+
+            widget.replace(ms);
+            this.selectWidgets.push(widget);
         }
+        this.el.querySelector('[type=submit]').addEventListener('click', this.failIfInvalid.bind(this));
+    }
+
+    onBeforeClose() {
+        this.el.querySelector('[type=submit]').removeEventListener('click', this.failIfInvalid.bind(this));
     }
 }
