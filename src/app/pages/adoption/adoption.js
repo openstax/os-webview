@@ -24,6 +24,7 @@ export default class AdoptionForm extends BaseView {
     }
 
     failIfInvalid(event) {
+        this.el.querySelector('form').classList.add('has-been-submitted');
         for (let widget of this.selectWidgets) {
             widget.doValidChecks();
         }
