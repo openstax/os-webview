@@ -35,13 +35,49 @@ function dataToTemplateHelper(data) {
         studentResources: '#student-resources'
     }
 })
+
 export default class Details extends BaseView {
     constructor() {
         super(...arguments);
         this.templateHelpers = {strips};
     }
 
+    getPosition(element) {
+        let xPosition = 0;
+        let yPosition = 0;
+
+        /* eslint-disable no-param-reassign */
+
+        while (element) {
+            xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
+            yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
+            element = element.offsetParent;
+        }
+        /* eslint-enable no-param-reassign */
+
+        return { x: xPosition, y: yPosition };
+    }
+
+    toggleFixedClass() {
+        let floatingMenu = document.querySelector('.floating-menu>.box');
+        let floatingMenuHeight = floatingMenu.offsetHeight;
+        let floatingMenuPosition = this.getPosition(floatingMenu);
+        let footer = document.getElementById('footer');
+        let footerPosition = this.getPosition(footer);
+        let menuOffset = footerPosition.y - (floatingMenuHeight+floatingMenuPosition.y+50);
+
+        if (!(window.pageYOffset < menuOffset)) {
+            floatingMenu.classList.remove('fixed');
+        } else {
+            floatingMenu.classList.add('fixed');
+        }
+    }
+
     onRender() {
+        this.toggleFixedClass();
+
+        window.addEventListener('scroll', this.toggleFixedClass.bind(this), true);
+
         let slug = decodeURIComponent(window.location.search.substr(1)),
             pageModel = new PageModel(),
             insertResources = (resources, regionName) => {
@@ -84,5 +120,9 @@ export default class Details extends BaseView {
                 insertResources(detailData.book_student_resources, 'studentResources');
             });
         });
+    }
+
+    onBeforeClose() {
+        window.removeEventListener('scroll', this.toggleFixedClass.bind(this), true);
     }
 }
