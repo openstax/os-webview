@@ -4,12 +4,14 @@ import TagMultiSelect from '~/components/tag-multi-select/tag-multi-select';
 import bookTitles from '~/helpers/book-titles';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './interest.hbs';
+import {template as strips} from '~/components/strips/strips.hbs';
 
 @props({
     template: template,
     templateHelpers: {
         titles: bookTitles,
-        urlOrigin: window.location.origin
+        urlOrigin: window.location.origin,
+        strips
     }
 })
 export default class InterestForm extends BaseView {

@@ -137,6 +137,16 @@ a {
     h1 {
         line-height: 1;
     }
+
+    a {
+        color: color(cyan);
+
+        &:hover,
+        &:focus {
+            color: rgba(color(cyan), 0.5);
+            }
+    }
+
 }
 
 @import 'components/bucket';
