@@ -1,0 +1,8 @@
+<span class="remover">&times;</span>
+<h2>Place an Order</h2>
+<a href="{{bookstore.link}}" class="btn">Bookstore Orders</a>
+<p>Bookstores place orders through NACSORP.  Need an account?</p>
+{{#if amazon.link}}
+<a href="{{amazon.link}}" class="btn">Individual Orders</a>
+<p>Available for {{amazon.price}} from seller "OpenStax College" on Amazon</p>
+{{/if}}

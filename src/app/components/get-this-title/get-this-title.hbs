@@ -3,6 +3,8 @@
     @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
 </style>
 <div class="get-this-title">
+    <div class="submenu">
+    </div>
     <div class="options">
         {{#if webviewLink}}
             <div class="option">
@@ -12,30 +14,42 @@
                 </a>
             </div>
         {{/if}}
+        {{#if conceptCoachLink}}
+            <div class="option">
+                <a href="{{conceptCoachLink}}">
+                    <span class="fa fa-mortar-board"></span>
+                    View Concept Coach version online
+                </a>
+            </div>
+        {{/if}}
         {{#if pdfLink}}
             <div class="option">
-                <a href="{{pdfLink}}">
+                <a href="{{pdfLink}}" class="show-pdf-submenu">
                     <span class="fa fa-cloud-download"></span>
                     Download a PDF
                 </a>
             </div>
         {{/if}}
-        {{#if printCopy}}
+        {{#if printLink}}
             <div class="option">
-                <span class="fa fa-book"></span>
-                Order a print copy
+                <a href="{{printLink}}" class="show-print-submenu">
+                    <span class="fa fa-book"></span>
+                    Order a print copy
+                </a>
             </div>
         {{/if}}
-        {{#if daisyLink}}
+        {{#if bookshareLink}}
         <div class="option">
-            <span class="fa fa-wheelchair"></span>
-            DAISY or BRF
+            <a href="{{bookshareLink}}">
+                <span class="fa fa-volume-up"></span>
+                Bookshare
+            </a>
         </div>
         {{/if}}
         {{#if ibookLink}}
             <div class="option">
                 <a href="{{ibookLink}}">
-                    <span class="fa fa-bookmark-o"></span>
+                    <span class="fa fa-tablet"></span>
                     iBook
                 </a>
             </div>
