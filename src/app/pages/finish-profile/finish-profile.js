@@ -46,7 +46,7 @@ export default class NewAccountForm extends BaseView {
 
     onRender() {
         this.facultySection = new FacultySection();
-        this.el.classList.add('text-content', 'finish-profile');
+        this.el.classList.add('finish-profile');
         new UserModel().fetch().then((data) => {
             let userInfo = data[0];
 
