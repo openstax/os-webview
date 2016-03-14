@@ -29,7 +29,7 @@ export default class CompCopyForm extends BaseView {
     }
 
     onRender() {
-        this.el.classList.add('text-content');
+        this.el.classList.add('comp-copy-form');
         salesforceModel.prefill(this.el);
     }
 }

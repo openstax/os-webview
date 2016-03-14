@@ -10,6 +10,6 @@ import {template} from './faculty-verification.hbs';
 })
 export default class FacultyVerificationForm extends BaseView {
     onRender() {
-        this.el.classList.add('text-content');
+        this.el.classList.add('faculty-verification-form');
     }
 }

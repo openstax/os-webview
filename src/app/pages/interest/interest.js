@@ -35,7 +35,7 @@ export default class InterestForm extends BaseView {
     }
 
     onRender() {
-        this.el.classList.add('text-content');
+        this.el.classList.add('interest-form');
         salesforceModel.prefill(this.el);
         this.selectWidgets = [];
         for (let ms of this.el.querySelectorAll('select[multiple]')) {

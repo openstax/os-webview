@@ -125,7 +125,6 @@ export default class AdoptionConfirmation extends BaseView {
 
     onRender() {
         this.el.classList.add('confirmation-page');
-        this.el.classList.add('text-content');
         hookUpCalculator(this.el.querySelector('#savings-calculator tbody'));
         hookUpDonationBox(document.getElementById('support-box'));
     }

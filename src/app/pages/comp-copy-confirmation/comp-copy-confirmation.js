@@ -8,7 +8,7 @@ import {template} from './comp-copy-confirmation.hbs';
 export default class InterestConfirmation extends BaseView {
 
     onRender() {
-        this.el.classList.add('confirmation-page', 'text-content');
+        this.el.classList.add('confirmation-page');
     }
 
 }
