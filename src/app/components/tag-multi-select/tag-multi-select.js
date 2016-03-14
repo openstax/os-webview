@@ -38,6 +38,7 @@ export default class TagMultiSelect extends BaseView {
         let optionList = this.el.querySelector('.option-list');
 
         optionList.classList.toggle('hidden', ...arguments);
+        this.hasDropdownEl.classList.toggle('open', ...arguments);
     }
 
     constructor() {
@@ -124,6 +125,7 @@ export default class TagMultiSelect extends BaseView {
 
     onRender() {
         this.el.classList.add('proxy-widget', 'tag-multi-select');
+        this.hasDropdownEl = this.el.querySelector('.has-dropdown');
         this.stateCollection.each((model) => {
             let msOption = new Option(model),
                 tag = new Tag(model);
