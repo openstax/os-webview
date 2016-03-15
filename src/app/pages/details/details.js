@@ -45,15 +45,13 @@ export default class Details extends BaseView {
     getPosition(element) {
         let xPosition = 0;
         let yPosition = 0;
+        let thisEl = element;
 
-        /* eslint-disable no-param-reassign */
-
-        while (element) {
-            xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
-            yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
-            element = element.offsetParent;
+        while (thisEl) {
+            xPosition += (thisEl.offsetLeft - thisEl.scrollLeft + thisEl.clientLeft);
+            yPosition += (thisEl.offsetTop - thisEl.scrollTop + thisEl.clientTop);
+            thisEl = thisEl.offsetParent;
         }
-        /* eslint-enable no-param-reassign */
 
         return { x: xPosition, y: yPosition };
     }
@@ -66,7 +64,7 @@ export default class Details extends BaseView {
         let footerPosition = this.getPosition(footer);
         let menuOffset = footerPosition.y - (floatingMenuHeight+floatingMenuPosition.y+50);
 
-        if (!(window.pageYOffset < menuOffset)) {
+        if ((window.pageYOffset > menuOffset)) {
             floatingMenu.classList.remove('fixed');
         } else {
             floatingMenu.classList.add('fixed');
