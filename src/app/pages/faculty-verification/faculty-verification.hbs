@@ -1,57 +1,77 @@
 <style scoped>@import url(/app/pages/faculty-verification/faculty-verification.css);</style>
-<h1>Instructor Verification</h1>
-<div class="faculty-verification">
-    <p class="subhead">
+
+<div class="text-content subhead">
+    <h1>Instructor Verification</h1>
+    <p>
         A verified instructor account at OpenStax gives you access to all
         instructor-only resources for our books, like test banks, answer
         guides, and more. We manually verify all instructor account requests,
         so you’ll hear back in three to four business days about your
         approval. Fill out and the information below to get started!
     </p>
-    <div>
-        <form accept-charset="UTF-8"
-         action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="post">
-            <div>
-                <input name="utf8" type="hidden" value="✓" />
-                <!-- This is our organization id -->
-                <input type=hidden name="oid" value="00DU0000000Kwch">
-                <input type=hidden name="retURL" value="{{urlOrigin}}/faculty-confirmation">
-                <input type=hidden name="lead_source" value="OSC Faculty">
-            </div>
-            <fieldset class="labeled-inputs">
+</div>
+
+<form accept-charset="UTF-8" class="form"
+ action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="post">
+    <div class="text-content">
+        <div>
+            <input name="utf8" type="hidden" value="✓" />
+            <!-- This is our organization id -->
+            <input type=hidden name="oid" value="00DU0000000Kwch">
+            <input type=hidden name="retURL" value="{{urlOrigin}}/faculty-confirmation">
+            <input type=hidden name="lead_source" value="OSC Faculty">
+        </div>
+
+        <div class="labeled-inputs row">
+            <div class="col">
                 <label>
-                    <span>First name</span>
+                    First name
                     <input name="first_name" type="text" required />
                 </label>
                 <label>
-                    <span>Last name</span>
+                    Last name
                     <input name="last_name" type="text" required />
                 </label>
+            </div>
+
+            <div class="col">
                 <label>
-                    <span>School</span>
+                    School
                     <input name="company" type="text" required />
                 </label>
                 <label>
-                    <span>Phone</span>
+                    Phone
                     <input name="phone" type="text" required />
                 </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper">
+        {{{strips}}}
+        <div class="text-content labeled-inputs row book-info">
+            <div class="col">
                 <label>
-                    <span>College website URL</span>
+                    College website URL
                     <input name="URL" type="text" required />
                 </label>
                 <label>
-                    <span>Official institutional email address</span>
+                    Official institutional email address
                     <input name="email" pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text" required />
-                    <p class="note">A verification email will be sent to this address</p>
+                    <small>A verification email will be sent to this address</small>
                 </label>
+            </div>
+
+            <div class="col">
                 <label>
-                    <span>Number of students this semester</span>
+                    Number of students this semester
                     <input name="00NU00000052VId" type="number" min="1" required />
                 </label>
-            </fieldset>
-            <div>
-                <input type="submit" value="Submit" role="button" />
+                <div class="cta">
+                    <input type="submit" value="Submit" role="button" class="btn"/>
+                </div>
             </div>
-        </form>
+        </div>
     </div>
-</div>
+</form>
+

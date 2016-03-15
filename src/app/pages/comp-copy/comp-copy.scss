@@ -1,6 +1,8 @@
 @import 'variables';
+@import 'mixins';
 
 .comp-copy-form {
+
     .cta {
         @media (min-width: 641px) {
             margin-top: 12rem;

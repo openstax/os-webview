@@ -39,6 +39,14 @@ form {
         text-decoration: none;
     }
 
+    small {
+        font-size: 1.1rem;
+        color: rgba(color(neutral-light), 0.5);
+        font-style: italic;
+        font-weight: 300;
+        padding-left: 0.313rem;
+    }
+
     .subhead {
         font-size: 1.7rem;
         font-weight: 400;
