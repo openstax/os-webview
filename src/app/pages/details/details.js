@@ -42,32 +42,18 @@ export default class Details extends BaseView {
         this.templateHelpers = {strips};
     }
 
-    getPosition(element) {
-        let xPosition = 0;
-        let yPosition = 0;
-        let thisEl = element;
-
-        while (thisEl) {
-            xPosition += (thisEl.offsetLeft - thisEl.scrollLeft + thisEl.clientLeft);
-            yPosition += (thisEl.offsetTop - thisEl.scrollTop + thisEl.clientTop);
-            thisEl = thisEl.offsetParent;
-        }
-
-        return { x: xPosition, y: yPosition };
-    }
-
     toggleFixedClass() {
         let floatingMenu = document.querySelector('.floating-menu>.box');
-        let floatingMenuHeight = floatingMenu.offsetHeight;
-        let floatingMenuPosition = this.getPosition(floatingMenu);
         let footer = document.getElementById('footer');
-        let footerPosition = this.getPosition(footer);
-        let menuOffset = footerPosition.y - (floatingMenuHeight+floatingMenuPosition.y+50);
+        let footerPosition = footer.offsetTop;
+        let floatingMenuHeight = floatingMenu.offsetHeight+200;
+        let menuOffset = footerPosition - floatingMenuHeight;
+        let menuTopPosition = (menuOffset-window.pageYOffset);
 
-        if ((window.pageYOffset > menuOffset)) {
-            floatingMenu.classList.remove('fixed');
+        if (window.pageYOffset > menuOffset) {
+            floatingMenu.setAttribute('style', `top: ${menuTopPosition}px`);
         } else {
-            floatingMenu.classList.add('fixed');
+            floatingMenu.removeAttribute('style');
         }
     }
 

@@ -88,22 +88,13 @@
             }
 
             .box {
-                opacity: 1;
-                transform: translate3d(0, 0, 0);
-                transition: opacity 0.2s, transform 0.2s linear;
-
                 @include desktop {
                     width: 25rem;
                     position: absolute;
+                    top: 0;
                     right: 0;
                     background-color: rgba(color(neutral-lightest), 0.95);
                     padding: 1.5rem;
-                }
-
-                &:not(.fixed) {
-                    opacity: 0;
-                    transform: translate3d(0, -150%, 0);
-
                 }
             }
 
