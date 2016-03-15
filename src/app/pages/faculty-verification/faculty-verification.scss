@@ -1,34 +1,10 @@
 @import 'variables';
 
-.faculty-verification {
-    > h1 {
-        flex: 1 100%;
-    }
+.faculty-verification-form {
 
-    .subhead {
-        color: rgba(color(neutral-darkest), 0.87);
-        font-weight: 400;
-        font-size: 1.7rem;
-        margin: 0 1rem;
-    }
-
-    img {
-        min-height: 20rem;
-        min-width: 15rem;
-    }
-
-    .note {
-        -webkit-margin-before: 0;
-        color: rgba(color(neutral-darkest), 0.56);
-        font-style: italic;
-        font-weight: 400;
-    }
-
-    [type="submit"] {
-        background-color: color(primary);
-        border: 0;
-        color: color(neutral-lightest);
-        font-size: 1.7rem;
-        padding: 1rem 2rem;
+    .cta {
+        @media (min-width: 641px) {
+            margin-top: 12rem;
+        }
     }
 }
