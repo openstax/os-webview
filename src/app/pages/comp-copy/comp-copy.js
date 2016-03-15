@@ -1,6 +1,5 @@
-import BaseView from '~/helpers/backbone/view';
+import ProxyWidgetView from '~/helpers/backbone/proxy-widget-view';
 import salesforceModel from '~/models/salesforce-model';
-import SingleSelect from '~/components/single-select/single-select';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './comp-copy.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
@@ -12,7 +11,7 @@ import {template as strips} from '~/components/strips/strips.hbs';
         strips
     }
 })
-export default class CompCopyForm extends BaseView {
+export default class CompCopyForm extends ProxyWidgetView {
     @on('change #decision-date')
     formatDate(e) {
         let value = e.target.value,
@@ -31,27 +30,9 @@ export default class CompCopyForm extends BaseView {
         }
     }
 
-    failIfInvalid(event) {
-        this.el.querySelector('form').classList.add('has-been-submitted');
-        for (let widget of this.selectWidgets) {
-            widget.doValidChecks();
-        }
-        let invalid = this.el.querySelectorAll('.invalid');
-
-        if (invalid.length > 0) {
-            event.preventDefault();
-        }
-    }
-
     onRender() {
         this.el.classList.add('comp-copy-form');
+        super.onRender();
         salesforceModel.prefill(this.el);
-        this.selectWidgets = [];
-        for (let ss of this.el.querySelectorAll('select:not([multiple])')) {
-            let widget = new SingleSelect();
-
-            widget.replace(ss);
-            this.selectWidgets.push(widget);
-        }
     }
 }
