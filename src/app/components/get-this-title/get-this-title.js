@@ -1,17 +1,73 @@
 import BaseView from '~/helpers/backbone/view';
-import {props} from '~/helpers/backbone/decorators';
+import BaseModel from '~/helpers/backbone/model';
+import PdfSubmenu from './pdf-submenu/pdf-submenu';
+import PrintSubmenu from './print-submenu/print-submenu';
+import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './get-this-title.hbs';
 
 @props({
-    template: template
+    template: template,
+    regions: {
+        submenu: '.submenu'
+    }
 })
 export default class GetThisTitle extends BaseView {
+    @on('click .show-pdf-submenu')
+    showPdfSubmenu(event) {
+        event.preventDefault();
+        this.stateModel.set('currentSubmenu', 'pdf');
+    }
+
+    @on('click .show-print-submenu')
+    showPrintSubment(event) {
+        event.preventDefault();
+        this.stateModel.set('currentSubmenu', 'print');
+    }
+
     constructor(data) {
         super();
         this.templateHelpers = {
-            pdfLink: data.high_resolution_pdf_url || data.low_resolution_pdf_url,
             ibookLink: data.ibook_link,
-            webviewLink: data.webview_link
+            webviewLink: data.webview_link,
+            conceptCoachLink: data.concept_coach_link,
+            bookshareLink: data.bookshare_link,
+            pdfLink: (data.high_resolution_pdf_url || data.low_resolution_pdf_url),
+            printLink: (data.amazon_link || data.bookstore_link)
         };
+        this.stateModel = new BaseModel({
+            currentSubmenu: null
+        });
+        this.pdfSubmenu = new PdfSubmenu({
+            hiRes: data.high_resolution_pdf_url,
+            loRes: data.low_resolution_pdf_url
+        }, this.stateModel);
+        this.printSubmenu = new PrintSubmenu({
+            amazon: {
+                link: data.amazon_link,
+                price: data.amazon_price,
+                blurb: data.amazon_blurb
+            },
+            bookstore: {
+                link: data.bookstore_link,
+                blurb: data.bookstore_blurb
+            }
+        }, this.stateModel);
+    }
+
+    onRender() {
+        this.regions.submenu.append(this.pdfSubmenu);
+        this.regions.submenu.append(this.printSubmenu);
+        this.stateModel.on('change:currentSubmenu', (what) => {
+            let newValue = what.changed.currentSubmenu,
+                optionsDiv = this.el.querySelector('.options');
+
+            if (newValue) {
+                this.regions.submenu.el.classList.add(newValue);
+                optionsDiv.classList.add('hidden');
+            } else {
+                this.regions.submenu.el.classList.remove(this.stateModel.previous('currentSubmenu'));
+                optionsDiv.classList.remove('hidden');
+            }
+        });
     }
 }
