@@ -1,93 +1,105 @@
 <style scoped>
     @import url(/app/pages/adoption-confirmation/adoption-confirmation.css);
 </style>
-<h1>Thank you for adopting OpenStax!</h1>
-<p class="subhead">
-    Our free digital textbooks and integrated resources are yours to use. You
-    are joining thousands of educators in providing greater access to quality
-    learning resources for your students.
-</p>
-<p>
-    Have you adopted another OpenStax book?<br />
-    <a class="go-to" href="/adoption">Let us know</a>
-</p>
-<p>
-    <a class="go-to" href="/subjects">Go back to our books</a>
-</p>
-<div>
-    <p>
-        Use the calculator below to find out how much money you will save your
-        students over the next three years.
-    </p>
-    <table id="savings-calculator">
-        <thead>
-            <tr>
-                <th></th>
-                <th>OpenStax Prices</th>
-                <th>Traditional Prices</th>
-                <th>Number of Students</th>
-                <th>Savings Over Three Years</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th>E-book Only</th>
-                <td>$0.00</td>
-                <td>$<input type="number" value="100.00" /></td>
-                <td><input id="student-count" type="number" value="1000" /></td>
-                <td class="savings"></td>
-            </tr>
-            <tr>
-                <th>Printed Text Only</th>
-                <td>$<input type="number" value="41.00" /></td>
-                <td>$<input type="number" value="220.00"/></td>
-                <td>1000</td>
-                <td class="savings footnote"></td>
-            </tr>
-            <tr>
-                <th>Printed Text + Online Resources</th>
-                <td>$<input type="number" value="91.00" /></td>
-                <td>$<input type="number" value="245.00" /></td>
-                <td>1000</td>
-                <td class="savings"></td>
-            </tr>
-            <tr>
-                <th>E-book + Online Resources</th>
-                <td>$<input type="number" value="50.00" /></td>
-                <td>$<input type="number" value="145.00" /></td>
-                <td>1000</td>
-                <td class="savings"></td>
-            </tr>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="5">
-                    <p>
-                        Use as a guide; price varies widely by source and local markets.
-                        OpenStax College printed cost based on on-demand printing of
-                        <i>College Physics</i>
-                    </p>
-                    <p>
-                        <sup>*</sup> Assumes students will be able to purchase
-                        used copies, 10% used in year 1, 50% in year2, 75% in year 3.
-                    </p>
-                </td>
-            </tr>
-        </tfoot>
-    </table>
-    {{!--
-    <div id="support-box" class="support-box">
-        <h2>Support OpenStax College!</h2>
-        <form>
-            <div class="slider-with-ends">
-                <span>$10</span><input type="range" name="points" min="0" max="12" value="0"><span>$10,000</span>
-                <span class="amount-box">$<input type="number" min="10" step="5" /></span>
-            </div>
-            <p class="amount-message"></p>
-            <div class="cta">
-                <input type="submit" value="Donate Now!" />
-            </div>
-        </form>
+
+<div class="page-intro">
+    <div class="text-content subhead">
+        <h1>Thank you for adopting OpenStax!</h1>
+        <p>
+            Our free digital textbooks and integrated resources are yours to use. You
+            are joining thousands of educators in providing greater access to quality
+            learning resources for your students.
+        </p>
+        <p class="blurb-calculator">
+            Use the calculator below to find out how much money you will save your
+            students over the next three years.
+        </p>
+        <a href="#savings-calculator" class="caret"></a>
     </div>
-    --}}
+</div>
+
+<div class="wrapper">
+    {{{strips}}}
+    <div class="text-content labeled-inputs row book-info">
+        <table id="savings-calculator">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>OpenStax Prices</th>
+                    <th>Traditional Prices</th>
+                    <th>Number of Students</th>
+                    <th>Savings Over Three Years</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>E-book Only</th>
+                    <td>$0.00</td>
+                    <td>$<input type="number" value="100.00" /></td>
+                    <td><input id="student-count" type="number" value="1000" /></td>
+                    <td class="savings"></td>
+                </tr>
+                <tr>
+                    <th>Printed Text Only</th>
+                    <td>$<input type="number" value="41.00" /></td>
+                    <td>$<input type="number" value="220.00"/></td>
+                    <td>1000</td>
+                    <td class="savings footnote"></td>
+                </tr>
+                <tr>
+                    <th>Printed Text + Online Resources</th>
+                    <td>$<input type="number" value="91.00" /></td>
+                    <td>$<input type="number" value="245.00" /></td>
+                    <td>1000</td>
+                    <td class="savings"></td>
+                </tr>
+                <tr>
+                    <th>E-book + Online Resources</th>
+                    <td>$<input type="number" value="50.00" /></td>
+                    <td>$<input type="number" value="145.00" /></td>
+                    <td>1000</td>
+                    <td class="savings"></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">
+                        <p>
+                            Use as a guide; price varies widely by source and local markets.
+                            OpenStax College printed cost based on on-demand printing of
+                            <i>College Physics</i>
+                        </p>
+                        <p>
+                            <sup>*</sup> Assumes students will be able to purchase
+                            used copies, 10% used in year 1, 50% in year2, 75% in year 3.
+                        </p>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        {{!--
+        <div id="support-box" class="support-box">
+            <h2>Support OpenStax College!</h2>
+            <form>
+                <div class="slider-with-ends">
+                    <span>$10</span><input type="range" name="points" min="0" max="12" value="0"><span>$10,000</span>
+                    <span class="amount-box">$<input type="number" min="10" step="5" /></span>
+                </div>
+                <p class="amount-message"></p>
+                <div class="cta">
+                    <input type="submit" value="Donate Now!" />
+                </div>
+            </form>
+        </div>
+        --}}
+
+        <div class="text-content add-another">
+           <h2>
+                Have you adopted another OpenStax book?<br />
+                <small>Please, let us know</small>
+            </h2>
+            <a href="/adoption" title="Add another book" class="btn">Add another book</a>
+            <a href="/subjects" title="Go back to our books" class="btn btn-secondary">Go back to our books</a>
+        </div>
+    </div>
 </div>

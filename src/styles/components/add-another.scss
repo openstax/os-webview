@@ -1,0 +1,34 @@
+@import 'variables';
+@import 'mixins';
+
+.add-another {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 8rem 0;
+    text-align: center;
+
+    h2 {
+        font-size: 2.4rem;
+
+        small {
+            padding-top: 3rem;
+            font-size: 1.6rem;
+            font-weight: normal;
+            color: color(neutral-light);
+            letter-spacing: normal;
+        }
+    }
+
+    .btn {
+        flex: 1 1 auto;
+        margin: 1rem auto 0;
+        padding: 1.5rem 2rem;
+        background-color: color(orange);
+        color: white;
+        min-width: 25rem;
+
+        &:last-child {
+            background-color: color(cyan);
+        }
+    }
+}

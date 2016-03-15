@@ -1,0 +1,45 @@
+@import 'variables';
+@import 'mixins';
+
+.page-intro {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: color(danger);
+    justify-content: center;
+
+    h1 {
+        color: color(orange);
+    }
+
+    p {
+        color: white;
+
+        &.blurb-calculator {
+            margin: 0 auto;
+            padding-top: 5rem;
+            max-width: 48rem;
+            color: color(orange);
+        }
+    }
+
+    a {
+
+        &.caret {
+            margin-top: 1rem;
+            position: relative;
+            display: inline-block;
+            width: 2rem;
+            height: 2rem;
+
+            &::after {
+                @include triangle(
+                    $direction: bottom,
+                    $position: top 0 left 0,
+                    $color: color(orange),
+                    $size: 0.6rem
+                );
+            }
+        }
+    }
+
+}
