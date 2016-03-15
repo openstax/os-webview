@@ -1,6 +1,7 @@
 import BaseView from '~/helpers/backbone/view';
 import {props} from '~/helpers/backbone/decorators';
 import {template} from './adoption-confirmation.hbs';
+import {template as strips} from '~/components/strips/strips.hbs';
 
 function hookUpCalculator(tableBody) {
     let studentCountEl = tableBody.querySelector('#student-count'),
@@ -119,7 +120,10 @@ function hookUpDonationBox(el) {
 }
 
 @props({
-    template: template
+    template: template,
+    templateHelpers: {
+        strips
+    }
 })
 export default class AdoptionConfirmation extends BaseView {
 
