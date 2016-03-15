@@ -198,16 +198,18 @@ class Header extends BaseView {
         let parentItem = $this.parentNode;
         let dropDownMenu = $this.nextElementSibling;
 
+        e.preventDefault();
+
         if (w <= 768) {
             this.cloneDropdownParent(e);
-            if (!dropDownMenu.classList.contains('open')) {
-                e.preventDefault();
-                header.classList.add('open');
-                parentItem.classList.add('open');
-                dropDownMenu.classList.add('open');
-            } else if (!e.target.classList.contains('back')) {
-                this.closeFullScreenNav(e);
-            }
+        }
+
+        if (!dropDownMenu.classList.contains('open')) {
+            header.classList.add('open');
+            parentItem.classList.add('open');
+            dropDownMenu.classList.add('open');
+        } else if (!e.target.classList.contains('back')) {
+            this.closeFullScreenNav(e);
         }
     }
 
@@ -245,8 +247,6 @@ class Header extends BaseView {
     resetHeader(e) {
         let urlClick = linkHelper.validUrlClick(e);
 
-        this.reset();
-
         if (urlClick) {
             if (!urlClick.parentNode.classList.contains('dropdown')) {
                 this.closeDropdownMenus(true);
@@ -254,6 +254,8 @@ class Header extends BaseView {
             }
         } else if (Backbone.history.location.pathname === '/') {
             this.updateHeaderStyle();
+        } else {
+            this.reset();
         }
     }
 
@@ -296,6 +298,7 @@ class Header extends BaseView {
         thisLi.setAttribute('role', 'presentation');
         thisLi.setAttribute('class', 'clone');
 
+        parent.setAttribute('href', '#');
         back.setAttribute('class', 'back');
         back.text = 'Back';
         thisLi.appendChild(back);

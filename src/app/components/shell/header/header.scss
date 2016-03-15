@@ -151,20 +151,15 @@ $transition: 0.3s;
                 }
             }
 
-            &:hover .dropdown-menu {
-                @include desktop {
-                    width: auto;
-                    height: auto;
-                    z-index: 1;
-                    opacity: 1;
-                    transform: translate3d(-50%, 0, 0);
-                }
-            }
-
             .clone {
                 a {
-                    color: color(blue);
+                    color: color(neutral-medium);
                     font-weight: 600;
+                    cursor: default;
+
+                    &:last-child:hover {
+                        color: color(neutral-medium);
+                    }
                 }
 
 
@@ -222,8 +217,8 @@ $transition: 0.3s;
                 width: 0;
                 height: 0;
                 top: 3.7rem;
-                left: 50%;
-                transform: translate3d(-50%, -1rem, 0);
+                left: 0;
+                transform: translate3d(0, -1rem, 0);
                 border-top: 0.5rem solid color(orange);
                 white-space: nowrap;
                 background: color(neutral-lightest);
@@ -237,6 +232,14 @@ $transition: 0.3s;
             }
 
             &.open {
+                @include desktop {
+                    width: auto;
+                    height: auto;
+                    z-index: 1;
+                    opacity: 1;
+                    transform: translate3d(0, 0, 0);
+                }
+
                 @at-root .active.open#{&} {
                     transform: translate3d(100rem, 0, 0);
 
