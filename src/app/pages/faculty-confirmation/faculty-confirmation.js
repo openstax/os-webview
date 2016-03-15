@@ -5,7 +5,7 @@ import {template} from './faculty-confirmation.hbs';
 @props({
     template: template
 })
-export default class InterestConfirmation extends BaseView {
+export default class FacultyConfirmation extends BaseView {
 
     onRender() {
         this.el.classList.add('confirmation-page');
