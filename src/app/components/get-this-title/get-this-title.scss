@@ -44,6 +44,7 @@
         }
 
         a {
+            display: block;
             color: color(cyan);
 
             &:hover {
@@ -60,19 +61,5 @@
         &::before {
             margin-left: -2.5rem;
         }
-    }
-
-    .cta > .btn {
-        width: 100%;
-        font-variant: normal;
-        margin: 1rem 0 0;
-        padding: 1.5rem;
-        text-transform: uppercase;
-    }
-
-    .btn:hover,
-    .btn:focus {
-        transform: scale3d(1, 1, 1);
-        background-color: darken(color(orange), 5%);
     }
 }

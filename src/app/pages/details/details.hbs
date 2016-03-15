@@ -53,7 +53,6 @@
         </section>
         <section id="resources" class="resources block">
             <div class="container">
-
             <h2>Resources</h2>
             <p>
                 Access doesn't end with the book. OpenStax has compiled additional
@@ -61,43 +60,19 @@
                 interactive study guides, to instructor-only resources that coincide with
                 Physics.
             </p>
-            <h3>OpenStax Instructor Resources</h3>
-            <p>
-                Get started with free resources to support your course. (Verified instructor
-                account required.)
-            </p>
-            <div id="instructor-resources" class="row">
+            <div class="row">
+                <h3>OpenStax Instructor Resources</h3>
+                <p>Get started with free resources to support your course. (Verified instructor
+                    account required.)</p>
+                <div id="instructor-resources" class="resource"></div>
             </div>
             <div class="row">
             <h3>Ally Resources</h3>
             <p>Learn more about our <a href="/allies">allies</a>.</p>
             </div>
-            <!-- <div class="resource-row">
-                <h3>Online Homework</h3>
-
-                {{#each onlineHomework}}
-                    <div class="blurb">
-                        <img src="{{imageUrl}}" />
-                        <h4>{{vendor}}</h4>
-                        <p class="text">{{blurb}}</p>
-                    </div>
-                {{/each}}
-            </div> -->
-            <!-- <div class="row">
-                <h3>Adaptive Courseware</h3>
-
-                {{#each adaptiveCourseware}}
-                    <div class="blurb">
-                        <img src="{{imageUrl}}" />
-                        <h4>{{vendor}}</h4>
-                        <p class="text">{{blurb}}</p>
-                    </div>
-                {{/each}}
-            </div> -->
             <div class="row">
                 <h3>Student Resources</h3>
-                <div id="student-resources" class="resource-row">
-                </div>
+                <div id="student-resources" class="resource"></div>
             </div>
             <div class="cta">
                 <a class="btn">Learn how you can tell your instructor about OpenStax!</a>
@@ -121,10 +96,10 @@
                     you have a correction to suggest, submit it here. We'll review your
                     suggestion and make necessary changes.
                 </p>
-                <div class="links">
-                    <a class="go-to">Errata list</a>
-                    <a class="go-to">Suggest a correction</a>
-                </div>
+                <ul class="links">
+                    <li><a class="go-to">Errata list</a></li>
+                    <li><a class="go-to">Suggest a correction</a></li>
+                </ul>
             </div>
             </section>
 </div>

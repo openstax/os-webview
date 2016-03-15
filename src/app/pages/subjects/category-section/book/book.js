@@ -19,7 +19,7 @@ export default class Book extends BaseView {
             this.model.set('selectedBook', this.isSelected() ? false : this.data);
             event.stopPropagation();
         } else {
-            this.el.querySelector('.btn').click();
+            this.el.querySelector('.cta>.btn').click();
         }
     }
 
