@@ -151,6 +151,7 @@ form {
     [type="text"],
     [type="number"],
     [type="email"],
+    [type="date"],
     textarea,
     select,
     .selected-button {
@@ -172,6 +173,10 @@ form {
             outline: 0;
             border-bottom: solid color(cyan) 0.2rem;
         }
+    }
+
+    [type="date"] {
+        appearance: none;
     }
 
     textarea {
@@ -243,6 +248,10 @@ form {
             }
         }
 
+    }
+
+    .btn {
+        margin-top: 3rem;
     }
 
     .wrapper {

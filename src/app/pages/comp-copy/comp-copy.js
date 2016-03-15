@@ -2,11 +2,13 @@ import BaseView from '~/helpers/backbone/view';
 import salesforceModel from '~/models/salesforce-model';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './comp-copy.hbs';
+import {template as strips} from '~/components/strips/strips.hbs';
 
 @props({
     template: template,
     templateHelpers: {
-        urlOrigin: window.location.origin
+        urlOrigin: window.location.origin,
+        strips
     }
 })
 export default class CompCopyForm extends BaseView {
