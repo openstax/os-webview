@@ -1,23 +1,9 @@
 @import 'variables';
 
-.comp-copy {
-    > h1 {
-        flex: 1 100%;
-    }
-
-    .subhead {
-        font-size: 1.7rem;
-        font-weight: 400;
-    }
-
-    img {
-        min-height: 20rem;
-        min-width: 15rem;
-    }
-
-    form {
-        border: thin solid color(neutral-light);
-        margin: 1rem;
-        padding: 1rem;
+.comp-copy-form {
+    .cta {
+        @media (min-width: 641px) {
+            margin-top: 12rem;
+        }
     }
 }
