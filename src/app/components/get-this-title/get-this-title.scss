@@ -6,26 +6,67 @@
     .submenu {
         position: relative;
 
-        .print-submenu,
-        .pdf-submenu {
-            display: none;
+        p {
+            color: color(gray);
         }
 
         &.pdf .pdf-submenu,
         &.print .print-submenu {
-            display: inherit;
+            width: initial;
+            height: initial;
+            transform: scale3d(1, 1, 1);
+            opacity: 1;
+
+        }
+
+        .pdf-submenu,
+        .print-submenu {
+            opacity: 0;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            transform: scale3d(0, 0, 0);
+            transition: opacity 0.2s;
+        }
+
+        .btn {
+            width: 100%;
+            font-variant: normal;
+            padding: 1.5rem;
+            text-transform: uppercase;
+            color: color(neutral-lightest);
+
+            &:hover {
+                transform: scale3d(1, 1, 1);
+                background-color: darken(color(neutral-medium), 5%);
+            }
         }
     }
 
     .remover {
         cursor: pointer;
         font-size: 2rem;
+        line-height: 1rem;
         font-weight: bold;
-        height: 2.2rem;
         position: absolute;
-        right: 1rem;
+        right: 0;
+        top: 0;
         text-align: center;
-        width: 2.2rem;
+    }
+
+    .options {
+        opacity: 1;
+        transition: opacity 0.2s;
+        margin-bottom: 1rem;
+    }
+
+    .pdf + .options,
+    .print + .options {
+        width: 0;
+        height: 0;
+        margin: 0;
+        overflow: hidden;
+        opacity: 0;
     }
 
     .option {
