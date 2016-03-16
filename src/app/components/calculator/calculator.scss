@@ -1,0 +1,55 @@
+@import 'variables';
+
+$table-background: lighten(neutral-color(light), 30%);
+$attention: color(green);
+$text-secondary: rgba(color(neutral-darkest), 0.7);
+
+.calculator {
+    table {
+        width: 90%;
+        background-color: $table-background;
+        line-height: 4rem;
+        margin: 8rem auto 0;
+
+        th {
+            text-align: left;
+            padding: 0.5rem 1.5rem;
+        }
+
+        td {
+            font-weight: 500;
+            padding: 0.5rem 1.5rem;
+        }
+
+        .savings {
+            color: $attention;
+            font-size: 1.6rem;
+        }
+
+    }
+
+    .footnote::after {
+        content: '*';
+    }
+
+    tfoot {
+        background-color: color(neutral-lightest);
+        color: $text-secondary;
+        font-size: 1rem;
+        text-align: right;
+
+        td {
+            padding: 0.5rem;
+
+            > p {
+                line-height: 1rem;
+                margin: 0;
+            }
+        }
+    }
+
+    .table-notes {
+        color: neutral-color(dark);
+        text-align: right;
+    }
+}

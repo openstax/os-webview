@@ -1,10 +1,53 @@
-<h1>Thank you for applying for an instructor account!</h1>
-<p class="subhead">
-    We manually verify all instructor account requests to ensure that educator
-    resources stay in the right hands, so we’ll email you in the next 3 to 4
-    business days about your approval. Once approved, you will be able to access
-    all of our instructor-only resources.
-</p>
-<div>
-    <a class="go-to" href="/adoption">Have you adopted an OpenStax book? Let us know</a>
+<style scoped>
+    @import url(/app/pages/faculty-confirmation/faculty-confirmation.css);
+    @import url(/app/components/calculator/calculator.css);
+</style>
+
+<div class="page-intro">
+    <div class="text-content subhead">
+        <h1>Thank you for applying for an instructor account!</h1>
+        <p>
+            We manually verify all instructor account requests to ensure that educator
+            resources stay in the right hands, so we’ll email you in the next 3 to 4
+            business days about your approval. Once approved, you will be able to access
+            all of our instructor-only resources.
+        </p>
+        <p class="blurb-calculator">
+            Use the calculator below to find out how much money you will save your
+            students over the next three years.
+        </p>
+        <a href="#savings-calculator" class="caret"></a>
+    </div>
+</div>
+
+<div class="wrapper">
+    {{{strips}}}
+    <div class="text-content labeled-inputs row book-info">
+        <div class="calculator">
+        </div>
+        {{!--
+        <div id="support-box" class="support-box">
+            <h2>Support OpenStax College!</h2>
+            <form>
+                <div class="slider-with-ends">
+                    <span>$10</span><input type="range" name="points" min="0" max="12" value="0"><span>$10,000</span>
+                    <span class="amount-box">$<input type="number" min="10" step="5" /></span>
+                </div>
+                <p class="amount-message"></p>
+                <div class="cta">
+                    <input type="submit" value="Donate Now!" />
+                </div>
+            </form>
+        </div>
+        --}}
+
+        <div class="text-content add-another">
+           <h2>
+                Have you adopted OpenStax book?<br />
+                <small>Please, let us know</small>
+            </h2>
+            <a href="/adoption" title="Add another book" class="btn">Adopt a book</a>
+            <a href="/subjects" title="Go back to our books" class="btn btn-secondary">Go back to our books</a>
+        </div>
+    </div>
 </div>
