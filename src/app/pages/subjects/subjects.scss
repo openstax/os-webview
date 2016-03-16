@@ -14,7 +14,7 @@
     }
 
     .container[data-manager="page-description"] {
-        margin: 6rem auto;
+        margin: 8rem auto;
 
         @include desktop {
             text-align: center;
@@ -43,6 +43,7 @@
         @include desktop {
             width: auto;
             height: auto;
+            margin-bottom: 8.5rem;
             opacity: 1;
         }
     }
@@ -65,18 +66,15 @@
 
     .books {
         background-color: lighten(color(neutral-lighter), 8%);
-        padding: 0 0 8rem;
+        padding: 8rem 0;
         position: relative;
-
-        @include desktop {
-            margin-top: 8.5rem;
-        }
 
         .strips {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
+            margin-bottom: 0;
 
         }
 
