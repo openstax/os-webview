@@ -58,15 +58,12 @@ export default class GetThisTitle extends BaseView {
         this.regions.submenu.append(this.pdfSubmenu);
         this.regions.submenu.append(this.printSubmenu);
         this.stateModel.on('change:currentSubmenu', (what) => {
-            let newValue = what.changed.currentSubmenu,
-                optionsDiv = this.el.querySelector('.options');
+            let newValue = what.changed.currentSubmenu;
 
             if (newValue) {
                 this.regions.submenu.el.classList.add(newValue);
-                optionsDiv.classList.add('hidden');
             } else {
                 this.regions.submenu.el.classList.remove(this.stateModel.previous('currentSubmenu'));
-                optionsDiv.classList.remove('hidden');
             }
         });
     }

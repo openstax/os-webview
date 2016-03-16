@@ -31,7 +31,6 @@
     .cta > .btn {
         width: 100%;
         font-variant: normal;
-        margin: 1rem 0 0;
         padding: 1.5rem;
         text-transform: uppercase;
     }
@@ -105,8 +104,9 @@
             .cta {
                 color: color(gray);
 
-                a:last-child {
+                .btn:last-child {
                     background-color: color(neutral-medium);
+                    margin-top: 1rem;
 
                     &:hover,
                     &:focus {
