@@ -205,6 +205,7 @@ class Header extends BaseView {
         }
 
         if (!dropDownMenu.classList.contains('open')) {
+            this.removeAllOpenClasses();
             header.classList.add('open');
             parentItem.classList.add('open');
             dropDownMenu.classList.add('open');
@@ -324,10 +325,7 @@ class Header extends BaseView {
 
     onRender() {
         this.updateHeaderStyle();
-
         document.addEventListener('load', this.appendURL.bind(this), true);
-        document.addEventListener('focus', this.closeDropdownMenus.bind(this), true);
-        document.addEventListener('click', this.closeDropdownMenus.bind(this), true);
         this.el.addEventListener('click', this.resetHeader.bind(this), true);
         window.addEventListener('scroll', this.updateHeaderStyle.bind(this));
         window.addEventListener('resize', this.closeFullScreenNav.bind(this));
@@ -337,8 +335,6 @@ class Header extends BaseView {
         document.removeEventListener('load', this.appendURL.bind(this), true);
         window.removeEventListener('scroll', this.updateHeaderStyle.bind(this));
         window.removeEventListener('resize', this.closeFullScreenNav.bind(this));
-        document.removeEventListener('focus', this.closeDropdownMenus.bind(this), true);
-        document.removeEventListener('click', this.closeDropdownMenus.bind(this), true);
         this.el.removeEventListener('click', this.resetHeader.bind(this), true);
     }
 }
