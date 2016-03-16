@@ -1,0 +1,134 @@
+@import 'variables';
+@import 'mixins';
+
+.higher-ed-page {
+    .more {
+        font-size: 1.3rem;
+        font-weight: bold;
+        letter-spacing: 0.05vw;
+        text-transform: uppercase;
+    }
+
+    .banner {
+        background-image: url('/images/higher-ed/background.png');
+        background-size: 100vw 42.85vw;
+        height: 42.85vw;
+        position: relative;
+        width: 100vw;
+
+        > .overlay {
+            background-color: rgba(color(cyan), 0.8);
+            color: color(neutral-lightest);
+            height: 24.29vw;
+            left: 8.215vw;
+            position: absolute;
+            top: 9.29vw;
+            width: 83.57vw;
+
+            > .header,
+            > .blurb,
+            > .more {
+                padding-left: 42.8vw;
+                padding-right: 3.93vw;
+            }
+
+            > .header {
+                font-size: 3.6vw;
+                font-weight: 900;
+                line-height: 0.9;
+                margin-bottom: 1.43vw;
+                margin-top: 2.85vw;
+            }
+
+            > .blurb {
+                font-size: 1.3vw;
+                line-height: 1.6;
+            }
+
+            > .more {
+                margin-top: 1.43vw;
+            }
+        }
+    }
+
+    .getting-started {
+        background-color: color(orange);
+        color: white;
+        padding: 3.57vw 8.21vw;
+
+        > .header {
+            font-size: 4.4rem;
+            font-weight: 900;
+        }
+
+        > .steps {
+            align-items: stretch;
+            border-bottom: 0.4rem solid lighten(color(orange), 10%);
+            border-top: 0.4rem solid lighten(color(orange), 10%);
+            counter-reset: steps;
+            display: flex;
+            list-style-type: none;
+            margin: 3.2vw 0;
+            padding: 4.29vw 0;
+
+            > .step {
+                flex: 1 1 33%;
+                margin: 0 2vw;
+
+                &:first-child {
+                    margin-left: 0;
+                }
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+
+        .step {
+            padding-bottom: 3.5rem;
+            position: relative;
+
+            &::before {
+                color: color(yellow);
+                counter-increment: steps;
+                content: counter(steps) '.';
+                font-size: 5.5rem;
+                font-weight: bold;
+            }
+
+            > .title {
+                font-size: 2.1rem;
+                font-weight: bold;
+                margin-bottom: 2rem;
+            }
+
+            > .blurb {
+                font-size: 1.5rem;
+                font-weight: 200;
+            }
+
+            > .more {
+                bottom: 0;
+                position: absolute;
+            }
+        }
+    }
+
+    .institution {
+        > .title {
+            font-size: 2.1rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+
+        > .blurb {
+            font-size: 1.5rem;
+            font-weight: 200;
+        }
+
+        > .more {
+            margin-top: 1.43vw;
+        }
+    }
+}

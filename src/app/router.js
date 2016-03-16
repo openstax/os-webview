@@ -21,6 +21,7 @@ const PAGES = [
     'finished-no-verify',
     'finished-verify',
     'foundation',
+    'higher-ed',
     'interest',
     'interest-confirmation',
     'k-12',
