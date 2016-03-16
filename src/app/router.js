@@ -1,6 +1,35 @@
 import Backbone from 'backbone';
 import shell from '~/components/shell/shell';
 
+const PAGES = [
+    'about',
+    'about-us',
+    'accessibility-statement',
+    'adoption',
+    'adoption-confirmation',
+    'allies',
+    'books',
+    'comp-copy',
+    'comp-copy-confirmation',
+    'contact',
+    'contact-thank-you',
+    'details',
+    'details',
+    'faculty-confirmation',
+    'faculty-verification',
+    'finish-profile',
+    'finished-no-verify',
+    'finished-verify',
+    'foundation',
+    'interest',
+    'interest-confirmation',
+    'k-12',
+    'license',
+    'news',
+    'renewal',
+    'subjects'
+];
+
 class Router extends Backbone.Router {
 
     initialize() {
@@ -23,13 +52,7 @@ class Router extends Backbone.Router {
             shell.load('details');
         });
 
-        ['about', 'books', 'contact', 'news', 'license', 'subjects', 'details',
-        'interest', 'adoption', 'adoption-confirmation', 'comp-copy',
-        'accessibility-statement', 'faculty-verification', 'k-12', 'allies',
-        'finish-profile', 'finished-verify', 'finished-no-verify', 'about-us',
-        'interest-confirmation', 'faculty-confirmation', 'comp-copy-confirmation',
-        'foundation', 'renewal', 'contact', 'contact-thank-you']
-        .forEach(this.standardRoute, this);
+        PAGES.forEach(this.standardRoute, this);
 
         this.route(/to[u|s]/, 'tos', () => {
             shell.load('tos');
