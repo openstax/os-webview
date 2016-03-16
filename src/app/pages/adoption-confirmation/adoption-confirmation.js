@@ -1,66 +1,10 @@
 import BaseView from '~/helpers/backbone/view';
+import Calculator from '~/components/calculator/calculator';
 import {props} from '~/helpers/backbone/decorators';
 import {template} from './adoption-confirmation.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
 
-function hookUpCalculator(tableBody) {
-    let studentCountEl = tableBody.querySelector('#student-count'),
-        rows = tableBody.querySelectorAll('tr');
-
-    function calculateRow(row, rowIndex) {
-        let tds = row.querySelectorAll('td'),
-            tPrice = tds[1].querySelector('input').value,
-            osInput = tds[0].querySelector('input'),
-            osPrice = osInput ? osInput.value : 0,
-            stuInput = tds[2].querySelector('input'),
-            stuCount = +(stuInput ? stuInput.value : tds[2].textContent);
-
-        if (rowIndex === 1) {
-            // full-price book costs plus half-price book costs
-            tPrice *= (0.9 + 0.5 + 0.25)/3 + (0.1 + 0.5 + 0.75)/6;
-        }
-
-        tds[3].textContent = ((tPrice - osPrice) * stuCount * 6).toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD'
-        });
-    }
-
-    studentCountEl.addEventListener('change', () => {
-        let newVal = studentCountEl.value;
-
-        for (let i of [1, 2, 3]) {
-            let r = rows[i],
-                td = r.querySelectorAll('td')[2];
-
-            td.textContent = newVal;
-            calculateRow(r, i);
-        }
-    });
-
-    let addCalculateAndRestyleChangeEvent = (row, inputs, node) => {
-        node.addEventListener('change', () => {
-            calculateRow(row, Array.from(rows).indexOf(row));
-            if (!(row === rows[0] && node === inputs[1])) {
-                node.value = (+node.value).toLocaleString('en-US', {
-                    style: 'decimal',
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                });
-            }
-        });
-    };
-
-    for (let r of rows) {
-        let inputs = r.querySelectorAll('input');
-
-        for (let i of inputs) {
-            addCalculateAndRestyleChangeEvent(r, inputs, i);
-        }
-        calculateRow(r, Array.from(rows).indexOf(r)); // Initial calculate
-    }
-}
-
+/*
 function hookUpDonationBox(el) {
     let slider = el.querySelector('input[type="range"]'),
         box = el.querySelector('input[type="number"]'),
@@ -118,19 +62,22 @@ function hookUpDonationBox(el) {
     box.value = levels[slider.value];
     box.dispatchEvent(new Event('input'));
 }
+*/
 
 @props({
     template: template,
     templateHelpers: {
         strips
+    },
+    regions: {
+        calculator: '.calculator'
     }
 })
 export default class AdoptionConfirmation extends BaseView {
 
     onRender() {
         this.el.classList.add('confirmation-page');
-        hookUpCalculator(this.el.querySelector('#savings-calculator tbody'));
-        hookUpDonationBox(document.getElementById('support-box'));
+        this.regions.calculator.append(new Calculator());
     }
 
 }
