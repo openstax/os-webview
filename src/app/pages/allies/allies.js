@@ -56,7 +56,7 @@ alliesDataPromise = new PageModel().fetch({
     templateHelpers: {strips},
     regions: {
         filterButtons: '.filter-buttons',
-        blurbs: '.blurbs'
+        blurbs: '.blurbs .container'
     }
 })
 export default class Subjects extends BaseView {
