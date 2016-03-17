@@ -247,12 +247,15 @@ class Header extends BaseView {
 
     resetHeader(e) {
         let urlClick = linkHelper.validUrlClick(e);
+        let header = this.el.querySelector('.page-header');
 
         if (urlClick) {
             if (!urlClick.parentNode.classList.contains('dropdown')) {
                 this.closeDropdownMenus(true);
                 this.closeFullScreenNav();
             }
+        } else if (!header.classList.contains('active')) {
+            this.closeFullScreenNav();
         } else {
             this.updateHeaderStyle();
         }
@@ -326,6 +329,7 @@ class Header extends BaseView {
         document.addEventListener('load', this.appendURL.bind(this), true);
         document.addEventListener('click', this.resetHeader.bind(this), true);
         window.addEventListener('scroll', this.updateHeaderStyle.bind(this));
+        window.addEventListener('scroll', this.removeAllOpenClasses.bind(this));
         window.addEventListener('resize', this.closeFullScreenNav.bind(this));
     }
 
@@ -333,6 +337,7 @@ class Header extends BaseView {
         document.removeEventListener('load', this.appendURL.bind(this), true);
         document.removeEventListener('click', this.resetHeader.bind(this), true);
         window.removeEventListener('scroll', this.updateHeaderStyle.bind(this));
+        window.removeEventListener('scroll', this.removeAllOpenClasses.bind(this));
         window.removeEventListener('resize', this.closeFullScreenNav.bind(this));
     }
 }
