@@ -4,11 +4,13 @@ $table-background: lighten(neutral-color(light), 30%);
 $attention: color(green);
 
 .calculator {
+    padding: 5rem 0 0;
+
     table {
         width: 90%;
         background-color: $table-background;
         line-height: 4rem;
-        margin: 8rem auto 0;
+        margin: 0 auto;
         border-collapse: collapse;
 
         th {

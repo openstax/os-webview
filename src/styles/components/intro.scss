@@ -4,11 +4,11 @@
 .page-intro {
     display: flex;
     flex-wrap: wrap;
-    background-color: color(danger);
+    background-color: color(deep-green);
     justify-content: center;
 
     h1 {
-        color: color(orange);
+        color: white;
     }
 
     p {
@@ -18,7 +18,7 @@
             margin: 0 auto;
             padding-top: 5rem;
             max-width: 48rem;
-            color: color(orange);
+            color: color(blue);
         }
     }
 
@@ -35,7 +35,7 @@
                 @include triangle(
                     $direction: bottom,
                     $position: top 0 left 0,
-                    $color: color(orange),
+                    $color: color(blue),
                     $size: 0.6rem
                 );
             }
