@@ -253,10 +253,8 @@ class Header extends BaseView {
                 this.closeDropdownMenus(true);
                 this.closeFullScreenNav();
             }
-        } else if (Backbone.history.location.pathname === '/') {
-            this.updateHeaderStyle();
         } else {
-            this.reset();
+            this.updateHeaderStyle();
         }
     }
 
@@ -326,16 +324,16 @@ class Header extends BaseView {
     onRender() {
         this.updateHeaderStyle();
         document.addEventListener('load', this.appendURL.bind(this), true);
-        this.el.addEventListener('click', this.resetHeader.bind(this), true);
+        document.addEventListener('click', this.resetHeader.bind(this), true);
         window.addEventListener('scroll', this.updateHeaderStyle.bind(this));
         window.addEventListener('resize', this.closeFullScreenNav.bind(this));
     }
 
     onBeforeClose() {
         document.removeEventListener('load', this.appendURL.bind(this), true);
+        document.removeEventListener('click', this.resetHeader.bind(this), true);
         window.removeEventListener('scroll', this.updateHeaderStyle.bind(this));
         window.removeEventListener('resize', this.closeFullScreenNav.bind(this));
-        this.el.removeEventListener('click', this.resetHeader.bind(this), true);
     }
 }
 
