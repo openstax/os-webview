@@ -12,7 +12,7 @@ export default class FilterButton extends BaseView {
     constructor(data, model) {
         super();
 
-        this.template = data;
+        this.template = data.replace(/®/, '<sup>&reg;</sup>');
         this.data = data;
         this.model = model;
 

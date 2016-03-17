@@ -14,7 +14,7 @@ export default class Option extends BaseView {
     constructor(model) {
         super();
         this.templateHelpers = {
-            label: model.get('label')
+            label: model.get('label').replace(/®/g, '<sup>&reg;</sup>')
         };
         this.model = model;
     }
