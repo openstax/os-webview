@@ -73,7 +73,7 @@
         color: color(cyan);
         cursor: pointer;
         font-size: 1.6rem;
-        padding: 0.5rem 0;
+        padding: 0.5rem;
         border-bottom: 0.1rem solid color(neutral-lighter);
 
         &:hover {
@@ -87,6 +87,7 @@
         a {
             display: block;
             color: color(cyan);
+            padding-left: 3rem;
 
             &:hover {
                 color: darken(color(cyan), 10%);
@@ -95,12 +96,9 @@
     }
 
     .fa {
+        width: 2.5rem;
         color: darken(color(cyan), 10%);
-        margin-left: 3rem;
+        margin-left: -3rem;
         font-size: 1.8rem;
-
-        &::before {
-            margin-left: -2.5rem;
-        }
     }
 }
