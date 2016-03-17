@@ -42,7 +42,6 @@ $text-black3: rgba(0, 0, 0, 0.54);
 }
 
 .filter-buttons {
-    align-items: baseline;
     display: flex;
     margin: 0 1.5rem;
     border: 0.1rem solid color(neutral-lighter);
@@ -59,7 +58,7 @@ $text-black3: rgba(0, 0, 0, 0.54);
 
     .filter-button {
         overflow: hidden;
-        padding: 0.7rem;
+        padding: 1.5rem;
         cursor: pointer;
 
         @include desktop {

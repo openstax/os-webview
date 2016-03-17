@@ -27,6 +27,14 @@ a {
     text-decoration: none;
 }
 
+sup {
+    font-size: 1rem;
+    margin-left: 0.1rem;
+    position: relative;
+    top: -0.5rem;
+    vertical-align: top;
+}
+
 .text-content {
     flex-direction: column;
     margin: 0 auto;
