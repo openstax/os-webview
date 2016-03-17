@@ -78,7 +78,7 @@ export default class SingleSelect extends BaseView {
             this.stateCollection.add(optionModel);
         }
         this.stateCollection.on('change:selected', (what) => {
-            this.togglePulldown(true);
+            this.togglePulldown();
             this.synchronizeModel(what);
         });
 
