@@ -1,49 +1,47 @@
-#os-green {fill: #77af42}
-#os-orange {fill: #f47641}
-#os-grey {fill: #5e6062}
-#os-yellow {fill: #f4d019}
-#os-blue {fill: #00246a}
+#os-green {fill: #77af42;}
+#os-orange {fill: #f47641;}
+#os-grey {fill: #5e6062;}
+#os-yellow {fill: #f4d019;}
+#os-blue {fill: #00246a;}
 
 .os-loader {
-	position: relative;
-	width: 100vw;
-	height: 100vh;
-	overflow: hidden;
-	background-color: white;
-	background-image: url('circle.svg');
-	background-repeat: no-repeat;
-	background-position: center center;
-	background-size: 300%;
-	animation: loader 800ms ease-out;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background-color: white;
+    background-image: url('circle.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 300%;
+    animation: loader 0.8s ease-out;
 }
 
 @keyframes loader {
     from {
-		background-size: 2%;
-	  }
+        background-size: 2%;
+    }
 
     to {
-		background-size: 300%;
-	  }
-
+        background-size: 300%;
+    }
 }
 
 .os-loader--inner {
-	position: absolute;
-	width: 100px;
-	height: 100px;
-	top: 50%;
-	left: 50%;
-	margin-top: -60px;
-	margin-left: -60px;
-	background: white;
-	border-radius: 50%;
-	box-shadow: 0 1px 0px #e7e7e7;
-	animation: loaderInner 200ms ease-out;
-	-webkit-animation-delay: 100ms;
-	animation-delay: 100ms;
-	transform: scale(1);
-
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 50%;
+    left: 50%;
+    margin-top: -60px;
+    margin-left: -60px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 1px 0px #e7e7e7;
+    animation: loaderInner 200ms ease-out;
+    -webkit-animation-delay: 100ms;
+    animation-delay: 100ms;
+    transform: scale(1);
 }
 
 @keyframes loaderInner {
