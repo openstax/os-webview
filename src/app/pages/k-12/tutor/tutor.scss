@@ -2,15 +2,22 @@
 @import 'mixins';
 
 .tutor-banner {
-    width: 100%;
-    min-height: 70vh;
     background-color: color(cyan);
     background-image: url('/images/k-12/k12-tutor-bg.jpg');
+    background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center center;
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
+    min-height: 70vh;
+    width: 100%;
+
+    .tutor-bg-overlay {
+        padding: 3rem 0;
+        position: relative;
+        top: 10%;
+        width: 80%;
+    }
 
     .tutor {
         width: 90vw;
@@ -27,19 +34,6 @@
                 flex-direction: column;
                 padding: 6.7rem 3rem;
                 align-content: flex-end;
-            }
-
-            > .image {
-                min-width: 26.7rem;
-                background: url('/images/k-12/people.svg') 0 1rem no-repeat;
-                background-size: 26.7rem;
-                display: block;
-                flex: 1 1 auto;
-                min-height: 10rem;
-
-                @include phone {
-                    background-size: 80%;
-                }
             }
 
             > .caption {
@@ -61,8 +55,11 @@
 
             .blurb {
                 display: block;
-                font-size: 1.6rem;
+                font-size: 1.8rem;
+                line-height: 3rem;
                 margin-bottom: 2rem;
+                max-width: 80%;
+                width: 45rem;
             }
 
             .btn {

@@ -6,6 +6,7 @@ import Bucket from '~/components/bucket/bucket';
 import Banner from './banner/banner';
 import Tutor from './tutor/tutor';
 import Boxes from './boxes/boxes';
+import {template as strips} from '~/components/strips/strips.hbs';
 
 @props({
     template: template,
@@ -15,7 +16,8 @@ import Boxes from './boxes/boxes';
         buckets: '.buckets-section',
         tutor: '.tutor-banner',
         boxes: '.boxes'
-    }
+    },
+    templateHelpers: {strips}
 })
 export default class K12 extends BaseView {
 
