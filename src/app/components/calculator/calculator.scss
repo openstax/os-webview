@@ -2,7 +2,6 @@
 
 $table-background: lighten(neutral-color(light), 30%);
 $attention: color(green);
-$text-secondary: rgba(color(neutral-darkest), 0.7);
 
 .calculator {
     table {
@@ -10,6 +9,7 @@ $text-secondary: rgba(color(neutral-darkest), 0.7);
         background-color: $table-background;
         line-height: 4rem;
         margin: 8rem auto 0;
+        border-collapse: collapse;
 
         th {
             text-align: left;
@@ -34,12 +34,13 @@ $text-secondary: rgba(color(neutral-darkest), 0.7);
 
     tfoot {
         background-color: color(neutral-lightest);
-        color: $text-secondary;
+        color: color(neutral-light);
         font-size: 1rem;
-        text-align: right;
+        padding-top: 1rem;
+        text-align: center;
 
         td {
-            padding: 0.5rem;
+            padding: 1.5rem;
 
             > p {
                 line-height: 1rem;

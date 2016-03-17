@@ -8,10 +8,21 @@ h4,
 h5,
 h6 {
     color: color(neutral-dark);
-    letter-spacing: -0.2rem;
     margin: 0;
     font-weight: 700;
     line-height: 1;
+}
+
+h1 {
+    letter-spacing: -0.2rem;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+    letter-spacing: -0.1rem;
 }
 
 h1,

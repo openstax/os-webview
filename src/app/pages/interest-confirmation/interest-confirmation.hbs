@@ -1,10 +1,52 @@
-<h1>Thanks for telling us about yourself!</h1>
-<p class="subhead">
-    Our goal is to increase access for students to get the learning materials
-    they need to succeed. We’ll be sure to send you more information about our
-    free textbooks and low-cost learning tools that are revolutionizing
-    classrooms across the country and the world.
-</p>
-<div>
-    <a class="go-to" href="/subjects">Explore our subjects</a>
+<style scoped>
+    @import url(/app/pages/interest-confirmation/interest-confirmation.css);
+    @import url(/app/components/calculator/calculator.css);
+</style>
+
+<div class="page-intro">
+    <div class="text-content subhead">
+        <h1>Thanks for telling us about yourself!</h1>
+        <p>
+            Our goal is to increase access for students to get the learning materials
+            they need to succeed. We’ll be sure to send you more information about our
+            free textbooks and low-cost learning tools that are revolutionizing
+            classrooms across the country and the world.
+        </p>
+        <p class="blurb-calculator">
+            Use the calculator below to find out how much money you can save your students over the next three years when you adopt OpenStax.
+        </p>
+        <a href="#savings-calculator" class="caret"></a>
+    </div>
 </div>
+
+<div class="wrapper">
+    {{{strips}}}
+    <div class="text-content labeled-inputs row book-info">
+        <div class="calculator">
+        </div>
+        {{!--
+        <div id="support-box" class="support-box">
+            <h2>Support OpenStax College!</h2>
+            <form>
+                <div class="slider-with-ends">
+                    <span>$10</span><input type="range" name="points" min="0" max="12" value="0"><span>$10,000</span>
+                    <span class="amount-box">$<input type="number" min="10" step="5" /></span>
+                </div>
+                <p class="amount-message"></p>
+                <div class="cta">
+                    <input type="submit" value="Donate Now!" />
+                </div>
+            </form>
+        </div>
+        --}}
+
+        <div class="text-content add-another">
+           <h2>
+                Have you been verified as an instructor?
+            </h2>
+            <a href="/faculty-verification" title="get verified" class="btn">Get verified</a>
+            <a href="/subjects" title="explore our books" class="btn btn-secondary">Explore our books</a>
+        </div>
+    </div>
+</div>
+
