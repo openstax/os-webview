@@ -2,7 +2,8 @@ import BaseView from '~/helpers/backbone/view';
 import PageModel from '~/models/pagemodel';
 import Author from './author/author';
 import Resource from './resource/resource';
-import {props} from '~/helpers/backbone/decorators';
+import Contents from './contents/contents';
+import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './details.hbs';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
 import {template as strips} from '~/components/strips/strips.hbs';
@@ -32,11 +33,26 @@ function dataToTemplateHelper(data) {
         topAuthors: '#top-authors',
         allAuthors: '#all-authors',
         instructorResources: '#instructor-resources',
-        studentResources: '#student-resources'
+        studentResources: '#student-resources',
+        tableOfContents: '.table-of-contents-container'
     }
 })
-
 export default class Details extends BaseView {
+    @on('click .table-of-contents-link')
+    showTableOfContents(event) {
+        this.openedWith = event.target;
+        this.el.querySelector('.table-of-contents-container').classList.toggle('hidden');
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    @on('click')
+    hideTOC(event) {
+        if (event.target !== this.openedWith) {
+            this.el.querySelector('.table-of-contents-container').classList.add('hidden');
+        }
+    }
+
     constructor() {
         super(...arguments);
         this.templateHelpers = {strips};
@@ -79,34 +95,41 @@ export default class Details extends BaseView {
             slug = window.location.pathname.replace(/.*\//, '');
         }
 
+        let handleBasicBookData = (data) => {
+            let detailUrl = data.pages[0].meta.detail_url,
+                detailModel = new PageModel(),
+                handleDetailData = (detailData) => {
+                    let th = dataToTemplateHelper(detailData);
+
+                    for (let topAuthor of th.topAuthors) {
+                        this.regions.topAuthors.append(new Author(topAuthor));
+                    }
+                    for (let author of th.allAuthors) {
+                        this.regions.allAuthors.append(new Author(author));
+                    }
+                    this.el.querySelector('.book-cover').src = th.coverUrl;
+                    this.el.querySelector('.book-info .title').textContent = th.title;
+                    this.el.querySelector('.book-info .blurb').innerHTML = th.description;
+                    document.getElementById('endorsement').innerHTML = th.endorsement;
+                    document.getElementById('attribution').textContent = th.attribution;
+                    document.getElementById('attribution-school').textContent = th.attributionSchool;
+                    this.gtt = new GetThisTitle(detailData);
+                    this.regions.getThisTitle.show(this.gtt);
+
+                    insertResources(detailData.book_faculty_resources, 'instructorResources');
+                    insertResources(detailData.book_student_resources, 'studentResources');
+
+                    for (let entry of detailData.table_of_contents.contents) {
+                        this.regions.tableOfContents.append(new Contents(entry));
+                    }
+                };
+
+            detailModel.fetch({url: detailUrl}).then(handleDetailData.bind(this));
+        };
+
         pageModel.fetch({
             data: {type: 'books.Book', slug}
-        }).then((data) => {
-            let detailUrl = data.pages[0].meta.detail_url,
-                detailModel = new PageModel();
-
-            detailModel.fetch({url: detailUrl}).then((detailData) => {
-                let th = dataToTemplateHelper(detailData);
-
-                for (let topAuthor of th.topAuthors) {
-                    this.regions.topAuthors.append(new Author(topAuthor));
-                }
-                for (let author of th.allAuthors) {
-                    this.regions.allAuthors.append(new Author(author));
-                }
-                this.el.querySelector('.book-cover').src = th.coverUrl;
-                this.el.querySelector('.book-info .title').textContent = th.title;
-                this.el.querySelector('.book-info .blurb').innerHTML = th.description;
-                document.getElementById('endorsement').innerHTML = th.endorsement;
-                document.getElementById('attribution').textContent = th.attribution;
-                document.getElementById('attribution-school').textContent = th.attributionSchool;
-                this.gtt = new GetThisTitle(detailData);
-                this.regions.getThisTitle.show(this.gtt);
-
-                insertResources(detailData.book_faculty_resources, 'instructorResources');
-                insertResources(detailData.book_student_resources, 'studentResources');
-            });
-        });
+        }).then(handleBasicBookData.bind(this));
     }
 
     onBeforeClose() {

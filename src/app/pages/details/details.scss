@@ -11,6 +11,22 @@
         letter-spacing: -0.1rem;
     }
 
+    .table-of-contents-link {
+        cursor: pointer;
+    }
+
+    .table-of-contents-container {
+        background-color: color(neutral-lightest);
+        box-shadow: 0 0 1rem color(neutral-dark);
+        padding: 1rem;
+        position: absolute;
+        z-index: 100;
+
+        .subunit {
+            margin-left: 1rem;
+        }
+    }
+
     .container {
         display: flex;
         margin: 0 auto;
