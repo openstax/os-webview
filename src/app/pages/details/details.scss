@@ -301,16 +301,15 @@
             margin-bottom: 1.5rem;
 
             @media (min-width: #{breakpoints(phone) + 1}) {
-                flex: 1 0 46%;
+                flex: 0 0 48%;
 
-                &:nth-child(odd):not(:only-child) {
+                &:nth-child(odd):not(:only-child):not(:last-child) {
                     margin-right: 1.5rem;
                 }
-
             }
 
             @media (min-width: 900px) {
-                flex: 0 0 30%;
+                flex: 0 0 31%;
                 margin-right: 1.5rem;
             }
 
