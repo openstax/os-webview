@@ -300,7 +300,8 @@ class Header extends BaseView {
         thisLi.setAttribute('role', 'presentation');
         thisLi.setAttribute('class', 'clone');
 
-        parent.setAttribute('href', '#');
+        parent.removeAttribute('href');
+        parent.removeAttribute('aria-haspopup');
         back.setAttribute('class', 'back');
         back.text = 'Back';
         thisLi.appendChild(back);
@@ -324,6 +325,10 @@ class Header extends BaseView {
         }
     }
 
+    preventMobileMenuScroll(e) {
+        e.preventDefault();
+    }
+
     onRender() {
         this.updateHeaderStyle();
         document.addEventListener('load', this.appendURL.bind(this), true);
@@ -331,6 +336,11 @@ class Header extends BaseView {
         window.addEventListener('scroll', this.updateHeaderStyle.bind(this));
         window.addEventListener('scroll', this.removeAllOpenClasses.bind(this));
         window.addEventListener('resize', this.closeFullScreenNav.bind(this));
+
+        // prevent scrolling on iOS when mobile menu is active
+        let header = document.querySelector('.page-header');
+
+        header.addEventListener('touchmove', this.preventMobileMenuScroll.bind(this), false);
     }
 
     onBeforeClose() {
