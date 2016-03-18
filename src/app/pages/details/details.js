@@ -44,23 +44,26 @@ export default class Details extends BaseView {
 
     toggleFixedClass() {
         let floatingMenu = document.querySelector('.floating-menu>.box');
-        let footer = document.getElementById('footer');
-        let footerPosition = footer.offsetTop;
-        let floatingMenuHeight = floatingMenu.offsetHeight+200;
-        let menuOffset = footerPosition - floatingMenuHeight;
-        let menuTopPosition = (menuOffset-window.pageYOffset);
 
-        if (window.pageYOffset > menuOffset) {
-            floatingMenu.setAttribute('style', `top: ${menuTopPosition}px`);
-        } else {
-            floatingMenu.removeAttribute('style');
+        if (floatingMenu) {
+            let footer = document.getElementById('footer');
+            let footerPosition = footer.offsetTop;
+            let floatingMenuHeight = floatingMenu.offsetHeight+200;
+            let menuOffset = footerPosition - floatingMenuHeight;
+            let menuTopPosition = ((menuOffset-window.pageYOffset)*1.05);
+
+            if (window.pageYOffset > menuOffset) {
+                floatingMenu.setAttribute('style', `top: ${menuTopPosition}px`);
+            } else {
+                floatingMenu.removeAttribute('style');
+            }
         }
     }
 
     onRender() {
         this.toggleFixedClass();
 
-        window.addEventListener('scroll', this.toggleFixedClass.bind(this), true);
+        window.addEventListener('scroll', this.toggleFixedClass.bind(this));
 
         let slug = decodeURIComponent(window.location.search.substr(1)),
             pageModel = new PageModel(),
@@ -107,6 +110,6 @@ export default class Details extends BaseView {
     }
 
     onBeforeClose() {
-        window.removeEventListener('scroll', this.toggleFixedClass.bind(this), true);
+        window.removeEventListener('scroll', this.toggleFixedClass.bind(this));
     }
 }
