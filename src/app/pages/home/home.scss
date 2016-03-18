@@ -3,7 +3,10 @@
 
 .home-page {
     flex: 1 0 auto;
-    margin-top: -7rem;
+
+    @include desktop {
+        margin-top: -6rem;
+    }
 }
 
 .quote-buckets {
