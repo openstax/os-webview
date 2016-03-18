@@ -156,6 +156,11 @@ sup {
 
 }
 
+[href=""],  // for testing empty links
+[href="#"] {
+    border: 0.3rem solid color(danger);
+}
+
 @import 'components/add-another';
 @import 'components/bucket';
 @import 'components/buttons';
