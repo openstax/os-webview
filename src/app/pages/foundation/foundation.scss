@@ -1,24 +1,107 @@
 @import 'variables';
 @import 'mixins';
 
-.comp-copy {
-    > h1 {
+$text-black: rgba(0, 0, 0, 0.87);
+$text-black2: rgba(0, 0, 0, 0.7);
+
+.foundation-page {
+    line-height: 3rem;
+
+    .container {
+        display: flex;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        width: 100%;
+        height: 100%;
+        max-width: $boxed-width;
+        flex-flow: column nowrap;
         flex: 1 100%;
     }
 
-    .subhead {
+    .hero {
+        background-color: color(deep-green);
+        color: color(neutral-lightest);
+        text-align: left;
+        padding: 8rem 0;
+
+        @include desktop {
+            text-align: center;
+        }
+
+        h1 {
+            color: color(neutral-lightest);
+        }
+
+        .subhead {
+            padding: 0;
+            text-align: left;
+
+            @include desktop {
+                text-align: center;
+            }
+        }
+    }
+
+    h2 {
+        margin-bottom: 0;
+    }
+
+    .blurbs {
+        background-color: lighten(color(neutral-light), 35%);
+        line-height: 2.3rem;
+        min-height: 10rem;
+        position: relative;
+        padding: 8rem 0;
+    }
+
+    .strips {
+        margin-bottom: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+
+    .funder {
+        align-items: center;
+        background-color: color(neutral-lightest);
+        color: $text-black2;
+        display: flex;
+        flex-flow: column nowrap;
         font-size: 1.7rem;
         font-weight: 400;
-    }
+        margin-bottom: 1.5rem;
+        padding: 3rem;
 
-    img {
-        min-height: 20rem;
-        min-width: 15rem;
-    }
+        @include desktop {
+            flex-flow: row nowrap;
+        }
 
-    form {
-        border: thin solid color(neutral-light);
-        margin: 1rem;
-        padding: 1rem;
+        h2 {
+            color: $text-black;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .logo {
+            flex: 0 0 25%;
+            margin-bottom: 3rem;
+
+            @include desktop {
+                margin-bottom: 0;
+                margin-right: 3rem;
+            }
+
+            img {
+                max-width: 30rem;
+                width: 100%;
+            }
+        }
+
+        .text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
     }
 }
