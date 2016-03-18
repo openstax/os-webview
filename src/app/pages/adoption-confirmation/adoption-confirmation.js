@@ -1,5 +1,5 @@
 import BaseView from '~/helpers/backbone/view';
-import Calculator from '~/components/calculator/calculator';
+// import Calculator from '~/components/calculator/calculator';
 import {props} from '~/helpers/backbone/decorators';
 import {template} from './adoption-confirmation.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
@@ -68,16 +68,16 @@ function hookUpDonationBox(el) {
     template: template,
     templateHelpers: {
         strips
-    },
-    regions: {
-        calculator: '.calculator'
     }
+//    regions: {
+//        calculator: '.calculator'
+//    }
 })
 export default class AdoptionConfirmation extends BaseView {
 
     onRender() {
         this.el.classList.add('confirmation-page');
-        this.regions.calculator.append(new Calculator());
+//        this.regions.calculator.append(new Calculator());
     }
 
 }
