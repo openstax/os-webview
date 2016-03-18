@@ -8,9 +8,11 @@ import bios from './bios.js';
 function toHeadshot(bioEntry) {
     return {
         name: bioEntry.name,
-        url: `/images/about-us/${bioEntry.image}`,
+        url: bioEntry.image ? `/images/about-us/${bioEntry.image}` : null,
         title: bioEntry.title,
-        description: bioEntry.bio
+        description: bioEntry.bio,
+        bgColor: bioEntry.bgColor,
+        textColor: bioEntry.textColor
     };
 }
 

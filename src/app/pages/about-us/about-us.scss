@@ -31,32 +31,137 @@
         .headshot {
             display: flex;
             flex-direction: column;
-            height: 24rem;
             padding: 2rem;
             position: relative;
 
-            img {
-                max-height: 100%;
-                max-width: 100%;
+            .picture-area {
+                align-items: flex-end;
+                display: flex;
+                height: 24rem;
+                overflow: hidden;
+                position: relative;
+                width: 20rem;
+
+                &.text-red .name {
+                    color: color(red);
+                }
+
+                &.text-orange .name {
+                    color: color(orange);
+                }
+
+                &.text-yellow .name {
+                    color: color(yellow);
+                }
+
+                &.text-gold .name {
+                    color: color(gold);
+                }
+
+                &.text-green .name {
+                    color: color(green);
+                }
+
+                &.text-deep-green .name {
+                    color: color(deep-green);
+                }
+
+                &.text-turquoise .name {
+                    color: color(turquoise);
+                }
+
+                &.text-cyan .name {
+                    color: color(cyan);
+                }
+
+                &.text-blue .name {
+                    color: color(blue);
+                }
+
+                &.text-gray .name {
+                    color: color(gray);
+                }
+
+                &.text-white .name {
+                    color: color(neutral-lightest);
+                }
+
+                &.bg-red {
+                    @include radial-gradient(lighten(color(red), 23%), color(red));
+                }
+
+                &.bg-orange {
+                    @include radial-gradient(lighten(color(orange), 15%), color(orange));
+                }
+
+                &.bg-yellow {
+                    @include radial-gradient(lighten(color(yellow), 25%), color(yellow));
+                }
+
+                &.bg-gold {
+                    @include radial-gradient(lighten(color(gold), 18%), color(gold));
+                }
+
+                &.bg-green {
+                    @include radial-gradient(lighten(color(green), 25%), color(green));
+                }
+
+                &.bg-deep-green {
+                    @include radial-gradient(lighten(color(deep-green), 15%), color(deep-green));
+                }
+
+                &.bg-turquoise {
+                    @include radial-gradient(lighten(color(turquoise), 19%), color(turquoise));
+                }
+
+                &.bg-cyan {
+                    @include radial-gradient(lighten(color(cyan), 32%), color(cyan));
+                }
+
+                &.bg-blue {
+                    @include radial-gradient(lighten(color(blue), 20%), color(blue));
+                }
+
+                &.bg-gray {
+                    @include radial-gradient(lighten(color(gray), 20%), color(gray));
+                }
             }
 
-            .name,
+            img {
+                height: 72%;
+            }
+
+            .name {
+                font-size: 3.2rem;
+                font-weight: bold;
+                left: 0;
+                line-height: normal;
+                position: absolute;
+                top: -0.2rem;
+                word-wrap: break-word;
+            }
+
             .title {
+                margin-left: 5%;
                 text-align: center;
+                width: 90%;
             }
 
             .details {
-                width: 0;
+                align-items: center;
+                background: color(neutral-lightest);
+                box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(94, 96, 98, 0.1);
+                display: flex;
+                flex-direction: column;
                 height: 0;
+                left: -10rem;
+                opacity: 0;
                 overflow: hidden;
                 position: absolute;
                 top: 80%;
-                left: -10rem;
-                background: color(neutral-lightest);
                 transform: translate3d(0, -1rem, 0);
-                opacity: 0;
                 transition: opacity 0.2s, transform 0.2s;
-                box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(94, 96, 98, 0.1);
+                width: 0;
 
                 &::before {
                     border: 2rem solid;
@@ -72,6 +177,8 @@
                     color: color(orange);
                     font-size: 1.8rem;
                     font-weight: 500;
+                    position: static;
+
                 }
 
                 .title {
