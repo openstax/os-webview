@@ -3,6 +3,7 @@ import PageModel from '~/models/pagemodel';
 import Author from './author/author';
 import Resource from './resource/resource';
 import Contents from './contents/contents';
+import Ally from './ally/ally';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './details.hbs';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
@@ -34,7 +35,8 @@ function dataToTemplateHelper(data) {
         allAuthors: '#all-authors',
         instructorResources: '#instructor-resources',
         studentResources: '#student-resources',
-        tableOfContents: '.table-of-contents-container'
+        tableOfContents: '.table-of-contents-container',
+        allies: '#allies'
     }
 })
 export default class Details extends BaseView {
@@ -95,6 +97,8 @@ export default class Details extends BaseView {
             slug = window.location.pathname.replace(/.*\//, '');
         }
 
+        this.el.querySelector('.go-to.errata-link').href = `https://openstaxcollege.org/textbooks/${slug}/errata`;
+
         let handleBasicBookData = (data) => {
             let detailUrl = data.pages[0].meta.detail_url,
                 detailModel = new PageModel(),
@@ -121,6 +125,18 @@ export default class Details extends BaseView {
 
                     for (let entry of detailData.table_of_contents.contents) {
                         this.regions.tableOfContents.append(new Contents(entry));
+                    }
+
+                    for (let ally of detailData.book_allies) {
+                        let allyTemplateHelper = {
+                            name: ally.ally_heading,
+                            blurb: ally.ally_short_description,
+                            url: ally.book_link_url,
+                            linkText: ally.book_link_text,
+                            logoUrlUrl: ally.ally_logo
+                        };
+
+                        this.regions.allies.append(new Ally(allyTemplateHelper));
                     }
                 };
 

@@ -85,7 +85,6 @@ $text-black2: rgba(0, 0, 0, 0.7);
             color: $text-black;
             font-size: 2rem;
             font-weight: bold;
-            letter-spacing: -0.1rem;
         }
 
         .logo {
@@ -114,25 +113,6 @@ $text-black2: rgba(0, 0, 0, 0.7);
             text-transform: uppercase;
             font-size: 1.4rem;
             font-weight: 500;
-
-            &::before,
-            &::after {
-                border-right: 0.2rem solid;
-                content: '';
-                display: block;
-                height: 0.7rem;
-                position: absolute;
-                transform: rotate3d(0, 0, 1, 135deg);
-                right: -1.3rem;
-                top: 0.6rem;
-                width: 0;
-            }
-
-            &::after {
-                top: 1rem;
-                right: -1.3rem;
-                transform: rotate3d(0, 0, 1, 45deg);
-            }
 
             &:hover {
                 color: darken(color(cyan), 10%);
