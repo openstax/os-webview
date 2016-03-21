@@ -12,44 +12,45 @@ const categories = ['Math', 'Science', 'Social Sciences', 'History', 'AP®'],
 
 let alliesData = {},
     logoPromises = [],
-    alliesDataPromise;
+    alliesDataPromise, pageDataPromise;
 
-alliesDataPromise = new PageModel().fetch({
-    data: {
-        type: 'books.Book',
-        fields: ['subject_name', 'title', 'book_allies']
-    }
-}).then((data) => {
+
+function handleAlliesData(data) {
     let imageModel = new BaseModel();
 
     for (let page of data.pages) {
-        for (let ally of page.book_allies) {
-            let name = ally.ally_heading;
+        let name = page.heading;
 
-            if (!(name in alliesData)) {
-                alliesData[name] = {
-                    name: ally.ally_heading,
-                    blurb: ally.ally_short_description,
-                    subjects: [],
-                    bookLinks: []
-                };
-                if (ally.ally_logo) {
-                    logoPromises.push(
-                        imageModel.fetch({url: ally.ally_logo}).then((logoData) => {
-                            alliesData[name].logoUrl = logoData.file;
-                        })
-                    );
-                }
-            }
-            alliesData[name].subjects.push(page.subject_name);
-            alliesData[name].bookLinks.push({
-                title: page.title,
-                url: ally.book_link_url,
-                subject: page.subject_name
-            });
+        alliesData[name] = {
+            name,
+            blurb: page.long_description,
+            subjects: page.ally_subject_list,
+            bookLinks: []
+        };
+        if (page.ally_logo) {
+            logoPromises.push(
+                imageModel.fetch({url: page.ally_logo}).then((logoData) => {
+                    alliesData[name].logoUrl = logoData.file;
+                })
+            );
         }
     }
+}
+
+pageDataPromise = new PageModel().fetch({
+    data: {
+        type: 'pages.EcosystemAllies',
+        fields: ['title', 'classroom_text']
+    }
 });
+
+alliesDataPromise = new PageModel().fetch({
+    data: {
+        type: 'allies.Ally',
+        fields: ['ally_subject_list', 'title', 'short_description', 'long_description',
+                'ally_logo', 'heading']
+    }
+}).then(handleAlliesData);
 
 @props({
     template,
@@ -59,7 +60,7 @@ alliesDataPromise = new PageModel().fetch({
         blurbs: '.blurbs .container'
     }
 })
-export default class Subjects extends BaseView {
+export default class Allies extends BaseView {
     constructor() {
         super();
         this.stateModel = new BaseModel({
@@ -67,6 +68,11 @@ export default class Subjects extends BaseView {
             selectedBook: null
         });
         this.imageModel = new BaseModel();
+    }
+
+    handlePageData(data) {
+        this.el.querySelector('#page-title').textContent = data.title;
+        this.el.querySelector('#page-subhead').innerHTML = data.classroom_text;
     }
 
     onRender() {
@@ -81,5 +87,6 @@ export default class Subjects extends BaseView {
                 }
             });
         });
+        pageDataPromise.then(this.handlePageData.bind(this));
     }
 }

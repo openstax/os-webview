@@ -10,7 +10,7 @@ export default class Ally extends BaseView {
         stateModel.on('change:selectedFilter', (what) => {
             let subject = what.changed.selectedFilter,
                 visible = (subject === 'View All' ||
-                this.templateHelpers.subjects.indexOf(subject) >= 0);
+                templateHelpers.subjects.indexOf(subject) >= 0);
 
             this.el.classList.toggle('hidden', !visible);
             if (visible) {
