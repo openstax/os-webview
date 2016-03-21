@@ -15,7 +15,7 @@ let alliesData = {},
     alliesDataPromise, pageDataPromise;
 
 
-function handleAlliesData(data){
+function handleAlliesData(data) {
     let imageModel = new BaseModel();
 
     for (let page of data.pages) {
@@ -31,13 +31,9 @@ function handleAlliesData(data){
             logoPromises.push(
                 imageModel.fetch({url: page.ally_logo}).then((logoData) => {
                     alliesData[name].logoUrl = logoData.file;
-                }, (error) => {
-                    console.debug("Unable to fetch logo", error);
-                    alliesData[name].logoUrl = 'https://oscms-dev.openstax.org/media/original_images/Sapling.png';
                 })
             );
         }
-
     }
 }
 

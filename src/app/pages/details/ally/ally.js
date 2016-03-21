@@ -3,23 +3,10 @@ import BaseModel from '~/helpers/backbone/model';
 import {props} from '~/helpers/backbone/decorators';
 import {template} from './ally.hbs';
 
-@props({
-    template: () => '<img />',
-    regions: {
-        img: 'img'
-    }
-})
-class Logo extends BaseView {
-    constructor(logoUrlUrl) {
+class LogoModel extends BaseModel {
+    constructor(urlRoot) {
         super();
-        this.logoUrlPromise = new BaseModel({url: logoUrlUrl}).fetch();
-    }
-
-    onRender() {
-        this.logoUrlPromise.then((data) => {
-            console.debug('logourl should be here', data);
-            this.regions.img.src = data.file;
-        });
+        this.urlRoot = urlRoot;
     }
 }
 
@@ -33,12 +20,18 @@ export default class Ally extends BaseView {
     constructor(templateHelpers) {
         super();
         this.templateHelpers = templateHelpers;
-        if (templateHelpers.logoUrlUrl) {
-            this.regions.logo.show(new Logo(templateHelpers.logoUrlUrl));
-        }
     }
 
     onRender() {
-        this.el.classList.add('ally-info');
+        this.el.classList.add('ally-info', 'resource');
+        if (this.templateHelpers.logoUrlUrl) {
+            let logoImg = document.createElement('IMG'),
+                logoDiv = this.el.querySelector('.logo');
+
+            new LogoModel(this.templateHelpers.logoUrlUrl).fetch().then((data) => {
+                logoImg.src = data.file;
+                logoDiv.appendChild(logoImg);
+            });
+        }
     }
 }
