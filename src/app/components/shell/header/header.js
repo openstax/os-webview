@@ -1,5 +1,6 @@
 import Backbone from 'backbone';
 import BaseView from '~/helpers/backbone/view';
+import userModel from '~/models/usermodel';
 import {on, props} from '~/helpers/backbone/decorators';
 import linkHelper from '~/helpers/link';
 import {template} from './header.hbs';
@@ -330,6 +331,15 @@ class Header extends BaseView {
     }
 
     onRender() {
+        userModel.fetch().then((data) => {
+            let loginItem = this.el.querySelector('.meta-nav .container .login a'),
+                userInfo = data[0];
+
+            console.debug("User data:", userInfo);
+            if (userInfo.username) {
+                loginItem.textContent = `Hi ${userInfo.first_name}`;
+            }
+        });
         this.updateHeaderStyle();
         document.addEventListener('load', this.appendURL.bind(this), true);
         document.addEventListener('click', this.resetHeader.bind(this), true);

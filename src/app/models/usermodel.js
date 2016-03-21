@@ -1,7 +1,11 @@
 import BaseModel from '~/helpers/backbone/model';
 
-let url = '//oscms-dev.openstax.org/api/user/';
+let url = 'https://oscms-dev.openstax.org/api/user/';
 
-export default class UserModel extends BaseModel {
+class UserModel extends BaseModel {
     urlRoot = url;
 }
+
+let userModel = new UserModel();
+
+export default userModel;

@@ -1,5 +1,5 @@
 import ProxyWidgetView from '~/helpers/backbone/proxy-widget-view';
-import UserModel from '~/models/usermodel';
+import userModel from '~/models/usermodel';
 import bookTitles from '~/helpers/book-titles';
 import FacultySection from './faculty-section/faculty-section';
 import {on, props} from '~/helpers/backbone/decorators';
@@ -35,7 +35,7 @@ export default class NewAccountForm extends ProxyWidgetView {
         this.facultySection = new FacultySection();
         this.el.classList.add('finish-profile');
         super.onRender();
-        new UserModel().fetch().then((data) => {
+        userModel.fetch().then((data) => {
             let userInfo = data[0];
 
             this.el.querySelector('[name=first_name]').value = userInfo.first_name;

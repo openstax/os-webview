@@ -4,6 +4,7 @@ import Author from './author/author';
 import Resource from './resource/resource';
 import Contents from './contents/contents';
 import Ally from './ally/ally';
+import userModel from '~/models/usermodel';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './details.hbs';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
@@ -102,49 +103,70 @@ export default class Details extends BaseView {
 
         this.el.querySelector('.go-to.errata-link').href = `https://openstaxcollege.org/textbooks/${slug}/errata`;
 
-        let handleBasicBookData = (data) => {
-            let detailUrl = data.pages[0].meta.detail_url,
-                detailModel = new PageModel(),
-                handleDetailData = (detailData) => {
-                    let th = dataToTemplateHelper(detailData);
+        let showInstructorResources = (resources) => {
+                userModel.fetch().then((userData) => {
+                    let userInfo = userData[0];
 
-                    for (let topAuthor of th.topAuthors) {
-                        this.regions.topAuthors.append(new Author(topAuthor));
+                    if (userInfo.is_staff || userInfo.is_superuser) {
+                        insertResources(resources, 'instructorResources');
                     }
-                    for (let author of th.allAuthors) {
-                        this.regions.allAuthors.append(new Author(author));
-                    }
-                    this.el.querySelector('.book-cover').src = th.coverUrl;
-                    this.el.querySelector('.book-info .title').textContent = th.title;
-                    this.el.querySelector('.book-info .blurb').innerHTML = th.description;
-                    document.getElementById('endorsement').innerHTML = th.endorsement;
-                    document.getElementById('attribution').textContent = th.attribution;
-                    document.getElementById('attribution-school').textContent = th.attributionSchool;
-                    this.gtt = new GetThisTitle(detailData);
-                    this.regions.getThisTitle.show(this.gtt);
-
-                    insertResources(detailData.book_faculty_resources, 'instructorResources');
-                    insertResources(detailData.book_student_resources, 'studentResources');
-
-                    for (let entry of detailData.table_of_contents.contents) {
+                });
+            },
+            handbookLink = this.el.querySelector('.handbook-link'),
+            setHandbookLink = (linkUrl) => {
+                if (linkUrl) {
+                    handbookLink.href = linkUrl;
+                    handbookLink.parentNode.classList.remove('hidden');
+                }
+            },
+            showTableOfContents = (toc) => {
+                if (toc) {
+                    for (let entry of toc.contents) {
                         this.regions.tableOfContents.append(new Contents(entry));
                     }
+                }
+            },
+            handleBasicBookData = (data) => {
+                let detailUrl = data.pages[0].meta.detail_url,
+                    detailModel = new PageModel(),
 
-                    for (let ally of detailData.book_allies) {
-                        let allyTemplateHelper = {
-                            name: ally.ally_heading,
-                            blurb: ally.ally_short_description,
-                            url: ally.book_link_url,
-                            linkText: ally.book_link_text,
-                            logoUrlUrl: ally.ally_logo
-                        };
+                    handleDetailData = (detailData) => {
+                        let th = dataToTemplateHelper(detailData);
 
-                        this.regions.allies.append(new Ally(allyTemplateHelper));
-                    }
-                };
+                        for (let topAuthor of th.topAuthors) {
+                            this.regions.topAuthors.append(new Author(topAuthor));
+                        }
+                        for (let author of th.allAuthors) {
+                            this.regions.allAuthors.append(new Author(author));
+                        }
+                        this.el.querySelector('.book-cover').src = th.coverUrl;
+                        this.el.querySelector('.book-info .title').textContent = th.title;
+                        this.el.querySelector('.book-info .blurb').innerHTML = th.description;
+                        document.getElementById('endorsement').innerHTML = th.endorsement;
+                        document.getElementById('attribution').textContent = th.attribution;
+                        document.getElementById('attribution-school').textContent = th.attributionSchool;
+                        this.gtt = new GetThisTitle(detailData);
+                        this.regions.getThisTitle.show(this.gtt);
+                        setHandbookLink(detailData.student_handbook_url);
+                        showTableOfContents(detailData.table_of_contents);
+                        showInstructorResources(detailData.book_faculty_resources);
+                        insertResources(detailData.book_student_resources, 'studentResources');
 
-            detailModel.fetch({url: detailUrl}).then(handleDetailData.bind(this));
-        };
+                        for (let ally of detailData.book_allies) {
+                            let allyTemplateHelper = {
+                                name: ally.ally_heading,
+                                blurb: ally.ally_short_description,
+                                url: ally.book_link_url,
+                                linkText: ally.book_link_text,
+                                logoUrlUrl: ally.ally_logo
+                            };
+
+                            this.regions.allies.append(new Ally(allyTemplateHelper));
+                        }
+                    };
+
+                detailModel.fetch({url: detailUrl}).then(handleDetailData.bind(this));
+            };
 
         pageModel.fetch({
             data: {type: 'books.Book', slug}
