@@ -361,8 +361,42 @@
         }
     }
 
-    .logo > img {
-        max-width: 20rem;
+    .ally-info {
+        .text a {
+            position: relative;
+
+            &::before,
+            &::after {
+                border-right: 0.2rem solid;
+                content: '';
+                display: block;
+                height: 0.7rem;
+                position: absolute;
+                transform: rotate3d(0, 0, 1, 135deg);
+                right: -1.3rem;
+                top: 0.3rem;
+                width: 0;
+            }
+
+            &::after {
+                top: 0.7rem;
+                right: -1.3rem;
+                transform: rotate3d(0, 0, 1, 45deg);
+            }
+        }
+
+        .logo {
+            display: flex;
+            margin-bottom: 3rem;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                width: 100%;
+                max-width: 20rem;
+
+            }
+        }
     }
 
     .errata {
