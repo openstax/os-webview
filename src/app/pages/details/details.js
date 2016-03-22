@@ -44,7 +44,7 @@ export default class Details extends BaseView {
     showTableOfContents(event) {
         this.openedWith = event.target;
         this.el.querySelector('.table-of-contents').classList.toggle('hidden');
-        document.body.classList.toggle('no-scroll');
+        document.body.setAttribute('style', 'overflow:hidden');
         event.preventDefault();
         event.stopPropagation();
     }
@@ -53,6 +53,7 @@ export default class Details extends BaseView {
     hideTOC(event) {
         if (event.target !== this.openedWith) {
             this.el.querySelector('.table-of-contents').classList.add('hidden');
+            document.body.removeAttribute('style');
         }
     }
 

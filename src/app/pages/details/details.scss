@@ -1,7 +1,6 @@
 @import 'variables';
 @import 'mixins';
 
-
 .details-page {
     position: relative;
 
@@ -52,7 +51,7 @@
                 padding: 1.5rem;
                 max-width: 60rem;
                 width: 100%;
-                max-height: 60rem;
+                max-height: 40rem;
                 overflow-y: auto;
                 transform: translate3d(-50%, -60%, 0);
             }
@@ -71,7 +70,7 @@
         padding: 0 1.5rem;
         position: relative;
         max-width: $boxed-width;
-        flex-flow: column wrap;
+        flex-flow: column nowrap;
 
         @include tablet {
             flex-flow: row wrap;
@@ -121,7 +120,7 @@
 
         .floating-menu {
             order: 2;
-            flex: 1 100%;
+            flex: 1 auto;
             margin-bottom: 3rem;
 
             @media (min-width: 500px) {
@@ -328,7 +327,7 @@
         }
 
         .row {
-            flex: 0 0 100%;
+            flex: 1 auto;
             margin-bottom: 2.5rem;
 
         }
