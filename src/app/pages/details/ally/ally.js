@@ -23,7 +23,7 @@ export default class Ally extends BaseView {
     }
 
     onRender() {
-        this.el.classList.add('ally-info', 'resource');
+        this.el.classList.add('ally-info');
         if (this.templateHelpers.logoUrlUrl) {
             let logoImg = document.createElement('IMG'),
                 logoDiv = this.el.querySelector('.logo');

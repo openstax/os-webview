@@ -1,7 +1,6 @@
 @import 'variables';
 @import 'mixins';
 
-
 .details-page {
     position: relative;
 
@@ -15,15 +14,53 @@
         cursor: pointer;
     }
 
-    .table-of-contents-container {
-        background-color: color(neutral-lightest);
-        box-shadow: 0 0 1rem color(neutral-dark);
-        padding: 1rem;
-        position: absolute;
+    .table-of-contents {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 100%;
+        width: 100%;
         z-index: 100;
+        overflow-y: auto;
+        opacity: 1;
+        transition: opacity 0.3s;
 
-        .subunit {
-            margin-left: 1rem;
+        @include desktop {
+            background-color: rgba(color(neutral-dark), 0.90);
+        }
+
+        &.hidden {
+            display: initial;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+
+        .box {
+            background-color: rgba(color(neutral-lightest), 0.97);
+            padding: 7.5rem 1.5rem 1.5rem;
+            font-weight: 500;
+
+            @include desktop {
+                position: absolute;
+                left: 50%;
+                top: 60%;
+                padding: 1.5rem;
+                max-width: 60rem;
+                width: 100%;
+                max-height: 40rem;
+                overflow-y: auto;
+                transform: translate3d(-50%, -60%, 0);
+            }
+
+            .subunit {
+                margin-left: 1.5rem;
+                font-weight: 300;
+            }
+
         }
     }
 
@@ -33,7 +70,7 @@
         padding: 0 1.5rem;
         position: relative;
         max-width: $boxed-width;
-        flex-flow: column wrap;
+        flex-flow: column nowrap;
 
         @include tablet {
             flex-flow: row wrap;
@@ -83,7 +120,7 @@
 
         .floating-menu {
             order: 2;
-            flex: 1 100%;
+            flex: 1 auto;
             margin-bottom: 3rem;
 
             @media (min-width: 500px) {
@@ -100,6 +137,7 @@
                 width: 100%;
                 transform: translate3d(-50%, 0, 0);
                 z-index: 1;
+                margin-bottom: 0;
             }
 
             .box {
@@ -289,7 +327,7 @@
         }
 
         .row {
-            flex: 0 0 100%;
+            flex: 1 auto;
             margin-bottom: 2.5rem;
 
         }
@@ -361,8 +399,42 @@
         }
     }
 
-    .logo > img {
-        max-width: 20rem;
+    .ally-info {
+        .text a {
+            position: relative;
+
+            &::before,
+            &::after {
+                border-right: 0.2rem solid;
+                content: '';
+                display: block;
+                height: 0.7rem;
+                position: absolute;
+                transform: rotate3d(0, 0, 1, 135deg);
+                right: -1.3rem;
+                top: 0.3rem;
+                width: 0;
+            }
+
+            &::after {
+                top: 0.7rem;
+                right: -1.3rem;
+                transform: rotate3d(0, 0, 1, 45deg);
+            }
+        }
+
+        .logo {
+            display: flex;
+            margin-bottom: 3rem;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                width: 100%;
+                max-width: 20rem;
+
+            }
+        }
     }
 
     .errata {
