@@ -1,0 +1,42 @@
+@import 'variables';
+@import 'mixins';
+
+.contact-page {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100vw;
+
+    h1,
+    h2 {
+        margin-bottom: 0;
+    }
+
+    .subhead {
+        font-size: 1.7rem;
+        padding: 0;
+        text-align: left;
+    }
+
+    .boxed {
+        display: flex;
+        flex-flow: column nowrap;
+        max-width: $boxed-width;
+        margin: 0 auto 4rem;
+        padding: 0 1.5rem;
+    }
+
+    form {
+        margin-bottom: 2rem;
+    }
+
+    .labeled-control,
+    .address {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1rem;
+    }
+
+    .address {
+        line-height: normal;
+    }
+}

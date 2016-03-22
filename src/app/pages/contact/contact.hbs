@@ -1,0 +1,43 @@
+<style scoped>
+    @import url(/app/pages/contact/contact.css);
+</style>
+<div class="contact-page page">
+    {{{strips}}}
+    <main id="maincontent" class="boxed">
+
+        <h1>Contact us</h1>
+        <p class="subhead">
+            If you have question or feedback, drop us a line!
+        </p>
+        <form>
+            <div class="labeled-control">
+                What is your question about?
+                <select>
+                    {{#each options}}
+                        <option>{{this}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="labeled-control">
+                Your Name
+                <input type="text" required />
+            </div>
+            <div class="labeled-control">
+                Your Email Address
+                <input pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text" required />
+            </div>
+            <div class="labeled-control">
+                Your Message
+                <textarea cols="50" name="00NU00000056Rls" rows="6" required></textarea>
+            </div>
+            <button class="btn">Send</button>
+        </form>
+        <h2>Mailing Address</h2>
+        <div class="address">
+            <span>OpenStax</span>
+            Rice University
+            <span>6100 Main St. MS 375</span>
+            Houston, TX 77005
+        </div>
+    </main>
+</div>
