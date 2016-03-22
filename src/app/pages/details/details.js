@@ -35,7 +35,7 @@ function dataToTemplateHelper(data) {
         allAuthors: '#all-authors',
         instructorResources: '#instructor-resources',
         studentResources: '#student-resources',
-        tableOfContents: '.table-of-contents-container',
+        tableOfContents: '.table-of-contents .box',
         allies: '#allies'
     }
 })
@@ -43,7 +43,8 @@ export default class Details extends BaseView {
     @on('click .table-of-contents-link')
     showTableOfContents(event) {
         this.openedWith = event.target;
-        this.el.querySelector('.table-of-contents-container').classList.toggle('hidden');
+        this.el.querySelector('.table-of-contents').classList.toggle('hidden');
+        document.body.classList.toggle('no-scroll');
         event.preventDefault();
         event.stopPropagation();
     }
@@ -51,7 +52,7 @@ export default class Details extends BaseView {
     @on('click')
     hideTOC(event) {
         if (event.target !== this.openedWith) {
-            this.el.querySelector('.table-of-contents-container').classList.add('hidden');
+            this.el.querySelector('.table-of-contents').classList.add('hidden');
         }
     }
 
@@ -68,7 +69,8 @@ export default class Details extends BaseView {
             let footerPosition = footer.offsetTop;
             let floatingMenuHeight = floatingMenu.offsetHeight+200;
             let menuOffset = footerPosition - floatingMenuHeight;
-            let menuTopPosition = ((menuOffset-window.pageYOffset)*1.05);
+            let menuTopPosition = Math.round((menuOffset-window.pageYOffset));
+
 
             if (window.pageYOffset > menuOffset) {
                 floatingMenu.setAttribute('style', `top: ${menuTopPosition}px`);
