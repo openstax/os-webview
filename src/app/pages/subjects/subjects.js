@@ -111,11 +111,11 @@ export default class Subjects extends BaseView {
 
         new PageModel().fetch({data: {
             type: 'books.Book',
-            fields: 'title,subject_name,is_ap,cover_url,' +
-            'high_resolution_pdf_url,low_resolution_pdf_url,' +
-            'ibook_link,webview_link,concept_coach_link,bookshare_link,' +
-            'amazon_link,amazon_price,amazon_blurb,' +
-            'bookstore_link,bookstore_blurb,slug'
+            fields: ['title', 'subject_name', 'is_ap,cover_url',
+            'high_resolution_pdf_url', 'low_resolution_pdf_url',
+            'ibook_link', 'webview_link', 'concept_coach_link,bookshare_link',
+            'amazon_link', 'amazon_price', 'amazon_blurb',
+            'bookstore_link', 'bookstore_blurb', 'slug']
         }}).then((result) => {
             this.renderCategorySections(organizeBooksByCategory(result.pages));
         });
