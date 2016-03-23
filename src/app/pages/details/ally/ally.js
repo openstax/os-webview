@@ -1,14 +1,6 @@
 import BaseView from '~/helpers/backbone/view';
-import BaseModel from '~/helpers/backbone/model';
 import {props} from '~/helpers/backbone/decorators';
 import {template} from './ally.hbs';
-
-class LogoModel extends BaseModel {
-    constructor(urlRoot) {
-        super();
-        this.urlRoot = urlRoot;
-    }
-}
 
 @props({
     template,
@@ -24,14 +16,12 @@ export default class Ally extends BaseView {
 
     onRender() {
         this.el.classList.add('ally-info');
-        if (this.templateHelpers.logoUrlUrl) {
+        if (this.templateHelpers.logoUrl) {
             let logoImg = document.createElement('IMG'),
                 logoDiv = this.el.querySelector('.logo');
 
-            new LogoModel(this.templateHelpers.logoUrlUrl).fetch().then((data) => {
-                logoImg.src = data.file;
-                logoDiv.appendChild(logoImg);
-            });
+            logoImg.src = this.templateHelpers.logoUrl;
+            logoDiv.appendChild(logoImg);
         }
     }
 }

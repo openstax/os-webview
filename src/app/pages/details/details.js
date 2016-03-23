@@ -158,7 +158,7 @@ export default class Details extends BaseView {
                                 blurb: ally.ally_short_description,
                                 url: ally.book_link_url,
                                 linkText: ally.book_link_text,
-                                logoUrlUrl: ally.ally_logo
+                                logoUrl: ally.ally_logo
                             };
 
                             this.regions.allies.append(new Ally(allyTemplateHelper));

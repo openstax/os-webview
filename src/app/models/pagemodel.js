@@ -1,5 +1,5 @@
 import BaseModel from '~/helpers/backbone/model';
-import {ApiOrigin} from '/settings.js';
+import {ApiOrigin} from '~/../settings.js';
 
 let pageUrl = `${ApiOrigin}/api/v1/pages`;
 
