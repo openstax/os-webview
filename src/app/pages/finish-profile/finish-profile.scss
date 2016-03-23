@@ -34,7 +34,13 @@
         background-color: color(primary);
         border: 0;
         color: color(neutral-lightest);
+        display: block;
+        float: none;
         font-size: 1.7rem;
         padding: 1rem 2rem;
+
+        &:disabled {
+            background-color: color(neutral-light);
+        }
     }
 }

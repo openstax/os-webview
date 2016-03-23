@@ -9,7 +9,7 @@
         <p class="subhead">
             If you have question or feedback, drop us a line!
         </p>
-        <form>
+        <form action="/mail/send_mail">
             <div class="labeled-control">
                 What is your question about?
                 <select>
@@ -17,20 +17,22 @@
                         <option>{{this}}</option>
                     {{/each}}
                 </select>
+                <input name="to_address" type="hidden" />
+                <input name="subject" type="hidden" />
             </div>
             <div class="labeled-control">
                 Your Name
-                <input type="text" required />
+                <input name="from_name" type="text" required />
             </div>
             <div class="labeled-control">
                 Your Email Address
-                <input pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text" required />
+                <input name="from_address" pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text" required />
             </div>
             <div class="labeled-control">
                 Your Message
-                <textarea cols="50" name="00NU00000056Rls" rows="6" required></textarea>
+                <textarea cols="50" name="message_body" rows="6" required></textarea>
             </div>
-            <button class="btn">Send</button>
+            <button class="btn" type="submit">Send</button>
         </form>
         <h2>Mailing Address</h2>
         <div class="address">
