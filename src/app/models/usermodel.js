@@ -1,5 +1,5 @@
 import BaseModel from '~/helpers/backbone/model';
-import {ApiOrigin} from '/settings.js';
+import {ApiOrigin} from '~/../settings.js';
 
 let url = `${ApiOrigin}/api/user/`;
 

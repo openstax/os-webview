@@ -16,8 +16,6 @@ let alliesData = {},
 
 
 function handleAlliesData(data) {
-    let imageModel = new BaseModel();
-
     for (let page of data.pages) {
         let name = page.heading;
 
@@ -28,11 +26,7 @@ function handleAlliesData(data) {
             bookLinks: []
         };
         if (page.ally_logo) {
-            logoPromises.push(
-                imageModel.fetch({url: page.ally_logo}).then((logoData) => {
-                    alliesData[name].logoUrl = logoData.file;
-                })
-            );
+            alliesData[name].logoUrl = page.ally_logo;
         }
     }
 }
@@ -67,7 +61,6 @@ export default class Allies extends BaseView {
             selectedFilter: 'View All',
             selectedBook: null
         });
-        this.imageModel = new BaseModel();
     }
 
     handlePageData(data) {
