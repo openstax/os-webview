@@ -31,8 +31,10 @@
         .headshot {
             display: flex;
             flex-direction: column;
-            padding: 2rem;
+            justify-content: space-between;
+            padding: 1.5rem 0;
             position: relative;
+            width: 20rem;
 
             .picture-area {
                 align-items: flex-end;
@@ -40,7 +42,7 @@
                 height: 24rem;
                 overflow: hidden;
                 position: relative;
-                width: 20rem;
+                width: calc(100% - 2.5rem);
 
                 &.text-red .name {
                     color: color(red);
@@ -128,16 +130,20 @@
             }
 
             img {
-                height: 72%;
+                height: 78%;
+                left: -3.5rem;
+                position: relative;
+                z-index: 3;
             }
 
             .name {
-                font-size: 3.2rem;
+                font-size: 3.6rem;
                 font-weight: bold;
-                left: 0;
-                line-height: normal;
+                left: -0.2rem;
+                letter-spacing: -0.15rem;
+                line-height: 3.6rem;
                 position: absolute;
-                top: -0.2rem;
+                top: -0.5rem;
                 word-wrap: break-word;
             }
 
@@ -192,12 +198,12 @@
             &:hover .details {
                 @include desktop {
                     overflow: initial;
-                    width: 45rem;
+                    width: 35rem;
                     height: auto;
                     opacity: 1;
                     transform: translate3d(0, 0, 0);
                     padding: 1.5rem;
-                    z-index: 1;
+                    z-index: 5;
                 }
             }
         }
