@@ -11,8 +11,9 @@ class UserModel extends BaseModel {
             options.crossDomain = true;
         }
         if (!options.xhrFields) {
-            options.xhrFields = {withCredentials: true};
+            options.xhrFields = {};
         }
+        options.xhrFields.withCredentials = true;
         return super.sync(method, model, options);
     }
 }

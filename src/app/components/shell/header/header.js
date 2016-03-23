@@ -331,11 +331,11 @@ class Header extends BaseView {
     }
 
     onRender() {
-        userModel.fetch({xhrFields: {withCredentials: true}}).then((data) => {
+        userModel.fetch().then((data) => {
             let loginItem = this.el.querySelector('.meta-nav .container .login a'),
                 userInfo = data[0];
 
-            if (userInfo.username) {
+            if (userInfo && userInfo.username) {
                 loginItem.textContent = `Hi ${userInfo.first_name}`;
             }
         });

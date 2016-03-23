@@ -27,13 +27,11 @@ const subjectOptions = [
 export default class Accessibility extends BaseView {
     @on('submit')
     validateAndSend(e) {
-        /* -- When we can submit, we'll use these
         let selectedSubject = this.el.querySelector('select').value,
-            selectedOption = subjectOptions.filter((item) => item[0] === selectedSubject)[0],
-            toAddress = selectedOption[1],
-            subjectLine = selectedOption[2];
-        */
+            selectedOption = subjectOptions.filter((item) => item[0] === selectedSubject)[0];
 
+        this.el.querySelector('[name="to_address"]').value = selectedOption[1];
+        this.el.querySelector('[name="subject"]').value = selectedOption[2];
         e.preventDefault();
     }
 
