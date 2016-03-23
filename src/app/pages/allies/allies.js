@@ -71,8 +71,8 @@ export default class Allies extends BaseView {
     }
 
     handlePageData(data) {
-        this.el.querySelector('#page-title').textContent = data.title;
-        this.el.querySelector('#page-subhead').innerHTML = data.classroom_text;
+        this.el.querySelector('#page-title').textContent = data.pages[0].title;
+        this.el.querySelector('#page-subhead').innerHTML = data.pages[0].classroom_text;
     }
 
     onRender() {
