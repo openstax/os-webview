@@ -25,6 +25,7 @@ const PAGES = [
     'higher-ed',
     'interest',
     'interest-confirmation',
+    'impact',
     'k-12',
     'license',
     'news',
