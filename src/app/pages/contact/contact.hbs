@@ -10,6 +10,7 @@
             If you have question or feedback, drop us a line!
         </p>
         <form action="/api/mail/send_mail/" method="post">
+            <input type="hidden" name="csrfmiddlewaretoken" />
             <div class="labeled-control">
                 What is your question about?
                 <select>
