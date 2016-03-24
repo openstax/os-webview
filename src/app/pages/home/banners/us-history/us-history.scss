@@ -1,39 +1,54 @@
 @import 'variables';
 @import 'mixins';
 
+@mixin tablet {
+    @media (min-width: #{breakpoints(phone) + 1}) {
+        @content;
+    }
+}
+
 @mixin desktop {
     @media (min-width: 1025px) {
         @content;
     }
 }
 
-@mixin tablet {
-    @media (min-width: #{breakpoints(phone) + 1}) and (max-width: 1024px) {
-        @content;
-    }
-}
-
 .us-history {
     background-image: url('/images/home/subjects/us-history/background.jpg');
-    background-position: center top;
+    background-position: -15rem 0;
     background-repeat: no-repeat;
-    background-size: 100vw 55.695vw;
-    height: 55.695vw;
+    background-size: cover;
+    height: 71rem;
     overflow: hidden;
     position: relative;
 
-    @include tablet {
-        background-size: 100vw 81.4vw;
-        height: 81.4vw;
+    @include desktop {
+        background-position: center top;
     }
 
     @include phone {
         background-color: color(blue);
         background-image: none;
         background-position: left top;
-        background-size: 53.66vw 53.66vw;
-        height: 128.13vw;
-        margin-top: 0;
+        height: 45rem;
+    }
+
+    .container {
+        display: flex;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        max-width: $boxed-width;
+        flex-flow: column wrap;
+        position: relative;
+        height: 100%;
+
+        @include tablet {
+            flex-flow: row wrap;
+        }
+
+        @include desktop {
+            flex-flow: row wrap;
+        }
     }
 
     .square-1,
@@ -52,32 +67,55 @@
 
     .square-1,
     .square-4 {
-        height: 1.77vw;
-        width: 1.77vw;
+        height: 2.5rem;
+        width: 2.5rem;
     }
 
     .square-1 {
-        left: 4.56vw;
-        top: 29.43vw;
+        left: 5rem;
+        top: 50%;
     }
 
     .square-2 {
-        height: 37.9vw;
-        left: 9.2vw;
-        top: 9.5vw;
-        width: 37.9vw;
+        height: 34rem;
+        bottom: 0;
+        left: 0;
+        width: 45rem;
+
+        @include tablet {
+            display: block;
+        }
+
+        @include desktop {
+            width: 70%;
+            height: 34rem;
+            bottom: auto;
+            top: 50%;
+            transform: translate3d(0, -35%, 0);
+        }
     }
 
     .square-3 {
-        height: 26.27vw;
-        left: 62.9vw;
-        top: 21.49vw;
-        width: 26.27vw;
+        height: 26rem;
+        bottom: 15rem;
+        right: 0;
+        width: 26rem;
+
+        @include tablet {
+            display: block;
+        }
+
+        @include desktop {
+            right: 5rem;
+            bottom: 5rem;
+            width: 40rem;
+            height: 33rem;
+        }
     }
 
     .square-4 {
-        left: 74.17vw;
-        top: 11.48vw;
+        left: 70%;
+        top: 20%;
     }
 
     .sacajawea,
@@ -104,77 +142,86 @@
 
     .sacajawea {
         background-image: url('/images/home/subjects/us-history/sacajawea.png');
-        height: 7.1376vw;
-        left: 26.637vw;
+        height: 10rem;
+        left: 26rem;
         position: absolute;
-        top: 23.7vw;
-        width: 8.83vw;
+        top: 50%;
+        width: 12.4rem;
     }
 
     .john-adams {
         background-image: url('/images/home/subjects/us-history/john-adams.png');
-        height: 5.94vw;
-        left: 78.44vw;
+        height: 8rem;
+        right: 18rem;
         position: absolute;
-        top: 16.85vw;
-        width: 5.07vw;
+        top: 30%;
+        width: 6.7rem;
     }
 
     .clermont {
         background-image: url('/images/home/subjects/us-history/clermont.png');
-        height: 17.4vw;
-        left: 70.37vw;
+        height: 22rem;
+        right: 0;
         position: absolute;
-        top: 28.4vw;
-        width: 26.39vw;
+        bottom: 10rem;
+        width: 36rem;
     }
 
     .book {
         background-color: color(blue);
         background-image: url('/images/subjects/us-history.svg');
-        height: 25.607vw;
-        left: 38.12vw;
         position: absolute;
-        top: 7.726vw;
-        width: 25.607vw;
+        height: 25rem;
+        left: 0;
+        top: 1.5rem;
+        width: 25rem;
 
         @include tablet {
-            height: 36.46vw;
-            left: 36.96vw;
-            top: 18.35vw;
-            width: 36.46vw;
+            top: 15%;
+            left: auto;
+            right: 25%;
+            width: 30rem;
+            height: 30rem;
         }
 
-        @include phone {
-            height: 61vw;
-            left: 0;
-            top: 0;
-            width: 61vw;
+        @media (max-width: 380px) {
+            width: 20rem;
+            height: 20rem;
+        }
+
+        @include desktop {
+            top: 15%;
+            left: 50%;
+            width: 30rem;
+            height: 30rem;
+            transform: translate3d(-50%, 0, 0);
         }
     }
 
     canvas,
     .video,
     .video-banner {
-        height: 41.7vw;
-        left: 46.2vw;
         position: absolute;
-        top: 14vw;
-        width: 35.72vw;
         z-index: 2;
+        width: 22rem;
+        height: 25rem;
+        bottom: 15rem;
+        right: 1.5rem;
+
+
 
         @include tablet {
-            height: 56.2vw;
-            left: 50.13vw;
-            top: 25.32vw;
-            width: 48.14vw;
+            height: 40rem;
+            bottom: 0;
+            right: -6rem;
+            width: 35rem;
         }
 
-        @include phone {
-            height: 71.87vw;
-            left: 33vw;
-            top: 25vw;
-            width: 61.56vw;
+        @include desktop {
+            height: 53rem;
+            bottom: 0;
+            right: 15rem;
+            width: 45.4rem;
         }
     }
 
@@ -184,139 +231,147 @@
 
     .video-banner {
         background-image: url('/images/home/subjects/us-history/student.png');
+        background-position: 92% 100%;
     }
 
     .now-i-can {
         background-color: rgba(color(turquoise), 0.85);
         color: color(neutral-lightest);
-        font-size: 2.4vw;
+        font-size: 3rem;
         font-weight: 600;
-        height: 7.064vw;
-        left: 12.8vw;
-        line-height: 7.064vw;
+        height: 8rem;
+        right: 15rem;
+        bottom: 15rem;
+        line-height: 2.5rem;
         padding: 0;
         position: absolute;
         text-align: center;
         text-transform: none;
-        top: 33.8484vw;
-        width: 42.09vw;
+        width: 48.5rem;
         z-index: 3;
+        display: none;
 
-        @include tablet {
-            font-size: 3.8vw;
-            left: 2.53vw;
-            line-height: 10.76vw;
-            height: 10.76vw;
-            top: 55.82vw;
-            width: 63.3vw;
+        @media (min-width:650px) {
+            display: initial;
         }
 
-        @include phone {
-            display: none;
+        @include desktop {
+            right: auto;
+            left: 5rem;
+            width: 59rem;
+            height: 9rem;
+            font-size: 3.6rem;
         }
 
         .quote {
             display: inline-block;
+            line-height: 8rem;
             font-family: 'Permanent Marker', cursive;
             transform: rotate(-1.2deg) translate(0.75vw, -0.45vw);
+            margin-right: 1rem;
         }
 
         &::after {
-            border-bottom: 0.18vw solid color(neutral-lightest);
+            border-bottom: 0.1rem solid color(neutral-lightest);
             content: '';
-            left: 15.4vw;
+            right: 1rem;
             position: absolute;
-            top: 5vw;
-            width: 24.6vw;
+            top: 6rem;
+            width: 30rem;
 
-            @include tablet {
-                border-bottom-width: 0.36vw;
-                left: 22.5vw;
-                top: 8vw;
-                width: 39.24vw;
+
+            @include desktop {
+                width: 35rem;
+                right: 2rem;
             }
         }
     }
 
     .subject-links {
-        left: 18.3vw;
-        letter-spacing: 0.078vw;
         position: absolute;
-        top: 41.5vw;
+        bottom: 1.5rem;
+        left: 0;
+        width: 100%;
         z-index: 3;
 
         @include tablet {
-            left: 10.76vw;
-            top: 67.6vw;
+            width: 27rem;
+            bottom: 5rem;
+            left: 5rem;
         }
 
-        @include phone {
-            bottom: 4.5vw;
-            left: 4.5vw;
-            top: auto;
+        @media (min-width:650px) {
+            width: auto;
+            right: 15rem;
+            left: auto;
+        }
+
+        @include desktop {
+            left: 18.4rem;
+            right: auto;
         }
 
         ul {
             list-style-type: none;
-            margin: 0;
+            margin: 0 1.5rem;
             padding: 0;
+
+            @include tablet {
+                margin: 0;
+            }
+
 
             li {
                 display: inline-block;
+                width: 100%;
+
+                @include tablet {
+                    width: auto;
+                }
             }
         }
 
         .btn {
-            font-size: 1.1vw;
-            height: 4.5vw;
-            line-height: 4.5vw;
-            padding: 0;
+            font-size: 1.6rem;
+            line-height: 6rem;
+            height: 6rem;
+            padding: 0 1.5rem;
+            width: 100%;
+            display: inline-block;
 
-            @include tablet {
-                font-size: 1.7vw;
-                height: 6.33vw;
-                line-height: 6.33vw;
+            @include desktop {
+                width: auto;
             }
 
-            @include phone {
-                font-size: 4.5vw;
-                height: 15.63vw;
-                line-height: 15.63vw;
+            &:hover {
+                transform: scale3d(1, 1, 1);
             }
         }
 
         .explore-subject {
-            margin-right: 0.2vw;
-            width: 17.5vw;
+            margin-bottom: 1.5rem;
 
             @include tablet {
-                width: 26.33vw;
+                margin-right: 1.5rem;
             }
 
             @include phone {
                 background-color: color(yellow);
+
+                &:hover {
+                    background-color: darken(color(yellow), 5%);
+                }
             }
         }
 
         .explore-all {
-            width: 18.55vw;
-
-            @include tablet {
-                width: 27.97vw;
-            }
 
             @include phone {
                 background-color: color(turquoise);
-                margin-top: 4.5vw;
-            }
-        }
 
-        .explore-subject,
-        .explore-all {
-            box-shadow: 0 0 1rem color(neutral-dark);
-
-            @include phone {
-                width: 91vw;
+                &:hover {
+                    background-color: darken(color(turquoise), 5%);
+                }
             }
         }
     }

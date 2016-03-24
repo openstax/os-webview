@@ -6,9 +6,13 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    padding: 8rem 1.5rem;
+    padding: 1.5rem;
     max-width: $boxed-width;
     margin: 0 auto;
+
+    @include desktop {
+        padding: 8rem 1.5rem;
+    }
 
     .quote-bucket {
         align-items: stretch;
@@ -22,7 +26,7 @@
             flex: 1 0 45%;
         }
 
-        @media (min-width: 900px) {
+        @media (min-width: 1000px) {
             flex: 1 0 32%;
             margin: 0;
         }
@@ -33,7 +37,7 @@
                 margin-left: 1.5rem;
             }
 
-            @media (min-width: 900px) {
+            @media (min-width: 1000px) {
                 margin-left: 1.5rem;
                 margin-right: 1.5rem;
             }
@@ -114,7 +118,7 @@
         flex-flow: column nowrap;
         justify-content: space-between;
 
-        @media (min-width: 900px) {
+        @media (min-width: 1000px) {
             align-self: auto;
         }
 
