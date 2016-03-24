@@ -1,0 +1,7 @@
+# robots.txt
+#User-agent: baiduspider
+#Disallow: /
+User-agent: *
+Disallow:
+# add any directories we don't want crawled here using the format in the line below:
+#Disallow: /cgi-bin/
