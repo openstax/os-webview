@@ -4,6 +4,10 @@
 .details-page {
     position: relative;
 
+    h1 {
+        word-wrap: break-word;
+    }
+
     h2,
     h3,
     h4 {

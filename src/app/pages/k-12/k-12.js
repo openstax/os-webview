@@ -13,8 +13,8 @@ import ProductsBoxes from '~/components/products-boxes/products-boxes';
     template: template,
     regions: {
         banner: '.banner',
-        quotes: '.quotes',
-        buckets: '.buckets',
+        quotes: '.quote-buckets',
+        buckets: '.buckets-section',
         tutor: '.tutor-banner',
         products: '.products'
     },
