@@ -301,8 +301,8 @@ let bios = {
             degree in Education with an emphasis on Educational Anthropology and
             Bachelor’s degree in Anthropology.`,
             image: 'Alana.png',
-            bgColor: 'yellow',
-            textColor: 'orange'
+            bgColor: 'turquoise',
+            textColor: 'white'
         },
         {
             name: 'Alina Slavik',
@@ -525,8 +525,8 @@ let bios = {
             Bachelor’s degree from UC Berkeley and a Master’s degree in Library & Information
             Science from San Jose State University. He enjoys writing in the third person.`,
             image: 'Kerwin.png',
-            bgColor: 'yellow',
-            textColor: 'orange'
+            bgColor: 'turquoise',
+            textColor: 'blue'
         },
         {
             name: 'Ryan Stickney',
