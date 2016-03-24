@@ -24,15 +24,14 @@ const subjectOptions = [
         options: subjectOptions.map((option) => option[0])
     }
 })
-export default class Accessibility extends BaseView {
+export default class Contact extends BaseView {
     @on('submit')
-    validateAndSend(e) {
+    validateAndSend() {
         let selectedSubject = this.el.querySelector('select').value,
             selectedOption = subjectOptions.filter((item) => item[0] === selectedSubject)[0];
 
         this.el.querySelector('[name="to_address"]').value = selectedOption[1];
         this.el.querySelector('[name="subject"]').value = selectedOption[2];
-        e.preventDefault();
     }
 
     onRender() {
