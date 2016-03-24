@@ -16,7 +16,7 @@
         display: flex;
         flex: 1 1 100%;
         margin: 0 0 1.5rem;
-        min-height: 23rem;
+        min-height: 20rem;
 
         @media (min-width: 600px) {
             flex: 1 0 45%;
@@ -40,6 +40,7 @@
 
             > .image {
                 order: 2;
+                background-image: url('/images/home/quotes/quote-left.jpg');
             }
 
             > .quote {
@@ -59,6 +60,7 @@
         &.right {
             .image {
                 order: 1;
+                background-image: url('/images/home/quotes/quote-right.jpg');
             }
 
             > .quote {
@@ -85,7 +87,8 @@
 
             blockquote {
                 color: white;
-                font-size: 2.1rem;
+                font-size: 1.8rem;
+                line-height: 2.6rem;
                 font-weight: 400;
             }
 
@@ -97,25 +100,19 @@
     }
 
     .image {
-        background-position: center top;
+        background-position: center center;
         background-size: cover;
         display: block;
         flex: 0 0 50%;
-
-        &.juan {
-            background-image: url('/images/home/quotes/juan.jpg');
-        }
-
-        &.school {
-            background-image: url('/images/home/quotes/school.jpg');
-        }
     }
 
     .quote {
         flex: 1 1 auto;
         padding: 2rem;
         position: relative;
-        align-self: center;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
 
         @media (min-width: 900px) {
             align-self: auto;
@@ -123,7 +120,7 @@
 
         blockquote {
             display: block;
-            line-height: 2.7rem;
+            line-height: 2.4rem;
             margin: 1rem 0;
 
             cite {
@@ -133,6 +130,10 @@
 
         .btn {
             margin-top: 1.5rem;
+
+            &:hover {
+                transform: scale3d(1, 1, 1);
+            }
         }
     }
 }
