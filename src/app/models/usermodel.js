@@ -1,7 +1,7 @@
 import BaseModel from '~/helpers/backbone/model';
-import {ApiOrigin} from '~/../settings.js';
+import settings from 'settings';
 
-let url = `${ApiOrigin}/api/user/`;
+let url = `${settings.apiOrigin}/api/user/`;
 
 class UserModel extends BaseModel {
     urlRoot = url;
