@@ -1,0 +1,24 @@
+@import 'variables';
+@import 'mixins';
+
+.impact-page {
+    ul {
+        list-style-type: none;
+    }
+
+    .partners {
+        display: flex;
+        flex-wrap: wrap;
+
+        > li {
+            height: 15rem;
+            margin: 3rem;
+            width: 20rem;
+
+            img {
+                max-height: 15rem;
+                max-width: 20rem;
+            }
+        }
+    }
+}

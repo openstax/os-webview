@@ -1,0 +1,44 @@
+<style scoped>
+    @import url(/app/pages/impact/impact.css);
+</style>
+<div class="impact-page page">
+    {{{strips}}}
+    <main id="maincontent" class="boxed">
+        <h1>We measure our success by the impact we make</h1>
+
+        <hr />
+
+        <p>
+            Since 2012, OpenStax has saved students $66 million and counting by offering free,
+            peer-reviewed textbooks for the highest-enrollment college courses.
+            Meet the schools who’ve adopted OpenStax and some of the students who’ve benefited
+            from free access to the learning materials they need to succeed.
+        </p>
+
+        <hr />
+
+        <h2>Institutional Partner and Affiliate Schools</h2>
+
+        <p>
+            Our institutional partner and affiliate schools are forging institutional
+            initiatives to encourage adoptions of OpenStax and other open resources
+            to give students access to the learning materials they need to succeed.
+        </p>
+
+        <ul class="partners">
+            {{#each highlightedPartners}}
+                <li>
+                    <a href="{{url}}">
+                        <img src="{{logo}}" alt="{{name}}" />
+                    </a>
+                </li>
+            {{/each}}
+        </ul>
+
+        <a href="#">See a full list of institutions that have adopted OpenStax</a>
+
+        <a href="mailto:nicolef@rice.edu?subject=We're interested in the OpenStax institutional partner & affiliate program!">
+            Contact us to learn more
+        </a>
+    </main>
+</div>
