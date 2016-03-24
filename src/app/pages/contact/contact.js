@@ -1,4 +1,5 @@
 import BaseView from '~/helpers/backbone/view';
+import csrfModel from '~/models/csrfmodel';
 import SingleSelect from '~/components/single-select/single-select';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './contact.hbs';
@@ -38,5 +39,8 @@ export default class Contact extends BaseView {
         for (let ss of this.el.querySelectorAll('select:not([multiple])')) {
             new SingleSelect().replace(ss);
         }
+        csrfModel.fetch().then((result) => {
+            this.el.querySelector('[name="csrfmiddlewaretoken"]').value = result.csrf_token;
+        });
     }
 }

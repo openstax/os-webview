@@ -740,6 +740,94 @@ let bios = {
             // image: 'Patrick.png',
             bgColor: 'deep-green',
             textColor: 'white'
+        },
+        {
+            name: 'Andrew Wienecke',
+            title: '',
+            bio: '',
+            image: 'Andrew.png',
+            bgColor: 'turquoise',
+            textColor: 'gold'
+        },
+        {
+            name: 'Bruce Pike',
+            title: '',
+            bio: '',
+            image: 'Bruce.png',
+            bgColor: 'turquoise',
+            textColor: 'gold'
+        },
+        {
+            name: 'Chris Houston',
+            title: '',
+            bio: '',
+            image: 'Chris H.png',
+            bgColor: 'turquoise',
+            textColor: 'gold'
+        },
+        {
+            name: 'Courtney Raymond',
+            title: '',
+            bio: '',
+            image: 'Courtney.png',
+            bgColor: 'turquoise',
+            textColor: 'gold'
+        },
+        {
+            name: 'Kajal Parekh',
+            title: '',
+            bio: '',
+            image: 'Kajal.png',
+            bgColor: 'turquoise',
+            textColor: 'gold'
+        },
+        {
+            name: 'Linda Pallares',
+            title: '',
+            bio: '',
+            image: 'Linda.png',
+            bgColor: 'turquoise',
+            textColor: 'gold'
+        },
+        {
+            name: 'Mary Allen',
+            title: '',
+            bio: '',
+            image: 'Mary.png',
+            bgColor: 'turquoise',
+            textColor: 'gold'
+        },
+        {
+            name: 'Michael Harrison',
+            title: '',
+            bio: '',
+            image: 'Michael.png',
+            bgColor: 'turquoise',
+            textColor: 'gold'
+        },
+        {
+            name: 'Mike Arbelaez',
+            title: '',
+            bio: '',
+            image: 'Mike.png',
+            bgColor: 'turquoise',
+            textColor: 'gold'
+        },
+        {
+            name: 'Robert Newell',
+            title: '',
+            bio: '',
+            image: 'Robert.png',
+            bgColor: 'turquoise',
+            textColor: 'gold'
+        },
+        {
+            name: 'Tim Reiland',
+            title: '',
+            bio: '',
+            image: 'Tim.png',
+            bgColor: 'turquoise',
+            textColor: 'gold'
         }
     ]
 };
