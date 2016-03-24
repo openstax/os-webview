@@ -126,6 +126,17 @@ export default class Details extends BaseView {
                     }
                 }
             },
+            handleErrataLink = (link) => {
+                let tab = this.el.querySelector('.errata-tab'),
+                    section = this.el.querySelector('#errata');
+
+                if (link) {
+                    section.querySelector('.errata-link').href = link;
+                } else {
+                    tab.parentNode.removeChild(tab);
+                    section.parentNode.removeChild(section);
+                }
+            },
             handleBasicBookData = (data) => {
                 let detailUrl = data.pages[0].meta.detail_url,
                     detailModel = new PageModel(),
@@ -151,6 +162,7 @@ export default class Details extends BaseView {
                         showTableOfContents(detailData.table_of_contents);
                         showInstructorResources(detailData.book_faculty_resources);
                         insertResources(detailData.book_student_resources, 'studentResources');
+                        handleErrataLink(detailData.errata_link);
 
                         for (let ally of detailData.book_allies) {
                             let allyTemplateHelper = {

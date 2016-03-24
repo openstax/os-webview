@@ -738,64 +738,64 @@ let bios = {
             simulations for free and open-source textbooks. He currently lives in Oregon
             with his wife Jessie and fancies himself a novice [traceur](http://en.wikipedia.org/wiki/Traceur#Terminology).`,
             // image: 'Patrick.png',
-            bgColor: 'deep-green',
-            textColor: 'white'
+            bgColor: 'blue',
+            textColor: 'green'
         },
         {
             name: 'Andrew Wienecke',
             title: '',
             bio: '',
             image: 'Andrew.png',
-            bgColor: 'turquoise',
-            textColor: 'gold'
+            bgColor: 'gray',
+            textColor: 'yellow'
         },
         {
             name: 'Bruce Pike',
             title: '',
             bio: '',
             image: 'Bruce.png',
-            bgColor: 'turquoise',
-            textColor: 'gold'
+            bgColor: 'deep-green',
+            textColor: 'blue'
         },
         {
             name: 'Chris Houston',
             title: '',
             bio: '',
             image: 'Chris H.png',
-            bgColor: 'turquoise',
-            textColor: 'gold'
+            bgColor: 'yellow',
+            textColor: 'orange'
         },
         {
             name: 'Courtney Raymond',
             title: '',
             bio: '',
             image: 'Courtney.png',
-            bgColor: 'turquoise',
-            textColor: 'gold'
+            bgColor: 'orange',
+            textColor: 'yellow'
         },
         {
             name: 'Kajal Parekh',
             title: '',
             bio: '',
             image: 'Kajal.png',
-            bgColor: 'turquoise',
-            textColor: 'gold'
+            bgColor: 'blue',
+            textColor: 'green'
         },
         {
             name: 'Linda Pallares',
             title: '',
             bio: '',
             image: 'Linda.png',
-            bgColor: 'turquoise',
-            textColor: 'gold'
+            bgColor: 'deep-green',
+            textColor: 'blue'
         },
         {
             name: 'Mary Allen',
             title: '',
             bio: '',
             image: 'Mary.png',
-            bgColor: 'turquoise',
-            textColor: 'gold'
+            bgColor: 'yellow',
+            textColor: 'orange'
         },
         {
             name: 'Michael Harrison',
@@ -803,31 +803,31 @@ let bios = {
             bio: '',
             image: 'Michael.png',
             bgColor: 'turquoise',
-            textColor: 'gold'
+            textColor: 'white'
         },
         {
             name: 'Mike Arbelaez',
             title: '',
             bio: '',
             image: 'Mike.png',
-            bgColor: 'turquoise',
-            textColor: 'gold'
+            bgColor: 'cyan',
+            textColor: 'white'
         },
         {
             name: 'Robert Newell',
             title: '',
             bio: '',
             image: 'Robert.png',
-            bgColor: 'turquoise',
-            textColor: 'gold'
+            bgColor: 'gray',
+            textColor: 'orange'
         },
         {
             name: 'Tim Reiland',
             title: '',
             bio: '',
             image: 'Tim.png',
-            bgColor: 'turquoise',
-            textColor: 'gold'
+            bgColor: 'cyan',
+            textColor: 'blue'
         }
     ]
 };
