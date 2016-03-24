@@ -1,4 +1,9 @@
-export const titleSuffix = ' - OpenStax';
-export const analyticsID = 'UA-XXXXXXX-X';
-export const webmaster = 'webmaster@openstax.org';
-export const ApiOrigin = 'https://oscms-dev.openstax.org';
+const settings = {
+    titleSuffix: ' - OpenStax',
+    analyticsID: 'UA-73668038-1',
+    tagManagerID: 'GTM-W6N7PB',
+    webmaster: 'webmaster@openstax.org',
+    apiOrigin: 'https://oscms-dev.openstax.org'
+};
+
+export default settings;

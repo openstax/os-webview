@@ -1,5 +1,6 @@
 import Backbone from 'backbone';
 import shell from '~/components/shell/shell';
+import analytics from '~/helpers/analytics';
 
 const PAGES = [
     'about',
@@ -64,6 +65,18 @@ class Router extends Backbone.Router {
         this.route(name, name, () => {
             shell.load(name);
         });
+    }
+
+    navigate(fragment, options = {}, cb) {
+        super.navigate(...arguments);
+
+        if (options.analytics !== false) {
+            analytics.send();
+        }
+
+        if (typeof cb === 'function') {
+            cb();
+        }
     }
 
 }

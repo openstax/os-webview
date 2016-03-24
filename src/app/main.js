@@ -3,6 +3,7 @@ import Backbone from 'backbone';
 import linkHelper from '~/helpers/link';
 import router from '~/router';
 import appView from '~/components/shell/shell';
+import '~/helpers/analytics';
 
 const EXTERNAL = /^((f|ht)tps?:)?\/\//;
 

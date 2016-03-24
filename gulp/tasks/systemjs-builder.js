@@ -13,6 +13,7 @@ function systemjs() {
     builder.config({
         paths: {
             '~/*': `${config.dest}/app/*`,
+            'settings': `${config.dest}/settings.js`,
             'github:*': 'jspm_packages/github/*',
             'npm:*': 'jspm_packages/npm/*'
         }
