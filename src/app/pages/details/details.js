@@ -107,7 +107,7 @@ export default class Details extends BaseView {
                 userModel.fetch().then((userData) => {
                     let userInfo = userData[0];
 
-                    if (userInfo.is_staff || userInfo.is_superuser) {
+                    if (userInfo && (userInfo.is_staff || userInfo.is_superuser)) {
                         insertResources(resources, 'instructorResources');
                     }
                 });

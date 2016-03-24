@@ -20,10 +20,12 @@ export default class FilterButton extends BaseView {
     }
 
     setState() {
-        this.el.classList.toggle(
-            'selected',
-            this.model.get('selectedFilter') === this.data
-        );
+        if (this.el && this.el.classList) {
+            this.el.classList.toggle(
+                'selected',
+                this.model.get('selectedFilter') === this.data
+            );
+        }
     }
 
     toggleOpenCategories() {
