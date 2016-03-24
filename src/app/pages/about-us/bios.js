@@ -193,7 +193,7 @@ let bios = {
             in K12 science education. She has a Master’s Degree in Computer Science.`,
             image: 'Kathi.png',
             bgColor: 'turquoise',
-            textColor: 'white'
+            textColor: 'blue'
         },
         {
             name: 'Beth Cassidy',
