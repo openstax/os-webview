@@ -107,7 +107,7 @@ export default class Details extends BaseView {
                 userModel.fetch().then((userData) => {
                     let userInfo = userData[0];
 
-                    if (userInfo.is_staff || userInfo.is_superuser) {
+                    if (userInfo && (userInfo.is_staff || userInfo.is_superuser)) {
                         insertResources(resources, 'instructorResources');
                     }
                 });
@@ -124,6 +124,17 @@ export default class Details extends BaseView {
                     for (let entry of toc.contents) {
                         this.regions.tableOfContents.append(new Contents(entry));
                     }
+                }
+            },
+            handleErrataLink = (link) => {
+                let tab = this.el.querySelector('.errata-tab'),
+                    section = this.el.querySelector('#errata');
+
+                if (link) {
+                    section.querySelector('.errata-link').href = link;
+                } else {
+                    tab.parentNode.removeChild(tab);
+                    section.parentNode.removeChild(section);
                 }
             },
             handleBasicBookData = (data) => {
@@ -151,6 +162,7 @@ export default class Details extends BaseView {
                         showTableOfContents(detailData.table_of_contents);
                         showInstructorResources(detailData.book_faculty_resources);
                         insertResources(detailData.book_student_resources, 'studentResources');
+                        handleErrataLink(detailData.errata_link);
 
                         for (let ally of detailData.book_allies) {
                             let allyTemplateHelper = {

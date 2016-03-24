@@ -162,7 +162,9 @@ class Header extends BaseView {
         let parentItem = this.el.querySelectorAll('.dropdown');
         let dropDownMenu = this.el.querySelectorAll('.dropdown-menu');
 
-        header.classList.remove('open');
+        if (header) {
+            header.classList.remove('open');
+        }
         this.removeClass(parentItem, 'open');
         this.removeClass(dropDownMenu, 'open');
         this.closeDropdownMenus(true);
