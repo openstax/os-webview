@@ -2,6 +2,11 @@
 @import 'mixins';
 
 .about-us-page {
+
+    @media (max-width: 1300px) {
+        max-width: 94%;
+    }
+
     .hero {
         background-color: color(gray);
         color: color(neutral-lightest);
