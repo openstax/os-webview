@@ -11,6 +11,10 @@
         background-color: color(gray);
         color: color(neutral-lightest);
 
+        @media (max-width: 1280px) {
+            padding: 2rem 9vw;
+        }
+
         h1 {
             color: color(orange);
         }
@@ -139,6 +143,11 @@
                 left: -3.5rem;
                 position: relative;
                 z-index: 3;
+
+                &.safari {
+                    object-fit: cover;
+                    left: 0;
+                }
             }
 
             .name {
@@ -202,14 +211,23 @@
 
             &:hover .details {
                 @include desktop {
-                    overflow: initial;
-                    width: 35rem;
                     height: auto;
                     opacity: 1;
-                    transform: translate3d(0, 0, 0);
                     padding: 1.5rem;
+                    transform: translate3d(0, 0, 0);
+                    width: 35rem;
                     z-index: 5;
                 }
+            }
+
+            &.tapped .details {
+                height: auto;
+                left: -2vw;
+                opacity: 1;
+                padding: 1.5rem;
+                position: absolute;
+                width: 25rem;
+                z-index: 5;
             }
         }
     }

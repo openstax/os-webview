@@ -1,4 +1,5 @@
 import BaseView from '~/helpers/backbone/view';
+import BaseModel from '~/helpers/backbone/model';
 import Headshot from './headshot/headshot';
 import {props} from '~/helpers/backbone/decorators';
 import {template} from './about-us.hbs';
@@ -26,9 +27,11 @@ function toHeadshot(bioEntry) {
 })
 export default class AboutUs extends BaseView {
     onRender() {
+        let stateModel = new BaseModel();
+
         this.el.classList.add('about-us-page', 'text-content');
         for (let person of bios.team) {
-            this.regions.team.append(new Headshot(toHeadshot(person)));
+            this.regions.team.append(new Headshot(toHeadshot(person), stateModel));
         }
         for (let person of bios.advisors) {
             this.regions.advisors.append(new Headshot(toHeadshot(person)));
