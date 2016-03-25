@@ -1,6 +1,7 @@
 import Backbone from 'backbone';
 import BaseView from '~/helpers/backbone/view';
 import userModel from '~/models/usermodel';
+import settings from 'settings';
 import {on, props} from '~/helpers/backbone/decorators';
 import linkHelper from '~/helpers/link';
 import {template} from './header.hbs';
@@ -219,7 +220,7 @@ class Header extends BaseView {
 
     appendURL() {
         let $this = this.el.querySelector('.login>a');
-        let loginLink = 'https://oscms-dev.openstax.org/accounts/login/openstax/?next=';
+        let loginLink = `${settings.apiOrigin}/accounts/login/openstax/?next=`;
         let href = loginLink + Backbone.history.location.href;
 
         $this.href = href;
