@@ -1,20 +1,8 @@
 @import 'variables';
 @import 'mixins';
 
-@mixin collapsed {
-    @media (max-width: 760px) {
-        @content;
-    }
-}
-
-@mixin expanded {
-    @media (min-width: 761px) {
-        @content;
-    }
-}
-
-@mixin widescreen {
-    @media (min-width: 1281px) {
+@mixin tablet {
+    @media (min-width: #{breakpoints(phone) + 1}) {
         @content;
     }
 }
@@ -23,18 +11,170 @@
     background-image: url('/images/home/education/background.jpg');
     background-position: center center;
     background-repeat: no-repeat;
-    background-size: 100vw 47.5vw;
-    height: 47.5vw;
+    background-size: cover;
     overflow: hidden;
     position: relative;
 
-    @include collapsed {
-        background-size: cover;
-        height: auto;
+    @media (min-width: 600px) {
+        height: 71rem;
+    }
 
-        > div {
+    .container {
+        display: flex;
+        margin: 0 auto;
+        max-width: $boxed-width;
+        flex-flow: column nowrap;
+        position: relative;
+        height: 100%;
+
+        @include tablet {
+            flex-flow: row wrap;
+            padding: 3rem 1.5rem;
+        }
+    }
+
+    .quote {
+        background-color: rgba(color(cyan), 0.8);
+        color: color(neutral-lightest);
+        padding: 3rem;
+        width: 100%;
+        top: 5rem;
+        left: 0;
+
+        .opening {
+            font-size: 2.2rem;
+            display: block;
+            font-weight: 300;
+
+            @include desktop {
+                width: 37rem;
+                font-size: 2.6rem;
+                font-weight: 100;
+                letter-spacing: 0.1rem;
+            }
+
+            @media (min-width: 1000px) {
+                width: 50rem;
+            }
+        }
+
+        strong {
+            color: color(yellow);
+            display: block;
+            font-size: 4.6rem;
+            line-height: 1;
+            margin: 1rem 0;
+
+            @include desktop {
+                width: 37rem;
+                font-size: 6rem;
+            }
+
+            @media (min-width: 1000px) {
+                width: 50rem;
+            }
+        }
+
+        .blurb {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: 300;
+
+            @include desktop {
+                width: 37rem;
+                font-size: 2.4rem;
+                font-weight: 100;
+                letter-spacing: 0.1rem;
+            }
+
+            @media (min-width: 1000px) {
+                width: 50rem;
+            }
+        }
+    }
+
+    .links {
+        width: 100%;
+        z-index: 3;
+
+        @media (min-width: 600px) {
+            margin-top: 1.5rem;
+            bottom: 5rem;
+        }
+
+        @media (min-width: 1000px) {
+            bottom: 10rem;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            width: 100%;
             display: flex;
-            flex-direction: column;
+            flex-flow: column nowrap;
+
+            @include desktop {
+                flex-flow: row wrap;
+            }
+        }
+
+        li {
+            flex: 0 0 auto;
+
+            @media (min-width: 600px) {
+                width: 60%;
+            }
+
+            @include desktop {
+                flex: 0 0 40%;
+                max-width: 37rem;
+            }
+
+            &:first-child {
+
+                @media (min-width: 600px) {
+                    margin-bottom: 1.5rem;
+                }
+
+                @include desktop {
+                    margin-right: 1.5rem;
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        .btn {
+            box-shadow: 0 0 1rem rgba(color(neutral-dark), 0.2);
+            display: inline-block;
+            width: 100%;
+            text-transform: none;
+
+            @media (min-width: 600px) {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+                text-align: left;
+                height: 11.5rem;
+            }
+
+            &:hover,
+            &:focus {
+                transform: scale3d(1, 1, 1);
+            }
+
+            &.k-12 > .title {
+                color: color(orange);
+            }
+        }
+
+        .title {
+            display: block;
+            font-size: 1.8rem;
+            color: color(yellow);
+        }
+
+        .blurb {
+            font-weight: 300;
         }
     }
 
@@ -43,180 +183,58 @@
     .student,
     .quote,
     .links {
-        @include expanded {
+        @media (min-width: 600px) {
             position: absolute;
         }
     }
 
     .square-1,
     .square-2 {
-        background-color: rgba(color(blue), 0.2);
+        background-color: rgba(color(cyan), 0.2);
         position: absolute;
         z-index: 0;
+        display: none;
 
-        @include collapsed {
-            display: none;
+        @include desktop {
+            display: initial;
         }
-    }
+     }
 
     .square-1 {
-        height: 8.14vw;
-        left: 13.93vw;
-        top: 36.07vw;
-        width: 23.79vw;
-    }
+        width: 56rem;
+        height: 12rem;
+        bottom: 18rem;
+        left: -1.5rem;
+     }
 
     .square-2 {
-        height: 35.36vw;
-        left: 47.78vw;
-        top: 2.86vw;
-        width: 43.5vw;
-    }
+        width: 64rem;
+        height: 50rem;
+        top: 1.5rem;
+        right: -5rem;
+     }
 
     .student {
         background-image: url('/images/home/education/student.png');
         background-position: center bottom;
         background-repeat: no-repeat;
-        background-size: 43.36vw 47.5vw;
+        background-size: 100% auto;
         bottom: 0;
-        left: calc(50rem - 5vw);
-        top: 0;
-        width: 43.36vw;
+        right: 0;
+        width: 33rem;
+        height: 100%;
         z-index: 2;
 
-        @include widescreen {
-            left: 33.07vw;
+        @include desktop {
+            width: 100%;
+            height: 100%;
+            right: -12rem;
+            background-position: right bottom;
+            background-size: auto 100%;
+        }
+
+        @media (min-width: 900px) {
+            right: 0;
         }
     }
-
-    .quote {
-        background-color: rgba(color(cyan), 0.7);
-        color: color(neutral-lightest);
-        padding: 2vw 2.5vw;
-        z-index: 1;
-
-        @include collapsed {
-            background-color: rgba(color(cyan), 0.9);
-            padding: 9.375vw 6.25vw;
-        }
-
-        @include expanded {
-            height: 26.64vw;
-            left: 7.86vw;
-            top: 6.07vw;
-            width: calc(61rem - 5vw);
-        }
-
-        @include widescreen {
-            width: 42.64vw;
-        }
-
-        .opening {
-            display: block;
-            font-size: calc(0.8rem + 1.08vw);
-            max-width: calc(49rem - 5vw);
-
-            @include collapsed {
-                font-size: 2.4rem;
-            }
-
-            @include widescreen {
-                font-size: 1.85vw;
-                max-width: 33vw;
-            }
-        }
-
-        .blurb {
-            display: block;
-            font-size: calc(0.5rem + 1.08vw);
-            max-width: calc(49rem - 5vw);
-
-            @include collapsed {
-                font-size: 1.8rem;
-            }
-
-            @include widescreen {
-                font-size: 1.35vw;
-                max-width: 33vw;
-            }
-        }
-
-        > strong {
-            color: color(yellow);
-            display: block;
-            font-size: calc(1.5rem + 3.5vw);
-            line-height: calc(1.7rem + 3.5vw);
-            max-width: calc(49rem - 5vw);
-
-            @include collapsed {
-                font-size: 6.9rem;
-                line-height: 0.9;
-                margin-bottom: 1rem;
-            }
-
-            @include widescreen {
-                font-size: calc(5.3rem + 1.35vw);
-                line-height: calc(5.5rem + 1.35vw);
-                max-width: 33vw;
-            }
-        }
-    }
-
-    .links {
-        left: 0;
-        right: 0;
-        top: 34.43vw;
-        z-index: 3;
-
-        ul {
-            display: flex;
-            justify-content: center;
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            position: relative;
-
-            @include collapsed {
-                align-items: stretch;
-                display: flex;
-                flex-direction: column;
-                left: 0;
-            }
-        }
-
-        .btn {
-            box-shadow: 0 0 1rem rgba(color(neutral-dark), 0.5);
-            margin: 0 1.15vw;
-            min-height: 10.5rem;
-            min-width: 37rem;
-            padding: 1.5rem 2.5rem;
-            text-align: left;
-            text-transform: none;
-            width: 27.76vw;
-
-            @include collapsed {
-                display: block;
-                margin: 0;
-                padding: 2.5rem 3.5rem;
-                width: auto;
-            }
-
-            .title {
-                display: block;
-                font-size: 2.4rem;
-            }
-
-            &.higher-ed > .title {
-                color: color(yellow);
-            }
-
-            &.k-12 > .title {
-                color: color(orange);
-            }
-
-            .blurb {
-                font-weight: 400;
-            }
-        }
-    }
-}
+ }
