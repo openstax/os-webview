@@ -24,13 +24,19 @@ export default class SingleSelect extends BaseView {
     }
 
     togglePulldown() {
-        this.optionListEl.classList.toggle('hidden', ...arguments);
-        this.hasDropdownEl.classList.toggle('open', ...arguments);
+        if (this.optionListEl) {
+            this.optionListEl.classList.toggle('hidden', ...arguments);
+        }
+        if (this.hasDropdownEl) {
+            this.hasDropdownEl.classList.toggle('open', ...arguments);
+        }
     }
 
     synchronizeModel(what) {
         if (what.get('selected') === true) {
-            this.selectedButtonEl.textContent = what.get('label');
+            if (this.selectedButtonEl) {
+                this.selectedButtonEl.textContent = what.get('label');
+            }
             let originalOption = what.get('originalOption');
 
             originalOption.selected = true;
@@ -43,6 +49,12 @@ export default class SingleSelect extends BaseView {
             });
             this.checkValid(originalOption);
         }
+    }
+
+    set(newValue) {
+        this.stateCollection.each((model) => {
+            model.set('selected', model.get('value') === newValue);
+        });
     }
 
     checkValid(originalOption) {

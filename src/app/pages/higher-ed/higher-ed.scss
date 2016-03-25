@@ -7,6 +7,17 @@
         font-weight: bold;
         letter-spacing: 0.05vw;
         text-transform: uppercase;
+
+        a {
+            color: inherit;
+            letter-spacing: inherit;
+
+            &::after {
+                color: color(yellow);
+                content: '►';
+                padding-left: 0.5rem;
+            }
+        }
     }
 
     .banner {

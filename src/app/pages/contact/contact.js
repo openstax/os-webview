@@ -37,8 +37,14 @@ export default class Contact extends BaseView {
     }
 
     onRender() {
-        for (let ss of this.el.querySelectorAll('select:not([multiple])')) {
-            new SingleSelect().replace(ss);
+        let queryString = window.location.search,
+            matched = queryString.match(/^\?subject=([^&]+)/),
+            ss = this.el.querySelector('select:not([multiple])'),
+            proxySs = new SingleSelect();
+
+        proxySs.replace(ss);
+        if (matched) {
+            proxySs.set(decodeURIComponent(matched[1]));
         }
         csrfModel.fetch().then((result) => {
             this.el.querySelector('[name="csrfmiddlewaretoken"]').value = result.csrf_token;
