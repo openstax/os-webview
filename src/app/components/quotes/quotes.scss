@@ -22,22 +22,22 @@
         margin: 0 0 1.5rem;
         min-height: 20rem;
 
-        @media (min-width: 600px) {
+        @media (min-width: 700px) {
             flex: 1 0 45%;
         }
 
-        @media (min-width: 1000px) {
+        @media (min-width: 1050px) {
             flex: 1 0 32%;
             margin: 0;
         }
 
         &.left {
 
-            @media (min-width: 600px) {
+            @media (min-width: 700px) {
                 margin-left: 1.5rem;
             }
 
-            @media (min-width: 1000px) {
+            @media (min-width: 1050px) {
                 margin-left: 1.5rem;
                 margin-right: 1.5rem;
             }
@@ -118,7 +118,7 @@
         flex-flow: column nowrap;
         justify-content: space-between;
 
-        @media (min-width: 1000px) {
+        @media (min-width: 1050px) {
             align-self: auto;
         }
 

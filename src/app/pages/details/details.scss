@@ -6,6 +6,10 @@
 
     h1 {
         word-wrap: break-word;
+
+        @media (min-width: 500px) {
+            margin-top: 0;
+        }
     }
 
     h2,
@@ -363,7 +367,8 @@
         }
 
         .cta {
-            flex: 0 0 100%;
+            flex: 0 1 100%;
+            margin-right: 1.5rem;
         }
     }
 
@@ -389,6 +394,10 @@
 
                 &:nth-child(odd):not(:only-child):not(:last-child) {
                     margin-right: 1.5rem;
+                }
+
+                &:last-child {
+                    margin-right: 0;
                 }
             }
 

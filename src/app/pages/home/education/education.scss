@@ -154,7 +154,10 @@
                 padding-left: 1.5rem;
                 padding-right: 1.5rem;
                 text-align: left;
-                height: 11.5rem;
+            }
+
+            @include desktop {
+                height: 12.7rem;
             }
 
             &:hover,

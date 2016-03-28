@@ -67,16 +67,17 @@ export default class Details extends BaseView {
     toggleFixedClass() {
         let floatingMenu = document.querySelector('.floating-menu>.box');
 
-        var body = document.body,
+        let body = document.body,
             html = document.documentElement;
 
-        var height = Math.max(body.scrollHeight, body.offsetHeight,
+        let height = Math.max(body.scrollHeight, body.offsetHeight,
                        html.clientHeight, html.scrollHeight, html.offsetHeight);
 
         if (floatingMenu) {
             let footer = document.getElementById('footer');
-            let floatingMenuHeight = floatingMenu.offsetHeight+220;
-            let menuOffset = height - footer.offsetHeight - floatingMenuHeight;
+            let footerHeight = Math.max(footer.scrollHeight, footer.offsetHeight);
+            let floatingMenuHeight = Math.max(floatingMenu.scrollHeight, floatingMenu.offsetHeight)+210;
+            let menuOffset = height - footerHeight - floatingMenuHeight;
 
             if ((window.pageYOffset > menuOffset) && (window.innerWidth > 768)) {
                 floatingMenu.parentNode.classList.add('bottom');

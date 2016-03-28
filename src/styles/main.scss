@@ -133,6 +133,14 @@ sup {
     width: 100%;
 }
 
+.no-style.page .boxed {
+    margin: 4rem auto 8rem;
+
+    @include desktop {
+        text-align: center;
+    }
+}
+
 .subhead {
     padding: 8rem 1.5rem 0;
     text-align: center;
