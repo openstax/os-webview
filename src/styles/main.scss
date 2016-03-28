@@ -81,7 +81,7 @@ sup {
 #footer {
     animation: fadeIn ease-in 1;
     animation-delay: 0.2s;
-    animation-duration: 0.1s;
+    animation-duration: 0.5s;
     animation-fill-mode: forwards;
     opacity: 0;
 }
@@ -91,6 +91,7 @@ sup {
 
     @include desktop {
         padding-top: 11rem;
+        min-height: calc(100vh - 54rem);
     }
 }
 
@@ -121,15 +122,15 @@ sup {
     display: flex;
     flex-flow: column nowrap;
     width: 100vw;
+}
 
-    .boxed {
-        display: flex;
-        flex-flow: column nowrap;
-        max-width: $boxed-width;
-        margin: 0 auto 4rem;
-        padding: 0 1.5rem;
-    }
-
+.boxed {
+    display: flex;
+    flex-flow: column nowrap;
+    max-width: $boxed-width;
+    margin: 0 auto 4rem;
+    padding: 0 1.5rem;
+    width: 100%;
 }
 
 .subhead {

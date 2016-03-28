@@ -7,23 +7,29 @@
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
-    padding: 5.8vw 7vw 7.25vw;
-    text-align: center;
+
+    @include desktop {
+        text-align: center;
+    }
 
     @include phone {
         text-align: left;
     }
 
+    .boxed {
+        margin: 0 auto;
+        padding: 8rem 1.5rem;
+    }
+
     ul {
         display: flex;
         flex-flow: row wrap;
-        justify-content: center;
         list-style-type: none;
         margin: 0;
         padding: 0;
 
-        @include phone {
-            justify-content: flex-start;
+        @include desktop {
+            justify-content: center;
         }
     }
 
