@@ -1,8 +1,7 @@
 @import 'variables';
 @import 'mixins';
 
-$text-black: rgba(0, 0, 0, 0.87);
-$text-black2: rgba(0, 0, 0, 0.7);
+$text-dark2: rgba(0, 0, 0, 0.7);
 
 .allies-page {
     line-height: 3rem;
@@ -65,7 +64,6 @@ $text-black2: rgba(0, 0, 0, 0.7);
     .ally-info {
         align-items: center;
         background-color: color(neutral-lightest);
-        color: $text-black2;
         display: flex;
         flex-flow: column nowrap;
         font-size: 1.7rem;
@@ -82,9 +80,8 @@ $text-black2: rgba(0, 0, 0, 0.7);
         }
 
         h2 {
-            color: $text-black;
             font-size: 2rem;
-            font-weight: bold;
+            letter-spacing: normal;
         }
 
         .logo {

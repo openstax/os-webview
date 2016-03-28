@@ -28,8 +28,6 @@
 
     h2 {
         color: color(gray);
-        font-size: 3.5rem;
-        font-weight: bold;
     }
 
     .headshots {
@@ -209,25 +207,22 @@
                 }
             }
 
-            &:hover .details {
-                @include desktop {
-                    height: auto;
-                    opacity: 1;
-                    padding: 1.5rem;
-                    transform: translate3d(0, 0, 0);
-                    width: 35rem;
-                    z-index: 5;
-                }
-            }
-
+            &:hover .details,
             &.tapped .details {
                 height: auto;
-                left: -2vw;
                 opacity: 1;
                 padding: 1.5rem;
-                position: absolute;
-                width: 25rem;
+                transform: translate3d(0, 0, 0);
                 z-index: 5;
+
+                @include desktop {
+                    width: 35rem;
+                }
+
+                @media (max-width: 1388px) {
+                    left: -2vw;
+                    width: 25rem;
+                }
             }
         }
     }
