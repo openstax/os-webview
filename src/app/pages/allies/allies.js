@@ -23,7 +23,8 @@ function handleAlliesData(data) {
             name,
             blurb: page.long_description,
             subjects: page.ally_subject_list,
-            bookLinks: []
+            bookLinks: [],
+            isAp: page.is_ap
         };
         if (page.ally_logo) {
             alliesData[name].logoUrl = page.ally_logo;
@@ -42,7 +43,7 @@ alliesDataPromise = new PageModel().fetch({
     data: {
         type: 'allies.Ally',
         fields: ['ally_subject_list', 'title', 'short_description', 'long_description',
-                'ally_logo', 'heading']
+                'ally_logo', 'heading', 'is_ap']
     }
 }).then(handleAlliesData);
 
