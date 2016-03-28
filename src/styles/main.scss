@@ -131,6 +131,10 @@ sup {
     padding: 8rem 1.5rem 0;
     text-align: center;
 
+    @media (max-width: #{breakpoints(tablet)}) {
+        text-align: left;
+    }
+
     h1 {
         line-height: 1;
     }
