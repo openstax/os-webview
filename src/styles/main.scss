@@ -76,12 +76,17 @@ sup {
     overflow: hidden;
 }
 
-#main {
+#main > *,
+.page-header,
+#footer {
     animation: fadeIn ease-in 1;
     animation-delay: 0.2s;
-    animation-duration: 0.5s;
+    animation-duration: 0.1s;
     animation-fill-mode: forwards;
     opacity: 0;
+}
+
+#main {
     padding-top: 6rem;
 
     @include desktop {
