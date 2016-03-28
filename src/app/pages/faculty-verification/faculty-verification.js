@@ -1,5 +1,6 @@
-import BaseView from '~/helpers/backbone/view';
-import {props} from '~/helpers/backbone/decorators';
+import ProxyWidgetView from '~/helpers/backbone/proxy-widget-view';
+import salesforceModel from '~/models/salesforce-model';
+import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './faculty-verification.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
 
@@ -10,8 +11,19 @@ import {template as strips} from '~/components/strips/strips.hbs';
         strips
     }
 })
-export default class FacultyVerificationForm extends BaseView {
+export default class FacultyVerificationForm extends ProxyWidgetView {
+    @on('change [type=text],[type=email]')
+    saveSetting(event) {
+        let varName = event.target.name;
+
+        if (varName) {
+            salesforceModel.set(varName, event.target.value);
+        }
+    }
+
     onRender() {
         this.el.classList.add('faculty-verification-form');
+        super.onRender();
+        salesforceModel.prefill(this.el);
     }
 }

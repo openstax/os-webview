@@ -9,7 +9,7 @@ class ProxyWidgetView extends BaseView {
         for (let widget of this.selectWidgets) {
             widget.doValidChecks();
         }
-        let invalid = this.el.querySelectorAll('.invalid');
+        let invalid = this.el.querySelectorAll('.invalid,input:invalid');
 
         if (invalid.length > 0) {
             event.preventDefault();
