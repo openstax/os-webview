@@ -6,7 +6,6 @@ import {template} from './contact.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
 
 const subjectOptions = [
-    ['Testing', 'mwh5@rice.edu', 'Test to Michael'],
     ['General', 'info@openstax.org', 'General OpenStax Question'],
     ['Adopting OpenStax Textbooks', 'info@openstax.org', 'Adopting OpenStax Textbooks'],
     ['Concept Coach', 'ccsupport@openstax.org', 'Concept Coach Question'],

@@ -1,0 +1,25 @@
+@import 'mixins';
+
+h1 {
+    text-align: center;
+}
+
+.adopters {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+
+.adopter {
+    flex-basis: 25%;
+    padding: 0.5rem;
+
+    @include phone {
+        flex-basis: 100%;
+    }
+
+    @include tablet {
+        flex-basis: 33%;
+    }
+}

@@ -6,6 +6,7 @@ const PAGES = [
     'about',
     'about-us',
     'accessibility-statement',
+    'adopters',
     'adoption',
     'adoption-confirmation',
     'allies',

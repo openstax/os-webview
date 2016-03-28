@@ -4,52 +4,68 @@
 h1,
 h2,
 h3,
-h4,
-h5,
-h6 {
-    color: color(neutral-dark);
-    margin: 0;
-    font-weight: 700;
-    line-height: 1;
+h4 {
+    color: $text-dark;
+    font-weight: bold;
+    margin-bottom: 1rem;
 }
 
 h1 {
-    letter-spacing: -0.2rem;
-}
-
-h2,
-h3,
-h4,
-h5,
-h6 {
-    letter-spacing: -0.1rem;
-}
-
-h1,
-.extra-large-header {
     font-size: 4.8rem;
     letter-spacing: -0.2rem;
-    margin-bottom: 2.5rem;
+    line-height: 5rem;
 }
 
-h2,
-.large-header {
-    font-size: 2.8rem;
-    margin-bottom: 1.8rem;
+h2 {
+    font-size: 3.6rem;
+    line-height: 4rem;
+    letter-spacing: -0.2rem;
+    margin-top: 2rem;
 }
 
-h3,
-.medium-header {
+h3 {
     font-size: 2.1rem;
-    margin-bottom: 1.1rem;
+    line-height: 2.5rem;
+    letter-spacing: -0.1rem;
+    margin-top: 1.5rem;
 }
 
-h4,
-.small-header {
-    font-size: 1.7rem;
+h4 {
+    color: color(primary);
+    font-size: 1.6rem;
+    line-height: 2.5rem;
+    letter-spacing: -0.1rem;
+    margin-top: 1rem;
 }
 
-h5,
-.extra-small-header {
-    font-size: 1.4rem;
+.hero {
+    font-size: 1.8rem;
+    font-weight: 100;
+    letter-spacing: 0.11rem;
+    line-height: 3rem;
+    margin-bottom: 1rem;
+    padding: 5rem 10rem;
+    text-align: center;
+
+    h1 {
+        font-weight: bold;
+        font-size: 6rem;
+        letter-spacing: -0.2rem;
+        line-height: 5rem;
+        margin-bottom: 1rem;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 4.8rem;
+        letter-spacing: -0.2rem;
+        line-height: 5rem;
+        margin-bottom: 1rem;
+    }
+
+    .cta {
+        font-size: 1.4rem;
+        font-weight: bold;
+        text-transform: capitalize;
+    }
 }

@@ -2,23 +2,23 @@
 @import 'mixins';
 
 .page-intro {
+    background-color: color(deep-green);
     display: flex;
     flex-wrap: wrap;
-    background-color: color(deep-green);
     justify-content: center;
 
     h1 {
-        color: white;
+        color: color(neutral-lightest);
     }
 
     p {
-        color: white;
+        color: color(neutral-lightest);
 
         &.blurb-calculator {
-            margin: 0 auto;
-            padding-top: 5rem;
-            max-width: 48rem;
             color: color(blue);
+            margin: 0 auto;
+            max-width: 48rem;
+            padding-top: 5rem;
         }
     }
 
