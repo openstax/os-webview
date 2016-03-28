@@ -43,9 +43,14 @@ h4 {
     font-weight: 100;
     letter-spacing: 0.11rem;
     line-height: 3rem;
-    margin-bottom: 1rem;
     padding: 5rem 10rem;
     text-align: center;
+
+    @media (max-width: #{breakpoints(tablet)}) {
+        font-size: 1.6rem;
+        line-height: 2.7rem;
+        text-align: left;
+    }
 
     h1 {
         font-weight: bold;

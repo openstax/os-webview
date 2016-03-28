@@ -1,3 +1,4 @@
+import Backbone from 'backbone';
 import BaseView from '~/helpers/backbone/view';
 import PageModel from '~/models/pagemodel';
 import Author from './author/author';
@@ -89,10 +90,10 @@ export default class Details extends BaseView {
 
         let slug = decodeURIComponent(window.location.search.substr(1)),
             pageModel = new PageModel(),
-            insertResources = (resources, regionName) => {
+            insertResources = (resources, regionName, alternateLink) => {
                 for (let res of resources) {
                     if (res.link_document) {
-                        this.regions[regionName].append(new Resource(res));
+                        this.regions[regionName].append(new Resource(res, alternateLink));
                     }
                 }
             };
@@ -103,11 +104,15 @@ export default class Details extends BaseView {
 
         let showInstructorResources = (resources) => {
                 userModel.fetch().then((userData) => {
-                    let userInfo = userData[0];
+                    let userInfo = userData[0],
+                        alternateLink = null;
 
-                    if (userInfo && (userInfo.is_staff || userInfo.is_superuser)) {
-                        insertResources(resources, 'instructorResources');
+                    if (!userInfo || userInfo.username === '') {
+                        alternateLink = `/accounts/login/openstax?next=${Backbone.history.location.href}`;
+                    } else if (!(userInfo.is_staff || userInfo.is_superuser)) {
+                        alternateLink = '/faculty-verification';
                     }
+                    insertResources(resources, 'instructorResources', alternateLink);
                 });
             },
             handbookLink = this.el.querySelector('.handbook-link'),
