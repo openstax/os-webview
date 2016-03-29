@@ -8,9 +8,7 @@ import {template} from './header.hbs';
 
 // NOTE: This needs to be refactored into multiple views
 
-@props({
-    template: template
-})
+@props({template})
 class Header extends BaseView {
 
     constructor() {
@@ -21,8 +19,7 @@ class Header extends BaseView {
         this.templateHelpers = {
             visible: () => this.meta.visible,
             fixed: () => this.meta.fixed,
-            transparent: () => this.meta.transparent,
-            loggedIn: () => this.meta.loggedIn
+            transparent: () => this.meta.transparent
         };
     }
 
@@ -337,17 +334,27 @@ class Header extends BaseView {
     onRender() {
         userModel.fetch().then((data) => {
             let loginItem = this.el.querySelector('.meta-nav .container .login a'),
-                userInfo = data[0];
+                userInfo = data[0],
+                loginWrapper = loginItem.parentNode,
+                loggedIn = userInfo && userInfo.username !== '';
 
-            if (!userInfo || userInfo.username === '') {
-                this.meta.loggedIn = false;
-            } else {
-                this.meta.loggedIn = true;
+            if (loggedIn) {
                 loginItem.textContent = `Hi ${userInfo.first_name}`;
+                loginWrapper.classList.add('dropdown');
+                loginItem.setAttribute('aria-haspopup', true);
+
+                let boundHandler = this.flyOutMenu.bind(this);
+
+                loginItem.addEventListener('click', boundHandler);
+                this.unbindLoginListener = () => {
+                    loginItem.removeEventListener('click', boundHandler);
+                };
+            } else {
+                loginItem.textContent = 'Login';
             }
         });
         this.updateHeaderStyle();
-        document.addEventListener('load', this.appendURL.bind(this), true);
+        this.appendURL();
         document.addEventListener('click', this.resetHeader.bind(this), true);
         window.addEventListener('scroll', this.updateHeaderStyle.bind(this));
         window.addEventListener('scroll', this.removeAllOpenClasses.bind(this));
@@ -360,11 +367,13 @@ class Header extends BaseView {
     }
 
     onBeforeClose() {
-        document.removeEventListener('load', this.appendURL.bind(this), true);
         document.removeEventListener('click', this.resetHeader.bind(this), true);
         window.removeEventListener('scroll', this.updateHeaderStyle.bind(this));
         window.removeEventListener('scroll', this.removeAllOpenClasses.bind(this));
         window.removeEventListener('resize', this.closeFullScreenNav.bind(this));
+        if (this.unbindLoginListener) {
+            this.unbindLoginListener();
+        }
     }
 }
 
