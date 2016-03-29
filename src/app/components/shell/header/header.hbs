@@ -9,7 +9,18 @@
             <ul class="nav-menu meta-menu" role="menu" aria-label="Meta navigation menu">
                 <li class="nav-menu-item"><a href="/about-us" role="menuitem">About</a></li>
                 <li class="nav-menu-item"><a href="/contact" role="menuitem">Contact</a></li>
-                <li class="nav-menu-item login"><a href="#" role="menuitem">Login</a></li>
+                {{#if loggedIn}}
+                    <li class="nav-menu-item dropdown login"><a href="#" role="menuitem" aria-haspopup="true">Hi, User!</a>
+                        <ul class="dropdown-menu" role="menu" aria-expanded="false" aria-label="User Menu">
+                            <li role="presentation"><a href="http://accounts.openstax.org" role="menuitem" tabindex="-1">Account Profile</a></li>
+                            <li role="presentation"><a href="/faculty-verification" role="menuitem" tabindex="-1">Request instructor access</a></li>
+                            <li role="presentation"><a href="/" role="menuitem" tabindex="-1">Logout</a></li>
+                        </ul>
+                    </li>
+                {{else}}
+                    <li class="nav-menu-item login"><a href="#" role="menuitem">Login</a>
+                {{/if}}
+
             </ul>
             <span class="logo-wrapper">
                 <a class="logo rice-logo" href="http://www.rice.edu" role="menuitem">

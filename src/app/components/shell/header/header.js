@@ -21,7 +21,8 @@ class Header extends BaseView {
         this.templateHelpers = {
             visible: () => this.meta.visible,
             fixed: () => this.meta.fixed,
-            transparent: () => this.meta.transparent
+            transparent: () => this.meta.transparent,
+            loggedIn: () => this.meta.loggedIn
         };
     }
 
@@ -338,7 +339,10 @@ class Header extends BaseView {
             let loginItem = this.el.querySelector('.meta-nav .container .login a'),
                 userInfo = data[0];
 
-            if (userInfo && userInfo.username) {
+            if (!userInfo || userInfo.username === '') {
+                this.meta.loggedIn = false;
+            } else {
+                this.meta.loggedIn = true;
                 loginItem.textContent = `Hi ${userInfo.first_name}`;
             }
         });

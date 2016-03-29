@@ -109,7 +109,15 @@ $transition: 0.3s;
 
         .nav-menu-item {
             @include desktop {
-                margin: 0 2rem;
+                padding: 0 2rem;
+                margin: 0;
+                position: relative;
+            }
+
+            > a {
+                @include desktop {
+                    padding-bottom: 2rem;
+                }
             }
         }
 
@@ -214,8 +222,9 @@ $transition: 0.3s;
                 width: 0;
                 height: 0;
                 top: 3.7rem;
-                left: 0;
-                transform: translate3d(0, -1rem, 0);
+                left: 50%;
+                padding: 0.5rem 0;
+                transform: translate3d(-50%, -1rem, 0);
                 border-top: 0.5rem solid color(orange);
                 white-space: nowrap;
                 background: color(neutral-lightest);
@@ -234,7 +243,7 @@ $transition: 0.3s;
                     height: auto;
                     z-index: 1;
                     opacity: 1;
-                    transform: translate3d(0, 0, 0);
+                    transform: translate3d(-50%, 0, 0);
                 }
 
                 @at-root .active.open#{&} {
@@ -247,7 +256,8 @@ $transition: 0.3s;
                 margin: 0 0 0.5rem;
 
                 @include desktop {
-                    margin: 0.5rem 1rem;
+                    padding: 0 1rem;
+                    margin: 0;
                 }
             }
 
@@ -273,6 +283,7 @@ $transition: 0.3s;
         @at-root .active#{&} {
             width: 100%;
             height: auto;
+            overflow: visible;
         }
 
         @include desktop {
@@ -298,7 +309,9 @@ $transition: 0.3s;
         }
 
         .nav-menu {
-            margin-left: -9rem;
+            @at-root .active#{&} {
+                width: 14.8rem;
+            }
         }
 
         .nav-menu-item {
@@ -306,16 +319,51 @@ $transition: 0.3s;
             a {
 
                 color: color(cyan);
-                display: block;
 
                 @include desktop {
                     color: color(gray);
                 }
 
                 &:active,
-                &:focus,
                 &:hover {
                     color: color(cyan);
+                }
+            }
+        }
+
+        .dropdown {
+            @include desktop {
+                margin-right: 2rem;
+            }
+        }
+
+        .dropdown-menu {
+
+            @at-root .active#{&} {
+                transform: translate3d(200rem, -75%, 0);
+            }
+
+            @include desktop {
+                font-size: 1.4rem;
+                background-color: darken(color(neutral-lightest), 12%);
+                border-top: 0;
+
+                &::before {
+                    @include triangle(
+                        $direction: top,
+                        $position: top -0.5rem right calc(50% - 1rem),
+                        $color: darken(color(neutral-lightest), 12%),
+                        $size: 1rem
+                    );
+                }
+            }
+
+            &.open {
+                overflow: visible;
+
+                @at-root .active.open#{&} {
+                    transform: translate3d(100rem, -75%, 0);
+
                 }
             }
         }
@@ -437,19 +485,19 @@ $transition: 0.3s;
                 margin: 0;
                 position: relative;
 
-                &:not(.dropdown) {
-                    &:hover {
-                        &::after {
-                            background-color: color(green);
-                            bottom: -1.7rem;
-                            content: '';
-                            height: 0.5rem;
-                            left: 1rem;
-                            outline: 0;
-                            position: absolute;
-                            right: 1rem;
-                        }
-                    }
+                &:hover::after {
+                    background-color: color(green);
+                    bottom: -1.7rem;
+                    content: '';
+                    height: 0.5rem;
+                    left: 1rem;
+                    outline: 0;
+                    position: absolute;
+                    right: 1rem;
+                }
+
+                &.dropdown:hover::after {
+                    right: -0.5rem;
                 }
             }
 
