@@ -151,53 +151,50 @@ $transition: 0.3s;
                 }
             }
 
-            .clone {
-                a {
-                    color: color(neutral-medium);
-                    font-weight: 600;
-                    cursor: default;
+            .clone a {
+                color: color(neutral-medium);
+                font-weight: 600;
+                cursor: default;
 
-                    &:last-child:hover {
-                        color: color(neutral-medium);
-                    }
+                &:last-child:hover {
+                    color: color(neutral-medium);
+                }
+            }
+
+            .clone .back {
+                display: block;
+                margin: 0 0 1rem;
+                padding-left: 2rem;
+                position: relative;
+                color: color(cyan);
+                cursor: pointer;
+
+                &::before,
+                &::after {
+                    border-right: 0.2rem solid;
+                    content: '';
+                    display: block;
+                    height: 1rem;
+                    margin-top: -0.7rem;
+                    position: absolute;
+                    transform: rotate3d(0, 0, 1, 45deg);
+                    left: 0.3rem;
+                    top: 50%;
+                    width: 0;
+                    cursor: pointer;
+                    transition: opacity 0s 0.6s;
+
                 }
 
+                &::after {
+                    margin-top: -0.1rem;
+                    transform: rotate3d(0, 0, 1, 135deg);
+                }
 
-                .back {
-                    display: block;
-                    margin: 0 0 1rem;
-                    padding-left: 2rem;
-                    position: relative;
-                    color: color(cyan);
-                    cursor: pointer;
-
-                    &::before,
-                    &::after {
-                        border-right: 0.2rem solid;
-                        content: '';
-                        display: block;
-                        height: 1rem;
-                        margin-top: -0.7rem;
-                        position: absolute;
-                        transform: rotate3d(0, 0, 1, 45deg);
-                        left: 0.3rem;
-                        top: 50%;
-                        width: 0;
-                        cursor: pointer;
-                        transition: opacity 0s 0.6s;
-
-                    }
-
-                    &::after {
-                        margin-top: -0.1rem;
-                        transform: rotate3d(0, 0, 1, 135deg);
-                    }
-
-                    &:focus {
-                        outline: none;
-                    }
-                } // end .back
-            }
+                &:focus {
+                    outline: none;
+                }
+            } // end .back
         }
 
         .dropdown-menu {
