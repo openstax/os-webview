@@ -10,6 +10,7 @@ import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './details.hbs';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
 import {template as strips} from '~/components/strips/strips.hbs';
+import settings from 'settings';
 
 function dataToTemplateHelper(data) {
     let quotes = data.book_quotes[0],
@@ -109,10 +110,11 @@ export default class Details extends BaseView {
         let showInstructorResources = (resources) => {
                 userModel.fetch().then((userData) => {
                     let userInfo = userData[0],
-                        alternateLink = null;
+                        alternateLink = null,
+                        encodedLocation = encodeURIComponent(Backbone.history.location.href);
 
                     if (!userInfo || userInfo.username === '') {
-                        alternateLink = `/accounts/login/openstax?next=${Backbone.history.location.href}`;
+                        alternateLink = `${settings.apiOrigin}/accounts/login/openstax/?next=${encodedLocation}`;
                     } else if (!(userInfo.is_staff || userInfo.is_superuser)) {
                         alternateLink = '/faculty-verification';
                     }
