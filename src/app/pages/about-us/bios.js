@@ -502,7 +502,7 @@ let bios = {
         },
         {
             name: 'Jemel Agulto',
-            title: 'Marketing & Communications Asst',
+            title: 'Marketing and Communications Specialist',
             bio: `Jemel is a Marketing and Communications Assistant at OpenStax focused
             on supporting all the marketing and communication efforts of the organization.
             Prior to joining OpenStax, Jemel worked at RR Donnelley managing the company’s
@@ -743,7 +743,7 @@ let bios = {
         },
         {
             name: 'Andrew Wienecke',
-            title: '',
+            title: 'Systems Administrator',
             bio: '',
             image: 'Andrew.png',
             bgColor: 'gray',
@@ -751,7 +751,7 @@ let bios = {
         },
         {
             name: 'Bruce Pike',
-            title: '',
+            title: 'Project Manager',
             bio: '',
             image: 'Bruce.png',
             bgColor: 'deep-green',
@@ -760,23 +760,35 @@ let bios = {
         {
             name: 'Chris Houston',
             title: '',
-            bio: '',
-            image: 'Chris H.png',
+            bio: `Chris is a Customer Support Specialist responsible for assisting faculty and students
+            in the adoption and use of Open Educational Resources.  After attending University of Houston
+            and MediaTech Institute, Chris began work with LJA Engineering as Junior Network Admin, When
+            not at OpenStax Chris can be found mixing records or watching Duke basketball.',
+            image: 'Chris H.png`,
             bgColor: 'yellow',
             textColor: 'orange'
         },
         {
             name: 'Courtney Raymond',
-            title: '',
-            bio: '',
+            title: 'Assistant Director, Marketing and Communications',
+            bio: `Courtney is the Assistant Director of Marketing & Communications at OpenStax, focused on
+            communications strategies around everything OpenStax has to offer for higher ed and K-12 classrooms.
+            She is a native Houstonian whose experience includes nonprofit work and writing consulting in Austin,
+            marketing campaigns for theater companies in New York, and digital marketing in Houston. Courtney is
+            a graduate of the University of Texas and got her Master’s degree at Columbia University. In her free
+            time, she likes to read, see musicals, binge watch good television, and travel.`,
             image: 'Courtney.png',
             bgColor: 'orange',
             textColor: 'yellow'
         },
         {
             name: 'Kajal Parekh',
-            title: '',
-            bio: '',
+            title: 'QA and Customer Support Manager',
+            bio: `Kajal manages the Quality Assurance and Customer Support teams at OpenStax. She strives to
+            be true to the mission of OpenStax by providing textbooks of highest quality and unbeatable user
+            experience. Kajal graduated from University of California Santa Barbara with a Master’s in
+            Electrical and Computer Engineering and has previously worked as an Engineer at Qualcomm and as
+            a QA Analyst at Weatherford. When not working, Kajal likes to cook, hike, or go on road trips.`,
             image: 'Kajal.png',
             bgColor: 'blue',
             textColor: 'green'
@@ -799,7 +811,7 @@ let bios = {
         },
         {
             name: 'Michael Harrison',
-            title: '',
+            title: 'Developer',
             bio: '',
             image: 'Michael.png',
             bgColor: 'turquoise',
@@ -815,8 +827,15 @@ let bios = {
         },
         {
             name: 'Robert Newell',
-            title: '',
-            bio: '',
+            title: 'UX Analyst',
+            bio: `Robert is a user experience (UX) researcher and designer at OpenStax.  He loves listening to users
+            and designing super-simple, easy-to-use interfaces that help build engaging learning experiences.
+            He comes to OpenStax from University of Houston Libraries where he led UX design and usability efforts
+            for their public-facing websites. He also worked as an interaction designer and usability engineer
+            at Dell.  Robert holds a BA in Psychology and an MSIS from the University of Texas at Austin, as well
+            as an MA in Communication from the University of Washington.  Prior to UX, he was a professional actor
+            for ten years.  Robert is generally an active person, and every Saturday morning you’ll find him running
+            along Buffalo Bayou with the Heights Running Club.`,
             image: 'Robert.png',
             bgColor: 'gray',
             textColor: 'orange'
@@ -828,6 +847,18 @@ let bios = {
             image: 'Tim.png',
             bgColor: 'cyan',
             textColor: 'blue'
+        },
+        {
+            name: 'Alan Cooke',
+            title: '',
+            bio: `Alan is a Customer Support Specialist at OpenStax focused on supporting the folks who use the
+            things we make. Prior to joining OpenStax, Alan worked support in Web-hosting and Cable/Fiber-Optic
+            Telecoms. He received a degree in Journalism and Mass Communications from Southeastern Louisiana
+            University. While not using the secret skills gained from his alma mater to filter and funnel
+            information from sources to readers he revels in trivia, podcasts, and wooing the muse of the odd.`,
+            image: '',
+            bgColor: 'yellow',
+            textColor: 'orange'
         }
     ]
 };
