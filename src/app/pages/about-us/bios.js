@@ -763,8 +763,8 @@ let bios = {
             bio: `Chris is a Customer Support Specialist responsible for assisting faculty and students
             in the adoption and use of Open Educational Resources.  After attending University of Houston
             and MediaTech Institute, Chris began work with LJA Engineering as Junior Network Admin, When
-            not at OpenStax Chris can be found mixing records or watching Duke basketball.',
-            image: 'Chris H.png`,
+            not at OpenStax Chris can be found mixing records or watching Duke basketball.`,
+            image: 'Chris H.png',
             bgColor: 'yellow',
             textColor: 'orange'
         },
@@ -850,7 +850,7 @@ let bios = {
         },
         {
             name: 'Alan Cooke',
-            title: '',
+            title: 'Customer Support Specialist',
             bio: `Alan is a Customer Support Specialist at OpenStax focused on supporting the folks who use the
             things we make. Prior to joining OpenStax, Alan worked support in Web-hosting and Cable/Fiber-Optic
             Telecoms. He received a degree in Journalism and Mass Communications from Southeastern Louisiana
