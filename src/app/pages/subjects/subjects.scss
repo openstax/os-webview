@@ -158,6 +158,11 @@
             }
         }
 
+        .book-category:last-child .details,
+        .last-row .details {
+            position: static;
+        }
+
         .cover:hover .details {
             @include desktop {
                 overflow: initial;

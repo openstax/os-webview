@@ -25,9 +25,12 @@ export default class CategorySection extends BaseView {
     }
 
     setState() {
-        let value = this.model.get('selectedFilter');
+        let value = this.model.get('selectedFilter'),
+            visible = value === this.category || value === 'View All',
+            isLastRow = value === this.category;
 
-        this.el.classList.toggle('hidden', value !== this.category && value !== 'View All');
+        this.el.classList.toggle('hidden', !visible);
+        this.el.classList.toggle('last-row', isLastRow);
     }
 
     onRender() {
