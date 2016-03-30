@@ -8,9 +8,7 @@ import {template} from './header.hbs';
 
 // NOTE: This needs to be refactored into multiple views
 
-@props({
-    template: template
-})
+@props({template})
 class Header extends BaseView {
 
     constructor() {
@@ -213,6 +211,7 @@ class Header extends BaseView {
             header.classList.add('open');
             parentItem.classList.add('open');
             dropDownMenu.classList.add('open');
+            this.openThisDropdown(e);
         } else if (!e.target.classList.contains('back')) {
             this.closeFullScreenNav(e);
         }
@@ -226,17 +225,17 @@ class Header extends BaseView {
         $this.href = href;
     }
 
+    loginOpenSameWindow(e) {
+        e.preventDefault(e);
+        window.open(e.target, '_self');
+    }
+
     @on('keydown .expand')
     onKeydownToggleFullScreenNav(e) {
         if (document.activeElement === e.currentTarget && (e.keyCode === 13 || e.keyCode === 32)) {
             e.preventDefault();
             this.toggleFullScreenNav(e);
         }
-    }
-
-    @on('click a[aria-haspopup="true"]')
-    openDropdownMenu(e) {
-        this.openThisDropdown(e);
     }
 
     openThisDropdown(e) {
@@ -336,14 +335,33 @@ class Header extends BaseView {
     onRender() {
         userModel.fetch().then((data) => {
             let loginItem = this.el.querySelector('.meta-nav .container .login a'),
-                userInfo = data[0];
+                userInfo = data[0],
+                loginWrapper = loginItem.parentNode,
+                loggedIn = userInfo && userInfo.username !== '';
 
-            if (userInfo && userInfo.username) {
+            if (loggedIn) {
                 loginItem.textContent = `Hi ${userInfo.first_name}`;
+                loginWrapper.classList.add('dropdown');
+                loginItem.setAttribute('aria-haspopup', true);
+
+                let boundHandler = this.flyOutMenu.bind(this);
+
+                loginItem.addEventListener('click', boundHandler);
+                this.unbindLoginListener = () => {
+                    loginItem.removeEventListener('click', boundHandler);
+                };
+            } else {
+                let boundHandler = this.loginOpenSameWindow.bind(this);
+
+                loginItem.textContent = 'Login';
+                loginItem.addEventListener('click', boundHandler);
+                this.unbindLoginListener = () => {
+                    loginItem.removeEventListener('click', boundHandler);
+                };
             }
         });
         this.updateHeaderStyle();
-        document.addEventListener('load', this.appendURL.bind(this), true);
+        this.appendURL();
         document.addEventListener('click', this.resetHeader.bind(this), true);
         window.addEventListener('scroll', this.updateHeaderStyle.bind(this));
         window.addEventListener('scroll', this.removeAllOpenClasses.bind(this));
@@ -356,11 +374,13 @@ class Header extends BaseView {
     }
 
     onBeforeClose() {
-        document.removeEventListener('load', this.appendURL.bind(this), true);
         document.removeEventListener('click', this.resetHeader.bind(this), true);
         window.removeEventListener('scroll', this.updateHeaderStyle.bind(this));
         window.removeEventListener('scroll', this.removeAllOpenClasses.bind(this));
         window.removeEventListener('resize', this.closeFullScreenNav.bind(this));
+        if (this.unbindLoginListener) {
+            this.unbindLoginListener();
+        }
     }
 }
 
