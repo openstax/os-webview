@@ -81,9 +81,9 @@ export default class Details extends BaseView {
             let menuOffset = height - footerHeight - floatingMenuHeight;
 
             if ((window.pageYOffset > menuOffset) && (window.innerWidth > 768)) {
-                floatingMenu.parentNode.classList.add('bottom');
+                floatingMenu.parentNode.style.top = `${menuOffset - window.pageYOffset + 200}px`;
             } else {
-                floatingMenu.parentNode.classList.remove('bottom');
+                floatingMenu.parentNode.style.top = 'auto';
             }
         }
     }

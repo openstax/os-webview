@@ -147,19 +147,6 @@
                 margin-bottom: 0;
             }
 
-            &.bottom {
-                position: absolute;
-                bottom: 0;
-                top: auto;
-
-                .box {
-                    position: relative;
-                    top: 0;
-                    left: calc(100% - 25rem);
-                    right: auto;
-                }
-            }
-
             .box {
                 @include desktop {
                     width: 25rem;
