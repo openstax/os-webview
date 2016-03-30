@@ -88,10 +88,10 @@ sup {
 
 #main {
     padding-top: 6rem;
+    flex: 1 0 auto;
 
     @include desktop {
         padding-top: 11rem;
-        min-height: calc(100vh - 54rem);
     }
 }
 
