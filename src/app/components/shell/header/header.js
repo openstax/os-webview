@@ -211,6 +211,7 @@ class Header extends BaseView {
             header.classList.add('open');
             parentItem.classList.add('open');
             dropDownMenu.classList.add('open');
+            this.openThisDropdown(e);
         } else if (!e.target.classList.contains('back')) {
             this.closeFullScreenNav(e);
         }
@@ -224,17 +225,17 @@ class Header extends BaseView {
         $this.href = href;
     }
 
+    loginOpenSameWindow(e) {
+        e.preventDefault(e);
+        window.open(e.target, '_self');
+    }
+
     @on('keydown .expand')
     onKeydownToggleFullScreenNav(e) {
         if (document.activeElement === e.currentTarget && (e.keyCode === 13 || e.keyCode === 32)) {
             e.preventDefault();
             this.toggleFullScreenNav(e);
         }
-    }
-
-    @on('click a[aria-haspopup="true"]')
-    openDropdownMenu(e) {
-        this.openThisDropdown(e);
     }
 
     openThisDropdown(e) {
@@ -350,7 +351,13 @@ class Header extends BaseView {
                     loginItem.removeEventListener('click', boundHandler);
                 };
             } else {
+                let boundHandler = this.loginOpenSameWindow.bind(this);
+
                 loginItem.textContent = 'Login';
+                loginItem.addEventListener('click', boundHandler);
+                this.unbindLoginListener = () => {
+                    loginItem.removeEventListener('click', boundHandler);
+                };
             }
         });
         this.updateHeaderStyle();
