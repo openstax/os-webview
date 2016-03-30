@@ -30,9 +30,9 @@ export default class K12 extends BaseView {
             bucketClass: 'allies',
             hasImage: false,
             titleText: 'OpenStax Allies',
-            blurbHtml: `OpenStax allies provide additional tools alongside our
-                OpenStax texts, because we believe that education is a community
-                effort.`,
+            blurbHtml: `We partner with OpenStax Allies to provide additional integrated
+            resources for our AP&reg; course textbooks. Discover the courseware, online homework,
+             and adaptive learning tools alongside our titles.`,
             btnClass: 'btn-yellow',
             linkUrl: '/allies',
             linkText: 'View Allies'
