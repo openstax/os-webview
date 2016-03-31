@@ -17,6 +17,11 @@
                 content: '►';
                 padding-left: 0.5rem;
             }
+
+            &.down-page::after {
+                color: inherit;
+                content: '▼';
+            }
         }
     }
 
