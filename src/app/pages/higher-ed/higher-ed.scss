@@ -1,11 +1,17 @@
 @import 'variables';
 @import 'mixins';
 
+@mixin widescreen {
+    @media (min-width: 1400px) {
+        @content;
+    }
+}
+
+$hero-break-width: 1024px;
+
 .higher-ed-page {
     .more {
-        font-size: 1.3rem;
         font-weight: bold;
-        letter-spacing: 0.05vw;
         text-transform: uppercase;
 
         a {
@@ -25,44 +31,52 @@
         }
     }
 
-    .banner {
+    .hero {
+        align-items: center;
         background-image: url('/images/higher-ed/background.png');
-        background-size: 100vw 42.85vw;
-        height: 42.85vw;
+        background-size: cover;
+        display: flex;
+        min-height: 42.8vw;
         position: relative;
-        width: 100vw;
+
+        @media (max-width: $hero-break-width) {
+            background-image: none;
+            padding: 0;
+        }
 
         > .overlay {
             background-color: rgba(color(cyan), 0.8);
             color: color(neutral-lightest);
-            height: 24.29vw;
-            left: 8.215vw;
-            position: absolute;
-            top: 9.29vw;
-            width: 83.57vw;
 
-            > .header,
-            > .blurb,
-            > .more {
-                padding-left: 42.8vw;
-                padding-right: 3.93vw;
-            }
+            > .text-block {
+                margin: 5rem;
+                padding-left: 35%;
 
-            > .header {
-                font-size: 3.6vw;
-                font-weight: 900;
-                line-height: 0.9;
-                margin-bottom: 1.43vw;
-                margin-top: 2.85vw;
-            }
+                @media (max-width: $hero-break-width) {
+                    padding: inherit;
+                }
 
-            > .blurb {
-                font-size: 1.3vw;
-                line-height: 1.6;
-            }
+                @include widescreen {
+                    h1 {
+                        font-size: calc(3.6rem + 1.8vw);
+                        line-height: 0.9;
+                    }
 
-            > .more {
-                margin-top: 1.43vw;
+                    .blurb,
+                    .more {
+                        font-size: calc(0.8rem + 0.7vw);
+                        line-height: 1.6;
+                        margin: 1vw 0;
+                    }
+                }
+
+                h1 {
+                    color: inherit;
+                }
+
+                .blurb {
+                    padding: 2rem 0;
+                }
             }
         }
     }
