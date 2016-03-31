@@ -31,12 +31,13 @@
         height: 100%;
         width: 100%;
         z-index: 100;
-        overflow-y: auto;
+        overflow-y: scroll;
         opacity: 1;
         transition: opacity 0.3s;
 
         @include desktop {
             background-color: rgba(color(neutral-dark), 0.90);
+            overflow-y: auto;
         }
 
         &.hidden {
