@@ -137,6 +137,25 @@ export default class TagMultiSelect extends BaseView {
                 tagItem: tag
             });
             this.synchronizeModel(model);
+
+            let controlledElementId = model.get('originalOption').dataset.other;
+
+            if (controlledElementId) {
+                let controlledElement = document.getElementById(controlledElementId),
+                    controlledInput = controlledElement.querySelector('input');
+
+                model.on('change:selected', () => {
+                    let newValue = model.get('selected');
+
+                    controlledElement.classList.toggle('hidden', !newValue);
+                    controlledInput.required = newValue;
+                    if (!newValue) {
+                        controlledInput.value = '';
+                    }
+                });
+
+                model.trigger('change:selected');
+            }
         });
     }
 }
