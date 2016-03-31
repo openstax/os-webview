@@ -115,7 +115,7 @@ export default class Details extends BaseView {
 
                     if (!userInfo || userInfo.username === '') {
                         alternateLink = `${settings.apiOrigin}/accounts/login/openstax/?next=${encodedLocation}`;
-                    } else if (!(userInfo.is_staff || userInfo.is_superuser)) {
+                    } else if (userInfo.groups.indexOf('Faculty') < 0) {
                         alternateLink = '/faculty-verification';
                     }
                     insertResources(resources, 'instructorResources', alternateLink);
