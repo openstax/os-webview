@@ -16,9 +16,9 @@ export default class Buckets extends BaseView {
         //     bucketClass: 'give',
         //     hasImage: true,
         //     titleText: 'Give',
-        //     blurbHtml: `Tanaya is a single mother and first generation college
-        //     student. Your donations helped create the free Biology textbook
-        //     she is now using on her path to become a nurse.`,
+        //     blurbHtml: `Joshua is working to support himself while going
+        //     to college on the GI Bill. Your donations helped create the
+        //     free textbook he is using to complete his college degree.`,
         //     btnClass: 'btn-yellow',
         //     linkUrl: '/give',
         //     linkText: 'Give Today'
@@ -28,9 +28,9 @@ export default class Buckets extends BaseView {
             bucketClass: 'our-impact',
             hasImage: true,
             titleText: 'Our Impact',
-            blurbHtml: `Prof. Craig has saved students $350,000 and opened the
-            doors for over 1000 future engineers and scientists by adopting
-            OpenStax Physics.`,
+            blurbHtml: `Prof. Wolchonok has saved students $15,000
+            and opened doors for them to pursue health science careers
+            by adopting our free Anatomy and Physiology book. `,
             btnClass: 'btn-cyan',
             linkUrl: '/impact',
             linkText: 'Learn More About Our Impact'
@@ -40,9 +40,9 @@ export default class Buckets extends BaseView {
             bucketClass: 'allies',
             hasImage: false,
             titleText: 'OpenStax Allies',
-            blurbHtml: `OpenStax allies provide additional tools alongside our
-            OpenStax texts, because we believe that education is a community
-            effort.`,
+            blurbHtml: `OpenStax allies provide additional tools
+            integrated with our OpenStax texts, because we believe
+            that education is a community effort.`,
             btnClass: 'btn-yellow',
             linkUrl: '/allies',
             linkText: 'View Allies'

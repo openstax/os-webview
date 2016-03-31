@@ -79,16 +79,29 @@
             display: block;
             font-size: 1.8rem;
             font-weight: 300;
+            margin: 1.5rem 0;
 
             @include desktop {
                 width: 37rem;
                 font-size: 2.4rem;
                 font-weight: 100;
                 letter-spacing: 0.1rem;
+                line-height: 2.8rem;
             }
 
             @media (min-width: 1000px) {
                 width: 50rem;
+            }
+        }
+
+        .btn {
+            background-color: transparent;
+            border: 0.1rem solid color(neutral-lightest);
+            color: color(neutral-lightest);
+
+            &:hover {
+                background-color: rgba(color(neutral-lightest), 0.90);
+                color: color(cyan);
             }
         }
     }
@@ -99,11 +112,11 @@
 
         @media (min-width: 600px) {
             margin-top: 1.5rem;
-            bottom: 5rem;
+            bottom: 3rem;
         }
 
         @media (min-width: 1000px) {
-            bottom: 10rem;
+            bottom: 7rem;
         }
 
         ul {
@@ -229,8 +242,7 @@
         z-index: 2;
 
         @include desktop {
-            width: 100%;
-            height: 100%;
+            width: 51rem;
             right: -12rem;
             background-position: right bottom;
             background-size: auto 100%;
