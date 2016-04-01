@@ -125,84 +125,73 @@ $transition: 0.3s;
                     outline: none;
                 }
             }
+
+            &.dropdown {
+                display: inline-block;
+
+                @include desktop {
+                    padding: 0 4rem 0 2rem;
+
+                    &:last-child {
+                        padding-right: 3rem;
+                    }
+                }
+            }
         }
 
-        .dropdown {
-            display: inline-block;
+        .dropdown > a {
+            position: relative;
+        }
 
-            > a {
-                position: relative;
+        .dropdown .chevron {
+            width: 0.8rem;
+            fill: color(blue);
+            position: absolute;
+            bottom: 0.3rem;
+            right: -2rem;
 
-                &::before,
-                &::after {
-                    content: '';
-                    display: block;
-                    height: 0.8rem;
-                    position: absolute;
-                    transform: rotate3d(0, 0, 1, -47deg);
-                    right: -2rem;
-                    top: 0.6rem;
-                    width: 0.2rem;
-                    background-color: color(blue);
+            @include desktop {
+                bottom: 2.2rem;
+                right: -2.5rem;
+                transform: rotate3d(0, 0, 1, 90deg);
+                fill: color(neutral-medium);
 
-                    @include desktop {
-                        background-color: color(gray);
-                        right: -1rem;
-                        top: 0.9rem;
-                    }
-                }
-
-                &::after {
-                    top: 1rem;
-                    transform: rotate3d(0, 0, 1, -137deg);
-
-                    @include desktop {
-                        top: 0.9rem;
-                        right: -1.4rem;
-                    }
+                @at-root .transparent#{&} {
+                    fill: color(neutral-lightest);
                 }
             }
+        }
 
-            .clone a {
+        .clone a {
+            color: color(neutral-medium);
+            font-weight: 600;
+            cursor: default;
+
+            &:last-child:hover {
                 color: color(neutral-medium);
-                font-weight: 600;
-                cursor: default;
-
-                &:last-child:hover {
-                    color: color(neutral-medium);
-                }
             }
+        }
 
-            .clone .back {
-                display: block;
-                margin: 0 0 1rem;
-                padding-left: 2rem;
-                position: relative;
-                color: color(cyan);
-                cursor: pointer;
+        .clone .back {
+            display: block;
+            margin: 0 0 1rem;
+            padding-left: 2rem;
+            position: relative;
+            color: color(cyan);
+            cursor: pointer;
 
-                &::before,
-                &::after {
-                    content: '';
-                    display: block;
-                    height: 0.8rem;
-                    position: absolute;
-                    transform: rotate3d(0, 0, 1, -137deg);
-                    left: 0.3rem;
-                    top: 0.7rem;
-                    width: 0.2rem;
-                    background-color: color(cyan);
-                }
+            &:focus {
+                outline: none;
+            }
+        } // end .back
 
-                &::after {
-                    top: 1.1rem;
-                    transform: rotate3d(0, 0, 1, -47deg);
-                }
-
-                &:focus {
-                    outline: none;
-                }
-            } // end .back
+        .clone .chevron {
+            width: 0.8rem;
+            transform: rotate3d(0, 0, 1, 180deg);
+            position: absolute;
+            top: 0.7rem;
+            left: 0;
+            fill: color(cyan);
         }
 
         .dropdown-menu {
@@ -317,7 +306,6 @@ $transition: 0.3s;
         .nav-menu-item {
 
             a {
-
                 color: color(cyan);
 
                 @include desktop {
@@ -329,40 +317,35 @@ $transition: 0.3s;
                     color: color(cyan);
                 }
             }
+
+            &.dropdown {
+                @include desktop {
+                    margin-right: 1rem;
+                }
+            }
         }
 
-        .dropdown {
+        .chevron {
+            display: none;
+        }
+
+        .dropdown .chevron {
+            display: inline-block;
+            width: 0.6rem;
+            fill: color(cyan);
+
             @include desktop {
-                margin-right: 2rem;
-            }
+                right: -2rem;
+                fill: color(neutral-medium);
 
-            > a::before,
-            > a::after {
-                background-color: color(cyan);
-                top: 0.5rem;
-
-                @include desktop {
-                    height: 0.6rem;
-                    top: 0.7rem;
-                    background-color: color(gray);
+                @at-root .transparent#{&} {
+                    fill: color(neutral-medium);
                 }
             }
+        }
 
-            > a::after {
-                top: 0.9rem;
-
-                @include desktop {
-                    top: 0.7rem;
-                    right: -1.3rem;
-                }
-            }
-
-            > a:hover::before,
-            > a:hover::after {
-                @include desktop {
-                    background-color: color(cyan);
-                }
-            }
+        .dropdown a:hover .chevron {
+            fill: color(cyan);
         }
 
         .dropdown-menu {
@@ -526,6 +509,10 @@ $transition: 0.3s;
                 }
 
                 &.dropdown:hover::after {
+                    right: 0.5rem;
+                }
+
+                &.dropdown:last-child:hover::after {
                     right: -0.5rem;
                 }
             }
@@ -537,22 +524,6 @@ $transition: 0.3s;
 
                     @at-root .transparent#{&} {
                         color: color(neutral-lightest);
-                    }
-                }
-            }
-
-            &.dropdown > a::before {
-                @include desktop {
-                    @at-root .transparent#{&} {
-                        background-color: color(neutral-lightest);
-                    }
-                }
-            }
-
-            &.dropdown > a::after {
-                @include desktop {
-                    @at-root .transparent#{&} {
-                        background-color: color(neutral-lightest);
                     }
                 }
             }
