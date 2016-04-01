@@ -340,7 +340,7 @@ class Header extends BaseView {
                 loggedIn = userInfo && userInfo.username !== '';
 
             if (loggedIn) {
-                loginItem.textContent = `Hi ${userInfo.first_name}`;
+                loginItem.firstChild.textContent = `Hi ${userInfo.first_name}`;
                 loginWrapper.classList.add('dropdown');
                 loginItem.setAttribute('aria-haspopup', true);
 
@@ -353,7 +353,7 @@ class Header extends BaseView {
             } else {
                 let boundHandler = this.loginOpenSameWindow.bind(this);
 
-                loginItem.textContent = 'Login';
+                loginItem.firstChild.textContent = 'Login';
                 loginItem.addEventListener('click', boundHandler);
                 this.unbindLoginListener = () => {
                     loginItem.removeEventListener('click', boundHandler);
