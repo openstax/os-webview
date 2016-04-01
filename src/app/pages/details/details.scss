@@ -34,6 +34,7 @@
         overflow-y: scroll;
         opacity: 1;
         transition: opacity 0.3s;
+        -webkit-overflow-scrolling: touch;
 
         @include desktop {
             background-color: rgba(color(neutral-dark), 0.90);
