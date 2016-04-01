@@ -329,24 +329,32 @@ $transition: 0.3s;
             display: none;
         }
 
-        .dropdown .chevron {
-            display: inline-block;
-            width: 0.6rem;
-            fill: color(cyan);
+        .dropdown {
+            .chevron {
+                display: inline-block;
+                width: 0.6rem;
+                fill: color(cyan);
 
-            @include desktop {
-                right: -2rem;
-                fill: color(neutral-medium);
-
-                @at-root .transparent#{&} {
+                @include desktop {
+                    right: -2rem;
                     fill: color(neutral-medium);
+
+                    @at-root .transparent#{&} {
+                        fill: color(neutral-medium);
+                    }
                 }
             }
+
+            .clone .chevron {
+                width: 0.8rem;
+            }
+
+            a:hover .chevron {
+                fill: color(cyan);
+           }
         }
 
-        .dropdown a:hover .chevron {
-            fill: color(cyan);
-        }
+
 
         .dropdown-menu {
 
