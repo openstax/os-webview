@@ -305,7 +305,7 @@ $transition: 0.3s;
 
         .nav-menu-item {
 
-            a {
+            > a {
                 color: color(cyan);
 
                 @include desktop {
