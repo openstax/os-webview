@@ -26,15 +26,14 @@ class AppView extends BaseView {
     }
 
     load(pageName, options) {
-        let view = this,
-            headTitle = document.querySelector('head title');
+        let headTitle = document.querySelector('head title');
 
         // Lazy-load the page
         System.import(`~/pages/${pageName}/${pageName}`).then((m) => {
             let Page = m.default;
 
             this.regions.header.show(header);
-            view.regions.main.show(new Page(options));
+            this.regions.main.show(new Page(options));
             this.regions.footer.show(footer);
             headTitle.textContent = `${pageName[0].toUpperCase()}${pageName.slice(1)} - OpenStax`;
             zendesk();

@@ -87,8 +87,8 @@ sup {
 }
 
 #main {
-    padding-top: 6rem;
     flex: 1 0 auto;
+    padding-top: 6rem;
 
     @include desktop {
         padding-top: 11rem;

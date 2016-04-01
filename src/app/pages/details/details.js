@@ -59,9 +59,10 @@ export default class Details extends BaseView {
             direction = Math.sign(rect.top),
             magnitude = Math.abs(rect.top),
             i = setInterval(() => {
-                let step = (magnitude > scrollStep) ? scrollStep : magnitude;
+                let step = (magnitude > scrollStep) ? scrollStep : magnitude,
+                    scrollBody = document.documentElement.scrollTop || document.body.scrollTop;
 
-                window.scrollTo(0, document.body.scrollTop + direction * step);
+                window.scrollTo(0, scrollBody + direction * step);
                 magnitude -= step;
                 if (magnitude <= 0) {
                     clearInterval(i);
