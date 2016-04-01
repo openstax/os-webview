@@ -58,6 +58,7 @@ h4 {
         letter-spacing: -0.2rem;
         line-height: 5rem;
         margin-bottom: 1rem;
+
         @include phone {
             font-size: 5rem;
         }
@@ -69,6 +70,7 @@ h4 {
         letter-spacing: -0.2rem;
         line-height: 5rem;
         margin-bottom: 1rem;
+
         @include phone {
             font-size: 4rem;
         }
