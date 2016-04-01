@@ -43,6 +43,34 @@ function dataToTemplateHelper(data) {
     }
 })
 export default class Details extends BaseView {
+    @on('click a[href^="#"]')
+    hashClick(e) {
+        const tick = 1000 / 40,
+            scrollStep = 200;
+
+        let target = e.target;
+
+        while (!target.href) {
+            target = target.parentNode;
+        }
+        let hash = new URL(target.href).hash,
+            targetEl = document.getElementById(hash.substr(1)),
+            rect = targetEl.getBoundingClientRect(),
+            direction = Math.sign(rect.top),
+            magnitude = Math.abs(rect.top),
+            i = setInterval(() => {
+                let step = (magnitude > scrollStep) ? scrollStep : magnitude;
+
+                window.scrollTo(0, document.body.scrollTop + direction * step);
+                magnitude -= step;
+                if (magnitude <= 0) {
+                    clearInterval(i);
+                }
+            }, tick);
+
+        e.preventDefault();
+    }
+
     @on('click .table-of-contents-link')
     showTableOfContents(event) {
         this.openedWith = event.target;
