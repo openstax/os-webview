@@ -218,16 +218,27 @@ class Header extends BaseView {
     }
 
     appendURL() {
-        let $this = this.el.querySelector('.login>a');
+        let loginEl = this.el.querySelector('.login>a');
         let loginLink = `${settings.apiOrigin}/accounts/login/openstax/?next=`;
-        let href = loginLink + Backbone.history.location.href;
+        let loginHref = loginLink + Backbone.history.location.href;
 
-        $this.href = href;
+        loginEl.href = loginHref;
+
+        let logoutEl = this.el.querySelector('.logout>a');
+        let logoutLink = `${settings.apiOrigin}/accounts/logout/?next=`;
+        let logoutHref = logoutLink + Backbone.history.location.href;
+
+        logoutEl.href = logoutHref;
     }
 
-    loginOpenSameWindow(e) {
+    openLinkSameWindow(e) {
         e.preventDefault(e);
         window.open(e.target, '_self');
+    }
+
+    @on('click .logout a')
+    appendLogoutURL(e) {
+        this.openLinkSameWindow(e);
     }
 
     @on('keydown .expand')
@@ -351,7 +362,7 @@ class Header extends BaseView {
                     loginItem.removeEventListener('click', boundHandler);
                 };
             } else {
-                let boundHandler = this.loginOpenSameWindow.bind(this);
+                let boundHandler = this.openLinkSameWindow.bind(this);
 
                 loginItem.firstChild.textContent = 'Login';
                 loginItem.addEventListener('click', boundHandler);
