@@ -154,7 +154,7 @@ export default class TagMultiSelect extends BaseView {
                     }
                 });
 
-                model.trigger('change:selected');
+                model.trigger('change:selected', model);
             }
         });
     }
