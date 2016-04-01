@@ -55,7 +55,8 @@
         <div class="text-content labeled-inputs row book-info">
 
             <div class="col">
-                <label>OpenStax College textbook(s) are you interested in adopting (select at least one):
+                <label>Which OpenStax College textbook(s) are you interested in adopting?
+                    <span class="select-instructions">Select at least one.</span>
                     <select name="00NU00000053nzR" multiple required>
                         {{#each titles}}
                         <option value="{{this}}">{{this}}</option>
@@ -71,6 +72,7 @@
                 <label class="question">
                     Which partners may we share your information with so they may contact you about
                     additional resources supporting the OpenStax College books?
+                    <span class="select-instructions">You may select more than one.</span>
                     <select name="00NU00000055spm" multiple>
                         <option value="Online homework providers">
                             Online homework providers
@@ -87,7 +89,8 @@
 
             <div class="col">
 
-                <label class="question">How did you hear about OpenStax College? (select at least one)
+                <label class="question">How did you hear about OpenStax College?
+                    <span class="select-instructions">Select at least one.</span>
                     <select name="00NU00000055spr" multiple required>
                         <option value="Web search">Web search</option>
                         <option value="Colleague">Colleague</option>
@@ -97,12 +100,14 @@
                         <option value="Twitter">Twitter</option>
                         <option value="Webinar">Webinar</option>
                         <option value="Partner organization">Partner organization</option>
+                        <option value="" data-other="other-source">Other (specify below)</option>
                     </select>
                 </label>
 
-                <label>
+                <label id="other-source" class="hidden">
                     Other:
-                    <input  name="00NU00000055spr" type="text">
+                    <input  name="00NU00000055spr" type="text"
+                    placeholder="Heard about us some other way?">
                 </label>
 
                 <label>

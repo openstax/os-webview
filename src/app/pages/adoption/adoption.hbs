@@ -99,6 +99,7 @@
             </label>
 
             <label>Which ally resources are you using with your book?
+                <span class="select-instructions">You may select more than one.</span>
                 <select multiple name="00NU0000005VmTu">
                      <option value="None" disabled selected>None</option>
                      <option value="Cerego">Cerego</option>
@@ -111,11 +112,13 @@
                      <option value="WebAssign">WebAssign</option>
                      <option value="Wiley Plus">Wiley Plus</option>
                      <option value="XYZ Homework">XYZ Homework</option>
+                     <option value="" data-other="other-ally">Other (specify below)</option>
                 </select>
             </label>
 
-            <label>Other
-                <input name="00NU0000005Vls8" class="short" type="text">
+            <label id="other-ally">Other
+                <input name="00NU0000005Vls8" class="short" type="text"
+                placeholder="Ally resources not listed above?">
             </label>
 
             <label>
@@ -129,7 +132,9 @@
 
         <div class="col">
             <label class="question">
-                Which of our allies would you like to give permission to contact you about additional resources to support our books?
+                Which of our allies would you like to give permission to contact you about
+                additional resources to support our books?
+                <span class="select-instructions">You may select more than one.</span>
                 <select multiple name="00NU00000055spm">
                     <option value="None" disabled selected>None</option>
                     <option value="Online homework allies">Online homework allies</option>

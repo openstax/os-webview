@@ -23,7 +23,7 @@ for (let c of cookies) {
 
 salesforceModel.prefill = (formElement) => {
     for (let key of Object.keys(salesforceModel.attributes)) {
-        let el = formElement.querySelector(`[name=${key}]`);
+        let el = formElement.querySelector(`[name="${key}"]`);
 
         if (el) {
             el.value = salesforceModel.attributes[key];
