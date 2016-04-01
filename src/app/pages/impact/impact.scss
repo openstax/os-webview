@@ -6,19 +6,142 @@
         list-style-type: none;
     }
 
-    .partners {
-        display: flex;
-        flex-wrap: wrap;
+    .hero {
+        background-image: url('/images/impact/banner-bg.jpg');
+        background-size: cover;
+        min-height: 42.8vw;
+        overflow: hidden;
+        position: relative;
 
-        > li {
-            height: 15rem;
-            margin: 3rem;
-            width: 20rem;
+        > .box-1,
+        > .box-2,
+        > .student {
+            position: absolute;
+        }
 
-            img {
-                max-height: 15rem;
-                max-width: 20rem;
+        > .box-1,
+        > .box-2 {
+            background-color: color(green);
+            opacity: 0.3;
+        }
+
+        .box-1 {
+            left: 46vw;
+            height: 11.14vw;
+            top: 2.36vw;
+            width: 11.14vw;
+        }
+
+        .box-2 {
+            left: 7.71vw;
+            height: 23.85vw;
+            top: 11.07vw;
+            width: 58.36vw;
+        }
+
+        > .student {
+            background-image: url('/images/impact/banner.png');
+            background-size: cover;
+            height: 50vw;
+            left: 0;
+            top: -4.2vw;
+            width: 65.15vw;
+        }
+
+        > .overlay {
+            background-color: rgba(color(green), 0.8);
+            color: color(neutral-lightest);
+            left: 51.07vw;
+            height: 32.86vw;
+            position: absolute;
+            text-align: left;
+            top: 5vw;
+            width: 40.7vw;
+
+            a {
+                color: color(neutral-lightest);
+                font-size: 1vw;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+
+            > .text-block {
+                margin: 2.86vw;
+
+                h1 {
+                    color: inherit;
+                    font-size: 4.43vw;
+                    line-height: 0.8;
+                }
+
+                .blurb {
+                    font-size: 1.286vw;
+                    line-height: 1.5;
+                    padding: 1.43vw 0 0.714vw;
+                }
             }
         }
+    }
+
+    .affiliates {
+        background-color: color(blue);
+        color: color(neutral-lightest);
+        text-align: center;
+
+        h2,
+        a {
+            color: color(neutral-lightest);
+        }
+
+        h2 {
+            font-size: 5rem;
+        }
+
+        p {
+            font-size: 1.8rem;
+            line-height: 1.7;
+        }
+
+        .text-wrapper {
+            margin: 0 auto;
+            max-width: 100rem;
+            padding: 5rem 0;
+        }
+
+        .partners {
+            align-items: center;
+            border-bottom: 0.5rem solid rgba(color(neutral-lightest), 0.25);
+            border-top: 0.5rem solid rgba(color(neutral-lightest), 0.25);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 0 auto 5rem;
+            max-width: 117rem;
+            padding: 0;
+
+            > li {
+                margin: 4rem;
+
+                img {
+                    max-height: 12rem;
+                    max-width: 17rem;
+                    opacity: 0.7;
+                }
+            }
+        }
+
+        .adopters {
+            padding-bottom: 5rem;
+
+            a {
+                font-size: 1.4rem;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+        }
+    }
+
+    .strips {
+        margin-bottom: 0;
     }
 }

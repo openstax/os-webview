@@ -6,63 +6,63 @@ import {template as strips} from '~/components/strips/strips.hbs';
 const highlightedPartners = [{
     name: 'Auburn University',
     url: 'http://www.auburn.edu',
-    logo: '/images/about-us/partners/auburn.png'
+    logo: '/images/impact/partners/auburn.png'
 }, {
     name: 'BCcampus',
     url: 'https://bccampus.ca',
-    logo: '/images/about-us/partners/bccampus.png'
+    logo: '/images/impact/partners/bccampus.png'
 }, {
     name: 'Central New Mexico Community College',
     url: 'http://www.cnm.edu',
-    logo: '/images/about-us/partners/cnm.png'
+    logo: '/images/impact/partners/cnm.png'
 }, {
     name: 'Grand Rapids Community College',
     url: 'http://www.grcc.edu',
-    logo: '/images/about-us/partners/grcc.png'
+    logo: '/images/impact/partners/grcc.png'
 }, {
     name: 'Maricopa Community Colleges',
     url: 'https://www.maricopa.edu',
-    logo: '/images/about-us/partners/maricopa.png'
+    logo: '/images/impact/partners/maricopa.png'
 }, {
     name: 'Ohio State University',
     url: 'https://www.osu.edu',
-    logo: '/images/about-us/partners/osu.png'
+    logo: '/images/impact/partners/osu.png'
 }, {
     name: 'Salt Lake Community College',
     url: 'http://www.slcc.edu',
-    logo: '/images/about-us/partners/slcc.png'
+    logo: '/images/impact/partners/slcc.png'
 }, {
     name: 'Tarrant County College',
     url: 'https://www.tccd.edu',
-    logo: '/images/about-us/partners/tcc.png'
+    logo: '/images/impact/partners/tarrant.png'
 }, {
     name: 'UMass Amherst',
     url: 'http://www.umass.edu',
-    logo: '/images/about-us/partners/umass.png'
+    logo: '/images/impact/partners/umass.png'
 }, {
     name: 'University of Idaho',
     url: 'https://www.uidaho.edu',
-    logo: '/images/about-us/partners/idaho.png'
+    logo: '/images/impact/partners/idaho.png'
 }, {
     name: 'University of Georgia',
     url: 'http://www.uga.edu',
-    logo: '/images/about-us/partners/georgia.png'
+    logo: '/images/impact/partners/georgia.png'
 }, {
     name: 'University of Oklahoma',
     url: 'https://www.ou.edu',
-    logo: '/images/about-us/partners/ou.png'
+    logo: '/images/impact/partners/oklahoma.png'
 }, {
     name: 'University of Texas at San Antonio',
     url: 'http://utsa.edu',
-    logo: '/images/about-us/partners/utsa.png'
+    logo: '/images/impact/partners/utsa.png'
 }, {
     name: 'Board of Regents of the University System of Georgia',
     url: 'http://www.usg.edu',
-    logo: '/images/about-us/partners/georgia-regents.png'
+    logo: '/images/impact/partners/ugsystem.png'
 }, {
     name: 'Virginia Tech',
     url: 'https://www.vt.edu',
-    logo: '/images/about-us/partners/vt.png'
+    logo: '/images/impact/partners/vt.png'
 }];
 
 @props({

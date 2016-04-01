@@ -2,43 +2,49 @@
     @import url(/app/pages/impact/impact.css);
 </style>
 <div class="impact-page page">
-    {{{strips}}}
-    <main id="maincontent" class="boxed">
-        <h1>We measure our success by the impact we make</h1>
+    <main id="maincontent">
+        <div class="hero">
+            <div class="box-1"></div>
+            <div class="box-2"></div>
+            <div class="student"></div>
+            <div class="overlay">
+                <div class="text-block">
+                    <h1 class="header">We measure our success by the impact we make.</h1>
+                    <div class="blurb">
+                        Since 2012, OpenStax has saved students $66 million and counting by offering free,
+                        peer-reviewed textbooks for the highest-enrollment college courses.
+                        Meet the schools who’ve adopted OpenStax and some of the students who’ve benefited
+                        from free access to the learning materials they need to succeed.
+                    </div>
+                    <div class="more"><a class="down-page" href="#getting-started">Learn More</a></div>
+                </div>
+            </div>
+        </div>
 
-        <hr />
+        <div class="affiliates">
+            <div class="text-wrapper">
+                <h2>Institutional Partner and Affiliate Schools</h2>
 
-        <p>
-            Since 2012, OpenStax has saved students $66 million and counting by offering free,
-            peer-reviewed textbooks for the highest-enrollment college courses.
-            Meet the schools who’ve adopted OpenStax and some of the students who’ve benefited
-            from free access to the learning materials they need to succeed.
-        </p>
+                <p>
+                    Our institutional partner and affiliate schools are forging institutional
+                    initiatives to encourage adoptions of OpenStax and other open resources
+                    to give students access to the learning materials they need to succeed.
+                </p>
+            </div>
 
-        <hr />
+            <ul class="partners">
+                {{#each highlightedPartners}}
+                    <li>
+                        <a href="{{url}}">
+                            <img src="{{logo}}" alt="{{name}}" />
+                        </a>
+                    </li>
+                {{/each}}
+            </ul>
 
-        <h2>Institutional Partner and Affiliate Schools</h2>
-
-        <p>
-            Our institutional partner and affiliate schools are forging institutional
-            initiatives to encourage adoptions of OpenStax and other open resources
-            to give students access to the learning materials they need to succeed.
-        </p>
-
-        <ul class="partners">
-            {{#each highlightedPartners}}
-                <li>
-                    <a href="{{url}}">
-                        <img src="{{logo}}" alt="{{name}}" />
-                    </a>
-                </li>
-            {{/each}}
-        </ul>
-
-        <a href="#">See a full list of institutions that have adopted OpenStax</a>
-
-        <a href="mailto:nicolef@rice.edu?subject=We're interested in the OpenStax institutional partner & affiliate program!">
-            Contact us to learn more
-        </a>
+            <div class="adopters"><a href="/adopters">See a full list of institutions that have adopted OpenStax</a></div>
+        </div>
     </main>
+
+    {{{strips}}}
 </div>
