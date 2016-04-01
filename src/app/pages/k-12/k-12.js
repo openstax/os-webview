@@ -38,7 +38,15 @@ export default class K12 extends BaseView {
             linkText: 'View Allies'
         }));
 
-        this.regions.quotes.show(new Quotes());
+        this.regions.quotes.show(new Quotes([
+            {
+                orientation: 'right',
+                hasImage: true,
+                quoteHtml: 'We’re recruiting for our Fall 2016 pilot of OpenStax Tutor!',
+                linkUrl: '/contact?subject=OpenStax Tutor Pilot Sign-up',
+                linkText: 'Sign up for info'
+            }
+        ]));
         this.regions.banner.show(new Banner());
         this.regions.tutor.show(new Tutor());
         this.regions.products.show(new ProductsBoxes({subject: 'ap'}));

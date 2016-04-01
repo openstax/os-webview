@@ -81,6 +81,10 @@ $hero-break-width: 1024px;
         }
     }
 
+    .quote-buckets {
+        background-color: lighten(color(neutral-lighter), 8%);
+    }
+
     .getting-started {
         background-color: color(orange);
         color: white;
