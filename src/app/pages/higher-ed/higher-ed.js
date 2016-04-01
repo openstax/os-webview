@@ -9,7 +9,7 @@ import Buckets from '~/components/buckets/buckets';
 @props({
     template: template,
     regions: {
-        quotes: '.quotes',
+        quotes: '.quote-buckets',
         products: '.products',
         buckets: '.buckets'
     }
@@ -21,9 +21,9 @@ export default class HigherEd extends BaseView {
             {
                 orientation: 'right',
                 hasImage: true,
-                quoteHtml: 'We’re recruiting for our Fall 2016 pilot of OpenStax Tutor!',
-                linkUrl: '/contact?subject=OpenStax Tutor Pilot Sign-up',
-                linkText: 'Sign up for info'
+                quoteHtml: 'We’re recruiting for our Fall 2016 pilot of Concept Coach!',
+                linkUrl: 'http://cc.openstax.org',
+                linkText: 'Learn More'
             },
             {
                 orientation: 'left',
@@ -31,13 +31,6 @@ export default class HigherEd extends BaseView {
                 quoteHtml: 'OpenStax is supported by major philanthropic foundations',
                 linkUrl: '/foundation',
                 linkText: 'Learn More'
-            },
-            {
-                orientation: 'full',
-                hasImage: false,
-                quoteHtml: `“OpenStax is AMAZING. Access to these high quality textbooks
-                is GAME CHANGING for our students.”
-                <span>&mdash; <cite>Prof. Wendy Riggs, College of the Redwoods</cite></span>`
             }
         ]));
         this.regions.products.show(new ProductsBoxes());
