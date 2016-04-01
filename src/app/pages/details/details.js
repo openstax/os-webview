@@ -97,7 +97,7 @@ export default class Details extends BaseView {
             pageModel = new PageModel(),
             insertResources = (resources, regionName, alternateLink) => {
                 for (let res of resources) {
-                    if (res.link_document) {
+                    if (res.link_document_url) {
                         this.regions[regionName].append(new Resource(res, alternateLink));
                     }
                 }
@@ -154,6 +154,10 @@ export default class Details extends BaseView {
                 }
             },
             handleBasicBookData = (data) => {
+                if (data.pages.length === 0) {
+                    window.location.href = '404';
+                }
+
                 let detailUrl = data.pages[0].meta.detail_url,
                     detailModel = new PageModel(),
 
