@@ -38,6 +38,7 @@ class AppView extends BaseView {
             this.regions.footer.show(footer);
             headTitle.textContent = `${pageName[0].toUpperCase()}${pageName.slice(1)} - OpenStax`;
             zendesk();
+            window.scrollTo(0, 0);
         });
 
         return this;
