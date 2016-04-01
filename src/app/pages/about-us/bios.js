@@ -736,7 +736,8 @@ let bios = {
             programming. Dreaming of one day using software to improve education in a
             meaningful way, he now fulfills his dream at OpenStax creating interactive
             simulations for free and open-source textbooks. He currently lives in Oregon
-            with his wife Jessie and fancies himself a novice [traceur](http://en.wikipedia.org/wiki/Traceur#Terminology).`,
+            with his wife Jessie and fancies himself a novice
+            <a href="http://en.wikipedia.org/wiki/Traceur#Terminology">traceur</a>.`,
             // image: 'Patrick.png',
             bgColor: 'blue',
             textColor: 'green'
