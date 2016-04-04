@@ -13,14 +13,7 @@ export default class Book extends BaseView {
 
     @on('click img')
     selectMe(event) {
-        let w = window.innerWidth;
-
-        if (w>768) {
-            this.model.set('selectedBook', this.isSelected() ? false : this.data);
-            event.stopPropagation();
-        } else {
-            this.el.querySelector('.cta>.btn').click();
-        }
+        this.el.querySelector('.cta>.btn').click(event);
     }
 
     constructor(data, model) {

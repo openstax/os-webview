@@ -22,7 +22,7 @@
     }
 
     .container[data-manager="page-description"] {
-        padding: 8rem 1.5rem 10.5rem;
+        padding: 6rem 1.5rem;
 
         @include desktop {
             text-align: center;
@@ -109,7 +109,8 @@
 
             .subject {
                 color: color(gray);
-                font-weight: 500;
+                font-style: italic;
+                font-weight: 300;
             }
         }
 

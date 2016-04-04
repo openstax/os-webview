@@ -1,5 +1,6 @@
 import BaseView from '~/helpers/backbone/view';
 import BaseModel from '~/helpers/backbone/model';
+import $ from '~/helpers/$';
 import PageModel from '~/models/pagemodel';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './subjects.hbs';
@@ -8,13 +9,14 @@ import {template as strips} from '~/components/strips/strips.hbs';
 import CategorySection from './category-section/category-section';
 import router from '~/router';
 
-const categories = ['Math', 'Science', 'Social Sciences', 'History', 'AP®'],
+const apId = 'AP<sup>&reg;</sup>',
+    categories = ['Math', 'Science', 'Social Sciences', 'History', apId],
     filterButtons = ['View All', ...categories];
 
 function organizeBooksByCategory(books) {
-    let result = {
-        'AP®': []
-    };
+    let result = {};
+
+    result[apId] = [];
 
     for (let book of books) {
         if (!(book.subject_name in result)) {
@@ -22,7 +24,7 @@ function organizeBooksByCategory(books) {
         }
         result[book.subject_name].push(book);
         if (book.is_ap) {
-            result['AP®'].push(book);
+            result[apId].push(book);
         }
     }
 
@@ -45,6 +47,11 @@ export default class Subjects extends BaseView {
     @on('click')
     deselect() {
         this.model.set('selectedBook', false);
+    }
+
+    @on('click .filter')
+    filterClick(e) {
+        $.scrollTo(e.target, 60);
     }
 
     updateSelectedFilterFromPath() {
