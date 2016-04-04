@@ -10,7 +10,7 @@ import zendesk from '~/helpers/zendesk';
     el: 'body',
     template: template,
     regions: {
-	    loader: '#loader',
+        loader: '#loader',
         main: '#main',
         header: '#header',
         footer: '#footer'
@@ -29,6 +29,15 @@ class AppView extends BaseView {
         this.render();
     }
 
+    preLoader() {
+        setTimeout(() => {
+            document.body.classList.remove('no-scroll');
+        }, 1000);
+        setTimeout(() => {
+            document.body.classList.add('loaded');
+        }, 2000);
+    }
+
     load(pageName, options) {
         let headTitle = document.querySelector('head title');
 
@@ -43,7 +52,11 @@ class AppView extends BaseView {
             headTitle.textContent = `${pageName[0].toUpperCase()}${pageName.slice(1)} - OpenStax`;
             zendesk();
             window.scrollTo(0, 0);
+            document.body.classList.add('no-scroll');
         });
+
+
+        document.addEventListener('DOMContentLoaded', this.preLoader());
 
         return this;
     }
