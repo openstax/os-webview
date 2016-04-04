@@ -23,7 +23,7 @@
         .product-box {
             background-color: white;
             margin: 0 1.8rem;
-            flex: 1 1 auto;
+            flex: 1 1 33%;
 
             @include collapsed {
                 margin: 0 0 3rem;
@@ -78,15 +78,15 @@
         }
     }
 
-    .books {
-        .image {
-            background-image: url('/images/k-12/books.jpg');
-        }
+    .books > .image {
+        background-image: url('/images/k-12/books.jpg');
     }
 
-    .cnx {
-        .image {
-            background-image: url('/images/k-12/bx-cnx-2x.jpg');
-        }
+    .cnx > .image {
+        background-image: url('/images/k-12/bx-cnx-2x.jpg');
+    }
+
+    .cc > .image {
+        background-image: url('/images/k-12/student.jpg');
     }
 }
