@@ -4,6 +4,8 @@ import bookTitles from '~/helpers/book-titles';
 import FacultySection from './faculty-section/faculty-section';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './finish-profile.hbs';
+import {template as strips} from '~/components/strips/strips.hbs';
+
 
 @props({
     template: template,
@@ -11,7 +13,8 @@ import {template} from './finish-profile.hbs';
         bookTitles,
         urlOrigin: `${window.location.origin}/finished-no-verify`,
         roles: ['Faculty', 'Adjunct Faculty', 'Administrator', 'Librarian',
-        'Instructional Designer', 'Student', 'Other']
+        'Instructional Designer', 'Student', 'Other'],
+        strips
     },
     regions: {
         facultySection: '#faculty-section'
@@ -24,9 +27,11 @@ export default class NewAccountForm extends ProxyWidgetView {
 
         if (event.target.checked) {
             this.regions.facultySection.show(this.facultySection);
+            this.el.querySelector('form').classList.add('faculty');
             retUrl.value = `${window.location.origin}/finished-verify`;
         } else {
             this.facultySection.remove();
+            this.el.querySelector('form').classList.remove('faculty');
             retUrl.value = `${window.location.origin}/finished-no-verify`;
         }
     }

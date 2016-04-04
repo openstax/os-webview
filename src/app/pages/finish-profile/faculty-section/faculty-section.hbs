@@ -1,13 +1,23 @@
 <h2>We manually verify that you are faculty.  Please help us find you!</h2>
-<label>
-    <span>College website URL that shows you work there</span>
-    <input name="website" type="text" required />
-</label>
-<label>
-    <span>Official institutional email address</span>
-    <input name="institutional_email_address"  pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text" required />
-</label>
-<label>
-    <span>Number of students you teach per semester</span>
-    <input name="00NU00000052VId" type="number" min=0 required />
-</label>
+<div class="labeled-inputs row faculty-section">
+    <div class="col">
+        <label>
+            <span>College website URL that shows you work there</span>
+            <input name="website" type="text" required />
+        </label>
+        <label>
+            <span>Official institutional email address</span>
+            <input name="institutional_email_address"  pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text" required />
+        </label>
+    </div>
+    <div class="col last">
+        <label>
+            <span>Number of students you teach per semester</span>
+            <input name="00NU00000052VId" type="number" min=0 required />
+        </label>
+        <label class="form-hidden">
+            <span>Not required</span>
+            <input type="number" min=0 />
+        </label>
+    </div>
+</div>
