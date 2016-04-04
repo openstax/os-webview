@@ -17,6 +17,10 @@ function toHeadshot(bioEntry) {
     };
 }
 
+function lastName(bioEntry) {
+    return bioEntry.name.substr(1 + bioEntry.name.lastIndexOf(' ')).toLowerCase();
+}
+
 @props({
     template,
     templateHelpers: {strips},
@@ -30,10 +34,10 @@ export default class AboutUs extends BaseView {
         let stateModel = new BaseModel();
 
         this.el.classList.add('about-us-page', 'text-content');
-        for (let person of bios.team) {
+        for (let person of bios.team.sort((a, b) => lastName(a) > lastName(b) ? 1 : -1)) {
             this.regions.team.append(new Headshot(toHeadshot(person), stateModel));
         }
-        for (let person of bios.advisors) {
+        for (let person of bios.advisors.sort((a, b) => lastName(a) > lastName(b) ? 1 : -1)) {
             this.regions.advisors.append(new Headshot(toHeadshot(person)));
         }
     }

@@ -1,6 +1,7 @@
 import BaseView from '~/helpers/backbone/view';
 import settings from 'settings';
-import {props} from '~/helpers/backbone/decorators';
+import $ from '~/helpers/$';
+import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './higher-ed.hbs';
 import Quotes from '~/components/quotes/quotes';
 import ProductsBoxes from '~/components/products-boxes/products-boxes';
@@ -15,6 +16,19 @@ import Buckets from '~/components/buckets/buckets';
     }
 })
 export default class HigherEd extends BaseView {
+    @on('click a[href^="#"]')
+    hashClick(e) {
+        let target = e.target;
+
+        while (!target.href) {
+            target = target.parentNode;
+        }
+        let hash = new URL(target.href).hash,
+            targetEl = document.getElementById(hash.substr(1));
+
+        $.scrollTo(targetEl);
+        e.preventDefault();
+    }
 
     onRender() {
         this.regions.quotes.show(new Quotes([{
