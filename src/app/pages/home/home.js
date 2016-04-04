@@ -9,7 +9,7 @@ import Education from './education/education';
 
 const books = [
     // 'astronomy',
-    // 'biology',
+    'biology',
     // 'chemistry',
     'us-history'
 ];

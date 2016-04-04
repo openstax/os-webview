@@ -126,8 +126,9 @@
         }
     }
 
+    canvas,
+    .video,
     .video-banner {
-        background-image: url('/images/home/subjects/biology/student.png');
         height: 42vw;
         left: 9.5vw;
         position: absolute;
@@ -141,6 +142,22 @@
             top: 26.4vw;
             width: 55.03vw;
         }
+
+        @include desktop {
+            height: 53rem;
+            bottom: 0;
+            right: 15rem;
+            width: 45.4rem;
+        }
+    }
+
+    .video {
+        display: none;
+    }
+
+    .video-banner {
+        background-image: url('/images/home/subjects/biology/student.png');
+        background-position: 92% 100%;
     }
 
     .now-i-can {
