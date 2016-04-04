@@ -49,6 +49,12 @@ export default class K12 extends BaseView {
         ]));
         this.regions.banner.show(new Banner());
         this.regions.tutor.show(new Tutor());
-        this.regions.products.show(new ProductsBoxes({subject: 'ap'}));
+        this.regions.products.show(new ProductsBoxes({
+            subject: 'ap',
+            products: [
+                'Our Books',
+                'OpenStax CNX'
+            ]
+        }));
     }
 }
