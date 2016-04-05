@@ -1,42 +1,90 @@
 @import 'variables';
 @import 'mixins';
 
-.contact-page {
-    display: flex;
-    flex-flow: column nowrap;
-    width: 100vw;
-
-    h1,
-    h2 {
-        margin-bottom: 0;
+@mixin tablet-up {
+    @media (min-width: #{breakpoints(phone) + 1}) {
+        @content;
     }
+}
+
+.contact-page {
+    background-color: rgba(color(neutral-lighter), 0.2);
 
     .subhead {
-        font-size: 1.7rem;
         padding: 0;
-        text-align: left;
+    }
+
+    .hero {
+        background-color: color(green);
+        color: color(neutral-lightest);
+        padding: 6rem 1.5rem;
+
+        h1 {
+            color: inherit;
+        }
+
+        .boxed {
+            padding: 0 1.5rem;
+            flex-flow: column nowrap;
+        }
     }
 
     .boxed {
-        display: flex;
-        flex-flow: column nowrap;
-        max-width: $boxed-width;
-        margin: 0 auto 4rem;
-        padding: 0 1.5rem;
+        padding: 4rem 1.5rem  0;
+
+        @include tablet-up {
+            flex-flow: row wrap;
+        }
+
+        .col {
+            padding-bottom: 4rem;
+
+            @include tablet-up {
+                flex: 1 1 60%;
+            }
+
+            &:last-child {
+                @include tablet-up {
+                    padding-left: 3rem;
+                    flex: 1 1 40%;
+                }
+
+            }
+        }
     }
 
     form {
+        color: color(blue);
+
+        textarea {
+            resize: none;
+            height: auto;
+        }
+    }
+
+    .btn {
+        float: none;
+        background-color: color(orange);
+    }
+
+    .btn:hover,
+    .btn:focus {
+        background-color: darken(color(orange), 5%);
+    }
+
+    .labeled-control {
         margin-bottom: 2rem;
     }
 
-    .labeled-control,
-    .address {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 1rem;
+    address {
+        line-height: normal;
+
+        span {
+            display: block;
+        }
     }
 
-    .address {
-        line-height: normal;
+    .phone span {
+        font-weight: 500;
     }
 }
