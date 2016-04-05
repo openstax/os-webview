@@ -3,7 +3,8 @@ import BaseModel from '~/helpers/backbone/model';
 import PageModel from '~/models/pagemodel';
 import FilterButton from '~/components/filter-button/filter-button';
 import Ally from '~/pages/allies/ally/ally';
-import {props} from '~/helpers/backbone/decorators';
+import $ from '~/helpers/$';
+import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './allies.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
 
@@ -18,6 +19,8 @@ let alliesData = {},
 function handleAlliesData(data) {
     for (let page of data.pages) {
         let name = page.heading;
+
+        data.pages.sort((a, b) => a.name < b.name ? a : b);
 
         alliesData[name] = {
             name,
@@ -56,6 +59,11 @@ alliesDataPromise = new PageModel().fetch({
     }
 })
 export default class Allies extends BaseView {
+    @on('click .filter')
+    filterClick(e) {
+        $.scrollTo(e.target, 60);
+    }
+
     constructor() {
         super();
         this.stateModel = new BaseModel({
