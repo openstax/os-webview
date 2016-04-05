@@ -3,14 +3,12 @@ import settings from 'settings';
 import $ from '~/helpers/$';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './higher-ed.hbs';
-import Quotes from '~/components/quotes/quotes';
 import ProductsBoxes from '~/components/products-boxes/products-boxes';
 import Buckets from '~/components/buckets/buckets';
 
 @props({
     template: template,
     regions: {
-        quotes: '.quote-buckets',
         products: '.products',
         buckets: '.buckets'
     }
@@ -26,18 +24,11 @@ export default class HigherEd extends BaseView {
         let hash = new URL(target.href).hash,
             targetEl = document.getElementById(hash.substr(1));
 
-        $.scrollTo(targetEl);
+        $.scrollTo(targetEl, 100);
         e.preventDefault();
     }
 
     onRender() {
-        this.regions.quotes.show(new Quotes([{
-            orientation: 'left',
-            hasImage: true,
-            quoteHtml: 'OpenStax is supported by major philanthropic foundations',
-            linkUrl: '/foundation',
-            linkText: 'Learn More'
-        }]));
         this.regions.products.show(new ProductsBoxes({
             products: [
                 'Our Books',

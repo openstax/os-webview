@@ -17,7 +17,7 @@ export default class Banner extends BaseView {
         let hash = new URL(target.href).hash,
             targetEl = document.getElementById(hash.substr(1));
 
-        $.scrollTo(targetEl);
+        $.scrollTo(targetEl, 100);
         e.preventDefault();
     }
 }
