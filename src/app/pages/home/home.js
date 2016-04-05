@@ -39,13 +39,6 @@ export default class Home extends BaseView {
                 linkText: 'Learn More'
             },
             {
-                orientation: 'left',
-                hasImage: true,
-                quoteHtml: 'OpenStax is supported by major philanthropic foundations',
-                linkUrl: '/foundation',
-                linkText: 'Learn More'
-            },
-            {
                 orientation: 'full',
                 hasImage: false,
                 quoteHtml: `“OpenStax is AMAZING. Access to these high quality textbooks
