@@ -33,7 +33,7 @@ export default class Buckets extends BaseView {
             by adopting our free Anatomy and Physiology book. `,
             btnClass: 'btn-cyan',
             linkUrl: '/impact',
-            linkText: 'Learn More About Our Impact'
+            linkText: 'See Our Impact'
         }));
         this.regions.buckets.append(new Bucket({
             orientation: 'full',
