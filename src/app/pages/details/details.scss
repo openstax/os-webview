@@ -432,6 +432,10 @@
         line-height: 2.6rem;
         padding: 6rem 0 0;
 
+        &:last-child {
+            margin-bottom: 6rem;
+        }
+
         .container {
             flex-flow: column wrap;
 
