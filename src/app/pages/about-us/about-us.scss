@@ -11,10 +11,6 @@
         background-color: color(gray);
         color: color(neutral-lightest);
 
-        @media (max-width: 1280px) {
-            padding: 2rem 9vw;
-        }
-
         h1 {
             color: color(orange);
         }
@@ -234,8 +230,10 @@
         }
 
         .name {
-            font-size: 3rem;
-            line-height: 3rem;
+            font-size: 2.8rem;
+            letter-spacing: -0.1rem;
+            line-height: 1;
+            padding: 0 1rem;
         }
 
         img {

@@ -122,7 +122,8 @@ export default class Subjects extends BaseView {
             'high_resolution_pdf_url', 'low_resolution_pdf_url',
             'ibook_link', 'webview_link', 'concept_coach_link,bookshare_link',
             'amazon_link', 'amazon_price', 'amazon_blurb',
-            'bookstore_link', 'bookstore_blurb', 'slug']
+            'bookstore_link', 'bookstore_blurb', 'slug'],
+            limit: 50
         }}).then((result) => {
             this.renderCategorySections(organizeBooksByCategory(result.pages));
         });
