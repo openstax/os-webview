@@ -21,6 +21,34 @@ function lastName(bioEntry) {
     return bioEntry.name.substr(1 + bioEntry.name.lastIndexOf(' ')).toLowerCase();
 }
 
+let colorCombos = [
+    ['gray', 'orange'],
+    ['cyan', 'blue'],
+    ['orange', 'white'],
+    ['turquoise', 'blue'],
+    ['cyan', 'white'],
+    ['blue', 'green'],
+    ['turquoise', 'white'],
+    ['gray', 'yellow'],
+    ['cyan', 'blue'],
+    ['orange', 'yellow'],
+    ['deep-green', 'white']
+];
+
+function assignColorsToTeam(team) {
+    let i = 0;
+
+    for (let entry of team) {
+        entry.bgColor = colorCombos[i][0];
+        entry.textColor = colorCombos[i][1];
+        ++i;
+        if (Math.random() > 0.9) {
+            ++i;
+        }
+        i %= colorCombos.length;
+    }
+}
+
 @props({
     template,
     templateHelpers: {strips},
@@ -34,7 +62,9 @@ export default class AboutUs extends BaseView {
         let stateModel = new BaseModel();
 
         this.el.classList.add('about-us-page', 'text-content');
-        for (let person of bios.team.sort((a, b) => lastName(a) > lastName(b) ? 1 : -1)) {
+        bios.team.sort((a, b) => lastName(a) > lastName(b) ? 1 : -1);
+        assignColorsToTeam(bios.team);
+        for (let person of bios.team) {
             this.regions.team.append(new Headshot(toHeadshot(person), stateModel));
         }
         for (let person of bios.advisors.sort((a, b) => lastName(a) > lastName(b) ? 1 : -1)) {
