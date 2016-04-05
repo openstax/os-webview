@@ -1,5 +1,6 @@
 import BaseView from '~/helpers/backbone/view';
-import {props} from '~/helpers/backbone/decorators';
+import $ from '~/helpers/$';
+import {on, props} from '~/helpers/backbone/decorators';
 import appView from '~/components/shell/shell';
 import {template} from './home.hbs';
 import Quotes from '~/components/quotes/quotes';
@@ -23,6 +24,19 @@ const books = [
     }
 })
 export default class Home extends BaseView {
+    @on('click a[href^="#"]')
+    hashClick(e) {
+        let target = e.target;
+
+        while (!target.href) {
+            target = target.parentNode;
+        }
+        let hash = new URL(target.href).hash,
+            targetEl = document.getElementById(hash.substr(1));
+
+        $.scrollTo(targetEl);
+        e.preventDefault();
+    }
 
     onRender() {
         appView.header.updateHeaderStyle();
@@ -34,16 +48,18 @@ export default class Home extends BaseView {
             {
                 orientation: 'right',
                 hasImage: true,
-                quoteHtml: 'We’re recruiting for our Fall 2016 pilot of Concept Coach!',
+                quoteHtml: `Concept Coach is our free new tool that helps college
+                students understand and retain what they’ve read. We’re recruiting
+                faculty for our Fall 2016 pilot!`,
                 linkUrl: 'http://cc.openstax.org',
                 linkText: 'Learn More'
             },
             {
                 orientation: 'full',
                 hasImage: false,
-                quoteHtml: `“OpenStax is AMAZING. Access to these high quality textbooks
-                is GAME CHANGING for our students.”
-                <span>&mdash; <cite>Prof. Wendy Riggs, College of the Redwoods</cite></span>`
+                quoteHtml: `<p>“OpenStax is <em>amazing</em>. Access to these high quality textbooks
+                is game changing for our students.”</p>
+                <div class="attribution">&mdash; <cite>Prof. Wendy Riggs, College of the Redwoods</cite></div>`
             }
         ]));
         this.regions.education.show(new Education());
