@@ -1,15 +1,15 @@
-<div class="text-content subhead">
+<style scoped>
+    @import url(/app/pages/adoption/adoption.css);
+</style>
+<div class="hero text-content">
     <h1>Let us know you’re using OpenStax</h1>
-    <p>To get started with an OpenStax book, fill out this form and paste the
-        book URL in your syllabus. Our books and their accompanying resources
-        are yours to use, free.</p>
+    <p>Our books and their accompanying resources are yours to use, free.</p>
     <p>Help us continue to make high-quality educational materials accessible by
         letting us know you’ve adopted! Our future grant funding is based on
         faculty adoptions and the number of students we impact. </p>
     <p>Not using OpenStax yet? Go to our OpenStax <a href="/interest">interest
         form</a> and we’ll send you the information you need.</p>
 </div>
-
 <form accept-charset="UTF-8" class="new_adoption form"
  action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="post">
     <div class="text-content">
@@ -20,7 +20,11 @@
             <input type=hidden name="retURL" value="{{urlOrigin}}/adoption-confirmation">
             <input type=hidden name="lead_source" value="OS Adoption Form">
         </div>
-        <div class="labeled-inputs row">
+        <p class="instructions">
+        To get started with an OpenStax book, fill out this form and paste the
+            book URL in your syllabus.
+        </p>
+        <div class="labeled-inputs row top-of-form">
             <div class="col">
                 <label>
                     <span>First name</span>
@@ -132,8 +136,9 @@
 
         <div class="col">
             <label class="question">
-                Which of our allies would you like to give permission to contact you about
-                additional resources to support our books?
+                Which of our <a href="/allies">allies</a> would you like to give
+                permission to contact you about additional resources to support
+                our books?
                 <span class="select-instructions">You may select more than one.</span>
                 <select multiple name="00NU00000055spm">
                     <option value="None" disabled selected>None</option>

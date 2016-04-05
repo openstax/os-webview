@@ -1,0 +1,21 @@
+@import 'variables';
+
+.adoption-form {
+    .hero {
+        background-color: color(deep-green);
+        color: color(neutral-lightest);
+
+        h1 {
+            color: inherit;
+        }
+
+        a {
+            color: color(gold);
+        }
+
+    }
+
+    .labeled-inputs.row.top-of-form {
+        padding-top: inherit;
+    }
+}

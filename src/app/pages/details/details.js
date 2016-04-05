@@ -1,5 +1,6 @@
 import Backbone from 'backbone';
 import BaseView from '~/helpers/backbone/view';
+import $ from '~/helpers/$';
 import PageModel from '~/models/pagemodel';
 import Author from './author/author';
 import Resource from './resource/resource';
@@ -45,30 +46,15 @@ function dataToTemplateHelper(data) {
 export default class Details extends BaseView {
     @on('click a[href^="#"]')
     hashClick(e) {
-        const tick = 1000 / 40,
-            scrollStep = 200;
-
         let target = e.target;
 
         while (!target.href) {
             target = target.parentNode;
         }
         let hash = new URL(target.href).hash,
-            targetEl = document.getElementById(hash.substr(1)),
-            rect = targetEl.getBoundingClientRect(),
-            direction = Math.sign(rect.top),
-            magnitude = Math.abs(rect.top),
-            i = setInterval(() => {
-                let step = (magnitude > scrollStep) ? scrollStep : magnitude,
-                    scrollBody = document.documentElement.scrollTop || document.body.scrollTop;
+            targetEl = document.getElementById(hash.substr(1));
 
-                window.scrollTo(0, scrollBody + direction * step);
-                magnitude -= step;
-                if (magnitude <= 0) {
-                    clearInterval(i);
-                }
-            }, tick);
-
+        $.scrollTo(targetEl);
         e.preventDefault();
     }
 
@@ -140,12 +126,15 @@ export default class Details extends BaseView {
                 userModel.fetch().then((userData) => {
                     let userInfo = userData[0],
                         alternateLink = null,
-                        encodedLocation = encodeURIComponent(Backbone.history.location.href);
+                        encodedLocation = encodeURIComponent(Backbone.history.location.href),
+                        extraInstructions = this.el.querySelector('#extra-instructions');
 
                     if (!userInfo || userInfo.username === '') {
                         alternateLink = `${settings.apiOrigin}/accounts/login/openstax/?next=${encodedLocation}`;
+                        extraInstructions.innerHTML = `<a href="${alternateLink}">Login</a> for instructor access.`;
                     } else if (userInfo.groups.indexOf('Faculty') < 0) {
                         alternateLink = '/faculty-verification';
+                        extraInstructions.innerHTML = `<a href="${alternateLink}">Apply for instructor access.</a>`;
                     }
                     insertResources(resources, 'instructorResources', alternateLink);
                 });
