@@ -47,10 +47,12 @@ export default class NewAccountForm extends ProxyWidgetView {
                 this.el.querySelector('#problem-message').textContent = 'Could not load user information';
                 this.el.querySelector('[type="submit"]').disabled = true;
             }
-        }).catch(() => {
+        }).catch((e) => {
             /* eslint no-alert: 0 */
             alert('Something went wrong. Cannot find your user information.');
-            window.location.pathname = '/';
+            /* eslint no-console: 0 */
+            console.warn(e);
+            // window.location.pathname = '/';
         });
     }
 }
