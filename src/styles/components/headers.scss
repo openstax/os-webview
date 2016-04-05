@@ -49,7 +49,6 @@ h4 {
     @media (max-width: #{breakpoints(tablet)}) {
         font-size: 1.6rem;
         line-height: 2.7rem;
-        padding: 3rem 6rem;
         text-align: left;
     }
 
@@ -64,10 +63,6 @@ h4 {
         letter-spacing: -0.2rem;
         line-height: 5rem;
         margin-bottom: 1rem;
-
-        @media (max-width: #{breakpoints(tablet)}) {
-            padding-left: 1.5rem;
-        }
 
         @include phone {
             font-size: 5rem;

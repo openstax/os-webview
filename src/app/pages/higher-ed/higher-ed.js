@@ -32,13 +32,6 @@ export default class HigherEd extends BaseView {
 
     onRender() {
         this.regions.quotes.show(new Quotes([{
-            orientation: 'right',
-            hasImage: true,
-            quoteHtml: 'We’re recruiting for our Fall 2016 pilot of Concept Coach!',
-            linkUrl: 'http://cc.openstax.org',
-            linkText: 'Learn More'
-        },
-        {
             orientation: 'left',
             hasImage: true,
             quoteHtml: 'OpenStax is supported by major philanthropic foundations',
