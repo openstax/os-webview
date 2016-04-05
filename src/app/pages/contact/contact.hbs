@@ -2,45 +2,55 @@
     @import url(/app/pages/contact/contact.css);
 </style>
 <div class="contact-page page">
-    {{{strips}}}
-    <main id="maincontent" class="boxed">
-
-        <h1>Contact us</h1>
-        <p class="subhead">
-          If you have any questions or feedback, drop us a line!
-        </p>
-        <form action="/api/mail/send_mail/" method="post">
-            <input type="hidden" name="csrfmiddlewaretoken" />
-            <div class="labeled-control">
-                What is your question about?
-                <select>
-                    {{#each options}}
-                        <option>{{this}}</option>
-                    {{/each}}
-                </select>
-                <input name="to_address" type="hidden" />
-                <input name="subject" type="hidden" />
+    <main id="maincontent">
+        <div class="hero">
+            <div class="boxed">
+                <h1>Contact Us</h1>
+                <p class="subhead">
+                    If you have any questions or feedback, drop us a line!
+                </p>
             </div>
-            <div class="labeled-control">
-                Your Name
-                <input name="from_name" type="text" required />
+        </div>
+        {{{strips}}}
+        <div class="boxed">
+            <div class="col">
+                <form action="/api/mail/send_mail/" method="post" class="form">
+                    <input type="hidden" name="csrfmiddlewaretoken" />
+                    <div class="labeled-control">
+                        What is your question about?
+                        <select>
+                            {{#each options}}
+                                <option>{{this}}</option>
+                            {{/each}}
+                        </select>
+                        <input name="to_address" type="hidden" />
+                        <input name="subject" type="hidden" />
+                    </div>
+                    <div class="labeled-control">
+                        Your Name
+                        <input name="from_name" type="text" required />
+                    </div>
+                    <div class="labeled-control">
+                        Your Email Address
+                        <input name="from_address" pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text" required />
+                    </div>
+                    <div class="labeled-control">
+                        Your Message
+                        <textarea cols="50" name="message_body" rows="6" required></textarea>
+                    </div>
+                    <button class="btn btn-orange" type="submit">Send</button>
+                </form>
             </div>
-            <div class="labeled-control">
-                Your Email Address
-                <input name="from_address" pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text" required />
+            <div class="col">
+                <h2>Mailing Address</h2>
+                <h3>OpenStax</h3>
+                <address>
+                    Rice University
+                    <span>6100 Main St. MS 375</span>
+                    Houston, TX 77005
+                </address>
+                <p class="phone"><span>Main:</span> (713) 348-5012</p>
             </div>
-            <div class="labeled-control">
-                Your Message
-                <textarea cols="50" name="message_body" rows="6" required></textarea>
-            </div>
-            <button class="btn" type="submit">Send</button>
-        </form>
-        <h2>Mailing Address</h2>
-        <div class="address">
-            <span>OpenStax</span>
-            Rice University
-            <span>6100 Main St. MS 375</span>
-            Houston, TX 77005
         </div>
     </main>
 </div>

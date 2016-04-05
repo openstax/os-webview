@@ -1,39 +1,81 @@
 @import 'variables';
+@import 'mixins';
 
 .finish-profile {
+
     h1 {
-        flex: 1 100%;
-        margin-bottom: 0;
+        color: color(neutral-lightest);
     }
 
-    img {
-        min-height: 20rem;
-        min-width: 15rem;
+    h2 {
+        margin-top: 4rem;
+
+        @include desktop {
+            text-align: center;
+        }
     }
 
-    form {
-        border: thin solid color(neutral-light);
-        margin: 1rem;
-        padding: 1rem;
+    .row {
+        padding: 0;
+        width: 100%;
+    }
+
+    .hero {
+        background-color: color(green);
+        color: color(neutral-lightest);
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
     }
 
     .note {
-        color: rgba(color(neutral-darkest), 0.57);
         font-style: italic;
-        margin-top: 0;
+        color: color(neutral-lightest);
     }
 
-    [type="submit"] {
-        background-color: color(primary);
-        border: 0;
-        color: color(neutral-lightest);
-        display: block;
-        float: none;
-        font-size: 1.7rem;
-        padding: 1rem 2rem;
+    .form-hidden {
+        visibility: hidden;
+        transform: scale3d(0, 0, 0);
 
-        &:disabled {
-            background-color: color(neutral-light);
+        @include phone {
+            width: 0;
+            height: 0;
+            overflow: hidden;
         }
+    }
+
+    .faculty-section {
+        padding: 4rem 0 0;
+    }
+
+    .cta {
+        padding-right: 1.5rem;
+
+        > .btn {
+            width: auto;
+            font-variant: normal;
+            text-transform: uppercase;
+            font-size: 1.4rem;
+        }
+    }
+
+    .form {
+        padding: 4rem 0;
+
+        &.faculty .cta {
+            @media (min-width: 481px) {
+                margin-top: -10rem;
+                z-index: 99;
+                position: relative;
+                padding-bottom: 8rem;
+            }
+        }
+    }
+
+    .checkboxes {
+        margin-top: 4rem;
+    }
+
+    [type="submit"]:disabled {
+        background-color: color(neutral-light);
     }
 }

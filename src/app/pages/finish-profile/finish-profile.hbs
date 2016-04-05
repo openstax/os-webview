@@ -1,62 +1,76 @@
 <style scoped>@import url(/app/pages/finish-profile/finish-profile.css);</style>
-<h1>Finish your OpenStax profile</h1>
-<p class="note">All fields are required.</p>
-<form accept-charset="UTF-8"
- action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="post">
-    <div>
-        <input name="utf8" type="hidden" value="✓" />
-        <!-- This is our organization id -->
-        <input type=hidden name="oid" value="00DU0000000Kwch" />
-        <input type=hidden name="retURL" value="{{urlOrigin}}" />
-        <input type=hidden name="lead_source" value="OSC User" />
-        <input type=hidden name="first_name" />
-        <input type=hidden name="last_name" />
-        <input type=hidden name="user_id" />
-        <input type=hidden name="OS_Accounts_ID__c" />
-    </div>
-    <fieldset class="labeled-inputs">
-        <label>
-            <span>School/Organization</span>
-            <input name="school" type="text" required />
-        </label>
-        <label>
-            <span>Email</span>
-            <input name="institutional_email_address" pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text" required />
-        </label>
-        <label>
-            <span>Phone number</span>
-            <input name="phone" type="text" required />
-        </label>
-        <p>Your role
-        <select name="00NU00000054MLz">
-            <option disabled selected>Please select</option>
-            {{#each roles}}
-                <option value="{{this}}">{{this}}</option>
-            {{/each}}
-        </select>
-        </p>
-        <p>Title(s) you're interested in
-        <select name="00NU00000053nzR" multiple required>
-            {{#each bookTitles}}
-            <option value="{{this}}">{{this}}</option>
-            {{/each}}
-        </select>
-        </p>
-        <div>
-            <label>
-                <input name="newsletter" type="checkbox" value="1" checked />
-                Keep me informed about OpenStax news.
-            </label>
+<div class="finish-profile page">
+    <div class="hero">
+        <div class="boxed">
+            <h1>Finish your OpenStax profile</h1>
+            <p class="note">All fields are required.</p>
         </div>
-        <label>
-            <input id="toggle-faculty" type="checkbox" />
-            I want access to faculty-only materials.
-        </label>
-        <fieldset id="faculty-section">
-        </fieldset>
-    </fieldset>
-    <div class="submit-zone">
-        <input type="submit" value="Finish profile" role="button" />
-        <span id="problem-message"></span>
     </div>
-</form>
+    {{{strips}}}
+    <div class="boxed">
+        <form accept-charset="UTF-8"
+         action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="post" class="form">
+            <div>
+                <input name="utf8" type="hidden" value="✓" />
+                <!-- This is our organization id -->
+                <input type=hidden name="oid" value="00DU0000000Kwch" />
+                <input type=hidden name="retURL" value="{{urlOrigin}}" />
+                <input type=hidden name="lead_source" value="OSC User" />
+                <input type=hidden name="first_name" />
+                <input type=hidden name="last_name" />
+                <input type=hidden name="user_id" />
+                <input type=hidden name="OS_Accounts_ID__c" />
+            </div>
+            <div class="labeled-inputs row">
+                <div class="col">
+                    <label>
+                        <span>School/Organization</span>
+                        <input name="school" type="text" required />
+                    </label>
+                    <label>
+                        <span>Email</span>
+                        <input name="institutional_email_address" pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text" required />
+                    </label>
+                    <label>
+                        <span>Phone number</span>
+                        <input name="phone" type="text" required />
+                    </label>
+                </div>
+                <div class="col">
+                    <label>Your role
+                    <select name="00NU00000054MLz">
+                        <option disabled selected>Please select</option>
+                        {{#each roles}}
+                            <option value="{{this}}">{{this}}</option>
+                        {{/each}}
+                    </select>
+                </label>
+                    <label>Title(s) you're interested in
+                    <select name="00NU00000053nzR" multiple required>
+                        {{#each bookTitles}}
+                        <option value="{{this}}">{{this}}</option>
+                        {{/each}}
+                    </select>
+                </label>
+                    <div class="checkboxes">
+                        <label>
+                            <input name="newsletter" type="checkbox" value="1" checked />
+                            Keep me informed about OpenStax.
+                        </label>
+
+                        <label>
+                            <input id="toggle-faculty" type="checkbox" />
+                            I want access to faculty-only materials.
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div id="faculty-section"></div>
+            <div class="cta">
+                <input type="submit" value="Finish profile" role="button" class="btn btn-orange" />
+                <span id="problem-message"></span>
+            </div>
+
+        </form>
+    </div>
+</div>
