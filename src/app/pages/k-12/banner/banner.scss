@@ -29,6 +29,10 @@ $breakpoint-2: 806px;
             min-height: auto;
         }
 
+        @media (max-width: $breakpoint-2) {
+            min-height: auto;
+        }
+
         .square-1,
         .square-2 {
             display: block;

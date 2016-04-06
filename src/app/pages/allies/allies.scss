@@ -1,5 +1,6 @@
 @import 'variables';
 @import 'mixins';
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
 
 $text-dark2: rgba(0, 0, 0, 0.7);
 
@@ -45,12 +46,37 @@ $text-dark2: rgba(0, 0, 0, 0.7);
         margin-bottom: 0;
     }
 
-    .blurbs {
-        background-color: lighten(color(neutral-light), 35%);
-        line-height: 2.3rem;
+    .icons {
+        @include constrained-variable-text(3, 0.3);
+
+        background-color: color(gray);
+        color: rgba(color(neutral-lightest), 0.8);
+        font-weight: 500;
         min-height: 10rem;
         position: relative;
-        padding: 8rem 0;
+
+        a {
+            color: inherit;
+        }
+
+        .container {
+            align-items: center;
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: center;
+            padding-top: 8rem;
+        }
+
+        .logo {
+            width: calc(4% + 15rem);
+            height: 20rem;
+            margin: 2rem;
+
+            .logo-text,
+            img {
+                width: 100%;
+            }
+        }
     }
 
     .strips {
@@ -61,47 +87,22 @@ $text-dark2: rgba(0, 0, 0, 0.7);
         right: 0;
     }
 
-    .ally-info {
+    .blurbs {
         align-items: center;
         background-color: color(neutral-lightest);
-        display: flex;
-        flex-flow: column nowrap;
         font-size: 1.7rem;
         font-weight: 400;
         margin-bottom: 1.5rem;
         padding: 3rem;
 
-        @include desktop {
-            flex-flow: row nowrap;
-        }
-
-        &.hidden {
-            display: none;
-        }
-
-        h2 {
-            font-size: 2rem;
-            letter-spacing: normal;
-        }
-
-        .logo {
-            flex: 0 0 25%;
-            margin-bottom: 3rem;
-
-            @include desktop {
-                margin-bottom: 0;
-                margin-right: 3rem;
-            }
-
-            img {
-                width: 100%;
-            }
-        }
-
         .text {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+
+            &.hidden {
+                display: none;
+            }
         }
 
         a {

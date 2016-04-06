@@ -2,7 +2,8 @@ import BaseView from '~/helpers/backbone/view';
 import BaseModel from '~/helpers/backbone/model';
 import PageModel from '~/models/pagemodel';
 import FilterButton from '~/components/filter-button/filter-button';
-import Ally from '~/pages/allies/ally/ally';
+import Icon from './icon/icon';
+import Ally from './ally/ally';
 import $ from '~/helpers/$';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './allies.hbs';
@@ -12,7 +13,6 @@ const categories = ['Math', 'Science', 'Social Sciences', 'History', 'AP®'],
     filterButtons = ['View All', ...categories];
 
 let alliesData = {},
-    logoPromises = [],
     alliesDataPromise, pageDataPromise;
 
 
@@ -27,7 +27,8 @@ function handleAlliesData(data) {
             blurb: page.long_description,
             subjects: page.ally_subject_list,
             bookLinks: [],
-            isAp: page.is_ap
+            isAp: page.is_ap,
+            logoUrl: page.ally_bw_logo
         };
         if (page.ally_logo) {
             alliesData[name].logoUrl = page.ally_logo;
@@ -46,7 +47,7 @@ alliesDataPromise = new PageModel().fetch({
     data: {
         type: 'allies.Ally',
         fields: ['ally_subject_list', 'title', 'short_description', 'long_description',
-                'ally_logo', 'heading', 'is_ap']
+                'heading', 'is_ap', 'ally_bw_logo']
     }
 }).then(handleAlliesData);
 
@@ -55,7 +56,8 @@ alliesDataPromise = new PageModel().fetch({
     templateHelpers: {strips},
     regions: {
         filterButtons: '.filter-buttons',
-        blurbs: '.blurbs .container'
+        icons: '.icons .container',
+        blurbs: '.blurbs.container'
     }
 })
 export default class Allies extends BaseView {
@@ -102,11 +104,10 @@ export default class Allies extends BaseView {
             this.regions.filterButtons.append(new FilterButton(button, this.stateModel));
         }
         alliesDataPromise.then(() => {
-            Promise.all(logoPromises).then(() => {
-                for (let name of Object.keys(alliesData).sort()) {
-                    this.regions.blurbs.append(new Ally(alliesData[name], this.stateModel));
-                }
-            });
+            for (let name of Object.keys(alliesData).sort()) {
+                this.regions.icons.append(new Icon(alliesData[name], this.stateModel));
+                this.regions.blurbs.append(new Ally(alliesData[name], this.stateModel));
+            }
         });
         pageDataPromise.then(this.handlePageData.bind(this));
     }
