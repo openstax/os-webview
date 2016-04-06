@@ -11,9 +11,10 @@ h4 {
 }
 
 h1 {
-    font-size: 4.8rem;
+    @include constrained-variable-text(4.8, 0.2);
+
     letter-spacing: -0.2rem;
-    line-height: 5rem;
+    line-height: 1.05;
 }
 
 h2 {
@@ -39,29 +40,28 @@ h4 {
 }
 
 .hero {
-    font-size: 1.8rem;
-    font-weight: 300;
-    letter-spacing: 0.11rem;
-    line-height: 3rem;
-    padding: 4rem 8rem;
-    text-align: center;
+    @include variable-sized-text(1.8, 0.2);
 
     @media (max-width: #{breakpoints(tablet)}) {
-        font-size: 1.6rem;
-        line-height: 2.7rem;
         text-align: left;
     }
 
-    @include phone {
+    @media (max-width: #{breakpoints(phone)}) {
         padding-left: 0;
         padding-right: 0;
     }
 
+    font-weight: 300;
+    letter-spacing: 0.11rem;
+    text-align: center;
+
     h1 {
+        @include variable-sized-text(6, 0.2);
+
+        color: inherit;
         font-weight: bold;
-        font-size: 6rem;
         letter-spacing: -0.2rem;
-        line-height: 5rem;
+        line-height: calc(5 / 6);
         margin-bottom: 1rem;
 
         @include phone {
@@ -70,19 +70,18 @@ h4 {
     }
 
     h2 {
-        font-weight: bold;
-        font-size: 4.8rem;
-        letter-spacing: -0.2rem;
-        line-height: 5rem;
-        margin-bottom: 1rem;
+        @include variable-sized-text(4.8, 0.2);
 
-        @include phone {
-            font-size: 4rem;
-        }
+        color: inherit;
+        font-weight: bold;
+        letter-spacing: -0.2rem;
+        line-height: 1;
+        margin-bottom: 1rem;
     }
 
     .cta {
-        font-size: 1.4rem;
+        @include variable-sized-text(1.4, 0.2);
+
         font-weight: bold;
         text-transform: capitalize;
     }

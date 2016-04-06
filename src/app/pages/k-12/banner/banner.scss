@@ -1,42 +1,47 @@
 @import 'variables';
 @import 'mixins';
 
-@mixin widescreen {
-    @media (min-width: 1400px) {
+$breakpoint-1: 1000px;
+$breakpoint-2: 806px;
+
+@mixin tablet-down {
+    @media (max-width: $breakpoint-1) {
         @content;
     }
 }
 
-@mixin tablet-down {
-    @media (max-width: 962px) {
-        @content;
-    }
+@mixin smaller-h1 {
+
 }
 
 .k-12-page {
     .banner {
-        position: relative;
-        width: 100%;
-        min-height: 42.857vw;
         background-color: color(blue);
         background-image: url('/images/k-12/k12-banner.jpg');
-        background-size: cover;
         background-repeat: no-repeat;
+        background-size: cover;
+        min-height: 42.857vw;
         overflow: hidden;
+        position: relative;
+        width: 100%;
+
+        @media (max-width: $breakpoint-2) {
+            min-height: auto;
+        }
 
         .square-1,
         .square-2 {
-            background-color: rgba(color(orange), 0.1);
-            display: none;
+            display: block;
             position: absolute;
-            z-index: 0;
+            z-index: 1;
 
-            @media (min-width: 963px) {
-                display: block;
+            @include tablet-down {
+                display: none;
             }
         }
 
         .square-1 {
+            background-color: rgba(darken(color(orange), 20%), 0.15);
             width: 34.285vw;
             height: 23.785vw;
             top: 4.8rem;
@@ -45,16 +50,17 @@
         }
 
         .square-2 {
-            width: 19.14vw;
-            height: 16.642vw;
-            top: 9rem;
-            right: 4.3rem;
+            background-color: rgba(darken(color(orange), 10%), 0.10);
+            width: calc(9vw + 12rem);
+            height: calc(8vw + 10rem);
+            bottom: 4vw;
+            right: 3vw;
         }
 
         .square-3 {
             display: flex;
             margin: 0 auto;
-            width: 90vw;
+            width: 82vw;
             position: relative;
             align-items: center;
             min-height: 42.857vw;
@@ -66,26 +72,33 @@
             }
 
             .blurb {
-                max-width: $boxed-width;
-                background-color: rgba(color(orange), 0.9);
-                padding: 4rem 4rem 4rem 40vw;
-                min-height: 34rem;
-                margin: 0 auto;
+                @include variable-sized-text(1.55, 0.15);
 
-                @include widescreen {
-                    padding-left: 34vw;
-                }
+                background-color: rgba(saturate(color(orange), 10%), 0.85);
+                margin: 0 auto;
+                letter-spacing: 0.06rem;
+                line-height: 1.6;
+                max-width: calc(#{$boxed-width} + 10vw);
+                padding: 0 4rem 4rem 47rem;
+                text-align: left;
 
                 @include tablet-down {
                     background: none;
+                    font-size: 1.5rem;
+                    min-height: auto;
+                    padding-left: 39rem;
                 }
 
-                @media (max-width: 806px) {
+                @media (max-width: $breakpoint-2) {
                     padding-left: 4rem;
                 }
 
                 h1 {
-                    font-size: 6rem;
+                    @include variable-sized-text(5.3, 0.2);
+
+                    font-weight: 500;
+                    letter-spacing: -0.1rem;
+                    line-height: 0.85;
                 }
 
                 * {
@@ -123,19 +136,20 @@
             top: 0;
             left: 0;
             bottom: 0;
-            width: 44.357vw;
+            height: 100%;
+            width: 50%;
             background: url('/images/k-12/k12-student.png') no-repeat;
-            background-position: center bottom;
+            background-position: left bottom;
             background-repeat: no-repeat;
-            background-size: 44.14vw 42.857vw;
+            background-size: contain;
             z-index: 3;
             transform: all 0.5s ease-in-out;
 
             @include tablet-down {
-                background-position: -12rem bottom;
+                background-size: auto 100%;
             }
 
-            @media (max-width: 806px) {
+            @media (max-width: $breakpoint-2) {
                 display: none;
             }
         }
