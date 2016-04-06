@@ -33,6 +33,14 @@
 .quote-buckets {
     background-color: lighten(color(neutral-lighter), 8%);
 
+    .quotes .quote-bucket {
+        margin-right: 2rem;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+
     .attribution {
         text-align: right;
     }

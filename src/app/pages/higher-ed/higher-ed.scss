@@ -7,7 +7,8 @@
     }
 }
 
-$hero-break-width: 1024px;
+$hero-break-width: 1006px;
+
 
 .higher-ed-page {
     .more {
@@ -39,22 +40,30 @@ $hero-break-width: 1024px;
         min-height: 42.8vw;
         position: relative;
 
+        @media (max-width: #{$boxed-width * 1200 / 1920}) {
+            padding: 0;
+        }
+
         @media (max-width: $hero-break-width) {
             background-image: none;
-            padding: 0;
+            min-height: 0;
         }
 
         > .overlay {
             background-color: rgba(color(cyan), 0.8);
             color: color(neutral-lightest);
+            margin-left: 35%;
+
+            @media (max-width: #{$boxed-width * 1200 / 1920}) {
+                height: 100%;
+            }
+
+            @media (max-width: $hero-break-width) {
+                margin: 0;
+            }
 
             > .text-block {
                 margin: 5rem;
-                padding-left: 35%;
-
-                @media (max-width: $hero-break-width) {
-                    padding: inherit;
-                }
 
                 @include widescreen {
                     h1 {
@@ -66,7 +75,8 @@ $hero-break-width: 1024px;
                     .more {
                         font-size: calc(0.8rem + 0.7vw);
                         line-height: 1.6;
-                        margin: 1vw 0;
+                        margin: 1vw
+                         0;
                     }
                 }
 
