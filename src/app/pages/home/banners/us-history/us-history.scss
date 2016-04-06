@@ -201,25 +201,23 @@
     canvas,
     .video,
     .video-banner {
-        position: absolute;
-        z-index: 2;
-        width: 22rem;
-        height: 25rem;
         bottom: 15rem;
+        height: 25rem;
+        position: absolute;
         right: 1.5rem;
-
-
+        width: 22rem;
+        z-index: 2;
 
         @include tablet {
-            height: 40rem;
             bottom: 0;
+            height: 40rem;
             right: -6rem;
             width: 35rem;
         }
 
         @include desktop {
-            height: 53rem;
             bottom: 0;
+            height: 53rem;
             right: 15rem;
             width: 45.4rem;
         }
