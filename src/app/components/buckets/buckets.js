@@ -40,9 +40,9 @@ export default class Buckets extends BaseView {
             bucketClass: 'allies',
             hasImage: false,
             titleText: 'OpenStax Allies',
-            blurbHtml: `OpenStax allies provide additional tools
-            integrated with our OpenStax texts, because we believe
-            that education is a community effort.`,
+            blurbHtml: `OpenStax Allies have united with us to increase access
+            to high-quality learning materials. Their low-cost tools integrate
+            seamlessly with OpenStax books.`,
             btnClass: 'btn-yellow',
             linkUrl: '/allies',
             linkText: 'View Allies'
