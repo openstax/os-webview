@@ -171,6 +171,17 @@ export default class Details extends BaseView {
                     section.parentNode.removeChild(section);
                 }
             },
+            handlePublishInfo = (data) => {
+                document.getElementById('publish-date').textContent = data.publish_date;
+                document.getElementById('isbn-10').textContent = data.isbn_10;
+                document.getElementById('isbn-13').textContent = data.isbn_13;
+                this.el.querySelector('.publish-info .license .text').textContent = `
+                ${data.license_name} v${data.license_version}
+                `;
+                if (data.license_name.match(/share/i)) {
+                    this.el.querySelector('.license img').src = '/images/details/by-sa-license.png';
+                }
+            },
             handleBasicBookData = (data) => {
                 if (data.pages.length === 0) {
                     window.location.href = '404';
@@ -201,6 +212,7 @@ export default class Details extends BaseView {
                         showInstructorResources(detailData.book_faculty_resources);
                         insertResources(detailData.book_student_resources, 'studentResources');
                         handleErrataLink(detailData.errata_link, detailData.errata_corrections_link);
+                        handlePublishInfo(detailData);
 
                         for (let ally of detailData.book_allies) {
                             let allyTemplateHelper = {
