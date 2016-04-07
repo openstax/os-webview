@@ -1,5 +1,6 @@
 import ProxyWidgetView from '~/helpers/backbone/proxy-widget-view';
 import userModel from '~/models/usermodel';
+import salesforceModel from '~/models/salesforce-model';
 import bookTitles from '~/helpers/book-titles';
 import FacultySection from './faculty-section/faculty-section';
 import {on, props} from '~/helpers/backbone/decorators';
@@ -40,6 +41,7 @@ export default class NewAccountForm extends ProxyWidgetView {
         this.facultySection = new FacultySection();
         this.el.classList.add('finish-profile');
         super.onRender();
+        salesforceModel.prefill(this.el);
         userModel.fetch().then((data) => {
             let userInfo = data[0];
 

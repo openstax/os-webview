@@ -8,7 +8,10 @@ let bookTitles = [
     'Chemistry',
     'College Algebra',
     'College Physics',
-    'College Physics for AP® Courses',
+    {
+        text: 'College Physics for AP® Courses',
+        value: 'AP Physics'
+    },
     'Concepts of Biology',
     'Elementary Algebra',
     'Intermediate Algebra',
@@ -20,9 +23,15 @@ let bookTitles = [
     'Precalculus',
     'Principles of Economics',
     'Principles of Macroeconomics',
-    'Principles of Macroeconomics for AP® Courses',
+    {
+        text: 'Principles of Macroeconomics for AP® Courses',
+        value: 'AP Macro Econ'
+    },
     'Principles of Microeconomics',
-    'Principles of Microeconomics for AP® Courses',
+    {
+        text: 'Principles of Microeconomics for AP® Courses',
+        value: 'AP Micro Econ'
+    },
     'Psychology',
     'University Physics',
     'U.S. History'

@@ -59,7 +59,11 @@
                     <span class="select-instructions">Select at least one.</span>
                     <select name="00NU00000053nzR" multiple required>
                         {{#each titles}}
-                        <option value="{{this}}">{{this}}</option>
+                            {{#if this.text}}
+                                <option value="{{this.value}}">{{this.text}}</option>
+                            {{else}}
+                                <option value="{{this}}">{{this}}</option>
+                            {{/if}}
                         {{/each}}
                     </select>
                 </label>

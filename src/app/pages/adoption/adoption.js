@@ -1,5 +1,6 @@
 import ProxyWidgetView from '~/helpers/backbone/proxy-widget-view';
 import salesforceModel from '~/models/salesforce-model';
+import bookTitles from '~/helpers/book-titles';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './adoption.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
@@ -7,6 +8,7 @@ import {template as strips} from '~/components/strips/strips.hbs';
 @props({
     template: template,
     templateHelpers: {
+        titles: bookTitles,
         urlOrigin: window.location.origin,
         strips
     }
