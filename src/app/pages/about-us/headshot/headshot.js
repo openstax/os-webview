@@ -47,12 +47,5 @@ export default class Headshot extends BaseView {
             });
         }
         this.el.classList.add('headshot');
-        let image = this.el.querySelector('img'),
-            isChrome = navigator.userAgent.indexOf('Chrome') > -1,
-            isSafari = !isChrome && navigator.userAgent.indexOf('Safari') > -1;
-
-        if (image && isSafari) {
-            image.classList.add('safari');
-        }
     }
 }
