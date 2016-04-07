@@ -483,6 +483,23 @@
         }
     }
 
+    .publish-info {
+        padding-top: 1rem;
+
+        th {
+            text-align: left;
+        }
+
+        .license {
+            display: flex;
+
+            img {
+                height: 4rem;
+                padding-right: 1rem;
+            }
+        }
+    }
+
     .errata {
         font-size: 1.6rem;
         line-height: 2.6rem;
