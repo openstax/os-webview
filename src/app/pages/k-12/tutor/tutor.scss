@@ -20,46 +20,55 @@
     }
 
     .tutor {
-        width: 90vw;
         margin: 0 auto;
 
         > .tutor-caption {
+            color: white;
+            display: flex;
             margin: inherit;
             max-width: 76.6rem;
-            display: flex;
             padding: 6.7rem 0;
-            color: white;
 
             @media (max-width: 840px) {
-                flex-direction: column;
-                padding: 6.7rem 3rem;
                 align-content: flex-end;
+                flex-direction: column;
+                padding: 5vw 3rem;
             }
 
             > .caption {
                 flex: 2 1 auto;
                 padding-left: 3rem;
+                text-align: left;
 
                 @media (max-width: 840px) {
-                    padding-left: 0;
+                    padding: 0;
                 }
             }
 
-            .title {
-                display: block;
-                font-size: 6rem;
-                font-weight: 700;
-                line-height: 1;
+            h1 {
+                @include variable-sized-text(4.8, 0.2);
+
+                color: inherit;
+                font-weight: 500;
+                letter-spacing: -0.1rem;
+                line-height: 0.85;
                 margin-bottom: 2rem;
             }
 
             .blurb {
+                @include variable-sized-text(1.6, 0.2);
+
                 display: block;
-                font-size: 1.8rem;
-                line-height: 3rem;
+                letter-spacing: 0.06rem;
+                line-height: 1.8;
                 margin-bottom: 2rem;
                 max-width: 80%;
-                width: 45rem;
+                width: calc(30rem + 12vw);
+
+                @include phone {
+                    max-width: none;
+                    width: auto;
+                }
             }
 
             .btn {

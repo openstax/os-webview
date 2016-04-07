@@ -46,8 +46,10 @@ export default class Subjects extends BaseView {
     }
 
     @on('click .filter')
-    filterClick(e) {
-        $.scrollTo(e.target, 60);
+    filterClick() {
+        let filterSection = this.el.querySelector('.filter');
+
+        $.scrollTo(filterSection, 60);
     }
 
     updateSelectedFilterFromPath() {

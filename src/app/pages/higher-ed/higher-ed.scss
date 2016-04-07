@@ -1,14 +1,9 @@
 @import 'variables';
 @import 'mixins';
 
-@mixin widescreen {
-    @media (min-width: 1400px) {
-        @content;
-    }
-}
+$breakpoint-1: 908px;
 
-$hero-break-width: 1006px;
-
+$hero-break-width: 820px;
 
 .higher-ed-page {
     .more {
@@ -34,50 +29,83 @@ $hero-break-width: 1006px;
 
     .hero {
         align-items: center;
-        background-image: url('/images/higher-ed/background.png');
+        background-image: url('/images/higher-ed/background.jpg');
         background-size: cover;
         display: flex;
         min-height: 42.8vw;
         position: relative;
-
-        @media (max-width: #{$boxed-width * 1200 / 1920}) {
-            padding: 0;
-        }
+        text-align: left;
 
         @media (max-width: $hero-break-width) {
-            background-image: none;
             min-height: 0;
+
+            > .container {
+                display: none;
+            }
+        }
+
+        > .container {
+            height: 100%;
+            overflow: hidden;
+            position: absolute;
+            z-index: 2;
+
+            > .student {
+                bottom: 4%;
+                height: 50vw;
+                position: relative;
+            }
+        }
+
+
+        .square-1,
+        .square-2 {
+            background-color: rgba(color(cyan), 0.15);
+            display: block;
+            position: absolute;
+            z-index: 0;
+
+            @media (max-width: $breakpoint-1) {
+                display: none;
+            }
+        }
+
+        .square-1 {
+            width: calc(50vw + 6.6rem);
+            height: calc(32vw + 4.2rem);
+            top: 3vw;
+            left: 3vw;
+        }
+
+        .square-2 {
+            width: calc(17vw + 2.5rem);
+            height: calc(23.5vw + 3.1rem);
+            top: 5vw;
+            right: 2vw;
         }
 
         > .overlay {
             background-color: rgba(color(cyan), 0.8);
             color: color(neutral-lightest);
-            margin-left: 35%;
+            margin: 0 6%;
+            padding-left: 26%;
+            z-index: 1;
 
-            @media (max-width: #{$boxed-width * 1200 / 1920}) {
-                height: 100%;
+            @media (max-width: $breakpoint-1) {
+                margin: 0;
+                padding: 0 4%;
+                padding-left: 34%;
             }
 
             @media (max-width: $hero-break-width) {
-                margin: 0;
+                padding: 0;
             }
 
             > .text-block {
-                margin: 5rem;
+                margin: 2vw 1vw 2vw 11vw;
 
-                @include widescreen {
-                    h1 {
-                        font-size: calc(3.6rem + 1.8vw);
-                        line-height: 0.9;
-                    }
-
-                    .blurb,
-                    .more {
-                        font-size: calc(0.8rem + 0.7vw);
-                        line-height: 1.6;
-                        margin: 1vw
-                         0;
-                    }
+                @media (max-width: $hero-break-width) {
+                    margin: 3vw 6vw;
                 }
 
                 h1 {
@@ -85,7 +113,7 @@ $hero-break-width: 1006px;
                 }
 
                 .blurb {
-                    padding: 2rem 0;
+                    padding: 1em 0;
                 }
             }
         }
@@ -98,11 +126,13 @@ $hero-break-width: 1006px;
     .getting-started {
         background-color: color(orange);
         color: white;
-        padding: 3.57vw 8.21vw;
+        padding: 3.5vw 8vw;
 
         > .header {
-            font-size: 4.4rem;
+            @include variable-sized-text(4.4, 0.2);
+
             font-weight: 900;
+            line-height: 1;
         }
 
         > .steps {
@@ -115,64 +145,54 @@ $hero-break-width: 1006px;
             margin: 3.2vw 0;
             padding: 4.29vw 0;
 
-            > .step {
-                flex: 1 1 33%;
-                margin: 0 2vw;
-
-                &:first-child {
-                    margin-left: 0;
-                }
-
-                &:last-child {
-                    margin-right: 0;
-                }
+            @include phone {
+                flex-direction: column;
             }
         }
 
         .step {
+            flex: 1 1 33%;
             padding-bottom: 3.5rem;
             position: relative;
 
-            &::before {
+            &:nth-child(2) {
+                margin: 0 3vw;
+
+                @include phone {
+                    margin: 2rem 0;
+                }
+            }
+
+            &.numbered::before {
+                @include variable-sized-text(5.5, 0.2);
+
                 color: color(yellow);
                 counter-increment: steps;
                 content: counter(steps) '.';
-                font-size: 5.5rem;
                 font-weight: bold;
             }
 
             > .title {
-                font-size: 2.1rem;
+                @include variable-sized-text(2.1, 0.2);
+
                 font-weight: bold;
-                margin-bottom: 2rem;
+                margin-bottom: 0.3em;
             }
 
             > .blurb {
-                font-size: 1.5rem;
+                @include variable-sized-text(1.6, 0.2);
+
                 font-weight: 200;
+
+                @include phone {
+                    font-size: 1.5rem;
+                }
             }
 
             > .more {
                 bottom: 0;
                 position: absolute;
             }
-        }
-    }
-
-    .institution {
-        > .title {
-            font-size: 2.1rem;
-            font-weight: bold;
-            margin-bottom: 2rem;
-        }
-
-        > .blurb {
-            font-size: 1.5rem;
-            font-weight: 200;
-        }
-
-        > .more {
-            margin-top: 1.43vw;
         }
     }
 }

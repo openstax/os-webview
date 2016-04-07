@@ -73,16 +73,18 @@
         position: relative;
 
         .title {
+            @include constrained-variable-text(4.8, 0.2);
+
             display: block;
-            font-size: 4.8rem;
             font-weight: 700;
-            line-height: 4.8rem;
+            line-height: 1;
             margin-bottom: 1.2rem;
         }
 
         .blurb {
+            @include constrained-variable-text(1.8, 0.2);
+
             display: block;
-            font-size: 1.8rem;
             line-height: 1.75;
         }
 
