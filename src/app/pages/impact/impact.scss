@@ -1,22 +1,35 @@
 @import 'variables';
 @import 'mixins';
 
+$breakpoint-1: 999px;
+$breakpoint-2: 699px;
+
 .impact-page {
     ul {
         list-style-type: none;
     }
 
     .hero {
+        align-items: center;
         background-image: url('/images/impact/banner-bg.jpg');
         background-size: cover;
+        display: flex;
         min-height: 42.8vw;
         overflow: hidden;
         position: relative;
+
+        @include phone {
+            background-image: none;
+        }
 
         > .box-1,
         > .box-2,
         > .student {
             position: absolute;
+
+            @media (max-width: $breakpoint-2) {
+                display: none;
+            }
         }
 
         > .box-1,
@@ -26,57 +39,69 @@
         }
 
         .box-1 {
-            left: 46vw;
-            height: 11.14vw;
+            left: 46%;
+            height: calc(6vw + 8rem);
             top: 2.36vw;
-            width: 11.14vw;
+            width: calc(6vw + 8rem);
         }
 
         .box-2 {
-            left: 7.71vw;
-            height: 23.85vw;
-            top: 11.07vw;
-            width: 58.36vw;
+            left: 7.71%;
+            height: 65%;
+            top: 25.7%;
+            width: 58.36%;
         }
 
         > .student {
             background-image: url('/images/impact/banner.png');
             background-size: cover;
-            height: 50vw;
+            height: 106%;
             left: 0;
-            top: -4.2vw;
+            top: -5%;
             width: 65.15vw;
+
+            @media (max-width: $breakpoint-1) {
+                left: calc(33vw - 33rem);
+            }
         }
 
         > .overlay {
-            background-color: rgba(color(green), 0.8);
+            background-color: rgba(color(green), 0.85);
             color: color(neutral-lightest);
-            left: 51.07vw;
-            height: 32.86vw;
-            position: absolute;
+            margin-left: 51.07vw;
             text-align: left;
-            top: 5vw;
-            width: 40.7vw;
+            width: calc(18vw + 27rem);
+            z-index: 10;
 
-            a {
-                color: color(neutral-lightest);
-                font-size: 1vw;
-                font-weight: bold;
-                text-transform: uppercase;
+            @media (max-width: $breakpoint-2) {
+                margin: 0;
+                height: 100%;
+                padding: 0 2vw 8vw;
+                width: 100%;
+            }
+
+            @include phone {
+                background-color: color(green);
+                padding: 4vw;
             }
 
             > .text-block {
-                margin: 2.86vw;
+                margin: 2.86vw calc(1.8vw + 1.5rem);
 
                 h1 {
+                    @include variable-sized-text(5.3, 0.2);
+
                     color: inherit;
-                    font-size: 4.43vw;
+                    font-weight: 500;
+                    letter-spacing: -0.15rem;
                     line-height: 0.8;
                 }
 
                 .blurb {
-                    font-size: 1.286vw;
-                    line-height: 1.5;
+                    @include variable-sized-text(1.51, 0.15);
+
+                    letter-spacing: 0.08rem;
+                    line-height: 1.7;
                     padding: 1.43vw 0 0.714vw;
                 }
             }
@@ -94,18 +119,22 @@
         }
 
         h2 {
-            font-size: 5rem;
+            @include variable-sized-text(4.8, 0.2);
+
+            font-weight: 500;
+            letter-spacing: -0.15rem;
         }
 
         p {
-            font-size: 1.8rem;
+            @include variable-sized-text(1.8, 0.2);
+
             line-height: 1.7;
         }
 
         .text-wrapper {
             margin: 0 auto;
-            max-width: 100rem;
             padding: 5rem 0;
+            width: 78vw;
         }
 
         .partners {
@@ -116,15 +145,14 @@
             flex-wrap: wrap;
             justify-content: center;
             margin: 0 auto 5rem;
-            max-width: 117rem;
+            max-width: calc(40vw + 60rem);
             padding: 0;
 
             > li {
                 margin: 4rem;
 
                 img {
-                    max-height: 12rem;
-                    max-width: 17rem;
+                    max-width: calc(3vw + 15rem);
                     opacity: 0.7;
                 }
             }

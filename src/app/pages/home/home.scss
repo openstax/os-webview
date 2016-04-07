@@ -9,27 +9,6 @@
     }
 }
 
-.scrolldown-chevron {
-    align-items: center;
-    display: flex;
-    font-size: 4rem;
-    height: 0;
-    justify-content: space-around;
-    opacity: 0.5;
-    position: relative;
-    top: -3rem;
-    z-index: 100;
-
-    @include phone {
-        display: none;
-    }
-
-    i {
-        color: color(neutral-lightest);
-        padding: 1rem;
-    }
-}
-
 .quote-buckets {
     background-color: lighten(color(neutral-lighter), 8%);
 

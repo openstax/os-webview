@@ -19,11 +19,6 @@ $hero-break-width: 820px;
                 content: '►';
                 padding-left: 0.5rem;
             }
-
-            &.down-page::after {
-                color: inherit;
-                content: '▼';
-            }
         }
     }
 
@@ -48,6 +43,7 @@ $hero-break-width: 820px;
             height: 100%;
             overflow: hidden;
             position: absolute;
+            top: 0;
             z-index: 2;
 
             > .student {
