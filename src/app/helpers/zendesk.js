@@ -26,7 +26,7 @@ let zendesk = () => {
                 this.zEQueue =
                 a, this.body.appendChild(o);
         }, o.write('<body onload="document._l();">'), o.close();
-    })('https://assets.zendesk.com/embeddable_framework/main.js', 'openstaxcc.zendesk.com');
+    })('https://assets.zendesk.com/embeddable_framework/main.js', 'openstaxcollege.zendesk.com');
 }
 
 export default zendesk;
