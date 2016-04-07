@@ -32,7 +32,7 @@ function organizeBooksByCategory(books) {
 }
 
 function canonicalSubject(string) {
-    return string.toLowerCase().match(/(\w+)/g).join(' ');
+    return string.toLowerCase().replace(/\W.*/, '').match(/(\w+)/g).join(' ');
 }
 
 @props({

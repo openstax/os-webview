@@ -797,7 +797,9 @@ let bios = {
         {
             name: 'Linda Pallares',
             title: '',
-            bio: '',
+            bio: `Linda Pallares is an Administrative Assistant with OpenStax.
+            She assists with daily operations. She attends the University of Houston
+            and is working towards a degree in Social Work.`,
             image: 'Linda.png',
             bgColor: 'deep-green',
             textColor: 'blue'
