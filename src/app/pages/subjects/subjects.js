@@ -31,10 +31,6 @@ function organizeBooksByCategory(books) {
     return result;
 }
 
-function canonicalSubject(string) {
-    return string.toLowerCase().replace(/\W.*/, '').match(/(\w+)/g).join(' ');
-}
-
 @props({
     template: template,
     templateHelpers: {strips},
@@ -59,10 +55,10 @@ export default class Subjects extends BaseView {
             selectedFilter = 'View All';
 
         if (pathMatch) {
-            let subject = canonicalSubject(pathMatch[1]);
+            let subject = FilterButton.canonicalSubject(pathMatch[1]);
 
             for (let c of categories) {
-                if (canonicalSubject(c) === subject) {
+                if (FilterButton.canonicalSubject(c) === subject) {
                     selectedFilter = c;
                 }
             }

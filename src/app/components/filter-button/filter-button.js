@@ -50,3 +50,7 @@ export default class FilterButton extends BaseView {
         window.removeEventListener('resize', this.removeOpenCategories.bind(this));
     }
 }
+
+FilterButton.canonicalSubject = function (string) {
+    return string.toLowerCase().replace(/\W.*/, '').match(/(\w+)/g).join(' ');
+};
