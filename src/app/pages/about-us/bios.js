@@ -259,7 +259,7 @@ let bios = {
         {
             name: 'Ed Woodward',
             title: 'Senior Dev Manager',
-            bio: `Ed Woodward is the Technical Director for Connexions. He has
+            bio: `Ed Woodward is a Senior Dev Manager. He has
             Bachelor and Master degrees in Music and a Master in Computer Science
             Technology. Before joining Connexions, he was a Vice President and
             Application Architect at JPMorganChase. He has worked as a Java
@@ -503,7 +503,7 @@ let bios = {
         {
             name: 'Jemel Agulto',
             title: 'Marketing and Communications Specialist',
-            bio: `Jemel is a Marketing and Communications Assistant at OpenStax focused
+            bio: `Jemel is a Marketing and Communications Specialist at OpenStax focused
             on supporting all the marketing and communication efforts of the organization.
             Prior to joining OpenStax, Jemel worked at RR Donnelley managing the company’s
             social media and technology platforms. Jemel has a bachelor’s degree in
