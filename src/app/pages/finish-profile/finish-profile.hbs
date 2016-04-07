@@ -25,11 +25,11 @@
                 <div class="col">
                     <label>
                         <span>School/Organization</span>
-                        <input name="school" type="text" required />
+                        <input name="company" type="text" required />
                     </label>
                     <label>
                         <span>Email</span>
-                        <input name="institutional_email_address" pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text" required />
+                        <input name="email" pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text" required />
                     </label>
                     <label>
                         <span>Phone number</span>
@@ -48,7 +48,11 @@
                     <label>Title(s) you're interested in
                     <select name="00NU00000053nzR" multiple required>
                         {{#each bookTitles}}
-                        <option value="{{this}}">{{this}}</option>
+                            {{#if this.text}}
+                                <option value="{{this.value}}">{{this.text}}</option>
+                            {{else}}
+                                <option value="{{this}}">{{this}}</option>
+                            {{/if}}
                         {{/each}}
                     </select>
                 </label>
