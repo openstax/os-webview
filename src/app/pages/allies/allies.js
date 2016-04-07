@@ -64,12 +64,29 @@ export default class Allies extends BaseView {
         $.scrollTo(e.target, 60);
     }
 
+    updateSelectedFilterFromPath() {
+        let pathMatch = window.location.pathname.match(/\/allies\/(.+)/),
+            selectedFilter = 'View All';
+
+        if (pathMatch) {
+            let subject = FilterButton.canonicalSubject(pathMatch[1]);
+
+            for (let c of categories) {
+                if (FilterButton.canonicalSubject(c) === subject) {
+                    selectedFilter = c;
+                }
+            }
+        }
+        this.stateModel.set('selectedFilter', selectedFilter);
+    }
+
     constructor() {
         super();
         this.stateModel = new BaseModel({
             selectedFilter: 'View All',
             selectedBook: null
         });
+        this.updateSelectedFilterFromPath();
     }
 
     handlePageData(data) {

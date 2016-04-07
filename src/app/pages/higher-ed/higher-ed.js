@@ -31,7 +31,7 @@ export default class HigherEd extends BaseView {
     onRender() {
         this.regions.products.show(new ProductsBoxes({
             products: [
-                'Our Books',
+                'books',
                 'Concept Coach',
                 'OpenStax CNX'
             ]

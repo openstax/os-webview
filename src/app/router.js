@@ -52,6 +52,13 @@ class Router extends Backbone.Router {
             }
         });
 
+        this.route(/allies\/.*/, 'allies', () => {
+            if (!(shell.regions.main.views &&
+                shell.regions.main.views[0].constructor.name === 'Allies')) {
+                shell.load('allies');
+            }
+        });
+
         this.route(/details\/.*/, 'details', () => {
             shell.load('details');
         });

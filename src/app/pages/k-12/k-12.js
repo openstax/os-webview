@@ -28,21 +28,20 @@ export default class K12 extends BaseView {
             bucketClass: 'allies',
             hasImage: false,
             titleText: 'OpenStax Allies',
-            blurbHtml: `We partner with OpenStax Allies to provide additional integrated
-            resources for our AP&reg; course textbooks. Discover the courseware, online homework,
-             and adaptive learning tools alongside our titles.`,
+            blurbHtml: `OpenStax Allies have united with us to increase access to
+            high-quality learning materials. Their low-cost tools integrate seamlessly
+            with our books for AP<sup>&reg;</sup> courses.`,
             btnClass: 'btn-yellow',
-            linkUrl: '/allies',
+            linkUrl: '/allies/ap',
             linkText: 'View Allies'
         }));
 
         this.regions.banner.show(new Banner());
         this.regions.tutor.show(new Tutor());
         this.regions.products.show(new ProductsBoxes({
-            subject: 'ap',
             products: [
-                'Our Books',
-                'OpenStax CNX'
+                'ap',
+                'Tutor'
             ]
         }));
     }
