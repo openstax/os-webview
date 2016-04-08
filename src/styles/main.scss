@@ -57,6 +57,30 @@ sup {
     }
 }
 
+.scrolldown-chevron {
+    align-items: center;
+    display: flex;
+    font-size: 4rem;
+    height: 0;
+    justify-content: space-around;
+    opacity: 0.5;
+    position: relative;
+    top: -3rem;
+    z-index: 100;
+
+    @include phone {
+        display: none;
+    }
+
+    i {
+        background-color: rgba(color(neutral-dark), 0.3);
+        border-radius: 1em;
+        box-shadow: 0 0 2rem rgba(color(neutral-dark), 0.5);
+        color: color(neutral-lightest);
+        padding: 0 2rem 0.4rem;
+    }
+}
+
 .sr-only {
     border: 0;
     clip: rect(0, 0, 0, 0);
