@@ -27,21 +27,16 @@
     }
 
     .headshots {
-        align-items: baseline;
         display: flex;
         flex-wrap: wrap;
 
         .headshot {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
             padding: 1.5rem 0;
             position: relative;
             width: 20rem;
 
             .picture-area {
                 align-items: flex-end;
-                display: flex;
                 height: 24rem;
                 overflow: hidden;
                 position: relative;
@@ -135,13 +130,9 @@
             img {
                 height: 78%;
                 left: -3.5rem;
-                position: relative;
+                bottom: 0;
+                position: absolute;
                 z-index: 3;
-
-                &.safari {
-                    object-fit: cover;
-                    left: 0;
-                }
             }
 
             .name {
@@ -223,21 +214,30 @@
     }
 
     .strategic-advisors .headshot {
+        margin-bottom: 2rem;
+
         .picture-area {
+            display: flex;
+            flex-direction: column;
             height: 21rem;
             overflow: visible;
             position: static;
         }
 
         .name {
+            display: block;
+            order: 1;
             font-size: 2.8rem;
             letter-spacing: -0.1rem;
-            line-height: 1;
+            line-height: 0.9;
+            margin-bottom: 0.9rem;
             padding: 0 1rem;
+            position: static;
         }
 
         img {
             height: auto;
+            order: 2;
             position: static;
         }
     }
