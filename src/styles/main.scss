@@ -166,11 +166,13 @@ sup {
 }
 
 .subhead {
-    padding: 6rem 1.5rem 0;
-    text-align: center;
+    font-weight: 100;
 
-    @media (max-width: #{breakpoints(tablet)}) {
-        text-align: left;
+    @include desktop {
+        text-align: center;
+        max-width: 80%;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     h1 {

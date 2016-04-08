@@ -174,7 +174,9 @@ class Header extends BaseView {
         let button = this.el.querySelector('.expand');
         let header = this.el.querySelector('.page-header');
 
-        document.body.classList.remove('no-scroll');
+        if (header.classList.contains('active')) {
+            document.body.classList.remove('no-scroll');
+        }
 
         window.requestAnimationFrame(() => {
             header.classList.remove('active');

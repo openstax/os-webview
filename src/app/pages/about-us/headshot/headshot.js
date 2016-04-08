@@ -4,33 +4,30 @@ import {template} from './headshot.hbs';
 
 @props({template})
 export default class Headshot extends BaseView {
-    @on('touchstart .picture-area')
-    setTapped() {
-        let isTapped = this.stateModel.get('tapped') === this;
-
-        this.stateModel.set('tapped', isTapped ? null : this);
-        this.stateModel.set('openedOnTouch', true);
-    }
-
-    @on('touchstart .details')
-    unsetTapped() {
-        this.stateModel.set('tapped', null);
-        setTimeout(() => this.stateModel.set('openedOnTouch', false), 200);
-    }
-
-    @on('mouseenter .picture-area')
-    setTappedOnHover() {
-        if (!this.stateModel.get('openedOnTouch')) {
-            this.stateModel.set('tapped', this);
+    removeTapped() {
+        if (this.el.classList.contains('tapped')) {
+            document.body.classList.remove('no-scroll');
+            this.el.classList.remove('tapped');
         }
     }
 
-    @on('mouseleave')
-    unsetTappedOnExit(e) {
-        let movingTo = e.toElement || e.relatedTarget;
+    @on('click')
+    setClicked() {
+        let w = window.innerWidth;
 
-        if (!this.el.contains(movingTo) && !this.stateModel.get('openedOnTouch')) {
-            this.stateModel.set('tapped', null);
+        if (w < 500) {
+            document.body.classList.add('no-scroll');
+            this.el.classList.add('tapped');
+        }
+    }
+
+    @on('click .details')
+    unsetClicked() {
+        let w = window.innerWidth;
+
+        if (w < 500) {
+            document.body.classList.remove('no-scroll');
+            this.el.classList.remove('tapped');
         }
     }
 
@@ -41,18 +38,11 @@ export default class Headshot extends BaseView {
     }
 
     onRender() {
-        if (this.stateModel) {
-            this.stateModel.on('change:tapped', (what) => {
-                this.el.classList.toggle('tapped', what.changed.tapped === this);
-            });
-        }
         this.el.classList.add('headshot');
-        let image = this.el.querySelector('img'),
-            isChrome = navigator.userAgent.indexOf('Chrome') > -1,
-            isSafari = !isChrome && navigator.userAgent.indexOf('Safari') > -1;
+        window.addEventListener('resize', this.removeTapped.bind(this));
 
-        if (image && isSafari) {
-            image.classList.add('safari');
+        if (this.el.firstChild.classList.contains('hidden')) {
+            this.el.classList.add('hidden');
         }
     }
 }
