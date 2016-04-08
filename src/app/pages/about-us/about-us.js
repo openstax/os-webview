@@ -13,7 +13,8 @@ function toHeadshot(bioEntry) {
         title: bioEntry.title,
         description: bioEntry.bio,
         bgColor: bioEntry.bgColor,
-        textColor: bioEntry.textColor
+        textColor: bioEntry.textColor,
+        hidden: bioEntry.hidden
     };
 }
 
@@ -61,7 +62,6 @@ export default class AboutUs extends BaseView {
     onRender() {
         let stateModel = new BaseModel();
 
-        this.el.classList.add('about-us-page', 'text-content');
         bios.team.sort((a, b) => lastName(a) > lastName(b) ? 1 : -1);
         assignColorsToTeam(bios.team);
         for (let person of bios.team) {

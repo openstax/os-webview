@@ -109,6 +109,18 @@ let bios = {
             Department at Stanford University since 1994. He is currently an Adjunct
             Professor in ECE at Rice.</p>`,
             image: 's-schwanauer.png'
+        },
+        {
+            name: 'ZZ ZZ',
+            bio: '',
+            image: '',
+            hidden: 'hidden'
+        },
+        {
+            name: 'ZZ ZZ',
+            bio: '',
+            image: '',
+            hidden: 'hidden'
         }
     ],
     'team': [
@@ -862,6 +874,33 @@ let bios = {
             image: '',
             bgColor: 'yellow',
             textColor: 'orange'
+        },
+        {
+            name: 'ZZ ZZ',
+            title: 'Customer Support Specialist',
+            bio: '',
+            image: '',
+            bgColor: 'yellow',
+            textColor: 'orange',
+            hidden: 'hidden'
+        },
+        {
+            name: 'ZZ ZZ',
+            title: 'Customer Support Specialist',
+            bio: '',
+            image: '',
+            bgColor: 'yellow',
+            textColor: 'orange',
+            hidden: 'hidden'
+        },
+        {
+            name: 'ZZ ZZ',
+            title: 'Customer Support Specialist',
+            bio: '',
+            image: '',
+            bgColor: 'yellow',
+            textColor: 'orange',
+            hidden: 'hidden'
         }
     ]
 };
