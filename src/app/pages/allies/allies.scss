@@ -50,8 +50,11 @@ $text-dark2: rgba(0, 0, 0, 0.7);
         @include constrained-variable-text(3, 0.3);
 
         background-color: color(gray);
-        color: rgba(color(neutral-lightest), 0.8);
+        color: color(neutral-lightest);
+        display: flex;
         font-weight: 500;
+        justify-content: center;
+        margin: 0 auto;
         min-height: 10rem;
         position: relative;
 
@@ -60,21 +63,24 @@ $text-dark2: rgba(0, 0, 0, 0.7);
         }
 
         .container {
-            align-items: center;
             display: flex;
             flex-flow: row wrap;
             justify-content: center;
-            padding-top: 8rem;
+            padding-top: 9rem;
         }
 
         .logo {
-            width: calc(4% + 15rem);
+            align-items: center;
+            display: flex;
             height: 20rem;
-            margin: 2rem;
+            justify-content: center;
+            width: 20rem;
 
             .logo-text,
             img {
-                width: 100%;
+                max-height: 7.5rem;
+                max-width: 14rem;
+                opacity: 0.88;
             }
         }
     }
