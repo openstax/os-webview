@@ -1,8 +1,3 @@
-{{#if logoUrl}}<div class="logo"><img src="{{logoUrl}}" /></div>{{/if}}
-<div class="text">
-    <h2>{{name}}</h2>
-    <p>{{{blurb}}}</p>
-    {{#each bookLinks}}
-    <a href="{{url}}" data-subject="{{subject}}">{{title}}</a>
-    {{/each}}
-</div>
+<h2 id="{{name}}-blurb">{{name}}</h2>
+<p>{{{blurb}}}</p>
+<a href="#filter" class="to-top">Return to top <i class="fa fa-chevron-up"></i></a>

@@ -10,24 +10,31 @@ $.setAttr = (node, name, value) => {
 
 const tick = 1000 / 40,
     defaultStep = 200,
-    spaceForMenu = 59;
+    spaceForMenu = 59,
+    maxTicks = 20;
 
 $.scrollTo = (el, customStep) => {
     let rect = el.getBoundingClientRect(),
         offsetTop = rect.top - spaceForMenu,
         direction = Math.sign(offsetTop),
         magnitude = Math.abs(offsetTop),
-        i = setInterval(() => {
-            let chosenStep = customStep || defaultStep,
-                step = (magnitude > chosenStep) ? chosenStep : magnitude,
-                scrollBody = document.documentElement.scrollTop || document.body.scrollTop;
+        chosenStep = customStep || defaultStep,
+        tickCount = magnitude / chosenStep;
 
-            window.scrollTo(0, scrollBody + direction * step);
-            magnitude -= step;
-            if (magnitude <= 0) {
-                clearInterval(i);
-            }
-        }, tick);
+    if (tickCount > maxTicks) {
+        chosenStep = magnitude / maxTicks;
+    }
+
+    let i = setInterval(() => {
+        let step = (magnitude > chosenStep) ? chosenStep : magnitude,
+            scrollBody = document.documentElement.scrollTop || document.body.scrollTop;
+
+        window.scrollTo(0, scrollBody + direction * step);
+        magnitude -= step;
+        if (magnitude <= 0) {
+            clearInterval(i);
+        }
+    }, tick);
 };
 
 export default $;

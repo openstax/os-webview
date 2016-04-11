@@ -1,16 +1,23 @@
 import BaseView from '~/helpers/backbone/view';
 import $ from '~/helpers/$';
 import {on, props} from '~/helpers/backbone/decorators';
-import {template} from './ally.hbs';
+import {template} from './icon.hbs';
 
 @props({template})
-export default class Ally extends BaseView {
-    @on('click .to-top')
-    returnToTop(e) {
-        let filterSection = document.querySelector('.filter');
+export default class Icon extends BaseView {
+    @on('click [href^="#"]')
+    goToBlurb(e) {
+        let target = e.target;
 
-        $.scrollTo(filterSection);
+        while (!target.href) {
+            target = target.parentNode;
+        }
+        let hash = new URL(target.href).hash,
+            targetEl = document.getElementById(hash.substr(1));
+
+        $.scrollTo(targetEl);
         e.preventDefault();
+        e.stopPropagation();
     }
 
     constructor(templateHelpers, stateModel) {
@@ -29,6 +36,6 @@ export default class Ally extends BaseView {
     }
 
     onRender() {
-        this.el.classList.add('text');
+        this.el.classList.add('logo');
     }
 }

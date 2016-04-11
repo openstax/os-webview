@@ -181,6 +181,9 @@ export default class Details extends BaseView {
                 if (data.license_name.match(/share/i)) {
                     this.el.querySelector('.license img').src = '/images/details/by-sa-license.png';
                 }
+                if (data.license_text) {
+                    this.el.querySelector('.license .extra-text').textContent = data.license_text;
+                }
             },
             handleBasicBookData = (data) => {
                 if (data.pages.length === 0) {
@@ -220,7 +223,7 @@ export default class Details extends BaseView {
                                 blurb: ally.ally_short_description,
                                 url: ally.book_link_url,
                                 linkText: ally.book_link_text,
-                                logoUrl: ally.ally_logo
+                                logoUrl: ally.ally_color_logo
                             };
 
                             this.regions.allies.append(new Ally(allyTemplateHelper));
