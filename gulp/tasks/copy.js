@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var config = require('../config');
 
 function copy() {
-    var systemjs;
+    var systemjs, polyfilljs;
 
     if (config.env === 'production') {
         systemjs = 'jspm_packages/system.js';
@@ -10,9 +10,12 @@ function copy() {
         systemjs = 'jspm_packages/system.js*';
     }
 
+    polyfilljs = 'jspm_packages/system-polyfills.js';
+
     return gulp.src([
         `${config.src}/*.{json,txt,ico}`,
-        systemjs
+        systemjs,
+        polyfilljs
     ])
     .pipe(gulp.dest(config.dest));
 }
