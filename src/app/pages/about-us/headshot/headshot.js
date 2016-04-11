@@ -31,6 +31,23 @@ export default class Headshot extends BaseView {
         }
     }
 
+    @on('touchstart .details')
+    startScrollBio(e) {
+        this.scrollInfo = {
+            touchStartY: e.changedTouches[0].pageY,
+            elementStartY: e.target.scrollTop
+        };
+    }
+
+    @on('touchmove .details')
+    scrollBio(e) {
+        let posInfo = e.changedTouches[0],
+            diff = this.scrollInfo.touchStartY - posInfo.pageY;
+
+        e.target.scrollTop = this.scrollInfo.elementStartY + diff;
+        e.preventDefault();
+    }
+
     constructor(templateHelpers, stateModel) {
         super();
         this.templateHelpers = templateHelpers;
