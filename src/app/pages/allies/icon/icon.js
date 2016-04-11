@@ -20,22 +20,21 @@ export default class Icon extends BaseView {
         e.stopPropagation();
     }
 
+    setVisibility() {
+        let visible = this.stateModel.matchesFilter(this.templateHelpers);
+
+        this.el.classList.toggle('hidden', !visible);
+    }
+
     constructor(templateHelpers, stateModel) {
         super();
         this.templateHelpers = templateHelpers;
-        let matchesFilter = (subject) => (subject === 'View All' ||
-            (subject === 'AP®' && templateHelpers.isAp) ||
-            templateHelpers.subjects.indexOf(subject) >= 0);
-
-        stateModel.on('change:selectedFilter', (what) => {
-            let subject = what.changed.selectedFilter,
-                visible = matchesFilter(subject);
-
-            this.el.classList.toggle('hidden', !visible);
-        });
+        this.stateModel = stateModel;
+        stateModel.on('change:selectedFilter', this.setVisibility.bind(this));
     }
 
     onRender() {
         this.el.classList.add('logo');
+        this.setVisibility();
     }
 }
