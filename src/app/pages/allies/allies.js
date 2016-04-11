@@ -51,6 +51,16 @@ alliesDataPromise = new PageModel().fetch({
     }
 }).then(handleAlliesData);
 
+class FilterStateModel extends BaseModel {
+    matchesFilter(allyData) {
+        let subject = this.get('selectedFilter');
+
+        return (subject === 'View All' ||
+            (subject === 'AP®' && allyData.isAp) ||
+            allyData.subjects.indexOf(subject) >= 0);
+    }
+}
+
 @props({
     template,
     templateHelpers: {strips},
@@ -86,7 +96,7 @@ export default class Allies extends BaseView {
 
     constructor() {
         super();
-        this.stateModel = new BaseModel({
+        this.stateModel = new FilterStateModel({
             selectedFilter: 'View All',
             selectedBook: null
         });
