@@ -75,6 +75,27 @@ export default class Details extends BaseView {
         }
     }
 
+    @on('touchstart .table-of-contents')
+    startScrollBio(e) {
+        let element = this.el.querySelector('.table-of-contents');
+
+        this.scrollInfo = {
+            element,
+            touchStartY: e.targetTouches[0].pageY,
+            elementStartY: element.scrollTop
+        };
+    }
+
+    @on('touchmove .table-of-contents')
+    scrollBio(e) {
+        let info = this.scrollInfo,
+            newY = e.targetTouches[0].pageY,
+            diff = info.touchStartY - newY;
+
+        info.element.scrollTop = info.elementStartY + diff;
+        e.preventDefault();
+    }
+
     constructor() {
         super(...arguments);
         this.templateHelpers = {strips};
