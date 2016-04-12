@@ -31,6 +31,10 @@
             margin: 0;
         }
 
+        > .quote {
+            display: block;
+        }
+
         &.left {
 
             @media (min-width: 700px) {

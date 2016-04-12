@@ -83,7 +83,7 @@ $hero-break-width: 820px;
         > .overlay {
             background-color: rgba(color(cyan), 0.8);
             color: color(neutral-lightest);
-            margin: 0 6%;
+            margin: calc(18vw - 15rem) 6%; // calc is for IE; 0 works otherwise
             padding-left: 26%;
             z-index: 1;
 

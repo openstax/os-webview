@@ -113,6 +113,7 @@ sup {
 #main {
     flex: 1 0 auto;
     padding-top: 6rem;
+    z-index: 0;
 
     @include desktop {
         padding-top: 11rem;
