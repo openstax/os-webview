@@ -9,6 +9,7 @@ import Ally from './ally/ally';
 import userModel from '~/models/usermodel';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './details.hbs';
+import Remover from '~/components/remover/remover';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
 import {template as strips} from '~/components/strips/strips.hbs';
 import settings from 'settings';
@@ -39,7 +40,8 @@ function dataToTemplateHelper(data) {
         allAuthors: '#all-authors',
         instructorResources: '#instructor-resources',
         studentResources: '#student-resources',
-        tableOfContents: '.table-of-contents .box',
+        tableOfContents: '.table-of-contents .box ol',
+        tocRemover: '.toc-remover',
         allies: '#allies'
     }
 })
@@ -170,7 +172,7 @@ export default class Details extends BaseView {
             showTableOfContents = (toc) => {
                 if (toc) {
                     for (let entry of toc.contents) {
-                        this.regions.tableOfContents.append(new Contents(entry));
+                        this.regions.tableOfContents.appendAs('li', new Contents(entry));
                     }
                 }
             },
@@ -252,6 +254,7 @@ export default class Details extends BaseView {
                     };
 
                 detailModel.fetch({url: detailUrl}).then(handleDetailData.bind(this));
+                this.regions.tocRemover.append(new Remover(() => {})); // just for show
             };
 
         pageModel.fetch({
