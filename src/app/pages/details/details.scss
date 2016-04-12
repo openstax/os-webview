@@ -53,6 +53,10 @@
             opacity: 0;
         }
 
+        .toc-remover {
+            position: relative;
+        }
+
         .box {
             background-color: rgba(color(neutral-lightest), 0.97);
             padding: 7.5rem 1.5rem 1.5rem;

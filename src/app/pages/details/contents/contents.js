@@ -17,7 +17,7 @@ export default class ContentEntry extends BaseView {
     onRender() {
         if (this.templateHelpers.contents) {
             for (let entry of this.templateHelpers.contents) {
-                this.regions.subunit.append(new ContentEntry(entry));
+                this.regions.subunit.appendAs('li', new ContentEntry(entry));
             }
         }
     }

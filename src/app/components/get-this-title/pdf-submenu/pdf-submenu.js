@@ -1,16 +1,12 @@
 import BaseView from '~/helpers/backbone/view';
-import {on, props} from '~/helpers/backbone/decorators';
+import Remover from '~/components/remover/remover';
+import {props} from '~/helpers/backbone/decorators';
 import {template} from './pdf-submenu.hbs';
 
 @props({
     template: template
 })
 export default class PdfSubmenu extends BaseView {
-    @on('click .remover')
-    removeMe() {
-        this.stateModel.set('currentSubmenu', null);
-    }
-
     constructor(pdfData, stateModel) {
         super();
         this.templateHelpers = pdfData;
@@ -19,5 +15,7 @@ export default class PdfSubmenu extends BaseView {
 
     onRender() {
         this.el.classList.add('pdf-submenu');
+        this.regions.self.el = this.el;
+        this.regions.self.append(new Remover(() => this.stateModel.set('currentSubmenu', null)));
     }
 }
