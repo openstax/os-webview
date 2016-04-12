@@ -79,7 +79,7 @@ $breakpoint-2: 806px;
                 @include variable-sized-text(1.55, 0.15);
 
                 background-color: rgba(saturate(color(orange), 10%), 0.85);
-                margin: 0 auto;
+                margin: calc(19vw - 15rem) auto; // calc fixes IE; 0 otherwise
                 letter-spacing: 0.06rem;
                 line-height: 1.6;
                 max-width: calc(#{$boxed-width} + 10vw);
