@@ -1,0 +1,6 @@
+$halo-color: color(neutral-lightest);
+$transparent: rgba(#000, 0);
+
+@mixin halo() {
+    background-image: radial-gradient(circle farthest-side at 60% 60%, rgba($halo-color, 0.40), $transparent);
+}

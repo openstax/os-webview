@@ -283,8 +283,7 @@
             height: calc(100% - 13.7rem);
             padding: 0 3rem;
             margin: 1.5rem 0 0;
-            overflow-y: scroll;
-            -webkit-overflow-scrolling: touch;
+            overflow-y: auto;
             transform: translate3d(0, 0, 0);
 
             @include tablet {
@@ -330,6 +329,8 @@
     }
 
     .our-team .picture-area {
+        @include halo();
+
         position: relative;
         overflow: hidden;
         height: 100%;
@@ -381,43 +382,43 @@
         }
 
         &.bg-red {
-            @include radial-gradient(lighten(color(red), 23%), color(red));
+            background-color: color(red);
         }
 
         &.bg-orange {
-            @include radial-gradient(lighten(color(orange), 15%), color(orange));
+            background-color: color(orange);
         }
 
         &.bg-yellow {
-            @include radial-gradient(lighten(color(yellow), 25%), color(yellow));
+            background-color: color(yellow);
         }
 
         &.bg-gold {
-            @include radial-gradient(lighten(color(gold), 18%), color(gold));
+            background-color: color(gold);
         }
 
         &.bg-green {
-            @include radial-gradient(lighten(color(green), 25%), color(green));
+            background-color: color(green);
         }
 
         &.bg-deep-green {
-            @include radial-gradient(lighten(color(deep-green), 15%), color(deep-green));
+            background-color: color(deep-green);
         }
 
         &.bg-turquoise {
-            @include radial-gradient(lighten(color(turquoise), 19%), color(turquoise));
+            background-color: color(turquoise);
         }
 
         &.bg-cyan {
-            @include radial-gradient(lighten(color(cyan), 32%), color(cyan));
+            background-color: color(cyan);
         }
 
         &.bg-blue {
-            @include radial-gradient(lighten(color(blue), 20%), color(blue));
+            background-color: color(blue);
         }
 
         &.bg-gray {
-            @include radial-gradient(lighten(color(gray), 20%), color(gray));
+            background-color: color(gray);
         }
 
         img {

@@ -1,5 +1,0 @@
-@mixin radial-gradient($light-color, $dark-color) {
-    //scss-lint:disable VendorPrefix
-    background-image: -webkit-radial-gradient(60% 60%, circle, $light-color 5%, $dark-color 90%); /* Chrome,Safari4+ */
-    background: -moz-radial-gradient(60% 60%, circle, $light-color 5%, $dark-color 90%); /* FF3.6+ */
-}
