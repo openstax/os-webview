@@ -40,7 +40,7 @@ export default class ProductsBoxes extends BaseView {
                 name: 'cc',
                 title: 'Concept Coach',
                 linkText: 'Learn More',
-                url: '//cc.openstax.org',
+                url: 'http://cc.openstax.org',
                 blurb: `We're integrating our adaptive learning technology with our
                 college textbooks to improve student reading comprehension at zero cost.`
             },
