@@ -12,7 +12,7 @@
 
     .content {
         margin: 0 auto;
-        max-width: 97rem;
+        max-width: $boxed-width;
         display: flex;
         justify-content: space-between;
 
@@ -26,6 +26,7 @@
             flex: 1 1 33%;
 
             @include collapsed {
+                flex: 1 1 auto;
                 margin: 0 0 3rem;
 
                 &.cnx {
