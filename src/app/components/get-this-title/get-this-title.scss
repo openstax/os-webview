@@ -12,8 +12,8 @@
 
         &.pdf .pdf-submenu,
         &.print .print-submenu {
-            width: initial;
-            height: initial;
+            width: auto;
+            height: auto;
             transform: scale3d(1, 1, 1);
             opacity: 1;
 

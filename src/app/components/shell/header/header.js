@@ -363,6 +363,13 @@ class Header extends BaseView {
                 this.unbindLoginListener = () => {
                     loginItem.removeEventListener('click', boundHandler);
                 };
+                if (userInfo.groups.indexOf('Faculty') >= 0) {
+                    let nonFaculty = this.el.querySelectorAll('.non-faculty');
+
+                    for (let item of nonFaculty) {
+                        item.classList.add('hidden');
+                    }
+                }
             } else {
                 let boundHandler = this.openLinkSameWindow.bind(this);
 
