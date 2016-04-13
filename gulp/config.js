@@ -11,7 +11,7 @@ module.exports = {
     src: 'src',
     browsers: [
         'last 2 versions',
-        'not ie < 12'
+        'not ie < 11'
     ],
     name: project.name,
     version: project.version,
