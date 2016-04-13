@@ -3,7 +3,7 @@
 
 $breakpoint-1: 908px;
 
-$hero-break-width: 820px;
+$hero-break-width: 880px;
 
 .higher-ed-page {
     .more {
@@ -27,32 +27,109 @@ $hero-break-width: 820px;
         background-image: url('/images/higher-ed/background.jpg');
         background-size: cover;
         display: flex;
-        min-height: 42.8vw;
+        height: 60rem;
         position: relative;
         text-align: left;
+        overflow: hidden;
 
         @media (max-width: $hero-break-width) {
             min-height: 0;
-
-            > .container {
-                display: none;
-            }
         }
 
-        > .container {
-            height: 100%;
-            overflow: hidden;
-            position: absolute;
-            top: 0;
-            z-index: 2;
-
-            > .student {
-                bottom: 4%;
-                height: 50vw;
-                position: relative;
-            }
+        @include collapsed {
+            align-items: stretch;
+            background: none;
+            height: calc(100vh - 6rem);
+            max-height: 63.7rem;
         }
 
+        .container-wrap {
+            display: flex;
+            flex-flow: column wrap;
+            margin: 0 auto;
+            width: 100%;
+            max-width: $boxed-width;
+            z-index: 1;
+
+            @include collapsed {
+                flex-flow: row wrap;
+                align-items: stretch;
+                padding: 1.5rem 0;
+            }
+
+            .student {
+                height: 100%;
+                width: 61rem;
+                overflow: hidden;
+                position: absolute;
+                background-image: url('/images/higher-ed/student.png');
+                background-repeat: no-repeat;
+                background-position: 0 -2.5rem;
+                background-size: 100% auto;
+                top: 0;
+                z-index: 2;
+                transition: All ease 0.2s;
+
+                @media screen and (max-width: $boxed-width) {
+                    left: calc(-61rem + 50%);
+                }
+
+                @media screen and (min-width: $boxed-width + 1) {
+                    left: calc(44% - 61rem);
+                }
+
+                @include collapsed {
+                    background-position: right 1.8rem;
+                    background-size: contain;
+                    bottom: 0;
+                    height: 50%;
+                    left: auto;
+                    top: auto;
+                    width: 38rem;
+                    right: 0;
+                }
+
+            }
+
+            .overlay {
+                background-color: rgba(color(cyan), 0.8);
+                color: color(neutral-lightest);
+                padding: 1rem 4rem 4rem;
+                display: flex;
+                justify-content: flex-end;
+                margin: 0 1.5rem;
+                z-index: 1;
+
+                @media screen and (min-width: $boxed-width + 1) {
+                    padding-left: calc(-61rem + 55%);
+                }
+
+                @include collapsed {
+                    background-color: color(cyan);
+                }
+
+                .text-block {
+                    flex-basis: 50%;
+
+                    @include collapsed {
+                        flex-basis: 100%;
+                    }
+                }
+
+                h1 {
+                    color: inherit;
+                }
+
+                .blurb {
+                    padding: 1em 0;
+                    font-size: 1.8rem;
+
+                    @include collapsed {
+                        display: none;
+                    }
+                }
+            }
+        }
 
         .square-1,
         .square-2 {
@@ -80,39 +157,6 @@ $hero-break-width: 820px;
             right: 2vw;
         }
 
-        > .overlay {
-            background-color: rgba(color(cyan), 0.8);
-            color: color(neutral-lightest);
-            margin: calc(18vw - 15rem) 6%; // calc is for IE; 0 works otherwise
-            padding-left: 26%;
-            z-index: 1;
-
-            @media (max-width: $breakpoint-1) {
-                margin: 0;
-                padding: 0 4%;
-                padding-left: 34%;
-            }
-
-            @media (max-width: $hero-break-width) {
-                padding: 0;
-            }
-
-            > .text-block {
-                margin: 2vw 1vw 2vw 11vw;
-
-                @media (max-width: $hero-break-width) {
-                    margin: 3vw 6vw;
-                }
-
-                h1 {
-                    color: inherit;
-                }
-
-                .blurb {
-                    padding: 1em 0;
-                }
-            }
-        }
     }
 
     .quote-buckets {
@@ -122,16 +166,22 @@ $hero-break-width: 820px;
     .getting-started {
         background-color: color(orange);
         color: white;
-        padding: 3.5vw 8vw;
+        padding: 5.5rem 8.5vw;
+        display: flex;
+        justify-content: center;
 
-        > .header {
+        .container {
+            max-width: $boxed-width;
+        }
+
+        .header {
             @include variable-sized-text(4.4, 0.2);
 
             font-weight: 900;
             line-height: 1;
         }
 
-        > .steps {
+        .steps {
             align-items: stretch;
             border-bottom: 0.4rem solid lighten(color(orange), 10%);
             border-top: 0.4rem solid lighten(color(orange), 10%);
@@ -141,7 +191,7 @@ $hero-break-width: 820px;
             margin: 3.2vw 0;
             padding: 4.29vw 0;
 
-            @include phone {
+            @include collapsed {
                 flex-direction: column;
             }
         }
@@ -151,11 +201,15 @@ $hero-break-width: 820px;
             padding-bottom: 3.5rem;
             position: relative;
 
+            @include collapsed {
+                flex: 1 1 auto;
+            }
+
             &:nth-child(2) {
                 margin: 0 3vw;
 
-                @include phone {
-                    margin: 2rem 0;
+                @include collapsed {
+                    margin: 3rem 0;
                 }
             }
 
@@ -190,5 +244,56 @@ $hero-break-width: 820px;
                 position: absolute;
             }
         }
+    }
+
+    .buckets-section {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 0;
+
+        @include collapsed {
+            flex-direction: column;
+        }
+
+        .bucket {
+            flex: 1 1 50%;
+
+            @include collapsed {
+                flex: 1 1 auto;
+            }
+
+            &.our-impact {
+                background-color: color(gray);
+                background-image: url('/images/home/buckets/bg-our-impact.jpg');
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: 0 0;
+                margin-bottom: 0;
+                margin-right: 3rem;
+                text-align: center;
+
+                @include collapsed {
+                    margin-bottom: 3rem;
+                    margin-right: 0;
+                    text-align: left;
+                }
+            }
+
+            .quote {
+                &::before {
+                    display: none;
+                }
+
+                .blurb {
+                    max-width: 100%;
+                }
+            }
+
+            .image {
+                display: none;
+            }
+
+        }
+
     }
 }
