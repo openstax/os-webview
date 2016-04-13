@@ -3,14 +3,12 @@
 
 .subjects-page {
     .container {
-        display: flex;
+        display: block;
         margin: 0 auto;
         padding: 0 1.5rem;
         width: 100%;
         height: 100%;
         max-width: $boxed-width;
-        flex-flow: column nowrap;
-        flex: 1 100%;
 
         @include tablet {
             flex-flow: row wrap;
@@ -66,6 +64,7 @@
 
     .filter {
         padding: 0.2rem 0;
+        width: 100%;
     }
 
     .blurb {
