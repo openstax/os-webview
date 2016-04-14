@@ -119,6 +119,10 @@
             bottom: 7rem;
         }
 
+        @include desktop {
+            left: 0;
+        }
+
         ul {
             list-style: none;
             margin: 0;
@@ -162,11 +166,12 @@
             display: inline-block;
             width: 100%;
             text-transform: none;
+            text-align: left;
 
             @media (min-width: 600px) {
                 padding-left: 1.5rem;
                 padding-right: 1.5rem;
-                text-align: left;
+
             }
 
             @include desktop {
