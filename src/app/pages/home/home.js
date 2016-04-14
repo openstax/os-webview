@@ -1,4 +1,4 @@
-import BaseView from '~/helpers/backbone/view';
+import LoadingView from '~/helpers/backbone/loading-view';
 import $ from '~/helpers/$';
 import {on, props} from '~/helpers/backbone/decorators';
 import appView from '~/components/shell/shell';
@@ -23,7 +23,7 @@ const books = [
         buckets: '.buckets'
     }
 })
-export default class Home extends BaseView {
+export default class Home extends LoadingView {
     @on('click a[href^="#"]')
     hashClick(e) {
         let target = e.target;
@@ -64,6 +64,13 @@ export default class Home extends BaseView {
         ]));
         this.regions.education.show(new Education());
         this.regions.buckets.show(new Buckets());
+    }
+
+    onLoaded() {
+        setTimeout(() => {
+            this.el.querySelector('.loader').style.display = 'none';
+            this.el.querySelector('.home-page').style.display = 'block';
+        }, 3000);
     }
 
     showBookBanner(book) {

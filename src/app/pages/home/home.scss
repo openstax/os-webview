@@ -2,6 +2,7 @@
 @import 'mixins';
 
 .home-page {
+    display: none;
     flex: 1 0 auto;
 
     @include desktop {
