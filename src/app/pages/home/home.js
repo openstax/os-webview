@@ -70,7 +70,7 @@ export default class Home extends LoadingView {
         setTimeout(() => {
             this.el.querySelector('.loader').style.display = 'none';
             this.el.querySelector('.home-page').style.display = 'block';
-        }, 3000);
+        }, 1000);
     }
 
     showBookBanner(book) {
@@ -79,9 +79,13 @@ export default class Home extends LoadingView {
         System.import(`~/pages/home/banners/${book}/${book}`).then((m) => {
             let Page = m.default;
 
-            view.regions.bookBanner.show(new Page());
+            view.regions.bookBanner.show(new Page({parent: view}));
             view.currentBookBanner = book;
         });
+    }
+
+    showNextBookBanner() {
+        this.showBookBanner(books[Math.floor(Math.random()*books.length)]);
     }
 
 }

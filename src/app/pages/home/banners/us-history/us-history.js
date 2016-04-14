@@ -8,8 +8,15 @@ import seeThru from 'seeThru';
 })
 export default class USHistory extends BaseView {
 
+    constructor(options) {
+        super();
+
+        this.parent = options.parent;
+    }
+
     onRender() {
-        let poster = this.el.querySelector('.video-banner');
+        let el = this.el;
+        let poster = el.querySelector('.video-banner');
         let noVideo = window.innerWidth < 780 ||
             (navigator.userAgent.indexOf('Safari') > -1 &&
             navigator.userAgent.indexOf('Chrome') === -1 &&
@@ -19,6 +26,19 @@ export default class USHistory extends BaseView {
             seeThru.create('.video')
             .ready((instance, video, canvas) => {
                 poster.style.display = 'none';
+
+                setTimeout(() => {
+                    let flyins = el.querySelectorAll('.flyin');
+
+                    for (let flyin of flyins) {
+                        flyin.classList.remove('flyin');
+                        flyin.classList.add('flyout');
+                    }
+
+                    setTimeout(() => {
+                        this.parent.showNextBookBanner();
+                    }, 3900);
+                }, 9400);
 
                 video.addEventListener('ended', () => {
                     canvas.style.display = 'none';
