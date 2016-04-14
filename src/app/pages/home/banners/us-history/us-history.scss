@@ -13,6 +13,45 @@
     }
 }
 
+@keyframes flyin {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes flyout {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    to {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+.flyin,
+.flyout {
+    animation-duration: 0.5s;
+    animation-name: flyin;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+    opacity: 0;
+}
+
+.flyout {
+    animation-name: flyout;
+    opacity: 1;
+}
+
 .us-history {
     background-image: url('/images/home/subjects/us-history/background.jpg');
     background-position: -15rem 0;
@@ -55,6 +94,7 @@
     .square-2,
     .square-3,
     .square-4 {
+        animation-delay: 3.4s;
         background-color: rgba(color(blue), 0.1);
         display: none;
         position: absolute;
@@ -87,11 +127,10 @@
         }
 
         @include desktop {
-            width: 70%;
+            width: 60%;
             height: 34rem;
             bottom: auto;
-            top: 50%;
-            transform: translate3d(0, -35%, 0);
+            top: 27%;
         }
     }
 
@@ -132,8 +171,9 @@
     .sacajawea,
     .john-adams,
     .clermont {
+        animation-delay: 3s;
         display: none;
-        opacity: 0.7;
+        //opacity: 0.7;
 
         @include desktop {
             display: block;
@@ -168,6 +208,7 @@
     }
 
     .book {
+        animation-delay: 2s;
         background-color: color(blue);
         background-image: url('/images/subjects/us-history.svg');
         position: absolute;
@@ -191,10 +232,9 @@
 
         @include desktop {
             top: 15%;
-            left: 50%;
+            left: 40%;
             width: 30rem;
             height: 30rem;
-            transform: translate3d(-50%, 0, 0);
         }
     }
 
@@ -233,21 +273,22 @@
     }
 
     .now-i-can {
+        animation-delay: 3.4s;
         background-color: rgba(color(turquoise), 0.85);
+        bottom: 15rem;
         color: color(neutral-lightest);
+        display: none;
         font-size: 3rem;
         font-weight: 600;
         height: 8rem;
-        right: 15rem;
-        bottom: 15rem;
         line-height: 2.5rem;
+        right: 15rem;
         padding: 0;
         position: absolute;
         text-align: center;
         text-transform: none;
         width: 50rem;
         z-index: 3;
-        display: none;
 
         @media (min-width:650px) {
             display: initial;
@@ -286,9 +327,10 @@
     }
 
     .subject-links {
-        position: absolute;
+        animation-delay: 3.4s;
         bottom: 1.5rem;
         left: 0;
+        position: absolute;
         width: 100%;
         z-index: 3;
 
@@ -339,10 +381,6 @@
 
             @include desktop {
                 width: auto;
-            }
-
-            &:hover {
-                transform: scale3d(1, 1, 1);
             }
         }
 

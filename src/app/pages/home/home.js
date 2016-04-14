@@ -1,4 +1,4 @@
-import BaseView from '~/helpers/backbone/view';
+import LoadingView from '~/helpers/backbone/loading-view';
 import $ from '~/helpers/$';
 import {on, props} from '~/helpers/backbone/decorators';
 import appView from '~/components/shell/shell';
@@ -23,7 +23,7 @@ const books = [
         buckets: '.buckets'
     }
 })
-export default class Home extends BaseView {
+export default class Home extends LoadingView {
     @on('click a[href^="#"]')
     hashClick(e) {
         $.scrollTo($.hashTarget(e));
@@ -58,15 +58,26 @@ export default class Home extends BaseView {
         this.regions.buckets.show(new Buckets());
     }
 
+    onLoaded() {
+        setTimeout(() => {
+            this.el.querySelector('.loader').style.display = 'none';
+            this.el.querySelector('.home-page').style.display = 'block';
+        }, 1000);
+    }
+
     showBookBanner(book) {
         let view = this;
 
         System.import(`~/pages/home/banners/${book}/${book}`).then((m) => {
             let Page = m.default;
 
-            view.regions.bookBanner.show(new Page());
+            view.regions.bookBanner.show(new Page({parent: view}));
             view.currentBookBanner = book;
         });
+    }
+
+    showNextBookBanner() {
+        this.showBookBanner(books[Math.floor(Math.random()*books.length)]);
     }
 
 }

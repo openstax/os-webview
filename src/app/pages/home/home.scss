@@ -2,10 +2,15 @@
 @import 'mixins';
 
 .home-page {
+    display: none;
     flex: 1 0 auto;
 
     @include desktop {
         margin-top: -6rem;
+    }
+
+    .book-banner {
+        height: 71rem;
     }
 }
 
