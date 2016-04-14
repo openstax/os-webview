@@ -246,10 +246,21 @@ $hero-break-width: 880px;
         }
     }
 
+    .products-boxes {
+        padding-top: 8rem;
+    }
+
+    .buckets {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
     .buckets-section {
         display: flex;
         justify-content: space-between;
-        padding-top: 0;
+        padding-top: 8rem;
+        padding-bottom: 8rem;
 
         @include collapsed {
             flex-direction: column;
@@ -277,6 +288,11 @@ $hero-break-width: 880px;
                     margin-right: 0;
                     text-align: left;
                 }
+
+                @include desktop {
+                    margin-bottom: 0;
+                }
+
             }
 
             .quote {
@@ -297,3 +313,4 @@ $hero-break-width: 880px;
 
     }
 }
+

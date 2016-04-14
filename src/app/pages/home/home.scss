@@ -12,6 +12,27 @@
     .book-banner {
         height: 65rem;
     }
+
+    .buckets {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .buckets-section {
+        padding-top: 8rem;
+        padding-bottom: 8rem;
+
+        .bucket {
+            &:first-child {
+                margin-bottom: 1.5rem;
+
+                @include desktop {
+                    margin-bottom: 5rem;
+                }
+            }
+        }
+    }
 }
 
 .quote-buckets {

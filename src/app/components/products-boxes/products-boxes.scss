@@ -3,12 +3,7 @@
 
 .products-boxes {
     margin: 0 auto;
-    padding: 10rem 0;
     width: 90vw;
-
-    @include collapsed {
-        padding: 8rem 0;
-    }
 
     .content {
         margin: 0 auto;
