@@ -22,15 +22,7 @@ import ProductsBoxes from '~/components/products-boxes/products-boxes';
 export default class K12 extends BaseView {
     @on('click a[href^="#"]')
     hashClick(e) {
-        let target = e.target;
-
-        while (!target.href) {
-            target = target.parentNode;
-        }
-        let hash = new URL(target.href).hash,
-            targetEl = document.getElementById(hash.substr(1));
-
-        $.scrollTo(targetEl, 100);
+        $.scrollTo($.hashTarget(e));
         e.preventDefault();
     }
 

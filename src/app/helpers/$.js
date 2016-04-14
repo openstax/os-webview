@@ -37,4 +37,14 @@ $.scrollTo = (el, customStep) => {
     }, tick);
 };
 
+$.hashTarget = (event) => {
+    let node = event.target;
+
+    while (node.tagName !== 'A') {
+        node = node.parentNode;
+    }
+
+    return document.getElementById(node.hash.substr(1));
+};
+
 export default $;
