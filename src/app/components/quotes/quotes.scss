@@ -18,17 +18,24 @@
         align-items: stretch;
         background-color: color(neutral-lightest);
         display: flex;
-        flex: 1 1 100%;
+        flex-flow: column nowrap;
+        flex: 1 1 auto;
         margin: 0 0 1.5rem;
         min-height: 20rem;
 
-        @media (min-width: 700px) {
-            flex: 1 0 45%;
+        @media (min-width: 500px) {
+            flex-flow: row wrap;
         }
 
-        @media (min-width: 1050px) {
-            flex: 1 0 32%;
+
+        @media (min-width: 800px) {
+            flex: 1 1 45%;
+            flex-flow: row wrap;
             margin: 0;
+
+            &:first-child {
+                margin-right: 1.5rem;
+            }
         }
 
         > .quote {
@@ -56,27 +63,6 @@
 
                 &::before {
                     @include triangle(
-                        $direction: right,
-                        $position: top calc(50% - 2.4rem) right -2.4rem,
-                        $color: color(neutral-lightest),
-                        $size: 2.4rem
-                    );
-                }
-            }
-        }
-
-        &.right {
-            .image {
-                order: 1;
-                background-image: url('/images/home/quotes/quote-right.jpg');
-                background-position: 62%;
-            }
-
-            > .quote {
-                order: 2;
-
-                &::before {
-                    @include triangle(
                         $direction: left,
                         $position: top calc(50% - 2.4rem) left -2.4rem,
                         $color: color(neutral-lightest),
@@ -86,9 +72,62 @@
             }
         }
 
+        &.right {
+
+            @media (min-width: 800px) {
+                flex: 1 1 60%;
+            }
+
+            @media (min-width: 1000px) {
+                flex: 1 1 45%;
+            }
+
+            .image {
+                order: 1;
+                background-image: url('/images/home/quotes/quote-right.jpg');
+                background-position: 62%;
+
+
+
+            }
+
+            > .quote {
+                order: 2;
+
+
+
+                &::before {
+                    @include triangle(
+                        $direction: top,
+                        $position: left calc(50% - 2.4rem) top -1rem,
+                        $color: color(neutral-lightest),
+                        $size: 2.4rem
+                    );
+
+                    @media (min-width: 500px) {
+                        @include triangle(
+                            $direction: left,
+                            $position: top 50% left -4.4rem,
+                            $color: color(neutral-lightest),
+                            $size: 2.4rem
+                        );
+                    }
+                }
+            }
+        }
+
         &.full {
             background-color: color(orange);
             margin: 0;
+            min-height: 0;
+
+            @media (min-width: 800px) {
+                flex: 1 1 35%;
+            }
+
+            @media (min-width: 1000px) {
+                flex: 1 1 45%;
+            }
 
             .quote {
                 padding: 2rem 3rem;
@@ -112,7 +151,15 @@
         background-position: center center;
         background-size: cover;
         display: block;
-        flex: 0 0 50%;
+        flex: 1 1 auto;
+        width: 100%;
+        height: 20rem;
+
+        @media (min-width: 500px) {
+            flex: 1 1 50%;
+            width: auto;
+            height: auto;
+        }
     }
 
     .quote {
@@ -123,8 +170,8 @@
         flex-flow: column nowrap;
         justify-content: space-between;
 
-        @media (min-width: 1050px) {
-            align-self: auto;
+        @media (min-width: 500px) {
+            flex: 1 1 50%;
         }
 
         blockquote {
@@ -139,6 +186,11 @@
 
         .btn {
             margin-top: 1.5rem;
+            width: 100%;
+
+            @media (min-width: 500px) {
+                width: auto;
+            }
 
             &:hover {
                 transform: scale3d(1, 1, 1);
