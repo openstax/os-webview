@@ -1,4 +1,5 @@
 import BaseView from '~/helpers/backbone/view';
+import $ from '~/helpers/$';
 import {props} from '~/helpers/backbone/decorators';
 import header from './header/header';
 import footer from './footer/footer';
@@ -37,7 +38,25 @@ class AppView extends BaseView {
             this.regions.footer.show(footer);
             headTitle.textContent = `${pageName[0].toUpperCase()}${pageName.slice(1)} - OpenStax`;
             zendesk();
-            window.scrollTo(0, 0);
+
+            let hash = window.location.hash;
+
+            if (hash) {
+                let attempts = 0,
+                    i = setInterval(() => {
+                        let destination = document.getElementById(hash.substr(1));
+
+                        if (destination) {
+                            $.scrollTo(destination);
+                        }
+                        ++attempts;
+                        if (attempts > 6) {
+                            clearInterval(i);
+                        }
+                    }, 200);
+            } else {
+                window.scrollTo(0, 0);
+            }
         });
 
         return this;
