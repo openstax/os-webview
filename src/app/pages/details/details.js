@@ -197,7 +197,7 @@ export default class Details extends BaseView {
                     this.el.querySelector('.license img').src = '/images/details/by-sa-license.png';
                 }
                 if (data.license_text) {
-                    this.el.querySelector('.license .extra-text').textContent = data.license_text;
+                    this.el.querySelector('.license .extra-text').innerHTML = data.license_text;
                 }
             },
             handleBasicBookData = (data) => {
