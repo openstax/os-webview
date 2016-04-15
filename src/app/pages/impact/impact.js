@@ -1,4 +1,4 @@
-import BaseView from '~/helpers/backbone/view';
+import LoadingView from '~/helpers/backbone/loading-view';
 import $ from '~/helpers/$';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './impact.hbs';
@@ -73,11 +73,15 @@ const highlightedPartners = [{
         highlightedPartners
     }
 })
-export default class Impact extends BaseView {
+export default class Impact extends LoadingView {
     @on('click a[href^="#"]')
     hashClick(e) {
         $.scrollTo($.hashTarget(e));
         e.preventDefault();
     }
 
+    onLoaded() {
+        super.onLoaded();
+        this.el.querySelector('.hidden').classList.remove('hidden');
+    }
 }

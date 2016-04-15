@@ -5,6 +5,11 @@ $breakpoint-1: 999px;
 $breakpoint-2: 699px;
 
 .impact-page {
+
+    &.hidden {
+        display: none;
+    }
+
     ul {
         list-style-type: none;
     }

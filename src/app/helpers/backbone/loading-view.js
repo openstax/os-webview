@@ -1,4 +1,5 @@
 import BaseView from './view';
+import LoadingSection from '~/components/loading-section/loading-section';
 
 const PARSE_URL = /url\(['"]?([^")]+)/;
 
@@ -39,7 +40,20 @@ function getBackgroundImages() {
 
 class LoadingView extends BaseView {
 
-    onLoaded() {} // noop
+    constructor() {
+        super();
+        this.otherPromises = [];
+        this.loadingSection = new LoadingSection();
+    }
+
+    onLoaded() {
+        setTimeout(() => {this.loadingSection.remove();}, 500);
+    } // noop
+
+    onRender() {
+        this.regions.self.el = this.el;
+        this.regions.self.append(this.loadingSection);
+    }
 
     onAfterRender() {
         this.trackResourceLoading();
@@ -68,7 +82,7 @@ class LoadingView extends BaseView {
             return tracker;
         });
 
-        return Promise.all([...imagesLoaded, ...videosLoaded]).then(() => {
+        return Promise.all([...imagesLoaded, ...videosLoaded, ...this.otherPromises]).then(() => {
             this.onLoaded();
         });
     }
