@@ -100,7 +100,7 @@ export default class TagMultiSelect extends BaseView {
     }
 
     replace(originalMs) {
-        for (let opt of originalMs.options) {
+        for (let opt of Array.from(originalMs.options)) {
             let optionModel = new BaseModel({
                 selected: opt.selected,
                 label: opt.textContent,
