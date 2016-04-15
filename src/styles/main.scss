@@ -33,6 +33,19 @@ p {
     margin-bottom: 1rem;
 }
 
+.loader {
+    align-items: center;
+    background-color: color(orange);
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    z-index: 1001;
+}
+
 sup {
     font-size: 66%;
     margin-left: 0.1rem;

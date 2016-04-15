@@ -1,4 +1,4 @@
-import BaseView from '~/helpers/backbone/view';
+import LoadingView from '~/helpers/backbone/loading-view';
 import BaseModel from '~/helpers/backbone/model';
 import Headshot from './headshot/headshot';
 import {props} from '~/helpers/backbone/decorators';
@@ -58,10 +58,11 @@ function assignColorsToTeam(team) {
         advisors: '.strategic-advisors>.headshots'
     }
 })
-export default class AboutUs extends BaseView {
+export default class AboutUs extends LoadingView {
     onRender() {
         let stateModel = new BaseModel();
 
+        super.onRender();
         bios.team.sort((a, b) => lastName(a) > lastName(b) ? 1 : -1);
         assignColorsToTeam(bios.team);
         for (let person of bios.team) {
@@ -70,5 +71,10 @@ export default class AboutUs extends BaseView {
         for (let person of bios.advisors.sort((a, b) => lastName(a) > lastName(b) ? 1 : -1)) {
             this.regions.advisors.append(new Headshot(toHeadshot(person)));
         }
+    }
+
+    onLoaded() {
+        super.onLoaded();
+        this.el.querySelector('.page').classList.remove('hidden');
     }
 }

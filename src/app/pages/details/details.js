@@ -1,5 +1,5 @@
 import Backbone from 'backbone';
-import BaseView from '~/helpers/backbone/view';
+import LoadingView from '~/helpers/backbone/loading-view';
 import $ from '~/helpers/$';
 import PageModel from '~/models/pagemodel';
 import Author from './author/author';
@@ -45,7 +45,7 @@ function dataToTemplateHelper(data) {
         allies: '#allies'
     }
 })
-export default class Details extends BaseView {
+export default class Details extends LoadingView {
     @on('click a[href^="#"]')
     hashClick(e) {
         $.scrollTo($.hashTarget(e));
@@ -119,6 +119,7 @@ export default class Details extends BaseView {
     }
 
     onRender() {
+        super.onRender();
         this.toggleFixedClass();
 
         window.addEventListener('scroll', this.toggleFixedClass.bind(this));
@@ -284,6 +285,11 @@ export default class Details extends BaseView {
         pageModel.fetch({
             data: {type: 'books.Book', slug}
         }).then(handleBasicBookData.bind(this));
+    }
+
+    onLoaded() {
+        super.onLoaded();
+        this.el.querySelector('.details-page').classList.remove('hidden');
     }
 
     onBeforeClose() {

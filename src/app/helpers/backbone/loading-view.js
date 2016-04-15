@@ -47,10 +47,14 @@ class LoadingView extends BaseView {
     }
 
     onLoaded() {
+        document.getElementById('header').classList.remove('hidden');
+        document.getElementById('footer').classList.remove('hidden');
         setTimeout(() => {this.loadingSection.remove();}, 500);
-    } // noop
+    }
 
     onRender() {
+        document.getElementById('header').classList.add('hidden');
+        document.getElementById('footer').classList.add('hidden');
         this.regions.self.el = this.el;
         this.regions.self.append(this.loadingSection);
     }
