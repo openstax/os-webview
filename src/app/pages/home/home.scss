@@ -10,7 +10,15 @@
     }
 
     .book-banner {
-        height: 65rem;
+        height: 45rem;
+
+        @include tablet {
+            height: 65rem;
+        }
+
+        @include desktop {
+            height: 65rem;
+        }
     }
 
     .buckets {
