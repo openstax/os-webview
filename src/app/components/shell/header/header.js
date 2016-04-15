@@ -382,6 +382,7 @@ class Header extends BaseView {
         });
         this.updateHeaderStyle();
         this.appendURL();
+        this.el.querySelector('[data-href-setting="account-href"]').href = settings.accountHref;
         document.addEventListener('click', this.resetHeader.bind(this), true);
         window.addEventListener('scroll', this.updateHeaderStyle.bind(this));
         window.addEventListener('scroll', this.removeAllOpenClasses.bind(this));
