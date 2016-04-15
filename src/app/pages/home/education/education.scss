@@ -83,7 +83,6 @@
 
             @include desktop {
                 width: 37rem;
-                font-size: 2.4rem;
                 font-weight: 100;
                 letter-spacing: 0.1rem;
                 line-height: 2.8rem;
@@ -190,11 +189,12 @@
 
         .title {
             display: block;
-            font-size: 1.8rem;
+            font-size: 2.4rem;
             color: color(yellow);
         }
 
         .blurb {
+            font-size: 1.6rem;
             font-weight: 300;
         }
     }
@@ -247,7 +247,7 @@
         z-index: 2;
 
         @include desktop {
-            width: 51rem;
+            width: 58rem;
             right: -12rem;
             background-position: right bottom;
             background-size: auto 100%;
