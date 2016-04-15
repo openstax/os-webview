@@ -16,6 +16,10 @@
 .about-us {
     background-color: rgba(color(neutral-lighter), 0.2);
 
+    &.hidden {
+        display: none;
+    }
+
     .hero {
         background-color: color(gray);
         color: color(neutral-lightest);
