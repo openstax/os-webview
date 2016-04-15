@@ -1,4 +1,4 @@
-import BaseView from '~/helpers/backbone/view';
+import LoadingView from '~/helpers/backbone/loading-view';
 import BaseModel from '~/helpers/backbone/model';
 import $ from '~/helpers/$';
 import PageModel from '~/models/pagemodel';
@@ -39,7 +39,7 @@ function organizeBooksByCategory(books) {
         bookViewer: '.books .container'
     }
 })
-export default class Subjects extends BaseView {
+export default class Subjects extends LoadingView {
     @on('click')
     deselect() {
         this.model.set('selectedBook', false);
@@ -86,10 +86,15 @@ export default class Subjects extends BaseView {
         }
     }
 
+    onLoaded() {
+        super.onLoaded();
+        this.el.querySelector('.subjects-page').classList.remove('hidden');
+    }
+
     onRender() {
+        super.onRender();
         let populateBookInfoFields = (data) => {
-            let findNode = (name) =>
-                this.el.querySelector(`[data-manager="${name}"]`);
+            let findNode = (name) => this.el.querySelector(`[data-manager="${name}"]`);
 
             findNode('page-description').innerHTML = data.page_description;
             findNode('ds1-head').textContent = data.dev_standard_1_heading;
@@ -114,16 +119,19 @@ export default class Subjects extends BaseView {
             this.regions.filterButtons.append(new FilterButton(button, this.model));
         }
 
-        new PageModel().fetch({data: {
-            type: 'books.Book',
-            fields: ['title', 'subject_name', 'is_ap,cover_url',
-            'high_resolution_pdf_url', 'low_resolution_pdf_url',
-            'ibook_link', 'webview_link', 'concept_coach_link,bookshare_link',
-            'amazon_link', 'amazon_price', 'amazon_blurb',
-            'bookstore_link', 'bookstore_blurb', 'slug'],
-            limit: 50
-        }}).then((result) => {
-            this.renderCategorySections(organizeBooksByCategory(result.pages));
-        });
+        this.otherPromises.push(new Promise((resolve) => {
+            new PageModel().fetch({data: {
+                type: 'books.Book',
+                fields: ['title', 'subject_name', 'is_ap,cover_url',
+                'high_resolution_pdf_url', 'low_resolution_pdf_url',
+                'ibook_link', 'webview_link', 'concept_coach_link,bookshare_link',
+                'amazon_link', 'amazon_price', 'amazon_blurb',
+                'bookstore_link', 'bookstore_blurb', 'slug'],
+                limit: 50
+            }}).then((result) => {
+                this.renderCategorySections(organizeBooksByCategory(result.pages));
+                resolve();
+            });
+        }));
     }
 }

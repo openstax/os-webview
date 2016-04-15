@@ -31,6 +31,7 @@ export default class Home extends LoadingView {
     }
 
     onRender() {
+        super.onRender();
         appView.header.updateHeaderStyle();
 
         // Lazy-load a random book
@@ -59,10 +60,10 @@ export default class Home extends LoadingView {
     }
 
     onLoaded() {
+        super.onLoaded();
         setTimeout(() => {
-            this.el.querySelector('.loader').style.display = 'none';
-            this.el.querySelector('.home-page').style.display = 'block';
-        }, 1000);
+            this.el.querySelector('.home-page').classList.remove('hidden');
+        }, 1200);
     }
 
     showBookBanner(book) {

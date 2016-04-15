@@ -1,4 +1,4 @@
-import BaseView from '~/helpers/backbone/view';
+import LoadingView from '~/helpers/backbone/loading-view';
 import BaseModel from '~/helpers/backbone/model';
 import PageModel from '~/models/pagemodel';
 import FilterButton from '~/components/filter-button/filter-button';
@@ -70,7 +70,7 @@ class FilterStateModel extends BaseModel {
         blurbs: '.blurbs.container'
     }
 })
-export default class Allies extends BaseView {
+export default class Allies extends LoadingView {
     @on('click .filter')
     filterClick() {
         let filterSection = this.el.querySelector('.filter');
@@ -109,16 +109,27 @@ export default class Allies extends BaseView {
     }
 
     onRender() {
+        super.onRender();
         this.el.classList.add('allies-page');
         for (let button of filterButtons) {
             this.regions.filterButtons.append(new FilterButton(button, this.stateModel));
         }
-        alliesDataPromise.then(() => {
-            for (let name of Object.keys(alliesData).sort()) {
-                this.regions.icons.append(new Icon(alliesData[name], this.stateModel));
-                this.regions.blurbs.append(new Ally(alliesData[name], this.stateModel));
-            }
-        });
+        this.otherPromises.push(new Promise((resolve) => {
+            alliesDataPromise.then(() => {
+                for (let name of Object.keys(alliesData).sort()) {
+                    this.regions.icons.append(new Icon(alliesData[name], this.stateModel));
+                    this.regions.blurbs.append(new Ally(alliesData[name], this.stateModel));
+                }
+                resolve();
+            });
+        }));
         pageDataPromise.then(this.handlePageData.bind(this));
+    }
+
+    onLoaded() {
+        super.onLoaded();
+        for (let section of this.el.querySelectorAll('.hero,.icons')) {
+            section.classList.remove('hidden');
+        }
     }
 }
