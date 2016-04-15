@@ -45,6 +45,10 @@
             overflow-y: auto;
         }
 
+        ol {
+            list-style: none;
+        }
+
         &.hidden {
             display: initial;
             width: 0;
@@ -75,7 +79,6 @@
             }
 
             .subunit {
-                margin-left: 1.5rem;
                 font-weight: 300;
             }
 
