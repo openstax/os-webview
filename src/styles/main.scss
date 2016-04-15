@@ -130,17 +130,6 @@ sup {
     }
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes pulse {
-    from {
-        background-color: rgba(color(primary), 0.2);
-    }
-}
-
 // Boxed Page
 
 .page {
@@ -196,6 +185,7 @@ sup {
 }
 
 @import 'components/add-another';
+@import 'components/animations';
 @import 'components/bucket';
 @import 'components/buttons';
 @import 'components/filter-buttons';

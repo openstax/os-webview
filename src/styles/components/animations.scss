@@ -1,0 +1,41 @@
+@import 'variables';
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes pulse {
+    from {
+        background-color: rgba(color(primary), 0.2);
+    }
+}
+
+@keyframes flyin {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes flyout {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    to {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+@keyframes loop {
+    from { transform: rotate(0deg) translateX(1.5rem) rotate(0deg); }
+    to { transform: rotate(360deg) translateX(1.5rem) rotate(-360deg); }
+}
