@@ -16,6 +16,15 @@ class ProxyWidgetView extends BaseView {
         }
     }
 
+    findProxyFor(originalWidget) {
+        for (let w of this.selectWidgets) {
+            if (w.originalSelect === originalWidget) {
+                return w;
+            }
+        }
+        return null;
+    }
+
     onRender() {
         this.selectWidgets = [];
         for (let ms of this.el.querySelectorAll('select[multiple]')) {
@@ -23,12 +32,14 @@ class ProxyWidgetView extends BaseView {
 
             widget.replace(ms);
             this.selectWidgets.push(widget);
+            widget.originalSelect = ms;
         }
         for (let ss of this.el.querySelectorAll('select:not([multiple])')) {
             let widget = new SingleSelect();
 
             widget.replace(ss);
             this.selectWidgets.push(widget);
+            widget.originalSelect = ss;
         }
         this.el.querySelector('[type=submit]').addEventListener('click', this.failIfInvalid.bind(this));
     }

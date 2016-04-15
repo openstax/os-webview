@@ -23,10 +23,14 @@ import {template as strips} from '~/components/strips/strips.hbs';
 })
 export default class NewAccountForm extends ProxyWidgetView {
     @on('click #toggle-faculty')
-    toggleFaculty(event) {
+    clickFaculty(event) {
+        this.toggleFaculty(event.target.checked);
+    }
+
+    toggleFaculty(show) {
         let retUrl = this.el.querySelector('[name=retURL]');
 
-        if (event.target.checked) {
+        if (show)  {
             this.regions.facultySection.show(this.facultySection);
             this.el.querySelector('form').classList.add('faculty');
             retUrl.value = `${window.location.origin}/finished-verify`;
@@ -60,6 +64,15 @@ export default class NewAccountForm extends ProxyWidgetView {
             /* eslint no-console: 0 */
             console.warn(e);
             // window.location.pathname = '/';
+        });
+
+        let roleSelector = this.el.querySelector('[name="00NU00000054MLz"]'),
+            roleProxy = this.findProxyFor(roleSelector),
+            facultyCheckbox = document.getElementById('toggle-faculty');
+
+        roleProxy.stateCollection.on('change:selected', (what) => {
+            facultyCheckbox.checked =  what.get('value') !== 'Student';
+            this.toggleFaculty(facultyCheckbox.checked);
         });
     }
 }

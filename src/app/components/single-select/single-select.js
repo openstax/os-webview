@@ -79,7 +79,7 @@ export default class SingleSelect extends BaseView {
     }
 
     replace(originalSelect) {
-        for (let opt of originalSelect.options) {
+        for (let opt of Array.from(originalSelect.options)) {
             let optionModel = new BaseModel({
                 selected: opt.selected,
                 label: opt.textContent,
