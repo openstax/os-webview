@@ -161,6 +161,37 @@ export default class Details extends BaseView {
                     handbookLink.parentNode.classList.remove('hidden');
                 }
             },
+            numberTableOfContents = (parent, continueFromChapter) => {
+                let chapter = continueFromChapter || 0,
+                    isUnitLevel = false,
+                    endOfUnitChapter = 0,
+                    handleUnit = (node) => {
+                        if (isUnitLevel || (chapter === 1 && node.title.match(/^Unit/))) {
+                            isUnitLevel = true;
+                            delete node.chapter;
+                        }
+                    },
+                    recurse = (node) => {
+                        if (node.contents) {
+                            numberTableOfContents(node, endOfUnitChapter);
+                            if (isUnitLevel) {
+                                endOfUnitChapter = node.contents.slice(-1)[0].chapter;
+                            }
+                        }
+                    },
+                    notAChapter = (node) =>
+                        node.title.match(/^Preface/) || (!parent.chapter && !node.contents);
+
+                for (let node of parent.contents) {
+                    if (notAChapter(node)) {
+                        continue;
+                    }
+                    ++chapter;
+                    node.chapter = parent.chapter ? `${parent.chapter}.${chapter}` : chapter;
+                    handleUnit(node);
+                    recurse(node);
+                }
+            },
             showTableOfContents = (toc) => {
                 if (toc) {
                     for (let entry of toc.contents) {
@@ -226,6 +257,7 @@ export default class Details extends BaseView {
                         this.gtt = new GetThisTitle(detailData);
                         this.regions.getThisTitle.show(this.gtt);
                         setHandbookLink(detailData.student_handbook_url);
+                        numberTableOfContents(detailData.table_of_contents);
                         showTableOfContents(detailData.table_of_contents);
                         showInstructorResources(detailData.book_faculty_resources);
                         insertResources(detailData.book_student_resources, 'studentResources');
