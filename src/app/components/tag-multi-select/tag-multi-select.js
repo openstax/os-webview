@@ -29,11 +29,6 @@ export default class TagMultiSelect extends BaseView {
         e.preventDefault();
     }
 
-    @on('blur .option-list')
-    closePulldown() {
-        this.togglePulldown(true);
-    }
-
     togglePulldown() {
         let optionList = this.el.querySelector('.option-list');
 
@@ -112,7 +107,6 @@ export default class TagMultiSelect extends BaseView {
         }
 
         this.stateCollection.on('change:selected', (what) => {
-            this.togglePulldown(true);
             this.synchronizeModel(what);
         });
 

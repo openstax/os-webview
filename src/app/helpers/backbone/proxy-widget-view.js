@@ -1,8 +1,20 @@
 import BaseView from './view.js';
+import {on} from '~/helpers/backbone/decorators';
 import TagMultiSelect from '~/components/tag-multi-select/tag-multi-select';
 import SingleSelect from '~/components/single-select/single-select';
 
 class ProxyWidgetView extends BaseView {
+    @on('click :not(.hidden)')
+    clickSomewhere(e) {
+        if (e.target.classList.contains('hidden')) {
+            return;
+        }
+        for (let w of this.selectWidgets) {
+            if (!w.el.contains(e.target)) {
+                w.togglePulldown(true);
+            }
+        }
+    }
 
     failIfInvalid(event) {
         this.el.querySelector('form').classList.add('has-been-submitted');

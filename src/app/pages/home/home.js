@@ -61,9 +61,7 @@ export default class Home extends LoadingView {
 
     onLoaded() {
         super.onLoaded();
-        setTimeout(() => {
-            this.el.querySelector('.home-page').classList.remove('hidden');
-        }, 1200);
+        this.el.querySelector('.home-page').classList.remove('hidden');
     }
 
     showBookBanner(book) {
