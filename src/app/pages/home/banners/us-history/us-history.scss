@@ -22,15 +22,20 @@
 
 .us-history {
     background-image: url('/images/home/subjects/us-history/background.jpg');
+    background-attachment: fixed;
     background-position: -15rem 0;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 65rem;
+    height: 60rem;
     overflow: hidden;
     position: relative;
 
     @include desktop {
         background-position: center top;
+    }
+
+    @media (min-width: #{breakpoints(tablet) + 1}) {
+        height: 65rem;
     }
 
     @include phone {
@@ -198,7 +203,7 @@
         width: 25rem;
 
         @include tablet {
-            top: 15%;
+            top: 5%;
             left: auto;
             right: 25%;
             width: 30rem;
@@ -210,8 +215,11 @@
             height: 20rem;
         }
 
-        @include desktop {
+        @media (min-width: #{breakpoints(tablet) + 1}) {
             top: 15%;
+        }
+
+        @include desktop {
             left: 40%;
             width: 30rem;
             height: 30rem;
