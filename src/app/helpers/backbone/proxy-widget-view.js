@@ -4,7 +4,7 @@ import TagMultiSelect from '~/components/tag-multi-select/tag-multi-select';
 import SingleSelect from '~/components/single-select/single-select';
 
 class ProxyWidgetView extends BaseView {
-    @on('click :not(.hidden)')
+    @on('click')
     clickSomewhere(e) {
         if (e.target.classList.contains('hidden')) {
             return;

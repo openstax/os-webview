@@ -203,6 +203,7 @@ class Header extends BaseView {
         let dropDownMenu = $this.nextElementSibling;
 
         e.preventDefault();
+        e.stopPropagation();
 
         if (w <= 768) {
             this.cloneDropdownParent(e);
@@ -352,6 +353,9 @@ class Header extends BaseView {
                 loginWrapper = loginItem.parentNode,
                 loggedIn = userInfo && userInfo.username !== '';
 
+            if (this.unbindLoginListener) {
+                this.unbindLoginListener();
+            }
             if (loggedIn) {
                 loginItem.firstChild.textContent = `Hi ${userInfo.first_name}`;
                 loginWrapper.classList.add('dropdown');

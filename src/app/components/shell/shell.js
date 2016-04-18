@@ -58,7 +58,7 @@ class AppView extends BaseView {
                 window.scrollTo(0, 0);
             }
             // This seems to fix a rendering problem in IE11
-            setTimeout(() => {header.render();}, 0);
+            setTimeout(() => {header.render();}, 100);
         });
 
         return this;
