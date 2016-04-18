@@ -7,7 +7,6 @@ import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './finish-profile.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
 
-
 @props({
     template: template,
     templateHelpers: {
@@ -71,7 +70,10 @@ export default class NewAccountForm extends ProxyWidgetView {
             facultyCheckbox = document.getElementById('toggle-faculty');
 
         roleProxy.stateCollection.on('change:selected', (what) => {
-            facultyCheckbox.checked =  what.get('value') !== 'Student';
+            let isStudent = what.get('value') === 'Student';
+
+            facultyCheckbox.disabled = isStudent;
+            facultyCheckbox.checked = !isStudent;
             this.toggleFaculty(facultyCheckbox.checked);
         });
     }
