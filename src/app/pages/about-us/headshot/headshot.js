@@ -68,5 +68,6 @@ export default class Headshot extends BaseView {
             this.el.classList.add('hidden');
         }
         this.regions.details.append(this.remover);
+        this.remover.el.classList.add('hidden');
     }
 }

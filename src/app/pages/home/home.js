@@ -30,9 +30,16 @@ export default class Home extends LoadingView {
         e.preventDefault();
     }
 
+    parallaxBanner() {
+        let bookBanner = this.el.querySelector('.book-banner > div > div');
+
+        bookBanner.setAttribute('style', `background-position-y: -${window.pageYOffset/2}px`);
+    }
+
     onRender() {
         super.onRender();
         appView.header.updateHeaderStyle();
+        window.addEventListener('scroll', this.parallaxBanner.bind(this));
 
         // Lazy-load a random book
         this.showBookBanner(books[Math.floor(Math.random()*books.length)]);
