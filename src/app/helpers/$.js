@@ -8,6 +8,8 @@ $.setAttr = (node, name, value) => {
     }
 };
 
+$.isIE11 = () => !(window.ActiveXObject) && 'ActiveXObject' in window;
+
 const tick = 1000 / 40,
     defaultStep = 200,
     spaceForMenu = 59,
