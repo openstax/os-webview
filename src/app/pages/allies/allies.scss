@@ -18,12 +18,7 @@ $text-dark2: rgba(0, 0, 0, 0.7);
     .hero {
         background-color: color(green);
         color: color(neutral-lightest);
-        padding: 2rem 2rem 11rem;
-        text-align: left;
-
-        @include desktop {
-            text-align: center;
-        }
+        padding-bottom: 11rem;
 
         h1 {
             color: inherit;

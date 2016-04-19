@@ -6,6 +6,7 @@
     flex-wrap: wrap;
     padding: 8rem 0;
     text-align: center;
+    align-items: center;
 
     h2 {
         font-size: 2.4rem;
@@ -27,6 +28,7 @@
         background-color: color(orange);
         color: white;
         min-width: 25rem;
+        max-width: 28rem;
 
         &:last-child {
             background-color: color(cyan);

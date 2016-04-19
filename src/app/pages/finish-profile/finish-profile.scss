@@ -4,7 +4,7 @@
 .finish-profile {
 
     h1 {
-        color: color(neutral-lightest);
+        font-size: 4.8rem;
     }
 
     h2 {
@@ -18,18 +18,6 @@
     .row {
         padding: 0;
         width: 100%;
-    }
-
-    .hero {
-        background-color: color(green);
-        color: color(neutral-lightest);
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-    }
-
-    .note {
-        font-style: italic;
-        color: color(neutral-lightest);
     }
 
     .form-hidden {

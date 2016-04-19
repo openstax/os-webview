@@ -59,6 +59,10 @@ form {
         flex-flow: row wrap;
         padding: 8rem 0;
 
+        &.top-of-form {
+            padding-top: 0;
+        }
+
         .col {
             display: inline-block;
             flex: 1 1 32rem;
