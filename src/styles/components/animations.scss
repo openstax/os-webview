@@ -36,6 +36,7 @@
 }
 
 @keyframes loop {
-    from { transform: rotate(0deg) translateX(1.5rem) rotate(0deg); }
-    to { transform: rotate(360deg) translateX(1.5rem) rotate(-360deg); }
+    // rotate slightly to force antialiasing and fix choppy animations in Firefox
+    from { transform: translate(-1.5rem, -7rem) rotate(0.001deg); }
+    to { transform: translate(0) rotate(0.001deg); }
 }
