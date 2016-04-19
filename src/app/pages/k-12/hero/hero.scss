@@ -1,0 +1,154 @@
+@import 'variables';
+@import 'mixins';
+
+$breakpoint-1: 908px;
+$breakpoint-2: 806px;
+$hero-break-width: 880px;
+
+.k-12-page {
+    .hero {
+        background-color: color(blue);
+        background-image: url('/images/k-12/k12-banner.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        height: 60rem;
+        text-align: left;
+
+        @media (max-width: $hero-break-width) {
+            min-height: 0;
+        }
+
+        @include collapsed {
+            align-items: stretch;
+            background: none;
+            height: calc(100vh - 6rem);
+            max-height: 53rem;
+        }
+
+        > div {
+            display: flex;
+            align-items: stretch;
+            width: 100%;
+        }
+
+        .container-wrap {
+            display: flex;
+            flex-flow: column wrap;
+            margin: 0 auto;
+            width: 100%;
+            max-width: $boxed-width;
+            z-index: 1;
+
+            @include collapsed {
+                flex-flow: row wrap;
+                align-items: stretch;
+            }
+
+        }
+
+        .overlay {
+            background-color: rgba(saturate(color(orange), 10%), 0.85);
+            color: color(neutral-lightest);
+            padding: 4rem;
+            display: flex;
+            justify-content: flex-end;
+
+            @media screen and (min-width: $boxed-width + 1) {
+                padding-left: calc(-61rem + 55%);
+            }
+
+            @include collapsed {
+                background-color: color(orange);
+                width: 100%;
+            }
+
+            .text-block {
+                flex-basis: 50%;
+
+                @include collapsed {
+                    flex-basis: 100%;
+                }
+            }
+
+            h1 {
+                color: inherit;
+            }
+
+            .blurb {
+                padding: 1em 0;
+                font-size: 1.8rem;
+
+                @include collapsed {
+                    display: none;
+                }
+            }
+        }
+
+        .student {
+            position: absolute;
+            overflow: hidden;
+            top: 0;
+            height: 100%;
+            width: 73rem;
+            background-image: url('/images/k-12/student-k12.png');
+            background-size: 100% auto;
+            background-position: 0 bottom;
+            background-repeat: no-repeat;
+            z-index: 3;
+            transition: All ease 0.2s;
+
+            @media screen and (max-width: $boxed-width) {
+                left: calc(-73rem + 50%);
+            }
+
+            @media screen and (min-width: $boxed-width + 1) {
+                left: calc(44% - 73rem);
+            }
+
+            @include collapsed {
+                background-position: left 1.8rem;
+                background-size: contain;
+                bottom: 0;
+                height: 50%;
+                left: 0;
+                top: auto;
+                width: 38rem;
+                right: 0;
+            }
+
+        }
+
+        .square-1,
+        .square-2 {
+            display: block;
+            position: absolute;
+            z-index: 0;
+
+            @media (max-width: $breakpoint-1) {
+                display: none;
+            }
+        }
+
+        .square-1 {
+            background-color: rgba(darken(color(orange), 20%), 0.15);
+            width: 34.285vw;
+            height: 23.785vw;
+            top: 4.8rem;
+            left: 4.1rem;
+        }
+
+        .square-2 {
+            background-color: rgba(darken(color(orange), 10%), 0.10);
+            width: calc(9vw + 12rem);
+            height: calc(8vw + 10rem);
+            bottom: 4vw;
+            right: 3vw;
+        }
+    }
+}

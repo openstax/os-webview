@@ -12,11 +12,20 @@
     min-height: 70vh;
     width: 100%;
 
+    @include phone {
+        overflow-x: hidden;
+    }
+
     .tutor-bg-overlay {
-        padding: 3rem 0;
+        padding: 12rem 0 0;
         position: relative;
         top: 10%;
         width: 80%;
+
+        @include phone {
+            left: -60%;
+            width: 140%;
+        }
     }
 
     .tutor {
@@ -27,12 +36,12 @@
             display: flex;
             margin: inherit;
             max-width: 76.6rem;
-            padding: 6.7rem 0;
+            padding: 2rem 0 6.7rem;
 
             @media (max-width: 840px) {
                 align-content: flex-end;
                 flex-direction: column;
-                padding: 5vw 3rem;
+                padding: 8vw 3rem 10vw;
             }
 
             > .caption {
