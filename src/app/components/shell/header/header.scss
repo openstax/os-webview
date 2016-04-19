@@ -81,6 +81,8 @@ $transition: 0.3s;
         margin: 0;
         padding: 0;
         list-style: none;
+        // Hide bullets in IE
+        list-style-image: url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7);
         transform: scale3d(0, 0, 0);
         flex: 0 auto;
         opacity: 0;
@@ -197,6 +199,8 @@ $transition: 0.3s;
         .dropdown-menu {
             overflow: hidden;
             list-style: none;
+            // Hide bullets in IE
+            list-style-image: url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7);
             margin: 0;
             padding: 0;
             font-weight: 300;

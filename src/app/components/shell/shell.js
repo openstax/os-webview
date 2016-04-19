@@ -57,15 +57,6 @@ class AppView extends BaseView {
             } else {
                 window.scrollTo(0, 0);
             }
-            // This seems to fix a rendering problem in IE11
-            if ($.isIE11()) {
-                setTimeout(() => {
-                    let reflow = window.getComputedStyle(header.el).height;
-
-                    // Meaningless parameter, just so variable is used
-                    header.render(reflow);
-                }, 1000);
-            }
         });
 
         return this;

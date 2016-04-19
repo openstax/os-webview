@@ -45,7 +45,8 @@
     }
 
     .hero-quote {
-        font-size: calc(4.8rem + 1.05vw);
+        @include constrained-variable-text(6, 0.2);
+
         font-weight: bold;
         line-height: 1;
         padding-bottom: 4rem;

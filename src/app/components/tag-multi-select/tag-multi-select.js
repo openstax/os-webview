@@ -43,10 +43,14 @@ export default class TagMultiSelect extends BaseView {
     }
 
     togglePulldown() {
-        let optionList = this.el.querySelector('.option-list');
+        let optionList = this.el.querySelector('.option-list'),
+            isOpen;
 
         optionList.classList.toggle('hidden', ...arguments);
-        this.hasDropdownEl.classList.toggle('open', ...arguments);
+        if (arguments.length > 0) {
+            isOpen = !arguments[0];
+        }
+        this.hasDropdownEl.classList.toggle('open', ...isOpen);
     }
 
     constructor() {
