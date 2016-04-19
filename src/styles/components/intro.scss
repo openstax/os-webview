@@ -4,11 +4,13 @@
 .page-intro {
     background-color: color(deep-green);
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
 
     h1 {
         color: color(neutral-lightest);
+        width: 100%;
     }
 
     p {

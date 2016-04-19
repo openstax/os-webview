@@ -6,6 +6,15 @@ import {template as strips} from '~/components/strips/strips.hbs';
 
 @props({
     template: template,
-    templateHelpers: {strips}
+    templateHelpers: {
+        strips
+    }
 })
-export default class FinishedNoVerify extends BaseView {}
+export default class FinishedNoVerify extends BaseView {
+
+    onRender() {
+        this.el.classList.add('confirmation-page');
+    }
+
+}
+

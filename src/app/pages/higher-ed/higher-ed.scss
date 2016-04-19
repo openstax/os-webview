@@ -54,7 +54,6 @@ $hero-break-width: 880px;
             @include collapsed {
                 flex-flow: row wrap;
                 align-items: stretch;
-                padding: 1.5rem 0;
             }
 
             .student {
@@ -94,10 +93,9 @@ $hero-break-width: 880px;
             .overlay {
                 background-color: rgba(color(cyan), 0.8);
                 color: color(neutral-lightest);
-                padding: 1rem 4rem 4rem;
+                padding: 4rem;
                 display: flex;
                 justify-content: flex-end;
-                margin: 0 1.5rem;
                 z-index: 1;
 
                 @media screen and (min-width: $boxed-width + 1) {

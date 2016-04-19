@@ -8,4 +8,10 @@ import {template as strips} from '~/components/strips/strips.hbs';
     template: template,
     templateHelpers: {strips}
 })
-export default class FinishedVerify extends BaseView {}
+export default class FinishedVerify extends BaseView {
+
+    onRender() {
+        this.el.classList.add('confirmation-page');
+    }
+
+}

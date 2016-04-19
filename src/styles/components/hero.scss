@@ -1,0 +1,69 @@
+@import 'variables';
+@import 'mixins';
+
+.hero {
+    @include variable-sized-text(1.8, 0.2);
+
+    padding: 8rem 1.5rem;
+    text-align: center;
+    font-weight: 300;
+    letter-spacing: 0.11rem;
+    line-height: 1.4;
+
+    @include phone {
+        text-align: left;
+    }
+
+    &.w-cards {
+        padding: 1.5rem;
+    }
+
+    h1 {
+        @include variable-sized-text(6, 0.2);
+
+        color: inherit;
+        font-weight: bold;
+        letter-spacing: -0.2rem;
+        line-height: calc(5 / 6);
+        margin-top: 0;
+        margin-bottom: 1rem;
+
+        @include phone {
+            font-size: 5rem;
+        }
+    }
+
+    h2 {
+        @include variable-sized-text(4.8, 0.2);
+
+        color: inherit;
+        font-weight: bold;
+        letter-spacing: -0.2rem;
+        line-height: 1;
+        margin-bottom: 1rem;
+    }
+
+    .cta {
+        @include variable-sized-text(1.4, 0.2);
+
+        font-weight: bold;
+        text-transform: capitalize;
+    }
+
+    .boxed p,
+    .container p {
+        margin: 0 auto;
+        width: 100%; // IE fix
+        max-width: 100%;
+
+        @include desktop {
+            max-width: 80%;
+        }
+    }
+
+    .boxed p p,
+    .container p p { // fix for nested paragraphs. Most likely the cms's text editor is adding extra html
+        margin: 0;
+        max-width: 100%;
+    }
+}
