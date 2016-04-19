@@ -74,7 +74,7 @@
 
         @include desktop {
             display: block;
-            animation: flyin 0.5s 1.2s 1 normal ease-in forwards, loop 30s 1.5s normal infinite linear both;
+            animation: flyin 0.5s 1.2s 1 normal ease-in forwards, loop 30s 1.5s normal infinite linear forwards;
         }
 
         &.flyout {
