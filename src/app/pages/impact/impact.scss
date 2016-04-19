@@ -3,6 +3,7 @@
 
 $breakpoint-1: 999px;
 $breakpoint-2: 699px;
+$breakpoint-3: 1920px;
 
 .impact-page {
 
@@ -12,6 +13,8 @@ $breakpoint-2: 699px;
 
     ul {
         list-style-type: none;
+        // Hide bullets in IE
+        list-style-image: url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7);
     }
 
     .hero {
@@ -19,12 +22,21 @@ $breakpoint-2: 699px;
         background-image: url('/images/impact/banner-bg.jpg');
         background-size: cover;
         display: flex;
-        min-height: 42.8vw;
+        height: 42.8vw;
         overflow: hidden;
         position: relative;
 
         @include phone {
             background-image: none;
+        }
+
+        @media (max-width: $breakpoint-1) {
+            height: 42rem;
+        }
+
+        @media (min-width: $breakpoint-3) {
+            min-height: 0;
+            height: 82rem;
         }
 
         > .box-1,
@@ -48,6 +60,12 @@ $breakpoint-2: 699px;
             height: calc(6vw + 8rem);
             top: 2.36vw;
             width: calc(6vw + 8rem);
+
+            @media (min-width: $breakpoint-3) {
+                height: 19.5rem;
+                top: 4.5rem;
+                width: 19.5rem;
+            }
         }
 
         .box-2 {
@@ -55,6 +73,11 @@ $breakpoint-2: 699px;
             height: 65%;
             top: 25.7%;
             width: 58.36%;
+
+            @media (min-width: $breakpoint-3) {
+                height: 53.3rem;
+                top: 21.1rem;
+            }
         }
 
         > .student {
@@ -67,6 +90,11 @@ $breakpoint-2: 699px;
 
             @media (max-width: $breakpoint-1) {
                 left: calc(33vw - 33rem);
+            }
+
+            @media (min-width: $breakpoint-3) {
+                height: 86.9rem;
+                width: 125rem;
             }
         }
 
@@ -83,6 +111,15 @@ $breakpoint-2: 699px;
                 height: 100%;
                 padding: 0 2vw 8vw;
                 width: 100%;
+            }
+
+            @media (min-width: $breakpoint-3) {
+                margin-left: calc(142.7rem - 23.33vw); // 98rem @ 1920, 84rem @2520
+                width: 32.5%; // 61.2rem @ 1920
+            }
+
+            @media (min-width: 2520px) {
+                margin: auto;
             }
 
             @include phone {
@@ -124,19 +161,21 @@ $breakpoint-2: 699px;
         }
 
         h2 {
-            @include variable-sized-text(4.8, 0.2);
+            @include constrained-variable-text(4.8, 0.2);
 
             font-weight: 500;
             letter-spacing: -0.15rem;
         }
 
         p {
-            @include variable-sized-text(1.8, 0.2);
+            @include constrained-variable-text(1.8, 0.2);
 
             line-height: 1.7;
+            margin-left: 4rem;
+            margin-right: 4rem;
         }
 
-        .text-wrapper {
+        .text-content {
             margin: 0 auto;
             padding: 5rem 0;
             width: 78vw;
@@ -144,32 +183,46 @@ $breakpoint-2: 699px;
 
         .partners {
             align-items: center;
-            border-bottom: 0.5rem solid rgba(color(neutral-lightest), 0.25);
-            border-top: 0.5rem solid rgba(color(neutral-lightest), 0.25);
+            border-bottom: 0.4rem solid rgba(color(neutral-light), 0.30);
+            border-top: 0.4rem solid rgba(color(neutral-light), 0.30);
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
-            margin: 0 auto 5rem;
-            max-width: calc(40vw + 60rem);
-            padding: 0;
+            justify-content: space-between;
+            margin: auto;
+            max-width: 100rem;
+            padding: 1.5rem 0 0;
+
+            @media (max-width: $breakpoint-1) {
+                justify-content: space-around;
+            }
 
             > li {
                 margin: 4rem;
 
                 img {
-                    max-width: calc(3vw + 15rem);
+                    max-width: 12rem;
                     opacity: 0.7;
                 }
             }
         }
 
         .adopters {
-            padding-bottom: 5rem;
+            padding: 4rem 0 5rem;
 
             a {
                 font-size: 1.4rem;
-                font-weight: bold;
+                font-weight: 500;
+                position: relative;
                 text-transform: uppercase;
+
+                &::after {
+                    @include triangle(
+                        $direction: right,
+                        $position: top 0.42rem right -1.6rem,
+                        $color: color(cyan),
+                        $size: 0.5rem
+                    );
+                }
             }
         }
     }
