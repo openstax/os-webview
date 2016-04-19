@@ -38,11 +38,16 @@ export default class SingleSelect extends BaseView {
     }
 
     togglePulldown() {
+        let isOpen;
+
         if (this.optionListEl) {
             this.optionListEl.classList.toggle('hidden', ...arguments);
         }
         if (this.hasDropdownEl) {
-            this.hasDropdownEl.classList.toggle('open', ...arguments);
+            if (arguments.length) {
+                isOpen = !arguments[0];
+            }
+            this.hasDropdownEl.classList.toggle('open', isOpen);
         }
     }
 

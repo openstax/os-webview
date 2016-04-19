@@ -5,7 +5,7 @@ import SingleSelect from '~/components/single-select/single-select';
 
 class ProxyWidgetView extends BaseView {
     @on('click')
-    clickSomewhere(e) {
+    closeNonContainers(e) {
         if (e.target.classList.contains('hidden')) {
             return;
         }
