@@ -3,6 +3,7 @@ import BaseModel from '~/helpers/backbone/model';
 import BaseCollection from '~/helpers/backbone/collection';
 import Tag from './tag/tag';
 import Option from '../select-option/select-option';
+import TouchScroller from '~/helpers/touch-scroller';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './tag-multi-select.hbs';
 
@@ -29,6 +30,18 @@ export default class TagMultiSelect extends BaseView {
         e.preventDefault();
     }
 
+    @on('touchstart .option-list')
+    startScrollBio(e) {
+        let element = this.el.querySelector('.option-list');
+
+        this.optionScroller.start(element, e);
+    }
+
+    @on('touchmove .option-list')
+    scrollList(e) {
+        this.optionScroller.scroll(e);
+    }
+
     togglePulldown() {
         let optionList = this.el.querySelector('.option-list');
 
@@ -39,6 +52,7 @@ export default class TagMultiSelect extends BaseView {
     constructor() {
         super();
         this.stateCollection = new BaseCollection();
+        this.optionScroller = new TouchScroller();
     }
 
     checkValid(originalOpt) {
