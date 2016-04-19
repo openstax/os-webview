@@ -50,7 +50,7 @@ sup {
     font-size: 66%;
     margin-left: 0.1rem;
     position: relative;
-    top: -0.5rem;
+    top: -0.25em; // em because it is relative to current font size
     vertical-align: top;
 }
 

@@ -19,7 +19,9 @@
 
     .boxed {
         margin: 0 auto;
-        padding: 8rem 1.5rem;
+        opacity: 0.85;
+        padding: 4rem 1.5rem;
+        width: 90rem;
     }
 
     ul {
@@ -45,19 +47,20 @@
     }
 
     .hero-quote {
-        @include constrained-variable-text(6, 0.2);
+        @include constrained-variable-text(5.5, 0.2);
 
         font-weight: bold;
+        letter-spacing: -0.2rem;
         line-height: 1;
-        padding-bottom: 4rem;
+        padding: 3rem 0;
     }
 
     .copyright {
         flex-wrap: wrap;
-        padding-bottom: 4rem;
+        padding-bottom: 1rem;
 
         ul {
-            margin: 0 0 4rem;
+            margin: 0 0 2rem;
         }
 
         li > a {
@@ -65,16 +68,21 @@
         }
 
         p {
-            margin: 0;
+            margin: 2rem 3rem;
         }
     }
 
     .social {
 
         a {
-            height: 7rem;
-            margin: 1.5rem;
-            width: 7rem;
+            background-size: 130%;
+            height: 5rem;
+            margin: 1rem;
+            width: 5rem;
+
+            &:hover {
+                background-color: rgba(color(neutral-light), 0.7);
+            }
         }
 
         ul {
