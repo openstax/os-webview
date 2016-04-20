@@ -82,7 +82,7 @@ export default class SingleSelect extends BaseView {
         if (originalSelect.required) {
             let valid = false;
 
-            for (let opt of originalSelect.options) {
+            for (let opt of Array.from(originalSelect.options)) {
                 if (opt.selected && opt.value) {
                     valid = true;
                 }
