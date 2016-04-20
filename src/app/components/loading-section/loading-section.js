@@ -5,6 +5,6 @@ import {template} from './loading-section.hbs';
 @props({template})
 export default class LoadingSection extends BaseView {
     onRender() {
-        this.el.classList.add('loader');
+        this.el.classList.add('os-loader');
     }
 }
