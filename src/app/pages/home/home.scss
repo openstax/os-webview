@@ -8,8 +8,9 @@
         margin-top: -6rem;
     }
 
-    .book-banner {
+    .book-banners {
         height: 45rem;
+        position: relative;
 
         @include tablet {
             height: 60rem;
@@ -17,6 +18,10 @@
 
         @include desktop {
             height: 65rem;
+        }
+
+        > div {
+            display: none;
         }
     }
 

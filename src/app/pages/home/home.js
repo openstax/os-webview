@@ -7,17 +7,32 @@ import Quotes from '~/components/quotes/quotes';
 import Buckets from '~/components/buckets/buckets';
 import Education from './education/education';
 
-const books = [
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    while (0 !== currentIndex) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
+
+const banners = shuffle([
     // 'astronomy',
-    // 'biology',
+    'biology',
     // 'chemistry',
     'us-history'
-];
+]);
 
 @props({
     template: template,
     regions: {
-        bookBanner: '.book-banner',
+        bookBanners: '.book-banners',
         quotes: '.quote-buckets',
         education: '.education',
         buckets: '.buckets'
@@ -30,19 +45,9 @@ export default class Home extends LoadingView {
         e.preventDefault();
     }
 
-    parallaxBanner() {
-        let bookBanner = this.el.querySelector('.book-banner > div > div');
-
-        bookBanner.setAttribute('style', `background-position-y: -${window.pageYOffset/2}px`);
-    }
-
     onRender() {
         super.onRender();
         appView.header.updateHeaderStyle();
-        window.addEventListener('scroll', this.parallaxBanner.bind(this));
-
-        // Lazy-load a random book
-        this.showBookBanner(books[Math.floor(Math.random()*books.length)]);
 
         this.regions.quotes.show(new Quotes([
             {
@@ -64,6 +69,31 @@ export default class Home extends LoadingView {
         ]));
         this.regions.education.show(new Education());
         this.regions.buckets.show(new Buckets());
+
+        for (let banner of banners) {
+            let view = this;
+
+            this.bannerViews = [];
+
+            System.import(`~/pages/home/banners/${banner}/${banner}`).then((m) => {
+                let Page = m.default;
+                let display = false;
+
+                if (view.currentBanner !== 0) {
+                    view.currentBanner = 0;
+                    display = true;
+                }
+
+                let bannerView = new Page({
+                    parent: view,
+                    name: banner,
+                    display: display
+                });
+
+                this.bannerViews.push(bannerView);
+                view.regions.bookBanners.append(bannerView);
+            });
+        }
     }
 
     onLoaded() {
@@ -71,19 +101,21 @@ export default class Home extends LoadingView {
         this.el.querySelector('.home-page').classList.remove('hidden');
     }
 
-    showBookBanner(book) {
-        let view = this;
-
-        System.import(`~/pages/home/banners/${book}/${book}`).then((m) => {
-            let Page = m.default;
-
-            view.regions.bookBanner.show(new Page({parent: view}));
-            view.currentBookBanner = book;
-        });
+    showBanner(banner) {
+        this.bannerViews[banner].show();
     }
 
-    showNextBookBanner() {
-        this.showBookBanner(books[Math.floor(Math.random()*books.length)]);
+    showNextBanner() {
+        this.bannerViews[this.currentBanner].hide();
+
+        let next = ++this.currentBanner;
+
+        if (next >= banners.length) {
+            next = 0;
+            this.currentBanner = 0;
+        }
+
+        this.showBanner(next);
     }
 
 }

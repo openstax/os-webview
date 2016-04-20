@@ -13,6 +13,13 @@
     }
 }
 
+.flyin,
+.flyout {
+    @include desktop {
+        opacity: 0;
+    }
+}
+
 .biology {
     background-image: url('/images/home/subjects/biology/background.jpg');
     background-position: center top;
@@ -40,6 +47,14 @@
 
         @include desktop {
             display: block;
+            animation: flyin 0.5s 1.2s 1 normal ease-in forwards, loop 30s 1.5s normal infinite linear forwards;
+        }
+
+        &.flyout {
+            @include desktop {
+                animation: flyout 0.5s 1 normal forwards;
+                opacity: 1;
+            }
         }
     }
 
@@ -84,10 +99,17 @@
     .diagram,
     .leaf {
         display: none;
-        opacity: 0.7;
 
         @include desktop {
             display: block;
+            animation: flyin 0.5s 1.4s 1 normal ease-in forwards, loop 40s 1.8s reverse infinite linear forwards;
+        }
+
+        &.flyout {
+            @include desktop {
+                animation: flyout 0.5s 1 normal forwards;
+                opacity: 1;
+            }
         }
     }
 
@@ -126,8 +148,9 @@
         }
     }
 
+    canvas,
+    .video,
     .video-banner {
-        background-image: url('/images/home/subjects/biology/student.png');
         height: 42vw;
         left: 9.5vw;
         position: absolute;
@@ -141,6 +164,22 @@
             top: 26.4vw;
             width: 55.03vw;
         }
+
+        @include desktop {
+            height: 53rem;
+            bottom: 0;
+            right: 15rem;
+            width: 45.4rem;
+        }
+    }
+
+    .video {
+        display: none;
+    }
+
+    .video-banner {
+        background-image: url('/images/home/subjects/biology/student.png');
+        background-position: 92% 100%;
     }
 
     .now-i-can {
@@ -166,6 +205,15 @@
             height: 10.76vw;
             top: 59.75vw;
             width: 65.82vw;
+        }
+
+        @include desktop {
+            animation: flyin 0.5s 1.8s 1 normal forwards;
+
+            &.flyout {
+                animation: flyout 0.5s 1 normal forwards;
+                opacity: 1;
+            }
         }
 
         .quote {
@@ -201,6 +249,17 @@
         @include tablet {
             left: 31.65vw;
             top: 71.39vw;
+        }
+
+        @include desktop {
+            animation: flyin 0.5s 1.8s 1 normal forwards;
+        }
+
+        &.flyout {
+            @include desktop {
+                animation: flyout 0.5s 1 normal forwards;
+                opacity: 1;
+            }
         }
 
         ul {
