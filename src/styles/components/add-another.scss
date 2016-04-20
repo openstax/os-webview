@@ -30,7 +30,7 @@
         min-width: 25rem;
         max-width: 28rem;
 
-        &:last-child {
+        &.btn-secondary {
             background-color: color(cyan);
         }
     }
