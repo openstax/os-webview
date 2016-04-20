@@ -2,6 +2,7 @@ import BaseView from './view';
 import LoadingSection from '~/components/loading-section/loading-section';
 
 const PARSE_URL = /url\(['"]?([^")]+)/;
+const MINIMUM_WAIT = 1200;
 
 function getImages() {
     let urls = new Set();
@@ -49,7 +50,7 @@ class LoadingView extends BaseView {
     onLoaded() {
         document.getElementById('header').classList.remove('hidden');
         document.getElementById('footer').classList.remove('hidden');
-        setTimeout(() => {this.loadingSection.remove();}, 500);
+        this.loadingSection.remove();
     }
 
     onRender() {
@@ -57,6 +58,7 @@ class LoadingView extends BaseView {
         document.getElementById('footer').classList.add('hidden');
         this.regions.self.el = this.el;
         this.regions.self.append(this.loadingSection);
+        this.renderStart = Date.now();
     }
 
     onAfterRender() {
@@ -87,7 +89,9 @@ class LoadingView extends BaseView {
         });
 
         return Promise.all([...imagesLoaded, ...videosLoaded, ...this.otherPromises]).then(() => {
-            this.onLoaded();
+            let elapsed = Date.now() - this.renderStart;
+
+            setTimeout(() => this.onLoaded(), elapsed > MINIMUM_WAIT ? 0 : MINIMUM_WAIT - elapsed);
         });
     }
 
