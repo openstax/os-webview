@@ -19,20 +19,13 @@
 
     .boxed {
         margin: 0 auto;
+        max-width: 90%;
         opacity: 0.85;
         padding: 4rem 8vw;
-        max-width: $boxed-width;
-    }
-
-    ul {
-        display: flex;
-        flex-flow: row wrap;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
+        width: 90rem;
 
         @include desktop {
-            justify-content: center;
+            padding: 4rem 9.6rem;
         }
     }
 
@@ -60,7 +53,14 @@
         padding-bottom: 1rem;
 
         ul {
+            display: flex;
+            flex-flow: row wrap;
             margin: 0 0 2rem;
+            padding: 0;
+
+            @include desktop {
+                justify-content: center;
+            }
         }
 
         li > a {
@@ -89,6 +89,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
+            padding: 0;
         }
     }
 }
