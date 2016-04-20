@@ -20,8 +20,8 @@
     .boxed {
         margin: 0 auto;
         opacity: 0.85;
-        padding: 4rem 1.5rem;
-        width: 90rem;
+        padding: 4rem 8vw;
+        max-width: $boxed-width;
     }
 
     ul {
@@ -64,11 +64,11 @@
         }
 
         li > a {
-            padding: 1rem;
+            padding-right: 1.5rem;
         }
 
         p {
-            margin: 2rem 3rem;
+            margin: 2rem auto;
         }
     }
 
