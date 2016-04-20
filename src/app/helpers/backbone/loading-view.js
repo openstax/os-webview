@@ -7,7 +7,7 @@ function getImages() {
     let urls = new Set();
     let els = document.getElementsByTagName('img');
 
-    for (let el of els) {
+    for (let el of Array.from(els)) {
         let url = el.getAttribute('src');
 
         if (url) {
@@ -23,7 +23,7 @@ function getBackgroundImages() {
     let els = document.getElementsByTagName('*');
     let view = document.defaultView || window;
 
-    for (let el of els) {
+    for (let el of Array.from(els)) {
         if (el && el.style) {
             let url = view.getComputedStyle(el).getPropertyValue('background-image');
 
