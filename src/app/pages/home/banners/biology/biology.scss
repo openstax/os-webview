@@ -22,18 +22,45 @@
 
 .biology {
     background-image: url('/images/home/subjects/biology/background.jpg');
-    background-position: center top;
+    background-attachment: fixed;
+    background-position: -15rem 0;
     background-repeat: no-repeat;
-    background-size: 100vw 55.695vw;
-    height: 55.695vw;
-    margin-top: -8rem;
+    background-size: cover;
+    height: 60rem;
     overflow: hidden;
-    padding-top: 8rem;
     position: relative;
 
-    @include tablet {
-        background-size: 100vw 81.4vw;
-        height: 81.4vw;
+    @include desktop {
+        background-position: center top;
+    }
+
+    @media (min-width: #{breakpoints(tablet) + 1}) {
+        height: 65rem;
+    }
+
+    @include phone {
+        background-color: color(blue);
+        background-image: none;
+        background-position: left top;
+        height: 45rem;
+    }
+
+    .container {
+        display: flex;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        max-width: $boxed-width;
+        flex-flow: column wrap;
+        position: relative;
+        height: 100%;
+
+        @include tablet {
+            flex-flow: row wrap;
+        }
+
+        @include desktop {
+            flex-flow: row wrap;
+        }
     }
 
     .square-1,
@@ -59,31 +86,31 @@
     }
 
     .square-1 {
-        height: 26.429vw;
-        left: 12.14vw;
-        top: 15.714vw;
-        width: 26.429vw;
+        height: 37rem;
+        left: 8rem;
+        top: 25rem;
+        width: 37rem;
     }
 
     .square-2 {
-        height: 3.57vw;
-        left: 15.714vw;
-        top: 10vw;
-        width: 3.57vw;
+        height: 5rem;
+        left: 12rem;
+        top: 16rem;
+        width: 5rem;
     }
 
     .square-3 {
-        height: 25.714vw;
-        left: 42.14vw;
-        top: 11.429vw;
-        width: 50.714vw;
+        height: 35rem;
+        left: 52rem;
+        top: 20rem;
+        width: 56rem;
     }
 
     .square-4 {
-        height: 2.143vw;
-        left: 86.86vw;
-        top: 20.714vw;
-        width: 2.143vw;
+        height: 3.2rem;
+        right: 4.5rem;
+        top: 34rem;
+        width: 3.2rem;
     }
 
     .diagram,
@@ -115,61 +142,55 @@
 
     .diagram {
         background-image: url('/images/home/subjects/biology/diagram.png');
-        height: 14.286vw;
-        left: 7.857vw;
+        height: 19rem;
+        left: 5rem;
         position: absolute;
-        top: 21.5vw;
-        width: 20.357vw;
+        bottom: 6rem;
+        width: 27.4rem;
     }
 
     .leaf {
         background-image: url('/images/home/subjects/biology/leaf.png');
-        height: 10vw;
-        left: 69.286vw;
+        height: 14rem;
+        right: 19rem;
         position: absolute;
-        top: 19.286vw;
-        width: 10vw;
+        top: 24rem;
+        width: 14rem;
+        opacity: 0.5;
     }
 
     .book {
         background-color: color(green);
         background-image: url('/images/subjects/biology.svg');
-        height: 25.607vw;
-        left: 38.12vw;
+        height: 29rem;
+        left: 50rem;
         position: absolute;
-        top: 7.726vw;
-        width: 25.607vw;
+        top: 9rem;
+        width: 29rem;
 
         @include tablet {
-            height: 36.46vw;
-            left: 27.85vw;
-            top: 22.15vw;
-            width: 36.46vw;
+            left: 28rem;
         }
     }
 
     canvas,
     .video,
     .video-banner {
-        height: 42vw;
-        left: 9.5vw;
+        bottom: 0;
+        height: 25rem;
+        left: 3rem;
         position: absolute;
-        top: 13.68vw;
-        width: 39.85vw;
+        width: 23.52rem;
         z-index: 2;
 
         @include tablet {
-            height: 58vw;
-            left: -12vw;
-            top: 26.4vw;
-            width: 55.03vw;
+            left: calc(16rem - 10%);
         }
 
         @include desktop {
-            height: 53rem;
-            bottom: 0;
-            right: 15rem;
-            width: 45.4rem;
+            height: 51rem;
+            width: 48rem;
+            left: calc(16rem + 10%);
         }
     }
 
@@ -184,30 +205,29 @@
 
     .now-i-can {
         background-color: rgba(color(neutral-medium), 0.85);
+        bottom: 15rem;
         color: color(neutral-lightest);
-        font-size: 2.5vw;
+        font-size: 3rem;
         font-weight: 600;
-        height: 7.064vw;
-        left: 45vw;
-        line-height: 7.064vw;
+        height: 8rem;
+        line-height: 8.5rem;
+        right: 5rem;
         padding: 0;
         position: absolute;
         text-align: center;
         text-transform: none;
-        top: 34vw;
-        width: 42.08vw;
+        width: 50rem;
         z-index: 3;
 
-        @include tablet {
-            font-size: 3.8vw;
-            left: 31.65vw;
-            line-height: 10.76vw;
-            height: 10.76vw;
-            top: 59.75vw;
-            width: 65.82vw;
+        @media (min-width:650px) {
+            display: initial;
         }
 
         @include desktop {
+            right: 1.5rem;
+            width: 59rem;
+            height: 9rem;
+            font-size: 3.6rem;
             animation: flyin 0.5s 1.8s 1 normal forwards;
 
             &.flyout {
@@ -223,32 +243,35 @@
         }
 
         &::after {
-            border-bottom: 0.18vw solid color(neutral-lightest);
+            border-bottom: 0.1rem solid color(neutral-lightest);
             content: '';
-            left: 16vw;
+            right: 1rem;
             position: absolute;
-            top: 5vw;
-            width: 23.5vw;
+            top: 6rem;
+            width: 32rem;
 
-            @include tablet {
-                border-bottom-width: 0.36vw;
-                left: 25vw;
-                top: 8vw;
-                width: 36.5vw;
+            @include desktop {
+                width: 35rem;
+                right: 2rem;
             }
         }
     }
 
     .subject-links {
-        left: 45vw;
-        letter-spacing: 0.078vw;
+        right: 8.5rem;
         position: absolute;
-        top: 41.8vw;
+        bottom: 7rem;
         z-index: 3;
 
         @include tablet {
-            left: 31.65vw;
-            top: 71.39vw;
+            width: 27rem;
+            bottom: 5rem;
+        }
+
+        @media (min-width:650px) {
+            width: auto;
+            right: 8.5rem;
+            left: auto;
         }
 
         @include desktop {
@@ -269,19 +292,18 @@
 
             li {
                 display: inline-block;
+
+                &:first-child {
+                    margin-right: 1rem;
+                }
             }
         }
 
         .btn {
-            font-size: 1.1vw;
-            height: 4.5vw;
-            line-height: 4.5vw;
-            padding: 0;
+            padding: 2rem 4rem;
 
             @include tablet {
                 font-size: 1.7vw;
-                height: 6.33vw;
-                line-height: 6.33vw;
             }
         }
 
@@ -290,21 +312,5 @@
             box-shadow: 0 0 1rem color(neutral-dark);
         }
 
-        .explore-subject {
-            margin-right: 0.2vw;
-            width: 17.5vw;
-
-            @include tablet {
-                width: 23.04vw;
-            }
-        }
-
-        .explore-all {
-            width: 18.55vw;
-
-            @include tablet {
-                width: 27.97vw;
-            }
-        }
     }
 }
