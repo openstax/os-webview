@@ -43,11 +43,7 @@ export default class FilterButton extends BaseView {
     onRender() {
         this.el.classList.add('filter-button');
         this.setState();
-        window.addEventListener('resize', this.removeOpenCategories.bind(this));
-    }
-
-    onBeforeClose() {
-        window.removeEventListener('resize', this.removeOpenCategories.bind(this));
+        this.attachListenerTo(window, 'resize', this.removeOpenCategories.bind(this));
     }
 }
 

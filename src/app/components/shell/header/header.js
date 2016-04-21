@@ -263,7 +263,7 @@ class Header extends BaseView {
     }
 
     resetHeader(e) {
-        let urlClick = linkHelper.validUrlClick(e);
+        let urlClick = e && linkHelper.validUrlClick(e);
         let header = this.el.querySelector('.page-header');
 
         if (urlClick) {
@@ -353,20 +353,13 @@ class Header extends BaseView {
                 loginWrapper = loginItem.parentNode,
                 loggedIn = userInfo && userInfo.username !== '';
 
-            if (this.unbindLoginListener) {
-                this.unbindLoginListener();
-            }
             if (loggedIn) {
                 loginItem.firstChild.textContent = `Hi ${userInfo.first_name}`;
                 loginWrapper.classList.add('dropdown');
                 loginItem.setAttribute('aria-haspopup', true);
 
-                let boundHandler = this.flyOutMenu.bind(this);
+                this.attachListenerTo(loginItem, 'click', this.flyOutMenu.bind(this));
 
-                loginItem.addEventListener('click', boundHandler);
-                this.unbindLoginListener = () => {
-                    loginItem.removeEventListener('click', boundHandler);
-                };
                 if (userInfo.groups.indexOf('Faculty') >= 0) {
                     let nonFaculty = this.el.querySelectorAll('.non-faculty');
 
@@ -375,37 +368,22 @@ class Header extends BaseView {
                     }
                 }
             } else {
-                let boundHandler = this.openLinkSameWindow.bind(this);
-
                 loginItem.firstChild.textContent = 'Login';
-                loginItem.addEventListener('click', boundHandler);
-                this.unbindLoginListener = () => {
-                    loginItem.removeEventListener('click', boundHandler);
-                };
+                this.attachListenerTo(loginItem, 'click', this.openLinkSameWindow.bind(this));
             }
         });
         this.updateHeaderStyle();
         this.appendURL();
         this.el.querySelector('[data-href-setting="account-href"]').href = settings.accountHref;
-        document.addEventListener('click', this.resetHeader.bind(this), true);
-        window.addEventListener('scroll', this.updateHeaderStyle.bind(this));
-        window.addEventListener('scroll', this.removeAllOpenClasses.bind(this));
-        window.addEventListener('resize', this.closeFullScreenNav.bind(this));
+        this.attachListenerTo(document, 'click', this.resetHeader.bind(this), true);
+        this.attachListenerTo(window, 'scroll', this.updateHeaderStyle.bind(this));
+        this.attachListenerTo(window, 'scroll', this.removeAllOpenClasses.bind(this));
+        this.attachListenerTo(window, 'resize', this.closeFullScreenNav.bind(this));
 
         // prevent scrolling on iOS when mobile menu is active
         let header = document.querySelector('.page-header');
 
         header.addEventListener('touchmove', this.preventMobileMenuScroll.bind(this), false);
-    }
-
-    onBeforeClose() {
-        document.removeEventListener('click', this.resetHeader.bind(this), true);
-        window.removeEventListener('scroll', this.updateHeaderStyle.bind(this));
-        window.removeEventListener('scroll', this.removeAllOpenClasses.bind(this));
-        window.removeEventListener('resize', this.closeFullScreenNav.bind(this));
-        if (this.unbindLoginListener) {
-            this.unbindLoginListener();
-        }
     }
 }
 

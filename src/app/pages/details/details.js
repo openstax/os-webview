@@ -121,8 +121,7 @@ export default class Details extends LoadingView {
     onRender() {
         super.onRender();
         this.toggleFixedClass();
-
-        window.addEventListener('scroll', this.toggleFixedClass.bind(this));
+        this.attachListenerTo(window, 'scroll', this.toggleFixedClass.bind(this));
 
         let slug = decodeURIComponent(window.location.search.substr(1)),
             pageModel = new PageModel(),
@@ -148,6 +147,13 @@ export default class Details extends LoadingView {
                     if (!userInfo || userInfo.username === '') {
                         alternateLink = `${settings.apiOrigin}/accounts/login/openstax/?next=${encodedLocation}`;
                         extraInstructions.innerHTML = `<a href="${alternateLink}">Login</a> for instructor access.`;
+                        let anchor = extraInstructions.querySelector('a'),
+                            goToHref = (e) => {
+                                e.preventDefault();
+                                window.location = e.target.href;
+                            };
+
+                        this.attachListenerTo(anchor, 'click', goToHref);
                     } else if (userInfo.groups.indexOf('Faculty') < 0) {
                         alternateLink = '/faculty-verification';
                         extraInstructions.innerHTML = `<a href="${alternateLink}">Apply for instructor access.</a>`;
@@ -290,9 +296,5 @@ export default class Details extends LoadingView {
     onLoaded() {
         super.onLoaded();
         this.el.querySelector('.details-page').classList.remove('hidden');
-    }
-
-    onBeforeClose() {
-        window.removeEventListener('scroll', this.toggleFixedClass.bind(this));
     }
 }

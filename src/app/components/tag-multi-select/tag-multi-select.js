@@ -50,7 +50,7 @@ export default class TagMultiSelect extends BaseView {
         if (arguments.length > 0) {
             isOpen = !arguments[0];
         }
-        this.hasDropdownEl.classList.toggle('open', ...isOpen);
+        this.hasDropdownEl.classList.toggle('open', isOpen);
     }
 
     constructor() {

@@ -77,6 +77,7 @@ class BaseView extends Backbone.View {
     constructor() {
         super(...arguments);
         this.regions = new Regions(this.regions, this);
+        this.unbinders = [];
     }
 
     delegate(eventName, selector, listener) {
@@ -226,7 +227,21 @@ class BaseView extends Backbone.View {
     onRender() {} // noop
     onAfterRender() {} // noop
     onDomRefresh() {} // noop
-    onBeforeClose() {} // noop
+
+    attachListenerTo(el, ...options) {
+        el.addEventListener(...options);
+        this.unbinders.push(() => {
+            el.removeEventListener(...options);
+        });
+    }
+
+    onBeforeClose() {
+        while (this.unbinders.length) {
+            let unbind = this.unbinders.pop();
+
+            unbind();
+        }
+    }
 
     close() {
         this.onBeforeClose();

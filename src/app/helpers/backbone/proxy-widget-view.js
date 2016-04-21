@@ -53,11 +53,7 @@ class ProxyWidgetView extends BaseView {
             this.selectWidgets.push(widget);
             widget.originalSelect = ss;
         }
-        this.el.querySelector('[type=submit]').addEventListener('click', this.failIfInvalid.bind(this));
-    }
-
-    onBeforeClose() {
-        this.el.querySelector('[type=submit]').removeEventListener('click', this.failIfInvalid.bind(this));
+        this.attachListenerTo(this.el.querySelector('[type=submit]'), 'click', this.failIfInvalid.bind(this));
     }
 }
 
