@@ -28,6 +28,7 @@ export default class GetThisTitle extends BaseView {
         super();
         this.templateHelpers = {
             ibookLink: data.ibook_link,
+            ibookLink2: data.ibook_link_volume_2,
             webviewLink: data.webview_link,
             conceptCoachLink: data.concept_coach_link,
             bookshareLink: data.bookshare_link,
