@@ -46,12 +46,27 @@
         </div>
         {{/if}}
         {{#if ibookLink}}
-            <div class="option">
-                <a href="{{ibookLink}}">
-                    <span class="fa fa-tablet"></span>
-                    iBook
-                </a>
-            </div>
+                {{#if ibookLink2}}
+                    <div class="option">
+                        <span class="option-header">
+                            <span class="fa fa-tablet"></span>
+                            iBook
+                        </span>
+                        <a href="{{ibookLink}}">
+                            Volume 1
+                        </a>
+                        <a href="{{ibookLink2}}">
+                            Volume 2
+                        </a>
+                    </div>
+                {{else}}
+                    <div class="option">
+                        <a href="{{ibookLink}}">
+                            <span class="fa fa-tablet"></span>
+                            iBook
+                        </a>
+                    </div>
+                {{/if}}
         {{/if}}
     </div>
 </div>

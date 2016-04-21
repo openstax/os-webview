@@ -51,32 +51,30 @@
 
     .pdf + .options,
     .print + .options {
-        width: 0;
         height: 0;
         margin: 0;
-        overflow: hidden;
         opacity: 0;
+        overflow: hidden;
+        width: 0;
     }
 
     .option {
-        color: color(cyan);
-        cursor: pointer;
+        border-bottom: 0.1rem solid color(neutral-lighter);
         font-size: 1.6rem;
         padding: 0.5rem;
-        border-bottom: 0.1rem solid color(neutral-lighter);
-
-        &:hover {
-            color: darken(color(cyan), 10%);
-        }
 
         &:last-child {
             border-bottom: 0;
         }
 
-        a {
+        a,
+        .option-header {
             display: block;
-            color: color(cyan);
             padding-left: 3rem;
+        }
+
+        a {
+            color: color(cyan);
 
             &:hover {
                 color: darken(color(cyan), 10%);
@@ -85,9 +83,9 @@
     }
 
     .fa {
-        width: 2.5rem;
         color: darken(color(cyan), 10%);
-        margin-left: -3rem;
         font-size: 1.8rem;
+        margin-left: -3rem;
+        width: 2.5rem;
     }
 }
