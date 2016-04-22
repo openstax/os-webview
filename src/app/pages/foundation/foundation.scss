@@ -23,15 +23,6 @@ $text-black2: rgba(0, 0, 0, 0.7);
         h1 {
             color: color(neutral-lightest);
         }
-
-        .subhead {
-            padding: 0;
-            text-align: left;
-
-            @include desktop {
-                text-align: center;
-            }
-        }
     }
 
     h2 {

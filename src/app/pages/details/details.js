@@ -15,7 +15,7 @@ import {template as strips} from '~/components/strips/strips.hbs';
 import settings from 'settings';
 
 function dataToTemplateHelper(data) {
-    let quotes = data.book_quotes[0],
+    let quotes = data.book_quotes[0] || {},
         result = {
             title: data.title,
             description: data.description,
@@ -228,6 +228,9 @@ export default class Details extends LoadingView {
                 document.getElementById('publish-date').textContent = data.publish_date;
                 document.getElementById('isbn-10').textContent = data.isbn_10;
                 document.getElementById('isbn-13').textContent = data.isbn_13;
+                if (!data.license_name) {
+                    return;
+                }
                 this.el.querySelector('.publish-info .license .text').textContent = `
                 ${data.license_name} v${data.license_version}
                 `;
@@ -245,7 +248,23 @@ export default class Details extends LoadingView {
 
                 let detailUrl = data.pages[0].meta.detail_url,
                     detailModel = new PageModel(),
-
+                    handleToc = (toc) => {
+                        if (toc) {
+                            numberTableOfContents(toc);
+                            showTableOfContents(toc);
+                        } else {
+                            this.el.querySelector('.table-of-contents-link').remove();
+                        }
+                    },
+                    handleEndorsement = (thData) => {
+                        if (thData.endorsement) {
+                            document.getElementById('endorsement').innerHTML = thData.endorsement;
+                            document.getElementById('attribution').textContent = thData.attribution;
+                            document.getElementById('attribution-school').textContent = thData.attributionSchool;
+                        } else {
+                            this.el.querySelector('.endorsement').remove();
+                        }
+                    },
                     handleDetailData = (detailData) => {
                         let th = dataToTemplateHelper(detailData);
 
@@ -258,14 +277,11 @@ export default class Details extends LoadingView {
                         this.el.querySelector('.book-cover').src = th.coverUrl;
                         this.el.querySelector('.book-info .title').textContent = th.title;
                         this.el.querySelector('.book-info .blurb').innerHTML = th.description;
-                        document.getElementById('endorsement').innerHTML = th.endorsement;
-                        document.getElementById('attribution').textContent = th.attribution;
-                        document.getElementById('attribution-school').textContent = th.attributionSchool;
+                        handleEndorsement(th);
                         this.gtt = new GetThisTitle(detailData);
                         this.regions.getThisTitle.show(this.gtt);
                         setHandbookLink(detailData.student_handbook_url);
-                        numberTableOfContents(detailData.table_of_contents);
-                        showTableOfContents(detailData.table_of_contents);
+                        handleToc(detailData.table_of_contents);
                         showInstructorResources(detailData.book_faculty_resources);
                         insertResources(detailData.book_student_resources, 'studentResources');
                         handleErrataLink(detailData.errata_link, detailData.errata_corrections_link);

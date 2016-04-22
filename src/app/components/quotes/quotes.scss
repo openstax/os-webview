@@ -122,6 +122,7 @@
         }
 
         &.full {
+            align-items: center;
             background-color: color(orange);
             margin: 0;
             min-height: 0;

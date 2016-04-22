@@ -29,7 +29,7 @@ export default class ProductsBoxes extends BaseView {
             },
             ap: {
                 name: 'books',
-                title: 'Books for Advanced Placement<sup>&reg;</sup>',
+                title: 'Books for AP<sup>&reg;</sup> Courses',
                 linkText: 'Explore Our Subjects',
                 blurb: `Our college­ level textbooks for Advanced Placement<sup>&reg;</sup>
                     courses are peer-reviewed, completely free online, and will soon be
@@ -46,13 +46,12 @@ export default class ProductsBoxes extends BaseView {
             },
             'Tutor': {
                 name: 'tutor',
-                title: 'OpenStax Tutor Pilot',
+                title: 'OpenStax Tutor',
                 linkText: 'Sign up',
                 url: '/contact?subject=OpenStax Tutor Pilot Sign-up',
-                blurb: `We’re recruiting for our Fall 2016 OpenStax Tutor high school pilot.
-                Sign up to partner with us in perfecting this full-service digital courseware
-                and help impact the future of education.
-`
+                blurb: `Our customizable digital courseware uses cognitive science and
+                machine learning to create a personalized learning experience that
+                empowers students to succeed.`
             },
             'OpenStax CNX': {
                 name: 'cnx',
