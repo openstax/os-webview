@@ -38,7 +38,5 @@ function precache() {
 gulp.task(precache);
 
 gulp.task('precache:watch', () => {
-    gulp.watch(shellFiles.map((uri) => `${config.dest}${uri}`), {
-        usePolling: true
-    }, precache);
+    gulp.watch(shellFiles.map((uri) => `${config.dest}${uri}`), config.watchOpts, precache);
 });

@@ -16,5 +16,5 @@ function html() {
 gulp.task(html);
 
 gulp.task('html:watch', () => {
-    gulp.watch(`${config.src}/**/*.html`, html);
+    gulp.watch(`${config.src}/**/*.html`, config.watchOpts, html);
 });

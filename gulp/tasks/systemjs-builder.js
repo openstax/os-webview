@@ -32,7 +32,5 @@ function systemjs() {
 gulp.task(systemjs);
 
 gulp.task('systemjs:watch', () => {
-    gulp.watch('./jspm_packages/**/*', {
-        usePolling: true
-    }, systemjs);
+    gulp.watch('./jspm_packages/**/*', config.watchOpts, systemjs);
 });
