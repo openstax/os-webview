@@ -156,7 +156,6 @@
         position: absolute;
         top: 24rem;
         width: 14rem;
-        opacity: 0.5;
     }
 
     .book {
@@ -170,6 +169,15 @@
 
         @include tablet {
             left: 28rem;
+        }
+
+        @include desktop {
+            animation: flyin 0.5s 1s 1 normal forwards;
+
+            &.flyout {
+                animation: flyout 0.5s 1 normal forwards;
+                opacity: 1;
+            }
         }
     }
 
