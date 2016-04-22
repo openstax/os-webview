@@ -1,4 +1,5 @@
 import _ from 'underscore';
+import {on} from '~/helpers/backbone/decorators';
 import Backbone from 'backbone';
 import NativeView from 'backbone.nativeview';
 
@@ -73,6 +74,26 @@ class Regions {
 }
 
 class BaseView extends Backbone.View {
+    @on('scroll .mac-scroll')
+    whileScrolling() {
+        this.freezePosition = document.documentElement.scrollTop || document.body.scrollTop;
+    }
+
+    @on('mouseleave .mac-scroll')
+    leaveOptionList(e) {
+        if (!e.target.contains(e.relatedTarget)) {
+            delete this.freezePosition;
+        }
+    }
+
+    @on('mousewheel .mac-scroll')
+    wheelScrollOptionList(e) {
+        let el = this.el.querySelector('.option-list'),
+            delta = e.deltaY || e.wheelDelta / 4;
+
+        el.scrollTop = el.scrollTop + delta;
+        e.preventDefault();
+    }
 
     constructor() {
         super(...arguments);
@@ -224,7 +245,15 @@ class BaseView extends Backbone.View {
 
     onShow() {} // noop
     onBeforeRender() {} // noop
-    onRender() {} // noop
+
+    onRender() {
+        this.attachListenerTo(window, 'scroll', () => {
+            if (this.freezePosition) {
+                window.scrollTo(0, this.freezePosition);
+            }
+        });
+    }
+
     onAfterRender() {} // noop
     onDomRefresh() {} // noop
 

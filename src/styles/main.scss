@@ -106,6 +106,27 @@ sup {
     overflow: hidden;
 }
 
+.mac-scroll {
+    &::-webkit-scrollbar {
+        -webkit-appearance: none;
+    }
+
+    &::-webkit-scrollbar:vertical {
+        width: 0.8rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(color(neutral-darkest), 0.3);
+        border-radius: 0.8rem;
+        border: thin solid color(neutral-lightest);
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: color(neutral-lightest);
+        border-radius: 0.8rem;
+    }
+}
+
 #main > *,
 .page-header,
 #footer {
