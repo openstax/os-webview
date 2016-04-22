@@ -17,9 +17,6 @@ module.exports = {
     version: project.version,
     license: project.license,
     watchOpts: {
-        interval: 300,
-        binaryInterval: 600,
-        usePolling: true,
         useFsEvents: true,
         awaitWriteFinish: true
     }
