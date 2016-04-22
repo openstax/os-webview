@@ -196,7 +196,11 @@ gulp.task('scripts', gulp.series(
 ));
 
 gulp.task('scripts:watch', () => {
-    gulp.watch(`${config.src}/**/*.js`, gulp.series(
+    gulp.watch(`${config.src}/**/*.js`, {
+        interval: 1000, // default 100
+        debounceDelay: 500, // default 500
+        mode: 'poll'
+    }, gulp.series(
         eslint,
         compileScripts,
         bs.reload
