@@ -196,27 +196,25 @@ class Header extends BaseView {
     @on('click .page-header .dropdown > a')
     flyOutMenu(e) {
         let w = window.innerWidth;
-
         let header = this.el.querySelector('.page-header');
         let $this = e.currentTarget;
         let parentItem = $this.parentNode;
         let dropDownMenu = $this.nextElementSibling;
 
-        e.preventDefault();
-        e.stopPropagation();
-
         if (w <= 768) {
+            e.preventDefault();
+            e.stopPropagation();
             this.cloneDropdownParent(e);
-        }
 
-        if (!dropDownMenu.classList.contains('open')) {
-            this.removeAllOpenClasses();
-            header.classList.add('open');
-            parentItem.classList.add('open');
-            dropDownMenu.classList.add('open');
-            this.openThisDropdown(e);
-        } else if (!e.target.classList.contains('back')) {
-            this.closeFullScreenNav(e);
+            if (!dropDownMenu.classList.contains('open')) {
+                this.removeAllOpenClasses();
+                header.classList.add('open');
+                parentItem.classList.add('open');
+                dropDownMenu.classList.add('open');
+                this.openThisDropdown(e);
+            } else if (!e.target.classList.contains('back')) {
+                this.closeFullScreenNav(e);
+            }
         }
     }
 

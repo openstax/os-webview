@@ -259,6 +259,16 @@ $transition: 0.3s;
                 }
             }
         }
+
+        .dropdown:hover .dropdown-menu {
+            @include desktop {
+                width: auto;
+                height: auto;
+                z-index: 1;
+                opacity: 1;
+                transform: translate3d(-50%, 0, 0);
+            }
+        }
     }
 
     .meta-nav {
@@ -504,7 +514,7 @@ $transition: 0.3s;
                 margin: 0;
                 position: relative;
 
-                &:hover::after {
+                &:not(.dropdown):hover::after {
                     background-color: color(green);
                     bottom: -1.7rem;
                     content: '';
@@ -513,14 +523,6 @@ $transition: 0.3s;
                     outline: 0;
                     position: absolute;
                     right: 1rem;
-                }
-
-                &.dropdown:hover::after {
-                    right: 0.5rem;
-                }
-
-                &.dropdown:last-child:hover::after {
-                    right: -0.5rem;
                 }
             }
 
