@@ -104,7 +104,7 @@ gulp.task('styles:watch', () => {
     gulp.watch([
         `${config.src}/**/*.scss`,
         `!${config.src}/styles/{components,mixins,variables}/**/*.scss`
-    ], gulp.series(
+    ], config.watchOpts, gulp.series(
         scsslint,
         compileChangedStyles,
         bs.reload // Only necessary if BS stream isn't piped in above
@@ -114,7 +114,7 @@ gulp.task('styles:watch', () => {
 gulp.task('component-styles:watch', () => {
     gulp.watch([
         `${config.src}/styles/components/**/*.scss`
-    ], gulp.series(
+    ], config.watchOpts, gulp.series(
         scsslint,
         compileMainStyle,
         bs.reload // Only necessary if BS stream isn't piped in above
@@ -124,7 +124,7 @@ gulp.task('component-styles:watch', () => {
 gulp.task('fundamental-styles:watch', () => {
     gulp.watch([
         `${config.src}/styles/{mixins,variables}/**/*.scss`
-    ], gulp.series(
+    ], config.watchOpts, gulp.series(
         scsslint,
         compileAllStyles,
         bs.reload // Only necessary if BS stream isn't piped in above

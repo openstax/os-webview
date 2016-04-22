@@ -23,9 +23,5 @@ function copy() {
 gulp.task(copy);
 
 gulp.task('copy:watch', () => {
-    gulp.watch(`${config.src}/*.{json,txt,ico}`, {
-        interval: 1000, // default 100
-        debounceDelay: 500, // default 500
-        usePolling: true
-    }, copy);
+    gulp.watch(`${config.src}/*.{json,txt,ico}`, config.watchOpts, copy);
 });

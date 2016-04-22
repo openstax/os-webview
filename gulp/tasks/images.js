@@ -23,5 +23,5 @@ function images() {
 gulp.task(images);
 
 gulp.task('images:watch', () => {
-    gulp.watch(`${config.src}/**/*.{png,jpg,jpeg,gif,svg,mp4}`, images);
+    gulp.watch(`${config.src}/**/*.{png,jpg,jpeg,gif,svg,mp4}`, config.watchOpts, images);
 });
