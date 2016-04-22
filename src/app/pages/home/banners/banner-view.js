@@ -39,7 +39,7 @@ export default class BannerView extends BaseView {
             setTimeout(() => {
                 this.parent.showNextBanner();
             }, 500);
-        }, 4500);
+        }, 7500);
     }
 
     hide() {

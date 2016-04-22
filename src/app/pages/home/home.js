@@ -45,9 +45,28 @@ export default class Home extends LoadingView {
         e.preventDefault();
     }
 
+    parallaxBanner() {
+        let bookBanners = this.el.querySelectorAll('.book-banners > div > div');
+        let books = this.el.querySelectorAll('.book');
+
+        for (let bookBanner of bookBanners) {
+            if (window.innerWidth > 1025) {
+                bookBanner.setAttribute('style', `background-position: 50% -${window.pageYOffset/2}px`);
+            } else {
+                bookBanner.setAttribute('style', `background-position: -15rem -${window.pageYOffset/2}px`);
+            }
+        }
+
+        for (let book of books) {
+            book.setAttribute('style', `background-position: 50% ${window.pageYOffset/20}px`);
+        }
+    }
+
     onRender() {
         super.onRender();
         appView.header.updateHeaderStyle();
+        this.attachListenerTo(window, 'scroll', this.parallaxBanner.bind(this));
+        this.attachListenerTo(window, 'resize', this.parallaxBanner.bind(this));
 
         this.regions.quotes.show(new Quotes([
             {
