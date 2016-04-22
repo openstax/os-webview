@@ -25,6 +25,11 @@
 
         @media (min-width: 500px) {
             flex-flow: row wrap;
+
+            div:first-child:nth-last-child(2),
+            div:first-child:nth-last-child(2) ~ div {
+                max-width: 50%; // IE fix
+            }
         }
 
 
