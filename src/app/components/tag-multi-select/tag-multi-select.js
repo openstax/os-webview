@@ -3,7 +3,6 @@ import BaseModel from '~/helpers/backbone/model';
 import BaseCollection from '~/helpers/backbone/collection';
 import Tag from './tag/tag';
 import Option from '../select-option/select-option';
-import TouchScroller from '~/helpers/touch-scroller';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './tag-multi-select.hbs';
 
@@ -30,16 +29,25 @@ export default class TagMultiSelect extends BaseView {
         e.preventDefault();
     }
 
-    @on('touchstart .option-list')
-    startScrollBio(e) {
-        let element = this.el.querySelector('.option-list');
-
-        this.optionScroller.start(element, e);
+    @on('scroll .option-list')
+    whileScrolling() {
+        this.freezePosition = document.documentElement.scrollTop || document.body.scrollTop;
     }
 
-    @on('touchmove .option-list')
-    scrollList(e) {
-        this.optionScroller.scroll(e);
+    @on('mouseleave .option-list')
+    leaveOptionList(e) {
+        if (!e.target.contains(e.relatedTarget)) {
+            delete this.freezePosition;
+        }
+    }
+
+    @on('mousewheel .option-list')
+    wheelScrollOptionList(e) {
+        let el = this.el.querySelector('.option-list');
+        let newY = el.scrollTop + e.deltaY;
+
+        el.scrollTop = newY;
+        e.preventDefault();
     }
 
     togglePulldown() {
@@ -56,7 +64,6 @@ export default class TagMultiSelect extends BaseView {
     constructor() {
         super();
         this.stateCollection = new BaseCollection();
-        this.optionScroller = new TouchScroller();
     }
 
     checkValid(originalOpt) {
@@ -137,6 +144,11 @@ export default class TagMultiSelect extends BaseView {
     }
 
     onRender() {
+        this.attachListenerTo(window, 'scroll', () => {
+            if (this.freezePosition) {
+                window.scrollTo(0, this.freezePosition);
+            }
+        });
         this.el.classList.add('proxy-widget', 'tag-multi-select');
         this.hasDropdownEl = this.el.querySelector('.has-dropdown');
         this.stateCollection.each((model) => {
