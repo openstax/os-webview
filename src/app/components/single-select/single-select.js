@@ -31,27 +31,6 @@ export default class SingleSelect extends BaseView {
         this.optionScroller.scroll(e);
     }
 
-    @on('scroll .option-list')
-    whileScrolling() {
-        this.freezePosition = document.documentElement.scrollTop || document.body.scrollTop;
-    }
-
-    @on('mouseleave .option-list')
-    leaveOptionList(e) {
-        if (!e.target.contains(e.relatedTarget)) {
-            delete this.freezePosition;
-        }
-    }
-
-    @on('mousewheel .option-list')
-    wheelScrollOptionList(e) {
-        let el = this.el.querySelector('.option-list'),
-            delta = e.deltaY || e.wheelDelta / 4;
-
-        el.scrollTop = el.scrollTop + delta;
-        e.preventDefault();
-    }
-
     constructor() {
         super();
         this.stateCollection = new BaseCollection();
@@ -143,6 +122,7 @@ export default class SingleSelect extends BaseView {
     }
 
     onRender() {
+        super.onRender();
         this.selectedButtonEl = this.el.querySelector('.selected-button');
         this.optionListEl = this.el.querySelector('.option-list');
         this.hasDropdownEl = this.el.querySelector('.has-dropdown');
@@ -153,11 +133,6 @@ export default class SingleSelect extends BaseView {
             this.regions.optionList.append(ssOption);
             model.set('listItem', ssOption);
             this.synchronizeModel(model);
-        });
-        this.attachListenerTo(window, 'scroll', () => {
-            if (this.freezePosition) {
-                window.scrollTo(0, this.freezePosition);
-            }
         });
     }
 }

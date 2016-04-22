@@ -29,27 +29,6 @@ export default class TagMultiSelect extends BaseView {
         e.preventDefault();
     }
 
-    @on('scroll .option-list')
-    whileScrolling() {
-        this.freezePosition = document.documentElement.scrollTop || document.body.scrollTop;
-    }
-
-    @on('mouseleave .option-list')
-    leaveOptionList(e) {
-        if (!e.target.contains(e.relatedTarget)) {
-            delete this.freezePosition;
-        }
-    }
-
-    @on('mousewheel .option-list')
-    wheelScrollOptionList(e) {
-        let el = this.el.querySelector('.option-list');
-        let newY = el.scrollTop + e.deltaY;
-
-        el.scrollTop = newY;
-        e.preventDefault();
-    }
-
     togglePulldown() {
         let optionList = this.el.querySelector('.option-list'),
             isOpen;
@@ -144,11 +123,7 @@ export default class TagMultiSelect extends BaseView {
     }
 
     onRender() {
-        this.attachListenerTo(window, 'scroll', () => {
-            if (this.freezePosition) {
-                window.scrollTo(0, this.freezePosition);
-            }
-        });
+        super.onRender();
         this.el.classList.add('proxy-widget', 'tag-multi-select');
         this.hasDropdownEl = this.el.querySelector('.has-dropdown');
         this.stateCollection.each((model) => {
