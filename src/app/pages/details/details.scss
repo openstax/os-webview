@@ -46,7 +46,13 @@
         }
 
         ol {
+            margin: 0;
             list-style: none;
+            padding: 0;
+
+            ol {
+                padding-left: 2rem;
+            }
         }
 
         &.hidden {
@@ -59,6 +65,11 @@
 
         .toc-remover {
             position: relative;
+
+            .remover {
+                top: 0;
+                right: 0;
+            }
         }
 
         .box {
@@ -70,7 +81,7 @@
                 position: absolute;
                 left: 50%;
                 top: 60%;
-                padding: 1.5rem;
+                padding: 3rem;
                 max-width: 60rem;
                 width: 100%;
                 max-height: 40rem;
