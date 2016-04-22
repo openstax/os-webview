@@ -2,7 +2,7 @@ import BaseView from './view';
 import LoadingSection from '~/components/loading-section/loading-section';
 
 const PARSE_URL = /url\(['"]?([^")]+)/;
-const MINIMUM_WAIT = 1200;
+const MINIMUM_WAIT = 2000;
 
 function getImages() {
     let urls = new Set();
