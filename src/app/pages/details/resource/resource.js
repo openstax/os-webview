@@ -1,9 +1,15 @@
 import BaseView from '~/helpers/backbone/view';
-import {props} from '~/helpers/backbone/decorators';
+import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './resource.hbs';
 
 @props({template})
 export default class Resource extends BaseView {
+    @on('click [href*="login"]')
+    loginInThisTab(e) {
+        window.location = e.currentTarget.href;
+        e.preventDefault();
+    }
+
     constructor(data, alternateLink) {
         super();
         this.templateHelpers = data;
