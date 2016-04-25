@@ -1,6 +1,7 @@
 import BaseView from '~/helpers/backbone/view';
 import BaseModel from '~/helpers/backbone/model';
 import BaseCollection from '~/helpers/backbone/collection';
+import $ from '~/helpers/$';
 import TouchScroller from '~/helpers/touch-scroller';
 import Option from '../select-option/select-option';
 import {on, props} from '~/helpers/backbone/decorators';
@@ -122,7 +123,7 @@ export default class SingleSelect extends BaseView {
     }
 
     onRender() {
-        super.onRender();
+        $.applyScrollFix(this);
         this.selectedButtonEl = this.el.querySelector('.selected-button');
         this.optionListEl = this.el.querySelector('.option-list');
         this.hasDropdownEl = this.el.querySelector('.has-dropdown');

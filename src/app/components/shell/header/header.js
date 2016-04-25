@@ -377,6 +377,7 @@ class Header extends BaseView {
         this.attachListenerTo(window, 'scroll', this.updateHeaderStyle.bind(this));
         this.attachListenerTo(window, 'scroll', this.removeAllOpenClasses.bind(this));
         this.attachListenerTo(window, 'resize', this.closeFullScreenNav.bind(this));
+        document.body.classList.remove('no-scroll');
 
         // prevent scrolling on iOS when mobile menu is active
         let header = document.querySelector('.page-header');

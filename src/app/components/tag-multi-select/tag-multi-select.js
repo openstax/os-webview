@@ -1,6 +1,7 @@
 import BaseView from '~/helpers/backbone/view';
 import BaseModel from '~/helpers/backbone/model';
 import BaseCollection from '~/helpers/backbone/collection';
+import $ from '~/helpers/$';
 import Tag from './tag/tag';
 import Option from '../select-option/select-option';
 import {on, props} from '~/helpers/backbone/decorators';
@@ -123,7 +124,7 @@ export default class TagMultiSelect extends BaseView {
     }
 
     onRender() {
-        super.onRender();
+        $.applyScrollFix(this);
         this.el.classList.add('proxy-widget', 'tag-multi-select');
         this.hasDropdownEl = this.el.querySelector('.has-dropdown');
         this.stateCollection.each((model) => {
