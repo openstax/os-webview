@@ -1,9 +1,10 @@
 @import 'variables';
 @import 'mixins';
 
-$breakpoint-1: 999px;
-$breakpoint-2: 699px;
-$breakpoint-3: 1920px;
+$breakpoint-1: 908px;
+$breakpoint-2: 761px;
+$iphone-five: 374px;
+$hero-break-width: 880px;
 
 .impact-page {
 
@@ -13,135 +14,152 @@ $breakpoint-3: 1920px;
 
     .hero {
         align-items: center;
+        background-color: color(green);
         background-image: url('/images/impact/banner-bg.jpg');
         background-size: cover;
-        display: flex;
-        height: 42.8vw;
         overflow: hidden;
         position: relative;
+        width: 100%;
+        justify-content: center;
+        display: flex;
+        height: 60rem;
+        text-align: left;
 
-        @include phone {
-            background-image: none;
-        }
-
-        @media (max-width: $breakpoint-1) {
-            height: 42rem;
-        }
-
-        @media (min-width: $breakpoint-3) {
+        @media (max-width: $hero-break-width) {
             min-height: 0;
-            height: 82rem;
         }
 
-        > .box-1,
-        > .box-2,
-        > .student {
+        @include collapsed {
+            align-items: stretch;
+            background: none;
+            height: calc(100vh - 6rem);
+            max-height: 53rem;
+        }
+
+        .container-wrap {
+            display: flex;
+            flex-flow: column wrap;
+            margin: 0 auto;
+            width: 100%;
+            max-width: $boxed-width;
+            z-index: 1;
+
+            @include collapsed {
+                flex-flow: row wrap;
+                align-items: stretch;
+            }
+
+        }
+
+        .student {
+            position: absolute;
+            overflow: hidden;
+            top: 0;
+            height: 100%;
+            width: 84rem;
+            background-image: url('/images/impact/banner.png');
+            background-size: 100% auto;
+            background-position: 0 bottom;
+            background-repeat: no-repeat;
+            transition: All ease 0.2s;
+
+            @media screen and (max-width: $boxed-width) {
+                left: calc(-84rem + 70%);
+            }
+
+            @media screen and (min-width: $boxed-width + 1) {
+                left: calc(50% - 84rem);
+            }
+
+            @include collapsed {
+                background-position: left 1.8rem;
+                background-size: contain;
+                bottom: 0;
+                height: 50%;
+                left: 0;
+                top: auto;
+                width: 38rem;
+                right: 0;
+            }
+        }
+
+        .overlay {
+            color: color(neutral-lightest);
+            padding: 4rem;
+            display: flex;
+            justify-content: flex-end;
+            z-index: 1;
+
+            @media screen and (min-width: $boxed-width + 1) {
+                padding-left: calc(-61rem + 55%);
+            }
+
+            @include collapsed {
+                background-color: color(green);
+                width: 100%;
+                z-index: auto;
+            }
+
+            .text-block {
+                background-color: rgba(saturate(color(green), 10%), 0.85);
+                flex-basis: 50%;
+                padding: 4rem;
+
+                @media screen and (min-width: $breakpoint-2) and (max-width: $hero-break-width) {
+                    flex-basis: 60%;
+                }
+
+                @include collapsed {
+                    background: none;
+                    padding: 0;
+                    flex-basis: 100%;
+                }
+            }
+
+            h1 {
+                color: inherit;
+                line-height: 0.8;
+
+                @media screen and (max-width: $iphone-five) {
+                    font-size: 4.5rem;
+                }
+            }
+
+            .blurb {
+                padding: 1em 0;
+                font-size: 1.8rem;
+
+                @include collapsed {
+                    display: none;
+                }
+            }
+        }
+
+        .square-1,
+        .square-2 {
+            background-color: color(green);
+            opacity: 0.3;
             position: absolute;
 
-            @media (max-width: $breakpoint-2) {
+            @media (max-width: $breakpoint-1) {
                 display: none;
             }
         }
 
-        > .box-1,
-        > .box-2 {
-            background-color: color(green);
-            opacity: 0.3;
-        }
-
-        .box-1 {
+        .square-1 {
             left: 46%;
-            height: calc(6vw + 8rem);
-            top: 2.36vw;
-            width: calc(6vw + 8rem);
-
-            @media (min-width: $breakpoint-3) {
-                height: 19.5rem;
-                top: 4.5rem;
-                width: 19.5rem;
-            }
+            height: 16.8rem;
+            top: 3.5rem;
+            width: 17.8rem;
         }
 
-        .box-2 {
+        .square-2 {
             left: 7.71%;
-            height: 65%;
-            top: 25.7%;
-            width: 58.36%;
-
-            @media (min-width: $breakpoint-3) {
-                height: 53.3rem;
-                top: 21.1rem;
-            }
+            height: 39rem;
+            top: 15.6rem;
+            width: 72rem;
         }
 
-        > .student {
-            background-image: url('/images/impact/banner.png');
-            background-size: cover;
-            height: 106%;
-            left: 0;
-            top: -5%;
-            width: 65.15vw;
-
-            @media (max-width: $breakpoint-1) {
-                left: calc(33vw - 33rem);
-            }
-
-            @media (min-width: $breakpoint-3) {
-                height: 86.9rem;
-                width: 125rem;
-            }
-        }
-
-        > .overlay {
-            background-color: rgba(color(green), 0.85);
-            color: color(neutral-lightest);
-            margin-left: 51.07vw;
-            text-align: left;
-            width: calc(18vw + 27rem);
-            z-index: 10;
-
-            @media (max-width: $breakpoint-2) {
-                margin: 0;
-                height: 100%;
-                padding: 0 2vw 8vw;
-                width: 100%;
-            }
-
-            @media (min-width: $breakpoint-3) {
-                margin-left: calc(142.7rem - 23.33vw); // 98rem @ 1920, 84rem @2520
-                width: 32.5%; // 61.2rem @ 1920
-            }
-
-            @media (min-width: 2520px) {
-                margin: auto;
-            }
-
-            @include phone {
-                background-color: color(green);
-                padding: 4vw;
-            }
-
-            > .text-block {
-                margin: 2.86vw calc(1.8vw + 1.5rem);
-
-                h1 {
-                    @include variable-sized-text(5.3, 0.2);
-
-                    color: inherit;
-                    font-weight: 500;
-                    letter-spacing: -0.15rem;
-                    line-height: 0.8;
-                }
-
-                .blurb {
-                    @include variable-sized-text(1.51, 0.15);
-
-                    letter-spacing: 0.08rem;
-                    line-height: 1.7;
-                    padding: 1.43vw 0 0.714vw;
-                }
-            }
-        }
     }
 
     .affiliates {
