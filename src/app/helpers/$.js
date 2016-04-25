@@ -39,6 +39,36 @@ $.scrollTo = (el, customStep) => {
     }, tick);
 };
 
+$.applyScrollFix = (view) => {
+    let freezePosition = null,
+        setFreezePosition = () => {
+            freezePosition = document.documentElement.scrollTop || document.body.scrollTop;
+        },
+        handleMouseLeave = (e) => {
+            if (!e.target.contains(e.relatedTarget)) {
+                freezePosition = null;
+            }
+        },
+        handleWheelEvent = (e) => {
+            let el = e.currentTarget,
+                delta = e.deltaY || e.wheelDelta / 4;
+
+            el.scrollTop = el.scrollTop + delta;
+            e.preventDefault();
+        };
+
+    for (let el of view.el.querySelectorAll('.mac-scroll')) {
+        view.attachListenerTo(el, 'scroll', setFreezePosition);
+        view.attachListenerTo(el, 'mouseleave', handleMouseLeave);
+        view.attachListenerTo(el, 'mousewheel', handleWheelEvent);
+    }
+    view.attachListenerTo(window, 'scroll', () => {
+        if (freezePosition !== null) {
+            window.scrollTo(0, freezePosition);
+        }
+    });
+};
+
 $.hashTarget = (event) => {
     let node = event.target;
 

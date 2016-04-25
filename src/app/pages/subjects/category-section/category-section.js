@@ -25,6 +25,9 @@ export default class CategorySection extends BaseView {
     }
 
     setState() {
+        if (!this.el) {
+            return;
+        }
         let value = this.model.get('selectedFilter');
 
         this.el.classList.toggle('hidden', value !== this.category && value !== 'View All');

@@ -119,7 +119,7 @@ export default class Details extends LoadingView {
     }
 
     onRender() {
-        super.onRender();
+        $.applyScrollFix(this);
         this.toggleFixedClass();
         this.attachListenerTo(window, 'scroll', this.toggleFixedClass.bind(this));
 
