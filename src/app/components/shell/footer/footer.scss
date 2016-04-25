@@ -21,11 +21,10 @@
         margin: 0 auto;
         max-width: 90%;
         opacity: 0.85;
-        padding: 4rem 8vw;
         width: 90rem;
 
         @include desktop {
-            padding: 4rem 9.6rem;
+            padding: 0;
         }
     }
 
@@ -46,11 +45,18 @@
         letter-spacing: -0.2rem;
         line-height: 1;
         padding: 3rem 0;
+
+        .narrow-block {
+            display: inline-block;
+        }
     }
 
     .copyright {
         flex-wrap: wrap;
-        padding-bottom: 1rem;
+
+        @include desktop {
+            padding: 0 5rem 1rem;
+        }
 
         ul {
             display: flex;

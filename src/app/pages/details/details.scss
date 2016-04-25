@@ -220,13 +220,10 @@
             order: 3;
             font-size: 1.6rem;
             line-height: 2.6rem;
-            color: color(neutral-dark);
 
             @include tablet {
                 flex: 1 100%;
             }
-
-
 
             @include desktop {
                 order: 2;
@@ -370,7 +367,6 @@
     .resources {
         font-size: 1.6rem;
         line-height: 2.6rem;
-        color: color(neutral-dark);
         background-color: lighten(color(neutral-lighter), 8%);
 
         h2 {
