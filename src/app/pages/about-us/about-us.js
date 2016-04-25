@@ -3,6 +3,7 @@ import BaseModel from '~/helpers/backbone/model';
 import Headshot from './headshot/headshot';
 import {props} from '~/helpers/backbone/decorators';
 import {template} from './about-us.hbs';
+import Hero from './hero/hero';
 import {template as strips} from '~/components/strips/strips.hbs';
 import bios from './bios.js';
 
@@ -54,12 +55,15 @@ function assignColorsToTeam(team) {
     template,
     templateHelpers: {strips},
     regions: {
+        hero: '.hero',
         team: '.our-team>.headshots',
         advisors: '.strategic-advisors>.headshots'
     }
 })
 export default class AboutUs extends LoadingView {
     onRender() {
+        this.regions.hero.show(new Hero());
+
         let stateModel = new BaseModel();
 
         super.onRender();

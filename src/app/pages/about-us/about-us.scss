@@ -20,13 +20,29 @@
         display: none;
     }
 
-    .hero {
-        background-color: color(gray);
-        color: color(neutral-lightest);
+    .strips {
+        margin: 0;
+    }
 
-        h1 {
-            color: color(orange);
+    .meta {
+        background-color: color(neutral-lightest);
+        padding: 8rem 0;
+
+        h2 {
+            margin: 0;
         }
+
+        p {
+            line-height: 2.6rem;
+            font-size: 1.8rem;
+
+            @include desktop {
+                width: 80%;
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+         }
     }
 
     section {

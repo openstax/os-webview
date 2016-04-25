@@ -1,11 +1,14 @@
 <style scoped>
     @import url(/app/pages/about-us/about-us.css);
     @import url(/app/components/remover/remover.css);
+    @import url(/app/pages/about-us/hero/hero.css);
 </style>
 <div class="about-us page hidden">
-    <div class="hero">
+    <div class="hero w-cards"></div>
+    {{{strips}}}
+    <div class="meta">
         <div class="boxed">
-            <h1>About Us</h1>
+            <h2>About Us</h2>
             <p>
                 OpenStax is a nonprofit based at Rice University, and it’s our mission to
                 improve student access to education. Our first open source college
@@ -21,7 +24,6 @@
             </p>
         </div>
     </div>
-    {{{strips}}}
     <div class="boxed">
         <section class="our-team">
             <h2>Our Team</h2>
