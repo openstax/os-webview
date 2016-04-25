@@ -99,7 +99,8 @@ sup {
     display: none;
 }
 
-.no-scroll {
+.no-scroll,
+.toc-overlay {
     overflow: hidden;
 }
 
@@ -141,6 +142,10 @@ sup {
 
     @include desktop {
         padding-top: 11rem;
+    }
+
+    .toc-overlay & {
+        z-index: 2;
     }
 }
 
