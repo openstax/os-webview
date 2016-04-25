@@ -31,7 +31,6 @@
 
         p {
             font-size: 1.8rem;
-            color: color(neutral-dark);
         }
     }
 
@@ -80,8 +79,6 @@
         }
 
         .title {
-            font-size: 1.8rem;
-            color: color(neutral-dark);
             font-weight: 600;
 
             @include desktop {
