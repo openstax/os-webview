@@ -39,9 +39,10 @@
         opacity: 1;
         transition: opacity 0.3s;
         -webkit-overflow-scrolling: touch;
+        background-color: rgba(color(neutral-lightest), 0.97);
 
         @include desktop {
-            background-color: rgba(color(neutral-dark), 0.90);
+            background-color: rgba(color(neutral-dark), 0.93);
             overflow-y: auto;
         }
 
@@ -73,20 +74,19 @@
         }
 
         .box {
-            background-color: rgba(color(neutral-lightest), 0.97);
-            padding: 7.5rem 1.5rem 1.5rem;
+            padding: 3rem;
             font-weight: 500;
 
             @include desktop {
+                background-color: rgba(color(neutral-lightest), 0.97);
                 position: absolute;
                 left: 50%;
-                top: 60%;
-                padding: 3rem;
+                top: 50%;
                 max-width: 60rem;
                 width: 100%;
-                max-height: 40rem;
+                max-height: 50rem;
                 overflow-y: auto;
-                transform: translate3d(-50%, -60%, 0);
+                transform: translate3d(-50%, -50%, 0);
             }
 
             .subunit {

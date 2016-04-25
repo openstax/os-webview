@@ -56,7 +56,7 @@ export default class Details extends LoadingView {
     showTableOfContents(event) {
         this.openedWith = event.target;
         this.el.querySelector('.table-of-contents').classList.toggle('hidden');
-        document.body.setAttribute('style', 'overflow:hidden');
+        document.body.classList.add('toc-overlay');
         event.preventDefault();
         event.stopPropagation();
     }
@@ -65,7 +65,7 @@ export default class Details extends LoadingView {
     hideTOC(event) {
         if (event.target !== this.openedWith) {
             this.el.querySelector('.table-of-contents').classList.add('hidden');
-            document.body.removeAttribute('style');
+            document.body.classList.remove('toc-overlay');
         }
     }
 
