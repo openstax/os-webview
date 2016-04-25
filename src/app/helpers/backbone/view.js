@@ -88,7 +88,7 @@ class BaseView extends Backbone.View {
 
     @on('mousewheel .mac-scroll')
     wheelScrollOptionList(e) {
-        let el = this.el.querySelector('.option-list'),
+        let el = e.currentTarget,
             delta = e.deltaY || e.wheelDelta / 4;
 
         el.scrollTop = el.scrollTop + delta;
