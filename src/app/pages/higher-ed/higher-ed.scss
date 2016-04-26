@@ -46,9 +46,10 @@ $hero-break-width: 880px;
         .container-wrap {
             display: flex;
             flex-flow: column wrap;
+            height: 100%;
             margin: 0 auto;
-            width: 100%;
             max-width: $boxed-width;
+            width: 100%;
             z-index: 1;
 
             @include collapsed {
@@ -104,6 +105,8 @@ $hero-break-width: 880px;
 
                 @include collapsed {
                     background-color: color(cyan);
+                    height: 100%;
+                    width: 100%;
                 }
 
                 .text-block {
@@ -187,6 +190,7 @@ $hero-break-width: 880px;
             display: flex;
             list-style-type: none;
             margin: 3.2vw 0;
+            max-width: 85vw;
             padding: 4.29vw 0;
 
             @include collapsed {
@@ -311,4 +315,3 @@ $hero-break-width: 880px;
 
     }
 }
-
