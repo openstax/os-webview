@@ -23,7 +23,12 @@ import {template as strips} from '~/components/strips/strips.hbs';
 export default class NewAccountForm extends ProxyWidgetView {
     @on('click #toggle-faculty')
     clickFaculty(event) {
-        this.toggleFaculty(event.target.checked);
+        let checkedState = event.target.checked,
+            leadSourceField = this.el.querySelector('[name="lead_source"]'),
+            leadType = checkedState ? 'OSC Faculty' : 'OSC User';
+
+        this.toggleFaculty(checkedState);
+        leadSourceField.value = leadType;
     }
 
     toggleFaculty(show) {

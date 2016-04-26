@@ -144,10 +144,7 @@ let bios = {
             Award, the IEEE Signal Processing Society Education Award, and has
             been named one of Edutopia Magazine’s Daring Dozen Education Innovators.
             For his research projects in machine learning, he has received numerous
-            national awards and has been elected a Fellow of IEEE and AAAS.`,
-            // image: 'richard_baraniuk.jpg',
-            bgColor: 'gray',
-            textColor: 'orange'
+            national awards and has been elected a Fellow of IEEE and AAAS.`
         },
         {
             name: 'Daniel Williamson',
@@ -159,9 +156,7 @@ let bios = {
             He has overseen the creation, editing, and maintenance of a database
             of nearly 2000 open educational resources accounting for a total
             online viewership of over 3 million.`,
-            image: 'Daniel.png',
-            bgColor: 'cyan',
-            textColor: 'blue'
+            image: 'Daniel.png'
         },
         {
             name: 'David Harris',
@@ -175,10 +170,7 @@ let bios = {
             provider. At OpenStax College David hopes to contribute to the teams
             effort of improving access to high quality materials by working with
             authors, developers, and partners to substantially lower costs for
-            students.`,
-            // image: 'david_harris.jpg',
-            bgColor: 'orange',
-            textColor: 'white'
+            students.`
         },
         {
             name: 'Kathi Fletcher',
@@ -203,9 +195,7 @@ let bios = {
             on middleware software, taught computer engineering courses at Rice
             University in Houston, Texas, and conducted grant-supported research
             in K12 science education. She has a Master’s Degree in Computer Science.`,
-            image: 'Kathi.png',
-            bgColor: 'turquoise',
-            textColor: 'blue'
+            image: 'Kathi.png'
         },
         {
             name: 'Beth Cassidy',
@@ -222,9 +212,7 @@ let bios = {
             and has served as a mentor for students interested in the nonprofit
             sector with MBA Women International, formerly National Association
             of Women MBAs.`,
-            image: 'Beth.png',
-            bgColor: 'cyan',
-            textColor: 'white'
+            image: 'Beth.png'
         },
         {
             name: 'Nicole Finkbeiner',
@@ -238,9 +226,7 @@ let bios = {
             not promoting Open Educational Resources, Nicole fills her time
             attending lectures, spending time with friends, writing about
             marketing on her blog, and working out.`,
-            image: 'Nicole.png',
-            bgColor: 'blue',
-            textColor: 'green'
+            image: 'Nicole.png'
         },
         {
             name: 'Dani Nicholson',
@@ -252,9 +238,7 @@ let bios = {
             Europe and also reported for local newspapers. Dani oversees the
             communication components to all higher education related activities
             for Connexions and OpenStax College.`,
-            image: 'Dani.png',
-            bgColor: 'turquoise',
-            textColor: 'blue'
+            image: 'Dani.png'
         },
         {
             name: 'Denver Greene',
@@ -264,9 +248,7 @@ let bios = {
             Connexions platform. When Denver is not telling the world about open
             education resources he is swing dancing or participating in Rice
             Universities Marching Owl Band.`,
-            image: 'Denver.png',
-            bgColor: 'cyan',
-            textColor: 'white'
+            image: 'Denver.png'
         },
         {
             name: 'Ed Woodward',
@@ -291,9 +273,7 @@ let bios = {
             focused on performance improvements, expanding capabilities, and
             innovative cost savings. Norm has degrees in Physics and Technical
             Communication and has written a number of technical manuals.`,
-            image: 'Norm.png',
-            bgColor: 'blue',
-            textColor: 'green'
+            image: 'Norm.png'
         },
         {
             name: 'Alana Lemay-Gibson',
@@ -310,9 +290,7 @@ let bios = {
             Professional (PMP) certification in November 2012. She has a Master’s
             degree in Education with an emphasis on Educational Anthropology and
             Bachelor’s degree in Anthropology.`,
-            image: 'Alana.png',
-            bgColor: 'turquoise',
-            textColor: 'white'
+            image: 'Alana.png'
         },
         {
             name: 'Alina Slavik',
@@ -327,9 +305,7 @@ let bios = {
             at OpenStax, Alina volunteers on Frame Dance Productions' Board of
             Directors, and she can be found at the cinema or attending local art
             happenings.`,
-            image: 'Alina.png',
-            bgColor: 'cyan',
-            textColor: 'blue'
+            image: 'Alina.png'
         },
         {
             name: 'Jeff DiGiovanni',
@@ -339,9 +315,7 @@ let bios = {
             support for OpenStax College. His time not spent assisting faculty
             and students in the adoption and use of Open Educational Resources is
             spent writing, reading, and cycling.`,
-            image: 'Jeff.png',
-            bgColor: 'orange',
-            textColor: 'yellow'
+            image: 'Jeff.png'
         },
         {
             name: 'Ross Reedstrom',
@@ -351,9 +325,7 @@ let bios = {
             University, and a Ph. D. in Cell & Molecular Biology from University
             of Wisconsin - Madison. He's been an Free and Open Source software
             user and advocate for almost two decades.`,
-            image: 'Ross.png',
-            bgColor: 'yellow',
-            textColor: 'orange'
+            image: 'Ross.png'
         },
         {
             name: 'Dennis Williamson',
@@ -362,9 +334,7 @@ let bios = {
             His experience has ranged from the US District Court to MIS director
             of a casino to a large web hosting company and others with a wide
             variety of hardware, operating systems and application software.`,
-            image: 'Dennis.png',
-            bgColor: 'turquoise',
-            textColor: 'white'
+            image: 'Dennis.png'
         },
         {
             name: 'Chris Nuber',
@@ -378,9 +348,7 @@ let bios = {
             is currently responsible designing, implementing and maintaining
             deployment systems as well as system maintenance and network
             infrastructure for the OpenStax Team.`,
-            image: 'Chris N.png',
-            bgColor: 'cyan',
-            textColor: 'blue'
+            image: 'Chris N.png'
         },
         {
             name: 'JP Slavinsky',
@@ -391,10 +359,7 @@ let bios = {
             interactions between students and open educational resources. A
             graduate of Rice and Berkeley, JP worked in Silicon Valley for six
             years on defense-related software projects and also for several years
-            managing technical research projects at Rice.`,
-            // image: 'JP.png',
-            bgColor: 'deep-green',
-            textColor: 'white'
+            managing technical research projects at Rice.`
         },
         {
             name: 'Philip Schatz',
@@ -404,9 +369,7 @@ let bios = {
             University. When he is not scaling mountains to find Sasquatch, he
             designs and writes the open source code to get textbooks into the
             hands of people everywhere.`,
-            image: 'Phil S.png',
-            bgColor: 'gray',
-            textColor: 'orange'
+            image: 'Phil S.png'
         },
         {
             name: 'Kevin Burleigh',
@@ -415,9 +378,7 @@ let bios = {
             lives he's developed diagnostic software for medical ultrasound machines,
             as well as defense-related signal processing and geolocation software.
             Kevin has a degree in Electrical Engineering and Computer Science from MIT.`,
-            image: 'Kevin.png',
-            bgColor: 'cyan',
-            textColor: 'blue'
+            image: 'Kevin.png'
         },
         {
             name: 'Phil Grimaldi',
@@ -427,9 +388,7 @@ let bios = {
             of human learning and applying these principles to solve educational problems.
             He currently conducts research aimed at integrating cognitive science into
             OpenStax Tutor.`,
-            image: 'Phil G.png',
-            bgColor: 'gray',
-            textColor: 'yellow'
+            image: 'Phil G.png'
         },
         {
             name: 'Drew Waters',
@@ -439,10 +398,7 @@ let bios = {
             College, which aims to create a personalized learning experience for students
             by mining interactions between students and educational content. Prior to
             working for OpenStax College, Drew spent 5 years as a Communications Systems
-            Analyst at L-3 Communications in Salt Lake City, Utah.`,
-            // image: 'Drew.png',
-            bgColor: 'turquoise',
-            textColor: 'blue'
+            Analyst at L-3 Communications in Salt Lake City, Utah.`
         },
         {
             name: 'Kim Davenport',
@@ -454,10 +410,7 @@ let bios = {
             the team, Kim spent several years as a research analyst in higher education,
             including at the Jesse H. Jones School of Management here at Rice. Before
             that, she worked as an employee training specialist and paralegal. Kim is
-            a Rice graduate.`,
-            // image: 'Kim.png',
-            bgColor: 'orange',
-            textColor: 'white'
+            a Rice graduate.`
         },
         {
             name: 'Micaela McGlone',
@@ -469,9 +422,7 @@ let bios = {
             at Cristo Rey Jesuit College Prep where her chief focus was managing the
             relationship between the school’s corporate sponsors and the greater school
             community. Micaela is a graduate of Washington and Lee University.`,
-            image: 'Micaela.png',
-            bgColor: 'turquoise',
-            textColor: 'white'
+            image: 'Micaela.png'
         },
         {
             name: 'Heather Seeba',
@@ -480,9 +431,7 @@ let bios = {
             Tutor's educational research. Heather previously worked for the Digital
             Signal Processing group at Rice after coming from the oilfield industry.
             She has an electrical engineering degree from Rice.`,
-            image: 'Heather.png',
-            bgColor: 'cyan',
-            textColor: 'blue'
+            image: 'Heather.png'
         },
         {
             name: 'Greg Fitch',
@@ -492,9 +441,7 @@ let bios = {
             the Tutor systems. Prior to joining OpenStax he supported the computer
             systems of various non-profit and government organizations. He graduated
             from the University of Texas with a focus on government and technology.`,
-            image: 'Greg.png',
-            bgColor: 'cyan',
-            textColor: 'blue'
+            image: 'Greg.png'
         },
         {
             name: 'Tory Watterson',
@@ -506,9 +453,7 @@ let bios = {
             than 10 years’ experience in accounting. When not at OpenStax, Tory can be found at
             Discovery Green dancing zumba, at the cinema or in the kitchen cooking clean and
             green meals for her family.`,
-            image: 'Tory.png',
-            bgColor: 'turquoise',
-            textColor: 'white'
+            image: 'Tory.png'
         },
         {
             name: 'Jemel Agulto',
@@ -521,9 +466,7 @@ let bios = {
             Entrepreneurship Certificate. While not at OpenStax, Jemel can be seen taking
             photographs around the city of Houston or supporting his favorite sports teams
             with his friends and family.`,
-            image: 'Jemel.png',
-            bgColor: 'cyan',
-            textColor: 'white'
+            image: 'Jemel.png'
         },
         {
             name: 'Kerwin So',
@@ -534,9 +477,7 @@ let bios = {
             also has a background in academic libraries and archives. Kerwin holds a
             Bachelor’s degree from UC Berkeley and a Master’s degree in Library & Information
             Science from San Jose State University. He enjoys writing in the third person.`,
-            image: 'Kerwin.png',
-            bgColor: 'turquoise',
-            textColor: 'blue'
+            image: 'Kerwin.png'
         },
         {
             name: 'Ryan Stickney',
@@ -550,9 +491,7 @@ let bios = {
             her expertise in MathML and the Connexions markup language. When Ryan is not
             helping to make education more accessible, she is a staff singer in several
             Houston choral groups, including the Houston Chamber Choir.`,
-            image: 'Ryan.png',
-            bgColor: 'blue',
-            textColor: 'green'
+            image: 'Ryan.png'
         },
         {
             name: 'Britney Blodget',
@@ -562,9 +501,7 @@ let bios = {
             work with Stage Store Inc. as Lead Content Coordinator, helping to launch and grow
             their E-commerce web platform. When not at OpenStax Britney can be found outdoors,
             with her cats, or eating.`,
-            image: 'Britney.png',
-            bgColor: 'orange',
-            textColor: 'white'
+            image: 'Britney.png'
         },
         {
             name: 'Larissa Chu',
@@ -575,9 +512,7 @@ let bios = {
             Chinese. Prior to joining OpenStax, she worked at Fairmount Santrol, a company that
             provides sand for hydraulic fracturing, as a data administrator. When not at OpenStax,
             Larissa spends time shopping, taking pictures around Houston and watching Netflix.`,
-            image: 'Larissa.png',
-            bgColor: 'gray',
-            textColor: 'orange'
+            image: 'Larissa.png'
         },
         {
             name: 'Britt Weinstein',
@@ -585,10 +520,7 @@ let bios = {
             bio: `As a Digital Media Specialist, Brittany verifies the final stages of textbook
             content quality assurance. Brittany graduated from the University of Texas with a
             degree in Linguistics, focused on Spanish and Portuguese. She enjoys playing tennis,
-            reading graphic novels, and traveling.`,
-            // image: 'Britt.png',
-            bgColor: 'yellow',
-            textColor: 'orange'
+            reading graphic novels, and traveling.`
         },
         {
             name: 'Jason Holmes',
@@ -602,9 +534,7 @@ let bios = {
             Louisiana State University before taking a faculty position at Kent State University
             for 7 years. Jason has a BA in English Literature and a MLIS, both from LSU and a
             PhD in Information Science from the University of North Texas.`,
-            image: 'Jason.png',
-            bgColor: 'turquoise',
-            textColor: 'blue'
+            image: 'Jason.png'
         },
         {
             name: 'Fred Lindner',
@@ -618,9 +548,7 @@ let bios = {
             Austin State University with a BA in art. When not swinging a hammer around his
             1920s bungalow, Fred can be found vainly trying to capture glory on a soccer field
             near you.`,
-            image: 'Fred.png',
-            bgColor: 'cyan',
-            textColor: 'white'
+            image: 'Fred.png'
         },
         {
             name: 'Derek Ford',
@@ -631,9 +559,7 @@ let bios = {
             southern California; primarily the San Diego, Las Angeles, and San Francisco
             Bay Areas. Derek is dedicated to the use of Creative Commons and Open Source
             Software to bring open education to as many students as possible.`,
-            image: 'Derek.png',
-            bgColor: 'turquoise',
-            textColor: 'blue'
+            image: 'Derek.png'
         },
         {
             name: 'Dante Soares',
@@ -641,9 +567,7 @@ let bios = {
             bio: `Dante is a graduate student at Rice University. He is helping develop
             systems that support the OpenStax ecosystem, like OpenStax Exercises, as well as
             software tools used by other websites in the family.`,
-            image: 'Dante.png',
-            bgColor: 'blue',
-            textColor: 'green'
+            image: 'Dante.png'
         },
         {
             name: 'Zach Roehr',
@@ -653,10 +577,7 @@ let bios = {
             interactive websites and loves seeing designs come to life. Prior to working at
             Openstax he worked as an Interactive Developer at local marketing agencies and
             held various computer support roles before that. He graduated from the University
-            of Houston – Clear Lake with a Bachelor of Science in Computer Information Systems.`,
-            // image: 'Zach.png',
-            bgColor: 'cyan',
-            textColor: 'white'
+            of Houston – Clear Lake with a Bachelor of Science in Computer Information Systems.`
         },
         {
             name: 'Helene McCarron',
@@ -665,9 +586,7 @@ let bios = {
             several years of web development experience and worked as a Front End Developer
             for an energy company based in Houston as we well as a Lead Developer for local
             web agencies before joining the Connexions team.`,
-            image: 'Helene.png',
-            bgColor: 'gray',
-            textColor: 'yellow'
+            image: 'Helene.png'
         },
         {
             name: 'Richard Hart',
@@ -677,18 +596,14 @@ let bios = {
             math. While in Philadelphia he also spent several years studying computer science
             at Drexel University. Today, Rich’s work at OpenStax focuses mainly on backend
             development with Python and SQL.`,
-            image: 'Rich.png',
-            bgColor: 'yellow',
-            textColor: 'orange'
+            image: 'Rich.png'
         },
         {
             name: 'Amanda Shih',
             title: 'Developer',
             bio: `Amanda enjoys making things with code and believes in the power education
             has to impact lives. Before joining OpenStax, she worked at a digital health startup.`,
-            image: 'Amanda.png',
-            bgColor: 'turquoise',
-            textColor: 'white'
+            image: 'Amanda.png'
         },
         {
             name: 'Roy Johnson',
@@ -696,9 +611,7 @@ let bios = {
             bio: `Roy is a Rice graduate who spent his first 25 years out of college
             working for a computer consulting company. He particularly enjoys working
             with JavaScript, and is happy to do that every day at OpenStax.`,
-            image: 'Roy.png',
-            bgColor: 'blue',
-            textColor: 'green'
+            image: 'Roy.png'
         },
         {
             name: 'Karen Chan',
@@ -706,10 +619,7 @@ let bios = {
             bio: `Karen Chan graduated from the University of York, UK with a degree in
             Computer Science. Before joining Connexions, she worked for a startup technology
             consultancy in York. She is now a freelance developer based in Munich, Germany.
-            She mainly focuses on backend development with Python and SQL.`,
-            // image: 'Karen.png',
-            bgColor: 'orange',
-            textColor: 'white'
+            She mainly focuses on backend development with Python and SQL.`
         },
         {
             name: 'Michael Mulich',
@@ -718,10 +628,7 @@ let bios = {
             Pennsylvania State University where he causually worked on development tasks
             for the Connexions project. He has a history and passion for working in the
             educational space. Michael thrives on bringing high-quality open education to
-            everyone around the world.`,
-            // image: 'MichaelMulich.png',
-            bgColor: 'gray',
-            textColor: 'orange'
+            everyone around the world.`
         },
         {
             name: 'Derek Kent',
@@ -732,10 +639,7 @@ let bios = {
             he developed a full-stack ITS app for the Maryland, Virginia, and DC departments
             of transportation. In past lives, he has worked at the State Department and on
             Capitol Hill, lived in six different countries in Europe, East Asia, and the Middle
-            East, and is a military veteran. He is also conversant in Mandarin Chinese.`,
-            // image: 'Dak.png',
-            bgColor: 'cyan',
-            textColor: 'white'
+            East, and is a military veteran. He is also conversant in Mandarin Chinese.`
         },
         {
             name: 'Patrick Wolfert',
@@ -747,26 +651,19 @@ let bios = {
             meaningful way, he now fulfills his dream at OpenStax creating interactive
             simulations for free and open-source textbooks. He currently lives in Oregon
             with his wife Jessie and fancies himself a novice
-            <a href="http://en.wikipedia.org/wiki/Traceur#Terminology">traceur</a>.`,
-            // image: 'Patrick.png',
-            bgColor: 'blue',
-            textColor: 'green'
+            <a href="http://en.wikipedia.org/wiki/Traceur#Terminology">traceur</a>.`
         },
         {
             name: 'Andrew Wienecke',
             title: 'Systems Administrator',
             bio: '',
-            image: 'Andrew.png',
-            bgColor: 'gray',
-            textColor: 'yellow'
+            image: 'Andrew.png'
         },
         {
             name: 'Bruce Pike',
             title: 'Project Manager',
             bio: '',
-            image: 'Bruce.png',
-            bgColor: 'deep-green',
-            textColor: 'blue'
+            image: 'Bruce.png'
         },
         {
             name: 'Chris Houston',
@@ -775,9 +672,7 @@ let bios = {
             in the adoption and use of Open Educational Resources.  After attending University of Houston
             and MediaTech Institute, Chris began work with LJA Engineering as Junior Network Admin, When
             not at OpenStax Chris can be found mixing records or watching Duke basketball.`,
-            image: 'Chris H.png',
-            bgColor: 'yellow',
-            textColor: 'orange'
+            image: 'Chris H.png'
         },
         {
             name: 'Courtney Raymond',
@@ -788,9 +683,7 @@ let bios = {
             marketing campaigns for theater companies in New York, and digital marketing in Houston. Courtney is
             a graduate of the University of Texas and got her Master’s degree at Columbia University. In her free
             time, she likes to read, see musicals, binge watch good television, and travel.`,
-            image: 'Courtney.png',
-            bgColor: 'orange',
-            textColor: 'yellow'
+            image: 'Courtney.png'
         },
         {
             name: 'Kajal Parekh',
@@ -800,9 +693,7 @@ let bios = {
             experience. Kajal graduated from University of California Santa Barbara with a Master’s in
             Electrical and Computer Engineering and has previously worked as an Engineer at Qualcomm and as
             a QA Analyst at Weatherford. When not working, Kajal likes to cook, hike, or go on road trips.`,
-            image: 'Kajal.png',
-            bgColor: 'blue',
-            textColor: 'green'
+            image: 'Kajal.png'
         },
         {
             name: 'Linda Pallares',
@@ -810,33 +701,25 @@ let bios = {
             bio: `Linda Pallares is an Administrative Assistant with OpenStax.
             She assists with daily operations. She attends the University of Houston
             and is working towards a degree in Social Work.`,
-            image: 'Linda.png',
-            bgColor: 'deep-green',
-            textColor: 'blue'
+            image: 'Linda.png'
         },
         {
             name: 'Mary Allen',
             title: '',
             bio: '',
-            image: 'Mary.png',
-            bgColor: 'yellow',
-            textColor: 'orange'
+            image: 'Mary.png'
         },
         {
             name: 'Michael Harrison',
             title: 'Developer',
             bio: '',
-            image: 'Michael.png',
-            bgColor: 'turquoise',
-            textColor: 'white'
+            image: 'Michael.png'
         },
         {
             name: 'Mike Arbelaez',
             title: '',
             bio: '',
-            image: 'Mike.png',
-            bgColor: 'cyan',
-            textColor: 'white'
+            image: 'Mike.png'
         },
         {
             name: 'Robert Newell',
@@ -849,17 +732,13 @@ let bios = {
             as an MA in Communication from the University of Washington.  Prior to UX, he was a professional actor
             for ten years.  Robert is generally an active person, and every Saturday morning you’ll find him running
             along Buffalo Bayou with the Heights Running Club.`,
-            image: 'Robert.png',
-            bgColor: 'gray',
-            textColor: 'orange'
+            image: 'Robert.png'
         },
         {
             name: 'Tim Reiland',
             title: '',
             bio: '',
-            image: 'Tim.png',
-            bgColor: 'cyan',
-            textColor: 'blue'
+            image: 'Tim.png'
         },
         {
             name: 'Alan Cooke',
@@ -869,17 +748,22 @@ let bios = {
             Telecoms. He received a degree in Journalism and Mass Communications from Southeastern Louisiana
             University. While not using the secret skills gained from his alma mater to filter and funnel
             information from sources to readers he revels in trivia, podcasts, and wooing the muse of the odd.`,
-            image: '',
-            bgColor: 'yellow',
-            textColor: 'orange'
+            image: ''
+        },
+        {
+            name: 'Nathan Stitt'
+        },
+        {
+            name: 'Kean Tonetti'
+        },
+        {
+            name: 'Maher El Aridi'
         },
         {
             name: 'ZZ ZZ',
             title: 'Customer Support Specialist',
             bio: '',
             image: '',
-            bgColor: 'yellow',
-            textColor: 'orange',
             hidden: 'hidden'
         },
         {
@@ -887,8 +771,6 @@ let bios = {
             title: 'Customer Support Specialist',
             bio: '',
             image: '',
-            bgColor: 'yellow',
-            textColor: 'orange',
             hidden: 'hidden'
         },
         {
@@ -896,8 +778,6 @@ let bios = {
             title: 'Customer Support Specialist',
             bio: '',
             image: '',
-            bgColor: 'yellow',
-            textColor: 'orange',
             hidden: 'hidden'
         }
     ]

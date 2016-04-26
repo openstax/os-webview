@@ -356,7 +356,7 @@ class Header extends BaseView {
                 loginWrapper.classList.add('dropdown');
                 loginItem.setAttribute('aria-haspopup', true);
 
-                this.attachListenerTo(loginItem, 'click', this.flyOutMenu.bind(this));
+                loginItem.href = settings.accountHref;
 
                 if (userInfo.groups.indexOf('Faculty') >= 0) {
                     let nonFaculty = this.el.querySelectorAll('.non-faculty');

@@ -10,6 +10,12 @@ $.setAttr = (node, name, value) => {
 
 $.isIE11 = () => !(window.ActiveXObject) && 'ActiveXObject' in window;
 
+$.isTouchDevice = () => (
+    ('ontouchstart' in window) ||
+    (navigator.MaxTouchPoints > 0) ||
+    (navigator.msMaxTouchPoints > 0)
+ );
+
 const tick = 1000 / 40,
     defaultStep = 200,
     spaceForMenu = 59,
