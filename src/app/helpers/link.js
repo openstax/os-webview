@@ -1,4 +1,5 @@
 const MAILTO = /^mailto:(.+)/;
+const PDF = /.pdf$/;
 
 function findAncestor(el, Element) {
     let parent = el;
@@ -29,6 +30,11 @@ function validUrlClick(e) {
     return el;
 }
 
+function isPDF(url) {
+    return PDF.test(url);
+}
+
 export default {
-    validUrlClick: validUrlClick
+    validUrlClick: validUrlClick,
+    isPDF: isPDF
 };

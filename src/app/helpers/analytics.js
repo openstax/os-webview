@@ -1,5 +1,6 @@
 import Backbone from 'backbone';
 import settings from 'settings';
+import linkHelper from '~/helpers/link';
 
 class Analytics {
 
@@ -39,7 +40,7 @@ class Analytics {
         })(window, document, 'script', 'dataLayer', settings.tagManagerID);
     }
 
-    send(account, fragment) {
+    send(fragment) {
         /* eslint global-require: 0 */
 
         let frag = fragment || Backbone.history.fragment;
@@ -48,9 +49,17 @@ class Analytics {
             frag = `/${frag}`;
         }
 
-        require(['//www.google-analytics.com/analytics.js'], (ga) => {
+        System.import('~/helpers/google-analytics').then((m) => {
+            let ga = m.ga;
+
             ga('send', 'pageview', frag);
         });
+    }
+
+    record(href) {
+        if (linkHelper.isPDF(href)) {
+            this.send();
+        }
     }
 
 }
