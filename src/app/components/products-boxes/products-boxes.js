@@ -49,9 +49,9 @@ export default class ProductsBoxes extends BaseView {
                 title: 'OpenStax Tutor',
                 linkText: 'Sign up',
                 url: '/contact?subject=OpenStax Tutor Pilot Sign-up',
-                blurb: `Our customizable digital courseware uses cognitive science and
-                machine learning to create a personalized learning experience that
-                empowers students to succeed.`
+                blurb: `We’re recruiting for our Fall 2016 OpenStax Tutor high school pilot.
+                Sign up to partner with us in perfecting this full-service digital
+                courseware and help impact the future of education.`
             },
             'OpenStax CNX': {
                 name: 'cnx',
