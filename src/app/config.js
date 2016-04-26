@@ -15,6 +15,13 @@ System.config({
     "npm:*": "jspm_packages/npm/*"
   },
 
+  meta: {
+    "//www.google-analytics.com/analytics.js": {
+      "exports": "ga",
+      "format": "global"
+    }
+  },
+
   map: {
     "babel": "npm:babel-core@5.8.38",
     "babel-polyfill": "npm:babel-polyfill@6.7.4",

@@ -3,7 +3,7 @@ import Backbone from 'backbone';
 import linkHelper from '~/helpers/link';
 import router from '~/router';
 import appView from '~/components/shell/shell';
-import '~/helpers/analytics';
+import analytics from '~/helpers/analytics';
 
 const EXTERNAL = /^((f|ht)tps?:)?\/\//;
 
@@ -62,6 +62,7 @@ class App {
             e.preventDefault();
 
             if (EXTERNAL.test(href)) {
+                analytics.record(href);
                 window.open(href, '_blank');
             } else {
                 router.navigate(href, {
