@@ -80,7 +80,7 @@ class Router extends Backbone.Router {
         super.navigate(...arguments);
 
         if (options.analytics !== false) {
-            analytics.send();
+            analytics.sendPageview();
         }
 
         if (typeof cb === 'function') {
