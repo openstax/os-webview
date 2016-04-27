@@ -271,13 +271,11 @@ let bios = {
         {
             name: 'Ed Woodward',
             title: 'Senior Dev Manager',
-            bio: `Ed Woodward is a Senior Dev Manager. He has
-            Bachelor and Master degrees in Music and a Master in Computer Science
-            Technology. Before joining Connexions, he was a Vice President and
-            Application Architect at JPMorganChase. He has worked as a Java
-            Developer and Development Team Lead for several firms in the Houston
-            area. Prior to his software development career, he worked as a high
-            school and junior high music teacher.`,
+            bio: `Ed has Bachelor and Master degrees in Music and a Master in
+            Computer Science Technology. Before joining OpenStax, he was a VP
+            and Application Architect at JPMorganChase. He has worked
+            as a Java Development Team Lead for several firms. Prior
+            to writing software, he was a music teacher.`,
             image: 'Ed.png',
             bgColor: 'gray',
             textColor: 'yellow'
