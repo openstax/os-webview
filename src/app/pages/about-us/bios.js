@@ -127,266 +127,238 @@ let bios = {
         {
             name: 'Richard Baraniuk',
             title: 'Director',
-            bio: `Richard G. Baraniuk is the Victor E. Cameron Professor of
-            Electrical and Computer Engineering at Rice University and the
-            founder and director of OpenStax. In 1999, Dr. Baraniuk launched
-            Connexions (now OpenStax CNX), one of the world’s first and today one
-            of the world’s largest “open education” platforms, providing free and
-            remix able e-textbooks to millions of users from 200 countries. More
-            recently, through his research in machine learning, he is enhancing
-            the OpenStax textbooks with personalized learning features that
-            optimize each student’s learning experience based on each their
-            background, context, and learning goals. For his education projects,
-            Dr. Baraniuk has received the Eta Kappa Nu C. Holmes MacDonald
-            National Outstanding Teaching Award, the Tech Museum Laureate Award,
-            the Internet Pioneer Award from the Berkman Center for Internet and
-            Society at Harvard Law School, the World Technology Network Education
-            Award, the IEEE Signal Processing Society Education Award, and has
-            been named one of Edutopia Magazine’s Daring Dozen Education Innovators.
-            For his research projects in machine learning, he has received numerous
-            national awards and has been elected a Fellow of IEEE and AAAS.`
+            bio: `Richard Baraniuk is the Victor E. Cameron Professor of Electrical
+            and Computer Engineering at Rice University and the founder/director of
+            OpenStax. In 1999, Dr. Baraniuk launched Connexions (now OpenStax CNX),
+            one of the world’s first and largest “open education” platforms. He now works
+            on enhancing OpenStax textbooks with personalized learning features through
+            his research in machine learning.`,
+            // image: 'richard_baraniuk.jpg',
+            bgColor: 'gray',
+            textColor: 'orange'
         },
         {
             name: 'Daniel Williamson',
             title: 'Managing Director',
-            bio: `A Rice University graduate and longtime Connexions team member,
-            Daniel now manages the day-to-day operations of OpenStax College using
-            his extensive experience in academic e-publishing to guide content
-            development, technology integration, and overall project coordination.
-            He has overseen the creation, editing, and maintenance of a database
-            of nearly 2000 open educational resources accounting for a total
-            online viewership of over 3 million.`,
-            image: 'Daniel.png'
+            bio: `As managing director, Daniel guides OpenStax in saving students across
+            the country millions of dollars. He has dedicated the past ten years of his
+            life to developing education startups from conception to culmination, with
+            specialties in open education, content development, ed-tech, consumer intelligence,
+            management, and quality assurance.`,
+            image: 'Daniel.png',
+            bgColor: 'cyan',
+            textColor: 'blue'
         },
         {
             name: 'David Harris',
             title: 'Editor in Chief',
-            bio: `David is a graduate of the University of Connecticut and has
-            worked extensively in higher education publishing. During his career
-            David has held a range of leadership positions allowing him to
-            collaborate with the best authors, editorial groups, and media
-            development teams in the industry. Most recently David was the
-            president of WebAssign, the largest independent online homework
-            provider. At OpenStax College David hopes to contribute to the teams
+            bio: `David is a University of Connecticut graduate and has held a range
+            of leadership positions in higher education publishing — most recently as
+            president of WebAssign. At OpenStax, David contributes to the team's
             effort of improving access to high quality materials by working with
-            authors, developers, and partners to substantially lower costs for
-            students.`
+            authors, developers, and by supporting our emerging ecosystem.`,
+            // image: 'david_harris.jpg',
+            bgColor: 'orange',
+            textColor: 'white'
         },
         {
             name: 'Kathi Fletcher',
             title: 'Technical Director',
-            bio: `Kathi Fletcher leads the personalized learning team at OpenStax.
-            Prior to joining OpenStax, she was a Shuttleworth Foundation Fellow
-            focusing on how to foster an ecosystem of innovative tools and
-            services around an education highway (metaphorically) made of open
-            education resources (OER). Currently OER is available in incompatible
-            formats in many individual projects. Kathi’s goal was to accelerate
-            both the production of high-quality, reusable OER, and the development
-            of innovative learning environments that build upon OER.
-            <p>Before accepting this fellowship, Kathi spent four years directing
-            the technical development and managing the development team at
-            Connexions. She views Connexions as one of the premier examples of a
-            repository that supports remixable OER and a key player in fostering
-            low-cost, high quality textbooks and learning materials. She is
-            continuing to work closely with the Connexions team, Connexions
-            consortium, and Connexions partners like Open Stax College to
-            strengthen the OER ecosystem utilizing Connexions.</p>
-            <p>Before joining Connexions, she helped run a small business focused
-            on middleware software, taught computer engineering courses at Rice
-            University in Houston, Texas, and conducted grant-supported research
-            in K12 science education. She has a Master’s Degree in Computer Science.`,
-            image: 'Kathi.png'
+            bio: `Kathi Fletcher leads development, research, and user experience at
+            OpenStax. Kathi's experience includes promoting greater technical
+            interoperability between open educational resource (OER) platforms as a
+            Shuttleworth Foundation Fellow, helping run a software business, and
+            teaching computer engineering at Rice University. Kathi has a master’s
+            degree in computer science.`,
+            image: 'Kathi.png',
+            bgColor: 'turquoise',
+            textColor: 'blue'
         },
         {
             name: 'Beth Cassidy',
             title: 'Director Finance & Operations',
-            bio: `Beth Cassidy is the Director of Finance and Operations. Prior
-            to her current position, Beth worked with numerous entities as a
-            senior associate at a local public accounting firm specializing in
-            not-for-profit organizations. In addition, her past experience at an
-            international accounting firm gave her hands-on experience across
-            diverse industry sectors including energy, manufacturing, and higher
-            education. Beth is a graduate of the University of Houston’s Bauer
-            College of Business where she earned a BBA in Accounting and a MS in
-            Accountancy. Beth has previously volunteered with the Houston SPCA
-            and has served as a mentor for students interested in the nonprofit
-            sector with MBA Women International, formerly National Association
-            of Women MBAs.`,
-            image: 'Beth.png'
+            bio: `Beth is the director of finance and operations at Openstax,
+            where she oversees accounting, finance, and business operations.
+            Her role entails oversight of all income and expense activity.
+            Prior to joining OpenStax, Beth worked at Blazek and Vetterling and
+            Grant Thornton. She has a BBA and MS in accountancy from the
+            University of Houston.`,
+            image: 'Beth.png',
+            bgColor: 'cyan',
+            textColor: 'white'
         },
         {
             name: 'Nicole Finkbeiner',
             title: 'Assoc Dir Insitutional Relations',
-            bio: `Nicole Finkbeiner is the Associate Director of Institutional
-            Relations, focused on providing advice and support for institutions
-            implementing OER on their campuses. A graduate of Kellogg Community
-            College, Western Michigan University, and Michigan State University,
-            she worked in marketing, public relations and college relations for
-            community colleges prior to joining the OpenStax College team. When
-            not promoting Open Educational Resources, Nicole fills her time
-            attending lectures, spending time with friends, writing about
-            marketing on her blog, and working out.`,
-            image: 'Nicole.png'
+            bio: `Nicole Finkbeiner is the associate director of institutional
+            relations, providing advice and support for institutions implementing
+            OER on their campuses. She worked in administration at community colleges
+            prior to joining OpenStax. When not promoting OER, Nicole works on civil
+            rights issues, hits the gym, and writes a marketing blog.`,
+            image: 'Nicole.png',
+            bgColor: 'blue',
+            textColor: 'green'
         },
         {
             name: 'Dani Nicholson',
-            title: 'Assoc Dir Communications',
-            bio: `Dani is a graduate of West Texas A&M University and the
-            University of North Texas. Before joining Connexions, she worked for
-            several years in communication and marketing at the University of
-            North Texas. Prior to UNT, Dani worked in Creative Solutions at CNBC
-            Europe and also reported for local newspapers. Dani oversees the
-            communication components to all higher education related activities
-            for Connexions and OpenStax College.`,
-            image: 'Dani.png'
+            title: 'Assoc Dir Marketing and Communications',
+            bio: `Dani is a graduate of West Texas A&M University and the University of
+            North Texas. Before joining OpenStax, she worked in communication and marketing
+            at University of North Texas, in Creative Solutions at CNBC Europe, and reported
+            for local newspapers. Dani oversees the communication components to all higher
+            education-related activities for OpenStax.`,
+            image: 'Dani.png',
+            bgColor: 'turquoise',
+            textColor: 'blue'
         },
         {
             name: 'Denver Greene',
             title: 'Asst Dir Customer Service',
-            bio: `Denver graduated from Rice University with a degree in Psychology.
-            He works to get OpenStax College's great content online via the
-            Connexions platform. When Denver is not telling the world about open
-            education resources he is swing dancing or participating in Rice
-            Universities Marching Owl Band.`,
-            image: 'Denver.png'
+            bio: `Denver is always swing dancing and board gaming. He also likes
+            to talk about science, politics, religion, and philosophy. And how
+            the oxford comma makes more sense. Denver graduated from Rice
+            University with a degree in psychology. `,
+            image: 'Denver.png',
+            bgColor: 'cyan',
+            textColor: 'white'
         },
         {
             name: 'Ed Woodward',
             title: 'Senior Dev Manager',
             bio: `Ed has Bachelor and Master degrees in Music and a Master in
-            Computer Science Technology. Before joining OpenStax, he was a VP
-            and Application Architect at JPMorganChase. He has worked
-            as a Java Development Team Lead for several firms. Prior
-            to writing software, he was a music teacher.`,
-            image: 'Ed.png'
+            Computer Science Technology. He has worked as a Development Team
+            Lead for several firms. Prior to writing software, he was a music teacher.
+            Outside of work, Ed enjoys comics and writing Android apps`,
+            image: 'Ed.png',
+            bgColor: 'gray',
+            textColor: 'yellow'
         },
         {
             name: 'Norm Woody',
             title: 'Project Manager',
-            bio: `Norm Woody, a PMP, spent a dozen years at Microsoft leading
-            field projects, engagements, and managing contracts for the Fortune
-            100 in high-tech manufacturing and Oil & Gas segments. Often focused
-            on emerging technology, Norm has led a number of joint-development
-            and global technology adoption projects with strategic partners
-            focused on performance improvements, expanding capabilities, and
-            innovative cost savings. Norm has degrees in Physics and Technical
-            Communication and has written a number of technical manuals.`,
-            image: 'Norm.png'
+            bio: `Norm Woody spent a dozen years at Microsoft leading field projects,
+            engagements, and managing Fortune 100 technical contracts. Focused on emerging
+            technology, Norm has led a number of joint-development and global technology
+            adoption projects focused on performance improvements, expanding capabilities,
+            and innovative cost savings. Norm has degrees in physics and technical communication.`,
+            image: 'Norm.png',
+            bgColor: 'blue',
+            textColor: 'green'
         },
         {
             name: 'Alana Lemay-Gibson',
             title: 'Project Manager',
-            bio: `Alana Lemay-Gibson manages textbook projects at OpenStax. She
-            also serves as a Head Resident Fellow at McMurtry College at Rice
-            University, where she supports the intellectual, cultural, and social
-            activities within the college. Prior to joining OpenStax, Alana worked
-            as a Senior Systems Analyst with Ellucian where she managed technical
-            projects, set strategic priorities, provided guidance regarding best
-            practices, and analyzed business needs to determine the best technology
-            solutions. She has more than 15 years experience in the software
-            industry and higher education. She earned her Project Management
-            Professional (PMP) certification in November 2012. She has a Master’s
-            degree in Education with an emphasis on Educational Anthropology and
-            Bachelor’s degree in Anthropology.`,
-            image: 'Alana.png'
+            bio: `Alana manages content-related projects at OpenStax. She also
+            serves as a head resident fellow at McMurtry College at Rice University.
+            Alana has more than 15 years experience in the software industry and
+            higher education. She has an M.Ed. with an emphasis in educational
+            anthropology and a BA in anthropology.`,
+            image: 'Alana.png',
+            bgColor: 'turquoise',
+            textColor: 'white'
         },
         {
             name: 'Alina Slavik',
             title: 'Asst Dir Content Development',
-            bio: `As the Assistant Director for Content Development, Alina is
-            responsible for the function and management of all aspects of
-            OpenStax’s digital media operations. Prior to joining OpenStax, Alina
-            worked in fundraising and communications and as a tutor. Alina
-            graduated from the University of Texas at Austin with a degree in
-            French and Italian, through which she participated in a year-long
-            exchange at the University of Paris III – Sorbonne Nouvelle. When not
-            at OpenStax, Alina volunteers on Frame Dance Productions' Board of
-            Directors, and she can be found at the cinema or attending local art
-            happenings.`,
-            image: 'Alina.png'
+            bio: `Alina graduated from the University of Texas at Austin with a degree in
+            French and Italian. Prior to joining OpenStax, Alina worked in fundraising and
+            communications and as a tutor. When not at OpenStax, Alina volunteers on Frame
+            Dance Productions' board and can be found attending local art happenings.`,
+            image: 'Alina.png',
+            bgColor: 'cyan',
+            textColor: 'blue'
         },
         {
             name: 'Jeff DiGiovanni',
             title: 'Asst Dir Customer Service',
-            bio: `A graduate of Louisiana State University, Jeff has worked for
-            several years in marketing and advertising and now handles customer
-            support for OpenStax College. His time not spent assisting faculty
-            and students in the adoption and use of Open Educational Resources is
-            spent writing, reading, and cycling.`,
-            image: 'Jeff.png'
+            bio: `Jeff provides internal and external support for the OpenStax resources
+            and aims to help increase education, access, and ease of use surrounding OER.
+            He received his mass communication degree from Louisiana State University in
+            Baton Rouge.`,
+            image: 'Jeff.png',
+            bgColor: 'orange',
+            textColor: 'yellow'
         },
         {
             name: 'Ross Reedstrom',
             title: 'Senior Developer',
-            bio: `Ross Reedstrom is the Connexions Systems Engineer and
-            Administrator. He has a B. S. in Molecular Biology from Yale
-            University, and a Ph. D. in Cell & Molecular Biology from University
-            of Wisconsin - Madison. He's been an Free and Open Source software
+            bio: `Ross Reedstrom is an OpenStax Systems Engineer and
+            Administrator. He has a BS in molecular biology from Yale
+            University, and a PhD in cell and molecular Biology from University
+            of Wisconsin - Madison. He's been a free and open source software
             user and advocate for almost two decades.`,
-            image: 'Ross.png'
+            image: 'Ross.png',
+            bgColor: 'yellow',
+            textColor: 'orange'
         },
         {
             name: 'Dennis Williamson',
             title: 'Systems Administrator',
-            bio: `Dennis Williamson is the System Administrator for Openstax CNX.
+            bio: `Dennis Williamson is the System Administrator for Openstax.
             His experience has ranged from the US District Court to MIS director
             of a casino to a large web hosting company and others with a wide
             variety of hardware, operating systems and application software.`,
-            image: 'Dennis.png'
+            image: 'Dennis.png',
+            bgColor: 'turquoise',
+            textColor: 'white'
         },
         {
             name: 'Chris Nuber',
-            title: 'Systems Administrator',
-            bio: `Chris Nuber is the DevOps Engineer on the OpenStax team. Chris'
-            experience has ranged from manager of several IT consulting firms as
-            well as brick and mortar computer hardware firms to Senior Linux
-            Engineer and Linux Administration Director for one of the worlds
-            largest web hosting firms. Chris brings nearly two decades of
-            experience with the Linux Operating System to the OpenStax team. Chris
-            is currently responsible designing, implementing and maintaining
-            deployment systems as well as system maintenance and network
-            infrastructure for the OpenStax Team.`,
-            image: 'Chris N.png'
+            title: 'DevOps Engineer',
+            bio: `Chris is the DevOps lead at OpenStax. Chris's experience ranges
+            from manager of several IT consulting firms to senior Linux engineer
+            and Linux director for a large web-hosting firm. Chris brings two decades
+            of Linux experience to OpenStax. Chris is responsible for cloud network
+            design and maintenance and deployment of servers.`,
+            image: 'Chris N.png',
+            bgColor: 'cyan',
+            textColor: 'blue'
         },
         {
             name: 'JP Slavinsky',
             title: 'Senior Developer',
-            bio: `JP Slavinsky leads the development of OpenStax Tutor, a tool
-            that uses advanced cognitive science and machine learning algorithms
-            to improve student learning by automating and individualizing the
-            interactions between students and open educational resources. A
-            graduate of Rice and Berkeley, JP worked in Silicon Valley for six
-            years on defense-related software projects and also for several years
-            managing technical research projects at Rice.`
+            bio: `JP Slavinsky is a software lead for OpenStax Tutor. A graduate of Rice
+            and Berkeley, JP worked previously in Silicon Valley in the field of signal
+            processing and also for several years managing technical research projects
+            at Rice. He joined OpenStax in 2010.`,
+            // image: 'JP.png',
+            bgColor: 'deep-green',
+            textColor: 'white'
         },
         {
             name: 'Philip Schatz',
             title: 'Senior Developer',
-            bio: `Philip joined Connexions in 2006 after receiving a Bachelor's
-            in Mathematics and a Master's in Programming Languages at Purdue
-            University. When he is not scaling mountains to find Sasquatch, he
-            designs and writes the open source code to get textbooks into the
-            hands of people everywhere.`,
-            image: 'Phil S.png'
+            bio: `Philip joined OpenStax (then Connexions) in 2006 after receiving a
+            bachelor's in mathematics and a master's in programming languages at Purdue
+            University. When he is not scaling mountains to find Sasquatch, he designs
+            and writes the open source code to get textbooks into the hands of people
+            everywhere.`,
+            image: 'Phil S.png',
+            bgColor: 'gray',
+            textColor: 'orange'
         },
         {
             name: 'Kevin Burleigh',
             title: 'Senior Developer',
-            bio: `Kevin does back-end development work for OpenStax Tutor. In past
+            bio: `Kevin does backend development work for OpenStax Tutor. In past
             lives he's developed diagnostic software for medical ultrasound machines,
             as well as defense-related signal processing and geolocation software.
             Kevin has a degree in Electrical Engineering and Computer Science from MIT.`,
-            image: 'Kevin.png'
+            image: 'Kevin.png',
+            bgColor: 'cyan',
+            textColor: 'blue'
         },
         {
             name: 'Phil Grimaldi',
             title: 'Research Scientist',
-            bio: `Phil received his PhD in Cognitive Science from Purdue University
-            in 2014. His research is focused on understanding the fundamental principles
-            of human learning and applying these principles to solve educational problems.
-            He currently conducts research aimed at integrating cognitive science into
-            OpenStax Tutor.`,
-            image: 'Phil G.png'
+            bio: `Phillip Grimaldi received his PhD from Purdue University in 2014, where
+            he studied human learning and memory. He currently leads the research team at
+            Rice University’s OpenStax. His research at OpenStax aims to leverage cognitive
+            science and machine learning to personalize the learning experience and improve
+            student success.`,
+            image: 'Phil G.png',
+            bgColor: 'gray',
+            textColor: 'yellow'
         },
         {
             name: 'Drew Waters',
@@ -396,387 +368,448 @@ let bios = {
             College, which aims to create a personalized learning experience for students
             by mining interactions between students and educational content. Prior to
             working for OpenStax College, Drew spent 5 years as a Communications Systems
-            Analyst at L-3 Communications in Salt Lake City, Utah.`
+            Analyst at L-3 Communications in Salt Lake City, Utah.`,
+            // image: 'Drew.png',
+            bgColor: 'turquoise',
+            textColor: 'blue'
         },
         {
             name: 'Kim Davenport',
-            title: 'Product Analyst',
-            bio: `Kim happily wears many hats but her primary focus is OpenStax Tutor
-            course and research operations. She works with instructors and researchers
-            running educational research studies, creates help content and videos, and
-            works with the development team to create new features. Prior to joining
-            the team, Kim spent several years as a research analyst in higher education,
-            including at the Jesse H. Jones School of Management here at Rice. Before
-            that, she worked as an employee training specialist and paralegal. Kim is
-            a Rice graduate.`
+            title: 'Consultant',
+            bio: `Kim enjoys tackling hard problems and figuring out ways to improve our
+            offerings. As a Rice alum with degrees in policy studies and French, she has
+            a knack for listening to, evaluating, and synthesizing different perspectives.
+            Kim has an abiding love for her daughter, dim sum, and planning dinner parties.`,
+            // image: 'Kim.png',
+            bgColor: 'orange',
+            textColor: 'white'
         },
         {
             name: 'Micaela McGlone',
             title: 'Research Specialist',
-            bio: `Micaela McGlone is a Research Specialist with the OpenStax team. Her
-            primary responsibilities include helping coordinate research and software
-            pilots as well as preparing proposals and documentation for institutional
-            review boards. Prior to joining OpenStax Micaela was a Program Coordinator
-            at Cristo Rey Jesuit College Prep where her chief focus was managing the
-            relationship between the school’s corporate sponsors and the greater school
-            community. Micaela is a graduate of Washington and Lee University.`,
-            image: 'Micaela.png'
+            bio: `As a research specialist on the OpenStax team, Micaela's primary
+            responsibilities include coordinating the pilots of OpenStax Tutor
+            courseware and preparing proposals and documentation for institutional
+            review boards. She is a native of San Antonio, Texas (read: an avid Spurs fan)
+            and a graduate of Washington and Lee University.`,
+            image: 'Micaela.png',
+            bgColor: 'turquoise',
+            textColor: 'white'
         },
         {
             name: 'Heather Seeba',
             title: 'Research Engineer',
-            bio: `As a Research Engineer, Heather works on many aspects of OpenStax
-            Tutor's educational research. Heather previously worked for the Digital
-            Signal Processing group at Rice after coming from the oilfield industry.
-            She has an electrical engineering degree from Rice.`,
-            image: 'Heather.png'
+            bio: `As OpenStax’s research engineer, Heather straddles the technical and human
+            sides of educational research. Technical duties include dataset preparation and
+            analysis.  She also works closely with external partners to successfully implement
+            research protocols. Heather received her electrical engineering degree at Rice and
+            previously worked in the oilfield industry.`,
+            image: 'Heather.png',
+            bgColor: 'cyan',
+            textColor: 'blue'
         },
         {
             name: 'Greg Fitch',
-            title: 'Software Support Specialist',
-            bio: `Greg Fitch is a Software Support Specialist for the OpenStax Tutor
-            team. He assists our professors, researchers and students with the use of
-            the Tutor systems. Prior to joining OpenStax he supported the computer
-            systems of various non-profit and government organizations. He graduated
-            from the University of Texas with a focus on government and technology.`,
-            image: 'Greg.png'
+            title: 'QA Analyst',
+            bio: `Greg Fitch is a quality assurance analyst for the OpenStax Tutor team. He
+            tests the various Tutor systems for usability and functionality. Prior to joining
+            OpenStax, he supported the computer systems of various non-profit and government
+            organizations. He graduated from the University of Texas with a focus on government
+            and technology.`,
+            image: 'Greg.png',
+            bgColor: 'cyan',
+            textColor: 'blue'
         },
         {
             name: 'Tory Watterson',
-            title: 'Accounting & Financial Analyst',
-            bio: `As an Accounting & Financial Analyst, Tory is responsible for grant
-            administration, accounting and internal bookkeeping. She has a B.B.A in Accounting.
-            Prior to joining OpenStax, Tory was the Finance Team Coordinator at Girls & Boys
-            Preparatory Academy, an open enrollment, Pre K- 12 charter school. She has more
-            than 10 years’ experience in accounting. When not at OpenStax, Tory can be found at
-            Discovery Green dancing zumba, at the cinema or in the kitchen cooking clean and
-            green meals for her family.`,
-            image: 'Tory.png'
+            title: 'Assoc Dir, Business Operations',
+            bio: `Tory Watterson is the associate director of business operations, focusing on
+            the day-to-day business and financial operations of OpenStax. She has a BBA in accounting
+            and more than 10 years’ experience in accounting. When not at OpenStax, Tory can be found
+            at the cinema or in the kitchen cooking clean and green meals for her family.`,
+            image: 'Tory.png',
+            bgColor: 'turquoise',
+            textColor: 'white'
         },
         {
             name: 'Jemel Agulto',
             title: 'Marketing and Communications Specialist',
-            bio: `Jemel is a Marketing and Communications Specialist at OpenStax focused
-            on supporting all the marketing and communication efforts of the organization.
-            Prior to joining OpenStax, Jemel worked at RR Donnelley managing the company’s
-            social media and technology platforms. Jemel has a bachelor’s degree in
-            communications from the University of Houston, where he also earned a Corporate
-            Entrepreneurship Certificate. While not at OpenStax, Jemel can be seen taking
-            photographs around the city of Houston or supporting his favorite sports teams
-            with his friends and family.`,
-            image: 'Jemel.png'
+            bio: `Jemel is a marketing and communications specialist at OpenStax focused on
+            supporting all the marketing and communication efforts of the organization. He has a
+            bachelor’s degree in communications from the University of Houston. While not at
+            OpenStax, Jemel is taking photographs and supporting his favorite sports teams.`,
+            image: 'Jemel.png',
+            bgColor: 'cyan',
+            textColor: 'white'
         },
         {
             name: 'Kerwin So',
-            title: 'Quality Assurance Analyst',
-            bio: `Kerwin So is an analyst focusing on development testing and quality
-            assurance for the OpenStax textbook development team. He brings over a decade
-            of tech experience from companies including MINDBODY, Kodak, and Schwab. He
-            also has a background in academic libraries and archives. Kerwin holds a
-            Bachelor’s degree from UC Berkeley and a Master’s degree in Library & Information
-            Science from San Jose State University. He enjoys writing in the third person.`,
-            image: 'Kerwin.png'
+            title: 'QA Analyst',
+            bio: `Kerwin So brings over a decade of tech experience from companies including
+            MINDBODY, Kodak, and Schwab. His diverse professional background also includes
+            nonprofits, startups, academic libraries, and digital archives. Kerwin holds a BA
+            from UC Berkeley and a master’s in library & information science from San Jose State
+            University.`,
+            image: 'Kerwin.png',
+            bgColor: 'turquoise',
+            textColor: 'blue'
         },
         {
             name: 'Ryan Stickney',
             title: 'Digital Media Specialist',
-            bio: `Ryan graduated with two bachelor's degrees from Rice University (Music
-            and Linguistics), and she received a master's from New England Conservatory
-            before coming to work at OpenStax College. As a digital media specialist,
-            Ryan is responsible for the final stages of textbook content quality assurance.
-            She provides proofreading and copy-editorial services on the content and
-            occasionally provides user and authorial assistance on Connexions utilizing
-            her expertise in MathML and the Connexions markup language. When Ryan is not
-            helping to make education more accessible, she is a staff singer in several
-            Houston choral groups, including the Houston Chamber Choir.`,
-            image: 'Ryan.png'
+            bio: `Ryan holds bachelor's degrees from Rice University (music and linguistics)
+            and a master's from New England Conservatory. With OpenStax, Ryan oversees the final
+            stages of textbook quality assurance, using her expertise in MathML and the Openstax
+            CNX markup language. Outside of OpenStax she sings with several professional groups,
+            including the Houston Chamber Choir.`,
+            image: 'Ryan.png',
+            bgColor: 'blue',
+            textColor: 'green'
         },
         {
             name: 'Britney Blodget',
             title: 'Digital Media Specialist',
-            bio: `Britney is a Digital Media Specialist responsible for the final stages of
-            textbook content quality assurance. After attending Rice University, Britney began
-            work with Stage Store Inc. as Lead Content Coordinator, helping to launch and grow
-            their E-commerce web platform. When not at OpenStax Britney can be found outdoors,
-            with her cats, or eating.`,
-            image: 'Britney.png'
+            bio: `Britney is a digital media specialist responsible for the final stages of
+            textbook content quality assurance. After attending Rice University, Britney
+            began work with Stage Stores, Inc. as lead content coordinator, helping to launch
+            and grow their e-commerce web platform. When not at OpenStax, Britney can be found
+            outdoors, with her cats, or eating.`,
+            image: 'Britney.png',
+            bgColor: 'orange',
+            textColor: 'white'
         },
         {
             name: 'Larissa Chu',
             title: 'Digital Media Specialist',
-            bio: `As a Digital Media Specialist, Larissa is responsible for the final stages of
-            textbook content quality assurance. Larissa graduated from the University of Texas at
-            Austin with a degree in East Asian Languages & Culture specializing in Japanese and
-            Chinese. Prior to joining OpenStax, she worked at Fairmount Santrol, a company that
-            provides sand for hydraulic fracturing, as a data administrator. When not at OpenStax,
-            Larissa spends time shopping, taking pictures around Houston and watching Netflix.`,
-            image: 'Larissa.png'
+            bio: `As a digital media specialist, Larissa is responsible for the final stages of
+            textbook content quality assurance. She graduated from the University of Texas at
+            Austin with a degree in East Asian languages & culture. When not at OpenStax, Larissa
+            watches Netflix and gets bullied by her cat, Pilot Jones.`,
+            image: 'Larissa.png',
+            bgColor: 'gray',
+            textColor: 'orange'
         },
         {
             name: 'Britt Weinstein',
             title: 'Digital Media Specialist',
             bio: `As a Digital Media Specialist, Brittany verifies the final stages of textbook
-            content quality assurance. Brittany graduated from the University of Texas with a
+            content quality assurance. Britt graduated from the University of Texas with a
             degree in Linguistics, focused on Spanish and Portuguese. She enjoys playing tennis,
-            reading graphic novels, and traveling.`
+            learning about coffee, and reading about the ocean.`,
+            // image: 'Britt.png',
+            bgColor: 'yellow',
+            textColor: 'orange'
         },
         {
             name: 'Jason Holmes',
             title: 'UX Manager',
-            bio: `Jason is the User Experience (UX) Manager for OpenStax Tutor. In this role,
+            bio: `Jason is the user experience (UX) manager for OpenStax Tutor. In this role,
             he aims to keep the learner at the center of the product and designs user-friendly
             interfaces to make them successful. Jason brings a varied background from libraries,
-            teaching, and UX research and design. Prior to joining OpenStax, he was the UX
-            Manager at Waste Management and UX Researcher at American Greetings. His teaching
-            career included brief stints in MLIS programs at the University of North Texas and
-            Louisiana State University before taking a faculty position at Kent State University
-            for 7 years. Jason has a BA in English Literature and a MLIS, both from LSU and a
-            PhD in Information Science from the University of North Texas.`,
-            image: 'Jason.png'
+            teaching, and UX design and research.`,
+            image: 'Jason.png',
+            bgColor: 'turquoise',
+            textColor: 'blue'
         },
         {
             name: 'Fred Lindner',
             title: 'UX Visual Designer',
-            bio: `As the UX Visual Designer, Fred takes boring beige and grey interfaces, and
-            transforms them into gleaming experiences that inspire envy. He is usually at his
-            desk debating the merits of Times New Roman at 16 pixels versus Garamond at 18
-            pixels, or trying to find just the right icon to express saudade. Prior to joining
-            OpenStax, Fred worked with several Houston area startups and was a participant in
-            Rice University’s OwlsSpark startup accelerator. He is a graduate of Stephen F.
-            Austin State University with a BA in art. When not swinging a hammer around his
-            1920s bungalow, Fred can be found vainly trying to capture glory on a soccer field
-            near you.`,
-            image: 'Fred.png'
+            bio: `Fred takes boring beige interfaces and transforms them into gleaming experiences
+            that inspire envy. Prior to joining OpenStax, Fred worked with several Houston area
+            startups and was a participant in Rice University’s OwlsSpark startup accelerator. He
+            is a graduate of Stephen F. Austin State University with a BA in art.`,
+            image: 'Fred.png',
+            bgColor: 'cyan',
+            textColor: 'white'
         },
         {
             name: 'Derek Ford',
             title: 'Developer',
-            bio: `Derek Ford is a developer focusing on the creation and development of the
-            templates for OpenStax College textbooks. Before joining Connexions he worked as
-            a UI/UX Designer and Lead Developer for companies such as MTV and Nokia in
-            southern California; primarily the San Diego, Las Angeles, and San Francisco
-            Bay Areas. Derek is dedicated to the use of Creative Commons and Open Source
-            Software to bring open education to as many students as possible.`,
-            image: 'Derek.png'
+            bio: `Derek is a software engineer and designer with a focus on agile software
+            development, as well as UI and UX design. At OpenStax, Derek is primarily responsible
+            for the visual development of OpenStax textbooks.`,
+            image: 'Derek.png',
+            bgColor: 'turquoise',
+            textColor: 'blue'
         },
         {
             name: 'Dante Soares',
             title: 'Developer',
-            bio: `Dante is a graduate student at Rice University. He is helping develop
-            systems that support the OpenStax ecosystem, like OpenStax Exercises, as well as
-            software tools used by other websites in the family.`,
-            image: 'Dante.png'
+            bio: `Dante Soares is an electrical and computer engineering graduate from Rice University
+            who works as a backend developer for OpenStax. He has participated in the creation of
+            OpenStax products such as OpenStax Tutor and Exercises and is most comfortable developing
+            code for the Ruby on Rails framework.`,
+            image: 'Dante.png',
+            bgColor: 'blue',
+            textColor: 'green'
         },
         {
             name: 'Zach Roehr',
             title: 'Developer',
-            bio: `Zach Roehr is a developer focusing on the creation and development of the
-            templates for OpenStax College textbooks. Zach has a passion for creating
-            interactive websites and loves seeing designs come to life. Prior to working at
-            Openstax he worked as an Interactive Developer at local marketing agencies and
-            held various computer support roles before that. He graduated from the University
-            of Houston – Clear Lake with a Bachelor of Science in Computer Information Systems.`
+            bio: `Zach Roehr is a developer focusing on creation and development of the templates
+            for OpenStax textbooks. Prior to working at OpenStax, he was an interactive developer
+            at marketing agencies and held various computer support roles. He graduated from the
+            University of Houston – Clear Lake with a Bachelor of Science in computer information
+            systems.`,
+            // image: 'Zach.png',
+            bgColor: 'cyan',
+            textColor: 'white'
         },
         {
             name: 'Helene McCarron',
             title: 'Developer',
             bio: `Helene McCarron is an OpenStax College textbook template developer. She has
-            several years of web development experience and worked as a Front End Developer
-            for an energy company based in Houston as we well as a Lead Developer for local
-            web agencies before joining the Connexions team.`,
-            image: 'Helene.png'
+            several years of web development experience and worked as a frontend developer
+            for an energy company based in Houston and as a lead developer for local
+            web agencies before joining the OpenStax team.`,
+            image: 'Helene.png',
+            bgColor: 'gray',
+            textColor: 'yellow'
         },
         {
             name: 'Richard Hart',
             title: 'Developer',
-            bio: `Rich earned a B.S. in physics and math from Bates College, ME. Afterwards
-            he moved back to his home city of Philadelphia to teach middle and high school
-            math. While in Philadelphia he also spent several years studying computer science
-            at Drexel University. Today, Rich’s work at OpenStax focuses mainly on backend
-            development with Python and SQL.`,
-            image: 'Rich.png'
+            bio: `Rich earned a BS in physics and math from Bates College in Maine. Afterwards
+            he moved back to his home city of Philadelphia to teach middle and high school math.
+            While in Philadelphia, he also spent several years studying computer science at Drexel
+            University. Today, Rich’s work at OpenStax focuses mainly on backend development with
+            Python and SQL.`,
+            image: 'Rich.png',
+            bgColor: 'yellow',
+            textColor: 'orange'
         },
         {
             name: 'Amanda Shih',
             title: 'Developer',
             bio: `Amanda enjoys making things with code and believes in the power education
             has to impact lives. Before joining OpenStax, she worked at a digital health startup.`,
-            image: 'Amanda.png'
+            image: 'Amanda.png',
+            bgColor: 'turquoise',
+            textColor: 'white'
         },
         {
             name: 'Roy Johnson',
-            title: 'Developer',
+            title: 'Javascript Developer',
             bio: `Roy is a Rice graduate who spent his first 25 years out of college
             working for a computer consulting company. He particularly enjoys working
             with JavaScript, and is happy to do that every day at OpenStax.`,
-            image: 'Roy.png'
+            image: 'Roy.png',
+            bgColor: 'blue',
+            textColor: 'green'
         },
         {
             name: 'Karen Chan',
-            title: 'Developer',
+            title: 'Consultant',
             bio: `Karen Chan graduated from the University of York, UK with a degree in
-            Computer Science. Before joining Connexions, she worked for a startup technology
+            Computer Science. Before joining OpenStax, she worked for a startup technology
             consultancy in York. She is now a freelance developer based in Munich, Germany.
-            She mainly focuses on backend development with Python and SQL.`
+            She mainly focuses on backend development with Python and SQL.`,
+            // image: 'Karen.png',
+            bgColor: 'orange',
+            textColor: 'white'
         },
         {
             name: 'Michael Mulich',
-            title: 'Developer',
-            bio: `Before formally joining the Connexions team, Michael worked with The
-            Pennsylvania State University where he causually worked on development tasks
-            for the Connexions project. He has a history and passion for working in the
-            educational space. Michael thrives on bringing high-quality open education to
-            everyone around the world.`
+            title: 'Consultant',
+            bio: `Michael Mulich is a consultant who has been working with OpenStax project
+            for over five years. He has a passion for providing open access to knowledge,
+            whether that is in the form of code, books or schematics. It's his goal to continue
+            contributing to both open source and open education.`,
+            // image: 'MichaelMulich.png',
+            bgColor: 'gray',
+            textColor: 'orange'
         },
         {
             name: 'Derek Kent',
-            title: 'Developer',
-            bio: `Derek Kent is a consultant for Connexions specializing in JavaScript and
-            Web Application development. He has a Bachelor degree from Syracuse University,
-            and has been developing for the web for over 15 years. Prior to joining Connexions,
-            he developed a full-stack ITS app for the Maryland, Virginia, and DC departments
-            of transportation. In past lives, he has worked at the State Department and on
-            Capitol Hill, lived in six different countries in Europe, East Asia, and the Middle
-            East, and is a military veteran. He is also conversant in Mandarin Chinese.`
+            title: 'Consultant',
+            bio: `Derek Kent is a web application consultant for OpenStax. He has a bachelor's
+            degree from Syracuse University and has been developing for the web for over 15
+            years. He is also a military veteran and conversant in Mandarin Chinese.`,
+            // image: 'Dak.png',
+            bgColor: 'cyan',
+            textColor: 'white'
         },
         {
             name: 'Patrick Wolfert',
-            title: 'Developer',
-            bio: `Patrick loves making software come alive - loves watching the delight on
-            people's faces when they experience digital magic. He studied Computer Science
-            and German at Oregon State University, specializing in simulation and game
-            programming. Dreaming of one day using software to improve education in a
-            meaningful way, he now fulfills his dream at OpenStax creating interactive
-            simulations for free and open-source textbooks. He currently lives in Oregon
-            with his wife Jessie and fancies himself a novice
-            <a href="http://en.wikipedia.org/wiki/Traceur#Terminology">traceur</a>.`
+            title: 'Consultant',
+            bio: `Patrick loves helping students engage with educational content through art, story,
+            and a bit of whimsy. He and his wife currently nest in Oregon and are waiting for their
+            little one to hatch. Patrick also fancies himself a traceur—something he picked up on the
+            rough streets of London’s East End.`,
+            // image: 'Patrick.png',
+            bgColor: 'blue',
+            textColor: 'green'
         },
         {
             name: 'Andrew Wienecke',
             title: 'Systems Administrator',
-            bio: '',
-            image: 'Andrew.png'
+            bio: `Born and raised in California, Andrew expatriated to Texas for work. With
+            a background in systems administration and software QA, he now works in DevOps for
+            the Openstax team.`,
+            image: 'Andrew.png',
+            bgColor: 'gray',
+            textColor: 'yellow'
         },
         {
             name: 'Bruce Pike',
             title: 'Project Manager',
-            bio: '',
-            image: 'Bruce.png'
+            bio: `Bruce came to OpenStax from Halliburton where he served as a software project manager and
+            scrum master. He holds a master's degree in engineering management.  He is active in the Agile
+            Leadership Network of Houston, plays the banjo, and leads a choral group at his church.`,
+            image: 'Bruce.png',
+            bgColor: 'deep-green',
+            textColor: 'blue'
         },
         {
             name: 'Chris Houston',
-            title: '',
+            title: 'Customer Support Specialist',
             bio: `Chris is a Customer Support Specialist responsible for assisting faculty and students
             in the adoption and use of Open Educational Resources.  After attending University of Houston
             and MediaTech Institute, Chris began work with LJA Engineering as Junior Network Admin, When
             not at OpenStax Chris can be found mixing records or watching Duke basketball.`,
-            image: 'Chris H.png'
+            image: 'Chris H.png',
+            bgColor: 'yellow',
+            textColor: 'orange'
         },
         {
             name: 'Courtney Raymond',
             title: 'Assistant Director, Marketing and Communications',
-            bio: `Courtney is the Assistant Director of Marketing & Communications at OpenStax, focused on
-            communications strategies around everything OpenStax has to offer for higher ed and K-12 classrooms.
-            She is a native Houstonian whose experience includes nonprofit work and writing consulting in Austin,
-            marketing campaigns for theater companies in New York, and digital marketing in Houston. Courtney is
-            a graduate of the University of Texas and got her Master’s degree at Columbia University. In her free
-            time, she likes to read, see musicals, binge watch good television, and travel.`,
-            image: 'Courtney.png'
+            bio: `Courtney is assistant director of marketing and communications at OpenStax, focused on
+            communications strategies around what OpenStax offers higher ed and K-12. Her experience includes
+            Austin nonprofit work, marketing campaigns for New York theater, and digital marketing in Houston.
+            Courtney is a University of Texas and Columbia University grad who loves to see musicals and travel.`,
+            image: 'Courtney.png',
+            bgColor: 'orange',
+            textColor: 'yellow'
         },
         {
             name: 'Kajal Parekh',
             title: 'QA and Customer Support Manager',
-            bio: `Kajal manages the Quality Assurance and Customer Support teams at OpenStax. She strives to
-            be true to the mission of OpenStax by providing textbooks of highest quality and unbeatable user
-            experience. Kajal graduated from University of California Santa Barbara with a Master’s in
-            Electrical and Computer Engineering and has previously worked as an Engineer at Qualcomm and as
-            a QA Analyst at Weatherford. When not working, Kajal likes to cook, hike, or go on road trips.`,
-            image: 'Kajal.png'
+            bio: `Kajal manages the Quality Assurance and Customer Support teams at OpenStax. She
+            strives to be true to the mission of OpenStax by providing educational tools of highest
+            quality. Kajal graduated from UC Santa Barbara with a master’s in ECE and has previously
+            worked as an engineer at Qualcomm and Weatherford.`,
+            image: 'Kajal.png',
+            bgColor: 'blue',
+            textColor: 'green'
         },
         {
             name: 'Linda Pallares',
-            title: '',
-            bio: `Linda Pallares is an Administrative Assistant with OpenStax.
+            title: 'Administrative Assistant',
+            bio: `Linda Pallares is an administrative assistant with OpenStax.
             She assists with daily operations. She attends the University of Houston
-            and is working towards a degree in Social Work.`,
-            image: 'Linda.png'
+            and is working towards a degree in social work.`,
+            image: 'Linda.png',
+            bgColor: 'deep-green',
+            textColor: 'blue'
         },
         {
             name: 'Mary Allen',
-            title: '',
-            bio: '',
-            image: 'Mary.png'
+            title: 'Executive Assistant',
+            bio: `Mary Allen is the executive assistant to Daniel Williamson and David Harris at OpenStax.
+            She is a graduate of Rice University with a BA in English and is currently completing her MFA
+            in creative writing through the Bennington College Writing Seminar’s low-residency program.`,
+            image: 'Mary.png',
+            bgColor: 'yellow',
+            textColor: 'orange'
         },
         {
             name: 'Michael Harrison',
-            title: 'Developer',
-            bio: '',
-            image: 'Michael.png'
+            title: 'Python Developer',
+            bio: `Michael is a Python developer for OpenStax. He joined OpenStax because he loves education
+            and open source software and technologies. Michael enjoys building things with Python and Swift,
+            as well as hacking on Pis and Arduinos. In his spare time you can find him boating or traveling.`,
+            image: 'Michael.png',
+            bgColor: 'turquoise',
+            textColor: 'white'
         },
         {
             name: 'Mike Arbelaez',
-            title: '',
-            bio: '',
-            image: 'Mike.png'
+            title: 'Research Developer',
+            bio: `As a research developer, Mike is dedicated to advancing the research of learning. Before
+            OpenStax, Mike was a database administrator at Texas A&M University. Mike is a veteran of the
+            United States Navy. When Mike is not combining Python code and cognitive psychology, he is
+            spending time with his family.`,
+            image: 'Mike.png',
+            bgColor: 'cyan',
+            textColor: 'white'
         },
         {
             name: 'Robert Newell',
-            title: 'UX Analyst',
-            bio: `Robert is a user experience (UX) researcher and designer at OpenStax.  He loves listening to users
-            and designing super-simple, easy-to-use interfaces that help build engaging learning experiences.
-            He comes to OpenStax from University of Houston Libraries where he led UX design and usability efforts
-            for their public-facing websites. He also worked as an interaction designer and usability engineer
-            at Dell.  Robert holds a BA in Psychology and an MSIS from the University of Texas at Austin, as well
-            as an MA in Communication from the University of Washington.  Prior to UX, he was a professional actor
-            for ten years.  Robert is generally an active person, and every Saturday morning you’ll find him running
-            along Buffalo Bayou with the Heights Running Club.`,
-            image: 'Robert.png'
+            title: 'UX Researcher',
+            bio: `Robert is a UX researcher and designer at OpenStax. He loves listening to users and designing
+            super simple, easy-to-use interfaces that help build engaging learning experiences. Previously, he
+            led UX efforts for the public-facing websites at UH Libraries. He also has experience as an interaction
+            designer and usability engineer at Dell.`,
+            image: 'Robert.png',
+            bgColor: 'gray',
+            textColor: 'orange'
         },
         {
             name: 'Tim Reiland',
-            title: '',
-            bio: '',
-            image: 'Tim.png'
+            title: 'Accounting Specialist',
+            bio: `Timothy assists with internal bookkeeping and accounting matters such as Concur and accounts
+            payable. Before joining OpenStax, he worked in Rice University’s Payroll Department for two years
+            after graduating from Rice with a degree in psychology. While he is not working, he spends time ballroom
+            dancing, homebrewing, and playing board games.`,
+            image: 'Tim.png',
+            bgColor: 'cyan',
+            textColor: 'blue'
         },
         {
             name: 'Alan Cooke',
             title: 'Customer Support Specialist',
-            bio: `Alan is a Customer Support Specialist at OpenStax focused on supporting the folks who use the
-            things we make. Prior to joining OpenStax, Alan worked support in Web-hosting and Cable/Fiber-Optic
-            Telecoms. He received a degree in Journalism and Mass Communications from Southeastern Louisiana
-            University. While not using the secret skills gained from his alma mater to filter and funnel
-            information from sources to readers he revels in trivia, podcasts, and wooing the muse of the odd.`,
-            image: ''
-        },
-        {
-            name: 'Nathan Stitt'
-        },
-        {
-            name: 'Kean Tonetti'
-        },
-        {
-            name: 'Maher El Aridi'
-        },
-        {
-            name: 'ZZ ZZ',
-            title: 'Customer Support Specialist',
-            bio: '',
+            bio: `Has a bachelor’s degree in journalism from Southeastern Louisiana University. Spends his time
+            absorbing information related to a whole mess of topics & applying that information in day-to-day
+            life with varying degrees of success. Vegetable eater. Aspiring code-knower. Will gladly talk for
+            extended periods of time about odd facts.`,
             image: '',
-            hidden: 'hidden'
+            bgColor: 'yellow',
+            textColor: 'orange'
         },
         {
-            name: 'ZZ ZZ',
-            title: 'Customer Support Specialist',
-            bio: '',
+            name: 'Nathan Stitt',
+            title: 'Consultant',
+            bio: `After writing his first GOTO on the Commodore64, Nathan was hooked on software development.
+            Prior to working on the OpenStax project, he has developed for the healthcare industry and
+            documentcloud.org. When not working at OpenStax, you can find him programming cool LED lighting
+            effects with Arduino.`,
             image: '',
-            hidden: 'hidden'
+            bgColor: 'yellow',
+            textColor: 'orange'
         },
         {
-            name: 'ZZ ZZ',
-            title: 'Customer Support Specialist',
-            bio: '',
+            name: 'Kean Tonetti',
+            title: 'Director of Strategic Partnerships',
+            bio: `Kean is the director of strategic partnerships at OpenStax. In this role, Kean amplifies
+            our impact by developing resources and relationships with non-profit organizations and foundations
+            focused on improving education. Prior to joining OpenStax, Kean served as a development director
+            for Rice University, and consulted with non-profit organizations on fundraising strategy. Kean
+            holds a degree in religion from Princeton University.`,
             image: '',
-            hidden: 'hidden'
+            bgColor: 'yellow',
+            textColor: 'orange'
+        },
+        {
+            name: 'Jing Wang',
+            title: 'Consultant',
+            bio: `Jing is a consultant for OpenStax Tutor focusing on frontend development. He has a bachelor's
+            degree from Virginia Tech and a master's degree from George Mason University. Before joining OpenStax,
+            Jing worked at multiple startups and created a website in China to teach English to Chinese kids.`,
+            image: '',
+            bgColor: 'yellow',
+            textColor: 'orange'
+        },
+        {
+            name: 'Maher El Aridi',
+            title: 'UI Designer and Developer',
+            bio: `Maher specializes in designing and developing user-interface products. At OpenStax, he now serves
+            as UI designer & developer. His previous work has been with various design studios and interactive
+            marketing agencies as lead designer & developer implementing modern design and web standards. Outside
+            of work, his passion lies with cooking, photography, and the outdoors.`,
+            image: '',
+            bgColor: 'yellow',
+            textColor: 'orange'
         }
     ]
 };
