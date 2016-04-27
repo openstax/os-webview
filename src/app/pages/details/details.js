@@ -245,6 +245,14 @@ export default class Details extends LoadingView {
                             this.el.querySelector('.endorsement').remove();
                         }
                     },
+                    handleComingSoon = (comingSoon) => {
+                        if (comingSoon) {
+                            for (let node of Array.from(this.el.querySelectorAll('.hide-if-coming-soon'))) {
+                                node.classList.add('hidden');
+                            }
+                            this.el.querySelector('.cover-wrap').classList.add('coming-soon');
+                        }
+                    },
                     handleDetailData = (detailData) => {
                         let th = dataToTemplateHelper(detailData);
 
@@ -266,6 +274,7 @@ export default class Details extends LoadingView {
                         insertResources(detailData.book_student_resources, 'studentResources');
                         handleErrataLink(detailData.errata_link, detailData.errata_corrections_link);
                         handlePublishInfo(detailData);
+                        handleComingSoon(detailData.webview_link === '');
 
                         for (let ally of detailData.book_allies) {
                             let allyTemplateHelper = {
