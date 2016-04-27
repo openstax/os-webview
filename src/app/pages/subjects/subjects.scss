@@ -143,6 +143,10 @@
                 flex: 0 auto;
             }
 
+            &.coming-soon::before {
+                @include coming-soon;
+            }
+
             img {
                 width: 100%;
             }

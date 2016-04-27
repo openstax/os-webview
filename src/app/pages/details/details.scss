@@ -133,7 +133,8 @@
             margin: 6rem auto;
         }
 
-        .book-cover {
+        .cover-wrap {
+            position: relative;
             width: 100vw;
             order: 1;
             align-self: flex-start;
@@ -146,6 +147,14 @@
 
             @include desktop {
                 width: 25rem;
+            }
+
+            &.coming-soon::before {
+                @include coming-soon;
+            }
+
+            > img {
+                width: 100%;
             }
         }
 
