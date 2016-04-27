@@ -258,9 +258,7 @@ let bios = {
             and Application Architect at JPMorganChase. He has worked
             as a Java Development Team Lead for several firms. Prior
             to writing software, he was a music teacher.`,
-            image: 'Ed.png',
-            bgColor: 'gray',
-            textColor: 'yellow'
+            image: 'Ed.png'
         },
         {
             name: 'Norm Woody',

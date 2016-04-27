@@ -88,6 +88,6 @@ export default class AboutUs extends LoadingView {
     onLoaded() {
         super.onLoaded();
         this.el.querySelector('.page').classList.remove('hidden');
-        this.el.classList.add($.isTouchDevice() ? 'touch' : 'no-touch');
+        this.el.querySelector('.page').classList.add($.isTouchDevice() ? 'touch' : 'no-touch');
     }
 }

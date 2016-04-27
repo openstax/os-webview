@@ -112,7 +112,8 @@
         }
     }
 
-    .headshot:hover:nth-child(3n-2) .details {
+    &.no-touch .headshot:hover:nth-child(3n-2) .details,
+    .headshot.tapped:nth-child(3n-2) .details {
         @include tablet {
             left: 0;
             transform: translate3d(0, 0, 0);
@@ -124,7 +125,8 @@
         }
     }
 
-    .headshot:hover:nth-child(3n+1) .details {
+    &.no-touch .headshot:hover:nth-child(3n+1) .details,
+    .headshot.tapped:nth-child(3n+1) .details {
         @include desktop {
             left: 0;
             transform: translate3d(0, 0, 0);
@@ -136,7 +138,8 @@
         }
     }
 
-    .headshot:hover:nth-child(3n) .details {
+    &.no-touch .headshot:hover:nth-child(3n) .details,
+    .headshot.tapped:nth-child(3n) .details {
         @include tablet {
             right: 0;
             left: auto;
@@ -160,8 +163,10 @@
         }
     }
 
-    .headshot:hover:nth-child(4n) .details,
-    .headshot:hover:nth-child(4n-1) .details {
+    &.no-touch .headshot:hover:nth-child(4n) .details,
+    &.no-touch .headshot:hover:nth-child(4n-1) .details,
+    .headshot.tapped:nth-child(4n) .details,
+    .headshot.tapped:nth-child(4n-1) .details {
         @media (min-width: 770px) {
             left: auto;
             right: 0;
@@ -174,8 +179,10 @@
         }
     }
 
-    .headshot:hover:nth-child(4n-3) .details,
-    .headshot:hover:nth-child(4n-2) .details {
+    &.no-touch .headshot:hover:nth-child(4n-3) .details,
+    &.no-touch .headshot:hover:nth-child(4n-2) .details,
+    .headshot.tapped:nth-child(4n-3) .details,
+    .headshot.tapped:nth-child(4n-2) .details {
         @media (min-width: 770px) {
             left: 0;
             right: auto;
@@ -189,8 +196,10 @@
     }
 
     // min-width 955px 5per row
-    .headshot:hover:nth-child(5n) .details,
-    .headshot:hover:nth-child(5n-1) .details {
+    &.no-touch .headshot:hover:nth-child(5n) .details,
+    &.no-touch .headshot:hover:nth-child(5n-1) .details,
+    .headshot.tapped:nth-child(5n) .details,
+    .headshot.tapped:nth-child(5n-1) .details {
         @media (min-width: 955px) {
             left: auto;
             right: 0;
@@ -203,8 +212,10 @@
         }
     }
 
-    .headshot:hover:nth-child(5n+1) .details,
-    .headshot:hover:nth-child(5n+2) .details {
+    &.no-touch .headshot:hover:nth-child(5n+1) .details,
+    &.no-touch .headshot:hover:nth-child(5n+2) .details,
+    .headshot.tapped:nth-child(5n+1) .details,
+    .headshot.tapped:nth-child(5n+2) .details {
         @media (min-width: 955px) {
             left: 0;
             right: auto;
@@ -218,8 +229,10 @@
     }
 
     // min-width 1140px 6 per row
-    .headshot:hover:nth-child(6n) .details,
-     .headshot:hover:nth-child(6n-1) .details {
+    &.no-touch .headshot:hover:nth-child(6n) .details,
+    &.no-touch .headshot:hover:nth-child(6n-1) .details,
+    .headshot.tapped:nth-child(6n) .details,
+    .headshot.tapped:nth-child(6n-1) .details {
         @media (min-width: 1140px) {
             left: auto;
             right: 0;
@@ -232,8 +245,10 @@
         }
     }
 
-    .headshot:hover:nth-child(6n+1) .details,
-     .headshot:hover:nth-child(6n+2) .details {
+    &.no-touch .headshot:hover:nth-child(6n+1) .details,
+    &.no-touch .headshot:hover:nth-child(6n+2) .details,
+    .headshot.tapped:nth-child(6n+1) .details,
+    .headshot.tapped:nth-child(6n+2) .details {
         @media (min-width: 1140px) {
             left: 0;
             right: auto;
@@ -254,7 +269,7 @@
         transform: translate3d(0, 0, 0);
     }
 
-    .headshot:hover .details,
+    &.no-touch .headshot:hover .details,
     .headshot.tapped .details {
         @include tablet {
             height: auto;
@@ -534,18 +549,7 @@
             }
         }
 
-        .headshot:hover .details {
-            @include tablet {
-                top: auto;
-                bottom: 26rem;
 
-                &::before {
-                    border-color: color(neutral-lightest) transparent transparent;
-                    bottom: auto;
-                    top: 100%;
-                }
-            }
-        }
 
         .picture-area {
             margin-bottom: 2.5rem;
@@ -561,6 +565,20 @@
         .name {
             font-size: 2.2rem;
             font-weight: 600;
+        }
+    }
+
+    &.no-touch .strategic-advisors .headshot:hover .details,
+    .strategic-advisors .headshot.tapped .details {
+        @include tablet {
+            top: auto;
+            bottom: 26rem;
+
+            &::before {
+                border-color: color(neutral-lightest) transparent transparent;
+                bottom: auto;
+                top: 100%;
+            }
         }
     }
 
