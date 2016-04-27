@@ -64,6 +64,9 @@ export default class Subjects extends LoadingView {
                     selectedFilter = c;
                 }
             }
+            if (selectedFilter === 'View All') {
+                router.navigate('404', true);
+            }
         }
         this.model.set('selectedFilter', selectedFilter);
     }
@@ -92,7 +95,6 @@ export default class Subjects extends LoadingView {
     }
 
     onRender() {
-        super.onRender();
         let populateBookInfoFields = (data) => {
             let findNode = (name) => this.el.querySelector(`[data-manager="${name}"]`);
 
@@ -134,5 +136,6 @@ export default class Subjects extends LoadingView {
                 resolve();
             });
         }));
+        super.onRender();
     }
 }

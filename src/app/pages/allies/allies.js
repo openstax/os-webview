@@ -8,6 +8,7 @@ import $ from '~/helpers/$';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './allies.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
+import router from '~/router';
 
 const categories = ['Math', 'Science', 'Social Sciences', 'History', 'AP®'],
     filterButtons = ['View All', ...categories];
@@ -90,6 +91,9 @@ export default class Allies extends LoadingView {
                     selectedFilter = c;
                 }
             }
+            if (selectedFilter === 'View All') {
+                router.navigate('404', true);
+            }
         }
         this.stateModel.set('selectedFilter', selectedFilter);
     }
@@ -109,7 +113,6 @@ export default class Allies extends LoadingView {
     }
 
     onRender() {
-        super.onRender();
         this.el.classList.add('allies-page');
         for (let button of filterButtons) {
             this.regions.filterButtons.append(new FilterButton(button, this.stateModel));
@@ -124,6 +127,7 @@ export default class Allies extends LoadingView {
             });
         }));
         pageDataPromise.then(this.handlePageData.bind(this));
+        super.onRender();
     }
 
     onLoaded() {

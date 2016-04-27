@@ -13,6 +13,7 @@ import Remover from '~/components/remover/remover';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
 import {template as strips} from '~/components/strips/strips.hbs';
 import settings from 'settings';
+import router from '~/router';
 
 function dataToTemplateHelper(data) {
     let quotes = data.book_quotes[0] || {},
@@ -243,7 +244,7 @@ export default class Details extends LoadingView {
             },
             handleBasicBookData = (data) => {
                 if (data.pages.length === 0) {
-                    window.location.href = '404';
+                    router.navigate('404', true);
                 }
 
                 let detailUrl = data.pages[0].meta.detail_url,
@@ -307,6 +308,7 @@ export default class Details extends LoadingView {
         pageModel.fetch({
             data: {type: 'books.Book', slug}
         }).then(handleBasicBookData.bind(this));
+        super.onRender();
     }
 
     onLoaded() {
