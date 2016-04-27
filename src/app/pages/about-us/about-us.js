@@ -1,7 +1,8 @@
 import LoadingView from '~/helpers/backbone/loading-view';
 import BaseModel from '~/helpers/backbone/model';
 import Headshot from './headshot/headshot';
-import {props} from '~/helpers/backbone/decorators';
+import $ from '~/helpers/$';
+import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './about-us.hbs';
 import Hero from './hero/hero';
 import {template as strips} from '~/components/strips/strips.hbs';
@@ -61,24 +62,32 @@ function assignColorsToTeam(team) {
     }
 })
 export default class AboutUs extends LoadingView {
+    @on('click')
+    closeBios() {
+        if (this.stateModel) {
+            this.stateModel.set('active', null);
+        }
+    }
+
     onRender() {
         this.regions.hero.show(new Hero());
 
-        let stateModel = new BaseModel();
+        this.stateModel = new BaseModel();
 
-        super.onRender();
         bios.team.sort((a, b) => lastName(a) > lastName(b) ? 1 : -1);
         assignColorsToTeam(bios.team);
         for (let person of bios.team) {
-            this.regions.team.append(new Headshot(toHeadshot(person), stateModel));
+            this.regions.team.append(new Headshot(toHeadshot(person), this.stateModel));
         }
         for (let person of bios.advisors.sort((a, b) => lastName(a) > lastName(b) ? 1 : -1)) {
-            this.regions.advisors.append(new Headshot(toHeadshot(person)));
+            this.regions.advisors.append(new Headshot(toHeadshot(person), this.stateModel));
         }
+        super.onRender();
     }
 
     onLoaded() {
         super.onLoaded();
         this.el.querySelector('.page').classList.remove('hidden');
+        this.el.querySelector('.page').classList.add($.isTouchDevice() ? 'touch' : 'no-touch');
     }
 }

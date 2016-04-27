@@ -1,6 +1,7 @@
 import BaseView from '~/helpers/backbone/view';
 import Remover from '~/components/remover/remover';
 import TouchScroller from '~/helpers/touch-scroller';
+import $ from '~/helpers/$';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './headshot.hbs';
 
@@ -11,6 +12,14 @@ import {template} from './headshot.hbs';
     }
 })
 export default class Headshot extends BaseView {
+    addTapped() {
+        if (this.isNarrowScreen()) {
+            document.body.classList.add('no-scroll');
+        }
+        this.el.classList.add('tapped');
+        this.remover.el.classList.remove('hidden');
+    }
+
     removeTapped() {
         if (this.el.classList.contains('tapped')) {
             document.body.classList.remove('no-scroll');
@@ -25,10 +34,8 @@ export default class Headshot extends BaseView {
 
     @on('click')
     setClicked() {
-        if (this.isNarrowScreen()) {
-            document.body.classList.add('no-scroll');
-            this.el.classList.add('tapped');
-            this.remover.el.classList.remove('hidden');
+        if ($.isTouchDevice() || this.isNarrowScreen()) {
+            this.stateModel.set('active', this);
         }
     }
 
@@ -48,8 +55,19 @@ export default class Headshot extends BaseView {
         super();
         this.templateHelpers = templateHelpers;
         this.stateModel = stateModel;
-        this.remover = new Remover(() => {this.removeTapped();});
         this.bioScroller = new TouchScroller();
+        this.remover = new Remover(() => {
+            stateModel.set('active', null);
+        });
+        stateModel.on('change:active', () => {
+            let newValue = stateModel.get('active');
+
+            if (newValue === this) {
+                this.addTapped();
+            } else {
+                this.removeTapped();
+            }
+        });
     }
 
     onRender() {
