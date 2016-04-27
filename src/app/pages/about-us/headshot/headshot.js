@@ -1,6 +1,5 @@
 import BaseView from '~/helpers/backbone/view';
 import Remover from '~/components/remover/remover';
-import TouchScroller from '~/helpers/touch-scroller';
 import $ from '~/helpers/$';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './headshot.hbs';
@@ -39,23 +38,10 @@ export default class Headshot extends BaseView {
         }
     }
 
-    @on('touchstart .details .description')
-    startScrollBio(e) {
-        let element = this.el.querySelector('.details .description');
-
-        this.bioScroller.start(element, e);
-    }
-
-    @on('touchmove .details .description')
-    scrollBio(e) {
-        this.bioScroller.scroll(e);
-    }
-
     constructor(templateHelpers, stateModel) {
         super();
         this.templateHelpers = templateHelpers;
         this.stateModel = stateModel;
-        this.bioScroller = new TouchScroller();
         this.remover = new Remover(() => {
             stateModel.set('active', null);
         });
@@ -79,5 +65,6 @@ export default class Headshot extends BaseView {
         }
         this.regions.details.append(this.remover);
         this.remover.el.classList.add('hidden');
+        $.applyScrollFix(this);
     }
 }

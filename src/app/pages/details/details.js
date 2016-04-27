@@ -7,7 +7,6 @@ import Resource from './resource/resource';
 import Contents from './contents/contents';
 import Ally from './ally/ally';
 import userModel from '~/models/usermodel';
-import TouchScroller from '~/helpers/touch-scroller';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './details.hbs';
 import Remover from '~/components/remover/remover';
@@ -71,22 +70,9 @@ export default class Details extends LoadingView {
         }
     }
 
-    @on('touchstart .table-of-contents')
-    startScrollBio(e) {
-        let element = this.el.querySelector('.table-of-contents');
-
-        this.optionScroller.start(element, e);
-    }
-
-    @on('touchmove .table-of-contents')
-    scrollList(e) {
-        this.optionScroller.scroll(e);
-    }
-
     constructor() {
         super(...arguments);
         this.templateHelpers = {strips};
-        this.tocScroller = new TouchScroller();
     }
 
     toggleFixedClass() {
