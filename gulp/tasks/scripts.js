@@ -169,7 +169,8 @@ function compileScripts() {
         plugins: [
             'transform-decorators-legacy',
             'transform-class-properties',
-            'transform-async-to-generator'
+            'transform-async-to-generator',
+            'transform-object-assign'
         ]
     }))
     .pipe(pi.if(config.env !== 'production', pi.sourcemaps.write('.')))

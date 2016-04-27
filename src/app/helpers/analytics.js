@@ -40,25 +40,41 @@ class Analytics {
         })(window, document, 'script', 'dataLayer', settings.tagManagerID);
     }
 
-    send(fragment) {
-        /* eslint global-require: 0 */
+    send(fields) {
+        System.import('~/helpers/google-analytics').then((m) => {
+            let ga = m.ga;
 
-        let frag = fragment || Backbone.history.fragment;
+            ga('send', fields);
+        });
+    }
+
+    sendPageview(page) {
+        let frag = page || Backbone.history.fragment;
 
         if (!(/^\//).test(frag)) {
             frag = `/${frag}`;
         }
 
-        System.import('~/helpers/google-analytics').then((m) => {
-            let ga = m.ga;
-
-            ga('send', 'pageview', frag);
+        this.send({
+            hitType: 'pageview',
+            page: frag
         });
+    }
+
+    sendEvent(fields) {
+        this.send(Object.assign(
+            {hitType: 'event'},
+            fields
+        ));
     }
 
     record(href) {
         if (linkHelper.isPDF(href)) {
-            this.send();
+            this.sendEvent({
+                eventCategory: 'PDF',
+                eventAction: 'download',
+                eventLabel: href
+            });
         }
     }
 

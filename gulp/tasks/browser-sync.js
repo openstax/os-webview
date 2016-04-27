@@ -10,6 +10,7 @@ const corsHeaders = [
     'X-Requested-With',
     'If-Modified-Since',
     'Cache-Control',
+    'Accept-Encoding',
     'Content-Type'
 ];
 
