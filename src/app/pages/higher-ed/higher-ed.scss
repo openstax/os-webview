@@ -51,6 +51,7 @@ $hero-break-width: 880px;
             max-width: $boxed-width;
             width: 100%;
             z-index: 1;
+            justify-content: center;
 
             @include collapsed {
                 flex-flow: row wrap;
