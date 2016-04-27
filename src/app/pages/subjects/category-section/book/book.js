@@ -37,6 +37,10 @@ export default class Book extends BaseView {
         this.el.classList.add('cover');
         this.regions.getThis.append(new GetThisTitle(this.data));
         this.setState();
+
+        if (this.data.webview_link === '') {
+            this.el.classList.add('coming-soon');
+        }
     }
 
     isSelected() {

@@ -125,6 +125,10 @@
         background-color: darken(color(orange), 5%);
     }
 
+    .btn.hidden {
+        display: none;
+    }
+
     .book-info {
         justify-content: space-between;
         margin-bottom: 6rem;
