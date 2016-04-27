@@ -51,7 +51,7 @@ $.applyScrollFix = (view) => {
             freezePosition = document.documentElement.scrollTop || document.body.scrollTop;
         },
         handleMouseLeave = (e) => {
-            if (!e.target.contains(e.relatedTarget)) {
+            if (!e.currentTarget.contains(e.relatedTarget)) {
                 freezePosition = null;
             }
         },
@@ -61,12 +61,20 @@ $.applyScrollFix = (view) => {
 
             el.scrollTop = el.scrollTop + delta;
             e.preventDefault();
-        };
+        },
+        touchOutside = (el) => (
+            (e) => {
+                if (!el.contains(e.target)) {
+                    freezePosition = null;
+                }
+            }
+        );
 
     for (let el of view.el.querySelectorAll('.mac-scroll')) {
         view.attachListenerTo(el, 'scroll', setFreezePosition);
         view.attachListenerTo(el, 'mouseleave', handleMouseLeave);
         view.attachListenerTo(el, 'mousewheel', handleWheelEvent);
+        view.attachListenerTo(window, 'touchstart', touchOutside(el));
     }
     view.attachListenerTo(window, 'scroll', () => {
         if (freezePosition !== null) {

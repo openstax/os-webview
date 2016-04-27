@@ -2,7 +2,6 @@ import BaseView from '~/helpers/backbone/view';
 import BaseModel from '~/helpers/backbone/model';
 import BaseCollection from '~/helpers/backbone/collection';
 import $ from '~/helpers/$';
-import TouchScroller from '~/helpers/touch-scroller';
 import Option from '../select-option/select-option';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './single-select.hbs';
@@ -20,22 +19,9 @@ export default class SingleSelect extends BaseView {
         e.stopPropagation();
     }
 
-    @on('touchstart .option-list')
-    startScrollBio(e) {
-        let element = this.el.querySelector('.option-list');
-
-        this.optionScroller.start(element, e);
-    }
-
-    @on('touchmove .option-list')
-    scrollList(e) {
-        this.optionScroller.scroll(e);
-    }
-
     constructor() {
         super();
         this.stateCollection = new BaseCollection();
-        this.optionScroller = new TouchScroller();
     }
 
     togglePulldown() {
