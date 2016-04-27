@@ -56,10 +56,6 @@ class AppView extends BaseView {
                     }, 200);
             } else {
                 window.scrollTo(0, 0);
-                // Another stab at fixing IE rendering issue
-                setTimeout(() => {
-                    this.header.updateHeaderStyle();
-                }, 250);
             }
         });
 

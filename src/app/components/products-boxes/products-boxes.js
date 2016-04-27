@@ -46,7 +46,7 @@ export default class ProductsBoxes extends BaseView {
             },
             'Tutor': {
                 name: 'tutor',
-                title: 'OpenStax Tutor',
+                title: 'OpenStax Tutor Pilot',
                 linkText: 'Sign up',
                 url: '/contact?subject=OpenStax Tutor Pilot Sign-up',
                 blurb: `We’re recruiting for our Fall 2016 OpenStax Tutor high school pilot.
