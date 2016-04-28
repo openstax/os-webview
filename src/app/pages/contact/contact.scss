@@ -41,12 +41,18 @@
 
             @include tablet-up {
                 flex: 1 1 60%;
+                max-width: 60%;
             }
 
             &:last-child {
                 @include tablet-up {
                     padding-left: 3rem;
                     flex: 1 1 40%;
+                    max-width: 40%;
+
+                    > h2 {
+                        margin-top: 2.5rem;
+                    }
                 }
 
             }
