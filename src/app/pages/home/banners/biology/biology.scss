@@ -1,14 +1,14 @@
 @import 'variables';
 @import 'mixins';
 
-@mixin desktop {
-    @media (min-width: 1025px) {
+@mixin tablet {
+    @media (min-width: #{breakpoints(phone) + 1}) {
         @content;
     }
 }
 
-@mixin tablet {
-    @media (min-width: #{breakpoints(phone) + 1}) and (max-width: 1024px) {
+@mixin desktop {
+    @media (min-width: 1025px) {
         @content;
     }
 }
@@ -23,25 +23,20 @@
 .biology {
     background-image: url('/images/home/subjects/biology/background.jpg');
     background-attachment: fixed;
-    background-position: -15rem 0;
+    background-position: 20% 0;
     background-repeat: no-repeat;
     background-size: cover;
     height: 60rem;
     overflow: hidden;
     position: relative;
 
-    @include desktop {
-        background-position: center top;
-    }
-
     @media (min-width: #{breakpoints(tablet) + 1}) {
         height: 65rem;
     }
 
     @include phone {
-        background-color: color(blue);
+        background-color: color(green);
         background-image: none;
-        background-position: left top;
         height: 45rem;
     }
 
@@ -161,20 +156,41 @@
     .book {
         background-color: color(green);
         background-image: url('/images/subjects/biology.svg');
-        height: 29rem;
-        left: 50rem;
         position: absolute;
-        top: 9rem;
-        width: 29rem;
+        height: 25rem;
+        right: 16rem;
+        top: 1.5rem;
+        width: 25rem;
+        background-size: 130% auto;
+        background-position: 100% 50%;
 
         @include tablet {
-            left: 28rem;
+            top: 5%;
+            left: auto;
+            right: 25%;
+            width: 30rem;
+            height: 30rem;
+        }
+
+        @media (max-width: 360px) {
+            right: auto;
+            left: -5rem;
+
+        }
+
+        @media (min-width: #{breakpoints(tablet) + 1}) {
+            top: 15%;
         }
 
         @include desktop {
+            left: 40%;
+            width: 30rem;
+            height: 30rem;
             animation: flyin 0.5s 1s 1 normal forwards;
+        }
 
-            &.flyout {
+        &.flyout {
+            @include desktop {
                 animation: flyout 0.5s 1 normal forwards;
                 opacity: 1;
             }
@@ -184,21 +200,25 @@
     canvas,
     .video,
     .video-banner {
-        bottom: 0;
+        bottom: 15rem;
         height: 25rem;
-        left: 3rem;
         position: absolute;
-        width: 23.52rem;
+        right: 1.5rem;
+        width: 22rem;
         z-index: 2;
 
         @include tablet {
-            left: calc(16rem - 10%);
+            bottom: 0;
+            height: 40rem;
+            left: -8rem;
+            right: auto;
+            width: 35rem;
         }
 
         @include desktop {
-            height: 51rem;
-            width: 48rem;
-            left: calc(16rem + 10%);
+            height: 53rem;
+            width: 45.4rem;
+            left: 15%;
         }
     }
 
@@ -215,11 +235,12 @@
         background-color: rgba(color(neutral-medium), 0.85);
         bottom: 15rem;
         color: color(neutral-lightest);
+        display: none;
         font-size: 3rem;
         font-weight: 600;
         height: 8rem;
-        line-height: 8.5rem;
-        right: 5rem;
+        line-height: 2.5rem;
+        left: 22%;
         padding: 0;
         position: absolute;
         text-align: center;
@@ -232,13 +253,15 @@
         }
 
         @include desktop {
-            right: 1.5rem;
+            left: 40%;
             width: 59rem;
             height: 9rem;
             font-size: 3.6rem;
             animation: flyin 0.5s 1.8s 1 normal forwards;
+        }
 
-            &.flyout {
+        &.flyout {
+            @include desktop {
                 animation: flyout 0.5s 1 normal forwards;
                 opacity: 1;
             }
@@ -246,8 +269,10 @@
 
         .quote {
             display: inline-block;
+            line-height: 8rem;
             font-family: 'Permanent Marker', cursive;
             transform: rotate(-1.2deg) translate(0.75vw, -0.45vw);
+            margin-right: 1rem;
         }
 
         &::after {
@@ -258,6 +283,7 @@
             top: 6rem;
             width: 32rem;
 
+
             @include desktop {
                 width: 35rem;
                 right: 2rem;
@@ -266,23 +292,25 @@
     }
 
     .subject-links {
-        right: 8.5rem;
+        bottom: 1.5rem;
+        left: 0;
         position: absolute;
-        bottom: 7rem;
+        width: 100%;
         z-index: 3;
 
         @include tablet {
             width: 27rem;
             bottom: 5rem;
+            left: 50%;
         }
 
-        @media (min-width:650px) {
+        @media (min-width: 650px) {
             width: auto;
-            right: 8.5rem;
-            left: auto;
+            left: 22%;
         }
 
         @include desktop {
+            left: 40%;
             animation: flyin 0.5s 1.8s 1 normal forwards;
         }
 
@@ -295,30 +323,62 @@
 
         ul {
             list-style-type: none;
-            margin: 0;
+            margin: 0 1.5rem;
             padding: 0;
+
+            @include tablet {
+                margin: 0;
+            }
+
 
             li {
                 display: inline-block;
+                width: 100%;
 
-                &:first-child {
-                    margin-right: 1rem;
+                @media (min-width: 650px) {
+                    width: auto;
                 }
             }
         }
 
         .btn {
-            padding: 2rem 4rem;
+            font-size: 1.6rem;
+            line-height: 6rem;
+            height: 6rem;
+            padding: 0 1.5rem;
+            width: 100%;
+            display: inline-block;
 
-            @include tablet {
-                font-size: 1.7vw;
+            @include desktop {
+                width: auto;
             }
         }
 
-        .explore-subject,
-        .explore-all {
-            box-shadow: 0 0 1rem color(neutral-dark);
+        .explore-subject {
+            margin-bottom: 1.5rem;
+
+            @include tablet {
+                margin-right: 1.5rem;
+            }
+
+            @include phone {
+                background-color: color(yellow);
+
+                &:hover {
+                    background-color: darken(color(yellow), 5%);
+                }
+            }
         }
 
+        .explore-all {
+
+            @include phone {
+                background-color: color(deep-green);
+
+                &:hover {
+                    background-color: darken(color(turquoise), 5%);
+                }
+            }
+        }
     }
 }
