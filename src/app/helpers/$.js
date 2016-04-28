@@ -68,9 +68,21 @@ $.applyScrollFix = (view) => {
                     freezePosition = null;
                 }
             }
-        );
+        ),
+        scrollStart,
+        startScrolling = (e) => {
+            scrollStart = e.changedTouches[0].pageY + e.currentTarget.scrollTop;
+        },
+        continueScrolling = (e) => {
+            let el = e.currentTarget,
+                newY = e.targetTouches[0].pageY;
+
+            el.scrollTop += scrollStart - newY;
+        };
 
     for (let el of view.el.querySelectorAll('.mac-scroll')) {
+        view.attachListenerTo(el, 'touchstart', startScrolling);
+        view.attachListenerTo(el, 'touchmove', continueScrolling);
         view.attachListenerTo(el, 'scroll', setFreezePosition);
         view.attachListenerTo(el, 'mouseleave', handleMouseLeave);
         view.attachListenerTo(el, 'mousewheel', handleWheelEvent);
