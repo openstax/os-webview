@@ -17,7 +17,6 @@ module.exports = {
     version: project.version,
     license: project.license,
     watchOpts: {
-        useFsEvents: true,
-        awaitWriteFinish: true
+        useFsEvents: true
     }
 };

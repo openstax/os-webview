@@ -31,7 +31,7 @@
     "connect-history-api-fallback": "1.2.0",
     "del": "2.2.0",
     "eslint": "2.8.0",
-    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp": "github:gulpjs/gulp#37dffae33396e67bf8fa01a174d0920f1ff1ae6b",
     "gulp-autoprefixer": "3.1.0",
     "gulp-babel": "6.1.2",
     "gulp-clip-empty-files": "0.1.2",
