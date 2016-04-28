@@ -41,8 +41,7 @@ $text-dark2: rgba(0, 0, 0, 0.7);
     .icons {
         @include constrained-variable-text(3, 0.3);
 
-        background-color: color(gray);
-        color: color(neutral-lightest);
+        color: color(gray);
         display: block;
         font-weight: 500;
         margin: 0 auto;
