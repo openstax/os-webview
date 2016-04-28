@@ -105,6 +105,8 @@ sup {
 }
 
 .mac-scroll {
+    -webkit-overflow-scrolling: touch;
+
     &::-webkit-scrollbar {
         -webkit-appearance: none;
     }
