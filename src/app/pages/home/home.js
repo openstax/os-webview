@@ -50,15 +50,11 @@ export default class Home extends LoadingView {
         let books = this.el.querySelectorAll('.book');
 
         for (let bookBanner of bookBanners) {
-            if (window.innerWidth > 1025) {
-                bookBanner.setAttribute('style', `background-position: 50% -${window.pageYOffset/2}px`);
-            } else {
-                bookBanner.setAttribute('style', `background-position: -15rem -${window.pageYOffset/2}px`);
-            }
+            bookBanner.setAttribute('style', `background-position: 20% -${window.pageYOffset/2}px`);
         }
 
         for (let book of books) {
-            book.setAttribute('style', `background-position: 50% ${window.pageYOffset/20}px`);
+            book.setAttribute('style', `margin-top: ${window.pageYOffset/20}px`);
         }
     }
 
@@ -66,7 +62,6 @@ export default class Home extends LoadingView {
         super.onRender();
         appView.header.updateHeaderStyle();
         this.attachListenerTo(window, 'scroll', this.parallaxBanner.bind(this));
-        this.attachListenerTo(window, 'resize', this.parallaxBanner.bind(this));
 
         this.regions.quotes.show(new Quotes([
             {

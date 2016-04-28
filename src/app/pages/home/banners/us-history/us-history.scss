@@ -23,16 +23,12 @@
 .us-history {
     background-image: url('/images/home/subjects/us-history/background.jpg');
     background-attachment: fixed;
-    background-position: -15rem 0;
+    background-position: 20% 0;
     background-repeat: no-repeat;
     background-size: cover;
     height: 60rem;
     overflow: hidden;
     position: relative;
-
-    @include desktop {
-        background-position: center top;
-    }
 
     @media (min-width: #{breakpoints(tablet) + 1}) {
         height: 65rem;
@@ -41,7 +37,6 @@
     @include phone {
         background-color: color(blue);
         background-image: none;
-        background-position: left top;
         height: 45rem;
     }
 
@@ -171,7 +166,7 @@
         height: 10rem;
         left: 26rem;
         position: absolute;
-        top: 50%;
+        top: 40%;
         width: 12.4rem;
     }
 
@@ -205,7 +200,7 @@
         @include tablet {
             top: 5%;
             left: auto;
-            right: 25%;
+            right: 15%;
             width: 30rem;
             height: 30rem;
         }
