@@ -2,6 +2,7 @@
 @import 'mixins';
 
 .home-page {
+    background-color: lighten(color(neutral-lighter), 8%);
     flex: 1 0 auto;
 
     @include desktop {
@@ -21,7 +22,18 @@
         }
 
         > div {
-            display: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            &.fadein {
+                opacity: 1;
+                z-index: 1;
+            }
         }
     }
 
@@ -48,8 +60,6 @@
 }
 
 .quote-buckets {
-    background-color: lighten(color(neutral-lighter), 8%);
-
     .attribution {
         text-align: right;
     }

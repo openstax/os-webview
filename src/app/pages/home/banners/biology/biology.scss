@@ -13,13 +13,6 @@
     }
 }
 
-.flyin,
-.flyout {
-    @include desktop {
-        opacity: 0;
-    }
-}
-
 .biology {
     background-image: url('/images/home/subjects/biology/background.jpg');
     background-attachment: fixed;
@@ -69,49 +62,66 @@
 
         @include desktop {
             display: block;
-            animation: flyin 0.5s 1.2s 1 normal ease-in forwards, loop 30s 1.5s normal infinite linear forwards;
+            animation: loop 30s normal infinite linear forwards;
         }
+    }
 
-        &.flyout {
-            @include desktop {
-                animation: flyout 0.5s 1 normal forwards;
-                opacity: 1;
-            }
-        }
+    .square-1,
+    .square-4 {
+        height: 2.5rem;
+        width: 2.5rem;
     }
 
     .square-1 {
-        height: 37rem;
-        left: 8rem;
-        top: 25rem;
-        width: 37rem;
+        left: 5rem;
+        top: 50%;
     }
 
     .square-2 {
-        height: 5rem;
-        left: 12rem;
-        top: 16rem;
-        width: 5rem;
+        height: 34rem;
+        bottom: 0;
+        left: 0;
+        width: 45rem;
+
+        @include tablet {
+            display: block;
+        }
+
+        @include desktop {
+            width: 60%;
+            height: 34rem;
+            bottom: auto;
+            top: 27%;
+        }
     }
 
     .square-3 {
-        height: 35rem;
-        left: 52rem;
-        top: 20rem;
-        width: 56rem;
+        height: 26rem;
+        bottom: 15rem;
+        right: 0;
+        width: 26rem;
+
+        @include tablet {
+            display: block;
+        }
+
+        @include desktop {
+            right: 5rem;
+            bottom: 5rem;
+            width: 40rem;
+            height: 33rem;
+        }
     }
 
     .square-4 {
-        height: 3.2rem;
-        right: 4.5rem;
-        top: 34rem;
-        width: 3.2rem;
+        left: 70%;
+        top: 20%;
     }
 
     .diagram,
     .leaf,
     .book,
-    .video-banner {
+    .student {
         background-position: center center;
         background-repeat: no-repeat;
         background-size: contain;
@@ -124,14 +134,7 @@
 
         @include desktop {
             display: block;
-            animation: flyin 0.5s 1.4s 1 normal ease-in forwards, loop 40s 1.8s reverse infinite linear forwards;
-        }
-
-        &.flyout {
-            @include desktop {
-                animation: flyout 0.5s 1 normal forwards;
-                opacity: 1;
-            }
+            animation: loop 40s reverse infinite linear forwards;
         }
     }
 
@@ -184,22 +187,12 @@
 
         @include desktop {
             left: 40%;
-            width: 30rem;
-            height: 30rem;
-            animation: flyin 0.5s 1s 1 normal forwards;
-        }
-
-        &.flyout {
-            @include desktop {
-                animation: flyout 0.5s 1 normal forwards;
-                opacity: 1;
-            }
         }
     }
 
-    canvas,
-    .video,
-    .video-banner {
+    .student {
+        background-image: url('/images/home/subjects/biology/student.png');
+        background-position: 92% 100%;
         bottom: 15rem;
         height: 25rem;
         position: absolute;
@@ -220,15 +213,6 @@
             width: 45.4rem;
             left: 15%;
         }
-    }
-
-    .video {
-        display: none;
-    }
-
-    .video-banner {
-        background-image: url('/images/home/subjects/biology/student.png');
-        background-position: 92% 100%;
     }
 
     .now-i-can {
@@ -257,14 +241,6 @@
             width: 59rem;
             height: 9rem;
             font-size: 3.6rem;
-            animation: flyin 0.5s 1.8s 1 normal forwards;
-        }
-
-        &.flyout {
-            @include desktop {
-                animation: flyout 0.5s 1 normal forwards;
-                opacity: 1;
-            }
         }
 
         .quote {
@@ -311,14 +287,6 @@
 
         @include desktop {
             left: 40%;
-            animation: flyin 0.5s 1.8s 1 normal forwards;
-        }
-
-        &.flyout {
-            @include desktop {
-                animation: flyout 0.5s 1 normal forwards;
-                opacity: 1;
-            }
         }
 
         ul {

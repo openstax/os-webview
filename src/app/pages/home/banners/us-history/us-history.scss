@@ -13,13 +13,6 @@
     }
 }
 
-.flyin,
-.flyout {
-    @include desktop {
-        opacity: 0;
-    }
-}
-
 .us-history {
     background-image: url('/images/home/subjects/us-history/background.jpg');
     background-attachment: fixed;
@@ -69,14 +62,7 @@
 
         @include desktop {
             display: block;
-            animation: flyin 0.5s 1.2s 1 normal ease-in forwards, loop 30s 1.5s normal infinite linear forwards;
-        }
-
-        &.flyout {
-            @include desktop {
-                animation: flyout 0.5s 1 normal forwards;
-                opacity: 1;
-            }
+            animation: loop 30s normal infinite linear forwards;
         }
     }
 
@@ -136,7 +122,7 @@
     .john-adams,
     .clermont,
     .book,
-    .video-banner {
+    .student {
         background-position: center center;
         background-repeat: no-repeat;
         background-size: contain;
@@ -150,14 +136,7 @@
 
         @include desktop {
             display: block;
-            animation: flyin 0.5s 1.4s 1 normal ease-in forwards, loop 40s 1.8s reverse infinite linear forwards;
-        }
-
-        &.flyout {
-            @include desktop {
-                animation: flyout 0.5s 1 normal forwards;
-                opacity: 1;
-            }
+            animation: loop 40s reverse infinite linear forwards;
         }
     }
 
@@ -216,22 +195,12 @@
 
         @include desktop {
             left: 40%;
-            width: 30rem;
-            height: 30rem;
-            animation: flyin 0.5s 1s 1 normal forwards;
-        }
-
-        &.flyout {
-            @include desktop {
-                animation: flyout 0.5s 1 normal forwards;
-                opacity: 1;
-            }
         }
     }
 
-    canvas,
-    .video,
-    .video-banner {
+    .student {
+        background-image: url('/images/home/subjects/us-history/student.png');
+        background-position: 92% 100%;
         bottom: 15rem;
         height: 25rem;
         position: absolute;
@@ -252,15 +221,6 @@
             right: 15rem;
             width: 45.4rem;
         }
-    }
-
-    .video {
-        display: none;
-    }
-
-    .video-banner {
-        background-image: url('/images/home/subjects/us-history/student.png');
-        background-position: 92% 100%;
     }
 
     .now-i-can {
@@ -290,14 +250,6 @@
             width: 59rem;
             height: 9rem;
             font-size: 3.6rem;
-            animation: flyin 0.5s 1.8s 1 normal forwards;
-        }
-
-        &.flyout {
-            @include desktop {
-                animation: flyout 0.5s 1 normal forwards;
-                opacity: 1;
-            }
         }
 
         .quote {
@@ -346,14 +298,6 @@
         @include desktop {
             left: 18.4rem;
             right: auto;
-            animation: flyin 0.5s 1.8s 1 normal forwards;
-        }
-
-        &.flyout {
-            @include desktop {
-                animation: flyout 0.5s 1 normal forwards;
-                opacity: 1;
-            }
         }
 
         ul {
