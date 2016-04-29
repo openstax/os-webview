@@ -18,17 +18,31 @@ export default class BannerView extends BaseView {
 
     show() {
         let el = this.el;
+        let flyouts = el.querySelectorAll('.flyout');
 
         el.classList.add('fadein');
 
+        for (let flyout of flyouts) {
+            flyout.classList.remove('flyout');
+            flyout.classList.add('flyin');
+        }
+
+
         setTimeout(() => {
-            el.classList.remove('fadein');
+            let flyins = el.querySelectorAll('.flyin');
+
+            for (let flyin of flyins) {
+                flyin.classList.remove('flyin');
+                flyin.classList.add('flyout');
+            }
 
             setTimeout(() => {
                 this.parent.showNextBanner();
-            }, 200);
+            }, 300);
         }, 8000);
     }
 
-    hide() {}
+    hide() {
+        this.el.classList.remove('fadein');
+    }
 }
