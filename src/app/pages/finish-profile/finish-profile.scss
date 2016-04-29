@@ -52,9 +52,9 @@
         &.faculty .cta {
             @media (min-width: 481px) {
                 margin-top: -10rem;
-                z-index: 99;
-                position: relative;
                 padding-bottom: 8rem;
+                position: relative;
+                z-index: -1;
             }
         }
     }
