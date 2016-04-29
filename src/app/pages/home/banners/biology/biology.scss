@@ -13,6 +13,13 @@
     }
 }
 
+.flyin,
+.flyout {
+    @include desktop {
+        opacity: 0;
+    }
+}
+
 .biology {
     background-image: url('/images/home/subjects/biology/background.jpg');
     background-attachment: fixed;
@@ -63,7 +70,14 @@
 
         @include desktop {
             display: block;
-            animation: loop 30s normal infinite linear forwards;
+            animation: flyin 0.5s 1.2s 1 normal ease-in forwards, loop 30s 1.5s normal infinite linear forwards;
+        }
+
+        &.flyout {
+            @include desktop {
+                animation: flyout 0.5s 1 normal forwards;
+                opacity: 1;
+            }
         }
     }
 
@@ -89,10 +103,10 @@
         }
 
         @include desktop {
-            width: 60%;
-            height: 34rem;
             bottom: auto;
-            top: 27%;
+            height: 34rem;
+            top: 50%;
+            width: 60%;
         }
     }
 
@@ -107,16 +121,16 @@
         }
 
         @include desktop {
+            bottom: 8rem;
+            height: 36rem;
             right: 5rem;
-            bottom: 5rem;
             width: 40rem;
-            height: 33rem;
         }
     }
 
     .square-4 {
-        left: 70%;
-        top: 20%;
+        left: 97%;
+        top: 50%;
     }
 
     .diagram,
@@ -136,7 +150,14 @@
 
         @include desktop {
             display: block;
-            animation: loop 40s reverse infinite linear forwards;
+            animation: flyin 0.5s 1.4s 1 normal ease-in forwards, loop 40s 1.8s reverse infinite linear forwards;
+        }
+
+        &.flyout {
+            @include desktop {
+                animation: flyout 0.5s 1 normal forwards;
+                opacity: 1;
+            }
         }
     }
 
@@ -171,8 +192,8 @@
 
         @include tablet {
             top: 5%;
-            left: auto;
-            right: 25%;
+            left: 30%;
+            right: auto;
             width: 30rem;
             height: 30rem;
         }
@@ -189,6 +210,14 @@
 
         @include desktop {
             left: 40%;
+            animation: flyin 0.5s 1s 1 normal forwards;
+        }
+
+        &.flyout {
+            @include desktop {
+                animation: flyout 0.5s 1 normal forwards;
+                opacity: 1;
+            }
         }
     }
 
@@ -204,10 +233,10 @@
 
         @include tablet {
             bottom: 0;
-            height: 40rem;
-            left: -8rem;
+            left: -10%;
             right: auto;
-            width: 35rem;
+            height: 53rem;
+            width: 45.4rem;
         }
 
         @include desktop {
@@ -239,10 +268,18 @@
         }
 
         @include desktop {
-            left: 40%;
+            left: calc(49% - 6rem);
             width: 59rem;
             height: 9rem;
             font-size: 3.6rem;
+            animation: flyin 0.5s 1.8s 1 normal forwards;
+        }
+
+        &.flyout {
+            @include desktop {
+                animation: flyout 0.5s 1 normal forwards;
+                opacity: 1;
+            }
         }
 
         .quote {
@@ -279,7 +316,7 @@
         @include tablet {
             width: 27rem;
             bottom: 5rem;
-            left: 50%;
+            left: 40%;
         }
 
         @media (min-width: 650px) {
@@ -288,7 +325,15 @@
         }
 
         @include desktop {
-            left: 40%;
+            left: calc(49% - 6rem);
+            animation: flyin 0.5s 1.8s 1 normal forwards;
+        }
+
+        &.flyout {
+            @include desktop {
+                animation: flyout 0.5s 1 normal forwards;
+                opacity: 1;
+            }
         }
 
         ul {
@@ -328,7 +373,7 @@
             margin-bottom: 1.5rem;
 
             @include tablet {
-                margin-right: 1.5rem;
+                margin-right: 1rem;
             }
 
             @include phone {
