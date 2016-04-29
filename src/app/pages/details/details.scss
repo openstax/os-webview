@@ -35,15 +35,12 @@
         height: 100%;
         width: 100%;
         z-index: 100;
-        overflow-y: scroll;
         opacity: 1;
         transition: opacity 0.3s;
-        -webkit-overflow-scrolling: touch;
         background-color: rgba(color(neutral-lightest), 0.97);
 
         @include desktop {
             background-color: rgba(color(neutral-dark), 0.93);
-            overflow-y: auto;
         }
 
         ol {
@@ -85,7 +82,6 @@
                 max-width: 60rem;
                 width: 100%;
                 max-height: 50rem;
-                overflow-y: auto;
                 transform: translate3d(-50%, -50%, 0);
             }
 
@@ -519,11 +515,12 @@
 
         th {
             text-align: left;
+            vertical-align: top;
         }
 
         .license {
-            align-items: center;
-            display: flex;
+            display: block;
+            vertical-align: top;
 
             img {
                 height: 4rem;
