@@ -81,8 +81,7 @@ form {
     }
 
     &.has-been-submitted {
-        input:invalid,
-        select:invalid,
+        :invalid,
         .proxy-widget.invalid {
             border: 0.1rem solid color(danger);
         }
