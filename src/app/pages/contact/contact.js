@@ -29,12 +29,16 @@ const subjectOptions = [
 })
 export default class Contact extends BaseView {
     @on('submit')
-    validateAndSend() {
+    validateAndSend(e) {
         let selectedSubject = this.el.querySelector('select').value,
             selectedOption = subjectOptions.filter((item) => item[0] === selectedSubject)[0];
 
         this.el.querySelector('[name="to_address"]').value = selectedOption[1];
         this.el.querySelector('[name="subject"]').value = selectedOption[2];
+        if (!e.target.checkValidity()) {
+            e.target.classList.add('has-been-submitted');
+            e.preventDefault();
+        }
     }
 
     onRender() {
