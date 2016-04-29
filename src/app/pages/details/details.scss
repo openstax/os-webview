@@ -71,8 +71,10 @@
         }
 
         .box {
-            padding: 3rem;
             font-weight: 500;
+            max-height: 100vh;
+            overflow-y: auto;
+            padding: 3rem;
 
             @include desktop {
                 background-color: rgba(color(neutral-lightest), 0.97);
