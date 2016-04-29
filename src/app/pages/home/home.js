@@ -61,7 +61,7 @@ export default class Home extends LoadingView {
     onRender() {
         super.onRender();
         appView.header.updateHeaderStyle();
-        this.attachListenerTo(window, 'scroll',
+        this.attachListenerTo(window, 'scroll', () =>
             window.requestAnimationFrame(this.parallaxBanner.bind(this))
         );
 
