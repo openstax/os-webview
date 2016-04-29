@@ -323,12 +323,11 @@ let bios = {
         {
             name: 'Drew Waters',
             title: 'Machine Learning Scientist',
-            bio: `Drew received his PhD in Electrical Engineering in 2014 from Rice
-            University. He currently oversees the machine-learning effort at OpenStax
-            College, which aims to create a personalized learning experience for students
-            by mining interactions between students and educational content. Prior to
-            working for OpenStax College, Drew spent 5 years as a Communications Systems
-            Analyst at L-3 Communications in Salt Lake City, Utah.`
+            bio: `Drew received his PhD in electrical engineering in 2014 from Rice
+            University. He currently oversees the machine learning effort at OpenStax,
+            aiming to create a personalized learning experience by mining interactions
+            between students and educational content. Prior to working for OpenStax, Drew
+            was a communications systems analyst at L-3 Communications in Salt Lake City.`
             // image: 'Drew.png',
         },
         {
@@ -687,6 +686,14 @@ let bios = {
             as UI designer & developer. His previous work has been with various design studios and interactive
             marketing agencies as lead designer & developer implementing modern design and web standards. Outside
             of work, his passion lies with cooking, photography, and the outdoors.`,
+            image: ''
+        },
+        {
+            name: 'Sonya Bennett-Brandt',
+            title: 'Marketing and Communications Assistant',
+            bio: `Sonya Bennett-Brandt works as OpenStax’s marketing and communications assistant, involved primarily
+            with our social media and email presence. Originally from Houston, she is currently a student at the the
+            University of Chicago, studying English Language and Literature.`,
             image: ''
         }
     ]
