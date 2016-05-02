@@ -627,8 +627,8 @@ let bios = {
         },
         {
             name: 'Robert Newell',
-            title: 'UX Researcher',
-            bio: `Robert is a UX researcher and designer at OpenStax. He loves listening to users and designing
+            title: 'UX Analyst',
+            bio: `Robert is a UX analyst and designer at OpenStax. He loves listening to users and designing
             super simple, easy-to-use interfaces that help build engaging learning experiences. Previously, he
             led UX efforts for the public-facing websites at UH Libraries. He also has experience as an interaction
             designer and usability engineer at Dell.`,
@@ -694,6 +694,14 @@ let bios = {
             bio: `Sonya Bennett-Brandt works as OpenStax’s marketing and communications assistant, involved primarily
             with our social media and email presence. Originally from Houston, she is currently a student at the the
             University of Chicago, studying English Language and Literature.`,
+            image: ''
+        },
+        {
+            name: 'Darren Mason',
+            title: 'Consultant',
+            bio: `Darren Mason specializes in web applications using JavaScript.  He has worked in web development for
+            over 10 years, coding for companies such as Fox Sports and Kawasaki.  In his spare time, he enjoys running,
+            golf, creative writing, and learning German. He is a graduate of Loyola Marymount University.`,
             image: ''
         }
     ]
