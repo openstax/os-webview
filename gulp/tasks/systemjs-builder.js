@@ -33,10 +33,6 @@ function systemjs() {
 gulp.task(systemjs);
 
 gulp.task('systemjs:watch', () => {
-    gulp.watch('./jspm_packages/**/*', config.watchOpts, systemjs);
-});
-
-gulp.task('systemjs:watch', () => {
     gulp.watch('./jspm_packages/**/*', config.watchOpts)
     .on('change', gulp.series(
         systemjs,

@@ -107,17 +107,13 @@ gulp.task('styles:watch', () => {
         scsslint,
         compileChangedStyles
     ));
-});
 
-gulp.task('component-styles:watch', () => {
     gulp.watch(`${config.src}/styles/components/**/*.scss`, config.watchOpts)
     .on('change', gulp.series(
         scsslint,
         compileMainStyle
     ));
-});
 
-gulp.task('fundamental-styles:watch', () => {
     gulp.watch(`${config.src}/styles/{mixins,variables}/**/*.scss`, config.watchOpts)
     .on('change', gulp.series(
         scsslint,
