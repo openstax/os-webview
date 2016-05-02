@@ -8,6 +8,7 @@ import Hero from './hero/hero';
 import Tutor from './tutor/tutor';
 import {template as strips} from '~/components/strips/strips.hbs';
 import ProductsBoxes from '~/components/products-boxes/products-boxes';
+import './k-12.css!';
 
 @props({
     template: template,

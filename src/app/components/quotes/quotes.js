@@ -2,6 +2,7 @@ import BaseView from '~/helpers/backbone/view';
 import Quote from '~/components/quote/quote';
 import {props} from '~/helpers/backbone/decorators';
 import {template} from './quotes.hbs';
+import './quotes.css!';
 
 @props({
     template,

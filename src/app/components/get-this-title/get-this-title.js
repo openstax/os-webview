@@ -4,6 +4,7 @@ import PdfSubmenu from './pdf-submenu/pdf-submenu';
 import PrintSubmenu from './print-submenu/print-submenu';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './get-this-title.hbs';
+import './get-this-title.css!';
 
 @props({
     template: template,

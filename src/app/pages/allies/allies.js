@@ -9,6 +9,7 @@ import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './allies.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
 import router from '~/router';
+import './allies.css!';
 
 const categories = ['Math', 'Science', 'Social Sciences', 'History', 'AP®'],
     filterButtons = ['View All', ...categories];

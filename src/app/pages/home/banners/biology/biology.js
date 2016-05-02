@@ -1,6 +1,7 @@
 import BannerView from '~/pages/home/banners/banner-view';
 import {props} from '~/helpers/backbone/decorators';
 import {template} from './biology.hbs';
+import './biology.css!';
 
 @props({
     template: template

@@ -3,6 +3,7 @@ import BaseView from '~/helpers/backbone/view';
 import {props} from '~/helpers/backbone/decorators';
 import {template} from './faculty-confirmation.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
+import './faculty-confirmation.css!';
 
 @props({
     template: template,

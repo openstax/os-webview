@@ -4,6 +4,7 @@ import bookTitles from '~/helpers/book-titles';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './interest.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
+import './interest.css!';
 
 @props({
     template: template,

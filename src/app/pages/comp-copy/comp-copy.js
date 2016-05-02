@@ -3,6 +3,7 @@ import salesforceModel from '~/models/salesforce-model';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './comp-copy.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
+import './comp-copy.css!';
 
 @props({
     template: template,

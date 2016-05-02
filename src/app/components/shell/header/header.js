@@ -5,6 +5,7 @@ import settings from 'settings';
 import {on, props} from '~/helpers/backbone/decorators';
 import linkHelper from '~/helpers/link';
 import {template} from './header.hbs';
+import './header.css!';
 
 // NOTE: This needs to be refactored into multiple views
 
