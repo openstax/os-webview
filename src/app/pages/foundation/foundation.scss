@@ -46,7 +46,7 @@ $text-black2: rgba(0, 0, 0, 0.7);
     }
 
     .funder {
-        align-items: center;
+        align-items: left;
         background-color: color(neutral-lightest);
         color: $text-black2;
         display: flex;
@@ -57,6 +57,7 @@ $text-black2: rgba(0, 0, 0, 0.7);
         padding: 3rem;
 
         @include desktop {
+            align-items: center;
             flex-flow: row nowrap;
         }
 
@@ -66,10 +67,11 @@ $text-black2: rgba(0, 0, 0, 0.7);
         }
 
         .logo {
-            flex: 0 0 25%;
+            flex: 0 0 auto;
             margin-bottom: 3rem;
 
             @include desktop {
+                flex: 0 0 25%;
                 margin-bottom: 0;
                 margin-right: 3rem;
             }

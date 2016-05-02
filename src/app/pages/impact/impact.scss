@@ -32,7 +32,7 @@ $hero-break-width: 880px;
         @include collapsed {
             align-items: stretch;
             background: none;
-            height: calc(100vh - 6rem);
+//            height: calc(100vh - 6rem);
             max-height: 53rem;
         }
 
@@ -190,17 +190,22 @@ $hero-break-width: 880px;
             margin: 0 auto;
             padding: 5rem 0;
             width: 78vw;
+
+            @include phone {
+                width: 100%;
+                padding: 5rem 1.5rem;
+            }
         }
 
         .partners {
             align-items: center;
-            border-bottom: 0.4rem solid rgba(color(neutral-light), 0.30);
-            border-top: 0.4rem solid rgba(color(neutral-light), 0.30);
+            border-bottom: 0.4rem solid rgba(color(neutral-light), 0.10);
+            border-top: 0.4rem solid rgba(color(neutral-light), 0.10);
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
             margin: auto;
-            max-width: 100rem;
+            max-width: $boxed-width;
             padding: 1.5rem 0 0;
 
             @media (max-width: $breakpoint-1) {
@@ -208,7 +213,12 @@ $hero-break-width: 880px;
             }
 
             > li {
-                margin: 4rem;
+                padding: 4rem;
+                flex: 1 1 20%;
+
+                @media (max-width: $hero-break-width) {
+                    flex: 1 1 auto;
+                }
 
                 a {
                     transition: All ease-in-out 0.3s;
@@ -226,7 +236,7 @@ $hero-break-width: 880px;
         }
 
         .adopters {
-            padding: 4rem 0 5rem;
+            padding: 4rem 1.5rem 5rem;
 
             a {
                 font-size: 1.4rem;
@@ -234,14 +244,19 @@ $hero-break-width: 880px;
                 position: relative;
                 text-transform: uppercase;
 
-                &::after {
-                    @include triangle(
-                        $direction: right,
-                        $position: top 0.42rem right -1.6rem,
-                        $color: color(cyan),
-                        $size: 0.5rem
-                    );
+                i {
+                    position: relative;
+
+                    &::after {
+                        @include triangle(
+                            $direction: right,
+                            $position: top 0.32rem right -1.6rem,
+                            $color: color(cyan),
+                            $size: 0.5rem
+                        );
+                    }
                 }
+
             }
         }
     }
