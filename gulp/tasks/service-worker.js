@@ -36,10 +36,3 @@ function precache() {
 }
 
 gulp.task(precache);
-
-gulp.task('scripts:watch', () => {
-    gulp.watch(shellFiles.map((uri) => `${config.dest}${uri}`), config.watchOpts)
-    .on('change', gulp.series(
-        precache
-    ));
-});
