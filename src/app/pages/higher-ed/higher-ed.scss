@@ -39,7 +39,7 @@ $hero-break-width: 880px;
         @include collapsed {
             align-items: stretch;
             background: none;
-            height: calc(100vh - 6rem);
+//            height: calc(100vh - 6rem);
             max-height: 53rem;
         }
 
