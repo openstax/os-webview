@@ -7,6 +7,7 @@ import {template} from './about-us.hbs';
 import Hero from './hero/hero';
 import {template as strips} from '~/components/strips/strips.hbs';
 import bios from './bios.js';
+import './about-us.css!';
 
 function toHeadshot(bioEntry) {
     return {

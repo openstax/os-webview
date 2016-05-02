@@ -4,6 +4,7 @@ import salesforceModel from '~/models/salesforce-model';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './faculty-verification.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
+import './faculty-verification.css!';
 
 @props({
     template: template,

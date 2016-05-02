@@ -6,6 +6,7 @@ import FacultySection from './faculty-section/faculty-section';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './finish-profile.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
+import './finish-profile.css!';
 
 @props({
     template: template,

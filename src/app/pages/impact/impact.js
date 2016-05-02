@@ -3,6 +3,7 @@ import $ from '~/helpers/$';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './impact.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
+import './impact.css!';
 
 const highlightedPartners = [{
     name: 'Auburn University',

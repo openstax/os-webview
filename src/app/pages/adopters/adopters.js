@@ -5,6 +5,7 @@ import {props} from '~/helpers/backbone/decorators';
 import {template} from './adopters.hbs';
 import {template as columnTemplate} from './adopter-column.hbs';
 import settings from 'settings';
+import './adopters.css!';
 
 let adopterPromise = (new BaseModel()).fetch({url: `${settings.apiOrigin}/api/adopters`});
 

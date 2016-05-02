@@ -1,6 +1,7 @@
 import BaseView from '~/helpers/backbone/view';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './calculator.hbs';
+import './calculator.css!';
 
 @props({
     template: template

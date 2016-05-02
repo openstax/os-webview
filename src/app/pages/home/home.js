@@ -6,6 +6,7 @@ import {template} from './home.hbs';
 import Quotes from '~/components/quotes/quotes';
 import Buckets from '~/components/buckets/buckets';
 import Education from './education/education';
+import './home.css!';
 
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;

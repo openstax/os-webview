@@ -1,6 +1,8 @@
 import Backbone from 'backbone';
 import LoadingView from '~/helpers/backbone/loading-view';
 import $ from '~/helpers/$';
+import settings from 'settings';
+import router from '~/router';
 import PageModel from '~/models/pagemodel';
 import Author from './author/author';
 import Resource from './resource/resource';
@@ -12,8 +14,7 @@ import {template} from './details.hbs';
 import Remover from '~/components/remover/remover';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
 import {template as strips} from '~/components/strips/strips.hbs';
-import settings from 'settings';
-import router from '~/router';
+import './details.css!';
 
 function dataToTemplateHelper(data) {
     let quotes = data.book_quotes[0] || {},
