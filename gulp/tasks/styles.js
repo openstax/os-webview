@@ -62,10 +62,8 @@ function compileStyles(src, dest) {
             includeContent: false,
             sourceRoot: './'
         })))
-        .pipe(gulp.dest(dest || config.dest));
-        // BrowserSync currently doesn't support injecting @import'ed CSS files
-        // See: https://github.com/BrowserSync/browser-sync/issues/10
-        // .pipe(bs.stream({match: '**/*.css'}));
+        .pipe(gulp.dest(dest || config.dest))
+        .pipe(bs.stream({match: '**/*.css'}));
 }
 
 function compileAllStyles() {
@@ -104,29 +102,25 @@ gulp.task('styles:watch', () => {
     gulp.watch([
         `${config.src}/**/*.scss`,
         `!${config.src}/styles/{components,mixins,variables}/**/*.scss`
-    ], config.watchOpts, gulp.series(
+    ], config.watchOpts)
+    .on('change', gulp.series(
         scsslint,
-        compileChangedStyles,
-        bs.reload // Only necessary if BS stream isn't piped in above
+        compileChangedStyles
     ));
 });
 
 gulp.task('component-styles:watch', () => {
-    gulp.watch([
-        `${config.src}/styles/components/**/*.scss`
-    ], config.watchOpts, gulp.series(
+    gulp.watch(`${config.src}/styles/components/**/*.scss`, config.watchOpts)
+    .on('change', gulp.series(
         scsslint,
-        compileMainStyle,
-        bs.reload // Only necessary if BS stream isn't piped in above
+        compileMainStyle
     ));
 });
 
 gulp.task('fundamental-styles:watch', () => {
-    gulp.watch([
-        `${config.src}/styles/{mixins,variables}/**/*.scss`
-    ], config.watchOpts, gulp.series(
+    gulp.watch(`${config.src}/styles/{mixins,variables}/**/*.scss`, config.watchOpts)
+    .on('change', gulp.series(
         scsslint,
-        compileAllStyles,
-        bs.reload // Only necessary if BS stream isn't piped in above
+        compileAllStyles
     ));
 });

@@ -74,7 +74,8 @@ gulp.task('templates', gulp.parallel(
 ));
 
 gulp.task('templates:watch', () => {
-    gulp.watch(`${config.src}/**/*.part.hbs`, config.watchOpts, gulp.series(
+    gulp.watch(`${config.src}/**/*.part.hbs`, config.watchOpts)
+    .on('change', gulp.series(
         precompilePartials,
         bs.reload
     ));
@@ -82,7 +83,8 @@ gulp.task('templates:watch', () => {
     gulp.watch([
         `${config.src}/**/*.hbs`,
         `!${config.src}/**/*.part.hbs`
-    ], config.watchOpts, gulp.series(
+    ], config.watchOpts)
+    .on('change', gulp.series(
         precompileTemplates,
         bs.reload
     ));

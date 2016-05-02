@@ -13,7 +13,7 @@ function copy() {
     polyfilljs = 'jspm_packages/system-polyfills.js';
 
     return gulp.src([
-        `${config.src}/*.{json,txt,ico}`,
+        `${config.src}/**/*.{json,txt,ico,eot,ttf,woff,woff2}`,
         systemjs,
         polyfilljs
     ])
@@ -23,5 +23,6 @@ function copy() {
 gulp.task(copy);
 
 gulp.task('copy:watch', () => {
-    gulp.watch(`${config.src}/*.{json,txt,ico}`, config.watchOpts, copy);
+    gulp.watch(`${config.src}/*.{json,txt,ico,eot,ttf,woff,woff2}`, config.watchOpts)
+    .on('change', copy);
 });

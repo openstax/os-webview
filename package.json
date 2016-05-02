@@ -31,7 +31,7 @@
     "connect-history-api-fallback": "1.2.0",
     "del": "2.2.0",
     "eslint": "2.8.0",
-    "gulp": "github:gulpjs/gulp#37dffae33396e67bf8fa01a174d0920f1ff1ae6b",
+    "gulp": "github:gulpjs/gulp#4.0",
     "gulp-autoprefixer": "3.1.0",
     "gulp-babel": "6.1.2",
     "gulp-clip-empty-files": "0.1.2",
@@ -55,7 +55,8 @@
     "jspm": "0.16.33",
     "require-dir": "0.3.0",
     "sw-precache": "3.1.1",
-    "systemjs-builder": "0.15.15"
+    "systemjs-builder": "0.15.15",
+    "yargs": "4.6.0"
   },
   "jspm": {
     "directories": {
