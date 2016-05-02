@@ -197,7 +197,8 @@ gulp.task('scripts', gulp.series(
 ));
 
 gulp.task('scripts:watch', () => {
-    gulp.watch(`${config.src}/**/*.js`, config.watchOpts, gulp.series(
+    gulp.watch(`${config.src}/**/*.js`, config.watchOpts)
+    .on('change', gulp.series(
         eslint,
         compileScripts,
         bs.reload

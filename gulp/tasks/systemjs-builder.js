@@ -2,6 +2,7 @@
 var path = require('path');
 var gulp = require('gulp');
 var config = require('../config');
+var bs = require('browser-sync').get(config.name);
 var Builder = require('systemjs-builder');
 
 function systemjs() {
@@ -33,4 +34,12 @@ gulp.task(systemjs);
 
 gulp.task('systemjs:watch', () => {
     gulp.watch('./jspm_packages/**/*', config.watchOpts, systemjs);
+});
+
+gulp.task('systemjs:watch', () => {
+    gulp.watch('./jspm_packages/**/*', config.watchOpts)
+    .on('change', gulp.series(
+        systemjs,
+        bs.reload
+    ));
 });

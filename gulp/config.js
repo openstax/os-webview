@@ -3,7 +3,7 @@ var project = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 
 module.exports = {
     get env() {
-        return process.env.NODE_ENV || 'production';
+        return process.env.NODE_ENV;
     },
     get dest() {
         return (process.env.NODE_ENV === 'development' ? 'dev' : 'dist');
