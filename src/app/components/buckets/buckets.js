@@ -40,13 +40,13 @@ export default class Buckets extends BaseView {
             orientation: 'full',
             bucketClass: 'allies',
             hasImage: false,
-            titleText: 'OpenStax Allies',
-            blurbHtml: `OpenStax Allies have united with us to increase access
+            titleText: 'OpenStax Partners',
+            blurbHtml: `OpenStax partners have united with us to increase access
             to high-quality learning materials. Their low-cost tools integrate
             seamlessly with OpenStax books.`,
             btnClass: 'btn-yellow',
             linkUrl: '/allies',
-            linkText: 'View Allies'
+            linkText: 'View Partners'
         }));
     }
 }

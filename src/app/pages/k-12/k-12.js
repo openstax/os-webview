@@ -34,13 +34,13 @@ export default class K12 extends BaseView {
             orientation: 'full',
             bucketClass: 'allies',
             hasImage: false,
-            titleText: 'OpenStax Allies',
-            blurbHtml: `OpenStax Allies have united with us to increase access to
+            titleText: 'OpenStax Partners',
+            blurbHtml: `OpenStax partners have united with us to increase access to
             high-quality learning materials. Their low-cost tools integrate seamlessly
             with our books for AP<sup>&reg;</sup> courses.`,
             btnClass: 'btn-yellow',
             linkUrl: '/allies/ap',
-            linkText: 'View Allies'
+            linkText: 'View Partners'
         }));
 
         this.regions.hero.show(new Hero());
