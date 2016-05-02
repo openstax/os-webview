@@ -366,6 +366,8 @@ class Header extends BaseView {
                         item.classList.add('hidden');
                     }
                 }
+
+                this.attachListenerTo(loginItem, 'click', this.flyOutMenu.bind(this));
             } else {
                 loginItem.firstChild.textContent = 'Login';
                 this.attachListenerTo(loginItem, 'click', this.openLinkSameWindow.bind(this));
