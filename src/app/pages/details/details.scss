@@ -75,10 +75,10 @@
             max-height: 100vh;
             overflow-y: auto;
             padding: 3rem;
+            position: absolute;
 
             @include desktop {
                 background-color: rgba(color(neutral-lightest), 0.97);
-                position: absolute;
                 left: 50%;
                 top: 50%;
                 max-width: 60rem;
