@@ -60,7 +60,6 @@ export default class Home extends LoadingView {
     }
 
     onRender() {
-        super.onRender();
         appView.header.updateHeaderStyle();
         this.attachListenerTo(window, 'scroll', () =>
             window.requestAnimationFrame(this.parallaxBanner.bind(this))
@@ -92,30 +91,39 @@ export default class Home extends LoadingView {
 
             this.bannerViews = [];
 
-            System.import(`~/pages/home/banners/${banner}/${banner}`).then((m) => {
-                let Page = m.default;
-                let display = false;
+            this.otherPromises.push(new Promise((resolve) => {
+                System.import(`~/pages/home/banners/${banner}/${banner}`).then((m) => {
+                    let Page = m.default;
+                    let display = false;
 
-                if (view.currentBanner !== 0) {
-                    view.currentBanner = 0;
-                    display = true;
-                }
+                    if (view.currentBanner !== 0) {
+                        view.currentBanner = 0;
+                        display = true;
+                    }
 
-                let bannerView = new Page({
-                    parent: view,
-                    name: banner,
-                    display: display
+                    let bannerView = new Page({
+                        parent: view,
+                        name: banner,
+                        display: display
+                    });
+
+                    this.bannerViews.push(bannerView);
+                    view.regions.bookBanners.append(bannerView);
+                    resolve();
                 });
-
-                this.bannerViews.push(bannerView);
-                view.regions.bookBanners.append(bannerView);
-            });
+            }));
         }
+        super.onRender();
     }
 
     onLoaded() {
+        let page = this.el.querySelector('.home-page');
+
         super.onLoaded();
-        this.el.querySelector('.home-page').classList.remove('hidden');
+        page.classList.remove('hidden');
+        setTimeout(() => {
+            page.classList.add('fade-in');
+        }, 100);
     }
 
     showBanner(banner) {
