@@ -68,13 +68,26 @@ $.applyScrollFix = (view) => {
                     freezePosition = null;
                 }
             }
-        );
+        ),
+        scrollStart,
+        setScrollStart = (e) => {
+            scrollStart = e.currentTarget.scrollTop + e.touches[0].pageY;
+            e.preventDefault();
+        },
+        scroll = (e) => {
+            e.currentTarget.scrollTop = scrollStart - event.touches[0].pageY;
+            event.preventDefault();
+        };
 
     for (let el of view.el.querySelectorAll('.mac-scroll')) {
         view.attachListenerTo(el, 'scroll', setFreezePosition);
         view.attachListenerTo(el, 'mouseleave', handleMouseLeave);
         view.attachListenerTo(el, 'mousewheel', handleWheelEvent);
         view.attachListenerTo(window, 'touchstart', touchOutside(el));
+        if ($.isTouchDevice() && window.innerWidth < 769) {
+            view.attachListenerTo(el, 'touchstart', setScrollStart);
+            view.attachListenerTo(el, 'touchmove', scroll);
+        }
     }
     view.attachListenerTo(window, 'scroll', () => {
         if (freezePosition !== null) {
