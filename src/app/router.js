@@ -9,7 +9,7 @@ const PAGES = [
     'adopters',
     'adoption',
     'adoption-confirmation',
-    'allies',
+    'partners',
     'books',
     'comp-copy',
     'comp-copy-confirmation',
@@ -52,10 +52,10 @@ class Router extends Backbone.Router {
             }
         });
 
-        this.route(/allies\/.*/, 'allies', () => {
+        this.route(/partners\/.*/, 'partners', () => {
             if (!(shell.regions.main.views &&
-                shell.regions.main.views[0].constructor.name === 'Allies')) {
-                shell.load('allies');
+                shell.regions.main.views[0].constructor.name === 'Partners')) {
+                shell.load('partners');
             }
         });
 

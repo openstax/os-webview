@@ -1,10 +1,10 @@
 import BaseView from '~/helpers/backbone/view';
 import $ from '~/helpers/$';
 import {on, props} from '~/helpers/backbone/decorators';
-import {template} from './ally.hbs';
+import {template} from './partner.hbs';
 
 @props({template})
-export default class Ally extends BaseView {
+export default class Partner extends BaseView {
     @on('click .to-top')
     returnToTop(e) {
         let filterSection = document.querySelector('.filter');

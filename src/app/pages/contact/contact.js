@@ -17,7 +17,7 @@ const subjectOptions = [
     ['College/University Partnerships', 'info@openstax.org', 'College/University Partnerships'],
     ['Media Inquiries', 'info@openstax.org', 'Media Inquiries.'],
     ['Foundational Support', 'richb@rice.edu, dcwill@rice.edu, mka2@rice.edu', 'Foundation'],
-    ['OpenStax Allies', 'info@openstax.org', 'Allies'],
+    ['OpenStax Partners', 'info@openstax.org', 'Partners'],
     ['Website', 'info@openstax.org', 'Website']
 ];
 

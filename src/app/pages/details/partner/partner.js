@@ -1,6 +1,6 @@
 import BaseView from '~/helpers/backbone/view';
 import {props} from '~/helpers/backbone/decorators';
-import {template} from './ally.hbs';
+import {template} from './partner.hbs';
 
 @props({
     template,
@@ -8,14 +8,14 @@ import {template} from './ally.hbs';
         logo: '.logo'
     }
 })
-export default class Ally extends BaseView {
+export default class Partner extends BaseView {
     constructor(templateHelpers) {
         super();
         this.templateHelpers = templateHelpers;
     }
 
     onRender() {
-        this.el.classList.add('ally-info');
+        this.el.classList.add('partner-info');
         if (this.templateHelpers.logoUrl) {
             let logoImg = document.createElement('IMG'),
                 logoDiv = this.el.querySelector('.logo');

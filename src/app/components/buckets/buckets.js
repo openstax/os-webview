@@ -38,15 +38,15 @@ export default class Buckets extends BaseView {
         }));
         this.regions.buckets.append(new Bucket({
             orientation: 'full',
-            bucketClass: 'allies',
+            bucketClass: 'partners',
             hasImage: false,
-            titleText: 'OpenStax Allies',
-            blurbHtml: `OpenStax Allies have united with us to increase access
+            titleText: 'OpenStax Partners',
+            blurbHtml: `OpenStax partners have united with us to increase access
             to high-quality learning materials. Their low-cost tools integrate
             seamlessly with OpenStax books.`,
             btnClass: 'btn-yellow',
-            linkUrl: '/allies',
-            linkText: 'View Allies'
+            linkUrl: '/partners',
+            linkText: 'View Partners'
         }));
     }
 }
