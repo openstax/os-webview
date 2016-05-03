@@ -3,28 +3,28 @@ import BaseModel from '~/helpers/backbone/model';
 import PageModel from '~/models/pagemodel';
 import FilterButton from '~/components/filter-button/filter-button';
 import Icon from './icon/icon';
-import Ally from './ally/ally';
+import Partner from './partner/partner';
 import $ from '~/helpers/$';
 import {on, props} from '~/helpers/backbone/decorators';
-import {template} from './allies.hbs';
+import {template} from './partners.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
 import router from '~/router';
-import './allies.css!';
+import './partners.css!';
 
 const categories = ['Math', 'Science', 'Social Sciences', 'History', 'AP®'],
     filterButtons = ['View All', ...categories];
 
-let alliesData = {},
-    alliesDataPromise, pageDataPromise;
+let partnersData = {},
+    partnersDataPromise, pageDataPromise;
 
 
-function handleAlliesData(data) {
+function handlePartnersData(data) {
     for (let page of data.pages) {
         let name = page.heading;
 
         data.pages.sort((a, b) => a.name < b.name ? a : b);
 
-        alliesData[name] = {
+        partnersData[name] = {
             name,
             blurb: page.long_description,
             subjects: page.ally_subject_list,
@@ -33,7 +33,7 @@ function handleAlliesData(data) {
             logoUrl: page.ally_bw_logo
         };
         if (page.ally_logo) {
-            alliesData[name].logoUrl = page.ally_logo;
+            partnersData[name].logoUrl = page.ally_logo;
         }
     }
 }
@@ -45,21 +45,21 @@ pageDataPromise = new PageModel().fetch({
     }
 });
 
-alliesDataPromise = new PageModel().fetch({
+partnersDataPromise = new PageModel().fetch({
     data: {
         type: 'allies.Ally',
         fields: ['ally_subject_list', 'title', 'short_description', 'long_description',
                 'heading', 'is_ap', 'ally_bw_logo']
     }
-}).then(handleAlliesData);
+}).then(handlePartnersData);
 
 class FilterStateModel extends BaseModel {
-    matchesFilter(allyData) {
+    matchesFilter(partnerData) {
         let subject = this.get('selectedFilter');
 
         return (subject === 'View All' ||
-            (subject === 'AP®' && allyData.isAp) ||
-            allyData.subjects.indexOf(subject) >= 0);
+            (subject === 'AP®' && partnerData.isAp) ||
+            partnerData.subjects.indexOf(subject) >= 0);
     }
 }
 
@@ -72,7 +72,7 @@ class FilterStateModel extends BaseModel {
         blurbs: '.blurbs.container'
     }
 })
-export default class Allies extends LoadingView {
+export default class Partners extends LoadingView {
     @on('click .filter')
     filterClick() {
         let filterSection = this.el.querySelector('.filter');
@@ -81,7 +81,7 @@ export default class Allies extends LoadingView {
     }
 
     updateSelectedFilterFromPath() {
-        let pathMatch = window.location.pathname.match(/\/allies\/(.+)/),
+        let pathMatch = window.location.pathname.match(/\/partners\/(.+)/),
             selectedFilter = 'View All';
 
         if (pathMatch) {
@@ -114,15 +114,15 @@ export default class Allies extends LoadingView {
     }
 
     onRender() {
-        this.el.classList.add('allies-page');
+        this.el.classList.add('partners-page');
         for (let button of filterButtons) {
             this.regions.filterButtons.append(new FilterButton(button, this.stateModel));
         }
         this.otherPromises.push(new Promise((resolve) => {
-            alliesDataPromise.then(() => {
-                for (let name of Object.keys(alliesData).sort()) {
-                    this.regions.icons.append(new Icon(alliesData[name], this.stateModel));
-                    this.regions.blurbs.append(new Ally(alliesData[name], this.stateModel));
+            partnersDataPromise.then(() => {
+                for (let name of Object.keys(partnersData).sort()) {
+                    this.regions.icons.append(new Icon(partnersData[name], this.stateModel));
+                    this.regions.blurbs.append(new Partner(partnersData[name], this.stateModel));
                 }
                 resolve();
             });

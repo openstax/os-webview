@@ -7,7 +7,7 @@ import PageModel from '~/models/pagemodel';
 import Author from './author/author';
 import Resource from './resource/resource';
 import Contents from './contents/contents';
-import Ally from './ally/ally';
+import Partner from './partner/partner';
 import userModel from '~/models/usermodel';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './details.hbs';
@@ -44,7 +44,7 @@ function dataToTemplateHelper(data) {
         studentResources: '#student-resources',
         tableOfContents: '.table-of-contents .box ol',
         tocRemover: '.toc-remover',
-        allies: '#allies'
+        partners: '#partners'
     }
 })
 export default class Details extends LoadingView {
@@ -277,16 +277,16 @@ export default class Details extends LoadingView {
                         handlePublishInfo(detailData);
                         handleComingSoon(detailData.webview_link === '');
 
-                        for (let ally of detailData.book_allies) {
-                            let allyTemplateHelper = {
-                                name: ally.ally_heading,
-                                blurb: ally.ally_short_description,
-                                url: ally.book_link_url,
-                                linkText: ally.book_link_text,
-                                logoUrl: ally.ally_color_logo
+                        for (let partner of detailData.book_allies) {
+                            let partnerTemplateHelper = {
+                                name: partner.ally_heading,
+                                blurb: partner.ally_short_description,
+                                url: partner.book_link_url,
+                                linkText: partner.book_link_text,
+                                logoUrl: partner.ally_color_logo
                             };
 
-                            this.regions.allies.append(new Ally(allyTemplateHelper));
+                            this.regions.partners.append(new Partner(partnerTemplateHelper));
                         }
                     };
 

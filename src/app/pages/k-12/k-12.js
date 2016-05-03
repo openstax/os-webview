@@ -32,14 +32,14 @@ export default class K12 extends BaseView {
 
         this.regions.buckets.append(new Bucket({
             orientation: 'full',
-            bucketClass: 'allies',
+            bucketClass: 'partners',
             hasImage: false,
             titleText: 'OpenStax Partners',
             blurbHtml: `OpenStax partners have united with us to increase access to
             high-quality learning materials. Their low-cost tools integrate seamlessly
             with our books for AP<sup>&reg;</sup> courses.`,
             btnClass: 'btn-yellow',
-            linkUrl: '/allies/ap',
+            linkUrl: '/partners/ap',
             linkText: 'View Partners'
         }));
 
