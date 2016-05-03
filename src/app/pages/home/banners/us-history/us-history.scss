@@ -302,15 +302,14 @@
         &::after {
             border-bottom: 0.1rem solid color(neutral-lightest);
             content: '';
-            right: 1rem;
+            right: 4rem;
             position: absolute;
             top: 6rem;
-            width: 32rem;
+            width: 26rem;
 
 
             @include desktop {
-                width: 35rem;
-                right: 2rem;
+                width: 32rem;
             }
         }
     }
