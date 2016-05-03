@@ -19,9 +19,17 @@
         <link href='https://fonts.googleapis.com/css?family=Permanent+Marker' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
         <link rel="stylesheet" href="/styles/main.css">
+        <script>
+            (function () {
+                var jscriptVersion = new Function("/*@cc_on return @_jscript_version; @*/")();
+
+                if (jscriptVersion) {
+                    alert('This site will not run on Internet Explorer versions prior to 11.');
+                }
+            }());
+        </script>
 
         <script src="https://cdn.rawgit.com/eligrey/classList.js/e87db36a95b2381a8c3ed44582a3926185cede70/classList.min.js"></script>
-
         <script src="/system.js"></script>
         <script src="/app/config.js"></script>
         <script src="/dependencies.js"></script>
@@ -30,5 +38,9 @@
             System.import('app/main');
         </script>
     </head>
-    <body></body>
+    <body>
+        <noscript>
+            You must enable JavaScript in order to use this site.
+        </noscript>
+    </body>
 </html>
