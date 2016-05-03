@@ -25,7 +25,7 @@ function getBackgroundImages() {
     let view = document.defaultView || window;
 
     for (let el of Array.from(els)) {
-        if (el && el.style) {
+        if (el) {
             let url = view.getComputedStyle(el).getPropertyValue('background-image');
 
             url = PARSE_URL.exec(url);
@@ -44,6 +44,7 @@ class LoadingView extends BaseView {
     constructor() {
         super();
         this.otherPromises = [];
+        this.subviewPromises = [];
         this.loadingSection = new LoadingSection();
     }
 
@@ -62,7 +63,9 @@ class LoadingView extends BaseView {
     }
 
     onAfterRender() {
-        this.trackResourceLoading();
+        Promise.all(this.subviewPromises).then(() => {
+            this.trackResourceLoading();
+        });
     }
 
     trackResourceLoading() {
