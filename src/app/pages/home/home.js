@@ -90,8 +90,9 @@ export default class Home extends LoadingView {
             let view = this;
 
             this.bannerViews = [];
+            this.subviewPromises = [];
 
-            this.otherPromises.push(new Promise((resolve) => {
+            this.subviewPromises.push(new Promise((resolve) => {
                 System.import(`~/pages/home/banners/${banner}/${banner}`).then((m) => {
                     let Page = m.default;
                     let display = false;
