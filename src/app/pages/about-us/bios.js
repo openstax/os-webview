@@ -110,16 +110,13 @@ let bios = {
             Professor in ECE at Rice.</p>`,
             image: 's-schwanauer.png'
         },
+        // DO NOT REMOVE. needed for alignment.
         {
             name: 'ZZ ZZ',
-            bio: '',
-            image: '',
             hidden: 'hidden'
         },
         {
             name: 'ZZ ZZ',
-            bio: '',
-            image: '',
             hidden: 'hidden'
         }
     ],
@@ -703,6 +700,19 @@ let bios = {
             over 10 years, coding for companies such as Fox Sports and Kawasaki.  In his spare time, he enjoys running,
             golf, creative writing, and learning German. He is a graduate of Loyola Marymount University.`,
             image: ''
+        },
+        // DO NOT REMOVE. needed for alignment.
+        {
+            name: 'ZZ ZZ',
+            hidden: 'hidden'
+        },
+        {
+            name: 'ZZ ZZ',
+            hidden: 'hidden'
+        },
+        {
+            name: 'ZZ ZZ',
+            hidden: 'hidden'
         }
     ]
 };
