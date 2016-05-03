@@ -72,7 +72,6 @@ $.applyScrollFix = (view) => {
         scrollStart,
         setScrollStart = (e) => {
             scrollStart = e.currentTarget.scrollTop + e.touches[0].pageY;
-            e.preventDefault();
         },
         scroll = (e) => {
             e.currentTarget.scrollTop = scrollStart - event.touches[0].pageY;
