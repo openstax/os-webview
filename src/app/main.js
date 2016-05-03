@@ -62,8 +62,12 @@ class App {
             e.preventDefault();
 
             if (EXTERNAL.test(href)) {
-                analytics.record(href);
-                window.open(href, '_blank');
+                if (el.getAttribute('data-local') === 'true') {
+                    document.location.href = href;
+                } else {
+                    analytics.record(href);
+                    window.open(href, '_blank');
+                }
             } else {
                 router.navigate(href, {
                     trigger: (el.getAttribute('data-trigger') !== false)

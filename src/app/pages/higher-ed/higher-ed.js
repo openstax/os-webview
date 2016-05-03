@@ -9,6 +9,14 @@ import './higher-ed.css!';
 
 @props({
     template: template,
+    templateHelpers: () => {
+        let loginLink = `${settings.apiOrigin}/accounts/login/openstax/?next=`;
+        let nextLink = `${settings.apiOrigin}/faculty-verification`;
+
+        return {
+            loginLink: `${loginLink}${nextLink}`
+        };
+    },
     regions: {
         products: '.products',
         buckets: '.buckets'
@@ -29,14 +37,8 @@ export default class HigherEd extends BaseView {
                 'OpenStax CNX'
             ]
         }));
+
         this.regions.buckets.show(new Buckets());
-
-        let anchor = this.el.querySelector('.login-link');
-        let loginLink = `${settings.apiOrigin}/accounts/login/openstax/?next=`;
-        let nextLink = `${settings.apiOrigin}/faculty-verification`;
-        let href = `${loginLink}${nextLink}`;
-
-        anchor.href = href;
     }
 
 }
