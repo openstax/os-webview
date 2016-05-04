@@ -132,6 +132,21 @@ sup {
     }
 }
 
+.nojs {
+    background-color: darken(color(cyan), 15%);
+    width: 100vw;
+    height: 100vh;
+
+    p {
+        background-color: color(neutral-lightest);
+        padding: 5rem 3rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate3d(-50%, -50%, 0);
+    }
+}
+
 #main > *,
 .page-header,
 #footer {
