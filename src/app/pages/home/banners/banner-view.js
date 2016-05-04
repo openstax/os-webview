@@ -28,7 +28,7 @@ export default class BannerView extends BaseView {
         }
 
 
-        setTimeout(() => {
+        this.flyinTimer = setTimeout(() => {
             let flyins = el.querySelectorAll('.flyin');
 
             for (let flyin of flyins) {
@@ -36,7 +36,7 @@ export default class BannerView extends BaseView {
                 flyin.classList.add('flyout');
             }
 
-            setTimeout(() => {
+            this.nextBannerTimer = setTimeout(() => {
                 this.parent.showNextBanner();
             }, 300);
         }, 8000);
@@ -45,4 +45,10 @@ export default class BannerView extends BaseView {
     hide() {
         this.el.classList.remove('fadein');
     }
+
+    onClose() {
+        clearTimeout(this.flyinTimer);
+        clearTimeout(this.nextBannerTimer);
+    }
+
 }

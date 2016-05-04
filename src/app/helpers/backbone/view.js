@@ -227,6 +227,7 @@ class BaseView extends Backbone.View {
     onRender() {} // noop
     onAfterRender() {} // noop
     onDomRefresh() {} // noop
+    onClose() {} // noop
 
     attachListenerTo(el, ...options) {
         el.addEventListener(...options);
@@ -245,6 +246,7 @@ class BaseView extends Backbone.View {
 
     close() {
         this.onBeforeClose();
+        this.onClose();
 
         _.each(this.regions, (region) => region.close());
 
