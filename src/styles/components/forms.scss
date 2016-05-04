@@ -230,7 +230,7 @@ form {
 
             > div {
                 display: inline-block;
-                margin: 0.84rem;
+                margin: 0.84rem 0 0.84rem 0.84rem;
             }
 
             span {
@@ -246,6 +246,8 @@ form {
                     background-color: color(cyan);
                     color: color(neutral-lightest);
                     cursor: cursor;
+                    padding: 1rem;
+                    font-size: inherit;
                 }
             }
         }

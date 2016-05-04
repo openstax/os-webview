@@ -366,6 +366,10 @@
         &.hidden {
             height: 0;
         }
+
+        .remover {
+            @include absolute(top 1.5rem right 1.5rem);
+        }
     }
 
     .our-team .picture-area {
