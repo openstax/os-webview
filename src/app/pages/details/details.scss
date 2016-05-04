@@ -65,8 +65,7 @@
             position: relative;
 
             .remover {
-                top: 0;
-                right: 0;
+                @include absolute(top 0 right 0);
             }
         }
 

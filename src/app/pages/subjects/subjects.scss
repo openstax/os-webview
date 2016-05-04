@@ -175,6 +175,14 @@
                 position: absolute;
             }
 
+            .remover {
+                @include absolute(top 1.84rem right -0.8rem);
+
+                > i {
+                    color: color(neutral-dark);
+                }
+            }
+
             .cta > .btn {
                 width: 100%;
                 font-variant: normal;
