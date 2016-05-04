@@ -13,6 +13,12 @@
     }
 }
 
+@mixin desktop {
+    @media (min-width: 770px) {
+        @content;
+    }
+}
+
 .about-us {
     background-color: rgba(color(neutral-lighter), 0.2);
 
@@ -167,7 +173,7 @@
     &.no-touch .headshot:hover:nth-child(4n-1) .details,
     .headshot.tapped:nth-child(4n) .details,
     .headshot.tapped:nth-child(4n-1) .details {
-        @media (min-width: 770px) {
+        @include desktop {
             left: auto;
             right: 0;
             transform: translate3d(0, 0, 0);
@@ -183,7 +189,7 @@
     &.no-touch .headshot:hover:nth-child(4n-2) .details,
     .headshot.tapped:nth-child(4n-3) .details,
     .headshot.tapped:nth-child(4n-2) .details {
-        @media (min-width: 770px) {
+        @include desktop {
             left: 0;
             right: auto;
             transform: translate3d(0, 0, 0);
