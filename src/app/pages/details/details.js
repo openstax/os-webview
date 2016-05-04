@@ -264,7 +264,7 @@ export default class Details extends LoadingView {
                             this.regions.allAuthors.append(new Author(author));
                         }
                         this.el.querySelector('.book-cover').src = th.coverUrl;
-                        this.el.querySelector('.book-info .title').textContent = th.title;
+                        this.el.querySelector('.book-info .title').innerHTML = th.title;
                         this.el.querySelector('.book-info .blurb').innerHTML = th.description;
                         handleEndorsement(th);
                         this.gtt = new GetThisTitle(detailData);
