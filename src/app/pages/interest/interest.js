@@ -4,10 +4,10 @@ import bookTitles from '~/helpers/book-titles';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './interest.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
-import './interest.css!';
 
 @props({
     template: template,
+    css: '/app/pages/interest/interest.css',
     templateHelpers: {
         titles: bookTitles,
         urlOrigin: window.location.origin,
@@ -15,6 +15,7 @@ import './interest.css!';
     }
 })
 export default class InterestForm extends ProxyWidgetView {
+
     @on('change [type=text],[type=email]')
     saveSetting(event) {
         let varName = event.target.name;
@@ -29,4 +30,5 @@ export default class InterestForm extends ProxyWidgetView {
         salesforceModel.prefill(this.el);
         super.onRender();
     }
+
 }

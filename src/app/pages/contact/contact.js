@@ -4,7 +4,6 @@ import SingleSelect from '~/components/single-select/single-select';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './contact.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
-import './contact.css!';
 
 const subjectOptions = [
     ['General', 'info@openstax.org', 'General OpenStax Question'],
@@ -23,6 +22,7 @@ const subjectOptions = [
 
 @props({
     template: template,
+    css: '/app/pages/contact/contact.css',
     templateHelpers: {
         strips,
         options: subjectOptions.map((option) => option[0])

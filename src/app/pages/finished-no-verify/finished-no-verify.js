@@ -2,10 +2,10 @@ import BaseView from '~/helpers/backbone/view';
 import {props} from '~/helpers/backbone/decorators';
 import {template} from './finished-no-verify.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
-import './finished-no-verify.css!';
 
 @props({
     template: template,
+    css: '/app/pages/finished-no-verify/finished-no-verify.css',
     templateHelpers: {
         strips
     }

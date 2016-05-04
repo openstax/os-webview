@@ -2,10 +2,10 @@ import BaseView from '~/helpers/backbone/view';
 import ProductBox from '~/components/product-box/product-box';
 import {props} from '~/helpers/backbone/decorators';
 import {template} from './products-boxes.hbs';
-import './products-boxes.css!';
 
 @props({
-    template,
+    template: template,
+    css: '/app/components/products-boxes/products-boxes.css',
     regions: {
         'boxes': '.content'
     }

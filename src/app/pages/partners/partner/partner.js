@@ -3,8 +3,11 @@ import $ from '~/helpers/$';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './partner.hbs';
 
-@props({template})
+@props({
+    template: template
+})
 export default class Partner extends BaseView {
+
     @on('click .to-top')
     returnToTop(e) {
         let filterSection = document.querySelector('.filter');
@@ -30,4 +33,5 @@ export default class Partner extends BaseView {
         this.el.classList.add('text');
         this.setVisibility();
     }
+
 }

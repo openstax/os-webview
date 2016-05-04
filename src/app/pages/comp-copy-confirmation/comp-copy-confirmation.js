@@ -3,10 +3,10 @@ import BaseView from '~/helpers/backbone/view';
 import {props} from '~/helpers/backbone/decorators';
 import {template} from './comp-copy-confirmation.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
-import './comp-copy-confirmation.css!';
 
 @props({
     template: template,
+    css: '/app/pages/comp-copy-confirmation/comp-copy-confirmation.css',
     templateHelpers: {
         strips
     }

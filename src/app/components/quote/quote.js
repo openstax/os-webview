@@ -2,7 +2,9 @@ import BaseView from '~/helpers/backbone/view';
 import {props} from '~/helpers/backbone/decorators';
 import {template} from './quote.hbs';
 
-@props({template})
+@props({
+    template: template
+})
 export default class Quote extends BaseView {
     constructor(templateHelpers) {
         super();

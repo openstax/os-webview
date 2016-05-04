@@ -8,7 +8,7 @@ import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './tag-multi-select.hbs';
 
 @props({
-    template,
+    template: template,
     regions: {
         tagList: '.tag-list',
         optionList: '.option-list'

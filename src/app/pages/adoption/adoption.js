@@ -4,10 +4,10 @@ import bookTitles from '~/helpers/book-titles';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './adoption.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
-import './adoption.css!';
 
 @props({
     template: template,
+    css: '/app/pages/adoption/adoption.css',
     templateHelpers: {
         titles: bookTitles,
         urlOrigin: window.location.origin,

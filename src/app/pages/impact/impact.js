@@ -3,7 +3,6 @@ import $ from '~/helpers/$';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './impact.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
-import './impact.css!';
 
 const highlightedPartners = [{
     name: 'Auburn University',
@@ -69,12 +68,14 @@ const highlightedPartners = [{
 
 @props({
     template: template,
+    css: '/app/pages/impact/impact.css',
     templateHelpers: {
         strips,
         highlightedPartners
     }
 })
 export default class Impact extends LoadingView {
+
     @on('click a[href^="#"]')
     hashClick(e) {
         $.scrollTo($.hashTarget(e));
@@ -85,4 +86,5 @@ export default class Impact extends LoadingView {
         super.onLoaded();
         this.el.querySelector('.hidden').classList.remove('hidden');
     }
+
 }

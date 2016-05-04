@@ -8,10 +8,10 @@ import Hero from './hero/hero';
 import Tutor from './tutor/tutor';
 import {template as strips} from '~/components/strips/strips.hbs';
 import ProductsBoxes from '~/components/products-boxes/products-boxes';
-import './k-12.css!';
 
 @props({
     template: template,
+    css: '/app/pages/k-12/k-12.css',
     regions: {
         hero: '.hero',
         buckets: '.buckets-section',
@@ -21,6 +21,7 @@ import './k-12.css!';
     templateHelpers: {strips}
 })
 export default class K12 extends BaseView {
+
     @on('click a[href^="#"]')
     hashClick(e) {
         $.scrollTo($.hashTarget(e));
@@ -52,4 +53,5 @@ export default class K12 extends BaseView {
             ]
         }));
     }
+
 }

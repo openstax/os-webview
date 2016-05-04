@@ -14,7 +14,6 @@ import {template} from './details.hbs';
 import Remover from '~/components/remover/remover';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
 import {template as strips} from '~/components/strips/strips.hbs';
-import './details.css!';
 
 function dataToTemplateHelper(data) {
     let quotes = data.book_quotes[0] || {},
@@ -36,6 +35,7 @@ function dataToTemplateHelper(data) {
 
 @props({
     template: template,
+    css: '/app/pages/details/details.css',
     regions: {
         getThisTitle: '.floating-menu .get-this-book',
         topAuthors: '#top-authors',

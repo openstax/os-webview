@@ -3,7 +3,7 @@ import {props} from '~/helpers/backbone/decorators';
 import {template} from './contents.hbs';
 
 @props({
-    template,
+    template: template,
     regions: {
         subunit: '.subunit'
     }

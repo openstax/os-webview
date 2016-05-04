@@ -6,10 +6,10 @@ import FacultySection from './faculty-section/faculty-section';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './finish-profile.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
-import './finish-profile.css!';
 
 @props({
     template: template,
+    css: '/app/pages/finish-profile/finish-profile.css',
     templateHelpers: {
         bookTitles,
         urlOrigin: `${window.location.origin}/finished-no-verify`,
@@ -22,6 +22,7 @@ import './finish-profile.css!';
     }
 })
 export default class NewAccountForm extends ProxyWidgetView {
+
     @on('click #toggle-faculty')
     clickFaculty(event) {
         let checkedState = event.target.checked,
@@ -83,4 +84,5 @@ export default class NewAccountForm extends ProxyWidgetView {
             this.toggleFaculty(facultyCheckbox.checked);
         });
     }
+
 }

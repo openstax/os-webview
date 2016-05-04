@@ -1,10 +1,10 @@
 import BaseView from '~/helpers/backbone/view';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './calculator.hbs';
-import './calculator.css!';
 
 @props({
-    template: template
+    template: template,
+    css: '/app/components/calculator/calculator.css'
 })
 export default class Calculator extends BaseView {
     @on('change #student-count')

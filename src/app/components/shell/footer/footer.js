@@ -1,10 +1,10 @@
 import BaseView from '~/helpers/backbone/view';
 import {props} from '~/helpers/backbone/decorators';
 import {template} from './footer.hbs';
-import './footer.css!';
 
 @props({
-    template: template
+    template: template,
+    css: '/app/components/shell/footer/footer.css'
 })
 class Footer extends BaseView {}
 
