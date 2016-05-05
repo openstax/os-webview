@@ -21,9 +21,9 @@ const tick = 1000 / 40,
     spaceForMenu = 59,
     maxTicks = 20;
 
-$.scrollTo = (el, customStep) => {
+$.scrollTo = (el, customStep, offset = 0) => {
     let rect = el.getBoundingClientRect(),
-        offsetTop = rect.top - spaceForMenu,
+        offsetTop = rect.top - spaceForMenu - offset,
         direction = Math.sign(offsetTop),
         magnitude = Math.abs(offsetTop),
         chosenStep = customStep || defaultStep,
