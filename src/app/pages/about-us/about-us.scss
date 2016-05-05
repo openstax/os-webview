@@ -387,13 +387,15 @@
     }
 
     .our-team .picture-area {
-        @include halo();
-
         position: relative;
         overflow: hidden;
         height: 100%;
         margin-bottom: 2.5rem;
         box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(94, 96, 98, 0.1);
+
+        &.has-picture {
+            @include halo();
+        }
 
         &.text-red .name {
             color: color(red);

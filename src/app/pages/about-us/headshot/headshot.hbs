@@ -1,4 +1,4 @@
-<div class="picture-area text-{{textColor}} bg-{{bgColor}} {{hidden}}">
+<div class="picture-area text-{{textColor}} bg-{{bgColor}} {{#if url}}has-picture {{/if}}{{hidden}}">
     {{#if url}}<img src="{{url}}" />{{/if}}
     <div class="name">{{name}}</div>
 </div>
