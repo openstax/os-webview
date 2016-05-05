@@ -51,7 +51,7 @@ export default class Subjects extends LoadingView {
     filterClick() {
         let filterSection = this.el.querySelector('.filter');
 
-        $.scrollTo(filterSection, 60);
+        $.scrollTo(filterSection, 60, 30);
     }
 
     updateSelectedFilterFromPath() {
