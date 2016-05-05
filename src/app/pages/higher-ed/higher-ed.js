@@ -5,10 +5,10 @@ import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './higher-ed.hbs';
 import ProductsBoxes from '~/components/products-boxes/products-boxes';
 import Buckets from '~/components/buckets/buckets';
-import './higher-ed.css!';
 
 @props({
     template: template,
+    css: '/app/pages/higher-ed/higher-ed.css',
     templateHelpers: () => {
         let loginLink = `${settings.apiOrigin}/accounts/login/openstax/?next=`;
         let nextLink = `${settings.apiOrigin}/faculty-verification`;
@@ -23,6 +23,7 @@ import './higher-ed.css!';
     }
 })
 export default class HigherEd extends BaseView {
+
     @on('click a[href^="#"]')
     hashClick(e) {
         $.scrollTo($.hashTarget(e));

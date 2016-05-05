@@ -2,10 +2,10 @@ import BaseView from '~/helpers/backbone/view';
 import {props} from '~/helpers/backbone/decorators';
 import {template} from './buckets.hbs';
 import Bucket from '../bucket/bucket';
-import './buckets.css!';
 
 @props({
     template: template,
+    css: '/app/components/buckets/buckets.css',
     regions: {
         buckets: '.buckets-section'
     }

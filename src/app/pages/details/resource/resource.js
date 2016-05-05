@@ -2,8 +2,11 @@ import BaseView from '~/helpers/backbone/view';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './resource.hbs';
 
-@props({template})
+@props({
+    template: template
+})
 export default class Resource extends BaseView {
+
     @on('click [href*="login"]')
     loginInThisTab(e) {
         window.location = e.currentTarget.href;
@@ -18,4 +21,5 @@ export default class Resource extends BaseView {
             this.templateHelpers.link_document_url = alternateLink;
         }
     }
+
 }

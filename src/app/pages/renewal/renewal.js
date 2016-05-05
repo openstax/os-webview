@@ -12,6 +12,7 @@ import {template as strips} from '~/components/strips/strips.hbs';
     }
 })
 export default class AdoptionForm extends ProxyWidgetView {
+
     @on('change [type=text],[type=email]')
     saveSetting(event) {
         let varName = event.target.name;
@@ -26,4 +27,5 @@ export default class AdoptionForm extends ProxyWidgetView {
         super.onRender();
         salesforceModel.prefill(this.el);
     }
+
 }

@@ -7,7 +7,7 @@ import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './single-select.hbs';
 
 @props({
-    template,
+    template: template,
     regions: {
         optionList: '.option-list'
     }

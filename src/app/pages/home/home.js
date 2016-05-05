@@ -6,7 +6,6 @@ import {template} from './home.hbs';
 import Quotes from '~/components/quotes/quotes';
 import Buckets from '~/components/buckets/buckets';
 import Education from './education/education';
-import './home.css!';
 
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -32,6 +31,7 @@ const banners = shuffle([
 
 @props({
     template: template,
+    css: '/app/pages/home/home.css',
     regions: {
         bookBanners: '.book-banners',
         quotes: '.quote-buckets',
@@ -40,6 +40,7 @@ const banners = shuffle([
     }
 })
 export default class Home extends LoadingView {
+
     @on('click a[href^="#"]')
     hashClick(e) {
         $.scrollTo($.hashTarget(e));

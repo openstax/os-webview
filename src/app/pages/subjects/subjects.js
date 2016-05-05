@@ -8,7 +8,6 @@ import FilterButton from '~/components/filter-button/filter-button';
 import {template as strips} from '~/components/strips/strips.hbs';
 import CategorySection from './category-section/category-section';
 import router from '~/router';
-import './subjects.css!';
 
 const apId = 'AP<sup>&reg;</sup>',
     categories = ['Math', 'Science', 'Social Sciences', 'History', apId],
@@ -34,6 +33,7 @@ function organizeBooksByCategory(books) {
 
 @props({
     template: template,
+    css: '/app/pages/subjects/subjects.css',
     templateHelpers: {strips},
     regions: {
         filterButtons: '.filter-buttons',
@@ -41,6 +41,7 @@ function organizeBooksByCategory(books) {
     }
 })
 export default class Subjects extends LoadingView {
+
     @on('click')
     deselect() {
         this.model.set('selectedBook', false);
@@ -139,4 +140,5 @@ export default class Subjects extends LoadingView {
         }));
         super.onRender();
     }
+
 }

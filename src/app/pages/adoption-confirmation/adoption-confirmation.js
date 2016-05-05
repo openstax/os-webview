@@ -3,7 +3,6 @@ import BaseView from '~/helpers/backbone/view';
 import {props} from '~/helpers/backbone/decorators';
 import {template} from './adoption-confirmation.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
-import './adoption-confirmation.css!';
 
 /*
 function hookUpDonationBox(el) {
@@ -67,6 +66,7 @@ function hookUpDonationBox(el) {
 
 @props({
     template: template,
+    css: '/app/pages/adoption-confirmation/adoption-confirmation.css',
     templateHelpers: {
         strips
     }

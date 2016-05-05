@@ -10,6 +10,28 @@ function dispose(obj) {
     delete obj.regions;
 }
 
+function injectCSS(file) {
+    if (typeof file !== 'string') {
+        return;
+    }
+
+    let links = document.getElementsByTagName('link');
+
+    for (let i = 0, l = links.length; i < l; i++) {
+        if (file === links[i].href) {
+            return;
+        }
+    }
+
+    let link = document.createElement('link');
+
+    link.href = file;
+    link.type = 'text/css';
+    link.rel = 'stylesheet';
+
+    document.getElementsByTagName('head')[0].appendChild(link);
+}
+
 class Region {
 
     constructor(el, parent) {
@@ -78,6 +100,7 @@ class BaseView extends Backbone.View {
         super(...arguments);
         this.regions = new Regions(this.regions, this);
         this.unbinders = [];
+        injectCSS(this.css);
     }
 
     delegate(eventName, selector, listener) {
