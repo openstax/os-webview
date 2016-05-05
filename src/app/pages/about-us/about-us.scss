@@ -339,18 +339,8 @@
         height: 25rem;
         width: 100%;
 
-        @include phone {
-            &:nth-child(odd) {
-                .picture-area {
-                    margin-right: 1.25rem;
-                }
-            }
-
-            &:nth-child(even) {
-                .picture-area {
-                    margin-left: 1.25rem;
-                }
-            }
+        @media (max-width: 400px) {
+            flex: 0 0 100%;
         }
 
         @include tablet {
@@ -361,6 +351,30 @@
         @include desktop {
             width: 17.5rem;
             flex: 0 0 auto;
+        }
+
+        &:nth-child(odd) {
+            .picture-area {
+                @include phone {
+                    margin-right: 1.25rem;
+                }
+
+                @media (max-width: 400px) {
+                    margin-right: 0;
+                }
+            }
+        }
+
+        &:nth-child(even) {
+            .picture-area {
+                @include phone {
+                    margin-left: 1.25rem;
+                }
+
+                @media (max-width: 400px) {
+                    margin-left: 0;
+                }
+            }
         }
 
         &.hidden {
@@ -495,22 +509,12 @@
         .headshot {
             flex: 0 0 49%;
 
-            @include phone {
-                width: 50%;
+            @media (max-width: 400px) {
+                flex: 0 0 100%;
             }
 
             @include phone {
-                &:nth-child(odd) {
-                    .picture-area {
-                        margin-right: 1.25rem;
-                    }
-                }
-
-                &:nth-child(even) {
-                    .picture-area {
-                        margin-left: 1.25rem;
-                    }
-                }
+                width: 50%;
             }
 
             @include tablet {
@@ -521,6 +525,34 @@
             @include desktop {
                 width: 17.5rem;
                 flex: 0 0 auto;
+            }
+
+            &:nth-child(odd) {
+                .picture-area {
+                    @include phone {
+                        margin-right: 1.25rem;
+                    }
+
+                    @media (max-width: 400px) {
+                        margin-right: 0;
+                    }
+                }
+            }
+
+            &:nth-child(even) {
+                .picture-area {
+                    @include phone {
+                        margin-left: 1.25rem;
+                    }
+
+                    @media (max-width: 400px) {
+                        margin-left: 0;
+                    }
+                }
+            }
+
+            .remover {
+                @include absolute(top 1.5rem right 1.5rem);
             }
 
             &.hidden {
