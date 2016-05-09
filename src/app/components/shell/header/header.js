@@ -19,10 +19,17 @@ class Header extends BaseView {
 
         this.meta = {};
 
-        this.templateHelpers = {
-            visible: () => this.meta.visible,
-            fixed: () => this.meta.fixed,
-            transparent: () => this.meta.transparent
+        this.templateHelpers = () => {
+            let accounts = `${settings.apiOrigin}/accounts`;
+            let currentPage = Backbone.history.location.href;
+
+            return {
+                visible: () => this.meta.visible,
+                fixed: () => this.meta.fixed,
+                transparent: () => this.meta.transparent,
+                login: `${accounts}/login/openstax/?next=${currentPage}`,
+                logout: `${accounts}/logout/?next=${currentPage}`
+            };
         };
     }
 
@@ -221,30 +228,6 @@ class Header extends BaseView {
         }
     }
 
-    appendURL() {
-        let loginEl = this.el.querySelector('.login>a');
-        let loginLink = `${settings.apiOrigin}/accounts/login/openstax/?next=`;
-        let loginHref = loginLink + Backbone.history.location.href;
-
-        loginEl.href = loginHref;
-
-        let logoutEl = this.el.querySelector('.logout>a');
-        let logoutLink = `${settings.apiOrigin}/accounts/logout/?next=`;
-        let logoutHref = logoutLink + Backbone.history.location.href;
-
-        logoutEl.href = logoutHref;
-    }
-
-    openLinkSameWindow(e) {
-        e.preventDefault(e);
-        window.open(e.target, '_self');
-    }
-
-    @on('click .logout a')
-    appendLogoutURL(e) {
-        this.openLinkSameWindow(e);
-    }
-
     @on('keydown .expand')
     onKeydownToggleFullScreenNav(e) {
         if (document.activeElement === e.currentTarget && (e.keyCode === 13 || e.keyCode === 32)) {
@@ -372,11 +355,9 @@ class Header extends BaseView {
                 this.attachListenerTo(loginItem, 'click', this.flyOutMenu.bind(this));
             } else {
                 loginItem.firstChild.textContent = 'Login';
-                this.attachListenerTo(loginItem, 'click', this.openLinkSameWindow.bind(this));
             }
         });
         this.updateHeaderStyle();
-        this.appendURL();
         this.el.querySelector('[data-href-setting="account-href"]').href = settings.accountHref;
         this.attachListenerTo(document, 'click', this.resetHeader.bind(this), true);
         this.attachListenerTo(window, 'scroll', () =>
