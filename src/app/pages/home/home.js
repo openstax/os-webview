@@ -50,6 +50,13 @@ export default class Home extends LoadingView {
     parallaxBanner() {
         let bookBanners = this.el.querySelectorAll('.book-banners > div > div');
         let books = this.el.querySelectorAll('.book');
+        let educationBanner = this.el.querySelector('.education-banner');
+        let educationBannerStudent = this.el.querySelector('.education-banner .student');
+
+
+        educationBanner.setAttribute('style', `background-position: 50% ${window.pageYOffset/30}px`);
+        educationBannerStudent.setAttribute('style', `bottom: -${window.pageYOffset/40}px`);
+
 
         for (let bookBanner of bookBanners) {
             bookBanner.setAttribute('style', `background-position: 20% -${window.pageYOffset/2}px`);
