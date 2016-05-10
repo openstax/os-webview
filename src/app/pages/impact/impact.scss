@@ -162,6 +162,11 @@ $hero-break-width: 880px;
 
     }
 
+    .cta .btn {
+        color: color(neutral-lightest);
+        font-size: 110%;
+    }
+
     .affiliates {
         color: color(gray);
         text-align: center;
@@ -178,7 +183,8 @@ $hero-break-width: 880px;
             letter-spacing: -0.15rem;
         }
 
-        p {
+        p,
+        .cta {
             @include constrained-variable-text(1.8, 0.2);
 
             line-height: 1.7;
