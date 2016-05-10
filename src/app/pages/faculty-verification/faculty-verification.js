@@ -1,6 +1,7 @@
 import ProxyWidgetView from '~/helpers/backbone/proxy-widget-view';
 import userModel from '~/models/usermodel';
 import salesforceModel from '~/models/salesforce-model';
+import bookTitles from '~/helpers/book-titles';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './faculty-verification.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
@@ -9,6 +10,7 @@ import {template as strips} from '~/components/strips/strips.hbs';
     template: template,
     css: '/app/pages/faculty-verification/faculty-verification.css',
     templateHelpers: {
+        titles: bookTitles,
         urlOrigin: window.location.origin,
         strips
     }
