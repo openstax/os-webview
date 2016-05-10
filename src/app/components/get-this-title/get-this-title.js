@@ -31,6 +31,7 @@ export default class GetThisTitle extends BaseView {
             ibookLink: data.ibook_link,
             ibookLink2: data.ibook_link_volume_2,
             webviewLink: data.webview_link,
+            comingSoon: data.webview_link === '',
             conceptCoachLink: data.concept_coach_link,
             bookshareLink: data.bookshare_link,
             pdfLink: (data.high_resolution_pdf_url || data.low_resolution_pdf_url),
