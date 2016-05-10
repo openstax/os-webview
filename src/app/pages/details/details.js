@@ -123,22 +123,32 @@ export default class Details extends LoadingView {
                     let userInfo = userData[0],
                         alternateLink = null,
                         encodedLocation = encodeURIComponent(Backbone.history.location.href),
-                        extraInstructions = this.el.querySelector('#extra-instructions');
+                        extraInstructions = this.el.querySelector('#extra-instructions'),
+                        isInstructor = true,
+                        setLockState = () => {
+                            for (let res of resources) {
+                                res.showLock = isInstructor ? 'fa-unlock-alt' : 'fa-lock';
+                            }
+                        },
+                        goToHref = (e) => {
+                            e.preventDefault();
+                            window.location = e.target.href;
+                        };
 
                     if (!userInfo || userInfo.username === '') {
+                        isInstructor = false;
                         alternateLink = `${settings.apiOrigin}/accounts/login/openstax/?next=${encodedLocation}`;
                         extraInstructions.innerHTML = `<a href="${alternateLink}">Login</a> for instructor access.`;
-                        let anchor = extraInstructions.querySelector('a'),
-                            goToHref = (e) => {
-                                e.preventDefault();
-                                window.location = e.target.href;
-                            };
+                        let anchor = extraInstructions.querySelector('a');
 
                         this.attachListenerTo(anchor, 'click', goToHref);
                     } else if (userInfo.groups.indexOf('Faculty') < 0) {
+                        isInstructor = false;
                         alternateLink = '/faculty-verification';
                         extraInstructions.innerHTML = `<a href="${alternateLink}">Apply for instructor access.</a>`;
                     }
+
+                    setLockState();
                     insertResources(resources, 'instructorResources', alternateLink);
                 });
             },

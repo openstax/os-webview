@@ -397,6 +397,13 @@
 
         }
 
+        .locked-state {
+            color: lighten(color(neutral-light), 18%);
+            float: right;
+            font-size: 4rem;
+            margin-right: 1rem;
+        }
+
         .student-resources-cta {
             min-height: 60rem;
             display: flex;
