@@ -397,13 +397,6 @@
 
         }
 
-        .locked-state {
-            color: lighten(color(neutral-light), 18%);
-            float: right;
-            font-size: 4rem;
-            margin-right: 1rem;
-        }
-
         .student-resources-cta {
             min-height: 60rem;
             display: flex;
@@ -456,18 +449,18 @@
         display: flex;
         flex-flow: column nowrap;
 
-        @include tablet {
-            flex-flow: row wrap;
-        }
-
-        @include desktop {
+        @media (min-width: #{breakpoints(phone) + 1}) {
             flex-flow: row wrap;
         }
 
         > div {
             background-color: color(neutral-lightest);
-            padding: 1.5rem;
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: space-between;
             margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            position: relative;
 
             @media (min-width: #{breakpoints(phone) + 1}) {
                 flex: 0 0 48%;
@@ -491,14 +484,26 @@
                 margin-bottom: 1rem;
             }
 
-            a {
-                color: color(cyan);
-                text-transform: uppercase;
-                font-size: 1.4rem;
-                font-weight: 500;
+            .link-and-lock {
+                align-items: flex-end;
+                display: flex;
+                justify-content: space-between;
 
-                &:hover {
-                    color: darken(color(cyan), 10%);
+                a {
+                    color: color(cyan);
+                    text-transform: uppercase;
+                    font-size: 1.4rem;
+                    font-weight: 500;
+
+                    &:hover {
+                        color: darken(color(cyan), 10%);
+                    }
+                }
+
+                .locked-state {
+                    color: lighten(color(neutral-light), 18%);
+                    font-size: 4rem;
+                    margin-right: 1rem;
                 }
             }
         }
@@ -553,9 +558,8 @@
             align-items: center;
 
             img {
-                width: 100%;
-                max-width: 20rem;
-
+                width: 20rem;
+                max-width: 100%;
             }
         }
     }

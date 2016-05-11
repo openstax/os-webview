@@ -16,10 +16,8 @@ export default class Resource extends BaseView {
     constructor(data, alternateLink) {
         super();
         this.templateHelpers = data;
-        if (alternateLink) {
-            /* eslint camelcase:0 */
-            this.templateHelpers.link_document_url = alternateLink;
-        }
+        /* eslint camelcase:0 */
+        this.templateHelpers.linkUrl = alternateLink || data.link_document_url || data.link_external;
     }
 
 }
