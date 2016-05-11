@@ -3,6 +3,10 @@
 
 
 .get-this-title {
+    .remover {
+        @include absolute(top 0 right 0);
+    }
+
     .submenu {
         position: relative;
 
@@ -82,7 +86,7 @@
         }
     }
 
-    .fa {
+    .fa:not(.fa-times) {
         color: darken(color(cyan), 10%);
         font-size: 1.8rem;
         margin-left: -3rem;
