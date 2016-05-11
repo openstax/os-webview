@@ -108,7 +108,7 @@ export default class Details extends LoadingView {
             pageModel = new PageModel(),
             insertResources = (resources, regionName, alternateLink) => {
                 for (let res of resources) {
-                    if (res.link_document_url) {
+                    if (res.link_document_url || res.link_external) {
                         this.regions[regionName].append(new Resource(res, alternateLink));
                     }
                 }
