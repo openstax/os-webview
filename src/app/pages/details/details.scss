@@ -107,6 +107,10 @@
         @include desktop {
             flex-flow: row wrap;
         }
+
+        @include designwidth {
+            padding: 0;
+        }
     }
 
     .cta > .btn {
@@ -318,7 +322,7 @@
                 @include desktop {
                     font-size: 18rem;
                     top: 7rem;
-                    left: -9rem;
+                    left: -8rem;
                 }
             }
 
@@ -365,7 +369,11 @@
             padding: 6rem 1.5rem;
 
             @include desktop {
-                padding: 6rem 25rem 6rem 1.5rem;
+                padding-right: 25rem;
+            }
+
+            @include designwidth {
+                padding-left: 0;
             }
         }
     }
@@ -387,7 +395,11 @@
             padding: 6rem 1.5rem;
 
             @include desktop {
-                padding: 6rem 27.5rem 6rem 1.5rem;
+                padding-right: 27.5rem;
+            }
+
+            @include designwidth {
+                padding-left: 0;
             }
         }
 

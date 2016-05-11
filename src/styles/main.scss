@@ -195,6 +195,10 @@ sup {
     margin: 0 auto;
     padding: 0 1.5rem;
     width: 100%;
+
+    @include designwidth {
+        padding: 0;
+    }
 }
 
 .no-style.page .boxed {

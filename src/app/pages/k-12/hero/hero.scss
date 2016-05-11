@@ -27,7 +27,6 @@ $hero-break-width: 880px;
         @include collapsed {
             align-items: stretch;
             background: none;
-//            height: calc(100vh - 6rem);
             max-height: 48rem;
         }
 
@@ -77,6 +76,8 @@ $hero-break-width: 880px;
             }
 
             h1 {
+                @include constrained-variable-text(6, 0.2);
+
                 color: inherit;
             }
 

@@ -18,6 +18,12 @@
     }
 }
 
+@mixin designwidth {
+    @media (min-width: #{$boxed-width + 20}) {
+        @content;
+    }
+}
+
 @mixin collapsed {
     @media (max-width: 760px) {
         @content;

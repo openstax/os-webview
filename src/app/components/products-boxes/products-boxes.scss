@@ -15,6 +15,16 @@
             flex-direction: column;
         }
 
+        @include designwidth {
+            .product-box:first-child {
+                margin-left: 0;
+            }
+
+            .product-box:last-child {
+                margin-right: 0;
+            }
+        }
+
         .product-box {
             background-color: white;
             margin: 0 1.8rem;

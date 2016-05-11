@@ -39,7 +39,6 @@ $hero-break-width: 880px;
         @include collapsed {
             align-items: stretch;
             background: none;
-//            height: calc(100vh - 6rem);
             max-height: 53rem;
         }
 
@@ -173,7 +172,7 @@ $hero-break-width: 880px;
         justify-content: center;
 
         .container {
-            max-width: $boxed-width;
+            width: $boxed-width;
         }
 
         .header {

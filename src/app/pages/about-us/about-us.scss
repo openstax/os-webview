@@ -69,10 +69,7 @@
         display: flex;
         flex-flow: row wrap;
         position: relative;
-
-        @include tablet {
-            justify-content: space-between;
-        }
+        justify-content: space-between;
 
         .headshot {
             cursor: pointer;
@@ -335,46 +332,28 @@
     .our-team .headshot {
         display: flex;
         flex-flow: column nowrap;
-        flex: 0 0 50%;
+        flex: 0 0 100%;
+        justify-content: space-between;
         height: 25rem;
-        width: 100%;
 
-        @media (max-width: 400px) {
-            flex: 0 0 100%;
+        @media (min-width: 400px) {
+            flex-basis: 48%;
         }
 
-        @include tablet {
-            flex: 0 0 30%;
-            margin-right: 1rem;
+        @media (min-width: 600px) {
+            flex-basis: 31.5%;
         }
 
-        @include desktop {
-            width: 17.5rem;
-            flex: 0 0 auto;
+        @media (min-width: 800px) {
+            flex-basis: 23.5%;
         }
 
-        &:nth-child(odd) {
-            .picture-area {
-                @include phone {
-                    margin-right: 1.25rem;
-                }
-
-                @media (max-width: 400px) {
-                    margin-right: 0;
-                }
-            }
+        @media (min-width: 1000px) {
+            flex-basis: 18.5%;
         }
 
-        &:nth-child(even) {
-            .picture-area {
-                @include phone {
-                    margin-left: 1.25rem;
-                }
-
-                @media (max-width: 400px) {
-                    margin-left: 0;
-                }
-            }
+        @include designwidth {
+            flex-basis: 15%;
         }
 
         &.hidden {
