@@ -10,7 +10,7 @@ import CategorySection from './category-section/category-section';
 import router from '~/router';
 
 const apId = 'AP<sup>&reg;</sup>',
-    categories = ['Math', 'Science', 'Social Sciences', 'History', apId],
+    categories = ['Math', 'Science', 'Social Sciences', 'Humanities', apId],
     filterButtons = ['View All', ...categories];
 
 function organizeBooksByCategory(books) {
