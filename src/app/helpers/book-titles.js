@@ -14,7 +14,7 @@ let comingSoon = [
 
 export let published = [
     'Algebra and Trigonometry',
-    'Anatomy &amp; Physiology',
+    'Anatomy & Physiology',
     'Biology',
     'Chemistry',
     'College Algebra',
