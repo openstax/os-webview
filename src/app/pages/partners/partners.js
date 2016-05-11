@@ -10,7 +10,7 @@ import {template} from './partners.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
 import router from '~/router';
 
-const categories = ['Math', 'Science', 'Social Sciences', 'History', 'AP®'],
+const categories = ['Math', 'Science', 'Social Sciences', 'Humanities', 'AP®'],
     filterButtons = ['View All', ...categories];
 
 let partnersData = {},
