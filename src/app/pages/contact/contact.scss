@@ -85,12 +85,12 @@
     address {
         line-height: normal;
 
-        span {
-            display: block;
+        p {
+            margin: 0;
         }
     }
 
-    .phone span {
+    .phone .label {
         font-weight: 500;
     }
 }

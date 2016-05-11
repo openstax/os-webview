@@ -2,10 +2,8 @@
     <main id="maincontent">
         <div class="hero">
             <div class="boxed">
-                <h1>Contact Us</h1>
-                <p>
-                    If you have any questions or feedback, drop us a line!
-                </p>
+                <h1 data-id="title"></h1>
+                <p data-id="tagline"></p>
             </div>
         </div>
         {{{strips}}}
@@ -39,14 +37,9 @@
                 </form>
             </div>
             <div class="col">
-                <h2>Mailing Address</h2>
-                <h3>OpenStax</h3>
-                <address>
-                    Rice University
-                    <span>6100 Main St. MS 375</span>
-                    Houston, TX 77005
-                </address>
-                <p class="phone"><span>Main:</span> (713) 348-5012</p>
+                <h2 data-id="mailing_header"></h2>
+                <address data-id="mailing_address"></address>
+                <p class="phone"><span class="label">Main: </span><span data-id="phone_number"></span></p>
             </div>
         </div>
     </main>

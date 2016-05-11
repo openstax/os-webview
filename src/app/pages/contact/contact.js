@@ -1,5 +1,6 @@
-import BaseView from '~/helpers/backbone/view';
+import LoadingView from '~/helpers/backbone/loading-view';
 import csrfModel from '~/models/csrfmodel';
+import PageModel from '~/models/pagemodel';
 import SingleSelect from '~/components/single-select/single-select';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './contact.hbs';
@@ -20,6 +21,13 @@ const subjectOptions = [
     ['Website', 'info@openstax.org', 'Website']
 ];
 
+let contactDataPromise = new PageModel().fetch({
+    data: {
+        type: 'pages.ContactUs',
+        fields: ['title', 'tagline', 'mailing_header', 'mailing_address', 'phone_number']
+    }
+});
+
 @props({
     template: template,
     css: '/app/pages/contact/contact.css',
@@ -28,7 +36,7 @@ const subjectOptions = [
         options: subjectOptions.map((option) => option[0])
     }
 })
-export default class Contact extends BaseView {
+export default class Contact extends LoadingView {
     @on('submit')
     validateAndSend(e) {
         let selectedSubject = this.el.querySelector('select').value,
@@ -55,5 +63,18 @@ export default class Contact extends BaseView {
         csrfModel.fetch().then((result) => {
             this.el.querySelector('[name="csrfmiddlewaretoken"]').value = result.csrf_token;
         });
+        contactDataPromise.then((result) => {
+            let data = result.pages[0];
+
+            for (let field of Object.keys(data)) {
+                let el = this.el.querySelector(`[data-id="${field}"]`);
+
+                if (el) {
+                    el.innerHTML = data[field];
+                }
+            }
+        });
+        this.otherPromises.push(contactDataPromise);
+        super.onRender();
     }
 }
