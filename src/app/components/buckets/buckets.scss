@@ -8,6 +8,11 @@
     padding-left: 1.5rem;
     padding-right: 1.5rem;
 
+    @include designwidth {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
     .bucket {
         color: color(neutral-lightest);
         max-width: 100%;

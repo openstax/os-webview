@@ -14,6 +14,14 @@
         @include phone {
             display: block;
         }
+
+        @include designwidth {
+            padding: 0;
+
+            &.row-container {
+                max-width: calc(#{$boxed-width} + 3rem);
+            }
+        }
     }
 
     .container[data-manager="page-description"] {
@@ -21,6 +29,11 @@
 
         @include desktop {
             text-align: center;
+        }
+
+        @include designwidth {
+            padding-left: 0;
+            padding-right: 0;
         }
 
         h2 {
@@ -115,32 +128,31 @@
         .row {
             display: flex;
             flex-flow: row wrap;
-            justify-content: space-around;
+            justify-content: flex-start;
             margin: 0 -1rem;
-            width: 100%;
-
-            @include tablet {
-                justify-content: space-between;
-            }
-
-            @include desktop {
-                justify-content: flex-start;
-            }
+            width: calc(100% + 2rem);
         }
 
         .cover {
-            width: 21rem;
-            margin: 1rem;
-            flex: 1 100%;
-            position: relative;
             cursor: pointer;
+            flex: 0 100%;
+            margin: 1rem;
+            position: relative;
 
-            @include tablet {
-                flex: 0 45%;
+            @media (min-width: $boxed-width - 660) {
+                flex-basis: calc(50% - 2rem);
             }
 
-            @include desktop {
-                flex: 0 auto;
+            @media (min-width: $boxed-width - 440) {
+                flex-basis: calc(33.3% - 2rem);
+            }
+
+            @media (min-width: $boxed-width - 220) {
+                flex-basis: calc(25% - 2rem);
+            }
+
+            @include designwidth {
+                flex-basis: calc(20% - 2rem);
             }
 
             &.coming-soon::before {

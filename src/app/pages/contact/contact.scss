@@ -36,6 +36,10 @@
             flex-flow: row wrap;
         }
 
+        @include designwidth {
+            padding: 0;
+        }
+
         .col {
             padding-bottom: 4rem;
 

@@ -13,6 +13,10 @@ $text-dark2: rgba(0, 0, 0, 0.7);
         width: 100%;
         height: 100%;
         max-width: $boxed-width;
+
+        @include designwidth {
+            padding: 0;
+        }
     }
 
     .hero {
