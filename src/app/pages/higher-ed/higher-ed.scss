@@ -39,7 +39,6 @@ $hero-break-width: 880px;
         @include collapsed {
             align-items: stretch;
             background: none;
-//            height: calc(100vh - 6rem);
             max-height: 53rem;
         }
 
@@ -95,9 +94,10 @@ $hero-break-width: 880px;
             .overlay {
                 background-color: rgba(color(cyan), 0.8);
                 color: color(neutral-lightest);
-                padding: 4rem;
                 display: flex;
                 justify-content: flex-end;
+                margin: auto 1.5rem;
+                padding: 4rem;
                 z-index: 1;
 
                 @media screen and (min-width: $boxed-width + 1) {
@@ -168,7 +168,7 @@ $hero-break-width: 880px;
     .getting-started {
         background-color: color(orange);
         color: white;
-        padding: 5.5rem 8.5vw;
+        padding: 5.5rem 0;
         display: flex;
         justify-content: center;
 
@@ -191,7 +191,6 @@ $hero-break-width: 880px;
             display: flex;
             list-style-type: none;
             margin: 3.2vw 0;
-            max-width: 85vw;
             padding: 4.29vw 0;
 
             @include collapsed {
@@ -237,8 +236,9 @@ $hero-break-width: 880px;
 
                 font-weight: 200;
 
-                @include phone {
+                @include collapsed {
                     font-size: 1.5rem;
+                    max-width: 80%;
                 }
             }
 
