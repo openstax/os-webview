@@ -104,7 +104,7 @@ export default class Details extends LoadingView {
         this.toggleFixedClass();
         this.attachListenerTo(window, 'scroll', this.toggleFixedClass.bind(this));
 
-        let slug = decodeURIComponent(window.location.search.substr(1)),
+        let slug = window.location.pathname.replace(/.*\//, ''),
             pageModel = new PageModel(),
             insertResources = (resources, regionName, alternateLink) => {
                 for (let res of resources) {
@@ -112,13 +112,8 @@ export default class Details extends LoadingView {
                         this.regions[regionName].append(new Resource(res, alternateLink));
                     }
                 }
-            };
-
-        if (slug === '') {
-            slug = window.location.pathname.replace(/.*\//, '');
-        }
-
-        let showInstructorResources = (resources) => {
+            },
+            showInstructorResources = (resources) => {
                 userModel.fetch().then((userData) => {
                     let userInfo = userData[0],
                         alternateLink = null,
