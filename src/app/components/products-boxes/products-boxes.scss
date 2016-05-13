@@ -3,7 +3,6 @@
 
 .products-boxes {
     margin: 0 auto;
-    width: 90vw;
 
     .content {
         margin: 0 auto;
@@ -15,9 +14,24 @@
             flex-direction: column;
         }
 
+        .caption {
+            align-items: flex-start;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .blurb {
+            flex-grow: 1;
+            width: 100%;
+        }
+
         .product-box {
             background-color: white;
-            margin: 0 1.8rem;
+            display: flex;
+            flex-direction: column;
+            margin: 0 1.5rem;
             flex: 1 1 33%;
 
             @include collapsed {
@@ -46,6 +60,7 @@
             h3 {
                 color: color(gray);
                 font-weight: 700;
+                margin: 0;
             }
 
             a {
@@ -60,15 +75,10 @@
                 &::after {
                     @include triangle(
                         $direction: right,
-                        $position: top 0.42rem right -1.3rem,
+                        $position: top calc(5% + 0.6rem) right -1.3rem,
                         $color: color(cyan),
                         $size: 0.5rem
                     );
-                }
-
-                &:hover,
-                &:focus {
-                    transform: scale(1.05);
                 }
             }
         }
