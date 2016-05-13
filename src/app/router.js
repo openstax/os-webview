@@ -16,7 +16,6 @@ const PAGES = [
     'contact',
     'contact-thank-you',
     'details',
-    'details',
     'faculty-confirmation',
     'faculty-verification',
     'finish-profile',
