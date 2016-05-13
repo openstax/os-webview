@@ -2,6 +2,7 @@
 #User-agent: baiduspider
 #Disallow: /
 User-agent: *
-Disallow:
+Disallow: /accounts
+Disallow: /admin
 # add any directories we don't want crawled here using the format in the line below:
 #Disallow: /cgi-bin/
