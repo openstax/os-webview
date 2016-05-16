@@ -6,7 +6,7 @@ var pi = require('gulp-load-plugins')({
     pattern: ['gulp-*', 'gulp.*', 'del']
 });
 
-var FAVICON_DATA_FILE = '.favicon.json';
+var FAVICON_DATA_FILE = `${__dirname}/.favicon.json`;
 
 function generateFavicons(done) {
     if (config.env !== 'production') {
