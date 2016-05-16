@@ -17,21 +17,16 @@ $.isTouchDevice = () => (
  );
 
 const tick = 1000 / 40,
-    defaultStep = 200,
     spaceForMenu = 59,
-    maxTicks = 20;
+    targetStep = 200,
+    targetTicks = 20;
 
-$.scrollTo = (el, customStep, offset = 0) => {
+$.scrollTo = (el, offset = 0) => {
     let rect = el.getBoundingClientRect(),
         offsetTop = rect.top - spaceForMenu - offset,
         direction = Math.sign(offsetTop),
         magnitude = Math.abs(offsetTop),
-        chosenStep = customStep || defaultStep,
-        tickCount = magnitude / chosenStep;
-
-    if (tickCount > maxTicks) {
-        chosenStep = magnitude / maxTicks;
-    }
+        chosenStep = (targetStep + magnitude / targetTicks) / 2;
 
     let i = setInterval(() => {
         let step = (magnitude > chosenStep) ? chosenStep : magnitude,
@@ -95,14 +90,16 @@ $.applyScrollFix = (view) => {
     });
 };
 
-$.hashTarget = (event) => {
-    let node = event.target;
+$.hashClick = (event, options = {doHistory: true}) => {
+    let node = event.currentTarget,
+        destUrl = `${node.pathname}${node.hash}`,
+        targetEl = document.getElementById(node.hash.substr(1));
 
-    while (node.tagName !== 'A') {
-        node = node.parentNode;
+    $.scrollTo(targetEl);
+    if (options.doHistory) {
+        history.pushState({}, '', destUrl);
     }
-
-    return document.getElementById(node.hash.substr(1));
+    event.preventDefault();
 };
 
 export default $;

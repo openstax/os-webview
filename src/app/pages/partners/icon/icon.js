@@ -9,9 +9,7 @@ import {template} from './icon.hbs';
 export default class Icon extends BaseView {
     @on('click [href^="#"]')
     goToBlurb(e) {
-        $.scrollTo($.hashTarget(e));
-        e.preventDefault();
-        e.stopPropagation();
+        $.hashClick(e, {doHistory: false});
     }
 
     setVisibility() {

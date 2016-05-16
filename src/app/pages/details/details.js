@@ -50,8 +50,7 @@ function dataToTemplateHelper(data) {
 export default class Details extends LoadingView {
     @on('click a[href^="#"]')
     hashClick(e) {
-        $.scrollTo($.hashTarget(e));
-        e.preventDefault();
+        $.hashClick(e);
     }
 
     @on('click .table-of-contents-link')

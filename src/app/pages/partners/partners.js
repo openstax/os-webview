@@ -77,7 +77,7 @@ export default class Partners extends LoadingView {
     filterClick() {
         let filterSection = this.el.querySelector('.filter');
 
-        $.scrollTo(filterSection, 60, 30);
+        $.scrollTo(filterSection, 30);
     }
 
     updateSelectedFilterFromPath() {

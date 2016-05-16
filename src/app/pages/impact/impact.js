@@ -78,8 +78,7 @@ export default class Impact extends LoadingView {
 
     @on('click a[href^="#"]')
     hashClick(e) {
-        $.scrollTo($.hashTarget(e));
-        e.preventDefault();
+        $.hashClick(e, {doHistory: false});
     }
 
     onLoaded() {
