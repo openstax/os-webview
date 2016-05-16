@@ -14,14 +14,6 @@
         @include phone {
             display: block;
         }
-
-        @media (min-width: $boxed-width) {
-            padding: 0;
-
-            &.row-container {
-                max-width: calc(#{$boxed-width} + 3rem);
-            }
-        }
     }
 
     .container[data-manager="page-description"] {
@@ -29,11 +21,6 @@
 
         @include desktop {
             text-align: center;
-        }
-
-        @media (min-width: $boxed-width) {
-            padding-left: 0;
-            padding-right: 0;
         }
 
         h2 {
@@ -44,6 +31,12 @@
 
         p {
             font-size: 1.8rem;
+
+            @include desktop {
+                width: 80%;
+                margin-left: auto;
+                margin-right: auto;
+            }
         }
     }
 
@@ -169,8 +162,8 @@
             height: 0;
             overflow: hidden;
             position: absolute;
-            top: 98%;
-            left: -10%;
+            top: 95%;
+            left: -5%;
             background: color(neutral-lightest);
             transform: translate3d(0, -1rem, 0);
             opacity: 0;
@@ -187,19 +180,12 @@
                 position: absolute;
             }
 
-            .remover {
-                @include absolute(top 1.84rem right -0.8rem);
-
-                > i {
-                    color: color(neutral-dark);
-                }
-            }
-
             .cta > .btn {
                 width: 100%;
                 font-variant: normal;
                 padding: 1.5rem;
                 text-transform: uppercase;
+                font-weight: 400;
             }
 
             .cta > .btn:hover,
@@ -212,7 +198,7 @@
         .cover:hover .details {
             @include desktop {
                 overflow: initial;
-                width: 120%;
+                width: 110%;
                 height: auto;
                 opacity: 1;
                 transform: translate3d(0, 0, 0);
