@@ -1,12 +1,21 @@
 var fs = require('fs');
+var argv = require('yargs').argv;
 var project = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 
 module.exports = {
     get env() {
-        return process.env.NODE_ENV;
+        var env = process.env.NODE_ENV;
+
+        if (argv.production) {
+            env = 'production';
+        } else if (argv.development) {
+            env = 'development';
+        }
+
+        return env;
     },
     get dest() {
-        return (process.env.NODE_ENV === 'development' ? 'dev' : 'dist');
+        return (this.env === 'development' ? 'dev' : 'dist');
     },
     src: 'src',
     browsers: [

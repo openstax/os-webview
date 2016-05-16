@@ -4,7 +4,7 @@ var bs = require('browser-sync').get(config.name);
 var pi = require('gulp-load-plugins')();
 
 function html() {
-    return gulp.src([`${config.src}/**/*.html`], {
+    return gulp.src(`${config.dest}/*.html`, {
         since: gulp.lastRun('html')
     })
     .pipe(pi.if(config.env === 'production', pi.htmlmin({
@@ -17,7 +17,7 @@ function html() {
 gulp.task(html);
 
 gulp.task('html:watch', () => {
-    gulp.watch(`${config.src}/**/*.html`, config.watchOpts)
+    gulp.watch(`${config.dest}/*.html`, config.watchOpts)
     .on('change', gulp.series(
         html,
         bs.reload
