@@ -28,7 +28,7 @@ export default class Headshot extends BaseView {
     }
 
     isNarrowScreen() {
-        return window.innerWidth < 500;
+        return window.innerWidth <= 500;
     }
 
     @on('click')
