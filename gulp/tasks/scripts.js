@@ -125,7 +125,6 @@ function eslint() {
             'wrap-regex': 2,
 
             // ECMAScript 2015
-            'arrow-body-style': [2, 'as-needed'],
             'arrow-parens': [2, 'always'],
             'arrow-spacing': 2,
             'constructor-super': 2,
@@ -178,13 +177,14 @@ function compileScripts() {
 }
 
 function minifyScripts() {
-    if (config.env !== 'production') {
-        return Promise.resolve();
-    }
-
-    return gulp.src(`${config.dest}/**/*.js`)
-        .pipe(pi.uglify())
-        .pipe(gulp.dest(config.dest));
+    return gulp.src([
+        `${config.dest}/**/*.js`
+    ])
+    .pipe(pi.uglify({
+        preserveComments: false,
+        screwIE8: true
+    }))
+    .pipe(gulp.dest(config.dest));
 }
 
 gulp.task(eslint);
@@ -192,8 +192,8 @@ gulp.task(compileScripts);
 gulp.task('minify-scripts', minifyScripts);
 
 gulp.task('scripts', gulp.series(
-    'eslint',
-    'compileScripts'
+    eslint,
+    compileScripts
 ));
 
 gulp.task('scripts:watch', () => {

@@ -5,9 +5,5 @@ var pi = require('gulp-load-plugins')({
 });
 
 gulp.task('clean', () => {
-    var stream = pi.del([config.dest], {
-        dot: true
-    });
-
-    return stream;
+    return pi.del([config.dest], {dot: true});
 });

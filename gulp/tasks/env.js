@@ -7,16 +7,16 @@ function nodeEnv(env) {
             NODE_ENV: env
         }
     });
-
-    return Promise.resolve();
 }
 
-function development() {
-    return nodeEnv('development');
+function development(done) {
+    nodeEnv('development');
+    done();
 }
 
-function production() {
-    return nodeEnv('production');
+function production(done) {
+    nodeEnv('production');
+    done();
 }
 
 gulp.task(development);

@@ -3,10 +3,12 @@ require('require-dir')('./gulp/tasks', {recurse: true});
 
 gulp.task('default', gulp.series(
     'clean',
-    'flags',
     gulp.parallel(
         'copy',
-        'html',
+        gulp.series(
+            'favicon',
+            'html'
+        ),
         'styles',
         'scripts',
         'templates',
@@ -24,8 +26,8 @@ gulp.task('dev', gulp.series(
 gulp.task('dist', gulp.series(
     'production',
     'default',
-    'minify-scripts',
-    'precache'
+    'precache',
+    'minify-scripts'
 ));
 
 gulp.task('lint', gulp.parallel(
