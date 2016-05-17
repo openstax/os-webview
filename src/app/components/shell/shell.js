@@ -31,29 +31,29 @@ class AppView extends BaseView {
 
         // Lazy-load the page
         System.import(`~/pages/${pageName}/${pageName}`).then((m) => {
-            let Page = m.default;
+            let Page = m.default,
+                view = new Page(options),
+                hash = window.location.hash,
+                scrollToDestination = () => {
+                    let destination = document.getElementById(hash.substr(1));
+
+                    if (destination) {
+                        $.scrollTo(destination);
+                    }
+                };
 
             this.regions.header.show(header);
-            this.regions.main.show(new Page(options));
+            this.regions.main.show(view);
             this.regions.footer.show(footer);
             headTitle.textContent = `${pageName[0].toUpperCase()}${pageName.slice(1)} - OpenStax`;
             zendesk();
 
-            let hash = window.location.hash;
-
             if (hash) {
-                let attempts = 0,
-                    i = setInterval(() => {
-                        let destination = document.getElementById(hash.substr(1));
-
-                        if (destination) {
-                            $.scrollTo(destination);
-                        }
-                        ++attempts;
-                        if (attempts > 6) {
-                            clearInterval(i);
-                        }
-                    }, 200);
+                if ('isLoaded' in view) {
+                    view.isLoaded.then(scrollToDestination);
+                } else {
+                    scrollToDestination();
+                }
             } else {
                 window.scrollTo(0, 0);
             }

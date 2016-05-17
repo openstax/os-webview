@@ -24,8 +24,7 @@ export default class K12 extends BaseView {
 
     @on('click a[href^="#"]')
     hashClick(e) {
-        $.scrollTo($.hashTarget(e));
-        e.preventDefault();
+        $.hashClick(e, {doHistory: false});
     }
 
     onRender() {

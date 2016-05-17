@@ -46,12 +46,16 @@ class LoadingView extends BaseView {
         this.otherPromises = [];
         this.subviewPromises = [];
         this.loadingSection = new LoadingSection();
+        this.isLoaded = new Promise((resolve) => {
+            this.resolveLoaded = resolve;
+        });
     }
 
     onLoaded() {
         document.getElementById('header').classList.remove('hidden');
         document.getElementById('footer').classList.remove('hidden');
         this.loadingSection.remove();
+        this.resolveLoaded();
     }
 
     onRender() {
