@@ -1,22 +1,23 @@
 var fs = require('fs');
 var gulp = require('gulp');
+var argv = require('yargs').argv;
 var config = require('../config');
 var bs = require('browser-sync').get(config.name);
 var pi = require('gulp-load-plugins')({
     pattern: ['gulp-*', 'gulp.*', 'del']
 });
 
-var FAVICON_DATA_FILE = `${__dirname}/.favicon.json`;
+var FAVICON_DATA_FILE = 'gulp/.favicon.json';
 
 function generateFavicons(done) {
-    if (config.env !== 'production') {
+    if (!argv.favicons) {
         done();
         return;
     }
 
     pi.realFavicon.generateFavicon({
         masterPicture: `${config.src}/images/favicon.svg`,
-        dest: config.dest,
+        dest: 'gulp/.favicons',
         iconsPath: '/',
         design: {
             ios: {
@@ -65,24 +66,33 @@ function injectFaviconMarkup() {
     return gulp.src(`${config.src}/*.html`, {
         since: gulp.lastRun('injectFaviconMarkup')
     })
-    .pipe(pi.if(config.env === 'production',
-        pi.realFavicon.injectFaviconMarkups(JSON.parse(fs.readFileSync(FAVICON_DATA_FILE)).favicon.html_code)
+    .pipe(pi.realFavicon.injectFaviconMarkups(
+        JSON.parse(fs.readFileSync(FAVICON_DATA_FILE)).favicon.html_code
     ))
+    .pipe(gulp.dest(config.dest));
+}
+
+function copyFavicons() {
+    return gulp.src([
+        'gulp/.favicons/**/*.{ico,json,png,svg,xml}'
+    ])
     .pipe(gulp.dest(config.dest));
 }
 
 gulp.task(generateFavicons);
 gulp.task(injectFaviconMarkup);
+gulp.task(copyFavicons);
 
 gulp.task('favicon', gulp.series(
     generateFavicons,
-    injectFaviconMarkup
+    injectFaviconMarkup,
+    copyFavicons
 ));
 
 gulp.task('favicon:watch', () => {
     gulp.watch(`${config.src}/*.html`, config.watchOpts)
     .on('change', gulp.series(
-        'favicon',
+        injectFaviconMarkup,
         bs.reload
     ));
 });
