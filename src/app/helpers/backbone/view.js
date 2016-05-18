@@ -158,7 +158,7 @@ class BaseView extends Backbone.View {
             for (let i = 0, len = this._domEvents.length; i < len; i++) {
                 let item = this._domEvents[i];
 
-                item.el.removeEventListener(item.eventName, item.handler);
+                item.el.removeEventListener(item.eventName, item.listener);
             }
 
             this._domEvents.length = 0;
