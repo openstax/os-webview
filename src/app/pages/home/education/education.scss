@@ -7,15 +7,27 @@
     }
 }
 
+.education {
+    @media (min-width: 600px) {
+        position: relative;
+        width: 100%;
+        top: -3rem;
+        height: 74rem;
+        overflow: hidden;
+    }
+}
+
 .education-banner {
     background-image: url('/images/home/education/background.jpg');
-    background-position: center center;
+    background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
-    overflow: hidden;
-    position: relative;
 
     @media (min-width: 600px) {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
         height: 71rem;
     }
 
@@ -26,10 +38,10 @@
         flex-flow: column nowrap;
         position: relative;
         height: 100%;
+        padding: 3rem 1.5rem;
 
         @include tablet {
             flex-flow: row wrap;
-            padding: 3rem 1.5rem;
         }
     }
 
@@ -39,7 +51,11 @@
         padding: 3rem;
         width: 100%;
         top: 5rem;
-        left: 0;
+        margin-bottom: 1.5rem;
+
+        @media (min-width: 600px) {
+            width: calc(100% - 3rem);
+        }
 
         .opening {
             font-size: 2.2rem;
@@ -64,10 +80,11 @@
             font-size: 4.6rem;
             line-height: 1;
             margin: 1rem 0;
+            letter-spacing: -0.2rem;
 
             @include desktop {
                 width: 37rem;
-                font-size: 6rem;
+                font-size: 7rem;
             }
 
             @media (min-width: 1000px) {
@@ -106,17 +123,15 @@
     }
 
     .links {
-        width: 100%;
         z-index: 3;
 
         @media (min-width: 600px) {
             margin-top: 1.5rem;
-            bottom: calc(7.5rem + 5vw);
+            bottom: 3rem;
         }
 
         @media (min-width: 1000px) {
-            bottom: 14.5rem;
-            left: 0;
+            bottom: 13rem;
         }
 
         ul {
@@ -145,13 +160,14 @@
             }
 
             &:first-child {
+                margin-bottom: 1.5rem;
 
                 @media (min-width: 600px) {
                     margin-bottom: 1.5rem;
                 }
 
                 @include desktop {
-                    margin-right: 1.5rem;
+                    margin-right: 3rem;
                     margin-bottom: 0;
                 }
             }
@@ -240,12 +256,12 @@
         bottom: 0;
         right: 0;
         height: 105%;
-        width: 33rem;
+        width: 37rem;
         z-index: 2;
 
         @include desktop {
-            width: 58rem;
-            right: -12rem;
+            width: 60rem;
+            right: -15rem;
             background-position: right bottom;
             background-size: auto 100%;
         }

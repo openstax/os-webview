@@ -242,7 +242,7 @@
         @include desktop {
             height: 53rem;
             width: 45.4rem;
-            left: 15%;
+            left: 10%;
         }
     }
 
@@ -375,14 +375,6 @@
             @include tablet {
                 margin-right: 1rem;
             }
-
-            @include phone {
-                background-color: color(yellow);
-
-                &:hover {
-                    background-color: darken(color(yellow), 5%);
-                }
-            }
         }
 
         .explore-all {
@@ -391,7 +383,7 @@
                 background-color: color(deep-green);
 
                 &:hover {
-                    background-color: darken(color(turquoise), 5%);
+                    background-color: darken(color(deep-green), 5%);
                 }
             }
         }

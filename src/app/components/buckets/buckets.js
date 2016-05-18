@@ -44,7 +44,7 @@ export default class Buckets extends BaseView {
             blurbHtml: `OpenStax partners have united with us to increase access
             to high-quality learning materials. Their low-cost tools integrate
             seamlessly with OpenStax books.`,
-            btnClass: 'btn-yellow',
+            btnClass: 'btn-gold',
             linkUrl: '/partners',
             linkText: 'View Partners'
         }));
