@@ -38,8 +38,10 @@ function dataToTemplateHelper(data) {
     css: '/app/pages/details/details.css',
     regions: {
         getThisTitle: '.floating-menu .get-this-book',
-        topAuthors: '#top-authors',
-        allAuthors: '#all-authors',
+        seniorTopAuthors: '[data-id="senior-top-authors"]',
+        topAuthors: '[data-id="top-authors"]',
+        seniorAllAuthors: '[data-id="senior-all-authors"]',
+        allAuthors: '[data-id="nonsenior-all-authors"]',
         instructorResources: '#instructor-resources',
         studentResources: '#student-resources',
         tableOfContents: '.table-of-contents .box ol',
@@ -259,14 +261,37 @@ export default class Details extends LoadingView {
                         }
                     },
                     handleDetailData = (detailData) => {
-                        let th = dataToTemplateHelper(detailData);
+                        let th = dataToTemplateHelper(detailData),
+                            showAuthors = (authors, region, container) => {
+                                for (let author of authors) {
+                                    region.append(new Author(author));
+                                }
+                                if (authors.length === 0) {
+                                    container.classList.add('hidden');
+                                }
+                            },
+                            separateSeniors = (authors, options) => {
+                                let seniors = authors.filter((d) => d.senior_author),
+                                    nonseniors = authors.filter((d) => !d.senior_author);
 
-                        for (let topAuthor of th.topAuthors) {
-                            this.regions.topAuthors.append(new Author(topAuthor));
-                        }
-                        for (let author of th.allAuthors) {
-                            this.regions.allAuthors.append(new Author(author));
-                        }
+                                showAuthors(seniors, options.seniorRegion, options.seniorContainer);
+                                showAuthors(nonseniors, options.nonseniorRegion, options.nonseniorContainer);
+                            };
+
+                        separateSeniors(th.topAuthors, {
+                            seniorRegion: this.regions.seniorTopAuthors,
+                            seniorContainer: document.getElementById('senior-top-authors'),
+                            nonseniorRegion: this.regions.topAuthors,
+                            nonseniorContainer: document.getElementById('top-authors')
+                        });
+
+                        separateSeniors(th.allAuthors, {
+                            seniorRegion: this.regions.seniorAllAuthors,
+                            seniorContainer: document.getElementById('senior-all-authors'),
+                            nonseniorRegion: this.regions.allAuthors,
+                            nonseniorContainer: document.getElementById('all-authors')
+                        });
+
                         this.el.querySelector('.book-cover').src = th.coverUrl;
                         this.el.querySelector('.book-info .title').innerHTML = th.title;
                         this.el.querySelector('.book-info .blurb').innerHTML = th.description;
