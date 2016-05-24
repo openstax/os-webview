@@ -8,7 +8,8 @@ salesforce.populateAdoptionStatusOptions = (
                 {
                     key: 'adopted',
                     value: 'Confirmed Adoption Won',
-                    text: 'Fully adopted and using it as our main text.'
+                    text: 'Fully adopted and using it as our main text.',
+                    qtext: 'Yes, I am using OpenStax as a primary resource in my courses'
                 },
                 {
                     key: 'piloting',
@@ -18,7 +19,8 @@ salesforce.populateAdoptionStatusOptions = (
                 {
                     key: 'recommend',
                     value: 'Confirmed Will Recommend',
-                    text: 'Recommending the book as an option. The students purchase a different book.'
+                    text: 'Recommending the book as an option. The students purchase a different book.',
+                    qtext: 'Yes, I am recommending OpenStax to my students as an optional resource'
                 },
                 {
                     key: 'interest',
@@ -28,7 +30,8 @@ salesforce.populateAdoptionStatusOptions = (
                 {
                     key: 'no',
                     value: 'Not using',
-                    text: 'Currently have no plans to use it.'
+                    text: 'Currently have no plans to use it.',
+                    qtext: 'No, I’m not using OpenStax in my courses yet'
                 }
             ],
             optionByKey = {};
@@ -37,13 +40,13 @@ salesforce.populateAdoptionStatusOptions = (
             optionByKey[opt.key] = opt;
         }
 
-        return function (el, keyList) {
+        return function (el, keyList, useQtext) {
             let availableOptionList = (keyList) ? keyList.map((key) => optionByKey[key]) : optionList,
                 asOptions = availableOptionList.map((data) => {
                     let opt = document.createElement('option');
 
                     opt.value = data.value;
-                    opt.textContent = data.text;
+                    opt.textContent = useQtext && data.qtext || data.text;
 
                     return opt;
                 }),

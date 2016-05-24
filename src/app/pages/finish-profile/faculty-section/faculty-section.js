@@ -8,6 +8,6 @@ import {template} from './faculty-section.hbs';
 })
 export default class FacultySection extends BaseView {
     onRender() {
-        salesforce.populateAdoptionStatusOptions(this.el);
+        salesforce.populateAdoptionStatusOptions(this.el, ['adopted', 'recommend', 'no'], true);
     }
 }

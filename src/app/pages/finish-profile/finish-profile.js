@@ -25,16 +25,13 @@ export default class NewAccountForm extends ProxyWidgetView {
 
     @on('click #toggle-faculty')
     clickFaculty(event) {
-        let checkedState = event.target.checked,
-            leadSourceField = this.el.querySelector('[name="lead_source"]'),
-            leadType = checkedState ? 'OSC Faculty' : 'OSC User';
-
-        this.toggleFaculty(checkedState);
-        leadSourceField.value = leadType;
+        this.toggleFaculty(event.currentTarget.checked);
     }
 
     toggleFaculty(show) {
-        let retUrl = this.el.querySelector('[name=retURL]');
+        let retUrl = this.el.querySelector('[name=retURL]'),
+            leadType = show ? 'OSC Faculty' : 'OSC User',
+            leadSourceField = this.el.querySelector('[name="lead_source"]');
 
         if (show)  {
             this.regions.facultySection.show(this.facultySection);
@@ -45,6 +42,7 @@ export default class NewAccountForm extends ProxyWidgetView {
             this.el.querySelector('form').classList.remove('faculty');
             retUrl.value = `${window.location.origin}/finished-no-verify`;
         }
+        leadSourceField.value = leadType;
     }
 
     onRender() {
