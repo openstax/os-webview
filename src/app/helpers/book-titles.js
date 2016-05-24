@@ -1,11 +1,9 @@
 let comingSoon = [
     'American Government',
     'Astronomy',
-    'Calculus',
     'Elementary Algebra',
     'Intermediate Algebra',
     'Microbiology',
-    'Psychology',
     {
         text: 'University Physics',
         value: 'University Physics (Calc)'
@@ -16,6 +14,7 @@ export let published = [
     'Algebra and Trigonometry',
     'Anatomy & Physiology',
     'Biology',
+    'Calculus',
     'Chemistry',
     'College Algebra',
     {
@@ -64,6 +63,7 @@ export let published = [
         text: 'Principles of Microeconomics for AP® Courses',
         value: 'AP Micro Econ'
     },
+    'Psychology',
     {
         text: 'U.S. History',
         value: 'US History'
