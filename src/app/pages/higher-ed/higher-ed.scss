@@ -168,9 +168,9 @@ $hero-break-width: 880px;
     .getting-started {
         background-color: color(orange);
         color: white;
-        padding: 5.5rem 0;
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
+        padding: 5.5rem 0;
 
         .container {
             max-width: $boxed-width;
@@ -196,15 +196,24 @@ $hero-break-width: 880px;
             @include collapsed {
                 flex-direction: column;
             }
+
+            @media (min-width: $boxed-width) {
+                margin: 3.84rem 0;
+                padding: 5.15rem 0;
+            }
         }
 
         .step {
-            flex: 1 1 33%;
-            padding-bottom: 3.5rem;
-            position: relative;
+            display: flex;
+            flex: 1 1 auto;
+            flex-direction: column;
 
-            @include collapsed {
-                flex: 1 1 auto;
+            &.numbered {
+                flex-basis: 0;
+
+                @include collapsed {
+                    flex-basis: auto;
+                }
             }
 
             &:nth-child(2) {
@@ -213,38 +222,39 @@ $hero-break-width: 880px;
                 @include collapsed {
                     margin: 3rem 0;
                 }
+
+                @media (min-width: $boxed-width) {
+                    margin: 0 4.8rem;
+                }
             }
 
             &.numbered::before {
-                @include variable-sized-text(5.5, 0.2);
+                @include constrained-variable-text(5.5, 0.2);
 
                 color: color(yellow);
                 counter-increment: steps;
                 content: counter(steps) '.';
                 font-weight: bold;
+                padding-bottom: 0.4em;
             }
 
             > .title {
-                @include variable-sized-text(2.1, 0.2);
+                @include constrained-variable-text(2.1, 0.2);
 
                 font-weight: bold;
                 margin-bottom: 0.3em;
             }
 
             > .blurb {
-                @include variable-sized-text(1.6, 0.2);
+                @include constrained-variable-text(1.6, 0.2);
 
+                flex-grow: 1;
                 font-weight: 200;
+                padding-bottom: 1rem;
 
                 @include collapsed {
                     font-size: 1.5rem;
-                    max-width: 80%;
                 }
-            }
-
-            > .more {
-                bottom: 0;
-                position: absolute;
             }
         }
     }
@@ -295,7 +305,6 @@ $hero-break-width: 880px;
                 @include desktop {
                     margin-bottom: 0;
                 }
-
             }
 
             .quote {
