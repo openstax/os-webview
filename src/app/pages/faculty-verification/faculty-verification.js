@@ -28,7 +28,7 @@ export default class FacultyVerificationForm extends ProxyWidgetView {
 
     onRender() {
         this.el.classList.add('faculty-verification-form');
-        salesforce.populateAdoptionStatusOptions(this.el);
+        salesforce.populateAdoptionStatusOptions(this.el, ['adopted', 'recommend', 'no'], true);
         super.onRender();
         userModel.fetch().then((data) => {
             let userInfo = data[0];
