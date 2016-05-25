@@ -16,6 +16,10 @@ $.isTouchDevice = () => (
     (navigator.msMaxTouchPoints > 0)
  );
 
+$.stringCompare = (a, b) => (a < b) ? -1 : +(a > b);
+
+$.lowerCaseCompare = (a, b) => $.stringCompare(a.toLowerCase(), b.toLowerCase());
+
 const tick = 1000 / 40,
     spaceForMenu = 59,
     targetStep = 200,

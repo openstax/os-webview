@@ -21,8 +21,6 @@ function handlePartnersData(data) {
     for (let page of data.pages) {
         let name = page.heading;
 
-        data.pages.sort((a, b) => a.name < b.name ? a : b);
-
         partnersData[name] = {
             name,
             blurb: page.long_description,
@@ -120,7 +118,7 @@ export default class Partners extends LoadingView {
         }
         this.otherPromises.push(new Promise((resolve) => {
             partnersDataPromise.then(() => {
-                for (let name of Object.keys(partnersData).sort()) {
+                for (let name of Object.keys(partnersData).sort($.lowerCaseCompare)) {
                     this.regions.icons.append(new Icon(partnersData[name], this.stateModel));
                     this.regions.blurbs.append(new Partner(partnersData[name], this.stateModel));
                 }
