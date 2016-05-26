@@ -25,7 +25,7 @@ function shuffle(array) {
 const banners = shuffle([
     // 'astronomy',
     'biology',
-    // 'chemistry',
+    'chemistry',
     'us-history'
 ]);
 
