@@ -50,6 +50,9 @@ class App {
             pushState: true
         });
 
+        // Track initial page loads
+        analytics.sendPageview();
+
         document.addEventListener('click', (e) => {
             let el = linkHelper.validUrlClick(e);
 
