@@ -1,7 +1,6 @@
 language: node_js
 node_js:
-  - '5.5'
-compiler: clang-3.6
+  - '5.11'
 before_install:
   - gem install scss_lint
   - npm install -g gulpjs/gulp-cli#4.0 jspm
@@ -11,13 +10,11 @@ notifications:
   email: false
 env:
   global:
-    - CXX=clang-3.6
+    - CXX=g++-4.8
     - secure: lnMyrNsQAq+1sSWuKwe/ydj04sYndKvGVBtk6ongXsNvyZBCV3uQsjZwfQfzRpUqHJscBh6ttwf/sLPZS3Nmh4GmooKLvtovXpvOr3EWAUCslBqy01/Yhv7ZeHtDRq9Q+kPqnwInC0sP2v7kN+DVnEdV5aK9KXISOzj0i6SRPBaZlQmW2rtUsZdJT9/0xlMt5D0DKhXCtG360FrunyNTQLIKTU+cZ+klfYkIU8u+66Byz0pdbSlIxX63y4dzJR5pRA6Cd55OvFyMJfew4ZIP0hXY3sc4n+fHu26O72kA+QK34gx0uE8KEn92XBkLXx8kGJVxNO+3YG/TLs3IHol+qv2Fu2qjGcQ7wHBzSuCsUe6+sEB5ruujCe9nkonQwpOut5rGC4G0ahRVOYeBs4Y0KCt7iX5GXLDYryx75xXaDyTbUnFjHgNEMpCyKAgmoJFghUt2JByT2Yy3Nr4Wxi0kXNYU+A4fjlDcuGKvU6QCYfzxYOvGjwL+b/QAYzwU8cxR0iwVJJeQ1NfCdOVm3t5nUmVPUVJY1kdPjtPNS+zlbIn+dBDIj7ybyE7zfS2KuVNlNmQURxZUfMd0xPL+eS8bsW9fUdUqXfrwhLoJpKnJIGJnPlYbh6K5htP6zHuXDDKVUh9OQC/b0WtxRAdmSZt+2coyght3Qwr0CgytP0rZerk=
 addons:
   apt:
     sources:
-      - llvm-toolchain-precise-3.6
       - ubuntu-toolchain-r-test
     packages:
-      - clang-3.6
       - g++-4.8
