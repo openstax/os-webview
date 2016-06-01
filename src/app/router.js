@@ -30,6 +30,7 @@ const PAGES = [
     'license',
     'news',
     'renewal',
+    'mass-renewal',
     'subjects'
 ];
 
