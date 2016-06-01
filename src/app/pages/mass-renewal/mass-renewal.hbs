@@ -31,6 +31,8 @@
                     <span>Last name</span>
                     <input name="last_name" type="text" required />
                 </label>
+            </div>
+            <div class="col">
                 <label>
                     <span>School name</span>
                     <input name="company" type="text" required />
@@ -39,6 +41,7 @@
                     <span>Email address</span>
                     <input name="email" pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text" required />
                 </label>
+            </div>
         </div>
     </div>
 
@@ -106,7 +109,7 @@
         </div>
 
         <div class="col">
-            <!-- Doesn't look like Salesforce can store this information
+            {{!-- Doesn't look like Salesforce can store this information
             <p>
                 Do you know of any other instructors using OpenStax books?
             </p>
@@ -128,7 +131,7 @@
                     <input name="adoption[hint_phone_number]" type="text">
                 </label>
             </fieldset>
-            -->
+            --}}
             <label class="question">
                 Are you interested in having your OpenStax experience featured
                 on our website, social media, and/or emails?
