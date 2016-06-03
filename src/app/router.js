@@ -9,7 +9,9 @@ const PAGES = [
     'adopters',
     'adoption',
     'adoption-confirmation',
+    'article',
     'partners',
+    'blog',
     'books',
     'comp-copy',
     'comp-copy-confirmation',
@@ -28,7 +30,6 @@ const PAGES = [
     'impact',
     'k-12',
     'license',
-    'news',
     'renewal',
     'mass-renewal',
     'subjects'
@@ -61,6 +62,10 @@ class Router extends Backbone.Router {
 
         this.route(/details\/.*/, 'details', () => {
             shell.load('details');
+        });
+
+        this.route(/blog\/.+/, 'article', () => {
+            shell.load('article');
         });
 
         PAGES.forEach(this.standardRoute, this);
