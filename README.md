@@ -92,31 +92,25 @@ gem install bundler
 gem install scss_lint
 ```
 
-### Install Gulp
+### Install nvm
 
 ```bash
-npm install -g gulpjs/gulp-cli#4.0
+# From https://github.com/creationix/nvm
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.1/install.sh | bash
 ```
-
-Note: On OS X, you must have Xcode 7.1+ installed along with the associated Command Line Tools (Xcode will prompt you to install these when you launch it if they are not installed).
-
-### Install JSPM
-
-```bash
-npm install -g jspm
-```
-
-Note: If you have not previously used JSPM, you may be prompted to set up your GitHub credentials.  It is recommended you do this in order to prevent being rate limited by GitHub.  You can [generate an access token](https://github.com/settings/tokens) in your GitHub account settings for JSPM, rather than providng your login credentials.
-
-If you are not prompted, you can manually bring it up with `jspm registry config github`.
 
 ### Install OpenStax Webview
 
 ```bash
 git clone git@github.com:openstax/os-webview.git
 cd os-webview
+nvm use         # uses the correct version of node
 npm install
 ```
+
+**Note:** If you have not previously used JSPM, you may be prompted to set up your GitHub credentials.  It is recommended you do this in order to prevent being rate limited by GitHub.  You can [generate an access token](https://github.com/settings/tokens) in your GitHub account settings for JSPM, rather than providng your login credentials.
+
+If you are not prompted, you can manually bring it up with `jspm registry config github`.
 
 ## Development
 
