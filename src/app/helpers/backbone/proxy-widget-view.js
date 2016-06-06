@@ -16,11 +16,16 @@ class ProxyWidgetView extends BaseView {
         }
     }
 
+    // Override in form
+    // Should set/clear invalid class on items that have custom validation
+    doValidChecks() {}
+
     failIfInvalid(event) {
-        this.el.querySelector('form').classList.add('has-been-submitted');
+        this.formEl.classList.add('has-been-submitted');
         for (let widget of this.selectWidgets) {
             widget.doValidChecks();
         }
+        this.doValidChecks();
         let invalid = this.el.querySelectorAll('.invalid,input:invalid');
 
         if (invalid.length > 0) {
@@ -38,6 +43,7 @@ class ProxyWidgetView extends BaseView {
     }
 
     onRender() {
+        this.formEl = this.el.querySelector('input').form;
         this.selectWidgets = [];
         for (let ms of this.el.querySelectorAll('select[multiple]')) {
             let widget = new TagMultiSelect();
@@ -53,7 +59,7 @@ class ProxyWidgetView extends BaseView {
             this.selectWidgets.push(widget);
             widget.originalSelect = ss;
         }
-        this.attachListenerTo(this.el.querySelector('[type=submit]'), 'click', this.failIfInvalid.bind(this));
+        this.attachListenerTo(this.formEl.querySelector('[type=submit]'), 'click', this.failIfInvalid.bind(this));
     }
 }
 

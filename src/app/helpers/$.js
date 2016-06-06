@@ -106,4 +106,20 @@ $.hashClick = (event, options = {doHistory: true}) => {
     event.preventDefault();
 };
 
+const invalidEmailPatterns = [
+    /@(aol|gmail|hotmail|yahoo).com/i
+];
+
+$.testInstitutionalEmail = (element) => {
+    let ieValue = element.value;
+
+    for (let re of invalidEmailPatterns) {
+        if (re.test(ieValue)) {
+            return false;
+        }
+    }
+
+    return true;
+};
+
 export default $;

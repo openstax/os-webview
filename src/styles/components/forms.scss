@@ -134,12 +134,12 @@ form {
         }
     }
 
-    > .validation-message {
+    .validation-message {
         display: none;
     }
 
-    &.invalid > .validation-message {
-        background-color: color(neutral-lightest);
+    .invalid > .validation-message {
+        background-color: none;
         color: color(danger);
         display: block;
     }

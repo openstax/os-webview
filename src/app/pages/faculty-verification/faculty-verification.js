@@ -1,6 +1,7 @@
 import ProxyWidgetView from '~/helpers/backbone/proxy-widget-view';
 import userModel from '~/models/usermodel';
 import salesforceModel from '~/models/salesforce-model';
+import $ from '~/helpers/$';
 import bookTitles from '~/helpers/book-titles';
 import salesforce from '~/helpers/salesforce';
 import {on, props} from '~/helpers/backbone/decorators';
@@ -23,6 +24,19 @@ export default class FacultyVerificationForm extends ProxyWidgetView {
 
         if (varName) {
             salesforceModel.set(varName, event.target.value);
+        }
+    }
+
+    doValidChecks() {
+        let institutionalEmailInput = this.el.querySelector('[name="00NU0000005oVQV"]'),
+            isValid = $.testInstitutionalEmail(institutionalEmailInput);
+
+        if (isValid) {
+            institutionalEmailInput.setCustomValidity('');
+            institutionalEmailInput.parentNode.classList.remove('invalid');
+        } else {
+            institutionalEmailInput.setCustomValidity('Cannot be generic');
+            institutionalEmailInput.parentNode.classList.add('invalid');
         }
     }
 
