@@ -2,19 +2,14 @@ import Backbone from 'backbone';
 import settings from 'settings';
 import linkHelper from '~/helpers/link';
 
+const RELATIVE_TO_ROOT = /^\//;
+const SETUP_GA = Symbol();
+
 class Analytics {
 
     constructor() {
-        this.setupGA();
+        this[SETUP_GA]();
         this.setupGTM();
-    }
-
-    setupGA() {
-        window.GoogleAnalyticsObject = 'ga';
-        window.ga = {
-            q: [['create', settings.analyticsID, 'auto']],
-            l: Date.now()
-        };
     }
 
     setupGTM() {
@@ -41,17 +36,15 @@ class Analytics {
     }
 
     send(fields) {
-        System.import('~/helpers/google-analytics').then((m) => {
-            let ga = m.ga;
-
-            ga('send', fields);
+        System.import('ga').then(() => {
+            window.ga('send', fields);
         });
     }
 
     sendPageview(page) {
         let frag = page || Backbone.history.fragment;
 
-        if (!(/^\//).test(frag)) {
+        if (!(RELATIVE_TO_ROOT).test(frag)) {
             frag = `/${frag}`;
         }
 
@@ -75,6 +68,26 @@ class Analytics {
                 eventAction: 'download',
                 eventLabel: href
             });
+        }
+
+        if (linkHelper.isExternal(href)) {
+            this.sendEvent({
+                eventCategory: 'External',
+                eventAction: 'open',
+                eventLabel: href
+            });
+        }
+    }
+
+    [SETUP_GA]() {
+        if (typeof window.ga !== 'function') {
+            window.GoogleAnalyticsObject = 'ga';
+            window.ga = {
+                q: [['create', settings.analyticsID, 'auto']],
+                l: Date.now()
+            };
+        } else {
+            window.ga('create', settings.analyticsID, 'auto');
         }
     }
 
