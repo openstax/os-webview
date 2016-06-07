@@ -7,8 +7,10 @@ import analytics from '~/helpers/analytics';
 
 const EXTERNAL = /^((f|ht)tps?:)?\/\//;
 
-if ('@ENV@' === 'production' && 'serviceWorker' in navigator) {
+// NOTE: precaching is disabled. uglify will remove this code block since it's unreachable
+if (false && '@ENV@' === 'production' && 'serviceWorker' in navigator) {
     /* eslint no-console: 0 */
+    /* eslint no-constant-condition: 0 */ // NOTE: Remove if enabling precaching
     navigator.serviceWorker.register('sw.js').then((registration) => {
         if (typeof registration.update === 'function') {
             registration.update();
