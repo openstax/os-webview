@@ -12,11 +12,13 @@ System.config({
     "~/*": "app/*",
     "settings": "settings",
     "github:*": "jspm_packages/github/*",
-    "npm:*": "jspm_packages/npm/*"
+    "npm:*": "jspm_packages/npm/*",
+    "ga": "https://www.google-analytics.com/analytics.js"
   },
 
   meta: {
-    "//www.google-analytics.com/analytics.js": {
+    "ga": {
+      "scriptLoad": true,
       "exports": "ga",
       "format": "global"
     }
