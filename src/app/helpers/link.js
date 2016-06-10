@@ -1,3 +1,4 @@
+const EXTERNAL = /^((f|ht)tps?:)?\/\//;
 const MAILTO = /^mailto:(.+)/;
 const PDF = /.pdf$/;
 
@@ -34,7 +35,12 @@ function isPDF(url) {
     return PDF.test(url);
 }
 
+function isExternal(href) {
+    return EXTERNAL.test(href);
+}
+
 export default {
+    isExternal: isExternal,
     validUrlClick: validUrlClick,
     isPDF: isPDF
 };

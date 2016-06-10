@@ -5,8 +5,6 @@ import router from '~/router';
 import appView from '~/components/shell/shell';
 import analytics from '~/helpers/analytics';
 
-const EXTERNAL = /^((f|ht)tps?:)?\/\//;
-
 // NOTE: precaching is disabled. uglify will remove this code block since it's unreachable
 if (false && '@ENV@' === 'production' && 'serviceWorker' in navigator) {
     /* eslint no-console: 0 */
@@ -66,7 +64,7 @@ class App {
 
             e.preventDefault();
 
-            if (EXTERNAL.test(href)) {
+            if (linkHelper.isExternal(href)) {
                 if (el.getAttribute('data-local') === 'true') {
                     document.location.href = href;
                 } else {
