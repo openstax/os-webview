@@ -289,7 +289,7 @@ export default class Details extends LoadingView {
                             seniorRegion: this.regions.seniorAllAuthors,
                             seniorContainer: document.getElementById('senior-all-authors'),
                             nonseniorRegion: this.regions.allAuthors,
-                            nonseniorContainer: document.getElementById('all-authors')
+                            nonseniorContainer: document.getElementById('nonsenior-all-authors')
                         });
 
                         this.el.querySelector('.book-cover').src = th.coverUrl;
