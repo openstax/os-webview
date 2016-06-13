@@ -41,15 +41,20 @@ export default class FacultyVerificationForm extends ProxyWidgetView {
     }
 
     onRender() {
-        this.el.classList.add('faculty-verification-form');
+        this.el.classList.add('faculty-verification-form', 'hidden');
         salesforce.populateAdoptionStatusOptions(this.el, ['adopted', 'recommend', 'no'], true);
-        super.onRender();
         userModel.fetch().then((data) => {
             let userInfo = data[0];
 
-            if (userInfo) {
+            if (userInfo && userInfo.username) {
+                super.onRender();
+                this.el.classList.remove('hidden');
                 this.el.querySelector('[name=user_id]').value = userInfo.username;
                 this.el.querySelector('[name=OS_Accounts_ID__c]').value = userInfo.accounts_id;
+            } else {
+                let loginLink = document.querySelector('.nav-menu-item.login > a');
+
+                loginLink.click();
             }
         });
         salesforceModel.prefill(this.el);
