@@ -3,7 +3,7 @@ node_js:
   - '5.11'
 before_install:
   - gem install scss_lint
-  - npm install -g gulpjs/gulp-cli#4.0 jspm
+  - npm install -g gulp-cli jspm
   - jspm config registries.github.auth $JSPM_GITHUB_AUTH_TOKEN
 sudo: false
 notifications:
