@@ -29,6 +29,8 @@ class ProxyWidgetView extends BaseView {
         let invalid = this.el.querySelectorAll('.invalid,input:invalid');
 
         if (invalid.length > 0) {
+            /* eslint no-console: 0 */
+            console.debug('Invalid items:', invalid);
             event.preventDefault();
         }
     }

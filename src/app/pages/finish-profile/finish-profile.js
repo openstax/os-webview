@@ -53,12 +53,14 @@ export default class NewAccountForm extends ProxyWidgetView {
         userModel.fetch().then((data) => {
             let userInfo = data[0];
 
-            if (userInfo) {
+            if (userInfo && userInfo.username && userInfo.accounts_id) {
                 this.el.querySelector('[name=first_name]').value = userInfo.first_name;
                 this.el.querySelector('[name=last_name]').value = userInfo.last_name;
                 this.el.querySelector('[name=user_id]').value = userInfo.username;
                 this.el.querySelector('[name=OS_Accounts_ID__c]').value = userInfo.accounts_id;
             } else {
+                /* eslint no-console: 0 */
+                console.debug('User info:', userInfo);
                 this.el.querySelector('#problem-message').textContent = 'Could not load user information';
                 this.el.querySelector('[type="submit"]').disabled = true;
             }
