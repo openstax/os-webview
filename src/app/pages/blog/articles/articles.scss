@@ -1,0 +1,83 @@
+@import 'variables';
+@import 'mixins';
+
+@mixin tablet {
+    @media (min-width: #{breakpoints(phone) + 1}) {
+        @content;
+    }
+}
+
+.search {
+    background-color: lighten(color(neutral-lighter), 8%);
+    margin: 0 -1.5rem 3rem;
+    padding: 3rem 1.5rem;
+    width: calc(100% + 3rem);
+
+    @include desktop {
+        width: 80%;
+        margin: 0 auto;
+        padding: 0 0 6rem;
+
+    }
+
+    h2 {
+        font-size: 2.4rem;
+        letter-spacing: -0.1;
+        margin-top: 0;
+        margin-bottom: 3rem;
+
+        @include desktop {
+            text-align: center;
+        }
+    }
+
+    form {
+        display: flex;
+    }
+
+    input {
+        flex-basis: 80%;
+        border: 0;
+        font-weight: 100;
+        font-style: italic;
+
+        @include desktop {
+            flex-basis: 90%;
+            font-size: 2.1rem;
+        }
+    }
+
+    button {
+        background-color: color(orange);
+        flex-basis: 20%;
+        margin: 0;
+
+        @include desktop {
+            flex-basis: 10%;
+        }
+    }
+}
+
+.articles {
+    display: flex;
+    flex-flow: column nowrap;
+
+    @include desktop {
+        flex-flow: row nowrap;
+        background-color: lighten(color(neutral-lighter), 8%);
+        padding: 8rem 0;
+
+    }
+
+    .boxed {
+        @include desktop {
+            padding: 0;
+            flex-flow: row wrap;
+        }
+    }
+
+    .container {
+        display: flex;
+        flex-flow: row wrap;
+    }
+}
