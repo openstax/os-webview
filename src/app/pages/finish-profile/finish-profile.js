@@ -34,10 +34,12 @@ export default class NewAccountForm extends ProxyWidgetView {
             leadSourceField = this.el.querySelector('[name="lead_source"]');
 
         if (show)  {
+            this.facultySection.setRequiredness(true);
             this.regions.facultySection.show(this.facultySection);
             this.el.querySelector('form').classList.add('faculty');
             retUrl.value = `${window.location.origin}/finished-verify`;
         } else {
+            this.facultySection.setRequiredness(false);
             this.facultySection.remove();
             this.el.querySelector('form').classList.remove('faculty');
             retUrl.value = `${window.location.origin}/finished-no-verify`;
@@ -59,8 +61,6 @@ export default class NewAccountForm extends ProxyWidgetView {
                 this.el.querySelector('[name=user_id]').value = userInfo.username;
                 this.el.querySelector('[name=OS_Accounts_ID__c]').value = userInfo.accounts_id;
             } else {
-                /* eslint no-console: 0 */
-                console.debug('User info:', userInfo);
                 this.el.querySelector('#problem-message').textContent = 'Could not load user information';
                 this.el.querySelector('[type="submit"]').disabled = true;
             }
