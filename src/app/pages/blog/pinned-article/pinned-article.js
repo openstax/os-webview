@@ -1,10 +1,14 @@
 import BaseView from '~/helpers/backbone/view';
 import {props} from '~/helpers/backbone/decorators';
 import {template} from './pinned-article.hbs';
+import bodyUnits from '~/components/body-units/body-units';
 
 @props({
     template: template,
-    css: '/app/pages/blog/article/article.css'
+    css: '/app/pages/blog/article/article.css',
+    regions: {
+        body: '.body'
+    }
 })
 
 export default class PinnedArticle extends BaseView {
@@ -14,7 +18,10 @@ export default class PinnedArticle extends BaseView {
 
         this.templateHelpers = {
             coverUrl: data.article_image || 'http://placehold.it/370x240',
-            articleSlug: data.slug
+            articleSlug: data.slug,
+            title: data.title,
+            author: data.author,
+            subheading: data.subheading
         };
 
         this.data = data;
@@ -22,17 +29,12 @@ export default class PinnedArticle extends BaseView {
 
     onRender() {
         this.el.classList.add('article');
-        let populateDataIdItems = (data) => {
-            for (let el of this.el.querySelectorAll('[data-id]')) {
-                let key = el.dataset.id;
 
-                if (key in data) {
-                    el.innerHTML = data[key];
-                }
-            }
-        };
+        for (let bodyUnit of this.data.body) {
+            let View = bodyUnits[bodyUnit.type];
 
-        populateDataIdItems(this.data);
+            this.regions.body.append(new View(bodyUnit.value));
+        }
 
         let d = new Date(this.data.date).toDateString().split(' ');
         let formatDate = `${d[1]} ${d[2]}, ${d[3]}`;

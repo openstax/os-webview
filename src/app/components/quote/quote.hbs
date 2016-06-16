@@ -1,6 +1,10 @@
-{{#if hasImage}}<div class="image"></div>{{/if}}
+{{#if imageUrl}}<div class="image" style="background-image: url({{imageUrl}}){{#if height}}; height:{{height}}px{{/if}}"></div>{{/if}}
 <div class="quote">
-    <blockquote>{{{quoteHtml}}}</blockquote>
+    <blockquote>{{{quoteHtml}}}
+        {{#if attribution}}
+        <div class="attribution">&mdash; {{{attribution}}}</div>
+        {{/if}}
+    </blockquote>
     {{#if linkText}}
     <a class="btn btn-orange" href="{{linkUrl}}">{{linkText}}</a>
     {{/if}}

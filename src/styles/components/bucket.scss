@@ -1,5 +1,9 @@
 @import 'mixins';
 
+.quote-bucket .image {
+    background-repeat: no-repeat;
+}
+
 .bucket {
     display: flex;
 
