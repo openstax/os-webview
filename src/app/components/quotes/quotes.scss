@@ -62,7 +62,6 @@ $phone-up: #{breakpoints(phone) + 1};
 
             > .image {
                 order: 2;
-                background-image: url('/images/home/quotes/quote-left.jpg');
             }
 
             > .quote {
@@ -87,8 +86,9 @@ $phone-up: #{breakpoints(phone) + 1};
 
             .image {
                 order: 1;
-                background-image: url('/images/home/quotes/quote-right.jpg');
                 background-position: 62%;
+                background-repeat: no-repeat;
+                background-size: contain;
             }
 
             > .quote {

@@ -6,6 +6,11 @@ $breakpoint-1: 908px;
 $hero-break-width: 880px;
 
 .higher-ed-page {
+
+    &.hidden {
+        display: none;
+    }
+
     .more {
         font-weight: bold;
         text-transform: uppercase;

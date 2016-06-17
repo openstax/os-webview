@@ -4,6 +4,7 @@ import $ from '~/helpers/$';
 import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './higher-ed.hbs';
 import PageModel from '~/models/pagemodel';
+import ImageModel from '~/models/imagemodel';
 import ProductsBoxes from '~/components/products-boxes/products-boxes';
 import Quotes from '~/components/quotes/quotes';
 import Buckets from '~/components/buckets/buckets';
@@ -62,10 +63,11 @@ export default class HigherEd extends LoadingView {
         }
 
         if (qbData.image) {
-            result.hasImage = true;
-            result.imageUrl = qbData.image.meta.detail_url;
+            result.imagePromise = new ImageModel({id: qbData.image.id}).fetch()
+            .then((imageData) => {
+                result.imageUrl = imageData.file;
+            });
         } else {
-            result.hasImage = false;
             result.orientation = 'full';
         }
 
@@ -104,7 +106,13 @@ export default class HigherEd extends LoadingView {
 
             let quoteBoxSpecs = quoteBoxData.filter((obj) => obj.content).map(HigherEd.quoteBoxHelper);
 
-            this.regions.quotes.show(new Quotes(quoteBoxSpecs));
+            let promises = quoteBoxSpecs
+            .filter((spec) => spec.imagePromise)
+            .map((spec) => spec.imagePromise);
+
+            Promise.all(promises).then(() => {
+                this.regions.quotes.show(new Quotes(quoteBoxSpecs));
+            });
         });
         this.otherPromises.push(detailPromise);
         this.regions.products.show(new ProductsBoxes({

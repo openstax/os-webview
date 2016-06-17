@@ -3,6 +3,7 @@ import {template as strips} from '~/components/strips/strips.hbs';
 import {props} from '~/helpers/backbone/decorators';
 import {template} from './article.hbs';
 import Articles from '../blog/articles/articles';
+import bodyUnits from '~/components/body-units/body-units';
 import PageModel from '~/models/pagemodel';
 
 @props({
@@ -10,7 +11,8 @@ import PageModel from '~/models/pagemodel';
     css: '/app/pages/article/article.css',
     templateHelpers: {strips},
     regions: {
-        articles: '.articles'
+        articles: '.articles',
+        body: '.body'
     }
 })
 export default class Article extends LoadingView {
@@ -25,7 +27,16 @@ export default class Article extends LoadingView {
         document.body.classList.add('no-scroll');
         this.el.querySelector('.article.page').classList.add('hidden');
 
-        let slug = window.location.pathname.replace(/.*\//, '');
+        let slug = window.location.pathname.replace(/.*\//, ''),
+            doDataIdSubstitutions = (data, elements) => {
+                for (let el of elements) {
+                    let key = el.dataset.id;
+
+                    if (key in data) {
+                        el.innerHTML = data[key];
+                    }
+                }
+            };
 
         new PageModel().fetch({
             data: {
@@ -35,12 +46,12 @@ export default class Article extends LoadingView {
         }).then((data) => {
             new PageModel().fetch({url: data.pages[0].meta.detail_url}).then((articleData) => {
                 document.title = `${articleData.title} - Openstax`;
-                for (let el of this.el.querySelectorAll('[data-id]')) {
-                    let key = el.dataset.id;
+                doDataIdSubstitutions(articleData, this.el.querySelectorAll('[data-id]'));
 
-                    if (key in articleData) {
-                        el.innerHTML = articleData[key];
-                    }
+                for (let bodyUnit of articleData.body) {
+                    let View = bodyUnits[bodyUnit.type];
+
+                    this.regions.body.append(new View(bodyUnit.value));
                 }
 
                 let articleImage = articleData.article_image || 'http://placehold.it/1400x600';
