@@ -40,6 +40,19 @@ export default class FacultyVerificationForm extends ProxyWidgetView {
         }
     }
 
+    disableForm(explanation) {
+        let explanationEl = this.el.querySelector('.subhead p'),
+            submitEl = this.el.querySelector('.cta [type="submit"]'),
+            inputEls = this.el.querySelectorAll('form .col');
+
+        submitEl.disabled = true;
+        for (let el of inputEls) {
+            el.classList.add('hidden');
+        }
+        explanationEl.classList.remove('hidden');
+        explanationEl.textContent = explanation;
+    }
+
     onRender() {
         this.el.classList.add('faculty-verification-form', 'hidden');
         salesforce.populateAdoptionStatusOptions(this.el, ['adopted', 'recommend', 'no'], true);
@@ -51,6 +64,9 @@ export default class FacultyVerificationForm extends ProxyWidgetView {
                 this.el.classList.remove('hidden');
                 this.el.querySelector('[name=user_id]').value = userInfo.username;
                 this.el.querySelector('[name=OS_Accounts_ID__c]').value = userInfo.accounts_id;
+                if (userInfo.pending_verification) {
+                    this.disableForm('You already have a verification request pending.');
+                }
             } else {
                 let loginLink = document.querySelector('.nav-menu-item.login > a');
 

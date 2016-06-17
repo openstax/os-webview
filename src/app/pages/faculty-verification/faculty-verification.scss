@@ -1,10 +1,25 @@
 @import 'variables';
 
 .faculty-verification-form {
+    .col.hidden {
+        display: none;
+    }
 
     .cta {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+
         @media (min-width: 641px) {
             margin-top: 12rem;
+        }
+
+        [type="submit"] {
+            float: none;
+
+            &:disabled {
+                background-color: color(neutral-light);
+            }
         }
     }
 }
