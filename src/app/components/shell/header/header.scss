@@ -345,7 +345,9 @@ $transition: 0.3s;
                 fill: color(cyan);
 
                 @include desktop {
-                    right: -2rem;
+                    right: -1.5rem;
+                    top: 0;
+                    bottom: auto;
                     fill: color(neutral-medium);
 
                     @at-root .transparent#{&} {
