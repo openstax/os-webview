@@ -36,8 +36,8 @@ export default class PinnedArticle extends BaseView {
             this.regions.body.append(new View(bodyUnit.value));
         }
 
-        let d = new Date(this.data.date).toDateString().split(' ');
-        let formatDate = `${d[1]} ${d[2]}, ${d[3]}`;
+        let d = new Date(this.data.date).toUTCString().split(' ');
+        let formatDate = `${d[2]} ${d[1]}, ${d[3]}`;
 
         for (let el of this.el.querySelectorAll('[data-id="date"]')) {
             el.innerHTML = formatDate;

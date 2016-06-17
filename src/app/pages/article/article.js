@@ -58,8 +58,8 @@ export default class Article extends LoadingView {
 
                 this.el.querySelector('.hero').setAttribute('style', `background-image:url(${articleImage})`);
 
-                let d = new Date(articleData.date).toDateString().split(' ');
-                let formatDate = `${d[1]} ${d[2]}, ${d[3]}`;
+                let d = new Date(articleData.date).toUTCString().split(' ');
+                let formatDate = `${d[2]} ${d[1]}, ${d[3]}`;
 
                 this.el.querySelector('[data-id="date"]').innerHTML = formatDate;
                 let newTags = [];
