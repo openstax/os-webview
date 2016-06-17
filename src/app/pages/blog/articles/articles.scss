@@ -8,15 +8,15 @@
 }
 
 .search {
-    background-color: lighten(color(neutral-lighter), 8%);
-    margin: 0 -1.5rem 3rem;
-    padding: 3rem 1.5rem;
-    width: calc(100% + 3rem);
+    //background-color: lighten(color(neutral-lighter), 8%);
+    //margin: 0 -1.5rem 3rem;
+    //padding: 3rem 1.5rem;
+    //width: calc(100% + 3rem);
 
     @include desktop {
         width: 80%;
         margin: 0 auto;
-        padding: 0 0 6rem;
+        //padding: 0 0 6rem;
 
     }
 
@@ -24,7 +24,7 @@
         font-size: 2.4rem;
         letter-spacing: -0.1;
         margin-top: 0;
-        margin-bottom: 3rem;
+        //margin-bottom: 3rem;
 
         @include desktop {
             text-align: center;
