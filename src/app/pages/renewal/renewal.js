@@ -2,6 +2,7 @@ import ProxyWidgetView from '~/helpers/backbone/proxy-widget-view';
 import salesforceModel from '~/models/salesforce-model';
 import {published as titles} from '~/helpers/book-titles';
 import {on, props} from '~/helpers/backbone/decorators';
+import partners from '~/helpers/partners';
 import {template} from './renewal.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
 
@@ -10,6 +11,7 @@ import {template as strips} from '~/components/strips/strips.hbs';
     templateHelpers: {
         titles,
         urlOrigin: window.location.origin,
+        partners,
         strips
     }
 })

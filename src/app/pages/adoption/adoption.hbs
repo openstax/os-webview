@@ -87,20 +87,9 @@
                 <span class="select-instructions">You may select more than one.</span>
                 <select multiple name="00NU0000005VmTu">
                      <option value="None" disabled selected>None</option>
-                     <option value="Cerego">Cerego</option>
-                     <option value="CogBooks">CogBooks</option>
-                     <option value="Courseweaver">Courseweaver</option>
-                     <option value="eMath">eMath</option>
-                     <option value="Expert TA">Expert TA</option>
-                     <option value="Junction">Junction</option>
-                     <option value="Lrnr">Lrnr</option>
-                     <option value="Lumen">Lumen</option>
-                     <option value="panOpen">panOpen</option>
-                     <option value="Sapling Learning">Sapling Learning</option>
-                     <option value="SimBio">SimBio</option>
-                     <option value="WebAssign">WebAssign</option>
-                     <option value="Wiley Plus">Wiley Plus</option>
-                     <option value="XYZ Homework">XYZ Homework</option>
+                     {{#each partners}}
+                        <option value="{{this}}">{{this}}</option>
+                     {{/each}}
                      <option value="" data-other="other-partner">Other (specify below)</option>
                 </select>
             </label>
