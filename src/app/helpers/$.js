@@ -1,15 +1,5 @@
 let $ = {};
 
-$.setAttr = (node, name, value) => {
-    if (value === false || value === null) {
-        node.removeAttribute(name);
-    } else {
-        node.setAttribute(name, value === true ? '' : value);
-    }
-};
-
-$.isIE11 = () => !(window.ActiveXObject) && 'ActiveXObject' in window;
-
 $.isTouchDevice = () => (
     ('ontouchstart' in window) ||
     (navigator.MaxTouchPoints > 0) ||

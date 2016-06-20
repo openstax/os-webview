@@ -3,6 +3,7 @@ import salesforceModel from '~/models/salesforce-model';
 import {published as titles} from '~/helpers/book-titles';
 import salesforce from '~/helpers/salesforce';
 import {on, props} from '~/helpers/backbone/decorators';
+import partners from '~/helpers/partners';
 import {template} from './adoption.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
 
@@ -12,6 +13,7 @@ import {template as strips} from '~/components/strips/strips.hbs';
     templateHelpers: {
         titles,
         urlOrigin: window.location.origin,
+        partners,
         strips
     }
 })

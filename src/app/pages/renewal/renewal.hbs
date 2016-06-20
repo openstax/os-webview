@@ -85,17 +85,9 @@
             <label>Which partner resources are you using with your book?
                 <select multiple name="00NU0000005VmTu">
                      <option value="None" disabled selected>None</option>
-                     <option value="Cerego">Cerego</option>
-                     <option value="Courseweaver">Courseweaver</option>
-                     <option value="eMath">eMath</option>
-                     <option value="Expert TA">Expert TA</option>
-                     <option value="Lrnr">Lrnr</option>
-                     <option value="panOpen">panOpen</option>
-                     <option value="Sapling Learning">Sapling Learning</option>
-                     <option value="SimBio">SimBio</option>
-                     <option value="WebAssign">WebAssign</option>
-                     <option value="Wiley Plus">Wiley Plus</option>
-                     <option value="XYZ Homework">XYZ Homework</option>
+                     {{#each partners}}
+                        <option value="{{this}}">{{this}}</option>
+                     {{/each}}
                      <option value="" data-other="other-partner">Other (specify below)</option>
                 </select>
             </label>
@@ -140,7 +132,7 @@
                 </select>
             </label>
 
-            <!-- Doesn't look like Salesforce can store this information
+            {{!-- Doesn't look like Salesforce can store this information
             <p>
                 Do you know of any other instructors using OpenStax College books? If so, would
                 you be willing to provide their contact information below?
@@ -163,7 +155,7 @@
                     <input name="adoption[hint_phone_number]" type="text">
                 </label>
             </fieldset>
-            -->
+            --}}
 
             <label>
                 Any feedback you'd like to share with us?
