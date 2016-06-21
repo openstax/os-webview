@@ -3,6 +3,12 @@
 
 $phone-up: #{breakpoints(phone) + 1};
 
+@mixin desktop {
+    @media (min-width: 1000px) {
+        @content;
+    }
+}
+
 .quotes {
     align-items: stretch;
     display: flex;
@@ -10,8 +16,10 @@ $phone-up: #{breakpoints(phone) + 1};
     justify-content: space-between;
     margin: 0 auto;
     padding: 1.5rem 0;
+    position: relative;
 
     @include desktop {
+        flex-wrap: nowrap;
         padding: 8rem 0;
     }
 
@@ -21,15 +29,20 @@ $phone-up: #{breakpoints(phone) + 1};
         display: flex;
         flex-flow: column nowrap;
         flex: 0 0 100%;
-        min-height: 20rem;
         margin-bottom: 1.5rem;
+        min-height: 20rem;
 
         @include desktop {
             margin-bottom: 0;
+            min-width: 31rem;
         }
 
         &:last-child {
             margin-bottom: 0;
+        }
+
+        .cyan {
+            background-color: color(cyan);
         }
 
         @media (min-width: $phone-up) {
@@ -39,14 +52,6 @@ $phone-up: #{breakpoints(phone) + 1};
             div:first-child:nth-last-child(2) ~ div {
                 max-width: 50%; // IE fix
             }
-        }
-
-        @media (min-width: $boxed-width) {
-            flex-basis: 57rem;
-        }
-
-        > .quote {
-            display: block;
         }
 
         &.left {
@@ -80,15 +85,9 @@ $phone-up: #{breakpoints(phone) + 1};
 
         &.right {
 
-            @include desktop {
-                flex-basis: calc(13.125rem + 37.5%);
-            }
-
             .image {
                 order: 1;
                 background-position: 62%;
-                background-repeat: no-repeat;
-                background-size: cover;
             }
 
             > .quote {
@@ -119,10 +118,6 @@ $phone-up: #{breakpoints(phone) + 1};
             color: color(neutral-lightest);
             font-weight: 400;
 
-            @include desktop {
-                flex-basis: calc(58.75% - 11.7375rem);
-            }
-
             blockquote {
                 @include constrained-variable-text(2.2, 0.2);
 
@@ -142,8 +137,25 @@ $phone-up: #{breakpoints(phone) + 1};
         }
     }
 
+    &.boxes-2 {
+        > .quote-bucket {
+            @include desktop {
+                flex-basis: 48%;
+            }
+        }
+    }
+
+    &.boxes-3 {
+        > .quote-bucket {
+            @include desktop {
+                flex-basis: 32%;
+            }
+        }
+    }
+
     .image {
         background-position: center center;
+        background-repeat: no-repeat;
         background-size: cover;
         display: block;
         flex: 1 1 auto;
@@ -158,15 +170,20 @@ $phone-up: #{breakpoints(phone) + 1};
     }
 
     .quote {
-        flex: 1 1 auto;
-        padding: 2rem;
-        position: relative;
+        align-items: flex-start;
         display: flex;
         flex-flow: column nowrap;
+        flex: 1 1 auto;
         justify-content: space-between;
+        padding: 2rem;
+        position: relative;
 
         @media (min-width: $phone-up) {
             flex: 1 1 50%;
+        }
+
+        > * {
+            max-width: 100%;
         }
 
         blockquote {
@@ -175,16 +192,15 @@ $phone-up: #{breakpoints(phone) + 1};
             margin: 1rem 0;
         }
 
-        .btn {
-            margin-top: 1.5rem;
-            width: 100%;
+        .overlay {
+            display: none;
 
             @media (min-width: $phone-up) {
-                width: auto;
-            }
-
-            &:hover {
-                transform: scale3d(1, 1, 1);
+                display: block;
+                position: absolute;
+                bottom: 0;
+                right: 5%;
+                height: calc(18% + 5rem);
             }
         }
     }

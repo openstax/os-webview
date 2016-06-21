@@ -21,5 +21,6 @@ export default class Quotes extends BaseView {
             this.regions.quotes.append(new Quote(templateHelper));
         }
         this.el.classList.add('boxed');
+        this.regions.quotes.el.classList.add(`boxes-${this.data.length}`);
     }
 }
