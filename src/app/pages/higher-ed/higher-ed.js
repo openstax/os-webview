@@ -23,6 +23,49 @@ let detailPromise = new Promise((resolve) => {
     });
 });
 
+let quoteBoxHelper = (qbData) => {
+    let orientationFromImageAlignment = {
+            L: 'right',
+            R: 'left'
+        },
+        result = {
+            quoteHtml: qbData.content,
+            orientation: orientationFromImageAlignment[qbData.image_alignment] || 'full'
+        };
+
+    if (qbData.link) {
+        result.linkUrl = qbData.link;
+        result.linkText = qbData.cta;
+    }
+
+    if (qbData.image) {
+        result.imagePromise = new ImageModel({id: qbData.image.id}).fetch()
+        .then((imageData) => {
+            result.imageUrl = imageData.file;
+        });
+    } else {
+        result.orientation = 'full';
+    }
+
+    return result;
+};
+
+let bucketHelper = (cmsData) => {
+    let row2keys = Object.keys(cmsData).filter((key) => (/^row_2/).test(key)),
+        rowData = [];
+
+    for (let key of row2keys) {
+        let [oneBasedIndex, subKey] = key.match(/row_2_box_(\d+)_(\w+)/).slice(1),
+            index = oneBasedIndex - 1;
+
+        if (!rowData[index]) {
+            rowData[index] = {};
+        }
+        rowData[index][subKey] = cmsData[key];
+    }
+    return rowData;
+};
+
 @props({
     template: template,
     css: '/app/pages/higher-ed/higher-ed.css',
@@ -45,33 +88,6 @@ export default class HigherEd extends LoadingView {
     @on('click a[href^="#"]')
     hashClick(e) {
         $.hashClick(e, {doHistory: false});
-    }
-
-    static quoteBoxHelper = (qbData) => {
-        let orientationFromImageAlignment = {
-                L: 'right',
-                R: 'left'
-            },
-            result = {
-                quoteHtml: qbData.content,
-                orientation: orientationFromImageAlignment[qbData.image_alignment] || 'full'
-            };
-
-        if (qbData.link) {
-            result.linkUrl = qbData.link;
-            result.linkText = qbData.cta;
-        }
-
-        if (qbData.image) {
-            result.imagePromise = new ImageModel({id: qbData.image.id}).fetch()
-            .then((imageData) => {
-                result.imageUrl = imageData.file;
-            });
-        } else {
-            result.orientation = 'full';
-        }
-
-        return result;
     }
 
     onRender() {
@@ -104,7 +120,7 @@ export default class HigherEd extends LoadingView {
                 }
             }
 
-            let quoteBoxSpecs = quoteBoxData.filter((obj) => obj.content).map(HigherEd.quoteBoxHelper);
+            let quoteBoxSpecs = quoteBoxData.filter((obj) => obj.content).map(quoteBoxHelper);
 
             let promises = quoteBoxSpecs
             .filter((spec) => spec.imagePromise)
@@ -113,6 +129,8 @@ export default class HigherEd extends LoadingView {
             Promise.all(promises).then(() => {
                 this.regions.quotes.show(new Quotes(quoteBoxSpecs));
             });
+
+            this.regions.buckets.show(new Buckets(bucketHelper(data)));
         });
         this.otherPromises.push(detailPromise);
         this.regions.products.show(new ProductsBoxes({
@@ -123,7 +141,6 @@ export default class HigherEd extends LoadingView {
             ]
         }));
 
-        this.regions.buckets.show(new Buckets());
         super.onRender();
     }
 

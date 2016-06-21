@@ -75,7 +75,7 @@ export default class Home extends LoadingView {
         this.regions.quotes.show(new Quotes([
             {
                 orientation: 'right',
-                hasImage: true,
+                imageUrl: '/images/home/quotes/quote-right.jpg',
                 quoteHtml: `Concept Coach is our free new tool that helps college
                 students understand and retain what they’ve read. We’re recruiting
                 faculty for our Fall 2016 pilot!`,
