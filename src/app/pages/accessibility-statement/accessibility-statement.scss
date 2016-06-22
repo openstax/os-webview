@@ -6,8 +6,8 @@
     .boxed {
         display: flex;
         flex-flow: column nowrap;
-        max-width: $boxed-width;
         margin: 0 auto 4rem;
+        max-width: $boxed-width;
         padding: 0 1.5rem;
     }
 

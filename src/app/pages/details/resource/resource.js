@@ -1,21 +1,11 @@
-import BaseView from '~/helpers/backbone/view';
-import {on, props} from '~/helpers/backbone/decorators';
-import {template} from './resource.hbs';
+import {Controller} from 'superb';
+import {description as template} from './resource.html';
 
-@props({
-    template: template
-})
-export default class Resource extends BaseView {
+export default class Resource extends Controller {
 
-    @on('click [href*="login"]')
-    loginInThisTab(e) {
-        window.location = e.currentTarget.href;
-        e.preventDefault();
-    }
-
-    constructor(data, alternateLink) {
-        super();
-        this.templateHelpers = data;
+    init(data, alternateLink) {
+        this.template = template;
+        this.templateHelpers = data; // FIX: This is not how to use templateHelpers
         /* eslint camelcase:0 */
         this.templateHelpers.linkUrl = alternateLink || data.link_document_url || data.link_external;
     }

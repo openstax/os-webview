@@ -1,9 +1,14 @@
 import BannerView from '~/pages/home/banners/banner-view';
-import {props} from '~/helpers/backbone/decorators';
-import {template} from './us-history.hbs';
+import {description as template} from './us-history.html';
 
-@props({
-    template: template,
-    css: '/app/pages/home/banners/us-history/us-history.css'
-})
-export default class USHistory extends BannerView {}
+export default class USHistory extends BannerView {
+
+    init() {
+        this.template = template;
+        this.css = '/app/pages/home/banners/us-history/us-history.css';
+        this.view = {
+            classes: ['us-history']
+        };
+    }
+
+}

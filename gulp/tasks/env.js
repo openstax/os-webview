@@ -1,5 +1,5 @@
-var gulp = require('gulp');
-var pi = require('gulp-load-plugins')();
+const gulp = require('gulp');
+const pi = require('gulp-load-plugins')();
 
 function nodeEnv(env) {
     pi.env({

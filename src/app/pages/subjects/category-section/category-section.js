@@ -1,19 +1,18 @@
-import BaseView from '~/helpers/backbone/view';
-import {props} from '~/helpers/backbone/decorators';
-import {template} from './category-section.hbs';
+import {Controller} from 'superb';
+import {description as template} from './category-section.html';
 import Book from './book/book';
 
-@props({
-    template: template,
-    regions: {
-        books: '.book-category .row'
-    }
-})
-export default class CategorySection extends BaseView {
+export default class CategorySection extends Controller {
 
-    constructor(category, books, model) {
-        super();
-
+    init(category, books, model) {
+        this.template = template;
+        this.regions = {
+            books: '.book-category .row'
+        };
+        this.view = {
+            classes: ['book-category']
+        };
+        // FIX: Should category, books, and model all be part of the model?
         this.category = category;
         this.books = books;
         this.model = model;
@@ -21,6 +20,7 @@ export default class CategorySection extends BaseView {
             categoryName: category
         };
 
+        // FIX: listenTo vs on
         this.model.on('change:selectedFilter', () => this.setState());
     }
 
@@ -28,16 +28,16 @@ export default class CategorySection extends BaseView {
         if (!this.el) {
             return;
         }
-        let value = this.model.get('selectedFilter');
 
+        const value = this.model.get('selectedFilter');
+
+        // FIX: Move DOM manipulation to template
         this.el.classList.toggle('hidden', value !== this.category && value !== 'View All');
     }
 
-    onRender() {
-        this.el.classList.add('book-category');
-
+    onLoaded() {
         if (this.books) {
-            for (let book of this.books) {
+            for (const book of this.books) {
                 this.regions.books.append(new Book(book, this.model));
             }
         }

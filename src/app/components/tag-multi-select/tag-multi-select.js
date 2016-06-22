@@ -1,20 +1,27 @@
-import BaseView from '~/helpers/backbone/view';
-import BaseModel from '~/helpers/backbone/model';
-import BaseCollection from '~/helpers/backbone/collection';
-import $ from '~/helpers/$';
-import Tag from './tag/tag';
-import Option from '../select-option/select-option';
-import {on, props} from '~/helpers/backbone/decorators';
-import {template} from './tag-multi-select.hbs';
+import {Controller} from 'superb';
+// import Model from '~/models/model';
+// import Collection from '~/models/collection';
+// import $ from '~/helpers/$';
+// import Tag from './tag/tag';
+// import Option from '../select-option/select-option';
+import {on} from '~/helpers/controller/decorators';
+import {description as template} from './tag-multi-select.html';
 
-@props({
-    template: template,
-    regions: {
-        tagList: '.tag-list',
-        optionList: '.option-list'
+export default class TagMultiSelect extends Controller {
+
+    init() {
+        this.template = template;
+        this.view = {
+            classes: ['proxy-widget', 'tag-multi-select']
+        };
+        this.regions = {
+            tagList: '.tag-list',
+            optionList: '.option-list'
+        };
+        // this.stateCollection = new Collection();
     }
-})
-export default class TagMultiSelect extends BaseView {
+
+    /*
     @on('click .activate-pulldown')
     displayPulldown(e) {
         e.preventDefault();
@@ -24,33 +31,32 @@ export default class TagMultiSelect extends BaseView {
 
     @on('click .tag-list')
     displayPulldownIfNotTag(e) {
+        e.preventDefault();
+
         if (e.target.classList.contains('tag-list')) {
             this.displayPulldown(e);
         }
-        e.preventDefault();
     }
+    */
 
-    togglePulldown() {
-        let optionList = this.el.querySelector('.option-list'),
-            isOpen;
+    /*
+    togglePulldown(...args) {
+        // FIX: Move DOM Manipulation to template
+        const optionList = this.el.querySelector('.option-list');
+        let isOpen;
 
-        optionList.classList.toggle('hidden', ...arguments);
-        if (arguments.length > 0) {
-            isOpen = !arguments[0];
+        optionList.classList.toggle('hidden', ...args);
+        if (args.length > 0) {
+            isOpen = !args[0];
         }
         this.hasDropdownEl.classList.toggle('open', isOpen);
     }
 
-    constructor() {
-        super();
-        this.stateCollection = new BaseCollection();
-    }
-
     checkValid(originalOpt) {
-        let parentWidget = originalOpt.parentNode;
+        const parentWidget = originalOpt.parentNode;
 
         if (parentWidget.required) {
-            let someSelected = this.stateCollection.some((item) => item.get('selected') === true);
+            const someSelected = this.stateCollection.some((item) => item.get('selected') === true);
 
             this.el.classList.toggle('invalid', !someSelected);
         }
@@ -63,10 +69,10 @@ export default class TagMultiSelect extends BaseView {
     }
 
     synchronizeModel(what) {
-        let tagItem = what.get('tagItem'),
-            listItem = what.get('listItem'),
-            originalOpt = what.get('originalOption'),
-            label = what.get('label');
+        const tagItem = what.get('tagItem');
+        const listItem = what.get('listItem');
+        const originalOpt = what.get('originalOption');
+        const label = what.get('label');
 
         if (what.get('selected') === true) {
             this.regions.tagList.append(tagItem);
@@ -89,8 +95,8 @@ export default class TagMultiSelect extends BaseView {
             tagItem.remove();
             listItem.el.classList.remove('hidden');
             originalOpt.selected = false;
-            let stillSelected = this.stateCollection.some((item) => item.get('selected') === true),
-                noneItem = this.stateCollection.findWhere({label: 'None'});
+            const stillSelected = this.stateCollection.some((item) => item.get('selected') === true);
+            const noneItem = this.stateCollection.findWhere({label: 'None'});
 
             if (noneItem && !stillSelected) {
                 noneItem.set('selected', true);
@@ -100,8 +106,8 @@ export default class TagMultiSelect extends BaseView {
     }
 
     replace(originalMs) {
-        for (let opt of Array.from(originalMs.options)) {
-            let optionModel = new BaseModel({
+        for (const opt of Array.from(originalMs.options)) {
+            const optionModel = new Model({
                 selected: opt.selected,
                 label: opt.textContent,
                 value: opt.value,
@@ -115,21 +121,20 @@ export default class TagMultiSelect extends BaseView {
             this.synchronizeModel(what);
         });
 
-        let wrapper = document.createElement('div');
+        const wrapper = document.createElement('div');
 
         originalMs.parentNode.insertBefore(wrapper, originalMs);
         this.parentRegion = new this.regions.self.constructor(wrapper);
-        this.parentRegion.show(this);
+        this.parentRegion.attach(this);
         originalMs.classList.add('hidden');
     }
 
-    onRender() {
+    onLoaded() {
         $.applyScrollFix(this);
-        this.el.classList.add('proxy-widget', 'tag-multi-select');
         this.hasDropdownEl = this.el.querySelector('.has-dropdown');
         this.stateCollection.each((model) => {
-            let msOption = new Option(model),
-                tag = new Tag(model);
+            const msOption = new Option(model);
+            const tag = new Tag(model);
 
             this.regions.optionList.append(msOption);
             model.set({
@@ -138,14 +143,14 @@ export default class TagMultiSelect extends BaseView {
             });
             this.synchronizeModel(model);
 
-            let controlledElementId = model.get('originalOption').dataset.other;
+            const controlledElementId = model.get('originalOption').dataset.other;
 
             if (controlledElementId) {
-                let controlledElement = document.getElementById(controlledElementId),
-                    controlledInput = controlledElement.querySelector('input');
+                const controlledElement = document.getElementById(controlledElementId);
+                const controlledInput = controlledElement.querySelector('input');
 
                 model.on('change:selected', () => {
-                    let newValue = model.get('selected');
+                    const newValue = model.get('selected');
 
                     controlledElement.classList.toggle('hidden', !newValue);
                     controlledInput.required = newValue;
@@ -158,4 +163,6 @@ export default class TagMultiSelect extends BaseView {
             }
         });
     }
+    */
+
 }

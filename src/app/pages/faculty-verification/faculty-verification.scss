@@ -6,9 +6,9 @@
     }
 
     .cta {
+        align-items: flex-end;
         display: flex;
         flex-direction: column;
-        align-items: flex-end;
 
         @media (min-width: 641px) {
             margin-top: 12rem;

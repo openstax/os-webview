@@ -1,0 +1,65 @@
+<div class="hero">
+    <div class="boxed">
+        <h1>Finish your OpenStax profile</h1>
+        <p class="note">All fields are required.</p>
+    </div>
+</div>
+<img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
+<div class="boxed">
+    <form accept-charset="UTF-8"
+     action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="post" class="form">
+        <div>
+            <input name="utf8" type="hidden" value="✓">
+            <input type="hidden" name="oid" value="00DU0000000Kwch">
+            <input type="hidden" name="retURL" value="{`${window.location.origin}/finished-no-verify`}">
+            <input type="hidden" name="lead_source" value="OSC User">
+            <input type="hidden" name="first_name">
+            <input type="hidden" name="last_name">
+            <input type="hidden" name="user_id">
+            <input type="hidden" name="OS_Accounts_ID__c">
+        </div>
+        <div class="labeled-inputs row">
+            <div class="col">
+                <label>
+                    <span>School/Organization</span>
+                    <input name="company" type="text" required>
+                </label>
+                <label>
+                    <span>Phone number</span>
+                    <input name="phone" type="text" required>
+                </label>
+            </div>
+            <div class="col">
+                <label>Your role
+                <select name="00NU00000054MLz">
+                    <option disabled selected>Please select</option>
+                    <option each="role in roles" value="{role}">{role}</option>
+                </select>
+            </label>
+                <label>Title(s) you're interested in
+                <select name="00NU00000053nzR" multiple required>
+                    <!-- FIX: Manipulate model data to avoid multiple loops -->
+                    <option each="title in bookTitles" if="title.text" value="{title.value}">{title.text}</option>
+                    <option each="title in bookTitles" if="!title.text" value="{title}">{title}</option>
+                </select>
+            </label>
+                <div class="checkboxes">
+                    <label>
+                        <input name="newsletter" type="checkbox" value="1" checked>
+                        Keep me informed about OpenStax.
+                    </label>
+
+                    <label>
+                        <input id="toggle-faculty" type="checkbox">
+                        I want access to faculty-only materials.
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div id="faculty-section"></div>
+        <div class="cta">
+            <input type="submit" value="Finish profile" role="button" class="btn btn-orange">
+            <span id="problem-message"></span>
+        </div>
+    </form>
+</div>

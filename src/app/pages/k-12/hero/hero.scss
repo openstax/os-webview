@@ -7,18 +7,18 @@ $hero-break-width: 880px;
 
 .k-12-page {
     .hero {
+        align-items: center;
         background-color: color(blue);
         background-image: url('/images/k-12/k12-banner.jpg');
         background-repeat: no-repeat;
         background-size: cover;
-        overflow: hidden;
-        position: relative;
-        width: 100%;
-        align-items: center;
-        justify-content: center;
         display: flex;
         height: 60rem;
+        justify-content: center;
+        overflow: hidden;
+        position: relative;
         text-align: left;
+        width: 100%;
 
         @media (max-width: $hero-break-width) {
             min-height: 0;
@@ -27,13 +27,13 @@ $hero-break-width: 880px;
         @include collapsed {
             align-items: stretch;
             background: none;
-//            height: calc(100vh - 6rem);
+            // height: calc(100vh - 6rem);
             max-height: 48rem;
         }
 
         > div {
-            display: flex;
             align-items: stretch;
+            display: flex;
             width: 100%;
         }
 
@@ -41,13 +41,13 @@ $hero-break-width: 880px;
             display: flex;
             flex-flow: column wrap;
             margin: 0 auto;
-            width: 100%;
             max-width: $boxed-width;
+            width: 100%;
             z-index: 1;
 
             @include collapsed {
-                flex-flow: row wrap;
                 align-items: stretch;
+                flex-flow: row wrap;
             }
 
         }
@@ -55,9 +55,9 @@ $hero-break-width: 880px;
         .overlay {
             background-color: rgba(saturate(color(orange), 10%), 0.85);
             color: color(neutral-lightest);
-            padding: 4rem;
             display: flex;
             justify-content: flex-end;
+            padding: 4rem;
 
             @media screen and (min-width: $boxed-width + 1) {
                 padding-left: calc(-61rem + 55%);
@@ -81,8 +81,8 @@ $hero-break-width: 880px;
             }
 
             .blurb {
-                padding: 1em 0;
                 font-size: 1.8rem;
+                padding: 1em 0;
 
                 @include collapsed {
                     display: none;
@@ -91,17 +91,17 @@ $hero-break-width: 880px;
         }
 
         .student {
-            position: absolute;
-            overflow: hidden;
-            top: 0;
-            height: 100%;
-            width: 73rem;
             background-image: url('/images/k-12/student-k12.png');
-            background-size: 100% auto;
             background-position: 0 bottom;
             background-repeat: no-repeat;
-            z-index: 3;
+            background-size: 100% auto;
+            height: 100%;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
             transition: All ease 0.2s;
+            width: 73rem;
+            z-index: 3;
 
             @media screen and (max-width: $boxed-width) {
                 left: calc(-73rem + 50%);
@@ -117,9 +117,9 @@ $hero-break-width: 880px;
                 bottom: 0;
                 height: 50%;
                 left: 0;
+                right: 0;
                 top: auto;
                 width: 38rem;
-                right: 0;
             }
 
         }
@@ -137,18 +137,18 @@ $hero-break-width: 880px;
 
         .square-1 {
             background-color: rgba(darken(color(orange), 20%), 0.15);
-            width: 34.285vw;
             height: 23.785vw;
-            top: 4.8rem;
             left: 4.1rem;
+            top: 4.8rem;
+            width: 34.285vw;
         }
 
         .square-2 {
             background-color: rgba(darken(color(orange), 10%), 0.10);
-            width: calc(9vw + 12rem);
-            height: calc(8vw + 10rem);
             bottom: 4vw;
+            height: calc(8vw + 10rem);
             right: 3vw;
+            width: calc(9vw + 12rem);
         }
     }
 }

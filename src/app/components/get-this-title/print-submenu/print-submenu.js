@@ -1,21 +1,19 @@
-import BaseView from '~/helpers/backbone/view';
+import {Controller} from 'superb';
 import Remover from '~/components/remover/remover';
-import {props} from '~/helpers/backbone/decorators';
-import {template} from './print-submenu.hbs';
+import {description as template} from './print-submenu.html';
 
-@props({
-    template: template
-})
-export default class PrintSubmenu extends BaseView {
-    constructor(pdfData, stateModel) {
-        super();
-        this.templateHelpers= pdfData;
+export default class PrintSubmenu extends Controller {
+
+    init(pdfData, stateModel) {
+        this.template = template;
+        this.templateHelpers = pdfData; // FIX: This makes no sense
         this.stateModel = stateModel;
     }
 
-    onRender() {
+    onLoaded() {
         this.el.classList.add('print-submenu');
         this.regions.self.el = this.el;
         this.regions.self.append(new Remover(() => this.stateModel.set('currentSubmenu', null)));
     }
+
 }

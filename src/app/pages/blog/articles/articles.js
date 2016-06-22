@@ -1,35 +1,32 @@
-import BaseView from '~/helpers/backbone/view';
-import {props} from '~/helpers/backbone/decorators';
-import {template} from './articles.hbs';
+import {Controller} from 'superb';
+import {description as template} from './articles.html';
 import Article from '../article/article';
 import newsPromise from '../newsPromise';
 
-@props({
-    template: template,
-    css: '/app/pages/blog/articles/articles.css',
-    regions: {
-        article: '.container'
-    }
-})
+export default class Articles extends Controller {
 
-export default class Articles extends BaseView {
-
-    constructor(excludeSlug) {
-        super();
-
+    init(excludeSlug) {
+        this.template = template;
+        this.css = '/app/pages/blog/articles/articles.css';
+        this.view = {
+            classes: ['boxed']
+        };
+        this.regions = {
+            article: '.container'
+        };
         this.excludeSlug = excludeSlug;
     }
 
-    onRender() {
-        this.el.classList.add('boxed');
+    onLoaded() {
         newsPromise.then((newsData) => {
-            let sortedArticles = newsData.pages.sort((a, b) => a.date < b.date ? 1 : -1);
+            const sortedArticles = newsData.pages.sort((a, b) => a.date < b.date ? 1 : -1);
 
-            for (let article of sortedArticles) {
+            for (const article of sortedArticles) {
                 if (article.slug !== this.excludeSlug) {
                     this.regions.article.append(new Article(article));
                 }
             }
         });
     }
+
 }

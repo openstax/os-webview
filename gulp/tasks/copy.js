@@ -1,28 +1,21 @@
-var gulp = require('gulp');
-var config = require('../config');
+const gulp = require('gulp');
+const config = require('../config');
+
+const glob = `${config.src}/**/*.{json,txt,ico,eot,ttf,woff,woff2}`;
 
 function copy() {
-    var systemjs, polyfilljs;
-
-    if (config.env === 'production') {
-        systemjs = 'jspm_packages/system.js';
-    } else {
-        systemjs = 'jspm_packages/system.js*';
-    }
-
-    polyfilljs = 'jspm_packages/system-polyfills.js';
-
-    return gulp.src([
-        `${config.src}/**/*.{json,txt,ico,eot,ttf,woff,woff2}`,
-        systemjs,
-        polyfilljs
-    ])
+    return gulp.src(glob, {
+        since: gulp.lastRun(copy)
+    })
     .pipe(gulp.dest(config.dest));
 }
 
 gulp.task(copy);
 
 gulp.task('copy:watch', () => {
-    gulp.watch(`${config.src}/*.{json,txt,ico,eot,ttf,woff,woff2}`, config.watchOpts)
-    .on('change', copy);
+    gulp.watch(glob, config.watchOpts)
+    .on('change', gulp.series(
+        copy,
+        'reload-browser'
+    ));
 });

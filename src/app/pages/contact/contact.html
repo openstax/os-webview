@@ -1,0 +1,44 @@
+<template args="model">
+    <main id="maincontent">
+        <div class="hero">
+            <div class="boxed">
+                <h1>{model.title}</h1>
+                <p>{model.tagline}</p>
+            </div>
+        </div>
+        <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
+        <div class="boxed">
+            <div class="col">
+                <form class="form" action="https://www.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8" method="post">
+                    <input type="hidden" name="orgid" value="00DU0000000Kwch">
+                    <input type="hidden" name="retURL" value="{`${window.location.origin}/confirmation?contact`}">
+                    <input type="hidden" name="external" value="1">
+                    <label>
+                        What is your question about?
+                        <select name="subject">
+                            <option each="subject in model.subjects" value="{subject}">{model.subjects[subject].name}</option>
+                        </select>
+                    </label>
+                    <label>
+                        Your Name
+                        <input name="name" type="text" size="20" required>
+                    </label>
+                    <label>
+                        Your Email Address
+                        <input name="email" pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text" required>
+                    </label>
+                    <label>
+                        Your Message
+                        <textarea cols="50" name="description" rows="6" required></textarea>
+                    </label>
+                    <input type="submit" value="Send" class="btn btn-orange">
+                </form>
+            </div>
+            <div class="col">
+                <h2>{model.mailing_header}</h2>
+                <address class="mailing-address">{model.mailing_address}</address>
+                <p class="phone"><span class="label">Main: </span><span>{model.phone_number}</span></p>
+            </div>
+        </div>
+    </main>
+</template>

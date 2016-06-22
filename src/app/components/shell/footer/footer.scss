@@ -1,13 +1,13 @@
 @import 'variables';
 @import 'mixins';
 
-.footer {
+.page-footer {
     background-color: color(neutral-dark);
     color: color(neutral-light);
     display: flex;
     flex-flow: column wrap;
-    justify-content: center;
     font-size: 1.4rem;
+    justify-content: center;
 
     @include desktop {
         text-align: center;

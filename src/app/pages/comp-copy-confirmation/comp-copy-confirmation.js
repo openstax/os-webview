@@ -1,24 +1,14 @@
-import BaseView from '~/helpers/backbone/view';
-// import Calculator from '~/components/calculator/calculator';
-import {props} from '~/helpers/backbone/decorators';
-import {template} from './comp-copy-confirmation.hbs';
-import {template as strips} from '~/components/strips/strips.hbs';
+import {Controller} from 'superb';
+import {description as template} from './comp-copy-confirmation.html';
 
-@props({
-    template: template,
-    css: '/app/pages/comp-copy-confirmation/comp-copy-confirmation.css',
-    templateHelpers: {
-        strips
-    }
-//    regions: {
-//        calculator: '.calculator'
-//    }
-})
-export default class InterestConfirmation extends BaseView {
+export default class InterestConfirmation extends Controller {
 
-    onRender() {
-        this.el.classList.add('confirmation-page');
-//        this.regions.calculator.append(new Calculator());
+    init() {
+        this.template = template;
+        this.css = '/app/pages/comp-copy-confirmation/comp-copy-confirmation.css';
+        this.view = {
+            classes: ['confirmation-page']
+        };
     }
 
 }

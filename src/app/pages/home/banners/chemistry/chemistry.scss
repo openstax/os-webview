@@ -21,8 +21,8 @@
 }
 
 .chemistry {
-    background-image: url('/images/home/subjects/chemistry/background.jpg');
     background-attachment: fixed;
+    background-image: url('/images/home/subjects/chemistry/background.jpg');
     background-position: 20% 0;
     background-repeat: no-repeat;
     background-size: cover;
@@ -42,12 +42,12 @@
 
     .container {
         display: flex;
-        margin: 0 auto;
-        padding: 0 1.5rem;
-        max-width: $boxed-width;
         flex-flow: column wrap;
-        position: relative;
         height: 100%;
+        margin: 0 auto;
+        max-width: $boxed-width;
+        padding: 0 1.5rem;
+        position: relative;
 
         @include tablet {
             flex-flow: row wrap;
@@ -69,8 +69,8 @@
         z-index: 0;
 
         @include desktop {
-            display: block;
             animation: flyin 0.5s 1.2s 1 normal ease-in forwards, loop 30s 1.5s normal infinite linear forwards;
+            display: block;
         }
 
         &.flyout {
@@ -93,8 +93,8 @@
     }
 
     .square-2 {
-        height: 34rem;
         bottom: 0;
+        height: 34rem;
         left: 0;
         width: 45rem;
 
@@ -103,16 +103,16 @@
         }
 
         @include desktop {
-            width: 60%;
-            height: 34rem;
             bottom: auto;
+            height: 34rem;
             top: 27%;
+            width: 60%;
         }
     }
 
     .square-3 {
-        height: 26rem;
         bottom: 15rem;
+        height: 26rem;
         right: 0;
         width: 26rem;
 
@@ -121,10 +121,10 @@
         }
 
         @include desktop {
-            right: 5rem;
             bottom: 5rem;
-            width: 40rem;
             height: 33rem;
+            right: 5rem;
+            width: 40rem;
         }
     }
 
@@ -144,17 +144,17 @@
     }
 
     .element {
-        display: none;
         background-image: url('/images/home/subjects/chemistry/element.png');
-        height: 12rem;
-        right: 0;
-        position: absolute;
         bottom: 10rem;
+        display: none;
+        height: 12rem;
+        position: absolute;
+        right: 0;
         width: 12rem;
 
         @include desktop {
-            display: block;
             animation: flyin 0.5s 1.4s 1 normal ease-in forwards, loop 40s 1.8s reverse infinite linear forwards;
+            display: block;
         }
 
         &.flyout {
@@ -169,34 +169,34 @@
         background-color: color(orange);
         background-image: url('/images/subjects/chemistry.svg');
         background-position: 0 0%;
-        position: absolute;
         height: 25rem;
         left: 0;
+        position: absolute;
         top: 1.5rem;
         width: 25rem;
 
         @include tablet {
             background-position: 0 100%;
-            top: 5%;
+            height: 30rem;
             left: auto;
             right: 40%;
+            top: 5%;
             width: 30rem;
-            height: 30rem;
         }
 
         @media (max-width: 380px) {
-            width: 20rem;
             height: 20rem;
+            width: 20rem;
         }
 
         @media (min-width: #{breakpoints(tablet) + 1}) {
-            top: 15%;
             right: 35%;
+            top: 15%;
         }
 
         @include desktop {
-            right: 45%;
             animation: flyin 0.5s 1s 1 normal forwards;
+            right: 45%;
         }
 
         &.flyout {
@@ -219,8 +219,8 @@
 
         @include tablet {
             bottom: 0;
-            right: -6rem;
             height: 53rem;
+            right: -6rem;
             width: 44.4rem;
         }
 
@@ -242,8 +242,8 @@
         font-size: 3.6rem;
         font-weight: 600;
         height: 9rem;
-        line-height: 2.5rem;
         left: 1.5rem;
+        line-height: 2.5rem;
         padding: 0;
         position: absolute;
         text-align: center;
@@ -260,9 +260,9 @@
         }
 
         @include desktop {
-            left: 13rem;
-            font-size: 3.6rem;
             animation: flyin 0.5s 1.8s 1 normal forwards;
+            font-size: 3.6rem;
+            left: 13rem;
         }
 
         &.flyout {
@@ -274,17 +274,17 @@
 
         .quote {
             display: inline-block;
-            line-height: 8rem;
             font-family: 'Permanent Marker', cursive;
-            transform: rotate(-1.2deg) translate(0.75vw, -0.45vw);
+            line-height: 8rem;
             margin-right: 1rem;
+            transform: rotate(-1.2deg) translate(0.75vw, -0.45vw);
         }
 
         &::after {
             border-bottom: 0.1rem solid color(neutral-lightest);
             content: '';
-            right: 3rem;
             position: absolute;
+            right: 3rem;
             top: 6rem;
             width: 20rem;
         }
@@ -298,14 +298,14 @@
         z-index: 3;
 
         @include tablet {
-            width: 27rem;
             bottom: 6.3rem;
             left: 5rem;
+            width: 27rem;
         }
 
         @media (min-width: 650px) {
-            width: auto;
             left: 2.5rem;
+            width: auto;
         }
 
         @media (min-width: 900px) {
@@ -313,8 +313,8 @@
         }
 
         @include desktop {
-            left: 14rem;
             animation: flyin 0.5s 1.8s 1 normal forwards;
+            left: 14rem;
         }
 
         &.flyout {
@@ -339,19 +339,19 @@
                 width: 100%;
 
                 @include tablet {
-                    width: auto;
                     margin-right: 1rem;
+                    width: auto;
                 }
             }
         }
 
         .btn {
+            display: inline-block;
             font-size: 1.6rem;
-            line-height: 6rem;
             height: 6rem;
+            line-height: 6rem;
             padding: 0 1.5rem;
             width: 100%;
-            display: inline-block;
 
             @include desktop {
                 width: auto;

@@ -1,6 +1,7 @@
-import Backbone from 'backbone';
-import shell from '~/components/shell/shell';
+import {Router} from 'superb';
 import analytics from '~/helpers/analytics';
+import linkHelper from '~/helpers/link';
+import shell from '~/components/shell/shell';
 
 const PAGES = [
     '404',
@@ -11,14 +12,13 @@ const PAGES = [
     'adoption',
     'adoption-confirmation',
     'article',
-    'partners',
-    'blog',
+    'blog/*path',
     'books',
     'comp-copy',
     'comp-copy-confirmation',
     'contact',
     'contact-thank-you',
-    'details',
+    'details/*path',
     'faculty-confirmation',
     'faculty-verification',
     'finish-profile',
@@ -31,76 +31,73 @@ const PAGES = [
     'impact',
     'k-12',
     'license',
-    'renewal',
-    'mass-renewal',
-    'subjects',
+    'partners',
+    'partners/*path',
+    'renew',
+    'subjects/*path',
     'support'
 ];
 
-class Router extends Backbone.Router {
+class AppRouter extends Router {
 
-    initialize() {
-        this.route('*actions', 'default', () => {
-            shell.load('404');
-        });
+    init() {
+        this.defaultRegion = shell.regions.main;
 
-        this.route('', 'home', () => {
-            shell.load('home');
-        });
+        this.default('404');
+        this.root('home');
+        this.route(/^(\d+)/, 'cms');
+        this.route(/to[u|s]/, 'tos');
 
-        this.route(/^(\d+)/, 'cms', (id) => {
-            shell.load('cms', id);
-        });
-
-        this.route(/subjects\/.*/, 'subjects', () => {
-            if (!(shell.regions.main.views &&
-                shell.regions.main.views[0].constructor.name === 'Subjects')) {
-                shell.load('subjects');
-            }
-        });
-
-        this.route(/partners\/.*/, 'partners', () => {
-            if (!(shell.regions.main.views &&
-                shell.regions.main.views[0].constructor.name === 'Partners')) {
-                shell.load('partners');
-            }
-        });
-
-        this.route(/details\/.*/, 'details', () => {
-            shell.load('details');
-        });
-
-        this.route(/blog\/.+/, 'article', () => {
-            shell.load('article');
-        });
-
-        PAGES.forEach(this.standardRoute, this);
-
-        this.route(/to[u|s]/, 'tos', () => {
-            shell.load('tos');
+        PAGES.forEach((page) => {
+            this.route(page);
         });
     }
 
-    standardRoute(name) {
-        this.route(name, name, () => {
-            shell.load(name);
-        });
+    start() {
+        super.start();
+
+        analytics.sendPageview(location.pathname);
+
+        this.linkHandler = AppRouter.linkHandler.bind(this);
+        document.addEventListener('click', this.linkHandler);
     }
 
-    navigate(fragment, options = {}, cb) {
-        super.navigate(...arguments);
+    stop() {
+        super.stop();
 
-        if (options.analytics !== false) {
-            analytics.sendPageview();
+        document.removeEventListener('click', this.linkHandler);
+    }
+
+    navigate(...args) {
+        super.navigate(...args);
+        analytics.sendPageview();
+    }
+
+    static linkHandler(e) {
+        const el = linkHelper.validUrlClick(e);
+
+        if (!el) {
+            return;
         }
 
-        if (typeof cb === 'function') {
-            cb();
+        const href = el.getAttribute('href');
+
+        e.preventDefault();
+
+        if (linkHelper.isExternal(href)) {
+            if (el.getAttribute('data-local') === 'true') {
+                document.location.href = href;
+            } else {
+                analytics.record(href);
+                window.open(href, '_blank');
+            }
+        } else {
+            this.navigate(href);
         }
     }
 
 }
 
-let router = new Router();
+const router = new AppRouter();
 
 export default router;

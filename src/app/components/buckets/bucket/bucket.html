@@ -1,0 +1,10 @@
+<template args="model">
+    <div if="model.hasImage" class="image"></div>
+    <div class="quote">
+        <div>
+            <span class="title">{model.titleText}</span>
+            <span class="blurb"></span>
+        </div>
+        <a class="btn {model.btnClass}" href="{model.linkUrl}">{model.linkText}</a>
+    </div>
+</template>

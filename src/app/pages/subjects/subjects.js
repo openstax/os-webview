@@ -1,24 +1,21 @@
-import LoadingView from '~/helpers/backbone/loading-view';
-import BaseModel from '~/helpers/backbone/model';
-import $ from '~/helpers/$';
-import PageModel from '~/models/pagemodel';
-import {on, props} from '~/helpers/backbone/decorators';
-import {template} from './subjects.hbs';
-import FilterButton from '~/components/filter-button/filter-button';
-import {template as strips} from '~/components/strips/strips.hbs';
-import CategorySection from './category-section/category-section';
 import router from '~/router';
+import LoadingView from '~/controllers/loading-view';
+import $ from '~/helpers/$';
+import {on} from '~/helpers/controller/decorators';
+// import FilterButton from '~/components/filter-button/filter-button';
+import {description as template} from './subjects.html';
+import CategorySection from './category-section/category-section';
 
-const apId = 'AP<sup>&reg;</sup>',
-    categories = ['Math', 'Science', 'Social Sciences', 'Humanities', apId],
-    filterButtons = ['View All', ...categories];
+const apId = 'AP<sup>&reg;</sup>';
+const categories = ['Math', 'Science', 'Social Sciences', 'Humanities', apId];
+const filterButtons = ['View All', ...categories];
 
 function organizeBooksByCategory(books) {
-    let result = {};
+    const result = {};
 
     result[apId] = [];
 
-    for (let book of books) {
+    for (const book of books) {
         if (!(book.subject_name in result)) {
             result[book.subject_name] = [];
         }
@@ -31,16 +28,32 @@ function organizeBooksByCategory(books) {
     return result;
 }
 
-@props({
-    template: template,
-    css: '/app/pages/subjects/subjects.css',
-    templateHelpers: {strips},
-    regions: {
-        filterButtons: '.filter-buttons',
-        bookViewer: '.books .container'
-    }
-})
 export default class Subjects extends LoadingView {
+
+    init() {
+        this.template = template;
+        this.css = '/app/pages/subjects/subjects.css';
+        this.view = {
+            classes: ['subjects-page', 'hidden']
+        };
+        this.regions = {
+            filterButtons: '.filter-buttons',
+            bookViewer: '.books .container'
+        };
+        this.model = new Model({
+            selectedFilter: 'View All',
+            selectedBook: null
+        });
+
+        this.description = `Our textbooks are openly licensed, peer-reviewed,
+            free, and backed by learning resources. Check out our books and
+            decide if they're right for your course.`;
+
+        // this.listenTo(router, 'route', this.updateSelectedFilterFromPath);
+        // this.updateSelectedFilterFromPath();
+    }
+
+    /*
 
     @on('click')
     deselect() {
@@ -49,23 +62,19 @@ export default class Subjects extends LoadingView {
 
     @on('click .filter')
     filterClick() {
-        let filterSection = this.el.querySelector('.filter');
+        const filterSection = this.el.querySelector('.filter');
 
         $.scrollTo(filterSection, 30);
     }
 
-    static metaDescription = () => `Our textbooks are openly licensed, peer-reviewed, free,
-        and backed by learning resources. Check out our books and decide if they’re
-        right for your course.`;
-
     updateSelectedFilterFromPath() {
-        let pathMatch = window.location.pathname.match(/\/subjects\/(.+)/),
-            selectedFilter = 'View All';
+        const pathMatch = window.location.pathname.match(/\/subjects\/(.+)/);
+        let selectedFilter = 'View All';
 
         if (pathMatch) {
-            let subject = FilterButton.canonicalSubject(pathMatch[1]);
+            const subject = FilterButton.canonicalSubject(pathMatch[1]);
 
-            for (let c of categories) {
+            for (const c of categories) {
                 if (FilterButton.canonicalSubject(c) === subject) {
                     selectedFilter = c;
                 }
@@ -77,33 +86,17 @@ export default class Subjects extends LoadingView {
         this.model.set('selectedFilter', selectedFilter);
     }
 
-    constructor() {
-        super();
-
-        this.model = new BaseModel({
-            selectedFilter: 'View All',
-            selectedBook: null
-        });
-
-        this.listenTo(router, 'route', this.updateSelectedFilterFromPath);
-        this.updateSelectedFilterFromPath();
-    }
-
     renderCategorySections(booksByCategory) {
-        for (let category of categories) {
+        for (const category of categories) {
             this.regions.bookViewer.append(new CategorySection(category, booksByCategory[category], this.model));
         }
     }
 
     onLoaded() {
-        super.onLoaded();
-        this.el.querySelector('.subjects-page').classList.remove('hidden');
-    }
+        const populateBookInfoFields = (data) => {
+            const findNode = (name) => this.el.querySelector(`[data-manager="${name}"]`);
 
-    onRender() {
-        let populateBookInfoFields = (data) => {
-            let findNode = (name) => this.el.querySelector(`[data-manager="${name}"]`);
-
+            // FIX: Move all DOM manipulation to template
             findNode('page-description').innerHTML = data.page_description;
             findNode('ds1-head').textContent = data.dev_standard_1_heading;
             findNode('ds2-head').textContent = data.dev_standard_2_heading;
@@ -113,20 +106,23 @@ export default class Subjects extends LoadingView {
             findNode('ds3-body').innerHTML= data.dev_standard_3_description;
         };
 
+        // FIX: Separate model from controller
         new PageModel().fetch({data: {type: 'books.BookIndex'}}).then((result) => {
             if (result.pages.length === 0) {
                 return;
             }
-            let id = result.pages[0].id,
-                detailPage = new PageModel({id});
+
+            const id = result.pages[0].id;
+            const detailPage = new PageModel({id});
 
             detailPage.fetch().then(populateBookInfoFields);
         });
 
-        for (let button of filterButtons) {
+        for (const button of filterButtons) {
             this.regions.filterButtons.append(new FilterButton(button, this.model));
         }
 
+        // FIX: Separate model from controller
         this.otherPromises.push(new Promise((resolve) => {
             new PageModel().fetch({data: {
                 type: 'books.Book',
@@ -142,7 +138,7 @@ export default class Subjects extends LoadingView {
                 resolve();
             });
         }));
-        super.onRender();
     }
+    */
 
 }

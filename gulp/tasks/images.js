@@ -1,7 +1,7 @@
-var gulp = require('gulp');
-var argv = require('yargs').argv;
-var config = require('../config');
-var pi = require('gulp-load-plugins')({
+const gulp = require('gulp');
+const argv = require('yargs').argv;
+const config = require('../config');
+const pi = require('gulp-load-plugins')({
     pattern: ['gulp-*', 'gulp.*', 'del']
 });
 
@@ -26,5 +26,8 @@ gulp.task(images);
 
 gulp.task('images:watch', () => {
     gulp.watch(`${config.src}/**/*.{png,jpg,jpeg,gif,svg,mp4}`, config.watchOpts)
-    .on('change', images);
+    .on('change', gulp.series(
+        images,
+        'reload-browser'
+    ));
 });

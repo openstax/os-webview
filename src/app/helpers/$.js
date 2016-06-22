@@ -1,4 +1,5 @@
-let $ = {};
+// FIX:  Delete as many of these as possible
+const $ = {};
 
 $.isTouchDevice = () => (
     ('ontouchstart' in window) ||
@@ -10,21 +11,21 @@ $.stringCompare = (a, b) => (a < b) ? -1 : +(a > b);
 
 $.lowerCaseCompare = (a, b) => $.stringCompare(a.toLowerCase(), b.toLowerCase());
 
-const tick = 1000 / 40,
-    spaceForMenu = 59,
-    targetStep = 200,
-    targetTicks = 20;
+const tick = 1000 / 40;
+const spaceForMenu = 59;
+const targetStep = 200;
+const targetTicks = 20;
 
 $.scrollTo = (el, offset = 0) => {
-    let rect = el.getBoundingClientRect(),
-        offsetTop = rect.top - spaceForMenu - offset,
-        direction = Math.sign(offsetTop),
-        magnitude = Math.abs(offsetTop),
-        chosenStep = (targetStep + magnitude / targetTicks) / 2;
+    const rect = el.getBoundingClientRect();
+    const offsetTop = rect.top - spaceForMenu - offset;
+    const direction = Math.sign(offsetTop);
+    let magnitude = Math.abs(offsetTop);
+    const chosenStep = (targetStep + magnitude / targetTicks) / 2;
 
-    let i = setInterval(() => {
-        let step = (magnitude > chosenStep) ? chosenStep : magnitude,
-            scrollBody = document.documentElement.scrollTop || document.body.scrollTop;
+    const i = setInterval(() => {
+        const step = (magnitude > chosenStep) ? chosenStep : magnitude;
+        const scrollBody = document.documentElement.scrollTop || document.body.scrollTop;
 
         window.scrollTo(0, scrollBody + direction * step);
         magnitude -= step;
@@ -35,39 +36,39 @@ $.scrollTo = (el, offset = 0) => {
 };
 
 $.applyScrollFix = (view) => {
-    let freezePosition = null,
-        setFreezePosition = () => {
-            freezePosition = document.documentElement.scrollTop || document.body.scrollTop;
-        },
-        handleMouseLeave = (e) => {
-            if (!e.currentTarget.contains(e.relatedTarget)) {
+    let freezePosition = null;
+    const setFreezePosition = () => {
+        freezePosition = document.documentElement.scrollTop || document.body.scrollTop;
+    };
+    const handleMouseLeave = (e) => {
+        if (!e.currentTarget.contains(e.relatedTarget)) {
+            freezePosition = null;
+        }
+    };
+    const handleWheelEvent = (e) => {
+        const el = e.currentTarget;
+        const delta = e.deltaY || e.wheelDelta / 4;
+
+        el.scrollTop = el.scrollTop + delta;
+        e.preventDefault();
+    };
+    const touchOutside = (el) => (
+        (e) => {
+            if (!el.contains(e.target)) {
                 freezePosition = null;
             }
-        },
-        handleWheelEvent = (e) => {
-            let el = e.currentTarget,
-                delta = e.deltaY || e.wheelDelta / 4;
+        }
+    );
+    let scrollStart;
+    const setScrollStart = (e) => {
+        scrollStart = e.currentTarget.scrollTop + e.touches[0].pageY;
+    };
+    const scroll = (e) => {
+        e.currentTarget.scrollTop = scrollStart - event.touches[0].pageY;
+        event.preventDefault();
+    };
 
-            el.scrollTop = el.scrollTop + delta;
-            e.preventDefault();
-        },
-        touchOutside = (el) => (
-            (e) => {
-                if (!el.contains(e.target)) {
-                    freezePosition = null;
-                }
-            }
-        ),
-        scrollStart,
-        setScrollStart = (e) => {
-            scrollStart = e.currentTarget.scrollTop + e.touches[0].pageY;
-        },
-        scroll = (e) => {
-            e.currentTarget.scrollTop = scrollStart - event.touches[0].pageY;
-            event.preventDefault();
-        };
-
-    for (let el of view.el.querySelectorAll('.mac-scroll')) {
+    for (const el of view.el.querySelectorAll('.mac-scroll')) {
         view.attachListenerTo(el, 'scroll', setFreezePosition);
         view.attachListenerTo(el, 'mouseleave', handleMouseLeave);
         view.attachListenerTo(el, 'mousewheel', handleWheelEvent);
@@ -85,9 +86,9 @@ $.applyScrollFix = (view) => {
 };
 
 $.hashClick = (event, options = {doHistory: true}) => {
-    let node = event.currentTarget,
-        destUrl = `${node.pathname}${node.hash}`,
-        targetEl = document.getElementById(node.hash.substr(1));
+    const node = event.currentTarget;
+    const destUrl = `${node.pathname}${node.hash}`;
+    const targetEl = document.getElementById(node.hash.substr(1));
 
     $.scrollTo(targetEl);
     if (options.doHistory) {
@@ -101,9 +102,9 @@ const invalidEmailPatterns = [
 ];
 
 $.testInstitutionalEmail = (element) => {
-    let ieValue = element.value;
+    const ieValue = element.value;
 
-    for (let re of invalidEmailPatterns) {
+    for (const re of invalidEmailPatterns) {
         if (re.test(ieValue)) {
             return false;
         }

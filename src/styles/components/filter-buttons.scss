@@ -8,25 +8,25 @@ $text-black3: rgba(0, 0, 0, 0.54);
 
 .filter {
     color: color(gray);
+    left: 0;
     margin: 0 auto;
     max-width: 70rem;
     position: absolute;
-    top: -2.1rem;
-    left: 0;
     right: 0;
+    top: -2.1rem;
     z-index: 1;
 
     &::before,
     &::after {
-        color: color(neutral-lighter);
         border-right: 0.2rem solid;
+        color: color(neutral-lighter);
         content: '';
         display: block;
         height: 1.2rem;
-        right: 4.3rem;
         position: absolute;
-        transform: rotate3d(0, 0, 1, 135deg);
+        right: 4.3rem;
         top: 2rem;
+        transform: rotate3d(0, 0, 1, 135deg);
         width: 0;
         z-index: 1;
 
@@ -42,28 +42,28 @@ $text-black3: rgba(0, 0, 0, 0.54);
 }
 
 .filter-buttons {
-    display: flex;
-    margin: 0 1.5rem;
+    background-color: color(neutral-lightest);
     border: 0.1rem solid color(neutral-lighter);
+    display: flex;
     flex-flow: column nowrap;
     font-size: 1.8rem;
     line-height: 1.8rem;
-    background-color: color(neutral-lightest);
+    margin: 0 1.5rem;
 
     @include desktop {
+        border-right: 0;
         flex-flow: row nowrap;
         margin: 0;
-        border-right: 0;
     }
 
     .filter-button {
+        cursor: pointer;
         overflow: hidden;
         padding: 1.5rem;
-        cursor: pointer;
 
         @include desktop {
-            flex: 1 auto;
             border-right: 0.1rem solid color(neutral-lighter);
+            flex: 1 auto;
             text-align: center;
         }
 
@@ -71,15 +71,15 @@ $text-black3: rgba(0, 0, 0, 0.54);
             order: -1;
 
             @include desktop {
-                order: 0;
                 background-color: lighten(color(neutral-lighter), 8%);
+                order: 0;
             }
 
             &::before {
-                content: 'Filter By: ';
-                font-weight: 500;
-                display: inline;
                 color: color(neutral-lighter);
+                content: 'Filter By: ';
+                display: inline;
+                font-weight: 500;
 
                 @include desktop {
                     content: '';
@@ -89,17 +89,17 @@ $text-black3: rgba(0, 0, 0, 0.54);
        }
 
         &:not(.selected) {
-            width: 0;
             height: 0;
-            padding: 0;
             opacity: 0;
+            padding: 0;
             transition: opacity 0.3s;
+            width: 0;
 
             @include desktop {
-                width: auto;
                 height: auto;
                 opacity: 1;
                 padding: 1.5rem;
+                width: auto;
             }
 
             &:hover {
@@ -107,10 +107,10 @@ $text-black3: rgba(0, 0, 0, 0.54);
             }
 
             @at-root .active#{&} {
-                padding: 1rem 1.5rem;
-                width: 100%;
                 height: inherit;
                 opacity: 1;
+                padding: 1rem 1.5rem;
+                width: 100%;
 
                 &:last-child {
                     margin-bottom: 0.5rem;

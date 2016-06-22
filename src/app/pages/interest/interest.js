@@ -1,34 +1,35 @@
-import ProxyWidgetView from '~/helpers/backbone/proxy-widget-view';
-import salesforceModel from '~/models/salesforce-model';
-import bookTitles from '~/helpers/book-titles';
-import {on, props} from '~/helpers/backbone/decorators';
-import {template} from './interest.hbs';
-import {template as strips} from '~/components/strips/strips.hbs';
+import ProxyWidgetView from '~/controllers/proxy-widget-view';
+import {on} from '~/helpers/controller/decorators';
+import bookTitles from '~/models/book-titles';
+// import salesforceModel from '~/models/salesforce-model';
+import {description as template} from './interest.html';
 
-@props({
-    template: template,
-    css: '/app/pages/interest/interest.css',
-    templateHelpers: {
-        titles: bookTitles,
-        urlOrigin: window.location.origin,
-        strips
-    }
-})
 export default class InterestForm extends ProxyWidgetView {
 
+    init() {
+        this.template = template;
+        this.css = '/app/pages/interest/interest.css';
+        this.view = {
+            classes: ['interest-form']
+        };
+        this.templateHelpers = {
+            titles: bookTitles
+        };
+    }
+
+    /*
+    // FIX: Refactor so a view can handle all these events by just listing the relevant elements
     @on('change [type=text],[type=email]')
     saveSetting(event) {
-        let varName = event.target.name;
-
-        if (varName) {
-            salesforceModel.set(varName, event.target.value);
+        if (event.target.name) {
+            salesforceModel.set(event.target.name, event.target.value);
         }
     }
 
-    onRender() {
-        this.el.classList.add('interest-form');
+    onLoaded() {
+        // FIX: Move DOM manipulation to the template, just pass the model in
         salesforceModel.prefill(this.el);
-        super.onRender();
     }
+    */
 
 }

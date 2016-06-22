@@ -21,8 +21,8 @@
 }
 
 .biology {
-    background-image: url('/images/home/subjects/biology/background.jpg');
     background-attachment: fixed;
+    background-image: url('/images/home/subjects/biology/background.jpg');
     background-position: 20% 0;
     background-repeat: no-repeat;
     background-size: cover;
@@ -42,12 +42,12 @@
 
     .container {
         display: flex;
-        margin: 0 auto;
-        padding: 0 1.5rem;
-        max-width: $boxed-width;
         flex-flow: column wrap;
-        position: relative;
         height: 100%;
+        margin: 0 auto;
+        max-width: $boxed-width;
+        padding: 0 1.5rem;
+        position: relative;
 
         @include tablet {
             flex-flow: row wrap;
@@ -69,8 +69,8 @@
         z-index: 0;
 
         @include desktop {
-            display: block;
             animation: flyin 0.5s 1.2s 1 normal ease-in forwards, loop 30s 1.5s normal infinite linear forwards;
+            display: block;
         }
 
         &.flyout {
@@ -93,8 +93,8 @@
     }
 
     .square-2 {
-        height: 34rem;
         bottom: 0;
+        height: 34rem;
         left: 0;
         width: 45rem;
 
@@ -111,8 +111,8 @@
     }
 
     .square-3 {
-        height: 26rem;
         bottom: 15rem;
+        height: 26rem;
         right: 0;
         width: 26rem;
 
@@ -149,8 +149,8 @@
         display: none;
 
         @include desktop {
-            display: block;
             animation: flyin 0.5s 1.4s 1 normal ease-in forwards, loop 40s 1.8s reverse infinite linear forwards;
+            display: block;
         }
 
         &.flyout {
@@ -163,18 +163,18 @@
 
     .diagram {
         background-image: url('/images/home/subjects/biology/diagram.png');
+        bottom: 6rem;
         height: 19rem;
         left: 5rem;
         position: absolute;
-        bottom: 6rem;
         width: 27.4rem;
     }
 
     .leaf {
         background-image: url('/images/home/subjects/biology/leaf.png');
         height: 14rem;
-        right: 19rem;
         position: absolute;
+        right: 19rem;
         top: 24rem;
         width: 14rem;
     }
@@ -182,26 +182,25 @@
     .book {
         background-color: color(green);
         background-image: url('/images/subjects/biology.svg');
-        position: absolute;
+        background-position: 100% 50%;
+        background-size: 130% auto;
         height: 25rem;
+        position: absolute;
         right: 16rem;
         top: 1.5rem;
         width: 25rem;
-        background-size: 130% auto;
-        background-position: 100% 50%;
 
         @include tablet {
-            top: 5%;
+            height: 30rem;
             left: 30%;
             right: auto;
+            top: 5%;
             width: 30rem;
-            height: 30rem;
         }
 
         @media (max-width: 360px) {
-            right: auto;
             left: -5rem;
-
+            right: auto;
         }
 
         @media (min-width: #{breakpoints(tablet) + 1}) {
@@ -209,8 +208,8 @@
         }
 
         @include desktop {
-            left: 40%;
             animation: flyin 0.5s 1s 1 normal forwards;
+            left: 40%;
         }
 
         &.flyout {
@@ -233,16 +232,16 @@
 
         @include tablet {
             bottom: 0;
+            height: 53rem;
             left: -10%;
             right: auto;
-            height: 53rem;
             width: 45.4rem;
         }
 
         @include desktop {
             height: 53rem;
-            width: 45.4rem;
             left: 10%;
+            width: 45.4rem;
         }
     }
 
@@ -254,8 +253,8 @@
         font-size: 3rem;
         font-weight: 600;
         height: 8rem;
-        line-height: 2.5rem;
         left: 22%;
+        line-height: 2.5rem;
         padding: 0;
         position: absolute;
         text-align: center;
@@ -268,11 +267,11 @@
         }
 
         @include desktop {
+            animation: flyin 0.5s 1.8s 1 normal forwards;
+            font-size: 3.6rem;
+            height: 9rem;
             left: calc(49% - 6rem);
             width: 59rem;
-            height: 9rem;
-            font-size: 3.6rem;
-            animation: flyin 0.5s 1.8s 1 normal forwards;
         }
 
         &.flyout {
@@ -284,24 +283,23 @@
 
         .quote {
             display: inline-block;
-            line-height: 8rem;
             font-family: 'Permanent Marker', cursive;
-            transform: rotate(-1.2deg) translate(0.75vw, -0.45vw);
+            line-height: 8rem;
             margin-right: 1rem;
+            transform: rotate(-1.2deg) translate(0.75vw, -0.45vw);
         }
 
         &::after {
             border-bottom: 0.1rem solid color(neutral-lightest);
             content: '';
-            right: 1rem;
             position: absolute;
+            right: 1rem;
             top: 6rem;
             width: 32rem;
 
-
             @include desktop {
-                width: 38rem;
                 right: 1rem;
+                width: 38rem;
             }
         }
     }
@@ -314,19 +312,19 @@
         z-index: 3;
 
         @include tablet {
-            width: 27rem;
             bottom: 6rem;
             left: 40%;
+            width: 27rem;
         }
 
         @media (min-width: 650px) {
-            width: auto;
             left: 22%;
+            width: auto;
         }
 
         @include desktop {
-            left: calc(49% - 6rem);
             animation: flyin 0.5s 1.8s 1 normal forwards;
+            left: calc(49% - 6rem);
         }
 
         &.flyout {
@@ -357,12 +355,12 @@
         }
 
         .btn {
+            display: inline-block;
             font-size: 1.6rem;
-            line-height: 6rem;
             height: 6rem;
+            line-height: 6rem;
             padding: 0 1.5rem;
             width: 100%;
-            display: inline-block;
 
             @include desktop {
                 width: auto;

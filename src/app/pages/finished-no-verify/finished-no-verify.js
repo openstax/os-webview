@@ -1,20 +1,14 @@
-import BaseView from '~/helpers/backbone/view';
-import {props} from '~/helpers/backbone/decorators';
-import {template} from './finished-no-verify.hbs';
-import {template as strips} from '~/components/strips/strips.hbs';
+import {Controller} from 'superb';
+import {description as template} from './finished-no-verify.html';
 
-@props({
-    template: template,
-    css: '/app/pages/finished-no-verify/finished-no-verify.css',
-    templateHelpers: {
-        strips
-    }
-})
-export default class FinishedNoVerify extends BaseView {
+export default class FinishedNoVerify extends Controller {
 
-    onRender() {
-        this.el.classList.add('confirmation-page');
+    init() {
+        this.template = template;
+        this.css = '/app/pages/finished-no-verify/finished-no-verify.css';
+        this.view = {
+            classes: ['confirmation-page']
+        };
     }
 
 }
-

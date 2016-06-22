@@ -1,23 +1,24 @@
-import BaseView from '~/helpers/backbone/view';
-import {on, props} from '~/helpers/backbone/decorators';
-import {template} from './remover.hbs';
+// FIX: Remove this component
 
-@props({
-    template: template,
-    css: '/app/components/remover/remover.css'
-})
-export default class Remover extends BaseView {
+import {Controller} from 'superb';
+import {on} from '~/helpers/controller/decorators';
+import {description as template} from './remover.html';
+
+export default class Remover extends Controller {
+
+    init(callback) {
+        this.template = template;
+        this.css = '/app/components/remover/remover.css';
+        this.callback = callback;
+    }
+
     @on('click')
     callCallback() {
         this.callback();
     }
 
-    constructor(callback) {
-        super();
-        this.callback = callback;
-    }
-
-    onRender() {
+    onLoaded() {
         this.el.classList.add('remover');
     }
+
 }

@@ -13,16 +13,16 @@ function findAncestor(el, Element) {
 }
 
 function ignoreUrl(url) {
-    return typeof url !== 'string' || url.charAt(0) === '#' || MAILTO.test(url);
+    return typeof url !== 'string' || MAILTO.test(url);
 }
 
 function ignoreClick(e) {
-    return e.defaultPrevented || e.metaKey || e.which !== 1;
+    return e.defaultPrevented || e.metaKey;
 }
 
 function validUrlClick(e) {
-    let el = findAncestor(e.target, HTMLAnchorElement) || e.target;
-    let href = el.getAttribute('href');
+    const el = findAncestor(e.target, HTMLAnchorElement) || e.target;
+    const href = el.getAttribute('href');
 
     if (ignoreClick(e) || ignoreUrl(href)) {
         return false;
@@ -40,7 +40,7 @@ function isExternal(href) {
 }
 
 export default {
-    isExternal: isExternal,
-    validUrlClick: validUrlClick,
-    isPDF: isPDF
+    isExternal,
+    validUrlClick,
+    isPDF
 };

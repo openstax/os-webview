@@ -1,8 +1,10 @@
-import BaseView from '~/helpers/backbone/view';
-import {props} from '~/helpers/backbone/decorators';
-import {template} from './already-using.hbs';
+import {Controller} from 'superb';
+import {description as template} from './already-using.html';
 
-@props({
-    template: template
-})
-export default class AlreadyUsing extends BaseView {}
+export default class AlreadyUsing extends Controller {
+
+    init() {
+        this.template = template;
+    }
+
+}

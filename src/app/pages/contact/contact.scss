@@ -24,8 +24,8 @@
         }
 
         .boxed {
-            padding: 0 1.5rem;
             flex-flow: column nowrap;
+            padding: 0 1.5rem;
         }
     }
 
@@ -46,9 +46,9 @@
 
             &:last-child {
                 @include tablet-up {
-                    padding-left: 3rem;
                     flex: 1 1 40%;
                     max-width: 40%;
+                    padding-left: 3rem;
 
                     > h2 {
                         margin-top: 2.5rem;
@@ -63,14 +63,14 @@
         color: color(blue);
 
         textarea {
-            resize: none;
             height: auto;
+            resize: none;
         }
     }
 
     .btn {
-        float: none;
         background-color: color(orange);
+        float: none;
     }
 
     .btn:hover,

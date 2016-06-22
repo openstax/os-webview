@@ -1,142 +1,120 @@
-import LoadingView from '~/helpers/backbone/loading-view';
-import BaseModel from '~/helpers/backbone/model';
-import PageModel from '~/models/pagemodel';
-import FilterButton from '~/components/filter-button/filter-button';
-import Icon from './icon/icon';
-import Partner from './partner/partner';
-import $ from '~/helpers/$';
-import {on, props} from '~/helpers/backbone/decorators';
-import {template} from './partners.hbs';
-import {template as strips} from '~/components/strips/strips.hbs';
+import settings from 'settings';
 import router from '~/router';
+import CMSPageController from '~/controllers/cms';
+import {on} from '~/helpers/controller/decorators';
+import {description as template} from './partners.html';
 
-const categories = ['Math', 'Science', 'Social Sciences', 'Humanities', 'AP®'],
-    filterButtons = ['View All', ...categories];
+const categories = ['Math', 'Science', 'Social Sciences', 'Humanities', 'AP'];
+const filterButtons = ['View All', ...categories];
 
-let partnersData = {},
-    partnersDataPromise, pageDataPromise;
+export default class Partners extends CMSPageController {
 
+    static description = `OpenStax partners have united with us to increase
+        access to high-quality learning materials. Their low-cost tools
+        integrate seamlessly with OpenStax books.`;
 
-function handlePartnersData(data) {
-    for (let page of data.pages) {
-        let name = page.heading;
-
-        partnersData[name] = {
-            name,
-            blurb: page.long_description,
-            subjects: page.ally_subject_list,
-            bookLinks: [],
-            isAp: page.is_ap,
-            logoUrl: page.ally_bw_logo
+    init() {
+        this.id = 50;
+        this.template = template;
+        this.css = '/app/pages/partners/partners.css';
+        this.view = {
+            classes: ['partners-page', 'page']
         };
-        if (page.ally_logo) {
-            partnersData[name].logoUrl = page.ally_logo;
-        }
-    }
-}
+        this.model = {
+            title: '',
+            'classroom_text': '',
+            book: null,
+            partners: [],
+            filterButtons
+        };
 
-pageDataPromise = new PageModel().fetch({
-    data: {
-        type: 'pages.EcosystemAllies',
-        fields: ['title', 'classroom_text']
-    }
-});
+        router.setState({filter: 'View All'});
 
-partnersDataPromise = new PageModel().fetch({
-    data: {
-        type: 'allies.Ally',
-        fields: ['ally_subject_list', 'title', 'short_description', 'long_description',
-                'heading', 'is_ap', 'ally_bw_logo']
-    }
-}).then(handlePartnersData);
+        this.filterPartnersEvent = this.filterPartners.bind(this);
 
-class FilterStateModel extends BaseModel {
-    matchesFilter(partnerData) {
-        let subject = this.get('selectedFilter');
-
-        return (subject === 'View All' ||
-            (subject === 'AP®' && partnerData.isAp) ||
-            partnerData.subjects.indexOf(subject) >= 0);
-    }
-}
-
-@props({
-    template: template,
-    css: '/app/pages/partners/partners.css',
-    templateHelpers: {strips},
-    regions: {
-        filterButtons: '.filter-buttons',
-        icons: '.icons .container',
-        blurbs: '.blurbs.container'
-    }
-})
-export default class Partners extends LoadingView {
-    @on('click .filter')
-    filterClick() {
-        let filterSection = this.el.querySelector('.filter');
-
-        $.scrollTo(filterSection, 30);
+        window.addEventListener('popstate', this.filterPartnersEvent);
     }
 
-    static metaDescription = () => `OpenStax partners have united with us to increase
-        access to high-quality learning materials. Their low-cost tools integrate
-        seamlessly with OpenStax books.`;
+    onDataLoaded() {
+        this.model = Object.assign(this.model, this.pageData);
+        this.update();
 
-    updateSelectedFilterFromPath() {
-        let pathMatch = window.location.pathname.match(/\/partners\/(.+)/),
-            selectedFilter = 'View All';
+        const fields = ['ally_subject_list', 'title', 'short_description', 'long_description',
+            'heading', 'is_ap', 'ally_bw_logo'];
 
-        if (pathMatch) {
-            let subject = FilterButton.canonicalSubject(pathMatch[1]);
-
-            for (let c of categories) {
-                if (FilterButton.canonicalSubject(c) === subject) {
-                    selectedFilter = c;
-                }
-            }
-            if (selectedFilter === 'View All') {
-                router.navigate('404', true);
-            }
-        }
-        this.stateModel.set('selectedFilter', selectedFilter);
-    }
-
-    constructor() {
-        super();
-        this.stateModel = new FilterStateModel({
-            selectedFilter: 'View All',
-            selectedBook: null
+        fetch(`${settings.apiOrigin}/api/v1/pages/?fields=${fields.join(',')}&format=json&type=allies.Ally`)
+        .then((response) => response.json())
+        .then((json) => {
+            this.model.allPartners = json.pages;
+            this.filterPartners();
         });
-        this.updateSelectedFilterFromPath();
     }
 
-    handlePageData(data) {
-        this.el.querySelector('#page-title').textContent = data.pages[0].title;
-        this.el.querySelector('#page-subhead').innerHTML = data.pages[0].classroom_text;
-    }
+    onUpdate() {
+        // NOTE: Incremental-DOM currently lacks the ability to inject HTML into a node.
+        for (const partner of this.model.partners) {
+            const el = document.getElementById(`${partner.title}-blurb`);
 
-    onRender() {
-        this.el.classList.add('partners-page');
-        for (let button of filterButtons) {
-            this.regions.filterButtons.append(new FilterButton(button, this.stateModel));
-        }
-        this.otherPromises.push(new Promise((resolve) => {
-            partnersDataPromise.then(() => {
-                for (let name of Object.keys(partnersData).sort($.lowerCaseCompare)) {
-                    this.regions.icons.append(new Icon(partnersData[name], this.stateModel));
-                    this.regions.blurbs.append(new Partner(partnersData[name], this.stateModel));
-                }
-                resolve();
-            });
-        }));
-        pageDataPromise.then(this.handlePageData.bind(this));
-        super.onRender();
-    }
-
-    onLoaded() {
-        super.onLoaded();
-        for (let section of this.el.querySelectorAll('.hero,.icons')) {
-            section.classList.remove('hidden');
+            el.querySelector('h2').innerHTML = partner.title;
+            el.querySelector('p').innerHTML = partner.long_description;
         }
     }
+
+    filterPartners() {
+        if (!Array.isArray(this.model.allPartners)) {
+            return;
+        }
+
+        if (!history.state.filter) {
+            router.setState({filter: 'View All'});
+        }
+
+        this.model.partners = this.model.allPartners.filter((partner) => {
+            if (history.state.filter === 'View All') {
+                return true;
+            } else if (history.state.filter === 'AP') {
+                return partner.is_ap;
+            }
+
+            return partner.ally_subject_list.includes(history.state.filter);
+        });
+
+        this.update();
+    }
+
+    @on('click .logo-text')
+    onLogoClick(e) {
+        e.preventDefault();
+
+        router.navigate(e.delegateTarget.getAttribute('href'), {
+            filter: history.state.filter
+        });
+    }
+
+    @on('click .filter-button')
+    setFilter(e) {
+        if (history.state.filter === e.target.textContent) {
+            return;
+        }
+
+        router.pushState({filter: e.target.textContent});
+        this.filterPartners();
+    }
+
+    @on('click .to-top')
+    scrollToFilterButtons(e) {
+        e.preventDefault();
+
+        const el = document.getElementById('filter');
+        const bodyRect = document.body.getBoundingClientRect();
+        const elRect = el.getBoundingClientRect();
+        const offset = elRect.top - bodyRect.top;
+
+        window.scrollTo(0, offset);
+    }
+
+    onClose() {
+        window.removeEventListener('popstate', this.filterPartnersEvent);
+    }
+
 }

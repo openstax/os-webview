@@ -1,6 +1,6 @@
-import BaseView from '~/helpers/backbone/view';
+import {Controller} from 'superb';
 
-export default class BannerView extends BaseView {
+export default class BannerView extends Controller {
 
     constructor(options) {
         super();
@@ -10,28 +10,28 @@ export default class BannerView extends BaseView {
         this.display = options.display;
     }
 
-    onRender() {
+    onLoaded() {
         if (this.display) {
             this.show();
         }
     }
 
     show() {
-        let el = this.el;
-        let flyouts = el.querySelectorAll('.flyout');
+        const el = this.el;
+        const flyouts = el.querySelectorAll('.flyout');
 
         el.classList.add('fadein');
 
-        for (let flyout of flyouts) {
+        for (const flyout of flyouts) {
             flyout.classList.remove('flyout');
             flyout.classList.add('flyin');
         }
 
 
         this.flyinTimer = setTimeout(() => {
-            let flyins = el.querySelectorAll('.flyin');
+            const flyins = el.querySelectorAll('.flyin');
 
-            for (let flyin of flyins) {
+            for (const flyin of flyins) {
                 flyin.classList.remove('flyin');
                 flyin.classList.add('flyout');
             }

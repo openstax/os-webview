@@ -1,80 +1,73 @@
-import LoadingView from '~/helpers/backbone/loading-view';
-import PageModel from '~/models/pagemodel';
-import SingleSelect from '~/components/single-select/single-select';
-import {on, props} from '~/helpers/backbone/decorators';
-import {template} from './contact.hbs';
-import {template as strips} from '~/components/strips/strips.hbs';
+import settings from 'settings';
+import router from '~/router';
+import $ from '~/helpers/$';
+import CMSPageController from '~/controllers/cms';
+import {on} from '~/helpers/controller/decorators';
+import selectHandler from '~/handlers/select';
+import {description as template} from './contact.html';
 
-const subjectOptions = [
-    ['General', 'General OpenStax Question'],
-    ['Adopting OpenStax Textbooks', 'Adopting OpenStax Textbooks'],
-    ['Concept Coach', 'Concept Coach Question'],
-    ['OpenStax Tutor Pilot Sign-up', 'I’m interested in piloting OpenStax Tutor'],
-    ['OpenStax Tutor Support', 'OpenStax Tutor Question'],
-    ['OpenStax CNX', 'CNX Question'],
-    ['Donations', 'Donations'],
-    ['College/University Partnerships', 'College/University Partnerships'],
-    ['Media Inquiries', 'Media Inquiries.'],
-    ['Foundational Support', 'Foundation'],
-    ['OpenStax Partners', 'Partners'],
-    ['Website', 'Website']
+const subjects = [
+    'General',
+    'Adopting OpenStax Textbooks',
+    'Concept Coach',
+    'OpenStax Tutor Pilot Sign-up',
+    'OpenStax Tutor Support',
+    'OpenStax CNX',
+    'Donations',
+    'College/University Partnerships',
+    'Media Inquiries',
+    'Foundational Support',
+    'OpenStax Partners',
+    'Website'
 ];
 
-let contactDataPromise = new PageModel().fetch({
-    data: {
-        type: 'pages.ContactUs',
-        fields: ['title', 'tagline', 'mailing_header', 'mailing_address', 'phone_number']
-    }
-});
+export default class Contact extends CMSPageController {
 
-@props({
-    template: template,
-    css: '/app/pages/contact/contact.css',
-    templateHelpers: {
-        strips,
-        options: subjectOptions.map((option) => option[0]),
-        urlOrigin: window.location.origin
-    }
-})
-export default class Contact extends LoadingView {
-    @on('submit')
-    validateAndSend(e) {
-        let selectedSubject = this.el.querySelector('select').value,
-            selectedOption = subjectOptions.filter((item) => item[0] === selectedSubject)[0];
+    static description = `If you have a question or feedback about our books,
+        OpenStax Tutor, Concept Coach, partnerships, or any other topic,
+        contact us here. We’d love to hear from you!`;
 
-        this.el.querySelector('[name="subject"]').value = selectedOption[1];
-        if (!e.target.checkValidity()) {
-            e.target.classList.add('has-been-submitted');
-            e.preventDefault();
+    init() {
+        document.querySelector('head meta[name="description"]').content = Contact.description;
+        this.id = 84;
+        this.template = template;
+        this.css = '/app/pages/contact/contact.css';
+        this.view = {
+            classes: ['contact-page', 'page']
+        };
+        this.model = {
+            subjects,
+            tagline: '',
+            title: '',
+            'mailing_header': '',
+            'mailing_address': '',
+            'phone_number': ''
+        };
+    }
+
+    onLoaded() {
+        // NOTE: Cannot set this in the template due to `each` restriction
+        const queryDict = $.parseSearchString(window.location.search);
+        const defaultSubject = queryDict.subject || 'General';
+        const subjectSelect = this.el.querySelector('[name="subject"]');
+        const optionPattern = `option[value="${defaultSubject}"]`;
+        const defaultSubjectOption = subjectSelect.querySelector(optionPattern);
+
+        if (defaultSubjectOption) {
+            defaultSubjectOption.defaultSelected = true;
         }
+
+        selectHandler.setup(this);
     }
 
-    static metaDescription = () => `If you have a question or feedback about our books,
-        OpenStax Tutor, Concept Coach, partnerships, or any other topic, contact us here.
-        We’d love to hear from you!`;
-
-    onRender() {
-        let queryString = window.location.search,
-            matched = queryString.match(/^\?subject=([^&]+)/),
-            ss = this.el.querySelector('select:not([multiple])'),
-            proxySs = new SingleSelect();
-
-        proxySs.replace(ss);
-        if (matched) {
-            proxySs.set(decodeURIComponent(matched[1]));
-        }
-        contactDataPromise.then((result) => {
-            let data = result.pages[0];
-
-            for (let field of Object.keys(data)) {
-                let el = this.el.querySelector(`[data-id="${field}"]`);
-
-                if (el) {
-                    el.innerHTML = data[field];
-                }
-            }
-        });
-        this.otherPromises.push(contactDataPromise);
-        super.onRender();
+    onDataLoaded() {
+        this.model = Object.assign(this.model, this.pageData);
+        this.update();
     }
+
+    onUpdate() {
+        // NOTE: Incremental-DOM currently lacks the ability to inject HTML into a node.
+        this.el.querySelector('[data-html="mailing-address"]').innerHTML = this.model.mailing_address;
+    }
+
 }

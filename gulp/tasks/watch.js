@@ -1,7 +1,4 @@
-'use strict';
-
-var gulp = require('gulp'),
-    taskNames, watchTasks;
+const gulp = require('gulp');
 
 require('require-dir')('.', {recurse: true});
 
@@ -11,12 +8,12 @@ require('require-dir')('.', {recurse: true});
  * run them with the 'watch' task.
  *
  */
-taskNames = Object.keys(gulp.registry().tasks());
-watchTasks = [];
+const taskNames = Object.keys(gulp.registry().tasks());
+const watchTasks = [];
 
 for (let i = 0, l = taskNames.length; i < l; i++) {
-    let taskName = taskNames[i];
-    let taskParts = taskName.split(':');
+    const taskName = taskNames[i];
+    const taskParts = taskName.split(':');
 
     // Check length is greater one to avoid selecting this task &
     // check if the last part is 'watch'
@@ -27,7 +24,6 @@ for (let i = 0, l = taskNames.length; i < l; i++) {
 }
 
 gulp.task('watch', gulp.series(
-    'development',
     'browser-sync',
     gulp.parallel(...watchTasks)
 ));

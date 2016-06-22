@@ -16,41 +16,41 @@
 
         &.pdf .pdf-submenu,
         &.print .print-submenu {
-            width: auto;
             height: auto;
-            transform: scale3d(1, 1, 1);
             opacity: 1;
+            transform: scale3d(1, 1, 1);
+            width: auto;
 
         }
 
         .pdf-submenu,
         .print-submenu {
-            opacity: 0;
-            width: 0;
             height: 0;
+            opacity: 0;
             overflow: hidden;
             transform: scale3d(0, 0, 0);
             transition: opacity 0.2s;
+            width: 0;
         }
 
         .btn {
-            width: 100%;
+            color: color(neutral-lightest);
             font-variant: normal;
             padding: 1.5rem;
             text-transform: uppercase;
-            color: color(neutral-lightest);
+            width: 100%;
 
             &:hover {
-                transform: scale3d(1, 1, 1);
                 background-color: darken(color(neutral-medium), 5%);
+                transform: scale3d(1, 1, 1);
             }
         }
     }
 
     .options {
+        margin-bottom: 1rem;
         opacity: 1;
         transition: opacity 0.2s;
-        margin-bottom: 1rem;
     }
 
     .pdf + .options,

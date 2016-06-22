@@ -1,21 +1,18 @@
-import BaseView from '~/helpers/backbone/view';
+import {Controller} from 'superb';
 import bodyUnits from '~/components/body-units/body-units';
-import {props} from '~/helpers/backbone/decorators';
-import {template} from './article.hbs';
+import {description as template} from './article.html';
 
-@props({
-    template: template,
-    css: '/app/pages/blog/article/article.css',
-    regions: {
-        body: '.body'
-    }
-})
+export default class Article extends Controller {
 
-export default class Article extends BaseView {
-
-    constructor(data) {
-        super();
-
+    init(data) {
+        this.template = template;
+        this.css = '/app/pages/blog/article/article.css';
+        this.view = {
+            classes: ['article']
+        };
+        this.regions = {
+            body: '.body'
+        };
         this.templateHelpers = {
             coverUrl: data.article_image || 'http://placehold.it/370x240',
             title: data.title,
@@ -27,24 +24,23 @@ export default class Article extends BaseView {
         this.data = data;
     }
 
-    onRender() {
-        this.el.classList.add('article');
+    onLoaded() {
+        const d = new Date(this.data.date).toUTCString().split(' ');
+        const formatDate = `${d[2]} ${d[1]}, ${d[3]}`;
 
-        let d = new Date(this.data.date).toUTCString().split(' ');
-        let formatDate = `${d[2]} ${d[1]}, ${d[3]}`;
-
-        for (let el of this.el.querySelectorAll('.date')) {
+        for (const el of this.el.querySelectorAll('.date')) {
             el.innerHTML = formatDate;
         }
 
-        for (let bodyUnit of this.data.body) {
-            let View = bodyUnits[bodyUnit.type];
+        for (const bodyUnit of this.data.body) {
+            const View = bodyUnits[bodyUnit.type];
 
             this.regions.body.append(new View(bodyUnit.value));
         }
 
-        for (let el of this.el.querySelectorAll('.img')) {
+        for (const el of this.el.querySelectorAll('.img')) {
             el.setAttribute('style', `background-image:url(${this.data.article_image})`);
         }
     }
+
 }

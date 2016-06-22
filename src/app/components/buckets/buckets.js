@@ -1,21 +1,20 @@
-import BaseView from '~/helpers/backbone/view';
-import {props} from '~/helpers/backbone/decorators';
-import {template} from './buckets.hbs';
-import Bucket from '../bucket/bucket';
+import {Controller} from 'superb';
+import {description as template} from './buckets.html';
+import Bucket from './bucket/bucket';
 
 const bucketClasses = ['our-impact', 'partners'];
 const buttonClasses = ['btn-cyan', 'btn-gold'];
 
-@props({
-    template: template,
-    css: '/app/components/buckets/buckets.css',
-    regions: {
-        buckets: '.buckets-section'
-    }
-})
-export default class Buckets extends BaseView {
-    constructor(data) {
-        super();
+export default class Buckets extends Controller {
+
+    init(data) {
+        this.template = template;
+        this.css = '/app/components/buckets/buckets.css';
+        this.regions = {
+            buckets: '.buckets-section'
+        };
+
+        // FIX: Simplify options
         if (data) {
             this.data = data.map((item, index) => ({
                 orientation: 'left',
@@ -57,10 +56,10 @@ export default class Buckets extends BaseView {
         }
     }
 
-
-    onRender() {
-        for (let bucketData of this.data) {
+    onLoaded() {
+        for (const bucketData of this.data) {
             this.regions.buckets.append(new Bucket(bucketData));
         }
     }
+
 }

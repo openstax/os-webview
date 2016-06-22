@@ -1,0 +1,115 @@
+<div class="text-content subhead">
+    <h1>Request Complimentary Download from iBooks</h1>
+    <p>
+        All instructors with a verified instructor account can download a
+        complimentary copy of their book of choice from iBooks.
+    </p>
+    <p>
+        OpenStax textbooks are free for students in web view and PDF form,
+        and for less than $5 in the iBooks Store.
+    </p>
+</div>
+
+
+<form accept-charset="UTF-8" class="form"
+ action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="post">
+    <div class="text-content">
+         <div>
+            <input name="utf8" type="hidden" value="✓">
+            <input type=hidden name="oid" value="00DU0000000Kwch">
+            <input type=hidden name="retURL" value="{`${window.location.origin}/comp-copy-confirmation`}">
+            <input type=hidden name="lead_source" value="Comp Request">
+        </div>
+
+        <div class="labeled-inputs row top-of-form">
+            <div class="col">
+                <label>
+                    <span>First name</span>
+                    <input name="first_name" type="text" required>
+                </label>
+                <label>
+                    <span>Last name</span>
+                    <input name="last_name" type="text" required>
+                </label>
+                <label>
+                    <span>School name</span>
+                    <input name="company" type="text" required>
+                </label>
+            </div>
+
+            <div class="col">
+                <label>
+                    <span>School url</span>
+                    <input name="URL" type="text" required>
+                </label>
+                <label>
+                    <span>Email address</span>
+                    <input name="email" pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text" required>
+                </label>
+                <label>
+                    <span>Phone number</span>
+                    <input name="phone" type="text" required>
+                </label>
+            </div>
+        </div>
+    </div>
+
+<div class="wrapper">
+<img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
+<div class="text-content labeled-inputs row book-info">
+    <div class="col">
+        <label>
+            <span>Book Requested</span>
+            <select name="00NU00000053nzR" required>
+                <option value="" disabled selected>Please Select</option>
+                <option value="Anatomy & Physiology">Anatomy and Physiology</option>
+                <option value="Biology">Biology</option>
+                <option value="Chemistry">Chemistry</option>
+                <option value="College Physics (Algebra)">College Physics</option>
+                <option value="Concepts of Bio (non-majors)">Concepts of Biology</option>
+                <option value="Introduction to Sociology">Introduction to Sociology 2e</option>
+                <option value="Introductory Statistics">Introductory Statistics</option>
+                <option value="Economics">Principles of Economics</option>
+                <option value="Macro Econ">Principles of Macroeconomics</option>
+                <option value="Micro Econ">Principles of Microeconomics</option>
+                <option value="Psychology">Psychology</option>
+                <option value="US History">U.S. History</option>
+            </select>
+        </label>
+
+
+        <label>
+            Number of students this semester
+            <input name="00NU00000052VId" type="number" min="0" required>
+        </label>
+
+        <label>
+            Your department
+            <input name="department" type="text">
+        </label>
+    </div>
+
+    <div class="col">
+        <label class="form-item">
+            Have you adopted an OpenStax textbook?
+            <select name="00NU00000055sqB">
+                <option type="radio" name="have_adopted" value="1">Yes</option>
+                <option type="radio" name="have_adopted" checked value="0">No</option>
+            </select>
+        </label>
+
+        <label>
+            Decision date
+            <select name="00NU00000052i3K">
+                <option value="Fall" selected>Fall</option>
+                <option value="Spring">Spring</option>
+                <option value="Summer">Summer</option>
+            </select>
+        </label>
+
+        <div class="cta">
+            <input type="submit" value="Submit" role="button" class="btn"/>
+        </div>
+    </div>
+</form>
+</div>

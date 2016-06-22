@@ -83,9 +83,9 @@ sup {
     }
 
     i {
-        text-shadow: 0 0.2rem 0.2rem rgba(color(neutral-dark), 0.25);
         color: color(neutral-lightest);
         padding: 0 2rem 0.4rem;
+        text-shadow: 0 0.2rem 0.2rem rgba(color(neutral-dark), 0.25);
     }
 }
 
@@ -122,8 +122,8 @@ sup {
 
     &::-webkit-scrollbar-thumb {
         background-color: rgba(color(neutral-darkest), 0.3);
-        border-radius: 0.8rem;
         border: thin solid color(neutral-lightest);
+        border-radius: 0.8rem;
     }
 
     &::-webkit-scrollbar-track {
@@ -134,15 +134,15 @@ sup {
 
 .nojs {
     background-color: darken(color(cyan), 15%);
-    width: 100vw;
     height: 100vh;
+    width: 100vw;
 
     p {
         background-color: color(neutral-lightest);
+        left: 50%;
         padding: 5rem 3rem;
         position: absolute;
         top: 50%;
-        left: 50%;
         transform: translate3d(-50%, -50%, 0);
     }
 }
@@ -191,8 +191,8 @@ sup {
 .boxed {
     display: flex;
     flex-flow: column nowrap;
-    max-width: $boxed-width;
     margin: 0 auto;
+    max-width: $boxed-width;
     padding: 0 1.5rem;
     width: 100%;
 }
@@ -208,13 +208,13 @@ sup {
 
 
 .subhead { // for banner with text only
-    padding: 8rem 1.5rem;
-    font-weight: normal;
-    display: flex;
     align-items: center;
-    width: 100%;
+    display: flex;
+    font-weight: normal;
     max-width: $boxed-width;
+    padding: 8rem 1.5rem;
     text-align: center;
+    width: 100%;
 
     @include phone {
         text-align: left;
@@ -239,9 +239,12 @@ sup {
         &:hover,
         &:focus {
             color: rgba(color(cyan), 0.5);
-            }
+        }
     }
+}
 
+.strips {
+    width: 100%;
 }
 
 [href=""],  // for testing empty links

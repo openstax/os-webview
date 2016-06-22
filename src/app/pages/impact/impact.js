@@ -1,10 +1,7 @@
-import LoadingView from '~/helpers/backbone/loading-view';
-import $ from '~/helpers/$';
-import {on, props} from '~/helpers/backbone/decorators';
-import {template} from './impact.hbs';
-import {template as strips} from '~/components/strips/strips.hbs';
+import LoadingView from '~/controllers/loading-view';
+import {description as template} from './impact.html';
 
-const highlightedPartners = [{
+const partners = [{
     name: 'Alamo Colleges',
     url: 'http://www.alamo.edu',
     logo: '/images/impact/partners/alamo.png'
@@ -110,28 +107,19 @@ const highlightedPartners = [{
     logo: '/images/impact/partners/vt.png'
 }];
 
-@props({
-    template: template,
-    css: '/app/pages/impact/impact.css',
-    templateHelpers: {
-        strips,
-        highlightedPartners
-    }
-})
 export default class Impact extends LoadingView {
 
-    @on('click a[href^="#"]')
-    hashClick(e) {
-        $.hashClick(e, {doHistory: false});
-    }
+    static description = `Since 2012, OpenStax has saved students millions
+        through free, peer-reviewed college textbooks. Learn more about our
+        impact on the 3,000+ schools who use our books.`;
 
-    static metaDescription = () => `Since 2012, OpenStax has saved students millions
-        through free, peer-reviewed college textbooks. Learn more about our impact
-        on the 3,000+ schools who use our books.`;
-
-    onLoaded() {
-        super.onLoaded();
-        this.el.querySelector('.hidden').classList.remove('hidden');
+    init() {
+        this.template = template;
+        this.css = '/app/pages/impact/impact.css';
+        this.view = {
+            classes: ['impact-page', 'page']
+        };
+        this.model = partners;
     }
 
 }

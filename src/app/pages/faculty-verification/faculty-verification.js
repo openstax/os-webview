@@ -1,26 +1,29 @@
-import ProxyWidgetView from '~/helpers/backbone/proxy-widget-view';
-import userModel from '~/models/usermodel';
-import salesforceModel from '~/models/salesforce-model';
+import ProxyWidgetView from '~/controllers/proxy-widget-view';
 import $ from '~/helpers/$';
-import bookTitles from '~/helpers/book-titles';
-import salesforce from '~/helpers/salesforce';
-import {on, props} from '~/helpers/backbone/decorators';
-import {template} from './faculty-verification.hbs';
-import {template as strips} from '~/components/strips/strips.hbs';
+import {on} from '~/helpers/controller/decorators';
+import bookTitles from '~/models/book-titles';
+// import salesforce from '~/helpers/salesforce';
+// import userModel from '~/models/usermodel';
+// import salesforceModel from '~/models/salesforce-model';
+import {description as template} from './faculty-verification.html';
 
-@props({
-    template: template,
-    css: '/app/pages/faculty-verification/faculty-verification.css',
-    templateHelpers: {
-        titles: bookTitles,
-        urlOrigin: window.location.origin,
-        strips
-    }
-})
 export default class FacultyVerificationForm extends ProxyWidgetView {
+
+    init() {
+        this.template = template;
+        this.css = '/app/pages/faculty-verification/faculty-verification.css';
+        this.view = {
+            classes: ['faculty-verification-form', 'hidden']
+        };
+        this.templateHelpers = {
+            titles: bookTitles
+        };
+    }
+
+    /*
     @on('change [type=text],[type=email]')
     saveSetting(event) {
-        let varName = event.target.name;
+        const varName = event.target.name;
 
         if (varName) {
             salesforceModel.set(varName, event.target.value);
@@ -28,8 +31,8 @@ export default class FacultyVerificationForm extends ProxyWidgetView {
     }
 
     doValidChecks() {
-        let institutionalEmailInput = this.el.querySelector('[name="00NU0000005oVQV"]'),
-            isValid = $.testInstitutionalEmail(institutionalEmailInput);
+        const institutionalEmailInput = this.el.querySelector('[name="00NU0000005oVQV"]');
+        const isValid = $.testInstitutionalEmail(institutionalEmailInput);
 
         if (isValid) {
             institutionalEmailInput.setCustomValidity('');
@@ -40,26 +43,28 @@ export default class FacultyVerificationForm extends ProxyWidgetView {
         }
     }
 
+    // FIX: Update model and move all DOM manipulation to template
     disableForm(explanation) {
-        let explanationEl = this.el.querySelector('.subhead p'),
-            submitEl = this.el.querySelector('.cta [type="submit"]'),
-            inputEls = this.el.querySelectorAll('form .col');
+        const explanationEl = this.el.querySelector('.subhead p');
+        const submitEl = this.el.querySelector('.cta [type="submit"]');
+        const inputEls = this.el.querySelectorAll('form .col');
 
         submitEl.disabled = true;
-        for (let el of inputEls) {
+        for (const el of inputEls) {
             el.classList.add('hidden');
         }
         explanationEl.classList.remove('hidden');
         explanationEl.textContent = explanation;
     }
 
-    onRender() {
-        this.el.classList.add('faculty-verification-form', 'hidden');
+    onLoaded() {
         salesforce.populateAdoptionStatusOptions(this.el, ['adopted', 'recommend', 'no'], true);
+        // FIX: Separate model from controller
         userModel.fetch().then((data) => {
-            let userInfo = data[0];
+            const userInfo = data[0];
 
             if (userInfo && userInfo.username) {
+                // FIX: Move all DOM manipulation to template
                 super.onRender();
                 this.el.classList.remove('hidden');
                 this.el.querySelector('[name=user_id]').value = userInfo.username;
@@ -68,11 +73,13 @@ export default class FacultyVerificationForm extends ProxyWidgetView {
                     this.disableForm('You already have a verification request pending.');
                 }
             } else {
-                let loginLink = document.querySelector('.nav-menu-item.login > a');
+                const loginLink = document.querySelector('.nav-menu-item.login > a');
 
                 loginLink.click();
             }
         });
         salesforceModel.prefill(this.el);
     }
+    */
+
 }

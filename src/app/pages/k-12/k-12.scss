@@ -2,8 +2,6 @@
 @import 'mixins';
 
 .k-12-page {
-    flex: 1 0 auto;
-
     .quote-buckets {
         background-color: lighten(color(neutral-lighter), 8%);
 
@@ -11,8 +9,8 @@
             padding: 8rem 1.5rem;
 
             .quote-bucket {
-                margin: 0;
                 font-size: 1.6rem;
+                margin: 0;
 
                 @include desktop {
                     max-width: 80%;
@@ -43,7 +41,7 @@
     }
 
     .buckets-section {
-        padding-top: 8rem;
         padding-bottom: 8rem;
+        padding-top: 8rem;
     }
 }

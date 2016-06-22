@@ -1,39 +1,38 @@
-import ProxyWidgetView from '~/helpers/backbone/proxy-widget-view';
-import salesforceModel from '~/models/salesforce-model';
-import {on, props} from '~/helpers/backbone/decorators';
-import {template} from './comp-copy.hbs';
-import {template as strips} from '~/components/strips/strips.hbs';
+import ProxyWidgetView from '~/controllers/proxy-widget-view';
+import {on} from '~/helpers/controller/decorators';
+// import salesforceModel from '~/models/salesforce-model';
+import {description as template} from './comp-copy.html';
 
-@props({
-    template: template,
-    css: '/app/pages/comp-copy/comp-copy.css',
-    templateHelpers: {
-        urlOrigin: window.location.origin,
-        strips
-    }
-})
 export default class CompCopyForm extends ProxyWidgetView {
+
+    init() {
+        this.template = template;
+        this.css = '/app/pages/comp-copy/comp-copy.css';
+        this.view = {
+            classes: ['comp-copy-form']
+        };
+    }
+
+    /*
+    onLoaded() {
+        salesforceModel.prefill(this.el);
+    }
+
     @on('change #decision-date')
     formatDate(e) {
-        let value = e.target.value,
-            year, month, day;
+        const value = e.target.value;
+        const [year, month, day] = value.split('-');
 
-        [year, month, day] = value.split('-');
         document.getElementById('hidden-decision-date').value = [month, day, year].join('/');
     }
 
     @on('change [type=text],[type=email]')
     saveSetting(event) {
-        let varName = event.target.name;
-
-        if (varName) {
-            salesforceModel.set(varName, event.target.value);
+        // FIX: This if statement is used an awful lot, should it be moved to the set method?
+        if (event.target.name) {
+            salesforceModel.set(event.target.name, event.target.value);
         }
     }
+    */
 
-    onRender() {
-        this.el.classList.add('comp-copy-form');
-        super.onRender();
-        salesforceModel.prefill(this.el);
-    }
 }

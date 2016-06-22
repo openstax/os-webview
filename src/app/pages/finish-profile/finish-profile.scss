@@ -21,13 +21,13 @@
     }
 
     .form-hidden {
-        visibility: hidden;
         transform: scale3d(0, 0, 0);
+        visibility: hidden;
 
         @include phone {
-            width: 0;
             height: 0;
             overflow: hidden;
+            width: 0;
         }
     }
 
@@ -39,10 +39,10 @@
         padding-right: 1.5rem;
 
         > .btn {
-            width: auto;
+            font-size: 1.4rem;
             font-variant: normal;
             text-transform: uppercase;
-            font-size: 1.4rem;
+            width: auto;
         }
     }
 
@@ -52,8 +52,8 @@
         &.faculty .cta {
             @media (min-width: 481px) {
                 float: right;
-                top: -10rem;
                 position: relative;
+                top: -10rem;
             }
         }
     }

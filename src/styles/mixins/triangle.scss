@@ -1,6 +1,6 @@
 @mixin size($width, $height: $width) {
-    width: $width;
     height: $height;
+    width: $width;
 }
 
 // From: http://hugogiraudel.com/2014/05/19/new-offsets-sass-mixin/

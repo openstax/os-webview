@@ -1,13 +1,19 @@
-import BaseView from '~/helpers/backbone/view';
-import {props} from '~/helpers/backbone/decorators';
-import {template} from './footer.hbs';
+import {Controller} from 'superb';
+import {description as template} from './footer.html';
 
-@props({
-    template: template,
-    css: '/app/components/shell/footer/footer.css'
-})
-class Footer extends BaseView {}
+class Footer extends Controller {
 
-let footer = new Footer();
+    init() {
+        this.template = template;
+        this.css = '/app/components/shell/footer/footer.css';
+        this.view = {
+            tag: 'footer',
+            classes: ['page-footer']
+        };
+    }
+
+}
+
+const footer = new Footer();
 
 export default footer;

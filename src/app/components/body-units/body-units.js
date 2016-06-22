@@ -1,26 +1,28 @@
-import BaseView from '~/helpers/backbone/view';
-import ImageModel from '~/models/imagemodel';
-import Quote from '~/components/quote/quote';
-import {props} from '~/helpers/backbone/decorators';
+import {Controller} from 'superb';
+// import ImageModel from '~/models/imagemodel';
+import Quote from '~/components/quotes/quote/quote';
 
-@props({template: ''})
-class Paragraph extends BaseView {
-    constructor(data) {
-        super();
+class Paragraph extends Controller {
+
+    init(data) {
         this.data = data;
     }
-    onRender() {
+
+    onLoaded() {
+        // FIX: Set in template, not in Controller
         this.el.innerHTML = this.data;
     }
+
 }
 
-@props({template: ''})
-class AlignedImage extends BaseView {
-    constructor(data) {
-        super();
+class AlignedImage extends Controller {
+
+    /*
+    init(data) {
+        // FIX: Lots of model stuff to fix
         this.viewPromise = new Promise((resolve) => {
             new ImageModel({id: data.image}).fetch().then((imageData) => {
-                let view = new Quote({
+                const view = new Quote({
                     quoteHtml: data.caption,
                     orientation: data.alignment,
                     imageUrl: imageData.file,
@@ -31,22 +33,28 @@ class AlignedImage extends BaseView {
             });
         });
     }
-    onRender() {
+    */
+
+    /*
+    onLoaded() {
         this.viewPromise.then((view) => {
             this.el.appendChild(view.el);
             view.render();
         });
     }
+    */
+
 }
 
-@props({template: ''})
-class PullQuote extends BaseView {
-    constructor(data) {
-        super();
+class PullQuote extends Controller {
+
+    init(data) {
         this.data = data;
     }
-    onRender() {
-        let view = new Quote({
+
+    onLoaded() {
+        // FIX: This isn't how to attach views (delete this view and just use Quote?)
+        const view = new Quote({
             quoteHtml: this.data.quote,
             attribution: this.data.attribution
         });
@@ -54,18 +62,21 @@ class PullQuote extends BaseView {
         this.el.appendChild(view.el);
         view.render();
     }
+
 }
 
-@props({template: ''})
-class AlignedHtml extends BaseView {
-    constructor(data) {
-        super();
+class AlignedHtml extends Controller {
+
+    init(data) {
         this.data = data;
     }
-    onRender() {
+
+    /*
+    onLoaded() {
+        // FIX: Do not set innerHTML or styles in Controller, move to template
         this.el.innerHTML = this.data.html;
         this.el.style.display = 'flex';
-        let children = this.el.childNodes.length;
+        const children = this.el.childNodes.length;
 
         if (this.data.alignment === 'full') {
             this.el.style.justifyContent = children === 1 ? 'center' : 'space-between';
@@ -75,11 +86,13 @@ class AlignedHtml extends BaseView {
             this.el.style.justifyContent = 'flex-end';
         }
     }
+    */
+
 }
 
 // Using CMS tags, which are not camel-case
 /* eslint camelcase: 0 */
-let bodyUnits = {
+const bodyUnits = {
     paragraph: Paragraph,
     aligned_image: AlignedImage,
     pullquote: PullQuote,

@@ -1,28 +1,28 @@
-import Backbone from 'backbone';
-import BaseView from '~/helpers/backbone/view';
-import userModel from '~/models/usermodel';
+import {Controller} from 'superb';
 import settings from 'settings';
-import newsPromise from '~/pages/blog/newsPromise';
-import {on, props} from '~/helpers/backbone/decorators';
+import {on} from '~/helpers/controller/decorators';
 import linkHelper from '~/helpers/link';
-import {template} from './header.hbs';
+// import userModel from '~/models/usermodel';
+// import newsPromise from '~/pages/blog/newsPromise';
+import {description as template} from './header.html';
 
-// NOTE: This needs to be refactored into multiple views
+// FIX: This needs to be refactored into multiple views
 
-@props({
-    template: template,
-    css: '/app/components/shell/header/header.css'
-})
-class Header extends BaseView {
+class Header extends Controller {
 
-    constructor() {
-        super(...arguments);
+    init() {
+        this.template = template;
+        this.css = '/app/components/shell/header/header.css';
+        this.view = {
+            tag: 'header',
+            classes: ['page-header']
+        };
 
         this.meta = {};
 
-        this.templateHelpers = () => {
-            let accounts = `${settings.apiOrigin}/accounts`;
-            let currentPage = Backbone.history.location.href;
+        this.model = () => {
+            const accounts = `${settings.apiOrigin}/accounts`;
+            const currentPage = window.location.href;
 
             return {
                 visible: () => this.meta.visible,
@@ -35,8 +35,8 @@ class Header extends BaseView {
     }
 
     classList(action, ...args) {
+        const header = this.el;
         let result = null;
-        let header = this.el.querySelector('.page-header');
 
         if (header && typeof header.classList === 'object') {
             result = header.classList[action](...args);
@@ -86,7 +86,7 @@ class Header extends BaseView {
     }
 
     get height() {
-        let header = this.el.querySelector('.page-header');
+        const header = this.el.querySelector('.page-header');
         let height = 0;
 
         if (header && typeof header === 'object') {
@@ -97,7 +97,7 @@ class Header extends BaseView {
     }
 
     get metaNavHeight() {
-        let metaNav = this.el.querySelector('.meta-nav');
+        const metaNav = this.el.querySelector('.meta-nav');
         let height = 0;
 
         if (metaNav && typeof metaNav === 'object') {
@@ -109,7 +109,7 @@ class Header extends BaseView {
 
     @on('click .skiptocontent a')
     skipToContent() {
-        let el = document.getElementById('maincontent');
+        const el = document.getElementById('maincontent');
 
         function removeTabIndex() {
             this.removeAttribute('tabindex');
@@ -129,8 +129,8 @@ class Header extends BaseView {
     }
 
     toggleFullScreenNav(e) {
-        let button = e.currentTarget;
-        let header = this.el.querySelector('.page-header');
+        const button = e.currentTarget;
+        const header = this.el.querySelector('.page-header');
 
         document.body.classList.toggle('no-scroll');
 
@@ -146,18 +146,16 @@ class Header extends BaseView {
     }
 
     removeClass(array, className) {
-        let i = 0,
-            len = array.length;
+        const len = array.length;
 
-        for (; i < len; i++) {
+        for (let i = 0; i < len; i++) {
             if (array[i].classList) {
                 array[i].classList.remove(className);
             } else {
-                let names = array[i].className.split(' '),
-                    j = 0,
-                    sublen = names.length;
+                const names = array[i].className.split(' ');
+                const sublen = names.length;
 
-                for (; j < sublen; j++) {
+                for (let j = 0; j < sublen; j++) {
                     if (names[j] === className) {
                         names[j] = '';
                     }
@@ -168,9 +166,9 @@ class Header extends BaseView {
     }
 
     removeAllOpenClasses() {
-        let header = this.el.querySelector('.page-header');
-        let parentItem = this.el.querySelectorAll('.dropdown');
-        let dropDownMenu = this.el.querySelectorAll('.dropdown-menu');
+        const header = this.el.querySelector('.page-header');
+        const parentItem = this.el.querySelectorAll('.dropdown');
+        const dropDownMenu = this.el.querySelectorAll('.dropdown-menu');
 
         if (header) {
             header.classList.remove('open');
@@ -182,8 +180,8 @@ class Header extends BaseView {
     }
 
     closeFullScreenNav() {
-        let button = this.el.querySelector('.expand');
-        let header = this.el.querySelector('.page-header');
+        const button = this.el.querySelector('.expand');
+        const header = this.el.querySelector('.page-header');
 
         if (header.classList.contains('active')) {
             document.body.classList.remove('no-scroll');
@@ -206,11 +204,11 @@ class Header extends BaseView {
 
     @on('click .page-header .dropdown > a')
     flyOutMenu(e) {
-        let w = window.innerWidth;
-        let header = this.el.querySelector('.page-header');
-        let $this = e.currentTarget;
-        let parentItem = $this.parentNode;
-        let dropDownMenu = $this.nextElementSibling;
+        const w = window.innerWidth;
+        const header = this.el.querySelector('.page-header');
+        const $this = e.currentTarget;
+        const parentItem = $this.parentNode;
+        const dropDownMenu = $this.nextElementSibling;
 
         if (w <= 768) {
             e.preventDefault();
@@ -238,18 +236,18 @@ class Header extends BaseView {
     }
 
     openThisDropdown(e) {
-        let menu = e.currentTarget.nextElementSibling;
+        const menu = e.currentTarget.nextElementSibling;
 
         menu.setAttribute('aria-expanded', 'true');
 
-        for (let a of menu.querySelectorAll('a')) {
+        for (const a of menu.querySelectorAll('a')) {
             a.setAttribute('tabindex', '0');
         }
     }
 
     resetHeader(e) {
-        let urlClick = e && linkHelper.validUrlClick(e);
-        let header = this.el.querySelector('.page-header');
+        const urlClick = e && linkHelper.validUrlClick(e);
+        const header = this.el.querySelector('.page-header');
 
         if (urlClick) {
             if (!urlClick.parentNode.classList.contains('dropdown')) {
@@ -264,13 +262,13 @@ class Header extends BaseView {
     }
 
     closeDropdownMenus(all) {
-        let menus = this.el.querySelectorAll('.dropdown-menu');
+        const menus = this.el.querySelectorAll('.dropdown-menu');
 
-        for (let menu of menus) {
+        for (const menu of menus) {
             if (all || !menu.contains(document.activeElement)) {
                 menu.setAttribute('aria-expanded', 'false');
 
-                for (let a of menu.querySelectorAll('a')) {
+                for (const a of menu.querySelectorAll('a')) {
                     a.setAttribute('tabindex', '-1');
                 }
             }
@@ -278,12 +276,12 @@ class Header extends BaseView {
     }
 
     updateHeaderStyle() {
-        let height = this.height;
+        const height = this.height;
 
         if (window.pageYOffset > height && !this.isPinned()) {
             this.reset().pin().visible();
         } else if (window.pageYOffset <= height) {
-            if (Backbone.history.location.pathname === '/') {
+            if (window.location.pathname === '/') {
                 this.reset().transparent();
             } else {
                 this.reset();
@@ -292,12 +290,12 @@ class Header extends BaseView {
     }
 
     cloneDropdownParent(e) {
-        let $this = e.currentTarget;
-        let dropdown = $this.nextElementSibling;
-        let parent = $this.cloneNode(true);
-        let thisLi = document.createElement('li');
-        let back = document.createElement('a');
-        var element = dropdown.querySelector('.clone');
+        const $this = e.currentTarget;
+        const dropdown = $this.nextElementSibling;
+        const parent = $this.cloneNode(true);
+        const thisLi = document.createElement('li');
+        const back = document.createElement('a');
+        const element = dropdown.querySelector('.clone');
 
         thisLi.setAttribute('role', 'presentation');
         thisLi.setAttribute('class', 'clone');
@@ -317,10 +315,10 @@ class Header extends BaseView {
     }
 
     removeCloneDropdownParent() {
-        let clone = this.el.querySelectorAll('.clone');
+        const clone = this.el.querySelectorAll('.clone');
 
-        for (let thisClone of clone) {
-            let back = thisClone.querySelector('.back');
+        for (const thisClone of clone) {
+            const back = thisClone.querySelector('.back');
 
             back.removeEventListener('click', this.removeAllOpenClasses.bind(this), true);
             thisClone.parentNode.removeChild(thisClone);
@@ -331,19 +329,21 @@ class Header extends BaseView {
         e.preventDefault();
     }
 
-    onRender() {
+    /*
+    onLoaded() {
+        // FIX: Model stuff
         newsPromise.then((articles) => {
-            let blogLink = this.el.querySelector('a[href="/blog"]').parentNode;
+            const blogLink = this.el.querySelector('a[href="/blog"]').parentNode;
 
             if (!(articles && articles.pages && articles.pages.length)) {
                 blogLink.classList.add('hidden');
             }
         });
         userModel.fetch().then((data) => {
-            let loginItem = this.el.querySelector('.meta-nav .container .login a'),
-                userInfo = data[0],
-                loginWrapper = loginItem.parentNode,
-                loggedIn = userInfo && userInfo.username !== '';
+            const loginItem = this.el.querySelector('.meta-nav .container .login a');
+            const userInfo = data[0];
+            const loginWrapper = loginItem.parentNode;
+            const loggedIn = userInfo && userInfo.username !== '';
 
             if (loggedIn) {
                 loginItem.firstChild.textContent = `Hi ${userInfo.first_name}`;
@@ -353,9 +353,9 @@ class Header extends BaseView {
                 loginItem.href = settings.accountHref;
 
                 if (userInfo.groups.indexOf('Faculty') >= 0) {
-                    let nonFaculty = this.el.querySelectorAll('.non-faculty');
+                    const nonFaculty = this.el.querySelectorAll('.non-faculty');
 
-                    for (let item of nonFaculty) {
+                    for (const item of nonFaculty) {
                         item.classList.add('hidden');
                     }
                 }
@@ -378,12 +378,14 @@ class Header extends BaseView {
         document.body.classList.remove('no-scroll');
 
         // prevent scrolling on iOS when mobile menu is active
-        let header = document.querySelector('.page-header');
+        const header = document.querySelector('.page-header');
 
         header.addEventListener('touchmove', this.preventMobileMenuScroll.bind(this), false);
     }
+    */
+
 }
 
-let header = new Header();
+const header = new Header();
 
 export default header;

@@ -1,9 +1,14 @@
 import BannerView from '~/pages/home/banners/banner-view';
-import {props} from '~/helpers/backbone/decorators';
-import {template} from './astronomy.hbs';
+import {description as template} from './astronomy.html';
 
-@props({
-    template: template,
-    css: '/app/pages/home/banners/astronomy/astronomy.css'
-})
-export default class Astronomy extends BannerView {}
+export default class Astronomy extends BannerView {
+
+    init() {
+        this.template = template;
+        this.css = '/app/pages/home/banners/astronomy/astronomy.css';
+        this.view = {
+            classes: ['astronomy']
+        };
+    }
+
+}

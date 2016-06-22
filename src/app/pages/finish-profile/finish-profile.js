@@ -1,41 +1,45 @@
-import ProxyWidgetView from '~/helpers/backbone/proxy-widget-view';
-import userModel from '~/models/usermodel';
-import salesforceModel from '~/models/salesforce-model';
-import bookTitles from '~/helpers/book-titles';
+import ProxyWidgetView from '~/controllers/proxy-widget-view';
+import {on} from '~/helpers/controller/decorators';
+import bookTitles from '~/models/book-titles';
+// import salesforceModel from '~/models/salesforce-model';
+// import userModel from '~/models/usermodel';
 import FacultySection from './faculty-section/faculty-section';
-import {on, props} from '~/helpers/backbone/decorators';
-import {template} from './finish-profile.hbs';
-import {template as strips} from '~/components/strips/strips.hbs';
+import {description as template} from './finish-profile.html';
 
-@props({
-    template: template,
-    css: '/app/pages/finish-profile/finish-profile.css',
-    templateHelpers: {
-        bookTitles,
-        urlOrigin: `${window.location.origin}/finished-no-verify`,
-        roles: ['Faculty', 'Adjunct Faculty', 'Administrator', 'Librarian',
-        'Instructional Designer', 'Student', 'Other'],
-        strips
-    },
-    regions: {
-        facultySection: '#faculty-section'
-    }
-})
 export default class NewAccountForm extends ProxyWidgetView {
 
+    init() {
+        this.template = template;
+        this.css = '/app/pages/finish-profile/finish-profile.css';
+        this.view = {
+            tag: 'footer',
+            classes: ['finish-profile', 'page']
+        };
+        this.regions = {
+            facultySection: '#faculty-section' // FIX: Don't use IDs
+        };
+        this.templateHelpers = {
+            bookTitles,
+            roles: ['Faculty', 'Adjunct Faculty', 'Administrator', 'Librarian',
+            'Instructional Designer', 'Student', 'Other']
+        };
+    }
+
+    /*
     @on('click #toggle-faculty')
     clickFaculty(event) {
         this.toggleFaculty(event.currentTarget.checked);
     }
 
+    // FIX: Move all DOM manipulation to template
     toggleFaculty(show) {
-        let retUrl = this.el.querySelector('[name=retURL]'),
-            leadType = show ? 'OSC Faculty' : 'OSC User',
-            leadSourceField = this.el.querySelector('[name="lead_source"]');
+        const retUrl = this.el.querySelector('[name=retURL]');
+        const leadType = show ? 'OSC Faculty' : 'OSC User';
+        const leadSourceField = this.el.querySelector('[name="lead_source"]');
 
-        if (show)  {
+        if (show) {
             this.facultySection.setRequiredness(true);
-            this.regions.facultySection.show(this.facultySection);
+            this.regions.facultySection.attach(this.facultySection);
             this.el.querySelector('form').classList.add('faculty');
             retUrl.value = `${window.location.origin}/finished-verify`;
         } else {
@@ -47,13 +51,12 @@ export default class NewAccountForm extends ProxyWidgetView {
         leadSourceField.value = leadType;
     }
 
-    onRender() {
+    onLoaded() {
         this.facultySection = new FacultySection();
-        this.el.classList.add('finish-profile');
-        super.onRender();
         salesforceModel.prefill(this.el);
+        // FIX: Model should be separate from controller
         userModel.fetch().then((data) => {
-            let userInfo = data[0];
+            const userInfo = data[0];
 
             if (userInfo && userInfo.username && userInfo.accounts_id) {
                 this.el.querySelector('[name=first_name]').value = userInfo.first_name;
@@ -66,23 +69,26 @@ export default class NewAccountForm extends ProxyWidgetView {
             }
         }).catch((e) => {
             /* eslint no-alert: 0 */
-            alert('Something went wrong. Cannot find your user information.');
+            // alert('Something went wrong. Cannot find your user information.');
             /* eslint no-console: 0 */
-            console.warn(e);
+            // console.warn(e);
             // window.location.pathname = '/';
-        });
+        // });
 
-        let roleSelector = this.el.querySelector('[name="00NU00000054MLz"]'),
-            roleProxy = this.findProxyFor(roleSelector),
-            facultyCheckbox = document.getElementById('toggle-faculty');
+        /*
+        const roleSelector = this.el.querySelector('[name="00NU00000054MLz"]');
+        const roleProxy = this.findProxyFor(roleSelector);
+        const facultyCheckbox = document.getElementById('toggle-faculty');
 
+        // FIX: Collection should be separate from controller
         roleProxy.stateCollection.on('change:selected', (what) => {
-            let isStudent = what.get('value') === 'Student';
+            const isStudent = what.get('value') === 'Student';
 
             facultyCheckbox.disabled = isStudent;
             facultyCheckbox.checked = !isStudent;
             this.toggleFaculty(facultyCheckbox.checked);
         });
     }
+    */
 
 }

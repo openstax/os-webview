@@ -1,13 +1,11 @@
-import BaseView from '~/helpers/backbone/view';
-import {props} from '~/helpers/backbone/decorators';
-import {template} from './author.hbs';
+import {Controller} from 'superb';
+import {description as template} from './author.html';
 
-@props({
-    template: template
-})
-export default class Author extends BaseView {
-    constructor(data) {
-        super();
-        this.templateHelpers = data;
+export default class Author extends Controller {
+
+    init(data) {
+        this.template = template;
+        this.templateHelpers = data; // FIX: This is what models are for
     }
+
 }

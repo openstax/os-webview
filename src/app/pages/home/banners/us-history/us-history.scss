@@ -21,8 +21,8 @@
 }
 
 .us-history {
-    background-image: url('/images/home/subjects/us-history/background.jpg');
     background-attachment: fixed;
+    background-image: url('/images/home/subjects/us-history/background.jpg');
     background-position: 20% 0;
     background-repeat: no-repeat;
     background-size: cover;
@@ -42,12 +42,12 @@
 
     .container {
         display: flex;
-        margin: 0 auto;
-        padding: 0 1.5rem;
-        max-width: $boxed-width;
         flex-flow: column wrap;
-        position: relative;
         height: 100%;
+        margin: 0 auto;
+        max-width: $boxed-width;
+        padding: 0 1.5rem;
+        position: relative;
 
         @include tablet {
             flex-flow: row wrap;
@@ -69,8 +69,8 @@
         z-index: 0;
 
         @include desktop {
-            display: block;
             animation: flyin 0.5s 1.2s 1 normal ease-in forwards, loop 30s 1.5s normal infinite linear forwards;
+            display: block;
         }
 
         &.flyout {
@@ -93,8 +93,8 @@
     }
 
     .square-2 {
-        height: 34rem;
         bottom: 0;
+        height: 34rem;
         left: 0;
         width: 45rem;
 
@@ -103,16 +103,16 @@
         }
 
         @include desktop {
-            width: 60%;
-            height: 34rem;
             bottom: auto;
+            height: 34rem;
             top: 27%;
+            width: 60%;
         }
     }
 
     .square-3 {
-        height: 26rem;
         bottom: 15rem;
+        height: 26rem;
         right: 0;
         width: 26rem;
 
@@ -121,10 +121,10 @@
         }
 
         @include desktop {
-            right: 5rem;
             bottom: 5rem;
-            width: 40rem;
             height: 33rem;
+            right: 5rem;
+            width: 40rem;
         }
     }
 
@@ -151,8 +151,8 @@
         display: none;
 
         @include desktop {
-            display: block;
             animation: flyin 0.5s 1.4s 1 normal ease-in forwards, loop 40s 1.8s reverse infinite linear forwards;
+            display: block;
         }
 
         &.flyout {
@@ -183,33 +183,33 @@
 
     .clermont {
         background-image: url('/images/home/subjects/us-history/clermont.png');
-        height: 22rem;
-        right: 0;
-        position: absolute;
         bottom: 10rem;
+        height: 22rem;
+        position: absolute;
+        right: 0;
         width: 36rem;
     }
 
     .book {
         background-color: color(blue);
         background-image: url('/images/subjects/us-history.svg');
-        position: absolute;
         height: 25rem;
         left: 0;
+        position: absolute;
         top: 1.5rem;
         width: 25rem;
 
         @include tablet {
-            top: 5%;
+            height: 30rem;
             left: auto;
             right: 25%;
+            top: 5%;
             width: 30rem;
-            height: 30rem;
         }
 
         @media (max-width: 380px) {
-            width: 20rem;
             height: 20rem;
+            width: 20rem;
         }
 
         @media (min-width: #{breakpoints(tablet) + 1}) {
@@ -217,8 +217,8 @@
         }
 
         @include desktop {
-            left: 40%;
             animation: flyin 0.5s 1s 1 normal forwards;
+            left: 40%;
         }
 
         &.flyout {
@@ -241,8 +241,8 @@
 
         @include tablet {
             bottom: 0;
-            right: -6rem;
             height: 53rem;
+            right: -6rem;
             width: 45.4rem;
         }
 
@@ -263,9 +263,9 @@
         font-weight: 600;
         height: 8rem;
         line-height: 2.5rem;
-        right: 15rem;
         padding: 0;
         position: absolute;
+        right: 15rem;
         text-align: center;
         text-transform: none;
         width: 50rem;
@@ -276,12 +276,12 @@
         }
 
         @include desktop {
-            right: auto;
-            left: 10rem;
-            width: 59rem;
-            height: 9rem;
-            font-size: 3.6rem;
             animation: flyin 0.5s 1.8s 1 normal forwards;
+            font-size: 3.6rem;
+            height: 9rem;
+            left: 10rem;
+            right: auto;
+            width: 59rem;
         }
 
         &.flyout {
@@ -293,20 +293,19 @@
 
         .quote {
             display: inline-block;
-            line-height: 8rem;
             font-family: 'Permanent Marker', cursive;
-            transform: rotate(-1.2deg) translate(0.75vw, -0.45vw);
+            line-height: 8rem;
             margin-right: 1rem;
+            transform: rotate(-1.2deg) translate(0.75vw, -0.45vw);
         }
 
         &::after {
             border-bottom: 0.1rem solid color(neutral-lightest);
             content: '';
-            right: 4rem;
             position: absolute;
+            right: 4rem;
             top: 6rem;
             width: 26rem;
-
 
             @include desktop {
                 width: 32rem;
@@ -322,21 +321,21 @@
         z-index: 3;
 
         @include tablet {
-            width: 27rem;
             bottom: 6.3rem;
             left: 5rem;
+            width: 27rem;
         }
 
         @media (min-width:650px) {
-            width: auto;
-            right: 15rem;
             left: auto;
+            right: 15rem;
+            width: auto;
         }
 
         @include desktop {
+            animation: flyin 0.5s 1.8s 1 normal forwards;
             left: 23.8rem;
             right: auto;
-            animation: flyin 0.5s 1.8s 1 normal forwards;
         }
 
         &.flyout {
@@ -367,12 +366,12 @@
         }
 
         .btn {
+            display: inline-block;
             font-size: 1.6rem;
-            line-height: 6rem;
             height: 6rem;
+            line-height: 6rem;
             padding: 0 1.5rem;
             width: 100%;
-            display: inline-block;
 
             @include desktop {
                 width: auto;

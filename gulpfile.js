@@ -14,12 +14,17 @@ gulp.task('default', gulp.series(
         'templates',
         'images'
     ),
-    'systemjs'
+    'jspm-builder'
+));
+
+gulp.task('dev-build', gulp.series(
+    'development',
+    'default'
 ));
 
 gulp.task('dev', gulp.series(
-    'development',
-    'default',
+    'dev-build',
+    'ava',
     'watch'
 ));
 
@@ -27,7 +32,8 @@ gulp.task('dist', gulp.series(
     'production',
     'default',
     'precache',
-    'minify-scripts'
+    'minify-scripts',
+    'humans'
 ));
 
 gulp.task('lint', gulp.parallel(
@@ -35,4 +41,7 @@ gulp.task('lint', gulp.parallel(
     'eslint'
 ));
 
-gulp.task('test', gulp.series('lint'));
+gulp.task('test', gulp.series(
+    'dev-build',
+    'ava'
+));

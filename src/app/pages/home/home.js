@@ -1,20 +1,22 @@
-import LoadingView from '~/helpers/backbone/loading-view';
+import LoadingView from '~/controllers/loading-view';
 import $ from '~/helpers/$';
-import {on, props} from '~/helpers/backbone/decorators';
-import appView from '~/components/shell/shell';
-import {template} from './home.hbs';
+import {on} from '~/helpers/controller/decorators';
+import shell from '~/components/shell/shell';
 import Quotes from '~/components/quotes/quotes';
 import Buckets from '~/components/buckets/buckets';
 import Education from './education/education';
+import {description as template} from './home.html';
 
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length;
 
     while (0 !== currentIndex) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
+        const randomIndex = Math.floor(Math.random() * currentIndex);
+
         currentIndex -= 1;
 
-        temporaryValue = array[currentIndex];
+        const temporaryValue = array[currentIndex];
+
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
@@ -30,49 +32,57 @@ const banners = shuffle([
     'us-history'
 ]);
 
-@props({
-    template: template,
-    css: '/app/pages/home/home.css',
-    regions: {
-        bookBanners: '.book-banners',
-        quotes: '.quote-buckets',
-        education: '.education',
-        buckets: '.buckets'
-    }
-})
 export default class Home extends LoadingView {
+
+    static description = `OpenStax's goal is to increase student access to
+        high-quality learning materials at little to no cost. Learn more
+        about what we offer for college and K-12.`;
+
+    init() {
+        this.template = template;
+        this.css = '/app/pages/home/home.css';
+        this.regions = {
+            bookBanners: '.book-banners',
+            quotes: '.quote-buckets',
+            education: '.education',
+            buckets: '.buckets'
+        };
+
+        this.description = `OpenStax's goal is to increase student access to
+            high-quality learning materials, at little to no cost. Learn more
+            about what we offer for college and K-12.`;
+    }
 
     @on('click a[href^="#"]')
     hashClick(e) {
         $.hashClick(e, {doHistory: false});
     }
 
-    static metaDescription = () => `OpenStax’s goal is to increase student access to
-        high-quality learning materials at little to no cost. Learn more about what we
-        offer for college and K-12.`;
-
     parallaxBanner() {
-        let bookBanners = this.el.querySelectorAll('.book-banners > div > div');
-        let books = this.el.querySelectorAll('.book');
-        let educationBanner = this.el.querySelector('.education-banner');
-        let educationBannerStudent = this.el.querySelector('.education-banner .student');
+        const bookBanners = this.el.querySelectorAll('.book-banners > div > div');
+        const books = this.el.querySelectorAll('.book');
+        const educationBanner = this.el.querySelector('.education-banner');
+        const educationBannerStudent = this.el.querySelector('.education-banner .student');
 
 
         educationBanner.setAttribute('style', `background-position: 50% ${window.pageYOffset/30}px`);
         educationBannerStudent.setAttribute('style', `bottom: -${window.pageYOffset/40}px`);
 
 
-        for (let bookBanner of bookBanners) {
+        for (const bookBanner of bookBanners) {
             bookBanner.setAttribute('style', `background-position: 20% -${window.pageYOffset/2}px`);
         }
 
-        for (let book of books) {
+        for (const book of books) {
             book.setAttribute('style', `margin-top: ${window.pageYOffset/20}px`);
         }
     }
 
-    onRender() {
-        appView.header.updateHeaderStyle();
+    /*
+    onLoaded() {
+        shell.header.updateHeaderStyle();
+        // FIX: Attaching listener on every load is creating too many listeners
+        // FIX: Listeners need to be removed when view is destroyed
         this.attachListenerTo(window, 'scroll', () =>
             window.requestAnimationFrame(this.parallaxBanner.bind(this))
         );
@@ -83,7 +93,7 @@ export default class Home extends LoadingView {
                 hasImage: true,
                 imageUrl: '/images/home/quotes/quote-right.jpg',
                 quoteHtml: `Concept Coach is our free new tool that helps college
-                students understand and retain what they’ve read. We’re recruiting
+                students understand and retain what they've read. We're recruiting
                 faculty for our Fall 2016 pilot!`,
                 linkUrl: 'http://cc.openstax.org',
                 linkText: 'Learn More'
@@ -105,18 +115,18 @@ export default class Home extends LoadingView {
                 linkText: 'Let Us Know'
             }
         ]));
-        this.regions.education.show(new Education());
-        this.regions.buckets.show(new Buckets());
+        this.regions.education.attach(new Education());
+        this.regions.buckets.attach(new Buckets());
 
-        for (let banner of banners) {
-            let view = this;
+        for (const banner of banners) {
+            const view = this;
 
             this.bannerViews = [];
             this.subviewPromises = [];
 
             this.subviewPromises.push(new Promise((resolve) => {
                 System.import(`~/pages/home/banners/${banner}/${banner}`).then((m) => {
-                    let Page = m.default;
+                    const Page = m.default;
                     let display = false;
 
                     if (view.currentBanner !== 0) {
@@ -124,10 +134,10 @@ export default class Home extends LoadingView {
                         display = true;
                     }
 
-                    let bannerView = new Page({
+                    const bannerView = new Page({
                         parent: view,
                         name: banner,
-                        display: display
+                        display
                     });
 
                     this.bannerViews.push(bannerView);
@@ -136,21 +146,11 @@ export default class Home extends LoadingView {
                 });
             }));
         }
-        super.onRender();
     }
-
-    onLoaded() {
-        let page = this.el.querySelector('.home-page');
-
-        super.onLoaded();
-        page.classList.remove('hidden');
-        setTimeout(() => {
-            page.classList.add('fade-in');
-        }, 100);
-    }
+    */
 
     showBanner(banner) {
-        this.bannerViews[banner].show();
+        this.bannerViews[banner].attach();
     }
 
     showNextBanner() {

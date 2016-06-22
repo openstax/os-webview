@@ -1,0 +1,14 @@
+<template args="model">
+    <div class="img"></div>
+    <div class="content">
+        <h2><a href="{`/blog/${model.articleSlug}`}">{model.title}</a></h2>
+        <div class="body"></div>
+        <div class="meta">
+            <p>
+                <span class="author">{model.author}</span>
+                <span> | </span>
+                <span class="date">{model.date}</span>
+            </p>
+        </div>
+    </div>
+</template>

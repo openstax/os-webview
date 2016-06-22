@@ -3,13 +3,13 @@
 $faint-gray: rgba(color(gray), 0.33);
 
 .tag-multi-select {
-    border: 0.1rem solid $faint-gray;
     background-color: white;
+    border: 0.1rem solid $faint-gray;
     display: flex;
     min-height: 4.8rem;
     min-width: 12rem;
-    position: relative;
     padding-right: 4.8rem;
+    position: relative;
 
     .tag-list {
         flex-grow: 1;

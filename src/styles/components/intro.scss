@@ -27,11 +27,11 @@
     a {
 
         &.caret {
+            display: inline-block;
+            height: 2rem;
             margin-top: 1rem;
             position: relative;
-            display: inline-block;
             width: 2rem;
-            height: 2rem;
 
             &::after {
                 @include triangle(

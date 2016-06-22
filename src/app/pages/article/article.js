@@ -1,44 +1,36 @@
-import LoadingView from '~/helpers/backbone/loading-view';
-import {template as strips} from '~/components/strips/strips.hbs';
-import {props} from '~/helpers/backbone/decorators';
-import {template} from './article.hbs';
-import Articles from '../blog/articles/articles';
-import bodyUnits from '~/components/body-units/body-units';
-import PageModel from '~/models/pagemodel';
+import LoadingView from '~/controllers/loading-view';
+// import Articles from '../blog/articles/articles';
+// import bodyUnits from '~/components/body-units/body-units';
+// import PageModel from '~/models/pagemodel';
+import {description as template} from './article.html';
 
-@props({
-    template: template,
-    css: '/app/pages/article/article.css',
-    templateHelpers: {strips},
-    regions: {
-        articles: '.articles',
-        body: '.body'
-    }
-})
 export default class Article extends LoadingView {
 
-    onLoaded() {
-        super.onLoaded();
-        this.el.querySelector('.article.page').classList.remove('hidden');
-        document.body.classList.remove('no-scroll');
+    init() {
+        this.template = template;
+        this.css = '/app/pages/article/article.css';
+        this.regions = {
+            articles: '.articles',
+            body: '.body'
+        };
     }
 
-    onRender() {
-        document.body.classList.add('no-scroll');
+    /*
+    onLoaded() {
         this.el.querySelector('.article.page').classList.add('hidden');
 
-        let slug = window.location.pathname.replace(/.*\//, ''),
-            doDataIdSubstitutions = (data, elements) => {
-                for (let el of elements) {
-                    let key = el.dataset.id;
+        const slug = window.location.pathname.replace(/.*\//, '');
+        const doDataIdSubstitutions = (data, elements) => {
+            for (const el of elements) {
+                const key = el.dataset.id;
 
-                    if (key in data) {
-                        el.innerHTML = data[key];
-                    } else {
-                        el.parentNode.removeChild(el);
-                    }
+                if (key in data) {
+                    el.innerHTML = data[key];
+                } else {
+                    el.parentNode.removeChild(el);
                 }
-            };
+            }
+        };
 
         new PageModel().fetch({
             data: {
@@ -50,24 +42,25 @@ export default class Article extends LoadingView {
                 document.title = `${articleData.title} - Openstax`;
                 doDataIdSubstitutions(articleData, this.el.querySelectorAll('[data-id]'));
 
-                for (let bodyUnit of articleData.body) {
-                    let View = bodyUnits[bodyUnit.type];
+                for (const bodyUnit of articleData.body) {
+                    const View = bodyUnits[bodyUnit.type];
 
                     this.regions.body.append(new View(bodyUnit.value));
                 }
 
-                let articleImage = articleData.article_image || 'http://placehold.it/1400x600';
+                const articleImage = articleData.article_image || 'http://placehold.it/1400x600';
 
                 this.el.querySelector('.hero').setAttribute('style', `background-image:url(${articleImage})`);
 
-                let d = new Date(articleData.date).toUTCString().split(' ');
-                let formatDate = `${d[2]} ${d[1]}, ${d[3]}`;
+                const d = new Date(articleData.date).toUTCString().split(' ');
+                const formatDate = `${d[2]} ${d[1]}, ${d[3]}`;
 
                 this.el.querySelector('[data-id="date"]').innerHTML = formatDate;
-                let newTags = [];
 
-                for (let tag of articleData.tags) {
-                    let spanObj = `<span>${tag}</span>`;
+                let newTags = '';
+
+                for (const tag of articleData.tags) {
+                    const spanObj = `<span>${tag}</span>`;
 
                     newTags += spanObj;
                 }
@@ -78,18 +71,18 @@ export default class Article extends LoadingView {
 
         this.regions.articles.append(new Articles(slug));
 
-        let d = document,
-            s = d.createElement('script');
+        const d = document;
+        const s = d.createElement('script');
 
         s.src = '//openstax.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s);
 
-        let d2 = document,
-            s2 = d2.createElement('script');
+        const d2 = document;
+        const s2 = d2.createElement('script');
 
         s2.src = '//openstax.disqus.com/count.js';
         s2.setAttribute('data-timestamp', +new Date()); (d2.body).appendChild(s2);
-
-        super.onRender();
     }
+    */
+
 }

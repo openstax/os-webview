@@ -1,9 +1,14 @@
-import BaseView from '~/helpers/backbone/view';
-import {props} from '~/helpers/backbone/decorators';
-import {template} from './education.hbs';
+import {Controller} from 'superb';
+import {description as template} from './education.html';
 
-@props({
-    template: template,
-    css: '/app/pages/home/education/education.css'
-})
-export default class Education extends BaseView {}
+export default class Education extends Controller {
+
+    init() {
+        this.template = template;
+        this.css = '/app/pages/home/education/education.css';
+        this.view = {
+            classes: ['education-banner']
+        };
+    }
+
+}

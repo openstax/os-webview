@@ -1,50 +1,43 @@
+@import 'variables';
 @import 'mixins';
 
+@mixin large-screen {
+    @media (min-width: 1000px) {
+        @content;
+    }
+}
+
 .adopters-page {
+    text-align: center;
+
     h1 {
-        text-align: center;
         margin-bottom: 2rem;
     }
 
     .adopters {
-        display: flex;
-        flex-flow: row wrap;
-        font-size: 1.5rem;
-        font-weight: 400;
-        justify-content: space-between;
-    }
-
-    .adopter-column {
-        display: none;
-        padding: 0.5rem;
+        column-count: 3;
+        column-gap: 5rem;
+        list-style-type: none;
 
         @include phone {
-            &.one-column {
-                display: block;
-            }
+            column-count: 1;
         }
 
         @include tablet {
-            flex-basis: 30%;
-
-            &.three-column {
-                display: block;
-            }
+            column-count: 2;
         }
 
-        @include desktop {
-            flex-basis: 22%;
-
-            &.four-column {
-                display: block;
-            }
+        @include large-screen {
+            column-count: 4;
         }
+    }
 
-        .adopter {
-            line-height: 1.3;
-            margin-bottom: 1rem;
-            padding-left: 0.5rem;
-            text-indent: -0.5rem;
+    .adopter {
+        line-height: 2;
+        text-align: left;
+
+        @include phone {
+            text-align: center;
         }
     }
 }

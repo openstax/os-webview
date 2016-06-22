@@ -2,33 +2,33 @@
 @import 'mixins';
 
 .add-another {
+    align-items: center;
     display: flex;
     flex-wrap: wrap;
     padding: 8rem 0;
     text-align: center;
-    align-items: center;
 
     h2 {
         font-size: 2.4rem;
         margin-bottom: 3rem;
 
         small {
-            padding-top: 3rem;
+            color: color(neutral-light);
             font-size: 1.6rem;
             font-weight: normal;
-            color: color(neutral-light);
             letter-spacing: normal;
+            padding-top: 3rem;
         }
     }
 
     .btn {
-        flex: 1 1 auto;
-        margin: 1rem auto 0;
-        padding: 1.5rem 2rem;
         background-color: color(orange);
         color: white;
-        min-width: 25rem;
+        flex: 1 1 auto;
+        margin: 1rem auto 0;
         max-width: 28rem;
+        min-width: 25rem;
+        padding: 1.5rem 2rem;
 
         &.btn-secondary {
             background-color: color(cyan);

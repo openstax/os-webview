@@ -1,13 +1,12 @@
-var fs = require('fs');
-var gulp = require('gulp');
-var argv = require('yargs').argv;
-var config = require('../config');
-var bs = require('browser-sync').get(config.name);
-var pi = require('gulp-load-plugins')({
+const fs = require('fs');
+const gulp = require('gulp');
+const argv = require('yargs').argv;
+const config = require('../config');
+const pi = require('gulp-load-plugins')({
     pattern: ['gulp-*', 'gulp.*', 'del']
 });
 
-var FAVICON_DATA_FILE = 'gulp/.favicon.json';
+const FAVICON_DATA_FILE = 'gulp/.favicon.json';
 
 function generateFavicons(done) {
     if (!argv.favicons) {
@@ -63,6 +62,13 @@ function generateFavicons(done) {
 }
 
 function injectFaviconMarkup() {
+    if (config.env !== 'production') {
+        return gulp.src(`${config.src}/*.html`, {
+            since: gulp.lastRun('injectFaviconMarkup')
+        })
+        .pipe(gulp.dest(config.dest));
+    }
+
     return gulp.src(`${config.src}/*.html`, {
         since: gulp.lastRun('injectFaviconMarkup')
     })
@@ -94,6 +100,6 @@ gulp.task('favicon:watch', () => {
     gulp.watch(`${config.src}/*.html`, config.watchOpts)
     .on('change', gulp.series(
         injectFaviconMarkup,
-        bs.reload
+        'reload-browser'
     ));
 });

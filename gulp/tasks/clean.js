@@ -1,6 +1,6 @@
-var gulp = require('gulp');
-var config = require('../config');
-var pi = require('gulp-load-plugins')({
+const gulp = require('gulp');
+const config = require('../config');
+const pi = require('gulp-load-plugins')({
     pattern: ['gulp-*', 'gulp.*', 'del']
 });
 

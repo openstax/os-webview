@@ -1,9 +1,15 @@
-import BaseView from '~/helpers/backbone/view';
-import {props} from '~/helpers/backbone/decorators';
-import {template} from './tutor.hbs';
+import {Controller} from 'superb';
+import {description as template} from './tutor.html';
 
-@props({
-    template: template,
-    css: '/app/pages/k-12/tutor/tutor.css'
-})
-export default class Tutor extends BaseView {}
+// FIX: Does this warrant its own view?
+export default class Tutor extends Controller {
+
+    init() {
+        this.template = template;
+        this.css = '/app/pages/k-12/tutor/tutor.css';
+        this.view = {
+            classes: ['tutor']
+        };
+    }
+
+}

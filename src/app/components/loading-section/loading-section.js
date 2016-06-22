@@ -1,13 +1,14 @@
-import BaseView from '~/helpers/backbone/view';
-import {props} from '~/helpers/backbone/decorators';
-import {template} from './loading-section.hbs';
+import {Controller} from 'superb';
+import {description as template} from './loading-section.html';
 
-@props({
-    template: template,
-    css: '/app/components/loading-section/loading-section.css'
-})
-export default class LoadingSection extends BaseView {
-    onRender() {
-        this.el.classList.add('os-loader');
+export default class LoadingSection extends Controller {
+
+    init() {
+        this.template = template;
+        this.css = '/app/components/loading-section/loading-section.css';
+        this.view = {
+            classes: ['os-loader']
+        };
     }
+
 }

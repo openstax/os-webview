@@ -1,24 +1,22 @@
-import BaseView from '~/helpers/backbone/view';
-import {props} from '~/helpers/backbone/decorators';
-import {template} from './contents.hbs';
+import {Controller} from 'superb';
+import {description as template} from './contents.html';
 
-@props({
-    template: template,
-    regions: {
-        subunit: '.subunit'
-    }
-})
-export default class ContentEntry extends BaseView {
-    constructor(data) {
-        super();
-        this.templateHelpers = data;
+export default class ContentEntry extends Controller {
+
+    init(data) {
+        this.template = template;
+        this.regions = {
+            subunit: '.subunit'
+        };
+        this.templateHelpers = data; // FIX: This is what models are for
     }
 
-    onRender() {
+    onLoaded() {
         if (this.templateHelpers.contents) {
-            for (let entry of this.templateHelpers.contents) {
+            for (const entry of this.templateHelpers.contents) {
                 this.regions.subunit.appendAs('li', new ContentEntry(entry));
             }
         }
     }
+
 }
