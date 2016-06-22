@@ -3,6 +3,7 @@ import shell from '~/components/shell/shell';
 import analytics from '~/helpers/analytics';
 
 const PAGES = [
+    '404',
     'about',
     'about-us',
     'accessibility-statement',
@@ -44,6 +45,10 @@ class Router extends Backbone.Router {
 
         this.route('', 'home', () => {
             shell.load('home');
+        });
+
+        this.route(/^(\d+)/, 'cms', (id) => {
+            shell.load('cms', id);
         });
 
         this.route(/subjects\/.*/, 'subjects', () => {
