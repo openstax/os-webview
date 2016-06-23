@@ -2,6 +2,7 @@ import Backbone from 'backbone';
 import BaseView from '~/helpers/backbone/view';
 import userModel from '~/models/usermodel';
 import settings from 'settings';
+import newsPromise from '~/pages/blog/newsPromise';
 import {on, props} from '~/helpers/backbone/decorators';
 import linkHelper from '~/helpers/link';
 import {template} from './header.hbs';
@@ -331,6 +332,13 @@ class Header extends BaseView {
     }
 
     onRender() {
+        newsPromise.then((articles) => {
+            let blogLink = this.el.querySelector('a[href="/blog"]').parentNode;
+
+            if (!(articles && articles.pages && articles.pages.length)) {
+                blogLink.classList.add('hidden');
+            }
+        });
         userModel.fetch().then((data) => {
             let loginItem = this.el.querySelector('.meta-nav .container .login a'),
                 userInfo = data[0],
