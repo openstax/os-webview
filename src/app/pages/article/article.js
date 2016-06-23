@@ -34,6 +34,8 @@ export default class Article extends LoadingView {
 
                     if (key in data) {
                         el.innerHTML = data[key];
+                    } else {
+                        el.parentNode.removeChild(el);
                     }
                 }
             };
