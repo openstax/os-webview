@@ -72,6 +72,7 @@
       "backbone.nativeajax": "github:akre54/Backbone.NativeAjax@^0.4.3",
       "backbone.nativeview": "github:akre54/Backbone.NativeView@^0.3.3",
       "handlebars": "github:components/handlebars.js@^4.0.5",
+      "recordo": "npm:recordo@0.0.5",
       "underscore": "npm:underscore@^1.8.3"
     },
     "devDependencies": {
