@@ -75,6 +75,7 @@ export default class Home extends LoadingView {
         this.regions.quotes.show(new Quotes([
             {
                 orientation: 'right',
+                hasImage: true,
                 imageUrl: '/images/home/quotes/quote-right.jpg',
                 quoteHtml: `Concept Coach is our free new tool that helps college
                 students understand and retain what they’ve read. We’re recruiting
@@ -88,6 +89,15 @@ export default class Home extends LoadingView {
                 quoteHtml: `<p>“OpenStax is <em>amazing</em>. Access to these high quality textbooks
                 is game changing for our students.”</p>
                 <div class="attribution">&mdash; <cite>Prof. Wendy Riggs, College of the Redwoods</cite></div>`
+            },
+            {
+                orientation: 'full',
+                colorScheme: 'cyan',
+                hasImage: false,
+                overlay: '/images/home/quotes/book-mass-renewal-bucket.svg',
+                quoteHtml: 'Using OpenStax in your course again this semester?',
+                linkUrl: '/mass-renewal',
+                linkText: 'Let Us Know'
             }
         ]));
         this.regions.education.show(new Education());
