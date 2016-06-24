@@ -65,7 +65,7 @@
                 Don't see your book? Fill out our <a href="/interest">interest form</a>.
             </p>
 
-            <label>How are you using this book?
+            <label>How are you using this book? <small><i>(optional)</i></small>
                 <select name="00NU00000055spw">
                     <option value="None" disabled selected></option>
                 </select>
@@ -73,7 +73,7 @@
 
             <label>
                 How many students are using this book in your courses each semester?
-                <input name="00NU00000052VId" type="number" required />
+                <input name="00NU00000052VId" type="number" min=0 required />
             </label>
 
             <label>Which partner resources are you using with your book?
@@ -146,7 +146,7 @@
 
 
             <label>
-                Do you have any feedback you'd like to share?
+                Do you have any feedback you'd like to share? <small><i>(optional)</i></small>
                 <textarea cols="50" name="00NU00000056Rls" rows="10"></textarea>
             </label>
 
