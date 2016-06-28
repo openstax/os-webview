@@ -33,7 +33,7 @@ System.config({
     "backbone.nativeview": "github:akre54/Backbone.NativeView@0.3.3",
     "core-js": "npm:core-js@1.2.6",
     "handlebars": "github:components/handlebars.js@4.0.5",
-    "recordo": "npm:recordo@0.0.5",
+    "recordo": "npm:recordo@0.0.6",
     "underscore": "npm:underscore@1.8.3",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
@@ -104,7 +104,7 @@ System.config({
     "npm:process@0.11.2": {
       "assert": "github:jspm/nodelibs-assert@0.1.0"
     },
-    "npm:recordo@0.0.5": {
+    "npm:recordo@0.0.6": {
       "clipboard": "npm:clipboard@1.5.12",
       "good-listener": "npm:good-listener@1.1.7",
       "lodash": "npm:lodash@3.10.1",
