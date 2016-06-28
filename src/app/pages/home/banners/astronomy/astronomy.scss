@@ -8,73 +8,122 @@
 }
 
 @mixin tablet {
-    @media (min-width: #{breakpoints(phone) + 1}) and (max-width: 1024px) {
+    @media (min-width: #{breakpoints(phone) + 1}) {
         @content;
     }
 }
 
+.flyin,
+.flyout {
+    @include desktop {
+        opacity: 0;
+    }
+}
+
 .astronomy {
+    background-attachment: fixed;
     background-image: url('/images/home/subjects/astronomy/background.jpg');
     background-position: center top;
     background-repeat: no-repeat;
-    background-size: 100vw 55.695vw;
-    height: 55.695vw;
-    margin-top: -8rem;
+    background-size: cover;
+    height: 60rem;
     overflow: hidden;
-    padding-top: 8rem;
     position: relative;
 
     @include tablet {
-        background-size: 100vw 81.4vw;
-        height: 81.4vw;
+        height: 65rem;
+    }
+
+    @include phone {
+        background-color: color(blue);
+        background-image: none;
+        height: 45rem;
+    }
+
+    .container {
+        display: flex;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        max-width: $boxed-width;
+        flex-flow: column wrap;
+        position: relative;
+        height: 100%;
+
+        @include tablet {
+            flex-flow: row wrap;
+        }
+
+        @include desktop {
+            flex-flow: row wrap;
+        }
     }
 
     .square-1,
     .square-2,
     .square-3,
     .square-4 {
-        background-color: rgba(color(blue), 0.5);
+        background-color: rgba(color(blue), 0.3);
         display: none;
         position: absolute;
         z-index: 0;
 
         @include desktop {
             display: block;
+            animation: flyin 0.5s 1.2s 1 normal ease-in forwards, loop 30s 1.5s normal infinite linear forwards;
+        }
+
+        &.flyout {
+            @include desktop {
+                animation: flyout 0.5s 1 normal forwards;
+                opacity: 1;
+            }
         }
     }
 
     .square-1 {
-        height: 2.786vw;
-        left: 12.143vw;
-        top: 26.143vw;
-        width: 2.786vw;
+        height: 3.5rem;
+        left: 13rem;
+        top: 60%;
+        width: 3.5rem;
     }
 
-    /*.square-2 {
-        height: 9vw;
-        left: 16.43vw;
-        top: 13.57vw;
-        width: 9vw;
-    }*/
-
     .square-3 {
-        height: 19.29vw;
-        left: 27.07vw;
-        top: 23.64vw;
-        width: 27.79vw;
+        @include tablet {
+            bottom: 0;
+            display: block;
+            height: 34rem;
+            left: 0;
+            width: 45rem;
+        }
+
+        @include desktop {
+            height: 17rem;
+            left: 29rem;
+            top: 40rem;
+            width: 36rem;
+        }
     }
 
     .square-4 {
-        height: 29.29vw;
-        left: 60.5vw;
-        top: 11.48vw;
-        width: 29.29vw;
+        @include tablet {
+            bottom: 15rem;
+            display: block;
+            height: 26rem;
+            right: 0;
+            width: 26rem;
+        }
+
+        @include desktop {
+            height: 43rem;
+            left: 64rem;
+            top: 24rem;
+            width: 43rem;
+        }
     }
 
     .chart,
     .equation,
-    .book,
-    .video-banner {
+    .book {
         background-position: center center;
         background-repeat: no-repeat;
         background-size: contain;
@@ -84,168 +133,232 @@
     .chart,
     .equation {
         display: none;
-        opacity: 0.7;
 
         @include desktop {
             display: block;
+            animation: flyin 0.5s 1.4s 1 normal ease-in forwards, loop 40s 1.8s reverse infinite linear forwards;
+        }
+
+        &.flyout {
+            @include desktop {
+                animation: flyout 0.5s 1 normal forwards;
+                opacity: 1;
+            }
         }
     }
 
     .chart {
         background-image: url('/images/home/subjects/astronomy/chart.png');
-        height: 17vw;
-        left: 78vw;
+        height: 19rem;
+        right: 2rem;
         position: absolute;
-        top: 24.64vw;
-        width: 17vw;
+        bottom: 6rem;
+        width: 27.4rem;
     }
 
     .equation {
         background-image: url('/images/home/subjects/astronomy/equation.png');
-        height: 9vw;
-        left: 16.43vw;
+        height: 14rem;
+        left: 19rem;
         position: absolute;
-        top: 13.57vw;
-        width: 9vw;
+        top: 24rem;
+        width: 14rem;
     }
 
     .book {
         background-color: color(blue);
         background-image: url('/images/subjects/astronomy.svg');
-        background-position: top center;
-        height: 25.607vw;
-        left: 38.12vw;
+        background-position: top left;
+        background-size: 100% auto;
+        height: 33rem;
+        left: 1.5rem;
+        max-width: calc(100% - 3rem);
         position: absolute;
-        top: 7.726vw;
-        width: 25.607vw;
+        top: 1.5rem;
+        width: 33rem;
 
         @include tablet {
-            height: 36.08vw;
-            left: 32.91vw;
-            top: 18.35vw;
-            width: 36.08vw;
+            top: 10vw;
+            left: calc(52.3% - 15.7rem);
+            width: 28rem;
+            height: 28rem;
+        }
+
+        @media (max-width: 360px) {
+            right: auto;
+        }
+
+        @include desktop {
+            animation: flyin 0.5s 1s 1 normal forwards;
+            background-position: top center;
+            background-size: contain;
+            left: 37%;
+            top: 10rem;
+        }
+
+        &.flyout {
+            @include desktop {
+                animation: flyout 0.5s 1 normal forwards;
+                opacity: 1;
+            }
         }
     }
 
-    .video-banner {
+    .student {
         background-image: url('/images/home/subjects/astronomy/student.png');
-        height: 46.2vw;
-        left: 46vw;
+        background-position: center bottom;
+        background-repeat: no-repeat;
+        background-size: contain;
+        bottom: 15rem;
+        height: 55%;
         position: absolute;
-        top: 9.5vw;
-        width: 39.85vw;
+        right: 1.5rem;
+        width: 32rem;
         z-index: 2;
 
         @include tablet {
-            height: 59.75vw;
-            left: 46.5vw;
-            top: 21.65vw;
-            width: 51.538vw;
+            bottom: -0.1rem;
+            height: calc(20vw + 35.5rem);
+            left: calc(65% - 28.7rem);
+            width: calc(20vw + 35.5rem);
+        }
+
+        @include desktop {
+            height: 56rem;
+            left: 36%;
+            width: 56rem;
         }
     }
 
     .now-i-can {
         background-color: rgba(color(cyan), 0.85);
         color: color(neutral-lightest);
-        font-size: 2.4vw;
+        display: none;
+        font-size: 3rem;
         font-weight: 600;
-        height: 7.064vw;
-        left: 6.86vw;
-        line-height: 7.064vw;
+        height: 8rem;
+        left: 4rem;
+        line-height: 2.5;
         padding: 0;
         position: absolute;
         text-align: center;
         text-transform: none;
-        top: 33.8484vw;
-        width: 49.5vw;
+        top: 41rem;
+        width: 53rem;
         z-index: 3;
 
-        @include tablet {
-            font-size: 3.8vw;
-            height: 10.89vw;
-            left: 2.66vw;
-            line-height: 10.89vw;
-            top: 55.7vw;
-            width: 74.43vw;
+        @media (min-width:650px) {
+            display: initial;
+        }
+
+        @include desktop {
+            animation: flyin 0.5s 1.8s 1 normal forwards;
+            font-size: 3.4rem;
+            height: 9rem;
+            left: 4rem;
+            width: 58rem;
+        }
+
+        &.flyout {
+            @include desktop {
+                animation: flyout 0.5s 1 normal forwards;
+                opacity: 1;
+            }
         }
 
         .quote {
             display: inline-block;
             font-family: 'Permanent Marker', cursive;
-            transform: rotate(-1.2deg) translate(0.75vw, -0.45vw);
+            transform: rotate(-1.2deg) translate(0.8rem, -0.5rem);
         }
 
         &::after {
-            border-bottom: 0.18vw solid color(neutral-lightest);
+            border-bottom: 0.1rem solid color(neutral-lightest);
             content: '';
-            left: 15vw;
+            right: 2rem;
             position: absolute;
-            top: 5vw;
-            width: 33vw;
+            top: 70%;
+            width: 33rem;
 
-            @include tablet {
-                border-bottom-width: 0.36vw;
-                left: 21vw;
-                top: 8vw;
-                width: 52.5vw;
+            @include desktop {
+                right: 1rem;
+                width: 37rem;
             }
         }
     }
 
     .subject-links {
-        left: 19.755vw;
-        letter-spacing: 0.078vw;
+        bottom: 1.5rem;
+        left: 0;
         position: absolute;
-        top: 41.5vw;
+        width: 100%;
         z-index: 3;
 
         @include tablet {
-            left: 21.85vw;
-            top: 67.47vw;
+            bottom: 6.3rem;
+            left: 2.5rem;
+            width: 27rem;
+        }
+
+        @media (min-width: 650px) {
+            width: auto;
+        }
+
+        @include desktop {
+            left: 15.6rem;
+            animation: flyin 0.5s 1.8s 1 normal forwards;
+        }
+
+        &.flyout {
+            @include desktop {
+                animation: flyout 0.5s 1 normal forwards;
+                opacity: 1;
+            }
         }
 
         ul {
             list-style-type: none;
-            margin: 0;
+            margin: 0 1.5rem;
             padding: 0;
 
             li {
                 display: inline-block;
+                width: 100%;
+
+                @include tablet {
+                    width: auto;
+                }
             }
         }
 
         .btn {
-            font-size: 1.1vw;
-            height: 4.5vw;
-            line-height: 4.5vw;
-            padding: 0;
+            font-size: 1.6rem;
+            line-height: 6rem;
+            height: 6rem;
+            padding: 0 1.5rem;
+            width: 100%;
+            display: inline-block;
 
-            @include tablet {
-                font-size: 1.7vw;
-                height: 6.33vw;
-                line-height: 6.33vw;
+            @include desktop {
+                width: auto;
             }
-        }
-
-        .explore-subject,
-        .explore-all {
-            box-shadow: 0 0 1rem color(neutral-dark);
         }
 
         .explore-subject {
-            margin-right: 0.2vw;
-            width: 17.5vw;
+            margin-bottom: 1.5rem;
 
             @include tablet {
-                width: 26.46vw;
+                margin-right: 1rem;
             }
         }
 
         .explore-all {
-            width: 18.55vw;
+            @include phone {
+                background-color: color(orange);
 
-            @include tablet {
-                width: 27.97vw;
+                &:hover {
+                    background-color: darken(color(orange), 5%);
+                }
             }
         }
     }
