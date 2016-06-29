@@ -100,6 +100,26 @@ export default class Details extends LoadingView {
         }
     }
 
+    asEl(elOrString) {
+        let value = elOrString;
+
+        if (typeof elOrString === 'string') {
+            value = this.el.querySelector(elOrString);
+        }
+        return value;
+    }
+    removeEl(elOrString) {
+        let el = this.asEl(elOrString);
+
+        el.parentNode.removeChild(el);
+    }
+
+    removeParentEl(elOrString) {
+        let el = this.asEl(elOrString);
+
+        el.parentNode.parentNode.removeChild(el.parentNode);
+    }
+
     onRender() {
         $.applyScrollFix(this);
         this.toggleFixedClass();
@@ -108,10 +128,14 @@ export default class Details extends LoadingView {
         let slug = window.location.pathname.replace(/.*\//, ''),
             pageModel = new PageModel(),
             insertResources = (resources, regionName, alternateLink) => {
-                for (let res of resources) {
-                    if (res.link_document_url || res.link_external) {
-                        this.regions[regionName].append(new Resource(res, alternateLink));
+                if (resources.length) {
+                    for (let res of resources) {
+                        if (res.link_document_url || res.link_external) {
+                            this.regions[regionName].append(new Resource(res, alternateLink));
+                        }
                     }
+                } else {
+                    this.removeParentEl(this.regions[regionName].el);
                 }
             },
             showInstructorResources = (resources) => {
@@ -240,7 +264,7 @@ export default class Details extends LoadingView {
                             numberTableOfContents(toc);
                             showTableOfContents(toc);
                         } else {
-                            this.el.querySelector('.table-of-contents-link').remove();
+                            this.removeEl('.table-of-contents-link');
                         }
                     },
                     handleEndorsement = (thData) => {
@@ -249,7 +273,7 @@ export default class Details extends LoadingView {
                             document.getElementById('attribution').textContent = thData.attribution;
                             document.getElementById('attribution-school').textContent = thData.attributionSchool;
                         } else {
-                            this.el.querySelector('.endorsement').remove();
+                            this.removeEl('section.endorsement');
                         }
                     },
                     handleComingSoon = (comingSoon) => {
@@ -306,16 +330,25 @@ export default class Details extends LoadingView {
                         handlePublishInfo(detailData);
                         handleComingSoon(detailData.webview_link === '');
 
-                        for (let partner of detailData.book_allies) {
-                            let partnerTemplateHelper = {
-                                name: partner.ally_heading,
-                                blurb: partner.ally_short_description,
-                                url: partner.book_link_url,
-                                linkText: partner.book_link_text,
-                                logoUrl: partner.ally_color_logo
-                            };
+                        if (detailData.book_allies.length) {
+                            for (let partner of detailData.book_allies) {
+                                let partnerTemplateHelper = {
+                                    name: partner.ally_heading,
+                                    blurb: partner.ally_short_description,
+                                    url: partner.book_link_url,
+                                    linkText: partner.book_link_text,
+                                    logoUrl: partner.ally_color_logo
+                                };
 
-                            this.regions.partners.append(new Partner(partnerTemplateHelper));
+                                this.regions.partners.append(new Partner(partnerTemplateHelper));
+                            }
+                        } else {
+                            let el = this.regions.partners.el;
+
+                            if (typeof el === 'string') {
+                                el = this.el.querySelector(el);
+                            }
+                            el.parentNode.parentNode.removeChild(el.parentNode);
                         }
                     };
 
