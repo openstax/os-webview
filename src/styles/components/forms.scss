@@ -171,6 +171,11 @@ form {
         }
     }
 
+    textarea {
+        height: 21.42rem;
+        white-space: normal;
+    }
+
     .select-instructions {
         font-size: 1.2rem;
         font-style: italic;
@@ -179,10 +184,6 @@ form {
 
     [type="date"] {
         appearance: none;
-    }
-
-    textarea {
-        height: 21.42rem;
     }
 
     select,

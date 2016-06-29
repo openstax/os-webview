@@ -25,7 +25,7 @@ export default class ProductsBoxes extends BaseView {
                 linkText: 'Explore Our Subjects',
                 blurb: `All of our textbooks are peer-reviewed and absolutely free.
                 They meet standard scope and sequence requirements and come in web
-                view, PDF, iBooks, or a low cost print version.`,
+                view, PDF, on iBooks, or a low cost print version.`,
                 url: '/subjects'
             },
             ap: {
