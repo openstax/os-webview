@@ -13,31 +13,21 @@
     }
 }
 
-.flyin,
-.flyout {
-    @include desktop {
-        opacity: 0;
-    }
-}
+$subject: chemistry;
 
-.chemistry {
-    background-image: url('/images/home/subjects/chemistry/background.jpg');
-    background-attachment: fixed;
-    background-position: 20% 0;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 60rem;
-    overflow: hidden;
-    position: relative;
+$book-color: color(orange);
+$now-i-can-color: rgba(color(gray), 0.85);
+$now-i-can-width: 41rem;
+$underline-width: 19rem;
+$square-color: rgba(color(orange), 0.15);
+$subject-button-color: color(orange);
+$all-subject-button-color: color(turquoise);
 
-    @media (min-width: #{breakpoints(tablet) + 1}) {
-        height: 65rem;
-    }
+.home-page .book-banners .banner.#{$subject} {
+    background-color: $book-color;
 
-    @include phone {
-        background-color: color(orange);
-        background-image: none;
-        height: 45rem;
+    @include tablet {
+        background-image: url('/images/home/subjects/chemistry/background.jpg');
     }
 
     .container {
@@ -62,23 +52,7 @@
     .square-2,
     .square-3,
     .square-4 {
-        background-color: rgba(color(orange), 0.1);
-        display: none;
-        position: absolute;
-        transform: translateZ(0);
-        z-index: 0;
-
-        @include desktop {
-            display: block;
-            animation: flyin 0.5s 1.2s 1 normal ease-in forwards, loop 30s 1.5s normal infinite linear forwards;
-        }
-
-        &.flyout {
-            @include desktop {
-                animation: flyout 0.5s 1 normal forwards;
-                opacity: 1;
-            }
-        }
+        background-color: $square-color;
     }
 
     .square-1,
@@ -133,83 +107,36 @@
         top: 20%;
     }
 
-    .element,
-    .book,
-    .student {
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: contain;
-        transform: translateZ(0);
-        z-index: 1;
-    }
-
     .element {
-        display: none;
         background-image: url('/images/home/subjects/chemistry/element.png');
         height: 12rem;
         right: 0;
         position: absolute;
         bottom: 10rem;
         width: 12rem;
-
-        @include desktop {
-            display: block;
-            animation: flyin 0.5s 1.4s 1 normal ease-in forwards, loop 40s 1.8s reverse infinite linear forwards;
-        }
-
-        &.flyout {
-            @include desktop {
-                animation: flyout 0.5s 1 normal forwards;
-                opacity: 1;
-            }
-        }
     }
 
     .book {
-        background-color: color(orange);
+        background-color: $book-color;
         background-image: url('/images/subjects/chemistry.svg');
-        background-position: 0 0%;
-        position: absolute;
-        height: 25rem;
-        left: 0;
-        top: 1.5rem;
-        width: 25rem;
 
         @include tablet {
-            background-position: 0 100%;
-            top: 5%;
+            background-position: bottom left;
+            top: calc(13vw - 6.2rem);
             left: auto;
-            right: 40%;
+            right: calc(44% - 2.5rem);
             width: 30rem;
             height: 30rem;
         }
 
-        @media (max-width: 380px) {
-            width: 20rem;
-            height: 20rem;
-        }
-
-        @media (min-width: #{breakpoints(tablet) + 1}) {
-            top: 15%;
-            right: 35%;
-        }
-
         @include desktop {
             right: 45%;
-            animation: flyin 0.5s 1s 1 normal forwards;
-        }
-
-        &.flyout {
-            @include desktop {
-                animation: flyout 0.5s 1 normal forwards;
-                opacity: 1;
-            }
+            top: 7.1rem;
         }
     }
 
     .student {
         background-image: url('/images/home/subjects/chemistry/student.png');
-        background-position: 92% 100%;
         bottom: 15rem;
         height: 25rem;
         position: absolute;
@@ -219,165 +146,65 @@
 
         @include tablet {
             bottom: 0;
-            right: -6rem;
+            right: calc(19% - 6.6rem);
             height: 53rem;
-            width: 44.4rem;
-        }
-
-        @media (min-width: 700px) {
-            right: 0;
+            width: calc(20% + 24rem);
         }
 
         @include desktop {
             bottom: 0;
-            right: 20rem;
+            right: calc(43% - 30rem);
+            width: 44.4rem;
+        }
+    }
+
+    .align-edge {
+        left: 1.5rem;
+        bottom: 1.5rem;
+
+        @include tablet {
+            bottom: calc(5vw - 0.9rem);
+            left: calc(20% - 8.1rem);
+        }
+
+        @include desktop {
+            bottom: 5rem;
         }
     }
 
     .now-i-can {
-        background-color: rgba(color(gray), 0.85);
-        bottom: 15rem;
+        background-color: $now-i-can-color;
         color: color(neutral-lightest);
-        display: none;
-        font-size: 3.6rem;
-        font-weight: 600;
-        height: 9rem;
-        line-height: 2.5rem;
-        left: 1.5rem;
-        padding: 0;
-        position: absolute;
-        text-align: center;
-        text-transform: none;
-        width: 45rem;
-        z-index: 3;
-
-        @media (min-width: 650px) {
-            display: initial;
-        }
-
-        @media (min-width: 900px) {
-            left: 10rem;
-        }
-
-        @include desktop {
-            left: 13rem;
-            font-size: 3.6rem;
-            animation: flyin 0.5s 1.8s 1 normal forwards;
-        }
-
-        &.flyout {
-            @include desktop {
-                animation: flyout 0.5s 1 normal forwards;
-                opacity: 1;
-            }
-        }
-
-        .quote {
-            display: inline-block;
-            line-height: 8rem;
-            font-family: 'Permanent Marker', cursive;
-            transform: rotate(-1.2deg) translate(0.75vw, -0.45vw);
-            margin-right: 1rem;
-        }
+        width: $now-i-can-width;
 
         &::after {
-            border-bottom: 0.1rem solid color(neutral-lightest);
-            content: '';
-            right: 3rem;
-            position: absolute;
-            top: 6rem;
-            width: 20rem;
+            width: $underline-width;
         }
     }
 
     .subject-links {
-        bottom: 1.5rem;
-        left: 0;
-        position: absolute;
-        width: 100%;
-        z-index: 3;
 
         @include tablet {
             width: 27rem;
-            bottom: 6.3rem;
-            left: 5rem;
-        }
-
-        @media (min-width: 650px) {
-            width: auto;
-            left: 2.5rem;
-        }
-
-        @media (min-width: 900px) {
-            left: 11rem;
-        }
-
-        @include desktop {
-            left: 14rem;
-            animation: flyin 0.5s 1.8s 1 normal forwards;
-        }
-
-        &.flyout {
-            @include desktop {
-                animation: flyout 0.5s 1 normal forwards;
-                opacity: 1;
-            }
-        }
-
-        ul {
-            list-style-type: none;
-            margin: 0 1.5rem;
-            padding: 0;
-
-            @include tablet {
-                margin: 0;
-            }
-
-
-            li {
-                display: inline-block;
-                width: 100%;
-
-                @include tablet {
-                    width: auto;
-                    margin-right: 1rem;
-                }
-            }
-        }
-
-        .btn {
-            font-size: 1.6rem;
-            line-height: 6rem;
-            height: 6rem;
-            padding: 0 1.5rem;
-            width: 100%;
-            display: inline-block;
-
-            @include desktop {
-                width: auto;
-            }
         }
 
         .explore-subject {
-            margin-bottom: 1.5rem;
+            @include tablet {
+                background-color: $subject-button-color;
+            }
 
-            @include phone {
-                background-color: color(turquoise);
-
-                &:hover {
-                    background-color: darken(color(turquoise), 5%);
-                }
+            &:hover {
+                background-color: darken($subject-button-color, 5%);
             }
         }
 
         .explore-all {
+            @include tablet {
+                background-color: $all-subject-button-color;
+            }
 
-            @include phone {
-                background-color: color(grey);
-
-                &:hover {
-                    background-color: darken(color(grey), 5%);
-                }
+            &:hover {
+                background-color: darken($all-subject-button-color, 5%);
             }
         }
     }

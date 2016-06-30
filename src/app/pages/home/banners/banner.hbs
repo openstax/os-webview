@@ -1,0 +1,27 @@
+<div class="banner {{subject}}">
+    <div class="container">
+        {{#each features}}
+            <div class="{{this}} feature flyout"></div>
+        {{/each}}
+        <div class="book flyout"></div>
+        <div class="student"></div>
+        <div class="square-1 flyout"></div>
+        <div class="square-2 flyout"></div>
+        <div class="square-3 flyout"></div>
+        <div class="square-4 flyout"></div>
+        <div class="align-edge {{alignedEdge}}">
+            <div class="now-i-can flyout">
+                <span>Now I can</span>
+                <span class="quote">{{quote}}</span>
+            </div>
+            <div class="subject-links flyout">
+                <a class="btn btn-large {{buttonSpec1}} explore-subject" href="/details/{{subject}}">
+                    Explore {{subjectTitle}}
+                </a>
+                <a class="btn btn-large {{buttonSpec2}} explore-all" href="/subjects">
+                    Explore All Subjects
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
