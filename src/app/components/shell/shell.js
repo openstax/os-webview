@@ -27,7 +27,8 @@ class AppView extends BaseView {
     }
 
     load(pageName, options) {
-        let headTitle = document.querySelector('head title');
+        let headTitle = document.querySelector('head title'),
+            metaDescriptionEl = document.querySelector('head meta[name="description"]');
 
         // Lazy-load the page
         System.import(`~/pages/${pageName}/${pageName}`).then((m) => {
@@ -42,6 +43,7 @@ class AppView extends BaseView {
                     }
                 };
 
+            metaDescriptionEl.content = Page.metaDescription();
             this.regions.header.show(header);
             this.regions.main.show(view);
             this.regions.footer.show(footer);

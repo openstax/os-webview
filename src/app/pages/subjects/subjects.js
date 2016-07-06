@@ -54,6 +54,10 @@ export default class Subjects extends LoadingView {
         $.scrollTo(filterSection, 30);
     }
 
+    static metaDescription = () => `Our textbooks are openly licensed, peer-reviewed, free,
+        and backed by learning resources. Check out our books and decide if they’re
+        right for your course.`;
+
     updateSelectedFilterFromPath() {
         let pathMatch = window.location.pathname.match(/\/subjects\/(.+)/),
             selectedFilter = 'View All';

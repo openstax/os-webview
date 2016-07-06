@@ -95,6 +95,8 @@ class Regions {
 }
 
 class BaseView extends Backbone.View {
+    // To be used in <meta description>; should be overridden in derived views
+    static metaDescription = () => 'Free educational materials for K-12 and College.';
 
     constructor() {
         super(...arguments);

@@ -27,6 +27,10 @@ export default class K12 extends BaseView {
         $.hashClick(e, {doHistory: false});
     }
 
+    static metaDescription = () => `K-12 classrooms benefit from our adaptive learning
+       courseware and open content, including textbooks for AP® courses. Find out how your
+       class can take part.`;
+
     onRender() {
         appView.header.updateHeaderStyle();
 
