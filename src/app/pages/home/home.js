@@ -46,6 +46,10 @@ export default class Home extends LoadingView {
         $.hashClick(e, {doHistory: false});
     }
 
+    static metaDescription = () => `OpenStax’s goal is to increase student access to
+        high-quality learning materials, at little to no cost. Learn more about what we
+        offer for college and K-12.`;
+
     parallaxBanner() {
         let bookBanners = this.el.querySelectorAll('.book-banners > div > div');
         let books = this.el.querySelectorAll('.book');

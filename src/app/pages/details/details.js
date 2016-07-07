@@ -72,6 +72,10 @@ export default class Details extends LoadingView {
         }
     }
 
+    static metaDescription = () => `This book is a peer-reviewed, free,
+    open textbook that covers standard scope and sequence. Access the text, authors,
+    and resources here.`;
+
     constructor() {
         super(...arguments);
         this.templateHelpers = {strips};

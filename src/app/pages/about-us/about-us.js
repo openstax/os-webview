@@ -70,6 +70,10 @@ export default class AboutUs extends LoadingView {
         }
     }
 
+    static metaDescription = () => `OpenStax is a nonprofit based at Rice University,
+        and it’s our mission to improve student access to education. Read more about
+        who we are and what we do.`;
+
     onRender() {
         this.regions.hero.show(new Hero());
 

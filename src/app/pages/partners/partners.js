@@ -78,6 +78,10 @@ export default class Partners extends LoadingView {
         $.scrollTo(filterSection, 30);
     }
 
+    static metaDescription = () => `OpenStax partners have united with us to increase
+        access to high-quality learning materials. Their low-cost tools integrate
+        seamlessly with OpenStax books.`;
+
     updateSelectedFilterFromPath() {
         let pathMatch = window.location.pathname.match(/\/partners\/(.+)/),
             selectedFilter = 'View All';
