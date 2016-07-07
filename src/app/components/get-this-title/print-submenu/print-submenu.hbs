@@ -1,7 +1,11 @@
 <h3>Place an Order</h3>
-<a href="{{bookstore.link}}" class="btn">Bookstore Orders</a>
-<p>Bookstores place orders through NACSORP.  Need an account?</p>
+<p>
+    <a href="{{bookstore.link}}" class="btn">Bookstore Orders</a>
+    Order through NACSCORP
+</p>
 {{#if amazon.link}}
-<a href="{{amazon.link}}" class="btn">Individual Orders</a>
-<p>Available for ${{amazon.price}} from seller "OpenStax" on Amazon</p>
+<p>
+    <a href="{{amazon.link}}" class="btn">Individual Orders</a>
+    ${{amazon.price}} from seller "OpenStax" on Amazon
+</p>
 {{/if}}
