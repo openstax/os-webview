@@ -13,160 +13,28 @@
     }
 }
 
-.flyin,
-.flyout {
-    @include desktop {
-        opacity: 0;
-    }
-}
+$subject: biology;
 
-.biology {
-    background-image: url('/images/home/subjects/biology/background.jpg');
-    background-attachment: fixed;
-    background-position: 20% 0;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 60rem;
-    overflow: hidden;
-    position: relative;
+$book-color: color(green);
+$now-i-can-color: rgba(color(gray), 0.85);
+$now-i-can-width: 50rem;
+$underline-width: 29rem;
+$square-color: rgba(color(green), 0.3);
+$subject-button-color: color(gold);
+$all-subject-button-color: color(green);
 
-    @media (min-width: #{breakpoints(tablet) + 1}) {
-        height: 65rem;
-    }
+.home-page .book-banners .banner.#{$subject} {
+    background-color: $book-color;
 
-    @include phone {
-        background-color: color(green);
-        background-image: none;
-        height: 45rem;
-    }
-
-    .container {
-        display: flex;
-        margin: 0 auto;
-        padding: 0 1.5rem;
-        max-width: $boxed-width;
-        flex-flow: column wrap;
-        position: relative;
-        height: 100%;
-
-        @include tablet {
-            flex-flow: row wrap;
-        }
-
-        @include desktop {
-            flex-flow: row wrap;
-        }
-    }
-
-    .square-1,
-    .square-2,
-    .square-3,
-    .square-4 {
-        background-color: rgba(color(green), 0.2);
-        display: none;
-        position: absolute;
-        transform: translateZ(0);
-        z-index: 0;
-
-        @include desktop {
-            display: block;
-            animation: flyin 0.5s 1.2s 1 normal ease-in forwards, loop 30s 1.5s normal infinite linear forwards;
-        }
-
-        &.flyout {
-            @include desktop {
-                animation: flyout 0.5s 1 normal forwards;
-                opacity: 1;
-            }
-        }
-    }
-
-    .square-1,
-    .square-4 {
-        height: 2.5rem;
-        width: 2.5rem;
-    }
-
-    .square-1 {
-        left: 5rem;
-        top: 50%;
-    }
-
-    .square-2 {
-        height: 34rem;
-        bottom: 0;
-        left: 0;
-        width: 45rem;
-
-        @include tablet {
-            display: block;
-        }
-
-        @include desktop {
-            bottom: auto;
-            height: 34rem;
-            top: 50%;
-            width: 60%;
-        }
-    }
-
-    .square-3 {
-        height: 26rem;
-        bottom: 15rem;
-        right: 0;
-        width: 26rem;
-
-        @include tablet {
-            display: block;
-        }
-
-        @include desktop {
-            bottom: 8rem;
-            height: 36rem;
-            right: 5rem;
-            width: 40rem;
-        }
-    }
-
-    .square-4 {
-        left: 97%;
-        top: 50%;
-    }
-
-    .diagram,
-    .leaf,
-    .book,
-    .student {
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: contain;
-        transform: translateZ(0);
-        z-index: 1;
-    }
-
-    .diagram,
-    .leaf {
-        display: none;
-
-        @include desktop {
-            display: block;
-            animation: flyin 0.5s 1.4s 1 normal ease-in forwards, loop 40s 1.8s reverse infinite linear forwards;
-        }
-
-        &.flyout {
-            @include desktop {
-                animation: flyout 0.5s 1 normal forwards;
-                opacity: 1;
-            }
-        }
+    @include tablet {
+        background-image: url("/images/home/subjects/#{$subject}/background.jpg");
     }
 
     .diagram {
         background-image: url('/images/home/subjects/biology/diagram.png');
+        bottom: 6rem;
         height: 19rem;
         left: 5rem;
-        position: absolute;
-        bottom: 6rem;
         width: 27.4rem;
     }
 
@@ -174,68 +42,98 @@
         background-image: url('/images/home/subjects/biology/leaf.png');
         height: 14rem;
         right: 19rem;
-        position: absolute;
         top: 24rem;
         width: 14rem;
     }
 
-    .book {
-        background-color: color(green);
-        background-image: url('/images/subjects/biology.svg');
-        position: absolute;
-        height: 25rem;
-        right: 16rem;
-        top: 1.5rem;
-        width: 25rem;
-        background-size: 130% auto;
-        background-position: 100% 50%;
+    .square-1,
+    .square-2,
+    .square-3,
+    .square-4 {
+        background-color: $square-color;
+    }
 
+    .square-1 {
+        height: 3.5rem;
+        left: 13rem;
+        top: 60%;
+        width: 3.5rem;
+    }
+
+    .square-3 {
         @include tablet {
-            top: 5%;
-            left: 30%;
-            right: auto;
-            width: 30rem;
-            height: 30rem;
-        }
-
-        @media (max-width: 360px) {
-            right: auto;
-            left: -5rem;
-
-        }
-
-        @media (min-width: #{breakpoints(tablet) + 1}) {
-            top: 15%;
+            bottom: 0;
+            display: block;
+            height: 34rem;
+            left: 0;
+            width: 45rem;
         }
 
         @include desktop {
-            left: 40%;
-            animation: flyin 0.5s 1s 1 normal forwards;
+            height: 17rem;
+            left: 29rem;
+            top: 40rem;
+            width: 36rem;
+        }
+    }
+
+    .square-4 {
+        @include tablet {
+            bottom: 15rem;
+            display: block;
+            height: 26rem;
+            right: 0;
+            width: 26rem;
         }
 
-        &.flyout {
-            @include desktop {
-                animation: flyout 0.5s 1 normal forwards;
-                opacity: 1;
-            }
+        @include desktop {
+            height: 43rem;
+            left: 64rem;
+            top: 24rem;
+            width: 43rem;
+        }
+    }
+
+    .element {
+        background-image: url('/images/home/subjects/#{$subject}/element.png');
+        bottom: 10rem;
+        height: 12rem;
+        right: 0;
+        width: 12rem;
+    }
+
+    .book {
+        background-color: $book-color;
+        background-image: url('/images/subjects/#{$subject}.svg');
+        background-size: 130%;
+        background-position: center right;
+        top: -1rem;
+        left: -2rem;
+
+        @include tablet {
+            background-position: center right;
+            top: 10vw;
+            left: calc(52.3% - 15.7rem);
+            width: 28rem;
+            height: 28rem;
+        }
+
+        @include desktop {
+            animation: flyin 0.5s 1s 1 normal forwards;
+            left: 37%;
+            top: 10rem;
         }
     }
 
     .student {
-        background-image: url('/images/home/subjects/biology/student.png');
+        background-image: url('/images/home/subjects/#{$subject}/student.png');
         background-position: 92% 100%;
-        bottom: 15rem;
-        height: 25rem;
-        position: absolute;
-        right: 1.5rem;
-        width: 22rem;
-        z-index: 2;
+        width: calc(30% + 13rem);
+        right: calc(20% - 4rem);
 
         @include tablet {
-            bottom: 0;
             left: -10%;
-            right: auto;
-            height: 53rem;
+            height: calc(20vw + 33.3rem);
             width: 45.4rem;
         }
 
@@ -246,146 +144,51 @@
         }
     }
 
-    .now-i-can {
-        background-color: rgba(color(neutral-medium), 0.85);
-        bottom: 15rem;
-        color: color(neutral-lightest);
-        display: none;
-        font-size: 3rem;
-        font-weight: 600;
-        height: 8rem;
-        line-height: 2.5rem;
-        left: 22%;
-        padding: 0;
-        position: absolute;
-        text-align: center;
-        text-transform: none;
-        width: 50rem;
-        z-index: 3;
-
-        @media (min-width:650px) {
-            display: initial;
+    .align-edge {
+        @include tablet {
+            bottom: 5.5rem;
+            left: calc(50% - 22.7rem);
         }
 
         @include desktop {
             left: calc(49% - 6rem);
-            width: 59rem;
-            height: 9rem;
-            font-size: 3.6rem;
-            animation: flyin 0.5s 1.8s 1 normal forwards;
         }
+    }
 
-        &.flyout {
-            @include desktop {
-                animation: flyout 0.5s 1 normal forwards;
-                opacity: 1;
-            }
-        }
-
-        .quote {
-            display: inline-block;
-            line-height: 8rem;
-            font-family: 'Permanent Marker', cursive;
-            transform: rotate(-1.2deg) translate(0.75vw, -0.45vw);
-            margin-right: 1rem;
-        }
+    .now-i-can {
+        background-color: $now-i-can-color;
+        color: color(neutral-lightest);
+        font-size: 3rem;
+        width: $now-i-can-width;
 
         &::after {
-            border-bottom: 0.1rem solid color(neutral-lightest);
-            content: '';
-            right: 1rem;
-            position: absolute;
-            top: 6rem;
-            width: 32rem;
-
-
-            @include desktop {
-                width: 38rem;
-                right: 1rem;
-            }
+            width: $underline-width;
         }
     }
 
     .subject-links {
-        bottom: 1.5rem;
-        left: 0;
-        position: absolute;
-        width: 100%;
-        z-index: 3;
-
         @include tablet {
-            width: 27rem;
-            bottom: 6rem;
-            left: 40%;
+            width: 45rem;
+        }
+    }
+
+    .explore-subject {
+        @include tablet {
+            background-color: $subject-button-color;
         }
 
-        @media (min-width: 650px) {
-            width: auto;
-            left: 22%;
+        &:hover {
+            background-color: darken($subject-button-color, 5%);
+        }
+    }
+
+    .explore-all {
+        @include tablet {
+            background-color: $all-subject-button-color;
         }
 
-        @include desktop {
-            left: calc(49% - 6rem);
-            animation: flyin 0.5s 1.8s 1 normal forwards;
-        }
-
-        &.flyout {
-            @include desktop {
-                animation: flyout 0.5s 1 normal forwards;
-                opacity: 1;
-            }
-        }
-
-        ul {
-            list-style-type: none;
-            margin: 0 1.5rem;
-            padding: 0;
-
-            @include tablet {
-                margin: 0;
-            }
-
-
-            li {
-                display: inline-block;
-                width: 100%;
-
-                @media (min-width: 650px) {
-                    width: auto;
-                }
-            }
-        }
-
-        .btn {
-            font-size: 1.6rem;
-            line-height: 6rem;
-            height: 6rem;
-            padding: 0 1.5rem;
-            width: 100%;
-            display: inline-block;
-
-            @include desktop {
-                width: auto;
-            }
-        }
-
-        .explore-subject {
-            margin-bottom: 1.5rem;
-
-            @include tablet {
-                margin-right: 1rem;
-            }
-        }
-
-        .explore-all {
-
-            @include phone {
-                background-color: color(deep-green);
-
-                &:hover {
-                    background-color: darken(color(deep-green), 5%);
-                }
-            }
+        &:hover {
+            background-color: darken($all-subject-button-color, 5%);
         }
     }
 }

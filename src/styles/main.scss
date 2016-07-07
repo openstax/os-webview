@@ -75,7 +75,7 @@ sup {
     height: 0;
     justify-content: space-around;
     position: relative;
-    top: -3rem;
+    bottom: 3rem;
     z-index: 100;
 
     @include phone {
