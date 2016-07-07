@@ -5,6 +5,50 @@ import {template} from './impact.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
 
 const highlightedPartners = [{
+    name: 'Alamo Colleges',
+    url: 'http://www.alamo.edu',
+    logo: '/images/impact/partners/alamo.png'
+}, {
+    name: 'College of the Canyons',
+    url: 'https://www.canyons.edu',
+    logo: '/images/impact/partners/canyons.png'
+}, {
+    name: 'Lansing Community College',
+    url: '	http://www.lcc.edu',
+    logo: '/images/impact/partners/lansing.png'
+}, {
+    name: 'Northern Essex Community College',
+    url: 'http://www.necc.mass.edu',
+    logo: '/images/impact/partners/n-essex.png'
+}, {
+    name: 'Pasadena City College',
+    url: 'http://www.pasadena.edu',
+    logo: '/images/impact/partners/pasadena.png'
+}, {
+    name: 'South Florida State College',
+    url: 'http://www.southflorida.edu',
+    logo: '/images/impact/partners/s-florida.png'
+}, {
+    name: 'Tulsa Community College',
+    url: 'http://www.tulsacc.edu',
+    logo: '/images/impact/partners/tulsa-cc.png'
+}, {
+    name: 'University of Connecticut',
+    url: 'http://uconn.edu',
+    logo: '/images/impact/partners/uconn.png'
+}, {
+    name: 'University of Arizona',
+    url: 'http://www.arizona.edu',
+    logo: '/images/impact/partners/arizona.png'
+}, {
+    name: 'Utah State University',
+    url: 'https://www.usu.edu',
+    logo: '/images/impact/partners/utah-state.png'
+}, {
+    name: 'Washington State University',
+    url: 'https://wsu.edu',
+    logo: '/images/impact/partners/washington-state.png'
+}, {
     name: 'Auburn University',
     url: 'http://www.auburn.edu',
     logo: '/images/impact/partners/auburn.png'
