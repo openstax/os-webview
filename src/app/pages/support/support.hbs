@@ -1,0 +1,27 @@
+<div class="hero">
+    <div class="container boxed">
+        <h1>OpenStax Support</h1>
+        <div class="subhead">
+            Our online support library is available 24/7 to answer your questions — just
+            click through your desired topic below to start your search. If you don’t
+            find the information you need, you can contact our Customer Service team for
+            further assistance.
+        </div>
+    </div>
+</div>
+{{{strips}}}
+<div class="main">
+    <div class="boxed">
+        <div class="resource-boxes">
+            {{#each resources}}
+            <div class="resource-box">
+                <div>
+                    <div class="name">{{name}}</div>
+                    <div class="description">{{description}}</div>
+                </div>
+                <div class="link"><a href="{{linkUrl}}">{{linkText}}</a></div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>

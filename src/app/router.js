@@ -33,7 +33,8 @@ const PAGES = [
     'license',
     'renewal',
     'mass-renewal',
-    'subjects'
+    'subjects',
+    'support'
 ];
 
 class Router extends Backbone.Router {

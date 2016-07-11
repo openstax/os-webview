@@ -1,0 +1,76 @@
+@import 'variables';
+@import 'mixins';
+
+.support-page {
+    .hero {
+        background-color: color(cyan);
+        color: color(neutral-lightest);
+
+        .subhead {
+            font-weight: inherit;
+            line-height: 1.8;
+            padding: 2rem 10rem 3rem;
+        }
+    }
+
+    .strips {
+        margin: 0;
+    }
+
+    .main {
+        background-color: lighten(color(neutral-lighter), 8%);
+        padding: 0;
+    }
+
+    .resource-boxes {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        .resource-box {
+            background-color: color(neutral-lightest);
+            display: flex;
+            flex: 1 1 100%;
+            flex-direction: column;
+            justify-content: space-between;
+            margin: 1.5rem;
+            min-width: 20rem;
+            padding: 1.5rem;
+
+            @include tablet {
+                flex-basis: 28%;
+                max-width: calc(50% - 3rem);
+            }
+
+            @include desktop {
+                flex-basis: 12%;
+                max-width: calc(50% - 3rem);
+            }
+
+            .name {
+                color: color(green);
+                font-size: 1.8rem;
+                font-weight: 500;
+            }
+
+            .description {
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+            }
+
+            .link > a {
+                color: color(cyan);
+                font-size: 80%;
+                font-weight: 500;
+                text-transform: uppercase;
+
+                &::after {
+                    color: inherit;
+                    content: '►';
+                    font-size: 94%;
+                    padding-left: 1rem;
+                }
+            }
+        }
+    }
+}
