@@ -176,6 +176,16 @@ export default class Details extends LoadingView {
                     insertResources(resources, 'instructorResources', alternateLink);
                 });
             },
+            showCommunityResources = (text, url) => {
+                let link = this.el.querySelector('#community-resources a');
+
+                if (text) {
+                    link.textContent = text;
+                }
+                if (url) {
+                    link.href = url;
+                }
+            },
             handbookLink = this.el.querySelector('.handbook-link'),
             setHandbookLink = (linkUrl) => {
                 if (linkUrl) {
@@ -329,6 +339,7 @@ export default class Details extends LoadingView {
                         setHandbookLink(detailData.student_handbook_url);
                         handleToc(detailData.table_of_contents);
                         showInstructorResources(detailData.book_faculty_resources);
+                        showCommunityResources(detailData.community_resource_cta, detailData.community_resource_url);
                         insertResources(detailData.book_student_resources, 'studentResources');
                         handleErrataLink(detailData.errata_link, detailData.errata_corrections_link);
                         handlePublishInfo(detailData);
