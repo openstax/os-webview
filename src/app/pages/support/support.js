@@ -38,7 +38,8 @@ const supportHost = 'https://c.na12.visual.force.com/apex/pkb_Home_Custom?l=en_U
                 using OpenStax Tutor courseware.`,
                 linkText: 'Find answers',
                 linkUrl: `${supportHost}&c=Products%3ATutor`
-            },
+            }/*
+            ,
             {
                 name: 'General OpenStax Info',
                 description: `Information about the OpenStax organization, mission, and
@@ -46,6 +47,7 @@ const supportHost = 'https://c.na12.visual.force.com/apex/pkb_Home_Custom?l=en_U
                 linkText: 'Find answers',
                 linkUrl: '404'
             }
+            */
         ]
     }
 })
