@@ -89,6 +89,22 @@ class Analytics {
         } else {
             window.ga('create', settings.analyticsID, 'auto');
         }
+
+        document.addEventListener('submit', (e) => {
+            if (typeof e.target !== 'object' || typeof e.target.action !== 'string') {
+                return;
+            }
+
+            if (e.target.action.indexOf('https://www.salesforce.com/') === 0) {
+                const formData = new FormData(e.target);
+
+                this.sendEvent({
+                    eventCategory: 'Salesforce',
+                    eventAction: 'submit',
+                    eventLabel: formData.get('lead_source')
+                });
+            }
+        });
     }
 
 }
