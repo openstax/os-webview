@@ -68,8 +68,8 @@
     .headshots {
         display: flex;
         flex-flow: row wrap;
-        position: relative;
         justify-content: space-between;
+        position: relative;
 
         .headshot {
             cursor: pointer;
@@ -474,7 +474,7 @@
         }
 
         .name {
-            font-size: 3.6rem;
+            @include constrained-variable-text(3.6, 0.2);
             font-weight: bold;
             left: -0.2rem;
             letter-spacing: -0.15rem;
