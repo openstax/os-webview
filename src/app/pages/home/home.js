@@ -23,7 +23,8 @@ function shuffle(array) {
 }
 
 const banners = shuffle([
-    'astronomy',
+    // Will not be released until Nov 2016
+    // 'astronomy',
     'biology',
     'chemistry',
     'us-history'
