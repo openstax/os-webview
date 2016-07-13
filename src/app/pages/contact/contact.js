@@ -51,7 +51,7 @@ export default class Contact extends LoadingView {
     }
 
     static metaDescription = () => `If you have a question or feedback about our books,
-        Concept Coach, Tutor, partnerships, media, or any other topic, contact us here.
+        OpenStax Tutor, Concept Coach, partnerships, or any other topic, contact us here.
         We’d love to hear from you!`;
 
     onRender() {

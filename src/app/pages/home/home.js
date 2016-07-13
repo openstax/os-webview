@@ -48,7 +48,7 @@ export default class Home extends LoadingView {
     }
 
     static metaDescription = () => `OpenStax’s goal is to increase student access to
-        high-quality learning materials, at little to no cost. Learn more about what we
+        high-quality learning materials at little to no cost. Learn more about what we
         offer for college and K-12.`;
 
     parallaxBanner() {

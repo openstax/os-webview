@@ -91,7 +91,7 @@ export default class HigherEd extends LoadingView {
     }
 
     static metaDescription = () => `Our open, peer-reviewed college textbooks are free
-        online and come with resources from us and our allies. See how you can adopt our
+        online and come with resources from us and our partners. See how you can adopt our
         books for your course.`;
 
     onRender() {
