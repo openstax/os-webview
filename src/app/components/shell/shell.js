@@ -4,7 +4,6 @@ import {props} from '~/helpers/backbone/decorators';
 import header from './header/header';
 import footer from './footer/footer';
 import {template} from './shell.hbs';
-import zendesk from '~/helpers/zendesk';
 
 @props({
     el: 'body',
@@ -48,7 +47,6 @@ class AppView extends BaseView {
             this.regions.main.show(view);
             this.regions.footer.show(footer);
             headTitle.textContent = `${pageName[0].toUpperCase()}${pageName.slice(1)} - OpenStax`;
-            zendesk();
 
             if (hash) {
                 if ('isLoaded' in view) {

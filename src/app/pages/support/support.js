@@ -3,7 +3,7 @@ import {props} from '~/helpers/backbone/decorators';
 import {template} from './support.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
 
-const supportHost = 'https://c.na12.visual.force.com/apex/pkb_Home_Custom?l=en_US';
+const supportHost = 'http://openstax.force.com/support?l=en_US';
 
 @props({
     template: template,
