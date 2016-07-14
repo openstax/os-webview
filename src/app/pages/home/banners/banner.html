@@ -1,0 +1,25 @@
+<template args="model">
+    <div class="container">
+        <div each="feature in model.features" class="{`${feature} feature fly${model.fly}`}"></div>
+        <div class="{`book fly${model.fly}`}"></div>
+        <div class="student" key="student"></div>
+        <div class="{`square-1 fly${model.fly}`}"></div>
+        <div class="{`square-2 fly${model.fly}`}"></div>
+        <div class="{`square-3 fly${model.fly}`}"></div>
+        <div class="{`square-4 fly${model.fly}`}"></div>
+        <div class="align-edge {model.alignedEdge}">
+            <div class="{`now-i-can fly${model.fly}`}">
+                <span>Now I can</span>
+                <span class="quote">{model.quote}</span>
+            </div>
+            <div class="{`subject-links fly${model.fly}`}">
+                <a class="btn btn-large {model.buttonSpec1} explore-subject" href="/details/{model.subject}">
+                    Explore {model.subjectTitle}
+                </a>
+                <a class="btn btn-large {model.buttonSpec2} explore-all" href="/subjects">
+                    Explore All Subjects
+                </a>
+            </div>
+        </div>
+    </div>
+</template>
