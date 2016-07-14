@@ -67,7 +67,8 @@ function injectFaviconMarkup() {
         since: gulp.lastRun('injectFaviconMarkup')
     })
     .pipe(pi.realFavicon.injectFaviconMarkups(
-        JSON.parse(fs.readFileSync(FAVICON_DATA_FILE)).favicon.html_code
+        JSON.parse(fs.readFileSync(FAVICON_DATA_FILE)).favicon.html_code,
+        {keep: 'meta[property="og:image"]'}
     ))
     .pipe(gulp.dest(config.dest));
 }
