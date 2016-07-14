@@ -11,6 +11,10 @@ import {template as strips} from '~/components/strips/strips.hbs';
 
 export default class Foundation extends BaseView {
 
+    static metaDescription = () => `OpenStax is supported by our philanthropic
+        sponsors like the Bill & Melinda Gates Foundation, the William and Flora
+        Hewlett Foundation, and more.`;
+
     onRender() {
         this.el.classList.add('foundation-page');
     }

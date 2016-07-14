@@ -125,9 +125,9 @@ export default class Impact extends LoadingView {
         $.hashClick(e, {doHistory: false});
     }
 
-    static metaDescription = () => `Since 2012, OpenStax has saved students millions through
-        free, peer-reviewed college textbooks. Meet the students and 3,000+ schools who’ve
-        adopted OpenStax.`;
+    static metaDescription = () => `Since 2012, OpenStax has saved students millions
+        through free, peer-reviewed college textbooks. Learn more about our impact
+        on the 3,000+ schools who use our books.`;
 
     onLoaded() {
         super.onLoaded();
