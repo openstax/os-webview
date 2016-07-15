@@ -5,7 +5,7 @@
     </if>
     <div class="quote {model.colorScheme ? model.colorScheme : ''}">
         <blockquote>
-            <span class="content"></span>
+            <quote-html></quote-html>
             <div if="model.attribution" class="attribution">— {model.attribution}</div>
         </blockquote>
         <img if="model.overlay" class="overlay" src="{model.overlay}">

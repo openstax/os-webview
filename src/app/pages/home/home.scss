@@ -31,6 +31,7 @@
     width: 100%;
 
     @include tablet {
+        background-color: transparent;
         height: 60rem;
     }
 
@@ -38,11 +39,23 @@
         height: 65rem;
     }
 
-    @include tablet {
-        background-attachment: fixed;
-        background-image: url("/images/home/subjects/#{$subject}/background.jpg");
-        background-position: center top;
-        background-size: cover;
+    .background-image {
+        display: none;
+
+        @include tablet {
+            background-image: url("/images/home/subjects/#{$subject}/background.jpg");
+            background-position: center top;
+            background-size: cover;
+            content: ' ';
+            display: block;
+            height: 70rem;
+            left: 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            will-change: transform;
+            z-index: -1;
+        }
     }
 
 

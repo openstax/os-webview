@@ -1,25 +1,23 @@
 import {Controller} from 'superb';
 import Quote from './quote/quote';
-import {description as template} from './quotes.html';
 
 export default class Quotes extends Controller {
 
     init(quotes) {
-        this.template = template;
+        this.template = () => '';
         this.css = '/app/components/quotes/quotes.css';
         this.view = {
-            classes: ['boxed']
+            classes: ['boxed', 'quotes', `boxes-${quotes.length}`]
         };
         this.regions = {
             quotes: '.quotes'
         };
-        this.model = quotes;
+        this.quoteViews = quotes.map((quote) => new Quote(quote));
     }
 
     onLoaded() {
-        for (const quote of this.model) {
-            // FIX: Append to self and remove HTML from template
-            this.regions.quotes.append(new Quote(quote));
+        for (const view of this.quoteViews) {
+            this.regions.self.append(view);
         }
     }
 

@@ -13,7 +13,7 @@ export default class Quote extends Controller {
 
     onUpdate() {
         // NOTE: Incremental-DOM currently lacks the ability to inject HTML into a node.
-        this.el.querySelector('.content').innerHTML = this.model.content;
+        this.el.querySelector('quote-html').innerHTML = this.model.quoteHtml;
     }
 
 }

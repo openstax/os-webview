@@ -1,5 +1,4 @@
 import {Controller} from 'superb';
-import {description as template} from './buckets.html';
 import Bucket from './bucket/bucket';
 
 const bucketClasses = ['our-impact', 'partners'];
@@ -8,10 +7,10 @@ const buttonClasses = ['btn-cyan', 'btn-gold'];
 export default class Buckets extends Controller {
 
     init(data) {
-        this.template = template;
+        this.template = () => '';
         this.css = '/app/components/buckets/buckets.css';
-        this.regions = {
-            buckets: '.buckets-section'
+        this.view = {
+            classes: ['buckets-section']
         };
 
         // FIX: Simplify options
@@ -58,7 +57,7 @@ export default class Buckets extends Controller {
 
     onLoaded() {
         for (const bucketData of this.data) {
-            this.regions.buckets.append(new Bucket(bucketData));
+            this.regions.self.append(new Bucket(bucketData));
         }
     }
 

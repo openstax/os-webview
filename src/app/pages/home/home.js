@@ -1,5 +1,6 @@
 import LoadingView from '~/controllers/loading-view';
 import $ from '~/helpers/$';
+import {utils} from 'superb';
 import {on} from '~/helpers/controller/decorators';
 import shell from '~/components/shell/shell';
 import Quotes from '~/components/quotes/quotes';
@@ -117,25 +118,54 @@ export default class Home extends LoadingView {
         }
     }
 
-    /*
+    setupDebouncedParallax() {
+        const pageYOffset = window.pageYOffset - 1;
+        const bannerEl = this.el.querySelector('.book-banners');
+        const backgrounds = bannerEl.querySelectorAll('.background-image');
+        const setBackgroundHeights = (height, top) => {
+            for (const bgEl of backgrounds) {
+                bgEl.style.height = `${height}px`;
+            }
+        };
+
+        this.debouncedParallax = utils.debounce(() => {
+            const bannerRect = bannerEl.getClientRects();
+            const bannerBottom = bannerRect[0].bottom;
+            const height = bannerBottom > 0 ? bannerBottom : 0;
+
+            setBackgroundHeights(height);
+        }, 10, false);
+    }
+
     onLoaded() {
         shell.header.updateHeaderStyle();
-        // FIX: Attaching listener on every load is creating too many listeners
-        // FIX: Listeners need to be removed when view is destroyed
-        this.attachListenerTo(window, 'scroll', () =>
-            window.requestAnimationFrame(this.parallaxBanner.bind(this))
-        );
+        for (const view of this.banners) {
+            this.regions.banners.append(view);
+        }
+        this.banners[this.currentBanner].show();
+        this.setupDebouncedParallax();
+        window.addEventListener('scroll', this.debouncedParallax);
+        window.addEventListener('resize', this.debouncedParallax);
 
-        this.regions.quotes.show(new Quotes([
+        this.modelInterval = setInterval(() => {
+            this.banners[this.currentBanner].hide()
+            .then(() => {
+                ++this.currentBanner;
+                this.currentBanner %= this.banners.length;
+                this.banners[this.currentBanner].show();
+            });
+        }, 11000);
+
+        const quotesView = new Quotes([
             {
-                orientation: 'right',
+                orientation: 'left',
                 hasImage: true,
-                imageUrl: '/images/home/quotes/quote-right.jpg',
+                image: '/images/home/quotes/quote-right.jpg',
                 quoteHtml: `Concept Coach is our free new tool that helps college
                 students understand and retain what they've read. We're recruiting
                 faculty for our Fall 2016 pilot!`,
-                linkUrl: 'http://cc.openstax.org',
-                linkText: 'Learn More'
+                link: 'http://cc.openstax.org',
+                cta: 'Learn More'
             },
             {
                 orientation: 'full',
@@ -150,62 +180,21 @@ export default class Home extends LoadingView {
                 hasImage: false,
                 overlay: '/images/home/quotes/book-mass-renewal-bucket.svg',
                 quoteHtml: 'Using OpenStax in your course again this semester?',
-                linkUrl: '/mass-renewal',
-                linkText: 'Let Us Know'
+                link: '/mass-renewal',
+                cta: 'Let Us Know'
             }
-        ]));
+        ]);
+
+        this.regions.quotes.attach(quotesView);
         this.regions.education.attach(new Education());
         this.regions.buckets.attach(new Buckets());
-
-        for (const banner of banners) {
-            const view = this;
-
-            this.bannerViews = [];
-            this.subviewPromises = [];
-
-            this.subviewPromises.push(new Promise((resolve) => {
-                System.import(`~/pages/home/banners/${banner}/${banner}`).then((m) => {
-                    const Page = m.default;
-                    let display = false;
-
-                    if (view.currentBanner !== 0) {
-                        view.currentBanner = 0;
-                        display = true;
-                    }
-
-                    const bannerView = new Page({
-                        parent: view,
-                        name: banner,
-                        display
-                    });
-
-                    this.bannerViews.push(bannerView);
-                    view.regions.bookBanners.append(bannerView);
-                    resolve();
-                });
-            }));
-        }
-    }
-    */
-
-    onLoaded() {
-        for (const view of this.banners) {
-            this.regions.banners.append(view);
-        }
-        this.banners[this.currentBanner].show();
-
-        this.modelInterval = setInterval(() => {
-            this.banners[this.currentBanner].hide()
-            .then(() => {
-                ++this.currentBanner;
-                this.currentBanner %= this.banners.length;
-                this.banners[this.currentBanner].show();
-            });
-        }, 11000);
     }
 
     onClose() {
         clearInterval(this.modelInterval);
+        clearInterval(this.parallaxInterval);
+        window.removeEventListener('scroll', this.debouncedParallax);
+        window.removeEventListener('resize', this.debouncedParallax);
     }
 
 }

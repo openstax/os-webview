@@ -19,7 +19,7 @@ $phone-up: #{breakpoints(phone) + 1};
     position: relative;
 
     @include desktop {
-        flex-wrap: nowrap;
+        flex-flow: row nowrap;
         padding: 8rem 0;
     }
 

@@ -29,4 +29,8 @@ export default class Banner extends Controller {
         });
     }
 
+    onClose() {
+        clearTimeout(this.flyTimer);
+    }
+
 }
