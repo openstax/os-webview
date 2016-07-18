@@ -332,6 +332,7 @@ export default class Details extends LoadingView {
 
                         this.el.querySelector('.book-cover').src = th.coverUrl;
                         this.el.querySelector('.book-info .title').innerHTML = th.title;
+                        this.el.querySelector('.your-book-title').textContent = `your ${th.title}`;
                         this.el.querySelector('.book-info .blurb').innerHTML = th.description;
                         handleEndorsement(th);
                         this.gtt = new GetThisTitle(detailData);
