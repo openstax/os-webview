@@ -1,6 +1,7 @@
 import {Controller} from 'superb';
-import bodyUnits from '~/components/body-units/body-units';
+import bodyUnitView from '~/components/body-units/body-units';
 import {description as template} from './article.html';
+import {formatDateForBlog as formatDate} from '~/helpers/data';
 
 export default class Article extends Controller {
 
@@ -13,11 +14,11 @@ export default class Article extends Controller {
         this.regions = {
             body: '.body'
         };
-        this.templateHelpers = {
+        this.model = {
             coverUrl: data.article_image || 'http://placehold.it/370x240',
             title: data.title,
             author: data.author,
-            date: data.date,
+            date: formatDate(data.date),
             articleSlug: data.slug
         };
 
@@ -25,21 +26,8 @@ export default class Article extends Controller {
     }
 
     onLoaded() {
-        const d = new Date(this.data.date).toUTCString().split(' ');
-        const formatDate = `${d[2]} ${d[1]}, ${d[3]}`;
-
-        for (const el of this.el.querySelectorAll('.date')) {
-            el.innerHTML = formatDate;
-        }
-
         for (const bodyUnit of this.data.body) {
-            const View = bodyUnits[bodyUnit.type];
-
-            this.regions.body.append(new View(bodyUnit.value));
-        }
-
-        for (const el of this.el.querySelectorAll('.img')) {
-            el.setAttribute('style', `background-image:url(${this.data.article_image})`);
+            this.regions.body.append(bodyUnitView(bodyUnit));
         }
     }
 

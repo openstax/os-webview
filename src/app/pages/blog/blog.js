@@ -17,31 +17,18 @@ export default class Blog extends LoadingView {
             articles: '.articles',
             pinned: '.pinned'
         };
-        this.templateHelpers = () => {
-            const loginLink = `${settings.apiOrigin}/accounts/login/openstax/?next=`;
-            const nextLink = `${settings.apiOrigin}/faculty-verification`;
-
-            return {
-                loginLink: `${loginLink}${nextLink}`
-            };
-        };
     }
 
     onLoaded() {
-        document.body.classList.add('no-scroll');
-        this.el.querySelector('.blog.page').classList.add('hidden');
+        // document.body.classList.add('no-scroll');
 
-        // FIX: Refactor models and where models live; use events
         newsPromise.then((newsData) => {
-            let excludeTitle;
+            const pinnedArticles = newsData.pages.filter((article) => article.pin_to_top);
 
-            for (const article of newsData.pages) {
-                if (article.pin_to_top) {
-                    excludeTitle = article.slug;
-                    this.regions.pinned.append(new PinnedArticle(article));
-                }
+            for (const article of pinnedArticles) {
+                this.regions.pinned.append(new PinnedArticle(article));
+                this.regions.articles.append(new Articles(article.slug));
             }
-            this.regions.articles.append(new Articles(excludeTitle));
         });
     }
 

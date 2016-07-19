@@ -1,12 +1,8 @@
-// import PageModel from '~/models/pagemodel';
+import cms from '~/helpers/cms';
 
-/* const newsPromise = new PageModel().fetch({
-    data: {
-        type: 'news.NewsArticle',
-        fields: ['slug', 'title', 'date', 'author', 'pin_to_top', 'subheading', 'body', 'article_image']
-    }
-}); */
-
-const newsPromise = {};
+const newsPromise = cms.query({
+    type: 'news.NewsArticle',
+    fields: ['slug', 'title', 'date', 'author', 'pin_to_top', 'subheading', 'body', 'article_image']
+});
 
 export default newsPromise;

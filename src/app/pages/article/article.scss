@@ -40,6 +40,10 @@
     .author {
         color: color(cyan);
         font-style: italic;
+
+        &::after {
+            content: ' | ';
+        }
     }
 
     .body {

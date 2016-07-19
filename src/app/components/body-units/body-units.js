@@ -2,11 +2,18 @@ import {Controller} from 'superb';
 // import ImageModel from '~/models/imagemodel';
 import Quote from '~/components/quotes/quote/quote';
 
-class Paragraph extends Controller {
+const template = () => '';
+
+class BodyUnit extends Controller {
 
     init(data) {
         this.data = data;
+        this.template = template;
     }
+
+}
+
+class Paragraph extends BodyUnit {
 
     onLoaded() {
         // FIX: Set in template, not in Controller
@@ -15,42 +22,15 @@ class Paragraph extends Controller {
 
 }
 
-class AlignedImage extends Controller {
+class AlignedImage extends BodyUnit {
 
-    /*
-    init(data) {
-        // FIX: Lots of model stuff to fix
-        this.viewPromise = new Promise((resolve) => {
-            new ImageModel({id: data.image}).fetch().then((imageData) => {
-                const view = new Quote({
-                    quoteHtml: data.caption,
-                    orientation: data.alignment,
-                    imageUrl: imageData.file,
-                    height: imageData.height
-                });
-
-                resolve(view);
-            });
-        });
-    }
-    */
-
-    /*
     onLoaded() {
-        this.viewPromise.then((view) => {
-            this.el.appendChild(view.el);
-            view.render();
-        });
+
     }
-    */
 
 }
 
-class PullQuote extends Controller {
-
-    init(data) {
-        this.data = data;
-    }
+class PullQuote extends BodyUnit {
 
     onLoaded() {
         // FIX: This isn't how to attach views (delete this view and just use Quote?)
@@ -60,16 +40,12 @@ class PullQuote extends Controller {
         });
 
         this.el.appendChild(view.el);
-        view.render();
+        this.update();
     }
 
 }
 
-class AlignedHtml extends Controller {
-
-    init(data) {
-        this.data = data;
-    }
+class AlignedHtml extends BodyUnit {
 
     /*
     onLoaded() {
@@ -99,4 +75,10 @@ const bodyUnits = {
     aligned_html: AlignedHtml
 };
 
-export default bodyUnits;
+const bodyUnitView = (bodyUnitData) => {
+    const View = bodyUnits[bodyUnitData.type];
+
+    return new View(bodyUnitData.value);
+};
+
+export default bodyUnitView;

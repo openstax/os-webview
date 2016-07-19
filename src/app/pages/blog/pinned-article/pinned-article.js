@@ -1,6 +1,7 @@
 import {Controller} from 'superb';
 import {description as template} from './pinned-article.html';
-import bodyUnits from '~/components/body-units/body-units';
+import bodyUnitView from '~/components/body-units/body-units';
+import {formatDateForBlog as formatDate} from '~/helpers/data';
 
 export default class PinnedArticle extends Controller {
 
@@ -13,34 +14,20 @@ export default class PinnedArticle extends Controller {
         this.regions = {
             body: '.body'
         };
-        this.templateHelpers = {
-            coverUrl: data.article_image || 'http://placehold.it/370x240',
+        this.model = {
+            coverUrl: data.article_image || 'http://placehold.it/570x270',
             articleSlug: data.slug,
             title: data.title,
             author: data.author,
-            subheading: data.subheading
+            subheading: data.subheading,
+            date: formatDate(data.date)
         };
-        this.data = data;
+        this.body = data.body;
     }
 
     onLoaded() {
-        for (const bodyUnit of this.data.body) {
-            const View = bodyUnits[bodyUnit.type];
-
-            this.regions.body.append(new View(bodyUnit.value));
-        }
-
-        const d = new Date(this.data.date).toUTCString().split(' ');
-        const formatDate = `${d[2]} ${d[1]}, ${d[3]}`;
-
-        // FIX: This should be part of the template
-        for (const el of this.el.querySelectorAll('[data-id="date"]')) {
-            el.innerHTML = formatDate;
-        }
-
-        // FIX: This should be part of the template
-        for (const el of this.el.querySelectorAll('.img')) {
-            el.setAttribute('style', `background-image:url(${this.data.article_image})`);
+        for (const bodyUnit of this.body) {
+            this.regions.body.append(bodyUnitView(bodyUnit));
         }
     }
 

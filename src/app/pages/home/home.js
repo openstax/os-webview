@@ -7,24 +7,8 @@ import Quotes from '~/components/quotes/quotes';
 import Buckets from '~/components/buckets/buckets';
 import Education from './education/education';
 import {description as template} from './home.html';
+import {shuffle} from '~/helpers/data';
 import Banner from './banners/banner';
-
-function shuffle(array) {
-    let currentIndex = array.length;
-
-    while (0 !== currentIndex) {
-        const randomIndex = Math.floor(Math.random() * currentIndex);
-
-        currentIndex -= 1;
-
-        const temporaryValue = array[currentIndex];
-
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
-
-    return array;
-}
 
 const bannerModels = shuffle([
     // Will not be released until Nov 2016
@@ -161,7 +145,7 @@ export default class Home extends LoadingView {
                 orientation: 'left',
                 hasImage: true,
                 image: '/images/home/quotes/quote-right.jpg',
-                quoteHtml: `Concept Coach is our free new tool that helps college
+                content: `Concept Coach is our free new tool that helps college
                 students understand and retain what they've read. We're recruiting
                 faculty for our Fall 2016 pilot!`,
                 link: 'http://cc.openstax.org',
@@ -170,7 +154,7 @@ export default class Home extends LoadingView {
             {
                 orientation: 'full',
                 hasImage: false,
-                quoteHtml: `<p>“OpenStax is <em>amazing</em>. Access to these high quality textbooks
+                content: `<p>“OpenStax is <em>amazing</em>. Access to these high quality textbooks
                 is game changing for our students.”</p>
                 <div class="attribution">&mdash; <cite>Prof. Wendy Riggs, College of the Redwoods</cite></div>`
             },
@@ -179,7 +163,7 @@ export default class Home extends LoadingView {
                 colorScheme: 'cyan',
                 hasImage: false,
                 overlay: '/images/home/quotes/book-mass-renewal-bucket.svg',
-                quoteHtml: 'Using OpenStax in your course again this semester?',
+                content: 'Using OpenStax in your course again this semester?',
                 link: '/mass-renewal',
                 cta: 'Let Us Know'
             }

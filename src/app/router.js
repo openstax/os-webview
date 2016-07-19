@@ -12,6 +12,7 @@ const PAGES = [
     'adoption',
     'adoption-confirmation',
     'article',
+    'blog',
     'blog/*path',
     'books',
     'comp-copy',
@@ -47,6 +48,13 @@ class AppRouter extends Router {
         this.root('home');
         this.route(/^(\d+)/, 'cms');
         this.route(/to[u|s]/, 'tos');
+        this.route(/blog\/(.*)/).load((params) =>
+            System.import('~/pages/article/article').then((m) => {
+                const Controller = m.default;
+
+                this.defaultRegion.attach(new Controller(...params));
+            })
+        );
 
         PAGES.forEach((page) => {
             this.route(page);
