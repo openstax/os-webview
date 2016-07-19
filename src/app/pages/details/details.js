@@ -139,7 +139,12 @@ export default class Details extends LoadingView {
                         }
                     }
                 } else {
-                    this.removeParentEl(this.regions[regionName].el);
+                    const regionEl = this.regions[regionName].el;
+                    const parentEl = this.asEl(regionEl).parentNode;
+                    const linkToIt = `a[href$="#${parentEl.id}"]`;
+
+                    this.removeParentEl(regionEl);
+                    this.removeEl(linkToIt);
                 }
             },
             showInstructorResources = (resources) => {
@@ -197,8 +202,11 @@ export default class Details extends LoadingView {
                 let chapter = continueFromChapter || 0,
                     isUnitLevel = false,
                     endOfUnitChapter = 0,
+                    hasTwoLevelsBelow = (node) => {
+                        return node.contents && node.contents[0].contents;
+                    },
                     handleUnit = (node) => {
-                        if (isUnitLevel || (chapter === 1 && node.title.match(/^Unit/))) {
+                        if (isUnitLevel || (chapter === 1 && hasTwoLevelsBelow(node))) {
                             isUnitLevel = true;
                             delete node.chapter;
                         }
