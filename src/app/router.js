@@ -13,7 +13,6 @@ const PAGES = [
     'adoption-confirmation',
     'article',
     'blog',
-    'blog/*path',
     'books',
     'comp-copy',
     'comp-copy-confirmation',
@@ -33,8 +32,8 @@ const PAGES = [
     'k-12',
     'license',
     'partners',
-    'partners/*path',
     'renew',
+    'subjects',
     'subjects/*path',
     'support'
 ];
@@ -57,7 +56,22 @@ class AppRouter extends Router {
         );
 
         PAGES.forEach((page) => {
-            this.route(page);
+            const isSplat = page.match(/\/\*/);
+
+            if (isSplat) {
+                const basePage = page.substr(0, isSplat.index);
+                const pageRegExp = new RegExp(`${basePage}/(.*)`);
+
+                this.route(pageRegExp).load((params) =>
+                    System.import(`~/pages/${basePage}/${basePage}`).then((m) => {
+                        const Controller = m.default;
+
+                        this.defaultRegion.attach(new Controller(...params));
+                    })
+                );
+            } else {
+                this.route(page);
+            }
         });
     }
 

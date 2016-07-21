@@ -1,11 +1,10 @@
 import settings from 'settings';
 import router from '~/router';
 import CMSPageController from '~/controllers/cms';
+import cms from '~/helpers/cms';
+import CategorySelector from '~/components/category-selector/category-selector';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './partners.html';
-
-const categories = ['Math', 'Science', 'Social Sciences', 'Humanities', 'AP'];
-const filterButtons = ['View All', ...categories];
 
 export default class Partners extends CMSPageController {
 
@@ -24,8 +23,10 @@ export default class Partners extends CMSPageController {
             title: '',
             'classroom_text': '',
             book: null,
-            partners: [],
-            filterButtons
+            partners: []
+        };
+        this.regions = {
+            filter: '#filter'
         };
 
         router.setState({filter: 'View All'});
@@ -42,12 +43,23 @@ export default class Partners extends CMSPageController {
         const fields = ['ally_subject_list', 'title', 'short_description', 'long_description',
             'heading', 'is_ap', 'ally_bw_logo'];
 
-        fetch(`${settings.apiOrigin}/api/v1/pages/?fields=${fields.join(',')}&format=json&type=allies.Ally`)
-        .then((response) => response.json())
-        .then((json) => {
+        cms.query({
+            type: 'allies.Ally',
+            fields
+        }).then((json) => {
             this.model.allPartners = json.pages;
             this.filterPartners();
         });
+
+        const categorySelectorView = new CategorySelector((category) => {
+            if (category === history.state.filter) {
+                return;
+            }
+            router.pushState({filter: category});
+            this.filterPartners();
+        });
+
+        this.regions.filter.attach(categorySelectorView);
     }
 
     onUpdate() {
@@ -89,16 +101,6 @@ export default class Partners extends CMSPageController {
         router.navigate(e.delegateTarget.getAttribute('href'), {
             filter: history.state.filter
         });
-    }
-
-    @on('click .filter-button')
-    setFilter(e) {
-        if (history.state.filter === e.target.textContent) {
-            return;
-        }
-
-        router.pushState({filter: e.target.textContent});
-        this.filterPartners();
     }
 
     @on('click .to-top')

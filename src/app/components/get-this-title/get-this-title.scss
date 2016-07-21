@@ -5,6 +5,12 @@
 .get-this-title {
     .remover {
         @include absolute(top 0 right 0);
+
+        cursor: pointer;
+        font-size: 2rem;
+        font-weight: bold;
+        line-height: 1rem;
+        text-align: center;
     }
 
     .submenu {

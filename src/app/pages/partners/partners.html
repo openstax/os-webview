@@ -7,11 +7,7 @@
     </div>
     <div class="icons">
         <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
-        <div id="filter" class="filter">
-            <div class="filter-buttons">
-                <div each="button in model.filterButtons" class="filter-button{button === history.state.filter ? ' selected' : ''}">{button}</div>
-            </div>
-        </div>
+        <div id="filter" class="filter" skip="true"></div>
         <div class="container">
             <div each="partner in model.partners" class="logo">
                 <a class="logo-text" href="#{partner.title}-blurb">

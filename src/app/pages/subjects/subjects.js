@@ -1,144 +1,140 @@
 import router from '~/router';
-import LoadingView from '~/controllers/loading-view';
-import $ from '~/helpers/$';
-import {on} from '~/helpers/controller/decorators';
-// import FilterButton from '~/components/filter-button/filter-button';
-import {description as template} from './subjects.html';
+import CMSPageController from '~/controllers/cms';
+import cms from '~/helpers/cms';
+import CategorySelector from '~/components/category-selector/category-selector';
 import CategorySection from './category-section/category-section';
+import {description as template} from './subjects.html';
 
-const apId = 'AP<sup>&reg;</sup>';
-const categories = ['Math', 'Science', 'Social Sciences', 'Humanities', apId];
-const filterButtons = ['View All', ...categories];
+const apId = 'AP';
 
 function organizeBooksByCategory(books) {
     const result = {};
+    const addLabels = () => {
+        for (const category of CategorySelector.categories) {
+            if (result[category.cms]) {
+                result[category.cms].label = category.html;
+            }
+        }
+    };
 
     result[apId] = [];
 
     for (const book of books) {
-        if (!(book.subject_name in result)) {
-            result[book.subject_name] = [];
+        const cmsCategory = book.subject_name;
+
+        if (!(cmsCategory in result)) {
+            result[cmsCategory] = [];
         }
-        result[book.subject_name].push(book);
+        result[cmsCategory].push(book);
         if (book.is_ap) {
             result[apId].push(book);
         }
     }
 
+    addLabels();
+
     return result;
 }
 
-export default class Subjects extends LoadingView {
+const dataPromises = Promise.all([
+    cms.getPage({
+        title: 'Subjects'
+    }),
+    cms.query({
+        type: 'books.Book',
+        fields: ['title', 'subject_name', 'is_ap,cover_url',
+        'high_resolution_pdf_url', 'low_resolution_pdf_url',
+        'ibook_link', 'ibook_link_volume_2',
+        'webview_link', 'concept_coach_link,bookshare_link',
+        'amazon_link', 'amazon_price', 'amazon_blurb',
+        'bookstore_link', 'bookstore_blurb', 'slug'],
+        limit: 50
+    })
+]);
+
+
+export default class Subjects extends CMSPageController {
+
+    static description = `Our textbooks are openly licensed, peer-reviewed,
+       free, and backed by learning resources. Check out our books and
+       decide if they're right for your course.`;
 
     init() {
         this.template = template;
         this.css = '/app/pages/subjects/subjects.css';
         this.view = {
-            classes: ['subjects-page', 'hidden']
+            classes: ['subjects-page']
         };
         this.regions = {
-            filterButtons: '.filter-buttons',
+            filter: '.filter',
             bookViewer: '.books .container'
         };
-        this.model = new Model({
-            selectedFilter: 'View All',
-            selectedBook: null
+        this.model = {};
+
+        dataPromises.then((results) => {
+            const [pageData, bookData] = results;
+
+            document.title = `${pageData.title} - OpenStax`;
+            this.model = pageData;
+            const categorizedBooks = organizeBooksByCategory(bookData.pages);
+
+            this.categorySections = CategorySelector.categories.map(
+                (category) => new CategorySection(category.cms, categorizedBooks[category.cms])
+            );
+            this.renderCategorySections(categorizedBooks);
+            this.update();
+
+            const htmlEls = this.el.querySelectorAll('[data-html]');
+
+            for (const el of htmlEls) {
+                el.innerHTML = this.model[el.dataset.html];
+            }
         });
 
-        this.description = `Our textbooks are openly licensed, peer-reviewed,
-            free, and backed by learning resources. Check out our books and
-            decide if they're right for your course.`;
-
-        // this.listenTo(router, 'route', this.updateSelectedFilterFromPath);
-        // this.updateSelectedFilterFromPath();
+        this.filterCategoriesEvent = () => this.filterCategories(history.state.filter);
+        window.addEventListener('popstate', this.filterCategoriesEvent);
     }
 
-    /*
-
-    @on('click')
-    deselect() {
-        this.model.set('selectedBook', false);
-    }
-
-    @on('click .filter')
-    filterClick() {
-        const filterSection = this.el.querySelector('.filter');
-
-        $.scrollTo(filterSection, 30);
-    }
-
-    updateSelectedFilterFromPath() {
-        const pathMatch = window.location.pathname.match(/\/subjects\/(.+)/);
-        let selectedFilter = 'View All';
-
-        if (pathMatch) {
-            const subject = FilterButton.canonicalSubject(pathMatch[1]);
-
-            for (const c of categories) {
-                if (FilterButton.canonicalSubject(c) === subject) {
-                    selectedFilter = c;
-                }
+    filterCategories(category) {
+        for (const view of this.categorySections) {
+            if (category === '' || category === view.category) {
+                view.el.classList.remove('hidden');
+            } else {
+                view.el.classList.add('hidden');
             }
-            if (selectedFilter === 'View All') {
-                router.navigate('404', true);
-            }
-        }
-        this.model.set('selectedFilter', selectedFilter);
-    }
-
-    renderCategorySections(booksByCategory) {
-        for (const category of categories) {
-            this.regions.bookViewer.append(new CategorySection(category, booksByCategory[category], this.model));
         }
     }
 
     onLoaded() {
-        const populateBookInfoFields = (data) => {
-            const findNode = (name) => this.el.querySelector(`[data-manager="${name}"]`);
+        const setCategory = (category) => {
+            const slug = CategorySelector.byCms[category].slug;
 
-            // FIX: Move all DOM manipulation to template
-            findNode('page-description').innerHTML = data.page_description;
-            findNode('ds1-head').textContent = data.dev_standard_1_heading;
-            findNode('ds2-head').textContent = data.dev_standard_2_heading;
-            findNode('ds3-head').textContent = data.dev_standard_3_heading;
-            findNode('ds1-body').innerHTML= data.dev_standard_1_description;
-            findNode('ds2-body').innerHTML= data.dev_standard_2_description;
-            findNode('ds3-body').innerHTML= data.dev_standard_3_description;
+            router.navigate(`/subjects/${slug}`, {path: '/subjects'}, {ignore: true});
+            this.filterCategories(category);
         };
+        const categorySelectorView = new CategorySelector(setCategory);
 
-        // FIX: Separate model from controller
-        new PageModel().fetch({data: {type: 'books.BookIndex'}}).then((result) => {
-            if (result.pages.length === 0) {
+        this.regions.filter.attach(categorySelectorView);
+
+        dataPromises.then(() => {
+            const slug = decodeURIComponent(window.location.pathname).replace(/.*subjects/, '').substr(1) || 'view-all';
+            const category = CategorySelector.bySlug[slug];
+
+            if (!category) {
                 return;
             }
-
-            const id = result.pages[0].id;
-            const detailPage = new PageModel({id});
-
-            detailPage.fetch().then(populateBookInfoFields);
+            categorySelectorView.updateSelected(category.cms);
         });
-
-        for (const button of filterButtons) {
-            this.regions.filterButtons.append(new FilterButton(button, this.model));
-        }
-
-        // FIX: Separate model from controller
-        this.otherPromises.push(new Promise((resolve) => {
-            new PageModel().fetch({data: {
-                type: 'books.Book',
-                fields: ['title', 'subject_name', 'is_ap,cover_url',
-                'high_resolution_pdf_url', 'low_resolution_pdf_url',
-                'ibook_link', 'ibook_link_volume_2',
-                'webview_link', 'concept_coach_link,bookshare_link',
-                'amazon_link', 'amazon_price', 'amazon_blurb',
-                'bookstore_link', 'bookstore_blurb', 'slug'],
-                limit: 50
-            }}).then((result) => {
-                this.renderCategorySections(organizeBooksByCategory(result.pages));
-                resolve();
-            });
-        }));
     }
-    */
+
+    renderCategorySections(booksByCategory) {
+        for (const view of this.categorySections) {
+            this.regions.bookViewer.append(view);
+        }
+    }
+
+    onClose() {
+        window.removeEventListener('popstate', this.filterCategoriesEvent);
+    }
 
 }
