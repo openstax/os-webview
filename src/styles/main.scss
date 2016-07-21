@@ -38,6 +38,10 @@ strong {
     font-weight: bold;
 }
 
+.no-scroll {
+    overflow: hidden;
+}
+
 .no-bullets {
     // Hide bullets in IE
     list-style-image: url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7);
@@ -147,16 +151,6 @@ sup {
     }
 }
 
-#main > *,
-.page-header,
-#footer {
-    animation: fadeIn ease-in 1;
-    animation-delay: 0.2s;
-    animation-duration: 0.5s;
-    animation-fill-mode: forwards;
-    opacity: 0;
-}
-
 #main {
     flex: 1 0 auto;
     padding-top: 6rem;
@@ -260,10 +254,8 @@ sup {
 @import 'components/forms';
 @import 'components/headers';
 @import 'components/hero';
-@import 'components/option-list';
 @import 'components/intro';
 @import 'components/responsive';
-@import 'components/single-select';
 @import 'components/social';
 @import 'components/strips';
 @import 'components/tag-multi-select';

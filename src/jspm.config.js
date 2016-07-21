@@ -47,7 +47,7 @@ SystemJS.config({
     "path": "github:jspm/nodelibs-path@0.2.0-alpha",
     "process": "github:jspm/nodelibs-process@0.2.0-alpha",
     "recordo": "npm:recordo@0.0.6",
-    "superb": "npm:superb.js@0.0.15"
+    "superb": "npm:superb.js@0.0.17"
   },
   packages: {
     "github:jspm/nodelibs-buffer@0.2.0-alpha": {
@@ -102,11 +102,6 @@ SystemJS.config({
       "map": {
         "regenerator-runtime": "npm:regenerator-runtime@0.9.5",
         "core-js": "npm:core-js@2.4.0"
-      }
-    },
-    "npm:superb.js@0.0.15": {
-      "map": {
-        "supermodels.js": "npm:supermodels.js@0.1.1"
       }
     }
   }

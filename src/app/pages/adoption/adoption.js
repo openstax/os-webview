@@ -3,6 +3,7 @@ import {on} from '~/helpers/controller/decorators';
 import {published as titles} from '~/models/book-titles';
 import partners from '~/models/partners';
 import salesforce from '~/models/salesforce';
+import Select from '~/components/select/select';
 import {description as template} from './adoption.html';
 
 export default class AdoptionForm extends Controller {
@@ -23,6 +24,17 @@ export default class AdoptionForm extends Controller {
                 }
             }
         };
+    }
+
+    onLoaded() {
+        const selects = this.el.querySelectorAll('select');
+
+        for (const select of selects) {
+            new Select({
+                select: select,
+                placeholder: select.previousSibling
+            });
+        }
     }
 
 }

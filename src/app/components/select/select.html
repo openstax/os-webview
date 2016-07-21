@@ -1,0 +1,18 @@
+<template args="model">
+    <ul class="tags">
+        <if condition="model.selected.length">
+            <li each="tag in model.selected">
+                <span class="label">{tag.text}</span>
+                <span class="remover">×</span>
+            </li>
+        <else>
+            <li>
+                <span class="label">None</span>
+                <span class="remover">×</span>
+            </li>
+        </if>
+    </ul>
+    <ul class="options{model.open ? ' open' : ''}">
+        <li each="option in model.options" class="option">{option.text}</li>
+    </ul>
+</template>

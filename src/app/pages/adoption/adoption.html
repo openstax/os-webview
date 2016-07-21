@@ -62,6 +62,7 @@
             <div class="text-content labeled-inputs row book-info">
                 <div id="primary-book" class="col">
                     <label>Your OpenStax book:
+                        <div skip="true"></div>
                         <select name="00NU00000053nzR" required>
                             <!-- FIX: Transform model to match expectations -->
                             <option each="title in model.titles" value="{title.value ? title.value : title}">
@@ -74,6 +75,7 @@
                     </p>
 
                     <label>How are you using this book?
+                        <div skip="true"></div>
                         <select name="00NU00000055spw">
                             <option value="None" disabled selected></option>
                             <option each="option in model.salesforce.adoption.options" value="{option.value}">{option.text}</option>
@@ -87,8 +89,8 @@
 
                     <label>Which partner resources are you using with your book?
                         <span class="select-instructions">You may select more than one.</span>
+                        <div skip="true"></div>
                         <select multiple name="00NU0000005VmTu">
-                            <option value="None" disabled selected>None</option>
                             <option each="partner in model.partners" value="{partner}">{partner}</option>
                             <option value="other-partner">Other (specify below)</option>
                         </select>
@@ -112,8 +114,8 @@
                         permission to contact you about additional resources to support
                         our books?
                         <span class="select-instructions">You may select more than one.</span>
+                        <div skip="true"></div>
                         <select multiple name="00NU00000055spm">
-                            <option value="None" disabled selected>None</option>
                             <option value="Online homework partners">Online homework partners</option>
                             <option value="Adaptive courseware partners">Adaptive courseware partners</option>
                             <option value="Customization tool partners">Customization tool partners</option>
@@ -121,6 +123,7 @@
                     </label>
 
                     <label class="question">Are you interested in having your OpenStax experience featured on our website, social media, and/or emails?
+                        <div skip="true"></div>
                         <select name="00NU00000055sq6">
                             <option value="1">Yes</option>
                             <option value="0">No</option>
@@ -129,6 +132,7 @@
 
                     <label class="question">
                         May we contact you about opportunities to participate in future pilots or research studies?
+                        <div skip="true"></div>
                         <select name="00NU00000055sqB">
                             <option value="1">Yes</option>
                             <option value="0">No</option>
