@@ -1,4 +1,5 @@
-import ProxyWidgetView from '~/controllers/proxy-widget-view';
+import {Controller} from 'superb';
+
 import {on} from '~/helpers/controller/decorators';
 import bookTitles from '~/models/book-titles';
 // import salesforceModel from '~/models/salesforce-model';
@@ -6,7 +7,7 @@ import bookTitles from '~/models/book-titles';
 import FacultySection from './faculty-section/faculty-section';
 import {description as template} from './finish-profile.html';
 
-export default class NewAccountForm extends ProxyWidgetView {
+export default class NewAccountForm extends Controller {
 
     init() {
         this.template = template;

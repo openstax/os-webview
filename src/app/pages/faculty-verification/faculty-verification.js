@@ -1,4 +1,5 @@
-import ProxyWidgetView from '~/controllers/proxy-widget-view';
+import {Controller} from 'superb';
+
 import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 import bookTitles from '~/models/book-titles';
@@ -7,7 +8,7 @@ import bookTitles from '~/models/book-titles';
 // import salesforceModel from '~/models/salesforce-model';
 import {description as template} from './faculty-verification.html';
 
-export default class FacultyVerificationForm extends ProxyWidgetView {
+export default class FacultyVerificationForm extends Controller {
 
     init() {
         this.template = template;

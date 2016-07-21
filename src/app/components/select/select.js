@@ -37,9 +37,11 @@ export default class Select extends Controller {
             throw new Error('A select component must be given a placeholder element to inject HTML into.');
         }
 
+        this.options = Select[CONVERT_OPTIONS](this.select.options);
+
         this.model = {};
-        this.model.options = Select[CONVERT_OPTIONS](this.select.options);
         this.model.selected = Select[CONVERT_OPTIONS](this.select.selectedOptions);
+        this.model.options = Select[CONVERT_OPTIONS](this.select.options);
     }
 
     static [CONVERT_OPTIONS](collection) {
@@ -85,9 +87,9 @@ export default class Select extends Controller {
         document.body.classList.remove('no-scroll');
     }
 
-    @on('scroll')
-    stopPageScrolling(e) {
-        console.log(e);
+    @on('click .option')
+    toggleOption() {
+
     }
 
     static [CLOSE_DROPDOWNS]() {

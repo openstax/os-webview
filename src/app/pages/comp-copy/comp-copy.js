@@ -1,9 +1,10 @@
-import ProxyWidgetView from '~/controllers/proxy-widget-view';
+import {Controller} from 'superb';
+
 import {on} from '~/helpers/controller/decorators';
 // import salesforceModel from '~/models/salesforce-model';
 import {description as template} from './comp-copy.html';
 
-export default class CompCopyForm extends ProxyWidgetView {
+export default class CompCopyForm extends Controller {
 
     init() {
         this.template = template;

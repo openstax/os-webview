@@ -1,9 +1,10 @@
-import ProxyWidgetView from '~/controllers/proxy-widget-view';
+import {Controller} from 'superb';
+
 import $ from '~/helpers/$';
 import salesforce from '~/helpers/salesforce';
 import {description as template} from './faculty-section.html';
 
-export default class FacultySection extends ProxyWidgetView {
+export default class FacultySection extends Controller {
 
     init() {
         this.template = template;

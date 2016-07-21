@@ -1,11 +1,12 @@
-import ProxyWidgetView from '~/controllers/proxy-widget-view';
+import {Controller} from 'superb';
+
 import {on} from '~/helpers/controller/decorators';
 import {published as titles} from '~/models/book-titles';
 // import salesforceModel from '~/models/salesforce-model';
 import partners from '~/models/partners';
 import {description as template} from './renew.html';
 
-export default class AdoptionForm extends ProxyWidgetView {
+export default class AdoptionForm extends Controller {
 
     init() {
         this.template = template;
