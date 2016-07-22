@@ -49,7 +49,7 @@ test('Internal Link Click Detection', async function (assert) {
         }
     };
 
-    let href = 'mailto:derek@derekkent.com';
+    let href = 'mailto:info@openstax.org';
     let actual = linkHelper.validUrlClick(e);
     let expected = false;
 
@@ -70,7 +70,7 @@ test('Internal Link Click Detection', async function (assert) {
     assert.is(actual, expected,
         'validUrlClick() should return the event target for links with relative URLs.');
 
-    href = 'https://derekkent.com';
+    href = 'https://openstax.org';
     actual = linkHelper.validUrlClick(e);
     expected = e.target;
 

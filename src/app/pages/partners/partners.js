@@ -52,6 +52,7 @@ export default class Partners extends CMSPageController {
         const fields = ['ally_subject_list', 'title', 'short_description', 'long_description',
             'heading', 'is_ap', 'ally_bw_logo'];
 
+        // FIX: Backend should be providing a less contrived URL to fetch the data
         fetch(`${settings.apiOrigin}/api/v1/pages/?fields=${fields.join(',')}&format=json&type=allies.Ally`)
         .then((response) => response.json())
         .then((json) => {
