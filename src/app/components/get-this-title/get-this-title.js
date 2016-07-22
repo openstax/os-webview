@@ -4,26 +4,6 @@ import {description as template} from './get-this-title.html';
 
 export default class GetThisTitle extends Controller {
 
-    @on('click .show-pdf-submenu')
-    showPdfSubmenu(event) {
-        event.preventDefault();
-        this.model.submenu = 'pdf';
-        this.update();
-    }
-
-    @on('click .show-print-submenu')
-    showPrintSubment(event) {
-        event.preventDefault();
-        this.model.submenu = 'print';
-        this.update();
-    }
-
-    @on('click .submenu .remover')
-    hideSubmenu() {
-        this.model.submenu = '';
-        this.update();
-    }
-
     init(data) {
         this.template = template;
         this.css = '/app/components/get-this-title/get-this-title.css';
@@ -53,6 +33,26 @@ export default class GetThisTitle extends Controller {
                 blurb: data.bookstore_blurb
             }
         };
+    }
+
+    @on('click .show-pdf-submenu')
+    showPdfSubmenu(event) {
+        event.preventDefault();
+        this.model.submenu = 'pdf';
+        this.update();
+    }
+
+    @on('click .show-print-submenu')
+    showPrintSubment(event) {
+        event.preventDefault();
+        this.model.submenu = 'print';
+        this.update();
+    }
+
+    @on('click .submenu .remover')
+    hideSubmenu() {
+        this.model.submenu = '';
+        this.update();
     }
 
 }
