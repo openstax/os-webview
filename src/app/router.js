@@ -32,6 +32,7 @@ const PAGES = [
     'k-12',
     'license',
     'partners',
+    'partners/*path',
     'renew',
     'subjects',
     'subjects/*path',

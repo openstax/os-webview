@@ -4,8 +4,15 @@ import CMSPageController from '~/controllers/cms';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './partners.html';
 
+function urlify(str) {
+    return str.toLowerCase().split(' ').join('_');
+}
+
 const categories = ['Math', 'Science', 'Social Sciences', 'Humanities', 'AP'];
 const filterButtons = ['View All', ...categories];
+const categoryMap = categories
+    .map((item) => ({[urlify(item)]: item}))
+    .reduce(((prev, current) => Object.assign(prev, current)), {});
 
 export default class Partners extends CMSPageController {
 
@@ -28,7 +35,10 @@ export default class Partners extends CMSPageController {
             filterButtons
         };
 
-        router.setState({filter: 'View All'});
+        router.replaceState({
+            filter: categoryMap[location.pathname.replace('/partners/', '')] || 'View All',
+            path: '/partners'
+        });
 
         this.filterPartnersEvent = this.filterPartners.bind(this);
 
@@ -48,8 +58,6 @@ export default class Partners extends CMSPageController {
             this.model.allPartners = json.pages;
             this.filterPartners();
         });
-
-        this.regions.filter.attach(categorySelectorView);
     }
 
     onUpdate() {
@@ -65,10 +73,6 @@ export default class Partners extends CMSPageController {
     filterPartners() {
         if (!Array.isArray(this.model.allPartners)) {
             return;
-        }
-
-        if (!history.state.filter) {
-            router.setState({filter: 'View All'});
         }
 
         this.model.partners = this.model.allPartners.filter((partner) => {
@@ -90,7 +94,15 @@ export default class Partners extends CMSPageController {
             return;
         }
 
-        router.pushState({filter: e.target.textContent});
+        const subpath = urlify(e.target.textContent);
+
+        router.navigate(`/partners/${subpath}`, {
+            filter: e.target.textContent,
+            path: '/partners',
+            x: history.state.x,
+            y: history.state.y
+        });
+
         this.filterPartners();
     }
 
@@ -99,7 +111,8 @@ export default class Partners extends CMSPageController {
         e.preventDefault();
 
         router.navigate(e.delegateTarget.getAttribute('href'), {
-            filter: history.state.filter
+            filter: history.state.filter,
+            path: '/partners'
         });
     }
 

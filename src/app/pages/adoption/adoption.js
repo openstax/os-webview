@@ -30,8 +30,9 @@ export default class AdoptionForm extends Controller {
         const selects = this.el.querySelectorAll('select');
 
         for (const select of selects) {
+            // FIX: use a select helper that internally creates new Selects
             new Select({
-                select: select,
+                select,
                 placeholder: select.previousSibling
             });
         }
