@@ -1,5 +1,7 @@
 import settings from 'settings';
 
+// FIX: This shouldn't be necessary with the CMSPageController
+
 const jsonToQueryString = (json) =>
     Object.keys(json).map((key) =>
         `${encodeURIComponent(key)}=${encodeURIComponent(json[key])}`
