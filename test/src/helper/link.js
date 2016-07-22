@@ -1,8 +1,7 @@
 import test from 'ava';
+import linkHelper from '~/helpers/link';
 
 test('External Link Detection', async function (assert) {
-    const {default: linkHelper} = await SystemJS.import('~/helpers/link');
-
     const externalLink = 'https://openstax.org';
     const internalLink = '/issues';
 
@@ -20,8 +19,6 @@ test('External Link Detection', async function (assert) {
 });
 
 test('PDF Link Detection', async function (assert) {
-    const {default: linkHelper} = await SystemJS.import('~/helpers/link');
-
     const internalPDFLink = 'physics.pdf';
     const externalPDFLink = 'https://openstax.org/physics.pdf';
 
@@ -39,8 +36,6 @@ test('PDF Link Detection', async function (assert) {
 });
 
 test('Internal Link Click Detection', async function (assert) {
-    const {default: linkHelper} = await SystemJS.import('~/helpers/link');
-
     let e = {
         target: {
             getAttribute() {
