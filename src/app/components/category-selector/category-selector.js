@@ -2,6 +2,8 @@ import {Controller} from 'superb';
 import router from '~/router';
 import FilterButton from './filter-button';
 
+// FIX: This should probably just be inlined into Subjects a la Partners
+
 const categories = [
     {slug: 'view-all', cms: '', html: 'View All'},
     {slug: 'math', cms: 'Math', html: 'Math'},
