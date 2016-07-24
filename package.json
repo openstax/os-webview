@@ -16,7 +16,7 @@
   "dependencies": {},
   "devDependencies": {
     "babel-eslint": "6.1.2",
-    "babel-plugin-transform-class-properties": "6.10.2",
+    "babel-plugin-transform-class-properties": "6.11.5",
     "babel-plugin-transform-decorators": "6.8.0",
     "babel-plugin-transform-decorators-legacy": "1.3.4",
     "babel-plugin-transform-object-assign": "6.8.0",
@@ -24,13 +24,13 @@
     "browser-sync": "2.13.0",
     "connect-history-api-fallback": "1.2.0",
     "del": "2.2.1",
-    "eslint": "3.0.1",
+    "eslint": "3.1.1",
     "find-pkg": "0.1.2",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-autoprefixer": "3.1.0",
     "gulp-ava": "0.12.1",
     "gulp-babel": "6.1.2",
-    "gulp-cli": "1.2.1",
+    "gulp-cli": "1.2.2",
     "gulp-clip-empty-files": "0.1.2",
     "gulp-cssnano": "2.1.2",
     "gulp-env": "0.4.0",
@@ -38,7 +38,7 @@
     "gulp-htmlmin": "2.0.0",
     "gulp-humans": "2.0.2",
     "gulp-if": "2.0.1",
-    "gulp-imagemin": "3.0.1",
+    "gulp-imagemin": "3.0.2",
     "gulp-load-plugins": "1.2.4",
     "gulp-real-favicon": "0.2.1",
     "gulp-rename": "1.2.2",
@@ -55,7 +55,7 @@
     "require-dir": "0.3.0",
     "sw-precache": "3.2.0",
     "systemjs-builder": "0.15.23",
-    "yargs": "4.7.1"
+    "yargs": "4.8.1"
   },
   "jspm": {
     "main": "src/app/main.js",
