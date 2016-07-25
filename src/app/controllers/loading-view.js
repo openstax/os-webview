@@ -43,8 +43,8 @@ function getBackgroundImages() {
 
 class LoadingView extends Controller {
 
-    constructor() {
-        super();
+    constructor(...args) {
+        super(...args);
         this.otherPromises = [];
         this.subviewPromises = [];
         this.loadingSection = new LoadingSection();

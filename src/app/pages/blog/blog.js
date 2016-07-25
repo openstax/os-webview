@@ -1,11 +1,11 @@
 import settings from 'settings';
-import LoadingView from '~/controllers/loading-view';
+import CMSPageController from '~/controllers/cms';
 import Articles from './articles/articles';
 import PinnedArticle from './pinned-article/pinned-article';
-import newsPromise from './newsPromise';
+import newsQuery from './newsPromise';
 import {description as template} from './blog.html';
 
-export default class Blog extends LoadingView {
+export default class Blog extends CMSPageController {
 
     init() {
         this.template = template;
@@ -17,19 +17,18 @@ export default class Blog extends LoadingView {
             articles: '.articles',
             pinned: '.pinned'
         };
+        this.query = newsQuery;
     }
 
-    onLoaded() {
+    onDataLoaded() {
         // document.body.classList.add('no-scroll');
 
-        newsPromise.then((newsData) => {
-            const pinnedArticles = newsData.pages.filter((article) => article.pin_to_top);
+        const pinnedArticles = this.pageData.pages.filter((article) => article.pin_to_top);
 
-            for (const article of pinnedArticles) {
-                this.regions.pinned.append(new PinnedArticle(article));
-                this.regions.articles.append(new Articles(article.slug));
-            }
-        });
+        for (const article of pinnedArticles) {
+            this.regions.pinned.append(new PinnedArticle(article));
+            this.regions.articles.append(new Articles(article.slug));
+        }
     }
 
 }

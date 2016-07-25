@@ -1,9 +1,9 @@
-import {Controller} from 'superb';
+import CMSPageController from '~/controllers/cms';
 import {description as template} from './articles.html';
 import Article from '../article/article';
-import newsPromise from '../newsPromise';
+import newsQuery from '../newsPromise';
 
-export default class Articles extends Controller {
+export default class Articles extends CMSPageController {
 
     init(excludeSlug) {
         this.template = template;
@@ -15,18 +15,17 @@ export default class Articles extends Controller {
             article: '.container'
         };
         this.excludeSlug = excludeSlug;
+        this.query = newsQuery;
     }
 
-    onLoaded() {
-        newsPromise.then((newsData) => {
-            const sortedArticles = newsData.pages.sort((a, b) => a.date < b.date ? 1 : -1);
+    onDataLoaded() {
+        const sortedArticles = this.pageData.pages.sort((a, b) => a.date < b.date ? 1 : -1);
 
-            for (const article of sortedArticles) {
-                if (article.slug !== this.excludeSlug) {
-                    this.regions.article.append(new Article(article));
-                }
+        for (const article of sortedArticles) {
+            if (article.slug !== this.excludeSlug) {
+                this.regions.article.append(new Article(article));
             }
-        });
+        }
     }
 
 }

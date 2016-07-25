@@ -3,11 +3,11 @@ import {description as template} from './resource.html';
 
 export default class Resource extends Controller {
 
-    init(data, alternateLink) {
+    init(model, alternateLink) {
         this.template = template;
-        this.templateHelpers = data; // FIX: This is not how to use templateHelpers
+        this.model = model;
         /* eslint camelcase:0 */
-        this.templateHelpers.linkUrl = alternateLink || data.link_document_url || data.link_external;
+        this.model.linkUrl = alternateLink || model.link_document_url || model.link_external;
     }
 
 }

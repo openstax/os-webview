@@ -25,4 +25,8 @@ export default class CategorySection extends Controller {
         }
     }
 
+    filter(category) {
+        this.el.classList.toggle('hidden', category !== '' && category !== this.category);
+    }
+
 }

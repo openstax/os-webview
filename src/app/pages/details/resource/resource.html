@@ -1,6 +1,12 @@
-<h4>{{resource_heading}}</h4>
-{{#if resource_description}}{{{resource_description}}}{{/if}}
-<span class="link-and-lock">
-<a href="{{linkUrl}}" data-local="true">{{link_text}}</a>
-{{#if showLock}}<i class="locked-state fa {{showLock}}"></i>{{/if}}
-</span>
+<template args="model">
+    <h4>{model.resource_heading}</h4>
+    <if condition="model.resource_description">
+      RESOURCE DESCRIPTION HTML!
+    </if>
+    <span class="link-and-lock">
+        <a href="{model.linkUrl}" data-local="true">{model.link_text}</a>
+        <if condition="model.showLock">
+            <i class="locked-state fa {model.showLock}"></i>
+        </if>
+    </span>
+</template>

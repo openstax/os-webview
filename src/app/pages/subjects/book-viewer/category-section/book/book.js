@@ -1,8 +1,18 @@
 import {Controller} from 'superb';
+import {on} from '~/helpers/controller/decorators';
+import $ from '~/helpers/$';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
 import {description as template} from './book.html';
 
 export default class Book extends Controller {
+
+    @on('click img')
+    selectOrDetails(event) {
+        if (!($.isTouchDevice())) {
+            // Clicking the book cover is the same as clicking the CTA button
+            this.el.querySelector('.cta>.btn').click(event);
+        }
+    }
 
     init(bookInfo) {
         this.template = template;
