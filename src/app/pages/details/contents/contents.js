@@ -1,21 +1,39 @@
 import {Controller} from 'superb';
-import {description as template} from './contents.html';
+import ContentItem from './content-item';
 
-export default class ContentEntry extends Controller {
+function hasContents(entry) {
+    return entry.contents && entry.contents.length;
+}
 
-    init(data) {
-        this.template = template;
-        this.regions = {
-            subunit: '.subunit'
-        };
-        this.templateHelpers = data; // FIX: This is what models are for
+function isUnit(entry) {
+    return hasContents(entry) && hasContents(entry.contents[0]);
+}
+
+function isPreface(entry) {
+    return entry.title.match(/Preface/);
+}
+
+export default class Contents extends Controller {
+
+    init(data, view) {
+        this.template = () => '';
+        this.view = view;
+        this.model = data.contents;
+        this.parentNumber = data.number ? `${data.number}.` : '';
     }
 
     onLoaded() {
-        if (this.templateHelpers.contents) {
-            for (const entry of this.templateHelpers.contents) {
-                this.regions.subunit.appendAs('li', new ContentEntry(entry));
+        let i=0;
+
+        for (const entry of this.model) {
+            let chapterNumber = '';
+
+            if (!isPreface(entry)) {
+                ++i;
+                chapterNumber = `${this.parentNumber}${i}`;
             }
+
+            this.regions.self.append(new ContentItem(entry, isUnit(entry) ? '' : chapterNumber, 'li'));
         }
     }
 

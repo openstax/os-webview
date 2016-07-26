@@ -1,4 +1,6 @@
 import settings from 'settings';
+import router from '~/router';
+import NotFound from '~/pages/404/404';
 import {Controller} from 'superb';
 
 const cmsPageUrl = `${settings.apiOrigin}/api/v1/pages`;
@@ -31,18 +33,26 @@ class CMSPageController extends Controller {
             fetch(`${cmsPageUrl}/?format=json&${jsonToQueryString(this.queryPage)}`)
             .then(toJson)
             .then((response) => {
-                const pageUrl = response.pages[0].meta.detail_url;
+                try {
+                    const pageUrl = response.pages[0].meta.detail_url;
 
-                fetch(pageUrl).then(toJson)
-                .then((json) => {
-                    this.pageData = json;
-                    this.onDataLoaded();
-                });
+                    fetch(pageUrl).then(toJson)
+                    .then((json) => {
+                        this.pageData = json;
+                        this.onDataLoaded();
+                    });
+                } catch (e) {
+                    this.onDataError(e);
+                }
             });
         }
     }
 
     onDataLoaded() {}
+
+    onDataError() {
+        this.regions.self.attach(new NotFound());
+    }
 
 }
 

@@ -1,12 +1,10 @@
 <template args="model">
-    <h4>{model.resource_heading}</h4>
-    <if condition="model.resource_description">
-      RESOURCE DESCRIPTION HTML!
-    </if>
+    <div>
+        <h4>{model.resource_heading}</h4>
+        <resource-description if="model.resource_description"></resource-description>
+    </div>
     <span class="link-and-lock">
         <a href="{model.linkUrl}" data-local="true">{model.link_text}</a>
-        <if condition="model.showLock">
-            <i class="locked-state fa {model.showLock}"></i>
-        </if>
+        <i if="model.showLock" class="locked-state fa {model.showLock}"></i>
     </span>
 </template>

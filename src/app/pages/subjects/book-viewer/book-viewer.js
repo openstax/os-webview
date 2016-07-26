@@ -61,10 +61,14 @@ export default class BookViewer extends CMSPageController {
         for (const controller of this.categorySections) {
             this.regions.self.append(controller);
         }
+        if (this.filterToCategory) {
+            this.filterCategories(this.filterToCategory);
+        }
     }
 
     filterCategories(category) {
         if (!this.categorySections) {
+            this.filterToCategory = category;
             return;
         }
         for (const controller of this.categorySections) {

@@ -1,6 +1,14 @@
-<div class="text">
-    <div class="logo"></div>
-    <h4>{{name}}</h4>
-    {{{blurb}}}
-    <a href="{{url}}">{{linkText}}</a>
-</div>
+<template args="model">
+    <div class="text">
+        <if condition="model.logoUrl">
+            <div class="logo">
+                <img src="{model.logoUrl}" />
+            </div>
+        </if>
+        <h4>{model.name}</h4>
+        <blurb-html></blurb-html>
+    </div>
+    <div class="text">
+        <a href="{model.url}">{model.linkText}</a>
+    </div>
+</template>

@@ -86,7 +86,7 @@ $.applyScrollFix = (view) => {
 };
 
 $.hashClick = (event, options = {doHistory: true}) => {
-    const node = event.currentTarget;
+    const node = event.delegateTarget;
     const destUrl = `${node.pathname}${node.hash}`;
     const targetEl = document.getElementById(node.hash.substr(1));
 

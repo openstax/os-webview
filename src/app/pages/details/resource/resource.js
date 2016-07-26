@@ -10,4 +10,8 @@ export default class Resource extends Controller {
         this.model.linkUrl = alternateLink || model.link_document_url || model.link_external;
     }
 
+    onLoaded() {
+        this.el.querySelector('resource-description').innerHTML = this.model.resource_description;
+    }
+
 }

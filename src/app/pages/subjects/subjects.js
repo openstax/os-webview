@@ -30,7 +30,7 @@ export default class Subjects extends CMSPageController {
         this.filterCategoriesEvent = () => {
             this.bookViewer.filterCategories(history.state.filter);
             this.categorySelector.updateSelected(history.state.filter);
-        }
+        };
         window.addEventListener('popstate', this.filterCategoriesEvent);
     }
 
@@ -59,7 +59,7 @@ export default class Subjects extends CMSPageController {
         document.title = `${this.pageData.title} - OpenStax`;
         this.model = this.pageData;
         this.update();
-        for(const htmlEl of this.el.querySelectorAll('[data-html]')) {
+        for (const htmlEl of this.el.querySelectorAll('[data-html]')) {
             htmlEl.innerHTML = this.model[htmlEl.dataset.html];
         }
     }
