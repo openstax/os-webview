@@ -51,10 +51,10 @@
     "gulp-util": "3.0.7",
     "gulp-wrap": "0.13.0",
     "jsdom-global": "2.0.0",
-    "jspm": "0.17.0-beta.22",
+    "jspm": "0.17.0-beta.23",
     "require-dir": "0.3.0",
-    "sw-precache": "3.2.0",
-    "systemjs-builder": "0.15.23",
+    "sw-precache": "4.0.0",
+    "systemjs-builder": "0.15.25",
     "yargs": "4.8.1"
   },
   "jspm": {
