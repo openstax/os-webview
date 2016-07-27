@@ -188,7 +188,7 @@ $hero-break-width: 880px;
         transform: translate3d(0, -1rem, 0);
         transition: opacity 0.2s, transform 0.2s;
         width: 0;
-        z-index: 99999;
+        z-index: 999;
 
         &::before {
             border: 2rem solid;

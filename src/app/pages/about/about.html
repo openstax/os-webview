@@ -36,13 +36,13 @@
             <div class="headshots">
                 <div each="member in group.members" class="headshot{model.tapped === member.id ? ' tapped' : ''}{member.hidden ? ' hidden' : ''}" data-id="{member.id}">
                     <div class="picture-area{group.name === 'team' ? ' text-'+member.textColor+' bg-'+member.bgColor : ''}{member.image ? ' has-picture' : ''}">
-                        <img if="member.image" src="/images/about/{member.image}">
+                        <img if="member.image" src="{member.image}">
                         <div class="name">{member.name}</div>
                     </div>
                     <div class="details">
                         <div class="name">{member.name}</div>
-                        <div class="title">{member.title}</div>
-                        <div class="description">{member.bio}</div>
+                        <div if="member.position" class="title">{member.position}</div>
+                        <div class="description" data-html="description" skip="true"></div>
                     </div>
                 </div>
             </div>
