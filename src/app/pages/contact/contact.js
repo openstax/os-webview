@@ -1,5 +1,4 @@
 import LoadingView from '~/helpers/backbone/loading-view';
-import csrfModel from '~/models/csrfmodel';
 import PageModel from '~/models/pagemodel';
 import SingleSelect from '~/components/single-select/single-select';
 import {on, props} from '~/helpers/backbone/decorators';
@@ -7,18 +6,18 @@ import {template} from './contact.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
 
 const subjectOptions = [
-    ['General', 'info@openstax.org', 'General OpenStax Question'],
-    ['Adopting OpenStax Textbooks', 'info@openstax.org', 'Adopting OpenStax Textbooks'],
-    ['Concept Coach', 'ccsupport@openstax.org', 'Concept Coach Question'],
-    ['OpenStax Tutor Pilot Sign-up', 'tutorpilot@openstax.org', 'I’m interested in piloting OpenStax Tutor'],
-    ['OpenStax Tutor Support', 'tutorsupport@openstax.org', 'OpenStax Tutor Question'],
-    ['OpenStax CNX', 'cnx@cnx.org', 'CNX Question'],
-    ['Donations', 'info@openstax.org', 'Donations'],
-    ['College/University Partnerships', 'info@openstax.org', 'College/University Partnerships'],
-    ['Media Inquiries', 'info@openstax.org', 'Media Inquiries.'],
-    ['Foundational Support', 'richb@rice.edu, dcwill@rice.edu, mka2@rice.edu', 'Foundation'],
-    ['OpenStax Partners', 'info@openstax.org', 'Partners'],
-    ['Website', 'info@openstax.org', 'Website']
+    ['General', 'General OpenStax Question'],
+    ['Adopting OpenStax Textbooks', 'Adopting OpenStax Textbooks'],
+    ['Concept Coach', 'Concept Coach Question'],
+    ['OpenStax Tutor Pilot Sign-up', 'I’m interested in piloting OpenStax Tutor'],
+    ['OpenStax Tutor Support', 'OpenStax Tutor Question'],
+    ['OpenStax CNX', 'CNX Question'],
+    ['Donations', 'Donations'],
+    ['College/University Partnerships', 'College/University Partnerships'],
+    ['Media Inquiries', 'Media Inquiries.'],
+    ['Foundational Support', 'Foundation'],
+    ['OpenStax Partners', 'Partners'],
+    ['Website', 'Website']
 ];
 
 let contactDataPromise = new PageModel().fetch({
@@ -33,7 +32,8 @@ let contactDataPromise = new PageModel().fetch({
     css: '/app/pages/contact/contact.css',
     templateHelpers: {
         strips,
-        options: subjectOptions.map((option) => option[0])
+        options: subjectOptions.map((option) => option[0]),
+        urlOrigin: window.location.origin
     }
 })
 export default class Contact extends LoadingView {
@@ -42,8 +42,7 @@ export default class Contact extends LoadingView {
         let selectedSubject = this.el.querySelector('select').value,
             selectedOption = subjectOptions.filter((item) => item[0] === selectedSubject)[0];
 
-        this.el.querySelector('[name="to_address"]').value = selectedOption[1];
-        this.el.querySelector('[name="subject"]').value = selectedOption[2];
+        this.el.querySelector('[name="subject"]').value = selectedOption[1];
         if (!e.target.checkValidity()) {
             e.target.classList.add('has-been-submitted');
             e.preventDefault();
@@ -64,9 +63,6 @@ export default class Contact extends LoadingView {
         if (matched) {
             proxySs.set(decodeURIComponent(matched[1]));
         }
-        csrfModel.fetch().then((result) => {
-            this.el.querySelector('[name="csrfmiddlewaretoken"]').value = result.csrf_token;
-        });
         contactDataPromise.then((result) => {
             let data = result.pages[0];
 
