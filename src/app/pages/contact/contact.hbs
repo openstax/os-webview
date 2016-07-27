@@ -9,8 +9,10 @@
         {{{strips}}}
         <div class="boxed">
             <div class="col">
-                <form action="/api/mail/send_mail/" method="post" class="form">
-                    <input type="hidden" name="csrfmiddlewaretoken" />
+                <form action="https://www.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8" method="post" class="form">
+                    <input type=hidden name="orgid" value="00DU0000000Kwch">
+                    <input type=hidden name="retURL" value="{{urlOrigin}}/contact-thank-you">
+                    <input type="hidden" name="external" value="1" />
                     <div class="labeled-control">
                         What is your question about?
                         <select>
@@ -18,20 +20,19 @@
                                 <option>{{this}}</option>
                             {{/each}}
                         </select>
-                        <input name="to_address" type="hidden" />
                         <input name="subject" type="hidden" />
                     </div>
                     <div class="labeled-control">
                         Your Name
-                        <input name="from_name" type="text" required />
+                        <input name="name" type="text" size="20" required />
                     </div>
                     <div class="labeled-control">
                         Your Email Address
-                        <input name="from_address" pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text" required />
+                        <input name="email" pattern="[^@]+@([^@\.]+\.)+[^@\.]+" type="text" required />
                     </div>
                     <div class="labeled-control">
                         Your Message
-                        <textarea cols="50" name="message_body" rows="6" required></textarea>
+                        <textarea cols="50" name="description" rows="6" required></textarea>
                     </div>
                     <button class="btn btn-orange" type="submit">Send</button>
                 </form>
