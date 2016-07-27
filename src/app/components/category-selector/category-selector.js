@@ -30,10 +30,12 @@ export default class CategorySelector extends Controller {
         this.view = {
             classes: ['filter-buttons']
         };
-        this.setState = setState;
 
         this.buttonViews = categories.map((button) =>
-            new FilterButton(button.html, button.cms, this.updateSelected.bind(this))
+            new FilterButton(button.html, button.cms, (category) => {
+                this.updateSelected(category);
+                setState(category);
+            })
         );
     }
 
@@ -45,7 +47,6 @@ export default class CategorySelector extends Controller {
                 view.el.classList.remove('selected');
             }
         }
-        this.setState(category);
     }
 
     onLoaded() {

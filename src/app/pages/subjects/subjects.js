@@ -1,5 +1,7 @@
 import router from '~/router';
 import CMSPageController from '~/controllers/cms';
+import {on} from '~/helpers/controller/decorators';
+import $ from '~/helpers/$';
 import BookViewer from './book-viewer/book-viewer';
 import CategorySelector from '~/components/category-selector/category-selector';
 import {description as template} from './subjects.html';
@@ -27,45 +29,62 @@ export default class Subjects extends CMSPageController {
         this.bookViewer = new BookViewer();
         this.categorySelector = new CategorySelector((category) => this.filterCategories(category));
 
+        router.replaceState({
+            filter: this.categoryFromPath(),
+            path: '/subjects'
+        });
         this.filterCategoriesEvent = () => {
-            this.bookViewer.filterCategories(history.state.filter);
-            this.categorySelector.updateSelected(history.state.filter);
+            const category = history.state.filter;
+
+            this.bookViewer.filterCategories(category);
+            this.categorySelector.updateSelected(category);
         };
         window.addEventListener('popstate', this.filterCategoriesEvent);
+    }
+
+    categoryFromPath() {
+        const slug = window.location.pathname.replace(/.*subjects/, '').substr(1).toLowerCase() || 'view-all';
+
+        return CategorySelector.bySlug[slug].cms;
     }
 
     filterCategories(category) {
         const slug = CategorySelector.byCms[category].slug;
         const path = slug === 'view-all' ? '/subjects' : `/subjects/${slug}`;
 
-        router.navigate(path, {filter: category, path: '/subjects'}, {ignore: true});
+        router.navigate(path, {
+            filter: category,
+            path: '/subjects',
+            x: history.state.x,
+            y: history.state.y
+        });
         this.bookViewer.filterCategories(category);
     }
 
     onLoaded() {
         this.regions.filter.attach(this.categorySelector);
         this.regions.bookViewer.attach(this.bookViewer);
+        const category = this.categoryFromPath();
 
-        const slug = decodeURIComponent(window.location.pathname).replace(/.*subjects/, '').substr(1) || 'view-all';
-        const category = CategorySelector.bySlug[slug];
-
-        if (!category) {
-            return;
-        }
-        this.categorySelector.updateSelected(category.cms);
+        this.categorySelector.updateSelected(category);
+        this.filterCategories(category);
     }
 
     onDataLoaded() {
         document.title = `${this.pageData.title} - OpenStax`;
         this.model = this.pageData;
-        this.update();
         for (const htmlEl of this.el.querySelectorAll('[data-html]')) {
             htmlEl.innerHTML = this.model[htmlEl.dataset.html];
         }
+        this.update();
     }
 
     onClose() {
         window.removeEventListener('popstate', this.filterCategoriesEvent);
     }
 
+    @on('click', '.filter .filter-button')
+    scrollToFilterButtons() {
+        $.scrollTo(this.el.querySelector('.filter'));
+    }
 }

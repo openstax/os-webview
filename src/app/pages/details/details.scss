@@ -62,11 +62,9 @@
         }
 
         .toc-remover {
-            position: relative;
+            @include absolute(top 0.5rem right 0.5rem);
 
-            .remover {
-                @include absolute(top 0 right 0);
-            }
+            cursor: pointer;
         }
 
         .box {

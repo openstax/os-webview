@@ -5,7 +5,6 @@ import {on} from '~/helpers/controller/decorators';
 import router from '~/router';
 import userModel from '~/models/usermodel';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
-import Author from './author/author';
 import Resource from './resource/resource';
 import Contents from './contents/contents';
 import Partner from './partner/partner';
