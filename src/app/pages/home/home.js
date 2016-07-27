@@ -10,45 +10,39 @@ import {description as template} from './home.html';
 import {shuffle} from '~/helpers/data';
 import Banner from './banners/banner';
 
-const bannerModels = shuffle([
-    // Will not be released until Nov 2016
-    {
-        subject: 'astronomy',
-        subjectTitle: 'astronomy',
-        quote: 'see beyond this world',
-        features: ['chart', 'equation'],
-        buttonSpec1: 'btn-gold',
-        buttonSpec2: 'btn-cyan',
-        alignedEdge: 'right'
-    },
-    {
-        subject: 'biology',
-        subjectTitle: 'Biology',
-        quote: 'live the wild life',
-        features: ['diagram', 'leaf'],
-        buttonSpec1: 'btn-gold',
-        buttonSpec2: 'btn-turquoise',
-        alignedEdge: 'left'
-    },
-    {
-        subject: 'chemistry',
-        subjectTitle: 'Chemistry',
-        quote: 'transform',
-        features: ['element'],
-        buttonSpec1: 'btn-gold',
-        buttonSpec2: 'btn-turquoise',
-        alignedEdge: 'right'
-    },
-    {
-        subject: 'us-history',
-        subjectTitle: 'U.S. History',
-        quote: 'see into the past',
-        features: ['clermont', 'sacajawea', 'john-adams'],
-        buttonSpec1: 'btn-yellow',
-        buttonSpec2: 'btn-turquoise',
-        alignedEdge: 'right'
-    }
-]);
+const bannerModels = shuffle([{
+    subject: 'astronomy',
+    subjectTitle: 'astronomy',
+    quote: 'see beyond this world',
+    features: ['chart', 'equation'],
+    buttonSpec1: 'btn-gold',
+    buttonSpec2: 'btn-cyan',
+    alignedEdge: 'right'
+}, {
+    subject: 'biology',
+    subjectTitle: 'Biology',
+    quote: 'live the wild life',
+    features: ['diagram', 'leaf'],
+    buttonSpec1: 'btn-gold',
+    buttonSpec2: 'btn-turquoise',
+    alignedEdge: 'left'
+}, {
+    subject: 'chemistry',
+    subjectTitle: 'Chemistry',
+    quote: 'transform',
+    features: ['element'],
+    buttonSpec1: 'btn-gold',
+    buttonSpec2: 'btn-turquoise',
+    alignedEdge: 'right'
+}, {
+    subject: 'us-history',
+    subjectTitle: 'U.S. History',
+    quote: 'see into the past',
+    features: ['clermont', 'sacajawea', 'john-adams'],
+    buttonSpec1: 'btn-yellow',
+    buttonSpec2: 'btn-turquoise',
+    alignedEdge: 'right'
+}]);
 
 
 export default class Home extends LoadingView {
@@ -78,20 +72,14 @@ export default class Home extends LoadingView {
         $.hashClick(e, {doHistory: false});
     }
 
-    static metaDescription = () => `OpenStax's goal is to increase student access to
-        high-quality learning materials, at little to no cost. Learn more about what we
-        offer for college and K-12.`;
-
     parallaxBanner() {
         const bookBanners = this.el.querySelectorAll('.book-banners > div > div');
         const books = this.el.querySelectorAll('.book');
         const educationBanner = this.el.querySelector('.education-banner');
         const educationBannerStudent = this.el.querySelector('.education-banner .student');
 
-
         educationBanner.setAttribute('style', `background-position: 50% ${window.pageYOffset/30}px`);
         educationBannerStudent.setAttribute('style', `bottom: -${window.pageYOffset/40}px`);
-
 
         for (const bookBanner of bookBanners) {
             bookBanner.setAttribute('style', `background-position: 20% -${window.pageYOffset/2}px`);
@@ -140,34 +128,30 @@ export default class Home extends LoadingView {
             });
         }, 11000);
 
-        const quotesView = new Quotes([
-            {
-                orientation: 'left',
-                hasImage: true,
-                image: '/images/home/quotes/quote-right.jpg',
-                content: `Concept Coach is our free new tool that helps college
-                students understand and retain what they've read. We're recruiting
-                faculty for our Fall 2016 pilot!`,
-                link: 'http://cc.openstax.org',
-                cta: 'Learn More'
-            },
-            {
-                orientation: 'full',
-                hasImage: false,
-                content: `<p>“OpenStax is <em>amazing</em>. Access to these high quality textbooks
-                is game changing for our students.”</p>
-                <div class="attribution">&mdash; <cite>Prof. Wendy Riggs, College of the Redwoods</cite></div>`
-            },
-            {
-                orientation: 'full',
-                colorScheme: 'cyan',
-                hasImage: false,
-                overlay: '/images/home/quotes/book-mass-renewal-bucket.svg',
-                content: 'Using OpenStax in your course again this semester?',
-                link: '/mass-renewal',
-                cta: 'Let Us Know'
-            }
-        ]);
+        const quotesView = new Quotes([{
+            orientation: 'left',
+            hasImage: true,
+            image: '/images/home/quotes/quote-right.jpg',
+            content: `Concept Coach is our free new tool that helps college
+            students understand and retain what they've read. We're recruiting
+            faculty for our Fall 2016 pilot!`,
+            link: 'http://cc.openstax.org',
+            cta: 'Learn More'
+        }, {
+            orientation: 'full',
+            hasImage: false,
+            content: `<p>“OpenStax is <em>amazing</em>. Access to these high quality textbooks
+            is game changing for our students.”</p>
+            <div class="attribution">&mdash; <cite>Prof. Wendy Riggs, College of the Redwoods</cite></div>`
+        }, {
+            orientation: 'full',
+            colorScheme: 'cyan',
+            hasImage: false,
+            overlay: '/images/home/quotes/book-mass-renewal-bucket.svg',
+            content: 'Using OpenStax in your course again this semester?',
+            link: '/mass-renewal',
+            cta: 'Let Us Know'
+        }]);
 
         this.regions.quotes.attach(quotesView);
         this.regions.education.attach(new Education());
