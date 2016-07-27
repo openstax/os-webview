@@ -40,17 +40,19 @@ export default class Select extends Controller {
         this.options = Select[CONVERT_OPTIONS](this.select.options);
 
         this.model = {};
+        this.model.select = this.select;
         this.model.selected = Select[CONVERT_OPTIONS](this.select.selectedOptions);
         this.model.options = Select[CONVERT_OPTIONS](this.select.options);
     }
 
     static [CONVERT_OPTIONS](collection) {
-        return Reflect.apply(Array.prototype.slice, collection, []).map((el) => {
-            return {
-                text: el.textContent,
-                value: el.value
-            };
-        });
+        const map = new Map();
+
+        for (const el of Array.from(collection)) {
+            map.set(el.value, el.textContent);
+        }
+
+        return map;
     }
 
     @on('click')
@@ -88,8 +90,21 @@ export default class Select extends Controller {
     }
 
     @on('click .option')
-    toggleOption() {
+    toggleOption(e) {
+        const value = e.delegateTarget.getAttribute('data-value');
+        const text = e.delegateTarget.textContent;
 
+        if (!this.select.multiple) {
+            this.model.selected.clear();
+        }
+
+        if (this.model.selected.has(value)) {
+            this.model.selected.delete(value);
+        } else {
+            this.model.selected.set(value, text);
+        }
+
+        this.update();
     }
 
     static [CLOSE_DROPDOWNS]() {

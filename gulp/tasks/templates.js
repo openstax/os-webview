@@ -16,7 +16,7 @@ function templates() {
         collapseWhitespace: true
     }))
     .pipe(pi.superviewsjs({
-        es6: true
+        mode: 'es6'
     }))
     .pipe(pi.babel({
         compact: false,

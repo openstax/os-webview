@@ -18,6 +18,11 @@ select {
     ul {
         list-style-type: none;
         padding: 0 1rem;
+
+        > li {
+            display: inline-block;
+            margin-right: 0.9rem;
+        }
     }
 
     &::before {
@@ -50,7 +55,6 @@ select {
     }
 
     .tags {
-
         > .tag {
             display: inline-block;
             margin: 0.84rem 0 0.84rem 0.84rem;
@@ -72,6 +76,13 @@ select {
             cursor: cursor;
             font-size: inherit;
         }
+    }
+
+    .item {
+        color: color(neutral-dark);
+        font-size: 1.6rem;
+        font-weight: 500;
+        padding: 1rem;
     }
 
     .options {
