@@ -91,21 +91,62 @@ export default class Home extends LoadingView {
     }
 
     setupDebouncedParallax() {
-        const pageYOffset = window.pageYOffset - 1;
         const bannerEl = this.el.querySelector('.book-banners');
+        const containerEl = bannerEl.querySelector('.container');
         const backgrounds = bannerEl.querySelectorAll('.background-image');
-        const setBackgroundHeights = (height, top) => {
+        const squaresAndFeatures = Array.from(bannerEl.querySelectorAll('.feature,[class^="square-"]'))
+        .map((el) => ({el}));
+
+        const setBackgroundHeights = (height) => {
             for (const bgEl of backgrounds) {
                 bgEl.style.height = `${height}px`;
             }
         };
+        const moveFeatures = (bannerRect, containerRect) => {
+            const containerMidX = containerRect.width / 2.5;
+            const containerMidY = containerRect.height / 2;
+            const offset = bannerRect.height - bannerRect.bottom;
+
+            for (const elInfo of squaresAndFeatures) {
+                if (!('left' in elInfo)) {
+                    const style = window.getComputedStyle(elInfo.el);
+
+                    elInfo.left = +style.left.replace('px', '');
+                    elInfo.top = +style.top.replace('px', '');
+                    const midX = elInfo.left + style.width.replace('px', '') / 2;
+                    const midY = elInfo.top + style.height.replace('px', '') / 2;
+
+                    elInfo.xDir = midX < containerMidX ? -1 : 1;
+                    elInfo.yDir = midY < containerMidY ? -1 : 1;
+                    console.debug("Mids", midX, containerMidX, elInfo.xDir);
+                }
+
+                elInfo.el.style.left = `${elInfo.left + offset * elInfo.xDir}px`;
+                elInfo.el.style.top = `${elInfo.top + offset * elInfo.yDir}px`;
+            }
+            squaresAndFeatures.modified = true;
+        }
+
+        const resetFeatures = () => {
+            for (const elInfo of squaresAndFeatures) {
+                elInfo.el.style.left = '';
+                elInfo.el.style.top = '';
+            }
+            squaresAndFeatures.modified = false;
+        }
 
         this.debouncedParallax = utils.debounce(() => {
-            const bannerRect = bannerEl.getClientRects();
-            const bannerBottom = bannerRect[0].bottom;
+            const bannerRect = bannerEl.getClientRects()[0];
+            const containerRect = bannerEl.getClientRects()[0];
+            const bannerBottom = bannerRect.bottom;
             const height = bannerBottom > 0 ? bannerBottom : 0;
 
             setBackgroundHeights(height);
+            if (bannerBottom < bannerRect.height) {
+                moveFeatures(bannerRect, containerRect);
+            } else if (squaresAndFeatures.modified) {
+                resetFeatures();
+            }
         }, 10, false);
     }
 
@@ -115,7 +156,11 @@ export default class Home extends LoadingView {
             this.regions.banners.append(view);
         }
         this.banners[this.currentBanner].show();
-        this.setupDebouncedParallax();
+        try {
+            this.setupDebouncedParallax();
+        } catch (e) {
+            console.warn(e);
+        }
         window.addEventListener('scroll', this.debouncedParallax);
         window.addEventListener('resize', this.debouncedParallax);
 

@@ -85,10 +85,10 @@
         display: none;
         position: absolute;
         transform: translateZ(0);
-        z-index: 0;
+        z-index: 1;
 
         @include desktop-plus {
-            animation: flyin 0.5s 1.2s 1 normal ease-in forwards, loop 30s 1.5s normal infinite linear forwards;
+            animation: flyin 0.5s 1.2s 1 normal ease-in forwards;
             display: block;
         }
 
@@ -114,7 +114,7 @@
         display: none;
 
         @include desktop-plus {
-            animation: flyin 0.5s 1.4s 1 normal ease-in forwards, loop 40s 1.8s reverse infinite linear forwards;
+            animation: flyin 0.5s 1.4s 1 normal ease-in forwards;
             display: block;
         }
 
