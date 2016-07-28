@@ -47,29 +47,6 @@ export default class Select extends Controller {
         this.model.options = Select[CONVERT_OPTIONS](this.select.options);
     }
 
-    static [CONVERT_OPTIONS](collection) {
-        const map = new Map();
-
-        for (const el of Array.from(collection)) {
-            map.set(el.value, el.textContent);
-        }
-
-        return map;
-    }
-
-    @on('click')
-    toggleDropdown(e) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const open = !this.model.open;
-
-        Select[CLOSE_DROPDOWNS]();
-
-        this.model.open = open;
-        this.update();
-    }
-
     closeDropdown() {
         this.model.open = false;
         this.update();
@@ -99,6 +76,9 @@ export default class Select extends Controller {
 
         if (!this.select.multiple) {
             this.model.selected.clear();
+        } else {
+            e.preventDefault();
+            e.stopPropagation();
         }
 
         if (this.model.selected.has(value)) {
@@ -108,6 +88,29 @@ export default class Select extends Controller {
         }
 
         this.update();
+    }
+
+    @on('click')
+    toggleDropdown(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const open = !this.model.open;
+
+        Select[CLOSE_DROPDOWNS]();
+
+        this.model.open = open;
+        this.update();
+    }
+
+    static [CONVERT_OPTIONS](collection) {
+        const map = new Map();
+
+        for (const el of Array.from(collection)) {
+            map.set(el.value, el.textContent);
+        }
+
+        return map;
     }
 
     static [CLOSE_DROPDOWNS]() {

@@ -87,4 +87,5 @@ export default class Subjects extends CMSPageController {
     scrollToFilterButtons() {
         $.scrollTo(this.el.querySelector('.filter'));
     }
+
 }

@@ -15,16 +15,6 @@ select {
     padding-right: 4.8rem;
     position: relative;
 
-    ul {
-        list-style-type: none;
-        padding: 0 1rem;
-
-        > li {
-            display: inline-block;
-            margin-right: 0.9rem;
-        }
-    }
-
     &::before {
         background-color: rgba(color(neutral-lighter), 0.2);
         content: '';
@@ -47,10 +37,25 @@ select {
         z-index: 0;
     }
 
-    &.open {
-        &::after {
-            transform: rotate(180deg);
-            transform-origin: center top;
+    &.select-multi {
+        height: auto;
+        min-height: 4.8rem;
+    }
+
+    &.open::after {
+        transform: rotate(180deg);
+        transform-origin: center top;
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0 1rem 0.9rem;
+
+        > li {
+            display: inline-block;
+            margin-right: 0.9rem;
+            padding-top: 0.9rem;
         }
     }
 
