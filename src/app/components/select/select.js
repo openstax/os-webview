@@ -5,6 +5,8 @@ import {description as template} from './select.html';
 const CONVERT_OPTIONS = Symbol();
 const CLOSE_DROPDOWNS = Symbol();
 const CONTROLLERS = Symbol();
+const STOP_SCROLLING = Symbol();
+const START_SCROLLING = Symbol();
 
 export default class Select extends Controller {
 
@@ -76,9 +78,10 @@ export default class Select extends Controller {
     @on('mouseover')
     preventPageScrolling(e) {
         const el = document.elementFromPoint(e.clientX, e.clientY);
+        const optionsEl = this.el.querySelector('.options');
 
-        if (el.matches('.options') || this.el.querySelector('.options').contains(el)) {
-            document.body.classList.add('no-scroll');
+        if (el === optionsEl || optionsEl.contains(el)) {
+            Select[STOP_SCROLLING](optionsEl);
         } else {
             this.allowPageScrolling();
         }
@@ -86,7 +89,7 @@ export default class Select extends Controller {
 
     @on('mouseleave')
     allowPageScrolling() {
-        document.body.classList.remove('no-scroll');
+        Select[START_SCROLLING]();
     }
 
     @on('click .option')
@@ -119,6 +122,19 @@ export default class Select extends Controller {
                 Select[CONTROLLERS].splice(i, 1);
             }
         }
+    }
+
+    static [STOP_SCROLLING](el) {
+        window.onwheel = window.ontouchmove = (e) => {
+            const delta = e.wheelDelta || -e.detail;
+
+            e.preventDefault();
+            el.scrollTop += (delta < 0 ? 1 : -1) * 30;
+        };
+    }
+
+    static [START_SCROLLING]() {
+        window.onwheel = window.ontouchmove = null;
     }
 
 }
