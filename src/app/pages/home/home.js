@@ -102,6 +102,7 @@ export default class Home extends LoadingView {
                 bgEl.style.height = `${height}px`;
             }
         };
+
         const moveFeatures = (bannerRect, containerRect) => {
             const containerMidX = containerRect.width / 2.5;
             const containerMidY = containerRect.height / 2;
@@ -118,14 +119,13 @@ export default class Home extends LoadingView {
 
                     elInfo.xDir = midX < containerMidX ? -1 : 1;
                     elInfo.yDir = midY < containerMidY ? -1 : 1;
-                    console.debug("Mids", midX, containerMidX, elInfo.xDir);
                 }
 
                 elInfo.el.style.left = `${elInfo.left + offset * elInfo.xDir}px`;
                 elInfo.el.style.top = `${elInfo.top + offset * elInfo.yDir}px`;
             }
             squaresAndFeatures.modified = true;
-        }
+        };
 
         const resetFeatures = () => {
             for (const elInfo of squaresAndFeatures) {
@@ -133,7 +133,7 @@ export default class Home extends LoadingView {
                 elInfo.el.style.top = '';
             }
             squaresAndFeatures.modified = false;
-        }
+        };
 
         this.debouncedParallax = utils.debounce(() => {
             const bannerRect = bannerEl.getClientRects()[0];
