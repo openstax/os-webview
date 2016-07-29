@@ -17,10 +17,11 @@ const categoryMap = categories
 export default class Partners extends CMSPageController {
 
     static description = `OpenStax partners have united with us to increase
-        access to high-quality learning materials. Their low-cost tools
-        integrate seamlessly with OpenStax books.`;
+access to high-quality learning materials. Their low-cost tools
+integrate seamlessly with OpenStax books.`;
 
     init() {
+        document.querySelector('head meta[name="description"]').content = Partners.description;
         this.id = 50;
         this.template = template;
         this.css = '/app/pages/partners/partners.css';

@@ -113,4 +113,11 @@ $.testInstitutionalEmail = (element) => {
     return true;
 };
 
+$.htmlToText = (html) => {
+    const temp = document.createElement('div');
+
+    temp.innerHTML = html;
+    return temp.textContent;
+};
+
 export default $;

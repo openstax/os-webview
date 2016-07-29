@@ -52,10 +52,11 @@ function assignIds(teams) {
 export default class AboutUs extends CMSPageController {
 
     static description = `OpenStax is a nonprofit based at Rice University,
-        and it's our mission to improve student access to education.
-        Read more about who we are and what we do.`;
+and it's our mission to improve student access to education.
+Read more about who we are and what we do.`;
 
     init() {
+        document.querySelector('head meta[name="description"]').content = AboutUs.description;
         this.template = template;
         this.css = '/app/pages/about/about.css';
         this.view = {

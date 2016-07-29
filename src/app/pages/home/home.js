@@ -48,10 +48,11 @@ const bannerModels = shuffle([{
 export default class Home extends LoadingView {
 
     static description = `OpenStax's goal is to increase student access to
-        high-quality learning materials at little to no cost. Learn more
-        about what we offer for college and K-12.`;
+high-quality learning materials at little to no cost. Learn more
+about what we offer for college and K-12.`;
 
     init() {
+        document.querySelector('head meta[name="description"]').content = Home.description;
         this.template = template;
         this.css = '/app/pages/home/home.css';
         this.regions = {

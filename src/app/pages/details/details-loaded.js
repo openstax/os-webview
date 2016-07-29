@@ -10,11 +10,7 @@ import Contents from './contents/contents';
 import Partner from './partner/partner';
 import {description as template} from './details-loaded.html';
 
-export default class Details extends Controller {
-
-    static description = `This book is a peer-reviewed, free, open textbook
-        that covers standard scope and sequence. Access the text, authors,
-        and resources here.`;
+export default class DetailsLoaded extends Controller {
 
     init(model) {
         this.template = template;

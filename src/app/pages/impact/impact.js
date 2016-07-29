@@ -110,10 +110,11 @@ const partners = [{
 export default class Impact extends LoadingView {
 
     static description = `Since 2012, OpenStax has saved students millions
-        through free, peer-reviewed college textbooks. Learn more about our
-        impact on the 3,000+ schools who use our books.`;
+through free, peer-reviewed college textbooks. Learn more about our
+impact on the 3,000+ schools who use our books.`;
 
     init() {
+        document.querySelector('head meta[name="description"]').content = Impact.description;
         this.template = template;
         this.css = '/app/pages/impact/impact.css';
         this.view = {

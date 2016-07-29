@@ -9,10 +9,11 @@ import {description as template} from './subjects.html';
 export default class Subjects extends CMSPageController {
 
     static description = `Our textbooks are openly licensed, peer-reviewed,
-       free, and backed by learning resources. Check out our books and
-       decide if they're right for your course.`;
+free, and backed by learning resources. Check out our books and
+decide if they're right for your course.`;
 
     init() {
+        document.querySelector('head meta[name="description"]').content = Subjects.description;
         this.template = template;
         this.css = '/app/pages/subjects/subjects.css';
         this.view = {
