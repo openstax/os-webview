@@ -52,6 +52,16 @@ export default class Select extends Controller {
         this.update();
     }
 
+    updateSelectElement() {
+        for (const option of Array.from(this.select.options)) {
+            if (this.model.selected.get(option.value)) {
+                option.selected = true;
+            } else {
+                option.selected = false;
+            }
+        }
+    }
+
     @on('mouseover')
     preventPageScrolling(e) {
         const el = document.elementFromPoint(e.clientX, e.clientY);
@@ -88,6 +98,19 @@ export default class Select extends Controller {
         }
 
         this.update();
+        this.updateSelectElement();
+    }
+
+    @on('click .remover')
+    removeOption(e) {
+        e.stopPropagation();
+
+        const option = e.delegateTarget.previousSibling.textContent;
+
+        this.model.selected.delete(option);
+
+        this.update();
+        this.updateSelectElement();
     }
 
     @on('click')
