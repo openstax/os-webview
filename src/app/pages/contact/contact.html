@@ -16,7 +16,7 @@
                     <label>
                         What is your question about?
                         <select name="subject">
-                            <option each="subject in model.subjects" value="{subject}">{model.subjects[subject].name}</option>
+                            <option each="subject in model.subjects" value="{subject}">{subject}</option>
                         </select>
                     </label>
                     <label>
@@ -36,7 +36,7 @@
             </div>
             <div class="col">
                 <h2>{model.mailing_header}</h2>
-                <address class="mailing-address">{model.mailing_address}</address>
+                <address data-html="mailing-address">{model.mailing_address}</address>
                 <p class="phone"><span class="label">Main: </span><span>{model.phone_number}</span></p>
             </div>
         </div>

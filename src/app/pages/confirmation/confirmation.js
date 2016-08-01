@@ -21,6 +21,14 @@ const models = {
         adoptionLinkText: 'Adopt a book',
         subjectLinkText: 'Explore our books'
     },
+    contact: {
+        headline: 'Thanks for contacting us',
+        topParagraph: `We love hearing from you! We've received your message and will
+        get back to you within one business day.`,
+        adoptionQuestion: 'Have you looked at our books lately?',
+        adoptionUrl: '/subjects',
+        adoptionLinkText: 'Check out our subjects'
+    },
     faculty: {
         headline: 'Thank you for applying for an instructor account!',
         topParagraph: `We manually verify all instructor account requests to ensure that educator
@@ -58,7 +66,7 @@ const models = {
 
 export default class Confirmation extends Controller {
 
-    init(model) {
+    init() {
         this.template = template;
         this.css = '/app/pages/confirmation/confirmation.css';
         this.view = {

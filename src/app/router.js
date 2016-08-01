@@ -16,7 +16,6 @@ const PAGES = [
     'comp-copy',
     'confirmation',
     'contact',
-    'contact-thank-you',
     'details/*path',
     'faculty-verification',
     'finish-profile',
