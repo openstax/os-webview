@@ -3,17 +3,14 @@ import {on} from '~/helpers/controller/decorators';
 import {description as template} from './select.html';
 
 const CONVERT_OPTIONS = Symbol();
-const CLOSE_DROPDOWNS = Symbol();
-const CONTROLLERS = Symbol();
-const STOP_SCROLLING = Symbol();
-const START_SCROLLING = Symbol();
 
 export default class Select extends Controller {
 
-    init(config) {
+    init(config, handler) {
         this.template = template;
         this.css = '/app/components/select/select.css';
         this.setup(config);
+        this.handler = handler;
         this.view = {
             classes: ['select']
         };
@@ -21,9 +18,6 @@ export default class Select extends Controller {
         if (this.select.getAttribute('multiple') !== null) {
             this.view.classes.push('select-multi');
         }
-
-        Select[CONTROLLERS] = Select[CONTROLLERS] || [];
-        Select[CONTROLLERS].push(this);
     }
 
     setup(config) {
@@ -68,7 +62,7 @@ export default class Select extends Controller {
         const optionsEl = this.el.querySelector('.options');
 
         if (el === optionsEl || optionsEl.contains(el)) {
-            Select[STOP_SCROLLING](optionsEl);
+            this.handler.stopScrolling(optionsEl);
         } else {
             this.allowPageScrolling();
         }
@@ -76,7 +70,7 @@ export default class Select extends Controller {
 
     @on('mouseleave')
     allowPageScrolling() {
-        Select[START_SCROLLING]();
+        this.handler.startScrolling();
     }
 
     @on('click .option')
@@ -120,7 +114,7 @@ export default class Select extends Controller {
 
         const open = !this.model.open;
 
-        Select[CLOSE_DROPDOWNS]();
+        this.handler.closeDropdowns();
 
         this.model.open = open;
         this.update();
@@ -136,35 +130,4 @@ export default class Select extends Controller {
         return map;
     }
 
-    static [CLOSE_DROPDOWNS]() {
-        let i = Select[CONTROLLERS].length;
-
-        while (i--) {
-            const controller = Select[CONTROLLERS][i];
-
-            if (document.body.contains(controller.select)) {
-                controller.closeDropdown();
-            } else {
-                Select[CONTROLLERS].splice(i, 1);
-            }
-        }
-    }
-
-    static [STOP_SCROLLING](el) {
-        window.onwheel = window.ontouchmove = (e) => {
-            const delta = e.wheelDelta || -e.detail;
-
-            e.preventDefault();
-            el.scrollTop += (delta < 0 ? 1 : -1) * 30;
-        };
-    }
-
-    static [START_SCROLLING]() {
-        window.onwheel = window.ontouchmove = null;
-    }
-
 }
-
-window.addEventListener('click', () => {
-    Select[CLOSE_DROPDOWNS]();
-});

@@ -3,7 +3,7 @@ import {on} from '~/helpers/controller/decorators';
 import {published as titles} from '~/models/book-titles';
 import partners from '~/models/partners';
 import salesforce from '~/models/salesforce';
-import Select from '~/components/select/select';
+import selectHandler from '~/handlers/select';
 import {description as template} from './adoption.html';
 
 export default class AdoptionForm extends Controller {
@@ -30,8 +30,7 @@ export default class AdoptionForm extends Controller {
         const selects = this.el.querySelectorAll('select');
 
         for (const select of selects) {
-            // FIX: use a select helper that internally creates new Selects
-            new Select({
+            selectHandler.setup({
                 select,
                 placeholder: select.previousSibling
             });
