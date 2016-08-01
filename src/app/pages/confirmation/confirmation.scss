@@ -4,9 +4,19 @@
 .confirmation-page {
     .subhead {
         padding-bottom: 8rem;
+
+        a {
+            color: color(yellow);
+        }
     }
 
     .strips {
         margin-bottom: 0;
     }
+
+    .calculator {
+        padding-bottom: 8rem;
+        padding-top: 0;
+    }
+
 }

@@ -42,12 +42,12 @@ export default class NewAccountForm extends Controller {
             this.facultySection.setRequiredness(true);
             this.regions.facultySection.attach(this.facultySection);
             this.el.querySelector('form').classList.add('faculty');
-            retUrl.value = `${window.location.origin}/finished-verify`;
+            retUrl.value = `${window.location.origin}/confirmation?faculty`;
         } else {
             this.facultySection.setRequiredness(false);
             this.facultySection.remove();
             this.el.querySelector('form').classList.remove('faculty');
-            retUrl.value = `${window.location.origin}/finished-no-verify`;
+            retUrl.value = `${window.location.origin}/confirmation?unverified`;
         }
         leadSourceField.value = leadType;
     }
