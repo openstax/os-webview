@@ -1,7 +1,7 @@
 import {Controller} from 'superb';
-
-import $ from '~/helpers/$';
+// import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
+import selectHandler from '~/handlers/select';
 import bookTitles from '~/models/book-titles';
 // import salesforce from '~/helpers/salesforce';
 // import userModel from '~/models/usermodel';
@@ -19,6 +19,10 @@ export default class FacultyVerificationForm extends Controller {
         this.templateHelpers = {
             titles: bookTitles
         };
+    }
+
+    onLoaded() {
+        selectHandler.setup(this.el);
     }
 
     /*

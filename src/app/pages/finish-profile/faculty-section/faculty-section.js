@@ -1,6 +1,6 @@
 import {Controller} from 'superb';
-
-import $ from '~/helpers/$';
+// import $ from '~/helpers/$';
+import selectHandler from '~/handlers/select';
 import salesforce from '~/helpers/salesforce';
 import {description as template} from './faculty-section.html';
 
@@ -10,6 +10,11 @@ export default class FacultySection extends Controller {
         this.template = template;
     }
 
+    onLoaded() {
+        selectHandler.setup(this.el);
+    }
+
+    /*
     onLoaded() {
         this.requireds = this.el.querySelectorAll('[required]');
         salesforce.populateAdoptionStatusOptions(this.el, ['adopted', 'recommend', 'no'], true);
@@ -36,5 +41,6 @@ export default class FacultySection extends Controller {
             }
         }
     }
+    */
 
 }

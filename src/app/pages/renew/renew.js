@@ -1,6 +1,6 @@
 import {Controller} from 'superb';
-
 import {on} from '~/helpers/controller/decorators';
+import selectHandler from '~/handlers/select';
 import {published as titles} from '~/models/book-titles';
 // import salesforceModel from '~/models/salesforce-model';
 import partners from '~/models/partners';
@@ -10,13 +10,17 @@ export default class AdoptionForm extends Controller {
 
     init() {
         this.template = template;
-        this.templateHelpers = {
-            titles,
-            partners
-        };
         this.view = {
             classes: ['adoption-form']
         };
+        this.model = {
+            titles,
+            partners
+        };
+    }
+
+    onLoaded() {
+        selectHandler.setup(this.el);
     }
 
     /*

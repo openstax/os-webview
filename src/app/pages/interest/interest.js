@@ -1,6 +1,6 @@
 import {Controller} from 'superb';
-
 import {on} from '~/helpers/controller/decorators';
+import selectHandler from '~/handlers/select';
 import bookTitles from '~/models/book-titles';
 // import salesforceModel from '~/models/salesforce-model';
 import {description as template} from './interest.html';
@@ -16,6 +16,10 @@ export default class InterestForm extends Controller {
         this.templateHelpers = {
             titles: bookTitles
         };
+    }
+
+    onLoaded() {
+        selectHandler.setup(this.el);
     }
 
     /*

@@ -1,6 +1,6 @@
 import {Controller} from 'superb';
-
 import {on} from '~/helpers/controller/decorators';
+import selectHandler from '~/handlers/select';
 // import salesforceModel from '~/models/salesforce-model';
 import {description as template} from './comp-copy.html';
 
@@ -12,6 +12,10 @@ export default class CompCopyForm extends Controller {
         this.view = {
             classes: ['comp-copy-form']
         };
+    }
+
+    onLoaded() {
+        selectHandler.setup(this.el);
     }
 
     /*

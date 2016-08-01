@@ -1,9 +1,9 @@
 import {Controller} from 'superb';
 import {on} from '~/helpers/controller/decorators';
+import selectHandler from '~/handlers/select';
 import {published as titles} from '~/models/book-titles';
 import partners from '~/models/partners';
 import salesforce from '~/models/salesforce';
-import selectHandler from '~/handlers/select';
 import {description as template} from './adoption.html';
 
 export default class AdoptionForm extends Controller {
@@ -27,14 +27,7 @@ export default class AdoptionForm extends Controller {
     }
 
     onLoaded() {
-        const selects = this.el.querySelectorAll('select');
-
-        for (const select of selects) {
-            selectHandler.setup({
-                select,
-                placeholder: select.previousSibling
-            });
-        }
+        selectHandler.setup(this.el);
     }
 
 }

@@ -1,6 +1,6 @@
 import {Controller} from 'superb';
-
 import {on} from '~/helpers/controller/decorators';
+import selectHandler from '~/handlers/select';
 import bookTitles from '~/models/book-titles';
 // import salesforceModel from '~/models/salesforce-model';
 // import userModel from '~/models/usermodel';
@@ -24,6 +24,10 @@ export default class NewAccountForm extends Controller {
             roles: ['Faculty', 'Adjunct Faculty', 'Administrator', 'Librarian',
             'Instructional Designer', 'Student', 'Other']
         };
+    }
+
+    onLoaded() {
+        selectHandler.setup(this.el);
     }
 
     /*

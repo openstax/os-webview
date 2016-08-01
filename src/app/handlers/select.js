@@ -10,8 +10,15 @@ class SelectHandler {
         });
     }
 
-    setup(config) {
-        this.controllers.push(new Select(config, this));
+    setup(el) {
+        const selects = el.querySelectorAll('select');
+
+        for (const select of selects) {
+            this.controllers.push(new Select({
+                select,
+                placeholder: select.previousSibling
+            }, this));
+        }
     }
 
     closeDropdowns() {

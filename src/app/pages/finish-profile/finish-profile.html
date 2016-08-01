@@ -31,12 +31,14 @@
             </div>
             <div class="col">
                 <label>Your role
+                <div skip="true"></div>
                 <select name="00NU00000054MLz">
                     <option disabled selected>Please select</option>
                     <option each="role in roles" value="{role}">{role}</option>
                 </select>
             </label>
                 <label>Title(s) you're interested in
+                <div skip="true"></div>
                 <select name="00NU00000053nzR" multiple required>
                     <!-- FIX: Manipulate model data to avoid multiple loops -->
                     <option each="title in bookTitles" if="title.text" value="{title.value}">{title.text}</option>
