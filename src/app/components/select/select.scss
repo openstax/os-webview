@@ -73,6 +73,13 @@ select {
 
         .label {
             background-color: rgba(color(gray), 0.2);
+
+            &.none {
+                background-color: transparent;
+                color: color(neutral-light);
+                font-size: 1.6rem;
+                margin-left: -0.84rem;
+            }
         }
 
         .remover {
