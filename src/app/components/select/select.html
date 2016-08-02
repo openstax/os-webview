@@ -13,7 +13,11 @@
             </if>
         </ul>
     <else>
-        <span each="item in model.selected" class="item">{$value}</span>
+        <if condition="model.selected.size">
+            <span each="item in model.selected" class="item">{$value}</span>
+        <else>
+            <span class="item none">Please choose an option...</span>
+        </if>
     </if>
     <ul class="options{model.open ? ' open' : ''}">
         <li each="option in model.options" class="option" data-value="{$item}">{$value}</li>

@@ -95,6 +95,10 @@ select {
         font-size: 1.6rem;
         font-weight: 500;
         padding: 1rem;
+
+        &.none {
+            color: color(neutral-light);
+        }
     }
 
     .options {
