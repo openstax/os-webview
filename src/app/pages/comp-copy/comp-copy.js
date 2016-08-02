@@ -15,7 +15,7 @@ export default class CompCopyForm extends Controller {
     }
 
     onLoaded() {
-        selectHandler.setup(this.el);
+        selectHandler.setup(this);
     }
 
     /*

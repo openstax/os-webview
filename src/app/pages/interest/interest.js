@@ -19,7 +19,7 @@ export default class InterestForm extends Controller {
     }
 
     onLoaded() {
-        selectHandler.setup(this.el);
+        selectHandler.setup(this);
     }
 
     /*

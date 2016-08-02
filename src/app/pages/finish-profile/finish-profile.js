@@ -27,7 +27,7 @@ export default class NewAccountForm extends Controller {
     }
 
     onLoaded() {
-        selectHandler.setup(this.el);
+        selectHandler.setup(this);
     }
 
     /*

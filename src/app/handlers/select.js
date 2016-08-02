@@ -10,14 +10,14 @@ class SelectHandler {
         });
     }
 
-    setup(el) {
-        const selects = el.querySelectorAll('select');
+    setup(parent) {
+        const selects = parent.el.querySelectorAll('select');
 
         for (const select of selects) {
             this.controllers.push(new Select({
                 select,
                 placeholder: select.previousSibling
-            }, this));
+            }, this, parent));
         }
     }
 

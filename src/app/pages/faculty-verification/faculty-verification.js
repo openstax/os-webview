@@ -22,7 +22,7 @@ export default class FacultyVerificationForm extends Controller {
     }
 
     onLoaded() {
-        selectHandler.setup(this.el);
+        selectHandler.setup(this);
     }
 
     /*

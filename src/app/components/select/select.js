@@ -6,7 +6,7 @@ const CONVERT_OPTIONS = Symbol();
 
 export default class Select extends Controller {
 
-    init(config, handler) {
+    init(config, handler, parent) {
         this.template = template;
         this.css = '/app/components/select/select.css';
         this.setup(config);
@@ -18,6 +18,19 @@ export default class Select extends Controller {
         if (this.select.getAttribute('multiple') !== null) {
             this.view.classes.push('select-multi');
         }
+
+        const onClose = parent.onClose;
+        const onAttached = parent.onAttached;
+
+        parent.onClose = () => {
+            this.detach();
+            onClose();
+        };
+
+        parent.onAttached = () => {
+            this.updateSelectElement();
+            onAttached();
+        };
     }
 
     setup(config) {
@@ -37,8 +50,9 @@ export default class Select extends Controller {
 
         this.model = {};
         this.model.select = this.select;
-        this.model.selected = Select[CONVERT_OPTIONS](this.select.selectedOptions);
+        this.model.selected = Select[CONVERT_OPTIONS](this.select.querySelectorAll('option[selected]'));
         this.model.options = Select[CONVERT_OPTIONS](this.select.options);
+        this.updateSelectElement();
     }
 
     closeDropdown() {
@@ -53,6 +67,10 @@ export default class Select extends Controller {
             } else {
                 option.selected = false;
             }
+        }
+
+        if (this.model.selected.size === 0) {
+            this.select.selectedIndex = -1;
         }
     }
 
@@ -128,6 +146,11 @@ export default class Select extends Controller {
         }
 
         return map;
+    }
+
+    onClose() {
+        delete this.handler;
+        delete this.select;
     }
 
 }

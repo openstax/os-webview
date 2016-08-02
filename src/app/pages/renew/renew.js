@@ -2,7 +2,7 @@ import {Controller} from 'superb';
 import {on} from '~/helpers/controller/decorators';
 import selectHandler from '~/handlers/select';
 import {published as titles} from '~/models/book-titles';
-// import salesforceModel from '~/models/salesforce-model';
+import salesforce from '~/models/salesforce';
 import partners from '~/models/partners';
 import {description as template} from './renew.html';
 
@@ -20,22 +20,7 @@ export default class AdoptionForm extends Controller {
     }
 
     onLoaded() {
-        selectHandler.setup(this.el);
+        selectHandler.setup(this);
     }
-
-    /*
-    onLoaded() {
-        // FIX: Move to model manipulation, then load normally in template
-        salesforceModel.prefill(this.el);
-    }
-
-    // FIX: Refactor out
-    @on('change [type=text],[type=email]')
-    saveSetting(event) {
-        if (event.target.name) {
-            salesforceModel.set(event.target.name, event.target.value);
-        }
-    }
-    */
 
 }
