@@ -120,4 +120,15 @@ $.htmlToText = (html) => {
     return temp.textContent;
 };
 
+$.parseSearchString = (searchString) => {
+    const result = {};
+
+    searchString.substr(1).split('&').forEach((item) => {
+        const [k, v] = item.split('=');
+
+        (k in result) ? result[k].push(decodeURIComponent(v)) : result[k] = [decodeURIComponent(v)];
+    });
+    return result;
+};
+
 export default $;
