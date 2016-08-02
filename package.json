@@ -46,7 +46,7 @@
     "gulp-sass": "2.3.2",
     "gulp-scss-lint": "0.4.0",
     "gulp-sourcemaps": "2.0.0-alpha",
-    "gulp-superviewsjs": "dak/gulp-superviewsjs",
+    "gulp-superviewsjs": "github:dak/gulp-superviewsjs",
     "gulp-uglify": "1.5.4",
     "gulp-util": "3.0.7",
     "gulp-wrap": "0.13.0",
@@ -80,7 +80,7 @@
       "fs": "github:jspm/nodelibs-fs@0.2.0-alpha",
       "incremental-dom": "npm:incremental-dom@0.4.1",
       "path": "github:jspm/nodelibs-path@0.2.0-alpha",
-      "process": "github:jspm/nodelibs-process@0.2.0-alpha"
+      "process": "github:jspm/nodelibs-process@^0.2.0-alpha"
     }
   },
   "ava": {
