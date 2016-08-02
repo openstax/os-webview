@@ -15,7 +15,11 @@ export default class AdoptionForm extends Controller {
         };
         this.model = {
             titles,
-            partners
+            partners,
+            salesforce: salesforce.adoption([
+                'adopted',
+                'recommended'
+            ])
         };
     }
 

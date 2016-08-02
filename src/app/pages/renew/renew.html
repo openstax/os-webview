@@ -64,7 +64,9 @@
 
                     <label>How are you using this book? <small><i>(optional)</i></small>
                         <div skip="true"></div>
-                        <select name="00NU00000055spw"></select>
+                        <select name="00NU00000055spw">
+                            <option each="key in model.salesforce" value="{key.value}">{key.text}</option>
+                        </select>
                     </label>
 
                     <label>
