@@ -1,7 +1,6 @@
 import {Controller} from 'superb';
 import {on} from '~/helpers/controller/decorators';
 import selectHandler from '~/handlers/select';
-// import salesforceModel from '~/models/salesforce-model';
 import {description as template} from './comp-copy.html';
 
 export default class CompCopyForm extends Controller {
@@ -12,32 +11,12 @@ export default class CompCopyForm extends Controller {
         this.view = {
             classes: ['comp-copy-form']
         };
+        // NOTE: List of books is more limited than the published list in models/book-titles,
+        // so using a hard-coded list in the HTML
     }
 
     onLoaded() {
         selectHandler.setup(this);
     }
-
-    /*
-    onLoaded() {
-        salesforceModel.prefill(this.el);
-    }
-
-    @on('change #decision-date')
-    formatDate(e) {
-        const value = e.target.value;
-        const [year, month, day] = value.split('-');
-
-        document.getElementById('hidden-decision-date').value = [month, day, year].join('/');
-    }
-
-    @on('change [type=text],[type=email]')
-    saveSetting(event) {
-        // FIX: This if statement is used an awful lot, should it be moved to the set method?
-        if (event.target.name) {
-            salesforceModel.set(event.target.name, event.target.value);
-        }
-    }
-    */
 
 }

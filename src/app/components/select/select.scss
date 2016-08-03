@@ -94,6 +94,7 @@ select {
         color: color(neutral-dark);
         font-size: 1.6rem;
         font-weight: 500;
+        line-height: 1;
         padding: 1rem;
 
         &.none {
@@ -131,6 +132,7 @@ select {
             background-color: color(neutral-lightest);
             color: color(neutral-dark);
             font-weight: 600;
+            line-height: 1;
             padding: 0.5rem 1rem;
             width: 100%;
 
