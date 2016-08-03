@@ -117,7 +117,7 @@ export default class Select extends Controller {
     removeOption(e) {
         e.stopPropagation();
 
-        const option = e.delegateTarget.previousSibling.textContent;
+        const option = e.delegateTarget.previousSibling.getAttribute('data-value');
 
         this.model.selected.delete(option);
 

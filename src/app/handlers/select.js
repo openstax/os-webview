@@ -40,7 +40,7 @@ class SelectHandler {
             const delta = e.wheelDelta || -e.detail;
 
             e.preventDefault();
-            el.scrollTop += (delta < 0 ? 1 : -1) * 30;
+            el.scrollTop += (delta < 0 ? 1 : -1) * 20;
         };
     }
 

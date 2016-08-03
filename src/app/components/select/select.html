@@ -3,7 +3,7 @@
         <ul class="tags">
             <if condition="model.selected.size">
                 <li each="tag in model.selected">
-                    <span class="label">{$value}</span>
+                    <span class="label" data-value="{$item}">{$value}</span>
                     <span class="remover">×</span>
                 </li>
             <else>
