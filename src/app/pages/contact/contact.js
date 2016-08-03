@@ -23,9 +23,9 @@ const subjects = [
 
 export default class Contact extends CMSPageController {
 
-    static description = `If you have a question or feedback about our books,
-        OpenStax Tutor, Concept Coach, partnerships, or any other topic,
-        contact us here. We’d love to hear from you!`;
+    static description = 'If you have a question or feedback about our books, ' +
+        'OpenStax Tutor, Concept Coach, partnerships, or any other topic, ' +
+        'contact us here. We\'d love to hear from you!';
 
     init() {
         document.querySelector('head meta[name="description"]').content = Contact.description;

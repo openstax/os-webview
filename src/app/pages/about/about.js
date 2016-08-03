@@ -51,9 +51,9 @@ function assignIds(teams) {
 
 export default class AboutUs extends CMSPageController {
 
-    static description = `OpenStax is a nonprofit based at Rice University,
-and it's our mission to improve student access to education.
-Read more about who we are and what we do.`;
+    static description = 'OpenStax is a nonprofit based at Rice University, ' +
+        'and it\'s our mission to improve student access to education. ' +
+        'Read more about who we are and what we do.';
 
     init() {
         document.querySelector('head meta[name="description"]').content = AboutUs.description;
@@ -70,21 +70,23 @@ Read more about who we are and what we do.`;
     }
 
     onDataLoaded() {
-        this.model = {
-            bios: [
-                {
-                    name: 'team',
-                    members: this.pageData.openstax_team
-                },
-                {
-                    name: 'advisors',
-                    members: this.pageData.strategic_advisors
-                }
-            ]
-        };
-        assignIds(this.model.bios);
         assignColors(this.pageData.openstax_team);
+
+        this.model = {
+            bios: [{
+                name: 'team',
+                members: this.pageData.openstax_team
+            }, {
+                name: 'advisors',
+                members: this.pageData.strategic_advisors
+            }]
+        };
+
+        assignIds(this.model.bios);
+
         this.update();
+
+        // NOTE: Incremental-DOM currently lacks the ability to inject HTML into a node.
         const updateDescription = (member) => {
             const id = member.id;
             const el = this.el.querySelector(`[data-id="${id}"] [data-html="description"]`);
@@ -97,6 +99,7 @@ Read more about who we are and what we do.`;
         for (const member of this.pageData.openstax_team) {
             updateDescription(member);
         }
+
         for (const member of this.pageData.strategic_advisors) {
             updateDescription(member);
         }

@@ -4,13 +4,13 @@ import DetailsLoaded from './details-loaded';
 
 export default class Details extends CMSPageController {
 
-    static description = `is a peer-reviewed, free, open textbook
-        that covers standard scope and sequence. Access the text, authors,
-        and resources here.`;
+    static description = 'is a peer-reviewed, free, open textbook ' +
+        'that covers standard scope and sequence. Access the text, authors, ' +
+        'and resources here.';
 
-    static apDescription = `is a peer-reviewed, free, open textbook
-        that adheres to Advanced Placement® frameworks. Access the full
-        text here.`;
+    static apDescription = 'is a peer-reviewed, free, open textbook ' +
+        'that adheres to Advanced Placement® frameworks. Access the full ' +
+        'text here.';
 
     init(bookTitle) {
         this.template = () => '';

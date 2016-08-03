@@ -11,9 +11,9 @@ const loginLink = `${loginQuery}${nextLink}`;
 
 export default class HigherEd extends CMSPageController {
 
-    static description = `Our open, peer-reviewed college textbooks are free
-online and come with resources from us and our partners. See how you can
-adopt our books for your course.`;
+    static description = 'Our open, peer-reviewed college textbooks are free ' +
+        'online and come with resources from us and our partners. See how you can ' +
+        'adopt our books for your course.';
 
     init() {
         this.id = 88;
