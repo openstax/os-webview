@@ -48,10 +48,13 @@ export default class Subjects extends LoadingView {
     }
 
     @on('click .filter')
-    filterClick() {
-        let filterSection = this.el.querySelector('.filter');
+    filterClick(e) {
+        const filterSection = this.el.querySelector('.filter');
+        const buttonText = e.target.textContent;
+        const routeTo = buttonText === 'View All' ? '/subjects' : `/subjects/${buttonText}`;
 
         $.scrollTo(filterSection, 30);
+        router.navigate(routeTo, false);
     }
 
     static metaDescription = () => `Our textbooks are openly licensed, peer-reviewed, free,
