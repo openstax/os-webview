@@ -72,6 +72,7 @@ export default class Select extends Controller {
         if (this.model.selected.size === 0) {
             this.select.selectedIndex = -1;
         }
+        this.select.dispatchEvent(new Event('change', {bubbles: true}));
     }
 
     @on('mouseover')

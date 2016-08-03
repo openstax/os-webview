@@ -20,11 +20,32 @@ export default class InterestForm extends Controller {
             }
         );
 
-        this.model = {titles};
+        this.model = {
+            titles,
+            validationMessage: (name) =>
+                this.hasBeenSubmitted ? this.el.querySelector(`[name="${name}"]`).validationMessage : ''
+        };
     }
 
     onLoaded() {
+        document.title = 'Interest Form - OpenStax';
         selectHandler.setup(this);
+    }
+
+    @on('click [type="submit"]')
+    doCustomValidation(event) {
+        const invalids = this.el.querySelectorAll('input:invalid');
+
+        this.hasBeenSubmitted = true;
+        if (invalids.length) {
+            event.preventDefault();
+            this.update();
+        }
+    }
+
+    @on('change')
+    updateOnChange() {
+        this.update();
     }
 
 }

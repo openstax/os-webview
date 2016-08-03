@@ -1,16 +1,19 @@
 <template args="model">
     <div class="text-content subhead">
         <h1>Instructor Verification</h1>
-        <p>
+        <p if="!model.pendingVerification">
             A verified instructor account at OpenStax gives you access to all
             instructor-only resources for our books, like test banks, answer
             guides, and more. We manually verify all instructor account requests,
             so you'll hear back in two to three business days about your
             approval. Fill out and the information below to get started!
         </p>
+        <p if="model.pendingVerification">
+            You already have a verification request pending.
+        </p>
     </div>
 
-    <form accept-charset="UTF-8" class="form"
+    <form accept-charset="UTF-8" class="form" if="!model.pendingVerification"
      action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="post">
         <div class="text-content">
             <div>
@@ -18,8 +21,8 @@
                 <input type="hidden" name="oid" value="00DU0000000Kwch">
                 <input type="hidden" name="retURL" value="{`${window.location.origin}/confirmation?faculty`}">
                 <input type="hidden" name="lead_source" value="OSC Faculty">
-                <input type="hidden" name="user_id">
-                <input type="hidden" name="OS_Accounts_ID__c">
+                <input type="hidden" name="user_id" value="{model.userId}">
+                <input type="hidden" name="OS_Accounts_ID__c" value="{model.accountId}">
             </div>
 
             <div class="labeled-inputs row top-of-form">

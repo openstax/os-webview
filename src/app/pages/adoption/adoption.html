@@ -64,9 +64,8 @@
                     <label>Your OpenStax book:
                         <div skip="true"></div>
                         <select name="00NU00000053nzR" required>
-                            <!-- FIX: Transform model to match expectations -->
-                            <option each="title in model.titles" value="{title.value ? title.value : title}">
-                                {title.text ? title.text : title}
+                            <option each="title in model.titles" value="{title.value}">
+                                {title.text}
                             </option>
                         </select>
                     </label>

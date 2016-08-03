@@ -36,6 +36,9 @@
     }
 
     .cta {
+        align-items: flex-end;
+        display: flex;
+        flex-direction: column;
         padding-right: 1.5rem;
 
         > .btn {

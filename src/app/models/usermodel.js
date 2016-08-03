@@ -16,6 +16,7 @@ class UserModel {
                 resolve(json[0]);
             });
         });
+        return this.promise;
     }
 
 }
