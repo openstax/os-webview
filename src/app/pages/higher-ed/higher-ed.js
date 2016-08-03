@@ -27,7 +27,10 @@ adopt our books for your course.`;
             products: '.products',
             buckets: '.buckets'
         };
-        this.model = {loginLink};
+        this.model = {
+            'intro_heading': '',
+            loginLink
+        };
         document.querySelector('head meta[name="description"]').content = HigherEd.description;
     }
 
