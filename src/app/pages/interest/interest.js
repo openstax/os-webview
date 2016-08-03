@@ -12,6 +12,7 @@ export default class InterestForm extends Controller {
         this.view = {
             classes: ['interest-form']
         };
+
         const titles = bookTitles.map((titleData) =>
             titleData.text ? titleData : {
                 text: titleData,
@@ -19,7 +20,7 @@ export default class InterestForm extends Controller {
             }
         );
 
-        this.model = { titles };
+        this.model = {titles};
     }
 
     onLoaded() {
