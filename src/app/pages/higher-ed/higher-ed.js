@@ -1,155 +1,87 @@
-import LoadingView from '~/helpers/backbone/loading-view';
 import settings from 'settings';
-import $ from '~/helpers/$';
-import {on, props} from '~/helpers/backbone/decorators';
-import {template} from './higher-ed.hbs';
-import PageModel from '~/models/pagemodel';
-import ImageModel from '~/models/imagemodel';
+import CMSPageController from '~/controllers/cms';
+import {description as template} from './higher-ed.html';
 import ProductsBoxes from '~/components/products-boxes/products-boxes';
 import Quotes from '~/components/quotes/quotes';
 import Buckets from '~/components/buckets/buckets';
 
-let detailPromise = new Promise((resolve) => {
-    new PageModel().fetch({
-        data: {
-            type: 'pages.HigherEducation'
-        }
-    }).then((detailData) => {
-        let detailUrl = detailData.pages[0].meta.detail_url;
+const loginQuery = `${settings.apiOrigin}/accounts/login/openstax/?next=`;
+const nextLink = `${settings.apiOrigin}/faculty-verification`;
+const loginLink = `${loginQuery}${nextLink}`;
 
-        new PageModel().fetch({url: detailUrl}).then((data) => {
-            resolve(data);
-        });
-    });
-});
+export default class HigherEd extends CMSPageController {
 
-let quoteBoxHelper = (qbData) => {
-    let orientationFromImageAlignment = {
-            L: 'right',
-            R: 'left'
-        },
-        result = {
-            quoteHtml: qbData.content,
-            orientation: orientationFromImageAlignment[qbData.image_alignment] || 'full'
+    static description = 'Our open, peer-reviewed college textbooks are free ' +
+        'online and come with resources from us and our partners. See how you can ' +
+        'adopt our books for your course.';
+
+    init() {
+        this.id = 88;
+        this.template = template;
+        this.css = '/app/pages/higher-ed/higher-ed.css';
+        this.view = {
+            classes: ['higher-ed-page', 'page']
         };
-
-    if (qbData.link) {
-        result.linkUrl = qbData.link;
-        result.linkText = qbData.cta;
-    }
-
-    if (qbData.image) {
-        result.imagePromise = new ImageModel({id: qbData.image.id}).fetch()
-        .then((imageData) => {
-            result.imageUrl = imageData.file;
-        });
-    } else {
-        result.orientation = 'full';
-    }
-
-    return result;
-};
-
-let bucketHelper = (cmsData) => {
-    let row2keys = Object.keys(cmsData).filter((key) => (/^row_2/).test(key)),
-        rowData = [];
-
-    for (let key of row2keys) {
-        let [oneBasedIndex, subKey] = key.match(/row_2_box_(\d+)_(\w+)/).slice(1),
-            index = oneBasedIndex - 1;
-
-        if (!rowData[index]) {
-            rowData[index] = {};
-        }
-        rowData[index][subKey] = cmsData[key];
-    }
-    return rowData;
-};
-
-@props({
-    template: template,
-    css: '/app/pages/higher-ed/higher-ed.css',
-    templateHelpers: () => {
-        let loginLink = `${settings.apiOrigin}/accounts/login/openstax/?next=`;
-        let nextLink = `${settings.apiOrigin}/faculty-verification`;
-
-        return {
-            loginLink: `${loginLink}${nextLink}`
+        this.regions = {
+            quotes: '.quote-buckets',
+            products: '.products',
+            buckets: '.buckets'
         };
-    },
-    regions: {
-        quotes: '.quote-buckets',
-        products: '.products',
-        buckets: '.buckets'
-    }
-})
-export default class HigherEd extends LoadingView {
-
-    @on('click a[href^="#"]')
-    hashClick(e) {
-        $.hashClick(e, {doHistory: false});
-    }
-
-    static metaDescription = () => `Our open, peer-reviewed college textbooks are free
-        online and come with resources from us and our partners. See how you can adopt our
-        books for your course.`;
-
-    onRender() {
-        this.el.querySelector('.page').classList.add('hidden');
-        let populateDataIdItems = (data) => {
-            for (let el of this.el.querySelectorAll('[data-id]')) {
-                let key = el.dataset.id;
-
-                if (key in data) {
-                    el.innerHTML = data[key];
-                }
-            }
+        this.model = {
+            'intro_heading': '',
+            loginLink
         };
+        document.querySelector('head meta[name="description"]').content = HigherEd.description;
+    }
 
-        detailPromise.then((data) => {
-            populateDataIdItems(data);
-            let quoteBoxData = [];
-
-            for (let key of Object.keys(data)) {
-                let m = key.match(/^row_0_box_(\d)_(\w+)/);
-
-                if (m) {
-                    let idx = m[1] - 1,
-                        name = m[2];
-
-                    if (!quoteBoxData[idx]) {
-                        quoteBoxData[idx] = {};
-                    }
-                    quoteBoxData[idx][name] = data[key];
-                }
-            }
-
-            let quoteBoxSpecs = quoteBoxData.filter((obj) => obj.content).map(quoteBoxHelper);
-
-            let promises = quoteBoxSpecs
-            .filter((spec) => spec.imagePromise)
-            .map((spec) => spec.imagePromise);
-
-            Promise.all(promises).then(() => {
-                this.regions.quotes.show(new Quotes(quoteBoxSpecs));
-            });
-
-            this.regions.buckets.show(new Buckets(bucketHelper(data)));
-        });
-        this.otherPromises.push(detailPromise);
-        this.regions.products.show(new ProductsBoxes({
+    onLoaded() {
+        this.regions.products.attach(new ProductsBoxes({
             products: [
                 'books',
                 'Concept Coach',
                 'OpenStax CNX'
             ]
         }));
-
-        super.onRender();
     }
 
-    onLoaded() {
-        super.onLoaded();
-        this.el.querySelector('.page').classList.remove('hidden');
+    onDataLoaded() {
+        this.model = Object.assign(this.model, this.pageData);
+        this.update();
+
+        this.regions.quotes.attach(new Quotes([{
+            content: this.model.row_0_box_1_content,
+            image: this.model.row_0_box_1_image_url,
+            orientation: this.get_row_0_box_1_image_alignment_display,
+            cta: this.model.row_0_box_1_cta,
+            link: this.model.row_0_box_1_link
+        }, {
+            content: this.model.row_0_box_2_content,
+            image: this.model.row_0_box_2_image_url,
+            orientation: this.model.get_row_0_box_2_image_alignment_display,
+            cta: this.model.row_0_box_2_cta,
+            link: this.model.row_0_box_2_link
+        }]));
+
+        this.regions.buckets.attach(new Buckets([{
+            cta: this.model.row_2_box_1_cta,
+            description: this.model.row_2_box_1_description,
+            heading: this.model.row_2_box_1_heading,
+            link: this.model.row_2_box_1_link
+        }, {
+            cta: this.model.row_2_box_2_cta,
+            description: this.model.row_2_box_2_description,
+            heading: this.model.row_2_box_2_heading,
+            link: this.model.row_2_box_2_link
+        }]));
+
+        this.regions.products.attach(new ProductsBoxes({
+            products: ['books', 'Concept Coach', 'OpenStax CNX']
+        }));
     }
+
+    onUpdate() {
+        // NOTE: Incremental-DOM currently lacks the ability to inject HTML into a node.
+        this.el.querySelector('.hero .overlay .blurb').innerHTML = this.model.intro_description;
+    }
+
 }

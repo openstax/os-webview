@@ -1,0 +1,24 @@
+<template args="model">
+    <div class="page-intro">
+        <div class="text-content subhead">
+            <h1>{model.headline}</h1>
+            <p>{model.topParagraph}
+                <if condition="model.topLinkUrl">
+                    {' '}<a href="{model.topLinkUrl}">{model.topLinkText}</a>
+                </if>
+            </p>
+        </div>
+    </div>
+
+    <div class="wrapper">
+        <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
+        <div class="text-content labeled-inputs row book-info">
+            <div class="text-content add-another">
+                <h2>{model.adoptionQuestion}</h2>
+                <a href="{model.adoptionUrl}" title="{model.adoptionLinkText}" class="btn">{model.adoptionLinkText}</a>
+                <a if="model.subjectLinkText"
+                    href="/subjects" title="{model.subjectLinkText}" class="btn btn-secondary">{model.subjectLinkText}</a>
+            </div>
+        </div>
+    </div>
+</template>

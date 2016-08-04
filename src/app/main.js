@@ -1,11 +1,9 @@
 import 'babel-polyfill';
-// import Recordo from 'recordo';
+import 'classList';
+import 'fetch';
 import {initialize, injectButtons} from 'recordo';
-import Backbone from 'backbone';
-import linkHelper from '~/helpers/link';
 import router from '~/router';
-import appView from '~/components/shell/shell';
-import analytics from '~/helpers/analytics';
+import shell from '~/components/shell/shell';
 
 
 initialize({ignoreAjaxResponse: true});
@@ -26,7 +24,7 @@ if (false && '@ENV@' === 'production' && 'serviceWorker' in navigator) {
         }
 
         registration.onupdatefound = function () {
-            let installingWorker = registration.installing;
+            const installingWorker = registration.installing;
 
             installingWorker.onstatechange = function () {
                 switch (installingWorker.state) {
@@ -53,46 +51,12 @@ if (false && '@ENV@' === 'production' && 'serviceWorker' in navigator) {
 class App {
 
     constructor() {
-        this.router = router;
-        this.view = appView;
-
-        Backbone.history.start({
-            hashChange: false,
-            pushState: true
-        });
-
-        // Track initial page loads
-        analytics.sendPageview();
-
-        document.addEventListener('click', (e) => {
-            let el = linkHelper.validUrlClick(e);
-
-            if (!el) {
-                return;
-            }
-
-            let href = el.getAttribute('href');
-
-            e.preventDefault();
-
-            if (linkHelper.isExternal(href)) {
-                if (el.getAttribute('data-local') === 'true') {
-                    document.location.href = href;
-                } else {
-                    analytics.record(href);
-                    window.open(href, '_blank');
-                }
-            } else {
-                router.navigate(href, {
-                    trigger: (el.getAttribute('data-trigger') !== false)
-                });
-                window.scrollTo(0, 0);
-            }
-        });
+        this.shell = shell;
+        router.start();
     }
 
 }
 
-let app = new App();
+const app = new App();
 
 export default app;

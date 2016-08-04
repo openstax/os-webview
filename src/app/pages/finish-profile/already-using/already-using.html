@@ -1,0 +1,8 @@
+<label>Title you are already using
+    <div skip="true"></div>
+    <select name="00NU00000053nzR" required>
+        <!-- FIX: Manipulate model data to avoid multiple loops -->
+        <option each="title in bookTitles" if="title.text" value="{title.value}">{title.text}</option>
+        <option each="title in bookTitles" if="!title.text" value="{title}">{title}</option>
+    </select>
+</label>

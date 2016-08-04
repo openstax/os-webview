@@ -9,36 +9,36 @@
 
 .education {
     @media (min-width: 600px) {
-        position: relative;
-        width: 100%;
-        top: -3rem;
         height: 74rem;
         overflow: hidden;
+        position: relative;
+        top: -3rem;
+        width: 100%;
     }
 }
 
 .education-banner {
+    background-attachment: local;
     background-image: url('/images/home/education/background.jpg');
-    background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
 
     @media (min-width: 600px) {
-        position: absolute;
         bottom: 0;
-        left: 0;
-        right: 0;
         height: 71rem;
+        left: 0;
+        position: absolute;
+        right: 0;
     }
 
     .container {
         display: flex;
+        flex-flow: column nowrap;
+        height: 100%;
         margin: 0 auto;
         max-width: $boxed-width;
-        flex-flow: column nowrap;
-        position: relative;
-        height: 100%;
         padding: 3rem 1.5rem;
+        position: relative;
 
         @include tablet {
             flex-flow: row wrap;
@@ -48,25 +48,25 @@
     .quote {
         background-color: rgba(color(cyan), 0.8);
         color: color(neutral-lightest);
-        padding: 3rem;
-        width: 100%;
-        top: 5rem;
         margin-bottom: 1.5rem;
+        padding: 3rem;
+        top: 5rem;
+        width: 100%;
 
         @media (min-width: 600px) {
             width: calc(100% - 3rem);
         }
 
         .opening {
-            font-size: 2.2rem;
             display: block;
+            font-size: 2.2rem;
             font-weight: 300;
 
             @include desktop {
-                width: 37rem;
                 font-size: 2.6rem;
                 font-weight: 300;
                 letter-spacing: 0.1rem;
+                width: 37rem;
             }
 
             @media (min-width: 1000px) {
@@ -78,13 +78,13 @@
             color: color(yellow);
             display: block;
             font-size: 4.6rem;
+            letter-spacing: -0.2rem;
             line-height: 1;
             margin: 1rem 0;
-            letter-spacing: -0.2rem;
 
             @include desktop {
-                width: 37rem;
                 font-size: 7rem;
+                width: 37rem;
             }
 
             @media (min-width: 1000px) {
@@ -99,10 +99,10 @@
             margin: 1.5rem 0;
 
             @include desktop {
-                width: 37rem;
                 font-weight: 300;
                 letter-spacing: 0.1rem;
                 line-height: 2.8rem;
+                width: 37rem;
             }
 
             @media (min-width: 1000px) {
@@ -127,8 +127,8 @@
         z-index: 3;
 
         @media (min-width: 600px) {
-            margin-top: 1.5rem;
             bottom: 3rem;
+            margin-top: 1.5rem;
         }
 
         @media (min-width: 1000px) {
@@ -136,12 +136,12 @@
         }
 
         ul {
+            display: flex;
+            flex-flow: column nowrap;
             list-style: none;
             margin: 0;
             padding: 0;
             width: 100%;
-            display: flex;
-            flex-flow: column nowrap;
 
             @include desktop {
                 flex-flow: row wrap;
@@ -168,8 +168,8 @@
                 }
 
                 @include desktop {
-                    margin-right: 3rem;
                     margin-bottom: 0;
+                    margin-right: 3rem;
                 }
             }
         }
@@ -177,9 +177,9 @@
         .btn {
             box-shadow: 0 0 1rem rgba(color(neutral-dark), 0.2);
             display: inline-block;
-            width: 100%;
-            text-transform: none;
             text-align: left;
+            text-transform: none;
+            width: 100%;
 
             @media (min-width: 600px) {
                 padding-left: 1.5rem;
@@ -202,9 +202,9 @@
         }
 
         .title {
+            color: color(yellow);
             display: block;
             font-size: 2.4rem;
-            color: color(yellow);
         }
 
         .blurb {
@@ -226,9 +226,9 @@
     .square-1,
     .square-2 {
         background-color: rgba(color(cyan), 0.2);
+        display: none;
         position: absolute;
         z-index: 0;
-        display: none;
 
         @include desktop {
             display: initial;
@@ -236,17 +236,17 @@
      }
 
     .square-1 {
-        width: 56rem;
-        height: 12rem;
         bottom: 18rem;
+        height: 12rem;
         left: -1.5rem;
+        width: 56rem;
      }
 
     .square-2 {
-        width: 64rem;
         height: 50rem;
-        top: 1.5rem;
         right: -5rem;
+        top: 1.5rem;
+        width: 64rem;
      }
 
     .student {
@@ -255,16 +255,16 @@
         background-repeat: no-repeat;
         background-size: 100% auto;
         bottom: 0;
-        right: 0;
         height: 105%;
+        right: 0;
         width: 37rem;
         z-index: 2;
 
         @include desktop {
-            width: 60rem;
-            right: -15rem;
             background-position: right bottom;
             background-size: auto 100%;
+            right: -15rem;
+            width: 60rem;
         }
 
         @media (min-width: 900px) {

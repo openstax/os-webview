@@ -1,88 +1,116 @@
-import ProxyWidgetView from '~/helpers/backbone/proxy-widget-view';
+import {Controller} from 'superb';
+import {on} from '~/helpers/controller/decorators';
+import selectHandler from '~/handlers/select';
+import bookTitles from '~/models/book-titles';
 import userModel from '~/models/usermodel';
-import salesforceModel from '~/models/salesforce-model';
-import bookTitles from '~/helpers/book-titles';
 import FacultySection from './faculty-section/faculty-section';
-import {on, props} from '~/helpers/backbone/decorators';
-import {template} from './finish-profile.hbs';
-import {template as strips} from '~/components/strips/strips.hbs';
+import {description as template} from './finish-profile.html';
 
-@props({
-    template: template,
-    css: '/app/pages/finish-profile/finish-profile.css',
-    templateHelpers: {
-        bookTitles,
-        urlOrigin: `${window.location.origin}/finished-no-verify`,
-        roles: ['Faculty', 'Adjunct Faculty', 'Administrator', 'Librarian',
-        'Instructional Designer', 'Student', 'Other'],
-        strips
-    },
-    regions: {
-        facultySection: '#faculty-section'
+export default class NewAccountForm extends Controller {
+
+    init() {
+        this.template = template;
+        this.css = '/app/pages/finish-profile/finish-profile.css';
+        this.view = {
+            classes: ['finish-profile', 'page']
+        };
+        this.regions = {
+            facultySection: '[data-region="faculty-section"]'
+        };
+        const titles = bookTitles.map((titleData) =>
+            titleData.text ? titleData : {
+                text: titleData,
+                value: titleData
+            }
+        );
+
+        this.model = {
+            titles,
+            roles: ['Faculty', 'Adjunct Faculty', 'Administrator', 'Librarian',
+            'Instructional Designer', 'Student', 'Other'],
+            leadType: 'OSC User',
+            validationMessage: (name) =>
+                this.hasBeenSubmitted ?
+                ((el) => el ? el.validationMessage : '')(this.el.querySelector(`[name="${name}"]`)) :
+                '',
+            problemMessage: 'Loading user info',
+            facultyCheckboxAvailable: true
+        };
     }
-})
-export default class NewAccountForm extends ProxyWidgetView {
+
+    onLoaded() {
+        document.title = 'Finish Profile - OpenStax';
+        selectHandler.setup(this);
+        userModel.fetch().then((data) => {
+            this.model.firstName = data.first_name;
+            this.model.lastName = data.last_name;
+            this.model.userId = data.username;
+            this.model.accountId = data.accounts_id;
+            if (data.accounts_id === null) {
+                this.model.problemMessage = 'Could not load user information';
+            } else {
+                this.model.problemMessage = '';
+            }
+            this.update();
+        });
+    }
+
+    onUpdate() {
+        if (this.regions.facultySection.controllers) {
+            for (const c of this.regions.facultySection.controllers) {
+                c.update();
+            }
+        }
+    }
+
+    setFacultySection(whether) {
+        if (whether) {
+            this.regions.facultySection.attach(new FacultySection(this.model));
+            this.model.leadType = 'OSC Faculty';
+            this.model.returnTo = 'faculty';
+        } else {
+            this.regions.facultySection.empty();
+            this.model.leadType = 'OSC User';
+            this.model.returnTo = 'unverified';
+        }
+    }
+
+    @on('click [type="submit"]')
+    doCustomValidation(event) {
+        const invalids = this.el.querySelectorAll('input:invalid');
+
+        this.hasBeenSubmitted = true;
+        if (invalids.length) {
+            event.preventDefault();
+            this.update();
+        }
+    }
+
+    @on('change')
+    updateOnChange() {
+        this.update();
+    }
+
+    @on('change [name="00NU00000054MLz"]')
+    updateFaculty(event) {
+        const role = event.delegateTarget.value;
+        const doFaculty = role !== '' && role !== 'Student';
+        const toggling = doFaculty !== this.model.facultyCheckboxAvailable;
+
+        if (toggling) {
+            this.model.facultyCheckboxAvailable = doFaculty;
+            this.model.facultyCheckboxChecked = doFaculty;
+            this.setFacultySection(doFaculty);
+            this.update();
+        }
+    }
 
     @on('click #toggle-faculty')
     clickFaculty(event) {
-        this.toggleFaculty(event.currentTarget.checked);
-    }
+        const checked = event.delegateTarget.checked;
 
-    toggleFaculty(show) {
-        let retUrl = this.el.querySelector('[name=retURL]'),
-            leadType = show ? 'OSC Faculty' : 'OSC User',
-            leadSourceField = this.el.querySelector('[name="lead_source"]');
-
-        if (show)  {
-            this.facultySection.setRequiredness(true);
-            this.regions.facultySection.show(this.facultySection);
-            this.el.querySelector('form').classList.add('faculty');
-            retUrl.value = `${window.location.origin}/finished-verify`;
-        } else {
-            this.facultySection.setRequiredness(false);
-            this.facultySection.remove();
-            this.el.querySelector('form').classList.remove('faculty');
-            retUrl.value = `${window.location.origin}/finished-no-verify`;
-        }
-        leadSourceField.value = leadType;
-    }
-
-    onRender() {
-        this.facultySection = new FacultySection();
-        this.el.classList.add('finish-profile');
-        super.onRender();
-        salesforceModel.prefill(this.el);
-        userModel.fetch().then((data) => {
-            let userInfo = data[0];
-
-            if (userInfo && userInfo.username && userInfo.accounts_id) {
-                this.el.querySelector('[name=first_name]').value = userInfo.first_name;
-                this.el.querySelector('[name=last_name]').value = userInfo.last_name;
-                this.el.querySelector('[name=user_id]').value = userInfo.username;
-                this.el.querySelector('[name=OS_Accounts_ID__c]').value = userInfo.accounts_id;
-            } else {
-                this.el.querySelector('#problem-message').textContent = 'Could not load user information';
-                this.el.querySelector('[type="submit"]').disabled = true;
-            }
-        }).catch((e) => {
-            /* eslint no-alert: 0 */
-            alert('Something went wrong. Cannot find your user information.');
-            /* eslint no-console: 0 */
-            console.warn(e);
-            // window.location.pathname = '/';
-        });
-
-        let roleSelector = this.el.querySelector('[name="00NU00000054MLz"]'),
-            roleProxy = this.findProxyFor(roleSelector),
-            facultyCheckbox = document.getElementById('toggle-faculty');
-
-        roleProxy.stateCollection.on('change:selected', (what) => {
-            let isStudent = what.get('value') === 'Student';
-
-            facultyCheckbox.disabled = isStudent;
-            facultyCheckbox.checked = !isStudent;
-            this.toggleFaculty(facultyCheckbox.checked);
-        });
+        this.setFacultySection(checked);
+        this.update();
     }
 
 }

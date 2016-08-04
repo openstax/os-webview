@@ -1,78 +1,83 @@
-import ProxyWidgetView from '~/helpers/backbone/proxy-widget-view';
-import userModel from '~/models/usermodel';
-import salesforceModel from '~/models/salesforce-model';
+import {Controller} from 'superb';
 import $ from '~/helpers/$';
-import bookTitles from '~/helpers/book-titles';
-import salesforce from '~/helpers/salesforce';
-import {on, props} from '~/helpers/backbone/decorators';
-import {template} from './faculty-verification.hbs';
-import {template as strips} from '~/components/strips/strips.hbs';
+import {on} from '~/helpers/controller/decorators';
+import selectHandler from '~/handlers/select';
+import bookTitles from '~/models/book-titles';
+import userModel from '~/models/usermodel';
+import salesforceModel from '~/models/salesforce';
+import {description as template} from './faculty-verification.html';
 
-@props({
-    template: template,
-    css: '/app/pages/faculty-verification/faculty-verification.css',
-    templateHelpers: {
-        titles: bookTitles,
-        urlOrigin: window.location.origin,
-        strips
+export default class FacultyVerificationForm extends Controller {
+
+    testInstitutionalEmail() {
+        const institutionalEmailInput = this.el.querySelector('[name="00NU0000005oVQV"]');
+        const isValid = $.testInstitutionalEmail(institutionalEmailInput);
+
+        institutionalEmailInput.setCustomValidity(isValid ? '' : 'We cannot verify a generic email address');
+        return isValid;
     }
-})
-export default class FacultyVerificationForm extends ProxyWidgetView {
-    @on('change [type=text],[type=email]')
-    saveSetting(event) {
-        let varName = event.target.name;
 
-        if (varName) {
-            salesforceModel.set(varName, event.target.value);
+    @on('click [type="submit"]')
+    doCustomValidation(event) {
+        const invalids = this.el.querySelectorAll('input:invalid');
+
+        this.hasBeenSubmitted = true;
+        if (invalids.length) {
+            event.preventDefault();
+            this.update();
         }
     }
 
-    doValidChecks() {
-        let institutionalEmailInput = this.el.querySelector('[name="00NU0000005oVQV"]'),
-            isValid = $.testInstitutionalEmail(institutionalEmailInput);
-
-        if (isValid) {
-            institutionalEmailInput.setCustomValidity('');
-            institutionalEmailInput.parentNode.classList.remove('invalid');
-        } else {
-            institutionalEmailInput.setCustomValidity('Cannot be generic');
-            institutionalEmailInput.parentNode.classList.add('invalid');
-        }
+    @on('change')
+    updateOnChange() {
+        this.testInstitutionalEmail();
+        this.update();
     }
 
-    disableForm(explanation) {
-        let explanationEl = this.el.querySelector('.subhead p'),
-            submitEl = this.el.querySelector('.cta [type="submit"]'),
-            inputEls = this.el.querySelectorAll('form .col');
+    init() {
+        this.template = template;
+        this.css = '/app/pages/faculty-verification/faculty-verification.css';
+        this.view = {
+            classes: ['faculty-verification-form']
+        };
+        const titles = bookTitles.map((titleData) =>
+            titleData.text ? titleData : {
+                text: titleData,
+                value: titleData
+            }
+        );
 
-        submitEl.disabled = true;
-        for (let el of inputEls) {
-            el.classList.add('hidden');
-        }
-        explanationEl.classList.remove('hidden');
-        explanationEl.textContent = explanation;
+        this.model = {
+            titles,
+            adoptionOptions: salesforceModel.adoption(['adopted', 'recommended', 'no']),
+            validationMessage: (name) => this.hasBeenSubmitted ?
+                this.el.querySelector(`[name="${name}"]`).validationMessage :
+                ''
+        };
     }
 
-    onRender() {
-        this.el.classList.add('faculty-verification-form', 'hidden');
-        salesforce.populateAdoptionStatusOptions(this.el, ['adopted', 'recommend', 'no'], true);
+    onLoaded() {
+        document.title = 'Instructor Verification - OpenStax';
+        selectHandler.setup(this);
         userModel.fetch().then((data) => {
-            let userInfo = data[0];
-
-            if (userInfo && userInfo.username) {
-                super.onRender();
-                this.el.classList.remove('hidden');
-                this.el.querySelector('[name=user_id]').value = userInfo.username;
-                this.el.querySelector('[name=OS_Accounts_ID__c]').value = userInfo.accounts_id;
-                if (userInfo.pending_verification) {
-                    this.disableForm('You already have a verification request pending.');
+            if (data.username) {
+                this.model.firstName = data.first_name;
+                this.model.lastName = data.last_name;
+                this.model.userId = data.username;
+                this.model.accountId = data.accounts_id;
+                this.model.pendingVerification = data.pending_verification;
+                if (data.accounts_id === null) {
+                    this.model.problemMessage = 'Could not load user information';
+                } else {
+                    this.model.problemMessage = '';
                 }
+                this.update();
             } else {
-                let loginLink = document.querySelector('.nav-menu-item.login > a');
+                const loginLink = document.querySelector('.nav-menu-item.login > a');
 
                 loginLink.click();
             }
         });
-        salesforceModel.prefill(this.el);
     }
+
 }

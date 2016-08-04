@@ -5,33 +5,33 @@ $button-size: 2.8rem;
 $transition: 0.3s;
 
 .page-header {
-    z-index: 1;
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
+    align-items: center;
+    background-color: rgba(color(neutral-lightest), 0.98);
     display: flex;
     flex-flow: column nowrap;
-    width: 100%;
     height: 6rem;
-    background-color: rgba(color(neutral-lightest), 0.98);
     justify-content: center;
-    align-items: center;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1;
 
     @at-root .active#{&} {
-        right: 0;
         bottom: 0;
-        width: 100%;
         height: 100%;
+        right: 0;
         transition: height 0.5s;
+        width: 100%;
     }
 
     @include desktop {
         height: 11rem;
-        position: absolute;
-        top: 0;
         left: 0;
+        position: absolute;
         right: 0;
+        top: 0;
     }
 
     &.transparent {
@@ -68,27 +68,27 @@ $transition: 0.3s;
 
     .container {
         display: flex;
+        flex: 1 100%;
+        flex-flow: row wrap;
+        height: 100%;
         margin: 0 auto;
+        max-width: $boxed-width;
         padding: 0 1.5rem;
         width: 100%;
-        height: 100%;
-        max-width: $boxed-width;
-        flex-flow: row wrap;
-        flex: 1 100%;
     }
 
     .nav-menu {
+        display: flex;
+        flex: 0 auto;
+        flex-flow: column nowrap;
         margin: 0;
+        opacity: 0;
         padding: 0;
         transform: scale3d(0, 0, 0);
-        flex: 0 auto;
-        opacity: 0;
-        display: flex;
-        flex-flow: column nowrap;
 
         @at-root .active#{&} {
-            transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
             opacity: 1;
+            transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
             transition: opacity 0.3s 0.4s, transform 0.3s ease-in-out;
 
         }
@@ -100,16 +100,16 @@ $transition: 0.3s;
         }
 
         @include desktop {
-            opacity: 1;
-            transform: scale3d(1, 1, 1);
             flex-flow: row wrap;
             justify-content: flex-end;
+            opacity: 1;
+            transform: scale3d(1, 1, 1);
         }
 
         .nav-menu-item {
             @include desktop {
-                padding: 0 2rem;
                 margin: 0;
+                padding: 0 2rem;
                 position: relative;
             }
 
@@ -143,18 +143,18 @@ $transition: 0.3s;
         }
 
         .dropdown .chevron {
-            width: 0.8rem;
+            bottom: 0.3rem;
             fill: color(blue);
             position: absolute;
-            bottom: 0.3rem;
             right: -2rem;
+            width: 0.8rem;
 
             @include desktop {
                 bottom: 1.1rem;
+                fill: color(neutral-medium);
                 padding-bottom: 25%;
                 right: -1.5rem;
                 transform: rotate3d(0, 0, 1, 90deg);
-                fill: color(neutral-medium);
 
                 @at-root .transparent#{&} {
                     fill: color(neutral-lightest);
@@ -164,8 +164,8 @@ $transition: 0.3s;
 
         .clone a {
             color: color(neutral-medium);
-            font-weight: 600;
             cursor: default;
+            font-weight: 600;
 
             &:last-child:hover {
                 color: color(neutral-medium);
@@ -173,12 +173,12 @@ $transition: 0.3s;
         }
 
         .clone .back {
+            color: color(cyan);
+            cursor: pointer;
             display: block;
             margin: 0 0 1rem;
             padding-left: 2rem;
             position: relative;
-            color: color(cyan);
-            cursor: pointer;
 
             &:focus {
                 outline: none;
@@ -186,39 +186,38 @@ $transition: 0.3s;
         } // end .back
 
         .clone .chevron {
-            width: 0.8rem;
-            transform: rotate3d(0, 0, 1, 180deg);
+            fill: color(cyan);
+            left: 0;
             position: absolute;
             top: 0.7rem;
-            left: 0;
-            fill: color(cyan);
+            transform: rotate3d(0, 0, 1, 180deg);
+            width: 0.8rem;
         }
 
         .dropdown-menu {
-            overflow: hidden;
-            margin: 0;
-            padding: 0;
-            font-weight: 300;
             font-size: 1.6rem;
+            font-weight: 300;
+            left: 0;
+            margin: 0;
+            overflow: hidden;
+            padding: 0;
             position: absolute;
             top: 0%;
-            left: 0;
             transform: translate3d(200rem, 0, 0);
             transition: transform 0.3s ease-in-out;
 
             @include desktop {
-                width: 0;
-                height: 0;
-                top: 3.7rem;
-                left: 50%;
-                padding: 0.5rem 0;
-                transform: translate3d(-50%, -1rem, 0);
-                border-top: 0.5rem solid color(orange);
-                white-space: nowrap;
                 background: color(neutral-lightest);
+                border-top: 0.5rem solid color(orange);
+                height: 0;
+                left: 50%;
                 opacity: 0;
+                padding: 0.5rem 0;
+                top: 3.7rem;
+                transform: translate3d(-50%, -1rem, 0);
                 transition: transform 0.2s 0.01s, opacity 0.2s;
-
+                white-space: nowrap;
+                width: 0;
 
                 @at-root .fixed#{&} {
                     background: color(neutral-lightest);
@@ -227,11 +226,11 @@ $transition: 0.3s;
 
             &.open {
                 @include desktop {
-                    width: auto;
                     height: auto;
-                    z-index: 1;
                     opacity: 1;
                     transform: translate3d(-50%, 0, 0);
+                    width: auto;
+                    z-index: 1;
                 }
 
                 @at-root .active.open#{&} {
@@ -244,8 +243,8 @@ $transition: 0.3s;
                 margin: 0 0 0.5rem;
 
                 @include desktop {
-                    padding: 0 1rem;
                     margin: 0;
+                    padding: 0 1rem;
                 }
             }
 
@@ -262,44 +261,43 @@ $transition: 0.3s;
 
         .dropdown:hover .dropdown-menu {
             @include desktop {
-                width: auto;
                 height: auto;
-                z-index: 1;
                 opacity: 1;
                 transform: translate3d(-50%, 0, 0);
+                width: auto;
+                z-index: 1;
             }
         }
     }
 
     .meta-nav {
-        order: 2;
-        width: 0;
-        height: 0;
-        overflow: hidden;
         font-size: 1.6rem;
+        height: 0;
+        order: 2;
+        overflow: hidden;
+        width: 0;
 
         @at-root .active#{&} {
-            width: 100%;
             height: auto;
             overflow: visible;
+            width: 100%;
         }
 
         @include desktop {
-            order: 1;
-            width: 100%;
-            height: 5rem;
-            overflow: inherit;
             background-color: lighten(color(neutral-lighter), 8%);
             font-size: 1.4rem;
+            height: 5rem;
+            order: 1;
+            overflow: inherit;
+            width: 100%;
             z-index: 1;
-
         }
 
         .container {
-            height: 100%;
-            width: 100%;
-            justify-content: center;
             align-items: center;
+            height: 100%;
+            justify-content: center;
+            width: 100%;
 
             @include desktop {
                 justify-content: flex-end;
@@ -341,14 +339,14 @@ $transition: 0.3s;
         .dropdown {
             .chevron {
                 display: inline-block;
-                width: 0.6rem;
                 fill: color(cyan);
+                width: 0.6rem;
 
                 @include desktop {
-                    right: -1.5rem;
-                    top: 0;
                     bottom: auto;
                     fill: color(neutral-medium);
+                    right: -1.5rem;
+                    top: 0;
 
                     @at-root .transparent#{&} {
                         fill: color(neutral-medium);
@@ -374,9 +372,9 @@ $transition: 0.3s;
             }
 
             @include desktop {
-                font-size: 1.4rem;
                 background-color: darken(color(neutral-lightest), 12%);
                 border-top: 0;
+                font-size: 1.4rem;
 
                 &::before {
                     @include triangle(
@@ -399,47 +397,45 @@ $transition: 0.3s;
         }
 
         .logo-wrapper {
-            flex: 1 100%;
+            align-items: center;
             background: rgba(color(neutral-lighter), 0.2);
-
             border-top: 0.1rem solid rgba(color(neutral-lighter), 0.5);
-            position: absolute;
             bottom: 0;
-            left: 0;
-            width: 0;
-            overflow: hidden;
             display: flex;
+            flex: 1 100%;
             flex-flow: row nowrap;
             justify-content: space-between;
-            align-items: center;
-            transform: translate3d(0, 100%, 0);
+            left: 0;
             opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            transform: translate3d(0, 100%, 0);
+            width: 0;
 
             @at-root .active#{&} {
-                padding: 1.5rem;
-                width: 100%;
-                transform: translate3d(0, 0, 0);
                 opacity: 1;
+                padding: 1.5rem;
+                transform: translate3d(0, 0, 0);
                 transition: opacity 0.2s 0.5s, transform 0.3s 0.6s;
+                width: 100%;
             }
 
             @include desktop {
-                flex: 0 auto;
-                width: auto;
-                position: static;
-                bottom: auto;
-                left: auto;
-                opacity: 1;
                 background: transparent;
                 border: 0;
-                transform: translate3d(0, 0, 0);
+                bottom: auto;
+                flex: 0 auto;
+                left: auto;
                 margin-left: 2rem;
-
+                opacity: 1;
+                position: static;
+                transform: translate3d(0, 0, 0);
+                width: auto;
             }
 
             &::after {
-                content: '\00a9  Rice University';
                 color: color(gray);
+                content: '\00a9  Rice University';
                 order: 2;
 
                 @include desktop {
@@ -450,19 +446,19 @@ $transition: 0.3s;
     } //end .meta-nav
 
     .nav {
-        order: 1;
-        height: 100%;
-        width: 100%;
         box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(color(gray), 0.1);
+        height: 100%;
+        order: 1;
+        width: 100%;
 
         @at-root .active#{&} {
-            height: auto;
             box-shadow: none;
+            height: auto;
         }
 
         @include desktop {
-            order: 2;
             height: 6rem;
+            order: 2;
             transform: translate3d(0, 0, 0);
             transition: transform;
 
@@ -471,12 +467,12 @@ $transition: 0.3s;
             }
 
             @at-root .fixed#{&} {
+                background-color: rgba(color(neutral-lightest), 0.97);
+                left: 0;
                 position: fixed;
                 top: -6rem;
-                left: 0;
-                width: 100%;
                 transform: translate3d(0, 0, 0);
-                background-color: rgba(color(neutral-lightest), 0.97);
+                width: 100%;
             }
 
             @at-root .visible#{&} {
@@ -487,8 +483,8 @@ $transition: 0.3s;
         }
 
         .container {
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             padding: 0 1.5rem;
 
             @include desktop {
@@ -498,10 +494,10 @@ $transition: 0.3s;
         }
 
         .main-menu {
-            order: 3;
-            margin-top: -6.6rem;
             font-size: 1.8rem;
             font-weight: 600;
+            margin-top: -6.6rem;
+            order: 3;
 
             @include desktop {
                 margin: 0;
@@ -512,8 +508,8 @@ $transition: 0.3s;
             margin: 0 0 1rem;
 
             @include desktop {
-                padding: 0 2rem;
                 margin: 0;
+                padding: 0 2rem;
                 position: relative;
 
                 &:not(.dropdown):hover::after {
@@ -541,20 +537,20 @@ $transition: 0.3s;
         }
 
         .logo-wrapper {
-            order: 1;
-            flex: 0 auto;
-            line-height: 0;
-            display: flex;
             align-items: center;
+            display: flex;
+            flex: 0 auto;
+            font-size: 1.4rem;
+            left: 1.5rem;
+            line-height: 0;
+            order: 1;
             position: absolute;
             top: 1.2rem;
-            left: 1.5rem;
-            font-size: 1.4rem;
 
             @include desktop {
+                left: auto;
                 position: static;
                 top: auto;
-                left: auto;
             }
 
             span {
@@ -585,8 +581,8 @@ $transition: 0.3s;
             }
 
             img {
-                width: 100%;
                 height: 100%;
+                width: 100%;
             }
 
             .logo-color {
@@ -611,16 +607,16 @@ $transition: 0.3s;
         }
 
         .logo-quote {
-            transform: scale3d(0, 0, 0);
-            display: inline-block;
             color: color(gray);
-            width: 0;
+            display: inline-block;
             height: 0;
+            transform: scale3d(0, 0, 0);
+            width: 0;
 
             @media (min-width: 1000px) {
+                height: auto;
                 transform: scale3d(1, 1, 1);
                 width: auto;
-                height: auto;
             }
 
             @at-root .transparent#{&} {
@@ -631,30 +627,30 @@ $transition: 0.3s;
     } //end .nav
 
     .expand {
-        order: 2;
-        -webkit-appearance: none;
         -moz-appearance: none;
+        -webkit-appearance: none;
         appearance: none;
-        box-shadow: none;
-        border-radius: none;
-        border: 0;
-        display: inline-block;
-        padding: 0;
-        transition: 0.3s;
-        cursor: pointer;
-        user-select: none;
         background: transparent;
+        border: 0;
+        border-radius: none;
+        box-shadow: none;
+        cursor: pointer;
+        display: inline-block;
+        order: 2;
+        padding: 0;
         position: absolute;
-        top: 2rem;
         right: 1.5rem;
+        top: 2rem;
+        transition: 0.3s;
+        user-select: none;
 
         @include desktop {
             display: none;
 
             @at-root .sticky#{&} {
                 display: block;
-                order: 3;
                 margin-left: 2rem;
+                order: 3;
             }
         }
 
@@ -666,39 +662,39 @@ $transition: 0.3s;
 
         span {
             //create middle line
-            display: inline-block;
-            width: $button-size;
-            height: $button-size / 7;
             background: color(gray);
+            display: inline-block;
+            height: $button-size / 7;
             position: relative;
             transition: background 0.3s 0.2s ease;
+            width: $button-size;
 
             /*create the upper and lower lines as pseudo-elements of the middle line*/
             &::before,
             &::after {
-                display: inline-block;
-                width: $button-size;
-                height: $button-size / 7;
                 background: color(gray);
-                position: absolute;
-                left: 0;
                 content: '';
+                display: inline-block;
+                height: $button-size / 7;
+                left: 0;
+                position: absolute;
                 //set transform origin back to center
                 transform-origin: 50% 50%;
                 transition: top 0.3s 0.2s ease, transform 0.3s ease;
+                width: $button-size;
             }
 
             &::before { top: $button-size / 4; }
             &::after { top: -$button-size / 4; }
 
             @at-root .active#{&} {
-                transition: background 0.3s 0s ease;
                 background: transparent;
+                transition: background 0.3s 0s ease;
 
                 &::before,
                 &::after {
-                    transition: top 0.3s ease, transform 0.3s 0.2s ease;
                     top: 0;
+                    transition: top 0.3s ease, transform 0.3s 0.2s ease;
                     width: $button-size;
                 }
 

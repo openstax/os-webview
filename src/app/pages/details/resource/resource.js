@@ -1,23 +1,17 @@
-import BaseView from '~/helpers/backbone/view';
-import {on, props} from '~/helpers/backbone/decorators';
-import {template} from './resource.hbs';
+import {Controller} from 'superb';
+import {description as template} from './resource.html';
 
-@props({
-    template: template
-})
-export default class Resource extends BaseView {
+export default class Resource extends Controller {
 
-    @on('click [href*="login"]')
-    loginInThisTab(e) {
-        window.location = e.currentTarget.href;
-        e.preventDefault();
+    init(model, alternateLink) {
+        this.template = template;
+        this.model = model;
+        /* eslint camelcase:0 */
+        this.model.linkUrl = alternateLink || model.link_document_url || model.link_external;
     }
 
-    constructor(data, alternateLink) {
-        super();
-        this.templateHelpers = data;
-        /* eslint camelcase:0 */
-        this.templateHelpers.linkUrl = alternateLink || data.link_document_url || data.link_external;
+    onLoaded() {
+        this.el.querySelector('resource-description').innerHTML = this.model.resource_description;
     }
 
 }

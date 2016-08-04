@@ -1,23 +1,26 @@
-import BaseModel from '~/helpers/backbone/model';
 import settings from 'settings';
 
-let url = `${settings.apiOrigin}/api/user/`;
+const userPageUrl = `${settings.apiOrigin}/api/user`;
 
-class UserModel extends BaseModel {
-    urlRoot = url;
+class UserModel {
 
-    sync(method, model, options) {
-        if (!options.crossDomain) {
-            options.crossDomain = true;
-        }
-        if (!options.xhrFields) {
-            options.xhrFields = {};
-        }
-        options.xhrFields.withCredentials = true;
-        return super.sync(method, model, options);
+    constructor() {
+        this.fetch();
     }
+
+    fetch() {
+        this.promise = new Promise((resolve) => {
+            fetch(`${userPageUrl}`)
+            .then((response) => response.json())
+            .then((json) => {
+                resolve(json[0]);
+            });
+        });
+        return this.promise;
+    }
+
 }
 
-let userModel = new UserModel();
+const userModel = new UserModel();
 
 export default userModel;

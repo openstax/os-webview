@@ -16,7 +16,7 @@
         }
     }
 
-    .container[data-manager="page-description"] {
+    .container[data-html="page_description"] {
         padding: 6rem 1.5rem 9rem;
 
         @include desktop {
@@ -33,17 +33,17 @@
             font-size: 1.8rem;
 
             @include desktop {
-                width: 80%;
                 margin-left: auto;
                 margin-right: auto;
+                width: 80%;
             }
         }
     }
 
     .feature-block {
+        margin-top: 5rem;
         overflow: hidden;
         transition: opacity 0.2s;
-        margin-top: 5rem;
 
         @include desktop {
             opacity: 1;
@@ -70,9 +70,9 @@
     }
 
     .blurb {
+        color: color(neutral-dark);
         flex: 1 28%;
         font-size: 1.6rem;
-        color: color(neutral-dark);
 
         @include desktop {
             text-align: center;
@@ -99,12 +99,11 @@
         position: relative;
 
         .strips {
-            position: absolute;
-            top: 0;
             left: 0;
-            right: 0;
             margin-bottom: 0;
-
+            position: absolute;
+            right: 0;
+            top: 0;
         }
 
         .book-category {
@@ -158,17 +157,17 @@
         }
 
         .details {
-            width: 0;
+            background: color(neutral-lightest);
+            box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(94, 96, 98, 0.1);
             height: 0;
+            left: -5%;
+            opacity: 0;
             overflow: hidden;
             position: absolute;
             top: 95%;
-            left: -5%;
-            background: color(neutral-lightest);
             transform: translate3d(0, -1rem, 0);
-            opacity: 0;
             transition: opacity 0.2s, transform 0.2s;
-            box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(94, 96, 98, 0.1);
+            width: 0;
 
             &::before {
                 border: 2rem solid;
@@ -181,28 +180,28 @@
             }
 
             .cta > .btn {
-                width: 100%;
                 font-variant: normal;
+                font-weight: 400;
                 padding: 1.5rem;
                 text-transform: uppercase;
-                font-weight: 400;
+                width: 100%;
             }
 
             .cta > .btn:hover,
             .cta > .btn:focus {
-                transform: scale3d(1, 1, 1);
                 background-color: darken(color(orange), 5%);
+                transform: scale3d(1, 1, 1);
             }
         }
 
         .cover:hover .details {
             @include desktop {
-                overflow: initial;
-                width: 110%;
                 height: auto;
                 opacity: 1;
-                transform: translate3d(0, 0, 0);
+                overflow: initial;
                 padding: 1.5rem;
+                transform: translate3d(0, 0, 0);
+                width: 110%;
                 z-index: 1;
             }
         }

@@ -4,11 +4,11 @@
 .hero {
     @include variable-sized-text(1.8, 0.2);
 
-    padding: 8rem 1.5rem;
-    text-align: center;
     font-weight: 300;
     letter-spacing: 0.11rem;
     line-height: 1.4;
+    padding: 8rem 1.5rem;
+    text-align: center;
 
     @include phone {
         text-align: left;
@@ -29,8 +29,8 @@
         font-weight: bold;
         letter-spacing: -0.2rem;
         line-height: calc(5 / 6);
-        margin-top: 0;
         margin-bottom: 1rem;
+        margin-top: 0;
 
         @include phone {
             font-size: 5rem;
@@ -57,8 +57,8 @@
     .boxed p,
     .container p {
         margin: 0 auto;
-        width: 100%; // IE fix
         max-width: 100%;
+        width: 100%; // IE fix
 
         @include desktop {
             max-width: 80%;

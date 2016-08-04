@@ -1,11 +1,11 @@
-var fs = require('fs');
-var path = require('path');
-var gulp = require('gulp');
-var config = require('../config');
-var swPrecache = require('sw-precache');
+const fs = require('fs');
+const path = require('path');
+const gulp = require('gulp');
+const config = require('../config');
+const swPrecache = require('sw-precache');
 
 // This is used as the cacheID, worth only reading the file once.
-var packageName = JSON.parse(fs.readFileSync('./package.json', 'utf8')).name;
+const packageName = JSON.parse(fs.readFileSync('./package.json', 'utf8')).name;
 
 const shellFiles = [
     '/**/*.html',

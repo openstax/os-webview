@@ -1,38 +1,28 @@
-import ProxyWidgetView from '~/helpers/backbone/proxy-widget-view';
-import salesforce from '~/helpers/salesforce';
+import {Controller} from 'superb';
+import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
-import {props} from '~/helpers/backbone/decorators';
-import {template} from './faculty-section.hbs';
+import selectHandler from '~/handlers/select';
+import salesforce from '~/models/salesforce';
+import {description as template} from './faculty-section.html';
 
-@props({
-    template: template
-})
-export default class FacultySection extends ProxyWidgetView {
+export default class FacultySection extends Controller {
 
-    doValidChecks() {
-        let institutionalEmailInput = this.el.querySelector('[name="00NU0000005oVQV"][required]'),
-            isValid = $.testInstitutionalEmail(institutionalEmailInput);
-
-        if (isValid) {
-            institutionalEmailInput.setCustomValidity('');
-            institutionalEmailInput.parentNode.classList.remove('invalid');
-        } else {
-            institutionalEmailInput.setCustomValidity('Cannot be generic');
-            institutionalEmailInput.parentNode.classList.add('invalid');
-        }
+    init(model) {
+        this.template = template;
+        this.model = model;
+        this.model.adoptionOptions = salesforce.adoption(['adopted', 'recommended', 'no']);
     }
 
-    setRequiredness(whether) {
-        if (this.requireds) {
-            for (let field of this.requireds) {
-                field.required = whether;
-            }
-        }
+    onLoaded() {
+        selectHandler.setup(this);
     }
 
-    onRender() {
-        this.requireds = this.el.querySelectorAll('[required]');
-        salesforce.populateAdoptionStatusOptions(this.el, ['adopted', 'recommend', 'no'], true);
-        super.onRender();
+    @on('change [name="00NU0000005oVQV"]')
+    testInstitutionalEmail(event) {
+        const el = event.delegateTarget;
+        const isValid = $.testInstitutionalEmail(el);
+
+        el.setCustomValidity(isValid ? '' : 'We cannot verify a generic email address');
     }
+
 }

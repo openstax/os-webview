@@ -21,9 +21,6 @@ linters:
         max_depth: 5
         ignore_parent_selectors: true
 
-    PropertySortOrder:
-        enabled: false
-
     PropertyUnits:
         global: ['em', 'rem', '%', 'vw', 'vh', 'vmin', 'vmax', 's']
 

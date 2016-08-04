@@ -13,11 +13,11 @@
 
 ## Requirements
 
-* Node.js v5.3+
-* Ruby v1.9.3+
+* Node.js v6.2+
+* Ruby v2.2.3+
 * Gulp v4.0.0-alpha.2+
-* JSPM v0.16.19+
-* SCSS-Lint v0.44.0+ (for testing)
+* JSPM v0.17.0-beta.22+
+* SCSS-Lint v0.48.0+ (for testing)
 
 ## Installation
 
@@ -34,7 +34,7 @@ brew install node
 #### Debian / Ubuntu
 
 ```bash
-curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install -y nodejs build-essential
 sudo ln -s /usr/bin/nodejs /usr/bin/node
 ```
@@ -108,7 +108,7 @@ nvm use         # uses the correct version of node
 npm install
 ```
 
-**Note:** If you have not previously used JSPM, you may be prompted to set up your GitHub credentials.  It is recommended you do this in order to prevent being rate limited by GitHub.  You can [generate an access token](https://github.com/settings/tokens) in your GitHub account settings for JSPM, rather than providng your login credentials.
+**Note:** If you have not previously used JSPM, you may be prompted to set up your GitHub credentials.  It is recommended you do this in order to prevent being rate limited by GitHub.  You can [generate an access token](https://github.com/settings/tokens) in your GitHub account settings for JSPM, rather than providing your login credentials.
 
 If you are not prompted, you can manually bring it up with `jspm registry config github`.
 
@@ -124,13 +124,25 @@ That will create a new `dev` directory from which the site is served.  Changes s
 
 You can also run individual tasks.  Enter `gulp --tasks` to see the full list.
 
+## Testing
+
+To run the linters and unit tests locally, enter:
+
+```bash
+gulp test
+```
+
+You can also just run the linters (`gulp lint`) or unit tests (`gulp ava`) individually without rebuilding.
+
+**Note:** The unit tests require the dev build to be built (in the `dev` directory).
+
 ## Build for Production
 
 ```bash
 gulp
 ```
 
-You must configure your web server to host the files in the `dist` directory that gets created.  No special configuration is required, although it is highly recommended to serve the site using SPDY or HTTP/2.
+You must configure your web server to host the files in the `dist` directory that gets created.  No special configuration is required, although it is highly recommended to serve the site using HTTP/2.
 
 ## Configuration
 

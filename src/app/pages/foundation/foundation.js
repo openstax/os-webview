@@ -1,22 +1,19 @@
-import BaseView from '~/helpers/backbone/view';
-import {props} from '~/helpers/backbone/decorators';
-import {template} from './foundation.hbs';
-import {template as strips} from '~/components/strips/strips.hbs';
+import {Controller} from 'superb';
+import {description as template} from './foundation.html';
 
-@props({
-    template: template,
-    css: '/app/pages/foundation/foundation.css',
-    templateHelpers: {strips}
-})
+export default class Foundation extends Controller {
 
-export default class Foundation extends BaseView {
+    static description = 'OpenStax is supported by our philanthropic ' +
+        'sponsors like the Bill & Melinda Gates Foundation, the William and Flora ' +
+        'Hewlett Foundation, and more.';
 
-    static metaDescription = () => `OpenStax is supported by our philanthropic
-        sponsors like the Bill & Melinda Gates Foundation, the William and Flora
-        Hewlett Foundation, and more.`;
-
-    onRender() {
-        this.el.classList.add('foundation-page');
+    init() {
+        document.querySelector('head meta[name="description"]').content = Foundation.description;
+        this.template = template;
+        this.css = '/app/pages/foundation/foundation.css';
+        this.view = {
+            classes: ['foundation-page', 'page']
+        };
     }
 
 }

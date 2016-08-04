@@ -7,12 +7,9 @@ $text-dark2: rgba(0, 0, 0, 0.7);
     line-height: 3rem;
 
     .container {
-        display: block;
         margin: 0 auto;
-        padding: 0 1.5rem;
-        width: 100%;
-        height: 100%;
         max-width: $boxed-width;
+        padding: 0 1.5rem;
     }
 
     .hero {
@@ -47,6 +44,7 @@ $text-dark2: rgba(0, 0, 0, 0.7);
         margin: 0 auto;
         min-height: 10rem;
         position: relative;
+        width: 100%;
 
         a {
             color: inherit;
@@ -57,15 +55,10 @@ $text-dark2: rgba(0, 0, 0, 0.7);
             flex-flow: row wrap;
             justify-content: center;
             padding-top: 9rem;
-            width: 100%;
         }
 
         .logo {
-            align-items: center;
-            display: flex;
-            height: 20rem;
-            justify-content: center;
-            width: 20rem;
+            padding: 4rem;
 
             &.hidden {
                 display: none;
@@ -121,11 +114,11 @@ $text-dark2: rgba(0, 0, 0, 0.7);
         }
 
         a {
-            position: relative;
             color: color(cyan);
-            text-transform: uppercase;
             font-size: 1.4rem;
             font-weight: 500;
+            position: relative;
+            text-transform: uppercase;
 
             &:hover {
                 color: darken(color(cyan), 10%);

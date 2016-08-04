@@ -1,68 +1,33 @@
-import BaseView from '~/helpers/backbone/view';
-import $ from '~/helpers/$';
-import {props} from '~/helpers/backbone/decorators';
+import {Controller} from 'superb';
 import header from './header/header';
 import footer from './footer/footer';
-import {template} from './shell.hbs';
+import {description as template} from './shell.html';
 
-@props({
-    el: 'body',
-    template: template,
-    regions: {
-        main: '#main',
-        header: '#header',
-        footer: '#footer'
-    }
-})
-class AppView extends BaseView {
+class Shell extends Controller {
 
-    constructor() {
-        super();
+    init() {
+        this.el = 'body';
+        this.template = template;
+        this.regions = {
+            header: '#header',
+            main: '#main',
+            footer: '#footer'
+        };
 
         this.header = header;
         this.footer = footer;
-
-        this.render();
     }
 
-    load(pageName, options) {
-        let headTitle = document.querySelector('head title'),
-            metaDescriptionEl = document.querySelector('head meta[name="description"]');
+    onLoaded() {
+        this.regions.header.attach(header);
+        this.regions.footer.attach(footer);
 
-        // Lazy-load the page
-        System.import(`~/pages/${pageName}/${pageName}`).then((m) => {
-            let Page = m.default,
-                view = new Page(options),
-                hash = window.location.hash,
-                scrollToDestination = () => {
-                    let destination = document.getElementById(hash.substr(1));
-
-                    if (destination) {
-                        $.scrollTo(destination);
-                    }
-                };
-
-            metaDescriptionEl.content = Page.metaDescription();
-            this.regions.header.show(header);
-            this.regions.main.show(view);
-            this.regions.footer.show(footer);
-            headTitle.textContent = `${pageName[0].toUpperCase()}${pageName.slice(1)} - OpenStax`;
-
-            if (hash) {
-                if ('isLoaded' in view) {
-                    view.isLoaded.then(scrollToDestination);
-                } else {
-                    scrollToDestination();
-                }
-            } else {
-                window.scrollTo(0, 0);
-            }
-        });
-
-        return this;
+        // FIX: Update pages title for the new page
+        // headTitle.textContent = `${pageName[0].toUpperCase()}${pageName.slice(1)} - OpenStax`;
     }
+
 }
 
-let appView = new AppView();
+const shell = new Shell();
 
-export default appView;
+export default shell;

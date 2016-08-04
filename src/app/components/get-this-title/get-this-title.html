@@ -1,0 +1,97 @@
+<template args="model">
+    <div class="get-this-title">
+        <div class="submenu {model.submenu}">
+            <div class="pdf-submenu">
+                <h3>Choose PDF</h3>
+                <a href="{model.hiRes}" class="btn">High Resolution</a>
+                <p>Better images, but a large file and a longer download time</p>
+                <if condition="model.loRes">
+                    <a href="{model.loRes}" class="btn">Low Resolution</a>
+                    <p>Same content and shorter download, but some lower resolution images</p>
+                </if>
+                <if condition="!model.loRes">
+                    <p>Low resolution not available</p>
+                </if>
+                <div class="remover"><i class="fa fa-times" aria-hidden="true"></i></div>
+            </div>
+            <div class="print-submenu">
+                <h3>Place an Order</h3>
+                <p>
+                    <a href="{model.bookstore.link}" class="btn">Bookstore Orders</a>
+                    Order through NACSCORP
+                </p>
+                <p if="model.amazon.link">
+                    <a href="{model.amazon.link}" class="btn">Individual Orders</a>
+                    ${model.amazon.price} from seller \"OpenStax\" on Amazon
+                </p>
+                <div class="remover"><i class="fa fa-times" aria-hidden="true"></i></div>
+            </div>
+        </div>
+        <div class="options">
+            <if condition="model.webviewLink">
+                <div class="option">
+                    <a href="{model.webviewLink}">
+                        <span class="fa fa-laptop"></span>
+                        View online
+                    </a>
+                </div>
+            </if>
+            <if condition="model.conceptCoachLink">
+                <div class="option">
+                    <a href="{model.conceptCoachLink}">
+                        <span class="fa fa-mortar-board"></span>
+                        View Concept Coach version online
+                    </a>
+                </div>
+            </if>
+            <if condition="model.pdfLink">
+                <div class="option">
+                    <a href="{model.pdfLink}" class="show-pdf-submenu">
+                        <span class="fa fa-cloud-download"></span>
+                        Download a PDF<if condition="model.comingSoon"> sample</if>
+                    </a>
+                </div>
+            </if>
+            <if condition="model.printLink">
+                <div class="option">
+                    <a href="{model.printLink}" class="show-print-submenu">
+                        <span class="fa fa-book"></span>
+                        Order a print copy
+                    </a>
+                </div>
+            </if>
+            <if condition="model.bookshareLink">
+            <div class="option">
+                <a href="{model.bookshareLink}">
+                    <span class="fa fa-volume-up"></span>
+                    Bookshare
+                </a>
+            </div>
+            </if>
+            <if condition="model.ibookLink">
+                <if condition="model.ibookLink2">
+                    <div class="option">
+                        <span class="option-header">
+                            <span class="fa fa-tablet"></span>
+                            iBook
+                        </span>
+                        <a href="{model.ibookLink}">
+                            Volume 1
+                        </a>
+                        <a href="{model.ibookLink2}">
+                            Volume 2
+                        </a>
+                    </div>
+                </if>
+                <if condition="!model.ibookLink2">
+                    <div class="option">
+                        <a href="{model.ibookLink}">
+                            <span class="fa fa-tablet"></span>
+                            Download on iBooks
+                        </a>
+                    </div>
+                </if>
+            </if>
+        </div>
+    </div>
+</template>

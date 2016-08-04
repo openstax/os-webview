@@ -1,33 +1,17 @@
-import BaseView from '~/helpers/backbone/view';
-import BaseModel from '~/helpers/backbone/model';
-import PdfSubmenu from './pdf-submenu/pdf-submenu';
-import PrintSubmenu from './print-submenu/print-submenu';
-import {on, props} from '~/helpers/backbone/decorators';
-import {template} from './get-this-title.hbs';
+import {Controller} from 'superb';
+import {on} from '~/helpers/controller/decorators';
+import {description as template} from './get-this-title.html';
 
-@props({
-    template: template,
-    css: '/app/components/get-this-title/get-this-title.css',
-    regions: {
-        submenu: '.submenu'
-    }
-})
-export default class GetThisTitle extends BaseView {
-    @on('click .show-pdf-submenu')
-    showPdfSubmenu(event) {
-        event.preventDefault();
-        this.stateModel.set('currentSubmenu', 'pdf');
-    }
+export default class GetThisTitle extends Controller {
 
-    @on('click .show-print-submenu')
-    showPrintSubment(event) {
-        event.preventDefault();
-        this.stateModel.set('currentSubmenu', 'print');
-    }
+    init(data) {
+        this.template = template;
+        this.css = '/app/components/get-this-title/get-this-title.css';
+        this.regions = {
+            submenu: '.submenu'
+        };
 
-    constructor(data) {
-        super();
-        this.templateHelpers = {
+        this.model = {
             ibookLink: data.ibook_link,
             ibookLink2: data.ibook_link_volume_2,
             webviewLink: data.webview_link,
@@ -35,16 +19,10 @@ export default class GetThisTitle extends BaseView {
             conceptCoachLink: data.concept_coach_link,
             bookshareLink: data.bookshare_link,
             pdfLink: (data.high_resolution_pdf_url || data.low_resolution_pdf_url),
-            printLink: (data.amazon_link || data.bookstore_link)
-        };
-        this.stateModel = new BaseModel({
-            currentSubmenu: null
-        });
-        this.pdfSubmenu = new PdfSubmenu({
+            printLink: (data.amazon_link || data.bookstore_link),
+            submenu: '',
             hiRes: data.high_resolution_pdf_url,
-            loRes: data.low_resolution_pdf_url
-        }, this.stateModel);
-        this.printSubmenu = new PrintSubmenu({
+            loRes: data.low_resolution_pdf_url,
             amazon: {
                 link: data.amazon_link,
                 price: data.amazon_price,
@@ -54,20 +32,27 @@ export default class GetThisTitle extends BaseView {
                 link: data.bookstore_link,
                 blurb: data.bookstore_blurb
             }
-        }, this.stateModel);
+        };
     }
 
-    onRender() {
-        this.regions.submenu.append(this.pdfSubmenu);
-        this.regions.submenu.append(this.printSubmenu);
-        this.stateModel.on('change:currentSubmenu', (what) => {
-            let newValue = what.changed.currentSubmenu;
-
-            if (newValue) {
-                this.regions.submenu.el.classList.add(newValue);
-            } else {
-                this.regions.submenu.el.classList.remove(this.stateModel.previous('currentSubmenu'));
-            }
-        });
+    @on('click .show-pdf-submenu')
+    showPdfSubmenu(event) {
+        event.preventDefault();
+        this.model.submenu = 'pdf';
+        this.update();
     }
+
+    @on('click .show-print-submenu')
+    showPrintSubment(event) {
+        event.preventDefault();
+        this.model.submenu = 'print';
+        this.update();
+    }
+
+    @on('click .submenu .remover')
+    hideSubmenu() {
+        this.model.submenu = '';
+        this.update();
+    }
+
 }

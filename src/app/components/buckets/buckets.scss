@@ -2,11 +2,11 @@
 @import 'mixins';
 
 .buckets-section {
-    width: 100%;
-    max-width: $boxed-width;
     margin: 0 auto;
+    max-width: $boxed-width;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+    width: 100%;
 
     .bucket {
         color: color(neutral-lightest);

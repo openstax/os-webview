@@ -1,0 +1,48 @@
+<template args="partners">
+    <main id="maincontent">
+        <div class="hero w-cards">
+            <div class="square-1"></div>
+            <div class="square-2"></div>
+            <div class="row container-wrap">
+                <div class="student"></div>
+                <div class="overlay">
+                    <div class="text-block">
+                        <h1 class="header">We measure our success in access.</h1>
+                        <p class="blurb">
+                            Since 2012, OpenStax has saved students $66 million and counting by offering free,
+                            peer-reviewed textbooks for the highest-enrollment college courses.
+                            Meet the schools who've adopted OpenStax and some of the students who've benefited
+                            from free access to the learning materials they need to succeed.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
+        <span class="scrolldown-chevron"><a href="#affiliates"><i class="fa fa-chevron-down"></i></a></span>
+
+        <div id="affiliates" class="affiliates">
+            <div class="text-content">
+                <h2>Institutional Partner and Affiliate Schools</h2>
+                <p>
+                    Our institutional partner and affiliate schools are forging institutional
+                    initiatives to encourage adoptions of OpenStax and other open resources
+                    to give students access to the learning materials they need to succeed.
+                </p>
+                <div class="cta">
+                    <a class="btn" href='/contact?subject=College/University%20Partnerships'>Contact us to learn more</a>
+                </div>
+            </div>
+
+            <ul class="partners no-bullets">
+                <li each="partner in partners">
+                    <a href="{partner.url}">
+                        <img src="{partner.logo}" alt="{partner.name}">
+                    </a>
+                </li>
+            </ul>
+
+            <div class="adopters"><a href="/adopters">See a full list of institutions that have adopted OpenStax<i></i></a></div>
+        </div>
+    </main>
+</template>

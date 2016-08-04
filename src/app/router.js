@@ -1,6 +1,7 @@
-import Backbone from 'backbone';
-import shell from '~/components/shell/shell';
+import {Router} from 'superb';
 import analytics from '~/helpers/analytics';
+import linkHelper from '~/helpers/link';
+import shell from '~/components/shell/shell';
 
 const PAGES = [
     '404',
@@ -9,98 +10,111 @@ const PAGES = [
     'accessibility-statement',
     'adopters',
     'adoption',
-    'adoption-confirmation',
     'article',
-    'partners',
     'blog',
     'books',
     'comp-copy',
-    'comp-copy-confirmation',
+    'confirmation',
     'contact',
-    'contact-thank-you',
-    'details',
-    'faculty-confirmation',
+    'details/*path',
     'faculty-verification',
     'finish-profile',
-    'finished-no-verify',
-    'finished-verify',
     'foundation',
     'higher-ed',
     'interest',
-    'interest-confirmation',
     'impact',
     'k-12',
     'license',
-    'renewal',
-    'mass-renewal',
+    'partners',
+    'partners/*path',
+    'renew',
     'subjects',
+    'subjects/*path',
     'support'
 ];
 
-class Router extends Backbone.Router {
+class AppRouter extends Router {
 
-    initialize() {
-        this.route('*actions', 'default', () => {
-            shell.load('404');
-        });
+    init() {
+        this.defaultRegion = shell.regions.main;
 
-        this.route('', 'home', () => {
-            shell.load('home');
-        });
+        this.default('404');
+        this.root('home');
+        this.route(/^(\d+)/, 'cms');
+        this.route(/to[u|s]/, 'tos');
+        this.route(/blog\/(.*)/).load((params) =>
+            System.import('~/pages/article/article').then((m) => {
+                const Controller = m.default;
 
-        this.route(/^(\d+)/, 'cms', (id) => {
-            shell.load('cms', id);
-        });
+                this.defaultRegion.attach(new Controller(...params));
+            })
+        );
 
-        this.route(/subjects\/.*/, 'subjects', () => {
-            if (!(shell.regions.main.views &&
-                shell.regions.main.views[0].constructor.name === 'Subjects')) {
-                shell.load('subjects');
+        PAGES.forEach((page) => {
+            const isSplat = page.match(/\/\*/);
+
+            if (isSplat) {
+                const basePage = page.substr(0, isSplat.index);
+                const pageRegExp = new RegExp(`${basePage}/(.*)`);
+
+                this.route(pageRegExp).load((params) =>
+                    System.import(`~/pages/${basePage}/${basePage}`).then((m) => {
+                        const Controller = m.default;
+
+                        this.defaultRegion.attach(new Controller(...params));
+                    })
+                );
+            } else {
+                this.route(page);
             }
-        });
-
-        this.route(/partners\/.*/, 'partners', () => {
-            if (!(shell.regions.main.views &&
-                shell.regions.main.views[0].constructor.name === 'Partners')) {
-                shell.load('partners');
-            }
-        });
-
-        this.route(/details\/.*/, 'details', () => {
-            shell.load('details');
-        });
-
-        this.route(/blog\/.+/, 'article', () => {
-            shell.load('article');
-        });
-
-        PAGES.forEach(this.standardRoute, this);
-
-        this.route(/to[u|s]/, 'tos', () => {
-            shell.load('tos');
         });
     }
 
-    standardRoute(name) {
-        this.route(name, name, () => {
-            shell.load(name);
-        });
+    start() {
+        super.start();
+
+        analytics.sendPageview(location.pathname);
+
+        this.linkHandler = AppRouter.linkHandler.bind(this);
+        document.addEventListener('click', this.linkHandler);
     }
 
-    navigate(fragment, options = {}, cb) {
-        super.navigate(...arguments);
+    stop() {
+        super.stop();
 
-        if (options.analytics !== false) {
-            analytics.sendPageview();
+        document.removeEventListener('click', this.linkHandler);
+    }
+
+    navigate(...args) {
+        super.navigate(...args);
+        analytics.sendPageview();
+    }
+
+    static linkHandler(e) {
+        const el = linkHelper.validUrlClick(e);
+
+        if (!el) {
+            return;
         }
 
-        if (typeof cb === 'function') {
-            cb();
+        const href = el.getAttribute('href');
+
+        e.preventDefault();
+
+        if (linkHelper.isExternal(href)) {
+            if (el.getAttribute('data-local') === 'true') {
+                document.location.href = href;
+            } else {
+                analytics.record(href);
+                window.open(href, '_blank');
+            }
+        } else {
+            this.navigate(href);
         }
     }
 
 }
 
-let router = new Router();
+const router = new AppRouter();
 
 export default router;

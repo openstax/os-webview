@@ -27,25 +27,25 @@
     }
 
     .table-of-contents {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
+        background-color: rgba(color(neutral-lightest), 0.97);
         bottom: 0;
         height: 100%;
+        left: 0;
+        opacity: 1;
+        position: fixed;
+        right: 0;
+        top: 0;
+        transition: opacity 0.3s;
         width: 100%;
         z-index: 100;
-        opacity: 1;
-        transition: opacity 0.3s;
-        background-color: rgba(color(neutral-lightest), 0.97);
 
         @include desktop {
             background-color: rgba(color(neutral-dark), 0.93);
         }
 
         ol {
-            margin: 0;
             list-style: none;
+            margin: 0;
             padding: 0;
 
             ol {
@@ -55,18 +55,16 @@
 
         &.hidden {
             display: initial;
-            width: 0;
             height: 0;
-            overflow: hidden;
             opacity: 0;
+            overflow: hidden;
+            width: 0;
         }
 
         .toc-remover {
-            position: relative;
+            @include absolute(top 0.5rem right 0.5rem);
 
-            .remover {
-                @include absolute(top 0 right 0);
-            }
+            cursor: pointer;
         }
 
         .box {
@@ -79,11 +77,11 @@
             @include desktop {
                 background-color: rgba(color(neutral-lightest), 0.97);
                 left: 50%;
-                top: 50%;
-                max-width: 60rem;
-                width: 100%;
                 max-height: 50rem;
+                max-width: 60rem;
+                top: 50%;
                 transform: translate3d(-50%, -50%, 0);
+                width: 100%;
             }
 
             .subunit {
@@ -95,10 +93,10 @@
 
     .container {
         display: flex;
-        margin: 0 auto;
-        padding: 0 1.5rem;
-        max-width: $boxed-width;
         flex-flow: column nowrap;
+        margin: 0 auto;
+        max-width: $boxed-width;
+        padding: 0 1.5rem;
 
         @include tablet {
             flex-flow: row wrap;
@@ -110,16 +108,16 @@
     }
 
     .cta > .btn {
-        width: 100%;
         font-variant: normal;
         padding: 1.5rem;
         text-transform: uppercase;
+        width: 100%;
     }
 
     .btn:hover,
     .btn:focus {
-        transform: scale3d(1, 1, 1);
         background-color: darken(color(orange), 5%);
+        transform: scale3d(1, 1, 1);
     }
 
     .btn.hidden {
@@ -135,11 +133,11 @@
         }
 
         .cover-wrap {
-            position: relative;
-            width: 100vw;
-            order: 1;
             align-self: flex-start;
             margin: 0 -1.5rem 3rem;
+            order: 1;
+            position: relative;
+            width: 100vw;
 
             @media (min-width: 500px) {
                 margin: 0 1.5rem 3rem 0;
@@ -160,9 +158,9 @@
         }
 
         .floating-menu {
-            order: 2;
             flex: 1 auto;
             margin-bottom: 3rem;
+            order: 2;
 
             @media (min-width: 500px) {
                 flex: 0 0 auto;
@@ -170,39 +168,39 @@
             }
 
             @include desktop {
+                left: 50%;
+                margin-bottom: 0;
+                max-width: 120rem;
                 order: 3;
                 position: fixed;
-                left: 50%;
                 top: 15rem;
-                max-width: 120rem;
-                width: 100%;
                 transform: translate3d(-50%, 0, 0);
+                width: 100%;
                 z-index: 1;
-                margin-bottom: 0;
             }
 
             &.bottom {
-                position: absolute;
                 bottom: 0;
+                position: absolute;
                 top: auto;
                 z-index: 0;
 
                 .box {
-                    position: relative;
-                    top: 0;
                     left: calc(100% - 26.5rem);
+                    position: relative;
                     right: auto;
+                    top: 0;
                 }
             }
 
             .box {
                 @include desktop {
-                    width: 25rem;
-                    position: absolute;
-                    top: 0;
-                    right: 1.5rem;
                     background-color: rgba(color(neutral-lightest), 0.95);
                     padding: 1.5rem;
+                    position: absolute;
+                    right: 1.5rem;
+                    top: 0;
+                    width: 25rem;
                 }
             }
 
@@ -219,26 +217,26 @@
 
                     &:hover,
                     &:focus {
-                        transform: scale3d(1, 1, 1);
                         background-color: darken(color(neutral-medium), 5%);
+                        transform: scale3d(1, 1, 1);
                     }
                 }
             }
         }
 
         .details {
-            order: 3;
             font-size: 1.6rem;
             line-height: 2.6rem;
+            order: 3;
 
             @include tablet {
                 flex: 1 100%;
             }
 
             @include desktop {
+                flex: 1 0;
                 order: 2;
                 padding: 0 25rem 0 0;
-                flex: 1 0;
             }
 
             @media (min-width: 830px) {
@@ -260,9 +258,9 @@
 
         .tabs {
             a:not(:last-child)::after {
+                color: color(neutral-dark);
                 content: ' | ';
                 display: inline;
-                color: color(neutral-dark);
             }
         }
 
@@ -280,9 +278,9 @@
                     height: 0.7rem;
                     margin-top: -0.2rem;
                     position: absolute;
-                    transform: rotate3d(0, 0, 1, 135deg);
                     right: -1.3rem;
                     top: 50%;
+                    transform: rotate3d(0, 0, 1, 135deg);
                     width: 0;
                 }
 
@@ -310,22 +308,22 @@
                 color: color(gold);
                 content: open-quote;
                 font-size: 15rem;
+                left: -5.5rem;
                 line-height: 0;
                 position: absolute;
                 top: 6rem;
-                left: -5.5rem;
 
                 @include desktop {
                     font-size: 18rem;
-                    top: 7rem;
                     left: -9rem;
+                    top: 7rem;
                 }
             }
 
             p {
                 font-size: 3.2rem;
-                font-weight: 500;
                 font-style: italic;
+                font-weight: 500;
                 letter-spacing: -0.15rem;
                 line-height: 5rem;
                 margin: 0 0 3rem;
@@ -346,8 +344,8 @@
             .attribution {
                 display: flex;
                 flex-direction: column;
-                justify-content: flex-end;
                 font-size: 2.1rem;
+                justify-content: flex-end;
                 letter-spacing: normal;
                 line-height: 2.5rem;
                 margin-top: 2.5rem;
@@ -375,9 +373,9 @@
     }
 
     .resources {
+        background-color: lighten(color(neutral-lighter), 8%);
         font-size: 1.6rem;
         line-height: 2.6rem;
-        background-color: lighten(color(neutral-lighter), 8%);
 
         h2 {
             margin-bottom: 0;
@@ -394,17 +392,16 @@
         .row {
             flex: 1 auto;
             margin-bottom: 2.5rem;
-
         }
 
         .student-resources-cta {
-            min-height: 60rem;
-            display: flex;
             background-color: color(gold);
             background-image: url('/images/details/student-resources-bg-lg.jpg');
-            background-repeat: no-repeat;
             background-position: left 70%;
+            background-repeat: no-repeat;
             background-size: cover;
+            display: flex;
+            min-height: 60rem;
             transition: All ease-in-out 0.3s;
 
             @include phone {
@@ -420,15 +417,15 @@
             }
 
             .caption {
-                max-width: 56rem;
+                align-items: flex-start;
                 display: flex;
                 flex-flow: column wrap;
-                align-items: flex-start;
+                max-width: 56rem;
             }
 
             h2 {
-                font-size: 3.6rem;
                 color: color(blue);
+                font-size: 3.6rem;
                 margin-bottom: 3rem;
                 width: 100%;
             }
@@ -476,8 +473,8 @@
 
             @media (min-width: 900px) {
                 flex: 1 0 28%;
-                max-width: 31%;
                 margin-right: 1.5rem;
+                max-width: 31%;
             }
 
             h4 {
@@ -492,9 +489,9 @@
 
                 a {
                     color: color(cyan);
-                    text-transform: uppercase;
                     font-size: 1.4rem;
                     font-weight: 500;
+                    text-transform: uppercase;
 
                     &:hover {
                         color: darken(color(cyan), 10%);
@@ -539,28 +536,28 @@
                 display: block;
                 height: 0.7rem;
                 position: absolute;
-                transform: rotate3d(0, 0, 1, 135deg);
                 right: -1.3rem;
                 top: 0.3rem;
+                transform: rotate3d(0, 0, 1, 135deg);
                 width: 0;
             }
 
             &::after {
-                top: 0.7rem;
                 right: -1.3rem;
+                top: 0.7rem;
                 transform: rotate3d(0, 0, 1, 45deg);
             }
         }
 
         .logo {
-            display: flex;
-            margin-bottom: 3rem;
-            justify-content: center;
             align-items: center;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
 
             img {
-                width: 20rem;
                 max-width: 100%;
+                width: 20rem;
             }
         }
     }
@@ -603,9 +600,9 @@
         }
 
         .links {
+            cursor: pointer;
             margin: 0;
             padding: 0;
-            cursor: pointer;
         }
 
         .go-to {
@@ -618,15 +615,15 @@
                 display: block;
                 height: 0.7rem;
                 position: absolute;
-                transform: rotate3d(0, 0, 1, 135deg);
                 right: -1.3rem;
                 top: 0.7rem;
+                transform: rotate3d(0, 0, 1, 135deg);
                 width: 0;
             }
 
             &::after {
-                top: 1.1rem;
                 right: -1.3rem;
+                top: 1.1rem;
                 transform: rotate3d(0, 0, 1, 45deg);
             }
 

@@ -1,7 +1,7 @@
-var gulp = require('gulp');
-var config = require('../config');
-var bs = require('browser-sync').get(config.name);
-var pi = require('gulp-load-plugins')({
+const gulp = require('gulp');
+const config = require('../config');
+const bs = require('browser-sync').get(config.name);
+const pi = require('gulp-load-plugins')({
     pattern: ['gulp-*', 'gulp.*', 'del']
 });
 
@@ -13,7 +13,7 @@ function scsslint() {
         config: 'gulp/.scss-lint.yml',
         customReport: (file) => {
             /* eslint prefer-template:0 */
-            var colors = pi.util.colors;
+            const colors = pi.util.colors;
 
             if (!file.scsslint.success) {
                 process.exitCode = 1;
@@ -25,9 +25,9 @@ function scsslint() {
                 );
 
                 file.scsslint.issues.forEach((issue) => {
-                    var severity = issue.severity === 'warning' ? colors.yellow(' [W] ') : colors.red(' [E] ');
-                    var linter = issue.linter ? (`${issue.linter}: `) : '';
-                    var logMsg = `${colors.cyan(file.relative)}:` +
+                    const severity = issue.severity === 'warning' ? colors.yellow(' [W] ') : colors.red(' [E] ');
+                    const linter = issue.linter ? (`${issue.linter}: `) : '';
+                    const logMsg = `${colors.cyan(file.relative)}:` +
                         colors.magenta(issue.line) +
                         severity +
                         colors.green(linter) +
@@ -67,13 +67,13 @@ function compileStyles(src, dest) {
 }
 
 function compileAllStyles() {
-    var src = gulp.src(`${config.src}/**/*.scss`);
+    const src = gulp.src(`${config.src}/**/*.scss`);
 
     return compileStyles(src);
 }
 
 function compileChangedStyles() {
-    var src = gulp.src(`${config.src}/**/*.scss`, {
+    const src = gulp.src(`${config.src}/**/*.scss`, {
         since: gulp.lastRun('compileChangedStyles')
     });
 
@@ -81,8 +81,8 @@ function compileChangedStyles() {
 }
 
 function compileMainStyle() {
-    var src = gulp.src(`${config.src}/styles/main.scss`);
-    var dest = `${config.dest}/styles`;
+    const src = gulp.src(`${config.src}/styles/main.scss`);
+    const dest = `${config.dest}/styles`;
 
     return compileStyles(src, dest);
 }

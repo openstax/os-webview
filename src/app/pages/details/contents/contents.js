@@ -1,24 +1,40 @@
-import BaseView from '~/helpers/backbone/view';
-import {props} from '~/helpers/backbone/decorators';
-import {template} from './contents.hbs';
+import {Controller} from 'superb';
+import ContentItem from './content-item';
 
-@props({
-    template: template,
-    regions: {
-        subunit: '.subunit'
-    }
-})
-export default class ContentEntry extends BaseView {
-    constructor(data) {
-        super();
-        this.templateHelpers = data;
+function hasContents(entry) {
+    return entry.contents && entry.contents.length;
+}
+
+function isUnit(entry) {
+    return hasContents(entry) && hasContents(entry.contents[0]);
+}
+
+function isPreface(entry) {
+    return entry.title.match(/Preface/);
+}
+
+export default class Contents extends Controller {
+
+    init(data, view) {
+        this.template = () => '';
+        this.view = view;
+        this.model = data.contents;
+        this.parentNumber = data.number ? `${data.number}.` : '';
     }
 
-    onRender() {
-        if (this.templateHelpers.contents) {
-            for (let entry of this.templateHelpers.contents) {
-                this.regions.subunit.appendAs('li', new ContentEntry(entry));
+    onLoaded() {
+        let i=0;
+
+        for (const entry of this.model) {
+            let chapterNumber = '';
+
+            if (!isPreface(entry)) {
+                ++i;
+                chapterNumber = `${this.parentNumber}${i}`;
             }
+
+            this.regions.self.append(new ContentItem(entry, isUnit(entry) ? '' : chapterNumber, 'li'));
         }
     }
+
 }

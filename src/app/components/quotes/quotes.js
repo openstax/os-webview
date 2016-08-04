@@ -1,26 +1,24 @@
-import BaseView from '~/helpers/backbone/view';
-import Quote from '~/components/quote/quote';
-import {props} from '~/helpers/backbone/decorators';
-import {template} from './quotes.hbs';
+import {Controller} from 'superb';
+import Quote from './quote/quote';
 
-@props({
-    template: template,
-    css: '/app/components/quotes/quotes.css',
-    regions: {
-        quotes: '.quotes'
-    }
-})
-export default class Quotes extends BaseView {
-    constructor(data) {
-        super();
-        this.data = data;
+export default class Quotes extends Controller {
+
+    init(quotes) {
+        this.template = () => '';
+        this.css = '/app/components/quotes/quotes.css';
+        this.view = {
+            classes: ['boxed', 'quotes', `boxes-${quotes.length}`]
+        };
+        this.regions = {
+            quotes: '.quotes'
+        };
+        this.quoteViews = quotes.map((quote) => new Quote(quote));
     }
 
-    onRender() {
-        for (let templateHelper of this.data) {
-            this.regions.quotes.append(new Quote(templateHelper));
+    onLoaded() {
+        for (const view of this.quoteViews) {
+            this.regions.self.append(view);
         }
-        this.el.classList.add('boxed');
-        this.regions.quotes.el.classList.add(`boxes-${this.data.length}`);
     }
+
 }

@@ -1,34 +1,51 @@
-import ProxyWidgetView from '~/helpers/backbone/proxy-widget-view';
-import salesforceModel from '~/models/salesforce-model';
-import bookTitles from '~/helpers/book-titles';
-import {on, props} from '~/helpers/backbone/decorators';
-import {template} from './interest.hbs';
-import {template as strips} from '~/components/strips/strips.hbs';
+import {Controller} from 'superb';
+import {on} from '~/helpers/controller/decorators';
+import selectHandler from '~/handlers/select';
+import bookTitles from '~/models/book-titles';
+import {description as template} from './interest.html';
 
-@props({
-    template: template,
-    css: '/app/pages/interest/interest.css',
-    templateHelpers: {
-        titles: bookTitles,
-        urlOrigin: window.location.origin,
-        strips
+export default class InterestForm extends Controller {
+
+    init() {
+        this.template = template;
+        this.css = '/app/pages/interest/interest.css';
+        this.view = {
+            classes: ['interest-form']
+        };
+
+        const titles = bookTitles.map((titleData) =>
+            titleData.text ? titleData : {
+                text: titleData,
+                value: titleData
+            }
+        );
+
+        this.model = {
+            titles,
+            validationMessage: (name) =>
+                this.hasBeenSubmitted ? this.el.querySelector(`[name="${name}"]`).validationMessage : ''
+        };
     }
-})
-export default class InterestForm extends ProxyWidgetView {
 
-    @on('change [type=text],[type=email]')
-    saveSetting(event) {
-        let varName = event.target.name;
+    onLoaded() {
+        document.title = 'Interest Form - OpenStax';
+        selectHandler.setup(this);
+    }
 
-        if (varName) {
-            salesforceModel.set(varName, event.target.value);
+    @on('click [type="submit"]')
+    doCustomValidation(event) {
+        const invalids = this.el.querySelectorAll('input:invalid');
+
+        this.hasBeenSubmitted = true;
+        if (invalids.length) {
+            event.preventDefault();
+            this.update();
         }
     }
 
-    onRender() {
-        this.el.classList.add('interest-form');
-        salesforceModel.prefill(this.el);
-        super.onRender();
+    @on('change')
+    updateOnChange() {
+        this.update();
     }
 
 }

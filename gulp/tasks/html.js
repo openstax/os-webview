@@ -1,7 +1,6 @@
-var gulp = require('gulp');
-var config = require('../config');
-var bs = require('browser-sync').get(config.name);
-var pi = require('gulp-load-plugins')();
+const gulp = require('gulp');
+const config = require('../config');
+const pi = require('gulp-load-plugins')();
 
 function html() {
     return gulp.src(`${config.dest}/*.html`, {
@@ -20,6 +19,6 @@ gulp.task('html:watch', () => {
     gulp.watch(`${config.dest}/*.html`, config.watchOpts)
     .on('change', gulp.series(
         html,
-        bs.reload
+        'reload-browser'
     ));
 });

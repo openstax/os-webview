@@ -6,7 +6,6 @@ $breakpoint-1: 908px;
 $hero-break-width: 880px;
 
 .higher-ed-page {
-
     &.hidden {
         display: none;
     }
@@ -33,9 +32,9 @@ $hero-break-width: 880px;
         background-size: cover;
         display: flex;
         height: 60rem;
+        overflow: hidden;
         position: relative;
         text-align: left;
-        overflow: hidden;
 
         @media (max-width: $hero-break-width) {
             min-height: 0;
@@ -51,29 +50,29 @@ $hero-break-width: 880px;
             display: flex;
             flex-flow: column wrap;
             height: 100%;
+            justify-content: center;
             margin: 0 auto;
             max-width: $boxed-width;
             width: 100%;
             z-index: 1;
-            justify-content: center;
 
             @include collapsed {
-                flex-flow: row wrap;
                 align-items: stretch;
+                flex-flow: row wrap;
             }
 
             .student {
+                background-image: url('/images/higher-ed/student.png');
+                background-position: 0 -2.5rem;
+                background-repeat: no-repeat;
+                background-size: 100% auto;
                 height: 100%;
-                width: 61rem;
                 overflow: hidden;
                 position: absolute;
-                background-image: url('/images/higher-ed/student.png');
-                background-repeat: no-repeat;
-                background-position: 0 -2.5rem;
-                background-size: 100% auto;
                 top: 0;
-                z-index: 2;
                 transition: All ease 0.2s;
+                width: 61rem;
+                z-index: 2;
 
                 @media screen and (max-width: $boxed-width) {
                     left: calc(-61rem + 50%);
@@ -89,9 +88,9 @@ $hero-break-width: 880px;
                     bottom: 0;
                     height: 50%;
                     left: auto;
+                    right: 0;
                     top: auto;
                     width: 38rem;
-                    right: 0;
                 }
 
             }
@@ -128,8 +127,8 @@ $hero-break-width: 880px;
                 }
 
                 .blurb {
-                    padding: 1em 0;
                     font-size: 1.8rem;
+                    padding: 1em 0;
 
                     @include collapsed {
                         display: none;
@@ -151,17 +150,17 @@ $hero-break-width: 880px;
         }
 
         .square-1 {
-            width: calc(50vw + 6.6rem);
             height: calc(32vw + 4.2rem);
-            top: 3vw;
             left: 3vw;
+            top: 3vw;
+            width: calc(50vw + 6.6rem);
         }
 
         .square-2 {
-            width: calc(17vw + 2.5rem);
             height: calc(23.5vw + 3.1rem);
-            top: 5vw;
             right: 2vw;
+            top: 5vw;
+            width: calc(17vw + 2.5rem);
         }
 
     }
@@ -237,8 +236,8 @@ $hero-break-width: 880px;
                 @include constrained-variable-text(5.5, 0.2);
 
                 color: color(yellow);
-                counter-increment: steps;
                 content: counter(steps) '.';
+                counter-increment: steps;
                 font-weight: bold;
                 padding-bottom: 0.4em;
             }
@@ -277,8 +276,8 @@ $hero-break-width: 880px;
     .buckets-section {
         display: flex;
         justify-content: space-between;
-        padding-top: 8rem;
         padding-bottom: 8rem;
+        padding-top: 8rem;
 
         @include collapsed {
             flex-direction: column;
@@ -294,9 +293,9 @@ $hero-break-width: 880px;
             &.our-impact {
                 background-color: color(gray);
                 background-image: url('/images/home/buckets/bg-our-impact.jpg');
+                background-position: 0 0;
                 background-repeat: no-repeat;
                 background-size: cover;
-                background-position: 0 0;
                 margin-bottom: 0;
                 margin-right: 3rem;
 
@@ -324,8 +323,6 @@ $hero-break-width: 880px;
             .image {
                 display: none;
             }
-
         }
-
     }
 }

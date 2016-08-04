@@ -14,8 +14,8 @@
     //width: calc(100% + 3rem);
 
     @include desktop {
-        width: 80%;
         margin: 0 auto;
+        width: 80%;
         //padding: 0 0 6rem;
 
     }
@@ -36,10 +36,10 @@
     }
 
     input {
-        flex-basis: 80%;
         border: 0;
-        font-weight: 100;
+        flex-basis: 80%;
         font-style: italic;
+        font-weight: 100;
 
         @include desktop {
             flex-basis: 90%;
@@ -63,16 +63,16 @@
     flex-flow: column nowrap;
 
     @include desktop {
-        flex-flow: row nowrap;
         background-color: lighten(color(neutral-lighter), 8%);
+        flex-flow: row nowrap;
         padding: 8rem 0;
 
     }
 
     .boxed {
         @include desktop {
-            padding: 0;
             flex-flow: row wrap;
+            padding: 0;
         }
     }
 

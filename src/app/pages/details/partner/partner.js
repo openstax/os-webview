@@ -1,27 +1,21 @@
-import BaseView from '~/helpers/backbone/view';
-import {props} from '~/helpers/backbone/decorators';
-import {template} from './partner.hbs';
+import {Controller} from 'superb';
+import {description as template} from './partner.html';
 
-@props({
-    template,
-    regions: {
-        logo: '.logo'
-    }
-})
-export default class Partner extends BaseView {
-    constructor(templateHelpers) {
-        super();
-        this.templateHelpers = templateHelpers;
+export default class Partner extends Controller {
+
+    init(model) {
+        this.template = template;
+        this.view = {
+            classes: ['partner-info']
+        };
+        this.regions = {
+            logo: '.logo'
+        };
+        this.model = model;
     }
 
-    onRender() {
-        this.el.classList.add('partner-info');
-        if (this.templateHelpers.logoUrl) {
-            let logoImg = document.createElement('IMG'),
-                logoDiv = this.el.querySelector('.logo');
-
-            logoImg.src = this.templateHelpers.logoUrl;
-            logoDiv.appendChild(logoImg);
-        }
+    onLoaded() {
+        this.el.querySelector('blurb-html').innerHTML = this.model.blurb;
     }
+
 }

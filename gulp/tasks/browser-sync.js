@@ -1,7 +1,7 @@
-var gulp = require('gulp');
-var config = require('../config');
-var bs = require('browser-sync').create(config.name);
-var historyApiFallback = require('connect-history-api-fallback');
+const gulp = require('gulp');
+const config = require('../config');
+const bs = require('browser-sync').create(config.name);
+const historyApiFallback = require('connect-history-api-fallback');
 
 const corsHeaders = [
     'DNT',
@@ -14,7 +14,7 @@ const corsHeaders = [
     'Content-Type'
 ];
 
-function browserSync() {
+function browserSync(done) {
     bs.init({
         server: {
             baseDir: `./${config.dest}`,
@@ -30,8 +30,13 @@ function browserSync() {
                 }
             ]
         }
-    });
-    return Promise.resolve();
+    }, done);
+}
+
+function reload(done) {
+    bs.reload();
+    done();
 }
 
 gulp.task('browser-sync', browserSync);
+gulp.task('reload-browser', reload);

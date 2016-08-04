@@ -7,15 +7,15 @@ $attention: color(green);
     padding: 5rem 0 0;
 
     table {
-        width: 90%;
         background-color: $table-background;
+        border-collapse: collapse;
         line-height: 4rem;
         margin: 0 auto;
-        border-collapse: collapse;
+        width: 90%;
 
         th {
-            text-align: left;
             padding: 0.5rem 1.5rem;
+            text-align: left;
         }
 
         td {

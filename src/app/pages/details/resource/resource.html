@@ -1,0 +1,10 @@
+<template args="model">
+    <div>
+        <h4>{model.resource_heading}</h4>
+        <resource-description if="model.resource_description"></resource-description>
+    </div>
+    <span class="link-and-lock">
+        <a href="{model.linkUrl}" data-local="true">{model.link_text}</a>
+        <i if="model.showLock" class="locked-state fa {model.showLock}"></i>
+    </span>
+</template>

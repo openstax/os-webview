@@ -17,13 +17,13 @@ $hero-break-width: 880px;
         background-color: color(green);
         background-image: url('/images/impact/banner-bg.jpg');
         background-size: cover;
-        overflow: hidden;
-        position: relative;
-        width: 100%;
-        justify-content: center;
         display: flex;
         height: 60rem;
+        justify-content: center;
+        overflow: hidden;
+        position: relative;
         text-align: left;
+        width: 100%;
 
         @media (max-width: $hero-break-width) {
             min-height: 0;
@@ -32,7 +32,7 @@ $hero-break-width: 880px;
         @include collapsed {
             align-items: stretch;
             background: none;
-//            height: calc(100vh - 6rem);
+            // height: calc(100vh - 6rem);
             max-height: 53rem;
         }
 
@@ -40,28 +40,28 @@ $hero-break-width: 880px;
             display: flex;
             flex-flow: column wrap;
             margin: 0 auto;
-            width: 100%;
             max-width: $boxed-width;
+            width: 100%;
             z-index: 1;
 
             @include collapsed {
-                flex-flow: row wrap;
                 align-items: stretch;
+                flex-flow: row wrap;
             }
 
         }
 
         .student {
-            position: absolute;
-            overflow: hidden;
-            top: 0;
-            height: 100%;
-            width: 84rem;
             background-image: url('/images/impact/banner.png');
-            background-size: 100% auto;
             background-position: 0 bottom;
             background-repeat: no-repeat;
+            background-size: 100% auto;
+            height: 100%;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
             transition: All ease 0.2s;
+            width: 84rem;
 
             @media screen and (max-width: $boxed-width) {
                 left: calc(-84rem + 70%);
@@ -77,17 +77,17 @@ $hero-break-width: 880px;
                 bottom: 0;
                 height: 50%;
                 left: 0;
+                right: 0;
                 top: auto;
                 width: 38rem;
-                right: 0;
             }
         }
 
         .overlay {
             color: color(neutral-lightest);
-            padding: 4rem;
             display: flex;
             justify-content: flex-end;
+            padding: 4rem;
             z-index: 1;
 
             @media screen and (min-width: $boxed-width + 1) {
@@ -111,8 +111,8 @@ $hero-break-width: 880px;
 
                 @include collapsed {
                     background: none;
-                    padding: 0;
                     flex-basis: 100%;
+                    padding: 0;
                 }
             }
 
@@ -126,8 +126,8 @@ $hero-break-width: 880px;
             }
 
             .blurb {
-                padding: 1em 0;
                 font-size: 1.8rem;
+                padding: 1em 0;
 
                 @include collapsed {
                     display: none;
@@ -147,15 +147,15 @@ $hero-break-width: 880px;
         }
 
         .square-1 {
-            left: 46%;
             height: 16.8rem;
+            left: 46%;
             top: 3.5rem;
             width: 17.8rem;
         }
 
         .square-2 {
-            left: 7.71%;
             height: 39rem;
+            left: 7.71%;
             top: 15.6rem;
             width: 72rem;
         }
@@ -199,8 +199,8 @@ $hero-break-width: 880px;
             width: 78vw;
 
             @include phone {
-                width: 100%;
                 padding: 5rem 1.5rem;
+                width: 100%;
             }
         }
 
@@ -220,8 +220,8 @@ $hero-break-width: 880px;
             }
 
             > li {
-                padding: 4rem;
                 flex: 1 1 20%;
+                padding: 4rem;
 
                 @media (max-width: $hero-break-width) {
                     flex: 1 1 auto;

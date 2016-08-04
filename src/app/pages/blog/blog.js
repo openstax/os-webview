@@ -1,49 +1,34 @@
-import LoadingView from '~/helpers/backbone/loading-view';
 import settings from 'settings';
-import {props} from '~/helpers/backbone/decorators';
-import {template} from './blog.hbs';
+import CMSPageController from '~/controllers/cms';
 import Articles from './articles/articles';
 import PinnedArticle from './pinned-article/pinned-article';
-import newsPromise from './newsPromise';
+import newsQuery from './newsPromise';
+import {description as template} from './blog.html';
 
-@props({
-    template: template,
-    css: '/app/pages/blog/blog.css',
-    templateHelpers: () => {
-        let loginLink = `${settings.apiOrigin}/accounts/login/openstax/?next=`;
-        let nextLink = `${settings.apiOrigin}/faculty-verification`;
+export default class Blog extends CMSPageController {
 
-        return {
-            loginLink: `${loginLink}${nextLink}`
+    init() {
+        this.template = template;
+        this.css = '/app/pages/blog/blog.css';
+        this.view = {
+            classes: ['blog', 'page']
         };
-    },
-    regions: {
-        articles: '.articles',
-        pinned: '.pinned'
-    }
-})
-export default class Blog extends LoadingView {
-    onLoaded() {
-        super.onLoaded();
-        this.el.querySelector('.blog.page').classList.remove('hidden');
-        document.body.classList.remove('no-scroll');
+        this.regions = {
+            articles: '.articles',
+            pinned: '.pinned'
+        };
+        this.query = newsQuery;
     }
 
-    onRender() {
-        document.body.classList.add('no-scroll');
-        this.el.querySelector('.blog.page').classList.add('hidden');
+    onDataLoaded() {
+        // document.body.classList.add('no-scroll');
 
-        newsPromise.then((newsData) => {
-            let excludeTitle;
+        const pinnedArticles = this.pageData.pages.filter((article) => article.pin_to_top);
 
-            for (let article of newsData.pages) {
-                if (article.pin_to_top) {
-                    excludeTitle = article.slug;
-                    this.regions.pinned.append(new PinnedArticle(article));
-                }
-            }
-            this.regions.articles.append(new Articles(excludeTitle));
-        });
-        super.onRender();
+        for (const article of pinnedArticles) {
+            this.regions.pinned.append(new PinnedArticle(article));
+            this.regions.articles.append(new Articles(article.slug));
+        }
     }
+
 }

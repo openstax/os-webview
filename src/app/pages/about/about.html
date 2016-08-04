@@ -1,0 +1,51 @@
+<template args="model">
+    <div class="hero w-cards">
+        <div class="row container-wrap">
+            <div class="overlay">
+                <div class="text-block">
+                    <h1>Changing the world is a team effort</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
+
+    <div class="meta">
+        <div class="boxed">
+            <h2>About Us</h2>
+            <p>
+                OpenStax is a nonprofit based at Rice University, and it's our mission to
+                improve student access to education. Our first open source college
+                textbook was published in 2012 and has since scaled to more than 20 books used by
+                hundreds of thousands of students across the globe. Our adaptive learning
+                technology, designed to improve learning outcomes through personalized
+                educational paths, is currently being piloted for K-12 and college.
+                The OpenStax mission is made possible through the generous support of
+                philanthropic foundations. Through these partnerships and our alliance
+                with other educational resource companies, OpenStax is breaking down the
+                most common barriers to learning and empowering students and instructors
+                to succeed.
+            </p>
+        </div>
+    </div>
+
+    <div class="boxed">
+        <div each="group in model.bios" class="{group.name === 'team' ? 'our-team' : 'strategic-advisors'}">
+            <h2>{group.name === 'team' ? 'Our Team' : 'Strategic Advisors'}</h2>
+            <div class="headshots">
+                <div each="member in group.members" class="headshot{model.tapped === member.id ? ' tapped' : ''}{member.hidden ? ' hidden' : ''}" data-id="{member.id}">
+                    <div class="picture-area{group.name === 'team' ? ' text-'+member.textColor+' bg-'+member.bgColor : ''}{member.image ? ' has-picture' : ''}">
+                        <img if="member.image" src="{member.image}">
+                        <div class="name">{member.name}</div>
+                    </div>
+                    <div class="details">
+                        <div class="name">{member.name}</div>
+                        <div if="member.position" class="title">{member.position}</div>
+                        <div class="description" data-html="description" skip="true"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

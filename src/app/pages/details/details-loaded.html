@@ -1,0 +1,203 @@
+<template args="model">
+    <section class="container book-info">
+        <div class="cover-wrap{model.comingSoon}"><img src="{model.cover_url}" class="book-cover"></div>
+            <section class="details">
+                <h1 class="title" data-html="title" skip="true"></h1>
+                <div class="tabs">
+                    <if condition="model.table_of_contents">
+                        <a class="table-of-contents-link" class="tab"><span>Table of Contents</span></a>
+                        <div class="table-of-contents {model.tocIsOpen ? '' : 'hidden'}">
+                            <div class="box mac-scroll">
+                                <div class="toc-remover"><i class="fa fa-times" aria-hidden="true"></i></div>
+                                <table-of-contents skip="true"></table-of-contents>
+                            </div>
+                        </div>
+                    </if>
+                    <if condition="model.book_faculty_resources.length">
+                        <a href="#resources" class="tab"><span>Instructor Resources</span></a>
+                    </if>
+                    <if condition="model.book_student_resources.length">
+                        <a href="#student-resources-section" class="tab"><span>Student Resources</span></a>
+                    </if>
+                    <a href="#details" class="tab"><span>Details</span></a>
+                    <if condition="model.errata_link">
+                        <a href="#errata" class="tab errata-tab"><span>Errata</span></a>
+                    </if>
+                </div>
+                <p class="blurb" data-html="description" skip="true"></p>
+                <div>
+                    <if condition="model.topSenior.length">
+                        <div id="senior-top-authors">
+                            <h2>Senior Contributing Authors</h2>
+                            <div each="author in model.topSenior">
+                                {author.name}<if condition="author.university">, {author.university}</if>
+                            </div>
+                        </div>
+                    </if>
+                    <if condition="model.topNonsenior.length">
+                        <div id="top-authors">
+                            <h2> Contributing Authors</h2>
+                            <div each="author in model.topNonsenior">
+                                {author.name}<if condition="author.university">, {author.university}</if>
+                            </div>
+                        </div>
+                    </if>
+                    <div class="links" if="model.allSenior.length || model.allNonsenior.length">
+                        <a class="go-to" href="#details">See all authors</a>
+                    </div>
+                </div>
+            </section>
+            <section class="floating-menu">
+                <div class="box">
+                <h2>Get this title</h2>
+                <div class="get-this-book" skip="true"></div>
+                <div class="notes"></div>
+                <div class="cta">
+                    <p class="interested-text">
+                        Using this book, or interested in adopting it for your
+                        course?
+                    </p>
+                    <a href="{`/adoption?${model.title}`}" class="btn hide-if-coming-soon">Adopt This Book</a>
+                    <a href="{`/interest?${model.title}`}" class="secondary btn">Sign up for info</a>
+                </div>
+            </div>
+            </section>
+    </section>
+    <section class="endorsement" if="model.book_quotes.length">
+        <div class="container">
+            <blockquote>
+                <div data-html="book_quotes[0].quote_text" skip="true"></div>
+                    <p class="attribution">
+                            <span>— <span>{model.book_quotes[0].quote_author}</span></span>
+                            <span>{model.book_quotes[0].quote_author_school}</span>
+                    </p>
+            </blockquote>
+        </div>
+        <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
+    </section>
+    <section class="resources block">
+        <div class="container">
+            <if condition="model.book_faculty_resources.length">
+                <div id="resources" class="row">
+                    <h3>OpenStax Instructor Resources</h3>
+                    <p>
+                        Access these free resources with your verified instructor account.
+                        <span id="extra-instructions"></span>
+                    </p>
+                    <div id="instructor-resources" class="resource" skip="true"></div>
+                </div>
+            </if>
+            <if condition="model.community_resource_url">
+                <div class="row">
+                    <h3>Community Resources</h3>
+                    <p>
+                        Find community-submitted resources for
+                        your {model.title} book,
+                        or share your own.
+                    </p>
+                    <a href="{model.community_resource_url}" class="btn btn-orange">{model.community_resource_cta}</a>
+                </div>
+            </if>
+            <if condition="model.book_allies.length">
+                <div class="row">
+                    <h3>Partner Resources</h3>
+                    <p>
+                    OpenStax partners provide additional, low-cost resources for your
+                    book. See what's offered for this title below and learn more about
+                    our <a href="/partners">Partners here</a>.</p>
+                    <div id='partners' class="resource"></div>
+                </div>
+            </if>
+            <if condition="model.book_student_resources.length">
+                <div id="student-resources-section" class="row">
+                    <h3>Student Resources</h3>
+                    <p>
+                        Take a look at our free student resources that are integrated
+                        with your book to help you ace your course.
+                    </p>
+                    <div id="student-resources" class="resource"></div>
+                </div>
+            </if>
+        </div>
+        <if condition="model.student_handbook_url">
+            <div class="student-resources-cta">
+                <div class="container">
+                    <div class="caption">
+                        <h2>Learn how you can help bring more OpenStax books to your campus!</h2>
+                        <div class="cta">
+                            <a href="{model.student_handbook_url}" class="btn handbook-link">view more</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </if>
+    </section>
+    <section id="details" class="authors">
+        <div class="container">
+        <h2>Details</h2>
+        <if condition="model.allSenior.length || model.allNonsenior.length">
+            <h3>Authors</h3>
+            <if condition="model.allSenior.length">
+                <div id="senior-all-authors">
+                    <h4>Senior Contributing Authors</h4>
+                    <div each="author in model.allSenior">
+                        {author.name}<if condition="author.university">, {author.university}</if>
+                    </div>
+                </div>
+            </if>
+            <if condition="model.allNonsenior.length">
+                <div id="nonsenior-all-authors">
+                    <h4> Contributing Authors</h4>
+                    <div each="author in model.allNonsenior">
+                        {author.name}<if condition="author.university">, {author.university}</if>
+                    </div>
+                </div>
+            </if>
+        </if>
+        <table class="publish-info">
+            <tbody>
+                <tr if="model.publish_date">
+                    <th>Publish Date</th>
+                    <td id='publish-date'>{model.publish_date}</td>
+                </tr>
+                <tr if="model.isbn_10">
+                    <th>ISBN-10</th>
+                    <td id='isbn-10'>{model.isbn_10}</td>
+                </tr>
+                <tr if="model.isbn_13">
+                    <th>ISBN-13</th>
+                    <td id='isbn-13'>{model.isbn_13}</td>
+                </tr>
+                <tr if="model.license_name">
+                    <th>License</th>
+                    <td class="license">
+                        <img src="{model.licenseIcon}">
+                        <div>
+                            <div class="text">{model.license_name} v{model.license_version}</div>
+                            <div class="extra-text"></div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </section>
+    <section id="errata" class="errata">
+        <if condition="model.errata_link">
+            <div class="container">
+                <h2>Errata</h2>
+                <p>
+                    All OpenStax textbooks undergo a rigorous review process. However, like
+                    any professional-grade textbook, errors sometimes occur. The good part
+                    is, since our books are web-based, we can make updates periodically. If
+                    you have a correction to suggest, submit it here. We'll review your
+                    suggestion and make necessary changes.
+                </p>
+                <ul class="links no-bullets">
+                    <li><a href="{model.errata_link}" class="go-to errata-link">Errata list</a></li>
+                    <li><a href="{model.errata_corrections_link}" class="go-to suggest-correction-link">Suggest a correction</a></li>
+                </ul>
+            </div>
+        </if>
+    </section>
+</template>

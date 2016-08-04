@@ -9,11 +9,11 @@ $text-black2: rgba(0, 0, 0, 0.7);
 
     .container {
         display: block;
+        height: 100%;
         margin: 0 auto;
+        max-width: $boxed-width;
         padding: 0 1.5rem;
         width: 100%;
-        height: 100%;
-        max-width: $boxed-width;
     }
 
     .hero {
@@ -33,16 +33,16 @@ $text-black2: rgba(0, 0, 0, 0.7);
         background-color: lighten(color(neutral-light), 35%);
         line-height: 2.3rem;
         min-height: 10rem;
-        position: relative;
         padding: 8rem 0;
+        position: relative;
     }
 
     .strips {
+        left: 0;
         margin-bottom: 0;
         position: absolute;
-        top: 0;
-        left: 0;
         right: 0;
+        top: 0;
     }
 
     .funder {

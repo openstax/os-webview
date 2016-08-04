@@ -1,9 +1,9 @@
 @mixin coming-soon() {
     background: url('/images/subjects/coming-soon.svg') 0 0 no-repeat;
     content: '';
-    position: absolute;
-    top: 2rem;
-    right: -0.4rem;
     height: calc(13.25% + 1rem);
+    position: absolute;
+    right: -0.4rem;
+    top: 2rem;
     width: calc(34% + 1rem);
 }
