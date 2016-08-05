@@ -3,6 +3,7 @@ import router from '~/router';
 import NotFound from '~/pages/404/404';
 import {Controller} from 'superb';
 
+const cmsPageSlugUrl = `${settings.apiOrigin}/api/pages`;
 const cmsPageUrl = `${settings.apiOrigin}/api/v1/pages`;
 const jsonToQueryString = (json) =>
     Object.keys(json).map((key) =>
@@ -14,21 +15,19 @@ class CMSPageController extends Controller {
 
     constructor(...args) {
         super(...args);
+        const fetchAndLoad = (path) => {
+            fetch(path).then(toJson).then((json) => {
+                this.pageData = json;
+                this.onDataLoaded();
+            });
+        };
 
         if (this.id) {
-            fetch(`${cmsPageUrl}/${this.id}/?format=json`)
-            .then(toJson)
-            .then((json) => {
-                this.pageData = json;
-                this.onDataLoaded();
-            });
+            fetchAndLoad(`${cmsPageUrl}/${this.id}/?format=json`);
+        } else if (this.slug) {
+            fetchAndLoad(`${cmsPageSlugUrl}/${this.slug}/?format=json`);
         } else if (this.query) {
-            fetch(`${cmsPageUrl}/?format=json&${jsonToQueryString(this.query)}`)
-            .then(toJson)
-            .then((json) => {
-                this.pageData = json;
-                this.onDataLoaded();
-            });
+            fetchAndLoad(`${cmsPageUrl}/?format=json&${jsonToQueryString(this.query)}`);
         } else if (this.queryPage) {
             fetch(`${cmsPageUrl}/?format=json&${jsonToQueryString(this.queryPage)}`)
             .then(toJson)

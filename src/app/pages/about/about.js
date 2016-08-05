@@ -64,9 +64,7 @@ export default class AboutUs extends CMSPageController {
         };
 
         this.model = {bios: []};
-        this.queryPage = {
-            type: 'pages.AboutUs'
-        };
+        this.id=90;
     }
 
     onDataLoaded() {

@@ -57,10 +57,12 @@
             width: calc(100% - 3rem);
         }
 
-        .opening {
+        .opening,
+        > p:first-child {
             display: block;
             font-size: 2.2rem;
             font-weight: 300;
+            margin: 0;
 
             @include desktop {
                 font-size: 2.6rem;
@@ -74,7 +76,8 @@
             }
         }
 
-        strong {
+        strong,
+        h3 {
             color: color(yellow);
             display: block;
             font-size: 4.6rem;
@@ -92,7 +95,8 @@
             }
         }
 
-        .blurb {
+        .blurb,
+        > p:nth-child(3) {
             display: block;
             font-size: 1.8rem;
             font-weight: 300;
