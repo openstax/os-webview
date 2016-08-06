@@ -19,7 +19,7 @@ export default class GetThisTitle extends Controller {
             conceptCoachLink: data.concept_coach_link,
             bookshareLink: data.bookshare_link,
             pdfLink: (data.high_resolution_pdf_url || data.low_resolution_pdf_url),
-            printLink: (data.amazon_link || data.bookstore_link),
+            printLink: (data.amazon_link || data.bookstore_link || data.slug === 'college-physics-ap-courses'),
             submenu: '',
             hiRes: data.high_resolution_pdf_url,
             loRes: data.low_resolution_pdf_url,
@@ -31,7 +31,8 @@ export default class GetThisTitle extends Controller {
             bookstore: {
                 link: data.bookstore_link,
                 blurb: data.bookstore_blurb
-            }
+            },
+            slug: data.slug
         };
     }
 
