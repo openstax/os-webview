@@ -14,7 +14,7 @@
     <div class="meta">
         <div class="boxed">
             <h2>{model.introHeading}</h2>
-            <insert-html data-name="introParagraph" skip="true"></insert-html>
+            {model.introParagraph}
         </div>
     </div>
 
@@ -30,7 +30,7 @@
                     <div class="details">
                         <div class="name">{member.name}</div>
                         <div if="member.position" class="title">{member.position}</div>
-                        <div class="description" data-html="description" skip="true"></div>
+                        <div class="description">{member.description}</div>
                     </div>
                 </div>
                 <div each="spaceholder in [1,2,3]" class="headshot hidden"></div>

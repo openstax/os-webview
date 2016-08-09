@@ -64,9 +64,7 @@ export default class AboutUs extends CMSPageController {
         };
 
         this.model = {bios: []};
-        this.queryPage = {
-            type: 'pages.AboutUs'
-        };
+        this.id = 90;
     }
 
     onDataLoaded() {
@@ -90,24 +88,6 @@ export default class AboutUs extends CMSPageController {
 
         this.update();
         this.el.querySelector('insert-html[data-name="introParagraph"]').innerHTML = this.model.introParagraph;
-
-        // NOTE: Incremental-DOM currently lacks the ability to inject HTML into a node.
-        const updateDescription = (member) => {
-            const id = member.id;
-            const el = this.el.querySelector(`[data-id="${id}"] [data-html="description"]`);
-
-            if (el) {
-                el.innerHTML = member.description;
-            }
-        };
-
-        for (const member of this.pageData.openstax_team) {
-            updateDescription(member);
-        }
-
-        for (const member of this.pageData.strategic_advisors) {
-            updateDescription(member);
-        }
     }
 
     @on('click .headshot')
