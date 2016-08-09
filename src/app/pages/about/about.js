@@ -73,6 +73,10 @@ export default class AboutUs extends CMSPageController {
         assignColors(this.pageData.openstax_team);
 
         this.model = {
+            tagline: this.pageData.tagline,
+            introHeading: this.pageData.intro_heading,
+            introParagraph: this.pageData.intro_paragraph,
+            ourTeamHeading: this.pageData.our_team_heading,
             bios: [{
                 name: 'team',
                 members: this.pageData.openstax_team
@@ -85,6 +89,7 @@ export default class AboutUs extends CMSPageController {
         assignIds(this.model.bios);
 
         this.update();
+        this.el.querySelector('insert-html[data-name="introParagraph"]').innerHTML = this.model.introParagraph;
 
         // NOTE: Incremental-DOM currently lacks the ability to inject HTML into a node.
         const updateDescription = (member) => {
