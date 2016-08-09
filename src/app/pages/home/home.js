@@ -1,4 +1,4 @@
-import LoadingView from '~/controllers/loading-view';
+import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
 import {utils} from 'superb';
 import {on} from '~/helpers/controller/decorators';
@@ -45,13 +45,14 @@ const bannerModels = shuffle([{
 }]);
 
 
-export default class Home extends LoadingView {
+export default class Home extends CMSPageController {
 
     static description = 'OpenStax\'s goal is to increase student access to ' +
         'high-quality learning materials at little to no cost. Learn more ' +
         'about what we offer for college and K-12.';
 
     init() {
+        this.slug = 'openstax-homepage';
         document.querySelector('head meta[name="description"]').content = Home.description;
         this.template = template;
         this.css = '/app/pages/home/home.css';
@@ -152,6 +153,7 @@ export default class Home extends LoadingView {
     }
 
     onLoaded() {
+        document.title = 'Home - OpenStax';
         shell.header.updateHeaderStyle();
         for (const view of this.banners) {
             this.regions.banners.append(view);
@@ -173,35 +175,52 @@ export default class Home extends LoadingView {
                 this.banners[this.currentBanner].show();
             });
         }, 11000);
+    }
 
-        const quotesView = new Quotes([{
-            orientation: 'left',
-            hasImage: true,
-            image: '/images/home/quotes/quote-right.jpg',
-            content: `Concept Coach is our free new tool that helps college
-            students understand and retain what they've read. We're recruiting
-            faculty for our Fall 2016 pilot!`,
-            link: 'http://cc.openstax.org',
-            cta: 'Learn More'
-        }, {
-            orientation: 'full',
-            hasImage: false,
-            content: `<p>“OpenStax is <em>amazing</em>. Access to these high quality textbooks
-            is game changing for our students.”</p>
-            <div class="attribution">&mdash; <cite>Prof. Wendy Riggs, College of the Redwoods</cite></div>`
-        }, {
-            orientation: 'full',
-            colorScheme: 'cyan',
-            hasImage: false,
-            overlay: '/images/home/quotes/book-mass-renewal-bucket.svg',
-            content: 'Using OpenStax in your course again this semester?',
-            link: '/mass-renewal',
-            cta: 'Let Us Know'
-        }]);
+    onDataLoaded() {
+        const quotesData = this.pageData.row_1[0].value.map((columnData) => {
+            const result = Object.assign({}, columnData.value);
+            const imageData = columnData.value.image;
+
+            if (imageData.image) {
+                result.hasImage = true;
+                result.orientation = imageData.alignment;
+                result.image = imageData.image;
+            } else {
+                result.hasImage = false;
+                delete result.image;
+            }
+            return result;
+        });
+        const quotesView = new Quotes(quotesData);
 
         this.regions.quotes.attach(quotesView);
-        this.regions.education.attach(new Education());
-        this.regions.buckets.attach(new Buckets());
+
+        const educationData = this.pageData.row_2[0].value.map((columnData) => {
+            const result = Object.assign({}, columnData.value);
+
+            return result;
+        });
+
+        this.regions.education.attach(new Education(educationData));
+
+        const bucketData = [4, 5].map((rowNum, index) => {
+            const value = this.pageData[`row_${rowNum}`][0].value[0].value;
+            const result = {
+                orientation: value.image.image ? value.image.alignment : 'full',
+                bucketClass: index ? 'partners' : 'our-impact',
+                hasImage: value.image.image !== null,
+                titleText: value.heading,
+                blurbHtml: value.content,
+                btnClass: index ? 'btn-gold' : 'btn-cyan',
+                linkUrl: value.link,
+                linkText: value.cta
+            };
+
+            return result;
+        });
+
+        this.regions.buckets.attach(new Buckets(bucketData));
     }
 
     onClose() {

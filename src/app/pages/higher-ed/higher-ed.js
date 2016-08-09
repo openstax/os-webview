@@ -16,7 +16,7 @@ export default class HigherEd extends CMSPageController {
         'adopt our books for your course.';
 
     init() {
-        this.id = 88;
+        this.slug = 'higher-education';
         this.template = template;
         this.css = '/app/pages/higher-ed/higher-ed.css';
         this.view = {
@@ -35,6 +35,7 @@ export default class HigherEd extends CMSPageController {
     }
 
     onLoaded() {
+        document.title = 'Higher-ed - OpenStax';
         this.regions.products.attach(new ProductsBoxes({
             products: [
                 'books',
@@ -48,31 +49,39 @@ export default class HigherEd extends CMSPageController {
         this.model = Object.assign(this.model, this.pageData);
         this.update();
 
-        this.regions.quotes.attach(new Quotes([{
-            content: this.model.row_0_box_1_content,
-            image: this.model.row_0_box_1_image_url,
-            orientation: this.get_row_0_box_1_image_alignment_display,
-            cta: this.model.row_0_box_1_cta,
-            link: this.model.row_0_box_1_link
-        }, {
-            content: this.model.row_0_box_2_content,
-            image: this.model.row_0_box_2_image_url,
-            orientation: this.model.get_row_0_box_2_image_alignment_display,
-            cta: this.model.row_0_box_2_cta,
-            link: this.model.row_0_box_2_link
-        }]));
+        const quoteData = this.model.row_1[0].value.map((columnData) => {
+            const valueData = columnData.value;
+            const result = Object.assign({}, valueData);
 
-        this.regions.buckets.attach(new Buckets([{
-            cta: this.model.row_2_box_1_cta,
-            description: this.model.row_2_box_1_description,
-            heading: this.model.row_2_box_1_heading,
-            link: this.model.row_2_box_1_link
-        }, {
-            cta: this.model.row_2_box_2_cta,
-            description: this.model.row_2_box_2_description,
-            heading: this.model.row_2_box_2_heading,
-            link: this.model.row_2_box_2_link
-        }]));
+            if (valueData.image.image) {
+                result.image = valueData.image.image;
+                result.orientation = valueData.image.alignment;
+            } else {
+                delete result.image;
+            }
+
+            return result;
+        });
+
+        this.regions.quotes.attach(new Quotes(quoteData));
+
+        const bucketData = this.model.row_3[0].value.map((columnData, index) => {
+            const value = columnData.value;
+            const result = {
+                orientation: value.image.image ? value.image.alignment : 'full',
+                bucketClass: index ? 'partners' : 'our-impact',
+                hasImage: value.image.image !== null,
+                titleText: value.heading,
+                blurbHtml: value.content,
+                btnClass: index ? 'btn-gold' : 'btn-cyan',
+                linkUrl: value.link,
+                linkText: value.cta
+            };
+
+            return result;
+        });
+
+        this.regions.buckets.attach(new Buckets(bucketData));
 
         this.regions.products.attach(new ProductsBoxes({
             products: ['books', 'Concept Coach', 'OpenStax CNX']
