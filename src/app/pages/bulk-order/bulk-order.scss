@@ -1,0 +1,17 @@
+@import 'variables';
+
+.bulk-order.page {
+    table th {
+        text-align: left;
+    }
+
+    [type="submit"] {
+        background-color: color(orange);
+        color: color(neutral-lightest);
+        float: none;
+    }
+
+    .unpadded {
+        padding: 0;
+    }
+}

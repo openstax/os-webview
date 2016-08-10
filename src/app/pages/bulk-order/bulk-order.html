@@ -1,0 +1,53 @@
+<template args="model">
+    <form action="{`${model.origin}/api/mail/send_mail/`}" class="form" method="post">
+        <input type="hidden" name="csrfmiddlewaretoken" value="{model.csrfToken}" />
+        <input name="to_address" type="hidden" value="{model.toAddress}" />
+        <input name="message_body" type="hidden" value="{model.messageBody}" />
+        <div class="text-content">
+            <div class="labeled-inputs row top-of-form">
+                <div class="col">
+                    <label>
+                        Organization Name
+                        <span class="invalid-message">{model.validationMessage('organization')}</span>
+                        <input name="organization" type="text" required>
+                    </label>
+                    <label>Organization type
+                        <div skip="true"></div>
+                        <select name="organization_type">
+                            <option each="option in model.orgTypeOptions">{option}</option>
+                        </select>
+                    </label>
+                    <label>
+                        Your name
+                        <span class="invalid-message">{model.validationMessage('first_name')}</span>
+                        <input name="from_name" type="text" required>
+                    </label>
+                </div>
+                <div class="col">
+                    <label>
+                        Phone number
+                        <span class="invalid-message">{model.validationMessage('phone')}</span>
+                        <input name="phone" type="text" required>
+                    </label>
+                    <label>
+                        Email address
+                        <span class="invalid-message">{model.validationMessage('email')}</span>
+                        <input name="from_address" type="email"
+                         pattern="[^@]+@([^@\.]+\.)+[^@\.]+" required>
+                    </label>
+                    <label>
+                        Country
+                        <span class="invalid-message">{model.validationMessage('country')}</span>
+                        <input name="country" type="text" required>
+                    </label>
+                </div>
+            </div>
+            <div class="row unpadded">
+                <div class="col">
+                    <insert-component data-name="orderItems" skip="true"></insert-component>
+                    <input type="submit" class="send btn" value="Send Order" />
+                </div>
+            </div>
+        </div>
+    </form>
+</template>

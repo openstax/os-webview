@@ -1,0 +1,14 @@
+<template args="model">
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>List</th>
+        </tr>
+        <tr each="orderItem in model.orderItems">
+            <td data-html="{orderItem.item}" skip="true"></td>
+            <td><input type="number" data-row="{$item}" name="quantity" min="0" required value="{orderItem.quantity}" /></td>
+            <td>${orderItem.list}</td>
+        </tr>
+    </table>
+</template>

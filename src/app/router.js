@@ -13,6 +13,7 @@ const PAGES = [
     'article',
     'blog',
     'books',
+    'bulk-order',
     'comp-copy',
     'confirmation',
     'contact',
