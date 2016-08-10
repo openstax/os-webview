@@ -16,6 +16,7 @@ export const published = [
     'Biology',
     'Calculus',
     'Chemistry',
+    'Chemistry: Atoms First',
     'College Algebra',
     {
         text: 'College Physics',
