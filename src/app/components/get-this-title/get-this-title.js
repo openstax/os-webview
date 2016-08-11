@@ -1,5 +1,6 @@
 import {Controller} from 'superb';
 import {on} from '~/helpers/controller/decorators';
+import {highSchoolSlugs} from '~/models/book-titles';
 import {description as template} from './get-this-title.html';
 
 export default class GetThisTitle extends Controller {
@@ -11,6 +12,8 @@ export default class GetThisTitle extends Controller {
             submenu: '.submenu'
         };
 
+        const isHighSchool = highSchoolSlugs.includes(data.slug);
+
         this.model = {
             ibookLink: data.ibook_link,
             ibookLink2: data.ibook_link_volume_2,
@@ -19,7 +22,7 @@ export default class GetThisTitle extends Controller {
             conceptCoachLink: data.concept_coach_link,
             bookshareLink: data.bookshare_link,
             pdfLink: (data.high_resolution_pdf_url || data.low_resolution_pdf_url),
-            printLink: (data.amazon_link || data.bookstore_link || data.slug === 'college-physics-ap-courses'),
+            printLink: (data.amazon_link || data.bookstore_link || isHighSchool),
             submenu: '',
             hiRes: data.high_resolution_pdf_url,
             loRes: data.low_resolution_pdf_url,

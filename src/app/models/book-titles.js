@@ -1,5 +1,4 @@
 const comingSoon = [
-    'American Government',
     'Astronomy',
     'Elementary Algebra',
     'Intermediate Algebra',
@@ -10,13 +9,25 @@ const comingSoon = [
     }
 ];
 
+export const highSchoolSlugs = [
+    'college-physics-ap-courses'
+];
+
 export const published = [
     'Algebra and Trigonometry',
+    'American Government',
     'Anatomy & Physiology',
     'Biology',
+    {
+        text: 'Biology for AP® Courses',
+        value: 'AP Biology'
+    },
     'Calculus',
     'Chemistry',
-    'Chemistry: Atoms First',
+    {
+        text: 'Chemistry: Atoms First',
+        value: 'Chem: Atoms First'
+    },
     'College Algebra',
     {
         text: 'College Physics',
