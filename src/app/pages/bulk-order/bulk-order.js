@@ -54,13 +54,12 @@ export default class BulkOrder extends Controller {
         };
         this.css = '/app/pages/bulk-order/bulk-order.css';
         this.model = {
-            origin: settings.apiOrigin.replace('https:', 'http:'),
+            origin: settings.apiOrigin,
             orgTypeOptions: [
                 'Retail/For profit',
                 'Public school',
                 'Private school'
             ],
-            toAddress: 'roy.e.johnson@rice.edu',
             orderItems: [],
             validationMessage: (name) => {
                 const el = this.el.querySelector(`[name="${name}"]`);
