@@ -5,7 +5,17 @@ $breakpoint-1: 908px;
 $breakpoint-2: 806px;
 $hero-break-width: 880px;
 
-.k-12-page {
+.ap-page {
+
+    .strips {
+        margin-bottom: 8rem;
+    }
+
+    .buckets-section {
+        padding-bottom: 8rem;
+        padding-top: 8rem;
+    }
+
     .hero {
         align-items: center;
         background-color: color(blue);
@@ -78,6 +88,12 @@ $hero-break-width: 880px;
 
             h1 {
                 color: inherit;
+                line-height: 1;
+
+                > sup {
+                    font-size: 50%;
+                    top: 0;
+                }
             }
 
             .blurb {

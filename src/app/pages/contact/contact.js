@@ -10,7 +10,6 @@ const subjects = [
     'General',
     'Adopting OpenStax Textbooks',
     'Concept Coach',
-    'OpenStax Tutor Pilot Sign-up',
     'OpenStax Tutor Support',
     'OpenStax CNX',
     'Donations',
