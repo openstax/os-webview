@@ -137,7 +137,7 @@ export default class Home extends CMSPageController {
             squaresAndFeatures.modified = false;
         };
 
-        this.debouncedParallax = utils.debounce(() => {
+        this.debouncedParallax = window.requestAnimationFrame(() => {
             const bannerRect = bannerEl.getClientRects()[0];
             const containerRect = bannerEl.getClientRects()[0];
             const bannerBottom = bannerRect.bottom;
@@ -149,7 +149,7 @@ export default class Home extends CMSPageController {
             } else if (squaresAndFeatures.modified) {
                 resetFeatures();
             }
-        }, 10, false);
+        });
     }
 
     onLoaded() {
