@@ -12,11 +12,11 @@ export default class Buckets extends Controller {
         this.view = {
             classes: ['buckets-section']
         };
-        this.data = data;
+        this.model = data;
     }
 
     onLoaded() {
-        for (const bucketData of this.data) {
+        for (const bucketData of this.model) {
             this.regions.self.append(new Bucket(bucketData));
         }
     }

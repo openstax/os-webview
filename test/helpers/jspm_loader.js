@@ -34,7 +34,7 @@ function jspmHasModule(name) {
     }
 
     const possiblePaths = [name + '/'];
-    let i = -1;
+    var i = -1;
 
     while (~(i = name.lastIndexOf('/'))) {
         name = name.substr(0, i);
@@ -58,7 +58,7 @@ Module._load = (name, m) => {
     debug(`[loader:internal] jspmHasModule(${name}): ${jspmHasModule(name)}`);
 
     if (jspmHasModule(name)) {
-        let jspmUri = System.normalizeSync(name);
+        var jspmUri = System.normalizeSync(name);
 
         debug(`[loader:internal] successfully normalized: ${jspmUri}`);
 

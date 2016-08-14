@@ -9,7 +9,7 @@ export default class Bucket extends Controller {
             classes: [
                 'bucket',
                 model.bucketClass,
-                model.orientation
+                model.image.alignment
             ]
         };
         this.model = model;
@@ -17,7 +17,7 @@ export default class Bucket extends Controller {
 
     onUpdate() {
         // NOTE: Incremental-DOM currently lacks the ability to inject HTML into a node.
-        this.el.querySelector('blurb-html').innerHTML = this.model.blurbHtml;
+        this.el.querySelector('blurb-html').innerHTML = this.model.content;
     }
 
 }
