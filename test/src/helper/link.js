@@ -5,8 +5,8 @@ test('External Link Detection', async function (assert) {
     const externalLink = 'https://openstax.org';
     const internalLink = '/issues';
 
-    let actual = linkHelper.isExternal(externalLink);
-    let expected = true;
+    var actual = linkHelper.isExternal(externalLink);
+    var expected = true;
 
     assert.is(actual, expected,
         `isExternal() should return true for ${externalLink}.`);
@@ -22,8 +22,8 @@ test('PDF Link Detection', async function (assert) {
     const internalPDFLink = 'physics.pdf';
     const externalPDFLink = 'https://openstax.org/physics.pdf';
 
-    let actual = linkHelper.isPDF(internalPDFLink);
-    let expected = true;
+    var actual = linkHelper.isPDF(internalPDFLink);
+    var expected = true;
 
     assert.is(actual, expected,
         `isPDF() should return true for ${internalPDFLink}.`);
@@ -36,7 +36,7 @@ test('PDF Link Detection', async function (assert) {
 });
 
 test('Internal Link Click Detection', async function (assert) {
-    let e = {
+    var e = {
         target: {
             getAttribute() {
                 return href;
@@ -44,9 +44,9 @@ test('Internal Link Click Detection', async function (assert) {
         }
     };
 
-    let href = 'mailto:info@openstax.org';
-    let actual = linkHelper.validUrlClick(e);
-    let expected = false;
+    var href = 'mailto:info@openstax.org';
+    var actual = linkHelper.validUrlClick(e);
+    var expected = false;
 
     assert.is(actual, expected,
         'validUrlClick() should return false for `mailto` links.');
