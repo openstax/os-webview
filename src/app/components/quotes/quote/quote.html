@@ -1,5 +1,5 @@
 <template args="model">
-    <if condition="model.image">
+    <if condition="model.image.image">
         <div class="image" style="background-image: url({model.image}){model.height ? `; height: ${model.height}px` : ''}">
         </div>
     </if>
