@@ -77,16 +77,6 @@
     </section>
     <section class="resources block">
         <div class="container">
-            <if condition="model.book_faculty_resources.length">
-                <div id="resources" class="row">
-                    <h3>OpenStax Instructor Resources</h3>
-                    <p>
-                        Access these free resources with your verified instructor account.
-                        <span id="extra-instructions"></span>
-                    </p>
-                    <div id="instructor-resources" class="resource" skip="true"></div>
-                </div>
-            </if>
             <if condition="model.community_resource_url">
                 <div class="row">
                     <h3>Community Resources</h3>
@@ -96,6 +86,16 @@
                         or share your own.
                     </p>
                     <a href="{model.community_resource_url}" class="btn btn-orange">{model.community_resource_cta}</a>
+                </div>
+            </if>
+            <if condition="model.book_faculty_resources.length">
+                <div id="resources" class="row">
+                    <h3>OpenStax Instructor Resources</h3>
+                    <p>
+                        Access these free resources with your verified instructor account.
+                        <span id="extra-instructions"></span>
+                    </p>
+                    <div id="instructor-resources" class="resource" skip="true"></div>
                 </div>
             </if>
             <if condition="model.book_allies.length">
