@@ -19,9 +19,15 @@ class CMSPageController extends Controller {
     }
 
     static [TRANSFORM_DATA](data) {
-        for (let prop in data) {
+        for (const prop in data) {
             if (data.hasOwnProperty(prop) && Array.isArray(data[prop])) {
-                data[prop] = data[prop].map((item) => item.value);
+                data[prop] = data[prop].map((item) => {
+                    if (item.value) {
+                        return item.value;
+                    }
+
+                    return item;
+                });
             }
         }
 
