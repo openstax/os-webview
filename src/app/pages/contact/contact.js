@@ -27,8 +27,7 @@ export default class Contact extends CMSPageController {
         'contact us here. We\'d love to hear from you!';
 
     init() {
-        document.querySelector('head meta[name="description"]').content = Contact.description;
-        this.id = 84;
+        this.slug = 'contact-us';
         this.template = template;
         this.css = '/app/pages/contact/contact.css';
         this.view = {
@@ -42,6 +41,8 @@ export default class Contact extends CMSPageController {
             'mailing_address': '',
             'phone_number': ''
         };
+
+        document.querySelector('head meta[name="description"]').content = Contact.description;
     }
 
     onLoaded() {
