@@ -56,7 +56,7 @@ export default class AboutUs extends CMSPageController {
         'Read more about who we are and what we do.';
 
     init() {
-        document.querySelector('head meta[name="description"]').content = AboutUs.description;
+        this.slug = 'about-us';
         this.template = template;
         this.css = '/app/pages/about/about.css';
         this.view = {
@@ -64,7 +64,9 @@ export default class AboutUs extends CMSPageController {
         };
 
         this.model = {bios: []};
-        this.id = 90;
+
+        // FIX: Move to an inherited controller so all pages can get this for free
+        document.querySelector('head meta[name="description"]').content = AboutUs.description;
     }
 
     onDataLoaded() {
