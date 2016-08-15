@@ -28,7 +28,7 @@ function jspmBuilder() {
     builder.config({
         defaultJSExtensions: true,
         paths: {
-            '~/*': `${config.dest}/app/*`,
+            '~/': `${config.dest}/app/`,
             'settings': `${config.dest}/settings.js`
         }
     });
