@@ -137,7 +137,7 @@ export default class Home extends CMSPageController {
             squaresAndFeatures.modified = false;
         };
 
-        this.debouncedParallax = window.requestAnimationFrame(() => {
+        this.debouncedParallax = utils.debounce(() => {
             const bannerRect = bannerEl.getClientRects()[0];
             const containerRect = bannerEl.getClientRects()[0];
             const bannerBottom = bannerRect.bottom;
@@ -149,7 +149,7 @@ export default class Home extends CMSPageController {
             } else if (squaresAndFeatures.modified) {
                 resetFeatures();
             }
-        });
+        }, 10);
     }
 
     onLoaded() {
@@ -178,44 +178,29 @@ export default class Home extends CMSPageController {
     }
 
     onDataLoaded() {
-        const quotesData = this.pageData.row_1[0].value.map((columnData) => {
-            const result = Object.assign({}, columnData.value);
-            const imageData = columnData.value.image;
+        const quotesData = this.pageData.row_1.map((columnData) => {
+            const result = Object.assign({}, columnData);
+            const imageData = columnData.image;
 
-            if (imageData.image) {
-                result.hasImage = true;
-                result.orientation = imageData.alignment;
-                result.image = imageData.image;
-            } else {
-                result.hasImage = false;
-                delete result.image;
-            }
+            result.hasImage = !!imageData.image;
             return result;
         });
         const quotesView = new Quotes(quotesData);
 
         this.regions.quotes.attach(quotesView);
 
-        const educationData = this.pageData.row_2[0].value.map((columnData) => {
-            const result = Object.assign({}, columnData.value);
-
-            return result;
-        });
+        const educationData = this.pageData.row_2.map((columnData) => Object.assign({}, columnData));
 
         this.regions.education.attach(new Education(educationData));
 
         const bucketData = [4, 5].map((rowNum, index) => {
-            const value = this.pageData[`row_${rowNum}`][0].value[0].value;
-            const result = {
-                orientation: value.image.image ? value.image.alignment : 'full',
-                bucketClass: index ? 'partners' : 'our-impact',
-                hasImage: value.image.image !== null,
-                titleText: value.heading,
-                blurbHtml: value.content,
-                btnClass: index ? 'btn-gold' : 'btn-cyan',
-                linkUrl: value.link,
-                linkText: value.cta
-            };
+            const cmsData = this.pageData[`row_${rowNum}`][0];
+            const result = Object.assign({}, cmsData);
+
+            // FIX: color schemes should be configured in the CMS
+            result.bucketClass = index ? 'partners' : 'our-impact';
+            result.btnClass = index ? 'btn-gold' : 'btn-cyan';
+            result.hasImage = !!result.image;
 
             return result;
         });
