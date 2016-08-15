@@ -55,11 +55,13 @@
 
         @media (min-width: 600px) {
             width: calc(100% - 3rem);
+
+            > p {
+                width: calc(88% - 20rem);
+            }
         }
 
-        .opening,
         > p:first-child {
-            display: block;
             font-size: 2.2rem;
             font-weight: 300;
             margin: 0;
@@ -68,18 +70,11 @@
                 font-size: 2.6rem;
                 font-weight: 300;
                 letter-spacing: 0.1rem;
-                width: 37rem;
-            }
-
-            @media (min-width: 1000px) {
-                width: 50rem;
             }
         }
 
-        strong,
         h3 {
             color: color(yellow);
-            display: block;
             font-size: 4.6rem;
             letter-spacing: -0.2rem;
             line-height: 1;
@@ -90,14 +85,9 @@
                 width: 37rem;
             }
 
-            @media (min-width: 1000px) {
-                width: 50rem;
-            }
         }
 
-        .blurb,
-        > p:nth-child(3) {
-            display: block;
+        > p:last-child {
             font-size: 1.8rem;
             font-weight: 300;
             margin: 1.5rem 0;
@@ -108,11 +98,15 @@
                 line-height: 2.8rem;
                 width: 37rem;
             }
+        }
 
-            @media (min-width: 1000px) {
+        @media (min-width: 1000px) {
+            > p,
+            > h3 {
                 width: 50rem;
             }
         }
+
 
         .btn {
             background-color: transparent;
@@ -260,19 +254,15 @@
         background-size: 100% auto;
         bottom: 0;
         height: 105%;
-        right: 0;
-        width: 37rem;
+        right: calc(-12rem + 12%);
+        width: calc(15rem + 30%);
         z-index: 2;
 
-        @include desktop {
+        @media (min-width: 1000px) {
             background-position: right bottom;
             background-size: auto 100%;
-            right: -15rem;
-            width: 60rem;
-        }
-
-        @media (min-width: 900px) {
             right: 0;
+            width: 60rem;
         }
     }
  }
