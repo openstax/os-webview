@@ -7,7 +7,7 @@ export default class Quotes extends Controller {
         this.template = () => '';
         this.css = '/app/components/quotes/quotes.css';
         this.view = {
-            classes: ['boxed', 'quotes', `boxes-${quotes.length}`]
+            classes: ['quotes', `boxes-${quotes.length}`]
         };
         this.regions = {
             quotes: '.quotes'

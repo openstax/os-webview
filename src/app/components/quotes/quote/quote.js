@@ -7,7 +7,7 @@ export default class Quote extends Controller {
         this.template = template;
         this.model = model;
         this.view = {
-            classes: ['quote-bucket', this.model.image.alignment || 'full']
+            classes: ['quote-bucket', this.model.image.image && this.model.image.alignment || 'full']
         };
     }
 

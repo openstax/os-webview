@@ -23,7 +23,7 @@ export default class HigherEd extends CMSPageController {
             classes: ['higher-ed-page', 'page']
         };
         this.regions = {
-            quotes: '.quote-buckets',
+            quotes: '.quote-buckets > .boxed',
             products: '.products',
             buckets: '.buckets'
         };
