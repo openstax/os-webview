@@ -21,8 +21,7 @@ export default class Partners extends CMSPageController {
         'integrate seamlessly with OpenStax books.';
 
     init() {
-        document.querySelector('head meta[name="description"]').content = Partners.description;
-        this.id = 50;
+        this.slug = 'partners';
         this.template = template;
         this.css = '/app/pages/partners/partners.css';
         this.view = {
@@ -44,6 +43,8 @@ export default class Partners extends CMSPageController {
         this.filterPartnersEvent = this.filterPartners.bind(this);
 
         window.addEventListener('popstate', this.filterPartnersEvent);
+
+        document.querySelector('head meta[name="description"]').content = Partners.description;
     }
 
     onDataLoaded() {
