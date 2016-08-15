@@ -37,55 +37,21 @@ export default class HigherEd extends CMSPageController {
     onLoaded() {
         document.title = 'Higher-ed - OpenStax';
         this.regions.products.attach(new ProductsBoxes({
-            products: [
-                'books',
-                'Concept Coach',
-                'OpenStax CNX'
-            ]
+            products: ['books', 'Concept Coach', 'OpenStax CNX']
         }));
     }
 
     onDataLoaded() {
         this.model = Object.assign(this.model, this.pageData);
+        this.model.row_3[0].bucketClass = 'our-impact';
+        this.model.row_3[1].bucketClass = 'partners';
+        this.model.row_3[0].btnClass = 'btn-cyan';
+        this.model.row_3[1].btnClass = 'btn-gold';
+
         this.update();
 
-        const quoteData = this.model.row_1[0].value.map((columnData) => {
-            const valueData = columnData.value;
-            const result = Object.assign({}, valueData);
-
-            if (valueData.image.image) {
-                result.image = valueData.image.image;
-                result.orientation = valueData.image.alignment;
-            } else {
-                delete result.image;
-            }
-
-            return result;
-        });
-
-        this.regions.quotes.attach(new Quotes(quoteData));
-
-        const bucketData = this.model.row_3[0].value.map((columnData, index) => {
-            const value = columnData.value;
-            const result = {
-                orientation: value.image.image ? value.image.alignment : 'full',
-                bucketClass: index ? 'partners' : 'our-impact',
-                hasImage: value.image.image !== null,
-                titleText: value.heading,
-                blurbHtml: value.content,
-                btnClass: index ? 'btn-gold' : 'btn-cyan',
-                linkUrl: value.link,
-                linkText: value.cta
-            };
-
-            return result;
-        });
-
-        this.regions.buckets.attach(new Buckets(bucketData));
-
-        this.regions.products.attach(new ProductsBoxes({
-            products: ['books', 'Concept Coach', 'OpenStax CNX']
-        }));
+        this.regions.quotes.attach(new Quotes(this.model.row_1));
+        this.regions.buckets.attach(new Buckets(this.model.row_3));
     }
 
     onUpdate() {

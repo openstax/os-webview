@@ -13,7 +13,7 @@
 
 ## Requirements
 
-* Node.js v6.2+
+* Node.js v5.11+
 * Ruby v2.2.3+
 * Gulp v4.0.0-alpha.2+
 * JSPM v0.17.0-beta.22+
