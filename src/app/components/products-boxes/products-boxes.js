@@ -45,15 +45,6 @@ export default class ProductsBoxes extends BaseView {
                 blurb: `We're integrating our adaptive learning technology with our
                 college textbooks to improve student reading comprehension at zero cost.`
             },
-            'Tutor': {
-                name: 'tutor',
-                title: 'OpenStax Tutor Pilot',
-                linkText: 'Sign up',
-                url: '/contact?subject=OpenStax Tutor Pilot Sign-up',
-                blurb: `We’re recruiting for our Fall 2016 OpenStax Tutor high school pilot.
-                Sign up to partner with us in perfecting this full-service digital
-                courseware and help impact the future of education.`
-            },
             'OpenStax CNX': {
                 name: 'cnx',
                 title: 'OpenStax CNX',

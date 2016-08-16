@@ -60,11 +60,17 @@ sup {
 
 .go-to {
     color: color(cyan);
-    font-size: 1.7rem;
+    font-size: 1.5rem;
     font-weight: 500;
+    text-transform: uppercase;
 
     &::after {
-        content: ' >';
+        @include triangle(
+            $direction: right,
+            $position: top 0.3rem right -1.5rem,
+            $color: color(cyan),
+            $size: 0.4em
+        );
     }
 }
 

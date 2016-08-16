@@ -1,6 +1,7 @@
 import BaseView from '~/helpers/backbone/view';
 import Remover from '~/components/remover/remover';
-import {props} from '~/helpers/backbone/decorators';
+import router from '~/router';
+import {on, props} from '~/helpers/backbone/decorators';
 import {template} from './pdf-submenu.hbs';
 
 @props({
@@ -17,5 +18,10 @@ export default class PdfSubmenu extends BaseView {
         this.el.classList.add('pdf-submenu');
         this.regions.self.el = this.el;
         this.regions.self.append(new Remover(() => this.stateModel.set('currentSubmenu', null)));
+    }
+
+    @on('click a[href$=".pdf"]')
+    showGiveOnDownload() {
+        router.navigate('/give', true);
     }
 }
