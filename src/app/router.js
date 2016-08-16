@@ -26,6 +26,7 @@ const PAGES = [
     'finished-verify',
     'foundation',
     'give',
+    'give-thank-you',
     'higher-ed',
     'interest',
     'interest-confirmation',
