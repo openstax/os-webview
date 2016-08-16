@@ -9,7 +9,6 @@ const subjectOptions = [
     ['General', 'General OpenStax Question'],
     ['Adopting OpenStax Textbooks', 'Adopting OpenStax Textbooks'],
     ['Concept Coach', 'Concept Coach Question'],
-    ['OpenStax Tutor Pilot Sign-up', 'I’m interested in piloting OpenStax Tutor'],
     ['OpenStax Tutor Support', 'OpenStax Tutor Question'],
     ['OpenStax CNX', 'CNX Question'],
     ['Donations', 'Donations'],
