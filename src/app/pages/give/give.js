@@ -1,5 +1,6 @@
 import BaseView from '~/helpers/backbone/view';
 import {on, props} from '~/helpers/backbone/decorators';
+import settings from 'settings';
 import {template} from './give.hbs';
 import {template as strips} from '~/components/strips/strips.hbs';
 
@@ -7,6 +8,7 @@ import {template as strips} from '~/components/strips/strips.hbs';
     template,
     templateHelpers: {
         strips,
+        thankYouUrl: `${settings.apiOrigin}/give-thank-you`,
         amounts: [5, 10, 15, 25, 50, 100]
     },
     css: '/app/pages/give/give.css'
