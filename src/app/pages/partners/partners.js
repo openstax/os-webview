@@ -21,7 +21,7 @@ export default class Partners extends CMSPageController {
         'integrate seamlessly with OpenStax books.';
 
     init() {
-        this.slug = 'partners';
+        this.slug = 'allies';
         this.template = template;
         this.css = '/app/pages/partners/partners.css';
         this.view = {
