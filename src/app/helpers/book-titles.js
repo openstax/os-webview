@@ -1,5 +1,4 @@
 let comingSoon = [
-    'American Government',
     'Astronomy',
     'Elementary Algebra',
     'Intermediate Algebra',
@@ -12,6 +11,7 @@ let comingSoon = [
 
 export let published = [
     'Algebra and Trigonometry',
+    'American Government',
     'Anatomy & Physiology',
     'Biology',
     'Calculus',
