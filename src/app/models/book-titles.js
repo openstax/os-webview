@@ -10,7 +10,7 @@ const comingSoon = [
 ];
 
 export const highSchoolSlugs = [
-    'college-physics-ap-courses'
+    'books/college-physics-ap-courses'
 ];
 
 export const published = [
