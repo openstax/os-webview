@@ -52,7 +52,7 @@ export default class Home extends CMSPageController {
         'about what we offer for college and K-12.';
 
     init() {
-        this.slug = 'openstax-homepage';
+        this.slug = 'pages/openstax-homepage';
         document.querySelector('head meta[name="description"]').content = Home.description;
         this.template = template;
         this.css = '/app/pages/home/home.css';
@@ -200,7 +200,7 @@ export default class Home extends CMSPageController {
             // FIX: color schemes should be configured in the CMS
             result.bucketClass = index ? 'partners' : 'our-impact';
             result.btnClass = index ? 'btn-gold' : 'btn-cyan';
-            result.hasImage = !!result.image;
+            result.hasImage = !!result.image.image;
 
             return result;
         });

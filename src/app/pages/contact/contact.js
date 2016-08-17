@@ -27,7 +27,7 @@ export default class Contact extends CMSPageController {
         'contact us here. We\'d love to hear from you!';
 
     init() {
-        this.slug = 'contact-us';
+        this.slug = 'pages/contact-us';
         this.template = template;
         this.css = '/app/pages/contact/contact.css';
         this.view = {

@@ -16,7 +16,7 @@ export default class HigherEd extends CMSPageController {
         'adopt our books for your course.';
 
     init() {
-        this.slug = 'higher-education';
+        this.slug = 'pages/higher-education';
         this.template = template;
         this.css = '/app/pages/higher-ed/higher-ed.css';
         this.view = {

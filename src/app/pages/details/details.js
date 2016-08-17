@@ -17,10 +17,7 @@ export default class Details extends CMSPageController {
         this.view = {
             classes: ['os-loader']
         };
-        this.queryPage = {
-            type: 'books.Book',
-            slug: bookTitle
-        };
+        this.slug = bookTitle;
     }
 
     onDataLoaded() {

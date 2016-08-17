@@ -9,7 +9,7 @@ class CMSPageController extends Controller {
         super(...args);
 
         if (this.slug) {
-            fetch(`${settings.apiOrigin}/api/pages/${this.slug}`)
+            fetch(`${settings.apiOrigin}/api/${this.slug}`)
             .then((response) => response.json())
             .then((data) => {
                 this.pageData = CMSPageController[TRANSFORM_DATA](data);
