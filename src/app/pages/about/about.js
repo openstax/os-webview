@@ -56,7 +56,7 @@ export default class AboutUs extends CMSPageController {
         'Read more about who we are and what we do.';
 
     init() {
-        this.slug = 'about-us';
+        this.slug = 'pages/about-us';
         this.template = template;
         this.css = '/app/pages/about/about.css';
         this.view = {
@@ -89,7 +89,6 @@ export default class AboutUs extends CMSPageController {
         assignIds(this.model.bios);
 
         this.update();
-        this.el.querySelector('insert-html[data-name="introParagraph"]').innerHTML = this.model.introParagraph;
     }
 
     @on('click .headshot')

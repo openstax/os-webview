@@ -1,9 +1,9 @@
-import {Controller} from 'superb';
+import CMSPageController from '~/controllers/cms';
 import {description as template} from './pinned-article.html';
 import bodyUnitView from '~/components/body-units/body-units';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
 
-export default class PinnedArticle extends Controller {
+export default class PinnedArticle extends CMSPageController {
 
     init(data) {
         this.template = template;
@@ -14,6 +14,7 @@ export default class PinnedArticle extends Controller {
         this.regions = {
             body: '.body'
         };
+        this.slug = data.slug;
         this.model = {
             coverUrl: data.article_image || 'http://placehold.it/570x270',
             articleSlug: data.slug,
@@ -22,11 +23,10 @@ export default class PinnedArticle extends Controller {
             subheading: data.subheading,
             date: formatDate(data.date)
         };
-        this.body = data.body;
     }
 
-    onLoaded() {
-        for (const bodyUnit of this.body) {
+    onDataLoaded() {
+        for (const bodyUnit of this.pageData.body) {
             this.regions.body.append(bodyUnitView(bodyUnit));
         }
     }
