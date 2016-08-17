@@ -16,7 +16,10 @@ export let published = [
     'Biology',
     'Calculus',
     'Chemistry',
-    'Chemistry: Atoms First',
+    {
+        text: 'Chemistry: Atoms First',
+        value: 'Chem: Atoms First'
+    },
     'College Algebra',
     {
         text: 'College Physics',
