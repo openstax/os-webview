@@ -12,15 +12,12 @@ class OrderItems extends CMSPageController {
     init(model) {
         this.template = oiTemplate;
         this.model = model;
-        this.query = {
-            type: 'books.Book',
-            fields: ['title', 'amazon_price', 'slug'],
-            limit: 50
-        };
+        this.slug = 'books';
     }
 
     onDataLoaded() {
-        const pages = this.pageData.pages.filter((pageData) => highSchoolSlugs.includes(pageData.slug));
+        const pages = Object.keys(this.pageData.books).filter((slug) => highSchoolSlugs.includes(slug))
+        .map((key) => Object.assign({slug: key}, this.pageData.books[key]));
 
         this.model.orderItems = pages.map((p) => ({item: p.title, quantity: 0, list: p.amazon_price}));
         this.update();
