@@ -23,6 +23,7 @@ export default class AP extends Controller {
     }
 
     onLoaded() {
+        document.title = 'AP® - OpenStax';
         this.regions.buckets.attach(new Buckets([{
             image: {
                 alignment: 'full'
