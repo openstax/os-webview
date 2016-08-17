@@ -1,5 +1,4 @@
 let comingSoon = [
-    'American Government',
     'Astronomy',
     'Elementary Algebra',
     'Intermediate Algebra',
@@ -12,11 +11,15 @@ let comingSoon = [
 
 export let published = [
     'Algebra and Trigonometry',
+    'American Government',
     'Anatomy & Physiology',
     'Biology',
     'Calculus',
     'Chemistry',
-    'Chemistry: Atoms First',
+    {
+        text: 'Chemistry: Atoms First',
+        value: 'Chem: Atoms First'
+    },
     'College Algebra',
     {
         text: 'College Physics',

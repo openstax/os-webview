@@ -17,6 +17,7 @@ export default class Give extends BaseView {
 
     onRender() {
         this.el.classList.add('give-page');
+        this.setAmount(5);
     }
 
     setAmount(amount) {

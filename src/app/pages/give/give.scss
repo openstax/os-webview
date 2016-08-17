@@ -3,9 +3,32 @@
 
 .give-page {
     .hero {
-        background-color: color(green);
         color: color(neutral-lightest);
         padding: 6rem 0;
+        position: relative;
+
+        .background-image,
+        .background-overlay {
+            height: 100%;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: -1;
+        }
+
+        .background-overlay {
+            background-color: color(green);
+            filter: saturate(110%);
+        }
+
+        .background-image {
+            background-image: url('/images/give/background.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            filter: grayscale(100%) contrast(120%);
+            opacity: 0.1;
+        }
 
         h1 {
             color: inherit;
@@ -61,14 +84,20 @@
             justify-content: space-between;
         }
 
+        .amount,
+        .amount-input {
+            font-size: 1.6rem;
+            font-weight: 500;
+            height: 4rem;
+        }
+
         .amount {
             background-color: color(neutral-lightest);
-            color: color(neutral-dark);
+            color: $text-dark;
             cursor: pointer;
             flex: 0 0 10rem;
-            height: 5rem;
             margin-bottom: 1rem;
-            padding: 1rem 0;
+            padding: 0.5rem 0;
             text-align: center;
 
             @include phone {
@@ -83,11 +112,16 @@
 
         .amount-input {
             flex: 0 0 21rem;
-            font-size: inherit;
-            height: 5rem;
+            padding-left: 1.5rem;
 
             @include phone {
                 flex-basis: 100%;
+            }
+
+            &::placeholder {
+                font-size: 1.8rem;
+                font-style: italic;
+                font-weight: normal;
             }
         }
     }
