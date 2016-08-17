@@ -1,11 +1,11 @@
-import {Controller} from 'superb';
+import CMSPageController from '~/controllers/cms';
 import bodyUnitView from '~/components/body-units/body-units';
 import {description as template} from './article.html';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
 
-export default class Article extends Controller {
+export default class Article extends CMSPageController {
 
-    init(data) {
+    init(article) {
         this.template = template;
         this.css = '/app/pages/blog/article/article.css';
         this.view = {
@@ -15,18 +15,18 @@ export default class Article extends Controller {
             body: '.body'
         };
         this.model = {
-            coverUrl: data.article_image || 'http://placehold.it/370x240',
-            title: data.title,
-            author: data.author,
-            date: formatDate(data.date),
-            articleSlug: data.slug
+            coverUrl: article.article_image || 'http://placehold.it/370x240',
+            title: article.title,
+            author: article.author,
+            date: formatDate(article.date),
+            articleSlug: article.slug
         };
 
-        this.data = data;
+        this.slug = article.slug;
     }
 
-    onLoaded() {
-        for (const bodyUnit of this.data.body) {
+    onDataLoaded() {
+        for (const bodyUnit of this.pageData.body) {
             this.regions.body.append(bodyUnitView(bodyUnit));
         }
     }

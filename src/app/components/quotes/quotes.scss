@@ -15,12 +15,13 @@ $phone-up: #{breakpoints(phone) + 1};
     flex-wrap: wrap;
     justify-content: space-between;
     margin: 0 auto;
-    padding: 1.5rem 0;
+    max-width: 120rem;
+    padding: 1.5rem;
     position: relative;
 
     @include desktop {
         flex-flow: row nowrap;
-        padding: 8rem 0;
+        padding: 8rem 1.5rem;
     }
 
     .quote-bucket {
@@ -117,6 +118,10 @@ $phone-up: #{breakpoints(phone) + 1};
             background-color: color(orange);
             color: color(neutral-lightest);
             font-weight: 400;
+
+            &:nth-child(odd) {
+                background-color: color(cyan);
+            }
 
             blockquote {
                 @include constrained-variable-text(2.2, 0.2);

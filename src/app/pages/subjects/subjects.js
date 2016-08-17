@@ -24,10 +24,7 @@ export default class Subjects extends CMSPageController {
             bookViewer: '.books .container'
         };
         this.model = {};
-        this.queryPage = {
-            title: 'Subjects'
-        };
-        this.bookViewer = new BookViewer();
+        this.slug = 'books';
         this.categorySelector = new CategorySelector((category) => this.filterCategories(category));
 
         router.replaceState({
@@ -62,22 +59,22 @@ export default class Subjects extends CMSPageController {
         this.bookViewer.filterCategories(category);
     }
 
-    onLoaded() {
-        this.regions.filter.attach(this.categorySelector);
-        this.regions.bookViewer.attach(this.bookViewer);
-        const category = this.categoryFromPath();
-
-        this.categorySelector.updateSelected(category);
-        this.filterCategories(category);
-    }
-
     onDataLoaded() {
+        this.bookViewer = new BookViewer(this.pageData.books);
+        this.regions.bookViewer.attach(this.bookViewer);
+
         document.title = `${this.pageData.title} - OpenStax`;
         this.model = this.pageData;
         for (const htmlEl of this.el.querySelectorAll('[data-html]')) {
             htmlEl.innerHTML = this.model[htmlEl.dataset.html];
         }
         this.update();
+
+        const category = this.categoryFromPath();
+
+        this.regions.filter.attach(this.categorySelector);
+        this.categorySelector.updateSelected(category);
+        this.filterCategories(category);
     }
 
     onClose() {

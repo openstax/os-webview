@@ -5,9 +5,9 @@ import {description as template} from './ap.html';
 
 export default class AP extends Controller {
 
-    static description = 'Classrooms benefit from our adaptive learning ' +
-        'courseware and open content, including textbooks for AP® courses. ' +
-        'Find out how your class can take part.';
+    static description =
+    'Explore OpenStax textbooks for Advanced Placement courses, available free ' +
+    'online and low-cost in print and ready to adopt for high school classrooms.';
 
     init() {
         document.querySelector('head meta[name="description"]').content = AP.description;
@@ -23,6 +23,7 @@ export default class AP extends Controller {
     }
 
     onLoaded() {
+        document.title = 'AP® - OpenStax';
         this.regions.buckets.attach(new Buckets([{
             image: {
                 alignment: 'full'

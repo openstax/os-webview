@@ -1,4 +1,4 @@
-import CMSPageController from '~/controllers/cms';
+import {Controller} from 'superb';
 import CategorySelector from '~/components/category-selector/category-selector';
 import CategorySection from './category-section/category-section';
 
@@ -16,9 +16,11 @@ function organizeBooksByCategory(books) {
 
     result[apId] = [];
 
-    for (const book of books) {
-        const cmsCategory = book.subject_name;
+    for (const slug of Object.keys(books)) {
+        const book = books[slug];
+        const cmsCategory = book.subject;
 
+        book.slug = slug;
         if (!(cmsCategory in result)) {
             result[cmsCategory] = [];
         }
@@ -33,10 +35,11 @@ function organizeBooksByCategory(books) {
     return result;
 }
 
-export default class BookViewer extends CMSPageController {
+export default class BookViewer extends Controller {
 
-    init() {
+    init(books) {
         this.template = () => '';
+/*
         this.query = {
             type: 'books.Book',
             fields: ['title', 'subject_name', 'is_ap,cover_url',
@@ -47,13 +50,15 @@ export default class BookViewer extends CMSPageController {
             'bookstore_link', 'bookstore_blurb', 'slug'],
             limit: 50
         };
+        */
         this.view = {
             classes: ['container']
         };
+        this.books = books;
     }
 
-    onDataLoaded() {
-        const categorizedBooks = organizeBooksByCategory(this.pageData.pages);
+    onLoaded() {
+        const categorizedBooks = organizeBooksByCategory(this.books);
 
         this.categorySections = CategorySelector.categories.map(
             (category) => new CategorySection(category.cms, categorizedBooks[category.cms])
