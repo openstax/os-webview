@@ -22,6 +22,7 @@ const PAGES = [
     'faculty-verification',
     'finish-profile',
     'foundation',
+    'give',
     'higher-ed',
     'interest',
     'impact',

@@ -1,5 +1,6 @@
 import {Controller} from 'superb';
 import {on} from '~/helpers/controller/decorators';
+import router from '~/router';
 import {highSchoolSlugs} from '~/models/book-titles';
 import {description as template} from './get-this-title.html';
 
@@ -57,6 +58,11 @@ export default class GetThisTitle extends Controller {
     hideSubmenu() {
         this.model.submenu = '';
         this.update();
+    }
+
+    @on('click [href*="cnx.org/content"],:not(.show-pdf-submenu)[href$=".pdf"')
+    showGive() {
+        router.navigate('/give?student', {path: '/give?student'});
     }
 
 }
