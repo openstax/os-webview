@@ -40,6 +40,14 @@ const models = {
         adoptionLinkText: 'Adopt a book',
         subjectLinkText: 'Explore our books'
     },
+    give: {
+        headline: 'Thank you for giving to OpenStax! ',
+        topParagraph: `Your donation helps us to develop and spread the word about our
+        books and adaptive learning tools. With your help, we’re giving hundreds of
+        thousands of students access to high-quality educational materials.`,
+        adoptionUrl: '/impact',
+        adoptionLinkText: 'See our impact'
+    },
     interest: {
         headline: 'Thanks for telling us about yourself!',
         topParagraph: `Our goal is to increase access for students to get the learning materials

@@ -1,0 +1,82 @@
+<template args="model">
+    <div class="hero">
+        <div class = "background-overlay"></div>
+        <div class="background-image"></div>
+        <div class="boxed">
+            <h1>{model.headline}</h1>
+            <p>{model.subhead}</p>
+            <div class="amount-boxes">
+                <form method="post" action="https://ebank.rice.edu/C21279_upay/web/index.jsp">
+                    <input name="AMT" type="hidden" value="{model.selectedAmount}"/>
+                    <input name="SUCCESS_LINK" type="hidden" value="{model.thankYouUrl}" />
+                    <input type="hidden" name="UPAY_SITE_ID" id="UPAY_SITE_ID" value="106" />
+                    <input type="hidden" name="Donation_To" id="Donation_To" value="OpenStax" />
+                    <div class="box-row">
+                        <div each="amount in model.amounts" class="{`amount ${model.selectedAmount === +amount ? 'selected' : ''}`}" data-value="{amount}">${amount}</div>
+                        <input type="number" class="{`amount-input ${model.otherAmount === null ? '' : 'selected'}`}" placeholder="Other amount" min="5" value="{model.otherAmount}"/>
+                    </div>
+                    <input class="btn" type="submit" value="donate!" />
+                </form>
+            </div>
+        </div>
+    </div>
+    <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
+    <div class="boxed">
+        <h2>Other Ways to Give</h2>
+        <hr />
+        <div class="row">
+            <div class="col">
+                <h3>Check</h3>
+                <p>
+                    If you would like to mail a check for your gift to OpenStax, make
+                    checks out to OpenStax, Rice University.
+                </p>
+                <h4>Mail to:</h4>
+                <address>OpenStax
+                    P.O. Box 1892 MS375
+                    Houston, TX 77251-1892
+                </address>
+            </div>
+            <div class="col">
+                <h3>Wire Transfer / ACH</h3>
+                <p>
+                    If you would like to make a gift via an electronic transfer,
+                    please contact our finance department for detailed bank instructions.
+                </p>
+                <div class="container">
+                    <a class="go-to" href="/contact?subject=Donations">Contact us for wire instructions</a>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col">
+                <h3>Matching Gifts</h3>
+                <p>
+                    Engage in your employer's matching gift program to multiply your
+                    donation's impact.
+            </div>
+            <div class="col">
+                <h3>Other Donation Options</h3>
+                <p>
+                    We are here to assist you with:
+                    <ul>
+                        <li>Longterm appreciated securities</li>
+                        <li>Gifts to OpenStax in your will or revocable management trust</li>
+                        <li>Qualified charitable distributions from your IRA</li>
+                        <li>Beneficiary designations for your retirement plan or life
+                            insurance to benefit OpenStax</li>
+                        <li>Charitable gift annuities</li>
+                        <li>Charitable trusts</li>
+                        <li>Gifts of real estate, business interests, closely held
+                            stock and personal property</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+        <hr />
+        <p>
+            <a href="/contact?subject=Donations" class="btn cta">Contact us for help with your gift</a>
+        </p>
+    </div>
+</template>
