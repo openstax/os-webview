@@ -1,9 +1,9 @@
-import CMSPageController from '~/controllers/cms';
+import {Controller} from 'superb';
 import bodyUnitView from '~/components/body-units/body-units';
 import {description as template} from './article.html';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
 
-export default class Article extends CMSPageController {
+export default class Article extends Controller {
 
     init(article) {
         this.template = template;
@@ -21,8 +21,6 @@ export default class Article extends CMSPageController {
             date: formatDate(article.date),
             articleSlug: article.slug
         };
-
-        this.slug = article.slug;
     }
 
     onDataLoaded() {
