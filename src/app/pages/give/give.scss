@@ -1,0 +1,186 @@
+@import 'variables';
+@import 'mixins';
+
+.give-page {
+    .hero {
+        color: color(neutral-lightest);
+        padding: 6rem 0;
+        position: relative;
+
+        .background-image,
+        .background-overlay {
+            height: 100%;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: -1;
+        }
+
+        .background-overlay {
+            background-color: color(green);
+            filter: saturate(110%);
+        }
+
+        .background-image {
+            background-image: url('/images/give/background.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            filter: grayscale(100%) contrast(120%);
+            opacity: 0.1;
+        }
+
+        h1 {
+            color: inherit;
+            line-height: 1;
+            margin-bottom: 2.5rem;
+        }
+
+        p {
+            max-width: none;
+        }
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    .boxed {
+        padding: 0 1rem;
+
+        @include desktop {
+            padding: 0 11.5rem;
+        }
+    }
+
+    .amount-boxes {
+        margin: 3rem 0;
+        max-width: 100%;
+
+        @include phone {
+            width: 21rem;
+        }
+
+        @media (min-width: 340px) {
+            width: 32rem;
+        }
+
+        @media (min-width: 481px) {
+            width: 43rem;
+        }
+
+        @include desktop {
+            margin: 3rem auto;
+        }
+
+
+        form {
+            display: flex;
+            flex-flow: row wrap;
+            width: 100%;
+
+            @include desktop {
+                justify-content: center;
+            }
+
+            [type="submit"] {
+                background-color: color(gold);
+                padding: 2rem 5rem;
+                width: 50%;
+            }
+        }
+
+        .box-row {
+            display: flex;
+            flex: 0 0 100%;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .amount,
+        .amount-input {
+            font-size: 1.6rem;
+            font-weight: 500;
+            height: 4rem;
+
+            &.selected {
+                background-color: color(cyan);
+                color: color(neutral-lightest);
+            }
+        }
+
+        .amount {
+            background-color: color(neutral-lightest);
+            color: $text-dark;
+            cursor: pointer;
+            flex: 0 0 10rem;
+            margin-bottom: 1rem;
+            padding: 0.5rem 0;
+            text-align: center;
+        }
+
+        .amount-input {
+            flex: 0 0 21rem;
+            padding-left: 1.5rem;
+
+            @include phone {
+                flex-basis: 100%;
+            }
+
+            &::placeholder {
+                font-size: 1.8rem;
+                font-style: italic;
+                font-weight: normal;
+            }
+        }
+    }
+
+    hr {
+        background: color(neutral-lighter);
+        border: 0;
+        color: color(neutral-lighter);
+        height: 0.4rem;
+        margin: 2rem 0;
+        opacity: 0.5;
+        width: 100%;
+    }
+
+    address {
+        font-style: normal;
+        white-space: pre-line;
+    }
+
+    .container {
+        display: inline;
+        position: relative;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        .col {
+            flex-basis: calc(50% - 2rem);
+
+            @include phone {
+                flex-basis: 100%;
+            }
+        }
+    }
+
+    .btn {
+        padding: 2rem;
+    }
+
+    .cta {
+        background-color: color(orange);
+        color: color(neutral-lightest);
+        margin-bottom: 7rem;
+    }
+
+    .text-content {
+        padding: 8rem 0 15rem;
+    }
+
+}

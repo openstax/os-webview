@@ -20,7 +20,13 @@ export default class Blog extends CMSPageController {
     }
 
     onDataLoaded() {
-        const articles = Object.keys(this.pageData.articles).map((key) => this.pageData.articles[key]);
+        const articles = Object.keys(this.pageData.articles).map((key) => {
+            const article = this.pageData.articles[key];
+
+            article.slug = key;
+
+            return article;
+        });
         const pinnedArticles = articles.filter((article) => article.pin_to_top);
         const otherArticles = articles.filter((article) => !article.pin_to_top);
 
