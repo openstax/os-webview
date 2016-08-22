@@ -11,6 +11,14 @@ const studentModel = {
     amounts: [5, 10, 15, 25, 50, 100]
 };
 
+const thankYouModel = {
+    headline: 'Thank you for giving to OpenStax!',
+    subhead: `Your donation helps us to develop and spread the word about our books
+    and adaptive learning tools. With your help, we’re giving hundreds of thousands
+    of students access to high-quality educational materials.`,
+    amounts: null
+};
+
 export default class Give extends Controller {
 
     init() {
@@ -24,11 +32,13 @@ export default class Give extends Controller {
             we can create and revise our free textbooks, finetune our adaptive learning
             tools, and spread the word to more instructors and students. Your donation
             changes lives.`,
-            thankYouUrl: `${settings.apiOrigin}/confirmation?give`,
+            thankYouUrl: `${settings.apiOrigin}/give?thanks`,
             amounts: [5, 25, 50, 100, 500, 1000]
         };
         if ('student' in queryDict) {
             Object.assign(this.model, studentModel);
+        } else if ('thanks' in queryDict) {
+            Object.assign(this.model, thankYouModel);
         }
         this.css = '/app/pages/give/give.css';
         this.view = {
@@ -37,8 +47,10 @@ export default class Give extends Controller {
     }
 
     onLoaded() {
-        document.title = 'Give - OpenStax';
-        this.setAmount(5);
+        document.title = this.model.amounts ? 'Give - OpenStax' : 'Thanks - OpenStax';
+        if (this.model.amounts) {
+            this.setAmount(5);
+        }
     }
 
     setAmount(amount) {
