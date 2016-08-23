@@ -1,5 +1,5 @@
 import ProxyWidgetView from '~/helpers/backbone/proxy-widget-view';
-import userModel from '~/models/usermodel';
+import {sfModel} from '~/models/usermodel';
 import salesforceModel from '~/models/salesforce-model';
 import bookTitles from '~/helpers/book-titles';
 import FacultySection from './faculty-section/faculty-section';
@@ -52,9 +52,8 @@ export default class NewAccountForm extends ProxyWidgetView {
         this.el.classList.add('finish-profile');
         super.onRender();
         salesforceModel.prefill(this.el);
-        userModel.fetch().then((data) => {
-            let userInfo = data[0];
 
+        const handleUserInfo = (userInfo) => {
             if (userInfo && userInfo.username && userInfo.accounts_id) {
                 this.el.querySelector('[name=first_name]').value = userInfo.first_name;
                 this.el.querySelector('[name=last_name]').value = userInfo.last_name;
@@ -64,12 +63,12 @@ export default class NewAccountForm extends ProxyWidgetView {
                 this.el.querySelector('#problem-message').textContent = 'Could not load user information';
                 this.el.querySelector('[type="submit"]').disabled = true;
             }
-        }).catch((e) => {
-            /* eslint no-alert: 0 */
-            alert('Something went wrong. Cannot find your user information.');
+        };
+
+        sfModel.fetch().then(handleUserInfo).catch((e) => {
             /* eslint no-console: 0 */
             console.warn(e);
-            // window.location.pathname = '/';
+            handleUserInfo({});
         });
 
         let roleSelector = this.el.querySelector('[name="00NU00000054MLz"]'),
