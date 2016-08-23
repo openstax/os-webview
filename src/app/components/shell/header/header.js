@@ -339,9 +339,8 @@ class Header extends BaseView {
                 blogLink.classList.add('hidden');
             }
         });
-        userModel.fetch().then((data) => {
+        userModel.fetch().then((userInfo) => {
             let loginItem = this.el.querySelector('.meta-nav .container .login a'),
-                userInfo = data[0],
                 loginWrapper = loginItem.parentNode,
                 loggedIn = userInfo && userInfo.username !== '';
 
