@@ -1,5 +1,5 @@
 import ProxyWidgetView from '~/helpers/backbone/proxy-widget-view';
-import userModel from '~/models/usermodel';
+import {sfModel} from '~/models/usermodel';
 import salesforceModel from '~/models/salesforce-model';
 import $ from '~/helpers/$';
 import bookTitles from '~/helpers/book-titles';
@@ -56,11 +56,16 @@ export default class FacultyVerificationForm extends ProxyWidgetView {
     onRender() {
         this.el.classList.add('faculty-verification-form', 'hidden');
         salesforce.populateAdoptionStatusOptions(this.el, ['adopted', 'recommend', 'no'], true);
-        userModel.fetch().then((data) => {
+        sfModel.fetch().then((data) => {
             let userInfo = data[0];
 
             if (userInfo && userInfo.username) {
                 super.onRender();
+                if (!('pending_verification' in userInfo)) {
+                    this.el.querySelector('.salesforce-down').classList.remove('hidden');
+                    this.el.querySelector('.subhead').classList.add('hidden');
+                    this.el.querySelector('form').classList.add('hidden');
+                }
                 this.el.classList.remove('hidden');
                 this.el.querySelector('[name=user_id]').value = userInfo.username;
                 this.el.querySelector('[name=OS_Accounts_ID__c]').value = userInfo.accounts_id;
