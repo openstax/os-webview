@@ -65,7 +65,7 @@ export default class NewAccountForm extends ProxyWidgetView {
             }
         };
 
-        sfModel.fetch().then(handleUserInfo).catch((e) => {
+        sfModel.fetch().then((data) => handleUserInfo(data[0])).catch((e) => {
             /* eslint no-console: 0 */
             console.warn(e);
             handleUserInfo({});

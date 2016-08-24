@@ -56,7 +56,9 @@ export default class FacultyVerificationForm extends ProxyWidgetView {
     onRender() {
         this.el.classList.add('faculty-verification-form', 'hidden');
         salesforce.populateAdoptionStatusOptions(this.el, ['adopted', 'recommend', 'no'], true);
-        sfModel.fetch().then((userInfo) => {
+        sfModel.fetch().then((data) => {
+            const userInfo = data[0];
+
             if (userInfo && userInfo.username) {
                 super.onRender();
                 if (!('pending_verification' in userInfo)) {
