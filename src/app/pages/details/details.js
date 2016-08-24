@@ -143,8 +143,7 @@ export default class Details extends LoadingView {
                 }
             },
             showInstructorResources = (resources) => {
-                userModel.fetch().then((data) => {
-                    const userInfo = data[0];
+                userModel.fetch().then((userInfo) => {
                     let alternateLink = null,
                         encodedLocation = encodeURIComponent(Backbone.history.location.href),
                         extraInstructions = this.el.querySelector('#extra-instructions'),
