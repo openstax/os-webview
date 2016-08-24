@@ -19,7 +19,7 @@ module.exports = {
     },
     src: 'src',
     browsers: [
-        'last 2 versions',
+        'last 3 versions',
         'not ie < 11'
     ],
     name: project.name,
