@@ -12,6 +12,7 @@
                         <input name="SUCCESS_LINK" type="hidden" value="{model.thankYouUrl}" />
                         <input type="hidden" name="UPAY_SITE_ID" id="UPAY_SITE_ID" value="106" />
                         <input type="hidden" name="Donation_To" id="Donation_To" value="OpenStax" />
+                        <input type="hidden" name="Revenue_Amount"  value="0" />
                         <div class="box-row">
                             <div each="amount in model.amounts" class="{`amount ${model.selectedAmount === +amount ? 'selected' : ''}`}" data-value="{amount}">${amount}</div>
                             <input type="number" class="{`amount-input ${model.otherAmount === null ? '' : 'selected'}`}" placeholder="Other amount" min="5" value="{model.otherAmount}"/>

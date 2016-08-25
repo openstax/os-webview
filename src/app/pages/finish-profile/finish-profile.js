@@ -2,7 +2,7 @@ import {Controller} from 'superb';
 import {on} from '~/helpers/controller/decorators';
 import selectHandler from '~/handlers/select';
 import bookTitles from '~/models/book-titles';
-import userModel from '~/models/usermodel';
+import {sfUserModel} from '~/models/usermodel';
 import FacultySection from './faculty-section/faculty-section';
 import {description as template} from './finish-profile.html';
 
@@ -41,7 +41,7 @@ export default class NewAccountForm extends Controller {
     onLoaded() {
         document.title = 'Finish Profile - OpenStax';
         selectHandler.setup(this);
-        userModel.fetch().then((data) => {
+        sfUserModel.fetch().then((data) => {
             this.model.firstName = data.first_name;
             this.model.lastName = data.last_name;
             this.model.userId = data.username;
