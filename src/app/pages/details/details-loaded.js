@@ -43,8 +43,7 @@ export default class DetailsLoaded extends Controller {
             }
         }
         this.regions.getThisTitle.append(new GetThisTitle(this.model));
-        userModel.fetch();
-        userModel.promise.then((userInfo) => {
+        userModel.fetch().then((userInfo) => {
             let alternateLink = null;
             let isInstructor = true;
             const encodedLocation = encodeURIComponent(window.location.href);
@@ -61,13 +60,26 @@ export default class DetailsLoaded extends Controller {
                     }
                 }
             };
+            const insertPartners = () => {
+                for (const partner of this.model.book_allies) {
+                    const partnerTemplateHelper = {
+                        name: partner.ally_heading,
+                        blurb: partner.ally_short_description,
+                        url: partner.book_link_url,
+                        linkText: partner.book_link_text,
+                        logoUrl: partner.ally_color_logo
+                    };
+
+                    this.regions.partners.append(new Partner(partnerTemplateHelper));
+                }
+            };
 
             if (!userInfo || userInfo.username === '') {
                 isInstructor = false;
                 alternateLink = `${settings.apiOrigin}/accounts/login/openstax/?next=${encodedLocation}`;
                 extraInstructions.innerHTML = `<a href="${alternateLink}">Login</a> for instructor access.`;
                 const anchor = extraInstructions.querySelector('a');
-            } else if (userInfo.groups.indexOf('Faculty') < 0) {
+            } else if (!('groups' in userInfo) || !userInfo.groups.includes('Faculty')) {
                 isInstructor = false;
                 alternateLink = '/faculty-verification';
                 extraInstructions.innerHTML = `<a href="${alternateLink}">Apply for instructor access.</a>`;
@@ -81,18 +93,7 @@ export default class DetailsLoaded extends Controller {
             const tocController = new Contents(this.model.table_of_contents, {tag: 'ol'});
 
             this.regions.tableOfContents.attach(tocController);
-
-            for (const partner of this.model.book_allies) {
-                const partnerTemplateHelper = {
-                    name: partner.ally_heading,
-                    blurb: partner.ally_short_description,
-                    url: partner.book_link_url,
-                    linkText: partner.book_link_text,
-                    logoUrl: partner.ally_color_logo
-                };
-
-                this.regions.partners.append(new Partner(partnerTemplateHelper));
-            }
+            insertPartners();
         });
     }
 

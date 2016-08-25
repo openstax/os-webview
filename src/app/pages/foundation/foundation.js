@@ -8,6 +8,7 @@ export default class Foundation extends Controller {
         'Hewlett Foundation, and more.';
 
     init() {
+        document.title = 'Sponsors - OpenStax';
         document.querySelector('head meta[name="description"]').content = Foundation.description;
         this.template = template;
         this.css = '/app/pages/foundation/foundation.css';

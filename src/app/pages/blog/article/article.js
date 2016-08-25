@@ -16,7 +16,7 @@ export default class Article extends Controller {
         };
         this.model = {
             coverUrl: article.article_image || 'http://placehold.it/370x240',
-            title: article.title,
+            title: article.subheading,
             author: article.author,
             date: formatDate(article.date),
             articleSlug: article.slug
