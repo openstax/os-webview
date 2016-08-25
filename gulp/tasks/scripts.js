@@ -196,8 +196,9 @@ function compileScripts() {
     .pipe(pi.babel({
         presets: ['es2015'],
         plugins: [
-            'transform-decorators-legacy',
+            'transform-async-to-generator',
             'transform-class-properties',
+            'transform-decorators-legacy',
             'transform-object-assign'
         ]
     }))
