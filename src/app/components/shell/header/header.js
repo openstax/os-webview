@@ -32,14 +32,16 @@ class Header extends Controller {
                 logout: `${accounts}/logout/?next=${currentPage}`
             };
         };
+
+        document.addEventListener('click', this.resetHeader.bind(this));
+        window.addEventListener('resize', this.closeFullScreenNav.bind(this));
     }
 
     classList(action, ...args) {
-        const header = this.el;
         let result = null;
 
-        if (header && typeof header.classList === 'object') {
-            result = header.classList[action](...args);
+        if (this.el && typeof this.el.classList === 'object') {
+            result = this.el.classList[action](...args);
         }
 
         return result;
@@ -86,11 +88,10 @@ class Header extends Controller {
     }
 
     get height() {
-        const header = this.el.querySelector('.page-header');
         let height = 0;
 
-        if (header && typeof header === 'object') {
-            height = header.offsetHeight;
+        if (this.el && typeof this.el === 'object') {
+            height = this.el.offsetHeight;
         }
 
         return height;
@@ -130,12 +131,11 @@ class Header extends Controller {
 
     toggleFullScreenNav(e) {
         const button = e.currentTarget;
-        const header = this.el.querySelector('.page-header');
 
         document.body.classList.toggle('no-scroll');
 
         window.requestAnimationFrame(() => {
-            header.classList.toggle('active');
+            this.el.classList.toggle('active');
             this.removeAllOpenClasses(e);
             this.removeCloneDropdownParent();
 
@@ -166,12 +166,11 @@ class Header extends Controller {
     }
 
     removeAllOpenClasses() {
-        const header = this.el.querySelector('.page-header');
         const parentItem = this.el.querySelectorAll('.dropdown');
         const dropDownMenu = this.el.querySelectorAll('.dropdown-menu');
 
-        if (header) {
-            header.classList.remove('open');
+        if (this.el) {
+            this.el.classList.remove('open');
         }
         this.removeClass(parentItem, 'open');
         this.removeClass(dropDownMenu, 'open');
@@ -181,14 +180,13 @@ class Header extends Controller {
 
     closeFullScreenNav() {
         const button = this.el.querySelector('.expand');
-        const header = this.el.querySelector('.page-header');
 
-        if (header.classList.contains('active')) {
+        if (this.el.classList.contains('active')) {
             document.body.classList.remove('no-scroll');
         }
 
         window.requestAnimationFrame(() => {
-            header.classList.remove('active');
+            this.el.classList.remove('active');
             this.removeAllOpenClasses();
             this.removeCloneDropdownParent();
 
@@ -199,13 +197,13 @@ class Header extends Controller {
 
     @on('click .expand')
     onClickToggleFullScreenNav(e) {
+        e.stopPropagation();
         this.toggleFullScreenNav(e);
     }
 
     @on('click .page-header .dropdown > a')
     flyOutMenu(e) {
         const w = window.innerWidth;
-        const header = this.el.querySelector('.page-header');
         const $this = e.currentTarget;
         const parentItem = $this.parentNode;
         const dropDownMenu = $this.nextElementSibling;
@@ -217,7 +215,7 @@ class Header extends Controller {
 
             if (!dropDownMenu.classList.contains('open')) {
                 this.removeAllOpenClasses();
-                header.classList.add('open');
+                this.el.classList.add('open');
                 parentItem.classList.add('open');
                 dropDownMenu.classList.add('open');
                 this.openThisDropdown(e);
@@ -247,14 +245,13 @@ class Header extends Controller {
 
     resetHeader(e) {
         const urlClick = e && linkHelper.validUrlClick(e);
-        const header = this.el.querySelector('.page-header');
 
         if (urlClick) {
             if (!urlClick.parentNode.classList.contains('dropdown')) {
                 this.closeDropdownMenus(true);
                 this.closeFullScreenNav();
             }
-        } else if (!header.classList.contains('active')) {
+        } else if (!this.el.classList.contains('active')) {
             this.closeFullScreenNav();
         } else {
             this.updateHeaderStyle();
@@ -365,16 +362,16 @@ class Header extends Controller {
                 loginItem.firstChild.textContent = 'Login';
             }
         });
-        this.updateHeaderStyle();
+
         this.el.querySelector('[data-href-setting="account-href"]').href = settings.accountHref;
-        this.attachListenerTo(document, 'click', this.resetHeader.bind(this), true);
+
         this.attachListenerTo(window, 'scroll', () =>
             window.requestAnimationFrame(this.updateHeaderStyle.bind(this))
         );
         this.attachListenerTo(window, 'scroll', () =>
             window.requestAnimationFrame(this.removeAllOpenClasses.bind(this))
         );
-        this.attachListenerTo(window, 'resize', this.closeFullScreenNav.bind(this));
+
         document.body.classList.remove('no-scroll');
 
         // prevent scrolling on iOS when mobile menu is active
