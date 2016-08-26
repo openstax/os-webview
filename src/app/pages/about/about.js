@@ -63,7 +63,12 @@ export default class AboutUs extends CMSPageController {
             classes: ['about-page', 'page']
         };
 
-        this.model = {bios: []};
+        this.model = {
+            bios: [],
+            introHeading: '',
+            introParagraph: '',
+            tagline: ''
+        };
 
         // FIX: Move to an inherited controller so all pages can get this for free
         document.querySelector('head meta[name="description"]').content = AboutUs.description;
