@@ -59,13 +59,6 @@ export default class Give extends Controller {
             classes: ['give-page']
         };
 
-        this.togglePage = () => {
-            if (history.state.page) {
-                this.model.page2 = !this.model.page2;
-                this.update();
-            }
-        };
-
         window.addEventListener('popstate', this.togglePage);
     }
 
@@ -76,6 +69,7 @@ export default class Give extends Controller {
 
             this.setAmount(amount);
         }
+
         selectHandler.setup(this);
     }
 
@@ -83,6 +77,18 @@ export default class Give extends Controller {
         this.model.selectedAmount = amount;
         this.model.otherAmount = this.model.amounts.includes(amount) ? null : amount;
         this.update();
+    }
+
+    togglePage() {
+        if (this.model && history.state.page) {
+            this.model.page2 = !this.model.page2;
+            this.update();
+        }
+    }
+
+    detach() {
+        super.detach();
+        window.removeEventListener('popstate', this.togglePage);
     }
 
     @on('click .amount')
@@ -93,10 +99,6 @@ export default class Give extends Controller {
     @on('change .amount-input')
     setCustomAmount(event) {
         this.setAmount(+event.target.value);
-    }
-
-    onClose() {
-        window.removeEventListener('popstate', this.togglePage);
     }
 
     @on('submit .preform')
