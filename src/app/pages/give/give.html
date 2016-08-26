@@ -16,22 +16,27 @@
                     <div class="col">
                         <label>
                             First Name
+                            <span class="invalid-message">{model.validationMessage('First_Name')}</span>
                             <input type="text" name="First_Name" class="form-control" required />
                         </label>
                         <label>
                             Last Name
+                            <span class="invalid-message">{model.validationMessage('Last_Name')}</span>
                             <input type="text" name="Last_Name" class="form-control" required />
                         </label>
                         <label>
                             Suffix
+                            <span class="invalid-message">{model.validationMessage('Suffix')}</span>
                             <input type="text" name="Suffix" class="form-control">
                         </label>
                         <label>
                             E-Mail
+                            <span class="invalid-message">{model.validationMessage('BILL_EMAIL_ADDRESS')}</span>
                             <input type="email" name="BILL_EMAIL_ADDRESS" class="form-control" required />
                         </label>
                         <label>
                             Donation Amount
+                            <span class="invalid-message">{model.validationMessage('AMT')}</span>
                             <input name="AMT" type="number" min=5 value="{model.selectedAmount}" required />
                         </label>
 
@@ -39,21 +44,24 @@
                     <div class="col">
                         <label>
                             Address
+                            <span class="invalid-message">{model.validationMessage('BILL_STREET1')}</span>
                             <input type="text" name="BILL_STREET1" class="form-control" required />
                         </label>
 
                         <label>
+                            <span class="invalid-message">{model.validationMessage('BILL_STREET2')}</span>
                             <input type="text" name="BILL_STREET2" class="form-control" />
                         </label>
 
                         <label>
                             City
+                            <span class="invalid-message">{model.validationMessage('BILL_CITY')}</span>
                             <input type="text" name="BILL_CITY" class="form-control" required />
                         </label>
 
                         <label>
                             State
-                            <input type="hidden" name="Mailing_State">
+                            <span class="invalid-message">{model.validationMessage('BILL_STATE')}</span>
                             <div skip="true"></div>
                             <select name="BILL_STATE" class="form-control" required>
                                 <option value="--">Not Applicable</option>
@@ -134,11 +142,13 @@
                         </label>
                         <label>
                             Zip Code
+                            <span class="invalid-message">{model.validationMessage('BILL_POSTAL_CODE')}</span>
                             <input type="text" name="BILL_POSTAL_CODE" class="form-control" required />
                         </label>
 
                         <label>
                             Country
+                            <span class="invalid-message">{model.validationMessage('BILL_COUNTRY')}</span>
                             <div skip="true"></div>
                             <select name="BILL_COUNTRY" class="form-control" required />
                                 <option value="US">United States</option>

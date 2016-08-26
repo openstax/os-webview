@@ -42,7 +42,12 @@ export default class Give extends Controller {
             changes lives.`,
             thankYouUrl: `${settings.apiOrigin}/give?thanks`,
             amounts: [5, 25, 50, 100, 500, 1000],
-            page2: history.state && (history.state.page === 2)
+            page2: history.state && (history.state.page === 2),
+            validationMessage: (name) => {
+                const el = this.el.querySelector(`[name="${name}"]`);
+
+                return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
+            }
         };
         if ('student' in queryDict) {
             Object.assign(this.model, studentModel);
@@ -107,6 +112,11 @@ export default class Give extends Controller {
     @on('focusout input')
     markVisited(event) {
         event.delegateTarget.classList.add('visited');
+    }
+
+    @on('change')
+    updateOnChange() {
+        this.update();
     }
 
     @on('click [type="submit"]')
