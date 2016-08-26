@@ -2,6 +2,11 @@
 @import 'mixins';
 
 .give-page {
+
+    .btn-orange {
+        background-color: color(orange);
+    }
+
     .hero {
         color: color(neutral-lightest);
         padding: 6rem 0;
@@ -181,6 +186,10 @@
 
     .text-content {
         padding: 8rem 0 15rem;
+
+        &.subhead {
+            padding: 2rem 0;
+        }
     }
 
 }

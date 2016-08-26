@@ -1,5 +1,6 @@
 import {Controller} from 'superb';
 import {on} from '~/helpers/controller/decorators';
+import selectHandler from '~/handlers/select';
 import $ from '~/helpers/$';
 import settings from 'settings';
 import {description as template} from './give.html';
@@ -73,6 +74,15 @@ export default class Give extends Controller {
     @on('change .amount-input')
     setCustomAmount(event) {
         this.setAmount(+event.target.value);
+    }
+
+    @on('submit .preform')
+    loadPage2(event) {
+        event.preventDefault();
+        console.debug('Hooray!');
+        this.model.page2 = true;
+        this.update();
+        selectHandler.setup(this);
     }
 
 }
