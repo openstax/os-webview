@@ -11,7 +11,8 @@ const corsHeaders = [
     'If-Modified-Since',
     'Cache-Control',
     'Accept-Encoding',
-    'Content-Type'
+    'Content-Type',
+    'Pragma'
 ];
 
 function browserSync(done) {

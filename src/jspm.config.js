@@ -1,11 +1,11 @@
 SystemJS.config({
   paths: {
-    "ga": "https://www.google-analytics.com/analytics.js"
+    "gtm": "https://www.googletagmanager.com/gtm.js"
   },
   meta: {
-    "ga": {
+    "gtm": {
       "scriptLoad": true,
-      "exports": "ga",
+      "exports": "dataLayer",
       "format": "global"
     }
   },

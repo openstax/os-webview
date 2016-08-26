@@ -3,7 +3,6 @@ import linkHelper from '~/helpers/link';
 
 const RELATIVE_TO_ROOT = /^\//;
 const SETUP_GTM = Symbol();
-const SETUP_GA = Symbol();
 
 class Analytics {
 
@@ -12,16 +11,15 @@ class Analytics {
     }
 
     start() {
-        this[SETUP_GA]();
         this[SETUP_GTM]();
     }
 
     send(fields) {
-        if (this.tracking) {
-            SystemJS.import('ga').then(() => {
-                window.ga('send', fields);
-            });
-        }
+        SystemJS.paths.gtm = `https://www.googletagmanager.com/gtm.js?id=${settings.tagManagerID}`;
+        SystemJS.meta[SystemJS.paths.gtm] = SystemJS.meta['https://www.googletagmanager.com/gtm.js'];
+        SystemJS.import('gtm').then(() => {
+            window.dataLayer.push(fields);
+        });
     }
 
     sendPageview(page) {
@@ -63,38 +61,11 @@ class Analytics {
     }
 
     [SETUP_GTM]() {
-        (function (w, d, s, l, i) {
-            // Disable ESLint rules since we're copying Google's script
-            /* eslint max-params: 0 */
-            /* eslint eqeqeq: 0 */
-            /* eslint prefer-template: 0 */
-
-            w[l] = w[l] || [];
-            w[l].push({
-                'gtm.start': new Date().getTime(),
-                event: 'gtm.js'
-            });
-
-            const f = d.getElementsByTagName(s)[0];
-            const j = d.createElement(s);
-            const dl = l !== 'dataLayer' ? '&l=' + l : '';
-
-            j.async = true;
-            j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', settings.tagManagerID);
-    }
-
-    [SETUP_GA]() {
-        if (typeof window.ga !== 'function') {
-            window.GoogleAnalyticsObject = 'ga';
-            window.ga = {
-                q: [['create', settings.analyticsID, 'auto']],
-                l: Date.now()
-            };
-        } else {
-            window.ga('create', settings.analyticsID, 'auto');
-        }
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            'gtm.start': new Date().getTime(),
+            event: 'gtm.js'
+        });
 
         document.addEventListener('submit', (e) => {
             if (typeof e.target !== 'object' || typeof e.target.action !== 'string') {
