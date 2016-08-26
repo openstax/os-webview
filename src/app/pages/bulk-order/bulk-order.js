@@ -81,17 +81,6 @@ export default class BulkOrder extends Controller {
         });
     }
 
-    @on('click [type="submit"]')
-    doCustomValidation(event) {
-        const invalids = this.el.querySelectorAll('input:invalid');
-
-        this.hasBeenSubmitted = true;
-        if (invalids.length) {
-            event.preventDefault();
-            this.update();
-        }
-    }
-
     updateMessageBody() {
         const queryByName = (name) => this.el.querySelector(`[name=${name}]`).value;
         const orgName = queryByName('organization');
@@ -113,10 +102,26 @@ export default class BulkOrder extends Controller {
         });
     }
 
+    @on('focusout input')
+    markVisited(event) {
+        event.delegateTarget.classList.add('visited');
+    }
+
     @on('change')
     updateOnChange() {
         this.updateMessageBody();
         this.update();
+    }
+
+    @on('click [type="submit"]')
+    doCustomValidation(event) {
+        const invalids = this.el.querySelectorAll('input:invalid');
+
+        this.hasBeenSubmitted = true;
+        if (invalids.length) {
+            event.preventDefault();
+            this.update();
+        }
     }
 
 }

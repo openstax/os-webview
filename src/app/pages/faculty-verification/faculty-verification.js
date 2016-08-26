@@ -28,6 +28,11 @@ export default class FacultyVerificationForm extends Controller {
         }
     }
 
+    @on('focusout input')
+    markVisited(event) {
+        event.delegateTarget.classList.add('visited');
+    }
+
     @on('change')
     updateOnChange() {
         this.testInstitutionalEmail();

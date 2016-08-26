@@ -75,6 +75,11 @@ export default class NewAccountForm extends Controller {
         }
     }
 
+    @on('focusout input')
+    markVisited(event) {
+        event.delegateTarget.classList.add('visited');
+    }
+
     @on('click [type="submit"]')
     doCustomValidation(event) {
         const invalids = this.el.querySelectorAll('input:invalid');

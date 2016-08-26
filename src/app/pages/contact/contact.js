@@ -39,7 +39,12 @@ export default class Contact extends CMSPageController {
             title: '',
             'mailing_header': '',
             'mailing_address': '',
-            'phone_number': ''
+            'phone_number': '',
+            validationMessage: (name) => {
+                const el = this.el.querySelector(`[name="${name}"]`);
+
+                return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
+            }
         };
 
         document.querySelector('head meta[name="description"]').content = Contact.description;
@@ -68,6 +73,27 @@ export default class Contact extends CMSPageController {
     onUpdate() {
         // NOTE: Incremental-DOM currently lacks the ability to inject HTML into a node.
         this.el.querySelector('[data-html="mailing-address"]').innerHTML = this.model.mailing_address;
+    }
+
+    @on('focusout input')
+    markVisited(event) {
+        event.delegateTarget.classList.add('visited');
+    }
+
+    @on('change')
+    updateOnChange() {
+        this.update();
+    }
+
+    @on('click [type="submit"]')
+    doCustomValidation(event) {
+        const invalids = this.el.querySelectorAll('input:invalid');
+
+        this.hasBeenSubmitted = true;
+        if (invalids.length) {
+            event.preventDefault();
+            this.update();
+        }
     }
 
 }
