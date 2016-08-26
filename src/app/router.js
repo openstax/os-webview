@@ -23,6 +23,7 @@ const PAGES = [
     'finish-profile',
     'foundation',
     'give',
+    'give/*path',
     'higher-ed',
     'interest',
     'impact',

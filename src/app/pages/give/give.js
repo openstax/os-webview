@@ -1,5 +1,6 @@
 import {Controller} from 'superb';
 import {on} from '~/helpers/controller/decorators';
+import router from '~/router';
 import selectHandler from '~/handlers/select';
 import $ from '~/helpers/$';
 import settings from 'settings';
@@ -40,7 +41,13 @@ export default class Give extends Controller {
             tools, and spread the word to more instructors and students. Your donation
             changes lives.`,
             thankYouUrl: `${settings.apiOrigin}/give?thanks`,
-            amounts: [5, 25, 50, 100, 500, 1000]
+            amounts: [5, 25, 50, 100, 500, 1000],
+            page2: history.state && (history.state.page === 2),
+            validationMessage: (name) => {
+                const el = this.el.querySelector(`[name="${name}"]`);
+
+                return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
+            }
         };
         if ('student' in queryDict) {
             Object.assign(this.model, studentModel);
@@ -51,19 +58,37 @@ export default class Give extends Controller {
         this.view = {
             classes: ['give-page']
         };
+
+        window.addEventListener('popstate', this.togglePage);
     }
 
     onLoaded() {
         document.title = this.model.amounts ? 'Give - OpenStax' : 'Thanks - OpenStax';
         if (this.model.amounts) {
-            this.setAmount(5);
+            const amount = history.state && history.state.amount || 5;
+
+            this.setAmount(amount);
         }
+
+        selectHandler.setup(this);
     }
 
     setAmount(amount) {
         this.model.selectedAmount = amount;
         this.model.otherAmount = this.model.amounts.includes(amount) ? null : amount;
         this.update();
+    }
+
+    togglePage() {
+        if (this.model && history.state.page) {
+            this.model.page2 = !this.model.page2;
+            this.update();
+        }
+    }
+
+    detach() {
+        super.detach();
+        window.removeEventListener('popstate', this.togglePage);
     }
 
     @on('click .amount')
@@ -79,10 +104,32 @@ export default class Give extends Controller {
     @on('submit .preform')
     loadPage2(event) {
         event.preventDefault();
-        console.debug('Hooray!');
-        this.model.page2 = true;
+        router.navigate('/give/form', {
+            path: '/give',
+            page: 2,
+            amount: this.model.selectedAmount
+        });
+    }
+
+    @on('focusout input')
+    markVisited(event) {
+        event.delegateTarget.classList.add('visited');
+    }
+
+    @on('change')
+    updateOnChange() {
         this.update();
-        selectHandler.setup(this);
+    }
+
+    @on('click [type="submit"]')
+    doCustomValidation(event) {
+        const invalids = this.el.querySelectorAll('input:invalid');
+
+        this.hasBeenSubmitted = true;
+        if (invalids.length) {
+            event.preventDefault();
+            this.update();
+        }
     }
 
 }

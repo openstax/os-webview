@@ -15,6 +15,7 @@
                     <input type="hidden" name="external" value="1">
                     <label>
                         What is your question about?
+                        <span class="invalid-message">{model.validationMessage('subject')}</span>
                         <div skip="true"></div>
                         <select name="subject">
                             <option each="subject in model.subjects" value="{subject}">{subject}</option>
@@ -22,14 +23,17 @@
                     </label>
                     <label>
                         Your Name
+                        <span class="invalid-message">{model.validationMessage('name')}</span>
                         <input name="name" type="text" size="20" required>
                     </label>
                     <label>
                         Your Email Address
+                        <span class="invalid-message">{model.validationMessage('email')}</span>
                         <input name="email" type="email" required>
                     </label>
                     <label>
                         Your Message
+                        <span class="invalid-message">{model.validationMessage('description')}</span>
                         <textarea cols="50" name="description" rows="6" required></textarea>
                     </label>
                     <input type="submit" value="Send" class="btn btn-orange">

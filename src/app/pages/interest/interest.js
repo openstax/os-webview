@@ -32,6 +32,11 @@ export default class InterestForm extends Controller {
         selectHandler.setup(this);
     }
 
+    @on('focusout input')
+    markVisited(event) {
+        event.delegateTarget.classList.add('visited');
+    }
+
     @on('click [type="submit"]')
     doCustomValidation(event) {
         const invalids = this.el.querySelectorAll('input:invalid');

@@ -19,12 +19,38 @@ export default class AdoptionForm extends Controller {
             salesforce: salesforce.adoption([
                 'adopted',
                 'recommended'
-            ])
+            ]),
+            validationMessage: (name) => {
+                const el = this.el.querySelector(`[name="${name}"]`);
+
+                return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
+            }
         };
     }
 
     onLoaded() {
         selectHandler.setup(this);
+    }
+
+    @on('focusout input')
+    markVisited(event) {
+        event.delegateTarget.classList.add('visited');
+    }
+
+    @on('change')
+    updateOnChange() {
+        this.update();
+    }
+
+    @on('click [type="submit"]')
+    doCustomValidation(event) {
+        const invalids = this.el.querySelectorAll('input:invalid');
+
+        this.hasBeenSubmitted = true;
+        if (invalids.length) {
+            event.preventDefault();
+            this.update();
+        }
     }
 
 }
