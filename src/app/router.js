@@ -43,7 +43,7 @@ class AppRouter extends Router {
         this.default('404');
         this.root('home');
         this.route(/^(\d+)/, 'cms');
-        this.route(/^to[us]/, 'tos');
+        this.route(/^to[us]$/, 'tos');
         this.route(/^blog\/(.*)/).load((params) =>
             System.import('~/pages/article/article').then((m) => {
                 const Controller = m.default;
