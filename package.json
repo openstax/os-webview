@@ -74,7 +74,7 @@
       "classList": "npm:classlist-polyfill@^1.0.3",
       "fetch": "npm:whatwg-fetch@^1.0.0",
       "recordo": "npm:recordo@0.0.6",
-      "superb": "npm:superb.js@^0.2.2"
+      "superb": "npm:superb.js@^0.2.5"
     },
     "devDependencies": {},
     "peerDependencies": {
