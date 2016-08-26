@@ -35,6 +35,12 @@ class Header extends Controller {
 
         document.addEventListener('click', this.resetHeader.bind(this));
         window.addEventListener('resize', this.closeFullScreenNav.bind(this));
+        window.addEventListener('scroll', () => {
+            window.requestAnimationFrame(this.updateHeaderStyle.bind(this));
+        });
+        window.addEventListener('scroll', () => {
+            window.requestAnimationFrame(this.removeAllOpenClasses.bind(this));
+        });
     }
 
     classList(action, ...args) {
@@ -364,13 +370,6 @@ class Header extends Controller {
         });
 
         this.el.querySelector('[data-href-setting="account-href"]').href = settings.accountHref;
-
-        this.attachListenerTo(window, 'scroll', () =>
-            window.requestAnimationFrame(this.updateHeaderStyle.bind(this))
-        );
-        this.attachListenerTo(window, 'scroll', () =>
-            window.requestAnimationFrame(this.removeAllOpenClasses.bind(this))
-        );
 
         document.body.classList.remove('no-scroll');
 
