@@ -1,18 +1,8 @@
 import 'babel-polyfill';
 import 'classList';
 import 'fetch';
-import {initialize, injectButtons} from 'recordo';
 import router from '~/router';
 import shell from '~/components/shell/shell';
-
-
-initialize({ignoreAjaxResponse: true});
-// HACK: the app destroys the DOM when starting up so we need to restart recordo so it reinjects into the DOM.
-// TODO: Should only run the setTimeout if `collect=true` has been specified on the URL
-setTimeout(() => {
-    injectButtons();
-}, 2000);
-
 
 // NOTE: precaching is disabled. uglify will remove this code block since it's unreachable
 if (false && '@ENV@' === 'production' && 'serviceWorker' in navigator) {
