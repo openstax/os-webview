@@ -2,8 +2,7 @@ import {Controller} from 'superb';
 import settings from 'settings';
 import {on} from '~/helpers/controller/decorators';
 import linkHelper from '~/helpers/link';
-// import userModel from '~/models/usermodel';
-// import newsPromise from '~/pages/blog/newsPromise';
+import userModel from '~/models/usermodel';
 import {description as template} from './header.html';
 
 // FIX: This needs to be refactored into multiple views
@@ -29,9 +28,21 @@ class Header extends Controller {
                 fixed: () => this.meta.fixed,
                 transparent: () => this.meta.transparent,
                 login: `${accounts}/login/openstax/?next=${currentPage}`,
-                logout: `${accounts}/logout/?next=${currentPage}`
+                logout: `${accounts}/logout/?next=${currentPage}`,
+                user: this.user || {
+                    username: null,
+                    groups: []
+                },
+                accountLink: settings.accountHref
             };
         };
+
+        userModel.load().then((user) => {
+            if (typeof user === 'object') {
+                this.user = user;
+            }
+            this.update();
+        });
 
         document.addEventListener('click', this.resetHeader.bind(this));
         window.addEventListener('resize', this.closeFullScreenNav.bind(this));
@@ -327,58 +338,6 @@ class Header extends Controller {
             thisClone.parentNode.removeChild(thisClone);
         }
     }
-
-    preventMobileMenuScroll(e) {
-        e.preventDefault();
-    }
-
-    /*
-    onLoaded() {
-        // FIX: Model stuff
-        newsPromise.then((articles) => {
-            const blogLink = this.el.querySelector('a[href="/blog"]').parentNode;
-
-            if (!(articles && articles.pages && articles.pages.length)) {
-                blogLink.classList.add('hidden');
-            }
-        });
-        userModel.fetch().then((data) => {
-            const loginItem = this.el.querySelector('.meta-nav .container .login a');
-            const userInfo = data[0];
-            const loginWrapper = loginItem.parentNode;
-            const loggedIn = userInfo && userInfo.username !== '';
-
-            if (loggedIn) {
-                loginItem.firstChild.textContent = `Hi ${userInfo.first_name}`;
-                loginWrapper.classList.add('dropdown');
-                loginItem.setAttribute('aria-haspopup', true);
-
-                loginItem.href = settings.accountHref;
-
-                if (userInfo.groups.indexOf('Faculty') >= 0) {
-                    const nonFaculty = this.el.querySelectorAll('.non-faculty');
-
-                    for (const item of nonFaculty) {
-                        item.classList.add('hidden');
-                    }
-                }
-
-                this.attachListenerTo(loginItem, 'click', this.flyOutMenu.bind(this));
-            } else {
-                loginItem.firstChild.textContent = 'Login';
-            }
-        });
-
-        this.el.querySelector('[data-href-setting="account-href"]').href = settings.accountHref;
-
-        document.body.classList.remove('no-scroll');
-
-        // prevent scrolling on iOS when mobile menu is active
-        const header = document.querySelector('.page-header');
-
-        header.addEventListener('touchmove', this.preventMobileMenuScroll.bind(this), false);
-    }
-    */
 
 }
 
