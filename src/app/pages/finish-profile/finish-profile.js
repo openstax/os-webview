@@ -41,12 +41,12 @@ export default class NewAccountForm extends Controller {
     onLoaded() {
         document.title = 'Finish Profile - OpenStax';
         selectHandler.setup(this);
-        sfUserModel.fetch().then((data) => {
-            this.model.firstName = data.first_name;
-            this.model.lastName = data.last_name;
-            this.model.userId = data.username;
-            this.model.accountId = data.accounts_id;
-            if (data.accounts_id === null) {
+        sfuserModel.load().then((user) => {
+            this.model.firstName = user.first_name;
+            this.model.lastName = user.last_name;
+            this.model.userId = user.username;
+            this.model.accountId = user.accounts_id;
+            if (user.accounts_id === null) {
                 this.model.problemMessage = 'Could not load user information';
             } else {
                 this.model.problemMessage = '';
