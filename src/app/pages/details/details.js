@@ -4,7 +4,7 @@ import DetailsLoaded from './details-loaded';
 
 export default class Details extends CMSPageController {
 
-    static description = 'is a peer-reviewed, free, open textbook ' +
+    static uniDescription = 'is a peer-reviewed, free, open textbook ' +
         'that covers standard scope and sequence. Access the text, authors, ' +
         'and resources here.';
 
@@ -23,8 +23,8 @@ export default class Details extends CMSPageController {
     onDataLoaded() {
         const textTitle = $.htmlToText(this.pageData.title);
 
-        document.querySelector('head meta[name="description"]').content =
-            `${textTitle} ${this.pageData.is_ap ? Details.apDescription : Details.description}`;
+        document.querySelector('head > meta[name="description"]').content =
+            `${textTitle} ${this.pageData.is_ap ? Details.apDescription : Details.uniDescription}`;
         document.title = `${textTitle} - OpenStax`;
 
         const model = this.pageData;

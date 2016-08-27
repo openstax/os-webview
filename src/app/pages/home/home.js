@@ -53,7 +53,6 @@ export default class Home extends CMSPageController {
 
     init() {
         this.slug = 'pages/openstax-homepage';
-        document.querySelector('head meta[name="description"]').content = Home.description;
         this.template = template;
         this.css = '/app/pages/home/home.css';
         this.regions = {
