@@ -69,6 +69,7 @@ export default class Partners extends CMSPageController {
             el.querySelector('h2').innerHTML = partner.title;
             el.querySelector('p').innerHTML = partner.long_description;
         }
+        this.el.querySelector('.filter-button[data-value="AP"]').innerHTML = 'AP<sup>&reg;</sup>';
     }
 
     filterPartners() {
@@ -91,14 +92,16 @@ export default class Partners extends CMSPageController {
 
     @on('click .filter-button')
     setFilter(e) {
-        if (history.state.filter === e.target.textContent) {
+        const value = e.target.dataset.value;
+
+        if (history.state.filter === value) {
             return;
         }
 
-        const subpath = urlify(e.target.textContent);
+        const subpath = urlify(value);
 
         router.navigate(`/partners/${subpath}`, {
-            filter: e.target.textContent,
+            filter: value,
             path: '/partners',
             x: history.state.x,
             y: history.state.y

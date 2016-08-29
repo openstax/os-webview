@@ -40,10 +40,10 @@
     @include position(relative, $args);
 }
 
-/// Returns the opposite direction of each direction in a list
-/// @author Hugo Giraudel
-/// @param {List} $directions - List of initial directions
-/// @return {List} - List of opposite directions
+// Returns the opposite direction of each direction in a list
+// @author Hugo Giraudel
+// @param {List} $directions - List of initial directions
+// @return {List} - List of opposite directions
 @function opposite-direction($directions) {
     $opposite-directions: ();
     $direction-map: (

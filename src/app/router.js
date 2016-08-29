@@ -13,6 +13,7 @@ const PAGES = [
     'ap',
     'article',
     'blog',
+    'blog/*path',
     'books',
     'bulk-order',
     'comp-copy',
@@ -45,13 +46,6 @@ class AppRouter extends Router {
         this.root('home');
         this.route(/^(\d+)/, 'cms');
         this.route(/^to[us]$/, 'tos');
-        this.route(/^blog\/(.*)/).load((params) =>
-            System.import('~/pages/article/article').then((m) => {
-                const Controller = m.default;
-
-                this.defaultRegion.attach(new Controller(...params));
-            })
-        );
 
         PAGES.forEach((page) => {
             const isSplat = page.match(/\/\*/);
