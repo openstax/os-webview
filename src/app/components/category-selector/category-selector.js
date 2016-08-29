@@ -1,5 +1,4 @@
 import {Controller} from 'superb';
-import router from '~/router';
 import FilterButton from './filter-button';
 
 const categories = [

@@ -7,4 +7,112 @@
             content: ' | ';
         }
     }
+
+    .articles {
+        display: flex;
+        flex-flow: column nowrap;
+
+        @include desktop {
+            background-color: lighten(color(neutral-lighter), 8%);
+            flex-flow: row nowrap;
+            padding: 8rem 0;
+
+        }
+
+        .boxed {
+            @include desktop {
+                flex-flow: row wrap;
+                padding: 0;
+            }
+        }
+
+        .container {
+            display: flex;
+            flex-flow: row wrap;
+            width: 100%;
+        }
+    }
+
+    .article.page {
+        $boxed-width: 730px;
+
+        @mixin tablet {
+            @media (min-width: #{breakpoints(phone) + 1}) {
+                @content;
+            }
+        }
+
+        .hero {
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            height: 60rem;
+            overflow: hidden;
+            padding: 0;
+            position: relative;
+            width: 100%;
+
+            .strips {
+                bottom: 0;
+                left: 0;
+                margin-bottom: 0;
+                position: absolute;
+                right: 0;
+            }
+        }
+
+        > .boxed {
+            max-width: $boxed-width;
+            padding: 2rem 1.5rem 8rem;
+        }
+
+        .meta {
+            color: color(neutral-light);
+        }
+
+        .author {
+            color: color(cyan);
+            font-style: italic;
+
+            &::after {
+                content: ' | ';
+            }
+        }
+
+        .body {
+            font-size: 1.8rem;
+            line-height: 3rem;
+
+            img {
+                margin: 1.5rem 0 0;
+                width: 100%;
+            }
+
+            .image {
+                margin-top: 2.5rem;
+            }
+        }
+
+        .tags span {
+            background-color: lighten(color(neutral-lighter), 8%);
+            color: color(gray);
+            display: inline-block;
+            font-size: 1.4rem;
+            line-height: 1;
+            margin-right: 1rem;
+            padding: 1rem;
+        }
+
+        .disqus {
+            padding: 4rem 0 0;
+        }
+
+        .articles .boxed {
+            padding: 0 1.5rem;
+
+            @include desktop {
+                padding: 0;
+            }
+        }
+    }
 }
