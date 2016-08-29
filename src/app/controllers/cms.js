@@ -29,20 +29,15 @@ class CMSPageController extends Controller {
     }
 
     [LOAD_IMAGES](data) {
-        const promises = [
-            new Promise((resolve) => {
-                if (typeof data.image === 'number') {
-                    fetch(`${settings.apiOrigin}/api/images/${data.image}`)
-                    .then((response) => response.json())
-                    .then((json) => {
-                        data.image = json.file;
-                        resolve();
-                    });
-                } else {
-                    resolve();
-                }
-            })
-        ];
+        const promises = [];
+
+        if (typeof data.image === 'number') {
+            promises.push(fetch(`${settings.apiOrigin}/api/images/${data.image}`)
+            .then((response) => response.json())
+            .then((json) => {
+                data.image = json.file;
+            }));
+        }
 
         for (const prop in data) {
             if (data.hasOwnProperty(prop)) {
