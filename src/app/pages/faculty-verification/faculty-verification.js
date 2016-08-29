@@ -64,18 +64,20 @@ export default class FacultyVerificationForm extends Controller {
     onLoaded() {
         document.title = 'Instructor Verification - OpenStax';
         selectHandler.setup(this);
-        userModel.fetch().then((data) => {
-            if (data.username) {
-                this.model.firstName = data.first_name;
-                this.model.lastName = data.last_name;
-                this.model.userId = data.username;
-                this.model.accountId = data.accounts_id;
-                this.model.pendingVerification = data.pending_verification;
-                if (data.accounts_id === null) {
+        userModel.load().then((user) => {
+            if (user.username) {
+                this.model.firstName = user.first_name;
+                this.model.lastName = user.last_name;
+                this.model.userId = user.username;
+                this.model.accountId = user.accounts_id;
+                this.model.pendingVerification = user.pending_verification;
+
+                if (user.accounts_id === null) {
                     this.model.problemMessage = 'Could not load user information';
                 } else {
                     this.model.problemMessage = '';
                 }
+
                 this.update();
             } else {
                 const loginLink = document.querySelector('.nav-menu-item.login > a');

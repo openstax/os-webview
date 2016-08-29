@@ -11,11 +11,32 @@
                 <li class="nav-menu-item"><a href="/give" role="menuitem">Give</a></li>
                 <li class="nav-menu-item"><a href="/contact" role="menuitem">Contact</a></li>
                 <li class="nav-menu-item"><a href="/support" role="menuitem">Support</a></li>
-                <li class="nav-menu-item login"><a href="{model.login}" data-local="true" role="menuitem">Login<svg width="0" class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 30"><title>arrow</title><path d="M12,1L26,16,12,31,8,27,18,16,8,5Z" transform="translate(-8 -1)"/></svg></a>
+                <li class="nav-menu-item login{model.user.username ? ' dropdown' : ''}">
+                    <if condition="!model.user.username">
+                        <a href="{model.login}" data-local="true" role="menuitem">Login</a>
+                    <else>
+                        <a href="{model.accountLink}" data-local="true" role="menuitem">
+                            Hi {model.user.first_name || model.user.username}
+                            <svg width="0" class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 30"><title>arrow</title><path d="M12,1L26,16,12,31,8,27,18,16,8,5Z" transform="translate(-8 -1)"/></svg>
+                        </a>
+                    </if>
+
                     <ul class="dropdown-menu" role="menu" aria-expanded="false" aria-label="User Menu">
-                        <li role="presentation"><a data-href-setting="account-href" role="menuitem" tabindex="-1">Account Profile</a></li>
-                        <li role="presentation" class="non-faculty"><a href="/faculty-verification" role="menuitem" tabindex="-1">Request instructor access</a></li>
-                        <li role="presentation" class="logout"><a href="{model.logout}" data-local="true" role="menuitem" tabindex="-1">Logout</a></li>
+                        <li role="presentation">
+                            <a href="{model.accountLink}" role="menuitem" tabindex="-1">
+                                Account Profile
+                            </a>
+                        </li>
+                        <li if="model.user.groups.indexOf('Faculty') >= 0" role="presentation">
+                            <a href="/faculty-verification" role="menuitem" tabindex="-1">
+                                Request instructor access
+                            </a>
+                        </li>
+                        <li role="presentation" class="logout">
+                            <a href="{model.logout}" data-local="true" role="menuitem" tabindex="-1">
+                                Logout
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>

@@ -3,25 +3,19 @@ import settings from 'settings';
 const userUrl = `${settings.apiOrigin}/api/user`;
 const sfUserUrl = `${settings.apiOrigin}/api/user_salesforce`;
 
+const LOADED = Symbol();
+
 class UserModel {
 
     constructor(url) {
-        this.fetch();
-        this.url = url;
+        this[LOADED] = fetch(url).then((response) => response.json());
     }
 
-    fetch() {
-        this.promise = new Promise((resolve) => {
-            fetch(`${this.url}`)
-            .then((response) => response.json())
-            .then(resolve);
-        });
-        return this.promise;
+    load() {
+        return this[LOADED];
     }
 
 }
 
 export const sfUserModel = new UserModel(sfUserUrl);
-const userModel = new UserModel(userUrl);
-
-export default userModel;
+export default new UserModel(userUrl);

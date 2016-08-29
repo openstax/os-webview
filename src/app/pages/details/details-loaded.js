@@ -43,7 +43,7 @@ export default class DetailsLoaded extends Controller {
             }
         }
         this.regions.getThisTitle.append(new GetThisTitle(this.model));
-        userModel.fetch().then((userInfo) => {
+        userModel.load().then((user) => {
             let alternateLink = null;
             let isInstructor = true;
             const encodedLocation = encodeURIComponent(window.location.href);
@@ -74,12 +74,12 @@ export default class DetailsLoaded extends Controller {
                 }
             };
 
-            if (!userInfo || userInfo.username === '') {
+            if (!user || user.username === '') {
                 isInstructor = false;
                 alternateLink = `${settings.apiOrigin}/accounts/login/openstax/?next=${encodedLocation}`;
                 extraInstructions.innerHTML = `<a href="${alternateLink}">Login</a> for instructor access.`;
                 const anchor = extraInstructions.querySelector('a');
-            } else if (!('groups' in userInfo) || !userInfo.groups.includes('Faculty')) {
+            } else if (!('groups' in user) || !user.groups.includes('Faculty')) {
                 isInstructor = false;
                 alternateLink = '/faculty-verification';
                 extraInstructions.innerHTML = `<a href="${alternateLink}">Apply for instructor access.</a>`;
