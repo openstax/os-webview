@@ -443,7 +443,7 @@ $transition: 0.3s;
                 }
             }
         }
-    } //end .meta-nav
+    }
 
     .nav {
         box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(color(gray), 0.1);
@@ -624,7 +624,7 @@ $transition: 0.3s;
             }
 
         }
-    } //end .nav
+    }
 
     .expand {
         -moz-appearance: none;
@@ -661,7 +661,7 @@ $transition: 0.3s;
         }
 
         span {
-            //create middle line
+            // create middle line
             background: color(gray);
             display: inline-block;
             height: $button-size / 7;
@@ -669,7 +669,7 @@ $transition: 0.3s;
             transition: background 0.3s 0.2s ease;
             width: $button-size;
 
-            /*create the upper and lower lines as pseudo-elements of the middle line*/
+            // create the upper and lower lines as pseudo-elements of the middle line
             &::before,
             &::after {
                 background: color(gray);
@@ -678,7 +678,7 @@ $transition: 0.3s;
                 height: $button-size / 7;
                 left: 0;
                 position: absolute;
-                //set transform origin back to center
+                // set transform origin back to center
                 transform-origin: 50% 50%;
                 transition: top 0.3s 0.2s ease, transform 0.3s ease;
                 width: $button-size;
@@ -707,5 +707,5 @@ $transition: 0.3s;
                 }
             }
         }
-    } //end .expand button
+    }
 }
