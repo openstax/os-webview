@@ -4,11 +4,12 @@ import {description as template} from './content-item.html';
 
 export default class ContentItem extends Controller {
 
-    init(model, number, tag) {
+    init({model, number, tag, startFrom}) {
         this.template = template;
         this.view = { tag };
         this.model = model;
         this.model.number = number;
+        this.model.startFrom = startFrom;
     }
 
     onLoaded() {
