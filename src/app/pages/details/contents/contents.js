@@ -20,20 +20,39 @@ export default class Contents extends Controller {
         this.view = view;
         this.model = data.contents;
         this.parentNumber = data.number ? `${data.number}.` : '';
+        this.startFrom = data.startFrom || 1;
     }
 
     onLoaded() {
-        let i=0;
+        let i=this.startFrom;
+        let isUnitLevel = false;
+        const computeStartFrom = (entry) => {
+            if (isUnitLevel && isUnit(entry)) {
+                this.startFrom += entry.contents.length;
+            }
+        };
 
         for (const entry of this.model) {
             let chapterNumber = '';
 
-            if (!isPreface(entry)) {
-                ++i;
-                chapterNumber = `${this.parentNumber}${i}`;
+            // If any entry is a Unit, all are Units (even if some don't look have contents)
+            if (isUnit(entry)) {
+                isUnitLevel = true;
+            } else {
+                this.startFrom = 1;
             }
-
-            this.regions.self.append(new ContentItem(entry, isUnit(entry) ? '' : chapterNumber, 'li'));
+            // Only check preface for first chapter in section
+            if (!(i === this.startFrom && isPreface(entry))) {
+                chapterNumber = `${this.parentNumber}${i}`;
+                ++i;
+            }
+            this.regions.self.append(new ContentItem({
+                model: entry,
+                number: isUnitLevel ? '' : chapterNumber,
+                tag: 'li',
+                startFrom: this.startFrom
+            }));
+            computeStartFrom(entry);
         }
     }
 
