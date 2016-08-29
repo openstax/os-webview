@@ -30,7 +30,6 @@ export default class Give extends Controller {
     init() {
         const queryDict = $.parseSearchString(window.location.search);
 
-        document.querySelector('head meta[name="description"]').content = Give.description;
         document.title = 'Give - OpenStax';
         this.template = template;
         this.model = {

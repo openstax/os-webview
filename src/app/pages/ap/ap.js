@@ -5,12 +5,11 @@ import {description as template} from './ap.html';
 
 export default class AP extends Controller {
 
-    static description =
-    'Explore OpenStax textbooks for Advanced Placement courses, available free ' +
-    'online and low-cost in print and ready to adopt for high school classrooms.';
+    static description = 'Explore OpenStax textbooks for Advanced Placement ' +
+        'courses, available free online and low-cost in print and ready to ' +
+        'adopt for high school classrooms.';
 
     init() {
-        document.querySelector('head meta[name="description"]').content = AP.description;
         this.template = template;
         this.css = '/app/pages/ap/ap.css';
         this.view = {
@@ -24,6 +23,7 @@ export default class AP extends Controller {
 
     onLoaded() {
         document.title = 'AP® - OpenStax';
+
         this.regions.buckets.attach(new Buckets([{
             image: {
                 alignment: 'full'
@@ -38,6 +38,7 @@ export default class AP extends Controller {
             link: '/partners/ap',
             cta: 'View Partners'
         }]));
+
         this.regions.products.attach(new ProductsBoxes({
             products: ['ap']
         }));

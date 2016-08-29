@@ -47,7 +47,7 @@ SystemJS.config({
     "path": "github:jspm/nodelibs-path@0.2.0-alpha",
     "process": "github:jspm/nodelibs-process@0.2.0-alpha",
     "recordo": "npm:recordo@0.0.6",
-    "superb": "npm:superb.js@0.2.5"
+    "superb": "npm:superb.js@0.2.6"
   },
   packages: {
     "github:jspm/nodelibs-buffer@0.2.0-alpha": {

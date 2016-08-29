@@ -31,7 +31,6 @@ export default class HigherEd extends CMSPageController {
             'intro_heading': '',
             loginLink
         };
-        document.querySelector('head meta[name="description"]').content = HigherEd.description;
     }
 
     onLoaded() {

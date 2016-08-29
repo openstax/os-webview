@@ -46,8 +46,6 @@ export default class Contact extends CMSPageController {
                 return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
             }
         };
-
-        document.querySelector('head meta[name="description"]').content = Contact.description;
     }
 
     onLoaded() {

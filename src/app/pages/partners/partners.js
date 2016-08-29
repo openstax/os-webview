@@ -43,8 +43,6 @@ export default class Partners extends CMSPageController {
         this.filterPartnersEvent = this.filterPartners.bind(this);
 
         window.addEventListener('popstate', this.filterPartnersEvent);
-
-        document.querySelector('head meta[name="description"]').content = Partners.description;
     }
 
     onDataLoaded() {

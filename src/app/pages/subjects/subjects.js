@@ -13,7 +13,6 @@ export default class Subjects extends CMSPageController {
         'decide if they\'re right for your course.';
 
     init() {
-        document.querySelector('head meta[name="description"]').content = Subjects.description;
         this.template = template;
         this.css = '/app/pages/subjects/subjects.css';
         this.view = {
