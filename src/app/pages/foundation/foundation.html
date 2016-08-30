@@ -1,139 +1,24 @@
-<div class="hero">
-    <div class="container">
-        <h1>Our Funders</h1>
-        <p>
-            OpenStax is supported by the generous funding of our philanthropic sponsors.
-        </p>
+<template args="model">
+    <div class="hero">
+        <div class="container">
+            <h1>{model.title}</h1>
+            <p>{model.page_description}
+            </p>
+        </div>
     </div>
-</div>
-<div class="blurbs">
-    <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
-    <div class="container">
-        <div class="funder">
-            <div class="logo">
-              <a href="http://www.arnoldfoundation.org/"><img src="/images/foundation/ljaf.gif"></a>
-            </div>
-            <div class="text">
-                <h2>The Laura and John Arnold Foundation</h2>
-                <p>
-                    Laura and John Arnold Foundation (LJAF) actively seeks opportunities
-                    to invest in organizations and thought leaders that have a sincere
-                    interest in implementing fundamental changes that not only yield
-                    immediate gains, but also repair broken systems for future
-                    generations. LJAF currently focuses its strategic investments on
-                    education, criminal justice, research integrity, and public accountability.
-                </p>
-            </div>
-        </div>
-        <div class="funder">
-            <div class="logo">
-              <a href="http://www.gatesfoundation.org/"><img src="/images/foundation/gates.jpg"></a>
-            </div>
-            <div class="text">
-                <h2>The Bill & Melinda Gates Foundation</h2>
-                <p>
-                    Guided by the belief that every life has equal value, the Bill
-                    & Melinda Gates Foundation works to help all people lead
-                    healthy, productive lives. In developing countries, it focuses
-                    on improving people's health with vaccines and other life-saving
-                    tools and giving them the chance to lift themselves out of hunger
-                    and extreme poverty. In the United States, it seeks to significantly
-                    improve education so that all young people have the opportunity to
-                    reach their full potential. Based in Seattle, Washington, the
-                    foundation is led by CEO Jeff Raikes and Co-chair William H. Gates
-                    Sr., under the direction of Bill and Melinda Gates and Warren Buffett.
-                </p>
-            </div>
-        </div>
-        <div class="funder">
-            <div class="logo">
-              <a href="http://www.hewlett.org/"><img src="/images/foundation/hewlett.jpg"></a>
-            </div>
-            <div class="text">
-                <h2>The William and Flora Hewlett Foundation</h2>
-                <p>
-                    The William and Flora Hewlett Foundation has been making grants
-                    since 1967 to help solve social and environmental problems at
-                    home and around the world. The Foundation concentrates its
-                    resources on activities in education, the environment, global
-                    development and population, performing arts, and philanthropy,
-                    and makes grants to support disadvantaged communities in the
-                    San Francisco Bay Area.
-                </p>
-            </div>
-        </div>
-        <div class="funder">
-            <div class="logo">
-              <a href="http://www.kazanjian.org/"><img src="/images/foundation/kazanjian.png"></a>
-            </div>
-            <div class="text">
-                <h2>The Calvin K. Kazanjian Economics Foundation</h2>
-                <p>
-                    Calvin K. Kazanjian was the founder and president of Peter Paul
-                    (Almond Joy), Inc. He firmly believed that the more people
-                    understood about basic economics the happier and more prosperous
-                    they would be. Accordingly, he established the Calvin K. Kazanjian
-                    Economics Foundation Inc, in 1949 as a philanthropic, nonpolitical
-                    educational organization to support efforts that enhanced economic
-                    understanding.
-                </p>
-            </div>
-        </div>
-        <div class="funder">
-            <div class="logo">
-              <img src="/images/foundation/maxfield.png">
-            </div>
-            <div class="text">
-                <h2>The Maxfield Foundation</h2>
-                <p>
-                    The Maxfield Foundation supports projects with potential for high
-                    impact in science, education, sustainability, and other areas of
-                    social importance.
-                </p>
-            </div>
-        </div>
-        <div class="funder">
-            <div class="logo">
-              <a href="http://www.rice.edu"><img src="/images/foundation/rice.jpg"></a>
-            </div>
-            <div class="text">
-                <h2>Rice University</h2>
-                <p>
-                    OpenStax is Rice University's nonprofit education initiative.
-                    As a leading research university with a distinctive commitment
-                    to undergraduate education, Rice University aspires to pathbreaking
-                    research, unsurpassed teaching, and contributions to the betterment
-                    of our world. It seeks to fulfill this mission by cultivating a
-                    diverse community of learning and discovery that produces leaders
-                    across the spectrum of human endeavor.
-                </p>
-            </div>
-        </div>
-        <div class="funder">
-            <div class="logo">
-                <img src="/images/foundation/sick-fund.gif">
-            </div>
-            <div class="text">
-                <h2>The Bill and Stephanie Sick Fund</h2>
-                <p>
-                    The Bill and Stephanie Sick Fund supports innovative projects
-                    in the areas of Education, Art, Science and Engineering.
-                </p>
-            </div>
-        </div>
-        <div class="funder">
-            <div class="logo">
-              <a href="http://20mm.org/"><img src="/images/foundation/20mm.png"></a>
-            </div>
-            <div class="text">
-                <h2>The Michelson 20MM Foundation</h2>
-                <p>
-                  Founded by Dr. Gary K. Michelson, the Michelson 20MM Foundation
-                  supports and invests in leading edge entrepreneurs, technologies,
-                  models, and initiatives with the potential to improve postsecondary
-                  access, affordability, and student success.
-                </p>
+    <div class="blurbs">
+        <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
+        <div class="container">
+            <div class="funder" each="funder in model.funders">
+                <div class="logo">
+                  <a href="{funder.link}"><img src="{funder.funder_logo}"></a>
+                </div>
+                <div class="text">
+                    <h2>{funder.title}</h2>
+                    <p>{funder.description}
+                    </p>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</template>

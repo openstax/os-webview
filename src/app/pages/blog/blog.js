@@ -5,6 +5,9 @@ import {description as template} from './blog.html';
 
 export default class Blog extends CMSPageController {
 
+    static description = 'Stay up to date with OpenStax news and hear community '+
+    'perspectives on issues in education and access on the OpenStax blog.';
+
     init() {
         this.template = template;
         this.css = '/app/pages/blog/blog.css';
