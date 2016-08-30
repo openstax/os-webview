@@ -1,6 +1,7 @@
 import settings from 'settings';
 import router from '~/router';
 import CMSPageController from '~/controllers/cms';
+import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './partners.html';
 
@@ -47,18 +48,11 @@ export default class Partners extends CMSPageController {
 
     onDataLoaded() {
         this.model = Object.assign(this.model, this.pageData);
-        this.update();
+        this.model.allPartners = Object.keys(this.pageData.allies)
+        .sort((a, b) => a < b ? -1 : 1)
+        .map((slug) => this.pageData.allies[slug]);
 
-        const fields = ['ally_subject_list', 'title', 'short_description', 'long_description',
-            'heading', 'is_ap', 'ally_bw_logo'];
-
-        // FIX: Backend should be providing a less contrived URL to fetch the data
-        fetch(`${settings.apiOrigin}/api/v1/pages/?fields=${fields.join(',')}&format=json&type=allies.Ally`)
-        .then((response) => response.json())
-        .then((json) => {
-            this.model.allPartners = json.pages;
-            this.filterPartners();
-        });
+        this.filterPartners();
     }
 
     onUpdate() {
@@ -84,7 +78,7 @@ export default class Partners extends CMSPageController {
                 return partner.is_ap;
             }
 
-            return partner.ally_subject_list.includes(history.state.filter);
+            return partner.subjects.includes(history.state.filter);
         });
 
         this.update();
@@ -113,23 +107,25 @@ export default class Partners extends CMSPageController {
     @on('click .logo-text')
     onLogoClick(e) {
         e.preventDefault();
+        const href = e.delegateTarget.getAttribute('href');
+        const el = document.getElementById(href.substr(1));
 
-        router.navigate(e.delegateTarget.getAttribute('href'), {
+        $.scrollTo(el);
+        history.replaceState({
             filter: history.state.filter,
             path: '/partners'
-        });
+        }, '', href);
     }
 
     @on('click .to-top')
     scrollToFilterButtons(e) {
         e.preventDefault();
 
-        const el = document.getElementById('filter');
-        const bodyRect = document.body.getBoundingClientRect();
-        const elRect = el.getBoundingClientRect();
-        const offset = elRect.top - bodyRect.top;
-
-        window.scrollTo(0, offset);
+        $.scrollTo(this.el.querySelector('.filter'));
+        history.replaceState({
+            filter: history.state.filter,
+            path: '/partners'
+        }, '', '/partners');
     }
 
     onClose() {
