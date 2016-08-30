@@ -1,6 +1,5 @@
 import BaseView from '~/helpers/backbone/view';
 import BaseModel from '~/helpers/backbone/model';
-import router from '~/router';
 import PdfSubmenu from './pdf-submenu/pdf-submenu';
 import PrintSubmenu from './print-submenu/print-submenu';
 import {on, props} from '~/helpers/backbone/decorators';
@@ -24,11 +23,6 @@ export default class GetThisTitle extends BaseView {
     showPrintSubment(event) {
         event.preventDefault();
         this.stateModel.set('currentSubmenu', 'print');
-    }
-
-    @on('click a[href*="cnx.org/contents"]')
-    showGiveOnDownload() {
-        router.navigate('/subjects', true);
     }
 
     constructor(data) {
