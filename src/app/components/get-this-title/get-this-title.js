@@ -28,7 +28,7 @@ export default class GetThisTitle extends BaseView {
 
     @on('click a[href*="cnx.org/contents"]')
     showGiveOnDownload() {
-        router.navigate('/give', true);
+        router.navigate('/subjects', true);
     }
 
     constructor(data) {

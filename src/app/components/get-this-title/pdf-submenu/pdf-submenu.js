@@ -22,6 +22,6 @@ export default class PdfSubmenu extends BaseView {
 
     @on('click a[href$=".pdf"]')
     showGiveOnDownload() {
-        router.navigate('/give', true);
+        router.navigate('/subjects', true);
     }
 }
