@@ -122,7 +122,7 @@ export default class Give extends Controller {
 
     @on('click [type="submit"]')
     doCustomValidation(event) {
-        const invalids = this.el.querySelectorAll('input:invalid');
+        const invalids = this.el.querySelectorAll(':invalid');
 
         this.hasBeenSubmitted = true;
         if (invalids.length) {

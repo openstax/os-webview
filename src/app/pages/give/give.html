@@ -6,14 +6,22 @@
                     {`Please enter your donor information and click "Continue" to be taken to the secure payment site.`}
                 </div>
                 <input name="SUCCESS_LINK" type="hidden" value="{model.thankYouUrl}" />
-                <input type="hidden" name="UPAY_SITE_ID" id="UPAY_SITE_ID" value="106" />
-                <input type="hidden" name="Donation_To" id="Donation_To" value="OpenStax" />
+                <input type="hidden" name="UPAY_SITE_ID" value="106" />
+                <input type="hidden" name="Donation_To" value="OpenStax" />
                 <input type="hidden" name="Revenue_Amount"  value="0" />
-                <input type="hidden" name="BILL_NAME" id="BILL_NAME" value="">
-                <input type="hidden" name="Donation_Amount" id="Donation_Amount" value="{model.seletedAmount}">
-                <input type="hidden" name="Rice_Relate" id="Rice_Relation" value="Friend">
+                <input type="hidden" name="Revenue_Fund_ID"  value="" />
+                <input type="hidden" name="Donation_Fund_ID"  value="G82812-205000" />
+                <input type="hidden" name="Donation_Amount" value="{model.seletedAmount}">
+                <input type="hidden" name="Rice_Relate" value="Friend">
                 <div class="labeled-inputs row top-of-form">
                     <div class="col">
+                        <label>
+                            Title
+                            <span class="invalid-message">{model.validationMessage('Title')}</span>
+                            <input type="text" name="Title" class="form-control" required
+                            placeholder="Mr./Mrs./Dr./Ms./..."
+                             />
+                        </label>
                         <label>
                             First Name
                             <span class="invalid-message">{model.validationMessage('First_Name')}</span>
@@ -31,39 +39,44 @@
                         </label>
                         <label>
                             E-Mail
-                            <span class="invalid-message">{model.validationMessage('BILL_EMAIL_ADDRESS')}</span>
-                            <input type="email" name="BILL_EMAIL_ADDRESS" class="form-control" required />
+                            <span class="invalid-message">{model.validationMessage('Email')}</span>
+                            <input type="email" name="Email" class="form-control" required />
                         </label>
                         <label>
-                            Donation Amount
-                            <span class="invalid-message">{model.validationMessage('AMT')}</span>
-                            <input name="AMT" type="number" min=5 value="{model.selectedAmount}" required />
+                            Phone
+                            <span class="invalid-message">{model.validationMessage('Phone')}</span>
+                            <input type="text" name="Phone" class="form-control" required />
                         </label>
-
+                        <label>
+                            Phone Type
+                            <span class="invalid-message">{model.validationMessage('Phone_Type')}</span>
+                            <input type="text" name="Phone_Type" class="form-control" required
+                            placeholder="Work/Home/Cell/..." />
+                        </label>
                     </div>
                     <div class="col">
                         <label>
                             Address
-                            <span class="invalid-message">{model.validationMessage('BILL_STREET1')}</span>
-                            <input type="text" name="BILL_STREET1" class="form-control" required />
+                            <span class="invalid-message">{model.validationMessage('Mailing_Address')}</span>
+                            <input type="text" name="Mailing_Address" class="form-control" required />
                         </label>
 
                         <label>
-                            <span class="invalid-message">{model.validationMessage('BILL_STREET2')}</span>
-                            <input type="text" name="BILL_STREET2" class="form-control" />
+                            <span class="invalid-message">{model.validationMessage('Mailing_Address2')}</span>
+                            <input type="text" name="Mailing_Address2" class="form-control" />
                         </label>
 
                         <label>
                             City
-                            <span class="invalid-message">{model.validationMessage('BILL_CITY')}</span>
-                            <input type="text" name="BILL_CITY" class="form-control" required />
+                            <span class="invalid-message">{model.validationMessage('Mailing_City')}</span>
+                            <input type="text" name="Mailing_City" class="form-control" required />
                         </label>
 
                         <label>
                             State
-                            <span class="invalid-message">{model.validationMessage('BILL_STATE')}</span>
+                            <span class="invalid-message">{model.validationMessage('Mailing_State')}</span>
                             <div skip="true"></div>
-                            <select name="BILL_STATE" class="form-control" required>
+                            <select name="Mailing_State" class="form-control" required>
                                 <option value="--">Not Applicable</option>
                                 <option value="AL">Alabama</option>
                                 <option value="AK">Alaska</option>
@@ -142,15 +155,15 @@
                         </label>
                         <label>
                             Zip Code
-                            <span class="invalid-message">{model.validationMessage('BILL_POSTAL_CODE')}</span>
-                            <input type="text" name="BILL_POSTAL_CODE" class="form-control" required />
+                            <span class="invalid-message">{model.validationMessage('Mailing_Zip')}</span>
+                            <input type="text" name="Mailing_Zip" class="form-control" required />
                         </label>
 
                         <label>
                             Country
-                            <span class="invalid-message">{model.validationMessage('BILL_COUNTRY')}</span>
+                            <span class="invalid-message">{model.validationMessage('Mailing_Country')}</span>
                             <div skip="true"></div>
-                            <select name="BILL_COUNTRY" class="form-control" required />
+                            <select name="Mailing_Country" class="form-control" required />
                                 <option value="US">United States</option>
                                 <option value="CA">Canada</option>
                                 <option value="AF">Afghanistan</option>
@@ -398,7 +411,11 @@
                                 <option value="ZW">Zimbabwe</option>
                             </select>
                         </label>
-
+                        <label>
+                            Donation Amount
+                            <span class="invalid-message">{model.validationMessage('AMT')}</span>
+                            <input name="AMT" type="number" min=5 value="{model.selectedAmount}" required />
+                        </label>
                         <button type="submit" class="btn btn-orange">Continue</button>
                     </div>
                 </div>
