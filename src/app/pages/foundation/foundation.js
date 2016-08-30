@@ -1,7 +1,7 @@
-import {Controller} from 'superb';
+import CMSPageController from '~/controllers/cms';
 import {description as template} from './foundation.html';
 
-export default class Foundation extends Controller {
+export default class Foundation extends CMSPageController {
 
     static description = 'OpenStax is supported by our philanthropic ' +
         'sponsors like the Bill & Melinda Gates Foundation, the William and Flora ' +
@@ -14,6 +14,13 @@ export default class Foundation extends Controller {
         this.view = {
             classes: ['foundation-page', 'page']
         };
+        this.slug = '/pages/foundation-support';
+        this.model = {};
+    }
+
+    onDataLoaded() {
+        Object.assign(this.model, this.pageData);
+        this.update();
     }
 
 }
