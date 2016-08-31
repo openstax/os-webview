@@ -40,7 +40,6 @@ SystemJS.config({
   map: {
     "babel-polyfill": "npm:babel-polyfill@6.9.1",
     "buffer": "github:jspm/nodelibs-buffer@0.2.0-alpha",
-    "classList": "npm:classlist-polyfill@1.0.3",
     "fetch": "npm:whatwg-fetch@1.0.0",
     "fs": "github:jspm/nodelibs-fs@0.2.0-alpha",
     "incremental-dom": "npm:incremental-dom@0.4.1",
