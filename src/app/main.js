@@ -1,5 +1,4 @@
 import 'babel-polyfill';
-import 'classList';
 import 'fetch';
 import router from '~/router';
 import shell from '~/components/shell/shell';
