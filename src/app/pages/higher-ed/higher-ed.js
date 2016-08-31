@@ -29,6 +29,19 @@ export default class HigherEd extends CMSPageController {
         };
         this.model = {
             'intro_heading': '',
+            'get_started_heading': '',
+            'get_started_step_1_heading': '',
+            'get_started_step_1_description': '',
+            'get_started_step_1_cta': '',
+            'get_started_step_2_heading': '',
+            'get_started_step_2_description': '',
+            'get_started_step_2_cta': '',
+            'get_started_step_3_heading': '',
+            'get_started_step_3_description': '',
+            'get_started_step_3_cta': '',
+            'adopt_heading': '',
+            'adopt_description': '',
+            'adopt_cta': '',
             loginLink
         };
     }
