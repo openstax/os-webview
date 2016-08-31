@@ -2,7 +2,8 @@ import settings from 'settings';
 import linkHelper from '~/helpers/link';
 
 const RELATIVE_TO_ROOT = /^\//;
-const SETUP_GTM = Symbol();
+
+const SETUP_GA = Symbol();
 
 class Analytics {
 
@@ -11,14 +12,12 @@ class Analytics {
     }
 
     start() {
-        this[SETUP_GTM]();
+        this[SETUP_GA]();
     }
 
     send(fields) {
-        SystemJS.paths.gtm = `https://www.googletagmanager.com/gtm.js?id=${settings.tagManagerID}`;
-        SystemJS.meta[SystemJS.paths.gtm] = SystemJS.meta['https://www.googletagmanager.com/gtm.js'];
-        SystemJS.import('gtm').then(() => {
-            window.dataLayer.push(fields);
+        SystemJS.import('ga').then(() => {
+            window.ga('send', fields);
         });
     }
 
@@ -43,14 +42,6 @@ class Analytics {
     }
 
     record(href) {
-        if (linkHelper.isPDF(href)) {
-            this.sendEvent({
-                eventCategory: 'PDF',
-                eventAction: 'download',
-                eventLabel: href
-            });
-        }
-
         if (linkHelper.isExternal(href)) {
             this.sendEvent({
                 eventCategory: 'External',
@@ -60,28 +51,16 @@ class Analytics {
         }
     }
 
-    [SETUP_GTM]() {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-            'gtm.start': new Date().getTime(),
-            event: 'gtm.js'
-        });
-
-        document.addEventListener('submit', (e) => {
-            if (typeof e.target !== 'object' || typeof e.target.action !== 'string') {
-                return;
-            }
-
-            if (e.target.action.indexOf('https://www.salesforce.com/') === 0) {
-                const formData = new FormData(e.target);
-
-                this.sendEvent({
-                    eventCategory: 'Salesforce',
-                    eventAction: 'submit',
-                    eventLabel: formData.get('lead_source')
-                });
-            }
-        });
+    [SETUP_GA]() {
+        if (typeof window.ga !== 'function') {
+            window.GoogleAnalyticsObject = 'ga';
+            window.ga = {
+                q: [['create', settings.analyticsID, 'auto']],
+                l: Date.now()
+            };
+        } else {
+            window.ga('create', settings.analyticsID, 'auto');
+        }
     }
 
 }
