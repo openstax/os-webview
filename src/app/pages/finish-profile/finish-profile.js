@@ -41,7 +41,7 @@ export default class NewAccountForm extends Controller {
     onLoaded() {
         document.title = 'Finish Profile - OpenStax';
         selectHandler.setup(this);
-        sfuserModel.load().then((user) => {
+        sfUserModel.load().then((user) => {
             this.model.firstName = user.first_name;
             this.model.lastName = user.last_name;
             this.model.userId = user.username;
@@ -82,10 +82,10 @@ export default class NewAccountForm extends Controller {
 
     @on('click [type="submit"]')
     doCustomValidation(event) {
-        const invalids = this.el.querySelectorAll('input:invalid');
+        const invalid = this.el.querySelector('form:invalid');
 
         this.hasBeenSubmitted = true;
-        if (invalids.length) {
+        if (invalid) {
             event.preventDefault();
             this.update();
         }
