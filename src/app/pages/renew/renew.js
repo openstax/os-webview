@@ -44,10 +44,10 @@ export default class AdoptionForm extends Controller {
 
     @on('click [type="submit"]')
     doCustomValidation(event) {
-        const invalids = this.el.querySelectorAll('input:invalid');
+        const invalid = this.el.querySelector('form:invalid');
 
         this.hasBeenSubmitted = true;
-        if (invalids.length) {
+        if (invalid) {
             event.preventDefault();
             this.update();
         }
