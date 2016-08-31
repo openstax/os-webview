@@ -47,9 +47,9 @@ const bannerModels = shuffle([{
 
 export default class Home extends CMSPageController {
 
-    static description = 'OpenStax\'s goal is to increase student access to ' +
-        'high-quality learning materials at little to no cost. Learn more ' +
-        'about what we offer for college and K-12.';
+    static description = 'OpenStax\'s goal is to increase student access ' +
+        'to high-quality learning materials at little to no cost. See what ' +
+        'we have to offer for college and AP courses.';
 
     init() {
         this.slug = 'pages/openstax-homepage';
