@@ -24,6 +24,7 @@ export default class GetThisTitle extends Controller {
             bookshareLink: data.bookshare_link,
             pdfLink: (data.high_resolution_pdf_url || data.low_resolution_pdf_url),
             printLink: (data.amazon_link || data.bookstore_link || isHighSchool),
+            isHighSchool,
             submenu: '',
             hiRes: data.high_resolution_pdf_url,
             loRes: data.low_resolution_pdf_url,

@@ -15,17 +15,14 @@
             </div>
             <div class="print-submenu">
                 <h3>Place an Order</h3>
-                <if condition="model.bookstore_link">
-                    <p>
-                        <a href="{model.bookstore.link}" class="btn">Bookstore Orders</a>
-                        Order through NACSCORP
-                    </p>
-                <else>
-                    <p>
-                        <a href="/bulk-order?{model.slug}" class="btn">Bulk Orders</a>
-                        Fill out our form to order in bulk for your school.
-                    </p>
-                </if>
+                <p if="model.bookstore.link">
+                    <a href="{model.bookstore.link}" class="btn">Bookstore Orders</a>
+                    Order through NACSCORP
+                </p>
+                <p if="model.isHighSchool">
+                    <a href="/bulk-order?{model.slug}" class="btn">Bulk Orders</a>
+                    Fill out our form to order in bulk for your school.
+                </p>
                 <p if="model.amazon.link">
                     <a href="{model.amazon.link}" class="btn">Individual Orders</a>
                     ${model.amazon.price} from seller \"OpenStax\" on Amazon
