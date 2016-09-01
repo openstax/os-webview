@@ -68,7 +68,7 @@ export default class HigherEd extends CMSPageController {
 
     onUpdate() {
         // NOTE: Incremental-DOM currently lacks the ability to inject HTML into a node.
-        this.el.querySelector('.hero .overlay .blurb').innerHTML = this.model.intro_description;
+        this.el.querySelector('.hero .overlay .blurb').innerHTML = this.model.intro_description || '';
     }
 
 }
