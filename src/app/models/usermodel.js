@@ -2,6 +2,7 @@ import settings from 'settings';
 
 const userUrl = `${settings.apiOrigin}/api/user`;
 const sfUserUrl = `${settings.apiOrigin}/api/user_salesforce`;
+const docUrlBase = `${settings.apiOrigin}/api/documents`;
 
 const LOADED = Symbol();
 
@@ -18,4 +19,5 @@ class UserModel {
 }
 
 export const sfUserModel = new UserModel(sfUserUrl);
+export const makeDocModel = (docId) => new UserModel(`${docUrlBase}/${docId}`);
 export default new UserModel(userUrl);
