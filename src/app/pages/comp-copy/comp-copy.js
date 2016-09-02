@@ -36,7 +36,7 @@ export default class CompCopyForm extends Controller {
 
     @on('click [type="submit"]')
     doCustomValidation(event) {
-        const invalid = this.el.querySelector('form:invalid');
+        const invalid = this.el.querySelector('form :invalid');
 
         this.hasBeenSubmitted = true;
         if (invalid) {
