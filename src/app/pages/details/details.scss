@@ -420,13 +420,13 @@
                 align-items: flex-start;
                 display: flex;
                 flex-flow: column wrap;
-                max-width: 56rem;
             }
 
             h2 {
                 color: color(blue);
                 font-size: 3.6rem;
                 margin-bottom: 3rem;
+                max-width: 56rem;
                 width: 100%;
             }
 
