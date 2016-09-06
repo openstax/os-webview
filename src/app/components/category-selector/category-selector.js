@@ -1,5 +1,6 @@
 import {Controller} from 'superb';
 import FilterButton from './filter-button';
+import {on} from '~/helpers/controller/decorators';
 
 const categories = [
     {slug: 'view-all', cms: '', html: 'View All'},
@@ -36,6 +37,7 @@ export default class CategorySelector extends Controller {
                 setState(category);
             })
         );
+        this.active = false;
     }
 
     updateSelected(category) {
@@ -52,6 +54,12 @@ export default class CategorySelector extends Controller {
         for (const view of this.buttonViews) {
             this.regions.self.append(view);
         }
+    }
+
+    @on('click')
+    toggleActive() {
+        this.active = !this.active;
+        this.el.classList.toggle('active', this.active);
     }
 
 }

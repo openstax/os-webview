@@ -33,7 +33,8 @@ export default class Partners extends CMSPageController {
             'classroom_text': '',
             book: null,
             partners: [],
-            filterButtons
+            filterButtons,
+            filterButtonsActive: false
         };
 
         router.replaceState({
@@ -86,6 +87,8 @@ export default class Partners extends CMSPageController {
 
     @on('click .filter-button')
     setFilter(e) {
+        this.model.filterButtonsActive = !this.model.filterButtonsActive;
+        this.update();
         const value = e.target.dataset.value;
 
         if (history.state.filter === value) {

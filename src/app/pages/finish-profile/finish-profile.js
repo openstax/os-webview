@@ -46,7 +46,7 @@ export default class NewAccountForm extends Controller {
             this.model.lastName = user.last_name;
             this.model.userId = user.username;
             this.model.accountId = user.accounts_id;
-            if (user.accounts_id === null) {
+            if (!user.accounts_id) {
                 this.model.problemMessage = 'Could not load user information';
             } else {
                 this.model.problemMessage = '';

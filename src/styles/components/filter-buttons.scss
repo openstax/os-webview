@@ -38,7 +38,7 @@ $text-black3: rgba(0, 0, 0, 0.54);
     &::after {
         right: 3.5rem;
         transform: rotate3d(0, 0, 1, 45deg);
-     }
+    }
 }
 
 .filter-buttons {
@@ -86,7 +86,7 @@ $text-black3: rgba(0, 0, 0, 0.54);
                     font-weight: 300;
                 }
             }
-       }
+        }
 
         &:not(.selected) {
             height: 0;
@@ -94,6 +94,19 @@ $text-black3: rgba(0, 0, 0, 0.54);
             padding: 0;
             transition: opacity 0.3s;
             width: 0;
+
+            @at-root .active#{&} {
+                height: inherit;
+                opacity: 1;
+                padding: 1rem 1.5rem;
+                width: 100%;
+
+                @include desktop {
+                    height: auto;
+                    padding: 1.5rem;
+                    width: auto;
+                }
+            }
 
             @include desktop {
                 height: auto;
@@ -104,17 +117,6 @@ $text-black3: rgba(0, 0, 0, 0.54);
 
             &:hover {
                 background-color: lighten(color(neutral-lighter), 8%);
-            }
-
-            @at-root .active#{&} {
-                height: inherit;
-                opacity: 1;
-                padding: 1rem 1.5rem;
-                width: 100%;
-
-                &:last-child {
-                    margin-bottom: 0.5rem;
-                }
             }
         }
     }
