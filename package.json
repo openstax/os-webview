@@ -73,7 +73,7 @@
       "babel-polyfill": "npm:babel-polyfill@^6.9.1",
       "fetch": "npm:whatwg-fetch@^1.0.0",
       "recordo": "npm:recordo@0.0.6",
-      "superb": "npm:superb.js@^0.2.6"
+      "superb": "npm:superb.js@^0.2.7"
     },
     "devDependencies": {},
     "peerDependencies": {
