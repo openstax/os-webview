@@ -8,7 +8,7 @@
     <div class="icons">
         <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
         <div id="filter" class="filter">
-            <div class="filter-buttons">
+            <div class="filter-buttons{model.filterButtonsActive ? ' active' : ''}">
                 <div each="button in model.filterButtons" class="filter-button{button === history.state.filter ? ' selected' : ''}"
                 data-value="{button}">{button}</div>
             </div>
