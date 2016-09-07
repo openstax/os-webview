@@ -9,10 +9,11 @@ const LOADED = Symbol();
 class UserModel {
 
     constructor(url) {
-        this[LOADED] = fetch(url).then((response) => response.json());
+        this.url = url;
     }
 
     load() {
+        this[LOADED] = fetch(this.url).then((response) => response.json());
         return this[LOADED];
     }
 
