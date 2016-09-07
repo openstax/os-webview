@@ -13,7 +13,7 @@ class UserModel {
     }
 
     load() {
-        this[LOADED] = fetch(this.url, {credentials: 'same-origin'}).then((response) => response.json());
+        this[LOADED] = fetch(this.url, {credentials: 'include'}).then((response) => response.json());
         return this[LOADED];
     }
 
