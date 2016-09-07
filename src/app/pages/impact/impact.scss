@@ -247,19 +247,14 @@ $hero-break-width: 880px;
                 position: relative;
                 text-transform: uppercase;
 
-                i {
-                    position: relative;
-
-                    &::after {
-                        @include triangle(
-                            $direction: right,
-                            $position: top 0.32rem right -1.6rem,
-                            $color: color(cyan),
-                            $size: 0.5rem
-                        );
-                    }
+                &::after {
+                    @include triangle(
+                        $direction: right,
+                        $position: top 0.32rem right -1.6rem,
+                        $color: color(cyan),
+                        $size: 0.5rem
+                    );
                 }
-
             }
         }
     }
