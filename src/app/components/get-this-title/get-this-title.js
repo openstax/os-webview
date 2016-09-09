@@ -61,7 +61,7 @@ export default class GetThisTitle extends Controller {
         this.update();
     }
 
-    @on('click [href*="cnx.org/content"],:not(.show-pdf-submenu)[href$=".pdf"')
+    @on('click [href*="cnx.org/content"],:not(.show-pdf-submenu)[href$=".pdf"]')
     showGive() {
         router.navigate('/give?student', {path: '/give?student'});
     }
