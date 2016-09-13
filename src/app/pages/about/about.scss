@@ -350,12 +350,44 @@ $hero-break-width: 880px;
         }
     }
 
-    .headshot.tapped .details {
-        height: 100vh;
-        opacity: 1;
-        padding: 3rem 0;
-        transform: translate3d(0, 0, 0);
-        width: 100%;
+    .headshot {
+        display: flex;
+        flex: 0 0 100%;
+        flex-flow: column nowrap;
+        height: 25rem;
+        justify-content: space-between;
+
+        @media (min-width: 400px) {
+            flex-basis: 48%;
+        }
+
+        @include tablet {
+            flex-basis: 31.5%;
+        }
+
+        @include desktop {
+            flex-basis: 23.5%;
+        }
+
+        @media (min-width: 955px) {
+            flex-basis: 18.5%;
+        }
+
+        @media (min-width: 1140px) {
+            flex-basis: 15%;
+        }
+
+        &.tapped .details {
+            height: 100vh;
+            opacity: 1;
+            padding: 3rem 0;
+            transform: translate3d(0, 0, 0);
+            width: 100%;
+        }
+
+        .remover {
+            @include absolute(top 1.5rem right 1.5rem);
+        }
     }
 
     &.no-touch .headshot:hover .details,
@@ -414,39 +446,7 @@ $hero-break-width: 880px;
         }
     }
 
-    .our-team .headshot {
-        display: flex;
-        flex: 0 0 100%;
-        flex-flow: column nowrap;
-        height: 25rem;
-        justify-content: space-between;
-
-        @media (min-width: 400px) {
-            flex-basis: 48%;
-        }
-
-        @include tablet {
-            flex-basis: 31.5%;
-        }
-
-        @include desktop {
-            flex-basis: 23.5%;
-        }
-
-        @media (min-width: 955px) {
-            flex-basis: 18.5%;
-        }
-
-        @media (min-width: 1140px) {
-            flex-basis: 15%;
-        }
-
-        .remover {
-            @include absolute(top 1.5rem right 1.5rem);
-        }
-    }
-
-    .our-team .picture-area {
+    .picture-area {
         box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(94, 96, 98, 0.1);
         height: 100%;
         margin-bottom: 2.5rem;
@@ -566,83 +566,13 @@ $hero-break-width: 880px;
         }
     }
 
-
-    .strategic-advisors {
-        .headshot {
-            flex: 0 0 100%;
-
-            @media (min-width: 400px) {
-                flex-basis: 48%;
-            }
-
-            @include tablet {
-                flex-basis: 31.5%;
-            }
-
-            @include desktop {
-                flex-basis: 23.5%;
-            }
-
-            @media (min-width: 955px) {
-                flex-basis: 18.5%;
-            }
-
-            @media (min-width: 1140px) {
-                flex-basis: 15%;
-            }
-
-            .remover {
-                @include absolute(top 1.5rem right 1.5rem);
-            }
-
-            &:nth-child(1) .picture-area img {
-                border-color: color(orange);
-            }
-
-            &:nth-child(2) .picture-area img {
-                border-color: color(blue);
-            }
-
-            &:nth-child(3) .picture-area img {
-                border-color: color(turquoise);
-            }
-
-            &:nth-child(4) .picture-area img {
-                border-color: color(yellow);
-            }
-
-            &:nth-child(5) .picture-area img {
-                border-color: color(gray);
-            }
-
-            &:nth-child(6) .picture-area img {
-                border-color: color(cyan);
-            }
-
-            &:hover .details {
-                @include tablet {
-                    top: 18.5rem;
-                }
-            }
-        }
-
-
-
-        .picture-area {
-            margin-bottom: 2.5rem;
-            overflow: hidden;
-
-            img {
-                border-bottom: 1rem solid;
-                height: 100%;
-                width: 100%;
-            }
-        }
-
-        .name {
-            font-size: 2.2rem;
-            font-weight: 600;
-        }
+    .strategic-advisors .headshot .picture-area img {
+        height: auto;
+        left: auto;
+        max-height: 105%;
+        max-width: 128%;
+        right: 0;
+        top: 15%;
     }
 
     &.no-touch .strategic-advisors .headshot:hover .details,
