@@ -37,6 +37,24 @@ const PAGES = [
     'support'
 ];
 
+// CustomEvent polyfill
+(function () {
+    if (typeof window.CustomEvent === 'function') {
+        return;
+    }
+
+    function CustomEvent(event, params={ bubbles: false, cancelable: false }) {
+        const evt = document.createEvent('CustomEvent');
+
+        evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+        return evt;
+    }
+
+    CustomEvent.prototype = window.Event.prototype;
+
+    window.CustomEvent = CustomEvent;
+})();
+
 class AppRouter extends Router {
 
     init() {
@@ -84,6 +102,7 @@ class AppRouter extends Router {
 
     navigate(...args) {
         super.navigate(...args);
+        window.dispatchEvent(new CustomEvent('navigate'));
         analytics.sendPageview();
     }
 

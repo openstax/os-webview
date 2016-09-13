@@ -1,4 +1,5 @@
 import {Controller} from 'superb';
+import stickyNote from '../sticky-note/sticky-note';
 import settings from 'settings';
 import {on} from '~/helpers/controller/decorators';
 import linkHelper from '~/helpers/link';
@@ -16,12 +17,28 @@ class Header extends Controller {
             tag: 'header',
             classes: ['page-header']
         };
+        this.regions = {
+            stickyNote: 'sticky-note'
+        };
 
         this.meta = {};
+
+        // Fix: There must be a better way
+        const padParentForStickyNote = () => {
+            const stickyNoteEl = this.el.querySelector('sticky-note');
+
+            if (stickyNoteEl) {
+                const h = stickyNoteEl.offsetHeight;
+
+                this.el.parentNode.style.minHeight = `${h}px`;
+            }
+        };
 
         this.model = () => {
             const accounts = `${settings.apiOrigin}/accounts`;
             const currentPage = window.location.href;
+
+            padParentForStickyNote();
 
             return {
                 visible: () => this.meta.visible,
@@ -46,12 +63,38 @@ class Header extends Controller {
 
         document.addEventListener('click', this.resetHeader.bind(this));
         window.addEventListener('resize', this.closeFullScreenNav.bind(this));
+        window.addEventListener('resize', padParentForStickyNote);
         window.addEventListener('scroll', () => {
             window.requestAnimationFrame(this.updateHeaderStyle.bind(this));
         });
         window.addEventListener('scroll', () => {
             window.requestAnimationFrame(this.removeAllOpenClasses.bind(this));
         });
+
+        this.handlePathChange = () => {
+            if (window.location.pathname === '/give/form') {
+                localStorage.visitedGive = Date.now();
+            } else if (window.location.pathname === '/') {
+                localStorage.visitedGive = Number(localStorage.visitedGive || 0) + 1;
+            }
+            this.update();
+        };
+        window.addEventListener('popstate', this.handlePathChange);
+        // Custom event created by router, because it does not emit popstate
+        // for forward navigation on IE or Safari
+        window.addEventListener('navigate', this.handlePathChange);
+    }
+
+    onUpdate() {
+        const path = window.location.pathname;
+        const visitedGive = Number(localStorage.visitedGive || 0) > 10;
+        const hideSticky = (path !== '/' || visitedGive);
+
+        this.el.querySelector('sticky-note').classList.toggle('hidden', hideSticky);
+    }
+
+    onLoaded() {
+        this.regions.stickyNote.append(stickyNote);
     }
 
     classList(action, ...args) {
