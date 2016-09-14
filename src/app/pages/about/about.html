@@ -23,7 +23,7 @@
             <h2>{group.name === 'team' ? model.ourTeamHeading : 'Strategic Advisors'}</h2>
             <div class="headshots">
                 <div each="member in group.members" class="headshot{model.tapped === member.id ? ' tapped' : ''}{member.hidden ? ' hidden' : ''}" data-id="{member.id}">
-                    <div class="picture-area{group.name === 'team' ? ' text-'+member.textColor+' bg-'+member.bgColor : ''}{member.image ? ' has-picture' : ''}">
+                    <div class="picture-area{' text-'+member.textColor+' bg-'+member.bgColor}{member.image ? ' has-picture' : ''}">
                         <img if="member.image" src="{member.image}">
                         <div class="name">{member.name}</div>
                     </div>

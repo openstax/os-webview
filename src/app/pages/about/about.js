@@ -73,6 +73,7 @@ export default class AboutUs extends CMSPageController {
 
     onDataLoaded() {
         assignColors(this.pageData.openstax_team);
+        assignColors(this.pageData.strategic_advisors);
 
         this.model = {
             tagline: this.pageData.tagline,
