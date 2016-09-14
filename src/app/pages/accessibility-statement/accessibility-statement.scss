@@ -3,12 +3,13 @@
 
 .accessibility-page {
 
+    a {
+        color: lighten(color(blue), 20%);
+        text-decoration: underline;
+    }
+
     .boxed {
-        display: flex;
-        flex-flow: column nowrap;
         margin: 0 auto 4rem;
-        max-width: $boxed-width;
-        padding: 0 1.5rem;
     }
 
 }
