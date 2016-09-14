@@ -29,6 +29,17 @@ export default class Give extends Controller {
 
     init() {
         const queryDict = $.parseSearchString(window.location.search);
+        const handleAmount = (amount) => {
+            router.replaceState({
+                // A string goes to Other
+                amount: amount || '?',
+                page: amount ? 2 : 1,
+                page2: false
+            });
+            if (amount) {
+                this.togglePage();
+            }
+        };
 
         document.title = 'Give - OpenStax';
         this.template = template;
@@ -52,6 +63,9 @@ export default class Give extends Controller {
             Object.assign(this.model, studentModel);
         } else if ('thanks' in queryDict) {
             Object.assign(this.model, thankYouModel);
+        }
+        if ('amount' in queryDict) {
+            handleAmount(+queryDict.amount);
         }
         this.css = '/app/pages/give/give.css';
         this.view = {
@@ -81,7 +95,9 @@ export default class Give extends Controller {
     togglePage() {
         if (this.model && history.state.page) {
             this.model.page2 = !this.model.page2;
-            this.update();
+            if (this.el) {
+                this.update();
+            }
         }
     }
 

@@ -1,0 +1,55 @@
+@import 'variables';
+@import 'mixins';
+
+.page-header .sticky-note {
+    @include constrained-variable-text(1.8, 0.2);
+
+    background-color: color(orange);
+    color: color(neutral-lightest);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+    padding: 1rem 0;
+    width: 100vw;
+    z-index: 1;
+
+    .inverted {
+        background-color: color(neutral-lightest);
+        color: color(orange);
+    }
+
+    > .container {
+        align-items: center;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+    }
+
+    .btn {
+        align-items: center;
+        display: flex;
+        font-size: 80%;
+        justify-content: center;
+        margin-left: 1rem;
+        white-space: nowrap;
+    }
+
+    .multi-button {
+        display: none;
+        margin-right: 1rem;
+        min-width: 57rem;
+
+        @include desktop {
+            display: flex;
+        }
+    }
+
+    .single-button {
+        display: flex;
+        justify-content: center;
+        min-width: 10rem;
+
+        @include desktop {
+            display: none;
+        }
+    }
+}

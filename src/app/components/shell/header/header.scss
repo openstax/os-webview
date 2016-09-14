@@ -9,7 +9,6 @@ $transition: 0.3s;
     background-color: rgba(color(neutral-lightest), 0.98);
     display: flex;
     flex-flow: column nowrap;
-    height: 6rem;
     justify-content: center;
     left: 0;
     position: fixed;
@@ -27,7 +26,6 @@ $transition: 0.3s;
     }
 
     @include desktop {
-        height: 11rem;
         left: 0;
         position: absolute;
         right: 0;
@@ -39,7 +37,6 @@ $transition: 0.3s;
             background: transparent;
         }
     }
-
 
     > .skiptocontent {
         a {
@@ -445,9 +442,19 @@ $transition: 0.3s;
         }
     }
 
+    &.active {
+        .nav .container {
+            position: static;
+        }
+
+        sticky-note {
+            display: none;
+        }
+    }
+
+
     .nav {
         box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(color(gray), 0.1);
-        height: 100%;
         order: 1;
         width: 100%;
 
@@ -486,6 +493,7 @@ $transition: 0.3s;
             align-items: center;
             justify-content: center;
             padding: 0 1.5rem;
+            position: relative;
 
             @include desktop {
                 height: 100%;
