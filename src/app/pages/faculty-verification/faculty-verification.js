@@ -3,7 +3,7 @@ import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 import selectHandler from '~/handlers/select';
 import bookTitles from '~/models/book-titles';
-import userModel from '~/models/usermodel';
+import {sfUserModel} from '~/models/usermodel';
 import salesforceModel from '~/models/salesforce';
 import {description as template} from './faculty-verification.html';
 
@@ -64,7 +64,7 @@ export default class FacultyVerificationForm extends Controller {
     onLoaded() {
         document.title = 'Instructor Verification - OpenStax';
         selectHandler.setup(this);
-        userModel.load().then((user) => {
+        sfUserModel.load().then((user) => {
             if (user.username) {
                 this.model.firstName = user.first_name;
                 this.model.lastName = user.last_name;
