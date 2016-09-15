@@ -1,13 +1,13 @@
-import {Controller} from 'superb';
+import SalesforceForm from '~/controllers/salesforce-form';
+import router from '~/router';
 import $ from '~/helpers/$';
-import {on} from '~/helpers/controller/decorators';
 import selectHandler from '~/handlers/select';
 import bookTitles from '~/models/book-titles';
 import {sfUserModel} from '~/models/usermodel';
 import salesforceModel from '~/models/salesforce';
 import {description as template} from './faculty-verification.html';
 
-export default class FacultyVerificationForm extends Controller {
+export default class FacultyVerificationForm extends SalesforceForm {
 
     testInstitutionalEmail() {
         const institutionalEmailInput = this.el.querySelector('[name="00NU0000005oVQV"]');
@@ -15,28 +15,6 @@ export default class FacultyVerificationForm extends Controller {
 
         institutionalEmailInput.setCustomValidity(isValid ? '' : 'We cannot verify a generic email address');
         return isValid;
-    }
-
-    @on('click [type="submit"]')
-    doCustomValidation(event) {
-        const invalid = this.el.querySelector('form :invalid');
-
-        this.hasBeenSubmitted = true;
-        if (invalid) {
-            event.preventDefault();
-            this.update();
-        }
-    }
-
-    @on('focusout input')
-    markVisited(event) {
-        event.delegateTarget.classList.add('visited');
-    }
-
-    @on('change')
-    updateOnChange() {
-        this.testInstitutionalEmail();
-        this.update();
     }
 
     init() {
@@ -84,6 +62,14 @@ export default class FacultyVerificationForm extends Controller {
 
                 loginLink.click();
             }
+            this.formResponseEl = this.el.querySelector('#form-response');
+            this.goToConfirmation = () => {
+                if (this.submitted) {
+                    this.submitted = false;
+                    router.navigate('/confirmation?faculty');
+                }
+            };
+            this.formResponseEl.addEventListener('load', this.goToConfirmation);
         });
     }
 

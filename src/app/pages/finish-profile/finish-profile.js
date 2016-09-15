@@ -1,4 +1,5 @@
-import {Controller} from 'superb';
+import SalesforceForm from '~/controllers/salesforce-form';
+import router from '~/router';
 import {on} from '~/helpers/controller/decorators';
 import selectHandler from '~/handlers/select';
 import bookTitles from '~/models/book-titles';
@@ -6,7 +7,7 @@ import {sfUserModel} from '~/models/usermodel';
 import FacultySection from './faculty-section/faculty-section';
 import {description as template} from './finish-profile.html';
 
-export default class NewAccountForm extends Controller {
+export default class NewAccountForm extends SalesforceForm {
 
     init() {
         this.template = template;
@@ -52,6 +53,14 @@ export default class NewAccountForm extends Controller {
                 this.model.problemMessage = '';
             }
             this.update();
+            this.formResponseEl = this.el.querySelector('#form-response');
+            this.goToConfirmation = () => {
+                if (this.submitted) {
+                    this.submitted = false;
+                    router.navigate(`/confirmation?${this.model.returnTo}`);
+                }
+            };
+            this.formResponseEl.addEventListener('load', this.goToConfirmation);
         });
     }
 
@@ -73,27 +82,6 @@ export default class NewAccountForm extends Controller {
             this.model.leadType = 'OSC User';
             this.model.returnTo = 'unverified';
         }
-    }
-
-    @on('focusout input')
-    markVisited(event) {
-        event.delegateTarget.classList.add('visited');
-    }
-
-    @on('click [type="submit"]')
-    doCustomValidation(event) {
-        const invalid = this.el.querySelector('form :invalid');
-
-        this.hasBeenSubmitted = true;
-        if (invalid) {
-            event.preventDefault();
-            this.update();
-        }
-    }
-
-    @on('change')
-    updateOnChange() {
-        this.update();
     }
 
     @on('change [name="00NU00000054MLz"]')

@@ -12,13 +12,13 @@
             form</a> and we'll send you the information you need.
         </p>
     </div>
-    <form accept-charset="UTF-8" class="form"
+    <iframe name="form-response" id="form-response" src="" width="0" height="0"></iframe>
+    <form accept-charset="UTF-8" class="form" target="form-response"
      action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="post">
         <div class="text-content">
             <div>
                 <input name="utf8" type="hidden" value="✓">
                 <input type="hidden" name="oid" value="00DU0000000Kwch">
-                <input type="hidden" name="retURL" value="{`${window.location.origin}/confirmation?adoption`}">
                 <input type="hidden" name="lead_source" value="Adoption Form">
             </div>
             <p class="instructions">

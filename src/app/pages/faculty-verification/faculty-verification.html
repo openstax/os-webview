@@ -12,14 +12,14 @@
             You already have a verification request pending.
         </p>
     </div>
-
+    <iframe name="form-response" id="form-response" src="" width="0" height="0"></iframe>
     <form accept-charset="UTF-8" class="form" if="!model.pendingVerification"
+     target="form-response"
      action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="post">
         <div class="text-content">
             <div>
                 <input name="utf8" type="hidden" value="✓">
                 <input type="hidden" name="oid" value="00DU0000000Kwch">
-                <input type="hidden" name="retURL" value="{`${window.location.origin}/confirmation?faculty`}">
                 <input type="hidden" name="lead_source" value="OSC Faculty">
                 <input type="hidden" name="user_id" value="{model.userId}">
                 <input type="hidden" name="OS_Accounts_ID__c" value="{model.accountId}">
