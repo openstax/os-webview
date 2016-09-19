@@ -73,10 +73,11 @@ export default class BulkOrder extends Controller {
         document.title = 'Bulk Order Form - OpenStax';
         selectHandler.setup(this);
         this.regions.orderItems.attach(new OrderItems(this.model));
-        fetch(`${this.model.origin}/api/mail/send_mail/`)
+        fetch(`${this.model.origin}/api/mail/send_mail/`, {credentials: 'include'})
         .then((data) => data.json())
         .then((data) => {
             this.model.csrfToken = data.csrf_token;
+            document.cookie = `csrftoken=${data.csrf_token}`;
             this.update();
         });
     }
