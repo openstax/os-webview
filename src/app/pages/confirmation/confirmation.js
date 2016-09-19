@@ -1,4 +1,5 @@
 import {Controller} from 'superb';
+import Popup from '~/components/popup/popup';
 import {description as template} from './confirmation.html';
 
 const models = {
@@ -38,7 +39,9 @@ const models = {
         adoptionQuestion: 'Have you adopted an OpenStax book?',
         adoptionUrl: '/adoption',
         adoptionLinkText: 'Adopt a book',
-        subjectLinkText: 'Explore our books'
+        subjectLinkText: 'Explore our books',
+        popupText: 'You will receive an email within 3 to 4 business days either ' +
+        'notifying you of your faculty access or requesting more information.'
     },
     interest: {
         headline: 'Thanks for telling us about yourself!',
@@ -61,7 +64,6 @@ const models = {
         adoptionLinkText: 'Adopt a book',
         subjectLinkText: 'Explore our books'
     }
-
 };
 
 export default class Confirmation extends Controller {
@@ -72,10 +74,19 @@ export default class Confirmation extends Controller {
         this.view = {
             classes: ['confirmation-page', 'page']
         };
+        this.regions = {
+            popup: 'pop-up'
+        };
 
         const referringPage = window.location.search.substr(1);
 
         this.model = models[referringPage];
+    }
+
+    onLoaded() {
+        if (this.model.popupText) {
+            this.regions.popup.attach(new Popup(this.model.popupText));
+        }
     }
 
 }
