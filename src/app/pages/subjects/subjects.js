@@ -63,7 +63,6 @@ export default class Subjects extends CMSPageController {
         this.regions.bookViewer.attach(this.bookViewer);
 
         document.title = `${this.pageData.title} - OpenStax`;
-        this.model = this.pageData;
         for (const htmlEl of this.el.querySelectorAll('[data-html]')) {
             htmlEl.innerHTML = this.model[htmlEl.dataset.html];
         }
