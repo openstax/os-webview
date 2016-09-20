@@ -62,9 +62,14 @@ sup {
     color: color(cyan);
     font-size: 1.7rem;
     font-weight: 500;
+}
 
+.go-to,
+.with-arrow {
     &::after {
-        content: ' >';
+        content: '▸';
+        font-size: 120%;
+        padding-left: 0.5em;
     }
 }
 
@@ -193,8 +198,6 @@ sup {
         text-align: center;
     }
 }
-
-
 
 .subhead { // for banner with text only
     align-items: center;

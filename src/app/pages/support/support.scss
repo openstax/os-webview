@@ -59,13 +59,6 @@
                 font-size: 80%;
                 font-weight: 500;
                 text-transform: uppercase;
-
-                &::after {
-                    color: inherit;
-                    content: '►';
-                    font-size: 94%;
-                    padding-left: 1rem;
-                }
             }
         }
     }

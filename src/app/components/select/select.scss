@@ -27,14 +27,19 @@ select {
     }
 
     &::after {
-        @include triangle(
-            $direction: bottom,
-            $position: top 2.4rem right 1.8rem,
-            $color: color(gray),
-            $size: 0.5rem
-        );
-        transition: All 0.3s ease-in-out;
-        z-index: 0;
+        color: color(gray);
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        transform: rotate(180deg);
+        transform-origin: center;
+        transition: All 0.2s ease-in-out;
+    }
+
+    &.open::after {
+        right: 1.2rem;
+        top: 0.6rem;
+        transform: rotate(90deg);
     }
 
     &.select-multi {
@@ -42,10 +47,6 @@ select {
         min-height: 4.8rem;
     }
 
-    &.open::after {
-        transform: rotate(180deg);
-        transform-origin: center top;
-    }
 
     ul {
         list-style-type: none;

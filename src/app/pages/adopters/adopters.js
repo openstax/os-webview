@@ -1,8 +1,7 @@
 import settings from 'settings';
-import {Controller} from 'superb';
-import {description as template} from './adopters.html';
+import CMSPageController from '~/controllers/cms';import {description as template} from './adopters.html';
 
-export default class Adopters extends Controller {
+export default class Adopters extends CMSPageController {
 
     init() {
         this.template = template;
@@ -10,14 +9,13 @@ export default class Adopters extends Controller {
         this.view = {
             classes: ['adopters-page', 'text-content']
         };
-        this.model = [];
+        this.model = {};
+        this.slug = 'adopters';
+    }
 
-        fetch(`${settings.apiOrigin}/api/adopters`)
-        .then((response) => response.json())
-        .then((json) => {
-            this.model = json;
-            this.update();
-        });
+    onDataLoaded() {
+        this.model.adopters = this.pageData.sort((a, b) => a.name.localeCompare(b.name));
+        this.update();
     }
 
 }

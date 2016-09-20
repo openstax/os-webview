@@ -269,25 +269,6 @@
 
             a {
                 position: relative;
-
-                &::before,
-                &::after {
-                    border-right: 0.2rem solid;
-                    content: '';
-                    display: block;
-                    height: 0.7rem;
-                    margin-top: -0.2rem;
-                    position: absolute;
-                    right: -1.3rem;
-                    top: 50%;
-                    transform: rotate3d(0, 0, 1, 135deg);
-                    width: 0;
-                }
-
-                &::after {
-                    right: -1.7rem;
-                    transform: rotate3d(0, 0, 1, 45deg);
-                }
             }
         }
     }
@@ -526,29 +507,6 @@
     }
 
     .partner-info {
-        .text a {
-            position: relative;
-
-            &::before,
-            &::after {
-                border-right: 0.2rem solid;
-                content: '';
-                display: block;
-                height: 0.7rem;
-                position: absolute;
-                right: -1.3rem;
-                top: 0.3rem;
-                transform: rotate3d(0, 0, 1, 135deg);
-                width: 0;
-            }
-
-            &::after {
-                right: -1.3rem;
-                top: 0.7rem;
-                transform: rotate3d(0, 0, 1, 45deg);
-            }
-        }
-
         .logo {
             align-items: center;
             display: flex;
@@ -607,25 +565,6 @@
 
         .go-to {
             position: relative;
-
-            &::before,
-            &::after {
-                border-right: 0.2rem solid;
-                content: '';
-                display: block;
-                height: 0.7rem;
-                position: absolute;
-                right: -1.3rem;
-                top: 0.7rem;
-                transform: rotate3d(0, 0, 1, 135deg);
-                width: 0;
-            }
-
-            &::after {
-                right: -1.3rem;
-                top: 1.1rem;
-                transform: rotate3d(0, 0, 1, 45deg);
-            }
 
             &:hover {
                 color: darken(color(cyan), 10%);
