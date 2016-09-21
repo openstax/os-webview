@@ -1,6 +1,5 @@
 import {Controller} from 'superb';
 import ProductBox from './product-box/product-box';
-import {description as template} from './products-boxes.html';
 
 const boxData = {
     books: {
@@ -43,7 +42,7 @@ const boxData = {
 export default class ProductsBoxes extends Controller {
 
     init(options = {}) {
-        this.template = template;
+        this.template = () => null;
         this.css = '/app/components/products-boxes/products-boxes.css';
         this.view = {
             classes: ['products-boxes']

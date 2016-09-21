@@ -17,12 +17,6 @@ $hero-break-width: 880px;
         a {
             color: inherit;
             letter-spacing: inherit;
-
-            &::after {
-                color: color(yellow);
-                content: '►';
-                padding-left: 0.5rem;
-            }
         }
     }
 

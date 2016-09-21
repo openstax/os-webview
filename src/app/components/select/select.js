@@ -12,7 +12,7 @@ export default class Select extends Controller {
         this.setup(config);
         this.handler = handler;
         this.view = {
-            classes: ['select']
+            classes: ['select', 'with-arrow']
         };
 
         if (this.select.getAttribute('multiple') !== null) {
@@ -82,6 +82,10 @@ export default class Select extends Controller {
             event.initEvent('change', true, true);
         }
         this.select.dispatchEvent(event);
+    }
+
+    onUpdate() {
+        this.el.classList.toggle('open', this.model.open);
     }
 
     @on('mouseover')

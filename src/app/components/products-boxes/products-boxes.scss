@@ -69,15 +69,6 @@
             padding: 0;
             position: relative;
             text-transform: uppercase;
-
-            &::after {
-                @include triangle(
-                    $direction: right,
-                    $position: top calc(5% + 0.6rem) right -1.3rem,
-                    $color: color(cyan),
-                    $size: 0.5rem
-                );
-            }
         }
     }
 
