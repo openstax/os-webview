@@ -59,6 +59,7 @@ export default class Subjects extends CMSPageController {
     }
 
     onDataLoaded() {
+        console.debug('Book data', this.pageData.books);
         this.bookViewer = new BookViewer(this.pageData.books);
         this.regions.bookViewer.attach(this.bookViewer);
 

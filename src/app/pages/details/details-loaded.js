@@ -32,16 +32,7 @@ export default class DetailsLoaded extends Controller {
     }
 
     onLoaded() {
-        for (const htmlEl of this.el.querySelectorAll('[data-html]')) {
-            /* eslint no-eval: 0 */
-            const expr = `this.model.${htmlEl.dataset.html}`;
-
-            try {
-                htmlEl.innerHTML = eval(expr);
-            } catch (e) {
-                console.warn('Eval', expr, e);
-            }
-        }
+        $.insertHtml(this.el, this.model);
         this.regions.getThisTitle.append(new GetThisTitle(this.model));
         userModel.load().then((user) => {
             let alternateLink = null;

@@ -43,7 +43,7 @@ export default class Details extends CMSPageController {
             '/images/details/by-sa-license.png' : '/images/details/by-license.png';
         }
 
-        model.comingSoon = model.webview_link === '' ? ' coming-soon' : '';
+        model.comingSoon = this.pageData.coming_soon ? ' coming-soon' : '';
 
         this.regions.self.attach(new DetailsLoaded(model));
     }

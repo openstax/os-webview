@@ -1,4 +1,4 @@
-import {Controller} from 'superb';
+import CMSPageController from '~/controllers/cms';
 import {on} from '~/helpers/controller/decorators';
 import router from '~/router';
 import selectHandler from '~/handlers/select';
@@ -21,7 +21,7 @@ const thankYouModel = {
     amounts: null
 };
 
-export default class Give extends Controller {
+export default class Give extends CMSPageController {
 
     static description =
     'Your donation helps us create opportunities for students to have access to quality ' +
@@ -50,6 +50,7 @@ export default class Give extends Controller {
             we can create and revise our free textbooks, finetune our adaptive learning
             tools, and spread the word to more instructors and students. Your donation
             changes lives.`,
+            paymentMethods: [],
             thankYouUrl: `${settings.apiOrigin}/give?thanks`,
             amounts: [5, 25, 50, 100, 500, 1000],
             page2: history.state && (history.state.page === 2),
@@ -59,6 +60,8 @@ export default class Give extends Controller {
                 return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
             }
         };
+        this.slug = 'pages/give';
+
         if ('student' in queryDict) {
             Object.assign(this.model, studentModel);
         } else if ('thanks' in queryDict) {
@@ -73,6 +76,44 @@ export default class Give extends Controller {
         };
 
         window.addEventListener('popstate', this.togglePage);
+    }
+
+    onDataLoaded() {
+        console.debug('Data:', this.pageData);
+        const modelToPageDataMap = {
+            headline: 'intro_heading',
+            subhead: 'intro_description',
+            otherPaymentHeading: 'other_payment_methods_heading',
+            giveCtaText: 'give_cta',
+            giveCtaUrl: 'give_cta_link'
+        };
+
+        for (const modelKey of Object.keys(modelToPageDataMap)) {
+            this.model[modelKey] = this.pageData[modelToPageDataMap[modelKey]];
+        }
+
+        const pmReg = new RegExp(/^payment_method_(\d)_(\w+)/);
+        const populatePaymentMethods = () => {
+            for (const pmKey of Object.keys(this.pageData).filter((key) => pmReg.test(key))) {
+                const [indexStr, contentKey] = pmKey.match(pmReg).slice(1);
+                const index = +indexStr - 1;
+                const value = this.pageData[pmKey];
+
+                if (value) {
+                    const alreadyCreated = this.model.paymentMethods[+index];
+                    const pmObj = alreadyCreated || {};
+
+                    pmObj[contentKey] = value;
+                    if (!alreadyCreated) {
+                        this.model.paymentMethods[+index] = pmObj;
+                    }
+                }
+            }
+        };
+
+        populatePaymentMethods();
+        this.update();
+        $.insertHtml(this.el, this.model);
     }
 
     onLoaded() {

@@ -31,7 +31,7 @@ export default class Book extends Controller {
 
     onLoaded() {
         this.regions.getThis.append(new GetThisTitle(this.bookInfo));
-        if (this.bookInfo.webview_link === '') {
+        if (this.bookInfo.coming_soon) {
             this.el.classList.add('coming-soon');
         }
     }

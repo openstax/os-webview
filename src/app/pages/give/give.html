@@ -447,52 +447,25 @@
                     </div>
                     <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
                     <div class="boxed">
-                        <h2>Other Ways to Give</h2>
+                        <h2>{model.otherPaymentHeading}</h2>
                         <hr />
                         <div class="row">
-                            <div class="col">
-                                <h3>Check</h3>
-                                <p>
-                                    If you would like to mail a check for your gift to OpenStax, make
-                                    checks out to OpenStax, Rice University.
-                                </p>
-                                <h4>Mail to:</h4>
-                                <address>OpenStax
-                                    P.O. Box 1892 MS375
-                                    Houston, TX 77251-1892
-                                </address>
-                            </div>
-                            <div class="col">
-                                <h3>Matching Gifts</h3>
-                                <p>
-                                    Engage in your employer's matching gift program to multiply your
-                                    donation's impact.
+                            <div each="pm in model.paymentMethods.slice(0,2)" class="col">
+                                <h3>{pm.heading}</h3>
+                                <div data-html="paymentMethods[{$item}].content" skip="true"></div>
                             </div>
                         </div>
                         <hr />
                         <div class="row">
-                            <div class="col">
-                                <h3>Other Donation Options</h3>
-                                <p>
-                                    We are here to assist you with:
-                                    <ul>
-                                        <li>Longterm appreciated securities</li>
-                                        <li>Gifts to OpenStax in your will or revocable management trust</li>
-                                        <li>Qualified charitable distributions from your IRA</li>
-                                        <li>Beneficiary designations for your retirement plan or life
-                                            insurance to benefit OpenStax</li>
-                                            <li>Charitable gift annuities</li>
-                                            <li>Charitable trusts</li>
-                                            <li>Gifts of real estate, business interests, closely held
-                                                stock and personal property</li>
-                                            </ul>
-                                        </p>
-                                    </div>
-                                </div>
-                                    <hr />
-                                    <p>
-                                        <a href="/contact?subject=Donations" class="btn cta">Contact us for help with your gift</a>
-                                    </p>
-                                </div>
-                            </if>
-                        </template>
+                            <div each="pm in model.paymentMethods.slice(2)" class="col">
+                                <h3>{pm.heading}</h3>
+                                <div data-html="paymentMethods[{$item}+2].content" skip="true"></div>
+                            </div>
+                        </div>
+                        <hr />
+                        <p>
+                            <a href="/contact?subject=Donations" class="btn cta">{model.giveCtaText}</a>
+                        </p>
+                    </div>
+                    </if>
+                </template>
