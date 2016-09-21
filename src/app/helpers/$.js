@@ -120,6 +120,19 @@ $.htmlToText = (html) => {
     return temp.textContent;
 };
 
+$.insertHtml = (containerEl, model) => {
+    for (const htmlEl of containerEl.querySelectorAll('[data-html]')) {
+        /* eslint no-eval: 0 */
+        const expr = `model.${htmlEl.dataset.html}`;
+
+        try {
+            htmlEl.innerHTML = eval(expr);
+        } catch (e) {
+            console.warn('Eval', expr, e);
+        }
+    }
+};
+
 $.parseSearchString = (searchString) => {
     const result = {};
 

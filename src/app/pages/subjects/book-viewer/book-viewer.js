@@ -14,10 +14,10 @@ function organizeBooksByCategory(books) {
         }
     };
     const compareByComingSoon = (a, b) => {
-        if (a.webview_link) {
-            return b.webview_link ? 0 : -1;
+        if (a.coming_soon) {
+            return b.coming_soon ? 0 : 1;
         }
-        return b.webview_link ? 1 : 0;
+        return b.coming_soon ? -1 : 0;
     };
     const compareSlugsByTitle = (a, b) => {
         const bA = books[a];
