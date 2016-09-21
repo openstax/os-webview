@@ -13,10 +13,22 @@ function organizeBooksByCategory(books) {
             }
         }
     };
+    const compareByComingSoon = (a, b) => {
+        if (a.webview_link) {
+            return b.webview_link ? 0 : -1;
+        }
+        return b.webview_link ? 1 : 0;
+    };
+    const compareSlugsByTitle = (a, b) => {
+        const bA = books[a];
+        const bB = books[b];
+
+        return compareByComingSoon(bA, bB) || bA.title.localeCompare(bB.title);
+    };
 
     result[apId] = [];
 
-    for (const slug of Object.keys(books)) {
+    for (const slug of Object.keys(books).sort(compareSlugsByTitle)) {
         const book = books[slug];
         const cmsCategory = book.subject;
 
@@ -39,30 +51,17 @@ export default class BookViewer extends Controller {
 
     init(books) {
         this.template = () => '';
-/*
-        this.query = {
-            type: 'books.Book',
-            fields: ['title', 'subject_name', 'is_ap,cover_url',
-            'high_resolution_pdf_url', 'low_resolution_pdf_url',
-            'ibook_link', 'ibook_link_volume_2',
-            'webview_link', 'concept_coach_link,bookshare_link',
-            'amazon_link', 'amazon_price', 'amazon_blurb',
-            'bookstore_link', 'bookstore_blurb', 'slug'],
-            limit: 50
-        };
-        */
         this.view = {
             classes: ['container']
         };
-        this.books = books;
-    }
-
-    onLoaded() {
-        const categorizedBooks = organizeBooksByCategory(this.books);
+        const categorizedBooks = organizeBooksByCategory(books);
 
         this.categorySections = CategorySelector.categories.map(
             (category) => new CategorySection(category.cms, categorizedBooks[category.cms])
         );
+    }
+
+    onLoaded() {
         for (const controller of this.categorySections) {
             this.regions.self.append(controller);
         }
