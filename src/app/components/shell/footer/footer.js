@@ -15,9 +15,8 @@ class Footer extends Controller {
         /* eslint arrow-parens: 0 */
         (async () => {
             try {
-                const response = await fetch(`${settings.apiOrigin}/api/documents`);
-                const pattern = new RegExp(/press kit/i);
-                const data = (await response.json()).filter((info) => pattern.test(info.title, 'i'));
+                const response = await fetch(`${settings.apiOrigin}/api/documents?search=press%20kit`);
+                const data = await response.json();
 
                 if (data.length) {
                     this.model.pressKitData = data[0];
