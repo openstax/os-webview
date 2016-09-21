@@ -25,6 +25,10 @@ body {
     box-sizing: border-box;
 }
 
+iframe {
+    border: 0;
+}
+
 a {
     color: color(primary);
     text-decoration: none;

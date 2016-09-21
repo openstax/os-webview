@@ -10,13 +10,13 @@
         <h2 if="!model.accountId">
             Could not load user information
         </h2>
-        <form accept-charset="UTF-8"
+        <iframe name="form-response" id="form-response" src="" width="0" height="0"></iframe>
+        <form accept-charset="UTF-8" target="form-response"
          action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="post"
          class="form{model.accountId ? '' : ' hidden'}">
             <div>
                 <input name="utf8" type="hidden" value="✓">
                 <input type="hidden" name="oid" value="00DU0000000Kwch">
-                <input type="hidden" name="retURL" value="{`${window.location.origin}/confirmation?${model.returnTo}`}">
                 <input type="hidden" name="lead_source" value="{model.leadType}">
                 <input type="hidden" name="first_name" value="{model.firstName}">
                 <input type="hidden" name="last_name" value="{model.lastName}">

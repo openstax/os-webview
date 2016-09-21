@@ -1,9 +1,9 @@
-import {Controller} from 'superb';
-import {on} from '~/helpers/controller/decorators';
+import SalesforceForm from '~/controllers/salesforce-form';
+import router from '~/router';
 import selectHandler from '~/handlers/select';
 import {description as template} from './comp-copy.html';
 
-export default class CompCopyForm extends Controller {
+export default class CompCopyForm extends SalesforceForm {
 
     init() {
         this.template = template;
@@ -22,27 +22,14 @@ export default class CompCopyForm extends Controller {
     onLoaded() {
         document.title = 'Comp Copy Request - OpenStax';
         selectHandler.setup(this);
-    }
-
-    @on('focusout input')
-    markVisited(event) {
-        event.delegateTarget.classList.add('visited');
-    }
-
-    @on('change')
-    updateOnChange() {
-        this.update();
-    }
-
-    @on('click [type="submit"]')
-    doCustomValidation(event) {
-        const invalid = this.el.querySelector('form :invalid');
-
-        this.hasBeenSubmitted = true;
-        if (invalid) {
-            event.preventDefault();
-            this.update();
-        }
+        this.formResponseEl = this.el.querySelector('#form-response');
+        this.goToConfirmation = () => {
+            if (this.submitted) {
+                this.submitted = false;
+                router.navigate('/confirmation?compCopy');
+            }
+        };
+        this.formResponseEl.addEventListener('load', this.goToConfirmation);
     }
 
 }

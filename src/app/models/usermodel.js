@@ -1,6 +1,6 @@
 import settings from 'settings';
 
-const userUrl = `${settings.apiOrigin}/api/user`;
+export const userUrl = `${settings.apiOrigin}/api/user`;
 const sfUserUrl = `${settings.apiOrigin}/api/user_salesforce`;
 const docUrlBase = `${settings.apiOrigin}/api/documents`;
 

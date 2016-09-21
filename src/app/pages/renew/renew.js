@@ -1,12 +1,12 @@
-import {Controller} from 'superb';
-import {on} from '~/helpers/controller/decorators';
+import SalesforceForm from '~/controllers/salesforce-form';
+import router from '~/router';
 import selectHandler from '~/handlers/select';
 import {published as titles} from '~/models/book-titles';
 import salesforce from '~/models/salesforce';
 import partners from '~/models/partners';
 import {description as template} from './renew.html';
 
-export default class AdoptionForm extends Controller {
+export default class AdoptionForm extends SalesforceForm {
 
     init() {
         this.template = template;
@@ -30,27 +30,14 @@ export default class AdoptionForm extends Controller {
 
     onLoaded() {
         selectHandler.setup(this);
-    }
-
-    @on('focusout input')
-    markVisited(event) {
-        event.delegateTarget.classList.add('visited');
-    }
-
-    @on('change')
-    updateOnChange() {
-        this.update();
-    }
-
-    @on('click [type="submit"]')
-    doCustomValidation(event) {
-        const invalid = this.el.querySelector('form :invalid');
-
-        this.hasBeenSubmitted = true;
-        if (invalid) {
-            event.preventDefault();
-            this.update();
-        }
+        this.formResponseEl = this.el.querySelector('#form-response');
+        this.goToConfirmation = () => {
+            if (this.submitted) {
+                this.submitted = false;
+                router.navigate('/confirmation?adoption');
+            }
+        };
+        this.formResponseEl.addEventListener('load', this.goToConfirmation);
     }
 
 }

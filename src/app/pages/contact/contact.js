@@ -1,7 +1,8 @@
+import SalesforceForm from '~/controllers/salesforce-form';
+import CMSPageController from '~/controllers/cms';
 import settings from 'settings';
 import router from '~/router';
 import $ from '~/helpers/$';
-import CMSPageController from '~/controllers/cms';
 import {on} from '~/helpers/controller/decorators';
 import selectHandler from '~/handlers/select';
 import {description as template} from './contact.html';
@@ -20,14 +21,27 @@ const subjects = [
     'Website'
 ];
 
-export default class Contact extends CMSPageController {
+class ContactData extends CMSPageController {
+
+    init() {
+        this.slug = 'pages/contact-us';
+        this.template = () => null;
+    }
+
+}
+
+export default class Contact extends SalesforceForm {
 
     static description = 'If you have a question or feedback about our books, ' +
         'OpenStax Tutor, Concept Coach, partnerships, or any other topic, ' +
         'contact us here. We\'d love to hear from you!';
 
     init() {
-        this.slug = 'pages/contact-us';
+        this.dataController = new ContactData();
+        this.dataController.onDataLoaded = () => {
+            this.pageData = this.dataController.pageData;
+            this.onDataLoaded();
+        };
         this.template = template;
         this.css = '/app/pages/contact/contact.css';
         this.view = {
@@ -61,6 +75,14 @@ export default class Contact extends CMSPageController {
         }
 
         selectHandler.setup(this);
+        this.formResponseEl = this.el.querySelector('#form-response');
+        this.goToConfirmation = () => {
+            if (this.submitted) {
+                this.submitted = false;
+                router.navigate('/confirmation?contact');
+            }
+        };
+        this.formResponseEl.addEventListener('load', this.goToConfirmation);
     }
 
     onDataLoaded() {
@@ -71,27 +93,6 @@ export default class Contact extends CMSPageController {
     onUpdate() {
         // NOTE: Incremental-DOM currently lacks the ability to inject HTML into a node.
         this.el.querySelector('[data-html="mailing-address"]').innerHTML = this.model.mailing_address;
-    }
-
-    @on('focusout input')
-    markVisited(event) {
-        event.delegateTarget.classList.add('visited');
-    }
-
-    @on('change')
-    updateOnChange() {
-        this.update();
-    }
-
-    @on('click [type="submit"]')
-    doCustomValidation(event) {
-        const invalid = this.el.querySelector('form :invalid');
-
-        this.hasBeenSubmitted = true;
-        if (invalid) {
-            event.preventDefault();
-            this.update();
-        }
     }
 
 }
