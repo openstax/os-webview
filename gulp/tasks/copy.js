@@ -1,7 +1,7 @@
 const gulp = require('gulp');
 const config = require('../config');
 
-const glob = `${config.src}/**/*.{json,txt,ico,eot,ttf,woff,woff2}`;
+const glob = `${config.src}/**/*.{json,txt,ico,eot,ttf,woff,woff2,xml}`;
 
 function copy() {
     return gulp.src(glob, {
