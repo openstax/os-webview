@@ -59,19 +59,15 @@ export default class Subjects extends CMSPageController {
     }
 
     onDataLoaded() {
-        console.debug('Book data', this.pageData.books);
-        this.bookViewer = new BookViewer(this.pageData.books);
-        this.regions.bookViewer.attach(this.bookViewer);
-
         document.title = `${this.pageData.title} - OpenStax`;
-        for (const htmlEl of this.el.querySelectorAll('[data-html]')) {
-            htmlEl.innerHTML = this.model[htmlEl.dataset.html];
-        }
+        Object.assign(this.model, this.pageData);
         this.update();
-
+        $.insertHtml(this.el, this.model);
+        this.bookViewer = new BookViewer(this.model.books);
+        this.regions.bookViewer.attach(this.bookViewer);
+        this.regions.filter.attach(this.categorySelector);
         const category = this.categoryFromPath();
 
-        this.regions.filter.attach(this.categorySelector);
         this.categorySelector.updateSelected(category);
         this.filterCategories(category);
     }
