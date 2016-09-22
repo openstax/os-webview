@@ -79,7 +79,6 @@ export default class Give extends CMSPageController {
     }
 
     onDataLoaded() {
-        console.debug('Data:', this.pageData);
         const modelToPageDataMap = {
             headline: 'intro_heading',
             subhead: 'intro_description',

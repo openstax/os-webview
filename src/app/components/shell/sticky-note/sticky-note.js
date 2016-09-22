@@ -1,7 +1,7 @@
-import {Controller} from 'superb';
+import CMSPageController from '~/controllers/cms';
 import {description as template} from './sticky-note.html';
 
-class StickyNote extends Controller {
+class StickyNote extends CMSPageController {
 
     init() {
         this.template = template;
@@ -9,6 +9,19 @@ class StickyNote extends Controller {
         this.view = {
             classes: ['sticky-note']
         };
+        this.slug = 'sticky';
+        this.model = {};
+    }
+
+    onDataLoaded() {
+        const expired = new Date(this.pageData.expires) < Date.now();
+
+        if (expired) {
+            this.el.classList.add('hidden');
+            localStorage.removeItem('visitedGive');
+        }
+        this.model.content = this.pageData.content;
+        this.update();
     }
 
 }
