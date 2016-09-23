@@ -1,0 +1,177 @@
+@import 'variables';
+@import 'mixins';
+
+.page-header .meta-nav {
+    font-size: 1.6rem;
+    height: 0;
+    order: 2;
+    overflow: hidden;
+    width: 0;
+
+    @at-root .active#{&} {
+        height: auto;
+        overflow: visible;
+        width: 100%;
+    }
+
+    @include desktop {
+        background-color: lighten(color(neutral-lighter), 8%);
+        font-size: 1.4rem;
+        height: 5rem;
+        order: 1;
+        overflow: inherit;
+        width: 100%;
+        z-index: 1;
+    }
+
+    .container {
+        align-items: center;
+        height: 100%;
+        justify-content: center;
+        width: 100%;
+
+        @include desktop {
+            justify-content: flex-end;
+        }
+    }
+
+    .nav-menu {
+        @at-root .active#{&} {
+            width: 14.8rem;
+        }
+    }
+
+    .nav-menu-item {
+
+        > a {
+            color: color(cyan);
+
+            @include desktop {
+                color: color(gray);
+            }
+
+            &:active,
+            &:hover {
+                color: color(cyan);
+            }
+        }
+
+        &.dropdown {
+            @include desktop {
+                margin-right: 1rem;
+            }
+        }
+    }
+
+    .chevron {
+        display: none;
+    }
+
+    .dropdown {
+        .chevron {
+            display: inline-block;
+            fill: color(cyan);
+            width: 0.6rem;
+
+            @include desktop {
+                bottom: auto;
+                fill: color(neutral-medium);
+                right: -1.5rem;
+                top: 0;
+
+                @at-root .transparent#{&} {
+                    fill: color(neutral-medium);
+                }
+            }
+        }
+
+        .clone .chevron {
+            width: 0.8rem;
+        }
+
+        a:hover .chevron {
+            fill: color(cyan);
+       }
+    }
+
+
+
+    .dropdown-menu {
+
+        @at-root .active#{&} {
+            transform: translate3d(200rem, -75%, 0);
+        }
+
+        @include desktop {
+            background-color: darken(color(neutral-lightest), 12%);
+            border-top: 0;
+            font-size: 1.4rem;
+
+            &::before {
+                @include triangle(
+                    $direction: top,
+                    $position: top -0.5rem right calc(50% - 1rem),
+                    $color: darken(color(neutral-lightest), 12%),
+                    $size: 1rem
+                );
+            }
+        }
+
+        &.open {
+            overflow: visible;
+
+            @at-root .active.open#{&} {
+                transform: translate3d(100rem, -75%, 0);
+
+            }
+        }
+    }
+
+    .logo-wrapper {
+        align-items: center;
+        background: rgba(color(neutral-lighter), 0.2);
+        border-top: 0.1rem solid rgba(color(neutral-lighter), 0.5);
+        bottom: 0;
+        display: flex;
+        flex: 1 100%;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        left: 0;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        transform: translate3d(0, 100%, 0);
+        width: 0;
+
+        @at-root .active#{&} {
+            opacity: 1;
+            padding: 1.5rem;
+            transform: translate3d(0, 0, 0);
+            transition: opacity 0.2s 0.5s, transform 0.3s 0.6s;
+            width: 100%;
+        }
+
+        @include desktop {
+            background: transparent;
+            border: 0;
+            bottom: auto;
+            flex: 0 auto;
+            left: auto;
+            margin-left: 2rem;
+            opacity: 1;
+            position: static;
+            transform: translate3d(0, 0, 0);
+            width: auto;
+        }
+
+        &::after {
+            color: color(gray);
+            content: '\00a9  Rice University';
+            order: 2;
+
+            @include desktop {
+                display: none;
+            }
+        }
+    }
+}
