@@ -81,8 +81,7 @@
 
         @if $color == default {
             border-#{$opposite-direction}: $size solid;
-
-        } else {
+        } @else {
             border-#{$opposite-direction}: $size solid $color;
         }
 
