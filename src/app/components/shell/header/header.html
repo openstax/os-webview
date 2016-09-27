@@ -4,6 +4,93 @@
     </div>
 
     <sticky-note skip="true"></sticky-note>
-    <nav class="meta-nav" skip="true"></nav>
-    <nav class="nav" role="menubar" aria-label="Main menu" skip="true"></nav>
+    <nav class="meta-nav">
+        <div class="container">
+            <ul class="nav-menu meta-menu no-bullets" role="menu" aria-label="Meta navigation menu">
+                <li class="nav-menu-item"><a href="/about" role="menuitem">About Us</a></li>
+                <!--<li class="nav-menu-item"><a href="/blog" role="menuitem">Blog</a></li>-->
+                <li class="nav-menu-item"><a href="/give" role="menuitem">Give</a></li>
+                <li class="nav-menu-item"><a href="/support" role="menuitem">Support</a></li>
+                <li class="nav-menu-item login{model.user.username ? ' dropdown' : ''}">
+                    <if condition="!model.user.username">
+                        <a href="{model.login}" data-local="true" role="menuitem">Login</a>
+                    <else>
+                        <a href="{model.accountLink}" data-local="true" role="menuitem">
+                            Hi {model.user.first_name || model.user.username}
+                            <svg width="0" class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 30"><title>arrow</title><path d="M12,1L26,16,12,31,8,27,18,16,8,5Z" transform="translate(-8 -1)"/></svg>
+                        </a>
+                    </if>
+
+                    <ul class="dropdown-menu" role="menu" aria-expanded="false" aria-label="User Menu">
+                        <li role="presentation">
+                            <a href="{model.accountLink}" role="menuitem" tabindex="-1">
+                                Account Profile
+                            </a>
+                        </li>
+                        <li if="model.user && !model.user.groups.includes('Faculty')" role="presentation">
+                            <a href="/faculty-verification" role="menuitem" tabindex="-1">
+                                Request instructor access
+                            </a>
+                        </li>
+                        <li role="presentation" class="logout">
+                            <a href="{model.logout}" data-local="true" role="menuitem" tabindex="-1">
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <span class="logo-wrapper">
+                <a class="logo rice-logo" href="http://www.rice.edu" role="menuitem">
+                    <img src="/images/rice.png" alt="Rice University logo" height="30">
+                </a>
+            </span>
+        </div>
+    </nav>
+
+    <nav class="nav" role="menubar" aria-label="Main menu">
+        <div class="container">
+            <span class="logo-wrapper">
+                <span class="logo os-logo">
+                    <a href="/" aria-label="Home Page">
+                        <img class="logo-color" src="/images/logo.svg" alt="OpenStax logo">
+                        <img class="logo-white" src="/images/logo-white.svg" alt="OpenStax logo">
+                    </a>
+                </span>
+
+                <span class="logo-quote">Access. The future of education.</span>
+            </span>
+
+            <ul class="nav-menu main-menu no-bullets">
+                <li class="nav-menu-item dropdown" role="presentation">
+                    <a href="/subjects" role="menuitem" aria-haspopup="true">Subjects<svg width="0" class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 30"><title>arrow</title><path d="M12,1L26,16,12,31,8,27,18,16,8,5Z" transform="translate(-8 -1)"/></svg></a>
+                    <ul class="dropdown-menu" role="menu" aria-expanded="false" aria-label="Subjects menu">
+                        <li role="presentation"><a href="/subjects" role="menuitem" tabindex="-1">All</a></li>
+                        <li role="presentation"><a href="/subjects/math" role="menuitem" tabindex="-1">Math</a></li>
+                        <li role="presentation"><a href="/subjects/science" role="menuitem" tabindex="-1">Science</a></li>
+                        <li role="presentation"><a href="/subjects/social-sciences" role="menuitem" tabindex="-1">Social Sciences</a></li>
+                        <li role="presentation"><a href="/subjects/humanities" role="menuitem" tabindex="-1">Humanities</a></li>
+                        <li role="presentation"><a href="/subjects/ap" role="menuitem" tabindex="-1">AP<sup>®</sup></a></li>
+                    </ul>
+                </li>
+                <li class="nav-menu-item" role="presentation">
+                    <a href="/higher-ed" role="menuitem">Higher Education</a>
+                </li>
+                <li class="nav-menu-item" role="presentation">
+                    <a href="/ap" role="menuitem">AP<sup>®</sup></a>
+                </li>
+                <li class="nav-menu-item dropdown" role="presentation">
+                    <a href="/impact" role="menuitem" aria-haspopup="true">Our Impact<svg width="0" class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 30"><title>arrow</title><path d="M12,1L26,16,12,31,8,27,18,16,8,5Z" transform="translate(-8 -1)"/></svg></a>
+                    <ul class="dropdown-menu" role="menu" aria-expanded="false" aria-label="Our Impact menu">
+                        <li><a href="/impact" role="menuitem" tabindex="-1">Explore Our Impact</a></li>
+                        <li><a href="/partners" role="menuitem" tabindex="-1">Partners</a></li>
+                        <li><a href="/foundation" role="menuitem" tabindex="-1">Foundation Support</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <button class="expand" type="button" role="button" aria-haspopup="true" aria-label="Toggle Meta Navigation Menu" tabindex="0">
+              <span></span>
+            </button>
+        </div>
+    </nav>
 </template>
