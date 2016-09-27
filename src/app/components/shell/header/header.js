@@ -199,7 +199,6 @@ class Header extends Controller {
             this.removeAllOpenClasses(e);
             this.removeCloneDropdownParent();
 
-
             button.classList.toggle('expanded');
             button.setAttribute('aria-expanded', !!button.classList.contains('expanded'));
         });
@@ -264,7 +263,7 @@ class Header extends Controller {
     @on('click .page-header .dropdown > a')
     flyOutMenu(e) {
         const w = window.innerWidth;
-        const $this = e.currentTarget;
+        const $this = e.target;
         const parentItem = $this.parentNode;
         const dropDownMenu = $this.nextElementSibling;
 
@@ -294,7 +293,7 @@ class Header extends Controller {
     }
 
     openThisDropdown(e) {
-        const menu = e.currentTarget.nextElementSibling;
+        const menu = e.target.nextElementSibling;
 
         menu.setAttribute('aria-expanded', 'true');
 
@@ -347,7 +346,7 @@ class Header extends Controller {
     }
 
     cloneDropdownParent(e) {
-        const $this = e.currentTarget;
+        const $this = e.target;
         const dropdown = $this.nextElementSibling;
         const parent = $this.cloneNode(true);
         const thisLi = document.createElement('li');
