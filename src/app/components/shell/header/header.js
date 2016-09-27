@@ -1,12 +1,12 @@
 import {Controller} from 'superb';
 import stickyNote from '../sticky-note/sticky-note';
-import UpperMenu from './upper-menu/upper-menu';
-import MainMenu from './main-menu/main-menu';
 import settings from 'settings';
 import {on} from '~/helpers/controller/decorators';
 import linkHelper from '~/helpers/link';
 import userModel from '~/models/usermodel';
 import {description as template} from './header.html';
+
+// FIX: This needs to be refactored into multiple views
 
 class Header extends Controller {
 
@@ -18,10 +18,10 @@ class Header extends Controller {
             classes: ['page-header']
         };
         this.regions = {
-            stickyNote: 'sticky-note',
-            upperMenu: 'nav.meta-nav',
-            mainMenu: 'nav.nav'
+            stickyNote: 'sticky-note'
         };
+
+        this.meta = {};
 
         // Fix: There must be a better way
         const padParentForStickyNote = () => {
@@ -38,7 +38,12 @@ class Header extends Controller {
             const accounts = `${settings.apiOrigin}/accounts`;
             const currentPage = window.location.href;
 
+            padParentForStickyNote();
+
             return {
+                visible: () => this.meta.visible,
+                fixed: () => this.meta.fixed,
+                transparent: () => this.meta.transparent,
                 login: `${accounts}/login/openstax/?next=${currentPage}`,
                 logout: `${accounts}/logout/?next=${currentPage}`,
                 user: this.user || {
@@ -60,10 +65,10 @@ class Header extends Controller {
         window.addEventListener('resize', this.closeFullScreenNav.bind(this));
         window.addEventListener('resize', padParentForStickyNote);
         window.addEventListener('scroll', () => {
-            window.requestAnimationFrame(() => {
-                this.updateHeaderStyle();
-                this.removeAllOpenClasses();
-            });
+            window.requestAnimationFrame(this.updateHeaderStyle.bind(this));
+        });
+        window.addEventListener('scroll', () => {
+            window.requestAnimationFrame(this.removeAllOpenClasses.bind(this));
         });
 
         this.handlePathChange = () => {
@@ -90,34 +95,56 @@ class Header extends Controller {
 
     onLoaded() {
         this.regions.stickyNote.append(stickyNote);
-        this.regions.upperMenu.attach(new UpperMenu(this.model));
-        this.regions.mainMenu.attach(new MainMenu(this.model));
+    }
+
+    classList(action, ...args) {
+        let result = null;
+
+        if (this.el && typeof this.el.classList === 'object') {
+            result = this.el.classList[action](...args);
+        }
+
+        return result;
     }
 
     visible() {
-        this.el.classList.add('visible');
+        this.meta.visible = true;
+        this.classList('add', 'visible');
         return this;
     }
 
     pin() {
-        this.el.classList.add('fixed');
+        this.meta.fixed = true;
+        this.classList('add', 'fixed');
         return this;
     }
 
     transparent() {
-        this.el.classList.add('transparent');
+        this.meta.transparent = true;
+        this.classList('add', 'transparent');
         return this;
     }
 
     reset() {
-        this.el.classList.remove('visible');
-        this.el.classList.remove('fixed');
-        this.el.classList.remove('transparent');
+        this.meta.visible = false;
+        this.meta.pinned = false;
+        this.meta.transparent = false;
+        this.classList('remove', 'visible');
+        this.classList('remove', 'fixed');
+        this.classList('remove', 'transparent');
         return this;
     }
 
+    isVisible() {
+        return !!this.classList('contains', 'visible');
+    }
+
     isPinned() {
-        return this.el.classList.contains('fixed');
+        return !!this.classList('contains', 'fixed');
+    }
+
+    isTransparent() {
+        return !!this.classList('contains', 'transparent');
     }
 
     get height() {
@@ -125,6 +152,17 @@ class Header extends Controller {
 
         if (this.el && typeof this.el === 'object') {
             height = this.el.offsetHeight;
+        }
+
+        return height;
+    }
+
+    get metaNavHeight() {
+        const metaNav = this.el.querySelector('.meta-nav');
+        let height = 0;
+
+        if (metaNav && typeof metaNav === 'object') {
+            height = metaNav.offsetHeight;
         }
 
         return height;
@@ -151,12 +189,14 @@ class Header extends Controller {
         }
     }
 
-    toggleFullScreenNav(button) {
+    toggleFullScreenNav(e) {
+        const button = e.currentTarget;
+
         document.body.classList.toggle('no-scroll');
 
         window.requestAnimationFrame(() => {
             this.el.classList.toggle('active');
-            this.removeAllOpenClasses();
+            this.removeAllOpenClasses(e);
             this.removeCloneDropdownParent();
 
 
@@ -172,9 +212,14 @@ class Header extends Controller {
             if (array[i].classList) {
                 array[i].classList.remove(className);
             } else {
-                const names = array[i].className.split(' ')
-                .filter((name) => name !== className);
+                const names = array[i].className.split(' ');
+                const sublen = names.length;
 
+                for (let j = 0; j < sublen; j++) {
+                    if (names[j] === className) {
+                        names[j] = '';
+                    }
+                }
                 array[i].className = names.join('');
             }
         }
@@ -213,13 +258,13 @@ class Header extends Controller {
     @on('click .expand')
     onClickToggleFullScreenNav(e) {
         e.stopPropagation();
-        this.toggleFullScreenNav(e.target);
+        this.toggleFullScreenNav(e);
     }
 
     @on('click .page-header .dropdown > a')
     flyOutMenu(e) {
         const w = window.innerWidth;
-        const $this = e.target;
+        const $this = e.currentTarget;
         const parentItem = $this.parentNode;
         const dropDownMenu = $this.nextElementSibling;
 
@@ -233,7 +278,7 @@ class Header extends Controller {
                 this.el.classList.add('open');
                 parentItem.classList.add('open');
                 dropDownMenu.classList.add('open');
-                this.openThisDropdown(dropDownMenu);
+                this.openThisDropdown(e);
             } else if (!e.target.classList.contains('back')) {
                 this.closeFullScreenNav(e);
             }
@@ -242,13 +287,15 @@ class Header extends Controller {
 
     @on('keydown .expand')
     onKeydownToggleFullScreenNav(e) {
-        if (document.activeElement === e.target && (e.keyCode === 13 || e.keyCode === 32)) {
+        if (document.activeElement === e.currentTarget && (e.keyCode === 13 || e.keyCode === 32)) {
             e.preventDefault();
-            this.toggleFullScreenNav(e.target);
+            this.toggleFullScreenNav(e);
         }
     }
 
-    openThisDropdown(menu) {
+    openThisDropdown(e) {
+        const menu = e.currentTarget.nextElementSibling;
+
         menu.setAttribute('aria-expanded', 'true');
 
         for (const a of menu.querySelectorAll('a')) {
@@ -300,7 +347,7 @@ class Header extends Controller {
     }
 
     cloneDropdownParent(e) {
-        const $this = e.target;
+        const $this = e.currentTarget;
         const dropdown = $this.nextElementSibling;
         const parent = $this.cloneNode(true);
         const thisLi = document.createElement('li');
