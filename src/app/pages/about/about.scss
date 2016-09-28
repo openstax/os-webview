@@ -168,6 +168,7 @@ $hero-break-width: 880px;
             }
 
             &.hidden {
+                height: 0;
                 visibility: hidden;
             }
         }
@@ -567,12 +568,12 @@ $hero-break-width: 880px;
     }
 
     .strategic-advisors .headshot .picture-area img {
+        bottom: -6%;
         height: auto;
         left: auto;
-        max-height: 105%;
-        max-width: 128%;
+        max-height: 92%;
+        max-width: 100%;
         right: 0;
-        top: 15%;
     }
 
     &.no-touch .strategic-advisors .headshot:hover .details,
