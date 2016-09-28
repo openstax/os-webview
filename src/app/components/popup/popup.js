@@ -26,7 +26,8 @@ export default class Popup extends Controller {
 
     @on('click .dismiss')
     goAway() {
-        this.detach();
+        this.el.classList.add('hidden');
+        this.onClose();
     }
 
     @on('keydown')
