@@ -1,4 +1,5 @@
 import {Controller} from 'superb';
+import $ from '~/helpers/$';
 import {description as template} from './product-box.html';
 
 export default class ProductBox extends Controller {
@@ -11,4 +12,7 @@ export default class ProductBox extends Controller {
         };
     }
 
+    onLoaded() {
+        $.insertHtml(this.el, this.model);
+    }
 }
