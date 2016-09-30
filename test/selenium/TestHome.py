@@ -20,6 +20,7 @@ class TestHome(unittest.TestCase):
         driver = self.driver
         driver.get(self.base_url)
         driver.implicitly_wait(7)
+        print("=== Running Home Test ===")
 
         if driver.find_element_by_xpath("//a[contains(text(),'Let us know')]"):
             print('Let us know link found')
@@ -32,6 +33,8 @@ class TestHome(unittest.TestCase):
             print('View Partners link found')
         if driver.find_element_by_xpath("//a[contains(text(),'Learn More')]"):
             print('Learn More link found')
+
+        print("=== Home Test Complete ===\n")
 
     def tearDown(self):
         self.driver.quit()

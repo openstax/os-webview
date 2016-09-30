@@ -3,14 +3,14 @@ import unittest, time
 
 '''
 This test
-   * Opens the Biology book page
-   * Prints out the links found on the page
+   * Opens the Subjects page
+   * Prints out the links to the images files
    * Some of the links should be from Cloudfront
    * This shows if the API is working and data is available
 '''
 
 
-class TestBiology(unittest.TestCase):
+class TestSubjects(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
@@ -20,12 +20,15 @@ class TestBiology(unittest.TestCase):
 
     def test_ap(self):
         driver = self.driver
-        driver.get(self.base_url + "/details/books/biology")
+        driver.get(self.base_url + "/subjects")
         time.sleep(10)
+        print("=== Running Subjects Test ===")
 
-        links = driver.find_elements_by_tag_name("a")
-        for link in links:
-            print(link.get_attribute("href"))
+        images = driver.find_elements_by_tag_name("img")
+        for image in images:
+            print(image.get_attribute("src"))
+
+        print("=== Subjects Test Complete ===\n")
 
     def tearDown(self):
         self.driver.quit()

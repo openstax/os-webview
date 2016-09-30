@@ -3,14 +3,14 @@ import unittest, time
 
 '''
 This test
-   * Opens the Foundation page
-   * Prints out the headers found on the page
-   * It should be the list of funders
+   * Opens the College Physics book page
+   * Prints out the links found on the page
+   * Some of the links should be from Cloudfront
    * This shows if the API is working and data is available
 '''
 
 
-class TestFunders(unittest.TestCase):
+class TestCollegePhysics(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
@@ -20,12 +20,15 @@ class TestFunders(unittest.TestCase):
 
     def test_ap(self):
         driver = self.driver
-        driver.get(self.base_url + "/foundation")
-        time.sleep(7)
+        driver.get(self.base_url + "/details/books/college-physics")
+        time.sleep(10)
+        print("=== Running College Physics Test ===")
 
-        images = driver.find_elements_by_tag_name("h2")
-        for image in images:
-            print(image.text)
+        links = driver.find_elements_by_tag_name("a")
+        for link in links:
+            print(link.get_attribute("href"))
+
+        print("=== College Physics Test Complete ===\n")
 
     def tearDown(self):
         self.driver.quit()

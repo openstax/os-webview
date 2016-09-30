@@ -21,6 +21,7 @@ class TestHigherEd(unittest.TestCase):
         driver = self.driver
         driver.get(self.base_url + "/higher-ed")
         driver.implicitly_wait(7)
+        print("=== Running Higher Ed Test ===")
 
         if driver.find_element_by_xpath("//a[contains(text(),'Sign up')]"):
             print('Sign up link found')
@@ -39,6 +40,8 @@ class TestHigherEd(unittest.TestCase):
             print('Learn More link found')
         if driver.find_element_by_xpath("//a[contains(text(),'Discover Free Content')]"):
             print('Discover Free Content link found')
+
+        print("=== Higher Ed Test Complete ===\n")
 
     def tearDown(self):
         self.driver.quit()
