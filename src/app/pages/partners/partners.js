@@ -128,7 +128,7 @@ export default class Partners extends CMSPageController {
         history.replaceState({
             filter: history.state.filter,
             path: '/partners'
-        }, '', '/partners');
+        }, '', window.location.pathname);
     }
 
     onClose() {
