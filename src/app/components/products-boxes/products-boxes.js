@@ -13,7 +13,7 @@ const boxData = {
     },
     ap: {
         name: 'books',
-        title: 'Books for AP® Courses',
+        title: 'Books for AP<sup>&reg;</sup> Courses',
         linkText: 'Explore Our Subjects',
         blurb: `Our college­ level textbooks for Advanced Placement<sup>&reg;</sup>
             courses are peer-reviewed, completely free online, and will soon be

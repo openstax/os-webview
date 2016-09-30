@@ -1,8 +1,8 @@
 <template args="model">
     <div class="image"></div>
     <div class="caption">
-        <h3 class="title">{model.title}</h3>
-        <p class="blurb">{model.blurb}</p>
+        <h3 class="title" data-html="title"></h3>
+        <p class="blurb" data-html="blurb"></p>
         <a class="btn with-arrow" href="{model.url}">{model.linkText}</a>
     </div>
 </template>
