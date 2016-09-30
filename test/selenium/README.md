@@ -19,7 +19,7 @@ The file should contain 1 line: the base URL for the tests
  * Download the [geckodriver](https://github.com/mozilla/geckodriver/releases)
  * Unzip the file and place it is /usr/bin. You will be asked for your password to copy it.
  * Install Selenium 3
-     pip install selenium=3.0.0b3
+     pip install selenium==3.0.0b3
 
 
 Make sure the python Selenium package is installed
