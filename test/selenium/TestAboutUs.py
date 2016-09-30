@@ -3,14 +3,13 @@ import unittest, time
 
 '''
 This test
-   * Opens the College Physics book page
-   * Prints out the links found on the page
-   * Some of the links should be from Cloudfront
+   * Opens the About Us page
+   * Prints out the links to the images files
    * This shows if the API is working and data is available
 '''
 
 
-class TestCollegePhysics(unittest.TestCase):
+class TestAboutUs(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
@@ -20,12 +19,15 @@ class TestCollegePhysics(unittest.TestCase):
 
     def test_ap(self):
         driver = self.driver
-        driver.get(self.base_url + "/details/books/college-physics")
+        driver.get(self.base_url + "/about")
         time.sleep(10)
+        print("=== Running About Us Test ===")
 
-        links = driver.find_elements_by_tag_name("a")
-        for link in links:
-            print(link.get_attribute("href"))
+        images = driver.find_elements_by_tag_name("img")
+        for image in images:
+            print(image.get_attribute("src"))
+
+        print("=== About Us Test Complete ===\n")
 
     def tearDown(self):
         self.driver.quit()

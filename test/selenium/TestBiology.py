@@ -1,15 +1,16 @@
 from selenium import webdriver
-import unittest
+import unittest, time
 
 '''
 This test
-   * Opens the AP page
-   * Verifies the CTA text from the API displays and prints out positive results
+   * Opens the Biology book page
+   * Prints out the links found on the page
+   * Some of the links should be from Cloudfront
    * This shows if the API is working and data is available
 '''
 
 
-class TestAP(unittest.TestCase):
+class TestBiology(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
@@ -19,13 +20,15 @@ class TestAP(unittest.TestCase):
 
     def test_ap(self):
         driver = self.driver
-        driver.get(self.base_url + "/ap")
-        driver.implicitly_wait(7)
+        driver.get(self.base_url + "/details/books/biology")
+        time.sleep(10)
+        print("=== Running Biology Test ===")
 
-        if driver.find_element_by_xpath("//a[contains(text(),'Explore Our Subjects')]"):
-            print('Explore Our Subjects link found')
-        if driver.find_element_by_xpath("//a[contains(text(),'View Partners')]"):
-            print('View partners link found')
+        links = driver.find_elements_by_tag_name("a")
+        for link in links:
+            print(link.get_attribute("href"))
+
+        print("=== Biology Test Complete ===\n")
 
     def tearDown(self):
         self.driver.quit()

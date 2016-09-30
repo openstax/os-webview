@@ -20,8 +20,16 @@ Make sure the python Selenium package is installed
 
 The tests can be run on the command line
 
+Run a single Test
+
     cd location/of/tests
     python <test name>.py
+    
+Run Test Suite (all tests)
+
+    cd location/of/tests
+    python osweb-test-suite.py
+
 
 License
 -------
