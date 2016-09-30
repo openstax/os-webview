@@ -15,4 +15,5 @@ export default class ProductBox extends Controller {
     onLoaded() {
         $.insertHtml(this.el, this.model);
     }
+
 }
