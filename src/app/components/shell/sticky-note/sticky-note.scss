@@ -19,8 +19,14 @@
 
     > .container {
         align-items: center;
-        flex-wrap: nowrap;
+        display: flex;
+        flex-flow: row nowrap;
         justify-content: space-around;
+        padding-left: 2rem;
+
+        @media (max-width: 680px) {
+            padding-right: calc(8rem - 5%);
+        }
     }
 
     .btn {

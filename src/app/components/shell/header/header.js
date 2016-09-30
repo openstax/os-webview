@@ -1,12 +1,12 @@
 import {Controller} from 'superb';
 import stickyNote from '../sticky-note/sticky-note';
+import UpperMenu from './upper-menu/upper-menu';
+import MainMenu from './main-menu/main-menu';
 import settings from 'settings';
 import {on} from '~/helpers/controller/decorators';
 import linkHelper from '~/helpers/link';
 import userModel from '~/models/usermodel';
 import {description as template} from './header.html';
-
-// FIX: This needs to be refactored into multiple views
 
 class Header extends Controller {
 
@@ -18,10 +18,10 @@ class Header extends Controller {
             classes: ['page-header']
         };
         this.regions = {
-            stickyNote: 'sticky-note'
+            stickyNote: 'sticky-note',
+            upperMenu: 'nav.meta-nav',
+            mainMenu: 'nav.nav'
         };
-
-        this.meta = {};
 
         // Fix: There must be a better way
         const padParentForStickyNote = () => {
@@ -34,41 +34,39 @@ class Header extends Controller {
             }
         };
 
-        this.model = () => {
-            const accounts = `${settings.apiOrigin}/accounts`;
-            const currentPage = window.location.href;
+        const accounts = `${settings.apiOrigin}/accounts`;
+        const currentPage = window.location.href;
 
-            padParentForStickyNote();
-
-            return {
-                visible: () => this.meta.visible,
-                fixed: () => this.meta.fixed,
-                transparent: () => this.meta.transparent,
-                login: `${accounts}/login/openstax/?next=${currentPage}`,
-                logout: `${accounts}/logout/?next=${currentPage}`,
-                user: this.user || {
-                    username: null,
-                    groups: []
-                },
-                accountLink: settings.accountHref
-            };
+        this.model = {
+            login: `${accounts}/login/openstax/?next=${currentPage}`,
+            logout: `${accounts}/logout/?next=${currentPage}`,
+            user: {
+                username: null,
+                groups: []
+            },
+            accountLink: settings.accountHref,
+            currentDropdown: null
         };
+
+        this.upperMenu = new UpperMenu(this.model);
+        this.mainMenu = new MainMenu();
 
         userModel.load().then((user) => {
             if (typeof user === 'object') {
-                this.user = user;
+                this.model.user = user;
             }
             this.update();
+            this.upperMenu.update();
         });
 
         document.addEventListener('click', this.resetHeader.bind(this));
         window.addEventListener('resize', this.closeFullScreenNav.bind(this));
         window.addEventListener('resize', padParentForStickyNote);
         window.addEventListener('scroll', () => {
-            window.requestAnimationFrame(this.updateHeaderStyle.bind(this));
-        });
-        window.addEventListener('scroll', () => {
-            window.requestAnimationFrame(this.removeAllOpenClasses.bind(this));
+            window.requestAnimationFrame(() => {
+                this.updateHeaderStyle();
+                this.removeAllOpenClasses();
+            });
         });
 
         this.handlePathChange = () => {
@@ -95,56 +93,28 @@ class Header extends Controller {
 
     onLoaded() {
         this.regions.stickyNote.append(stickyNote);
-    }
-
-    classList(action, ...args) {
-        let result = null;
-
-        if (this.el && typeof this.el.classList === 'object') {
-            result = this.el.classList[action](...args);
-        }
-
-        return result;
-    }
-
-    visible() {
-        this.meta.visible = true;
-        this.classList('add', 'visible');
-        return this;
+        this.regions.upperMenu.attach(this.upperMenu);
+        this.regions.mainMenu.attach(this.mainMenu);
     }
 
     pin() {
-        this.meta.fixed = true;
-        this.classList('add', 'fixed');
+        this.el.classList.add('fixed');
         return this;
     }
 
     transparent() {
-        this.meta.transparent = true;
-        this.classList('add', 'transparent');
+        this.el.classList.add('transparent');
         return this;
     }
 
     reset() {
-        this.meta.visible = false;
-        this.meta.pinned = false;
-        this.meta.transparent = false;
-        this.classList('remove', 'visible');
-        this.classList('remove', 'fixed');
-        this.classList('remove', 'transparent');
+        this.el.classList.remove('fixed');
+        this.el.classList.remove('transparent');
         return this;
     }
 
-    isVisible() {
-        return !!this.classList('contains', 'visible');
-    }
-
     isPinned() {
-        return !!this.classList('contains', 'fixed');
-    }
-
-    isTransparent() {
-        return !!this.classList('contains', 'transparent');
+        return this.el.classList.contains('fixed');
     }
 
     get height() {
@@ -152,17 +122,6 @@ class Header extends Controller {
 
         if (this.el && typeof this.el === 'object') {
             height = this.el.offsetHeight;
-        }
-
-        return height;
-    }
-
-    get metaNavHeight() {
-        const metaNav = this.el.querySelector('.meta-nav');
-        let height = 0;
-
-        if (metaNav && typeof metaNav === 'object') {
-            height = metaNav.offsetHeight;
         }
 
         return height;
@@ -189,15 +148,12 @@ class Header extends Controller {
         }
     }
 
-    toggleFullScreenNav(e) {
-        const button = e.currentTarget;
-
+    toggleFullScreenNav(button) {
         document.body.classList.toggle('no-scroll');
 
         window.requestAnimationFrame(() => {
             this.el.classList.toggle('active');
-            this.removeAllOpenClasses(e);
-            this.removeCloneDropdownParent();
+            this.removeAllOpenClasses();
 
             button.classList.toggle('expanded');
             button.setAttribute('aria-expanded', !!button.classList.contains('expanded'));
@@ -211,14 +167,9 @@ class Header extends Controller {
             if (array[i].classList) {
                 array[i].classList.remove(className);
             } else {
-                const names = array[i].className.split(' ');
-                const sublen = names.length;
+                const names = array[i].className.split(' ')
+                .filter((name) => name !== className);
 
-                for (let j = 0; j < sublen; j++) {
-                    if (names[j] === className) {
-                        names[j] = '';
-                    }
-                }
                 array[i].className = names.join('');
             }
         }
@@ -247,7 +198,6 @@ class Header extends Controller {
         window.requestAnimationFrame(() => {
             this.el.classList.remove('active');
             this.removeAllOpenClasses();
-            this.removeCloneDropdownParent();
 
             button.classList.remove('expanded');
             button.setAttribute('aria-expanded', 'false');
@@ -257,10 +207,10 @@ class Header extends Controller {
     @on('click .expand')
     onClickToggleFullScreenNav(e) {
         e.stopPropagation();
-        this.toggleFullScreenNav(e);
+        this.toggleFullScreenNav(e.target);
     }
 
-    @on('click .page-header .dropdown > a')
+    @on('click .dropdown > a')
     flyOutMenu(e) {
         const w = window.innerWidth;
         const $this = e.target;
@@ -270,31 +220,32 @@ class Header extends Controller {
         if (w <= 768) {
             e.preventDefault();
             e.stopPropagation();
-            this.cloneDropdownParent(e);
-
             if (!dropDownMenu.classList.contains('open')) {
                 this.removeAllOpenClasses();
                 this.el.classList.add('open');
                 parentItem.classList.add('open');
                 dropDownMenu.classList.add('open');
-                this.openThisDropdown(e);
-            } else if (!e.target.classList.contains('back')) {
-                this.closeFullScreenNav(e);
+                this.openThisDropdown(dropDownMenu);
             }
         }
     }
 
+    @on('click .submenu-zone .close')
+    closeSubmenu(e) {
+        this.removeAllOpenClasses();
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
     @on('keydown .expand')
     onKeydownToggleFullScreenNav(e) {
-        if (document.activeElement === e.currentTarget && (e.keyCode === 13 || e.keyCode === 32)) {
+        if (document.activeElement === e.target && (e.keyCode === 13 || e.keyCode === 32)) {
             e.preventDefault();
-            this.toggleFullScreenNav(e);
+            this.toggleFullScreenNav(e.target);
         }
     }
 
-    openThisDropdown(e) {
-        const menu = e.target.nextElementSibling;
-
+    openThisDropdown(menu) {
         menu.setAttribute('aria-expanded', 'true');
 
         for (const a of menu.querySelectorAll('a')) {
@@ -303,6 +254,8 @@ class Header extends Controller {
     }
 
     resetHeader(e) {
+        const target = e.target;
+
         const urlClick = e && linkHelper.validUrlClick(e);
 
         if (urlClick) {
@@ -335,49 +288,13 @@ class Header extends Controller {
         const height = this.height;
 
         if (window.pageYOffset > height && !this.isPinned()) {
-            this.reset().pin().visible();
+            this.reset().pin();
         } else if (window.pageYOffset <= height) {
             if (window.location.pathname === '/') {
                 this.reset().transparent();
             } else {
                 this.reset();
             }
-        }
-    }
-
-    cloneDropdownParent(e) {
-        const $this = e.target;
-        const dropdown = $this.nextElementSibling;
-        const parent = $this.cloneNode(true);
-        const thisLi = document.createElement('li');
-        const back = document.createElement('a');
-        const element = dropdown.querySelector('.clone');
-
-        thisLi.setAttribute('role', 'presentation');
-        thisLi.setAttribute('class', 'clone');
-
-        parent.removeAttribute('href');
-        parent.removeAttribute('aria-haspopup');
-        back.setAttribute('class', 'back');
-        back.text = 'Back';
-        thisLi.appendChild(back);
-        thisLi.appendChild(parent);
-
-        if (!element) {
-            back.addEventListener('click', this.removeAllOpenClasses.bind(this), true);
-
-            dropdown.insertBefore(thisLi, dropdown.childNodes[0]);
-        }
-    }
-
-    removeCloneDropdownParent() {
-        const clone = this.el.querySelectorAll('.clone');
-
-        for (const thisClone of clone) {
-            const back = thisClone.querySelector('.back');
-
-            back.removeEventListener('click', this.removeAllOpenClasses.bind(this), true);
-            thisClone.parentNode.removeChild(thisClone);
         }
     }
 
