@@ -41,7 +41,6 @@ export default class FacultyVerificationForm extends SalesforceForm {
 
     onLoaded() {
         document.title = 'Instructor Verification - OpenStax';
-        selectHandler.setup(this);
         sfUserModel.load().then((user) => {
             if (user.username) {
                 this.model.firstName = user.first_name;
@@ -49,6 +48,7 @@ export default class FacultyVerificationForm extends SalesforceForm {
                 this.model.userId = user.username;
                 this.model.accountId = user.accounts_id;
                 this.model.pendingVerification = user.pending_verification;
+                this.model.alreadyVerified = user.groups.includes('Faculty');
 
                 if (user.accounts_id === null) {
                     this.model.problemMessage = 'Could not load user information';
@@ -57,6 +57,7 @@ export default class FacultyVerificationForm extends SalesforceForm {
                 }
 
                 this.update();
+                selectHandler.setup(this);
             } else {
                 const loginLink = document.querySelector('.nav-menu-item.login > a');
 

@@ -1,0 +1,246 @@
+@import 'variables';
+@import 'mixins';
+
+.page-header .nav {
+    height: auto;
+    overflow: hidden;
+    width: 100%;
+
+    @include desktop {
+        box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(color(gray), 0.1);
+    }
+
+    @at-root .active#{&} {
+        box-shadow: none;
+    }
+
+    @at-root .fixed#{&} {
+        left: 0;
+        overflow: visible;
+    }
+
+    .container {
+        align-items: flex-start;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        justify-content: space-between;
+        margin: 0 auto;
+        max-width: $boxed-width;
+
+        @include desktop {
+            align-items: center;
+            flex-direction: row;
+        }
+    }
+
+    .logo-wrapper {
+        align-items: center;
+        display: flex;
+        flex: 0 auto;
+        font-size: 1.4rem;
+        padding: 0.5rem 1.5rem;
+
+        @at-root .active#{&} {
+            left: 1.5rem;
+            position: absolute;
+            top: 1.5rem;
+        }
+
+        @include desktop {
+            left: auto;
+            position: static;
+            top: auto;
+        }
+
+        span {
+            vertical-align: middle;
+        }
+
+        > a {
+            display: inline-block;
+        }
+    }
+
+    .main-menu {
+        display: none;
+        flex-direction: column;
+        font-size: 1.8rem;
+        font-weight: 600;
+        height: 0;
+        overflow: hidden;
+
+        @at-root .active#{&} {
+            display: flex;
+            height: auto;
+            margin: 0;
+            padding: 0;
+        }
+
+        @include desktop {
+            display: flex;
+            flex-flow: row nowrap;
+            height: auto;
+            justify-content: flex-end;
+            margin: 0;
+        }
+    }
+
+    .nav-menu-item {
+        white-space: nowrap;
+
+        @at-root .active#{&} {
+            margin-bottom: 1rem;
+        }
+
+        @include desktop {
+            margin: 0.5rem 1rem;
+            padding: 0 1rem;
+
+            > a {
+                color: color(gray);
+                display: inline-block;
+                padding: 1.2rem 0;
+
+                @at-root .transparent#{&} {
+                    color: color(neutral-lightest);
+                }
+            }
+
+            @media (max-width: 1242px) {
+                &:last-child .dropdown-menu {
+                    right: 0.2rem;
+                }
+            }
+
+            &:hover .dropdown-menu {
+                border-top: 0.5rem solid color(orange);
+                display: block;
+                height: auto;
+                opacity: 1;
+                padding: 1rem;
+                position: absolute;
+                transition: opacity 0.3s;
+                width: auto;
+
+                @at-root .fixed#{&} {
+                    position: fixed;
+                    top: 5.5rem;
+                }
+
+                a {
+                    color: color(gray);
+                    display: block;
+
+                    &:hover {
+                        color: color(cyan);
+                    }
+                }
+            }
+
+            &:not(.dropdown):hover {
+                border-bottom: 0.5rem solid color(green);
+                margin-bottom: 0;
+            }
+        }
+
+        .dropdown-menu {
+            background-color: color(neutral-lightest);
+            color: color(gray);
+            display: none;
+            font-size: 1.6rem;
+            font-weight: 300;
+            padding-left: 0;
+
+            @include desktop {
+                display: block;
+                height: 0;
+                opacity: 0;
+                overflow: hidden;
+                position: absolute;
+                width: 0;
+            }
+        }
+    }
+
+    .chevron {
+        fill: color(blue);
+        height: 1.33rem;
+        margin-left: 1rem;
+        width: 0.8rem;
+
+        @include desktop {
+            fill: color(gray);
+            transform: rotate(90deg);
+            transform-origin: center;
+
+            @at-root .transparent#{&} {
+                fill: color(neutral-lightest);
+            }
+        }
+    }
+
+    .logo {
+        display: inline-block;
+        margin-right: 2rem;
+
+        a {
+            display: inline-block;
+            width: 15rem;
+
+            &:active,
+            &:focus,
+            &:hover {
+                &::after {
+                    background-color: transparent;
+                    box-shadow: none;
+                }
+            }
+        }
+
+        img {
+            height: 100%;
+            margin-top: 0.5rem;
+            width: 100%;
+        }
+
+        .logo-color {
+            display: inline-block;
+
+            @include desktop {
+                @at-root .transparent#{&} {
+                    display: none;
+                }
+            }
+        }
+
+        .logo-white {
+            display: none;
+
+            @include desktop {
+                @at-root .transparent#{&} {
+                    display: inline-block;
+                }
+            }
+        }
+    }
+
+    .logo-quote {
+        color: color(gray);
+        display: inline-block;
+        height: 0;
+        transform: scale3d(0, 0, 0);
+        width: 0;
+
+        @media (min-width: 1000px) {
+            height: auto;
+            transform: scale3d(1, 1, 1);
+            width: auto;
+        }
+
+        @at-root .transparent#{&} {
+            color: color(neutral-lightest);
+        }
+
+    }
+}

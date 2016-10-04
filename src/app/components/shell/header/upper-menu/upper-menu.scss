@@ -1,0 +1,162 @@
+@import 'variables';
+@import 'mixins';
+
+.page-header > .meta-nav {
+    font-size: 1.6rem;
+    height: 0;
+    overflow: hidden;
+    width: 0;
+
+    @at-root .active#{&} {
+        height: auto;
+        white-space: nowrap;
+    }
+
+    @include desktop {
+        background-color: lighten(color(neutral-lighter), 8%);
+        font-size: 1.4rem;
+        height: 5rem;
+        order: 1;
+        overflow: inherit;
+        width: 100%;
+        z-index: 1;
+    }
+
+    .container {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+
+        @include desktop {
+            justify-content: flex-end;
+            margin: 0 auto;
+            max-width: $boxed-width;
+        }
+    }
+
+    .nav-menu {
+        display: flex;
+        flex-direction: column;
+
+        @include desktop {
+            flex-direction: row;
+            justify-content: flex-end;
+        }
+
+        @at-root .active#{&} {
+            margin: 0;
+            padding-left: 0;
+        }
+
+        .dropdown > a {
+            display: block;
+            margin-bottom: 1.1rem;
+        }
+
+        .nav-menu-item {
+            padding: 0 2rem;
+
+            @at-root .active#{&} {
+                padding-left: 0;
+            }
+
+            .dropdown-menu {
+                display: none;
+                flex-direction: column;
+                overflow: hidden;
+                transition: opacity 0.3s;
+
+                @include desktop {
+                    display: flex;
+                    height: 0;
+                    opacity: 0;
+                    width: 0;
+                }
+            }
+
+            &:hover .dropdown-menu {
+                @include desktop {
+                    background-color: darken(color(neutral-lightest), 12%);
+                    border-top: 0;
+                    display: flex;
+                    font-size: 1.4rem;
+                    height: auto;
+                    opacity: 1;
+                    padding: 1rem;
+                    position: absolute;
+                    transform: translateX(-30%);
+                    width: auto;
+                }
+            }
+        }
+    }
+
+    .nav-menu-item a {
+        color: color(cyan);
+
+        @include desktop {
+            color: color(gray);
+
+            &:hover {
+                color: color(cyan);
+
+                .chevron {
+                    fill: color(cyan);
+                }
+            }
+        }
+
+        .chevron {
+            fill: color(cyan);
+            margin-left: 0.5em;
+            width: 0.6rem;
+
+            @include desktop {
+                fill: color(gray);
+                transform: rotate(90deg);
+                transform-origin: center;
+            }
+        }
+    }
+
+    .logo-wrapper {
+        align-items: center;
+        background: rgba(color(neutral-lighter), 0.2);
+        border-top: 0.1rem solid rgba(color(neutral-lighter), 0.5);
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        opacity: 0;
+        overflow: hidden;
+        width: 0;
+
+        @at-root .active#{&} {
+            bottom: 0;
+            left: 0;
+            opacity: 1;
+            padding: 1.5rem;
+            position: absolute;
+            transform: translate3d(0, 0, 0);
+            transition: opacity 0.2s 0.5s, transform 0.3s 0.6s;
+            width: 100%;
+        }
+
+        @include desktop {
+            background: transparent;
+            border: 0;
+            opacity: 1;
+            padding: 0 1.5rem;
+            width: auto;
+        }
+
+        &::after {
+            color: color(gray);
+            content: '\00a9  Rice University';
+            order: 2;
+
+            @include desktop {
+                display: none;
+            }
+        }
+    }
+}
