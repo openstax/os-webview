@@ -24,6 +24,10 @@
                 flex-flow: row wrap;
                 padding: 0;
             }
+
+            .search {
+                margin: 0 auto;
+            }
         }
 
         .container {
@@ -113,6 +117,21 @@
             @include desktop {
                 padding: 0;
             }
+        }
+    }
+
+    .update-box {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        margin: 2rem auto;
+        max-width: $boxed-width;
+
+        .cta {
+            background-color: color(orange);
+            color: color(neutral-lightest);
+            padding-left: 3rem;
+            padding-right: 3rem;
         }
     }
 }
