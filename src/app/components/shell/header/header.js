@@ -50,9 +50,25 @@ class Header extends Controller {
                     username: null,
                     groups: []
                 },
+                showBlog: this.showBlog,
                 accountLink: settings.accountHref
             };
         };
+
+        /* eslint arrow-parens: 0 */
+        (async () => {
+            try {
+                const response = await fetch(`${settings.apiOrigin}/api/news`);
+                const data = await response.json();
+
+                if (Object.keys(data.articles).length) {
+                    this.showBlog = true;
+                    this.update();
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        })();
 
         userModel.load().then((user) => {
             if (typeof user === 'object') {
