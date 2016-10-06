@@ -76,7 +76,7 @@ export default class Subjects extends CMSPageController {
         window.removeEventListener('popstate', this.filterCategoriesEvent);
     }
 
-    @on('click', '.filter .filter-button')
+    @on('click .filter .filter-button')
     scrollToFilterButtons() {
         $.scrollTo(this.el.querySelector('.filter'));
     }

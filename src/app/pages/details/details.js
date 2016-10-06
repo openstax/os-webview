@@ -17,7 +17,11 @@ export default class Details extends CMSPageController {
         this.view = {
             classes: ['os-loader']
         };
-        this.slug = bookTitle;
+        if (/^books/.test(bookTitle)) {
+            this.slug = bookTitle;
+        } else {
+            this.slug = `books/${bookTitle}`;
+        }
     }
 
     onDataLoaded() {
