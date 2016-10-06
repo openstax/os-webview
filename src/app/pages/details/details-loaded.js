@@ -20,12 +20,9 @@ export default class DetailsLoaded extends Controller {
         };
         this.regions = {
             getThisTitle: '.floating-menu .get-this-book',
-            seniorAllAuthors: '[data-id="senior-all-authors"]',
-            allAuthors: '[data-id="nonsenior-all-authors"]',
             instructorResources: '#instructor-resources',
             studentResources: '#student-resources',
             tableOfContents: 'table-of-contents',
-            tocRemover: '.toc-remover',
             partners: '#partners'
         };
         this.model = model;

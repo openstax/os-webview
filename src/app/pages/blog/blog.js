@@ -69,12 +69,14 @@ export default class Blog extends CMSPageController {
                 articleController.setMode('page');
                 this.regions.articlePage.attach(articleController);
                 this.otherArticles(this.model.articleSlug);
-            } else {
+            } else if (this.pinnedArticleSlug) {
                 const articleController = new Article(this.articles[this.pinnedArticleSlug]);
 
                 articleController.setMode('pinned');
                 this.regions.pinned.append(articleController);
                 this.otherArticles(this.pinnedArticleSlug);
+            } else {
+                this.otherArticles();
             }
         }
     }
