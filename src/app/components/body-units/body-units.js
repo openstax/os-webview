@@ -76,9 +76,10 @@ const bodyUnits = {
 };
 
 const bodyUnitView = (bodyUnitData) => {
-    const View = bodyUnits[bodyUnitData.type];
+    const unitType = bodyUnitData.type || 'paragraph';
+    const View = bodyUnits[unitType];
 
-    return new View(bodyUnitData.value);
+    return new View(bodyUnitData.value || bodyUnitData);
 };
 
 export default bodyUnitView;
