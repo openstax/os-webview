@@ -34,7 +34,9 @@ export default class Blog extends CMSPageController {
         this.model = {};
 
         this.handlePathChange = () => {
-            Object.assign(this.model, history.state.model);
+            if (history && history.state && history.state.model) {
+                Object.assign(this.model, history.state.model);
+            }
             const slugMatch = window.location.pathname.match(/\/blog\/(.+)/);
 
             if (slugMatch) {
@@ -43,28 +45,31 @@ export default class Blog extends CMSPageController {
             this.update();
         };
         window.addEventListener('popstate', this.handlePathChange);
+        window.addEventListener('navigate', this.handlePathChange);
     }
 
     onDataLoaded() {
-        this.articleSlugs = Object.keys(this.pageData.articles)
-        .sort((a, b) => {
-            const articleA = this.pageData.articles[a];
-            const articleB = this.pageData.articles[b];
+        if (!this.articles) {
+            this.articleSlugs = Object.keys(this.pageData.articles)
+            .sort((a, b) => {
+                const articleA = this.pageData.articles[a];
+                const articleB = this.pageData.articles[b];
 
-            return articleA.date < articleB.date ? 1 : -1;
-        });
+                return articleA.date < articleB.date ? 1 : -1;
+            });
 
-        this.articles = {};
-        for (const rawSlug of this.articleSlugs) {
-            const slug = slugWithNewsPrefix(rawSlug);
-            const article = Object.assign({slug}, this.pageData.articles[slug]);
+            this.articles = {};
+            for (const rawSlug of this.articleSlugs) {
+                const slug = slugWithNewsPrefix(rawSlug);
+                const article = Object.assign({slug}, this.pageData.articles[slug]);
 
-            if (article.pin_to_top) {
-                this.pinnedArticleSlug = slug;
+                if (article.pin_to_top) {
+                    this.model.pinnedArticleSlug = slug;
+                }
+                this.articles[slug] = article;
             }
-            this.articles[slug] = article;
+            this.handlePathChange();
         }
-        this.update();
     }
 
     onUpdate() {
@@ -78,13 +83,13 @@ export default class Blog extends CMSPageController {
                 articleController.setMode('page');
                 this.regions.articlePage.attach(articleController);
                 this.otherArticles(this.model.articleSlug);
-            } else if (this.pinnedArticleSlug) {
-                const articleData = this.articles[this.pinnedArticleSlug];
+            } else if (this.model.pinnedArticleSlug) {
+                const articleData = this.articles[this.model.pinnedArticleSlug];
                 const articleController = new Article(articleData);
 
                 articleController.setMode('pinned');
                 this.regions.pinned.append(articleController);
-                this.otherArticles(this.pinnedArticleSlug);
+                this.otherArticles(this.model.pinnedArticleSlug);
             } else {
                 this.otherArticles();
             }
@@ -93,6 +98,7 @@ export default class Blog extends CMSPageController {
 
     onClose() {
         window.removeEventListener('popstate', this.handlePathChange);
+        window.removeEventListener('navigate', this.handlePathChange);
     }
 
     otherArticles(exceptThisSlug) {
