@@ -13,15 +13,15 @@ h4 {
 h1 {
     @include constrained-variable-text(4.8, 0.2);
 
-    letter-spacing: -0.2rem;
+    letter-spacing: -0.055em;
     line-height: 1.05;
 }
 
 h2 {
-    font-size: 3.6rem;
-    letter-spacing: -0.2rem;
-    line-height: 4rem;
-    margin-top: 2rem;
+    @include constrained-variable-text(3.6, 0.2);
+    letter-spacing: -0.055em;
+    line-height: 1.11;
+    margin-top: 0.55em;
 }
 
 h3 {

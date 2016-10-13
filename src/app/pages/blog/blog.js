@@ -1,7 +1,17 @@
 import settings from 'settings';
+import {on} from '~/helpers/controller/decorators';
+import router from '~/router';
 import CMSPageController from '~/controllers/cms';
 import Article from './article/article';
 import {description as template} from './blog.html';
+
+
+function slugWithNewsPrefix(slug) {
+    if (!(/^news\//).test(slug)) {
+        return `news/${slug}`;
+    }
+    return slug;
+}
 
 export default class Blog extends CMSPageController {
 
@@ -23,16 +33,13 @@ export default class Blog extends CMSPageController {
 
         this.model = {};
 
-        const slugMatch = window.location.pathname.match(/\/blog\/(.+)/);
-
-        if (slugMatch) {
-            const slug = slugMatch[1];
-
-            this.model.articleSlug = slugMatch[1];
-        }
-
         this.handlePathChange = () => {
             Object.assign(this.model, history.state.model);
+            const slugMatch = window.location.pathname.match(/\/blog\/(.+)/);
+
+            if (slugMatch) {
+                this.model.articleSlug = slugWithNewsPrefix(slugMatch[1]);
+            }
             this.update();
         };
         window.addEventListener('popstate', this.handlePathChange);
@@ -48,7 +55,8 @@ export default class Blog extends CMSPageController {
         });
 
         this.articles = {};
-        for (const slug of this.articleSlugs) {
+        for (const rawSlug of this.articleSlugs) {
+            const slug = slugWithNewsPrefix(rawSlug);
             const article = Object.assign({slug}, this.pageData.articles[slug]);
 
             if (article.pin_to_top) {
@@ -64,13 +72,15 @@ export default class Blog extends CMSPageController {
             this.regions.articlePage.empty();
             this.regions.pinned.empty();
             if (this.model.articleSlug) {
-                const articleController = new Article(this.articles[this.model.articleSlug]);
+                const articleData = this.articles[this.model.articleSlug];
+                const articleController = new Article(articleData);
 
                 articleController.setMode('page');
                 this.regions.articlePage.attach(articleController);
                 this.otherArticles(this.model.articleSlug);
             } else if (this.pinnedArticleSlug) {
-                const articleController = new Article(this.articles[this.pinnedArticleSlug]);
+                const articleData = this.articles[this.pinnedArticleSlug];
+                const articleController = new Article(articleData);
 
                 articleController.setMode('pinned');
                 this.regions.pinned.append(articleController);
@@ -90,6 +100,19 @@ export default class Blog extends CMSPageController {
         for (const slug of this.articleSlugs.filter((s) => s !== exceptThisSlug)) {
             this.regions.articles.append(new Article(this.articles[slug]));
         }
+    }
+
+    @on('click a[href^="/blog"]')
+    saveArticleState(event) {
+        event.preventDefault();
+        const href = event.delegateTarget.href;
+
+        router.navigate(href, {
+            model: this.model,
+            path: '/blog',
+            x: history.state.x,
+            y: history.state.y
+        });
     }
 
 }

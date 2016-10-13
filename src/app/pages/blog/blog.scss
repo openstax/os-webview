@@ -127,6 +127,10 @@
         margin: 2rem auto;
         max-width: $boxed-width;
 
+        @include phone {
+            padding-left: 1.5rem;
+        }
+
         .cta {
             background-color: color(orange);
             color: color(neutral-lightest);

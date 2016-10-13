@@ -7,10 +7,18 @@
     }
 }
 
-.article:not(.page) {
+.article {
     display: flex;
     flex-flow: row wrap;
     margin-bottom: 3rem;
+
+    &.page .article {
+        width: 100%;
+
+        .boxed {
+            max-width: 64rem;
+        }
+    }
 
     h2 {
         font-size: 2.1rem;
@@ -46,32 +54,6 @@
         flex-basis: 100%;
         flex-direction: column;
         justify-content: space-between;
-    }
-
-    .body {
-        font-size: 1.6rem;
-        height: 8em;
-        line-height: 2.5rem;
-        overflow: hidden;
-        position: relative;
-
-        &::after {
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0), white 60%);
-            bottom: -3rem;
-            content: '';
-            height: 8rem;
-            position: absolute;
-            right: 0;
-            text-align: right;
-            width: 100%;
-        }
-
-        .quote-bucket,
-        iframe {
-            height: 0;
-            overflow: hidden;
-            width: 0;
-        }
     }
 
     .meta {
@@ -161,6 +143,35 @@
     .content {
         @include desktop {
             padding: 1.5rem;
+        }
+    }
+}
+
+.pinned .article,
+.articles .article {
+    .body {
+        font-size: 1.6rem;
+        height: 8em;
+        line-height: 2.5rem;
+        overflow: hidden;
+        position: relative;
+
+        .quote-bucket,
+        iframe {
+            height: 0;
+            overflow: hidden;
+            width: 0;
+        }
+
+        &::after {
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0), white 60%);
+            bottom: -3rem;
+            content: '';
+            height: 8rem;
+            position: absolute;
+            right: 0;
+            text-align: right;
+            width: 100%;
         }
     }
 }
