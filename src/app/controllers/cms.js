@@ -16,7 +16,7 @@ class CMSPageController extends Controller {
                     const response = await fetch(`${settings.apiOrigin}/api/${this.slug}`);
                     const data = await response.json();
 
-                    this.pageData = CMSPageController[TRANSFORM_DATA](data);
+                    this.pageData = this.preserveWrapping ? data : CMSPageController[TRANSFORM_DATA](data);
 
                     await this[LOAD_IMAGES](this.pageData);
 

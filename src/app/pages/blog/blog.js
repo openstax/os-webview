@@ -41,6 +41,10 @@ export default class Blog extends CMSPageController {
 
             if (slugMatch) {
                 this.model.articleSlug = slugWithNewsPrefix(slugMatch[1]);
+                if (!this.articles[this.model.articleSlug]) {
+                    router.navigate('/404', {path: '/blog'});
+                    return;
+                }
             }
             this.update();
         };

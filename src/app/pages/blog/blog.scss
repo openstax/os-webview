@@ -14,9 +14,7 @@
 
         @include desktop {
             background-color: lighten(color(neutral-lighter), 8%);
-            flex-flow: row nowrap;
             padding: 8rem 0;
-
         }
 
         .boxed {
@@ -84,8 +82,8 @@
         }
 
         .body {
-            font-size: 1.8rem;
-            line-height: 3rem;
+            @include constrained-variable-text(1.8, 0.16);
+            line-height: 1.667;
 
             img {
                 margin: 1.5rem 0 0;

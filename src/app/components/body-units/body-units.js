@@ -1,5 +1,6 @@
 import {Controller} from 'superb';
-// import ImageModel from '~/models/imagemodel';
+import $ from '~/helpers/$';
+import {description as alignedImageTemplate} from './aligned-image.html';
 import Quote from '~/components/quotes/quote/quote';
 
 const template = () => '';
@@ -16,7 +17,6 @@ class BodyUnit extends Controller {
 class Paragraph extends BodyUnit {
 
     onLoaded() {
-        // FIX: Set in template, not in Controller
         this.el.innerHTML = this.data;
     }
 
@@ -24,23 +24,28 @@ class Paragraph extends BodyUnit {
 
 class AlignedImage extends BodyUnit {
 
-    onLoaded() {
+    init(data) {
+        super.init(data);
+        this.template = alignedImageTemplate;
+        this.model = Object.assign({
+            imageUrl: data.image
+        }, data);
+    }
 
+    onLoaded() {
+        $.insertHtml(this.el, this.model);
     }
 
 }
 
-class PullQuote extends BodyUnit {
+class PullQuote extends Quote {
 
-    onLoaded() {
-        // FIX: This isn't how to attach views (delete this view and just use Quote?)
-        const view = new Quote({
-            quoteHtml: this.data.quote,
-            attribution: this.data.attribution
+    init(data) {
+        super.init({
+            image: {},
+            content: data.quote,
+            attribution: data.attribution
         });
-
-        this.el.appendChild(view.el);
-        this.update();
     }
 
 }
@@ -76,10 +81,15 @@ const bodyUnits = {
 };
 
 const bodyUnitView = (bodyUnitData) => {
-    const unitType = bodyUnitData.type || 'paragraph';
+    let unitType = bodyUnitData.type;
+
+    if (!(unitType in bodyUnits)) {
+        console.warn('Unknown type:', bodyUnitData, '(using paragraph)');
+        unitType = 'paragraph';
+    }
     const View = bodyUnits[unitType];
 
-    return new View(bodyUnitData.value || bodyUnitData);
+    return new View(bodyUnitData.value);
 };
 
 export default bodyUnitView;

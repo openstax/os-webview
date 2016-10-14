@@ -12,9 +12,9 @@
             </p>
         </div>
         <div class="body"></div>
-        <if condition="model.tags">
-            <div class="tags">{model.tags}</div>
-        </if>
+        <div class="tags" if="model.tags.length">
+            <div class="tag" each="tag in model.tags">{tag}</div>
+        </div>
         <div id="disqus_thread" class="disqus"></div>
     </div>
     <div class="articles"></div>
