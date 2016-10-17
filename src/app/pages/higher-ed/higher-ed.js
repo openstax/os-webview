@@ -48,9 +48,6 @@ export default class HigherEd extends CMSPageController {
 
     onLoaded() {
         document.title = 'Higher-ed - OpenStax';
-        this.regions.products.attach(new ProductsBoxes({
-            products: ['books', 'Concept Coach', 'OpenStax CNX']
-        }));
     }
 
     onDataLoaded() {
@@ -63,6 +60,7 @@ export default class HigherEd extends CMSPageController {
         this.update();
 
         this.regions.quotes.attach(new Quotes(this.model.row_1));
+        this.regions.products.attach(new ProductsBoxes(this.model.row_2));
         this.regions.buckets.attach(new Buckets(this.model.row_3));
     }
 
