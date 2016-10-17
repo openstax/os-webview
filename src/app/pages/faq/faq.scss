@@ -1,0 +1,71 @@
+@import 'variables';
+@import 'mixins';
+
+.faq-page {
+    background-color: lighten(color(neutral-lighter), 8%);
+    padding-bottom: 4rem;
+
+    .hero {
+        background-color: color(gray);
+        color: color(neutral-lightest);
+
+        h1 {
+            color: color(orange);
+        }
+    }
+
+    .desktop-row {
+        @include desktop {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+
+    .qa {
+        .question {
+            color: color(blue);
+            cursor: pointer;
+            font-weight: bold;
+
+            > p {
+                display: inline;
+
+                &::before {
+                    content: '+ ';
+                }
+            }
+        }
+
+        &.open .question > p::before {
+            content: '– '; //n-dash
+        }
+
+        .answer {
+            display: none;
+            margin-left: 1em;
+        }
+
+        &.open .answer {
+            display: block;
+
+            > p {
+                display: block;
+                margin: 0.5rem 0;
+            }
+        }
+    }
+
+    .info-box {
+        background-color: color(neutral-lightest);
+        display: inline-block;
+        padding: 1.5rem;
+
+        .in-color {
+            color: color(blue);
+        }
+
+        .fa {
+            width: 2em;
+        }
+    }
+}

@@ -8,14 +8,11 @@
     letter-spacing: 0.11rem;
     line-height: 1.4;
     padding: 8rem 1.5rem;
-    text-align: center;
+    text-align: left;
 
-    @include phone {
-        text-align: left;
-    }
-
-    @include tablet {
-        text-align: left;
+    @include desktop {
+        align-items: center;
+        text-align: center;
     }
 
     &.w-cards {
@@ -56,6 +53,9 @@
 
     .boxed p,
     .container p {
+        @include variable-sized-text(1.8, 0.2);
+
+        line-height: 1.67;
         margin: 0 auto;
         max-width: 100%;
         width: 100%; // IE fix

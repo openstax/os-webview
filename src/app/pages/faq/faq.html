@@ -1,0 +1,25 @@
+<template args="model">
+    <div if="model.heading" class="hero">
+        <div class="boxed">
+            <h1>{model.heading}</h1>
+            <p>{model.subhead}</p>
+        </div>
+    </div>
+    <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
+    <div if="model.questions" class="desktop-row boxed">
+        <div class="faq-list">
+            <div class="qa {qa.isOpen ? 'open' : null}" each="qa in model.questions">
+                <div class="question" data-item="{$item}" data-html="questions[{$item}].question"></div>
+                <div class="answer" data-html="questions[{$item}].answer" skip="true"></div>
+            </div>
+        </div>
+        <div class="info-box">
+            <h2 class="in-color">Contact Us</h2>
+            <div>
+                <p>Have more questions? Contact our customer service team:</p>
+                <div><i class="fa fa-envelope"></i><a class="in-color" href="mailto:support@openstax.org">support@openstax.org</a></div>
+                <div><i class="fa fa-phone"></i><span class="in-color">713 348 5012</span></div>
+            </div>
+        </div>
+    </div>
+</template>
