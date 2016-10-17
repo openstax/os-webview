@@ -79,6 +79,10 @@ export const published = [
     {
         text: 'U.S. History',
         value: 'US History'
+    },
+    {
+        text: 'University Physics',
+        value: 'University Physics (Calc)'
     }
 ];
 
