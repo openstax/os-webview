@@ -68,24 +68,11 @@ class Header extends Controller {
                 this.removeAllOpenClasses();
             });
         });
-
-        this.handlePathChange = () => {
-            if (window.location.pathname === '/give/form') {
-                localStorage.visitedGive = Date.now();
-            } else if (window.location.pathname === '/') {
-                localStorage.visitedGive = Number(localStorage.visitedGive || 0) + 1;
-            }
-            this.update();
-        };
-        window.addEventListener('popstate', this.handlePathChange);
-        // Custom event created by router, because it does not emit popstate
-        // for forward navigation on IE or Safari
-        window.addEventListener('navigate', this.handlePathChange);
     }
 
     onUpdate() {
         const path = window.location.pathname;
-        const visitedGive = Number(localStorage.visitedGive || 0) > 10;
+        const visitedGive = Number(localStorage.visitedGive || 0) > 5;
         const hideSticky = (path !== '/' || visitedGive);
 
         this.el.querySelector('sticky-note').classList.toggle('hidden', hideSticky);
