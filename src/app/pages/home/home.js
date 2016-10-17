@@ -66,6 +66,7 @@ export default class Home extends CMSPageController {
         };
         this.banners = bannerModels.map((model) => new Banner(model));
         this.currentBanner = 0;
+        localStorage.visitedGive = Number(localStorage.visitedGive || 0) + 1;
     }
 
     @on('click a[href^="#"]')
