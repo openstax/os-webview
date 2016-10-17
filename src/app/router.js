@@ -21,6 +21,7 @@ const PAGES = [
     'contact',
     'details/*path',
     'faculty-verification',
+    'faq',
     'finish-profile',
     'foundation',
     'give',
