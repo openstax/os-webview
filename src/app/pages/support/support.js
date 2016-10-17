@@ -15,12 +15,6 @@ const resources = [{
     linkText: 'Find answers',
     linkUrl: `${supportHost}&c=Products%3ACNX`
 }, {
-    name: 'Concept Coach',
-    description: `Resources on piloting, setting up, and using our Concept
-    Coach tool.`,
-    linkText: 'Find answers',
-    linkUrl: `${supportHost}&c=Products%3AConcept_Coach`
-}, {
     name: 'OpenStax Tutor',
     description: `Answers to your questions about piloting, setting up, and
     using OpenStax Tutor courseware.`,
