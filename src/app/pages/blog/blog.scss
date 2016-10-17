@@ -45,14 +45,20 @@
         }
 
         .hero {
-            background-position: center;
+            background-position: 60% 40%;
             background-repeat: no-repeat;
-            background-size: contain;
+            background-size: cover;
             height: 60rem;
             overflow: hidden;
             padding: 0;
             position: relative;
             width: 100%;
+
+            @media (min-width: 1400px) {
+                background-size: calc(28rem + 80vw);
+                height: calc(4rem + 40vw);
+                max-height: 80vh;
+            }
 
             .strips {
                 bottom: 0;
