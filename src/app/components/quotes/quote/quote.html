@@ -3,7 +3,7 @@
         <div class="image" style="background-image: url({model.image.image}){model.height ? `; height: ${model.height}px` : ''}">
         </div>
     </if>
-    <div class="quote {model.colorScheme ? model.colorScheme : ''}">
+    <div class="quote {model.colorScheme || ''}">
         <blockquote>
             <quote-html></quote-html>
             <div if="model.attribution" class="attribution">— {model.attribution}</div>

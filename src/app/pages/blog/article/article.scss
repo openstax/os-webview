@@ -18,6 +18,27 @@
         .boxed {
             max-width: 64rem;
         }
+
+        .quote {
+            background-color: lighten(color(neutral-lighter), 8%);
+            padding: 1rem 3rem;
+        }
+
+        figcaption {
+            font-size: 80%;
+        }
+
+        .tags {
+            display: flex;
+
+            .tag {
+                @include constrained-variable-text(1.4, 0.16);
+                background-color: lighten(color(neutral-lighter), 8%);
+                color: lighten(color(neutral-dark), 8%);
+                margin-right: 1.5rem;
+                padding: 0.35em 1.1em;
+            }
+        }
     }
 
     h2 {
@@ -55,6 +76,7 @@
         flex-basis: 100%;
         flex-direction: column;
         justify-content: space-between;
+        max-width: 100%;
     }
 
     .meta {
@@ -115,35 +137,46 @@
 }
 
 
-.articles .article {
-    background-color: color(neutral-lightest);
-    flex-basis: 100%;
+.articles .container {
 
-    @include desktop {
-        flex-basis: calc(50% - 3rem);
-        margin: 1.5rem;
-    }
-
-    @media (min-width: $boxed-width) {
-        flex-basis: calc(33% - 2.6rem);
-    }
-
-    /* one article */
-    &:first-child:nth-last-child(1) {
+    > .article {
+        // align-items: flex-start;
+        background-color: color(neutral-lightest);
+        display: block;
         flex-basis: 100%;
-    }
+        max-width: 100%;
 
-    /* two articles */
-    &:first-child:nth-last-child(2),
-    &:first-child:nth-last-child(2) ~ div {
         @include desktop {
             flex-basis: calc(50% - 3rem);
+            margin: 1.5rem;
+            max-width: calc(50% - 3rem);
         }
-    }
 
-    .content {
-        @include desktop {
-            padding: 1.5rem;
+        @media (min-width: $boxed-width) {
+            flex-basis: calc(33% - 2.6rem);
+            max-width: calc(33% - 2.6rem);
+        }
+
+        /* one article */
+        &:first-child:nth-last-child(1) {
+            flex-basis: 100%;
+        }
+
+        /* two articles */
+        &:first-child:nth-last-child(2),
+        &:first-child:nth-last-child(2) ~ div {
+            @include desktop {
+                flex-basis: calc(50% - 3rem);
+            }
+        }
+
+        .content {
+
+            flex-basis: 100%;
+
+            @include desktop {
+                padding: 1.5rem;
+            }
         }
     }
 }

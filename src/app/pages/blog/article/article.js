@@ -10,6 +10,7 @@ export default class Article extends CMSPageController {
             classes: ['article']
         };
         this.slug = article.slug;
+        this.preserveWrapping = true;
     }
 
     setMode(mode) {
