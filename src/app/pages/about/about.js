@@ -79,6 +79,7 @@ export default class AboutUs extends CMSPageController {
             tagline: this.pageData.tagline,
             introHeading: this.pageData.intro_heading,
             introParagraph: this.pageData.intro_paragraph,
+            faqLink: this.pageData.faq_link || 'Frequently Asked Questions',
             ourTeamHeading: this.pageData.our_team_heading,
             bios: [{
                 name: 'team',
