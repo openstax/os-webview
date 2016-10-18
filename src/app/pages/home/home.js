@@ -206,6 +206,7 @@ export default class Home extends CMSPageController {
         });
 
         this.regions.buckets.attach(new Buckets(bucketData));
+        this.debouncedParallax();
     }
 
     onClose() {

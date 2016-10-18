@@ -107,7 +107,7 @@
         background-size: contain;
         position: absolute;
         transform: translateZ(0);
-        z-index: 1;
+        z-index: 2;
     }
 
     .feature {
@@ -152,7 +152,7 @@
         background-position: center bottom;
         bottom: 15rem;
         height: 60%; // Bounds height; use width in individual pages to control size
-        z-index: 2;
+        z-index: 3;
 
         @include tablet {
             bottom: 0;
@@ -453,14 +453,14 @@
                 rgba(color(gray), 0.85),
                 50rem,
                 29rem,
-                rgba(color(green), 0.3),
+                rgba(color(green), 0.22),
                 color(gold),
                 color(green)
             );
 
             .diagram {
                 background-image: url('/images/home/subjects/biology/diagram.png');
-                bottom: 6rem;
+                bottom: 16rem;
                 height: 19rem;
                 left: 5rem;
                 width: 27.4rem;
@@ -469,16 +469,23 @@
             .leaf {
                 background-image: url('/images/home/subjects/biology/leaf.png');
                 height: 14rem;
-                right: 19rem;
+                right: 27rem;
                 top: 24rem;
                 width: 14rem;
             }
 
             .square-1 {
-                height: 3.5rem;
-                left: 13rem;
-                top: 60%;
-                width: 3.5rem;
+                height: 5rem;
+                left: 17rem;
+                top: 17%;
+                width: 5rem;
+            }
+
+            .square-2 {
+                bottom: 55%;
+                height: 3rem;
+                right: 17rem;
+                width: 3rem;
             }
 
             .square-3 {
@@ -491,9 +498,9 @@
                 }
 
                 @include desktop {
-                    height: 17rem;
-                    left: 29rem;
-                    top: 40rem;
+                    height: 40%;
+                    left: 10rem;
+                    top: 30%;
                     width: 36rem;
                 }
             }
@@ -508,9 +515,9 @@
                 }
 
                 @include desktop {
-                    height: 43rem;
+                    height: 33rem;
                     left: 64rem;
-                    top: 24rem;
+                    top: 20%;
                     width: 43rem;
                 }
             }
@@ -572,7 +579,7 @@
                 rgba(color(gray), 0.85),
                 41rem,
                 19rem,
-                rgba(color(orange), 0.15),
+                rgba(color(orange), 0.20),
                 color(orange),
                 color(turquoise)
             );
@@ -614,21 +621,24 @@
                 }
             }
 
-            .square-1,
-            .square-4 {
-                height: 2.5rem;
-                width: 2.5rem;
+            .square-1 {
+                height: 5rem;
+                left: 2rem;
+                top: 50%;
+                width: 5rem;
             }
 
-            .square-1 {
-                left: 5rem;
-                top: 50%;
+            .square-4 {
+                height: 2.5rem;
+                left: 85%;
+                top: 30%;
+                width: 2.5rem;
             }
 
             .square-2 {
                 bottom: 0;
                 height: 34rem;
-                left: 0;
+                left: 10%;
                 width: 45rem;
 
                 @include tablet {
@@ -637,8 +647,8 @@
 
                 @include desktop {
                     bottom: auto;
-                    height: 34rem;
-                    top: 27%;
+                    height: 24rem;
+                    top: 53%;
                     width: 60%;
                 }
             }
@@ -654,16 +664,11 @@
                 }
 
                 @include desktop {
-                    bottom: 5rem;
-                    height: 33rem;
+                    bottom: 15rem;
+                    height: 35rem;
                     right: 5rem;
-                    width: 40rem;
+                    width: 50rem;
                 }
-            }
-
-            .square-4 {
-                left: 70%;
-                top: 20%;
             }
 
             .element {
@@ -742,14 +747,14 @@
             }
 
             .square-1 {
-                left: 5rem;
-                top: 50%;
+                left: -18rem;
+                top: 55%;
             }
 
             .square-2 {
                 bottom: 0;
                 height: 34rem;
-                left: 0;
+                left: -10rem;
                 width: 45rem;
 
                 @include tablet {
@@ -758,8 +763,8 @@
 
                 @include desktop {
                     bottom: auto;
-                    height: 34rem;
-                    top: 27%;
+                    height: 78%;
+                    top: 17%;
                     width: 60%;
                 }
             }
@@ -783,7 +788,7 @@
             }
 
             .square-4 {
-                left: 70%;
+                left: 80%;
                 top: 20%;
             }
 
@@ -810,7 +815,7 @@
                 bottom: 10rem;
                 height: 22rem;
                 position: absolute;
-                right: 0;
+                right: -8rem;
                 width: 36rem;
             }
 
