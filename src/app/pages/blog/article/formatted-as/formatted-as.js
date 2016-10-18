@@ -22,6 +22,7 @@ export default class FormattedAs extends Controller {
     }
 
     onLoaded() {
+        const d = document;
         const loadDisqus = () => {
             /* eslint camelcase: 0 */
             const disqus_config = function () {
@@ -51,25 +52,28 @@ export default class FormattedAs extends Controller {
                 });
             } catch (e) {
                 console.warn('Disqus reset failed', e);
+                this.loadDisqus();
             }
         };
 
         for (const bodyUnit of this.model.body) {
             this.regions.body.append(bodyUnitView(bodyUnit));
         }
-        if (this.template === featureTemplate) {
-            const d = document;
+        setTimeout(() => {
+            const disqusThreadBlock = d.getElementById('disqus_thread');
 
-            if (d.getElementById('disqus_thread')) {
-                const disqusScript = d.querySelector('script[src*="openstax.disqus.com"]');
+            if (this.template === featureTemplate) {
+                if (disqusThreadBlock) {
+                    const disqusScript = d.querySelector('script[src*="openstax.disqus.com"]');
 
-                if (disqusScript) {
-                    reloadDisqus();
-                } else {
-                    loadDisqus();
+                    if (disqusScript) {
+                        reloadDisqus();
+                    } else {
+                        loadDisqus();
+                    }
                 }
             }
-        }
+        }, 0);
     }
 
 }

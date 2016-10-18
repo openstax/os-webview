@@ -42,7 +42,7 @@ export default class Blog extends CMSPageController {
             if (slugMatch) {
                 this.model.articleSlug = slugWithNewsPrefix(slugMatch[1]);
                 if (!this.articles[this.model.articleSlug]) {
-                    router.navigate('/404', {path: '/blog'});
+                    router.navigate('/404', {path: '/blog'}, true);
                     return;
                 }
             }
@@ -120,8 +120,8 @@ export default class Blog extends CMSPageController {
         router.navigate(href, {
             model: this.model,
             path: '/blog',
-            x: history.state.x,
-            y: history.state.y
+            x: history.state ? history.state.x : 0,
+            y: history.state ? history.state.y : 0
         });
     }
 
