@@ -4,6 +4,7 @@ import router from '~/router';
 import selectHandler from '~/handlers/select';
 import $ from '~/helpers/$';
 import settings from 'settings';
+import FbShare from './fbshare';
 import {description as template} from './give.html';
 
 const studentModel = {
@@ -14,10 +15,10 @@ const studentModel = {
 };
 
 const thankYouModel = {
-    headline: 'Thank you for giving to OpenStax!',
-    subhead: `Your donation helps us to develop and spread the word about our books
-    and adaptive learning tools. With your help, we’re giving hundreds of thousands
-    of students access to high-quality educational materials.`,
+    headline: 'Thanks for your support!',
+    subhead: `Tell your social networks that you support free, peer-reviewed,
+    openly licensed textbooks by OpenStax so others can benefit from OpenStax
+    resources!`,
     amounts: null
 };
 
@@ -28,6 +29,35 @@ export default class Give extends CMSPageController {
     'free and low-cost educational materials. Your gift changes lives.';
 
     init() {
+        document.title = 'Give - OpenStax';
+        this.template = template;
+        this.model = {
+            headline: '',
+            subhead: '',
+            paymentMethods: [],
+            thankYouUrl: `${settings.apiOrigin}/give?thanks`,
+            amounts: [5, 25, 50, 100, 500, 1000],
+            page2: history.state && (history.state.page === 2),
+            validationMessage: (name) => {
+                const el = this.el.querySelector(`[name="${name}"]`);
+
+                return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
+            }
+        };
+        this.slug = 'pages/give';
+        this.regions = {
+            'share': '.share-buttons'
+        };
+
+        this.css = '/app/pages/give/give.css';
+        this.view = {
+            classes: ['give-page']
+        };
+
+        window.addEventListener('popstate', this.togglePage);
+    }
+
+    handleQueryString() {
         const queryDict = $.parseSearchString(window.location.search);
         const handleAmount = (amount) => {
             router.replaceState({
@@ -41,42 +71,17 @@ export default class Give extends CMSPageController {
             }
         };
 
-        document.title = 'Give - OpenStax';
-        this.template = template;
-        this.model = {
-            headline: 'Give to OpenStax',
-            subhead: `Your donation helps us create opportunities for students to have
-            access to quality free and low-cost educational materials. With your gift,
-            we can create and revise our free textbooks, finetune our adaptive learning
-            tools, and spread the word to more instructors and students. Your donation
-            changes lives.`,
-            paymentMethods: [],
-            thankYouUrl: `${settings.apiOrigin}/give?thanks`,
-            amounts: [5, 25, 50, 100, 500, 1000],
-            page2: history.state && (history.state.page === 2),
-            validationMessage: (name) => {
-                const el = this.el.querySelector(`[name="${name}"]`);
-
-                return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
-            }
-        };
-        this.slug = 'pages/give';
-
         if ('student' in queryDict) {
             Object.assign(this.model, studentModel);
         } else if ('thanks' in queryDict) {
             Object.assign(this.model, thankYouModel);
             localStorage.visitedGive = Date.now();
+            this.regions.share.attach(new FbShare());
+            this.model.isThanks = true;
         }
         if ('amount' in queryDict) {
             handleAmount(+queryDict.amount);
         }
-        this.css = '/app/pages/give/give.css';
-        this.view = {
-            classes: ['give-page']
-        };
-
-        window.addEventListener('popstate', this.togglePage);
     }
 
     onDataLoaded() {
@@ -91,6 +96,7 @@ export default class Give extends CMSPageController {
         for (const modelKey of Object.keys(modelToPageDataMap)) {
             this.model[modelKey] = this.pageData[modelToPageDataMap[modelKey]];
         }
+        this.handleQueryString();
 
         const pmReg = new RegExp(/^payment_method_(\d)_(\w+)/);
         const populatePaymentMethods = () => {

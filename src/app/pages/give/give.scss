@@ -190,4 +190,11 @@
         }
     }
 
+    .share-buttons {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        margin-top: 1rem;
+        padding-bottom: 1rem;
+    }
 }
