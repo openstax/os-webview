@@ -23,8 +23,8 @@ class TestHigherEd(unittest.TestCase):
         driver.implicitly_wait(7)
         print("=== Running Higher Ed Test ===")
 
-        if driver.find_element_by_xpath("//a[contains(text(),'Sign up')]"):
-            print('Sign up link found')
+        if driver.find_element_by_xpath("//a[contains(text(),'Subscribe')]"):
+            print('Subscribe link found')
 
         if driver.find_element_by_xpath("//a[contains(text(),'View Books')]"):
             print('View Books link found')
@@ -36,8 +36,8 @@ class TestHigherEd(unittest.TestCase):
             print('Contact Us link found')
         if driver.find_element_by_xpath("//a[contains(text(),'Explore Our Subjects')]"):
             print('Explore Our Subjects link found')
-        if driver.find_element_by_xpath("//a[contains(text(),'Learn More')]"):
-            print('Learn More link found')
+        if driver.find_element_by_xpath("//a[contains(text(),'Give')]"):
+            print('Give link found')
         if driver.find_element_by_xpath("//a[contains(text(),'Discover Free Content')]"):
             print('Discover Free Content link found')
 
