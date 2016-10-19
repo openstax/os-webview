@@ -9,6 +9,8 @@ from TestHome import TestHome
 from TestImpact import TestImpact
 from TestPartners import TestPartners
 from TestSubjects import TestSubjects
+from TestBlog import TestBlog
+from TestFAQ import TestFAQ
 
 
 class Test_Suite(unittest.TestCase):
@@ -25,6 +27,8 @@ class Test_Suite(unittest.TestCase):
             unittest.defaultTestLoader.loadTestsFromTestCase(TestImpact),
             unittest.defaultTestLoader.loadTestsFromTestCase(TestPartners),
             unittest.defaultTestLoader.loadTestsFromTestCase(TestSubjects),
+            unittest.defaultTestLoader.loadTestsFromTestCase(TestBlog),
+            unittest.defaultTestLoader.loadTestsFromTestCase(TestFAQ),
 
         ])
         runner = unittest.TextTestRunner()
