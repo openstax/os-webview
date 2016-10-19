@@ -1,9 +1,9 @@
-import {Controller} from 'superb';
+import CMSPageController from '~/controllers/cms';
 import Buckets from '~/components/buckets/buckets';
 import ProductsBoxes from '~/components/products-boxes/products-boxes';
 import {description as template} from './ap.html';
 
-export default class AP extends Controller {
+export default class AP extends CMSPageController {
 
     static description = 'Explore OpenStax textbooks for Advanced Placement ' +
         'courses, available free online and low-cost in print and ready to ' +
@@ -19,29 +19,24 @@ export default class AP extends Controller {
             buckets: 'insert-region[data-name="buckets"]',
             products: 'insert-region[data-name="products"]'
         };
+        this.slug = 'pages/ap';
+        this.model = {};
     }
 
     onLoaded() {
         document.title = 'AP® - OpenStax';
+    }
 
-        this.regions.buckets.attach(new Buckets([{
-            image: {
-                alignment: 'full'
-            },
+    onDataLoaded() {
+        this.model = Object.assign({}, this.pageData);
+        this.update();
+        this.regions.products.attach(new ProductsBoxes(this.pageData.row_1));
+        const bucketData = this.pageData.row_2.map((d) => Object.assign({
             bucketClass: 'partners',
-            hasImage: false,
-            heading: 'OpenStax Partners',
-            content: `OpenStax partners have united with us to increase access to
-                high-quality learning materials. Their low-cost tools integrate seamlessly
-                with our books for AP<sup>&reg;</sup> courses.`,
-            btnClass: 'btn-yellow',
-            link: '/partners/ap',
-            cta: 'View Partners'
-        }]));
+            btnClass: 'btn-yellow'
+        }, d));
 
-        this.regions.products.attach(new ProductsBoxes({
-            products: ['ap']
-        }));
+        this.regions.buckets.attach(new Buckets(bucketData));
     }
 
 }
