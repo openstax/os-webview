@@ -23,12 +23,13 @@ export default class FormattedAs extends Controller {
 
     onLoaded() {
         const d = document;
+        const disqusConfig = function () {
+            this.page.url = window.location.href;
+            this.page.identifier = window.location.pathname;
+        };
         const loadDisqus = () => {
             /* eslint camelcase: 0 */
-            const disqus_config = function () {
-                this.page.url = window.location.pathname;
-                this.page.identifier = window.location.pathname;
-            };
+            const disqus_config = disqusConfig;
             const s = d.createElement('script');
 
             s.src = '//openstax.disqus.com/embed.js';
@@ -42,18 +43,10 @@ export default class FormattedAs extends Controller {
             d.body.appendChild(s2);
         };
         const reloadDisqus = () => {
-            try {
-                DISQUS.reset({
-                    reload: true,
-                    config() {
-                        this.page.identifier = window.location.pathname;
-                        this.page.url = window.location.pathname;
-                    }
-                });
-            } catch (e) {
-                console.warn('Disqus reset failed', e);
-                this.loadDisqus();
-            }
+            DISQUS.reset({
+                reload: true,
+                config: disqusConfig
+            });
         };
 
         for (const bodyUnit of this.model.body) {
