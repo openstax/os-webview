@@ -8,7 +8,7 @@
     <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
     <div if="model.questions" class="desktop-row boxed">
         <div class="faq-list">
-            <div class="qa {qa.isOpen ? 'open' : null}" each="qa in model.questions">
+            <div class="qa{qa.isOpen ? ' open' : ''}" each="qa in model.questions">
                 <div class="question" data-item="{$item}" data-html="questions[{$item}].question"></div>
                 <div class="answer" data-html="questions[{$item}].answer" skip="true"></div>
             </div>

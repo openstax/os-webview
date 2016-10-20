@@ -29,11 +29,11 @@
 
             > p {
                 display: inline;
-
-                &::before {
-                    content: '+ ';
-                }
             }
+        }
+
+        &:not(.open) .question > p::before {
+            content: '+ ';
         }
 
         &.open .question > p::before {
