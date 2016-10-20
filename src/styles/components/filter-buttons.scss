@@ -71,7 +71,6 @@ $text-black3: rgba(0, 0, 0, 0.54);
             order: -1;
 
             @include desktop {
-                background-color: lighten(color(neutral-lighter), 8%);
                 order: 0;
             }
 
@@ -109,6 +108,7 @@ $text-black3: rgba(0, 0, 0, 0.54);
             }
 
             @include desktop {
+                background-color: lighten(color(neutral-lighter), 8%);
                 height: auto;
                 opacity: 1;
                 padding: 1.5rem;
