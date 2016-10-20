@@ -7,9 +7,17 @@ $text-dark2: rgba(0, 0, 0, 0.7);
     line-height: 3rem;
 
     .container {
+        align-items: left;
+        display: flex;
+        flex-direction: column;
         margin: 0 auto;
         max-width: $boxed-width;
         padding: 0 1.5rem;
+
+        @include desktop {
+            align-items: center;
+        }
+
     }
 
     .hero {
@@ -21,13 +29,10 @@ $text-dark2: rgba(0, 0, 0, 0.7);
             color: inherit;
         }
 
-        .subhead {
-            padding: 0;
-            text-align: left;
-
-            @include desktop {
-                text-align: center;
-            }
+        .ally-logo {
+            display: block;
+            margin-top: 2rem;
+            width: calc(15rem + 5%);
         }
     }
 
