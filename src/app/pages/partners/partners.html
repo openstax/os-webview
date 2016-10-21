@@ -3,6 +3,10 @@
         <div class="container">
             <h1>{model.title}</h1>
             <p>{model.classroom_text}</p>
+            <p>
+                OpenStax Partners are identified around the web with the OpenStax Ally logo.
+            </p>
+            <img class="ally-logo" src="http://staxlogos.openstax.org/OSX-ALLY-Yellow-RGB-150dpi.png" />
         </div>
     </div>
     <div class="icons">
@@ -23,12 +27,16 @@
                     </if>
                 </a>
             </div>
+            <div each="spacer in [1,2,3]" class="spacer logo"></div>
         </div>
+    </div>
+    <div class="divider boxed">
+        <hr />
     </div>
     <div class="blurbs container">
         <div each="partner in model.partners" class="text" id="{partner.title+'-blurb'}">
-            <h2></h2>
-            <p></p>
+            <h3 data-html="partners[{$item}].title"></h3>
+            <div data-html="partners[{$item}].long_description"></div>
             <a href="#filter" class="to-top">Return to top <i class="fa fa-chevron-up"></i></a>
         </div>
     </div>

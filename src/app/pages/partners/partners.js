@@ -22,6 +22,7 @@ export default class Partners extends CMSPageController {
         'integrate seamlessly with OpenStax books.';
 
     init() {
+        document.title = 'Partners - OpenStax';
         this.slug = 'pages/partners';
         this.template = template;
         this.css = '/app/pages/partners/partners.css';
@@ -58,13 +59,7 @@ export default class Partners extends CMSPageController {
     }
 
     onUpdate() {
-        // NOTE: Incremental-DOM currently lacks the ability to inject HTML into a node.
-        for (const partner of this.model.partners) {
-            const el = document.getElementById(`${partner.title}-blurb`);
-
-            el.querySelector('h2').innerHTML = partner.title;
-            el.querySelector('p').innerHTML = partner.long_description;
-        }
+        $.insertHtml(this.el, this.model);
         this.el.querySelector('.filter-button[data-value="AP"]').innerHTML = 'AP<sup>&reg;</sup>';
     }
 
