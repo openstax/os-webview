@@ -17,6 +17,7 @@ export const published = [
     'Algebra and Trigonometry',
     'American Government',
     'Anatomy & Physiology',
+    'Astronomy',
     'Biology',
     {
         text: 'Biology for AP® Courses',
