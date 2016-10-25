@@ -62,6 +62,7 @@ class Header extends Controller {
         document.addEventListener('click', this.resetHeader.bind(this));
         window.addEventListener('resize', this.closeFullScreenNav.bind(this));
         window.addEventListener('resize', padParentForStickyNote);
+        window.addEventListener('navigate', () => this.update());
         window.addEventListener('scroll', () => {
             window.requestAnimationFrame(() => {
                 this.updateHeaderStyle();

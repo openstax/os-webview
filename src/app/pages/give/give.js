@@ -75,7 +75,9 @@ export default class Give extends CMSPageController {
             Object.assign(this.model, studentModel);
         } else if ('thanks' in queryDict) {
             Object.assign(this.model, thankYouModel);
-            localStorage.visitedGive = Date.now();
+            try {
+                localStorage.visitedGive = Date.now();
+            } catch (e) { }
             this.regions.share.attach(new FbShare());
             this.model.isThanks = true;
         }
