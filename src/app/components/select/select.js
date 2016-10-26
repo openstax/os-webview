@@ -31,6 +31,46 @@ export default class Select extends Controller {
             this.updateSelectElement();
             onAttached();
         };
+
+        this.keyHandler = (e) => {
+            const k = String.fromCharCode(e.keyCode).toLowerCase();
+            const listEl = this.el.querySelector('.options');
+            const items = listEl.querySelectorAll('.option');
+
+            // Scroll selection to next element beginning with key
+            const listTop = listEl.getBoundingClientRect().top;
+            const target = Array.from(items)
+            .filter((el) => el.textContent.toLowerCase().substr(0, 1) === k)
+            .sort((a, b) => {
+                const aDiff = a.getBoundingClientRect().top - listTop;
+                const bDiff = b.getBoundingClientRect().top - listTop;
+                const sTop = listEl.scrollTop;
+
+                if (aDiff <= 0 && bDiff <= 0 || aDiff > 0 && bDiff > 0) {
+                    return aDiff - bDiff;
+                }
+                return bDiff - aDiff;
+            });
+
+            if (e.keyCode === 13) {
+                // Pick the topmost element
+                const notScrolledPast = Array.from(items)
+                .filter((el) => el.getBoundingClientRect().top - listTop >= 0);
+
+                if (notScrolledPast.length) {
+                    notScrolledPast[0].click();
+                }
+                return;
+            }
+
+            if (target.length > 0) {
+                const itemTop = target.shift().getBoundingClientRect().top;
+                const scrollDiff = itemTop - listTop;
+
+                listEl.scrollTop += scrollDiff;
+            }
+        };
+        this.keyHandlerActive = false;
     }
 
     setup(config) {
@@ -48,7 +88,7 @@ export default class Select extends Controller {
 
         this.options = Select[CONVERT_OPTIONS](this.select.options);
 
-        this.model = {};
+        this.model = { open: false };
         this.model.select = this.select;
         this.model.selected = Select[CONVERT_OPTIONS](this.select.querySelectorAll('option[selected]'));
         this.model.options = Select[CONVERT_OPTIONS](this.select.options);
@@ -86,6 +126,19 @@ export default class Select extends Controller {
 
     onUpdate() {
         this.el.classList.toggle('open', this.model.open);
+        this.setKeyHandler();
+    }
+
+    setKeyHandler() {
+        if (this.model.open) {
+            if (!this.keyHandlerActive) {
+                this.keyHandlerActive = true;
+                document.addEventListener('keypress', this.keyHandler);
+            }
+        } else {
+            this.keyHandlerActive = false;
+            document.removeEventListener('keypress', this.keyHandler);
+        }
     }
 
     @on('mouseover')
