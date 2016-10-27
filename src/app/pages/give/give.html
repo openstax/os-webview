@@ -415,7 +415,8 @@
                         <label>
                             Donation Amount
                             <span class="invalid-message">{model.validationMessage('AMT')}</span>
-                            <input name="AMT" type="number" min=5 value="{model.selectedAmount}" required />
+                            <input name="AMT" type="number" min=5 value="{model.selectedAmount}" required
+                            autofocus="{model.selectedAmount == '?' ? '' : null}"/>
                         </label>
                         <button type="submit" class="btn btn-orange">Continue</button>
                     </div>
