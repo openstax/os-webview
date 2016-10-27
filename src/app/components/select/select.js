@@ -93,6 +93,11 @@ export default class Select extends Controller {
         this.model.selected = Select[CONVERT_OPTIONS](this.select.querySelectorAll('option[selected]'));
         this.model.options = Select[CONVERT_OPTIONS](this.select.options);
         this.updateSelectElement();
+        if (this.select.required) {
+            this.model.noneMessage = 'Please select...';
+        } else {
+            this.model.noneMessage = 'None';
+        }
     }
 
     closeDropdown() {
@@ -170,11 +175,20 @@ export default class Select extends Controller {
             e.stopPropagation();
         }
 
+        if ('requireNone' in this.select.dataset) {
+            if (value === '') {
+                this.model.selected.clear();
+            } else {
+                this.model.selected.delete('');
+            }
+        }
+
         if (this.model.selected.has(value)) {
             this.model.selected.delete(value);
         } else {
             this.model.selected.set(value, text);
         }
+
 
         this.update();
         this.updateSelectElement();
