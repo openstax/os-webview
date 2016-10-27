@@ -27,12 +27,23 @@ $text-dark2: rgba(0, 0, 0, 0.7);
 
         h1 {
             color: inherit;
+            margin-bottom: 0.5em;
+        }
+
+        p {
+            @include constrained-variable-text(1.8, 0.2);
         }
 
         .ally-logo {
+            // border: solid color(neutral-lightest) 0.15em;
+            border-radius: 0.15em;
             display: block;
             margin-top: 2rem;
             width: calc(15rem + 5%);
+        }
+
+        .logo-text {
+            margin-top: 0.6em;
         }
     }
 
