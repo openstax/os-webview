@@ -150,10 +150,7 @@ $text-dark2: rgba(0, 0, 0, 0.7);
 
         a {
             color: color(cyan);
-            font-size: 1.4rem;
             font-weight: 500;
-            position: relative;
-            text-transform: uppercase;
 
             &:hover {
                 color: darken(color(cyan), 10%);
