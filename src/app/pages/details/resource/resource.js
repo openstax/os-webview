@@ -1,4 +1,5 @@
 import {Controller} from 'superb';
+import $ from '~/helpers/$';
 import {description as template} from './resource.html';
 
 export default class Resource extends Controller {
@@ -11,7 +12,7 @@ export default class Resource extends Controller {
     }
 
     onLoaded() {
-        this.el.querySelector('resource-description').innerHTML = this.model.resource_description;
+        $.insertHtml(this.el, this.model);
     }
 
 }
