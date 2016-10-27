@@ -31,7 +31,7 @@ export default class Partners extends CMSPageController {
         };
         this.model = {
             title: '',
-            'classroom_text': '',
+            'page_description': '',
             book: null,
             partners: [],
             filterButtons,
@@ -48,6 +48,14 @@ export default class Partners extends CMSPageController {
         window.addEventListener('popstate', this.filterPartnersEvent);
     }
 
+    changeAllyLogoColor() {
+        const colors = ['Blue', 'Yellow', 'Gray', 'Green', 'Orange'];
+        const index = Math.floor(Math.random() * colors.length);
+
+        this.model.allyLogoColor = 'Gray';
+        this.update();
+    }
+
     onDataLoaded() {
         this.model = Object.assign(this.model, this.pageData);
         this.model.allPartners = Object.keys(this.pageData.allies)
@@ -56,6 +64,7 @@ export default class Partners extends CMSPageController {
         .filter((info) => !info.do_not_display);
 
         this.filterPartners();
+        this.changeAllyLogoColor();
     }
 
     onUpdate() {
