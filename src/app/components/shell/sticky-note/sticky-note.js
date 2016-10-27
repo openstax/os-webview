@@ -1,4 +1,6 @@
 import CMSPageController from '~/controllers/cms';
+import router from '~/router';
+import {on} from '~/helpers/controller/decorators';
 import {description as template} from './sticky-note.html';
 
 class StickyNote extends CMSPageController {
@@ -22,6 +24,18 @@ class StickyNote extends CMSPageController {
         }
         this.model.content = this.pageData.content;
         this.update();
+    }
+
+    @on('click .multi-button > a')
+    goToForm(e) {
+        const amount = e.target.dataset.amount;
+
+        e.preventDefault();
+        router.navigate('/give/form', {
+            path: '/give',
+            page: 2,
+            amount
+        });
     }
 
 }
