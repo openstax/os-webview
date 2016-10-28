@@ -1,42 +1,36 @@
-import {Controller} from 'superb';
+import CMSPageController from '~/controllers/cms';
+import $ from '~/helpers/$';
 import {description as template} from './support.html';
 
 const supportHost = 'http://openstax.force.com/support?l=en_US';
-const resources = [{
-    name: 'OpenStax Textbooks',
-    description: `Information on adopting OpenStax books, using our additional
-    resources, and more.`,
-    linkText: 'Find answers',
-    linkUrl: `${supportHost}&c=Products%3ACollege`
-}, {
-    name: 'OpenStax CNX',
-    description: `Help with using, contributing, and remixing content from
-    our open library.`,
-    linkText: 'Find answers',
-    linkUrl: `${supportHost}&c=Products%3ACNX`
-}, {
-    name: 'OpenStax Tutor',
-    description: `Answers to your questions about piloting, setting up, and
-    using OpenStax Tutor courseware.`,
-    linkText: 'Find answers',
-    linkUrl: `${supportHost}&c=Products%3ATutor`
-}/* , {
-    name: 'General OpenStax Info',
-    description: `Information about the OpenStax organization, mission, and
-    other nonproduct-related topics.`,
-    linkText: 'Find answers',
-    linkUrl: '404'
-}*/];
 
-export default class Support extends Controller {
+export default class Support extends CMSPageController {
 
     init() {
+        document.title = 'Support - OpenStax';
         this.template = template;
         this.css = '/app/pages/support/support.css';
         this.view = {
             classes: ['support-page', 'page']
         };
-        this.model = resources;
+        this.slug = 'pages/support';
+    }
+
+    onDataLoaded() {
+        const d = this.pageData;
+
+        this.model = {
+            heading: d.intro_heading,
+            description: d.intro_description,
+            resources: d.row_1.map((r) => ({
+                name: r.heading,
+                description: r.content,
+                linkUrl: r.link,
+                linkText: r.cta
+            }))
+        };
+        this.update();
+        $.insertHtml(this.el, this.model);
     }
 
 }

@@ -1,27 +1,24 @@
-<template args="resources">
-    <div class="hero">
-        <div class="container boxed">
-            <h1>OpenStax Support</h1>
-            <p>
-                Our online support library is available 24/7 to answer your questions — just
-                click through your desired topic below to start your search. If you don’t
-                find the information you need, you can contact our Customer Service team for
-                further assistance.
-            </p>
+<template args="model">
+    <if condition="model">
+        <div class="hero">
+            <div class="container boxed">
+                <h1>{model.heading}</h1>
+                <p>{model.description}</p>
+            </div>
         </div>
-    </div>
-    <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
-    <div class="main">
-        <div class="boxed">
-            <div class="resource-boxes">
-                <div each="resource in resources" class="resource-box">
-                    <div>
-                        <div class="name">{resource.name}</div>
-                        <div class="description">{resource.description}</div>
+        <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
+        <div class="main">
+            <div class="boxed">
+                <div class="resource-boxes">
+                    <div each="resource in model.resources" class="resource-box">
+                        <div>
+                            <div class="name">{resource.name}</div>
+                            <div class="description" data-html="resources[{$item}].description"></div>
+                        </div>
+                        <div class="link"><a href="{resource.linkUrl}" class="with-arrow">{resource.linkText}</a></div>
                     </div>
-                    <div class="link"><a href="{resource.linkUrl}" class="with-arrow">{resource.linkText}</a></div>
                 </div>
             </div>
         </div>
-    </div>
+    </if>
 </template>
