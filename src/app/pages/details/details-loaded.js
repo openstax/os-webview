@@ -35,7 +35,6 @@ export default class DetailsLoaded extends Controller {
             let alternateLink = null;
             let isInstructor = true;
             const encodedLocation = encodeURIComponent(window.location.href);
-            const extraInstructions = this.el.querySelector('#extra-instructions');
             const setLockState = () => {
                 for (const res of this.model.book_faculty_resources) {
                     res.showLock = isInstructor ? 'fa-unlock-alt' : 'fa-lock';
@@ -61,26 +60,30 @@ export default class DetailsLoaded extends Controller {
                     this.regions.partners.append(new Partner(partnerTemplateHelper));
                 }
             };
+            const insertToc = () => {
+                if (this.model.table_of_contents) {
+                    const tocController = new Contents(this.model.table_of_contents, {tag: 'ol'});
+
+                    this.regions.tableOfContents.attach(tocController);
+                }
+            };
 
             if (!user || user.username === '') {
                 isInstructor = false;
                 alternateLink = `${settings.apiOrigin}/accounts/login/openstax/?next=${encodedLocation}`;
-                extraInstructions.innerHTML = `<a href="${alternateLink}">Login</a> for instructor access.`;
-                const anchor = extraInstructions.querySelector('a');
+                this.model.extraInstructions = `<a href="${alternateLink}">Login</a> for instructor access.`;
             } else if (!('groups' in user) || !user.groups.includes('Faculty')) {
                 isInstructor = false;
                 alternateLink = '/faculty-verification';
-                extraInstructions.innerHTML = `<a href="${alternateLink}">Apply for instructor access.</a>`;
+                this.model.extraInstructions = `<a href="${alternateLink}">Apply for instructor access.</a>`;
             }
+            $.insertHtml(this.el, this.model);
 
             setLockState();
             insertResources(this.model.book_faculty_resources, 'instructorResources');
             alternateLink = null;
             insertResources(this.model.book_student_resources, 'studentResources');
-
-            const tocController = new Contents(this.model.table_of_contents, {tag: 'ol'});
-
-            this.regions.tableOfContents.attach(tocController);
+            insertToc();
             insertPartners();
         });
     }
