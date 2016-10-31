@@ -104,7 +104,9 @@ class AppRouter extends Router {
     navigate(...args) {
         super.navigate(...args);
         window.dispatchEvent(new CustomEvent('navigate'));
-        analytics.sendPageview();
+        if (args.length === 1) {
+            analytics.sendPageview();
+        }
     }
 
     static linkHandler(e) {

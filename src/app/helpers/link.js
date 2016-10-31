@@ -1,6 +1,10 @@
 const EXTERNAL = /^((f|ht)tps?:)?\/\//;
 const MAILTO = /^mailto:(.+)/;
 const PDF = /.pdf$/;
+const ZIP = /.zip$/;
+const TXT = /.txt$/;
+const CNX = /cnx.org/;
+const CLOUDFRONT = /cloudfront.net/;
 
 function findAncestor(el, Element) {
     let parent = el;
@@ -35,12 +39,32 @@ function isPDF(url) {
     return PDF.test(url);
 }
 
+function isZIP(url) {
+    return ZIP.test(url);
+}
+
+function isTXT(url) {
+    return TXT.test(url);
+}
+
 function isExternal(href) {
     return EXTERNAL.test(href);
+}
+
+function isCNX(href) {
+    return CNX.test(href);
+}
+
+function isCloudFront(href) {
+    return CLOUDFRONT.test(href);
 }
 
 export default {
     isExternal,
     validUrlClick,
-    isPDF
+    isPDF,
+    isZIP,
+    isTXT,
+    isCNX,
+    isCloudFront
 };
