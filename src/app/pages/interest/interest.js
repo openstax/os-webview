@@ -1,35 +1,28 @@
 import SalesforceForm from '~/controllers/salesforce-form';
 import router from '~/router';
 import selectHandler from '~/handlers/select';
-import bookTitles from '~/models/book-titles';
 import {description as template} from './interest.html';
 
 export default class InterestForm extends SalesforceForm {
 
     init() {
+        super.init();
         this.template = template;
         this.css = '/app/pages/interest/interest.css';
         this.view = {
             classes: ['interest-form']
         };
-
-        const titles = bookTitles.map((titleData) =>
-            titleData.text ? titleData : {
-                text: titleData,
-                value: titleData
-            }
-        );
+        const defaultTitle = decodeURIComponent(window.location.search.substr(1));
 
         this.model = {
-            titles,
             validationMessage: (name) =>
-                this.hasBeenSubmitted ? this.el.querySelector(`[name="${name}"]`).validationMessage : ''
+                this.hasBeenSubmitted ? this.el.querySelector(`[name="${name}"]`).validationMessage : '',
+            defaultTitle
         };
     }
 
     onLoaded() {
         document.title = 'Interest Form - OpenStax';
-        selectHandler.setup(this);
         this.formResponseEl = this.el.querySelector('#form-response');
         this.goToConfirmation = () => {
             if (this.submitted) {
@@ -38,6 +31,13 @@ export default class InterestForm extends SalesforceForm {
             }
         };
         this.formResponseEl.addEventListener('load', this.goToConfirmation);
+    }
+
+    onDataLoaded() {
+        super.onDataLoaded();
+        this.model.titles = this.salesforceTitles;
+        this.update();
+        selectHandler.setup(this);
     }
 
 }

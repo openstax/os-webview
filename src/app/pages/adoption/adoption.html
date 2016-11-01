@@ -14,7 +14,8 @@
     </div>
     <iframe name="form-response" id="form-response" src="" width="0" height="0"></iframe>
     <form accept-charset="UTF-8" class="form" target="form-response"
-     action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="post">
+     action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="post"
+     if="model.titles">
         <div class="text-content">
             <div>
                 <input name="utf8" type="hidden" value="✓">
@@ -72,7 +73,8 @@
                         <span class="invalid-message">{model.validationMessage('00NU00000053nzR')}</span>
                         <div skip="true"></div>
                         <select name="00NU00000053nzR" required>
-                            <option each="title in model.titles" value="{title.value}">
+                            <option each="title in model.titles" value="{title.value}"
+                             selected="{model.defaultTitle == title.value ? '' : null}">
                                 {title.text}
                             </option>
                         </select>

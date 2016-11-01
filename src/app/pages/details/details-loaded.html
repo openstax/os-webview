@@ -57,8 +57,8 @@
                         Using this book, or interested in adopting it for your
                         course?
                     </p>
-                    <a href="{`/adoption?${model.title}`}" class="btn hide-if-coming-soon">Adopt This Book</a>
-                    <a href="{`/interest?${model.title}`}" class="secondary btn">Sign up for info</a>
+                    <a href="{`/adoption?${model.salesforce_abbreviation}`}" class="btn hide-if-coming-soon">Adopt This Book</a>
+                    <a href="{`/interest?${model.salesforce_abbreviation}`}" class="secondary btn">Sign up for info</a>
                 </div>
             </div>
             </section>
@@ -93,7 +93,7 @@
                     <h3>OpenStax Instructor Resources</h3>
                     <p>
                         Access these free resources with your verified instructor account.
-                        <span id="extra-instructions"></span>
+                        <span data-html="extraInstructions"></span>
                     </p>
                     <div id="instructor-resources" class="resource" skip="true"></div>
                 </div>

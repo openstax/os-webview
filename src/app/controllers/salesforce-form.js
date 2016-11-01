@@ -1,7 +1,23 @@
-import {Controller} from 'superb';
+import CMSPageController from '~/controllers/cms';
 import {on} from '~/helpers/controller/decorators';
 
-class SalesforceForm extends Controller {
+class SalesforceForm extends CMSPageController {
+
+    init() {
+        this.slug = 'books';
+    }
+
+    onDataLoaded() {
+        this.salesforceTitles = Object.keys(this.pageData.books)
+        .map((key) => this.pageData.books[key])
+        .filter((book) => book.salesforce_abbreviation)
+        .map((book) => ({
+            text: book.salesforce_name,
+            value: book.salesforce_abbreviation,
+            comingSoon: book.coming_soon
+        }))
+        .sort((a, b) => a.text < b.text ? a : b);
+    }
 
     @on('focusout input')
     markVisited(event) {
