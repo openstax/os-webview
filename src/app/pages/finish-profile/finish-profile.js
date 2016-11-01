@@ -2,7 +2,6 @@ import SalesforceForm from '~/controllers/salesforce-form';
 import router from '~/router';
 import {on} from '~/helpers/controller/decorators';
 import selectHandler from '~/handlers/select';
-import bookTitles from '~/models/book-titles';
 import {sfUserModel} from '~/models/usermodel';
 import FacultySection from './faculty-section/faculty-section';
 import {description as template} from './finish-profile.html';
@@ -10,6 +9,7 @@ import {description as template} from './finish-profile.html';
 export default class NewAccountForm extends SalesforceForm {
 
     init() {
+        super.init();
         this.template = template;
         this.css = '/app/pages/finish-profile/finish-profile.css';
         this.view = {
@@ -18,15 +18,8 @@ export default class NewAccountForm extends SalesforceForm {
         this.regions = {
             facultySection: '[data-region="faculty-section"]'
         };
-        const titles = bookTitles.map((titleData) =>
-            titleData.text ? titleData : {
-                text: titleData,
-                value: titleData
-            }
-        );
 
         this.model = {
-            titles,
             roles: ['Faculty', 'Adjunct Faculty', 'Administrator', 'Librarian',
             'Instructional Designer', 'Student', 'Other'],
             leadType: 'OSC User',
@@ -42,7 +35,8 @@ export default class NewAccountForm extends SalesforceForm {
     onLoaded() {
         document.title = 'Finish Profile - OpenStax';
         selectHandler.setup(this);
-        sfUserModel.load().then((user) => {
+        this.sfUserModelLoaded = sfUserModel.load();
+        this.sfUserModelLoaded.then((user) => {
             this.model.firstName = user.first_name;
             this.model.lastName = user.last_name;
             this.model.userId = user.username;
@@ -61,6 +55,15 @@ export default class NewAccountForm extends SalesforceForm {
                 }
             };
             this.formResponseEl.addEventListener('load', this.goToConfirmation);
+        });
+    }
+
+    onDataLoaded() {
+        super.onDataLoaded();
+        this.sfUserModelLoaded.then(() => {
+            this.model.titles = this.salesforceTitles;
+            this.update();
+            selectHandler.setup(this);
         });
     }
 

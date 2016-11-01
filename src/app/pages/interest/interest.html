@@ -11,7 +11,8 @@
         </div>
         <iframe name="form-response" id="form-response" src="" width="0" height="0"></iframe>
         <form accept-charset="UTF-8" action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8"
-         target="form-response" class="new_adoption_interest form" method="post">
+         target="form-response" class="new_adoption_interest form" method="post"
+         if="model.titles">
             <div class="text-content">
                 <div>
                     <input type="hidden" name="oid" value="00DU0000000Kwch">
@@ -67,7 +68,10 @@
                             <span class="invalid-message"><br />{model.validationMessage('00NU00000053nzR')}</span>
                             <div skip="true"></div>
                             <select name="00NU00000053nzR" multiple required>
-                                <option each="title in model.titles" value="{title.value}">{title.text}</option>
+                                <option each="title in model.titles" value="{title.value}"
+                                 selected="{model.defaultTitle == title.value ? '' : null}">
+                                    {title.text}
+                                 </option>
                             </select>
                         </label>
 

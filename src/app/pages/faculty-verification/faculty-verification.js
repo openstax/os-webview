@@ -2,7 +2,6 @@ import SalesforceForm from '~/controllers/salesforce-form';
 import router from '~/router';
 import $ from '~/helpers/$';
 import selectHandler from '~/handlers/select';
-import bookTitles from '~/models/book-titles';
 import {sfUserModel} from '~/models/usermodel';
 import salesforceModel from '~/models/salesforce';
 import {description as template} from './faculty-verification.html';
@@ -18,20 +17,14 @@ export default class FacultyVerificationForm extends SalesforceForm {
     }
 
     init() {
+        super.init();
         this.template = template;
         this.css = '/app/pages/faculty-verification/faculty-verification.css';
         this.view = {
             classes: ['faculty-verification-form']
         };
-        const titles = bookTitles.map((titleData) =>
-            titleData.text ? titleData : {
-                text: titleData,
-                value: titleData
-            }
-        );
 
         this.model = {
-            titles,
             adoptionOptions: salesforceModel.adoption(['adopted', 'recommended', 'no']),
             validationMessage: (name) => this.hasBeenSubmitted ?
                 this.el.querySelector(`[name="${name}"]`).validationMessage :
@@ -41,7 +34,8 @@ export default class FacultyVerificationForm extends SalesforceForm {
 
     onLoaded() {
         document.title = 'Instructor Verification - OpenStax';
-        sfUserModel.load().then((user) => {
+        this.sfUserModelLoaded = sfUserModel.load();
+        this.sfUserModelLoaded.then((user) => {
             if (user.username) {
                 this.model.firstName = user.first_name;
                 this.model.lastName = user.last_name;
@@ -55,9 +49,6 @@ export default class FacultyVerificationForm extends SalesforceForm {
                 } else {
                     this.model.problemMessage = '';
                 }
-
-                this.update();
-                selectHandler.setup(this);
             } else {
                 const loginLink = document.querySelector('.nav-menu-item.login > a');
 
@@ -71,6 +62,15 @@ export default class FacultyVerificationForm extends SalesforceForm {
                 }
             };
             this.formResponseEl.addEventListener('load', this.goToConfirmation);
+        });
+    }
+
+    onDataLoaded() {
+        super.onDataLoaded();
+        this.model.titles = this.salesforceTitles;
+        this.sfUserModelLoaded.then(() => {
+            this.update();
+            selectHandler.setup(this);
         });
     }
 

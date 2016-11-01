@@ -1,7 +1,6 @@
 import SalesforceForm from '~/controllers/salesforce-form';
 import router from '~/router';
 import selectHandler from '~/handlers/select';
-import {published as titles} from '~/models/book-titles';
 import salesforce from '~/models/salesforce';
 import partners from '~/models/partners';
 import {description as template} from './renew.html';
@@ -9,12 +8,12 @@ import {description as template} from './renew.html';
 export default class AdoptionForm extends SalesforceForm {
 
     init() {
+        super.init();
         this.template = template;
         this.view = {
             classes: ['adoption-form']
         };
         this.model = {
-            titles,
             partners,
             salesforce: salesforce.adoption([
                 'adopted',
@@ -29,7 +28,6 @@ export default class AdoptionForm extends SalesforceForm {
     }
 
     onLoaded() {
-        selectHandler.setup(this);
         this.formResponseEl = this.el.querySelector('#form-response');
         this.goToConfirmation = () => {
             if (this.submitted) {
@@ -38,6 +36,13 @@ export default class AdoptionForm extends SalesforceForm {
             }
         };
         this.formResponseEl.addEventListener('load', this.goToConfirmation);
+    }
+
+    onDataLoaded() {
+        super.onDataLoaded();
+        this.model.titles = this.salesforceTitles.filter((t) => !t.comingSoon);
+        this.update();
+        selectHandler.setup(this);
     }
 
 }
