@@ -103,7 +103,7 @@
         }
 
         @include desktop {
-            flex-flow: row wrap;
+            flex-flow: row nowrap;
         }
     }
 
