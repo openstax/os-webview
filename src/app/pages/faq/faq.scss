@@ -22,10 +22,14 @@
     }
 
     .qa {
+        margin-bottom: 1em;
+
         .question {
             color: color(blue);
             cursor: pointer;
             font-weight: bold;
+            padding-left: 0.9em;
+            text-indent: -0.9em;
 
             > p {
                 display: inline;
@@ -67,5 +71,9 @@
         .fa {
             width: 2em;
         }
+    }
+
+    .one-line {
+        white-space: nowrap;
     }
 }
