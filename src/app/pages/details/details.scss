@@ -193,6 +193,10 @@
                 }
             }
 
+            h2 {
+                margin-top: 0;
+            }
+
             .box {
                 @include desktop {
                     background-color: rgba(color(neutral-lightest), 0.95);

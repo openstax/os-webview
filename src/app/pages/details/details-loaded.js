@@ -26,6 +26,7 @@ export default class DetailsLoaded extends Controller {
             partners: '#partners'
         };
         this.model = model;
+        this.model.bottom = '';
     }
 
     onLoaded() {
@@ -86,6 +87,10 @@ export default class DetailsLoaded extends Controller {
             insertToc();
             insertPartners();
         });
+
+        this.toggleFixedClass();
+        window.addEventListener('scroll', this.toggleFixedClass.bind(this));
+        window.addEventListener('resize', this.toggleFixedClass.bind(this));
     }
 
     @on('click a[href^="#"]')
@@ -110,7 +115,6 @@ export default class DetailsLoaded extends Controller {
         }
     }
 
-    /*
     toggleFixedClass() {
         const floatingMenu = document.querySelector('.floating-menu>.box');
         const body = document.body;
@@ -124,21 +128,20 @@ export default class DetailsLoaded extends Controller {
             const floatingMenuHeight = Math.max(floatingMenu.scrollHeight, floatingMenu.offsetHeight)+210;
             const menuOffset = height - footerHeight - floatingMenuHeight;
 
-            // FIX: Move DOM changes to template
             if ((window.pageYOffset > menuOffset) && (window.innerWidth > 768)) {
-                floatingMenu.parentNode.classList.add('bottom');
+                this.model.bottom = 'bottom';
             } else {
-                floatingMenu.parentNode.classList.remove('bottom');
+                this.model.bottom = '';
             }
+            this.update();
         }
     }
 
+/*
     onLoaded() {
         $.applyScrollFix(this);
-        this.toggleFixedClass();
-        this.attachListenerTo(window, 'scroll', this.toggleFixedClass.bind(this));
-
         const slug = window.location.pathname.replace(/.*\//, '');
-    */
+  }
+  */
 
 }
