@@ -73,7 +73,9 @@ class Analytics {
 
     handleExternalLink(href) {
         if (linkHelper.isCNX(href)) {
-            this.sendUrlEvent('CNX', href, 'open');
+            this.sendUrlEvent('Webview', href, 'open');
+        } else if (linkHelper.isAmazon(href)) {
+            this.sendUrlEvent('External', href, 'open');
         } else if (linkHelper.isCloudFront(href)) {
             return;
         } else {
@@ -97,7 +99,8 @@ class Analytics {
             'high_resolution_pdf_url': 'Book HR',
             'low_resolution_pdf_url': 'Book LR',
             'webview_link': 'CNX',
-            'concept_coach_link': 'Concept Coach'
+            'concept_coach_link': 'Concept Coach',
+            'amazon_link': 'Amazon'
         };
 
         for (const slug of Object.keys(bookData)) {

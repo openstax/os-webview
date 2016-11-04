@@ -5,6 +5,7 @@ const ZIP = /.zip$/;
 const TXT = /.txt$/;
 const CNX = /cnx.org/;
 const CLOUDFRONT = /cloudfront.net/;
+const AMAZON = /amazon.com/;
 
 function findAncestor(el, Element) {
     let parent = el;
@@ -55,6 +56,10 @@ function isCNX(href) {
     return CNX.test(href);
 }
 
+function isAmazon(href) {
+    return AMAZON.test(href);
+}
+
 function isCloudFront(href) {
     return CLOUDFRONT.test(href);
 }
@@ -66,5 +71,6 @@ export default {
     isZIP,
     isTXT,
     isCNX,
-    isCloudFront
+    isCloudFront,
+    isAmazon
 };
