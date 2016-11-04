@@ -89,8 +89,14 @@ export default class DetailsLoaded extends Controller {
         });
 
         this.toggleFixedClass();
-        window.addEventListener('scroll', this.toggleFixedClass.bind(this));
-        window.addEventListener('resize', this.toggleFixedClass.bind(this));
+        this.boundToggleFixedClass = this.toggleFixedClass.bind(this);
+        window.addEventListener('scroll', this.boundToggleFixedClass);
+        window.addEventListener('resize', this.boundToggleFixedClass);
+    }
+
+    onClose() {
+        window.removeEventListener('scroll', this.boundToggleFixedClass);
+        window.removeEventListener('resize', this.boundToggleFixedClass);
     }
 
     @on('click a[href^="#"]')
