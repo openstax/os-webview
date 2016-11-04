@@ -73,7 +73,7 @@ class Analytics {
 
     handleExternalLink(href) {
         if (linkHelper.isCNX(href)) {
-            sendUrlEvent('CNX', href, 'open');
+            this.sendUrlEvent('CNX', href, 'open');
         } else if (linkHelper.isCloudFront(href)) {
             return;
         } else {
@@ -92,7 +92,7 @@ class Analytics {
         }
     }
 
-    buildUrlLookupTable(bookData) {
+    addBooksToLookupTable(bookData) {
         const urlMarker = {
             'high_resolution_pdf_url': 'Book HR',
             'low_resolution_pdf_url': 'Book LR',
@@ -104,7 +104,36 @@ class Analytics {
             const book = bookData[slug];
 
             for (const url of Object.keys(urlMarker)) {
-                this.sourceByUrl[url] = `${book.title} ${urlMarker[url]}`;
+                const resource = book[url];
+
+                this.sourceByUrl[resource] = `${book.title} ${urlMarker[url]}`;
+            }
+        }
+    }
+
+    addResourcesToLookupTable(resourceItems) {
+        const resourceMarker = {
+            'book_student_resources': 'Student',
+            'book_faculty_resources': 'Faculty'
+        };
+
+        for (const item of resourceItems) {
+            for (const resourceBranch of Object.keys(resourceMarker)) {
+                const marker = resourceMarker[resourceBranch];
+
+                for (const resource of item[resourceBranch]) {
+                    this.sourceByUrl[resource.link_document_url] = `${item.title} ${marker}`;
+                }
+            }
+        }
+    }
+
+    addPartnersToLookupTable(partnerItems) {
+        for (const item of partnerItems) {
+            for (const ally of item.book_allies) {
+                const url = ally.book_link_url;
+
+                this.sourceByUrl[url] = ally.ally_heading;
             }
         }
     }
@@ -115,7 +144,7 @@ class Analytics {
         }
 
         const found = Object.keys(this.sourceByUrl)
-            .find(url => selectedUrl.localCompare(url) === 0);
+            .find(url => selectedUrl.localeCompare(url) === 0);
 
         return found ? this.sourceByUrl[found] : '';
     }
@@ -127,7 +156,7 @@ class Analytics {
                 const response = await fetch(`${settings.apiOrigin}/api/books`);
                 const data = await response.json();
 
-                this.buildUrlLookupTable(data.books);
+                this.addBooksToLookupTable(data.books);
             } catch (e) {
                 console.log(e);
             }
@@ -140,7 +169,7 @@ class Analytics {
                   '=title,book_student_resources,book_faculty_resources,book_allies');
                 const bookFields = await response.json();
 
-                this.buildResourceLookupTable(bookFields.items);
+                this.addResourcesToLookupTable(bookFields.items);
             } catch (e) {
                 console.log(e);
             }
@@ -155,38 +184,11 @@ class Analytics {
                   '=title,book_allies');
                 const data = await response.json();
 
-                buildPartnerLookupTable(data);
+                this.addPartnersToLookupTable(data.items);
             } catch (e) {
                 console.log(e);
             }
         })();
-    }
-
-    buildResourceLookupTable(resourceItems) {
-        const resourceMarker = {
-            'book_student_resources': 'Student',
-            'book_faculty_resources': 'Faculty'
-        };
-
-        for (const item of resourceItems) {
-            for (const resourceBranch of Object.keys(resourceMarker)) {
-                const marker = resourceMarker[resourceBranch];
-
-                for (const resource of item.book[resourceBranch]) {
-                    this.sourceByUrl[resource.link_document_url] = `${item.title} ${marker}`;
-                }
-            }
-        }
-    }
-
-    buildPartnerLookupTable(partnerItems) {
-        for (const item of partnerItems) {
-            for (const ally of item.book_allies) {
-                const url = ally.book_link_url;
-
-                this.sourceByUrl[url] = ally.ally_heading;
-            }
-        }
     }
 
     [SETUP_GA]() {
