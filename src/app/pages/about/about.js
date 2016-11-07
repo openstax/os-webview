@@ -71,6 +71,10 @@ export default class AboutUs extends CMSPageController {
         };
     }
 
+    onLoaded() {
+        document.title = 'About Us - OpenStax';
+    }
+
     onDataLoaded() {
         assignColors(this.pageData.openstax_team);
         assignColors(this.pageData.strategic_advisors);

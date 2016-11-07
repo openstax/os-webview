@@ -11,4 +11,8 @@ export default class Accessibility extends Controller {
         };
     }
 
+    onLoaded() {
+        document.title = 'Accessibility Statement - OpenStax';
+    }
+
 }

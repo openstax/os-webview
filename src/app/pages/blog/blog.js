@@ -52,6 +52,10 @@ export default class Blog extends CMSPageController {
         window.addEventListener('navigate', this.handlePathChange);
     }
 
+    onLoaded() {
+        document.title = 'Blog - OpenStax';
+    }
+
     onDataLoaded() {
         if (!this.articles) {
             this.articleSlugs = Object.keys(this.pageData.articles)

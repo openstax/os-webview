@@ -28,6 +28,7 @@ export default class AdoptionForm extends SalesforceForm {
     }
 
     onLoaded() {
+        document.title = 'Renew - OpenStax';
         this.formResponseEl = this.el.querySelector('#form-response');
         this.goToConfirmation = () => {
             if (this.submitted) {
