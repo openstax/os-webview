@@ -3,45 +3,12 @@
 
 .page-intro {
     background-color: color(deep-green);
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
 
     h1 {
         color: color(neutral-lightest);
-        width: 100%;
     }
 
     p {
         color: color(neutral-lightest);
-
-        &.blurb-calculator {
-            color: color(blue);
-            margin: 0 auto;
-            max-width: 48rem;
-            padding-top: 5rem;
-        }
     }
-
-    a {
-
-        &.caret {
-            display: inline-block;
-            height: 2rem;
-            margin-top: 1rem;
-            position: relative;
-            width: 2rem;
-
-            &::after {
-                @include triangle(
-                    $direction: bottom,
-                    $position: top 0 left 0,
-                    $color: color(blue),
-                    $size: 0.6rem
-                );
-            }
-        }
-    }
-
 }
