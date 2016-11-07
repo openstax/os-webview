@@ -125,11 +125,15 @@
     }
 
     .book-info {
-        justify-content: space-between;
         margin-bottom: 6rem;
 
         @media (min-width: 500px) {
+            justify-content: space-between;
             margin: 6rem auto;
+        }
+
+        @include desktop {
+            justify-content: flex-start;
         }
 
         .cover-wrap {
