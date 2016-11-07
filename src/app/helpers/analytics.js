@@ -42,67 +42,47 @@ class Analytics {
         ));
     }
 
+    sendUrlEvent(category, href, action = 'download') {
+        const source = this.lookupUrl(href) || 'unknown';
+
+        this.sendEvent({
+            eventCategory: `${category} ${source}`,
+            eventAction: action,
+            eventLabel: href,
+            location: location.href
+        });
+    }
+
     record(href) {
         if (linkHelper.isExternal(href)) {
             this.handleExternalLink(href);
         }
 
         if (linkHelper.isPDF(href)) {
-            const bookName = this.getBookName(href);
-
-            this.sendEvent({
-                eventCategory: 'PDF '.concat(bookName),
-                eventAction: 'download',
-                eventLabel: href,
-                location: location.href
-            });
+            this.sendUrlEvent('PDF', href);
         }
 
         if (linkHelper.isZIP(href)) {
-            const bookName = this.getBookName(href);
-
-            this.sendEvent({
-                eventCategory: 'ZIP '.concat(bookName),
-                eventAction: 'download',
-                eventLabel: href,
-                location: location.href
-            });
+            this.sendUrlEvent('ZIP', href);
         }
 
         if (linkHelper.isTXT(href)) {
-            const bookName = this.getBookName(href);
-
-            this.sendEvent({
-                eventCategory: 'TXT '.concat(bookName),
-                eventAction: 'download',
-                eventLabel: href,
-                location: location.href
-            });
+            this.sendUrlEvent('TXT', href);
         }
     }
 
     handleExternalLink(href) {
         if (linkHelper.isCNX(href)) {
-            const cnxBook = this.getCNXBookName(href);
-
-            this.sendEvent({
-                eventCategory: 'CNX '.concat(cnxBook),
-                eventAction: 'open',
-                eventLabel: href,
-                location: location.href
-            });
+            this.sendUrlEvent('Webview', href, 'open');
+        } else if (linkHelper.isAmazon(href)) {
+            this.sendUrlEvent('External', href, 'open');
         } else if (linkHelper.isCloudFront(href)) {
             return;
         } else {
-            const partner = this.getPartner(href);
+            const partner = this.lookupUrl(href);
 
             if (partner !== '') {
-                this.sendEvent({
-                    eventCategory: 'Partner '.concat(partner),
-                    eventAction: 'open',
-                    eventLabel: href,
-                    location: location.href
-                });
+                this.sendUrlEvent('Partner', href, 'open');
             } else {
                 this.sendEvent({
                     eventCategory: 'External',
@@ -114,6 +94,64 @@ class Analytics {
         }
     }
 
+    addBooksToLookupTable(bookData) {
+        const urlMarker = {
+            'high_resolution_pdf_url': 'Book HR',
+            'low_resolution_pdf_url': 'Book LR',
+            'webview_link': 'CNX',
+            'concept_coach_link': 'Concept Coach',
+            'amazon_link': 'Amazon'
+        };
+
+        for (const slug of Object.keys(bookData)) {
+            const book = bookData[slug];
+
+            for (const url of Object.keys(urlMarker)) {
+                const resource = book[url];
+
+                this.sourceByUrl[resource] = `${book.title} ${urlMarker[url]}`;
+            }
+        }
+    }
+
+    addResourcesToLookupTable(resourceItems) {
+        const resourceMarker = {
+            'book_student_resources': 'Student',
+            'book_faculty_resources': 'Faculty'
+        };
+
+        for (const item of resourceItems) {
+            for (const resourceBranch of Object.keys(resourceMarker)) {
+                const marker = resourceMarker[resourceBranch];
+
+                for (const resource of item[resourceBranch]) {
+                    this.sourceByUrl[resource.link_document_url] = `${item.title} ${marker}`;
+                }
+            }
+        }
+    }
+
+    addPartnersToLookupTable(partnerItems) {
+        for (const item of partnerItems) {
+            for (const ally of item.book_allies) {
+                const url = ally.book_link_url;
+
+                this.sourceByUrl[url] = ally.ally_heading;
+            }
+        }
+    }
+
+    lookupUrl(selectedUrl) {
+        if (selectedUrl in this.sourceByUrl) {
+            return this.sourceByUrl[selectedUrl];
+        }
+
+        const found = Object.keys(this.sourceByUrl)
+            .find(url => selectedUrl.localeCompare(url) === 0);
+
+        return found ? this.sourceByUrl[found] : '';
+    }
+
     fetchBooks() {
         /* eslint arrow-parens: 0 */
         (async () => {
@@ -121,7 +159,7 @@ class Analytics {
                 const response = await fetch(`${settings.apiOrigin}/api/books`);
                 const data = await response.json();
 
-                this.data.books = data.books;
+                this.addBooksToLookupTable(data.books);
             } catch (e) {
                 console.log(e);
             }
@@ -134,7 +172,7 @@ class Analytics {
                   '=title,book_student_resources,book_faculty_resources,book_allies');
                 const bookFields = await response.json();
 
-                this.data.resources = bookFields.items;
+                this.addResourcesToLookupTable(bookFields.items);
             } catch (e) {
                 console.log(e);
             }
@@ -149,117 +187,16 @@ class Analytics {
                   '=title,book_allies');
                 const data = await response.json();
 
-                this.data.partners = data;
+                this.addPartnersToLookupTable(data.items);
             } catch (e) {
                 console.log(e);
             }
         })();
     }
 
-    getBookName(pdfUrl) {
-        let bookTitle = '';
-
-        bookTitle = this.checkBookPDF(pdfUrl);
-
-        if (bookTitle === '') {
-            bookTitle = this.checkFacultyResources(pdfUrl);
-            if (bookTitle === '') {
-                bookTitle = this.checkStudentResources(pdfUrl);
-            }
-        }
-        return bookTitle;
-    }
-
-    checkBookPDF(pdfUrl) {
-        for (const slug of Object.keys(this.data.books)) {
-            const book = this.data.books[slug];
-            const hrUrl = book.high_resolution_pdf_url;
-            const lrUrl = book.low_resolution_pdf_url;
-            const hrResults = pdfUrl.localeCompare(hrUrl);
-            const lrResults = pdfUrl.localeCompare(lrUrl);
-
-            if (hrResults === 0) {
-                return book.title.concat(' Book HR');
-            }
-
-            if (lrResults === 0) {
-                return book.title.concat(' Book LR');
-            }
-        }
-
-        return '';
-    }
-
-    checkStudentResources(href) {
-        for (const item of this.data.resources) {
-            for (const resource of item.book_student_resources) {
-                const url = resource.link_document_url;
-                const urlResults = href.localeCompare(url);
-
-                if (urlResults === 0) {
-                    return item.title.concat(' Student');
-                    break;
-                }
-            }
-        }
-
-        return '';
-    }
-
-    checkFacultyResources(href) {
-        for (const item of this.data.resources) {
-            for (const resource of item.book_faculty_resources) {
-                const url = resource.link_document_url;
-                const urlResults = href.localeCompare(url);
-
-                if (urlResults === 0) {
-                    return item.title.concat(' Faculty');
-                    break;
-                }
-            }
-        }
-
-        return '';
-    }
-
-    getPartner(partnerUrl) {
-        for (const item of this.data.partners.items) {
-            for (const ally of item.book_allies) {
-                const partner = ally.ally_heading;
-                const url = ally.book_link_url;
-                const urlResults = partnerUrl.localeCompare(url);
-
-                if (urlResults === 0) {
-                    return partner;
-                    break;
-                }
-            }
-        }
-        return '';
-    }
-
-    getCNXBookName(cnxUrl) {
-        for (const slug of Object.keys(this.data.books)) {
-            const book = this.data.books[slug];
-            const wvUrl = book.webview_link;
-            const ccUrl = book.concept_coach_link;
-            const cnxResults = cnxUrl.localeCompare(wvUrl);
-            const ccResults = cnxUrl.localeCompare(ccUrl);
-
-            if (cnxResults === 0) {
-                return book.title;
-            }
-
-            if (ccResults === 0) {
-                return book.title.concat(' Concept Coach');
-            }
-        }
-
-        return '';
-    }
-
     [SETUP_GA]() {
         this.data = {};
+        this.sourceByUrl = {};
         this.fetchBooks();
         this.fetchPartners();
         if (typeof window.ga !== 'function') {
