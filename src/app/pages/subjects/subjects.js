@@ -16,7 +16,7 @@ export default class Subjects extends CMSPageController {
         this.template = template;
         this.css = '/app/pages/subjects/subjects.css';
         this.view = {
-            classes: ['subjects-page']
+            classes: ['subjects-page', 'hide-until-loaded']
         };
         this.regions = {
             filter: '.filter',
@@ -70,6 +70,7 @@ export default class Subjects extends CMSPageController {
 
         this.categorySelector.updateSelected(category);
         this.filterCategories(category);
+        this.el.classList.add('loaded');
     }
 
     onClose() {

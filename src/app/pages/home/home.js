@@ -66,6 +66,9 @@ export default class Home extends CMSPageController {
         };
         this.banners = bannerModels.map((model) => new Banner(model));
         this.currentBanner = 0;
+        this.model = {
+            loaded: ''
+        };
         // Safari private window patch
         try {
             localStorage.visitedGive = Number(localStorage.visitedGive || 0) + 1;
@@ -107,16 +110,11 @@ export default class Home extends CMSPageController {
                 bgEl.style.height = `${height}px`;
             }
         };
+        const moveElement = (elInfo) => {
+            if (!('left' in elInfo)) {
+                const style = window.getComputedStyle(elInfo.el, null);
 
-        const moveFeatures = (bannerRect, containerRect) => {
-            const containerMidX = containerRect.width / 2.5;
-            const containerMidY = containerRect.height / 2;
-            const offset = bannerRect.height - bannerRect.bottom;
-
-            for (const elInfo of squaresAndFeatures) {
-                if (!('left' in elInfo)) {
-                    const style = window.getComputedStyle(elInfo.el);
-
+                if (style.left) {
                     elInfo.left = +style.left.replace('px', '');
                     elInfo.top = +style.top.replace('px', '');
                     const midX = elInfo.left + style.width.replace('px', '') / 2;
@@ -125,9 +123,18 @@ export default class Home extends CMSPageController {
                     elInfo.xDir = midX < containerMidX ? -1 : 1;
                     elInfo.yDir = midY < containerMidY ? -1 : 1;
                 }
+            }
 
-                elInfo.el.style.left = `${elInfo.left + offset * elInfo.xDir}px`;
-                elInfo.el.style.top = `${elInfo.top + offset * elInfo.yDir}px`;
+            elInfo.el.style.left = `${elInfo.left + offset * elInfo.xDir}px`;
+            elInfo.el.style.top = `${elInfo.top + offset * elInfo.yDir}px`;
+        };
+        const moveFeatures = (bannerRect, containerRect) => {
+            const containerMidX = containerRect.width / 2.5;
+            const containerMidY = containerRect.height / 2;
+            const offset = bannerRect.height - bannerRect.bottom;
+
+            for (const elInfo of squaresAndFeatures) {
+                moveElement(elInfo);
             }
             squaresAndFeatures.modified = true;
         };
@@ -158,6 +165,9 @@ export default class Home extends CMSPageController {
     onLoaded() {
         document.title = 'Home - OpenStax';
         shell.header.updateHeaderStyle();
+    }
+
+    onDataLoaded() {
         for (const view of this.banners) {
             this.regions.banners.append(view);
         }
@@ -178,9 +188,7 @@ export default class Home extends CMSPageController {
                 this.banners[this.currentBanner].show();
             });
         }, 11000);
-    }
 
-    onDataLoaded() {
         const quotesData = this.pageData.row_1.map((columnData) => {
             const result = Object.assign({}, columnData);
             const imageData = columnData.image;
@@ -209,6 +217,8 @@ export default class Home extends CMSPageController {
         });
 
         this.regions.buckets.attach(new Buckets(bucketData));
+        this.model.loaded = 'loaded';
+        this.update();
         this.debouncedParallax();
     }
 

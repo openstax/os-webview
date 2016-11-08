@@ -60,7 +60,7 @@ export default class AboutUs extends CMSPageController {
         this.template = template;
         this.css = '/app/pages/about/about.css';
         this.view = {
-            classes: ['about-page', 'page']
+            classes: ['about-page', 'page', 'hide-until-loaded']
         };
 
         this.model = {
@@ -95,7 +95,7 @@ export default class AboutUs extends CMSPageController {
         };
 
         assignIds(this.model.bios);
-
+        this.el.classList.add('loaded');
         this.update();
     }
 
