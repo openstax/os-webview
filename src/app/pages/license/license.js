@@ -11,4 +11,8 @@ export default class License extends Controller {
         };
     }
 
+    onLoaded() {
+        document.title = 'License - OpenStax';
+    }
+
 }

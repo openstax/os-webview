@@ -63,6 +63,8 @@ export default class Contact extends SalesforceForm {
     }
 
     onLoaded() {
+        document.title = 'Contact Us - OpenStax';
+
         // NOTE: Cannot set this in the template due to `each` restriction
         const queryDict = $.parseSearchString(window.location.search);
         const defaultSubject = queryDict.subject || 'General';
