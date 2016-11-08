@@ -34,7 +34,6 @@ export default class NewAccountForm extends SalesforceForm {
 
     onLoaded() {
         document.title = 'Finish Profile - OpenStax';
-        selectHandler.setup(this);
         this.sfUserModelLoaded = sfUserModel.load();
         this.sfUserModelLoaded.then((user) => {
             this.model.firstName = user.first_name;
