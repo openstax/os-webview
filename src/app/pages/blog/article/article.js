@@ -7,7 +7,7 @@ export default class Article extends CMSPageController {
         this.template = () => '';
         this.css = '/app/pages/blog/article/article.css';
         this.view = {
-            classes: ['article']
+            classes: ['article', 'hide-until-loaded']
         };
         this.slug = article.slug;
         this.preserveWrapping = true;
@@ -21,6 +21,7 @@ export default class Article extends CMSPageController {
     onDataLoaded() {
         if (this.el) {
             this.update();
+            this.el.classList.add('loaded');
         }
     }
 

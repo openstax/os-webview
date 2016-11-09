@@ -13,7 +13,7 @@ export default class AP extends CMSPageController {
         this.template = template;
         this.css = '/app/pages/ap/ap.css';
         this.view = {
-            classes: ['ap-page', 'page']
+            classes: ['ap-page', 'page', 'hide-until-loaded']
         };
         this.regions = {
             buckets: 'insert-region[data-name="buckets"]',
@@ -37,6 +37,7 @@ export default class AP extends CMSPageController {
         }, d));
 
         this.regions.buckets.attach(new Buckets(bucketData));
+        this.el.classList.add('loaded');
     }
 
 }

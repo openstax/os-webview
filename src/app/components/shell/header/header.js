@@ -15,7 +15,7 @@ class Header extends Controller {
         this.css = '/app/components/shell/header/header.css';
         this.view = {
             tag: 'header',
-            classes: ['page-header']
+            classes: ['page-header', 'hide-until-loaded']
         };
         this.regions = {
             stickyNote: 'sticky-note',
@@ -83,6 +83,8 @@ class Header extends Controller {
         this.regions.stickyNote.append(stickyNote);
         this.regions.upperMenu.attach(this.upperMenu);
         this.regions.mainMenu.attach(this.mainMenu);
+        // Prevent elements from showing up as they load
+        setTimeout(() => this.el.classList.add('loaded'), 100);
     }
 
     pin() {

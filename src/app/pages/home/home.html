@@ -1,7 +1,9 @@
-<main id="maincontent">
-    <div class="book-banners"></div>
-    <span class="scrolldown-chevron"><a href="#education"><i class="fa fa-chevron-down"></i></a></span>
-    <div class="quote-buckets"></div>
-    <div id="education" class="education"></div>
-    <div class="buckets"></div>
-</main>
+<template args="model">
+    <main id="maincontent" class="hide-until-loaded {model.loaded}">
+        <div class="book-banners" skip="true"></div>
+        <span class="scrolldown-chevron"><a href="#education"><i class="fa fa-chevron-down"></i></a></span>
+        <div class="quote-buckets" skip="true"></div>
+        <div id="education" class="education" skip="true"></div>
+        <div class="buckets" skip="true"></div>
+    </main>
+</template>

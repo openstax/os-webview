@@ -42,7 +42,8 @@ export default class HigherEd extends CMSPageController {
             'adopt_heading': '',
             'adopt_description': '',
             'adopt_cta': '',
-            loginLink
+            loginLink,
+            loaded: ''
         };
     }
 
@@ -57,6 +58,7 @@ export default class HigherEd extends CMSPageController {
         this.model.row_3[0].btnClass = 'btn-cyan';
         this.model.row_3[1].btnClass = 'btn-gold';
 
+        this.model.loaded = 'loaded';
         this.update();
 
         this.regions.quotes.attach(new Quotes(this.model.row_1));

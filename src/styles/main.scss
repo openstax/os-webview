@@ -113,6 +113,17 @@ sup {
     display: none;
 }
 
+.hide-until-loaded {
+    opacity: 0;
+    transition: opacity 0.3s linear;
+    visibility: hidden;
+
+    &.loaded {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
 .no-scroll {
     overflow: hidden;
 }
