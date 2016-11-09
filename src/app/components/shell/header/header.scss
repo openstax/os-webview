@@ -117,14 +117,8 @@ $button-size: 2.8rem;
                 display: none;
             }
 
-            &.dropdown.open > a {
-                display: block;
-                padding-left: 100rem;
-            }
-        }
-
-        .dropdown-menu {
-            &.open {
+            &.dropdown.open > a,
+            .dropdown-menu.open {
                 display: block;
                 padding-left: 100rem;
             }
