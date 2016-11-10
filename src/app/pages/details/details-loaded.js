@@ -3,7 +3,7 @@ import {Controller} from 'superb';
 import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 import router from '~/router';
-import userModel from '~/models/usermodel';
+import sfUserModel from '~/models/usermodel';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
 import Resource from './resource/resource';
 import Contents from './contents/contents';
@@ -31,7 +31,7 @@ export default class DetailsLoaded extends Controller {
     onLoaded() {
         $.insertHtml(this.el, this.model);
         this.regions.getThisTitle.append(new GetThisTitle(this.model));
-        userModel.load().then((user) => {
+        sfUserModel.load().then((user) => {
             let alternateLink = null;
             let isInstructor = true;
             const encodedLocation = encodeURIComponent(window.location.href);

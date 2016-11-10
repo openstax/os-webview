@@ -1,7 +1,6 @@
 import {Controller} from 'superb';
 import CategorySelector from '~/components/category-selector/category-selector';
 import CategorySection from './category-section/category-section';
-import {sfUserModel} from '~/models/usermodel';
 
 const apId = 'AP';
 
@@ -69,19 +68,6 @@ export default class BookViewer extends Controller {
         if (this.filterToCategory) {
             this.filterCategories(this.filterToCategory);
         }
-        sfUserModel.load().then((user) => {
-            if (user.username) {
-                this.model.firstName = user.first_name;
-                this.model.lastName = user.last_name;
-                this.model.userId = user.username;
-                this.model.accountId = user.accounts_id;
-                this.model.pendingVerification = user.pending_verification;
-                this.model.alreadyVerified = user.groups.includes('Faculty');
-
-                this.update();
-                selectHandler.setup(this);
-            }
-        });
     }
 
     filterCategories(category) {
