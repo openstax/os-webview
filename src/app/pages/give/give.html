@@ -21,6 +21,7 @@
                             <span class="invalid-message">{model.validationMessage('Title')}</span>
                             <input type="text" name="Title" class="form-control"
                             placeholder="Mr./Mrs./Dr./Ms./..."
+                            required
                              />
                         </label>
                         <label>
@@ -46,20 +47,20 @@
                         <label>
                             Phone
                             <span class="invalid-message">{model.validationMessage('Phone')}</span>
-                            <input type="text" name="Phone" class="form-control" />
+                            <input type="text" name="Phone" class="form-control" required />
                         </label>
                         <label>
                             Phone Type
                             <span class="invalid-message">{model.validationMessage('Phone_Type')}</span>
                             <input type="text" name="Phone_Type" class="form-control"
-                            placeholder="Work/Home/Cell/..." />
+                            placeholder="Work/Home/Cell/..." required />
                         </label>
                     </div>
                     <div class="col">
                         <label>
                             Address
                             <span class="invalid-message">{model.validationMessage('Mailing_Address')}</span>
-                            <input type="text" name="Mailing_Address" class="form-control" />
+                            <input type="text" name="Mailing_Address" class="form-control" required />
                         </label>
 
                         <label>
@@ -70,14 +71,14 @@
                         <label>
                             City
                             <span class="invalid-message">{model.validationMessage('Mailing_City')}</span>
-                            <input type="text" name="Mailing_City" class="form-control" />
+                            <input type="text" name="Mailing_City" class="form-control" required />
                         </label>
 
                         <label>
                             State
                             <span class="invalid-message">{model.validationMessage('Mailing_State')}</span>
                             <div skip="true"></div>
-                            <select name="Mailing_State" class="form-control">
+                            <select name="Mailing_State" class="form-control" required>
                                 <option value="--">Not Applicable</option>
                                 <option value="AL">Alabama</option>
                                 <option value="AK">Alaska</option>
@@ -157,7 +158,7 @@
                         <label>
                             Zip Code
                             <span class="invalid-message">{model.validationMessage('Mailing_Zip')}</span>
-                            <input type="text" name="Mailing_Zip" class="form-control" />
+                            <input type="text" name="Mailing_Zip" class="form-control" required />
                         </label>
 
                         <label>
