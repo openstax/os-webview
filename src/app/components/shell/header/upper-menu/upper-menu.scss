@@ -63,7 +63,7 @@
             .dropdown-menu {
                 display: none;
                 flex-direction: column;
-                overflow: hidden;
+                // overflow: hidden;
                 transition: opacity 0.3s;
 
                 @include desktop {
