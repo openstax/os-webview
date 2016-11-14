@@ -21,6 +21,12 @@ export default class FAQ extends CMSPageController {
 
     onDataLoaded() {
         const d = this.pageData;
+        const slug = window.location.hash.substr(1);
+        const item = d.questions.find((q) => q.slug === slug);
+
+        if (item) {
+            item.isOpen = true;
+        }
 
         this.model = {
             heading: d.intro_heading,
@@ -28,6 +34,13 @@ export default class FAQ extends CMSPageController {
             questions: d.questions
         };
         this.update();
+
+
+        if (item) {
+            const targetEl = document.getElementById(slug);
+
+            $.scrollTo(targetEl);
+        }
     }
 
     onUpdate() {
