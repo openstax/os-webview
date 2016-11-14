@@ -21,12 +21,9 @@
         align-items: center;
         display: flex;
         flex-flow: row nowrap;
-        justify-content: space-around;
-        padding-left: 2rem;
-
-        @media (max-width: 680px) {
-            padding-right: calc(8rem - 5%);
-        }
+        justify-content: space-between;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
     }
 
     .btn {
@@ -40,8 +37,6 @@
 
     .multi-button {
         display: none;
-        margin-right: 1rem;
-        min-width: 57rem;
 
         @include desktop {
             display: flex;
@@ -51,7 +46,6 @@
     .single-button {
         display: flex;
         justify-content: center;
-        min-width: 10rem;
 
         @include desktop {
             display: none;

@@ -2,13 +2,10 @@
 @import 'mixins';
 
 .page-header .nav {
+    box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(color(gray), 0.1);
     height: auto;
     overflow: hidden;
     width: 100%;
-
-    @include desktop {
-        box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(color(gray), 0.1);
-    }
 
     @at-root .active#{&} {
         box-shadow: none;
@@ -32,6 +29,10 @@
             align-items: center;
             flex-direction: row;
         }
+
+        @at-root :not(.active)#{&} {
+            position: relative;
+        }
     }
 
     .logo-wrapper {
@@ -42,9 +43,9 @@
         padding: 0.5rem 1.5rem;
 
         @at-root .active#{&} {
-            left: 1.5rem;
+            left: 0;
             position: absolute;
-            top: 1.5rem;
+            top: 0;
         }
 
         @include desktop {
