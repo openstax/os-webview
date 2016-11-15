@@ -1,6 +1,7 @@
 import SalesforceForm from '~/controllers/salesforce-form';
 import router from '~/router';
 import $ from '~/helpers/$';
+import {on} from '~/helpers/controller/decorators';
 import selectHandler from '~/handlers/select';
 import {sfUserModel} from '~/models/usermodel';
 import salesforceModel from '~/models/salesforce';
@@ -71,6 +72,16 @@ export default class FacultyVerificationForm extends SalesforceForm {
         this.sfUserModelLoaded.then(() => {
             this.update();
             selectHandler.setup(this);
+        });
+    }
+
+    @on('change [name="00NU0000005oVQV"]')
+    checkEmailPending(event) {
+        const sfResponse = sfUserModel.load({email: event.target.value});
+
+        sfResponse.then((user) => {
+            this.model.pendingVerification = user.salesforce_email_previously_used;
+            this.update();
         });
     }
 
