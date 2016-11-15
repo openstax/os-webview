@@ -42,7 +42,8 @@ export default class Contents extends Controller {
                 this.startFrom = 1;
             }
             // Only check preface for first chapter in section
-            if (!(i === this.startFrom && isPreface(entry))) {
+            // Do not number chapters with no contents -- those are appendices
+            if (!(i === this.startFrom && isPreface(entry)) && hasContents(entry)) {
                 chapterNumber = `${this.parentNumber}${i}`;
                 ++i;
             }
