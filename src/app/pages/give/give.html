@@ -14,6 +14,7 @@
                 <input type="hidden" name="Donation_Amount" value="{model.selectedAmount}">
                 <input type="hidden" name="Rice_Relate" value="Friend">
                 <input type="hidden" name="turn_email_off" value="yes">
+                <input type="hidden" name="recurring_payment_type" value="{model.recurring}">
                 <div class="labeled-inputs row top-of-form">
                     <div class="col">
                         <label>
@@ -437,6 +438,13 @@
                             <div class="box-row">
                                 <div each="amount in model.amounts" class="{`amount ${model.selectedAmount === +amount ? 'selected' : ''}`}" data-value="{amount}">${amount}</div>
                                 <input type="number" class="{`amount-input ${model.otherAmount === null ? '' : 'selected'}`}" placeholder="Other amount" min="5" value="{model.otherAmount}"/>
+                            </div>
+                            <div class="recurring-section">
+                                <label>
+                                    <input type="checkbox" name="recurring-payment" value="setup" />
+                                    <div class="checkbox-proxy"> </div>
+                                    Make this a monthly donation
+                                </label>
                             </div>
                             <input class="btn" type="submit" value="donate!" />
                         </form>
