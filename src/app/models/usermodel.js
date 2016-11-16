@@ -14,7 +14,7 @@ class UserModel {
 
     load(qs = {}) {
         const query = Object.keys(qs)
-        .map((k) => `${encodeURIComponent(k)} = ${encodeURIComponent(qs[k])}`)
+        .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(qs[k])}`)
         .join('&');
         const url = this.url + (query.length ? `?${query}` : '');
 
