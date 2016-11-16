@@ -12,8 +12,13 @@ class UserModel {
         this.url = url;
     }
 
-    load() {
-        this[LOADED] = fetch(this.url, {credentials: 'include'}).then((response) => response.json());
+    load(qs = {}) {
+        const query = Object.keys(qs)
+        .map((k) => `${encodeURIComponent(k)} = ${encodeURIComponent(qs[k])}`)
+        .join('&');
+        const url = this.url + (query.length ? `?${query}` : '');
+
+        this[LOADED] = fetch(url, {credentials: 'include'}).then((response) => response.json());
         return this[LOADED];
     }
 
