@@ -1,11 +1,51 @@
-// FIX:  Delete as many of these as possible
 const $ = {};
 
 $.isTouchDevice = () => (
     ('ontouchstart' in window) ||
     (navigator.MaxTouchPoints > 0) ||
     (navigator.msMaxTouchPoints > 0)
- );
+);
+
+$.browserId = () => {
+    const ua = navigator.userAgent;
+    let M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+    let tem;
+    const checkIE = () => {
+        if (/trident/i.test(M[1])) {
+            tem = ua.match(/\brv[ :]+(\d+)/g) || [];
+            M = ['IE', (tem[1] || '')];
+        }
+    };
+    const checkChrome = () => {
+        if (M[1] === 'Chrome' && (tem = ua.match(/\b(OPR|Edge)\/(\d+)/))) {
+            M = [tem[1].replace('OPR', 'Opera'), tem[2]];
+        }
+    };
+    const checkFirefox = () => {
+        if (M[1] === 'Firefox') {
+            M = ua.match(/.*\b(\w+)\/(\S+)/);
+        }
+    };
+
+    checkIE();
+    checkChrome();
+    checkFirefox();
+    M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+    if ((tem = ua.match(/version\/(\d+)/i)) !== null) {
+        M.splice(1, 1, tem[1]);
+    }
+
+    return {name: M[0], version: M[1]};
+};
+
+$.isSupported = () => {
+    const info = $.browserId();
+
+    return ((info.name === 'Safari' && +info.version >= 9) ||
+     (info.name === 'IE' && +info.version >= 11) ||
+     (info.name === 'Firefox' && +info.version >= 37) ||
+     (info.name === 'Chrome' && +info.version >= 40));
+};
 
 $.stringCompare = (a, b) => (a < b) ? -1 : +(a > b);
 

@@ -1,5 +1,6 @@
 import 'babel-polyfill';
 import 'fetch';
+import $ from '~/helpers/$';
 import router from '~/router';
 import shell from '~/components/shell/shell';
 
@@ -42,6 +43,12 @@ class App {
     constructor() {
         this.shell = shell;
         router.start();
+
+        if (!$.isSupported()) {
+            /* eslint no-alert: 0 */
+            alert('Our site is designed to work with recent versions of Chrome,' +
+            ' Firefox, IE (Edge) and Safari. It may not work in your browser.');
+        }
     }
 
 }
