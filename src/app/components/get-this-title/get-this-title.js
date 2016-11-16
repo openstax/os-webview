@@ -41,6 +41,11 @@ export default class GetThisTitle extends Controller {
         };
     }
 
+    @on('click .btn')
+    blurAfterClick(event) {
+        event.target.blur();
+    }
+
     @on('click .show-pdf-submenu')
     showPdfSubmenu(event) {
         event.preventDefault();
