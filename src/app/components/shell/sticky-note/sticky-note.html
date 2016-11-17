@@ -1,15 +1,23 @@
 <template args="model">
-    <div if="model.content" class="text-content container">
-        {model.content}
-        <div class="single-button">
-            <a class="btn inverted" href="/give?student">Give Now</a>
+    <if condition="model.temporary">
+        <div class = "text-content container">
+            We'll perform website maintenance on Saturday, November 19 from 10 a.m.
+            - 1 p.m. CST. You may briefly encounter difficulty downloading PDFs or
+            accessing our textbooks via webview.
         </div>
-        <div class="multi-button">
-            <a class="btn inverted" href="/give" data-amount="5">Give $5</a>
-            <a class="btn inverted" href="/give" data-amount="10">Give $10</a>
-            <a class="btn inverted" href="/give" data-amount="25">Give $25</a>
-            <a class="btn inverted" href="/give" data-amount="50">Give $50</a>
-            <a class="btn inverted" href="/give"  data-amount="?">Give Other Amount</a>
+    <else>
+        <div if="model.content" class="text-content container">
+            {model.content}
+            <div class="single-button">
+                <a class="btn inverted" href="/give?student">Give Now</a>
+            </div>
+            <div class="multi-button">
+                <a class="btn inverted" href="/give" data-amount="5">Give $5</a>
+                <a class="btn inverted" href="/give" data-amount="10">Give $10</a>
+                <a class="btn inverted" href="/give" data-amount="25">Give $25</a>
+                <a class="btn inverted" href="/give" data-amount="50">Give $50</a>
+                <a class="btn inverted" href="/give"  data-amount="?">Give Other Amount</a>
+            </div>
         </div>
-    </div>
+    </if>
 </template>
