@@ -12,6 +12,11 @@
     width: 100vw;
     z-index: 1;
 
+    &.temporary-banner {
+        background-color: color(yellow);
+        color: color(blue);
+    }
+
     .inverted {
         background-color: color(neutral-lightest);
         color: color(orange);
