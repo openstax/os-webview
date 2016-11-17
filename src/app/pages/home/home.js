@@ -110,6 +110,9 @@ export default class Home extends CMSPageController {
                 bgEl.style.height = `${height}px`;
             }
         };
+        let containerMidX;
+        let containerMidY;
+        let offset;
         const moveElement = (elInfo) => {
             if (!('left' in elInfo)) {
                 const style = window.getComputedStyle(elInfo.el, null);
@@ -129,9 +132,9 @@ export default class Home extends CMSPageController {
             elInfo.el.style.top = `${elInfo.top + offset * elInfo.yDir}px`;
         };
         const moveFeatures = (bannerRect, containerRect) => {
-            const containerMidX = containerRect.width / 2.5;
-            const containerMidY = containerRect.height / 2;
-            const offset = bannerRect.height - bannerRect.bottom;
+            containerMidX = containerRect.width / 2.5;
+            containerMidY = containerRect.height / 2;
+            offset = bannerRect.height - bannerRect.bottom;
 
             for (const elInfo of squaresAndFeatures) {
                 moveElement(elInfo);
