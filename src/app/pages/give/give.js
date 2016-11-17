@@ -42,7 +42,8 @@ export default class Give extends CMSPageController {
                 const el = this.el.querySelector(`[name="${name}"]`);
 
                 return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
-            }
+            },
+            recurring: history.state && history.state.recurring || ''
         };
         this.slug = 'pages/give';
         this.regions = {
@@ -165,13 +166,21 @@ export default class Give extends CMSPageController {
         this.setAmount(+event.target.value);
     }
 
+    @on('change [name="recurring-payment"]')
+    setRecurring(event) {
+        this.model.recurring = event.target.checked ? event.target.value : '';
+        this.update();
+        // Nothing will actually update; the value is only used in the form
+    }
+
     @on('submit .preform')
     loadPage2(event) {
         event.preventDefault();
         router.navigate('/give/form', {
             path: '/give',
             page: 2,
-            amount: this.model.selectedAmount
+            amount: this.model.selectedAmount,
+            recurring: this.model.recurring
         });
     }
 

@@ -46,6 +46,40 @@
         p {
             max-width: none;
         }
+
+        .recurring-section {
+            label {
+                color: color(neutral-lightest);
+                font-size: 1.6rem;
+                position: relative;
+            }
+
+            [type=checkbox] {
+                height: 0;
+                margin: 0;
+                padding: 0;
+                visibility: hidden;
+                width: 0;
+
+                &:checked + .checkbox-proxy::before {
+                    bottom: 0;
+                    content: '✓';
+                    font-weight: bold;
+                    left: 0;
+                    position: absolute;
+                }
+            }
+
+            $box-size: 0.875em;
+
+            .checkbox-proxy {
+                border: solid 1px color(neutral-lightest);
+                display: inline-block;
+                height: $box-size;
+                margin-right: 0.5em;
+                width: $box-size;
+            }
+        }
     }
 
     h2 {
