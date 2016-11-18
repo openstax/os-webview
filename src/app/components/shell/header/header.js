@@ -65,7 +65,6 @@ class Header extends Controller {
         window.addEventListener('navigate', () => this.update());
         window.addEventListener('scroll', () => {
             window.requestAnimationFrame(() => {
-                this.updateHeaderStyle();
                 this.removeAllOpenClasses();
             });
         });

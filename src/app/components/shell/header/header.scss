@@ -37,6 +37,7 @@ $button-size: 2.8rem;
 
         @include desktop {
             height: 6rem;
+            transform: translate3d(0, 0, 0);
         }
     }
 
@@ -70,7 +71,7 @@ $button-size: 2.8rem;
                 position: fixed;
                 top: -6rem;
                 transform: translate3d(0, 6rem, 0);
-                transition: all 0.3s 0.2s;
+                transition: transform 0.3s 0.5s ease-in-out;
             }
         }
     }

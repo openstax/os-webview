@@ -4,7 +4,6 @@
 .page-header .nav {
     box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(color(gray), 0.1);
     height: auto;
-    overflow: hidden;
     width: 100%;
 
     @at-root .active#{&} {

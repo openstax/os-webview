@@ -81,29 +81,33 @@ export default class Home extends CMSPageController {
         $.hashClick(e, {doHistory: false});
     }
 
-    parallaxBanner() {
-        const bookBanners = this.el.querySelectorAll('.book-banners > .banner');
-
-        for (const bookBanner of bookBanners) {
-            const bookBannersBackgroundImage = bookBanner.querySelector('.background-image');
-            const bookBannersBook = bookBanner.querySelector('.container .book');
-            const bookBannersStudent = bookBanner.querySelector('.container .student');
-
-            bookBannersBackgroundImage.setAttribute('style', `transform:translate3d(0,-${window.pageYOffset/15}px,0)`);
-            bookBannersBook.setAttribute('style', `transform:translate3d(0,-${window.pageYOffset/8}px,0)`);
-            bookBannersStudent.setAttribute('style', `transform:translate3d(0,${window.pageYOffset/10}px,0)`);
-        }
-    }
-
     onLoaded() {
         document.title = 'Home - OpenStax';
         shell.header.updateHeaderStyle();
-        this.parallaxBanner();
-        window.addEventListener('scroll', () => {
+
+        this.parallaxBanner = () => {
+            const bookBanners = this.el.querySelectorAll('.book-banners > .banner');
+
+            for (const bookBanner of bookBanners) {
+                const bookBannersBackgroundImage = bookBanner.querySelector('.background-image');
+                const bookBannersBook = bookBanner.querySelector('.container .book');
+                const bookBannersStudent = bookBanner.querySelector('.container .student');
+
+                bookBannersBackgroundImage.setAttribute('style',
+                                                        `transform:translate3d(0,-${window.pageYOffset/15}px,0)`);
+                bookBannersBook.setAttribute('style', `transform:translate3d(0,-${window.pageYOffset/8}px,0)`);
+                bookBannersStudent.setAttribute('style', `transform:translate3d(0,${window.pageYOffset/10}px,0)`);
+            }
+        };
+
+        this.parallaxOnScroll = () => {
             window.requestAnimationFrame(() => {
                 this.parallaxBanner();
             });
-        });
+        };
+
+        this.parallaxBanner();
+        window.addEventListener('scroll', this.parallaxOnScroll);
     }
 
     onDataLoaded() {
@@ -155,7 +159,7 @@ export default class Home extends CMSPageController {
 
     onClose() {
         clearInterval(this.modelInterval);
-        window.removeEventListener('scroll', this.parallaxBanner());
+        window.removeEventListener('scroll', this.parallaxOnScroll);
     }
 
 }
