@@ -31,7 +31,13 @@
         }
 
         @at-root :not(.active)#{&} {
-            position: relative;
+            @include phone {
+                position: relative;
+            }
+
+            @include tablet {
+                position: relative;
+            }
         }
     }
 
