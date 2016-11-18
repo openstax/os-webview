@@ -116,7 +116,7 @@ class AppRouter extends Router {
             return;
         }
 
-        const href = el.getAttribute('href');
+        const href = linkHelper.stripOpenStaxDomain(el.getAttribute('href'));
 
         e.preventDefault();
 

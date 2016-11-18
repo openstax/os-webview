@@ -1,4 +1,5 @@
 const EXTERNAL = /^((f|ht)tps?:)?\/\//;
+const ABSOLUTE_OPENSTAX = /^https?:\/\/[^/]*openstax.org/;
 const MAILTO = /^mailto:(.+)/;
 const PDF = /.pdf$/;
 const ZIP = /.zip$/;
@@ -48,6 +49,10 @@ function isTXT(url) {
     return TXT.test(url);
 }
 
+function stripOpenStaxDomain(href) {
+    return href.replace(ABSOLUTE_OPENSTAX, '');
+}
+
 function isExternal(href) {
     return EXTERNAL.test(href);
 }
@@ -72,5 +77,6 @@ export default {
     isTXT,
     isCNX,
     isCloudFront,
-    isAmazon
+    isAmazon,
+    stripOpenStaxDomain
 };
