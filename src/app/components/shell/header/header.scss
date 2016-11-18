@@ -65,10 +65,13 @@ $button-size: 2.8rem;
     @at-root .fixed#{&} {
         > .nav {
             background-color: color(neutral-lightest);
-            position: fixed;
-            top: -5rem;
-            transform: translateY(5rem);
-            transition: all 0.15s;
+
+            @include desktop {
+                position: fixed;
+                top: -6rem;
+                transform: translate3d(0, 6rem, 0);
+                transition: all 0.3s 0.2s;
+            }
         }
     }
 

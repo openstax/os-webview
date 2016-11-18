@@ -69,6 +69,7 @@ export default class Home extends CMSPageController {
         this.model = {
             loaded: ''
         };
+
         // Safari private window patch
         try {
             localStorage.visitedGive = Number(localStorage.visitedGive || 0) + 1;
@@ -81,93 +82,28 @@ export default class Home extends CMSPageController {
     }
 
     parallaxBanner() {
-        const bookBanners = this.el.querySelectorAll('.book-banners > div > div');
-        const books = this.el.querySelectorAll('.book');
-        const educationBanner = this.el.querySelector('.education-banner');
-        const educationBannerStudent = this.el.querySelector('.education-banner .student');
-
-        educationBanner.setAttribute('style', `background-position: 50% ${window.pageYOffset/30}px`);
-        educationBannerStudent.setAttribute('style', `bottom: -${window.pageYOffset/40}px`);
+        const bookBanners = this.el.querySelectorAll('.book-banners > .banner');
 
         for (const bookBanner of bookBanners) {
-            bookBanner.setAttribute('style', `background-position: 20% -${window.pageYOffset/2}px`);
+            const bookBannersBackgroundImage = bookBanner.querySelector('.background-image');
+            const bookBannersBook = bookBanner.querySelector('.container .book');
+            const bookBannersStudent = bookBanner.querySelector('.container .student');
+
+            bookBannersBackgroundImage.setAttribute('style', `transform:translate3d(0,-${window.pageYOffset/15}px,0)`);
+            bookBannersBook.setAttribute('style', `transform:translate3d(0,-${window.pageYOffset/8}px,0)`);
+            bookBannersStudent.setAttribute('style', `transform:translate3d(0,${window.pageYOffset/10}px,0)`);
         }
-
-        for (const book of books) {
-            book.setAttribute('style', `margin-top: ${window.pageYOffset/20}px`);
-        }
-    }
-
-    setupDebouncedParallax() {
-        const bannerEl = this.el.querySelector('.book-banners');
-        const containerEl = bannerEl.querySelector('.container');
-        const backgrounds = bannerEl.querySelectorAll('.background-image');
-        const squaresAndFeatures = Array.from(bannerEl.querySelectorAll('.feature,[class^="square-"]'))
-        .map((el) => ({el}));
-
-        const setBackgroundHeights = (height) => {
-            for (const bgEl of backgrounds) {
-                bgEl.style.height = `${height}px`;
-            }
-        };
-        let containerMidX;
-        let containerMidY;
-        let offset;
-        const moveElement = (elInfo) => {
-            if (!('left' in elInfo)) {
-                const style = window.getComputedStyle(elInfo.el, null);
-
-                if (style.left) {
-                    elInfo.left = +style.left.replace('px', '');
-                    elInfo.top = +style.top.replace('px', '');
-                    const midX = elInfo.left + style.width.replace('px', '') / 2;
-                    const midY = elInfo.top + style.height.replace('px', '') / 2;
-
-                    elInfo.xDir = midX < containerMidX ? -1 : 1;
-                    elInfo.yDir = midY < containerMidY ? -1 : 1;
-                }
-            }
-
-            elInfo.el.style.left = `${elInfo.left + offset * elInfo.xDir}px`;
-            elInfo.el.style.top = `${elInfo.top + offset * elInfo.yDir}px`;
-        };
-        const moveFeatures = (bannerRect, containerRect) => {
-            containerMidX = containerRect.width / 2.5;
-            containerMidY = containerRect.height / 2;
-            offset = bannerRect.height - bannerRect.bottom;
-
-            for (const elInfo of squaresAndFeatures) {
-                moveElement(elInfo);
-            }
-            squaresAndFeatures.modified = true;
-        };
-
-        const resetFeatures = () => {
-            for (const elInfo of squaresAndFeatures) {
-                elInfo.el.style.left = '';
-                elInfo.el.style.top = '';
-            }
-            squaresAndFeatures.modified = false;
-        };
-
-        this.debouncedParallax = utils.debounce(() => {
-            const bannerRect = bannerEl.getClientRects()[0];
-            const containerRect = bannerEl.getClientRects()[0];
-            const bannerBottom = bannerRect.bottom;
-            const height = bannerBottom > 0 ? bannerBottom : 0;
-
-            setBackgroundHeights(height);
-            if (bannerBottom < bannerRect.height) {
-                moveFeatures(bannerRect, containerRect);
-            } else if (squaresAndFeatures.modified) {
-                resetFeatures();
-            }
-        }, 10);
     }
 
     onLoaded() {
         document.title = 'Home - OpenStax';
         shell.header.updateHeaderStyle();
+        this.parallaxBanner();
+        window.addEventListener('scroll', () => {
+            window.requestAnimationFrame(() => {
+                this.parallaxBanner();
+            });
+        });
     }
 
     onDataLoaded() {
@@ -175,13 +111,6 @@ export default class Home extends CMSPageController {
             this.regions.banners.append(view);
         }
         this.banners[this.currentBanner].show();
-        try {
-            this.setupDebouncedParallax();
-        } catch (e) {
-            console.warn(e);
-        }
-        window.addEventListener('scroll', this.debouncedParallax);
-        window.addEventListener('resize', this.debouncedParallax);
 
         this.modelInterval = setInterval(() => {
             this.banners[this.currentBanner].hide()
@@ -222,14 +151,11 @@ export default class Home extends CMSPageController {
         this.regions.buckets.attach(new Buckets(bucketData));
         this.model.loaded = 'loaded';
         this.update();
-        this.debouncedParallax();
     }
 
     onClose() {
         clearInterval(this.modelInterval);
-        clearInterval(this.parallaxInterval);
-        window.removeEventListener('scroll', this.debouncedParallax);
-        window.removeEventListener('resize', this.debouncedParallax);
+        window.removeEventListener('scroll', this.parallaxBanner());
     }
 
 }
