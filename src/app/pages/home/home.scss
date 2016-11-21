@@ -41,16 +41,19 @@
 
     .background-image {
         display: none;
+        transform: translate3d(0, 0, 0);
 
         @include tablet {
             background-image: url("/images/home/subjects/#{$subject}/background.jpg");
             background-position: center top;
             background-size: cover;
+            bottom: 0;
             content: ' ';
             display: block;
             height: 70rem;
             left: 0;
-            position: fixed;
+            position: absolute;
+            right: 0;
             top: 0;
             width: 100%;
             will-change: transform;
@@ -105,7 +108,7 @@
         background-repeat: no-repeat;
         background-size: contain;
         position: absolute;
-        transform: translateZ(0);
+        transform: translate3d(0, 0, 0);
         z-index: 2;
     }
 
@@ -183,6 +186,7 @@
         color: color(neutral-lightest);
         display: none;
         font-size: 3rem;
+        position: relative;
         width: $now-i-can-width;
 
         @media (min-width: 650px) {
@@ -359,7 +363,7 @@
             .square-1 {
                 height: 3.5rem;
                 left: 13rem;
-                top: 60%;
+                top: 50%;
                 width: 3.5rem;
             }
 
@@ -367,15 +371,15 @@
                 @include tablet {
                     bottom: 0;
                     display: block;
-                    height: 34rem;
+                    height: 20rem;
                     left: 0;
                     width: 45rem;
                 }
 
                 @include desktop {
                     height: 17rem;
-                    left: 29rem;
-                    top: 40rem;
+                    left: 30%;
+                    top: 30rem;
                     width: 36rem;
                 }
             }
@@ -392,7 +396,7 @@
                 @include desktop {
                     height: 43rem;
                     left: 64rem;
-                    top: 24rem;
+                    top: 19rem;
                     width: 43rem;
                 }
             }
@@ -436,7 +440,7 @@
             .align-edge {
                 @include tablet {
                     bottom: 5.5rem;
-                    left: calc(22vw - 9.1rem);
+                    left: 1.5rem;
                 }
 
                 @include desktop {
@@ -468,8 +472,8 @@
             .leaf {
                 background-image: url('/images/home/subjects/biology/leaf.png');
                 height: 14rem;
-                right: 27rem;
-                top: 24rem;
+                right: 16rem;
+                top: 20rem;
                 width: 14rem;
             }
 
@@ -481,9 +485,9 @@
             }
 
             .square-2 {
-                bottom: 55%;
+                bottom: 40%;
                 height: 3rem;
-                right: 17rem;
+                right: 7rem;
                 width: 3rem;
             }
 
@@ -530,14 +534,14 @@
                 @include tablet {
                     background-position: center right;
                     height: 28rem;
-                    left: calc(52.3% - 15.7rem);
-                    top: 10vw;
+                    left: 40%;
+                    top: 2rem;
                     width: 28rem;
                 }
 
                 @include desktop {
                     left: 37%;
-                    top: 10rem;
+                    top: 9rem;
                 }
             }
 
@@ -562,11 +566,11 @@
             .align-edge {
                 @include tablet {
                     bottom: 5.5rem;
-                    left: calc(50% - 22.7rem);
+                    right: 5%;
                 }
 
                 @include desktop {
-                    left: calc(49% - 6rem);
+                    right: 15%;
                 }
             }
         } // .banner.biology
@@ -622,8 +626,8 @@
 
             .square-1 {
                 height: 5rem;
-                left: 2rem;
-                top: 50%;
+                left: 21rem;
+                top: 44%;
                 width: 5rem;
             }
 
@@ -646,9 +650,9 @@
 
                 @include desktop {
                     bottom: auto;
-                    height: 24rem;
-                    top: 53%;
-                    width: 60%;
+                    height: 36rem;
+                    top: 30%;
+                    width: 59rem;
                 }
             }
 
@@ -663,7 +667,7 @@
                 }
 
                 @include desktop {
-                    bottom: 15rem;
+                    bottom: 4rem;
                     height: 35rem;
                     right: 5rem;
                     width: 50rem;

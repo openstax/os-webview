@@ -6,7 +6,7 @@ export default class Banner extends Controller {
     init(model) {
         this.template = template;
         this.model = model;
-        this.model.fly = '';
+        this.model.fly = 'out';
         this.view = {
             classes: ['banner', model.subject]
         };

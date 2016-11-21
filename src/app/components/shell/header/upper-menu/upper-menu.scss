@@ -70,6 +70,7 @@
                     display: flex;
                     height: 0;
                     opacity: 0;
+                    visibility: hidden;
                     width: 0;
                 }
             }
@@ -85,6 +86,7 @@
                     padding: 1rem;
                     position: absolute;
                     transform: translateX(-30%);
+                    visibility: visible;
                     width: auto;
                 }
             }
