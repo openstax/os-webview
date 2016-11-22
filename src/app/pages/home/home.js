@@ -89,21 +89,22 @@ export default class Home extends CMSPageController {
         shell.header.updateHeaderStyle();
 
         this.parallaxBanner = () => {
-            const relativeY = lastScrollY / 3000;
-            const bookBanners = this.el.querySelectorAll('.book-banners > .banner');
+            const bookBanner = this.el.querySelector('.book-banners > .banner.fadein');
 
-            for (const bookBanner of bookBanners) {
-                const backgroundImage = bookBanner.querySelector('.background-image');
-                const bookCover = bookBanner.querySelector('.container .book');
-                const student = bookBanner.querySelector('.container .student');
-
-                backgroundImage.setAttribute('style',
-                                             `transform:translate3d(0, ${this.pos(0, -200, relativeY, 0)}px, 0)`);
-                bookCover.setAttribute('style', `transform:translate3d(0, ${this.pos(0, -100, relativeY, 0)}px, 0)`);
-                student.setAttribute('style', `transform:translate3d(0, ${this.pos(0, 200, relativeY, 0)}px, 0)`);
-            }
-
+            this.parallaxBannerUpdate(bookBanner);
             ticking = false;
+        };
+
+        this.parallaxBannerUpdate = (bookBanner) => {
+            const relativeY = lastScrollY / 3000;
+            const backgroundImage = bookBanner.querySelector('.background-image');
+            const bookCover = bookBanner.querySelector('.container .book');
+            const student = bookBanner.querySelector('.container .student');
+
+            backgroundImage.setAttribute('style',
+                                       `transform:translate3d(0, ${this.pos(-200, relativeY, 0)}px, 0)`);
+            bookCover.setAttribute('style', `transform:translate3d(0, ${this.pos(-100, relativeY, 0)}px, 0)`);
+            student.setAttribute('style', `transform:translate3d(0, ${this.pos(200, relativeY, 0)}px, 0)`);
         };
 
         this.parallaxOnScroll = (evt) => {
@@ -117,8 +118,8 @@ export default class Home extends CMSPageController {
         window.addEventListener('scroll', this.parallaxOnScroll, false);
     }
 
-    pos(base, range, relY, offset) {
-        return base + this.limit(0, 1, relY - offset) * range;
+    pos(range, relY, offset) {
+        return this.limit(0, 1, relY - offset) * range;
     }
 
     limit(min, max, value) {
@@ -136,6 +137,7 @@ export default class Home extends CMSPageController {
             .then(() => {
                 ++this.currentBanner;
                 this.currentBanner %= this.banners.length;
+                this.parallaxBannerUpdate(this.banners[this.currentBanner].el);
                 this.banners[this.currentBanner].show();
             });
         }, 11000);
