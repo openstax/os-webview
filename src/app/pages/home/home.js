@@ -82,32 +82,47 @@ export default class Home extends CMSPageController {
     }
 
     onLoaded() {
+        let ticking = false;
+        let lastScrollY = 0;
+
         document.title = 'Home - OpenStax';
         shell.header.updateHeaderStyle();
 
         this.parallaxBanner = () => {
+            const relativeY = lastScrollY / 3000;
             const bookBanners = this.el.querySelectorAll('.book-banners > .banner');
 
             for (const bookBanner of bookBanners) {
-                const bookBannersBackgroundImage = bookBanner.querySelector('.background-image');
-                const bookBannersBook = bookBanner.querySelector('.container .book');
-                const bookBannersStudent = bookBanner.querySelector('.container .student');
+                const backgroundImage = bookBanner.querySelector('.background-image');
+                const bookCover = bookBanner.querySelector('.container .book');
+                const student = bookBanner.querySelector('.container .student');
 
-                bookBannersBackgroundImage.setAttribute('style',
-                                                        `transform:translate3d(0,-${window.pageYOffset/15}px,0)`);
-                bookBannersBook.setAttribute('style', `transform:translate3d(0,-${window.pageYOffset/8}px,0)`);
-                bookBannersStudent.setAttribute('style', `transform:translate3d(0,${window.pageYOffset/10}px,0)`);
+                backgroundImage.setAttribute('style',
+                                             `transform:translate3d(0, ${this.pos(0, -200, relativeY, 0)}px, 0)`);
+                bookCover.setAttribute('style', `transform:translate3d(0, ${this.pos(0, -100, relativeY, 0)}px, 0)`);
+                student.setAttribute('style', `transform:translate3d(0, ${this.pos(0, 200, relativeY, 0)}px, 0)`);
+            }
+
+            ticking = false;
+        };
+
+        this.parallaxOnScroll = (evt) => {
+            if (!ticking) {
+                ticking = true;
+                requestAnimationFrame(this.parallaxBanner);
+                lastScrollY = window.pageYOffset;
             }
         };
 
-        this.parallaxOnScroll = () => {
-            window.requestAnimationFrame(() => {
-                this.parallaxBanner();
-            });
-        };
+        window.addEventListener('scroll', this.parallaxOnScroll, false);
+    }
 
-        this.parallaxBanner();
-        window.addEventListener('scroll', this.parallaxOnScroll);
+    pos(base, range, relY, offset) {
+        return base + this.limit(0, 1, relY - offset) * range;
+    }
+
+    limit(min, max, value) {
+        return Math.max(min, Math.min(max, value));
     }
 
     onDataLoaded() {
