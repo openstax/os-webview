@@ -82,40 +82,8 @@ export default class Home extends CMSPageController {
     }
 
     onLoaded() {
-        let ticking = false;
-        let lastScrollY = 0;
-
         document.title = 'Home - OpenStax';
         shell.header.updateHeaderStyle();
-
-        this.parallaxBanner = () => {
-            const bookBanner = this.el.querySelector('.book-banners > .banner.fadein');
-
-            this.parallaxBannerUpdate(bookBanner);
-            ticking = false;
-        };
-
-        this.parallaxBannerUpdate = (bookBanner) => {
-            const relativeY = lastScrollY / 3000;
-            const backgroundImage = bookBanner.querySelector('.background-image');
-            const bookCover = bookBanner.querySelector('.container .book');
-            const student = bookBanner.querySelector('.container .student');
-
-            backgroundImage.setAttribute('style',
-                                       `transform:translate3d(0, ${this.pos(-200, relativeY, 0)}px, 0)`);
-            bookCover.setAttribute('style', `transform:translate3d(0, ${this.pos(-100, relativeY, 0)}px, 0)`);
-            student.setAttribute('style', `transform:translate3d(0, ${this.pos(200, relativeY, 0)}px, 0)`);
-        };
-
-        this.parallaxOnScroll = (evt) => {
-            if (!ticking) {
-                ticking = true;
-                requestAnimationFrame(this.parallaxBanner);
-                lastScrollY = window.pageYOffset;
-            }
-        };
-
-        window.addEventListener('scroll', this.parallaxOnScroll, false);
     }
 
     pos(range, relY, offset) {
@@ -127,10 +95,41 @@ export default class Home extends CMSPageController {
     }
 
     onDataLoaded() {
+        let ticking = false;
+
+        this.parallaxBannerUpdate = (bookBanner) => {
+            const relativeY = window.pageYOffset / 3000;
+            const backgroundImage = bookBanner.querySelector('.background-image');
+            const bookCover = bookBanner.querySelector('.container .book');
+            const student = bookBanner.querySelector('.container .student');
+
+            backgroundImage.setAttribute('style',
+                                       `transform:translate3d(0, ${this.pos(-200, relativeY, 0)}px, 0)`);
+            bookCover.setAttribute('style', `transform:translate3d(0, ${this.pos(-100, relativeY, 0)}px, 0)`);
+            student.setAttribute('style', `transform:translate3d(0, ${this.pos(200, relativeY, 0)}px, 0)`);
+        };
+
         for (const view of this.banners) {
             this.regions.banners.append(view);
         }
         this.banners[this.currentBanner].show();
+        this.parallaxBannerUpdate(this.banners[this.currentBanner].el);
+
+        this.parallaxBanner = () => {
+            const bookBanner = this.el.querySelector('.book-banners > .banner.fadein');
+
+            this.parallaxBannerUpdate(bookBanner);
+            ticking = false;
+        };
+
+        this.parallaxOnScroll = (evt) => {
+            if (!ticking) {
+                ticking = true;
+                requestAnimationFrame(this.parallaxBanner);
+            }
+        };
+
+        window.addEventListener('scroll', this.parallaxOnScroll, false);
 
         this.modelInterval = setInterval(() => {
             this.banners[this.currentBanner].hide()
