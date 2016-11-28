@@ -842,8 +842,12 @@
     }
 
     .buckets-section {
-        padding-bottom: 8rem;
-        padding-top: 8rem;
+        padding-bottom: 6rem;
+        padding-top: 3rem;
+
+        @media (max-width: 600px) {
+            padding-top: 6rem;
+        }
 
         .bucket {
             &:first-child {
@@ -858,6 +862,10 @@
 }
 
 .quote-buckets {
+    .quotes {
+        padding: 6rem 1.5rem;
+    }
+
     .attribution {
         margin-left: 2rem;
         text-align: right;

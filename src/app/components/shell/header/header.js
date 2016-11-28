@@ -63,11 +63,6 @@ class Header extends Controller {
         window.addEventListener('resize', this.closeFullScreenNav.bind(this));
         window.addEventListener('resize', padParentForStickyNote);
         window.addEventListener('navigate', () => this.update());
-        window.addEventListener('scroll', () => {
-            window.requestAnimationFrame(() => {
-                this.removeAllOpenClasses();
-            });
-        });
     }
 
     onUpdate() {
@@ -84,6 +79,22 @@ class Header extends Controller {
         this.regions.mainMenu.attach(this.mainMenu);
         // Prevent elements from showing up as they load
         setTimeout(() => this.el.classList.add('loaded'), 100);
+
+        let ticking = false;
+
+        this.removeAllOpenClassesOnScroll = () => {
+            this.removeAllOpenClasses();
+            ticking = false;
+        };
+
+        this.onScrollHeader = (evt) => {
+            if (!ticking) {
+                ticking = true;
+                requestAnimationFrame(this.removeAllOpenClassesOnScroll);
+            }
+        };
+
+        window.addEventListener('scroll', this.onScrollHeader, false);
     }
 
     pin() {
@@ -139,14 +150,11 @@ class Header extends Controller {
 
     toggleFullScreenNav(button) {
         document.body.classList.toggle('no-scroll');
+        this.el.classList.toggle('active');
+        this.removeAllOpenClasses();
 
-        window.requestAnimationFrame(() => {
-            this.el.classList.toggle('active');
-            this.removeAllOpenClasses();
-
-            button.classList.toggle('expanded');
-            button.setAttribute('aria-expanded', !!button.classList.contains('expanded'));
-        });
+        button.classList.toggle('expanded');
+        button.setAttribute('aria-expanded', !!button.classList.contains('expanded'));
     }
 
     removeClass(array, className) {
@@ -184,13 +192,11 @@ class Header extends Controller {
             document.body.classList.remove('no-scroll');
         }
 
-        window.requestAnimationFrame(() => {
-            this.el.classList.remove('active');
-            this.removeAllOpenClasses();
+        this.el.classList.remove('active');
+        this.removeAllOpenClasses();
 
-            button.classList.remove('expanded');
-            button.setAttribute('aria-expanded', 'false');
-        });
+        button.classList.remove('expanded');
+        button.setAttribute('aria-expanded', 'false');
     }
 
     @on('click .expand')
