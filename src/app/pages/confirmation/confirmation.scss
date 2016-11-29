@@ -2,6 +2,8 @@
 @import 'mixins';
 
 .confirmation-page {
+    background-color: darken(color(neutral-lightest), 5%);
+
     .subhead {
         padding-bottom: 8rem;
 
@@ -13,10 +15,4 @@
     .strips {
         margin-bottom: 0;
     }
-
-    .calculator {
-        padding-bottom: 8rem;
-        padding-top: 0;
-    }
-
 }

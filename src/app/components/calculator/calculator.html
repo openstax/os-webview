@@ -1,56 +1,50 @@
-<table id="savings-calculator">
-    <thead>
-        <tr>
-            <th></th>
-            <th>OpenStax Prices</th>
-            <th>Traditional Prices</th>
-            <th>Number of Students</th>
-            <th>Savings Over Three Years</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th>E-book Only</th>
-            <td>$0.00</td>
-            <td>$<input type="number" value="100.00"></td>
-            <td><input id="student-count" type="number" value="1000"></td>
-            <td class="savings"></td>
-        </tr>
-        <tr>
-            <th>Printed Text Only</th>
-            <td>$<input type="number" value="41.00"></td>
-            <td>$<input type="number" value="220.00"/></td>
-            <td>1000</td>
-            <td class="savings footnote"></td>
-        </tr>
-        <tr>
-            <th>Printed Text + Online Resources</th>
-            <td>$<input type="number" value="91.00"></td>
-            <td>$<input type="number" value="245.00"></td>
-            <td>1000</td>
-            <td class="savings"></td>
-        </tr>
-        <tr>
-            <th>E-book + Online Resources</th>
-            <td>$<input type="number" value="50.00"></td>
-            <td>$<input type="number" value="145.00"></td>
-            <td>1000</td>
-            <td class="savings"></td>
-        </tr>
-    </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="5">
-                <p>
-                    Use as a guide; price varies widely by source and local markets.
-                    OpenStax College printed cost based on on-demand printing of
-                    <i>College Physics</i>
-                </p>
-                <p>
-                    <sup>*</sup> Assumes students will be able to purchase
-                    used copies, 10% used in year 1, 50% in year2, 75% in year 3.
-                </p>
-            </td>
-        </tr>
-    </tfoot>
-</table>
+<template args="model">
+    <div class="columns">
+        <div class="column formats">
+            <div class="cell">Formats</div>
+            <div class="cell">E-book Only</div>
+            <div class="cell">Printed Text Only</div>
+            <div class="cell">Printed Text + Online Resources</div>
+            <div class="cell">E-book + Online Resources</div>
+        </div>
+        <div class="column zoomed">
+            <div class="cell">OpenStax Prices</div>
+            <div class="cell">$<span class="non-input">{model.ebook.osPrice}</span></div>
+            <div class="cell">$<input type="number" value="{model.print.osPrice}" data-item="print.osPrice"/></div>
+            <div class="cell">$<input type="number" value="{model.printPlus.osPrice}" data-item="printPlus.osPrice"/></div>
+            <div class="cell">$<input type="number" value="{model.ePlus.osPrice}" data-item="ePlus.osPrice"/></div>
+        </div>
+        <div class="column">
+            <div class="cell">Traditional Prices</div>
+            <div class="cell">$<input type="number" value="{model.ebook.price}" data-item="ebook.price" /></div>
+            <div class="cell">$<input type="number" value="{model.print.price}" data-item="print.price"/></div>
+            <div class="cell">$<input type="number" value="{model.printPlus.price}" data-item="printPlus.price"/></div>
+            <div class="cell">$<input type="number" value="{model.ePlus.price}" data-item="ePlus.price" /></div>
+        </div>
+        <div class="column">
+            <div class="cell">Number of Students</div>
+            <div class="cell"><input type="number" value="{model.studentCount}" data-item="studentCount" /></div>
+            <div class="cell">{model.studentCount}</div>
+            <div class="cell">{model.studentCount}</div>
+            <div class="cell">{model.studentCount}</div>
+        </div>
+        <div class="column">
+            <div class="cell">Savings Over Three Years</div>
+            <div class="cell">{model.ebook.savings()}</div>
+            <div class="cell">{model.print.savings()}<span class="footnote"></span></div>
+            <div class="cell">{model.printPlus.savings()}</div>
+            <div class="cell">{model.ePlus.savings()}</div>
+        </div>
+    </div>
+    <div class="table-notes">
+        <p>
+            Use as a guide; price varies widely by source and local markets.
+            OpenStax College printed cost based on on-demand printing of
+            <i>College Physics</i>
+        </p>
+        <p>
+            <sup>*</sup>Assumes students will be able to purchase
+            used copies, 10% used in year 1, 50% in year2, 75% in year 3.
+        </p>
+    </div>
+</template>

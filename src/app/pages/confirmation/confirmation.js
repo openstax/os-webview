@@ -1,5 +1,6 @@
 import {Controller} from 'superb';
 import Popup from '~/components/popup/popup';
+import Calculator from '~/components/calculator/calculator';
 import {description as template} from './confirmation.html';
 
 const models = {
@@ -75,17 +76,20 @@ export default class Confirmation extends Controller {
             classes: ['confirmation-page', 'page']
         };
         this.regions = {
-            popup: 'pop-up'
+            popup: 'pop-up',
+            calculator: 'savings-calculator'
         };
 
-        const referringPage = window.location.search.substr(1);
-
-        this.model = models[referringPage];
+        this.referringPage = window.location.search.substr(1);
+        this.model = models[this.referringPage];
     }
 
     onLoaded() {
         if (this.model.popupText) {
             this.regions.popup.attach(new Popup(this.model.popupText));
+        }
+        if (['adoption', 'interest', 'faculty', 'compCopy'].includes(this.referringPage)) {
+            this.regions.calculator.attach(new Calculator());
         }
     }
 

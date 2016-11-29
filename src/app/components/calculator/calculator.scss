@@ -1,58 +1,120 @@
 @import 'variables';
 
-$table-background: lighten(neutral-color(light), 30%);
-$attention: color(green);
+$border-color: rgba(color(neutral-dark), 0.15);
+$medium-cyan: rgb(0, 134, 176);
+$darker-cyan: rgb(23, 82, 133);
+$neutral-cyan: rgb(2, 119, 163);
 
 .calculator {
-    padding: 5rem 0 0;
+    display: none;
 
-    table {
-        background-color: $table-background;
-        border-collapse: collapse;
-        line-height: 4rem;
+    @media (min-width: 700px) {
+        display: block;
+        padding: 5rem 0 0;
+    }
+
+    .columns {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        line-height: inherit;
         margin: 0 auto;
-        width: 90%;
 
-        th {
-            padding: 0.5rem 1.5rem;
-            text-align: left;
+        .column {
+            background-color: color(neutral-lightest);
+            display: flex;
+            flex-basis: 20%;
+            flex-flow: column nowrap;
+
+            &:first-child {
+                background-color: color(cyan);
+                color: color(neutral-lightest);
+
+                .cell {
+                    justify-content: flex-start;
+                    padding-left: 2em;
+
+                    &:first-child {
+                        background-color: $medium-cyan;
+                        color: inherit;
+                    }
+                }
+            }
+
+            &:nth-child(2) {
+                background-color: $neutral-cyan;
+                box-shadow: 1px 1px 5px 0 rgba(color(neutral-dark), 0.4);
+                color: color(neutral-lightest);
+                position: relative;
+                transform: scaleY(1.05);
+
+                .cell:first-child {
+                    background-color: $darker-cyan;
+                    color: inherit;
+                }
+            }
+
+            &:last-child .cell {
+                border-right: 0;
+                color: color(deep-green);
+                filter: saturate(80%);
+
+                &:first-child {
+                    color: inherit;
+                    filter: none;
+                }
+            }
+
+            .cell {
+                border-bottom: thin solid $border-color;
+                border-right: thin solid $border-color;
+            }
         }
 
-        td {
-            font-weight: 500;
-            padding: 0.5rem 1.5rem;
-        }
+        .cell {
+            align-items: center;
+            display: flex;
+            height: 5em;
+            justify-content: center;
+            padding: 1em;
 
-        .savings {
-            color: $attention;
-            font-size: 1.6rem;
-        }
+            &:first-child {
+                background-color: darken(color(neutral-lightest), 7%);
+                color: $text-dark;
+                font-weight: 500;
+            }
 
-    }
+            &:last-child {
+                border-bottom: 0;
+            }
 
-    .footnote::after {
-        content: '*';
-    }
-
-    tfoot {
-        background-color: color(neutral-lightest);
-        color: color(neutral-light);
-        font-size: 1rem;
-        padding-top: 1rem;
-        text-align: center;
-
-        td {
-            padding: 1.5rem;
-
-            > p {
-                line-height: 1rem;
-                margin: 0;
+            input,
+            .non-input {
+                background-color: transparent;
+                border: 0;
+                color: inherit;
+                font-size: inherit;
+                left: 0.5rem;
+                min-width: 4em;
+                outline: none;
+                position: relative;
+                text-align: center;
+                width: 35%;
             }
         }
     }
 
     .table-notes {
-        color: neutral-color(dark);
-        text-align: right;
+        font-size: 85%;
+        line-height: 1;
+        text-align: center;
+
+        sup {
+            font-size: inherit;
+        }
+    }
+
+    .footnote::after {
+        content: '*';
     }
 }
