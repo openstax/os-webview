@@ -12,8 +12,8 @@ $.browserId = () => {
     let tem;
     const checkIE = () => {
         if (/trident/i.test(M[1])) {
-            tem = ua.match(/\brv[ :]+(\d+)/g) || [];
-            M = ['IE', (tem[1] || '')];
+            tem = ua.match(/\brv[ :]+(\d+)/) || [];
+            M = ['IE', 'IE', (tem[1] || '')];
         }
     };
     const checkChrome = () => {
