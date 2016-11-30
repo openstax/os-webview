@@ -1,5 +1,5 @@
 const EXTERNAL = /^((f|ht)tps?:)?\/\//;
-const ABSOLUTE_OPENSTAX = /^https?:\/\/openstax.org/;
+const ABSOLUTE_OPENSTAX = /^https?:\/\/openstax.org(?!\/accounts)/;
 const MAILTO = /^mailto:(.+)/;
 const PDF = /.pdf$/;
 const ZIP = /.zip$/;
