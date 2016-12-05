@@ -3,7 +3,7 @@ import router from '~/router';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './sticky-note.html';
 
-const TEMPORARY_EXPIRATION = new Date('Nov 19 2016 14:00 CST');
+const TEMPORARY_EXPIRATION = new Date('Dec 10 2016 12:00 CST');
 
 class StickyNote extends CMSPageController {
 
