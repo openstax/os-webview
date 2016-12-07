@@ -7,6 +7,10 @@
     .subhead {
         padding-bottom: 8rem;
 
+        @include desktop {
+            text-align: center;
+        }
+
         a {
             color: color(yellow);
         }

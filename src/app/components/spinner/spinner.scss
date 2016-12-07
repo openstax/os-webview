@@ -1,0 +1,20 @@
+@import 'variables';
+
+.spinner {
+    display: flex;
+
+    .controls {
+        display: flex;
+        flex-direction: column;
+
+        .up-spinner,
+        .down-spinner {
+            cursor: pointer;
+            font-size: 75%;
+            font-weight: 200;
+            line-height: 1;
+            margin: 0.2rem;
+            opacity: 0.8;
+        }
+    }
+}

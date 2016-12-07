@@ -10,20 +10,20 @@
         <div class="column zoomed">
             <div class="cell">OpenStax Prices</div>
             <div class="cell">$<span class="non-input">{model.ebook.osPrice}</span></div>
-            <div class="cell">$<input type="number" value="{model.print.osPrice}" data-item="print.osPrice"/></div>
-            <div class="cell">$<input type="number" value="{model.printPlus.osPrice}" data-item="printPlus.osPrice"/></div>
-            <div class="cell">$<input type="number" value="{model.ePlus.osPrice}" data-item="ePlus.osPrice"/></div>
+            <div class="cell">$<spinner data-item="print.osPrice" skip="true"></spinner></div>
+            <div class="cell">$<spinner data-item="printPlus.osPrice" skip="true"></spinner></div>
+            <div class="cell">$<spinner data-item="ePlus.osPrice" skip="true"></spinner></div>
         </div>
         <div class="column">
             <div class="cell">Traditional Prices</div>
-            <div class="cell">$<input type="number" value="{model.ebook.price}" data-item="ebook.price" /></div>
-            <div class="cell">$<input type="number" value="{model.print.price}" data-item="print.price"/></div>
-            <div class="cell">$<input type="number" value="{model.printPlus.price}" data-item="printPlus.price"/></div>
-            <div class="cell">$<input type="number" value="{model.ePlus.price}" data-item="ePlus.price" /></div>
+            <div class="cell">$<spinner data-item="ebook.price" skip="true"></spinner></div>
+            <div class="cell">$<spinner data-item="print.price" skip="true"></spinner></div>
+            <div class="cell">$<spinner data-item="printPlus.price" skip="true"></spinner></div>
+            <div class="cell">$<spinner data-item="ePlus.price" skip="true"></spinner></div>
         </div>
         <div class="column">
             <div class="cell">Number of Students</div>
-            <div class="cell"><input type="number" value="{model.studentCount}" data-item="studentCount" /></div>
+            <div class="cell"><spinner data-item="studentCount" skip="true" /></div>
             <div class="cell">{model.studentCount}</div>
             <div class="cell">{model.studentCount}</div>
             <div class="cell">{model.studentCount}</div>
@@ -44,7 +44,7 @@
         </p>
         <p>
             <sup>*</sup>Assumes students will be able to purchase
-            used copies, 10% used in year 1, 50% in year2, 75% in year 3.
+            used copies, 10% used in year 1, 50% in year 2, 75% in year 3.
         </p>
     </div>
 </template>
