@@ -9,6 +9,7 @@ const TXT = /.txt$/;
 const CNX = /cnx.org/;
 const CLOUDFRONT = /cloudfront.net/;
 const AMAZON = /amazon.com/;
+const PRODUCTION = /https:\/\/openstax.org/;
 
 function findAncestor(el, Element) {
     let parent = el;
@@ -71,6 +72,10 @@ function isCloudFront(href) {
     return CLOUDFRONT.test(href);
 }
 
+function isProduction() {
+    return PRODUCTION.test(settings.apiOrigin);
+}
+
 export default {
     isExternal,
     validUrlClick,
@@ -80,5 +85,6 @@ export default {
     isCNX,
     isCloudFront,
     isAmazon,
-    stripOpenStaxDomain
+    stripOpenStaxDomain,
+    isProduction
 };

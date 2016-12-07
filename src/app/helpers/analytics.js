@@ -22,17 +22,19 @@ class Analytics {
     }
 
     sendPageview(page) {
-        let frag = page || location.pathname;
+        if (linkHelper.isProduction()) {
+            let frag = page || location.pathname;
 
-        if (!(RELATIVE_TO_ROOT).test(frag)) {
-            frag = `/${frag}`;
+            if (!(RELATIVE_TO_ROOT).test(frag)) {
+                frag = `/${frag}`;
+            }
+
+            this.send({
+                hitType: 'pageview',
+                page: frag,
+                location: location.href
+            });
         }
-
-        this.send({
-            hitType: 'pageview',
-            page: frag,
-            location: location.href
-        });
     }
 
     sendEvent(fields) {
@@ -43,14 +45,16 @@ class Analytics {
     }
 
     sendUrlEvent(category, href, action = 'download') {
-        const source = this.lookupUrl(href) || 'unknown';
+        if (linkHelper.isProduction()) {
+            const source = this.lookupUrl(href) || 'unknown';
 
-        this.sendEvent({
-            eventCategory: `${category} ${source}`,
-            eventAction: action,
-            eventLabel: href,
-            location: location.href
-        });
+            this.sendEvent({
+                eventCategory: `${category} ${source}`,
+                eventAction: action,
+                eventLabel: href,
+                location: location.href
+            });
+        }
     }
 
     record(href) {
