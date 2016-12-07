@@ -1,5 +1,6 @@
 import {Controller} from 'superb';
 import {on} from '~/helpers/controller/decorators';
+import Spinner from '~/components/spinner/spinner';
 import {description as template} from './calculator.html';
 
 function moneyFormat(num) {
@@ -50,11 +51,30 @@ export default class Calculator extends Controller {
         };
     }
 
-    @on('input [data-item]')
-    updateItem(e) {
-        /* eslint no-eval: 0 */
-        eval(`this.model.${e.target.dataset.item} = ${e.target.value}`);
-        this.update();
+    onLoaded() {
+        const spinners = this.el.querySelectorAll('spinner');
+        const Region = this.regions.self.constructor;
+
+        for (const s of spinners) {
+            const region = new Region(s, this);
+            // Allow dot-notation, arbitrarily deep, with no eval
+            const itemIds = s.dataset.item.split('.');
+            const index = itemIds.pop();
+            const valueContainer = itemIds.reduce((a, b) => a[b], this.model);
+            const parentThis = this;
+
+            const props = {
+                get value() {
+                    return valueContainer[index];
+                },
+                set value(newValue) {
+                    valueContainer[index] = newValue;
+                    parentThis.update();
+                }
+            };
+
+            region.attach(new Spinner(props));
+        }
     }
 
 }

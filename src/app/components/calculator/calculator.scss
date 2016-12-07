@@ -89,17 +89,26 @@ $neutral-cyan: rgb(2, 119, 163);
             }
 
             input,
-            .non-input {
+            .non-input,
+            spinner {
                 background-color: transparent;
                 border: 0;
                 color: inherit;
                 font-size: inherit;
-                left: 0.5rem;
                 min-width: 4em;
                 outline: none;
                 position: relative;
                 text-align: center;
                 width: 35%;
+            }
+
+            [type="number"] {
+                -moz-appearance: textfield;
+
+                &::-webkit-outer-spin-button,
+                &::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                }
             }
         }
     }
@@ -107,6 +116,8 @@ $neutral-cyan: rgb(2, 119, 163);
     .table-notes {
         font-size: 85%;
         line-height: 1;
+        margin-top: 2.5em;
+        opacity: 0.8;
         text-align: center;
 
         sup {
