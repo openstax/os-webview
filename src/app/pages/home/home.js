@@ -97,6 +97,8 @@ export default class Home extends CMSPageController {
     onLoaded() {
         document.title = 'Home - OpenStax';
         shell.header.updateHeaderStyle();
+        document.body.classList.add('no-scroll');
+        document.body.classList.add('home');
     }
 
     pos(range, relY, offset) {
@@ -184,11 +186,16 @@ export default class Home extends CMSPageController {
         this.regions.buckets.attach(new Buckets(bucketData));
         this.model.loaded = 'loaded';
         this.update();
+
+        document.body.classList.remove('no-scroll');
+        document.body.classList.add('loaded');
     }
 
     onClose() {
         clearInterval(this.modelInterval);
         window.removeEventListener('scroll', this.parallaxOnScroll);
+        document.body.classList.remove('home');
+        shell.header.updateHeaderStyle();
     }
 
 }

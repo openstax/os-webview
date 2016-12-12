@@ -23,6 +23,10 @@ class Shell extends Controller {
         this.regions.header.attach(header);
         this.regions.footer.attach(footer);
 
+        if (window.location.pathname === '/') {
+            this.el.classList.add('home');
+        }
+
         // Start recordo
         initialize({ignoreAjaxResponse: true});
         if (/collect=true/.test(window.location.search)) {
