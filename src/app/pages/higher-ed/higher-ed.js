@@ -6,7 +6,7 @@ import Quotes from '~/components/quotes/quotes';
 import Buckets from '~/components/buckets/buckets';
 
 const loginQuery = `${settings.apiOrigin}/accounts/login/openstax/?next=`;
-const nextLink = `${settings.apiOrigin}/faculty-verification`;
+const nextLink = `${settings.accountHref}/faculty_access/apply`;
 const loginLink = `${loginQuery}${nextLink}`;
 
 export default class HigherEd extends CMSPageController {

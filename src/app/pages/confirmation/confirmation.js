@@ -1,4 +1,5 @@
 import {Controller} from 'superb';
+import settings from 'settings';
 import Popup from '~/components/popup/popup';
 import Calculator from '~/components/calculator/calculator';
 import {description as template} from './confirmation.html';
@@ -51,7 +52,7 @@ const models = {
         free textbooks and low-cost learning tools that are revolutionizing
         classrooms across the country and the world.`,
         adoptionQuestion: 'Have you been verified as an instructor?',
-        adoptionUrl: '/faculty-verification',
+        adoptionUrl: `${settings.accountHref}/faculty_access/apply`,
         adoptionLinkText: 'Get verified',
         subjectLinkText: 'Explore our books'
     },
@@ -59,7 +60,7 @@ const models = {
         headline: 'Your new account has been created. Thank you for joining the OpenStax community!',
         topParagraph: 'Do you need access to instructor-only resources?',
         topLinkText: 'Get your account verified',
-        topLinkUrl: '/finish-profile',
+        topLinkUrl: `${settings.accountHref}/faculty_access/apply`,
         adoptionQuestion: 'Have you adopted an OpenStax book?',
         adoptionUrl: '/adoption',
         adoptionLinkText: 'Adopt a book',
