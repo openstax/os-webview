@@ -75,7 +75,7 @@ export default class DetailsLoaded extends Controller {
                 this.model.extraInstructions = `<a href="${alternateLink}">Login</a> for instructor access.`;
             } else if (!('groups' in user) || !user.groups.includes('Faculty')) {
                 isInstructor = false;
-                alternateLink = '/faculty-verification';
+                alternateLink = `${settings.accountHref}/faculty_access/apply`;
                 this.model.extraInstructions = `<a href="${alternateLink}">Apply for instructor access.</a>`;
             }
             $.insertHtml(this.el, this.model);
