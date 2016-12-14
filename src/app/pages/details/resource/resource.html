@@ -4,7 +4,7 @@
         <resource-description if="model.resource_description" data-html="resource_description"></resource-description>
     </div>
     <span class="link-and-lock">
-        <a href="{model.linkUrl}">{model.link_text}</a>
+        <a class="download-link" href="{model.linkUrl}">{model.link_text}</a>
         <i if="model.showLock" class="locked-state fa {model.showLock}"></i>
     </span>
 </template>
