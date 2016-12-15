@@ -111,6 +111,7 @@ export default class DetailsLoaded extends Controller {
         event.stopPropagation();
         this.model.tocIsOpen = true;
         this.update();
+        document.body.style.overflow = 'hidden';
     }
 
     @on('click')
@@ -118,6 +119,7 @@ export default class DetailsLoaded extends Controller {
         if (event.target !== this.openedWith) {
             this.model.tocIsOpen = false;
             this.update();
+            document.body.style.overflow = '';
         }
     }
 
