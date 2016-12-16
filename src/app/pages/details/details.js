@@ -1,5 +1,6 @@
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
+import router from '~/router';
 import DetailsLoaded from './details-loaded';
 
 export default class Details extends CMSPageController {
@@ -17,6 +18,7 @@ export default class Details extends CMSPageController {
         this.view = {
             classes: ['os-loader']
         };
+        bookTitle = bookTitle.toLowerCase();
         if (/^books/.test(bookTitle)) {
             this.slug = bookTitle;
         } else {
@@ -50,6 +52,10 @@ export default class Details extends CMSPageController {
         model.comingSoon = this.pageData.coming_soon ? ' coming-soon' : '';
 
         this.regions.self.attach(new DetailsLoaded(model));
+    }
+
+    onDataError() {
+        router.navigate('/404');
     }
 
 }
