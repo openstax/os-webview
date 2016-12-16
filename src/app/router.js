@@ -10,7 +10,6 @@ const PAGES = [
     'accessibility-statement',
     'adopters',
     'adoption',
-    'ap',
     'article',
     'blog',
     'blog/*path',
