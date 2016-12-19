@@ -1,4 +1,5 @@
 import CMSPageController from '~/controllers/cms';
+import {makeDocModel} from '~/models/usermodel';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import {description as template} from './faq.html';
@@ -40,6 +41,17 @@ export default class FAQ extends CMSPageController {
             const targetEl = document.getElementById(slug);
 
             $.scrollTo(targetEl);
+        }
+
+        // Load documents
+        for (const q of this.model.questions) {
+            if (q.document) {
+                makeDocModel(q.document).load().then((data) => {
+                    q.documentUrl = data.file;
+                    q.documentTitle = data.title;
+                    this.update();
+                });
+            }
         }
     }
 

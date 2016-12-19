@@ -77,6 +77,17 @@ sup {
     }
 }
 
+.download-link {
+    color: color(cyan);
+    font-size: 1.4rem;
+    font-weight: 500;
+    text-transform: uppercase;
+
+    &:hover {
+        color: darken(color(cyan), 10%);
+    }
+}
+
 .scrolldown-chevron {
     align-items: center;
     display: flex;

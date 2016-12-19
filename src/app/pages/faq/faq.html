@@ -11,6 +11,10 @@
             <div each="qa in model.questions" id="{qa.slug}" class="qa{qa.isOpen ? ' open' : ''}">
                 <div class="question" data-item="{$item}" data-html="questions[{$item}].question"></div>
                 <div class="answer" data-html="questions[{$item}].answer" skip="true"></div>
+                <div class="answer" if="qa.document">
+                    <div class="document-title">{qa.documentTitle}</div>
+                    <a class="download-link" href="{qa.documentUrl}">Download</a>
+                </div>
             </div>
         </div>
         <div class="info-box">
