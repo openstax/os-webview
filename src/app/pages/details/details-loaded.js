@@ -71,11 +71,11 @@ export default class DetailsLoaded extends Controller {
 
             if (!user || user.username === '') {
                 isInstructor = false;
-                alternateLink = `${settings.apiOrigin}/accounts/login/openstax/?next=${encodedLocation}`;
+                alternateLink = `${settings.accountHref}/signin?r=${encodedLocation}`;
                 this.model.extraInstructions = `<a href="${alternateLink}">Login</a> for instructor access.`;
             } else if (!('groups' in user) || !user.groups.includes('Faculty')) {
                 isInstructor = false;
-                alternateLink = `${settings.accountHref}/faculty_access/apply`;
+                alternateLink = `${settings.accountHref}/faculty_access/apply?r=${encodedLocation}`;
                 this.model.extraInstructions = `<a href="${alternateLink}">Apply for instructor access.</a>`;
             }
             $.insertHtml(this.el, this.model);

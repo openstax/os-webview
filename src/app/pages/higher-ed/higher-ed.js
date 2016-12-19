@@ -5,9 +5,7 @@ import ProductsBoxes from '~/components/products-boxes/products-boxes';
 import Quotes from '~/components/quotes/quotes';
 import Buckets from '~/components/buckets/buckets';
 
-const loginQuery = `${settings.apiOrigin}/accounts/login/openstax/?next=`;
-const nextLink = `${settings.accountHref}/faculty_access/apply`;
-const loginLink = `${loginQuery}${nextLink}`;
+const loginLink = `${settings.accountHref}/signin?r=${settings.accountHref}/faculty_access/apply`;
 
 export default class HigherEd extends CMSPageController {
 

@@ -34,12 +34,12 @@ class Header extends Controller {
             }
         };
 
-        const accounts = `${settings.apiOrigin}/accounts`;
+        const accounts = `${settings.accountHref}`;
         const currentPage = window.location.href;
 
         this.model = {
-            login: `${accounts}/login/openstax/?next=${currentPage}`,
-            logout: `${accounts}/logout/?next=${currentPage}`,
+            login: `${accounts}/signin?r=${currentPage}`,
+            logout: `${accounts}/signout/?r=${currentPage}`,
             user: {
                 username: null,
                 groups: []
