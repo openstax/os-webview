@@ -1,6 +1,5 @@
 import unittest
 from TestAboutUs import TestAboutUs
-from TestAP import TestAP
 from TestBiology import TestBiology
 from TestCollegePhysics import TestCollegePhysics
 from TestFunders import TestFunders
@@ -18,7 +17,6 @@ class Test_Suite(unittest.TestCase):
         self.suite = unittest.TestSuite()
         self.suite.addTests([
             unittest.defaultTestLoader.loadTestsFromTestCase(TestAboutUs),
-            unittest.defaultTestLoader.loadTestsFromTestCase(TestAP),
             unittest.defaultTestLoader.loadTestsFromTestCase(TestBiology),
             unittest.defaultTestLoader.loadTestsFromTestCase(TestCollegePhysics),
             unittest.defaultTestLoader.loadTestsFromTestCase(TestFunders),
