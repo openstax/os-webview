@@ -75,6 +75,13 @@ sup {
         font-size: 120%;
         padding-left: 0.5em;
     }
+
+    &.down-page::after {
+        display: inline-block;
+        margin-left: 0.5em;
+        transform: rotate(90deg);
+        transform-origin: 0.5em 0.4em;
+    }
 }
 
 .download-link {
