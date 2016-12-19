@@ -35,11 +35,11 @@ class Header extends Controller {
         };
 
         const accounts = `${settings.accountHref}`;
-        const currentPage = window.location.href;
+        const encodedLocation = encodeURIComponent(window.location.href);
 
         this.model = {
-            login: `${accounts}/signin?r=${currentPage}`,
-            logout: `${accounts}/signout/?r=${currentPage}`,
+            login: `${accounts}/signin?r=${encodedLocation}`,
+            logout: `${accounts}/signout/?r=${encodedLocation}`,
             user: {
                 username: null,
                 groups: []
