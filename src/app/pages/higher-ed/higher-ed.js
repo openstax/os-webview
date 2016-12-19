@@ -5,7 +5,8 @@ import ProductsBoxes from '~/components/products-boxes/products-boxes';
 import Quotes from '~/components/quotes/quotes';
 import Buckets from '~/components/buckets/buckets';
 
-const loginLink = `${settings.accountHref}/signin?r=${settings.accountHref}/faculty_access/apply`;
+const encodedLocation = encodeURIComponent(`${settings.accountHref}/faculty_access/apply`);
+const loginLink = `${settings.accountHref}/signin?r=${encodedLocation}`;
 
 export default class HigherEd extends CMSPageController {
 
