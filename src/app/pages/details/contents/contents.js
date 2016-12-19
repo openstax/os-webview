@@ -31,6 +31,8 @@ export default class Contents extends Controller {
                 this.startFrom += entry.contents.length;
             }
         };
+        const doNumber = (entry) => (!(i === this.startFrom && isPreface(entry)) ||
+            hasContents(entry));
 
         for (const entry of this.model) {
             let chapterNumber = '';
@@ -43,7 +45,7 @@ export default class Contents extends Controller {
             }
             // Only check preface for first chapter in section
             // Do not number chapters with no contents -- those are appendices
-            if (!(i === this.startFrom && isPreface(entry)) && hasContents(entry)) {
+            if (doNumber(entry)) {
                 chapterNumber = `${this.parentNumber}${i}`;
                 ++i;
             }
