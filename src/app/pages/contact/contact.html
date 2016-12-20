@@ -42,8 +42,10 @@
             </div>
             <div class="col">
                 <h2>{model.mailing_header}</h2>
-                <address data-html="mailing-address">{model.mailing_address}</address>
+                <address data-html="mailing_address" skip="true"></address>
                 <p class="phone"><span class="label">Main: </span><span>{model.phone_number}</span></p>
+                <div data-html="customer_service" skip="true"></div>
+
             </div>
         </div>
     </main>
