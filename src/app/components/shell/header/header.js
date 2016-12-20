@@ -34,7 +34,7 @@ class Header extends Controller {
             }
         };
 
-        const accounts = `${settings.accountHref}`;
+        const accounts = settings.accountHref;
         const encodedLocation = encodeURIComponent(window.location.href);
 
         this.model = {
@@ -44,7 +44,7 @@ class Header extends Controller {
                 username: null,
                 groups: []
             },
-            accountLink: settings.accountHref,
+            accountLink: `${accounts}/profile`,
             currentDropdown: null
         };
 

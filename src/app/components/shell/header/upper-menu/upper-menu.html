@@ -21,7 +21,7 @@
                     </a>
                 </li>
                 <li if="model.user && !model.user.groups.includes('Faculty')" role="presentation">
-                    <a href="{model.accountLink + '/faculty_access/apply'}" role="menuitem" tabindex="-1">
+                    <a href="{model.accountLink + '/faculty_access/apply'}" data-local="true" role="menuitem" tabindex="-1">
                         Request instructor access
                     </a>
                 </li>
