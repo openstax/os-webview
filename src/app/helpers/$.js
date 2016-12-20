@@ -10,6 +10,12 @@ $.browserId = () => {
     const ua = navigator.userAgent;
     let M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
     let tem;
+    const checkEdge = () => {
+        if (/\bEdge\b/.test(ua)) {
+            tem = ua.match(/Edge\/(\d+)/);
+            M = ['Edge', 'IE', (tem[1] || '')];
+        }
+    };
     const checkIE = () => {
         if (/trident/i.test(M[1])) {
             tem = ua.match(/\brv[ :]+(\d+)/) || [];
@@ -27,6 +33,7 @@ $.browserId = () => {
         }
     };
 
+    checkEdge();
     checkIE();
     checkChrome();
     checkFirefox();
