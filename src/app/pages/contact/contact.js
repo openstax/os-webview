@@ -90,11 +90,7 @@ export default class Contact extends SalesforceForm {
     onDataLoaded() {
         this.model = Object.assign(this.model, this.pageData);
         this.update();
-    }
-
-    onUpdate() {
-        // NOTE: Incremental-DOM currently lacks the ability to inject HTML into a node.
-        this.el.querySelector('[data-html="mailing-address"]').innerHTML = this.model.mailing_address;
+        $.insertHtml(this.el, this.model);
     }
 
 }
