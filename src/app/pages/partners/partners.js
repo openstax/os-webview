@@ -14,6 +14,7 @@ const filterButtons = ['View All', ...categories];
 const categoryMap = categories
     .map((item) => ({[urlify(item)]: item}))
     .reduce(((prev, current) => Object.assign(prev, current)), {});
+const pagePath = '/partners';
 
 export default class Partners extends CMSPageController {
 
@@ -40,7 +41,7 @@ export default class Partners extends CMSPageController {
 
         router.replaceState({
             filter: categoryMap[location.pathname.replace('/partners/', '')] || 'View All',
-            path: '/partners'
+            path: pagePath
         });
 
         this.filterPartnersEvent = this.filterPartners.bind(this);
@@ -104,7 +105,7 @@ export default class Partners extends CMSPageController {
 
         router.navigate(`/partners/${subpath}`, {
             filter: value,
-            path: '/partners',
+            path: pagePath,
             x: history.state.x,
             y: history.state.y
         });
@@ -117,23 +118,33 @@ export default class Partners extends CMSPageController {
         e.preventDefault();
         const href = e.delegateTarget.getAttribute('href');
         const el = document.getElementById(href.substr(1));
+        const state = {
+            filter: history.state.filter,
+            path: pagePath,
+            target: href
+        };
+        const pushOrReplaceState = history.state.target ? 'replaceState' : 'pushState';
 
         $.scrollTo(el);
-        history.replaceState({
-            filter: history.state.filter,
-            path: '/partners'
-        }, '', href);
+        history[pushOrReplaceState](state, '', href);
     }
 
     @on('click .to-top')
     scrollToFilterButtons(e) {
         e.preventDefault();
-
-        $.scrollTo(this.el.querySelector('.filter'));
-        history.replaceState({
+        const hasTarget = 'target' in history.state;
+        const state = {
             filter: history.state.filter,
-            path: '/partners'
-        }, '', window.location.pathname);
+            path: pagePath
+        };
+
+        $.scrollTo(this.el.querySelector('.filter')).then(() => {
+            if (hasTarget) {
+                history.back();
+            } else {
+                history.replaceState(state, '', state.target);
+            }
+        });
     }
 
     onClose() {
