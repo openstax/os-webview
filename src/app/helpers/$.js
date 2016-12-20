@@ -63,16 +63,19 @@ $.scrollTo = (el, offset = 0) => {
     let magnitude = Math.abs(offsetTop);
     const chosenStep = (targetStep + magnitude / targetTicks) / 2;
 
-    const i = setInterval(() => {
-        const step = (magnitude > chosenStep) ? chosenStep : magnitude;
-        const scrollBody = document.documentElement.scrollTop || document.body.scrollTop;
+    return new Promise((resolve) => {
+        const i = setInterval(() => {
+            const step = (magnitude > chosenStep) ? chosenStep : magnitude;
+            const scrollBody = document.documentElement.scrollTop || document.body.scrollTop;
 
-        window.scrollTo(0, scrollBody + direction * step);
-        magnitude -= step;
-        if (magnitude <= 0) {
-            clearInterval(i);
-        }
-    }, tick);
+            window.scrollTo(0, scrollBody + direction * step);
+            magnitude -= step;
+            if (magnitude <= 0) {
+                clearInterval(i);
+                resolve();
+            }
+        }, tick);
+    });
 };
 
 $.applyScrollFix = (view) => {
