@@ -2,18 +2,11 @@ import settings from 'settings';
 import router from '~/router';
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
+import CategorySelector from '~/components/category-selector/category-selector';
+import PartnerViewer from './partner-viewer/partner-viewer';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './partners.html';
 
-function urlify(str) {
-    return str.toLowerCase().split(' ').join('_');
-}
-
-const categories = ['Math', 'Science', 'Social Sciences', 'Humanities', 'AP'];
-const filterButtons = ['View All', ...categories];
-const categoryMap = categories
-    .map((item) => ({[urlify(item)]: item}))
-    .reduce(((prev, current) => Object.assign(prev, current)), {});
 const pagePath = '/partners';
 
 export default class Partners extends CMSPageController {
@@ -30,23 +23,36 @@ export default class Partners extends CMSPageController {
         this.view = {
             classes: ['partners-page', 'page']
         };
+        this.regions = {
+            filter: '.filter',
+            iconViewer: 'icon-viewer',
+            blurbViewer: 'blurb-viewer'
+        };
         this.model = {
             title: '',
             'page_description': '',
-            book: null,
-            partners: [],
-            filterButtons,
-            filterButtonsActive: false
+            partners: []
         };
+        this.categorySelector = new CategorySelector((category) => this.filterPartners(category));
 
         router.replaceState({
-            filter: categoryMap[location.pathname.replace('/partners/', '')] || 'View All',
+            filter: this.categoryFromPath(),
             path: pagePath
         });
 
-        this.filterPartnersEvent = this.filterPartners.bind(this);
+        this.filterPartnersEvent = () => {
+            const category = history.state.filter;
 
+            this.categorySelector.updateSelected(category);
+            this.partnerViewer.filterPartners(category);
+        };
         window.addEventListener('popstate', this.filterPartnersEvent);
+    }
+
+    categoryFromPath() {
+        const slug = window.location.pathname.replace(/.*partners/, '').substr(1).toLowerCase() || 'view-all';
+
+        return CategorySelector.bySlug[slug].cms;
     }
 
     changeAllyLogoColor() {
@@ -64,53 +70,34 @@ export default class Partners extends CMSPageController {
         .map((slug) => this.pageData.allies[slug])
         .filter((info) => !info.do_not_display);
 
-        this.filterPartners();
+        this.partnerViewer = new PartnerViewer(this.model);
+        this.regions.iconViewer.attach(this.partnerViewer.iconViewer);
+        this.regions.blurbViewer.attach(this.partnerViewer.blurbViewer);
+
+        const category = this.categoryFromPath();
+
+        this.regions.filter.attach(this.categorySelector);
+        this.categorySelector.updateSelected(category);
+        this.filterPartners(category);
         this.changeAllyLogoColor();
     }
 
-    onUpdate() {
-        $.insertHtml(this.el, this.model);
-        this.el.querySelector('.filter-button[data-value="AP"]').innerHTML = 'AP<sup>&reg;</sup>';
-    }
+    filterPartners(category) {
+        const slug = CategorySelector.byCms[category].slug;
+        const path = slug === 'view-all' ? pagePath : `${pagePath}/${slug}`;
 
-    filterPartners() {
-        if (!Array.isArray(this.model.allPartners)) {
-            return;
-        }
-
-        this.model.partners = this.model.allPartners.filter((partner) => {
-            if (history.state.filter === 'View All') {
-                return true;
-            } else if (history.state.filter === 'AP') {
-                return partner.is_ap;
-            }
-
-            return partner.subjects.includes(history.state.filter);
-        });
-
-        this.update();
-    }
-
-    @on('click .filter-button')
-    setFilter(e) {
-        this.model.filterButtonsActive = !this.model.filterButtonsActive;
-        this.update();
-        const value = e.target.dataset.value;
-
-        if (history.state.filter === value) {
-            return;
-        }
-
-        const subpath = urlify(value);
-
-        router.navigate(`/partners/${subpath}`, {
-            filter: value,
+        router.navigate(path, {
+            filter: category,
             path: pagePath,
             x: history.state.x,
             y: history.state.y
         });
+        this.partnerViewer.filterPartners(category);
+    }
 
-        this.filterPartners();
+    @on('click .filter-button')
+    scrollToFilterButtons1() {
+        $.scrollTo(this.el.querySelector('.filter'), 20);
     }
 
     @on('click .logo-text')
@@ -123,6 +110,7 @@ export default class Partners extends CMSPageController {
             path: pagePath,
             target: href
         };
+
         const pushOrReplaceState = history.state.target ? 'replaceState' : 'pushState';
 
         $.scrollTo(el);
@@ -138,7 +126,7 @@ export default class Partners extends CMSPageController {
             path: pagePath
         };
 
-        $.scrollTo(this.el.querySelector('.filter')).then(() => {
+        $.scrollTo(this.el.querySelector('.filter'), 20).then(() => {
             if (hasTarget) {
                 history.back();
             } else {

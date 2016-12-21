@@ -70,7 +70,7 @@ export default class BookViewer extends Controller {
         }
     }
 
-    filterCategories(category) {
+    filterSubjects(category) {
         if (!this.categorySections) {
             this.filterToCategory = category;
             return;

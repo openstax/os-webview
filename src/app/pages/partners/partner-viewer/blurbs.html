@@ -1,0 +1,7 @@
+<template args="model">
+    <div each="partner in model.partners" class="text" id="{partner.title+'-blurb'}">
+        <h3 data-html="partners[{$item}].title"></h3>
+        <div data-html="partners[{$item}].long_description"></div>
+        <a href="#filter" class="to-top">Return to top <i class="fa fa-chevron-up"></i></a>
+    </div>
+</template>

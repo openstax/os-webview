@@ -60,7 +60,7 @@ $.lowerCaseCompare = (a, b) => $.stringCompare(a.toLowerCase(), b.toLowerCase())
 
 const tick = 1000 / 40;
 const spaceForMenu = 59;
-const targetStep = 200;
+const targetStep = 100;
 const targetTicks = 20;
 
 $.scrollTo = (el, offset = 0) => {

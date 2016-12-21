@@ -1,6 +1,8 @@
 import {Controller} from 'superb';
-import FilterButton from './filter-button';
+// import FilterButton from './filter-button';
 import {on} from '~/helpers/controller/decorators';
+import $ from '~/helpers/$';
+import {description as template} from './category-selector.html';
 
 const categories = [
     {slug: 'view-all', cms: '', html: 'View All'},
@@ -26,40 +28,43 @@ export default class CategorySelector extends Controller {
     static byCms = byCms;
 
     init(setState) {
-        this.template = () => '';
+        this.template = template;
         this.view = {
             classes: ['filter-buttons']
         };
-
-        this.buttonViews = categories.map((button) =>
-            new FilterButton(button.html, button.cms, (category) => {
-                this.updateSelected(category);
-                setState(category);
-            })
-        );
+        this.model = {
+            categories,
+            isSelected: (cms) => this.selectedCms === cms ? ' selected' : ''
+        };
+        this.setState = setState;
         this.active = false;
     }
 
-    updateSelected(category) {
-        for (const view of this.buttonViews) {
-            if (category === view.value) {
-                view.el.classList.add('selected');
-            } else {
-                view.el.classList.remove('selected');
-            }
-        }
+    onLoaded() {
+        $.insertHtml(this.el, this.model);
     }
 
-    onLoaded() {
-        for (const view of this.buttonViews) {
-            this.regions.self.append(view);
-        }
+    updateSelected(category) {
+        this.selectedCms = category;
+        this.update();
     }
 
     @on('click')
     toggleActive() {
         this.active = !this.active;
         this.el.classList.toggle('active', this.active);
+    }
+
+    @on('click .filter-button')
+    setCategory(event) {
+        const newValue = event.target.dataset.value;
+
+        if (newValue !== this.selectedCms) {
+            this.active = false;
+            this.el.classList.remove('active');
+        }
+        this.updateSelected(newValue);
+        this.setState(newValue);
     }
 
 }
