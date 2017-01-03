@@ -5,7 +5,7 @@ import MainMenu from './main-menu/main-menu';
 import settings from 'settings';
 import {on} from '~/helpers/controller/decorators';
 import linkHelper from '~/helpers/link';
-import {sfUserModel} from '~/models/usermodel';
+import {userModel, sfUserModel} from '~/models/usermodel';
 import {description as template} from './header.html';
 
 class Header extends Controller {
@@ -51,12 +51,21 @@ class Header extends Controller {
         this.upperMenu = new UpperMenu(this.model);
         this.mainMenu = new MainMenu();
 
-        sfUserModel.load().then((user) => {
-            if (typeof user === 'object') {
-                this.model.user = user;
+        userModel.load().then((response) => {
+            const handleUser = (user) => {
+                if (typeof user === 'object') {
+                    this.model.user = user;
+                }
+                this.update();
+                this.upperMenu.update();
+            };
+
+            if (response.groups.length === 0) {
+                console.log('Calling sfUserModel in menu');
+                sfUserModel.load().then(handleUser);
+            } else {
+                handleUser(response);
             }
-            this.update();
-            this.upperMenu.update();
         });
 
         document.addEventListener('click', this.resetHeader.bind(this));
