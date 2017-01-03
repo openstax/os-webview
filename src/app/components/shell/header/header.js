@@ -5,7 +5,7 @@ import MainMenu from './main-menu/main-menu';
 import settings from 'settings';
 import {on} from '~/helpers/controller/decorators';
 import linkHelper from '~/helpers/link';
-import userModel from '~/models/usermodel';
+import {sfUserModel} from '~/models/usermodel';
 import {description as template} from './header.html';
 
 class Header extends Controller {
@@ -51,7 +51,7 @@ class Header extends Controller {
         this.upperMenu = new UpperMenu(this.model);
         this.mainMenu = new MainMenu();
 
-        userModel.load().then((user) => {
+        sfUserModel.load().then((user) => {
             if (typeof user === 'object') {
                 this.model.user = user;
             }
