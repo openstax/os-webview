@@ -1,0 +1,12 @@
+<template args="model">
+    <div each="partner in model.partners" class="logo">
+        <a class="logo-text" href="#{partner.title}-blurb">
+            <if condition="partner.ally_bw_logo">
+                <img src="{partner.ally_bw_logo}">
+            <else>
+                {partner.title}
+            </if>
+        </a>
+    </div>
+    <div each="spacer in [1,2,3]" class="spacer logo"></div>
+</template>

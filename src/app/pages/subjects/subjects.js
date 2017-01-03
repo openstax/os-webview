@@ -6,6 +6,8 @@ import BookViewer from './book-viewer/book-viewer';
 import CategorySelector from '~/components/category-selector/category-selector';
 import {description as template} from './subjects.html';
 
+const pagePath = '/subjects';
+
 export default class Subjects extends CMSPageController {
 
     static description = 'Our textbooks are openly licensed, peer-reviewed,' +
@@ -13,6 +15,7 @@ export default class Subjects extends CMSPageController {
         'decide if they\'re right for your course.';
 
     init() {
+        this.slug = 'books';
         this.template = template;
         this.css = '/app/pages/subjects/subjects.css';
         this.view = {
@@ -23,20 +26,19 @@ export default class Subjects extends CMSPageController {
             bookViewer: '.books .container'
         };
         this.model = {};
-        this.slug = 'books';
-        this.categorySelector = new CategorySelector((category) => this.filterCategories(category));
+        this.categorySelector = new CategorySelector((category) => this.filterSubjects(category));
 
         router.replaceState({
             filter: this.categoryFromPath(),
-            path: '/subjects'
+            path: pagePath
         });
-        this.filterCategoriesEvent = () => {
+        this.filterSubjectsEvent = () => {
             const category = history.state.filter;
 
-            this.bookViewer.filterCategories(category);
             this.categorySelector.updateSelected(category);
+            this.bookViewer.filterSubjects(category);
         };
-        window.addEventListener('popstate', this.filterCategoriesEvent);
+        window.addEventListener('popstate', this.filterSubjectsEvent);
     }
 
     categoryFromPath() {
@@ -45,17 +47,17 @@ export default class Subjects extends CMSPageController {
         return CategorySelector.bySlug[slug].cms;
     }
 
-    filterCategories(category) {
+    filterSubjects(category) {
         const slug = CategorySelector.byCms[category].slug;
-        const path = slug === 'view-all' ? '/subjects' : `/subjects/${slug}`;
+        const path = slug === 'view-all' ? pagePath : `${pagePath}/${slug}`;
 
         router.navigate(path, {
             filter: category,
-            path: '/subjects',
+            path: pagePath,
             x: history.state.x,
             y: history.state.y
         });
-        this.bookViewer.filterCategories(category);
+        this.bookViewer.filterSubjects(category);
     }
 
     onDataLoaded() {
@@ -69,17 +71,17 @@ export default class Subjects extends CMSPageController {
         const category = this.categoryFromPath();
 
         this.categorySelector.updateSelected(category);
-        this.filterCategories(category);
+        this.filterSubjects(category);
         this.el.classList.add('loaded');
     }
 
     onClose() {
-        window.removeEventListener('popstate', this.filterCategoriesEvent);
+        window.removeEventListener('popstate', this.filterSubjectsEvent);
     }
 
     @on('click .filter .filter-button')
     scrollToFilterButtons() {
-        $.scrollTo(this.el.querySelector('.filter'));
+        $.scrollTo(this.el.querySelector('.filter'), 20);
     }
 
 }

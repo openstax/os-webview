@@ -60,7 +60,7 @@ $.lowerCaseCompare = (a, b) => $.stringCompare(a.toLowerCase(), b.toLowerCase())
 
 const tick = 1000 / 40;
 const spaceForMenu = 59;
-const targetStep = 200;
+const targetStep = 100;
 const targetTicks = 20;
 
 $.scrollTo = (el, offset = 0) => {
@@ -70,16 +70,19 @@ $.scrollTo = (el, offset = 0) => {
     let magnitude = Math.abs(offsetTop);
     const chosenStep = (targetStep + magnitude / targetTicks) / 2;
 
-    const i = setInterval(() => {
-        const step = (magnitude > chosenStep) ? chosenStep : magnitude;
-        const scrollBody = document.documentElement.scrollTop || document.body.scrollTop;
+    return new Promise((resolve) => {
+        const i = setInterval(() => {
+            const step = (magnitude > chosenStep) ? chosenStep : magnitude;
+            const scrollBody = document.documentElement.scrollTop || document.body.scrollTop;
 
-        window.scrollTo(0, scrollBody + direction * step);
-        magnitude -= step;
-        if (magnitude <= 0) {
-            clearInterval(i);
-        }
-    }, tick);
+            window.scrollTo(0, scrollBody + direction * step);
+            magnitude -= step;
+            if (magnitude <= 0) {
+                clearInterval(i);
+                resolve();
+            }
+        }, tick);
+    });
 };
 
 $.applyScrollFix = (view) => {
