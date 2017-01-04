@@ -1,7 +1,7 @@
 import settings from '~/../settings';
 
 const EXTERNAL = /^((f|ht)tps?:)?\/\//;
-const ABSOLUTE_OPENSTAX = new RegExp(`(https?://openstax.org|${settings.apiOrigin})`);
+const ABSOLUTE_OPENSTAX = new RegExp(`(https?://openstax.org|${settings.apiOrigin})(?!/accounts)`);
 const MAILTO = /^mailto:(.+)/;
 const PDF = /.pdf$/;
 const ZIP = /.zip$/;

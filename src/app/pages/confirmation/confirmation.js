@@ -4,6 +4,8 @@ import Popup from '~/components/popup/popup';
 import Calculator from '~/components/calculator/calculator';
 import {description as template} from './confirmation.html';
 
+const applyLink = `${settings.accountHref}/faculty_access/apply?r=${encodeURIComponent(settings.apiOrigin)}`;
+
 const models = {
     adoption: {
         headline: 'Thank you for adopting OpenStax!',
@@ -52,7 +54,7 @@ const models = {
         free textbooks and low-cost learning tools that are revolutionizing
         classrooms across the country and the world.`,
         adoptionQuestion: 'Have you been verified as an instructor?',
-        adoptionUrl: `${settings.accountHref}/faculty_access/apply`,
+        adoptionUrl: applyLink,
         adoptionLinkText: 'Get verified',
         subjectLinkText: 'Explore our books'
     },
@@ -60,7 +62,7 @@ const models = {
         headline: 'Your new account has been created. Thank you for joining the OpenStax community!',
         topParagraph: 'Do you need access to instructor-only resources?',
         topLinkText: 'Get your account verified',
-        topLinkUrl: `${settings.accountHref}/faculty_access/apply`,
+        topLinkUrl: applyLink,
         adoptionQuestion: 'Have you adopted an OpenStax book?',
         adoptionUrl: '/adoption',
         adoptionLinkText: 'Adopt a book',
