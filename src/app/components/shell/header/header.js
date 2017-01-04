@@ -5,7 +5,7 @@ import MainMenu from './main-menu/main-menu';
 import settings from 'settings';
 import {on} from '~/helpers/controller/decorators';
 import linkHelper from '~/helpers/link';
-import {userModel, sfUserModel} from '~/models/usermodel';
+import userModel, {sfUserModel} from '~/models/usermodel';
 import {description as template} from './header.html';
 
 class Header extends Controller {
