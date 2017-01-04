@@ -34,12 +34,12 @@ class Header extends Controller {
             }
         };
 
-        const accounts = settings.accountHref;
+        const accounts = `${settings.apiOrigin}/accounts`;
         const encodedLocation = encodeURIComponent(window.location.href);
 
         this.model = {
-            login: `${accounts}/signin?r=${encodedLocation}`,
-            logout: `${accounts}/signout/?r=${encodedLocation}`,
+            login: `${accounts}/login/openstax/?r=${encodedLocation}`,
+            logout: `${accounts}/logout/?r=${encodedLocation}`,
             user: {
                 username: null,
                 groups: []
