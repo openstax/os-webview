@@ -3,36 +3,41 @@ import router from '~/router';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './sticky-note.html';
 
-const TEMPORARY_EXPIRATION = new Date('Nov 19 2016 14:00 CST');
-
 class StickyNote extends CMSPageController {
 
     init() {
-        const isTemporary = Date.now() < TEMPORARY_EXPIRATION;
-
         this.template = template;
         this.css = '/app/components/shell/sticky-note/sticky-note.css';
         this.view = {
             classes: ['sticky-note']
         };
-        if (isTemporary) {
-            this.view.classes.push('temporary-banner');
-        }
         this.slug = 'sticky';
-        this.model = {
-            temporary: isTemporary
-        };
+        this.model = {};
     }
 
     onDataLoaded() {
-        const expired = !this.model.temporary && new Date(this.pageData.expires) < Date.now();
+        const isExpired = (str) => new Date(str) < Date.now();
 
-        if (expired) {
-            this.el.classList.add('hidden');
-            localStorage.removeItem('visitedGive');
+        this.expired = true;
+        if (this.pageData.emergency_content && !isExpired(this.pageData.emergency_expires)) {
+            this.model.temporary = true;
+            this.model.content = this.pageData.emergency_content;
+            this.el.classList.add('temporary-banner');
+            this.expired = false;
+        } else {
+            if (isExpired(this.pageData.expires)) {
+                this.forceHide(true);
+                localStorage.removeItem('visitedGive');
+            } else {
+                this.expired = Number(localStorage.visitedGive || 0) > 5;
+            }
+            this.model.content = this.expired ? null : this.pageData.content;
         }
-        this.model.content = this.pageData.content;
         this.update();
+    }
+
+    forceHide(whether) {
+        this.el.classList.toggle('hidden', whether);
     }
 
     @on('click .multi-button > a')

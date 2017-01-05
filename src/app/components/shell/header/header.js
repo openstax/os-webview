@@ -76,11 +76,7 @@ class Header extends Controller {
     }
 
     onUpdate() {
-        const path = window.location.pathname;
-        const visitedGive = Number(localStorage.visitedGive || 0) > 5;
-        const hideSticky = (path !== '/' || (!stickyNote.model.temporary && visitedGive));
-
-        this.el.querySelector('sticky-note').classList.toggle('hidden', hideSticky);
+        stickyNote.forceHide(window.location.pathname !== '/');
     }
 
     onLoaded() {
