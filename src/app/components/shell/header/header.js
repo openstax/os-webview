@@ -44,7 +44,8 @@ class Header extends Controller {
                 username: null,
                 groups: []
             },
-            accountLink: `${accounts}/profile`,
+            accountLink: `${settings.accountHref}/profile`,
+            facultyAccessLink: `${settings.accountHref}/faculty_access/apply`,
             currentDropdown: null
         };
 
