@@ -118,7 +118,7 @@ class AppRouter extends Router {
         e.preventDefault();
 
         if (linkHelper.isExternal(href)) {
-            if (el.getAttribute('data-local') === 'true') {
+            if (el.dataset.local === 'true') {
                 document.location.href = href;
             } else {
                 analytics.record(href);
