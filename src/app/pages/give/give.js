@@ -202,6 +202,12 @@ export default class Give extends CMSPageController {
         if (invalid) {
             event.preventDefault();
             this.update();
+        } else {
+            localStorage.setItem('donation:first_name', this.el.querySelector('[name=First_Name]').value);
+            localStorage.setItem('donation:last_name', this.el.querySelector('[name=Last_Name]').value);
+            localStorage.setItem('donation:email', this.el.querySelector('[name=Email]').value);
+            localStorage.setItem('donation:phone', this.el.querySelector('[name=Phone]').value);
+            localStorage.setItem('donation:amount', this.el.querySelector('[name=AMT]').value);
         }
     }
 
