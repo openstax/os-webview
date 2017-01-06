@@ -81,6 +81,18 @@ export default class Give extends CMSPageController {
             } catch (e) { }
             this.regions.share.attach(new FbShare());
             this.model.isThanks = true;
+
+            this.el.querySelector('[name=first_name]').value = localStorage.getItem('donation:first_name');
+            this.el.querySelector('[name=last_name]').value = localStorage.getItem('donation:last_name');
+            this.el.querySelector('[name=email]').value = localStorage.getItem('donation:email');
+            this.el.querySelector('[name=phone]').value = localStorage.getItem('donation:phone');
+            this.el.querySelector('[name=Donation_Amount__c]').value = localStorage.getItem('donation:amount');
+            document.getElementById('donation-update').submit();
+            localStorage.removeItem('donation:first_name');
+            localStorage.removeItem('donation:last_name');
+            localStorage.removeItem('donation:email');
+            localStorage.removeItem('donation:phone');
+            localStorage.removeItem('donation:amount');
         }
         if ('amount' in queryDict) {
             handleAmount(+queryDict.amount);
@@ -202,6 +214,12 @@ export default class Give extends CMSPageController {
         if (invalid) {
             event.preventDefault();
             this.update();
+        } else {
+            localStorage.setItem('donation:first_name', this.el.querySelector('[name=First_Name]').value);
+            localStorage.setItem('donation:last_name', this.el.querySelector('[name=Last_Name]').value);
+            localStorage.setItem('donation:email', this.el.querySelector('[name=Email]').value);
+            localStorage.setItem('donation:phone', this.el.querySelector('[name=Phone]').value);
+            localStorage.setItem('donation:amount', this.el.querySelector('[name=AMT]').value);
         }
     }
 
