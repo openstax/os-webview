@@ -16,14 +16,28 @@ class StickyNote extends CMSPageController {
     }
 
     onDataLoaded() {
-        const expired = new Date(this.pageData.expires) < Date.now();
+        const isExpired = (str) => new Date(str) < Date.now();
 
-        if (expired) {
-            this.el.classList.add('hidden');
-            localStorage.removeItem('visitedGive');
+        this.expired = true;
+        if (this.pageData.emergency_content && !isExpired(this.pageData.emergency_expires)) {
+            this.model.temporary = true;
+            this.model.content = this.pageData.emergency_content;
+            this.el.classList.add('temporary-banner');
+            this.expired = false;
+        } else {
+            if (isExpired(this.pageData.expires)) {
+                this.forceHide(true);
+                localStorage.removeItem('visitedGive');
+            } else {
+                this.expired = Number(localStorage.visitedGive || 0) > 5;
+            }
+            this.model.content = this.expired ? null : this.pageData.content;
         }
-        this.model.content = this.pageData.content;
         this.update();
+    }
+
+    forceHide(whether) {
+        this.el.classList.toggle('hidden', whether);
     }
 
     @on('click .multi-button > a')
