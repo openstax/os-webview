@@ -88,11 +88,11 @@ export default class Give extends CMSPageController {
             this.el.querySelector('[name=phone]').value = localStorage.getItem('donation:phone');
             this.el.querySelector('[name=Donation_Amount__c]').value = localStorage.getItem('donation:amount');
             document.getElementById('donation-update').submit();
-            localStorage.setItem('donation:first_name', '');
-            localStorage.setItem('donation:last_name', '');
-            localStorage.setItem('donation:email', '');
-            localStorage.setItem('donation:phone', '');
-            localStorage.setItem('donation:amount', '');
+            localStorage.removeItem('donation:first_name');
+            localStorage.removeItem('donation:last_name');
+            localStorage.removeItem('donation:email');
+            localStorage.removeItem('donation:phone');
+            localStorage.removeItem('donation:amount');
         }
         if ('amount' in queryDict) {
             handleAmount(+queryDict.amount);
