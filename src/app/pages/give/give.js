@@ -81,6 +81,18 @@ export default class Give extends CMSPageController {
             } catch (e) { }
             this.regions.share.attach(new FbShare());
             this.model.isThanks = true;
+
+            this.el.querySelector('[name=first_name]').value = localStorage.getItem('donation:first_name');
+            this.el.querySelector('[name=last_name]').value = localStorage.getItem('donation:last_name');
+            this.el.querySelector('[name=email]').value = localStorage.getItem('donation:email');
+            this.el.querySelector('[name=phone]').value = localStorage.getItem('donation:phone');
+            this.el.querySelector('[name=Donation_Amount__c]').value = localStorage.getItem('donation:amount');
+            document.getElementById('donation-update').submit();
+            localStorage.setItem('donation:first_name', '');
+            localStorage.setItem('donation:last_name', '');
+            localStorage.setItem('donation:email', '');
+            localStorage.setItem('donation:phone', '');
+            localStorage.setItem('donation:amount', '');
         }
         if ('amount' in queryDict) {
             handleAmount(+queryDict.amount);

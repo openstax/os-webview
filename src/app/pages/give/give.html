@@ -474,5 +474,18 @@
                 <a href="/contact?subject=Donations" class="btn cta">{model.giveCtaText}</a>
             </p>
         </div>
+        <div>
+          <iframe name="form-response" id="form-response" src="" width="0" height="0"></iframe>
+          <form id="donation-update" accept-charset="UTF-8" class="form" target="form-response"
+           action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="post">
+              <input type="hidden" name="oid" value="00DU0000000Kwch">
+              <input type="hidden" name="lead_source" value="Donation">
+              <input type="hidden" name="first_name">
+              <input type="hidden" name="last_name">
+              <input type="hidden" name="email">
+              <input type="hidden" name="phone">
+              <input type="hidden" name="Donation_Amount__c">
+          </form>
+        </div
     </if>
 </template>
