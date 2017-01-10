@@ -24,7 +24,6 @@ gulp.task('dev-build', gulp.series(
 
 gulp.task('dev', gulp.series(
     'dev-build',
-    'ava',
     'watch'
 ));
 
@@ -42,6 +41,5 @@ gulp.task('lint', gulp.parallel(
 ));
 
 gulp.task('test', gulp.series(
-    'dev-build',
-    'ava'
+    'dev-build'
 ));
