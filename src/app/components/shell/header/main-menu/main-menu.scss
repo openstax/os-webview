@@ -86,9 +86,18 @@
         @include desktop {
             display: flex;
             flex-flow: row nowrap;
+            font-size: 1.55rem;
             height: auto;
             justify-content: flex-end;
             margin: 0;
+        }
+
+        @media (min-width: 800px) {
+            font-size: 1.65rem;
+        }
+
+        @media (min-width: 1100px) {
+            font-size: 1.8rem;
         }
     }
 
@@ -101,7 +110,7 @@
 
         @include desktop {
             margin: 0.5rem 1rem;
-            padding: 0 1rem;
+            padding: 0 0.25rem;
 
             > a {
                 color: color(gray);
@@ -148,6 +157,14 @@
                 border-bottom: 0.5rem solid color(green);
                 margin-bottom: 0;
             }
+        }
+
+        @media (min-width: 800px) {
+            padding: 0 0.35rem;
+        }
+
+        @media (min-width: 1100px) {
+            padding: 0 0.45rem;
         }
 
         .dropdown-menu {
