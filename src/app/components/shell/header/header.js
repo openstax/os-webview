@@ -50,7 +50,7 @@ class Header extends Controller {
         };
 
         this.upperMenu = new UpperMenu(this.model);
-        this.mainMenu = new MainMenu();
+        this.mainMenu = new MainMenu(this.model);
 
         userModel.load().then((response) => {
             const handleUser = (user) => {
@@ -58,7 +58,7 @@ class Header extends Controller {
                     this.model.user = user;
                 }
                 this.update();
-                this.upperMenu.update();
+                this.mainMenu.update();
             };
 
             if (typeof user === 'object' && response.groups.length === 0) {
