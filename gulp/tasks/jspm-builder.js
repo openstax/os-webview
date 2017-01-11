@@ -35,7 +35,7 @@ function jspmBuilder() {
 
     return builder.bundle(dependencies, output, {
         minify: (config.env === 'production'),
-        sourceMaps: (config.env !== 'production' ? 'inline' : true)
+        sourceMaps: true
     })
     .catch((err) => {
         /* eslint no-console: 0 */
