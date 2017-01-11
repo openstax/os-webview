@@ -6,7 +6,7 @@
     "start": "gulp dev",
     "prepublish": "jspm install",
     "upgrade": "jspm update",
-    "test": "gulp dev-build && nyc --reporter=lcov --reporter=text-summary --reporter=json ava ./test/src/*/*.js"
+    "test": "gulp dev-build && nyc --reporter=text ava --serial ./test/src/*/*.js && ./script/postprocess-coverage && nyc report --reporter=html --reporter=json --reporter=text"
   },
   "repository": {
     "type": "git",
