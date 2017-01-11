@@ -190,7 +190,7 @@ function compileScripts() {
     return gulp.src(`${config.src}/**/*.js`, {
         since: gulp.lastRun('compileScripts')
     })
-    .pipe(pi.if(config.env !== 'production', pi.sourcemaps.init()))
+    .pipe(pi.sourcemaps.init({loadMaps: true}))
     .pipe(pi.replace(/@VERSION@/g, config.version))
     .pipe(pi.replace(/@ENV@/g, config.env))
     .pipe(pi.babel({
@@ -202,7 +202,11 @@ function compileScripts() {
             'transform-object-assign'
         ]
     }))
-    .pipe(pi.if(config.env !== 'production', pi.sourcemaps.write('.')))
+    // Use inline sourcemaps for dev mode so code coverage (nyc) find them
+    // according to both:
+    // https://github.com/istanbuljs/nyc#support-for-custom-require-hooks-babel-webpack-etc
+    // https://github.com/avajs/ava/blob/master/docs/recipes/code-coverage.md#configure-babel
+    .pipe(pi.if(config.env !== 'production', pi.sourcemaps.write(), pi.sourcemaps.write('.')))
     .pipe(gulp.dest(config.dest));
 }
 
