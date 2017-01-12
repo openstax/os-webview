@@ -12,4 +12,8 @@ export default class MainMenu extends Controller {
         this.model = model;
     }
 
+    onLoaded() {
+        this.model.initialRenderDone = true;
+    }
+
 }
