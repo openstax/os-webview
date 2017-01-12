@@ -13,7 +13,7 @@ $.browserId = () => {
     const checkEdge = () => {
         if (/\bEdge\b/.test(ua)) {
             tem = ua.match(/Edge\/(\d+)/);
-            M = ['Edge', 'IE', (tem[1] || '')];
+            M = ['Edge', 'Edge', (tem[1] || '')];
         }
     };
     const checkIE = () => {
@@ -49,6 +49,7 @@ $.isSupported = () => {
     const info = $.browserId();
 
     return ((info.name === 'Safari' && +info.version >= 9) ||
+     (info.name === 'Edge' && +info.version >= 14) ||
      (info.name === 'IE' && +info.version >= 11) ||
      (info.name === 'Firefox' && +info.version >= 37) ||
      (info.name === 'Chrome' && +info.version >= 40));

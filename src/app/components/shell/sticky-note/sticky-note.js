@@ -37,7 +37,7 @@ class StickyNote extends CMSPageController {
     }
 
     forceHide(whether) {
-        this.el.classList.toggle('hidden', whether);
+        this.el.classList.toggle('hidden', whether || this.model.content === null);
     }
 
     @on('click .multi-button > a')

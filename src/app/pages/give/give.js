@@ -178,13 +178,6 @@ export default class Give extends CMSPageController {
         this.setAmount(+event.target.value);
     }
 
-    @on('change [name="recurring-payment"]')
-    setRecurring(event) {
-        this.model.recurring = event.target.checked ? event.target.value : '';
-        this.update();
-        // Nothing will actually update; the value is only used in the form
-    }
-
     @on('submit .preform')
     loadPage2(event) {
         event.preventDefault();
