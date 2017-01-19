@@ -38,8 +38,8 @@ class Header extends Controller {
         const encodedLocation = encodeURIComponent(window.location.href);
 
         this.model = {
-            login: `${accounts}/login/openstax/?r=${encodedLocation}`,
-            logout: `${accounts}/logout/?r=${encodedLocation}`,
+            login: `${accounts}/login/openstax/?next=${encodedLocation}`,
+            logout: `${accounts}/logout/?next=${encodedLocation}`,
             user: {
                 username: null,
                 groups: []
