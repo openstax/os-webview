@@ -71,7 +71,7 @@ export default class DetailsLoaded extends Controller {
 
             if (!user || user.username === '') {
                 isInstructor = false;
-                alternateLink = `${settings.apiOrigin}/accounts/login/openstax/?r=${encodedLocation}`;
+                alternateLink = `${settings.apiOrigin}/accounts/login/openstax/?next=${encodedLocation}`;
                 this.model.extraInstructions =
                     `<a href="${alternateLink}" data-local="true">Login</a> for instructor access.`;
             } else if (!('groups' in user) || !user.groups.includes('Faculty')) {
