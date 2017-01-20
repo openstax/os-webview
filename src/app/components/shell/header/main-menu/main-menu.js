@@ -1,4 +1,5 @@
 import {Controller} from 'superb';
+import {on} from '~/helpers/controller/decorators';
 import {description as template} from './main-menu.html';
 
 export default class MainMenu extends Controller {
@@ -14,6 +15,13 @@ export default class MainMenu extends Controller {
 
     onLoaded() {
         this.model.initialRenderDone = true;
+    }
+
+    @on('click a[data-set-redirect]')
+    setRedirect(e) {
+        const encodedLocation = encodeURIComponent(window.location.href);
+
+        e.target.href += `?next=${encodedLocation}`;
     }
 
 }
