@@ -92,7 +92,7 @@ export default class Confirmation extends Controller {
             this.regions.popup.attach(new Popup(this.model.popupText));
         }
         if (['adoption', 'interest', 'faculty', 'compCopy'].includes(this.referringPage)) {
-            this.regions.calculator.attach(new Calculator());
+            // this.regions.calculator.attach(new Calculator());
         }
     }
 
