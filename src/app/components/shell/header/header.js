@@ -60,8 +60,7 @@ class Header extends Controller {
                 this.mainMenu.update();
             };
 
-            if (typeof user === 'object' && response.groups.length === 0) {
-                console.log('Calling sfUserModel in menu');
+            if (typeof response === 'object' && response.groups.length === 0) {
                 sfUserModel.load().then(handleUser);
             } else {
                 handleUser(response);
