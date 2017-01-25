@@ -18,6 +18,12 @@
     }
 }
 
+@mixin wide-desktop {
+    @media (min-width: #{breakpoints(wide-desktop)}) {
+        @content;
+    }
+}
+
 @mixin collapsed {
     @media (max-width: 760px) {
         @content;
