@@ -190,7 +190,8 @@ function compileScripts() {
     return gulp.src(`${config.src}/**/*.js`, {
         since: gulp.lastRun('compileScripts')
     })
-    .pipe(pi.if(config.env !== 'production', pi.sourcemaps.init()))
+    // .pipe(pi.sourcemaps.init({loadMaps: true}))
+    .pipe(pi.sourcemaps.init())
     .pipe(pi.replace(/@VERSION@/g, config.version))
     .pipe(pi.replace(/@ENV@/g, config.env))
     .pipe(pi.babel({
@@ -202,7 +203,7 @@ function compileScripts() {
             'transform-object-assign'
         ]
     }))
-    .pipe(pi.if(config.env !== 'production', pi.sourcemaps.write('.')))
+    .pipe(pi.sourcemaps.write('.'))
     .pipe(gulp.dest(config.dest));
 }
 

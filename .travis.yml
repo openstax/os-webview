@@ -19,3 +19,6 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - g++-4.8
+after_script:
+  # Report coverage to codecov
+  - bash <(curl -s https://codecov.io/bash)
