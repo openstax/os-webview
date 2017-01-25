@@ -10,6 +10,7 @@ export default class Article extends CMSPageController {
             classes: ['article', 'hide-until-loaded']
         };
         this.slug = article.slug;
+        this.pinned = article.pin_to_top;
         this.preserveWrapping = true;
     }
 
@@ -27,6 +28,7 @@ export default class Article extends CMSPageController {
 
     onUpdate() {
         if (this.pageData && this.regions) {
+            this.pageData.pinned = this.pinned;
             const formattedContent = new FormattedAs(this.mode === 'page' ? 'feature' : 'synopsis', this.pageData);
 
             this.regions.self.attach(formattedContent);

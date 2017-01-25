@@ -14,7 +14,7 @@
 
         @include desktop {
             background-color: lighten(color(neutral-lighter), 8%);
-            padding: 8rem 0;
+            padding: 2rem 0;
         }
 
         .boxed {
@@ -88,7 +88,6 @@
         }
 
         .body {
-            @include constrained-variable-text(1.8, 0.16);
             line-height: 1.667;
 
             img {
@@ -127,17 +126,21 @@
     .update-box {
         align-items: center;
         display: flex;
-        flex-direction: column;
-        margin: 2rem auto;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: auto;
         max-width: $boxed-width;
+        padding-bottom: 2rem;
 
         @include phone {
+            flex-direction: column;
             padding-left: 1.5rem;
         }
 
         .cta {
             background-color: color(orange);
             color: color(neutral-lightest);
+            margin-left: 0.5rem;
             padding-left: 3rem;
             padding-right: 3rem;
         }
