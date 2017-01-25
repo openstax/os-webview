@@ -1,9 +1,12 @@
 <template args="model">
-    <div class="img" style="{backgroundImage: `url(${model.coverUrl})`}"></div>
+    <a class="img" href="/blog/{model.articleSlug}" style="{backgroundImage: `url(${model.coverUrl})`}"></a>
     <div class="content">
-        <h2><a href="/blog/{model.articleSlug}">{model.title}</a></h2>
-        <h3 if="model.subheading">{model.subheading}</h3>
-        <div class="body"></div>
+        <div class="excerpt">
+            <h2><a href="/blog/{model.articleSlug}">{model.title}</a></h2>
+            <h3 if="model.subheading && model.pinned">{model.subheading}</h3>
+            <div class="body"></div>
+        </div>
+        <a class="go-to" href="/blog/{model.articleSlug}">read more</a>
         <div class="meta">
             <p>
                 <span class="author">{model.author}</span>

@@ -8,11 +8,12 @@ export default class FormattedAs extends Controller {
 
     init(format, article) {
         this.template = format === 'feature' ? featureTemplate : synopsisTemplate;
+        this.format = format;
         this.model = Object.assign({
             coverUrl: article.article_image || 'http://placehold.it/370x240',
-            date: formatDate(article.date),
             articleSlug: article.slug
         }, article);
+        this.model.date = formatDate(article.date);
         this.regions = {
             body: '.body'
         };
@@ -49,6 +50,9 @@ export default class FormattedAs extends Controller {
             });
         };
 
+        if (this.format === 'synopsis') {
+            this.model.body = this.model.body.slice(0, 1);
+        }
         for (const bodyUnit of this.model.body) {
             this.regions.body.append(bodyUnitView(bodyUnit));
         }
