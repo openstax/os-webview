@@ -97,9 +97,7 @@ export default class AboutUs extends CMSPageController {
         assignIds(this.model.bios);
         this.el.classList.add('loaded');
         this.update();
-        console.log("pageData: " + this.pageData.intro_paragraph);
-        console.log("model: " + model.introParagraph);
-        $.insertHtml(this.el, this.pageData);
+        $.insertHtml(this.el, this.model);
 
     }
 
