@@ -1,6 +1,7 @@
 $breakpoints: (
     phone: 480px,
-    tablet: 768px
+    tablet: 768px,
+    wide-desktop: 1024px
 );
 
 $boxed-width: 1200px; // For @media, 120rem != 1200px
