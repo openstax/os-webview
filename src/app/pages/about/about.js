@@ -98,7 +98,6 @@ export default class AboutUs extends CMSPageController {
         this.el.classList.add('loaded');
         this.update();
         $.insertHtml(this.el, this.model);
-
     }
 
     @on('click .headshot')
