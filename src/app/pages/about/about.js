@@ -1,6 +1,7 @@
 import CMSPageController from '~/controllers/cms';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './about.html';
+import $ from '~/helpers/$';
 
 function lastName(bioEntry) {
     return bioEntry.name.substr(1 + bioEntry.name.lastIndexOf(' ')).toLowerCase();
@@ -83,7 +84,6 @@ export default class AboutUs extends CMSPageController {
             tagline: this.pageData.tagline,
             introHeading: this.pageData.intro_heading,
             introParagraph: this.pageData.intro_paragraph,
-            faqLink: this.pageData.faq_link || 'Frequently Asked Questions',
             ourTeamHeading: this.pageData.our_team_heading,
             bios: [{
                 name: 'team',
@@ -97,6 +97,7 @@ export default class AboutUs extends CMSPageController {
         assignIds(this.model.bios);
         this.el.classList.add('loaded');
         this.update();
+        $.insertHtml(this.el, this.model);
     }
 
     @on('click .headshot')
