@@ -1,13 +1,15 @@
-<div class="article page"></div>
-<div class="boxed">
-    <div class="pinned"></div>
-</div>
-<div class="articles">
-    <div class="update-box">
-        <h3>Get updates in your inbox.</h3>
-        <a class="btn cta" href="http://www2.openstax.org/l/218812/2016-10-04/lvk">Sign Up</a>
-    </div>
+<template args="model">
+    <div class="article page {model.articleSlug ? '' : 'hidden'}"></div>
     <div class="boxed">
-        <div class="container"></div>
+        <div class="pinned"></div>
     </div>
-</div>
+    <div class="articles">
+        <div class="update-box">
+            <h3>Get updates in your inbox.</h3>
+            <a class="btn cta" href="http://www2.openstax.org/l/218812/2016-10-04/lvk">Sign Up</a>
+        </div>
+        <div class="boxed">
+            <div class="container"></div>
+        </div>
+    </div>
+</template>

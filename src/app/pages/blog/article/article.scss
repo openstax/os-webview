@@ -107,7 +107,6 @@
 
     .pinned .article {
         flex-flow: row wrap;
-        padding: 3rem 0 0;
         width: 100%;
 
         @include wide-desktop {
