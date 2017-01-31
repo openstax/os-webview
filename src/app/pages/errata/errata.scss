@@ -1,0 +1,414 @@
+@import 'variables';
+@import 'mixins';
+
+@mixin wide-desktop {
+    @media (min-width: 900px) {
+        @content;
+    }
+}
+
+$page-background: #fbfbfb;
+$label-1: #575958;
+$label-2: #999;
+$label-3: #4a4a4a;
+$label-4: #5f6163;
+$table-border: #dcdcdc;
+$table-dark-row: #f6f6f6;
+$node-gray: #efefef;
+$node-size: 2.5rem;
+$node-dot-size: 1.1rem;
+$bar-size: 1rem;
+$fill-size: $node-size * 0.6;
+
+.errata-page {
+    background-color: $page-background;
+
+    a {
+        color: color(cyan);
+    }
+
+    .hero {
+        background-color: color(cyan);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 30rem;
+        padding: 3rem;
+
+        @include desktop {
+            padding: 0;
+        }
+
+        h1 {
+            color: color(blue);
+            font-size: 4.8rem;
+
+            @include phone {
+                font-size: 3.6rem;
+                letter-spacing: -0.24rem;
+                line-height: 1;
+            }
+        }
+
+        .instructions {
+            color: color(neutral-lightest);
+            font-size: 1.6rem;
+        }
+
+        .with-tooltip {
+            color: color(blue);
+            cursor: default;
+            display: inline-block;
+            font-size: 1.6rem;
+            position: relative;
+
+            .tooltip {
+                display: none;
+            }
+
+            &:hover .tooltip {
+                display: block;
+                position: absolute;
+            }
+        }
+    }
+
+    .strips-and-filter {
+        position: relative;
+
+        .filter-buttons {
+            margin: 0;
+        }
+    }
+
+    .body-block {
+        padding: 0 4rem;
+
+        @include phone {
+            padding: 0 1rem;
+        }
+    }
+
+    .summary-table,
+    .summary-table-mobile {
+        background-color: color(neutral-lightest);
+        border: thin solid $table-border;
+        border-collapse: collapse;
+        font-size: 1.4rem;
+        max-width: 100%;
+
+        tr {
+            max-width: 100%;
+        }
+
+        [data-sort-fn] {
+            cursor: pointer;
+        }
+
+        .sortdir1::after,
+        .sortdir-1::after {
+            content: '▸';
+            display: inline-block;
+            font-size: 120%;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .sortdir1::after {
+            transform: rotate(-90deg);
+            transform-origin: 0.3em 0.6em;
+        }
+
+        .sortdir-1::after {
+            margin-left: 0.5rem;
+            transform: rotate(90deg);
+            transform-origin: 0.3em 0.6em;
+        }
+
+        th,
+        td {
+            border: thin solid $table-border;
+        }
+
+        th,
+        td > div {
+            line-height: 1.4;
+            padding: 2rem;
+            text-align: left;
+            vertical-align: top;
+            word-wrap: break-word;
+        }
+
+        .narrow {
+            width: 8rem;
+        }
+
+        .mid {
+            overflow-x: auto;
+            width: 12rem;
+        }
+
+        .mid-wide {
+            width: 15rem;
+        }
+    }
+
+    .summary-table {
+        display: none;
+        table-layout: fixed;
+        width: 100%;
+
+        @include wide-desktop {
+            display: table;
+        }
+
+        th {
+            border-bottom: 0.2rem solid color(blue);
+            color: color(blue);
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: $table-dark-row;
+        }
+    }
+
+    .summary-table-mobile {
+        margin-bottom: 1.5rem;
+        table-layout: fixed;
+        width: 100%;
+
+        @include wide-desktop {
+            display: none;
+        }
+
+        th:first-child {
+            width: 15rem;
+        }
+    }
+
+    .progress-bar-labels {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1rem;
+
+        .event {
+            color: $label-1;
+            font-weight: bold;
+        }
+
+        .when {
+            color: $label-2;
+        }
+    }
+
+    .progress-bar {
+        background-color: color(neutral-lightest);
+        display: flex;
+        flex-flow: column;
+        height: 5rem;
+        justify-content: center;
+        margin-top: 1.9rem;
+        position: relative;
+        width: 100%;
+
+        .progress-bar-layer {
+            align-content: center;
+            display: flex;
+            justify-content: space-between;
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
+
+        .node,
+        .bar {
+            background-color: $node-gray;
+
+            &.filled {
+                background-color: color(green);
+            }
+
+            &.filled-no {
+                background-color: color(yellow);
+            }
+        }
+
+        .node {
+            align-items: center;
+            border-radius: 50%;
+            display: flex;
+            height: $node-size;
+            justify-content: center;
+            width: $node-size;
+
+            &.filled::after,
+            &.filled-no::after {
+                background-color: rgba(color(neutral-darkest), 0.12);
+                border-radius: 50%;
+                content: '';
+                height: $node-dot-size;
+                width: $node-dot-size;
+            }
+        }
+
+        .bar {
+            box-shadow: inset 0 1px 3px rgba(color(neutral-darkest), 0.2);
+            flex: 50% 1 1;
+            height: $bar-size;
+            margin: $node-size / 2 - $bar-size / 2 0.3rem 0;
+        }
+    }
+
+    .info {
+        color: $label-1;
+        display: table;
+        margin-top: 1.9rem;
+        width: 100%;
+
+        @include phone {
+            display: block;
+        }
+
+    }
+
+    .padded {
+        margin-bottom: 4rem;
+    }
+
+    .label-value-pair {
+        display: table-row;
+        height: 4rem;
+
+        @include phone {
+            display: block;
+            height: auto;
+            padding-bottom: 1rem;
+        }
+
+        .label,
+        .value {
+            display: table-cell;
+            line-height: normal;
+            padding: 1rem 0;
+            word-wrap: break-word;
+
+            @include phone {
+                display: block;
+            }
+        }
+
+        .label {
+            color: $label-3;
+            font-weight: bold;
+            text-align: left;
+            width: 20rem;
+
+            @include phone {
+                width: auto;
+            }
+        }
+
+        .value {
+            max-width: calc(100% - 20rem);
+        }
+    }
+
+    .note {
+        color: $label-1;
+        font-size: 1.2rem;
+        line-height: normal;
+        margin-bottom: 8rem;
+    }
+
+    .form-container {
+        background-color: color(neutral-lightest);
+        color: $label-4;
+        padding: 2rem 9rem;
+
+        .question {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            margin-top: 3rem;
+        }
+
+        label {
+            color: $label-4;
+            display: block;
+            line-height: normal;
+            padding-left: 2rem;
+            text-indent: -2rem;
+        }
+
+        .radio-columns {
+            font-size: 1.6rem;
+
+            @include desktop {
+                column-count: 2;
+                column-gap: 3rem;
+            }
+
+            [type="text"] {
+                width: auto;
+            }
+
+        }
+
+        [type="radio"] {
+            display: none;
+
+            + .proxy {
+                background: url('/images/components/unchecked-radio.png') left center no-repeat;
+                padding-right: 1.5em;
+            }
+
+            &:checked + .proxy {
+                background-image: url('/images/components/checked-radio.png');
+            }
+        }
+
+        .subnote {
+            font-size: 1.2rem;
+            font-style: italic;
+            line-height: normal;
+            margin-bottom: 1rem;
+            width: 75%;
+        }
+
+        .btn {
+            background-color: $table-dark-row;
+            border: 0;
+            color: $label-4;
+            font-size: 1.6rem;
+            margin: 0 0 3rem;
+            padding: 1.4rem;
+            text-transform: none;
+            width: 11.9rem;
+        }
+
+        [type="submit"].btn {
+            background-color: color(orange);
+            color: color(neutral-lightest);
+            float: none;
+            text-transform: uppercase;
+        }
+
+        .helpbox {
+            background-color: lighten(color(cyan), 47%);
+            border: thin solid darken(color(cyan), 20%);
+            color: darken(color(cyan), 22%);
+            margin-top: 1rem;
+            max-height: 6rem;
+            overflow: hidden;
+            padding: 1rem;
+            transition: all 0.13s linear;
+
+            &.not-visible {
+                max-height: 0;
+                opacity: 0;
+                padding: 0 1rem;
+                visibility: hidden;
+            }
+        }
+    }
+}
