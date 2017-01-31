@@ -3,7 +3,7 @@ import {Controller} from 'superb';
 import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 import router from '~/router';
-import sfUserModel from '~/models/usermodel';
+import {sfUserModel} from '~/models/usermodel';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
 import Resource from './resource/resource';
 import Contents from './contents/contents';
@@ -68,6 +68,16 @@ export default class DetailsLoaded extends Controller {
                     this.regions.tableOfContents.attach(tocController);
                 }
             };
+            const handlePending = () => {
+                if (user.pending_verification) {
+                    alternateLink = '#';
+                    this.model.extraInstructions = 'Your request to access these resources is pending.';
+                } else {
+                    alternateLink = `${settings.accountHref}/faculty_access/apply?r=${encodedLocation}`;
+                    this.model.extraInstructions =
+                        `<a href="${alternateLink}" data-local="true">Apply for instructor access.</a>`;
+                }
+            };
 
             if (!user || user.username === '') {
                 isInstructor = false;
@@ -76,9 +86,7 @@ export default class DetailsLoaded extends Controller {
                     `<a href="${alternateLink}" data-local="true">Login</a> for instructor access.`;
             } else if (!('groups' in user) || !user.groups.includes('Faculty')) {
                 isInstructor = false;
-                alternateLink = `${settings.accountHref}/faculty_access/apply?r=${encodedLocation}`;
-                this.model.extraInstructions =
-                    `<a href="${alternateLink}" data-local="true">Apply for instructor access.</a>`;
+                handlePending();
             }
             $.insertHtml(this.el, this.model);
 
