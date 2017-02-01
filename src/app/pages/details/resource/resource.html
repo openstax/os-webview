@@ -4,7 +4,11 @@
         <resource-description if="model.resource_description" data-html="resource_description"></resource-description>
     </div>
     <span class="link-and-lock">
-        <a class="download-link go-to" data-local="{model.dataLocal}" href="{model.linkUrl}">{model.link_text}</a>
+        <if condition="model.linkUrl === '#'">
+            <span class="download-link unavailable">access pending</span>
+        <else>
+            <a class="download-link go-to" data-local="{model.dataLocal}" href="{model.linkUrl}">{model.link_text}</a>
+        </if>
         <i if="model.showLock" class="locked-state fa {model.showLock}"></i>
     </span>
 </template>
