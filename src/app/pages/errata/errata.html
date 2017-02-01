@@ -1,0 +1,104 @@
+<template args="model">
+    <div class="hero">
+        <h1 if="model.title" data-html="title()"></h1>
+        <div if="model.mode === 'summary'">
+            <div class="instructions">{model.instructions}</div>
+            <div class="with-tooltip">
+                {model.moreAbout}
+                <div class="tooltip">{model.tooltipText}</div>
+            </div>
+        </div>
+    </div>
+    <div class="strips-and-filter{model.mode === 'summary' ? '' : ' hidden'}">
+        <img class="strips" src="/images/components/strips2.png" height="10" alt="" role="presentation">
+        <div class="filter" skip="true"></div>
+    </div>
+    <div class="boxed" if="model.mode !== 'form'">
+        <table class="body-block summary-table" if="model.mode === 'summary'">
+            <thead>
+                <tr>
+                    <th each="md in model.summaryMetaData" class="{md.cssClass || ''}"
+                     data-sort-fn="{md.sortFn}" data-sort-key="{md.key}">
+                     {md.label}
+                     <span if="model.summarySortedBy === md.key" class="{`sortdir${model.summarySortDirection}`}">
+                 </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr each="entry in model.summaryFilteredData()">
+                    <td each="md in model.summaryMetaData">
+                        <div class="{md.cssClass || ''}">
+                            <if condition="md.key === 'id'">
+                                <a href="?id={entry[md.key]}">{entry[md.key] || ''}</a>
+                            <else>
+                                {entry[md.key] || ''}
+                            </if>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="body-block summary-table-mobile" if="model.mode === 'summary'" each="entry in model.summaryFilteredData()">
+            <tbody>
+                <tr each="md in model.summaryMetaData">
+                    <th>{md.label}</th>
+                    <td><div>
+                        <if condition="md.key === 'id'">
+                            <a href="?id={entry[md.key]}">{entry[md.key] || ''}</a>
+                        <else>
+                            {entry[md.key] || ''}
+                        </if>
+                    </div></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="detail" if="model.mode === 'detail'">
+            <div class="body-block" if="model.detail">
+                <div class="progress-bar-labels">
+                    <div class="label">
+                        <div class="event">In Review</div>
+                    </div>
+                    <div class="label">
+                        <div class="event">Reviewed</div>
+                    </div>
+                    <div class="label">
+                        <div class="event">{model.detail.resolution}</div>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-bar-layer">
+                        <div class="bar{model.detail.firstBarClass}"></div>
+                        <div class="bar{model.detail.secondBarClass}"></div>
+                    </div>
+                    <div class="progress-bar-layer">
+                        <div class="node filled"></div>
+                        <div class="node{model.detail.firstBarClass}"></div>
+                        <div class="node{model.detail.secondBarClass}"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="body-block padded" if="model.detail && model.detail.resolution">
+                <div class="info">
+                    <div class="label-value-pair" each="pair in model.decisionDataPairs">
+                        <div class="label">{pair[0]}</div>
+                        <div class="value">{model.detail[pair[1]]}</div>
+                    </div>
+                </div>
+                <div>Questions about the resolution? <a mailto="support@openstax.org">Ask us</a></div>
+            </div>
+            <div class="info padded body-block" if="model.detail">
+                <div class="label-value-pair" each="pair in model.detailDataPairs">
+                    <div class="label">{pair[0]}</div>
+                    <div class="value" data-html="detail['{pair[1]}']" skip="true"></div>
+                </div>
+            </div>
+            <div class="note body-block" if="model.book">
+                You can check the status of all errata submissions on the
+                <a href="/errata?book={encodeURIComponent(model.bookTitle)}">
+                    <span data-html="bookTitle" skip="true"></span> Errata Page
+                </a>.
+            </div>
+        </div>
+    </div>
+    <div class="boxed form-container" skip="true"></div>
+</template>

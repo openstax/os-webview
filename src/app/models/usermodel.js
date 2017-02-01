@@ -22,6 +22,12 @@ class UserModel {
         return this[LOADED];
     }
 
+    loginLink(returnTo) {
+        const encodedLocation = encodeURIComponent(returnTo || window.location.href);
+
+        return `${settings.apiOrigin}/accounts/login/openstax/?next=${encodedLocation}`;
+    }
+
 }
 
 export const sfUserModel = new UserModel(sfUserUrl);

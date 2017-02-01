@@ -4,8 +4,9 @@ import {description as template} from './higher-ed.html';
 import ProductsBoxes from '~/components/products-boxes/products-boxes';
 import Quotes from '~/components/quotes/quotes';
 import Buckets from '~/components/buckets/buckets';
+import userModel from '~/models/usermodel';
 
-const loginLink = `${settings.apiOrigin}/accounts/login/openstax/?next=${settings.apiOrigin}`;
+const loginLink = userModel.loginLink(settings.apiOrigin);
 
 export default class HigherEd extends CMSPageController {
 

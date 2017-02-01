@@ -6,7 +6,6 @@ import shell from '~/components/shell/shell';
 const PAGES = [
     '404',
     'about',
-    'about-us',
     'accessibility-statement',
     'adopters',
     'adoption',
@@ -19,6 +18,7 @@ const PAGES = [
     'confirmation',
     'contact',
     'details/*path',
+    'errata',
     'faq',
     'foundation',
     'give',
@@ -62,6 +62,7 @@ class AppRouter extends Router {
         this.root('home');
         this.route(/^(\d+)/, 'cms');
         this.route(/^to[us]$/, 'tos');
+        this.route(/^errata\/form\b/, 'errata');
 
         PAGES.forEach((page) => {
             const isSplat = page.match(/\/\*/);

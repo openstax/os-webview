@@ -172,14 +172,16 @@ $.htmlToText = (html) => {
 };
 
 $.insertHtml = (containerEl, model) => {
-    for (const htmlEl of containerEl.querySelectorAll('[data-html]')) {
-        /* eslint no-eval: 0 */
-        const expr = `model.${htmlEl.dataset.html}`;
+    if (containerEl) {
+        for (const htmlEl of containerEl.querySelectorAll('[data-html]')) {
+            /* eslint no-eval: 0 */
+            const expr = `model.${htmlEl.dataset.html}`;
 
-        try {
-            htmlEl.innerHTML = eval(expr);
-        } catch (e) {
-            console.warn('Eval', expr, e);
+            try {
+                htmlEl.innerHTML = eval(expr);
+            } catch (e) {
+                console.warn('Eval', expr, e);
+            }
         }
     }
 };

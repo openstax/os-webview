@@ -1,0 +1,5 @@
+<template args="model">
+    <div class="filter-button{model.isSelected($value.value)}" each="item in model.items"
+     data-html="items[{$item}].html" data-value="{$value.value}" skip="true">
+    </div>
+</template>
