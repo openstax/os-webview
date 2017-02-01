@@ -39,7 +39,7 @@ export default class AdoptionForm extends SalesforceForm {
         this.goToConfirmation = () => {
             if (this.submitted) {
                 this.submitted = false;
-                router.navigate('/confirmation?adoption');
+                router.navigate('/confirmation/adoption');
             }
         };
         this.formResponseEl.addEventListener('load', this.goToConfirmation);

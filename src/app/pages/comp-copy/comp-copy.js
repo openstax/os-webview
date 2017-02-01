@@ -26,7 +26,7 @@ export default class CompCopyForm extends SalesforceForm {
         this.goToConfirmation = () => {
             if (this.submitted) {
                 this.submitted = false;
-                router.navigate('/confirmation?compCopy');
+                router.navigate('/confirmation/compCopy');
             }
         };
         this.formResponseEl.addEventListener('load', this.goToConfirmation);

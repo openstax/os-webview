@@ -16,6 +16,7 @@ const PAGES = [
     'bulk-order',
     'comp-copy',
     'confirmation',
+    'confirmation/*path',
     'contact',
     'details/*path',
     'errata',
