@@ -83,7 +83,7 @@ export default class Confirmation extends Controller {
             calculator: 'savings-calculator'
         };
 
-        this.referringPage = window.location.search.substr(1);
+        this.referringPage = window.location.pathname.replace('/confirmation/', '');
         this.model = models[this.referringPage];
     }
 
