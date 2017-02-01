@@ -39,6 +39,7 @@
 
         h1 {
             color: inherit;
+            font-size: 4.8rem;
             line-height: 1;
             margin-bottom: 2.5rem;
         }
@@ -99,7 +100,7 @@
         max-width: 100%;
 
         @include phone {
-            width: 21rem;
+            width: 100%;
         }
 
         @media (min-width: 340px) {
@@ -154,14 +155,20 @@
             margin-bottom: 1rem;
             padding: 0.5rem 0;
             text-align: center;
+
+            @include phone {
+                flex-basis: calc(50% - 0.5rem);
+            }
         }
 
         .amount-input {
             flex: 0 0 21rem;
+            max-width: 21rem;
             padding-left: 1.5rem;
 
             @include phone {
                 flex-basis: 100%;
+                max-width: 100%;
             }
 
             &::placeholder {
