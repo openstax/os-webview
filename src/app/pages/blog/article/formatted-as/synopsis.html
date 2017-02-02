@@ -5,8 +5,8 @@
             <h2><a href="/blog/{model.articleSlug}">{model.title}</a></h2>
             <h3 if="model.subheading && model.pinned">{model.subheading}</h3>
             <div class="body"></div>
+            <a class="go-to" href="/blog/{model.articleSlug}">read more</a>
         </div>
-        <a class="go-to" href="/blog/{model.articleSlug}">read more</a>
         <div class="meta">
             <p>
                 <span class="author">{model.author}</span>

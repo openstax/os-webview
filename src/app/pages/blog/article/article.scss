@@ -52,6 +52,7 @@
             font-size: 2.1rem;
             letter-spacing: 0;
             line-height: 2.6rem;
+            margin-top: 2rem;
 
             @include desktop {
                 margin-top: 0;
@@ -81,13 +82,20 @@
         .content {
             display: flex;
             flex-direction: column;
-            height: 32rem;
         }
 
         .excerpt {
-            column-width: 57em;
             height: 100%;
+        }
+
+        .body {
+            column-width: 57em;
+            max-height: 9.8rem;
             overflow: hidden;
+
+            div :first-child {
+                -webkit-margin-before: 0;
+            }
         }
 
         .meta {
@@ -106,7 +114,6 @@
     }
 
     .pinned .article {
-        flex-flow: row wrap;
         width: 100%;
 
         @include wide-desktop {
@@ -120,6 +127,11 @@
                 font-size: 3.6rem;
                 letter-spacing: -0.2rem;
                 line-height: 4rem;
+                margin-top: 2rem;
+            }
+
+            @include wide-desktop {
+                margin-top: 0;
             }
         }
 
@@ -131,6 +143,10 @@
 
         .body {
             font-size: 1.8rem;
+        }
+
+        .go-to {
+            font-size: 1.4rem;
         }
 
         .img {
@@ -210,14 +226,9 @@
         text-transform: uppercase;
     }
 
-    .pinned .go-to {
-        font-size: 1.4rem;
-    }
-
     .body {
         column-width: 100%;
         line-height: 1.5;
-        position: relative;
 
         @include phone {
             font-size: 1.5rem;
