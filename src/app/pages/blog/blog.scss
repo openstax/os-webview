@@ -128,10 +128,9 @@
     }
 
     .update-box {
-        align-items: center;
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+        flex-flow: row nowrap;
+        justify-content: center;
         margin: auto;
         max-width: $boxed-width;
         padding-bottom: 2rem;
@@ -144,9 +143,8 @@
         .cta {
             background-color: color(orange);
             color: color(neutral-lightest);
-            margin-left: 0.5rem;
-            padding-left: 3rem;
-            padding-right: 3rem;
+            margin-left: 1rem;
+            padding: 1.25rem 3rem 0;
         }
     }
 }
