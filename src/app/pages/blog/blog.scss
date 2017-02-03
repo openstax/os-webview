@@ -136,15 +136,21 @@
         padding-bottom: 2rem;
 
         @include phone {
+            align-items: center;
             flex-direction: column;
             padding-left: 1.5rem;
+            text-align: center;
         }
 
         .cta {
             background-color: color(orange);
             color: color(neutral-lightest);
             margin-left: 1rem;
-            padding: 1.25rem 3rem 0;
+            padding: 1.25rem 3rem;
+
+            @include phone {
+                margin: 0;
+            }
         }
     }
 }
