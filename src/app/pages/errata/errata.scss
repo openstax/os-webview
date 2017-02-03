@@ -375,15 +375,21 @@ $fill-size: $node-size * 0.6;
             width: 75%;
         }
 
+        .file-button {
+            display: flex;
+            justify-content: flex-start;
+        }
+
         .btn {
             background-color: $table-dark-row;
             border: 0;
             color: $label-4;
+            display: flex;
             font-size: 1.6rem;
             margin: 0 0 3rem;
-            padding: 1.4rem;
+            padding: 1rem 4rem;
+            text-indent: inherit;
             text-transform: none;
-            width: 11.9rem;
         }
 
         [type="submit"].btn {
