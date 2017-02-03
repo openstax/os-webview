@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://openstax.org/about-us</loc>
-    <lastmod>2016-11-11</lastmod>
+    <loc>https://openstax.org/about</loc>
+    <lastmod>2017-02-03</lastmod>
   </url>
   <url>
     <loc>https://openstax.org/accessibility-statement</loc>
@@ -219,5 +219,13 @@
   <url>
     <loc>https://openstax.org/details/books/college-physics-ap-courses</loc>
     <lastmod>2016-11-11</lastmod>
+  </url>
+  <url>
+    <loc>https://openstax.org/blog</loc>
+    <lastmod>2017-02-03</lastmod>
+  </url>
+  <url>
+    <loc>https://openstax.org/tos</loc>
+    <lastmod>2017-02-03</lastmod>
   </url>
 </urlset>
