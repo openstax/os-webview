@@ -1,5 +1,5 @@
 <template args="model">
-    <form class="body-block" method="post" action="{model.postEndpoint}">
+    <form class="body-block" method="post" action="{model.postEndpoint}" enctype="multipart/form-data">
         <div class="question">Wrong subject? Select a different subject.</div>
         <div skip="true"></div>
         <select name="book">
@@ -49,7 +49,7 @@
         <div>
             <label class="btn">
                 Add file
-                <input type="file" class="hidden" name="attachment" class="btn" />
+                <input type="file" class="hidden" name="file" class="btn" />
             </label>
         </div>
         <div>
