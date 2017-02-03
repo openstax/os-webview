@@ -23,7 +23,8 @@ export default class Book extends Controller {
         this.model = {
             coverUrl: bookInfo.cover_url,
             slug: bookInfo.slug,
-            detailsOpenClass: ''
+            detailsOpenClass: '',
+            title: bookInfo.title
         };
         this.view = {
             classes: ['cover']

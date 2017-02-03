@@ -227,9 +227,9 @@ export default class Errata extends Controller {
 
             if (entry) {
                 this.model.summaryBook = entry.id;
+                this.model.title = () => `${entry.title} Errata`;
             }
             this.model.mode = 'summary';
-            this.model.title = () => `${this.model.summaryBook} Errata`;
             summaryPromise.then((summary) => {
                 for (const detail of summary) {
                     detail.date = new Date(detail.created).toLocaleDateString();
