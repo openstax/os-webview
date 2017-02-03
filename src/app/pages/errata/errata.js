@@ -187,7 +187,7 @@ export default class Errata extends Controller {
             const secondBarFill = detail.resolution === 'Published' ? ' filled' : ' filled-no';
 
             detail.date = new Date(detail.created).toLocaleDateString();
-            detail.source = detail.resource.join(', ');
+            detail.source = detail.resource;
             detail.firstBarClass = bars > 0 ? ' filled' : '';
             detail.secondBarClass = bars > 1 ? secondBarFill : '';
             this.model.title = () => 'Errata Submission Details';
@@ -233,7 +233,9 @@ export default class Errata extends Controller {
             summaryPromise.then((summary) => {
                 for (const detail of summary) {
                     detail.date = new Date(detail.created).toLocaleDateString();
-                    detail.source = detail.resource.join(', ');
+                    detail.source = detail.resource === 'Other' ? detail.resource_other : detail.resource;
+                    /* eslint camelcase: 0 */
+                    detail.error_type = detail.error_type === 'Other' ? detail.error_type_other : detail.error_type;
                 }
                 this.model.summaryData = summary;
                 this.update();

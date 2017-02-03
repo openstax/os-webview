@@ -15,7 +15,7 @@ export default class Form extends Controller {
 
                 return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
             },
-            helpBoxVisible: () => this.selectedError === 'Other' ? 'visible' : 'not-visible',
+            helpBoxVisible: () => this.model.selectedError === 'Other' ? 'visible' : 'not-visible',
             selectedSource: model.assessmentId ? 'OpenStax Tutor' : null,
             location: model.assessmentId ? `Assessment ${model.assessmentId}` : ''
         });
@@ -23,23 +23,45 @@ export default class Form extends Controller {
 
     onLoaded() {
         selectHandler.setup(this);
+        this.el.querySelector('[name="form-target"]').addEventListener('load', this.showConfirmation);
     }
 
     @on('change [name="error_type"]')
     showOrHideSupportBox() {
-        this.selectedError = this.el.querySelector('[name="error_type"]:checked').value;
+        this.model.selectedError = this.el.querySelector('[name="error_type"]:checked').value;
         this.update();
     }
 
-    @on('change [name="source"]')
+    @on('change [name="resource"]')
     updateSelectedSource(e) {
         this.model.selectedSource = e.target.value;
+        this.update();
+    }
+
+    @on('change [type="file"]')
+    updateFiles(e) {
+        const varName = e.target.name.replace('_', '');
+
+        this.model[varName] = e.target.value;
+        if (this.model.file2 && !this.model.file1) {
+            this.model.file1 = this.model.file2;
+            this.model.file2 = '';
+        }
+        this.update();
+    }
+
+    showConfirmation() {
+        console.debug('Confirmation: ', this.textContent);
     }
 
     @on('change [name="book"]')
     updateParent(e) {
-        this.model.selectedTitle = e.target.selectedOptions[0].dataset.stringValue;
-        this.parent && this.parent.update();
+        const selectedOptions = e.target.selectedOptions;
+
+        if (selectedOptions.length) {
+            this.model.selectedTitle = e.target.selectedOptions[0].dataset.stringValue;
+            this.parent && this.parent.update();
+        }
     }
 
     @on('focusout input')
