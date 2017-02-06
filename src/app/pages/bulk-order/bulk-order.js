@@ -87,12 +87,14 @@ export default class BulkOrder extends Controller {
         const orgName = queryByName('organization');
         const orgType = queryByName('organization_type');
         const fromName = queryByName('from_name');
+        const fromAddress = queryByName('from_address');
         const phone = queryByName('phone');
         const country = queryByName('country');
 
         this.model.messageBody =`
         From: ${fromName}
         Organization: ${orgName} (${orgType})
+        Email: ${fromAddress}
         Phone: ${phone}
         Country: ${country}
         `;
