@@ -38,15 +38,53 @@
             }());
         </script>
 
-        <script src="https://cdn.rawgit.com/eligrey/classList.js/e87db36a95b2381a8c3ed44582a3926185cede70/classList.min.js"></script>
+        <script async src="https://cdn.rawgit.com/eligrey/classList.js/e87db36a95b2381a8c3ed44582a3926185cede70/classList.min.js"></script>
         <script src="/jspm_packages/system.js"></script>
         <script src="/jspm.browser.js"></script>
         <script src="/jspm.config.js"></script>
         <script src="/libs/dependencies.js"></script>
-        <script src="https://cdn.optimizely.com/js/7893320024.js"></script>
+        <script async src="https://cdn.optimizely.com/js/7893320024.js"></script>
 
         <script>
             SystemJS.import('app/main');
+            /* Set meta description for initial page load */
+            const descriptions = {
+                '/about': 'OpenStax is a nonprofit based at Rice University, ' +
+                    'and it\'s our mission to improve student access to education. ' +
+                    'Read more about who we are and what we do.',
+                '/blog': 'Stay up to date with OpenStax news and hear community '+
+                    'perspectives on issues in education and access on the OpenStax blog.',
+                '/contact': 'If you have a question or feedback about our books, ' +
+                    'OpenStax Tutor, Concept Coach, partnerships, or any other topic, ' +
+                    'contact us here. We\'d love to hear from you!',
+                '/faq': 'Frequently Asked Questions about OpenStax',
+                '/foundation': 'OpenStax is supported by our philanthropic ' +
+                    'sponsors like the Bill & Melinda Gates Foundation, the William and Flora ' +
+                    'Hewlett Foundation, and more.',
+                '/give': 'Your donation helps us create opportunities for students to ' +
+                    'have access to quality free and low-cost educational materials. ' +
+                    'Your gift changes lives.',
+                '/higher-ed': 'Our open, peer-reviewed college textbooks are free ' +
+                    'online and come with resources from us and our partners. See how you can ' +
+                    'adopt our books for your course.',
+                '/impact': 'Since 2012, OpenStax has saved students millions ' +
+                    'through free, peer-reviewed college textbooks. Learn more about our ' +
+                    'impact on the 3,000+ schools who use our books.',
+                '/partners': 'OpenStax partners have united with us to increase ' +
+                    'access to high-quality learning materials. Their low-cost tools ' +
+                    'integrate seamlessly with OpenStax books.',
+                '/subjects': 'Our textbooks are openly licensed, peer-reviewed,' +
+                    'free, and backed by learning resources. Check out our books and' +
+                    'decide if they\'re right for your course.',
+                '/tos': 'Since 2012, OpenStax has saved students millions ' +
+                    'through free, peer-reviewed college textbooks. Learn more about our ' +
+                    'impact on the 3,000+ schools who use our books.'
+            };
+            const description = descriptions[location.pathname];
+
+            if (description) {
+                document.querySelector('meta[name="description"]').content = description;
+            }
         </script>
     </head>
     <body>
