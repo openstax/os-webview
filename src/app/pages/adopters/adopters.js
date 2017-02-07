@@ -14,7 +14,9 @@ export default class Adopters extends CMSPageController {
     }
 
     onDataLoaded() {
-        this.model.adopters = this.pageData.sort((a, b) => a.name.localeCompare(b.name));
+        const results = this.pageData.results || this.pageData;
+
+        this.model.adopters = results.sort((a, b) => a.name.localeCompare(b.name));
         this.update();
     }
 
