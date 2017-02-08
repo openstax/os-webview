@@ -4,6 +4,11 @@ import selectHandler from '~/handlers/select';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './form.html';
 
+const sourceNames = {
+    cc: 'OpenStax Concept Coach',
+    tutor: 'OpenStax Tutor'
+};
+
 export default class Form extends Controller {
 
     init(model) {
@@ -16,8 +21,8 @@ export default class Form extends Controller {
                 return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
             },
             helpBoxVisible: () => this.model.selectedError === 'Other' ? 'visible' : 'not-visible',
-            selectedSource: model.assessmentId ? 'OpenStax Tutor' : null,
-            location: model.assessmentId ? `Assessment ${model.assessmentId}` : ''
+            selectedSource: model.source && sourceNames[model.source.toLowerCase()],
+            location: model.location
         });
     }
 
