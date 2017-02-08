@@ -8,14 +8,15 @@ const applyLink = `${settings.accountHref}/faculty_access/apply?r=${encodeURICom
 
 const models = {
     adoption: {
-        headline: 'Thank you for adopting OpenStax!',
+        headline: 'Thanks! You\'re A Textbook Hero',
         topParagraph: `Our free digital textbooks and integrated resources are
         yours to use. You are joining thousands of educators in providing greater
         access to quality learning resources for your students.`,
         adoptionQuestion: 'Have you adopted another OpenStax book?',
         adoptionUrl: '/adoption',
         adoptionLinkText: 'Add another book',
-        subjectLinkText: 'Go back to our books'
+        subjectLinkText: 'Go back to our books',
+        studentImage: 'student-algebra.png'
     },
     compCopy: {
         headline: 'Thank you for requesting a download from iBooks.',
@@ -34,19 +35,6 @@ const models = {
         adoptionUrl: '/subjects',
         adoptionLinkText: 'Check out our subjects'
     },
-    faculty: {
-        headline: 'Thank you for applying for an instructor account!',
-        topParagraph: `We manually verify all instructor account requests to ensure that educator
-        resources stay in the right hands, so we'll email you in the next 3 to 4
-        business days about your approval. Once approved, you will be able to access
-        all of our instructor-only resources.`,
-        adoptionQuestion: 'Have you adopted an OpenStax book?',
-        adoptionUrl: '/adoption',
-        adoptionLinkText: 'Adopt a book',
-        subjectLinkText: 'Explore our books',
-        popupText: 'You will receive an email within 3 to 4 business days either ' +
-        'notifying you of your faculty access or requesting more information.'
-    },
     interest: {
         headline: 'Thanks for telling us about yourself!',
         topParagraph: `Our goal is to increase access for students to get the learning materials
@@ -56,17 +44,8 @@ const models = {
         adoptionQuestion: 'Have you been verified as an instructor?',
         adoptionUrl: applyLink,
         adoptionLinkText: 'Get verified',
-        subjectLinkText: 'Explore our books'
-    },
-    unverified: {
-        headline: 'Your new account has been created. Thank you for joining the OpenStax community!',
-        topParagraph: 'Do you need access to instructor-only resources?',
-        topLinkText: 'Get your account verified',
-        topLinkUrl: applyLink,
-        adoptionQuestion: 'Have you adopted an OpenStax book?',
-        adoptionUrl: '/adoption',
-        adoptionLinkText: 'Adopt a book',
-        subjectLinkText: 'Explore our books'
+        subjectLinkText: 'Explore our books',
+        studentImage: 'student-chemistry.png'
     }
 };
 
@@ -92,7 +71,7 @@ export default class Confirmation extends Controller {
             this.regions.popup.attach(new Popup(this.model.popupText));
         }
         if (['adoption', 'interest', 'faculty', 'compCopy'].includes(this.referringPage)) {
-            // this.regions.calculator.attach(new Calculator());
+            this.regions.calculator.attach(new Calculator());
         }
     }
 
