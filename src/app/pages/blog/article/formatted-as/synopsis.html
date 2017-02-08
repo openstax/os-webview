@@ -4,8 +4,10 @@
         <div class="excerpt">
             <h2><a href="/blog/{model.articleSlug}">{model.title}</a></h2>
             <h3 if="model.subheading && model.pinned">{model.subheading}</h3>
-            <div class="body"></div>
-            <a class="go-to" href="/blog/{model.articleSlug}">read more</a>
+            <div class="viewport">
+                <div class="body"></div>
+                <a class="go-to" href="/blog/{model.articleSlug}">read more</a>
+            </div>
         </div>
         <div class="meta">
             <p>
