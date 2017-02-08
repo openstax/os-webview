@@ -163,7 +163,8 @@ export default class Errata extends Controller {
                         mode: 'form',
                         selectedTitle: title,
                         books,
-                        assessmentId: queryDict.assessment
+                        location: queryDict.location && queryDict.location[0],
+                        source: queryDict.source && queryDict.source[0]
                     });
                     const form = new Form(this.model, () => this.update());
 
