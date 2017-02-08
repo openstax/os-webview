@@ -21,33 +21,12 @@ export default class Calculator extends Controller {
             classes: ['calculator']
         };
         this.model = {
-            studentCount: 1000,
-            savings: (item) => ((item.price - item.osPrice) * this.model.studentCount * 3),
-            ebook: {
-                osPrice: 0,
-                price: 100,
-                savings: () => moneyFormat(this.model.savings(this.model.ebook))
-            },
-            print: {
-                osPrice: 41,
-                price: 220,
-                savings: () => {
-                    const pDiff = this.model.savings(this.model.print);
-
-                    // Full-price costs (3 years) and used-price costs (3 years @ 50%)
-                    return moneyFormat(pDiff * (0.9 + 0.5 + 0.25)/3 + (0.1 + 0.5 + 0.75)/6);
-                }
-            },
-            printPlus: {
-                osPrice: 91,
-                price: 245,
-                savings: () => moneyFormat(this.model.savings(this.model.printPlus))
-            },
-            ePlus: {
-                osPrice: 50,
-                price: 145,
-                savings: () => moneyFormat(this.model.savings(this.model.ePlus))
-            }
+            activeBlock: null,
+            isValid: {},
+            widthClass: {},
+            values: {},
+            product: () => this.model.values.students * this.model.values.dollars,
+            calculated: false
         };
     }
 
@@ -75,6 +54,45 @@ export default class Calculator extends Controller {
 
             region.attach(new Spinner(props));
         }
+    }
+
+    @on('click .block')
+    setFocus(e) {
+        const input = e.delegateTarget.querySelector('input');
+
+        input.focus();
+    }
+
+    @on('focusin input.giant')
+    setActive(e) {
+        this.model.activeBlock = e.target.name;
+        this.update();
+    }
+
+    @on('focusout input.giant')
+    setInactive(e) {
+        if (this.model.activeBlock === e.target.name) {
+            this.model.activeBlock = null;
+            this.update();
+        }
+    }
+
+    @on('input .giant')
+    setValid(e) {
+        const name = e.target.name;
+        const value = e.target.value;
+
+        this.model.isValid[name] = value > 0;
+        this.model.widthClass[name] = `w${value.length}-chars`;
+        this.model.values[name] = value;
+        this.model.calculated = false;
+        this.update();
+    }
+
+    @on('click .calculate')
+    doCalculate() {
+        this.model.calculated = true;
+        this.update();
     }
 
 }

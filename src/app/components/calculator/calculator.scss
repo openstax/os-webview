@@ -1,131 +1,231 @@
 @import 'variables';
+@import 'mixins';
 
-$border-color: rgba(color(neutral-dark), 0.15);
-$medium-cyan: rgb(0, 134, 176);
-$darker-cyan: rgb(23, 82, 133);
-$neutral-cyan: rgb(2, 119, 163);
+$intro-text-color: #5e6062;
+$block-bgcolor: #f6f6f6;
+$narrow-tablet: 700px;
+$facebook-blue: #3b5998;
+$twitter-blue: #00aced;
+$linkedin-blue: #0077b5;
 
 .calculator {
-    display: none;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding-top: 4rem;
 
-    @media (min-width: 700px) {
-        display: block;
-        padding: 5rem 0 0;
+    .intro-paragraph {
+        color: $intro-text-color;
+        display: flex;
+        font-size: 2.1rem;
+        font-weight: bold;
+        justify-content: center;
+        margin-bottom: 3rem;
+        max-width: 100%;
+        text-align: center;
     }
 
-    .columns {
+    .input-blocks {
         display: flex;
-        flex-flow: row nowrap;
         justify-content: center;
-        line-height: inherit;
-        margin: 0 auto;
+        margin-bottom: 3rem;
+        width: 100%;
 
-        .column {
-            background-color: color(neutral-lightest);
-            display: flex;
-            flex-basis: 20%;
-            flex-flow: column nowrap;
-
-            &:first-child {
-                background-color: color(cyan);
-                color: color(neutral-lightest);
-
-                .cell {
-                    justify-content: flex-start;
-                    padding-left: 2em;
-
-                    &:first-child {
-                        background-color: $medium-cyan;
-                        color: inherit;
-                    }
-                }
-            }
-
-            &:nth-child(2) {
-                background-color: $neutral-cyan;
-                box-shadow: 1px 1px 5px 0 rgba(color(neutral-dark), 0.4);
-                color: color(neutral-lightest);
-                position: relative;
-                transform: scaleY(1.05);
-
-                .cell:first-child {
-                    background-color: $darker-cyan;
-                    color: inherit;
-                }
-            }
-
-            &:last-child .cell {
-                border-right: 0;
-                color: color(deep-green);
-                filter: saturate(80%);
-
-                &:first-child {
-                    color: inherit;
-                    filter: none;
-                }
-            }
-
-            .cell {
-                border-bottom: thin solid $border-color;
-                border-right: thin solid $border-color;
-            }
+        @media (max-width: $narrow-tablet) {
+            align-items: center;
+            flex-direction: column;
+            justify-content: flex-start;
         }
 
-        .cell {
+        .block {
+            flex-basis: 50%;
+            height: 37rem;
+            max-width: 39rem;
+            min-height: 37rem;
+
+            @media (max-width: $narrow-tablet) {
+                width: 100%;
+            }
+
+        }
+    }
+
+    .btn {
+        border: 0;
+        font-size: 1.6rem;
+        margin-bottom: 6rem;
+        padding: 1rem 2rem;
+    }
+
+    .block {
+        background-color: $block-bgcolor;
+        box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(color(gray), 0.1);
+        color: color(blue);
+        font-weight: bold;
+        position: relative;
+        vertical-align: top;
+
+        &.active {
+            background-color: color(neutral-lightest);
+            z-index: 1;
+        }
+
+        .input-zone {
             align-items: center;
             display: flex;
-            height: 5em;
+            flex-direction: column;
+            padding: 7rem;
+        }
+
+        .dollar-input {
+            position: relative;
+
+            > span {
+                font-size: 2rem;
+                position: absolute;
+                top: 20%;
+            }
+        }
+
+        .giant {
+            background-color: transparent;
+            border: 0;
+            color: inherit;
+            font-family: inherit;
+            font-size: 9.5rem;
+            font-weight: inherit;
+            outline: none;
+            text-align: center;
+            width: 1.55em;
+
+            &::placeholder {
+                color: color(neutral-light);
+            }
+
+            &.w1-chars {
+                width: 1em;
+            }
+
+            &.w3-chars {
+                width: 2.1em;
+            }
+
+            &.w4-chars {
+                width: 2.65em;
+            }
+        }
+
+        .instructions {
+            color: $intro-text-color;
+            font-weight: normal;
+            max-width: 100%;
+            text-align: center;
+        }
+
+        .active-indicator {
+            align-items: center;
+            border-top: thin solid color(neutral-lighter);
+            bottom: 0;
+            display: flex;
+            height: 9rem;
+            justify-content: flex-end;
+            padding: 2rem;
+            position: absolute;
+            width: 100%;
+        }
+    }
+
+    .output {
+        align-content: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 12rem;
+        margin-top: 3rem;
+        max-width: 78rem;
+        width: 100%;
+
+        @include phone {
+            margin-bottom: 6rem;
+        }
+
+        .savings {
+            align-items: center;
+            background-image: url('/images/components/confetti.png');
+            background-size: cover;
+            display: flex;
+            flex-basis: 63vw;
+            flex-direction: column;
             justify-content: center;
-            padding: 1em;
 
-            &:first-child {
-                background-color: darken(color(neutral-lightest), 7%);
-                color: $text-dark;
-                font-weight: 500;
+            @include desktop {
+                flex-basis: 50rem;
             }
 
-            &:last-child {
-                border-bottom: 0;
+            .text {
+                align-items: flex-start;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                line-height: 1;
+
+                @include phone {
+                    transform: scale(0.7);
+                }
             }
 
-            input,
-            .non-input,
-            spinner {
-                background-color: transparent;
-                border: 0;
-                color: inherit;
-                font-size: inherit;
-                min-width: 4em;
-                outline: none;
-                position: relative;
-                text-align: center;
-                width: 35%;
+            .giant {
+                font-size: 5rem;
+                width: auto;
             }
 
-            [type="number"] {
-                -moz-appearance: textfield;
+            .raised {
+                margin-top: 0.5rem;
+            }
+        }
 
-                &::-webkit-outer-spin-button,
-                &::-webkit-inner-spin-button {
-                    -webkit-appearance: none;
+        .share {
+            align-items: center;
+            background-color: color(blue);
+            color: color(neutral-lightest);
+            display: flex;
+            flex-direction: column;
+            padding: 4rem;
+            text-align: center;
+            width: 100%;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0;
+            width: 100%;
+
+            @include phone {
+                flex-direction: column;
+                width: auto;
+            }
+
+            .btn {
+                background-repeat: no-repeat;
+                color: color(neutral-lightest);
+                font-weight: normal;
+                margin: 1rem 0.5rem;
+                padding-left: 3.5rem;
+                text-transform: none;
+
+                &.facebook {
+                    background-color: $facebook-blue;
+                }
+
+                &.twitter {
+                    background-color: $twitter-blue;
+                }
+
+                &.linkedin {
+                    background-color: $linkedin-blue;
                 }
             }
         }
-    }
-
-    .table-notes {
-        font-size: 85%;
-        line-height: 1;
-        margin-top: 2.5em;
-        opacity: 0.8;
-        text-align: center;
-
-        sup {
-            font-size: inherit;
-        }
-    }
-
-    .footnote::after {
-        content: '*';
     }
 }

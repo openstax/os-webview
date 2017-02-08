@@ -1,18 +1,100 @@
 @import 'variables';
 @import 'mixins';
 
+$confirmation-green: #0c9372;
+
 .confirmation-page {
     background-color: darken(color(neutral-lightest), 5%);
 
-    .subhead {
-        padding-bottom: 8rem;
+    .page-intro {
+        background-color: $confirmation-green;
+        display: flex;
+        justify-content: center;
 
-        @include desktop {
-            text-align: center;
+        .subhead,
+        .subhead h1 {
+            align-items: flex-end;
+            color: color(neutral-lightest);
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            padding-bottom: 0;
         }
 
-        a {
-            color: color(yellow);
+        .subhead {
+            padding-top: 4rem;
+
+            h1 {
+                max-width: 100%;
+            }
+        }
+
+        .text-content {
+            align-items: flex-start;
+            display: flex;
+            flex: 1 1 50%;
+            flex-direction: column;
+            margin-left: 14rem;
+            padding-bottom: 4rem;
+
+            @media (max-width: 1024px) {
+                margin-left: calc(54vw - 41.4rem);
+            }
+
+            @include tablet {
+                margin-left: 0;
+            }
+
+            @include phone {
+                margin-left: 0;
+            }
+
+            &.centered {
+                align-items: center;
+                margin-left: auto;
+                text-align: center;
+            }
+        }
+
+        img {
+            display: inline-block;
+            flex: 1 0 20rem;
+            height: calc(35rem - 2vw);
+            left: -14rem;
+            position: relative;
+
+            @media (max-width: 1024px) {
+                left: calc(41.4rem - 54vw);
+            }
+
+            @include phone {
+                display: none;
+            }
+
+            @include tablet {
+                display: none;
+            }
+        }
+    }
+
+    .btn.cta {
+        background-color: color(orange);
+        color: color(neutral-lightest);
+        display: inline-block;
+        margin: 1rem 0;
+        padding: 1em 2em;
+    }
+
+    .go-back {
+        color: color(neutral-lightest);
+        font-size: 1.4rem;
+
+        &::before {
+            content: '▸';
+            display: inline-block;
+            font-size: 120%;
+            padding-left: 0.3em;
+            transform: rotate(180deg);
         }
     }
 

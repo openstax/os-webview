@@ -1,50 +1,60 @@
 <template args="model">
-    <div class="columns">
-        <div class="column formats">
-            <div class="cell">Formats</div>
-            <div class="cell">E-book Only</div>
-            <div class="cell">Printed Text Only</div>
-            <div class="cell">Printed Text + Online Resources</div>
-            <div class="cell">E-book + Online Resources</div>
+    <div class="intro-paragraph">
+        Calculate how much your students will save this year
+    </div>
+    <div class="input-blocks">
+        <div class="{`cost block ${model.activeBlock === 'dollars' ? 'active' : ''}`}">
+            <div class="input-zone">
+                <div class="dollar-input">
+                    <span>$</span>
+                    <input class="{`giant ${model.widthClass.dollars}`}" name="dollars" type="number" placeholder="00" min="1" />
+                </div>
+                <div class="instructions">Enter your previous book cost</div>
+            </div>
+            <div class="active-indicator">
+                <if condition="model.isValid.dollars">
+                    <img src="/images/components/green-checked-radio.png" />
+                <else>
+                    <img src="/images/components/unchecked-radio.png" />
+                </if>
+            </div>
         </div>
-        <div class="column zoomed">
-            <div class="cell">OpenStax Prices</div>
-            <div class="cell">$<span class="non-input">{model.ebook.osPrice}</span></div>
-            <div class="cell">$<spinner data-item="print.osPrice" skip="true"></spinner></div>
-            <div class="cell">$<spinner data-item="printPlus.osPrice" skip="true"></spinner></div>
-            <div class="cell">$<spinner data-item="ePlus.osPrice" skip="true"></spinner></div>
-        </div>
-        <div class="column">
-            <div class="cell">Traditional Prices</div>
-            <div class="cell">$<spinner data-item="ebook.price" skip="true"></spinner></div>
-            <div class="cell">$<spinner data-item="print.price" skip="true"></spinner></div>
-            <div class="cell">$<spinner data-item="printPlus.price" skip="true"></spinner></div>
-            <div class="cell">$<spinner data-item="ePlus.price" skip="true"></spinner></div>
-        </div>
-        <div class="column">
-            <div class="cell">Number of Students</div>
-            <div class="cell"><spinner data-item="studentCount" skip="true" /></div>
-            <div class="cell">{model.studentCount}</div>
-            <div class="cell">{model.studentCount}</div>
-            <div class="cell">{model.studentCount}</div>
-        </div>
-        <div class="column">
-            <div class="cell">Savings Over Three Years</div>
-            <div class="cell">{model.ebook.savings()}</div>
-            <div class="cell">{model.print.savings()}<span class="footnote"></span></div>
-            <div class="cell">{model.printPlus.savings()}</div>
-            <div class="cell">{model.ePlus.savings()}</div>
+        <div class="{`student block ${model.activeBlock === 'students' ? 'active' : ''}`}">
+            <div class="input-zone">
+                <input class="{`giant ${model.widthClass.students}`}" name="students" type="number" placeholder="00" min="1" />
+                <div class="instructions">
+                    The number of students you teach  each academic year
+                </div>
+            </div>
+            <div class="active-indicator">
+                <if condition="model.isValid.students">
+                    <img src="/images/components/green-checked-radio.png" />
+                <else>
+                    <img src="/images/components/unchecked-radio.png" />
+                </if>
+            </div>
         </div>
     </div>
-    <div class="table-notes">
-        <p>
-            Use as a guide; price varies widely by source and local markets.
-            OpenStax College printed cost based on on-demand printing of
-            <i>College Physics</i>
-        </p>
-        <p>
-            <sup>*</sup>Assumes students will be able to purchase
-            used copies, 10% used in year 1, 50% in year 2, 75% in year 3.
-        </p>
-    </div>
+    <if condition="model.isValid.dollars && model.isValid.students">
+        <button class="btn cta calculate">Calculate</button>
+        <div if="model.calculated" class="output">
+            <div class="savings block">
+                <div class="text">
+                    <span class="raised">$</span>
+                    <span class="giant">{model.product().toLocaleString()}</span>
+                </div>
+                <div>Pretty amazing!</div>
+            </div>
+            <div class="share">
+                <div class="text">
+                    Spread the word and join the textbook revolution
+                </div>
+                <div class="buttons">
+                    <button class="facebook btn">Facebook</button>
+                    <button class="twitter btn">Twitter</button>
+                    <button class="linkedin btn">LinkedIn</button>
+                </div>
+            </div>
+        </div>
+    </if>
 </template>
