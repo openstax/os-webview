@@ -84,10 +84,14 @@
             flex-direction: column;
         }
 
+        .viewport {
+            overflow: hidden;
+        }
+
         .body {
             column-width: 57em;
-            max-height: 9.8rem;
-            overflow: hidden;
+            max-height: 11rem;
+            width: auto;
 
             div :first-child {
                 -webkit-margin-before: 0;
@@ -95,7 +99,13 @@
         }
 
         .meta {
+            border-bottom: thin solid color(neutral-lighter);
             color: color(neutral-light);
+            padding-bottom: 1rem;
+
+            @include desktop {
+                border: 0;
+            }
 
             p {
                 margin: 0;
@@ -139,6 +149,7 @@
 
         .body {
             font-size: 1.8rem;
+            height: 15rem;
         }
 
         .go-to {
