@@ -2,6 +2,7 @@
 @import 'mixins';
 
 $confirmation-green: #0c9372;
+$page-background: #fbfbfb;
 
 .confirmation-page {
     background-color: darken(color(neutral-lightest), 5%);
@@ -98,7 +99,8 @@ $confirmation-green: #0c9372;
         }
     }
 
-    .strips {
-        margin-bottom: 0;
+    .wrapper {
+        background-color: $page-background;
+        min-height: 13rem;
     }
 }

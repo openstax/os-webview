@@ -10,7 +10,6 @@
 $page-background: #fbfbfb;
 $label-1: #575958;
 $label-2: #999;
-$label-3: #4a4a4a;
 $label-4: #5f6163;
 $table-border: #dcdcdc;
 $table-dark-row: #f6f6f6;
@@ -269,55 +268,6 @@ $fill-size: $node-size * 0.6;
             display: block;
         }
 
-    }
-
-    .padded {
-        margin-bottom: 4rem;
-    }
-
-    .label-value-pair {
-        display: table-row;
-        height: 4rem;
-
-        @include phone {
-            display: block;
-            height: auto;
-            padding-bottom: 1rem;
-        }
-
-        .label,
-        .value {
-            display: table-cell;
-            line-height: normal;
-            padding: 1rem 0;
-            word-wrap: break-word;
-
-            @include phone {
-                display: block;
-            }
-        }
-
-        .label {
-            color: $label-3;
-            font-weight: bold;
-            text-align: left;
-            width: 20rem;
-
-            @include phone {
-                width: auto;
-            }
-        }
-
-        .value {
-            max-width: calc(100% - 20rem);
-        }
-    }
-
-    .note {
-        color: $label-1;
-        font-size: 1.2rem;
-        line-height: normal;
-        margin-bottom: 8rem;
     }
 
     .form-container {

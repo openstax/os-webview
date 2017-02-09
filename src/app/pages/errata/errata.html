@@ -19,7 +19,7 @@
                 <tr>
                     <th each="md in model.summaryMetaData" class="{md.cssClass || ''}"
                      data-sort-fn="{md.sortFn}" data-sort-key="{md.key}">
-                     {md.label}
+                     {md.label || ''}
                      <span if="model.summarySortedBy === md.key" class="{`sortdir${model.summarySortDirection}`}">
                  </th>
                 </tr>
@@ -62,7 +62,7 @@
                         <div class="event">Reviewed</div>
                     </div>
                     <div class="label">
-                        <div class="event">{model.detail.resolution}</div>
+                        <div class="event">{model.detail.resolution || 'Corrected'}</div>
                     </div>
                 </div>
                 <div class="progress-bar">
@@ -77,27 +77,7 @@
                     </div>
                 </div>
             </div>
-            <div class="body-block padded" if="model.detail && model.detail.resolution">
-                <div class="info">
-                    <div class="label-value-pair" each="pair in model.decisionDataPairs">
-                        <div class="label">{pair[0]}</div>
-                        <div class="value">{model.detail[pair[1]]}</div>
-                    </div>
-                </div>
-                <div>Questions about the resolution? <a mailto="support@openstax.org">Ask us</a></div>
-            </div>
-            <div class="info padded body-block" if="model.detail">
-                <div class="label-value-pair" each="pair in model.detailDataPairs">
-                    <div class="label">{pair[0]}</div>
-                    <div class="value" data-html="detail['{pair[1]}']" skip="true"></div>
-                </div>
-            </div>
-            <div class="note body-block" if="model.book">
-                You can check the status of all errata submissions on the
-                <a href="/errata?book={encodeURIComponent(model.bookTitle)}">
-                    <span data-html="bookTitle" skip="true"></span> Errata Page
-                </a>.
-            </div>
+            <detail-block skip="true"></detail-block>
         </div>
     </div>
     <div class="boxed form-container" skip="true"></div>

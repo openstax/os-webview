@@ -1,7 +1,9 @@
 import {Controller} from 'superb';
 import settings from 'settings';
+import $ from '~/helpers/$';
 import Popup from '~/components/popup/popup';
 import Calculator from '~/components/calculator/calculator';
+import Detail from '~/pages/errata/detail/detail';
 import {description as template} from './confirmation.html';
 
 const applyLink = `${settings.accountHref}/faculty_access/apply?r=${encodeURIComponent(settings.apiOrigin)}`;
@@ -35,6 +37,11 @@ const models = {
         adoptionUrl: '/subjects',
         adoptionLinkText: 'Check out our subjects'
     },
+    errata: {
+        headline: 'Thanks for your help!',
+        adoptionQuestion: `Your contribution helps keep OpenStax resources high quality
+        and up to date. We sent you an email confirming your submission.`
+    },
     interest: {
         headline: 'Thanks for telling us about yourself!',
         topParagraph: `Our goal is to increase access for students to get the learning materials
@@ -59,7 +66,8 @@ export default class Confirmation extends Controller {
         };
         this.regions = {
             popup: 'pop-up',
-            calculator: 'savings-calculator'
+            calculator: 'savings-calculator',
+            detail: 'detail-block'
         };
 
         this.referringPage = window.location.pathname.replace('/confirmation/', '');
@@ -70,8 +78,15 @@ export default class Confirmation extends Controller {
         if (this.model.popupText) {
             this.regions.popup.attach(new Popup(this.model.popupText));
         }
-        if (['adoption', 'interest', 'faculty', 'compCopy'].includes(this.referringPage)) {
+        if (['adoption', 'interest'].includes(this.referringPage)) {
             this.regions.calculator.attach(new Calculator());
+        }
+        if (this.referringPage === 'errata') {
+            const queryDict = $.parseSearchString(window.location.search);
+
+            Detail.detailPromise(queryDict.id).then((detail) => {
+                this.regions.detail.attach(new Detail(detail));
+            });
         }
     }
 
