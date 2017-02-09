@@ -40,6 +40,7 @@ $linkedin-blue: #0077b5;
         .block {
             flex-basis: 50%;
             height: 37rem;
+            margin: 0.1rem;
             max-width: 39rem;
             min-height: 37rem;
 
@@ -59,7 +60,6 @@ $linkedin-blue: #0077b5;
 
     .block {
         background-color: $block-bgcolor;
-        box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(color(gray), 0.1);
         color: color(blue);
         font-weight: bold;
         position: relative;
@@ -67,7 +67,12 @@ $linkedin-blue: #0077b5;
 
         &.active {
             background-color: color(neutral-lightest);
+            box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(color(gray), 0.1);
             z-index: 1;
+
+            .active-indicator {
+                border-top-color: $block-bgcolor;
+            }
         }
 
         .input-zone {
@@ -84,6 +89,10 @@ $linkedin-blue: #0077b5;
                 font-size: 2rem;
                 position: absolute;
                 top: 20%;
+
+                &.placeholder {
+                    opacity: 0.2;
+                }
             }
         }
 
@@ -99,7 +108,8 @@ $linkedin-blue: #0077b5;
             width: 1.55em;
 
             &::placeholder {
-                color: color(neutral-light);
+                color: inherit;
+                opacity: 0.2;
             }
 
             &.w1-chars {
@@ -124,7 +134,7 @@ $linkedin-blue: #0077b5;
 
         .active-indicator {
             align-items: center;
-            border-top: thin solid color(neutral-lighter);
+            border-top: thin solid color(neutral-lightest);
             bottom: 0;
             display: flex;
             height: 9rem;
