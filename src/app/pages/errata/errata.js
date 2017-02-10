@@ -2,13 +2,12 @@ import {Controller} from 'superb';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import settings from 'settings';
+import {bookPromise} from '~/models/book-titles';
 import userModel from '~/models/usermodel';
 import Form from './form/form';
+import Detail from './detail/detail';
 import RadioPanel from '~/components/radio-panel/radio-panel';
 import {description as template} from './errata.html';
-
-const bookPromise = fetch(`${settings.apiOrigin}/api/v2/pages/?type=books.Book&fields=title,id`)
-    .then(r => r.json()).then(r => r.items);
 
 export default class Errata extends Controller {
 
@@ -20,7 +19,8 @@ export default class Errata extends Controller {
         };
         this.regions = {
             filter: '.filter',
-            form: '.form-container'
+            form: '.form-container',
+            detail: '.detail-block'
         };
         this.radioPanel = new RadioPanel([
             {value: '', html: 'View All'},
@@ -121,15 +121,7 @@ export default class Errata extends Controller {
             summaryBook: '',
             summaryFilteredData: () => this.model.summaryData.filter(
                 (item) => item.book === this.model.summaryBook && this.matchesFilter(item)
-            ),
-            detailDataPairs: [
-                ['Submission ID', 'id'], ['Title', 'book'], ['Source', 'source'],
-                ['Error Type', 'error_type'], ['Location', 'location'],
-                ['Description', 'detail'], ['Date Submitted', 'date']
-            ],
-            decisionDataPairs: [
-                ['Decision', 'resolution'], ['Decision details', 'resolution_notes']
-            ]
+            )
         };
     }
 
@@ -148,7 +140,6 @@ export default class Errata extends Controller {
     }
 
     onUpdate() {
-        $.insertHtml(this.el.querySelector('.detail'), this.model);
         $.insertHtml(this.el.querySelector('.hero'), this.model);
     }
 
@@ -166,7 +157,7 @@ export default class Errata extends Controller {
                         location: queryDict.location && queryDict.location[0],
                         source: queryDict.source && queryDict.source[0]
                     });
-                    const form = new Form(this.model, () => this.update());
+                    const form = new Form(this.model);
 
                     this.regions.form.attach(form);
                     this.update();
@@ -179,6 +170,7 @@ export default class Errata extends Controller {
 
     fetchAndDisplay(id) {
         this.model.mode = 'detail';
+        const Region = this.regions.self.constructor;
         const setModelDetail = (detail) => {
             const bars = detail.resolution ? 2 : {
                 'New': 0,
@@ -187,41 +179,29 @@ export default class Errata extends Controller {
             }[detail.status];
             const secondBarFill = detail.resolution === 'Published' ? ' filled' : ' filled-no';
 
-            detail.date = new Date(detail.created).toLocaleDateString();
-            detail.source = detail.resource;
             detail.firstBarClass = bars > 0 ? ' filled' : '';
             detail.secondBarClass = bars > 1 ? secondBarFill : '';
             this.model.title = () => 'Errata Submission Details';
             this.model.book = detail.book;
-            this.model.bookTitle = '(unknown book)';
             this.model.detail = detail;
+            const detailComponent = new Detail(detail);
+            const detailEl = this.el.querySelector('detail-block');
+            const detailRegion = new Region(detailEl, this);
+
+            detailRegion.attach(detailComponent);
+            this.update();
         };
 
-        /* eslint arrow-parens: 0 */
-        (async () => {
-            try {
-                const response = await fetch(`${settings.apiOrigin}/api/errata/${id}`);
-                const detail = await response.json();
-
-                setModelDetail(detail);
-                bookPromise.then((bookList) => {
-                    const entry = bookList.find((info) => info.id === detail.book);
-
-                    if (entry) {
-                        this.model.bookTitle = entry.title;
-                    }
-                    this.update();
-                });
-            } catch (e) {
-                console.log(e);
-            }
-        })();
+        Detail.detailPromise(id).then((detail) => {
+            this.model.bookTitle = detail.bookTitle;
+            setModelDetail(detail);
+        });
     }
 
     summary(book) {
         // Fetch the summary data once
         const summaryPromise = fetch(`${settings.apiOrigin}/api/errata/?book_title=${book}`)
-            .then(r => r.json()).then(r => r.results);
+            .then((r) => r.json()).then((r) => r.results);
 
         bookPromise.then((bookList) => {
             const entry = bookList.find((info) => info.title === book);
