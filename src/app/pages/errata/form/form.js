@@ -1,6 +1,7 @@
 import {Controller} from 'superb';
 import settings from 'settings';
 import selectHandler from '~/handlers/select';
+import router from '~/router';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './form.html';
 
@@ -28,7 +29,6 @@ export default class Form extends Controller {
 
     onLoaded() {
         selectHandler.setup(this);
-        this.el.querySelector('[name="form-target"]').addEventListener('load', this.showConfirmation);
     }
 
     @on('change [name="error_type"]')
@@ -53,10 +53,6 @@ export default class Form extends Controller {
             this.model.file2 = '';
         }
         this.update();
-    }
-
-    showConfirmation() {
-        console.debug('Confirmation: ', this.textContent);
     }
 
     @on('change [name="book"]')
@@ -91,9 +87,25 @@ export default class Form extends Controller {
     }
 
     @on('submit form')
-    changeSubmitMode() {
+    changeSubmitMode(e) {
         this.submitted = true;
         this.update();
+        const formEl = this.el.querySelector('form');
+        const form = new FormData(formEl);
+
+        // Programmatically post the form
+        fetch(this.model.postEndpoint, {
+            method: 'POST',
+            body: form
+        }).then((r) => r.json()).then((json) => {
+            if (json.id) {
+                router.navigate(`/confirmation/errata?id=${json.id}`);
+            } else {
+                /* eslint no-alert: 0 */
+                alert('Errata submission failed.');
+            }
+        });
+        e.preventDefault();
     }
 
 }
