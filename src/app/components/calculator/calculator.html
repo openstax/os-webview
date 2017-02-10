@@ -6,7 +6,7 @@
         <div class="{`cost block ${model.activeBlock === 'dollars' ? 'active' : ''}`}">
             <div class="input-zone">
                 <div class="dollar-input">
-                    <span>$</span>
+                    <span class="{model.values.dollars ? '' : 'placeholder'}">$</span>
                     <input class="{`giant ${model.widthClass.dollars}`}" name="dollars" type="number" placeholder="00" min="1" />
                 </div>
                 <div class="instructions">Enter your previous book cost</div>
