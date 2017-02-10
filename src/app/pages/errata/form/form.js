@@ -14,7 +14,7 @@ export default class Form extends Controller {
     init(model) {
         this.template = template;
         this.model = Object.assign(model, {
-            postEndpoint: `${settings.apiOrigin}/api/errata/`,
+            postEndpoint: `${settings.apiOrigin}/api/errata/?format=json`,
             validationMessage: (name) => {
                 const el = this.el.querySelector(`[name="${name}"]`);
 

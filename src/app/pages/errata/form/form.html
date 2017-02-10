@@ -1,7 +1,7 @@
 <template args="model">
     <iframe name="form-target" class="hidden"></iframe>
     <form class="body-block" method="post" action="{model.postEndpoint}"
-     enctype="multipart/form-data" target="_blank">
+     enctype="multipart/form-data" target="form-target">
         <div class="question">Wrong subject? Select a different subject.</div>
         <div skip="true"></div>
         <select name="book">

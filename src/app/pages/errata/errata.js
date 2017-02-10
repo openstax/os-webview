@@ -201,7 +201,7 @@ export default class Errata extends Controller {
     summary(book) {
         // Fetch the summary data once
         const summaryPromise = fetch(`${settings.apiOrigin}/api/errata/?book_title=${book}`)
-            .then((r) => r.json()).then((r) => r.results);
+            .then((r) => r.json());
 
         bookPromise.then((bookList) => {
             const entry = bookList.find((info) => info.title === book);
