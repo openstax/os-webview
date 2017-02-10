@@ -43,7 +43,9 @@ export default class Give extends CMSPageController {
 
                 return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
             },
-            recurring: history.state && history.state.recurring || ''
+            recurring: history.state && history.state.recurring || '',
+            billingFields: ['NAME', 'EMAIL_ADDRESS', 'STREET1', 'STREET2', 'CITY',
+            'STATE', 'POSTAL_CODE', 'COUNTRY']
         };
         this.slug = 'pages/give';
         this.regions = {
@@ -202,6 +204,33 @@ export default class Give extends CMSPageController {
     @on('click [type="submit"]')
     doCustomValidation(event) {
         const invalid = this.el.querySelector('form :invalid');
+
+        // Copy fields to BILL_* fields
+        const elements = Array.from(this.el.querySelectorAll('input,select'));
+        /* eslint camelcase: 0 */
+        const fieldMap = {
+            email: 'BILL_EMAIL_ADDRESS',
+            mailing_address: 'BILL_STREET1',
+            mailing_address2: 'BILL_STREET2',
+            mailing_city: 'BILL_CITY',
+            mailing_state: 'BILL_STATE',
+            mailing_zip: 'BILL_POSTAL_CODE',
+            mailing_country: 'BILL_COUNTRY'
+        };
+
+        for (const el of elements) {
+            const name = el.name.toLowerCase();
+
+            if (name in fieldMap) {
+                const billEl = this.el.querySelector(`[name=${fieldMap[name]}]`);
+
+                billEl.value = el.value;
+            }
+        }
+        // BILL_NAME is special
+        this.el.querySelector('[name="BILL_NAME"]').value = ['First_Name', 'Last_Name']
+            .map((name) => this.el.querySelector(`[name=${name}]`).value)
+            .join(' ');
 
         this.hasBeenSubmitted = true;
         if (invalid) {

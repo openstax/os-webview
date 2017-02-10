@@ -15,6 +15,7 @@
                 <input type="hidden" name="Rice_Relate" value="Friend">
                 <input type="hidden" name="turn_email_off" value="yes">
                 <input type="hidden" name="recurring_payment_type" value="{model.recurring}">
+                <input each="fieldName in model.billingFields" type="hidden" name="{`BILL_${fieldName}`}" />
                 <div class="labeled-inputs row top-of-form">
                     <div class="col">
                         <label>
