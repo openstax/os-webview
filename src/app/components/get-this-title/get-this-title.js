@@ -30,7 +30,10 @@ export default class GetThisTitle extends Controller {
             loRes: data.low_resolution_pdf_url,
             amazon: {
                 link: data.amazon_link,
-                price: data.amazon_price,
+                price: data.amazon_price.toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD'
+                }),
                 blurb: data.amazon_blurb
             },
             bookstore: {

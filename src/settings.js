@@ -3,7 +3,7 @@ const settings = {
     analyticsID: 'UA-73668038-1',
     tagManagerID: 'GTM-W6N7PB',
     webmaster: 'webmaster@openstax.org',
-    apiOrigin: 'http://localhost:8000',
+    apiOrigin: 'http://oscms-dev.openstax.org',
     accountHref: 'https://accounts-qa.openstax.org'
 };
 
