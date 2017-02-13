@@ -3,15 +3,6 @@ import {on} from '~/helpers/controller/decorators';
 import Spinner from '~/components/spinner/spinner';
 import {description as template} from './calculator.html';
 
-function moneyFormat(num) {
-    return num.toLocaleString('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        maximumFractionDigits: 0,
-        minimumFractionDigits: 0
-    });
-}
-
 export default class Calculator extends Controller {
 
     init() {
