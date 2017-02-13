@@ -79,7 +79,7 @@ export default class DetailsLoaded extends Controller {
                 }
             };
 
-            if (!user || user.username === '') {
+            if (!user || !user.username) {
                 isInstructor = false;
                 alternateLink = `${settings.apiOrigin}/accounts/login/openstax/?next=${encodedLocation}`;
                 this.model.extraInstructions =
