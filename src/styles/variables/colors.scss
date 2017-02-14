@@ -1,15 +1,15 @@
 // OpenStax Color Scheme
 $os-colors: (
     red: rgb(194, 32, 50),
-    orange: rgb(244, 118, 65),
-    yellow: rgb(244, 208, 25),
+    orange: #f47642,
+    yellow: #f5d019,
     gold: rgb(254, 189, 62),
-    green: rgb(119, 175, 66),
+    green: #79b142,
     deep-green: rgb(12, 147, 144),
     turquoise: rgb(45, 151, 147),
     cyan: rgb(13, 192, 220),
-    blue: rgb(0, 36, 106),
-    gray: rgb(94, 96, 98)
+    blue: #232e66,
+    gray: #5f6062
 );
 
 @function os-color($color) {

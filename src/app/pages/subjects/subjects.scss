@@ -67,6 +67,15 @@
     .filter {
         padding: 0.2rem 0;
         width: 100%;
+
+        &.sticky {
+            position: fixed;
+            top: 6rem;
+
+            @include desktop {
+                position: static;
+            }
+        }
     }
 
     .blurb {

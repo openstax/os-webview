@@ -95,11 +95,6 @@ export default class Partners extends CMSPageController {
         this.partnerViewer.filterPartners(category);
     }
 
-    @on('click .filter-button')
-    scrollToFilterButtons1() {
-        $.scrollTo(this.el.querySelector('.filter'), 20);
-    }
-
     @on('click .logo-text')
     onLogoClick(e) {
         e.preventDefault();

@@ -72,6 +72,7 @@
             max-height: 100vh;
             overflow-y: auto;
             padding: 3rem;
+            padding-top: 6rem;
             position: absolute;
 
             @include desktop {
@@ -79,6 +80,7 @@
                 left: 50%;
                 max-height: 50rem;
                 max-width: 60rem;
+                padding-top: 3rem;
                 top: 50%;
                 transform: translate3d(-50%, -50%, 0);
                 width: 100%;
