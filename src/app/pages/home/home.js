@@ -12,6 +12,7 @@ import Banner from './banners/banner';
 
 const bannerModels = shuffle([{
     subject: 'astronomy',
+    subjectURL: '/details/books/astronomy',
     subjectTitle: 'astronomy',
     quote: 'see beyond this world',
     features: ['chart', 'equation'],
@@ -20,6 +21,7 @@ const bannerModels = shuffle([{
     alignedEdge: 'right'
 }, {
     subject: 'biology',
+    subjectURL: '/details/books/biology',
     subjectTitle: 'Biology',
     quote: 'live the wild life',
     features: ['diagram', 'leaf'],
@@ -28,6 +30,7 @@ const bannerModels = shuffle([{
     alignedEdge: 'left'
 }, {
     subject: 'chemistry',
+    subjectURL: '/details/books/chemistry',
     subjectTitle: 'Chemistry',
     quote: 'transform',
     features: ['element'],
@@ -36,10 +39,20 @@ const bannerModels = shuffle([{
     alignedEdge: 'right'
 }, {
     subject: 'us-history',
+    subjectURL: '/details/books/us-history',
     subjectTitle: 'U.S. History',
     quote: 'see into the past',
     features: ['clermont', 'sacajawea', 'john-adams'],
     buttonSpec1: 'btn-yellow',
+    buttonSpec2: 'btn-turquoise',
+    alignedEdge: 'right'
+}, {
+    subject: 'math',
+    subjectURL: '/subjects/math',
+    subjectTitle: 'Math',
+    quote: 'solve for the unknown',
+    features: [],
+    buttonSpec1: 'btn-orange',
     buttonSpec2: 'btn-turquoise',
     alignedEdge: 'right'
 }]);
