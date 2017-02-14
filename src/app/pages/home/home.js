@@ -42,6 +42,14 @@ const bannerModels = shuffle([{
     buttonSpec1: 'btn-yellow',
     buttonSpec2: 'btn-turquoise',
     alignedEdge: 'right'
+}, {
+    subject: 'math',
+    subjectTitle: 'Math',
+    quote: 'solve for the unknown',
+    features: [],
+    buttonSpec1: 'btn-orange',
+    buttonSpec2: 'btn-turquoise',
+    alignedEdge: 'right'
 }]);
 
 

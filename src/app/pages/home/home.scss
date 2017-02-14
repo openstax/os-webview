@@ -12,6 +12,7 @@
         @content;
     }
 }
+
 @mixin banner(
     $subject,
     $book-color,
@@ -327,6 +328,125 @@
         .flyout {
             @include desktop-plus {
                 opacity: 0;
+            }
+        }
+
+        .banner.math {
+            @include banner(
+                math,
+                color(blue),
+                rgba(color(cyan), 0.85),
+                61rem,
+                39rem,
+                rgba(color(blue), 0.3),
+                color(orange),
+                color(turquoise)
+            );
+
+            background-color: transparent;
+
+            .background-image {
+                background-color: transparent;
+                background-image: url('/images/home/subjects/math/background.jpg');
+                background-position: 50% 0;
+                background-repeat: no-repeat;
+                background-size: cover;
+                bottom: 0;
+                content: ' ';
+                display: block;
+                height: 25rem;
+                left: 0;
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: 100%;
+                will-change: transform;
+                z-index: 1;
+
+                @include tablet {
+                    height: 54rem;
+                }
+              }
+
+            .book {
+                display: none;
+
+                @include tablet {
+                    background-image: url('/images/subjects/algebra_trigonometry.svg');
+                    background-position: top left;
+                    display: block;
+                    height: 25rem;
+                    left: 26.5rem;
+                    top: 5rem;
+                    width: 25rem;
+                }
+
+                @include desktop {
+                    height: 30rem;
+                    left: 31.5rem;
+                    top: 10rem;
+                    width: 30rem;
+                }
+
+                &::before {
+                    background-image: url('/images/subjects/college_algebra.svg');
+                    background-position: top left;
+                    background-size: 100% 100%;
+                    content: '';
+                    display: block;
+                    height: 25rem;
+                    left: -25rem;
+                    position: absolute;
+                    width: 25rem;
+
+                    @include desktop {
+                        height: 30rem;
+                        left: -30rem;
+                        width: 30rem;
+                    }
+                }
+
+                &::after {
+                    background-image: url('/images/subjects/precalculus.svg');
+                    background-position: top left;
+                    background-size: 100% 100%;
+                    content: '';
+                    display: block;
+                    height: 25rem;
+                    left: 25rem;
+                    position: absolute;
+                    width: 25rem;
+
+                    @include desktop {
+                        height: 30rem;
+                        left: 30rem;
+                        width: 30rem;
+                    }
+                }
+            }
+
+            .student {
+                bottom: 15rem;
+                height: 100%;
+                right: 2rem;
+                width: 23rem;
+
+                @include tablet {
+                    bottom: 0;
+                    width: 45rem;
+                }
+
+                @include desktop {
+                    right: 15rem;
+                }
+            }
+
+            .align-edge {
+                bottom: 1.5rem;
+
+                @include tablet {
+                    bottom: 6rem;
+                }
             }
         }
 
