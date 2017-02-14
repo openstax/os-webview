@@ -31,8 +31,8 @@ export default class Contents extends Controller {
                 this.startFrom += entry.contents.length;
             }
         };
-        const doNumber = (entry) => (!(i === this.startFrom && isPreface(entry)) ||
-            hasContents(entry));
+        const doNumber = (entry) => (!(i === this.startFrom && isPreface(entry)) &&
+            (hasContents(entry) || this.parentNumber));
 
         for (const entry of this.model) {
             let chapterNumber = '';
