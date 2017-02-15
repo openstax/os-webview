@@ -50,13 +50,13 @@ export default class Subjects extends CMSPageController {
     filterSubjects(category) {
         const slug = CategorySelector.byCms[category].slug;
         const path = slug === 'view-all' ? pagePath : `${pagePath}/${slug}`;
+        const yTarget = history.state.y;
 
         router.navigate(path, {
             filter: category,
-            path: pagePath,
-            x: history.state.x,
-            y: history.state.y
+            path: pagePath
         });
+        window.scrollTo(0, yTarget);
         this.bookViewer.filterSubjects(category);
     }
 
@@ -75,13 +75,23 @@ export default class Subjects extends CMSPageController {
         this.el.classList.add('loaded');
     }
 
-    onClose() {
-        window.removeEventListener('popstate', this.filterSubjectsEvent);
+    onLoaded() {
+        const threshold = 347;
+
+        this.setFilterClass = () => {
+            const newStickyState = window.pageYOffset > threshold;
+
+            if (newStickyState !== this.model.filterIsSticky) {
+                this.model.filterIsSticky = newStickyState;
+                this.update();
+            }
+        };
+        window.addEventListener('scroll', this.setFilterClass, false);
     }
 
-    @on('click .filter .filter-button')
-    scrollToFilterButtons() {
-        $.scrollTo(this.el.querySelector('.filter'), 20);
+    onClose() {
+        window.removeEventListener('popstate', this.filterSubjectsEvent);
+        window.removeEventListener('scroll', this.setFilterClass, false);
     }
 
 }

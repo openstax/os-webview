@@ -3,7 +3,7 @@
 
     <div class="books">
         <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
-        <div class="filter" skip="true"></div>
+        <div class="filter {model.filterIsSticky ? 'sticky': ''}" skip="true"></div>
         <div class="container" skip="true"></div>
         <div class="feature-block">
             <div class="container" if="model.dev_standard_1_heading">
