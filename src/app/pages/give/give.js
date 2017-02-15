@@ -35,7 +35,7 @@ export default class Give extends CMSPageController {
             headline: '',
             subhead: '',
             paymentMethods: [],
-            thankYouUrl: `${settings.apiOrigin}/give?thanks`,
+            thankYouUrl: `${settings.apiOrigin}/give-confirmation`,
             amounts: [5, 25, 50, 100, 500, 1000],
             page2: history.state && (history.state.page === 2),
             validationMessage: (name) => {
@@ -76,7 +76,7 @@ export default class Give extends CMSPageController {
 
         if ('student' in queryDict) {
             Object.assign(this.model, studentModel);
-        } else if ('thanks' in queryDict) {
+        } else if (window.location.pathname === '/give-confirmation') {
             Object.assign(this.model, thankYouModel);
             try {
                 localStorage.visitedGive = Date.now();
