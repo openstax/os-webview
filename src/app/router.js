@@ -19,7 +19,7 @@ const PAGES = [
     'confirmation/*path',
     'contact',
     'details/*path',
-    'errata',
+    'errata/*path',
     'faq',
     'foundation',
     'give',
@@ -63,7 +63,6 @@ class AppRouter extends Router {
         this.root('home');
         this.route(/^(\d+)/, 'cms');
         this.route(/^to[us]$/, 'tos');
-        this.route(/^errata\/form\b/, 'errata');
         this.route('give-confirmation', 'give');
 
         PAGES.forEach((page) => {

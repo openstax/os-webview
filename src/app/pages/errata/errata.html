@@ -29,7 +29,7 @@
                     <td each="md in model.summaryMetaData">
                         <div class="{md.cssClass || ''}">
                             <if condition="md.key === 'id'">
-                                <a href="?id={entry[md.key]}">{entry[md.key] || ''}</a>
+                                <a href="{entry[md.key]}">{entry[md.key] || ''}</a>
                             <else>
                                 {entry[md.key] || ''}
                             </if>
@@ -44,7 +44,7 @@
                     <th>{md.label}</th>
                     <td><div>
                         <if condition="md.key === 'id'">
-                            <a href="?id={entry[md.key]}">{entry[md.key] || ''}</a>
+                            <a href="{entry[md.key]}">{entry[md.key] || ''}</a>
                         <else>
                             {entry[md.key] || ''}
                         </if>
