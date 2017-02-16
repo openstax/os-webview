@@ -128,11 +128,12 @@ export default class Errata extends Controller {
     onLoaded() {
         document.title = 'Errata - OpenStax';
         const queryDict = $.parseSearchString(window.location.search);
+        const afterTheSlash = location.pathname.replace('/errata/', '');
 
-        if (location.pathname === '/errata/form') {
+        if (afterTheSlash === 'form') {
             this.showForm(queryDict);
-        } else if ('id' in queryDict) {
-            this.fetchAndDisplay(queryDict.id[0]);
+        } else if (afterTheSlash > 0) {
+            this.fetchAndDisplay(afterTheSlash);
         } else if ('book' in queryDict) {
             this.summary(queryDict.book[0]);
         }
@@ -147,6 +148,7 @@ export default class Errata extends Controller {
         const title = (queryDict.book || [''])[0];
 
         userModel.load().then((response) => {
+            this.model.defaultEmail = response.email;
             if (response.accounts_id) {
                 this.model.title = () => `Suggest a Correction for ${this.model.selectedTitle}`;
                 bookPromise.then((books) => {

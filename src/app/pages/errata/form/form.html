@@ -1,7 +1,6 @@
 <template args="model">
     <form class="body-block" method="post" action="{model.postEndpoint}"
      enctype="multipart/form-data">
-        <input type="hidden" name="submitter_email_address" value="rej2@rice.edu" />
         <div class="question">Wrong subject? Select a different subject.</div>
         <div skip="true"></div>
         <select name="book">
@@ -61,6 +60,11 @@
                 <input type="file" class="hidden" name="file_2" class="btn" />
             </label>
             <span if="model.file2" class="file-name">{model.file2}</span>
+        </div>
+        <div class="question">
+            If you would like to receive email notifications about updates to this
+            errata entry, include your email address here.
+            <input type="text" name="submitter_email_address" value="{model.defaultEmail}" />
         </div>
         <div>
             <input type="submit" class="btn" />
