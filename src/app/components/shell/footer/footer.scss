@@ -28,16 +28,6 @@
         }
     }
 
-    a {
-        color: color(cyan);
-
-        &:active,
-        &:focus,
-        &:hover {
-            color: rgba(color(cyan), 0.5);
-        }
-    }
-
     .hero-quote {
         @include constrained-variable-text(5.5, 0.2);
 
