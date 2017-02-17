@@ -27,7 +27,7 @@ export default class InterestForm extends SalesforceForm {
         this.goToConfirmation = () => {
             if (this.submitted) {
                 this.submitted = false;
-                router.navigate('/confirmation/interest');
+                router.navigate('/interest-confirmation');
             }
         };
         this.formResponseEl.addEventListener('load', this.goToConfirmation);

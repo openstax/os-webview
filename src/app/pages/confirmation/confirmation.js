@@ -71,6 +71,11 @@ export default class Confirmation extends Controller {
         };
 
         this.referringPage = window.location.pathname.replace('/confirmation/', '');
+        if (this.referringPage === window.location.pathname) {
+            this.referringPage = window.location.pathname
+            .replace('-confirmation', '')
+            .replace(/^\//, '');
+        }
         this.model = models[this.referringPage];
     }
 
