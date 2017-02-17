@@ -149,6 +149,7 @@ export default class Errata extends Controller {
 
         userModel.load().then((response) => {
             this.model.defaultEmail = response.email;
+            this.model.submittedBy = response.id;
             if (response.accounts_id) {
                 this.model.title = () => `Suggest a Correction for ${this.model.selectedTitle}`;
                 bookPromise.then((books) => {
