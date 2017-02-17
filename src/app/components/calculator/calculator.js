@@ -1,4 +1,5 @@
 import {Controller} from 'superb';
+import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 import Spinner from '~/components/spinner/spinner';
 import {description as template} from './calculator.html';
@@ -83,7 +84,13 @@ export default class Calculator extends Controller {
     @on('click .calculate')
     doCalculate() {
         this.model.calculated = true;
+        this.model.waiting = true;
         this.update();
+        $.scrollTo(this.el.querySelector('.output'))
+        .then(() => {
+            this.model.waiting = false;
+            this.update();
+        });
     }
 
 }
