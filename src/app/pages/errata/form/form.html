@@ -1,6 +1,7 @@
 <template args="model">
     <form class="body-block" method="post" action="{model.postEndpoint}"
      enctype="multipart/form-data">
+        <input type="hidden" name="submitted_by" value="{model.submittedBy}" />
         <div class="question">Wrong subject? Select a different subject.</div>
         <div skip="true"></div>
         <select name="book">
