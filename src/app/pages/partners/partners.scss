@@ -150,12 +150,7 @@ $text-dark2: rgba(0, 0, 0, 0.7);
         }
 
         a {
-            color: color(cyan);
             font-weight: 500;
-
-            &:hover {
-                color: darken(color(cyan), 10%);
-            }
         }
     }
 

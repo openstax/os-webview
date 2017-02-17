@@ -30,8 +30,17 @@ iframe {
 }
 
 a {
-    color: color(primary);
+    color: color(cyan);
     text-decoration: none;
+
+    &:focus,
+    &:hover {
+        color: darken(color(cyan), 10%);
+    }
+
+    &:active {
+        color: lighten(color(cyan), 10%);
+    }
 }
 
 p {
@@ -253,15 +262,6 @@ sup {
 
         @include phone {
             max-width: 100%;
-        }
-    }
-
-    a {
-        color: color(cyan);
-
-        &:hover,
-        &:focus {
-            color: rgba(color(cyan), 0.5);
         }
     }
 }
