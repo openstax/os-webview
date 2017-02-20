@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>Form/input-radio-not-selected</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="10" cy="10" r="10"></circle>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="20" height="20" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <circle id="path-3" cx="6" cy="6" r="6"></circle>
+    </defs>
+    <g id="Savings-Calculator" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Savings-Calculator--Step-0" transform="translate(-760.000000, -911.000000)">
+            <g id="Group-6" transform="translate(414.000000, 595.000000)">
+                <g id="Form/input-radio" transform="translate(346.000000, 316.000000)">
+                    <use id="Oval" stroke="#DCDCDC" mask="url(#mask-2)" stroke-width="2" fill="#FFFFFF" xlink:href="#path-1"></use>
+                    <g id="Colors/ox-secondary-blue" stroke-width="1" transform="translate(4.000000, 4.000000)">
+                        <mask id="mask-4" fill="white">
+                            <use xlink:href="#path-3"></use>
+                        </mask>
+                        <use id="Mask" fill-opacity="0" fill="#0DC0DC" xlink:href="#path-3"></use>
+                        <g id="Colors/transparent" mask="url(#mask-4)">
+                            <g transform="translate(-2.769231, -2.769231)"></g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

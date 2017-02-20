@@ -35,6 +35,7 @@ $page-background: #fbfbfb;
             display: flex;
             flex: 1 1 50%;
             flex-direction: column;
+            font-size: 1.8rem;
             margin-left: 14rem;
             padding-bottom: 4rem;
 
@@ -54,6 +55,10 @@ $page-background: #fbfbfb;
                 align-items: center;
                 margin-left: auto;
                 text-align: center;
+            }
+
+            &.left-aligned {
+                text-align: left;
             }
         }
 
@@ -82,6 +87,7 @@ $page-background: #fbfbfb;
         background-color: color(orange);
         color: color(neutral-lightest);
         display: inline-block;
+        font-size: 1.6rem;
         margin: 1rem 0;
         padding: 1em 2em;
     }
@@ -93,9 +99,10 @@ $page-background: #fbfbfb;
         &::before {
             content: '▸';
             display: inline-block;
-            font-size: 120%;
+            font-size: 100%;
             padding-left: 0.3em;
             transform: rotate(180deg);
+            vertical-align: middle;
         }
     }
 

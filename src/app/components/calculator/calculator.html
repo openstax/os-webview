@@ -13,9 +13,9 @@
             </div>
             <div class="active-indicator">
                 <if condition="model.isValid.dollars">
-                    <img src="/images/components/green-checked-radio.png" />
+                    <img src="/images/components/green-checked-radio.svg" />
                 <else>
-                    <img src="/images/components/unchecked-radio.png" />
+                    <img src="/images/components/unchecked-radio.svg" />
                 </if>
             </div>
         </div>
@@ -28,16 +28,16 @@
             </div>
             <div class="active-indicator">
                 <if condition="model.isValid.students">
-                    <img src="/images/components/green-checked-radio.png" />
+                    <img src="/images/components/green-checked-radio.svg" />
                 <else>
-                    <img src="/images/components/unchecked-radio.png" />
+                    <img src="/images/components/unchecked-radio.svg" />
                 </if>
             </div>
         </div>
     </div>
     <if condition="model.isValid.dollars && model.isValid.students">
         <button class="btn cta calculate">Calculate</button>
-        <div if="model.calculated" class="output">
+        <div if="model.calculated" class="output {model.waiting ? 'hidden' : ''}">
             <div class="savings block">
                 <div class="text">
                     <span class="raised">$</span>

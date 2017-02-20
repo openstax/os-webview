@@ -14,6 +14,12 @@ $linkedin-blue: #0077b5;
     flex-direction: column;
     padding-top: 4rem;
 
+    [type=number]::-webkit-outer-spin-button,
+    [type=number]::-webkit-inner-spin-button, {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
     .intro-paragraph {
         color: $intro-text-color;
         display: flex;
@@ -51,11 +57,11 @@ $linkedin-blue: #0077b5;
         }
     }
 
-    .btn {
+    .btn.cta {
         border: 0;
         font-size: 1.6rem;
         margin-bottom: 6rem;
-        padding: 1rem 2rem;
+        padding: 1.5rem 3rem;
     }
 
     .block {
@@ -151,17 +157,22 @@ $linkedin-blue: #0077b5;
         flex-direction: column;
         justify-content: center;
         margin-bottom: 12rem;
-        margin-top: 3rem;
         max-width: 78rem;
+        transition: opacity 0.3s ease-in-out;
         width: 100%;
 
         @include phone {
             margin-bottom: 6rem;
         }
 
+        &.hidden {
+            opacity: 0;
+        }
+
         .savings {
             align-items: center;
-            background-image: url('/images/components/confetti.png');
+            background-image: url('/images/components/confetti.svg');
+            background-position: center 40%;
             background-size: cover;
             display: flex;
             flex-basis: 63vw;
@@ -202,6 +213,7 @@ $linkedin-blue: #0077b5;
             flex-direction: column;
             padding: 4rem;
             text-align: center;
+            visibility: hidden; // Because it is not ready to go live
             width: 100%;
         }
 
