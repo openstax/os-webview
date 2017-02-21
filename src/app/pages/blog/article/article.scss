@@ -151,6 +151,8 @@
         .body {
             font-size: 1.8rem;
             height: 15rem;
+            max-height: 15rem;
+            overflow: hidden;
         }
 
         .go-to {
