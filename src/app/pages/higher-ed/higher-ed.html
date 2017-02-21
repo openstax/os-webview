@@ -6,7 +6,7 @@
                     <div class="overlay hide-until-loaded {model.loaded}">
                         <div class="text-block">
                             <h1 class="header">{model.intro_heading}</h1>
-                            <p class="blurb"></p>
+                            <p class="blurb" data-html="intro_description" skip="true"></p>
                         </div>
                     </div>
                 </div>
@@ -31,9 +31,13 @@
                         <div class="title">{model.get_started_step_2_heading}</div>
                         <div class="blurb">{model.get_started_step_2_description}</div>
                         <div class="more">
-                            <a href="{model.loginLink}" class="with-arrow" data-local="true">
-                                {model.get_started_step_2_cta}
-                            </a>
+                            <if condition="model.loggedIn">
+                                {model.get_started_step_2_logged_in_cta}
+                            <else>
+                                <a href="{model.loginLink}" class="with-arrow" data-local="true">
+                                    {model.get_started_step_2_logged_out_cta}
+                                </a>
+                            </if>
                         </div>
                     </li>
 
