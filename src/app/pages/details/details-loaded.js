@@ -78,14 +78,22 @@ export default class DetailsLoaded extends Controller {
                         `<a href="${alternateLink}" data-local="true">Apply for instructor access.</a>`;
                 }
             };
+            const hasGroups = 'groups' in user;
+            const hideResourcesFromStudent = () => {
+                if (hasGroups && user.groups.includes('Student')) {
+                    /* eslint camelcase: 0 */
+                    this.model.book_faculty_resources = [];
+                }
+            };
 
             if (!user || !user.username) {
                 isInstructor = false;
                 alternateLink = sfUserModel.loginLink();
                 this.model.extraInstructions =
                     `<a href="${alternateLink}" data-local="true">Login</a> for instructor access.`;
-            } else if (!('groups' in user) || !user.groups.includes('Faculty')) {
+            } else if (!hasGroups || !user.groups.includes('Faculty')) {
                 isInstructor = false;
+                hideResourcesFromStudent();
                 handlePending();
             }
             $.insertHtml(this.el, this.model);
@@ -96,6 +104,7 @@ export default class DetailsLoaded extends Controller {
             insertResources(this.model.book_student_resources, 'studentResources');
             insertToc();
             insertPartners();
+            this.update();
         });
 
         this.toggleFixedClass();
