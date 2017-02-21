@@ -5,20 +5,20 @@ const sfUserUrl = `${settings.apiOrigin}/api/user_salesforce`;
 const docUrlBase = `${settings.apiOrigin}/api/documents`;
 
 const LOADED = Symbol();
+const LOADED_TIME = Symbol();
+const CACHE_FOR_MS = 15000;
 
 class UserModel {
 
     constructor(url) {
         this.url = url;
+        this[LOADED_TIME] = 0;
     }
 
-    load(qs = {}) {
-        const query = Object.keys(qs)
-        .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(qs[k])}`)
-        .join('&');
-        const url = this.url + (query.length ? `?${query}` : '');
-
-        this[LOADED] = fetch(url, {credentials: 'include'}).then((response) => response.json());
+    load() {
+        if (Date.now() > this[LOADED_TIME] + CACHE_FOR_MS) {
+            this[LOADED] = fetch(this.url, {credentials: 'include'}).then((response) => response.json());
+        }
         return this[LOADED];
     }
 

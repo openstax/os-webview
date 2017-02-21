@@ -132,11 +132,6 @@ class Analytics {
                     this.sourceByUrl[resource.link_document_url] = `${item.title} ${marker}`;
                 }
             }
-        }
-    }
-
-    addPartnersToLookupTable(partnerItems) {
-        for (const item of partnerItems) {
             for (const ally of item.book_allies) {
                 const url = ally.book_link_url;
 
@@ -183,26 +178,10 @@ class Analytics {
         })();
     }
 
-    fetchPartners() {
-        /* eslint arrow-parens: 0 */
-        (async () => {
-            try {
-                const response = await fetch(`${settings.apiOrigin}/api/v2/pages/?type=books.Book&fields`+
-                  '=title,book_allies');
-                const data = await response.json();
-
-                this.addPartnersToLookupTable(data.items);
-            } catch (e) {
-                console.log(e);
-            }
-        })();
-    }
-
     [SETUP_GA]() {
         this.data = {};
         this.sourceByUrl = {};
         this.fetchBooks();
-        this.fetchPartners();
         if (typeof window.ga !== 'function') {
             window.GoogleAnalyticsObject = 'ga';
             window.ga = {
