@@ -1,6 +1,9 @@
 @import 'variables';
 @import 'mixins';
 
+// Just for math book
+$tablet-book-size: 16.5rem;
+
 @mixin tablet {
     @media (min-width: #{breakpoints(phone) + 1}) {
         @content;
@@ -105,6 +108,7 @@
 
     .feature,
     .book,
+    .second-book,
     .student {
         background-repeat: no-repeat;
         background-size: contain;
@@ -129,7 +133,8 @@
         }
     }
 
-    .book {
+    .book,
+    .second-book {
         background-color: $book-color;
         background-image: url('/images/subjects/#{$subject}.svg');
         background-position: top left;
@@ -148,6 +153,10 @@
                 opacity: 1;
             }
         }
+    }
+
+    .second-book {
+        display: none;
     }
 
     .student {
@@ -375,10 +384,10 @@
                     background-image: url('/images/subjects/algebra_trigonometry.svg');
                     background-position: top left;
                     display: block;
-                    height: 25rem;
-                    left: 26.5rem;
-                    top: 5rem;
-                    width: 25rem;
+                    height: $tablet-book-size;
+                    left: $tablet-book-size + 1.5rem;
+                    top: 2rem;
+                    width: $tablet-book-size;
                 }
 
                 @include desktop {
@@ -394,10 +403,10 @@
                     background-size: 100% 100%;
                     content: '';
                     display: block;
-                    height: 25rem;
-                    left: -25rem;
+                    height: $tablet-book-size;
+                    left: -$tablet-book-size;
                     position: absolute;
-                    width: 25rem;
+                    width: $tablet-book-size;
 
                     @include desktop {
                         height: 30rem;
@@ -405,17 +414,38 @@
                         width: 30rem;
                     }
                 }
+            }
+
+            .second-book {
+                display: none;
+
+                @include tablet {
+                    background-image: url('/images/subjects/precalculus.svg');
+                    background-position: top left;
+                    display: block;
+                    height: $tablet-book-size;
+                    left: 1.5rem;
+                    top: $tablet-book-size + 2rem;
+                    width: $tablet-book-size;
+                }
+
+                @include desktop {
+                    height: 30rem;
+                    left: 61.5rem;
+                    top: 10rem;
+                    width: 30rem;
+                }
 
                 &::after {
-                    background-image: url('/images/subjects/precalculus.svg');
+                    background-image: url('/images/subjects/calculus-v1.svg');
                     background-position: top left;
                     background-size: 100% 100%;
                     content: '';
                     display: block;
-                    height: 25rem;
-                    left: 25rem;
+                    height: $tablet-book-size;
+                    left: $tablet-book-size;
                     position: absolute;
-                    width: 25rem;
+                    width: $tablet-book-size;
 
                     @include desktop {
                         height: 30rem;
