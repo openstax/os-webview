@@ -4,9 +4,6 @@
 $intro-text-color: #5e6062;
 $block-bgcolor: #f6f6f6;
 $narrow-tablet: 700px;
-$facebook-blue: #3b5998;
-$twitter-blue: #00aced;
-$linkedin-blue: #0077b5;
 
 .calculator {
     align-items: center;
@@ -213,41 +210,7 @@ $linkedin-blue: #0077b5;
             flex-direction: column;
             padding: 4rem;
             text-align: center;
-            visibility: hidden; // Because it is not ready to go live
             width: 100%;
-        }
-
-        .buttons {
-            display: flex;
-            justify-content: center;
-            margin: 1rem 0;
-            width: 100%;
-
-            @include phone {
-                flex-direction: column;
-                width: auto;
-            }
-
-            .btn {
-                background-repeat: no-repeat;
-                color: color(neutral-lightest);
-                font-weight: normal;
-                margin: 1rem 0.5rem;
-                padding-left: 3.5rem;
-                text-transform: none;
-
-                &.facebook {
-                    background-color: $facebook-blue;
-                }
-
-                &.twitter {
-                    background-color: $twitter-blue;
-                }
-
-                &.linkedin {
-                    background-color: $linkedin-blue;
-                }
-            }
         }
     }
 }

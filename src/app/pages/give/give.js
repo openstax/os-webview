@@ -4,7 +4,7 @@ import router from '~/router';
 import selectHandler from '~/handlers/select';
 import $ from '~/helpers/$';
 import settings from 'settings';
-import FbShare from './fbshare';
+import Share from '~/components/share/share';
 import {description as template} from './give.html';
 
 const studentModel = {
@@ -81,7 +81,9 @@ export default class Give extends CMSPageController {
             try {
                 localStorage.visitedGive = Date.now();
             } catch (e) { }
-            this.regions.share.attach(new FbShare());
+
+            this.regions.share.attach(new Share(`${settings.apiOrigin}/give`,
+            'Contribute to OpenStax (I did)!'));
             this.model.isThanks = true;
 
             this.el.querySelector('[name=first_name]').value = localStorage.getItem('donation:first_name');
@@ -114,6 +116,7 @@ export default class Give extends CMSPageController {
             this.model[modelKey] = this.pageData[modelToPageDataMap[modelKey]];
         }
         this.handleQueryString();
+        this.model.queryStringHandled = true;
 
         const pmReg = new RegExp(/^payment_method_(\d)_(\w+)/);
         const populatePaymentMethods = () => {

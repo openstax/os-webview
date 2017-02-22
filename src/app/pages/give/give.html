@@ -433,7 +433,7 @@
             <div class="boxed">
                 <h1>{model.headline}</h1>
                 <p>{model.subhead}</p>
-                <if condition="model.amounts">
+                <if condition="model.amounts && model.queryStringHandled">
                     <div class="amount-boxes">
                         <form class="preform">
                             <div class="box-row">

@@ -1,0 +1,39 @@
+@import 'variables';
+@import 'mixins';
+
+.share-buttons {
+    .buttons {
+        display: flex;
+        justify-content: center;
+        margin: 1rem 0;
+        width: 100%;
+
+        @include phone {
+            flex-direction: column;
+            width: auto;
+        }
+
+        .btn {
+            background-repeat: no-repeat;
+            border: 0;
+            color: color(neutral-lightest);
+            font-size: 1.6rem;
+            font-weight: normal;
+            margin: 1rem 0.5rem;
+            padding: 1rem 3rem 1rem 4.5rem;
+            text-transform: none;
+
+            &.facebook {
+                background-color: color(facebook-blue);
+            }
+
+            &.twitter {
+                background-color: color(twitter-blue);
+            }
+
+            &.linkedin {
+                background-color: color(linkedin-blue);
+            }
+        }
+    }
+}
