@@ -178,7 +178,7 @@ $.insertHtml = (containerEl, model) => {
             const expr = `model.${htmlEl.dataset.html}`;
 
             try {
-                htmlEl.innerHTML = eval(expr);
+                htmlEl.innerHTML = eval(expr) || '';
             } catch (e) {
                 console.warn('Eval', expr, e);
             }
