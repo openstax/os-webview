@@ -1,5 +1,6 @@
 import settings from 'settings';
 import CMSPageController from '~/controllers/cms';
+import $ from '~/helpers/$';
 import {description as template} from './higher-ed.html';
 import ProductsBoxes from '~/components/products-boxes/products-boxes';
 import Quotes from '~/components/quotes/quotes';
@@ -34,7 +35,6 @@ export default class HigherEd extends CMSPageController {
             'get_started_step_1_cta': '',
             'get_started_step_2_heading': '',
             'get_started_step_2_description': '',
-            'get_started_step_2_cta': '',
             'get_started_step_3_heading': '',
             'get_started_step_3_description': '',
             'get_started_step_3_cta': '',
@@ -48,6 +48,10 @@ export default class HigherEd extends CMSPageController {
 
     onLoaded() {
         document.title = 'Higher-ed - OpenStax';
+        userModel.load().then((user) => {
+            this.model.loggedIn = user && user.username;
+            this.update();
+        });
     }
 
     onDataLoaded() {
@@ -63,11 +67,8 @@ export default class HigherEd extends CMSPageController {
         this.regions.quotes.attach(new Quotes(this.model.row_1));
         this.regions.products.attach(new ProductsBoxes(this.model.row_2));
         this.regions.buckets.attach(new Buckets(this.model.row_3));
-    }
 
-    onUpdate() {
-        // NOTE: Incremental-DOM currently lacks the ability to inject HTML into a node.
-        this.el.querySelector('.hero .overlay .blurb').innerHTML = this.model.intro_description || '';
+        $.insertHtml(this.el, this.model);
     }
 
 }
