@@ -1,20 +1,23 @@
 <template args="model">
-    <div class="body-block padded" if="model.detail && model.detail.resolution">
+    <div class="body-block" if="model.detail && model.detail.resolution">
         <div class="info">
             <div class="label-value-pair" each="pair in model.decisionDataPairs">
                 <div class="label">{pair[0]}</div>
                 <div class="value">{model.detail[pair[1]] || ''}</div>
             </div>
+            <div class="label-value-pair">
+                <div class="label"></div>
+                <div class="value">Questions about the resolution? <a mailto="support@openstax.org">Ask us</a></div>
+            </div>
         </div>
-        <div>Questions about the resolution? <a mailto="support@openstax.org">Ask us</a></div>
     </div>
-    <div class="info padded body-block">
+    <div class="info body-block {model.detail.resolution ? 'graytop' : ''}">
         <div class="label-value-pair" each="pair in model.detailDataPairs">
             <div class="label">{pair[0]}</div>
             <div class="value" data-html="detail['{pair[1]}'] || ''" skip="true"></div>
         </div>
     </div>
-    <div class="note body-block">
+    <div class="note">
         You can check the status of all errata submissions on the
         <a href="/errata/?book={encodeURIComponent(model.detail.bookTitle)}">
             <span data-html="detail.bookTitle" skip="true"></span> Errata Page

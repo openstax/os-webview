@@ -3,24 +3,25 @@
 
 $label-1: #575958;
 $label-3: #4a4a4a;
+$graytop-border: #f4f4f4;
+$graytop-start: #fcfcfc;
 
 detail-block {
 
     display: flex;
     justify-content: center;
+    padding-top: 2rem;
 
     > div {
-        background-color: color(neutral-lightest);
-        max-width: 97rem;
-        padding: 3rem 4rem;
+        width: 100%;
 
         @include phone {
             padding: 1rem;
         }
-    }
 
-    .padded {
-        margin-bottom: 4rem;
+        > .body-block {
+            background-color: color(neutral-lightest);
+        }
     }
 
     .label-value-pair {
@@ -67,11 +68,16 @@ detail-block {
         }
     }
 
+    .body-block.graytop {
+        background-image: linear-gradient(to bottom, $graytop-start, rgba(color(neutral-lightest), 0) 40%);
+        border-top: thin solid $graytop-border;
+    }
+
     .note {
         color: $label-1;
         font-size: 1.2rem;
         line-height: normal;
-        margin-bottom: 8rem;
+        margin: 1rem 0 4rem 4rem;
     }
 
 }

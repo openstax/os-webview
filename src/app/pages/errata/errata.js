@@ -9,6 +9,29 @@ import Detail from './detail/detail';
 import RadioPanel from '~/components/radio-panel/radio-panel';
 import {description as template} from './errata.html';
 
+function setDisplayStatus(detail) {
+    const result = {
+        status: 'Reviewed',
+        barStatus: ''
+    };
+
+    if (['New', 'Editorial Review'].includes(detail.status)) {
+        result.status = 'In Review';
+    } else if (detail.resolution === 'Approved') {
+        if (detail.status === 'Completed') {
+            result.status = `Corrected ${new Date(detail.modified).toLocaleDateString()} in web view`;
+            result.barStatus = 'Corrected';
+        } else {
+            result.status = 'Will Correct';
+        }
+    } else {
+        result.status = result.barStatus = 'No Correction';
+    }
+
+    detail.displayStatus = result.status;
+    detail.barStatus = result.barStatus;
+}
+
 export default class Errata extends Controller {
 
     init() {
@@ -37,13 +60,13 @@ export default class Errata extends Controller {
                 return true;
                 break;
             case 'in-review':
-                return item.status === 'New' || item.status === 'In Review';
+                return item.displayStatus === 'In Review';
                 break;
             case 'reviewed':
-                return item.status === 'Reviewed';
+                return (/Reviewed|Will Correct|No Correction/).test(item.displayStatus);
                 break;
             default:
-                return item.resolution;
+                return (/^Corrected/).test(item.displayStatus);
             }
         };
         this.radioPanel.updateSelected('');
@@ -55,13 +78,31 @@ export default class Errata extends Controller {
 
                 return as.localeCompare(bs, 'en', {sensitivity: 'base'});
             },
-            sortNumber: (a, b) => a - b
+            sortNumber: (a, b) => a - b,
+            sortDecision: (a, b) => {
+                /* eslint complexity: 0 */
+                const ar = a.barStatus || 'F'; // Between Corrected and No Correction
+                const br = b.barStatus || 'F';
+
+                if (ar < br) {
+                    return -1;
+                }
+                if (ar > br) {
+                    return 1;
+                }
+                const ad = new Date(a.modified);
+                const bd = new Date(b.modified);
+
+                if (ad < bd) {
+                    return -1;
+                }
+                return 1;
+            }
         };
         this.model = {
             mode: 'detail',
             instructions: 'Errata submissions are displayed below until a new PDF is published online.',
             moreAbout: 'More about our correction schedule',
-            tooltipText: 'This should appear on hover',
             errorTypes: [
                 'Typo', 'Broken link', 'Incorrect calculation or solution',
                 'Other factual inaccuracy in content',
@@ -111,7 +152,7 @@ export default class Errata extends Controller {
                 },
                 {
                     label: 'Decision',
-                    key: 'resolution',
+                    key: 'displayStatus',
                     sortFn: 'sort',
                     cssClass: 'mid'
                 }
@@ -175,12 +216,12 @@ export default class Errata extends Controller {
         this.model.mode = 'detail';
         const Region = this.regions.self.constructor;
         const setModelDetail = (detail) => {
-            const bars = detail.resolution ? 2 : {
-                'New': 0,
-                'Editorial Review': 0,
+            setDisplayStatus(detail);
+            const bars = detail.barStatus ? 2 : {
+                'In Review': 0,
                 'Reviewed': 1
-            }[detail.status];
-            const secondBarFill = detail.resolution === 'Published' ? ' filled' : ' filled-no';
+            }[detail.displayStatus];
+            const secondBarFill = detail.barStatus === 'Corrected' ? ' filled' : ' filled-no';
 
             detail.firstBarClass = bars > 0 ? ' filled' : '';
             detail.secondBarClass = bars > 1 ? secondBarFill : '';
@@ -201,6 +242,20 @@ export default class Errata extends Controller {
         });
     }
 
+    fetchReleaseNotes(slug) {
+        const url = `${settings.apiOrigin}/api/books/${slug}`;
+
+        fetch(url).then((r) => r.json()).then((bookInfo) => {
+            const notes = bookInfo.book_faculty_resources
+            .find((entry) => entry.resource_heading === 'Errata Release Notes');
+
+            if (notes) {
+                this.model.releaseNotes = notes.link_document_url;
+                this.update();
+            }
+        });
+    }
+
     summary(book) {
         // Fetch the summary data once
         const summaryPromise = fetch(`${settings.apiOrigin}/api/errata/?book_title=${book}`)
@@ -210,21 +265,34 @@ export default class Errata extends Controller {
             const entry = bookList.find((info) => info.title === book);
 
             if (entry) {
+                this.fetchReleaseNotes(entry.meta.slug);
                 this.model.summaryBook = entry.id;
                 this.model.title = () => `${entry.title} Errata`;
             }
             this.model.mode = 'summary';
             summaryPromise.then((summary) => {
                 for (const detail of summary) {
+                    detail.self = detail;
+                    setDisplayStatus(detail);
                     detail.date = new Date(detail.created).toLocaleDateString();
                     detail.source = detail.resource === 'Other' ? detail.resource_other : detail.resource;
                     /* eslint camelcase: 0 */
                     detail.error_type = detail.error_type === 'Other' ? detail.error_type_other : detail.error_type;
                 }
                 this.model.summaryData = summary;
+                this.sortData('sortDate', 'date');
                 this.update();
             });
         });
+    }
+
+    sortData(sortFn, key) {
+        this.model.summarySortedBy = key;
+        this.model.summarySortDirection = sortFn === 'sort' ? 1 : -1;
+        this.model.summaryData.sort((a, b) => this.sortFunctions[sortFn](a[key], b[key]));
+        if (this.model.summarySortDirection < 0) {
+            this.model.summaryData.reverse();
+        }
     }
 
     @on('click [data-sort-fn]')
@@ -237,9 +305,7 @@ export default class Errata extends Controller {
             this.model.summaryData.reverse();
             this.model.summarySortDirection *= -1;
         } else {
-            this.model.summarySortedBy = key;
-            this.model.summarySortDirection = 1;
-            this.model.summaryData.sort((a, b) => this.sortFunctions[sortFn](a[key], b[key]));
+            this.sortData(sortFn, key);
         }
         this.update();
     }
