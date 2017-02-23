@@ -11,7 +11,8 @@ import {description as template} from './errata.html';
 
 function setDisplayStatus(detail) {
     const result = {
-        status: 'Reviewed'
+        status: 'Reviewed',
+        barStatus: ''
     };
 
     if (['New', 'Editorial Review'].includes(detail.status)) {
@@ -19,14 +20,16 @@ function setDisplayStatus(detail) {
     } else if (detail.resolution === 'Approved') {
         if (detail.status === 'Completed') {
             result.status = `Corrected ${new Date(detail.modified).toLocaleDateString()}`;
+            result.barStatus = 'Corrected';
         } else {
             result.status = 'Will Correct';
         }
     } else {
-        result.status = 'No Correction';
+        result.status = result.barStatus = 'No Correction';
     }
 
     detail.displayStatus = result.status;
+    detail.barStatus = result.barStatus;
 }
 
 export default class Errata extends Controller {
@@ -210,19 +213,18 @@ export default class Errata extends Controller {
         this.model.mode = 'detail';
         const Region = this.regions.self.constructor;
         const setModelDetail = (detail) => {
-            const bars = detail.resolution ? 2 : {
-                'New': 0,
-                'Editorial Review': 0,
+            setDisplayStatus(detail);
+            const bars = detail.barStatus ? 2 : {
+                'In Review': 0,
                 'Reviewed': 1
-            }[detail.status];
-            const secondBarFill = detail.resolution === 'Published' ? ' filled' : ' filled-no';
+            }[detail.displayStatus];
+            const secondBarFill = detail.barStatus === 'Corrected' ? ' filled' : ' filled-no';
 
             detail.firstBarClass = bars > 0 ? ' filled' : '';
             detail.secondBarClass = bars > 1 ? secondBarFill : '';
             this.model.title = () => 'Errata Submission Details';
             this.model.book = detail.book;
             this.model.detail = detail;
-            setDisplayStatus(detail);
             const detailComponent = new Detail(detail);
             const detailEl = this.el.querySelector('detail-block');
             const detailRegion = new Region(detailEl, this);
