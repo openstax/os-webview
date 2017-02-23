@@ -1,0 +1,103 @@
+@import 'variables';
+@import 'mixins';
+
+$label-4: #5f6163;
+$table-dark-row: #f6f6f6;
+
+.form-container {
+    background-color: color(neutral-lightest);
+    color: $label-4;
+    padding: 2rem 9rem;
+
+    .question {
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        margin-top: 3rem;
+    }
+
+    label {
+        color: $label-4;
+        display: block;
+        line-height: normal;
+        padding-left: 2rem;
+        text-indent: -2rem;
+    }
+
+    .radio-columns {
+        font-size: 1.6rem;
+
+        @include desktop {
+            column-count: 2;
+            column-gap: 3rem;
+        }
+
+        [type="text"] {
+            width: auto;
+        }
+
+    }
+
+    [type="radio"] {
+        display: none;
+
+        + .proxy {
+            background: url('/images/components/unchecked-radio.svg') left center no-repeat;
+            padding-right: 1.5em;
+        }
+
+        &:checked + .proxy {
+            background-image: url('/images/components/checked-radio.png');
+        }
+    }
+
+    .subnote {
+        font-size: 1.2rem;
+        font-style: italic;
+        line-height: normal;
+        margin-bottom: 1rem;
+        width: 75%;
+    }
+
+    .file-button {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .btn {
+        background-color: $table-dark-row;
+        border: 0;
+        color: $label-4;
+        display: flex;
+        font-size: 1.6rem;
+        margin: 0 0 3rem;
+        padding: 1rem 4rem;
+        text-indent: inherit;
+        text-transform: none;
+    }
+
+    [type="submit"].btn {
+        background-color: color(orange);
+        color: color(neutral-lightest);
+        float: none;
+        text-transform: uppercase;
+    }
+
+    .helpbox {
+        background-color: lighten(color(cyan), 47%);
+        border: thin solid darken(color(cyan), 20%);
+        color: darken(color(cyan), 22%);
+        margin-top: 1rem;
+        max-height: 6rem;
+        overflow: hidden;
+        padding: 1rem;
+        transition: all 0.13s linear;
+
+        &.not-visible {
+            max-height: 0;
+            opacity: 0;
+            padding: 0 1rem;
+            visibility: hidden;
+        }
+    }
+}

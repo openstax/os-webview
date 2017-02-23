@@ -35,7 +35,7 @@ export default class Detail extends Controller {
                 ['Description', 'detail'], ['Date Submitted', 'date']
             ],
             decisionDataPairs: [
-                ['Decision', 'resolution'], ['Decision details', 'resolution_notes']
+                ['Decision', 'displayStatus'], ['Decision details', 'resolution_notes']
             ]
         };
     }

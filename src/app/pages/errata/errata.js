@@ -19,7 +19,7 @@ function setDisplayStatus(detail) {
         result.status = 'In Review';
     } else if (detail.resolution === 'Approved') {
         if (detail.status === 'Completed') {
-            result.status = `Corrected ${new Date(detail.modified).toLocaleDateString()}`;
+            result.status = `Corrected ${new Date(detail.modified).toLocaleDateString()} in web view`;
             result.barStatus = 'Corrected';
         } else {
             result.status = 'Will Correct';
@@ -80,8 +80,23 @@ export default class Errata extends Controller {
             },
             sortNumber: (a, b) => a - b,
             sortDecision: (a, b) => {
-                const ar = a.resolution;
-                const br = b.resolution;
+                /* eslint complexity: 0 */
+                const ar = a.barStatus || 'F'; // Between Corrected and No Correction
+                const br = b.barStatus || 'F';
+
+                if (ar < br) {
+                    return -1;
+                }
+                if (ar > br) {
+                    return 1;
+                }
+                const ad = new Date(a.modified);
+                const bd = new Date(b.modified);
+
+                if (ad < bd) {
+                    return -1;
+                }
+                return 1;
             }
         };
         this.model = {
