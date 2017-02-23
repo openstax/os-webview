@@ -61,7 +61,18 @@ export default class Errata extends Controller {
             mode: 'detail',
             instructions: 'Errata submissions are displayed below until a new PDF is published online.',
             moreAbout: 'More about our correction schedule',
-            tooltipText: 'This should appear on hover',
+            tooltipText: `<p>Textbook corrections are incorporated into the webview version regularly.
+              Instructor and student resources, such as test banks and student solution manuals, are
+              also updated regularly online.  New PDF versions of OpenStax textbooks that reflect
+              errata are updated, with release notes, in June.</p>
+              <p><a href="">
+                  <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                  Download the latest release notes
+              </a></p>
+              <p>
+              Errata for OpenStax Tutor and Concept Coach are updated at the end of each semester.
+              </p>
+              Have questions?  Please email <a href="mailto:errata@openstax.org">errata@openstax.org</a>`,
             errorTypes: [
                 'Typo', 'Broken link', 'Incorrect calculation or solution',
                 'Other factual inaccuracy in content',

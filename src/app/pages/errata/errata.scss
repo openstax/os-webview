@@ -48,22 +48,49 @@ $fill-size: $node-size * 0.6;
         .instructions {
             color: color(neutral-lightest);
             font-size: 1.6rem;
+            margin-top: 1rem;
         }
 
         .with-tooltip {
             color: color(blue);
             cursor: default;
-            display: inline-block;
+            display: block;
             font-size: 1.6rem;
+            letter-spacing: normal;
+            margin-top: 0.5rem;
+            padding-bottom: 3rem;
             position: relative;
 
             .tooltip {
-                display: none;
+                height: 0;
+                opacity: 0;
+                position: absolute;
             }
 
             &:hover .tooltip {
+                background-color: color(neutral-lightest);
+                box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(94, 96, 98, 0.1);
+                cursor: default;
                 display: block;
-                position: absolute;
+                height: auto;
+                left: 0;
+                opacity: 1;
+                padding: 2rem;
+                text-align: left;
+                top: 4rem;
+                transition: opacity 0.2s, transform 0.2s;
+                width: auto;
+                z-index: 10;
+
+                &::before {
+                    border: 2rem solid;
+                    border-color: transparent transparent color(neutral-lightest);
+                    bottom: 100%;
+                    content: '';
+                    left: 50%;
+                    margin-left: -2rem;
+                    position: absolute;
+                }
             }
         }
     }
