@@ -1,5 +1,7 @@
 import {Controller} from 'superb';
 import $ from '~/helpers/$';
+import settings from 'settings';
+import Share from '~/components/share/share';
 import {on} from '~/helpers/controller/decorators';
 import Spinner from '~/components/spinner/spinner';
 import {description as template} from './calculator.html';
@@ -81,6 +83,18 @@ export default class Calculator extends Controller {
         this.update();
     }
 
+    attachShareButtons() {
+        const Region = this.regions.self.constructor;
+        const el = this.el.querySelector('share-buttons');
+        const region = new Region(el, this);
+
+        region.attach(
+            new Share(
+                settings.apiOrigin,
+                `I saved my students $${this.model.product()} by adopting an OpenStax textbook!`
+            ));
+    }
+
     @on('click .calculate')
     doCalculate() {
         this.model.calculated = true;
@@ -90,6 +104,7 @@ export default class Calculator extends Controller {
         .then(() => {
             this.model.waiting = false;
             this.update();
+            this.attachShareButtons();
         });
     }
 

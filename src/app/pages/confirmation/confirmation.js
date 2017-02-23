@@ -59,6 +59,7 @@ const models = {
 export default class Confirmation extends Controller {
 
     init() {
+        document.title = 'Thanks! - OpenStax';
         this.template = template;
         this.css = '/app/pages/confirmation/confirmation.css';
         this.view = {

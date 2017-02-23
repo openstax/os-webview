@@ -9,7 +9,10 @@ $os-colors: (
     turquoise: rgb(45, 151, 147),
     cyan: rgb(13, 192, 220),
     blue: #232e66,
-    gray: #5f6062
+    gray: #5f6062,
+    facebook-blue: #3b5998,
+    twitter-blue: #00aced,
+    linkedin-blue: #0077b5
 );
 
 @function os-color($color) {
