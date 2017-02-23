@@ -195,8 +195,8 @@
                     suggestion and make necessary changes.
                 </p>
                 <ul class="links no-bullets">
-                    <li><a href="{model.errata_link}" class="go-to errata-link">Errata list</a></li>
-                    <li><a href="{model.errata_corrections_link}" class="go-to suggest-correction-link">Suggest a correction</a></li>
+                    <li><a href="/errata/?book={encodeURIComponent(model.title)}" class="go-to errata-link">Errata list</a></li>
+                    <li><a href="/errata/form?book={encodeURIComponent(model.title)}" class="go-to suggest-correction-link">Suggest a correction</a></li>
                 </ul>
             </div>
         </if>
