@@ -64,6 +64,7 @@ $fill-size: $node-size * 0.6;
             .tooltip {
                 height: 0;
                 opacity: 0;
+                overflow: hidden;
                 position: absolute;
             }
 
@@ -75,6 +76,7 @@ $fill-size: $node-size * 0.6;
                 height: auto;
                 left: 0;
                 opacity: 1;
+                overflow: visible;
                 padding: 2rem;
                 text-align: left;
                 top: 4rem;
@@ -96,6 +98,7 @@ $fill-size: $node-size * 0.6;
     }
 
     .strips-and-filter {
+        margin-bottom: 8rem;
         position: relative;
 
         .filter-buttons {
@@ -123,8 +126,28 @@ $fill-size: $node-size * 0.6;
             max-width: 100%;
         }
 
+        th {
+            position: relative;
+
+            .will-sort {
+                display: none;
+            }
+
+            &:hover .will-sort {
+                color: $label-2;
+                display: inline-block;
+            }
+        }
+
         [data-sort-fn] {
             cursor: pointer;
+        }
+
+        .sortdir1,
+        .sortdir-1 {
+            position: absolute;
+            right: 1.5rem;
+            top: 2rem;
         }
 
         .sortdir1::after,
@@ -132,18 +155,17 @@ $fill-size: $node-size * 0.6;
             content: '▸';
             display: inline-block;
             font-size: 120%;
+            transform-origin: 0.3em 0.6em;
             transition: all 0.2s ease-in-out;
         }
 
         .sortdir1::after {
             transform: rotate(-90deg);
-            transform-origin: 0.3em 0.6em;
         }
 
         .sortdir-1::after {
             margin-left: 0.5rem;
             transform: rotate(90deg);
-            transform-origin: 0.3em 0.6em;
         }
 
         th,

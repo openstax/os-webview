@@ -30,6 +30,7 @@ export default class Detail extends Controller {
             detail,
             detailDataPairs: [
                 ['Submission ID', 'id'], ['Title', 'bookTitle'], ['Source', 'source'],
+                ['Status', 'displayStatus'],
                 ['Error Type', 'error_type'], ['Location', 'location'],
                 ['Description', 'detail'], ['Date Submitted', 'date']
             ],

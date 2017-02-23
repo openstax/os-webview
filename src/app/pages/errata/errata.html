@@ -20,7 +20,11 @@
                     <th each="md in model.summaryMetaData" class="{md.cssClass || ''}"
                      data-sort-fn="{md.sortFn}" data-sort-key="{md.key}">
                      {md.label || ''}
-                     <span if="model.summarySortedBy === md.key" class="{`sortdir${model.summarySortDirection}`}">
+                    <if condition="model.summarySortedBy === md.key">
+                        <span class="{`sortdir${model.summarySortDirection}`}"></span>
+                    <else>
+                        <span if="md.sortFn" class="{`will-sort sortdir${md.sortFn === 'sort' ? 1 : -1}`}"></span>
+                    </if>
                  </th>
                 </tr>
             </thead>
@@ -32,6 +36,8 @@
                                 <a href="{entry[md.key]}">{entry[md.key] || ''}</a>
                             <else>
                                 {entry[md.key] || ''}
+                                <a if="md.key === 'displayStatus' && entry[md.key] === 'No Correction'"
+                                href="/errata/{entry.id}">Details</a>
                             </if>
                         </div>
                     </td>

@@ -9,6 +9,26 @@ import Detail from './detail/detail';
 import RadioPanel from '~/components/radio-panel/radio-panel';
 import {description as template} from './errata.html';
 
+function setDisplayStatus(detail) {
+    const result = {
+        status: 'Reviewed'
+    };
+
+    if (['New', 'Editorial Review'].includes(detail.status)) {
+        result.status = 'In Review';
+    } else if (detail.resolution === 'Approved') {
+        if (detail.status === 'Completed') {
+            result.status = `Corrected ${new Date(detail.modified).toLocaleDateString()}`;
+        } else {
+            result.status = 'Will Correct';
+        }
+    } else {
+        result.status = 'No Correction';
+    }
+
+    detail.displayStatus = result.status;
+}
+
 export default class Errata extends Controller {
 
     init() {
@@ -37,13 +57,13 @@ export default class Errata extends Controller {
                 return true;
                 break;
             case 'in-review':
-                return item.status === 'New' || item.status === 'In Review';
+                return item.displayStatus === 'In Review';
                 break;
             case 'reviewed':
-                return item.status === 'Reviewed';
+                return (/Reviewed|Will Correct|No Correction/).test(item.displayStatus);
                 break;
             default:
-                return item.resolution;
+                return (/^Corrected/).test(item.displayStatus);
             }
         };
         this.radioPanel.updateSelected('');
@@ -55,7 +75,11 @@ export default class Errata extends Controller {
 
                 return as.localeCompare(bs, 'en', {sensitivity: 'base'});
             },
-            sortNumber: (a, b) => a - b
+            sortNumber: (a, b) => a - b,
+            sortDecision: (a, b) => {
+                const ar = a.resolution;
+                const br = b.resolution;
+            }
         };
         this.model = {
             mode: 'detail',
@@ -122,7 +146,7 @@ export default class Errata extends Controller {
                 },
                 {
                     label: 'Decision',
-                    key: 'resolution',
+                    key: 'displayStatus',
                     sortFn: 'sort',
                     cssClass: 'mid'
                 }
@@ -198,6 +222,7 @@ export default class Errata extends Controller {
             this.model.title = () => 'Errata Submission Details';
             this.model.book = detail.book;
             this.model.detail = detail;
+            setDisplayStatus(detail);
             const detailComponent = new Detail(detail);
             const detailEl = this.el.querySelector('detail-block');
             const detailRegion = new Region(detailEl, this);
@@ -227,15 +252,27 @@ export default class Errata extends Controller {
             this.model.mode = 'summary';
             summaryPromise.then((summary) => {
                 for (const detail of summary) {
+                    detail.self = detail;
+                    setDisplayStatus(detail);
                     detail.date = new Date(detail.created).toLocaleDateString();
                     detail.source = detail.resource === 'Other' ? detail.resource_other : detail.resource;
                     /* eslint camelcase: 0 */
                     detail.error_type = detail.error_type === 'Other' ? detail.error_type_other : detail.error_type;
                 }
                 this.model.summaryData = summary;
+                this.sortData('sortDate', 'date');
                 this.update();
             });
         });
+    }
+
+    sortData(sortFn, key) {
+        this.model.summarySortedBy = key;
+        this.model.summarySortDirection = sortFn === 'sort' ? 1 : -1;
+        this.model.summaryData.sort((a, b) => this.sortFunctions[sortFn](a[key], b[key]));
+        if (this.model.summarySortDirection < 0) {
+            this.model.summaryData.reverse();
+        }
     }
 
     @on('click [data-sort-fn]')
@@ -248,9 +285,7 @@ export default class Errata extends Controller {
             this.model.summaryData.reverse();
             this.model.summarySortDirection *= -1;
         } else {
-            this.model.summarySortedBy = key;
-            this.model.summarySortDirection = 1;
-            this.model.summaryData.sort((a, b) => this.sortFunctions[sortFn](a[key], b[key]));
+            this.sortData(sortFn, key);
         }
         this.update();
     }
