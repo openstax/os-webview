@@ -103,18 +103,6 @@ export default class Errata extends Controller {
             mode: 'detail',
             instructions: 'Errata submissions are displayed below until a new PDF is published online.',
             moreAbout: 'More about our correction schedule',
-            tooltipText: `<p>Textbook corrections are incorporated into the webview version regularly.
-              Instructor and student resources, such as test banks and student solution manuals, are
-              also updated regularly online.  New PDF versions of OpenStax textbooks that reflect
-              errata are updated, with release notes, in June.</p>
-              <p><a href="">
-                  <i class="fa fa-cloud-download" aria-hidden="true"></i>
-                  Download the latest release notes
-              </a></p>
-              <p>
-              Errata for OpenStax Tutor and Concept Coach are updated at the end of each semester.
-              </p>
-              Have questions?  Please email <a href="mailto:errata@openstax.org">errata@openstax.org</a>`,
             errorTypes: [
                 'Typo', 'Broken link', 'Incorrect calculation or solution',
                 'Other factual inaccuracy in content',
@@ -254,6 +242,20 @@ export default class Errata extends Controller {
         });
     }
 
+    fetchReleaseNotes(slug) {
+        const url = `${settings.apiOrigin}/api/books/${slug}`;
+
+        fetch(url).then((r) => r.json()).then((bookInfo) => {
+            const notes = bookInfo.book_faculty_resources
+            .find((entry) => entry.resource_heading === 'Errata Release Notes');
+
+            if (notes) {
+                this.model.releaseNotes = notes.link_document_url;
+                this.update();
+            }
+        });
+    }
+
     summary(book) {
         // Fetch the summary data once
         const summaryPromise = fetch(`${settings.apiOrigin}/api/errata/?book_title=${book}`)
@@ -263,6 +265,7 @@ export default class Errata extends Controller {
             const entry = bookList.find((info) => info.title === book);
 
             if (entry) {
+                this.fetchReleaseNotes(entry.meta.slug);
                 this.model.summaryBook = entry.id;
                 this.model.title = () => `${entry.title} Errata`;
             }
