@@ -99,13 +99,6 @@ class Header extends Controller {
         };
 
         window.addEventListener('scroll', this.onScrollHeader, false);
-        window.addEventListener('beforeunload', () => {
-            // Needs to be synchronous so page exit doesn't abort it
-            const request = new XMLHttpRequest();
-
-            request.open('GET', '/accounts/logout', false);
-            request.send(null);
-        });
     }
 
     pin() {
