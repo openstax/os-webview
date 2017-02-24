@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="options">
-            <div if="model.webviewLink" class="option">
+            <div if="!model.comingSoon && model.webviewLink" class="option">
                 <a href="{model.webviewLink}">
                     <span class="fa fa-laptop"></span>
                     View online
@@ -46,7 +46,8 @@
             <div if="model.pdfLink" class="option">
                 <a href="{model.pdfLink}" class="show-pdf-submenu">
                     <span class="fa fa-cloud-download"></span>
-                    Download a PDF<if condition="model.comingSoon"> sample</if>
+                    Download a PDF
+                    <if condition="model.comingSoon">{' sample'}</if>
                 </a>
             </div>
             <div if="model.printLink" class="option">
