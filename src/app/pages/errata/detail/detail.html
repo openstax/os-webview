@@ -1,5 +1,5 @@
 <template args="model">
-    <div class="body-block" if="model.detail && model.detail.resolution">
+    <div class="body-block" if="model.detail.barStatus">
         <div class="info">
             <div class="label-value-pair" each="pair in model.decisionDataPairs">
                 <div class="label">{pair[0]}</div>
@@ -11,7 +11,7 @@
             </div>
         </div>
     </div>
-    <div class="info body-block {model.detail.resolution ? 'graytop' : ''}">
+    <div class="info body-block {model.detail.barStatus ? 'graytop' : ''}">
         <div class="label-value-pair" each="pair in model.detailDataPairs">
             <div class="label">{pair[0]}</div>
             <div class="value" data-html="detail['{pair[1]}'] || ''" skip="true"></div>
