@@ -40,7 +40,7 @@ const models = {
     errata: {
         headline: 'Thanks for your help!',
         adoptionQuestion: `Your contribution helps keep OpenStax resources high quality
-        and up to date. We sent you an email confirming your submission.`
+        and up to date.`
     },
     interest: {
         headline: 'Thanks for telling us about yourself!',

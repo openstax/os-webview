@@ -29,17 +29,17 @@ select {
     &::after {
         color: color(gray);
         position: absolute;
-        right: 1rem;
-        top: 1rem;
-        transform: rotate(180deg);
-        transform-origin: center;
+        right: 1.2rem;
+        text-align: center;
+        top: 0.4rem;
+        transform: rotate(90deg);
+        transform-origin: 63% 55%;
         transition: All 0.2s ease-in-out;
+        width: 2rem;
     }
 
     &.open::after {
-        right: 1.2rem;
-        top: 0.6rem;
-        transform: rotate(90deg);
+        transform: rotate(270deg);
     }
 
     &.select-multi {

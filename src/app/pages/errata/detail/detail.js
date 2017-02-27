@@ -26,6 +26,9 @@ export default class Detail extends Controller {
         this.css = '/app/pages/errata/detail/detail.css';
         detail.date = new Date(detail.created).toLocaleDateString();
         detail.source = detail.resource;
+        if (!(/^\/errata/).test(window.location.pathname)) {
+            detail.id = `<a href="/errata/${detail.id}">${detail.id}</a>`;
+        }
         this.model = {
             detail,
             detailDataPairs: [
