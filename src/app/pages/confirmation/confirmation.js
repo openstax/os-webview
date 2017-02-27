@@ -1,6 +1,7 @@
 import {Controller} from 'superb';
 import settings from 'settings';
 import $ from '~/helpers/$';
+import userModel from '~/models/usermodel';
 import Popup from '~/components/popup/popup';
 import Calculator from '~/components/calculator/calculator';
 import Detail from '~/pages/errata/detail/detail';
@@ -78,6 +79,9 @@ export default class Confirmation extends Controller {
             .replace(/^\//, '');
         }
         this.model = models[this.referringPage];
+        if (this.referringPage === 'errata') {
+            this.userPromise = userModel.load();
+        }
     }
 
     onLoaded() {
@@ -92,6 +96,11 @@ export default class Confirmation extends Controller {
 
             Detail.detailPromise(queryDict.id).then((detail) => {
                 this.regions.detail.attach(new Detail(detail));
+            });
+
+            this.userPromise.then((response) => {
+                this.model.defaultEmail = response.email;
+                this.update();
             });
         }
     }
