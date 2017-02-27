@@ -52,7 +52,9 @@
                         Account Profile
                     </a>
                 </li>
-                <li if="model.user && !model.user.groups.includes('Faculty') && !model.user.pending_verification" role="presentation">
+                <li if="model.user && !model.user.groups.includes('Faculty')
+                    && !model.user.groups.includes('Student')
+                    && !model.user.pending_verification" role="presentation">
                     <a href="{model.facultyAccessLink}" data-local="true" role="menuitem" tabindex="-1">
                         Request instructor access
                     </a>
