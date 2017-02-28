@@ -41,6 +41,8 @@ const statusSortOrder = {
 
 export default class Errata extends Controller {
 
+    static setDisplayStatus = setDisplayStatus;
+
     init() {
         this.template = template;
         this.css = '/app/pages/errata/errata.css';
