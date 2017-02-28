@@ -271,6 +271,16 @@ $fill-size: $node-size * 0.6;
         .when {
             color: $label-2;
         }
+
+        .label {
+            &:nth-child(2) {
+                text-align: center;
+            }
+
+            &:nth-child(3) {
+                text-align: right;
+            }
+        }
     }
 
     .progress-bar {
@@ -334,7 +344,7 @@ $fill-size: $node-size * 0.6;
     .info {
         color: $label-1;
         display: table;
-        padding: 2rem 0 4rem 4rem;
+        padding: 2rem 2rem 4rem 4rem;
 
         @include phone {
             display: block;
