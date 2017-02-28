@@ -32,6 +32,13 @@ function setDisplayStatus(detail) {
     detail.barStatus = result.barStatus;
 }
 
+const statusSortOrder = {
+    'Co': 0,
+    'Wi': 1,
+    'No': 2,
+    'In': 3
+};
+
 export default class Errata extends Controller {
 
     init() {
@@ -69,7 +76,8 @@ export default class Errata extends Controller {
                 return (/^Corrected/).test(item.displayStatus);
             }
         };
-        this.radioPanel.updateSelected('');
+        this.selectedFilter = '';
+        this.radioPanel.updateSelected(this.selectedFilter);
         this.sortFunctions = {
             sortDate: (a, b) => new Date(a) - new Date(b),
             sort: (a, b) => {
@@ -81,14 +89,11 @@ export default class Errata extends Controller {
             sortNumber: (a, b) => a - b,
             sortDecision: (a, b) => {
                 /* eslint complexity: 0 */
-                const ar = a.barStatus || 'F'; // Between Corrected and No Correction
-                const br = b.barStatus || 'F';
+                const ar = statusSortOrder[a.substr(0, 2)];
+                const br = statusSortOrder[b.substr(0, 2)];
 
-                if (ar < br) {
-                    return -1;
-                }
-                if (ar > br) {
-                    return 1;
+                if (ar !== br) {
+                    return br - ar;
                 }
                 const ad = new Date(a.modified);
                 const bd = new Date(b.modified);
@@ -153,7 +158,7 @@ export default class Errata extends Controller {
                 {
                     label: 'Decision',
                     key: 'displayStatus',
-                    sortFn: 'sort',
+                    sortFn: 'sortDecision',
                     cssClass: 'mid'
                 }
             ],
