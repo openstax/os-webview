@@ -1,5 +1,5 @@
 <template args="model">
-    <div class="hero">
+    <div class="hero{model.mode === 'summary' ? '' : ' padded'}">
         <h1 if="model.title" data-html="title()"></h1>
         <div if="model.mode === 'summary'">
             <div class="instructions">{model.instructions}</div>

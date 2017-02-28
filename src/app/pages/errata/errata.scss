@@ -26,12 +26,15 @@ $fill-size: $node-size * 0.6;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        margin-bottom: 2rem;
         min-height: 22rem;
         padding: 3rem;
 
         @include desktop {
             padding: 0;
+        }
+
+        &.padded {
+            margin-bottom: 2rem;
         }
 
         h1 {
@@ -125,6 +128,7 @@ $fill-size: $node-size * 0.6;
         border: thin solid $table-border;
         border-collapse: collapse;
         font-size: 1.4rem;
+        margin-bottom: 13rem;
         max-width: 100%;
 
         tr {
@@ -151,8 +155,9 @@ $fill-size: $node-size * 0.6;
         .sortdir1,
         .sortdir-1 {
             position: absolute;
-            right: 1.5rem;
-            top: 2rem;
+            right: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
         .sortdir1::after,
@@ -160,7 +165,9 @@ $fill-size: $node-size * 0.6;
             content: '▸';
             display: inline-block;
             font-size: 120%;
-            transform-origin: 0.3em 0.6em;
+            margin-bottom: 0.3rem;
+            text-align: center;
+            transform-origin: 50% 50%;
             transition: all 0.2s ease-in-out;
         }
 
@@ -169,7 +176,6 @@ $fill-size: $node-size * 0.6;
         }
 
         .sortdir-1::after {
-            margin-left: 0.5rem;
             transform: rotate(90deg);
         }
 
