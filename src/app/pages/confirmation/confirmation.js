@@ -1,6 +1,7 @@
 import {Controller} from 'superb';
 import settings from 'settings';
 import $ from '~/helpers/$';
+import userModel from '~/models/usermodel';
 import Popup from '~/components/popup/popup';
 import Calculator from '~/components/calculator/calculator';
 import Detail from '~/pages/errata/detail/detail';
@@ -40,7 +41,7 @@ const models = {
     errata: {
         headline: 'Thanks for your help!',
         adoptionQuestion: `Your contribution helps keep OpenStax resources high quality
-        and up to date. We sent you an email confirming your submission.`
+        and up to date.`
     },
     interest: {
         headline: 'Thanks for telling us about yourself!',
@@ -78,6 +79,9 @@ export default class Confirmation extends Controller {
             .replace(/^\//, '');
         }
         this.model = models[this.referringPage];
+        if (this.referringPage === 'errata') {
+            this.userPromise = userModel.load();
+        }
     }
 
     onLoaded() {
@@ -92,6 +96,11 @@ export default class Confirmation extends Controller {
 
             Detail.detailPromise(queryDict.id).then((detail) => {
                 this.regions.detail.attach(new Detail(detail));
+            });
+
+            this.userPromise.then((response) => {
+                this.model.defaultEmail = response.email;
+                this.update();
             });
         }
     }

@@ -2,20 +2,18 @@
     <form class="body-block" method="post" action="{model.postEndpoint}"
      enctype="multipart/form-data">
         <input type="hidden" name="submitted_by" value="{model.submittedBy}" />
-        <div class="question">Wrong subject? Select a different subject.</div>
+        <div class="question">Select a subject.</div>
         <div skip="true"></div>
         <select name="book">
             <option each="book in model.books" value="{book.id}"
              data-string-value="{book.title}"
              selected="{book.title === model.selectedTitle ? '' : null}">{book.title}</option>
         </select>
-        <div>Selected title: {model.selectedTitle}</div>
         <div class="question">Select the type of error below.</div>
         <div class="radio-columns">
             <span class="invalid-message">{model.validationMessage('source')}</span>
             <label each="eType in model.errorTypes">
                 <input type="radio" name="error_type" value="{eType}" required/>
-                <span class="proxy"></span>
                 {eType}
                 <input if="eType === 'Other' && model.selectedError === 'Other'" type="text" name="error_type_other" maxlength="250" />
             </label>
@@ -63,12 +61,11 @@
             <span if="model.file2" class="file-name">{model.file2}</span>
         </div>
         <div class="question">
-            If you would like to receive email notifications about updates to this
-            errata entry, include your email address here.
-            <input type="text" name="submitter_email_address" value="{model.defaultEmail}" />
+            Email notifications about updates to this
+            errata entry will be sent to {model.defaultEmail}.
         </div>
         <div>
-            <input type="submit" class="btn" />
+            <input type="submit" class="btn" value="Submit" />
         </div>
     </form>
 </template>

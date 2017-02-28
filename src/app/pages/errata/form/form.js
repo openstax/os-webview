@@ -16,7 +16,7 @@ export default class Form extends Controller {
         this.css = '/app/pages/errata/form/form.css';
         this.template = template;
         this.model = Object.assign(model, {
-            postEndpoint: `${settings.apiOrigin}/api/errata/?format=json`,
+            postEndpoint: `${settings.apiOrigin}/api/errata/`,
             validationMessage: (name) => {
                 const el = this.el.querySelector(`[name="${name}"]`);
 

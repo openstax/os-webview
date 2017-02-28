@@ -1,0 +1,106 @@
+@import 'variables';
+
+$custom-radio-size:                 20px;
+$custom-radio-border-width:         1px;
+$custom-radio-transition-speed:     100ms;
+$custom-radio-inset-shadow:         inset 0 0.1em 1px -0.1em rgba(0, 0, 0, 0.3);
+
+$custom-radio-pip-color:            color(cyan);
+$custom-radio-pip-size:             round($custom-radio-size * 0.75);
+
+// States
+$custom-radio-unchecked-bg:         white;
+$custom-radio-unchecked-border:     transparentize(gray, 0.6);
+
+$custom-radio-checked-bg:           $custom-radio-unchecked-bg;
+$custom-radio-checked-border:       $custom-radio-unchecked-border;
+
+$custom-radio-active-inset-shadow:  inset 0 0 2px 3px rgba(0, 0, 0, 0.1);
+
+$custom-radio-focus-shadow:         0 0 0 2px transparentize(dodgerblue, 0.5);
+
+$custom-radio-disabled-bg:          lighten(black, 91.8%);
+$custom-radio-disabled-pip-color:   lighten(black, 80%);
+
+
+// Check variable values
+@if ($custom-radio-size % 2 == 1) { @error '$custom-radio-size must be even'; }
+// round to nearest even number
+@if ($custom-radio-pip-size % 2 == 1) { $custom-radio-pip-size: $custom-radio-pip-size - 1; }
+
+
+[type="radio"] {
+    -webkit-appearance: none;
+    border-radius: 100%;
+    display: inline-block;
+    height: $custom-radio-size;
+    outline: none;
+    position: relative;
+    transform: translateY(25%);
+    width: $custom-radio-size;
+
+    // Radio
+    // -----
+
+    &::before {
+        background: $custom-radio-unchecked-bg;
+        border: $custom-radio-border-width solid $custom-radio-unchecked-border;
+        border-radius: 100%;
+        box-shadow: $custom-radio-inset-shadow;
+        content: '';
+        display: block;
+        height: $custom-radio-size;
+        left: -$custom-radio-border-width;
+        position: relative;
+        top: -$custom-radio-border-width;
+        width: $custom-radio-size;
+    }
+
+    &:checked::before {
+        background: $custom-radio-checked-bg;
+        border-color: $custom-radio-checked-border;
+    }
+
+    &:disabled::before {
+        background-color: $custom-radio-disabled-bg;
+        border-color: transparentize($custom-radio-unchecked-border, 0.2);
+        cursor: not-allowed;
+    }
+
+    // Radio Pip
+    // ---
+    &::after {
+        background: $custom-radio-pip-color;
+        border-radius: 100%;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        content: '';
+        display: block;
+        height: 0;
+        left: ($custom-radio-size / 2) - $custom-radio-border-width;
+        position: relative;
+        top: -($custom-radio-size / 2) - $custom-radio-border-width;
+        width: 0;
+    }
+
+    &:checked::after {
+        height: $custom-radio-pip-size;
+        left: floor(
+        + ($custom-radio-size / 2)
+        - ($custom-radio-pip-size / 2)
+        - $custom-radio-border-width
+        + 1
+        );
+        top: floor(
+        - ($custom-radio-size / 2)
+        - ($custom-radio-pip-size / 2)
+        - $custom-radio-border-width
+        - 0.5
+        );
+        transition: all ease-in-out $custom-radio-transition-speed 0;
+        width: $custom-radio-pip-size;
+    }
+
+    &:disabled::after {
+        background: $custom-radio-disabled-pip-color;
+    }
+}

@@ -7,7 +7,7 @@
     }
 }
 
-$page-background: #fbfbfb;
+$page-background: #f0f0f0;
 $label-1: #575958;
 $label-2: #999;
 $table-border: #dcdcdc;
@@ -26,7 +26,8 @@ $fill-size: $node-size * 0.6;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        min-height: 30rem;
+        margin-bottom: 2rem;
+        min-height: 22rem;
         padding: 3rem;
 
         @include desktop {
@@ -114,12 +115,8 @@ $fill-size: $node-size * 0.6;
     }
 
     .body-block {
-        padding: 0 4rem;
+        padding: 0;
         width: 100%;
-
-        @include phone {
-            padding: 0 1rem;
-        }
     }
 
     .summary-table,
@@ -239,12 +236,26 @@ $fill-size: $node-size * 0.6;
 
     .progress-bar-container {
         background-color: color(neutral-lightest);
+        margin-bottom: 2rem;
+        padding: 3rem 4rem 0;
+
+        @include phone {
+            margin: 0 1rem;
+            padding: 1rem;
+            padding-bottom: 0;
+            width: calc(100% - 2rem);
+        }
     }
 
     .progress-bar-labels {
         display: flex;
+        font-size: 1.4rem;
         justify-content: space-between;
-        margin-top: 1rem;
+        margin-top: 0;
+
+        @include phone {
+            font-size: 1.2rem;
+        }
 
         .event {
             color: $label-1;
@@ -262,7 +273,7 @@ $fill-size: $node-size * 0.6;
         flex-flow: column;
         height: 5rem;
         justify-content: center;
-        margin-top: 1.9rem;
+        margin-top: 1rem;
         position: relative;
 
         .progress-bar-layer {
@@ -317,11 +328,12 @@ $fill-size: $node-size * 0.6;
     .info {
         color: $label-1;
         display: table;
-        padding-bottom: 4rem;
-        padding-top: 2rem;
+        padding: 2rem 0 4rem 4rem;
 
         @include phone {
             display: block;
+            padding-bottom: 2rem;
+            padding-left: 1rem;
         }
 
     }

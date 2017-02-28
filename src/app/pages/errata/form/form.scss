@@ -9,6 +9,10 @@ $table-dark-row: #f6f6f6;
     color: $label-4;
     padding: 2rem 9rem;
 
+    &.boxed {
+        max-width: 97rem;
+    }
+
     .question {
         font-size: 1.8rem;
         font-weight: bold;
@@ -19,7 +23,8 @@ $table-dark-row: #f6f6f6;
     label {
         color: $label-4;
         display: block;
-        line-height: normal;
+        line-height: 2;
+        margin: 0;
         padding-left: 2rem;
         text-indent: -2rem;
     }
@@ -36,19 +41,6 @@ $table-dark-row: #f6f6f6;
             width: auto;
         }
 
-    }
-
-    [type="radio"] {
-        display: none;
-
-        + .proxy {
-            background: url('/images/components/unchecked-radio.svg') left center no-repeat;
-            padding-right: 1.5em;
-        }
-
-        &:checked + .proxy {
-            background-image: url('/images/components/checked-radio.png');
-        }
     }
 
     .subnote {
@@ -86,6 +78,7 @@ $table-dark-row: #f6f6f6;
     .helpbox {
         background-color: lighten(color(cyan), 47%);
         border: thin solid darken(color(cyan), 20%);
+        border-radius: 0.2rem;
         color: darken(color(cyan), 22%);
         margin-top: 1rem;
         max-height: 6rem;

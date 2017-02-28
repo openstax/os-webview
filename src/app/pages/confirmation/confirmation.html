@@ -7,7 +7,11 @@
                 <p if="model.topLinkUrl">
                     {' '}<a href="{model.topLinkUrl}">{model.topLinkText}</a>
                 </p>
-                <p if="model.adoptionQuestion">{model.adoptionQuestion}</p>
+                <p if="model.adoptionQuestion">{model.adoptionQuestion}
+                    <if condition="model.defaultEmail">
+                        {` `}We sent an email to {model.defaultEmail} confirming your submission.
+                    </if>
+                </p>
                 <a if="model.adoptionUrl" href="{model.adoptionUrl}" title="{model.adoptionLinkText}" class="cta btn">{model.adoptionLinkText}</a>
                 <a if="model.subjectLinkText"
                     href="/subjects" title="{model.subjectLinkText}" class="go-back">{model.subjectLinkText}</a>
@@ -18,7 +22,7 @@
 
     <div class="wrapper">
         <savings-calculator class="boxed" skip="true"></savings-calculator>
-        <detail-block skip="true"></detail-block>
+        <detail-block class="boxed" skip="true"></detail-block>
         <div class="text-content labeled-inputs row book-info">
         </div>
     </div>

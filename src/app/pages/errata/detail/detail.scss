@@ -10,7 +10,6 @@ detail-block {
 
     display: flex;
     justify-content: center;
-    padding-top: 2rem;
 
     > div {
         width: 100%;
@@ -21,6 +20,14 @@ detail-block {
 
         > .body-block {
             background-color: color(neutral-lightest);
+        }
+    }
+
+    .info {
+        padding: 3rem 4rem;
+
+        @include phone {
+            padding: 2rem 1rem;
         }
     }
 
@@ -78,6 +85,11 @@ detail-block {
         font-size: 1.2rem;
         line-height: normal;
         margin: 1rem 0 4rem 4rem;
+
+        @include phone {
+            margin-bottom: 6rem;
+            margin-left: 1rem;
+        }
     }
 
 }
