@@ -14,14 +14,24 @@
         }
 
         .btn {
-            background-repeat: no-repeat;
+            align-items: center;
+            background-image: none;
             border: 0;
             color: color(neutral-lightest);
+            display: flex;
             font-size: 1.6rem;
             font-weight: normal;
+            justify-content: flex-start;
             margin: 1rem 0.5rem;
-            padding: 1rem 3rem 1rem 4.5rem;
+            padding: 0.8rem;
+            padding-left: 2.5rem;
             text-transform: none;
+            width: 16rem;
+
+            @include tablet {
+                padding-left: 2.2rem;
+                width: 15rem;
+            }
 
             &.facebook {
                 background-color: color(facebook-blue);
@@ -33,6 +43,12 @@
 
             &.linkedin {
                 background-color: color(linkedin-blue);
+            }
+
+            .social-icon {
+                color: color(neutral-lightest);
+                font-size: 2rem;
+                margin-right: 1rem;
             }
         }
     }
