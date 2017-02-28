@@ -1,5 +1,6 @@
 import {Controller} from 'superb';
 import settings from 'settings';
+import $ from '~/helpers/$';
 import selectHandler from '~/handlers/select';
 import router from '~/router';
 import {on} from '~/helpers/controller/decorators';
@@ -26,6 +27,9 @@ export default class Form extends Controller {
             selectedSource: model.source && sourceNames[model.source.toLowerCase()],
             location: model.location
         });
+        for (const book of this.model.books) {
+            book.titleText = $.htmlToText(book.title);
+        }
     }
 
     onLoaded() {
