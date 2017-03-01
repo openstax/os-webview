@@ -13,9 +13,6 @@ const applyLink = `${settings.accountHref}/faculty_access/apply?r=${encodeURICom
 const models = {
     adoption: {
         headline: 'Thanks! You\'re A Textbook Hero',
-        topParagraph: `Our free digital textbooks and integrated resources are
-        yours to use. You are joining thousands of educators in providing greater
-        access to quality learning resources for your students.`,
         adoptionQuestion: 'Have you adopted another OpenStax book?',
         adoptionUrl: '/adoption',
         adoptionLinkText: 'Add another book',
@@ -24,8 +21,6 @@ const models = {
     },
     compCopy: {
         headline: 'Thank you for requesting a download from iBooks.',
-        topParagraph: `A member of our Customer Service team will contact you with
-        a code for your free download from iBooks within one to two business days.`,
         adoptionQuestion: 'Have you adopted an OpenStax book?',
         adoptionUrl: '/adoption',
         adoptionLinkText: 'Adopt a book',
@@ -33,8 +28,10 @@ const models = {
     },
     contact: {
         headline: 'Thanks for contacting us',
-        topParagraph: `We love hearing from you! We've received your message and will
-        get back to you within one business day.`,
+        simpleMessage: 'We\'ve received your order form.'
+    },
+    webContact: {
+        headline: 'Thanks for contacting us',
         adoptionQuestion: 'Have you looked at our books lately?',
         adoptionUrl: '/subjects',
         adoptionLinkText: 'Check out our subjects'
@@ -46,10 +43,6 @@ const models = {
     },
     interest: {
         headline: 'Thanks for telling us about yourself!',
-        topParagraph: `Our goal is to increase access for students to get the learning materials
-        they need to succeed. We'll be sure to send you more information about our
-        free textbooks and low-cost learning tools that are revolutionizing
-        classrooms across the country and the world.`,
         adoptionQuestion: 'Have you been verified as an instructor?',
         adoptionUrl: applyLink,
         adoptionLinkText: 'Get verified',
