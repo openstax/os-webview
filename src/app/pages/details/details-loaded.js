@@ -85,20 +85,24 @@ export default class DetailsLoaded extends Controller {
                     this.model.book_faculty_resources = [];
                 }
             };
+            const checkForNonInstructor = () => {
+                if (!user || !user.username) {
+                    isInstructor = false;
+                    alternateLink = sfUserModel.loginLink();
+                    this.model.extraInstructions =
+                        `<a href="${alternateLink}" data-local="true">Log in</a> for instructor access.`;
+                } else if (!hasGroups || !user.groups.includes('Faculty')) {
+                    isInstructor = false;
+                    hideResourcesFromStudent();
+                    handlePending();
+                }
+            };
 
-            if (!user || !user.username) {
-                isInstructor = false;
-                alternateLink = sfUserModel.loginLink();
-                this.model.extraInstructions =
-                    `<a href="${alternateLink}" data-local="true">Login</a> for instructor access.`;
-            } else if (!hasGroups || !user.groups.includes('Faculty')) {
-                isInstructor = false;
-                hideResourcesFromStudent();
-                handlePending();
-            }
+            checkForNonInstructor();
             $.insertHtml(this.el, this.model);
 
             setLockState();
+            this.model.hideInstructorInstructions = isInstructor || user.pending_verification;
             insertResources(this.model.book_faculty_resources, 'instructorResources');
             alternateLink = null;
             insertResources(this.model.book_student_resources, 'studentResources');
