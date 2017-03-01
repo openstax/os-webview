@@ -4,6 +4,7 @@ import $ from '~/helpers/$';
 import userModel from '~/models/usermodel';
 import Popup from '~/components/popup/popup';
 import Calculator from '~/components/calculator/calculator';
+import Errata from '~/pages/errata/errata';
 import Detail from '~/pages/errata/detail/detail';
 import {description as template} from './confirmation.html';
 
@@ -95,6 +96,7 @@ export default class Confirmation extends Controller {
             const queryDict = $.parseSearchString(window.location.search);
 
             Detail.detailPromise(queryDict.id).then((detail) => {
+                Errata.setDisplayStatus(detail);
                 this.regions.detail.attach(new Detail(detail));
             });
 

@@ -7,7 +7,7 @@
         <select name="book">
             <option each="book in model.books" value="{book.id}"
              data-string-value="{book.title}"
-             selected="{book.title === model.selectedTitle ? '' : null}">{book.title}</option>
+             selected="{book.title === model.selectedTitle ? '' : null}">{book.titleText}</option>
         </select>
         <div class="question">Select the type of error below.</div>
         <div class="radio-columns">
