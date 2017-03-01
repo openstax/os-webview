@@ -91,7 +91,7 @@
             <if condition="model.book_faculty_resources.length">
                 <div id="resources" class="row">
                     <h3>OpenStax Instructor Resources</h3>
-                    <p>
+                    <p if="!model.hideInstructorInstructions">
                         Access these free resources with your verified instructor account.
                         <span data-html="extraInstructions" skip="true"></span>
                     </p>
