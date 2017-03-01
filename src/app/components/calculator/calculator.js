@@ -8,7 +8,7 @@ import {description as template} from './calculator.html';
 
 export default class Calculator extends Controller {
 
-    init() {
+    init(referringPage) {
         this.template = template;
         this.css = '/app/components/calculator/calculator.css';
         this.view = {
@@ -22,6 +22,7 @@ export default class Calculator extends Controller {
             product: () => this.model.values.students * this.model.values.dollars,
             calculated: false
         };
+        this.referringPage = referringPage;
     }
 
     onLoaded() {
@@ -87,11 +88,17 @@ export default class Calculator extends Controller {
         const Region = this.regions.self.constructor;
         const el = this.el.querySelector('share-buttons');
         const region = new Region(el, this);
+        const messages = {
+            adoption: `I saved my students $${this.model.product()} by adopting`,
+            interest: `I can save my students $${this.model.product()} with`
+        };
+        const commonMessageTail = ' an OpenStax textbook! They\'re high quality' +
+            ' and available free online at';
 
         region.attach(
             new Share(
                 settings.apiOrigin,
-                `I saved my students $${this.model.product()} by adopting an OpenStax textbook!`
+                messages[this.referringPage] + commonMessageTail
             ));
     }
 
