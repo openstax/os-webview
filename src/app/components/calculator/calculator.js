@@ -16,6 +16,7 @@ export default class Calculator extends Controller {
         };
         this.model = {
             activeBlock: null,
+            introText: 'Calculate how much your students will save this year',
             isValid: {},
             widthClass: {},
             values: {},
@@ -23,6 +24,10 @@ export default class Calculator extends Controller {
             calculated: false
         };
         this.referringPage = referringPage;
+
+        if ((/interest/).test(window.location.pathname)) {
+            this.model.introText = 'Calculate how much students save each year when you adopt OpenStax';
+        }
     }
 
     onLoaded() {
