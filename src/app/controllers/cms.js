@@ -1,4 +1,5 @@
 import settings from 'settings';
+import jsonDataCache from '~/helpers/json-data-cache';
 import {Controller} from 'superb';
 
 const TRANSFORM_DATA = Symbol();
@@ -13,8 +14,7 @@ class CMSPageController extends Controller {
             /* eslint arrow-parens: 0 */ // Fix eslint bug with async arrow functions
             (async () => {
                 try {
-                    const response = await fetch(`${settings.apiOrigin}/api/${this.slug}`);
-                    const data = await response.json();
+                    const data = await jsonDataCache.load(`${settings.apiOrigin}/api/${this.slug}`);
 
                     this.pageData = this.preserveWrapping ? data : CMSPageController[TRANSFORM_DATA](data);
 
@@ -26,6 +26,10 @@ class CMSPageController extends Controller {
                 }
             })();
         }
+    }
+
+    onDataError(e) {
+        console.warn(e);
     }
 
     [LOAD_IMAGES](data) {
