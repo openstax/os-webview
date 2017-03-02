@@ -93,6 +93,7 @@ export default class Confirmation extends Controller {
                 this.regions.detail.attach(new Detail(detail));
             });
 
+            this.model.errataId = queryDict.id;
             this.userPromise.then((response) => {
                 this.model.defaultEmail = response.email;
                 this.update();
