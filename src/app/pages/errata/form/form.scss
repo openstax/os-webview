@@ -5,10 +5,19 @@ $label-4: #5f6163;
 $table-dark-row: #f6f6f6;
 
 .form-container {
-    background-color: color(neutral-lightest);
+    background-color: inherit;
     color: $label-4;
     margin-bottom: 18rem;
-    padding: 2rem 9rem;
+    padding: 0 1.5rem;
+
+    > div {
+        background-color: color(neutral-lightest);
+        padding: 2rem 9rem;
+
+        @include phone {
+            padding: 2rem 1.5rem;
+        }
+    }
 
     &.boxed {
         max-width: 97rem;
@@ -81,8 +90,8 @@ $table-dark-row: #f6f6f6;
         border: thin solid darken(color(cyan), 20%);
         border-radius: 0.2rem;
         color: darken(color(cyan), 22%);
+        line-height: 1.5;
         margin-top: 1rem;
-        max-height: 6rem;
         overflow: hidden;
         padding: 1rem;
         transition: all 0.13s linear;
