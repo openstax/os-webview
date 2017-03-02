@@ -30,6 +30,15 @@ $page-background: #fbfbfb;
             }
         }
 
+        .header-link {
+            color: color(blue);
+            line-height: 2;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
         .text-content {
             align-items: flex-start;
             display: flex;

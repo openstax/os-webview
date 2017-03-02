@@ -11,8 +11,15 @@
                     {model.simpleMessage}
                 </p>
                 <p if="model.adoptionQuestion">{model.adoptionQuestion}
-                    <if condition="model.defaultEmail">
-                        {` `}We sent an email to {model.defaultEmail} confirming your submission.
+                    <if condition = "model.errataId">
+                        <if condition="model.defaultEmail">
+                            {` `}We sent an email to {model.defaultEmail} confirming your submission.
+                        <else>
+                            <br />
+                            <a class="header-link" href="/errata/{model.errataId}">
+                                Track the status of your submission
+                            </a>
+                        </if>
                     </if>
                 </p>
                 <a if="model.adoptionUrl" href="{model.adoptionUrl}" title="{model.adoptionLinkText}" class="cta btn">{model.adoptionLinkText}</a>
