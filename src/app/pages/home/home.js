@@ -192,7 +192,6 @@ export default class Home extends CMSPageController {
     onClose() {
         clearInterval(this.modelInterval);
         window.removeEventListener('scroll', this.parallaxOnScroll);
-        document.body.classList.remove('home');
         shell.header.updateHeaderStyle();
     }
 

@@ -20,11 +20,8 @@ class Shell extends Controller {
     }
 
     onLoaded() {
-        // Prevents header and footer flashing
-        setTimeout(() => {
-            this.regions.header.attach(header);
-            this.regions.footer.attach(footer);
-        }, 200);
+        this.regions.header.attach(header);
+        this.regions.footer.attach(footer);
 
         // Start recordo
         initialize({ignoreAjaxResponse: true});
