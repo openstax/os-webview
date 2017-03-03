@@ -9,7 +9,11 @@
         <else>
             <a class="download-link go-to" data-local="{model.dataLocal}" href="{model.linkUrl}">{model.link_text}</a>
         </if>
-        <i if="model.showLock" title="{model.lockToolTip}"
-         class="locked-state fa {model.showLock}"></i>
+        <div class="with-tooltip">
+            <i if="model.showLock" class="locked-state fa {model.showLock}"></i>
+             <div class="tooltip">
+                 {model.lockToolTip}
+             </div>
+         </div>
     </span>
 </template>
