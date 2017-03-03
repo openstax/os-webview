@@ -2,6 +2,7 @@ import settings from 'settings';
 import router from '~/router';
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
+import shell from '~/components/shell/shell';
 import CategorySelector from '~/components/category-selector/category-selector';
 import PartnerViewer from './partner-viewer/partner-viewer';
 import {on} from '~/helpers/controller/decorators';
@@ -34,6 +35,7 @@ export default class Partners extends CMSPageController {
             partners: []
         };
         this.categorySelector = new CategorySelector((category) => this.filterPartners(category));
+        shell.showLoader();
 
         router.replaceState({
             filter: this.categoryFromPath(),
@@ -80,6 +82,7 @@ export default class Partners extends CMSPageController {
         this.categorySelector.updateSelected(category);
         this.filterPartners(category);
         this.changeAllyLogoColor();
+        shell.hideLoader();
     }
 
     filterPartners(category) {

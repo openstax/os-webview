@@ -1,6 +1,7 @@
 import settings from 'settings';
 import {on} from '~/helpers/controller/decorators';
 import router from '~/router';
+import shell from '~/components/shell/shell';
 import CMSPageController from '~/controllers/cms';
 import Article from './article/article';
 import {description as template} from './blog.html';
@@ -30,8 +31,8 @@ export default class Blog extends CMSPageController {
             articlePage: '.article.page'
         };
         this.slug = '/news';
-
         this.model = {};
+        shell.showLoader();
 
         this.handlePathChange = () => {
             if (history && history.state && history.state.model) {
@@ -78,6 +79,7 @@ export default class Blog extends CMSPageController {
             }
             this.handlePathChange();
         }
+        shell.hideLoader();
     }
 
     onUpdate() {

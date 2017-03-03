@@ -2,6 +2,7 @@ import router from '~/router';
 import CMSPageController from '~/controllers/cms';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
+import shell from '~/components/shell/shell';
 import BookViewer from './book-viewer/book-viewer';
 import CategorySelector from '~/components/category-selector/category-selector';
 import {description as template} from './subjects.html';
@@ -27,6 +28,8 @@ export default class Subjects extends CMSPageController {
         };
         this.model = {};
         this.categorySelector = new CategorySelector((category) => this.filterSubjects(category));
+
+        shell.showLoader();
 
         router.replaceState({
             filter: this.categoryFromPath(),
@@ -73,6 +76,7 @@ export default class Subjects extends CMSPageController {
         this.categorySelector.updateSelected(category);
         this.filterSubjects(category);
         this.el.classList.add('loaded');
+        shell.hideLoader();
     }
 
     onLoaded() {

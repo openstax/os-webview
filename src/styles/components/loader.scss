@@ -1,6 +1,7 @@
 // scss-lint:disable IdSelector
-.home {
-    &.loaded {
+.page-loading {
+
+    &.page-loaded {
         #header,
         #main,
         #footer {
@@ -24,7 +25,7 @@
         width: 100vw;
         z-index: 200;
 
-        @at-root .loaded#{&} {
+        @at-root .page-loaded#{&} {
             opacity: 0;
             transform: translate3d(0, -100%, 0);
             transition: opacity 0.5s 0.3s, transform 0.2s 0.2s;

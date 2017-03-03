@@ -83,6 +83,7 @@ export default class Home extends CMSPageController {
             loaded: ''
         };
 
+        shell.showLoader();
         // Safari private window patch
         try {
             localStorage.visitedGive = Number(localStorage.visitedGive || 0) + 1;
@@ -97,8 +98,6 @@ export default class Home extends CMSPageController {
     onLoaded() {
         document.title = 'Home - OpenStax';
         shell.header.updateHeaderStyle();
-        document.body.classList.add('no-scroll');
-        document.body.classList.add('home');
     }
 
     pos(range, relY, offset) {
@@ -187,8 +186,7 @@ export default class Home extends CMSPageController {
         this.model.loaded = 'loaded';
         this.update();
 
-        document.body.classList.remove('no-scroll');
-        document.body.classList.add('loaded');
+        shell.hideLoader();
     }
 
     onClose() {

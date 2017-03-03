@@ -20,21 +20,27 @@ class Shell extends Controller {
     }
 
     onLoaded() {
-        this.regions.header.attach(header);
-        this.regions.footer.attach(footer);
-
-        if (window.location.pathname === '/') {
-            this.el.classList.add('home');
-        }
+        // Prevents header and footer flashing
+        setTimeout(() => {
+            this.regions.header.attach(header);
+            this.regions.footer.attach(footer);
+        }, 200);
 
         // Start recordo
         initialize({ignoreAjaxResponse: true});
         if (/collect=true/.test(window.location.search)) {
             injectButtons();
         }
+    }
 
-        // FIX: Update pages title for the new page
-        // headTitle.textContent = `${pageName[0].toUpperCase()}${pageName.slice(1)} - OpenStax`;
+    showLoader() {
+        document.body.classList.add('no-scroll');
+        document.body.classList.add('page-loading');
+    }
+
+    hideLoader() {
+        document.body.classList.add('page-loaded');
+        document.body.classList.remove('no-scroll');
     }
 
 }

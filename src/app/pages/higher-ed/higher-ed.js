@@ -1,6 +1,7 @@
 import settings from 'settings';
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
+import shell from '~/components/shell/shell';
 import {description as template} from './higher-ed.html';
 import ProductsBoxes from '~/components/products-boxes/products-boxes';
 import Quotes from '~/components/quotes/quotes';
@@ -44,6 +45,7 @@ export default class HigherEd extends CMSPageController {
             loginLink,
             loaded: ''
         };
+        shell.showLoader();
     }
 
     onLoaded() {
@@ -69,6 +71,7 @@ export default class HigherEd extends CMSPageController {
         this.regions.buckets.attach(new Buckets(this.model.row_3));
 
         $.insertHtml(this.el, this.model);
+        shell.hideLoader();
     }
 
 }

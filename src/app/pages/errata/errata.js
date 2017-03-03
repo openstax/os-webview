@@ -1,6 +1,7 @@
 import {Controller} from 'superb';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
+import shell from '~/components/shell/shell';
 import settings from 'settings';
 import {bookPromise} from '~/models/book-titles';
 import userModel from '~/models/usermodel';
@@ -171,6 +172,7 @@ export default class Errata extends Controller {
                 (item) => item.book === this.model.summaryBook && this.matchesFilter(item)
             )
         };
+        shell.showLoader();
     }
 
     onLoaded() {
@@ -212,6 +214,7 @@ export default class Errata extends Controller {
 
                     this.regions.form.attach(form);
                     this.update();
+                    shell.hideLoader();
                 });
             } else {
                 window.location = userModel.loginLink();
@@ -246,6 +249,7 @@ export default class Errata extends Controller {
         Detail.detailPromise(id).then((detail) => {
             this.model.bookTitle = detail.bookTitle;
             setModelDetail(detail);
+            shell.hideLoader();
         });
     }
 
@@ -289,6 +293,7 @@ export default class Errata extends Controller {
                 this.model.summaryData = summary;
                 this.sortData('sortDate', 'date');
                 this.update();
+                shell.hideLoader();
             });
         });
     }

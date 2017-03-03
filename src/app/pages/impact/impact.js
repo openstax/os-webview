@@ -1,4 +1,5 @@
 import CMSPageController from '~/controllers/cms';
+import shell from '~/components/shell/shell';
 import {description as template} from './impact.html';
 
 export default class Impact extends CMSPageController {
@@ -15,12 +16,14 @@ export default class Impact extends CMSPageController {
         };
         this.model = {};
         this.slug = 'pages/our-impact';
+        shell.showLoader();
     }
 
     onDataLoaded() {
         document.title = `${this.pageData.title} - OpenStax`;
         this.model = this.pageData;
         this.update();
+        shell.hideLoader();
     }
 
 }
