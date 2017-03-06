@@ -1,5 +1,6 @@
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
+import shell from '~/components/shell/shell';
 import {description as template} from './accessibility-statement.html';
 
 export default class Accessibility extends CMSPageController {
@@ -11,6 +12,7 @@ export default class Accessibility extends CMSPageController {
             classes: ['accessibility-page', 'page']
         };
         this.slug = 'pages/accessibility';
+        shell.showLoader();
     }
 
     onLoaded() {
@@ -19,6 +21,7 @@ export default class Accessibility extends CMSPageController {
 
     onDataLoaded() {
         $.insertHtml(this.el, this.pageData);
+        shell.hideLoader();
     }
 
 }

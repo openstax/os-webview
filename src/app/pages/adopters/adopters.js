@@ -1,5 +1,7 @@
 import settings from 'settings';
-import CMSPageController from '~/controllers/cms';import {description as template} from './adopters.html';
+import shell from '~/components/shell/shell';
+import CMSPageController from '~/controllers/cms';
+import {description as template} from './adopters.html';
 
 export default class Adopters extends CMSPageController {
 
@@ -11,6 +13,7 @@ export default class Adopters extends CMSPageController {
         };
         this.model = {};
         this.slug = 'adopters';
+        shell.showLoader();
     }
 
     onDataLoaded() {
@@ -18,6 +21,7 @@ export default class Adopters extends CMSPageController {
 
         this.model.adopters = results.sort((a, b) => a.name.localeCompare(b.name));
         this.update();
+        shell.hideLoader();
     }
 
 }

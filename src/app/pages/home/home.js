@@ -83,6 +83,7 @@ export default class Home extends CMSPageController {
             loaded: ''
         };
 
+        shell.showLoader();
         // Safari private window patch
         try {
             localStorage.visitedGive = Number(localStorage.visitedGive || 0) + 1;
@@ -184,11 +185,14 @@ export default class Home extends CMSPageController {
         this.regions.buckets.attach(new Buckets(bucketData));
         this.model.loaded = 'loaded';
         this.update();
+
+        shell.hideLoader();
     }
 
     onClose() {
         clearInterval(this.modelInterval);
         window.removeEventListener('scroll', this.parallaxOnScroll);
+        shell.header.updateHeaderStyle();
     }
 
 }

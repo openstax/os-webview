@@ -1,5 +1,6 @@
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
+import shell from '~/components/shell/shell';
 import {description as template} from './support.html';
 
 const supportHost = 'http://openstax.force.com/support?l=en_US';
@@ -14,6 +15,7 @@ export default class Support extends CMSPageController {
             classes: ['support-page', 'page']
         };
         this.slug = 'pages/support';
+        shell.showLoader();
     }
 
     onDataLoaded() {
@@ -31,6 +33,7 @@ export default class Support extends CMSPageController {
         };
         this.update();
         $.insertHtml(this.el, this.model);
+        shell.hideLoader();
     }
 
 }

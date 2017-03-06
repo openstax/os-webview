@@ -1,5 +1,6 @@
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
+import shell from '~/components/shell/shell';
 import router from '~/router';
 import DetailsLoaded from './details-loaded';
 
@@ -15,15 +16,13 @@ export default class Details extends CMSPageController {
 
     init(bookTitle) {
         this.template = () => '';
-        this.view = {
-            classes: ['os-loader']
-        };
         bookTitle = bookTitle.toLowerCase();
         if (/^books/.test(bookTitle)) {
             this.slug = bookTitle;
         } else {
             this.slug = `books/${bookTitle}`;
         }
+        shell.showLoader();
     }
 
     onDataLoaded() {
@@ -52,6 +51,7 @@ export default class Details extends CMSPageController {
         model.comingSoon = this.pageData.coming_soon ? ' coming-soon' : '';
 
         this.regions.self.attach(new DetailsLoaded(model));
+        shell.hideLoader();
     }
 
     onDataError() {

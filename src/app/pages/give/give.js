@@ -3,6 +3,7 @@ import {on} from '~/helpers/controller/decorators';
 import router from '~/router';
 import selectHandler from '~/handlers/select';
 import $ from '~/helpers/$';
+import shell from '~/components/shell/shell';
 import settings from 'settings';
 import Share from '~/components/share/share';
 import {description as template} from './give.html';
@@ -56,6 +57,8 @@ export default class Give extends CMSPageController {
         this.view = {
             classes: ['give-page']
         };
+
+        shell.showLoader();
 
         window.addEventListener('popstate', this.togglePage);
     }
@@ -140,6 +143,7 @@ export default class Give extends CMSPageController {
         populatePaymentMethods();
         this.update();
         $.insertHtml(this.el, this.model);
+        shell.hideLoader();
     }
 
     onLoaded() {

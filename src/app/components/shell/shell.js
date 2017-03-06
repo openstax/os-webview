@@ -28,9 +28,16 @@ class Shell extends Controller {
         if (/collect=true/.test(window.location.search)) {
             injectButtons();
         }
+    }
 
-        // FIX: Update pages title for the new page
-        // headTitle.textContent = `${pageName[0].toUpperCase()}${pageName.slice(1)} - OpenStax`;
+    showLoader() {
+        document.body.classList.add('no-scroll');
+        document.body.classList.add('page-loading');
+    }
+
+    hideLoader() {
+        document.body.classList.add('page-loaded');
+        document.body.classList.remove('no-scroll');
     }
 
 }

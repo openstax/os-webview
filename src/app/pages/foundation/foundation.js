@@ -1,4 +1,5 @@
 import CMSPageController from '~/controllers/cms';
+import shell from '~/components/shell/shell';
 import {description as template} from './foundation.html';
 
 export default class Foundation extends CMSPageController {
@@ -19,11 +20,13 @@ export default class Foundation extends CMSPageController {
             title: '',
             'page_description': ''
         };
+        shell.showLoader();
     }
 
     onDataLoaded() {
         Object.assign(this.model, this.pageData);
         this.update();
+        shell.hideLoader();
     }
 
 }

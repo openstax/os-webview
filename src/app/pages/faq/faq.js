@@ -2,6 +2,7 @@ import CMSPageController from '~/controllers/cms';
 import {makeDocModel} from '~/models/usermodel';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
+import shell from '~/components/shell/shell';
 import {description as template} from './faq.html';
 
 export default class FAQ extends CMSPageController {
@@ -18,6 +19,7 @@ export default class FAQ extends CMSPageController {
         };
 
         this.model = {};
+        shell.showLoader();
     }
 
     onDataLoaded() {
@@ -53,6 +55,7 @@ export default class FAQ extends CMSPageController {
                 });
             }
         }
+        shell.hideLoader();
     }
 
     onUpdate() {
