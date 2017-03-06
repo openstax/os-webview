@@ -13,26 +13,20 @@ function organizeBooksByCategory(books) {
             }
         }
     };
-    const compareByComingSoon = (a, b) => {
-        if (a.coming_soon) {
-            return b.coming_soon ? 0 : 1;
-        }
-        return b.coming_soon ? -1 : 0;
-    };
-    const compareSlugsByTitle = (a, b) => {
-        const bA = books[a];
-        const bB = books[b];
-
-        return compareByComingSoon(bA, bB) || bA.title.localeCompare(bB.title);
-    };
 
     result[apId] = [];
-
-    for (const slug of Object.keys(books).sort(compareSlugsByTitle)) {
+    // Transitioning to array from Object
+    // FIX: just use books instead of bookList
+    const bookList = books.length ? books : Object.keys(books).map((slug) => {
         const book = books[slug];
-        const cmsCategory = book.subject;
 
         book.slug = slug;
+        return book;
+    });
+
+    for (const book of bookList) {
+        const cmsCategory = book.subject;
+
         if (!(cmsCategory in result)) {
             result[cmsCategory] = [];
         }
