@@ -2,7 +2,6 @@ import 'babel-polyfill';
 import 'fetch';
 import $ from '~/helpers/$';
 import router from '~/router';
-import shell from '~/components/shell/shell';
 
 // NOTE: precaching is disabled. uglify will remove this code block since it's unreachable
 if (false && '@ENV@' === 'production' && 'serviceWorker' in navigator) {
@@ -41,7 +40,6 @@ if (false && '@ENV@' === 'production' && 'serviceWorker' in navigator) {
 class App {
 
     constructor() {
-        this.shell = shell;
         router.start();
 
         if (!$.isSupported()) {
