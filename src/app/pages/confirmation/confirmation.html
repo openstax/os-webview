@@ -13,7 +13,7 @@
                 <p if="model.adoptionQuestion">{model.adoptionQuestion}
                     <if condition = "model.errataId">
                         <if condition="model.defaultEmail">
-                            {` `}We sent an email to {model.defaultEmail} confirming your submission.
+                            {` `}We'll be sending submission updates to {model.defaultEmail}.
                         <else>
                             <br />
                             <a class="header-link" href="/errata/{model.errataId}">
