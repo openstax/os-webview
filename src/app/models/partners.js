@@ -2,6 +2,6 @@ import settings from 'settings';
 
 const partnerPromise = fetch(`${settings.apiOrigin}/api/pages/partners`)
 .then((r) => r.json())
-.then((a) => Object.keys(a.allies).map((k) => a.allies[k]));
+.then((obj) => Object.values(obj.allies).filter((a) => !a.do_not_display));
 
 export default partnerPromise;
