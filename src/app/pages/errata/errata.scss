@@ -56,46 +56,14 @@ $fill-size: $node-size * 0.6;
 
         .with-tooltip {
             color: color(blue);
-            cursor: default;
-            display: block;
             font-size: 1.6rem;
             letter-spacing: normal;
+            margin-bottom: 3rem;
             margin-top: 0.5rem;
-            padding-bottom: 3rem;
-            position: relative;
 
-            .tooltip {
-                height: 0;
-                opacity: 0;
-                overflow: hidden;
-                position: absolute;
-            }
-
-            &:hover .tooltip {
-                background-color: color(neutral-lightest);
-                box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(94, 96, 98, 0.1);
-                cursor: default;
-                display: block;
-                height: auto;
-                left: 0;
-                opacity: 1;
-                overflow: visible;
-                padding: 2rem;
-                text-align: left;
-                top: 4rem;
-                transition: opacity 0.2s, transform 0.2s;
-                width: auto;
-                z-index: 10;
-
-                &::before {
-                    border: 2rem solid;
-                    border-color: transparent transparent color(neutral-lightest);
-                    bottom: 100%;
-                    content: '';
-                    left: 50%;
-                    margin-left: -2rem;
-                    position: absolute;
-                }
+            &:hover {
+                margin-bottom: 0;
+                padding-bottom: 3rem;
             }
         }
     }

@@ -430,7 +430,6 @@
                 }
             }
         }
-
     }
 
     .resource {
@@ -483,6 +482,13 @@
                     font-size: 130%;
                     margin-right: 1rem;
                 }
+            }
+        }
+
+        .with-tooltip {
+            .tooltip {
+                transform: translateX(-45%);
+                width: 26rem;
             }
         }
     }
