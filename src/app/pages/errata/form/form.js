@@ -25,7 +25,7 @@ export default class Form extends Controller {
             },
             helpBoxVisible: () => this.model.selectedError === 'Other' ? 'visible' : 'not-visible',
             selectedSource: model.source && sourceNames[model.source.toLowerCase()],
-            location: model.location
+            sourceProvided: model.location && model.source ? '' : null
         });
         for (const book of this.model.books) {
             book.titleText = $.htmlToText(book.title);
