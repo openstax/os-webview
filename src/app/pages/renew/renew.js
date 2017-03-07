@@ -2,7 +2,7 @@ import SalesforceForm from '~/controllers/salesforce-form';
 import router from '~/router';
 import selectHandler from '~/handlers/select';
 import salesforce from '~/models/salesforce';
-import partners from '~/models/partners';
+import partnerPromise from '~/models/partners';
 import {description as template} from './renew.html';
 
 export default class AdoptionForm extends SalesforceForm {
@@ -14,7 +14,7 @@ export default class AdoptionForm extends SalesforceForm {
             classes: ['adoption-form']
         };
         this.model = {
-            partners,
+            partners: [],
             salesforce: salesforce.adoption([
                 'adopted',
                 'recommended'
@@ -37,6 +37,11 @@ export default class AdoptionForm extends SalesforceForm {
             }
         };
         this.formResponseEl.addEventListener('load', this.goToConfirmation);
+        partnerPromise.then((partners) => {
+            this.model.partners = partners.map((p) => p.title)
+            .sort((a, b) => a.localeCompare(b));
+            this.update();
+        });
     }
 
     onDataLoaded() {

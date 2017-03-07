@@ -1,21 +1,7 @@
-const partners = [
-    'Cerego',
-    'CogBooks',
-    'Connect for Education',
-    'Courseweaver',
-    'eMath',
-    'Expert TA',
-    'Lrnr',
-    'Lumen',
-    'Memory Science',
-    'Odigia',
-    'panOpen',
-    'Sapling Learning',
-    'SimBio',
-    'Top Hat',
-    'WebAssign',
-    'Wiley',
-    'XYZ Homework'
-];
+import settings from 'settings';
 
-export default partners;
+const partnerPromise = fetch(`${settings.apiOrigin}/api/pages/partners`)
+.then((r) => r.json())
+.then((obj) => Object.values(obj.allies).filter((a) => !a.do_not_display));
+
+export default partnerPromise;
