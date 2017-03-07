@@ -65,6 +65,10 @@ $fill-size: $node-size * 0.6;
                 margin-bottom: 0;
                 padding-bottom: 3rem;
             }
+
+            .tooltip > p:first-child {
+                margin-top: 0;
+            }
         }
     }
 

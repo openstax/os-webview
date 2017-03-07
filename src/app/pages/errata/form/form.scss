@@ -72,10 +72,12 @@ $table-dark-row: #f6f6f6;
         color: $label-4;
         display: flex;
         font-size: 1.6rem;
+        height: 4.7rem;
+        justify-content: center;
         margin: 0 0 3rem;
-        padding: 1rem 4rem;
         text-indent: inherit;
         text-transform: none;
+        width: 12rem;
     }
 
     [type="submit"].btn {
