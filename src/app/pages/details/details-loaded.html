@@ -20,7 +20,7 @@
                         <a href="#student-resources-section" class="tab"><span>Student Resources</span></a>
                     </if>
                     <a href="#details" class="tab"><span>Details</span></a>
-                    <if condition="model.errata_link">
+                    <if condition="!model.comingSoon">
                         <a href="#errata" class="tab errata-tab"><span>Errata</span></a>
                     </if>
                 </div>
@@ -184,7 +184,7 @@
     </div>
     </section>
     <section id="errata" class="errata">
-        <if condition="model.errata_link">
+        <if condition="!model.comingSoon">
             <div class="container">
                 <h2>Errata</h2>
                 <p>
