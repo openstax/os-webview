@@ -84,6 +84,10 @@ $table-dark-row: #f6f6f6;
         color: color(neutral-lightest);
         float: none;
         text-transform: uppercase;
+
+        &[disable] {
+            background-color: $label-4;
+        }
     }
 
     [type="text"]:disabled {

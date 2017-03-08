@@ -93,7 +93,7 @@ export default class Form extends Controller {
 
     @on('submit form')
     changeSubmitMode(e) {
-        this.submitted = true;
+        this.model.submitted = true;
         this.update();
         const formEl = this.el.querySelector('form');
         const form = new FormData(formEl);

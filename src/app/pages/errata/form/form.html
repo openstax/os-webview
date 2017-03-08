@@ -62,7 +62,11 @@
             <span if="model.file2" class="file-name">{model.file2}</span>
         </div>
         <div>
-            <input type="submit" class="btn" value="Submit" />
+            <if condition="model.submitted">
+                <input type="submit" class="btn" value="Submit" disabled />
+            <else>
+                <input type="submit" class="btn" value="Submit" />
+            </if>
         </div>
     </form>
 </template>
