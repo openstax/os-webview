@@ -27,7 +27,8 @@
             <span class="invalid-message">{model.validationMessage('source')}</span>
             <label each="sType in model.sourceTypes">
                 <input type="radio" name="resource" value="{sType}"
-                 checked="{model.selectedSource === sType ? '' : null}" required/>
+                 checked="{model.selectedSource === sType ? '' : null}"
+                 disabled="{model.sourceProvided}" required/>
                 <span class="proxy"></span>
                 {sType}
                 <span if="sType in model.subnotes" class="subnote"><br>{model.subnotes[sType]}</span>
@@ -36,7 +37,7 @@
         </div>
         <div class="question">Where did you find this error?</div>
         <input type="text" name="location" placeholder="Page number, url, etc."
-         value="{model.location}" />
+         value="{model.location}" disabled="{model.sourceProvided}"/>
         <div class="question">Tell us in detail about the error and your suggestion.</div>
         <div class="subnote">
             Please limit to one error per submission and include a suggested

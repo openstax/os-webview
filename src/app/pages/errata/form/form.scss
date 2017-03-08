@@ -50,7 +50,6 @@ $table-dark-row: #f6f6f6;
         [type="text"] {
             width: auto;
         }
-
     }
 
     .subnote {
@@ -85,6 +84,11 @@ $table-dark-row: #f6f6f6;
         color: color(neutral-lightest);
         float: none;
         text-transform: uppercase;
+    }
+
+    [type="text"]:disabled {
+        background-color: lighten(black, 91.8%);
+        color: lighten($label-4, 15%);
     }
 
     .helpbox {
