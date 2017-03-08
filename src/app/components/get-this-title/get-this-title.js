@@ -1,5 +1,6 @@
 import {Controller} from 'superb';
 import {on} from '~/helpers/controller/decorators';
+import userModel from '~/models/usermodel';
 import router from '~/router';
 import {highSchoolSlugs} from '~/models/book-titles';
 import {description as template} from './get-this-title.html';
@@ -71,7 +72,11 @@ export default class GetThisTitle extends Controller {
 
     @on('click [href*="cnx.org/content"],:not(.show-pdf-submenu)[href$=".pdf"]')
     showGive() {
-        router.navigate('/give?student', {path: '/give?student'});
+        userModel.load().then((userInfo) => {
+            if (!userInfo.is_superuser && !userInfo.is_staff) {
+                router.navigate('/give?student', {path: '/give?student'});
+            }
+        });
     }
 
 }
