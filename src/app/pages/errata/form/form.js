@@ -82,7 +82,7 @@ export default class Form extends Controller {
 
     @on('click [type="submit"]')
     doCustomValidation(event) {
-        const invalid = this.el.querySelectorAll('form :invalid');
+        const invalid = this.el.querySelector('form :invalid');
 
         this.hasBeenSubmitted = true;
         this.model.visitedClass = 'visited';
@@ -90,6 +90,7 @@ export default class Form extends Controller {
             event.preventDefault();
             this.update();
         }
+        this.model.submitFailed = '';
     }
 
     @on('submit form')
@@ -106,10 +107,11 @@ export default class Form extends Controller {
         }).then((r) => r.json()).then((json) => {
             if (json.id) {
                 router.navigate(`/confirmation/errata?id=${json.id}`);
-            } else {
-                /* eslint no-alert: 0 */
-                alert('Errata submission failed.');
             }
+        }).catch((fetchError) => {
+            this.model.submitFailed = `Submit failed: ${fetchError}.`;
+            this.model.submitted = false;
+            this.update();
         });
         e.preventDefault();
     }
