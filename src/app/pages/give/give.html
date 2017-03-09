@@ -1,12 +1,20 @@
 <template args="model">
     <if condition="model.page2">
-        <form class="form-horizontal" role="form" method="post" action="https://ebank.rice.edu/C21279_upay/web/index.jsp">
+        <form class="form-horizontal" role="form" method="post" action="{model.touchnet().url}">
             <div class="text-content">
                 <div class="text-content subhead">
                     {`Please enter your information and click "Continue" to be taken to the secure payment site. OpenStax is based at Rice, but your donation will go directly to OpenStax. Once your payment is submitted, you will receive payment confirmation and a gift receipt from Rice University.`}
                 </div>
+                <div class="testing-only" if="model.useTestingSite">
+                    <label>
+                        <input id="use-testing-site" type="checkbox"
+                         checked="{model.useTestingSite ? '' : null}" />
+                        Use testing site (this option will not appear in production.
+                        If you uncheck it, it will disappear.)
+                    </label>
+                </div>
                 <input name="SUCCESS_LINK" type="hidden" value="{model.thankYouUrl}" />
-                <input type="hidden" name="UPAY_SITE_ID" value="106" />
+                <input type="hidden" name="UPAY_SITE_ID" value="{model.touchnet().id}" />
                 <input type="hidden" name="Donation_To" value="OpenStax" />
                 <input type="hidden" name="Revenue_Amount"  value="0" />
                 <input type="hidden" name="Revenue_Fund_ID"  value="" />
