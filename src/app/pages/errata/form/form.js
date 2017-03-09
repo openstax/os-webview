@@ -82,9 +82,10 @@ export default class Form extends Controller {
 
     @on('click [type="submit"]')
     doCustomValidation(event) {
-        const invalid = this.el.querySelector('form :invalid');
+        const invalid = this.el.querySelectorAll('form :invalid');
 
         this.hasBeenSubmitted = true;
+        this.model.visitedClass = 'visited';
         if (invalid) {
             event.preventDefault();
             this.update();
