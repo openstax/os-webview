@@ -168,7 +168,7 @@ class Analytics {
         (async () => {
             try {
                 const response = await fetch(`${settings.apiOrigin}/api/v2/pages/?type=books.Book&fields`+
-                  '=title,book_student_resources,book_faculty_resources,book_allies');
+                  '=title,book_student_resources,book_faculty_resources,book_allies&limit=250');
                 const bookFields = await response.json();
 
                 this.addResourcesToLookupTable(bookFields.items);
