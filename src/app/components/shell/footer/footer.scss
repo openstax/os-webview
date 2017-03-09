@@ -41,7 +41,7 @@
         }
     }
 
-    .copyright {
+    [role="contentinfo"] {
         flex-wrap: wrap;
 
         @include desktop {
@@ -69,6 +69,7 @@
     }
 
     .social {
+        margin-bottom: 1rem;
 
         a {
             background-size: 130%;
@@ -79,13 +80,6 @@
             &:hover {
                 background-color: rgba(color(neutral-light), 0.7);
             }
-        }
-
-        ul {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            padding: 0;
         }
     }
 }
