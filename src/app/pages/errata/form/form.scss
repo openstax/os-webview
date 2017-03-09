@@ -90,7 +90,7 @@ $table-dark-row: #f6f6f6;
         float: none;
         text-transform: uppercase;
 
-        &[disable] {
+        &[disabled] {
             background-color: $label-4;
         }
     }
