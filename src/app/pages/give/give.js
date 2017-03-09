@@ -46,7 +46,9 @@ export default class Give extends CMSPageController {
             },
             recurring: history.state && history.state.recurring || '',
             billingFields: ['NAME', 'EMAIL_ADDRESS', 'STREET1', 'STREET2', 'CITY',
-            'STATE', 'POSTAL_CODE', 'COUNTRY']
+            'STATE', 'POSTAL_CODE', 'COUNTRY'],
+            touchnet: () => this.model.useTestingSite ? settings.touchnet.test : settings.touchnet.prod,
+            useTestingSite: settings.testingEnvironment
         };
         this.slug = 'pages/give';
         this.regions = {
@@ -205,6 +207,12 @@ export default class Give extends CMSPageController {
 
     @on('change')
     updateOnChange() {
+        this.update();
+    }
+
+    @on('change #use-testing-site')
+    toggleUseTestingSite(event) {
+        this.model.useTestingSite = !this.model.useTestingSite;
         this.update();
     }
 
