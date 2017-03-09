@@ -58,6 +58,11 @@ $table-dark-row: #f6f6f6;
         line-height: normal;
         margin-bottom: 1rem;
         width: 75%;
+
+        &.indented {
+            line-height: 0.2;
+            text-indent: 1.5rem;
+        }
     }
 
     .file-button {

@@ -31,7 +31,7 @@
                  disabled="{model.sourceProvided}" required/>
                 <span class="proxy"></span>
                 {sType}
-                <span if="sType in model.subnotes" class="subnote"><br>{model.subnotes[sType]}</span>
+                <div if="sType in model.subnotes" class="indented subnote">{model.subnotes[sType]}</div>
                 <input if="sType === 'Other' && model.selectedSource === 'Other'" type="text" name="resource_other" maxlength="250" />
             </label>
         </div>

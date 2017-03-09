@@ -122,7 +122,7 @@ export default class Errata extends Controller {
                 'Student solution manual', 'OpenStax Tutor', 'OpenStax Concept Coach',
                 'Other'
             ],
-            subnotes: {'Textbook': 'includes print, PDF and web view'},
+            subnotes: {'Textbook': 'includes print, PDF, and web view'},
             summaryMetaData: [
                 {
                     label: 'Date Submitted',
