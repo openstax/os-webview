@@ -31,7 +31,7 @@
             <label each="sType in model.sourceTypes">
                 <input type="radio" name="resource" value="{sType}"
                  checked="{model.selectedSource === sType ? '' : null}"
-                 disabled="{model.sourceProvided}" required/>
+                 required/>
                 {sType}{` `}
                 <div if="sType in model.subnotes" class="indented subnote">{model.subnotes[sType]}</div>
                 <input if="sType === 'Other' && model.selectedSource === 'Other'" type="text"
@@ -41,7 +41,7 @@
         </div>
         <div class="question">Where did you find this error?</div>
         <input type="text" name="location" placeholder="Page number, url, etc."
-         value="{model.location}" disabled="{model.sourceProvided}" />
+         value="{model.location}" readonly="{model.sourceProvided}" />
         <div class="question">Tell us in detail about the error and your suggestion.</div>
         <div class="subnote">
             Please limit to one error per submission and include a suggested
