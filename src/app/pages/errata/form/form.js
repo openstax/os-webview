@@ -73,7 +73,7 @@ export default class Form extends Controller {
         }
     }
 
-    @on('focusout input')
+    @on('focusin input,textarea')
     markVisited(event) {
         event.delegateTarget.classList.add('visited');
     }

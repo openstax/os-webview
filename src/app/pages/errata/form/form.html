@@ -40,16 +40,18 @@
             </label>
         </div>
         <div class="question">Where did you find this error?</div>
+        <span class="invalid-message">{model.validationMessage('location')}</span>
         <input type="text" name="location" placeholder="Page number, url, etc."
-         value="{model.location}" readonly="{model.sourceProvided}" />
+         value="{model.location}" readonly="{model.sourceProvided}"
+         required />
         <div class="question">Tell us in detail about the error and your suggestion.</div>
         <div class="subnote">
             Please limit to one error per submission and include a suggested
             resolution if possible. If you have several to report, please
             contact us at <a href="mailto:errata@openstax.org">errata@openstax.org</a>.
         </div>
-        <span class="invalid-message">{model.validationMessage('source')}</span>
-        <textarea maxlength="1000" name="detail"></textarea>
+        <span class="invalid-message">{model.validationMessage('detail')}</span>
+        <textarea maxlength="1000" name="detail" required></textarea>
         <div class="question">Please add a screenshot or any other file that helps explain the error.</div>
         <div class="file-button">
             <label class="btn">
