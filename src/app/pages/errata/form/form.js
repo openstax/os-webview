@@ -30,6 +30,9 @@ export default class Form extends Controller {
         for (const book of this.model.books) {
             book.titleText = $.htmlToText(book.title);
         }
+        if (this.model.sourceProvided === '') {
+            this.model.sourceTypes = [this.model.selectedSource];
+        }
     }
 
     onLoaded() {

@@ -95,7 +95,7 @@ $table-dark-row: #f6f6f6;
         }
     }
 
-    [type="text"]:disabled {
+    [type="text"][readonly] {
         background-color: lighten(black, 91.8%);
         color: lighten($label-4, 15%);
     }
