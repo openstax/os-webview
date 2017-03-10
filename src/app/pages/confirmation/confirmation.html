@@ -12,7 +12,7 @@
                 </p>
                 <p if="model.adoptionQuestion">{model.adoptionQuestion}
                     <if condition = "model.errataId">
-                        <if condition="model.defaultEmail">
+                        <if condition="model.defaultEmail && model.defaultEmail !== 'none@openstax.org'">
                             {` `}We'll be sending submission updates to {model.defaultEmail}.
                         <else>
                             <br />
