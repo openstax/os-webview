@@ -32,8 +32,9 @@
                 <input type="radio" name="resource" value="{sType}"
                  checked="{model.selectedSource === sType ? '' : null}"
                  required/>
-                {sType}{` `}
+                {` `}{sType}{` `}
                 <div if="sType in model.subnotes" class="indented subnote">{model.subnotes[sType]}</div>
+
                 <input if="sType === 'Other' && model.selectedSource === 'Other'" type="text"
                  class="{model.visitedClass}"
                  name="resource_other" maxlength="250" required />

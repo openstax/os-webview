@@ -33,10 +33,9 @@ $custom-radio-disabled-pip-color:   rgba(color(cyan), 0.40);
     -webkit-appearance: none;
     border-radius: 100%;
     display: inline-block;
-    height: $custom-radio-size;
     outline: none;
-    position: relative;
-    transform: translateY(25%);
+    transform: translateY(22%);
+    vertical-align: middle;
     width: $custom-radio-size;
 
     // Radio
