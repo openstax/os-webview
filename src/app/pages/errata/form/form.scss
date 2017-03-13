@@ -38,6 +38,10 @@ $table-dark-row: #f6f6f6;
         margin: 0;
         padding-left: 2rem;
         text-indent: -2rem;
+
+        input {
+            height: 4.2rem;
+        }
     }
 
     .radio-columns {
@@ -61,8 +65,10 @@ $table-dark-row: #f6f6f6;
         width: 75%;
 
         &.indented {
-            line-height: 0.2;
-            text-indent: 1.5rem;
+            line-height: 0.3;
+            position: relative;
+            text-indent: 1.3rem;
+            top: -1.2rem;
         }
     }
 
