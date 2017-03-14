@@ -1,6 +1,6 @@
 import SalesforceForm from '~/controllers/salesforce-form';
 import router from '~/router';
-import Popup from '~/components/popup/popup';
+import ContactInfo from '~/components/contact-info/contact-info';
 import {on} from '~/helpers/controller/decorators';
 import selectHandler from '~/handlers/select';
 import partnerPromise from '~/models/partners';
@@ -26,16 +26,11 @@ export default class AdoptionForm extends SalesforceForm {
                     options: salesforce.adoption(['adopted', 'recommended'])
                 }
             },
-            validationMessage: (name) => {
-                const el = this.el.querySelector(`[name="${name}"]`);
-
-                return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
-            },
+            validationMessage: (name) =>
+                this.hasBeenSubmitted ? this.el.querySelector(`[name="${name}"]`).validationMessage : '',
             defaultTitle
         };
-        this.regions = {
-            popup: 'pop-up'
-        };
+        this.contactInfoComponent = new ContactInfo(this.model);
     }
 
     onLoaded() {
@@ -59,20 +54,23 @@ export default class AdoptionForm extends SalesforceForm {
         super.onDataLoaded();
         this.model.titles = this.salesforceTitles;
         this.update();
+        const Region = this.regions.self.constructor;
+        const regionEl = this.el.querySelector('component[data-id="contactInfo"]');
+        const contactRegion = new Region(regionEl);
+
+        contactRegion.attach(this.contactInfoComponent);
         selectHandler.setup(this);
     }
 
+    onUpdate() {
+        if (this.contactInfoComponent) {
+            this.contactInfoComponent.update();
+        }
+    }
 
     @on('click [type="submit"]')
     checkSchoolName(e) {
-        const schoolName = this.el.querySelector('[name="company"]').value;
-
-        if (this.askedAboutSchool !== schoolName && schoolName.length > 0 && schoolName.length < 5) {
-            this.regions.popup.attach(new Popup('Please enter your full school name' +
-            ' without abbreviations. If this is your full school name, you can hit Submit.'));
-            this.askedAboutSchool = schoolName;
-            e.preventDefault();
-        } else {
+        if (!this.contactInfoComponent.checkSchoolName(e)) {
             super.doCustomValidation(e);
         }
     }
