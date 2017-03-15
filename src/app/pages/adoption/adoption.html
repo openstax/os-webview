@@ -33,98 +33,22 @@
             <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
             <div class="text-content labeled-inputs row book-info">
                 <div id="primary-book" class="col">
-                    <label>
-                        Your OpenStax book:
-                        <span class="invalid-message">{model.validationMessage('00NU00000053nzR')}</span>
-                        <div skip="true"></div>
-                        <select name="00NU00000053nzR" required>
-                            <option each="title in model.titles" value="{title.value}"
-                             selected="{model.defaultTitle == title.value ? '' : null}">
-                                {title.text}
-                            </option>
-                        </select>
-                    </label>
+                    <component data-id="yourBook" skip="true"></component>
                     <p>
                         Don't see your book? Fill out our <a href="/interest">interest form</a>.
                     </p>
 
-                    <label>
-                        How are you using this book?
-                        <span class="invalid-message">{model.validationMessage('00NU00000055spw')}</span>
-                        <div skip="true"></div>
-                        <select name="00NU00000055spw">
-                            <option each="option in model.salesforce.adoption.options" value="{option.value}">{option.text}</option>
-                        </select>
-                    </label>
-
-                    <label>
-                        How many students are using this book in your courses each semester?
-                        <span class="invalid-message">{model.validationMessage('00NU00000052VId')}</span>
-                        <input name="00NU00000052VId" type="number" min="1" required>
-                    </label>
-
-                    <label>
-                        Which partner resources are you using with your book?
-                        <span class="select-instructions">You may select more than one.</span>
-                        <span class="invalid-message">{model.validationMessage('00NU0000005VmTu')}</span>
-                        <div skip="true"></div>
-                        <select multiple name="00NU0000005VmTu">
-                            <option each="partner in model.partners" value="{partner}">{partner}</option>
-                            <option value="other-partner">Other (specify below)</option>
-                        </select>
-                    </label>
-
-                    <label id="other-partner">
-                        Other
-                        <span class="invalid-message">{model.validationMessage('00NU0000005Vls8')}</span>
-                        <input name="00NU0000005Vls8" class="short" type="text" placeholder="Partner resources not listed above?">
-                    </label>
-
-                    <label>
-                        If there are other instructors in your department who will also be using this
-                        book, approximately how many students in your department will be using this
-                        book per semester?
-                        <span class="invalid-message">{model.validationMessage('00NU00000055sq1')}</span>
-                        <input name="00NU00000055sq1" type="number" min="0">
-                    </label>
+                    <component data-id="adoptionStatus" skip="true"></component>
+                    <component data-id="howMany" skip="true"></component>
+                    <component data-id="partnerResources" skip="true"></component>
+                    <component data-id="otherPartner" skip="true"></component>
+                    <component data-id="otherInstructors" skip="true"></component>
                 </div>
 
                 <div class="col">
-                    <label class="question">
-                        Which of our <a href="/partners">partners</a> would you like to give
-                        permission to contact you about additional resources to support
-                        our books?
-                        <span class="select-instructions">You may select more than one.</span>
-                        <span class="invalid-message">{model.validationMessage('00NU00000055spm')}</span>
-                        <div skip="true"></div>
-                        <select multiple name="00NU00000055spm" data-require-none required>
-                            <option value="">None</option>
-                            <option value="Online homework partners">Online homework partners</option>
-                            <option value="Adaptive courseware partners">Adaptive courseware partners</option>
-                            <option value="Customization tool partners">Customization tool partners</option>
-                        </select>
-                    </label>
-
-                    <label class="question">
-                        Are you interested in having your OpenStax experience featured on our website,
-                        social media, and/or emails?
-                        <span class="invalid-message">{model.validationMessage('00NU00000055sq6')}</span>
-                        <div skip="true"></div>
-                        <select name="00NU00000055sq6" required>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                        </select>
-                    </label>
-
-                    <label class="question">
-                        May we contact you about opportunities to participate in future pilots or research studies?
-                        <span class="invalid-message">{model.validationMessage('00NU00000055sqB')}</span>
-                        <div skip="true"></div>
-                        <select name="00NU00000055sqB" required>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                        </select>
-                    </label>
+                    <component data-id="partnerContact" skip="true"></component>
+                    <component data-id="featureMe" skip="true"></component>
+                    <component data-id="contactMe" skip="true"></component>
 
                     <label>
                         Any feedback you'd like to share with us?

@@ -1,0 +1,14 @@
+<template args="model">
+    <if condition="model.label">{model.label}</if>
+    <span data-html="labelHtml" skip="true"></span>
+    <span if="model.instructions" class="select-instructions">{' ' + model.instructions}</span>
+    <span class="invalid-message">{model.validationMessage(model.name)}</span>
+    <div class="proxy-select" skip="true"></div>
+    <select name="{model.name}"
+     multiple="{model.multiple ? '' : null}" required="{model.required ? '' : null}"
+     data-require-none="{model.requireNone ? '' : null}"
+     >
+        <option each="opt in model.options" value="{opt.value}"
+         selected="{opt.selected ? '' : null}">{opt.label}</option>
+    </select>
+</template>

@@ -16,7 +16,7 @@ pop-up {
         z-index: 5000;
     }
 
-    .popup {
+    [role="dialog"] {
         align-items: flex-start;
         background-color: color(neutral-lightest);
         display: flex;
@@ -30,8 +30,9 @@ pop-up {
             margin: 0 0 2rem;
         }
 
-        .btn {
+        button {
             background-color: color(orange);
+            border: 0;
             color: color(neutral-lightest);
             font-size: 1.4rem;
             padding: 1.5rem 2.5rem;
