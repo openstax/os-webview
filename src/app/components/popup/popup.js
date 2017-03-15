@@ -11,6 +11,7 @@ export default class Popup extends Controller {
             show: true
         };
         this.view = {
+            tag: 'pop-up',
             classes: ['page-overlay']
         };
         this.css = '/app/components/popup/popup.css';

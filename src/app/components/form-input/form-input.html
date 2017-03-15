@@ -1,0 +1,8 @@
+<template args="model">
+    {model.label}
+    <span class="invalid-message">{model.validationMessage(model.name)}</span>
+    <input name="{model.name}" type="{model.type}" value="{model.value}"
+     pattern="{model.pattern}" min="{model.min}" max="{model.max}"
+     placeholder="{model.placeholder}"
+     required="{model.required ? '' : null}">
+</template>

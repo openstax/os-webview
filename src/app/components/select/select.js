@@ -86,12 +86,13 @@ export default class Select extends Controller {
             throw new Error('A select component must be given a placeholder element to inject HTML into.');
         }
 
-        this.options = Select[CONVERT_OPTIONS](this.select.options);
 
-        this.model = { open: false };
-        this.model.select = this.select;
-        this.model.selected = Select[CONVERT_OPTIONS](this.select.querySelectorAll('option[selected]'));
-        this.model.options = Select[CONVERT_OPTIONS](this.select.options);
+        this.model = {
+            open: false,
+            select: this.select,
+            selected: Select[CONVERT_OPTIONS](this.select.querySelectorAll('option[selected]'))
+        };
+        this.updateOptions();
         this.updateSelectElement();
         if (this.select.required) {
             this.model.noneMessage = 'Please select...';
@@ -102,6 +103,11 @@ export default class Select extends Controller {
 
     closeDropdown() {
         this.model.open = false;
+        this.update();
+    }
+
+    updateOptions() {
+        this.model.options = this.options = Select[CONVERT_OPTIONS](this.select.options);
         this.update();
     }
 

@@ -46,12 +46,26 @@ class SalesforceForm extends CMSPageController {
             event.preventDefault();
             this.update();
         }
+        this.submitClicked = true;
+    }
+
+    beforeSubmit() {
+        return true;
     }
 
     @on('submit form')
-    changeSubmitMode() {
-        this.submitted = true;
-        this.update();
+    changeSubmitMode(e) {
+        // Running through beforeSubmit was somehow causing me to receive
+        // a second submit event. This stops that.
+        if (! this.submitClicked) {
+            e.stopImmediatePropagation();
+            return;
+        }
+        this.submitClicked = false;
+        if (this.beforeSubmit()) {
+            this.submitted = true;
+            this.update();
+        }
     }
 
 }
