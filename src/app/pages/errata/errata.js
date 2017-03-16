@@ -62,6 +62,10 @@ export default class Errata extends Controller {
             {value: 'corrected', html: 'Corrected'}
         ], (selectedItem) => {
             this.selectedFilter = selectedItem;
+            history.replaceState('', '',
+                selectedItem ? `#${selectedItem}` :
+                window.location.href.replace(location.hash, '')
+            );
             this.update();
         });
         this.matchesFilter = (item) => {
@@ -79,7 +83,7 @@ export default class Errata extends Controller {
                 return (/^Corrected/).test(item.displayStatus);
             }
         };
-        this.selectedFilter = '';
+        this.selectedFilter = window.location.hash.replace('#', '');
         this.radioPanel.updateSelected(this.selectedFilter);
         this.sortFunctions = {
             sortDate: (a, b) => new Date(a) - new Date(b),
