@@ -190,6 +190,8 @@ export default class Errata extends Controller {
             this.fetchAndDisplay(afterTheSlash);
         } else if ('book' in queryDict) {
             this.summary(queryDict.book[0]);
+        } else {
+            window.location = '/404';
         }
         this.regions.filter.attach(this.radioPanel);
     }
@@ -254,6 +256,8 @@ export default class Errata extends Controller {
             this.model.bookTitle = detail.bookTitle;
             setModelDetail(detail);
             shell.hideLoader();
+        }).catch((e) => {
+            window.location = '/404';
         });
     }
 

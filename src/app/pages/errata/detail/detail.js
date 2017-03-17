@@ -7,7 +7,7 @@ import {description as template} from './detail.html';
 export default class Detail extends Controller {
 
     static detailPromise(id) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             fetch(`${settings.apiOrigin}/api/errata/${id}`)
                 .then((r) => r.json())
                 .then((detail) =>
@@ -17,7 +17,10 @@ export default class Detail extends Controller {
                         detail.bookTitle = entry ? entry.title : '(unknown book ID)';
                         resolve(detail);
                     })
-                );
+                )
+                .catch((e) => {
+                    reject(e);
+                });
         });
     }
 
