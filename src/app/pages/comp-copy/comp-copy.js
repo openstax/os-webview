@@ -1,5 +1,6 @@
 import SalesforceForm from '~/controllers/salesforce-form';
 import router from '~/router';
+import $ from '~/helpers/$';
 import selectHandler from '~/handlers/select';
 import {description as template} from './comp-copy.html';
 
@@ -17,6 +18,7 @@ export default class CompCopyForm extends SalesforceForm {
             validationMessage: (name) =>
                 this.hasBeenSubmitted ? this.el.querySelector(`[name="${name}"]`).validationMessage : ''
         };
+        this.slug = 'pages/comp-copy';
     }
 
     onLoaded() {
@@ -30,6 +32,15 @@ export default class CompCopyForm extends SalesforceForm {
             }
         };
         this.formResponseEl.addEventListener('load', this.goToConfirmation);
+    }
+
+    onDataLoaded() {
+        Object.assign(this.model, {
+            introHeading: this.pageData.intro_heading,
+            introDescription: this.pageData.intro_description
+        });
+        this.update();
+        $.insertHtml(this.el, this.model);
     }
 
 }
