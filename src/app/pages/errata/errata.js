@@ -253,9 +253,13 @@ export default class Errata extends Controller {
         };
 
         Detail.detailPromise(id).then((detail) => {
-            this.model.bookTitle = detail.bookTitle;
-            setModelDetail(detail);
-            shell.hideLoader();
+            if (detail.created) {
+                this.model.bookTitle = detail.bookTitle;
+                setModelDetail(detail);
+                shell.hideLoader();
+            } else {
+                window.location = '/404';
+            }
         }).catch((e) => {
             window.location = '/404';
         });
