@@ -15,7 +15,7 @@
             <span class="invalid-message">{model.validationMessage('error_type')}</span>
             <label each="eType in model.errorTypes">
                 <input type="radio" name="error_type" value="{eType}" required />
-                {eType}
+                <span class="label-text">{eType}</span>
                 <input if="eType === 'Other' && model.selectedError === 'Other'" type="text"
                  class="{model.visitedClass}"
                  name="error_type_other" maxlength="250" required />
@@ -32,7 +32,7 @@
                 <input type="radio" name="resource" value="{sType}"
                  checked="{model.selectedSource === sType ? '' : null}"
                  required/>
-                {` `}{sType}{` `}
+                <span class="label-text">{sType}</span>
                 <div if="sType in model.subnotes" class="indented subnote">{model.subnotes[sType]}</div>
 
                 <input if="sType === 'Other' && model.selectedSource === 'Other'" type="text"

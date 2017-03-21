@@ -34,13 +34,23 @@ $table-dark-row: #f6f6f6;
         color: $label-4;
         display: block;
         height: 4.2rem;
-        line-height: 2;
         margin: 0;
         padding-left: 2rem;
         text-indent: -2rem;
+        white-space: nowrap;
 
         input {
-            height: 4.2rem;
+            height: 100%;
+        }
+
+        .label-text {
+            display: inline-block;
+            height: 100%;
+            line-height: 1;
+            margin-left: 0.5rem;
+            text-indent: 0;
+            vertical-align: text-top;
+            white-space: normal;
         }
     }
 
@@ -68,7 +78,7 @@ $table-dark-row: #f6f6f6;
             line-height: 0.3;
             position: relative;
             text-indent: 1.3rem;
-            top: -1.2rem;
+            top: -1.8rem;
         }
     }
 
