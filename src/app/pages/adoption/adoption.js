@@ -130,7 +130,7 @@ export default class AdoptionForm extends SalesforceForm {
             .map((title) => ({label: title, value: title}));
 
             options.push({label: 'Other (specify below)', value: 'other-partner'});
-            partnerComponent.component.model.options = options;
+            partnerComponent.component.setOptions(options);
             partnerComponent.update();
         });
     }
