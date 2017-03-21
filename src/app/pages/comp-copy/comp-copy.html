@@ -1,14 +1,7 @@
 <template args="model">
-    <div class="text-content subhead">
-        <h1>Request Complimentary Download from iBooks</h1>
-        <p>
-            All instructors with a verified instructor account can download a
-            complimentary copy of their book of choice from iBooks.
-        </p>
-        <p>
-            OpenStax textbooks are free for students in web view and PDF form,
-            and for less than $5 in the iBooks Store.
-        </p>
+    <div if="model.introHeading" class="text-content subhead">
+        <h1>{model.introHeading}</h1>
+        <html-content class="description" data-html="introDescription" skip="true"></html-content>
     </div>
     <iframe name="form-response" id="form-response" src="" width="0" height="0"></iframe>
     <form accept-charset="UTF-8" class="form" target="form-response"

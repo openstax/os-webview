@@ -3,6 +3,16 @@
 
 .comp-copy-form {
 
+    .subhead .description {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+
+        p {
+            max-width: 100%;
+        }
+    }
+
     .cta {
         @media (min-width: 641px) {
             margin-top: 12rem;
