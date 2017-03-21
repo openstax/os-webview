@@ -306,6 +306,9 @@ export default class Errata extends Controller {
                 this.sortData('sortDate', 'date');
                 this.update();
                 shell.hideLoader();
+                if (history.state && history.state.y) {
+                    window.scrollTo(history.state.x, history.state.y);
+                }
             });
         });
     }
