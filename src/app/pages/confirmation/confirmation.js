@@ -26,11 +26,11 @@ const models = {
         adoptionLinkText: 'Adopt a book',
         subjectLinkText: 'Explore our books'
     },
-    contact: {
+    'bulk-order': {
         headline: 'Thanks for contacting us',
         simpleMessage: 'We\'ve received your order form.'
     },
-    webContact: {
+    contact: {
         headline: 'Thanks for contacting us',
         adoptionQuestion: 'Have you looked at our books lately?',
         adoptionUrl: '/subjects',

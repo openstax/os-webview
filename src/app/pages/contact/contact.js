@@ -81,7 +81,7 @@ export default class Contact extends SalesforceForm {
         this.goToConfirmation = () => {
             if (this.submitted) {
                 this.submitted = false;
-                router.navigate('/confirmation/webContact');
+                router.navigate('/confirmation/contact');
             }
         };
         this.formResponseEl.addEventListener('load', this.goToConfirmation);
