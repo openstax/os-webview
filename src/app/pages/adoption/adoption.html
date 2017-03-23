@@ -1,16 +1,7 @@
 <template args="model">
-    <div class="subhead text-content">
-        <h1>Let us know you’re using OpenStax</h1>
-        <p>Our books and their accompanying resources are yours to use, free.</p>
-        <p>
-            Help us continue to make high-quality educational materials accessible by
-            letting us know you've adopted! Our future grant funding is based on
-            faculty adoptions and the number of students we impact.
-        </p>
-        <p>
-            Not using OpenStax yet? Go to our OpenStax <a href="/interest">interest
-            form</a> and we'll send you the information you need.
-        </p>
+    <div if="model.introHeading" class="text-content subhead">
+        <h1>{model.introHeading}</h1>
+        <span data-html="introDescription" skip="true"></span>
     </div>
     <iframe name="form-response" id="form-response" src="" width="0" height="0"></iframe>
     <form accept-charset="UTF-8" class="form" target="form-response"

@@ -1,11 +1,16 @@
 import SalesforceForm from '~/controllers/salesforce-form';
 import router from '~/router';
+import $ from '~/helpers/$';
+import settings from 'settings';
 import FormInput from '~/components/form-input/form-input';
 import FormSelect from '~/components/form-select/form-select';
 import ManagedComponent from '~/helpers/controller/managed-component';
 import ContactInfo from '~/components/contact-info/contact-info';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './interest.html';
+
+const headerInfoPromise = fetch(`${settings.apiOrigin}/api/pages/interest-form`)
+.then((r) => r.json());
 
 export default class InterestForm extends SalesforceForm {
 
@@ -96,6 +101,13 @@ export default class InterestForm extends SalesforceForm {
             }
         };
         this.formResponseEl.addEventListener('load', this.goToConfirmation);
+
+        headerInfoPromise.then((response) => {
+            this.model.introHeading = response.intro_heading;
+            this.model.introDescription = response.intro_description;
+            this.update();
+            $.insertHtml(this.el, this.model);
+        });
     }
 
     setBookOptions() {

@@ -1,5 +1,7 @@
 import SalesforceForm from '~/controllers/salesforce-form';
 import router from '~/router';
+import $ from '~/helpers/$';
+import settings from 'settings';
 import ContactInfo from '~/components/contact-info/contact-info';
 import {on} from '~/helpers/controller/decorators';
 import FormInput from '~/components/form-input/form-input';
@@ -8,6 +10,9 @@ import ManagedComponent from '~/helpers/controller/managed-component';
 import partnerPromise from '~/models/partners';
 import salesforce from '~/models/salesforce';
 import {description as template} from './adoption.html';
+
+const headerInfoPromise = fetch(`${settings.apiOrigin}/api/pages/adoption-form`)
+.then((r) => r.json());
 
 export default class AdoptionForm extends SalesforceForm {
 
@@ -132,6 +137,12 @@ export default class AdoptionForm extends SalesforceForm {
             options.push({label: 'Other (specify below)', value: 'other-partner'});
             partnerComponent.component.setOptions(options);
             partnerComponent.update();
+        });
+        headerInfoPromise.then((response) => {
+            this.model.introHeading = response.intro_heading;
+            this.model.introDescription = response.intro_description;
+            this.update();
+            $.insertHtml(this.el, this.model);
         });
     }
 
