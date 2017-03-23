@@ -1,5 +1,5 @@
 <template args="model">
-    <div class="body-block" if="model.detail.barStatus">
+    <div class="body-block" if="model.showDetails">
         <div class="info">
             <div class="label-value-pair" each="pair in model.decisionDataPairs">
                 <div class="label">{pair[0]}</div>

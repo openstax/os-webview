@@ -42,7 +42,8 @@ export default class Detail extends Controller {
             ],
             decisionDataPairs: [
                 ['Decision', 'displayStatus'], ['Decision details', 'resolution_notes']
-            ]
+            ],
+            showDetails: detail.barStatus || detail.displayStatus === 'Will Correct'
         };
     }
 
