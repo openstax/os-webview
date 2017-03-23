@@ -2,12 +2,9 @@
     <if condition="model.submitted">
         <h1>Sending...</h1>
     <else>
-        <div class="text-content subhead">
-            <h1>Interested in learning more about OpenStax?</h1>
-            <p>
-                Fill out the form below, and we’ll send you more information about giving your students access to peer-reviewed college textbooks, free of cost.
-            </p>
-            <p>Have you already adopted an OpenStax textbook? <a href="/adoption">Let us know!</a></p>
+        <div if="model.introHeading" class="text-content subhead">
+            <h1>{model.introHeading}</h1>
+            <span data-html="introDescription" skip="true"></span>
         </div>
         <iframe name="form-response" id="form-response" src="" width="0" height="0"></iframe>
         <form accept-charset="UTF-8" action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8"
@@ -35,7 +32,7 @@
                     <div class="col">
 
                         <component data-id="hearAbout" skip="true"></component>
-                        
+
                         <label id="other-source" class="hidden">
                             Other:
                             <input name="00NU00000055spr" type="text"
