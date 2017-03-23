@@ -236,7 +236,8 @@ export default class Errata extends Controller {
             setDisplayStatus(detail);
             const bars = detail.barStatus ? 2 : {
                 'In Review': 0,
-                'Reviewed': 1
+                'Reviewed': 1,
+                'Will Correct': 1
             }[detail.displayStatus];
             const secondBarFill = detail.barStatus === 'Corrected' ? ' filled' : ' filled-no';
 
