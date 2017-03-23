@@ -181,6 +181,7 @@ export default class Errata extends Controller {
 
     onLoaded() {
         document.title = 'Errata - OpenStax';
+        this.savedScrollPosition = history.state && history.state.y;
         const queryDict = $.parseSearchString(window.location.search);
         const afterTheSlash = location.pathname.replace('/errata/', '');
 
@@ -306,8 +307,8 @@ export default class Errata extends Controller {
                 this.sortData('sortDate', 'date');
                 this.update();
                 shell.hideLoader();
-                if (history.state && history.state.y) {
-                    window.scrollTo(history.state.x, history.state.y);
+                if (this.savedScrollPosition) {
+                    window.scroll(0, this.savedScrollPosition);
                 }
             });
         });
