@@ -38,13 +38,15 @@ export default class DetailsLoaded extends Controller {
             const encodedLocation = encodeURIComponent(window.location.href);
             const setLockState = () => {
                 for (const res of this.model.book_faculty_resources) {
-                    res.showLock = isInstructor ? 'fa-unlock-alt' : 'fa-lock';
+                    res.showLock = res.resource_unlocked || isInstructor ? 'fa-unlock-alt' : 'fa-lock';
                 }
             };
             const insertResources = (resources, regionName) => {
                 for (const res of resources) {
                     if (res.link_document_url || res.link_external) {
-                        this.regions[regionName].append(new Resource(res, alternateLink));
+                        const altLink = res.resource_unlocked ? null : alternateLink;
+
+                        this.regions[regionName].append(new Resource(res, altLink));
                     }
                 }
             };
@@ -90,7 +92,8 @@ export default class DetailsLoaded extends Controller {
                     isInstructor = false;
                     alternateLink = sfUserModel.loginLink();
                     this.model.extraInstructions =
-                        `<a href="${alternateLink}" data-local="true">Log in</a> for instructor access.`;
+                        `For locked resources, <a href="${alternateLink}" data-local="true">log in
+                        or create an instructor account</a>.`;
                 } else if (!hasGroups || !user.groups.includes('Faculty')) {
                     isInstructor = false;
                     hideResourcesFromStudent();

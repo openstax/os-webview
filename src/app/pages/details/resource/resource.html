@@ -11,7 +11,7 @@
         </if>
         <div class="with-tooltip">
             <i if="model.showLock" class="locked-state fa {model.showLock}"></i>
-             <div class="tooltip">
+             <div if="!model.resource_unlocked" class="tooltip">
                  {model.lockToolTip}
              </div>
          </div>
