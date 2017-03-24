@@ -43,11 +43,9 @@ export default class DetailsLoaded extends Controller {
             };
             const insertResources = (resources, regionName) => {
                 for (const res of resources) {
-                    if (res.link_document_url || res.link_external) {
-                        const altLink = res.resource_unlocked ? null : alternateLink;
+                    const altLink = res.resource_unlocked ? null : alternateLink;
 
-                        this.regions[regionName].append(new Resource(res, altLink));
-                    }
+                    this.regions[regionName].append(new Resource(res, altLink));
                 }
             };
             const insertPartners = () => {
