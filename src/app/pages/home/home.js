@@ -166,7 +166,7 @@ export default class Home extends CMSPageController {
 
         this.regions.quotes.attach(quotesView);
 
-        const educationData = this.pageData.row_2.map((columnData) => Object.assign({}, columnData));
+        const educationData = this.pageData.row_2;
 
         this.regions.education.attach(new Education(educationData));
 

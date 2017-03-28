@@ -1,4 +1,5 @@
 import {Controller} from 'superb';
+import $ from '~/helpers/$';
 import {makeDocModel} from '~/models/usermodel';
 import {description as template} from './quote.html';
 
@@ -19,8 +20,7 @@ export default class Quote extends Controller {
     }
 
     onUpdate() {
-        // NOTE: Incremental-DOM currently lacks the ability to inject HTML into a node.
-        this.el.querySelector('quote-html').innerHTML = this.model.content;
+        $.insertHtml(this.el, this.model);
     }
 
 }

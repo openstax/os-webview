@@ -58,7 +58,6 @@
                         <span class="invalid-message">{model.validationMessage('00NU00000053nzR')}</span>
                         <div skip="true"></div>
                         <select name="00NU00000053nzR" required>
-                            <!-- FIX: Manipulate model data to avoid multiple loops -->
                             <option each="title in model.titles" value="{title.value ? title.value : title}">
                                 {title.text ? title.text : title}
                             </option>

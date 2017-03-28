@@ -23,13 +23,6 @@ class OrderItems extends CMSPageController {
         this.update();
     }
 
-    onUpdate() {
-        // Note: HTML cannot be directly inserted
-        Array.from(this.el.querySelectorAll('[data-html]')).map((el) => {
-            el.innerHTML = el.dataset.html;
-        });
-    }
-
     @on('change')
     updateOrder(event) {
         const el = event.target;

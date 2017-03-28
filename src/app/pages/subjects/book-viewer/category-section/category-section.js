@@ -1,5 +1,6 @@
 import {Controller} from 'superb';
 import Book from './book/book';
+import $ from '~/helpers/$';
 import {description as template} from './category-section.html';
 
 export default class CategorySection extends Controller {
@@ -21,8 +22,8 @@ export default class CategorySection extends Controller {
             for (const book of this.books) {
                 this.regions.books.append(new Book(book));
             }
-            this.el.querySelector('.subject').innerHTML = this.books.label;
         }
+        $.insertHtml(this.el, this.books || {});
     }
 
     filter(category) {
