@@ -1,4 +1,5 @@
 import {Controller} from 'superb';
+import $ from '~/helpers/$';
 import {description as template} from './bucket.html';
 
 export default class Bucket extends Controller {
@@ -15,9 +16,8 @@ export default class Bucket extends Controller {
         this.model = model;
     }
 
-    onUpdate() {
-        // NOTE: Incremental-DOM currently lacks the ability to inject HTML into a node.
-        this.el.querySelector('blurb-html').innerHTML = this.model.content;
+    onLoaded() {
+        $.insertHtml(this.el, this.model);
     }
 
 }

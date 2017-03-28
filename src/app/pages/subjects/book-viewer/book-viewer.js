@@ -15,16 +15,8 @@ function organizeBooksByCategory(books) {
     };
 
     result[apId] = [];
-    // Transitioning to array from Object
-    // FIX: just use books instead of bookList
-    const bookList = books.length ? books : Object.keys(books).map((slug) => {
-        const book = books[slug];
 
-        book.slug = slug;
-        return book;
-    });
-
-    for (const book of bookList) {
+    for (const book of books) {
         const cmsCategory = book.subject;
 
         if (!(cmsCategory in result)) {

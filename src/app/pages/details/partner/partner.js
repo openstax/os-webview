@@ -1,4 +1,5 @@
 import {Controller} from 'superb';
+import $ from '~/helpers/$';
 import {description as template} from './partner.html';
 
 export default class Partner extends Controller {
@@ -15,7 +16,7 @@ export default class Partner extends Controller {
     }
 
     onLoaded() {
-        this.el.querySelector('blurb-html').innerHTML = this.model.blurb;
+        $.insertHtml(this.el, this.model);
     }
 
 }

@@ -10,7 +10,7 @@ class CMSPageController extends Controller {
         super(...args);
 
         if (this.slug) {
-            /* eslint arrow-parens: 0 */ // Fix eslint bug with async arrow functions
+            /* eslint arrow-parens: 0 */ // eslint does not like async arrow functions
             (async () => {
                 try {
                     const response = await fetch(`${settings.apiOrigin}/api/${this.slug}`);
