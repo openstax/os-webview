@@ -43,7 +43,7 @@ export default class BookViewer extends Controller {
         const categorizedBooks = organizeBooksByCategory(books);
 
         this.categorySections = CategorySelector.categories.map(
-            (category) => new CategorySection(category.cms, categorizedBooks[category.cms])
+            (category) => new CategorySection(category.value, categorizedBooks[category.cms])
         );
     }
 

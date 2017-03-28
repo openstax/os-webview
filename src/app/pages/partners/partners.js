@@ -44,17 +44,16 @@ export default class Partners extends CMSPageController {
 
         this.filterPartnersEvent = () => {
             const category = history.state.filter;
+            const cms = CategorySelector.byValue[category].cms;
 
             this.categorySelector.updateSelected(category);
-            this.partnerViewer.filterPartners(category);
+            this.partnerViewer.filterPartners(cms);
         };
         window.addEventListener('popstate', this.filterPartnersEvent);
     }
 
     categoryFromPath() {
-        const slug = window.location.pathname.replace(/.*partners/, '').substr(1).toLowerCase() || 'view-all';
-
-        return CategorySelector.bySlug[slug].cms;
+        return window.location.pathname.replace(/.*partners/, '').substr(1).toLowerCase() || 'view-all';
     }
 
     changeAllyLogoColor() {
@@ -86,8 +85,8 @@ export default class Partners extends CMSPageController {
     }
 
     filterPartners(category) {
-        const slug = CategorySelector.byCms[category].slug;
-        const path = slug === 'view-all' ? pagePath : `${pagePath}/${slug}`;
+        const path = category === 'view-all' ? pagePath : `${pagePath}/${category}`;
+        const cms = CategorySelector.byValue[category].cms;
 
         router.navigate(path, {
             filter: category,
@@ -95,7 +94,7 @@ export default class Partners extends CMSPageController {
             x: history.state.x,
             y: history.state.y
         });
-        this.partnerViewer.filterPartners(category);
+        this.partnerViewer.filterPartners(cms);
     }
 
     @on('click .logo-text')

@@ -42,7 +42,7 @@ $text-black3: rgba(0, 0, 0, 0.54);
 }
 
 .filter-buttons {
-    background-color: color(neutral-lightest);
+    background-color: lighten(color(neutral-lighter), 8%);
     border: 0.1rem solid color(neutral-lighter);
     display: flex;
     flex-flow: column nowrap;
@@ -108,7 +108,7 @@ $text-black3: rgba(0, 0, 0, 0.54);
             }
 
             @include desktop {
-                background-color: lighten(color(neutral-lighter), 8%);
+                background-color: color(neutral-lightest);
                 height: auto;
                 opacity: 1;
                 padding: 1.5rem;
@@ -116,7 +116,7 @@ $text-black3: rgba(0, 0, 0, 0.54);
             }
 
             &:hover {
-                background-color: lighten(color(neutral-lighter), 8%);
+                background-color: color(neutral-lightest);
             }
         }
     }
