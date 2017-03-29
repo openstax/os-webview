@@ -45,14 +45,11 @@ export default class Subjects extends CMSPageController {
     }
 
     categoryFromPath() {
-        const slug = window.location.pathname.replace(/.*subjects/, '').substr(1).toLowerCase() || 'view-all';
-
-        return CategorySelector.bySlug[slug].cms;
+        return window.location.pathname.replace(/.*subjects/, '').substr(1).toLowerCase() || 'view-all';
     }
 
     filterSubjects(category) {
-        const slug = CategorySelector.byCms[category].slug;
-        const path = slug === 'view-all' ? pagePath : `${pagePath}/${slug}`;
+        const path = category === 'view-all' ? pagePath : `${pagePath}/${category}`;
         const yTarget = history.state.y;
 
         router.navigate(path, {

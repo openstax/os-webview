@@ -46,7 +46,7 @@ export default class PartnerViewer {
         this.model.partners = this.model.allPartners.filter((partner) => {
             if (category === '') {
                 return true;
-            } else if (history.state.filter === 'AP') {
+            } else if (history.state.filter === 'ap') {
                 return partner.is_ap;
             }
 
