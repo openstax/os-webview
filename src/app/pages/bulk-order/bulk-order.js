@@ -2,6 +2,7 @@ import {Controller} from 'superb';
 import CMSPageController from '~/controllers/cms';
 import {on} from '~/helpers/controller/decorators';
 import settings from 'settings';
+import $ from '~/helpers/$';
 import selectHandler from '~/handlers/select';
 import {highSchoolSlugs} from '~/models/book-titles';
 import {description as template} from './bulk-order.html';
@@ -16,11 +17,12 @@ class OrderItems extends CMSPageController {
     }
 
     onDataLoaded() {
-        const pages = Object.keys(this.pageData.books).filter((slug) => highSchoolSlugs.includes(slug))
-        .map((key) => Object.assign({slug: key}, this.pageData.books[key]));
+        const pages = this.pageData.books
+        .filter((book) => highSchoolSlugs.includes(book.slug));
 
         this.model.orderItems = pages.map((p) => ({item: p.title, quantity: 0, list: p.amazon_price}));
         this.update();
+        $.insertHtml(this.el, this.model);
     }
 
     @on('change')
