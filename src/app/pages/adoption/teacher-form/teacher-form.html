@@ -1,0 +1,44 @@
+<template args="model">
+    <iframe name="form-response" id="form-response" src="" width="0" height="0"></iframe>
+    <form accept-charset="UTF-8" class="form" target="form-response"
+     action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="post">
+
+        <div class="text-content">
+            <component data-id="contactInfo" skip="true"></component>
+        </div>
+        <div class="wrapper">
+            <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
+
+            <div class="text-content labeled-inputs row book-info">
+                <div id="primary-book" class="col">
+                    <component data-id="yourBook" skip="true"></component>
+                    <p>
+                        Don't see your book? Fill out our <a href="/interest">interest form</a>.
+                    </p>
+
+                    <component data-id="adoptionStatus" skip="true"></component>
+                    <component data-id="howMany" skip="true"></component>
+                    <component data-id="partnerResources" skip="true"></component>
+                    <component data-id="otherPartner" skip="true"></component>
+                    <component data-id="otherInstructors" skip="true"></component>
+                </div>
+
+                <div class="col">
+                    <component data-id="partnerContact" skip="true"></component>
+                    <component data-id="featureMe" skip="true"></component>
+                    <component data-id="contactMe" skip="true"></component>
+
+                    <label>
+                        Any feedback you'd like to share with us?
+                        <span class="invalid-message">{model.validationMessage('00NU00000056Rls')}</span>
+                        <textarea cols="50" name="00NU00000056Rls" rows="10"></textarea>
+                    </label>
+                </div>
+            </div>
+            <div class="cta boxed">
+                <span></span>
+                <input name="commit" class="btn" type="submit" value="Submit" role="button" aria-disabled="false">
+            </div>
+        </div>
+    </form>
+</template>

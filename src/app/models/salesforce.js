@@ -1,5 +1,5 @@
-export const adoptionName = '[name="00NU00000055spw"]';
-export const adoptionOptions = [{
+const adoptionName = '[name="00NU00000055spw"]';
+const adoptionOptions = [{
     key: 'adopted',
     value: 'Confirmed Adoption Won',
     text: 'Fully adopted and using it as our main text.',
@@ -23,14 +23,19 @@ export const adoptionOptions = [{
     text: 'Currently have no plans to use it.',
     qtext: 'No, I\'m not using OpenStax in my courses yet'
 }];
+const userRoles = [
+    'Student', 'Instructor', 'Homeschool Instructor', 'Administrator', 'Librarian', 'Other'
+];
 
-export function adoption(options) {
+
+function adoption(options) {
     return adoptionOptions.filter((option) => options.includes(option.key));
 }
 
 const salesforce = {
     adoption,
-    adoptionName
+    adoptionName,
+    userRoles
 };
 
 export default salesforce;

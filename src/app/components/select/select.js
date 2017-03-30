@@ -90,6 +90,7 @@ export default class Select extends Controller {
         this.model = {
             open: false,
             select: this.select,
+            placeholder: this.select.getAttribute('placeholder'),
             selected: Select[CONVERT_OPTIONS](this.select.querySelectorAll('option[selected]'))
         };
         this.updateOptions();
@@ -108,6 +109,7 @@ export default class Select extends Controller {
 
     updateOptions() {
         this.model.options = this.options = Select[CONVERT_OPTIONS](this.select.options);
+        this.select.value = '';
         this.update();
     }
 

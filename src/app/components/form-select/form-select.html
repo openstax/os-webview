@@ -6,6 +6,7 @@
     <div class="proxy-select" skip="true"></div>
     <select name="{model.name}"
      multiple="{model.multiple ? '' : null}" required="{model.required ? '' : null}"
+     placeholder="{model.placeholder}"
      data-require-none="{model.requireNone ? '' : null}"
      >
         <option each="opt in model.options" value="{opt.value}"
