@@ -13,7 +13,7 @@ class CMSPageController extends Controller {
             /* eslint arrow-parens: 0 */ // Fix eslint bug with async arrow functions
             (async () => {
                 try {
-                    const response = await fetch(`${settings.apiOrigin}/api/${this.slug}`);
+                    const response = await fetch(`${settings.apiOrigin}/api/${this.slug}`, {credentials: 'include'});
                     const data = await response.json();
 
                     this.pageData = this.preserveWrapping ? data : CMSPageController[TRANSFORM_DATA](data);
