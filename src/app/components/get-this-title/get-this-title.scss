@@ -37,6 +37,31 @@
             transform: scale3d(0, 0, 0);
             transition: opacity 0.2s;
             width: 0;
+
+        }
+
+        .coming-soon-wrapper {
+            align-items: center;
+            border: thin solid color(neutral-lighter);
+            color: color(neutral-medium);
+            display: flex;
+            font-weight: 500;
+            height: 7rem;
+            justify-content: flex-start;
+            line-height: normal;
+            margin: 1rem 1rem 0 0;
+            padding: 0 8rem 0 2rem;
+            position: relative;
+
+            .coming-soon {
+                border-bottom-left-radius: 1.5rem;
+                border-top-left-radius: 1.5rem;
+                box-shadow: 0 0.1rem 0.2rem 0.1rem rgba(94, 96, 98, 0.4);
+                height: 3.2rem;
+                position: absolute;
+                right: -0.2rem;
+                top: 1.2rem;
+            }
         }
 
         .btn {
