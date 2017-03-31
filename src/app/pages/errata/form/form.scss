@@ -30,37 +30,36 @@ $table-dark-row: #f6f6f6;
         margin-top: 3rem;
     }
 
+    ::placeholder {
+        color: lighten($label-4, 20%);
+    }
+
     label {
+        align-items: center;
         color: $label-4;
-        display: block;
+        display: flex;
         height: 4.2rem;
         margin: 0;
         padding-left: 2rem;
+        position: relative;
         text-indent: -2rem;
-        white-space: nowrap;
 
-        input {
-            height: 100%;
+        input:not(.hidden) {
+            display: inline;
+            height: 2rem;
+            position: static;
         }
 
         .label-text {
-            display: inline-block;
-            height: 100%;
-            line-height: 1;
+            display: block;
+            line-height: normal;
             margin-left: 0.5rem;
             text-indent: 0;
-            vertical-align: text-top;
-            white-space: normal;
         }
     }
 
     .radio-columns {
         font-size: 1.6rem;
-
-        @include desktop {
-            column-count: 2;
-            column-gap: 3rem;
-        }
 
         [type="text"] {
             width: auto;
@@ -71,14 +70,10 @@ $table-dark-row: #f6f6f6;
         font-size: 1.2rem;
         font-style: italic;
         line-height: normal;
-        margin-bottom: 1rem;
-        width: 75%;
 
-        &.indented {
-            line-height: 0.3;
-            position: relative;
-            text-indent: 1.3rem;
-            top: -1.8rem;
+        &.wide {
+            margin-bottom: 1rem;
+            max-width: 75%;
         }
     }
 
