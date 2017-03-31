@@ -96,6 +96,7 @@ export default class Select extends Controller {
         this.updateSelectElement();
         if (this.select.required) {
             this.model.noneMessage = 'Please select...';
+            this.isRequired = true;
         } else {
             this.model.noneMessage = 'None';
         }
@@ -129,6 +130,8 @@ export default class Select extends Controller {
         if (typeof window.Event === 'function') {
             event = new Event('change', {bubbles: true});
         } else {
+            // Work around IE which shows invalid even when selections are made
+            this.select.required = this.isRequired && this.model.selected.size === 0;
             event = document.createEvent('Event');
             event.initEvent('change', true, true);
         }
