@@ -15,6 +15,8 @@ export default class GetThisTitle extends Controller {
         };
 
         const isHighSchool = highSchoolSlugs.includes(data.slug);
+        const printLink = [data.amazon_link, data.amazon_coming_soon, data.bookstore_link,
+            data.bookstore_coming_soon, isHighSchool].find((x) => x);
 
         this.model = {
             ibookLink: data.ibook_link,
@@ -24,13 +26,14 @@ export default class GetThisTitle extends Controller {
             conceptCoachLink: data.concept_coach_link,
             bookshareLink: data.bookshare_link,
             pdfLink: (data.high_resolution_pdf_url || data.low_resolution_pdf_url),
-            printLink: (data.amazon_link || data.bookstore_link || isHighSchool),
+            printLink,
             isHighSchool,
             submenu: '',
             hiRes: data.high_resolution_pdf_url,
             loRes: data.low_resolution_pdf_url,
             amazon: {
                 link: data.amazon_link,
+                comingSoon: data.amazon_coming_soon,
                 price: data.amazon_price.toLocaleString('en-US', {
                     style: 'currency',
                     currency: 'USD'
@@ -39,6 +42,7 @@ export default class GetThisTitle extends Controller {
             },
             bookstore: {
                 link: data.bookstore_link,
+                comingSoon: data.bookstore_coming_soon,
                 blurb: data.bookstore_blurb
             },
             slug: data.slug

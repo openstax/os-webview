@@ -27,6 +27,14 @@
                     <a href="{model.amazon.link}" class="btn">Individual Orders</a>
                     {model.amazon.price} from seller \"OpenStax\" on Amazon
                 </p>
+                <div if="model.bookstore.comingSoon" class="coming-soon-wrapper">
+                    <img class="coming-soon" src="/images/subjects/coming-soon.svg" />
+                    BOOKSTORE ORDERS
+                </div>
+                <div if="model.amazon.comingSoon" class="coming-soon-wrapper">
+                    <img class="coming-soon" src="/images/subjects/coming-soon.svg" />
+                    INDIVIDUAL ORDERS
+                </div>
                 <div class="remover"><i class="fa fa-times" aria-hidden="true"></i></div>
             </div>
         </div>
