@@ -34,6 +34,8 @@ $table-dark-row: #f6f6f6;
         color: lighten($label-4, 20%);
     }
 
+
+
     label {
         align-items: center;
         color: $label-4;
@@ -63,6 +65,18 @@ $table-dark-row: #f6f6f6;
 
         [type="text"] {
             width: auto;
+        }
+    }
+
+    .column-container {
+
+        @include desktop {
+            display: flex;
+            flex-flow: row nowrap;
+
+            .col {
+                flex-basis: 45%;
+            }
         }
     }
 
