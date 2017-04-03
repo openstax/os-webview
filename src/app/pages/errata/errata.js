@@ -239,10 +239,11 @@ export default class Errata extends Controller {
                 'Reviewed': 1,
                 'Will Correct': 1
             }[detail.displayStatus];
-            const secondBarFill = detail.barStatus === 'Corrected' ? ' filled' : ' filled-no';
+            const thirdNodeFill = detail.barStatus === 'Corrected' ? ' filled' : ' filled-no';
 
-            detail.firstBarClass = bars > 0 ? ' filled' : '';
-            detail.secondBarClass = bars > 1 ? secondBarFill : '';
+            detail.firstNodeClass = bars === 0 ? ' filled ' : '';
+            detail.secondNodeClass = bars === 1 ? ' filled' : '';
+            detail.thirdNodeClass = bars > 1 ? thirdNodeFill : '';
             this.model.title = () => 'Errata Submission Details';
             this.model.book = detail.book;
             this.model.detail = detail;
