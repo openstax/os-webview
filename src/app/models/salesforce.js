@@ -23,10 +23,6 @@ const adoptionOptions = [{
     text: 'Currently have no plans to use it.',
     qtext: 'No, I\'m not using OpenStax in my courses yet'
 }];
-const userRoles = [
-    'Student', 'Instructor', 'Homeschool Instructor', 'Administrator', 'Librarian', 'Other'
-];
-
 
 function adoption(options) {
     return adoptionOptions.filter((option) => options.includes(option.key));
@@ -34,8 +30,7 @@ function adoption(options) {
 
 const salesforce = {
     adoption,
-    adoptionName,
-    userRoles
+    adoptionName
 };
 
 export default salesforce;

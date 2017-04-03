@@ -116,11 +116,9 @@ export default class Select extends Controller {
 
     updateSelectElement() {
         for (const option of Array.from(this.select.options)) {
-            if (this.model.selected.get(option.value) !== null) {
-                option.selected = true;
-            } else {
-                option.selected = false;
-            }
+            const selectedness = this.model.selected.get(option.value);
+
+            option.selected = selectedness || selectedness === '';
         }
 
         if (this.model.selected.size === 0) {

@@ -1,16 +1,16 @@
 import {Controller} from 'superb';
 import $ from '~/helpers/$';
 import settings from 'settings';
-import {on} from '~/helpers/controller/decorators';
-import FormInput from '~/components/form-input/form-input';
 import FormSelect from '~/components/form-select/form-select';
-import ManagedComponent from '~/helpers/controller/managed-component';
-import StudentForm from './student-form/student-form';
+import StudentForm from '~/components/student-form/student-form';
 import TeacherForm from './teacher-form/teacher-form';
-import salesforce from '~/models/salesforce';
+import {on} from '~/helpers/controller/decorators';
 import {description as template} from './adoption.html';
 
 const headerInfoPromise = fetch(`${settings.apiOrigin}/api/pages/adoption-form`)
+.then((r) => r.json());
+
+const rolesPromise = fetch(`${settings.apiOrigin}/api/snippets/roles`)
 .then((r) => r.json());
 
 export default class AdoptionForm extends Controller {
@@ -27,7 +27,6 @@ export default class AdoptionForm extends Controller {
         };
         this.form = null;
         this.model = {};
-        // const defaultTitle = decodeURIComponent(window.location.search.substr(1));
     }
 
     onLoaded() {
@@ -38,11 +37,15 @@ export default class AdoptionForm extends Controller {
             this.update();
             $.insertHtml(this.el, this.model);
         });
-        this.regions.roleSelector.attach(new FormSelect({
-            placeholder: 'I am a',
-            validationMessage: () => '',
-            options: salesforce.userRoles.map((opt) => ({label: opt, value: opt}))
-        }));
+        rolesPromise.then((roles) => {
+            const options = roles.map((opt) => ({label: opt.name, value: opt.name}));
+
+            this.regions.roleSelector.attach(new FormSelect({
+                placeholder: 'I am a',
+                validationMessage: () => '',
+                options
+            }));
+        });
     }
 
     @on('change [data-id="selectedRole"] select')
@@ -55,12 +58,13 @@ export default class AdoptionForm extends Controller {
         }
         this.model.selectedRole = newRole;
         if (newRole === 'Student') {
-            this.form = new StudentForm();
+            this.form = new StudentForm('http://go.pardot.com/l/218812/2017-04-06/l4sn');
             this.regions.form.attach(this.form);
         } else if (newRole && (!oldRole || oldRole === 'Student')) {
             this.form = new TeacherForm(this.model);
             this.regions.form.attach(this.form);
         }
+        this.model.userRole = newRole;
         this.form.update();
     }
 

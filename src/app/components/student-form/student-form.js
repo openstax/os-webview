@@ -6,11 +6,14 @@ import {description as template} from './student-form.html';
 
 export default class StudentForm extends SalesforceForm {
 
-    init() {
+    init(postUrl) {
         super.init();
         this.template = template;
         this.view = {
             classes: ['labeled-inputs', 'row', 'top-of-form']
+        };
+        this.model = {
+            postUrl
         };
         const validationMessage = (name) => {
             const field = this.el && this.el.querySelector(`[name="${name}"]`);
@@ -43,7 +46,7 @@ export default class StudentForm extends SalesforceForm {
                 validationMessage
             }),
             school: new FormInput({
-                name: 'company',
+                name: 'school',
                 type: 'text',
                 label: 'School name',
                 required: true,
@@ -60,12 +63,23 @@ export default class StudentForm extends SalesforceForm {
         for (const c of this.components) {
             c.attach();
         }
+        this.setCheckedness(true);
     }
 
     onUpdate() {
         for (const c of this.components) {
             c.update();
         }
+    }
+
+    setCheckedness(whether) {
+        this.model.isChecked = whether;
+        this.update();
+    }
+
+    @on('change [name="email_updates"]')
+    toggleChecked(e) {
+        this.setCheckedness(e.target.checked);
     }
 
 }
