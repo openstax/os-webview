@@ -1,16 +1,16 @@
 <template args="model">
-    <div if="model.content" class="text-content container">
+    <div if="model.content" class="text-content container" role="alert">
         {model.content}
         <if condition="!model.temporary">
             <div class="single-button">
                 <a class="btn inverted" href="/give?student">Give Now</a>
             </div>
             <div class="multi-button">
-                <a class="btn inverted" href="/give" data-amount="5">Give $5</a>
-                <a class="btn inverted" href="/give" data-amount="10">Give $10</a>
-                <a class="btn inverted" href="/give" data-amount="25">Give $25</a>
-                <a class="btn inverted" href="/give" data-amount="50">Give $50</a>
-                <a class="btn inverted" href="/give"  data-amount="?">Give Other Amount</a>
+                <button class="btn inverted" href="/give" data-amount="5">Give $5</button>
+                <button class="btn inverted" href="/give" data-amount="10">Give $10</button>
+                <button class="btn inverted" href="/give" data-amount="25">Give $25</button>
+                <button class="btn inverted" href="/give" data-amount="50">Give $50</button>
+                <button class="btn inverted" href="/give"  data-amount="?">Give Other Amount</button>
             </div>
         </if>
     </div>

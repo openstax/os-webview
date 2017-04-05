@@ -2,7 +2,7 @@
     <div class="hero" style="{backgroundImage: `url(${model.coverUrl})`}">
         <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
     </div>
-    <div class="boxed">
+    <article class="boxed">
         <h1>{model.title}</h1>
         <h2 if="model.subheading">{model.subheading}</h2>
         <div class="meta">
@@ -16,6 +16,5 @@
             <div class="tag" each="tag in model.tags">{tag}</div>
         </div>
         <div id="disqus_thread" class="disqus"></div>
-    </div>
-    <div class="articles"></div>
+    </article>
 </template>

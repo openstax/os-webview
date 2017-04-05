@@ -1,12 +1,14 @@
 @import 'variables';
 @import 'mixins';
 
+button,
 .btn {
     background-color: color(neutral-medium);
+    border: 0;
     color: color(neutral-light);
     cursor: pointer;
     display: inline-block;
-    -webkit-font-smoothing: subpixel-antialiased;
+    font-size: inherit;
     font-weight: 500;
     outline: 0;
     padding: 1rem;

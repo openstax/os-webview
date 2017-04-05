@@ -110,13 +110,21 @@ export default class AboutUs extends CMSPageController {
 
         const tapped = Number(e.delegateTarget.getAttribute('data-id'));
 
-        if (tapped === this.model.tapped) {
-            this.model.tapped = null;
-        } else {
-            this.model.tapped = tapped;
-        }
-
+        this.model.tapped = tapped === this.model.tapped ? null : tapped;
         this.update();
+        if (this.model.tapped) {
+            const el = e.delegateTarget;
+            const tooltipId = el.querySelector('[aria-describedby]').getAttribute('aria-describedby');
+            const tooltipEl = document.getElementById(tooltipId);
+            const elRect = el.getBoundingClientRect();
+            const ttRect = tooltipEl.getBoundingClientRect();
+            const topMost = Math.min(elRect.top, ttRect.top);
+            const bottomMost = Math.max(elRect.bottom, ttRect.bottom);
+            const totalHeight = bottomMost - topMost;
+            const offset = (window.innerHeight - totalHeight) / 2 - 40;
+
+            $.scrollTo(elRect.top < ttRect.top ? el : tooltipEl, offset);
+        }
     }
 
     @on('click')
