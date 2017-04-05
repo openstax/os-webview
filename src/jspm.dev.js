@@ -6,7 +6,7 @@ SystemJS.config({
     "jest": "npm:jest@19.0.2",
     "console": "github:jspm/nodelibs-console@0.2.0-alpha",
     "source-map": "npm:source-map@0.2.0",
-    "uglify-js": "npm:uglify-js@2.8.20",
+    "uglify-js": "npm:uglify-js@2.8.21",
     "punycode": "github:jspm/nodelibs-punycode@0.2.0-alpha",
     "uglify-to-browserify": "npm:uglify-to-browserify@1.0.2"
   },
@@ -151,12 +151,12 @@ SystemJS.config({
         "istanbul-lib-instrument": "npm:istanbul-lib-instrument@1.7.0",
         "mkdirp": "npm:mkdirp@0.5.1",
         "fileset": "npm:fileset@2.0.3",
-        "async": "npm:async@2.2.0",
+        "async": "npm:async@2.3.0",
         "istanbul-lib-report": "npm:istanbul-lib-report@1.0.0",
         "istanbul-lib-hook": "npm:istanbul-lib-hook@1.0.5",
         "istanbul-reports": "npm:istanbul-reports@1.0.2",
         "istanbul-lib-source-maps": "npm:istanbul-lib-source-maps@1.1.1",
-        "js-yaml": "npm:js-yaml@3.8.2",
+        "js-yaml": "npm:js-yaml@3.8.3",
         "once": "npm:once@1.4.0"
       }
     },
@@ -449,11 +449,6 @@ SystemJS.config({
         "esutils": "npm:esutils@2.0.2"
       }
     },
-    "npm:async@2.2.0": {
-      "map": {
-        "lodash": "npm:lodash@4.17.4"
-      }
-    },
     "npm:jsdom@9.12.0": {
       "map": {
         "content-type-parser": "npm:content-type-parser@1.0.1",
@@ -463,7 +458,7 @@ SystemJS.config({
         "cssstyle": "npm:cssstyle@0.2.37",
         "html-encoding-sniffer": "npm:html-encoding-sniffer@1.0.1",
         "webidl-conversions": "npm:webidl-conversions@4.0.1",
-        "whatwg-url": "npm:whatwg-url@4.6.0",
+        "whatwg-url": "npm:whatwg-url@4.7.0",
         "xml-name-validator": "npm:xml-name-validator@2.0.1",
         "escodegen": "npm:escodegen@1.8.1",
         "acorn": "npm:acorn@4.0.11",
@@ -475,11 +470,6 @@ SystemJS.config({
         "acorn-globals": "npm:acorn-globals@3.1.0",
         "tough-cookie": "npm:tough-cookie@2.3.2",
         "request": "npm:request@2.81.0"
-      }
-    },
-    "npm:json-stable-stringify@1.0.1": {
-      "map": {
-        "jsonify": "npm:jsonify@0.0.0"
       }
     },
     "npm:expand-brackets@0.1.5": {
@@ -509,12 +499,6 @@ SystemJS.config({
         "append-transform": "npm:append-transform@0.4.0"
       }
     },
-    "npm:js-yaml@3.8.2": {
-      "map": {
-        "argparse": "npm:argparse@1.0.9",
-        "esprima": "npm:esprima@3.1.3"
-      }
-    },
     "npm:istanbul-reports@1.0.2": {
       "map": {
         "handlebars": "npm:handlebars@4.0.6"
@@ -534,12 +518,6 @@ SystemJS.config({
       "map": {
         "is-glob": "npm:is-glob@2.0.1",
         "glob-parent": "npm:glob-parent@2.0.0"
-      }
-    },
-    "npm:whatwg-url@4.6.0": {
-      "map": {
-        "webidl-conversions": "npm:webidl-conversions@3.0.1",
-        "tr46": "npm:tr46@0.0.3"
       }
     },
     "npm:escodegen@1.8.1": {
@@ -647,37 +625,6 @@ SystemJS.config({
         "acorn": "npm:acorn@4.0.11"
       }
     },
-    "npm:request@2.81.0": {
-      "map": {
-        "tough-cookie": "npm:tough-cookie@2.3.2",
-        "caseless": "npm:caseless@0.12.0",
-        "har-validator": "npm:har-validator@4.2.1",
-        "qs": "npm:qs@6.4.0",
-        "aws-sign2": "npm:aws-sign2@0.6.0",
-        "combined-stream": "npm:combined-stream@1.0.5",
-        "extend": "npm:extend@3.0.0",
-        "http-signature": "npm:http-signature@1.1.1",
-        "is-typedarray": "npm:is-typedarray@1.0.0",
-        "json-stringify-safe": "npm:json-stringify-safe@5.0.1",
-        "stringstream": "npm:stringstream@0.0.5",
-        "isstream": "npm:isstream@0.1.2",
-        "mime-types": "npm:mime-types@2.1.15",
-        "uuid": "npm:uuid@3.0.1",
-        "tunnel-agent": "npm:tunnel-agent@0.6.0",
-        "performance-now": "npm:performance-now@0.2.0",
-        "safe-buffer": "npm:safe-buffer@5.0.1",
-        "forever-agent": "npm:forever-agent@0.6.1",
-        "form-data": "npm:form-data@2.1.2",
-        "hawk": "npm:hawk@3.1.3",
-        "aws4": "npm:aws4@1.6.0",
-        "oauth-sign": "npm:oauth-sign@0.8.2"
-      }
-    },
-    "npm:rimraf@2.6.1": {
-      "map": {
-        "glob": "npm:glob@7.1.1"
-      }
-    },
     "npm:find-up@1.1.2": {
       "map": {
         "path-exists": "npm:path-exists@2.1.0",
@@ -726,11 +673,6 @@ SystemJS.config({
         "babel-plugin-jest-hoist": "npm:babel-plugin-jest-hoist@19.0.0"
       }
     },
-    "npm:debug@2.6.3": {
-      "map": {
-        "ms": "npm:ms@0.7.2"
-      }
-    },
     "npm:for-own@0.1.5": {
       "map": {
         "for-in": "npm:for-in@1.0.2"
@@ -739,12 +681,6 @@ SystemJS.config({
     "npm:expand-range@1.8.2": {
       "map": {
         "fill-range": "npm:fill-range@2.2.3"
-      }
-    },
-    "npm:babel-runtime@6.23.0": {
-      "map": {
-        "regenerator-runtime": "npm:regenerator-runtime@0.10.3",
-        "core-js": "npm:core-js@2.4.1"
       }
     },
     "npm:whatwg-encoding@1.0.1": {
@@ -852,17 +788,6 @@ SystemJS.config({
         "wordwrap": "npm:wordwrap@0.0.3"
       }
     },
-    "npm:uglify-js@2.8.20": {
-      "map": {
-        "yargs": "npm:yargs@3.10.0",
-        "source-map": "npm:source-map@0.5.6"
-      }
-    },
-    "npm:tunnel-agent@0.6.0": {
-      "map": {
-        "safe-buffer": "npm:safe-buffer@5.0.1"
-      }
-    },
     "npm:loose-envify@1.3.1": {
       "map": {
         "js-tokens": "npm:js-tokens@3.0.1"
@@ -892,12 +817,6 @@ SystemJS.config({
       "map": {
         "os-tmpdir": "npm:os-tmpdir@1.0.2",
         "os-homedir": "npm:os-homedir@1.0.2"
-      }
-    },
-    "npm:har-validator@4.2.1": {
-      "map": {
-        "har-schema": "npm:har-schema@1.0.5",
-        "ajv": "npm:ajv@4.11.5"
       }
     },
     "github:jspm/nodelibs-punycode@0.2.0-alpha": {
@@ -948,12 +867,6 @@ SystemJS.config({
     "npm:isobject@2.1.0": {
       "map": {
         "isarray": "npm:isarray@1.0.0"
-      }
-    },
-    "npm:ajv@4.11.5": {
-      "map": {
-        "json-stable-stringify": "npm:json-stable-stringify@1.0.1",
-        "co": "npm:co@4.6.0"
       }
     },
     "npm:is-builtin-module@1.0.0": {
@@ -1010,6 +923,48 @@ SystemJS.config({
         "kind-of": "npm:kind-of@3.1.0",
         "repeat-string": "npm:repeat-string@1.6.1",
         "longest": "npm:longest@1.0.1"
+      }
+    },
+    "npm:chalk@1.1.3": {
+      "map": {
+        "strip-ansi": "npm:strip-ansi@3.0.1",
+        "escape-string-regexp": "npm:escape-string-regexp@1.0.5",
+        "ansi-styles": "npm:ansi-styles@2.2.1",
+        "supports-color": "npm:supports-color@2.0.0",
+        "has-ansi": "npm:has-ansi@2.0.0"
+      }
+    },
+    "npm:has-ansi@2.0.0": {
+      "map": {
+        "ansi-regex": "npm:ansi-regex@2.1.1"
+      }
+    },
+    "npm:pinkie-promise@2.0.1": {
+      "map": {
+        "pinkie": "npm:pinkie@2.0.4"
+      }
+    },
+    "npm:uglify-js@2.8.21": {
+      "map": {
+        "source-map": "npm:source-map@0.5.6",
+        "yargs": "npm:yargs@3.10.0"
+      }
+    },
+    "npm:async@2.3.0": {
+      "map": {
+        "lodash": "npm:lodash@4.17.4"
+      }
+    },
+    "npm:js-yaml@3.8.3": {
+      "map": {
+        "argparse": "npm:argparse@1.0.9",
+        "esprima": "npm:esprima@3.1.3"
+      }
+    },
+    "npm:whatwg-url@4.7.0": {
+      "map": {
+        "webidl-conversions": "npm:webidl-conversions@3.0.1",
+        "tr46": "npm:tr46@0.0.3"
       }
     }
   }

@@ -55,36 +55,26 @@
     "gulp-uglify": "2.1.2",
     "gulp-util": "3.0.8",
     "gulp-wrap": "0.13.0",
-<<<<<<< HEAD
+    "jest": "^19.0.2",
     "jsdom": "9.12.0",
     "jsdom-global": "2.1.1",
     "jspm": "0.17.0-beta.23",
     "nyc": "^10.0.0",
+    "regenerator-runtime": "^0.10.3",
     "require-dir": "0.3.1",
     "sw-precache": "5.1.0",
     "systemjs-builder": "0.16.4",
-    "yargs": "7.0.2"
-=======
-    "jest": "^19.0.2",
-    "jsdom": "9.4.2",
-    "jsdom-global": "2.1.0",
-    "jspm": "0.17.0-beta.23",
-    "nyc": "^10.0.0",
-    "regenerator-runtime": "^0.10.3",
-    "require-dir": "0.3.0",
-    "sw-precache": "4.0.0",
-    "systemjs-builder": "0.15.29",
     "systemjs-jest": "^1.0.0",
-    "yargs": "5.0.0"
->>>>>>> Passes 404 test
+    "yargs": "7.0.2"
   },
   "jest": {
     "moduleNameMapper": {
-        "^~/(.*)": "<rootDir>/dev/app/$1",
-        "superb": "<rootDir>/jspm_packages/npm/superb.js@0.2.13/dist/superb.js",
-        "settings": "<rootDir>/dev/settings",
-        "fetch": "<rootDir>/jspm_packages/npm/whatwg-fetch@1.0.0/fetch.js"
-    }
+      "^~/(.*)": "<rootDir>/dev/app/$1",
+      "superb": "<rootDir>/jspm_packages/npm/superb.js@0.2.15/dist/superb.js",
+      "settings": "<rootDir>/dev/settings",
+      "fetch": "<rootDir>/jspm_packages/npm/whatwg-fetch@1.1.1/fetch.js"
+    },
+    "setupFiles": ["<rootDir>/test/setupFile.js"]
   },
   "jspm": {
     "main": "src/app/main.js",
@@ -113,7 +103,7 @@
     "peerDependencies": {
       "assert": "github:jspm/nodelibs-assert@^0.2.0-alpha",
       "bcrypt-pbkdf": "npm:bcrypt-pbkdf@^1.0.0",
-      "buffer": "github:jspm/nodelibs-buffer@0.2.0-alpha",
+      "buffer": "github:jspm/nodelibs-buffer@^0.2.0-alpha",
       "child_process": "github:jspm/nodelibs-child_process@^0.2.0-alpha",
       "constants": "github:jspm/nodelibs-constants@^0.2.0-alpha",
       "crypto": "github:jspm/nodelibs-crypto@^0.2.0-alpha",
@@ -121,7 +111,7 @@
       "dns": "github:jspm/nodelibs-dns@^0.2.0-alpha",
       "ecc-jsbn": "npm:ecc-jsbn@~0.1.1",
       "events": "github:jspm/nodelibs-events@^0.2.0-alpha",
-      "fs": "github:jspm/nodelibs-fs@0.2.0-alpha",
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha",
       "fsevents": "npm:fsevents@^1.0.0",
       "http": "github:jspm/nodelibs-http@^0.2.0-alpha",
       "https": "github:jspm/nodelibs-https@^0.2.0-alpha",
@@ -131,7 +121,7 @@
       "module": "github:jspm/nodelibs-module@^0.2.0-alpha",
       "net": "github:jspm/nodelibs-net@^0.2.0-alpha",
       "os": "github:jspm/nodelibs-os@^0.2.0-alpha",
-      "path": "github:jspm/nodelibs-path@0.2.0-alpha",
+      "path": "github:jspm/nodelibs-path@^0.2.0-alpha",
       "process": "github:jspm/nodelibs-process@^0.2.0-alpha",
       "querystring": "github:jspm/nodelibs-querystring@^0.2.0-alpha",
       "stream": "github:jspm/nodelibs-stream@^0.2.0-alpha",
@@ -154,6 +144,7 @@
           "_stream_transform": "readable-stream/transform"
         }
       },
+<<<<<<< HEAD
       "npm:debug@2.6.3": {
         "main": "browser.js",
         "jspmNodeConversion": false,
@@ -171,6 +162,8 @@
           "util": "@node/util"
         }
       },
+=======
+>>>>>>> Passes about tests
       "npm:debug@2.6.3": {
         "main": "browser.js",
         "jspmNodeConversion": false,
@@ -205,11 +198,14 @@
           "process": "@empty"
         }
       },
+<<<<<<< HEAD
       "npm:ms@0.7.1": {
 >>>>>>> Passes 404 test
         "jspmNodeConversion": false,
         "format": "cjs"
       },
+=======
+>>>>>>> Passes about tests
       "npm:ms@0.7.2": {
         "jspmNodeConversion": false,
         "format": "cjs"
