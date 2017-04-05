@@ -6,7 +6,8 @@
     "start": "gulp dev",
     "build": "gulp",
     "upgrade": "jspm update",
-    "test": "gulp dev-build && nyc --reporter=text ava --serial ./test/src/*/*.js && ./script/postprocess-coverage && nyc report --reporter=html --reporter=json --reporter=text"
+    "avatest": "gulp dev-build && nyc --reporter=text ava --serial ./test/src/*/*.js && ./script/postprocess-coverage && nyc report --reporter=html --reporter=json --reporter=text",
+    "test": "jest ./test/src/*/*.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   "devDependencies": {
     "ava": "^0.19.1",
     "babel-eslint": "7.2.1",
+    "babel-jest": "^19.0.0",
     "babel-plugin-transform-async-to-generator": "6.24.1",
     "babel-plugin-transform-class-properties": "6.24.1",
     "babel-plugin-transform-decorators": "6.24.1",
@@ -53,6 +55,7 @@
     "gulp-uglify": "2.1.2",
     "gulp-util": "3.0.8",
     "gulp-wrap": "0.13.0",
+<<<<<<< HEAD
     "jsdom": "9.12.0",
     "jsdom-global": "2.1.1",
     "jspm": "0.17.0-beta.23",
@@ -61,6 +64,27 @@
     "sw-precache": "5.1.0",
     "systemjs-builder": "0.16.4",
     "yargs": "7.0.2"
+=======
+    "jest": "^19.0.2",
+    "jsdom": "9.4.2",
+    "jsdom-global": "2.1.0",
+    "jspm": "0.17.0-beta.23",
+    "nyc": "^10.0.0",
+    "regenerator-runtime": "^0.10.3",
+    "require-dir": "0.3.0",
+    "sw-precache": "4.0.0",
+    "systemjs-builder": "0.15.29",
+    "systemjs-jest": "^1.0.0",
+    "yargs": "5.0.0"
+>>>>>>> Passes 404 test
+  },
+  "jest": {
+    "moduleNameMapper": {
+        "^~/(.*)": "<rootDir>/dev/app/$1",
+        "superb": "<rootDir>/jspm_packages/npm/superb.js@0.2.13/dist/superb.js",
+        "settings": "<rootDir>/dev/settings",
+        "fetch": "<rootDir>/jspm_packages/npm/whatwg-fetch@1.0.0/fetch.js"
+    }
   },
   "jspm": {
     "main": "src/app/main.js",
@@ -78,7 +102,14 @@
       "recordo": "npm:recordo@0.0.6",
       "superb": "npm:superb.js@^0.2.7"
     },
-    "devDependencies": {},
+    "devDependencies": {
+      "console": "github:jspm/nodelibs-console@^0.2.0-alpha",
+      "jest": "npm:jest@^19.0.2",
+      "punycode": "github:jspm/nodelibs-punycode@^0.2.0-alpha",
+      "source-map": "npm:source-map@0.2",
+      "uglify-js": "npm:uglify-js@^2.6",
+      "uglify-to-browserify": "npm:uglify-to-browserify@1.0"
+    },
     "peerDependencies": {
       "assert": "github:jspm/nodelibs-assert@^0.2.0-alpha",
       "bcrypt-pbkdf": "npm:bcrypt-pbkdf@^1.0.0",
@@ -140,10 +171,44 @@
           "util": "@node/util"
         }
       },
+      "npm:debug@2.6.3": {
+        "main": "browser.js",
+        "jspmNodeConversion": false,
+        "format": "cjs",
+        "map": {
+          "./browser.js": {
+            "node": "./node.js"
+          },
+          "./node.js": {
+            "browser": "./browser.js"
+          },
+          "fs": "@node/fs",
+          "net": "@node/net",
+          "tty": "@node/tty",
+          "util": "@node/util"
+        }
+      },
+      "npm:esprima@2.7.3": {
+        "jspmNodeConversion": false
+      },
       "npm:inherits@2.0.3": {
         "ignore": [
           "test.js"
         ]
+      },
+<<<<<<< HEAD
+      "npm:ms@0.7.2": {
+=======
+      "npm:lodash@4.17.4": {
+        "map": {
+          "buffer": "@empty",
+          "process": "@empty"
+        }
+      },
+      "npm:ms@0.7.1": {
+>>>>>>> Passes 404 test
+        "jspmNodeConversion": false,
+        "format": "cjs"
       },
       "npm:ms@0.7.2": {
         "jspmNodeConversion": false,
