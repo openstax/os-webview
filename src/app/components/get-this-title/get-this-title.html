@@ -27,11 +27,11 @@
                     <a href="{model.amazon.link}" class="btn">Individual Orders</a>
                     {model.amazon.price} from seller \"OpenStax\" on Amazon
                 </p>
-                <div if="model.bookstore.comingSoon" class="coming-soon-wrapper">
+                <div if="!model.bookstore.link && model.bookstore.comingSoon" class="coming-soon-wrapper">
                     <img class="coming-soon" src="/images/subjects/coming-soon.svg" />
                     BOOKSTORE ORDERS
                 </div>
-                <div if="model.amazon.comingSoon" class="coming-soon-wrapper">
+                <div if="!model.amazon.link && model.amazon.comingSoon" class="coming-soon-wrapper">
                     <img class="coming-soon" src="/images/subjects/coming-soon.svg" />
                     INDIVIDUAL ORDERS
                 </div>
