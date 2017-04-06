@@ -1,8 +1,13 @@
 import SalesforceForm from '~/controllers/salesforce-form';
 import router from '~/router';
 import $ from '~/helpers/$';
+import settings from 'settings';
 import selectHandler from '~/handlers/select';
 import {description as template} from './comp-copy.html';
+
+const booksPromise = fetch(`${settings.apiOrigin}/api/books`)
+    .then((r) => r.json())
+    .then((r) => r.books.filter((b) => b.comp_copy_available && b.salesforce_abbreviation));
 
 export default class CompCopyForm extends SalesforceForm {
 
@@ -12,8 +17,6 @@ export default class CompCopyForm extends SalesforceForm {
         this.view = {
             classes: ['comp-copy-form']
         };
-        // NOTE: List of books is more limited than the published list in models/book-titles,
-        // so using a hard-coded list in the HTML
         this.model = {
             validationMessage: (name) =>
                 this.hasBeenSubmitted ? this.el.querySelector(`[name="${name}"]`).validationMessage : ''
@@ -23,7 +26,6 @@ export default class CompCopyForm extends SalesforceForm {
 
     onLoaded() {
         document.title = 'Comp Copy Request - OpenStax';
-        selectHandler.setup(this);
         this.formResponseEl = this.el.querySelector('#form-response');
         this.goToConfirmation = () => {
             if (this.submitted) {
@@ -39,8 +41,12 @@ export default class CompCopyForm extends SalesforceForm {
             introHeading: this.pageData.intro_heading,
             introDescription: this.pageData.intro_description
         });
-        this.update();
-        $.insertHtml(this.el, this.model);
+        booksPromise.then((books) => {
+            this.model.books = books;
+            this.update();
+            $.insertHtml(this.el, this.model);
+            selectHandler.setup(this);
+        });
     }
 
 }
