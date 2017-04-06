@@ -29,7 +29,16 @@
             <img if="model.studentImage" src="{`/images/components/${model.studentImage}`}" />
         </div>
     </div>
-
+    <div if="model.belowHeader" class="wrapper">
+        <div class="boxed">
+            <div class="below-header-text">{model.belowHeader.text}</div>
+            <div class="buttons">
+                <a each="b in model.belowHeader.buttons" class="btn {b.colorScheme}" href="{b.url}">
+                    {b.text}
+                </a>
+            </div>
+        </div>
+    </div>
     <div class="wrapper">
         <savings-calculator class="boxed" skip="true"></savings-calculator>
         <detail-block class="boxed" skip="true"></detail-block>

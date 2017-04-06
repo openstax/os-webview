@@ -48,6 +48,24 @@ const models = {
         adoptionLinkText: 'Get verified',
         subjectLinkText: 'Explore our books',
         studentImage: 'student-chemistry.png'
+    },
+    student: {
+        headline: 'Get started with OpenStax!',
+        studentImage: 'student-algebra.png',
+        belowHeader: {
+            text: 'Download our getting started guide for our books or' +
+            ' use our toolkit to help bring more free, openly licensed books to your campus',
+            buttons: [
+                {
+                    text: 'Getting Started Guide',
+                    colorScheme: 'white-on-blue'
+                },
+                {
+                    text: 'Student Toolkit',
+                    colorScheme: 'white-on-gold'
+                }
+            ]
+        }
     }
 };
 
