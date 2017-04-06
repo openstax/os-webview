@@ -14,7 +14,7 @@ $page-background: #fbfbfb;
 
         .subhead,
         .subhead h1 {
-            align-items: flex-end;
+            align-items: center;
             color: color(neutral-lightest);
             display: flex;
             flex-direction: row;
@@ -119,5 +119,34 @@ $page-background: #fbfbfb;
         background-color: $page-background;
         min-height: 13rem;
         padding-top: 2rem;
+    }
+
+    .below-header-text {
+        font-weight: bold;
+        margin-bottom: 3rem;
+        text-align: center;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: center;
+
+        .btn {
+            font-size: 1.4rem;
+            margin: 0 1rem;
+        }
+    }
+
+    .white-on-blue,
+    .white-on-gold {
+        color: color(neutral-lightest);
+    }
+
+    .white-on-blue {
+        background-color: color(blue);
+    }
+
+    .white-on-gold {
+        background-color: color(gold);
     }
 }
