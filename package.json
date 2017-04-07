@@ -44,6 +44,7 @@
     "gulp-humans": "2.0.2",
     "gulp-if": "2.0.2",
     "gulp-imagemin": "3.2.0",
+    "gulp-jest": "^1.0.0",
     "gulp-load-plugins": "1.5.0",
     "gulp-real-favicon": "0.2.2",
     "gulp-rename": "1.2.2",
@@ -56,6 +57,7 @@
     "gulp-util": "3.0.8",
     "gulp-wrap": "0.13.0",
     "jest": "^19.0.2",
+    "jest-cli": "^19.0.2",
     "jsdom": "9.12.0",
     "jsdom-global": "2.1.1",
     "jspm": "0.17.0-beta.23",
@@ -70,11 +72,13 @@
   "jest": {
     "moduleNameMapper": {
       "^~/(.*)": "<rootDir>/dev/app/$1",
-      "superb": "<rootDir>/jspm_packages/npm/superb.js@0.2.15/dist/superb.js",
+      "superb": "<rootDir>/jspm_packages/npm/superb.js@0.2.13/dist/superb.js",
       "settings": "<rootDir>/dev/settings",
       "fetch": "<rootDir>/jspm_packages/npm/whatwg-fetch@1.1.1/fetch.js"
     },
-    "setupFiles": ["<rootDir>/test/setupFile.js"]
+    "setupFiles": [
+      "<rootDir>/test/setupFile.js"
+    ]
   },
   "jspm": {
     "main": "src/app/main.js",
@@ -94,6 +98,7 @@
     },
     "devDependencies": {
       "console": "github:jspm/nodelibs-console@^0.2.0-alpha",
+      "element-dataset": "npm:element-dataset@^2.2.5",
       "jest": "npm:jest@^19.0.2",
       "punycode": "github:jspm/nodelibs-punycode@^0.2.0-alpha",
       "source-map": "npm:source-map@0.2",
@@ -144,26 +149,6 @@
           "_stream_transform": "readable-stream/transform"
         }
       },
-<<<<<<< HEAD
-      "npm:debug@2.6.3": {
-        "main": "browser.js",
-        "jspmNodeConversion": false,
-        "format": "cjs",
-        "map": {
-          "./browser.js": {
-            "node": "./node.js"
-          },
-          "./node.js": {
-            "browser": "./browser.js"
-          },
-          "fs": "@node/fs",
-          "net": "@node/net",
-          "tty": "@node/tty",
-          "util": "@node/util"
-        }
-      },
-=======
->>>>>>> Passes about tests
       "npm:debug@2.6.3": {
         "main": "browser.js",
         "jspmNodeConversion": false,
@@ -189,23 +174,12 @@
           "test.js"
         ]
       },
-<<<<<<< HEAD
-      "npm:ms@0.7.2": {
-=======
       "npm:lodash@4.17.4": {
         "map": {
           "buffer": "@empty",
           "process": "@empty"
         }
       },
-<<<<<<< HEAD
-      "npm:ms@0.7.1": {
->>>>>>> Passes 404 test
-        "jspmNodeConversion": false,
-        "format": "cjs"
-      },
-=======
->>>>>>> Passes about tests
       "npm:ms@0.7.2": {
         "jspmNodeConversion": false,
         "format": "cjs"

@@ -175,7 +175,8 @@ $.insertHtml = (containerEl, model) => {
     if (containerEl) {
         for (const htmlEl of containerEl.querySelectorAll('[data-html]')) {
             /* eslint no-eval: 0 */
-            const expr = `model.${htmlEl.dataset.html}`;
+            const html = htmlEl.dataset ? htmlEl.dataset.html : htmlEl.getAttribute('data-html');
+            const expr = `model.${html}`;
 
             try {
                 htmlEl.innerHTML = eval(expr) || '';

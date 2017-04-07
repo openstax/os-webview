@@ -8,7 +8,8 @@ SystemJS.config({
     "source-map": "npm:source-map@0.2.0",
     "uglify-js": "npm:uglify-js@2.8.21",
     "punycode": "github:jspm/nodelibs-punycode@0.2.0-alpha",
-    "uglify-to-browserify": "npm:uglify-to-browserify@1.0.2"
+    "uglify-to-browserify": "npm:uglify-to-browserify@1.0.2",
+    "element-dataset": "npm:element-dataset@2.2.5"
   },
   packages: {
     "npm:jest@19.0.2": {
@@ -965,6 +966,11 @@ SystemJS.config({
       "map": {
         "webidl-conversions": "npm:webidl-conversions@3.0.1",
         "tr46": "npm:tr46@0.0.3"
+      }
+    },
+    "npm:element-dataset@2.2.5": {
+      "map": {
+        "babel-runtime": "npm:babel-runtime@6.23.0"
       }
     }
   }
