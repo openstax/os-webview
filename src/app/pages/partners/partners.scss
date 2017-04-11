@@ -17,7 +17,6 @@ $text-dark2: rgba(0, 0, 0, 0.7);
         @include desktop {
             align-items: center;
         }
-
     }
 
     .hero {
@@ -99,15 +98,6 @@ $text-dark2: rgba(0, 0, 0, 0.7);
                 max-width: 14rem;
             }
         }
-    }
-
-    .strips {
-        left: 0;
-        margin-bottom: 0;
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 100%;
     }
 
     .divider {

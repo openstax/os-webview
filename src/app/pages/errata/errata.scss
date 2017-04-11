@@ -72,19 +72,6 @@ $bar-size: 0.2rem;
 
     .strips-and-filter {
         margin-bottom: 8rem;
-        position: relative;
-
-        .filter-buttons {
-            margin: 0;
-
-            @include tablet {
-                margin: 0 1.5rem;
-            }
-
-            @include phone {
-                margin: 0 1.5rem;
-            }
-        }
     }
 
     .body-block {
