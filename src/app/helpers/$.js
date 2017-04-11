@@ -173,6 +173,7 @@ $.htmlToText = (html) => {
     return temp.textContent;
 };
 
+/* eslint complexity: 0 */
 $.insertHtml = (containerEl, model) => {
     if (containerEl) {
         for (const htmlEl of containerEl.querySelectorAll('[data-html]')) {
@@ -188,6 +189,7 @@ $.insertHtml = (containerEl, model) => {
         }
     }
 };
+/* eslint complexity: 1 */
 
 $.parseSearchString = (searchString) => {
     const result = {};
