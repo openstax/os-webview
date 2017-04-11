@@ -16,9 +16,21 @@ class Analytics {
     }
 
     send(fields) {
-        SystemJS.import('ga').then(() => {
-            window.ga('send', fields);
-        });
+        try {
+            SystemJS.import('ga')
+            .then(
+                () => {
+                    window.ga('send', fields);
+                },
+                () => {
+                    console.warn('GA FAILED TO IMPORT');
+                }
+            ).catch((e) => {
+                console.warn('Caught trying to import ga:', e);
+            });
+        } catch (e) {
+            console.warn('Caught SYSTEM JS nonsense', e);
+        }
     }
 
     sendPageview(page) {
