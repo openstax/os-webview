@@ -6,12 +6,21 @@ $lightest-gray: #fafafa;
 $text-black: rgba(0, 0, 0, 0.87);
 $text-black3: rgba(0, 0, 0, 0.54);
 
+.strips-and-filter {
+    position: relative;
+    width: 100%;
+
+    .strips {
+        margin-bottom: 0;
+    }
+}
+
 .filter {
     color: color(gray);
     left: 50%;
     max-width: 70rem;
     position: absolute;
-    transform: translate(-50%, -140%);
+    transform: translate(-50%, -2.8rem);
     width: 100%;
     z-index: 1;
 

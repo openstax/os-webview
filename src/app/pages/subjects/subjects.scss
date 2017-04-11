@@ -66,11 +66,10 @@
 
     .filter {
         padding: 0.2rem 0;
-        width: 100%;
 
         &.sticky {
             position: fixed;
-            top: 6rem;
+            top: 9rem;
 
             @include desktop {
                 position: static;
@@ -106,14 +105,6 @@
         background-color: lighten(color(neutral-lighter), 8%);
         padding: 8rem 0;
         position: relative;
-
-        .strips {
-            left: 0;
-            margin-bottom: 0;
-            position: absolute;
-            right: 0;
-            top: 0;
-        }
 
         .book-category {
             flex: 1 1 auto;
