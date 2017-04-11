@@ -6,6 +6,8 @@ $.isTouchDevice = () => (
     (navigator.msMaxTouchPoints > 0)
 );
 
+$.isNode = () => (typeof process !== 'undefined') && (process.release.name === 'node');
+
 $.browserId = () => {
     const ua = navigator.userAgent;
     let M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];

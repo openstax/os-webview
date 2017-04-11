@@ -31,10 +31,12 @@ export default class Subjects extends CMSPageController {
 
         shell.showLoader();
 
-        router.replaceState({
-            filter: this.categoryFromPath(),
-            path: pagePath
-        });
+        if (!$.isNode()) {
+            router.replaceState({
+                filter: this.categoryFromPath(),
+                path: pagePath
+            });
+        }
         this.filterSubjectsEvent = () => {
             const category = history.state.filter;
 
