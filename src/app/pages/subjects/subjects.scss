@@ -72,7 +72,8 @@
             top: 9rem;
 
             @include desktop {
-                position: static;
+                position: absolute;
+                top: inherit;
             }
         }
     }
