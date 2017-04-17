@@ -52,14 +52,18 @@ export default class Subjects extends CMSPageController {
 
     filterSubjects(category) {
         const path = category === 'view-all' ? pagePath : `${pagePath}/${category}`;
-        const yTarget = history.state.y;
 
-        router.navigate(path, {
-            filter: category,
-            path: pagePath
-        });
-        window.scrollTo(0, yTarget);
         this.bookViewer.filterSubjects(category);
+
+        if (!$.isNode()) {
+            const yTarget = history.state.y;
+
+            router.navigate(path, {
+                filter: category,
+                path: pagePath
+            });
+            window.scrollTo(0, yTarget);
+        }
     }
 
     onDataLoaded() {
