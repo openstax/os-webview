@@ -65,12 +65,12 @@ export default class HigherEd extends CMSPageController {
 
         this.model.loaded = 'loaded';
         this.update();
+        $.insertHtml(this.el, this.model);
 
         this.regions.quotes.attach(new Quotes(this.model.row_1));
         this.regions.products.attach(new ProductsBoxes(this.model.row_2));
         this.regions.buckets.attach(new Buckets(this.model.row_3));
 
-        $.insertHtml(this.el, this.model);
         shell.hideLoader();
     }
 
