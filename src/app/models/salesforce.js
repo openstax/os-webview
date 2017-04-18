@@ -1,5 +1,5 @@
-export const adoptionName = '[name="00NU00000055spw"]';
-export const adoptionOptions = [{
+const adoptionName = '[name="00NU00000055spw"]';
+const adoptionOptions = [{
     key: 'adopted',
     value: 'Confirmed Adoption Won',
     text: 'Fully adopted and using it as our main text.',
@@ -24,7 +24,7 @@ export const adoptionOptions = [{
     qtext: 'No, I\'m not using OpenStax in my courses yet'
 }];
 
-export function adoption(options) {
+function adoption(options) {
     return adoptionOptions.filter((option) => options.includes(option.key));
 }
 

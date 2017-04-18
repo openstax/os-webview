@@ -1,0 +1,47 @@
+<template args="model">
+    <iframe name="form-response" id="form-response" src="" width="0" height="0"></iframe>
+    <form accept-charset="UTF-8" action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8"
+     target="form-response" class="new_adoption_interest form" method="post">
+        <div>
+            <input type="hidden" name="oid" value="00DU0000000Kwch">
+            <input type="hidden" name="lead_source" value="OS Interest Form">
+            <input type="hidden" name="00NU00000055spw" value="High Interest in Adopting">
+            <input type="hidden" name="Role__c" value="{model.userRole}">
+        </div>
+        <div class="text-content">
+            <component data-id="contactInfo" skip="true"></component>
+        </div>
+
+        <div class="wrapper">
+            <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
+            <div class="text-content labeled-inputs row book-info">
+
+                <div class="col">
+                    <component data-id="whichBook" skip="true"></component>
+                    <component data-id="howMany" skip="true"></component>
+                    <component data-id="partnerContact" skip="true"></component>
+                </div>
+
+                <div class="col">
+
+                    <component data-id="hearAbout" skip="true"></component>
+
+                    <label id="other-source" class="hidden">
+                        Other:
+                        <input name="00NU00000055spr" type="text"
+                        placeholder="Heard about us some other way?">
+                    </label>
+
+                    <label>
+                        Do you have any feedback you'd like to share with us?
+                        <textarea cols="50" name="00NU00000056Rls" rows="4"></textarea>
+                    </label>
+
+                    <div class="cta">
+                        <input name="commit" class="btn" type="submit" value="Submit" role="button" aria-disabled="false">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</template>

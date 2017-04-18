@@ -74,7 +74,24 @@ export default class ContactInfo extends Controller {
         }
     }
 
+    updateSchoolUrlModel() {
+        const schoolUrlComponent = this.components.find((c) => c.id === 'schoolUrl');
+
+        if (schoolUrlComponent) {
+            const schoolUrlModel = schoolUrlComponent.component.model;
+            const isHomeSchool = this.model.selectedRole === 'Homeschool Instructor';
+
+            schoolUrlModel.required = !isHomeSchool;
+            if (schoolUrlModel.value === 'http://' && isHomeSchool) {
+                schoolUrlModel.value = '';
+            } else if (schoolUrlModel.value === '' && !isHomeSchool) {
+                schoolUrlModel.value = 'http://';
+            }
+        }
+    }
+
     onUpdate() {
+        this.updateSchoolUrlModel();
         for (const c of this.components) {
             c.update();
         }

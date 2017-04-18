@@ -1,7 +1,33 @@
 @import 'variables';
+@import 'mixins';
 
 .interest-form {
     .top-of-form {
         padding-top: inherit;
+    }
+
+    .cta {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0 1.5rem 4rem;
+        width: 100%;
+    }
+
+    [data-id="selectedRole"] {
+        display: flex;
+        justify-content: center;
+        margin: auto;
+        max-width: 50rem;
+        padding: 0 1.5rem;
+
+        > label {
+            flex-basis: 100%;
+        }
+    }
+
+    [data-id="form"]:empty {
+        display: block;
+        height: 20rem;
     }
 }

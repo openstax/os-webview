@@ -90,12 +90,14 @@ export default class Select extends Controller {
         this.model = {
             open: false,
             select: this.select,
+            placeholder: this.select.getAttribute('placeholder'),
             selected: Select[CONVERT_OPTIONS](this.select.querySelectorAll('option[selected]'))
         };
         this.updateOptions();
         this.updateSelectElement();
         if (this.select.required) {
             this.model.noneMessage = 'Please select...';
+            this.isRequired = true;
         } else {
             this.model.noneMessage = 'None';
         }
@@ -108,16 +110,15 @@ export default class Select extends Controller {
 
     updateOptions() {
         this.model.options = this.options = Select[CONVERT_OPTIONS](this.select.options);
+        this.select.value = '';
         this.update();
     }
 
     updateSelectElement() {
         for (const option of Array.from(this.select.options)) {
-            if (this.model.selected.get(option.value) !== null) {
-                option.selected = true;
-            } else {
-                option.selected = false;
-            }
+            const selectedness = this.model.selected.get(option.value);
+
+            option.selected = selectedness || selectedness === '';
         }
 
         if (this.model.selected.size === 0) {
@@ -129,6 +130,8 @@ export default class Select extends Controller {
         if (typeof window.Event === 'function') {
             event = new Event('change', {bubbles: true});
         } else {
+            // Work around IE which shows invalid even when selections are made
+            this.select.required = this.isRequired && this.model.selected.size === 0;
             event = document.createEvent('Event');
             event.initEvent('change', true, true);
         }

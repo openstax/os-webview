@@ -1,0 +1,23 @@
+<template args="model">
+    <component data-id="popup" skip="true"></component>
+    <form action="{model.postUrl}" method="post" class="text-content">
+        <div class="row">
+            <div class="col">
+                <component data-id="firstName" skip="true"></component>
+                <component data-id="lastName" skip="true"></component>
+            </div>
+            <div class="col">
+                <component data-id="email" skip="true"></component>
+                <component data-id="school" skip="true"></component>
+            </div>
+        </div>
+        <div class="cta">
+            <label>
+                <input type="checkbox" name="email_updates" value="0" checked />
+                <input if="!model.isChecked" type="hidden" name="email_updates" value="1" />
+                Receive email updates from OpenStax.
+            </label>
+            <input name="commit" class="btn" type="submit" value="Submit" role="button" />
+        </div>
+    </form>
+</template>
