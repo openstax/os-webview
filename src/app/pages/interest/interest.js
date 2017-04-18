@@ -36,6 +36,8 @@ export default class InterestForm extends Controller {
 
     onLoaded() {
         document.title = 'Interest Form - OpenStax';
+        // Pardot tracking
+        piTracker(window.location.href.split('#')[0]);
         headerInfoPromise.then((response) => {
             this.model.introHeading = response.intro_heading;
             this.model.introDescription = response.intro_description;
