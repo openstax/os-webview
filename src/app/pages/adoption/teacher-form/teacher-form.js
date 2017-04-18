@@ -19,6 +19,7 @@ export default class TeacherForm extends SalesforceForm {
         this.regions = {
             contactInfo: '[data-id="contactInfo"]'
         };
+        this.defaultTitle = window.location.search.substr(1);
         const validationMessage = (name) => {
             const field = this.el && this.el.querySelector(`[name="${name}"]`);
 
@@ -121,7 +122,7 @@ export default class TeacherForm extends SalesforceForm {
         const options = this.salesforceTitles.map((title) => ({
             label: title.text,
             value: title.value,
-            selected: this.model.defaultTitle === title.value
+            selected: this.defaultTitle === title.value
         }));
 
         bookComponent.component.setOptions(options);
