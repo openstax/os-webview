@@ -38,7 +38,7 @@
         </li>
         <li class="nav-menu-item login{model.user.username ? ' dropdown' : ''}">
             <if condition="!model.user.username">
-                <a href="{model.login}" data-set-redirect="true" data-local="true" role="menuitem">Login</a>
+                <a href="{model.login}" class="pardotTrackClick" data-set-redirect="true" data-local="true" role="menuitem">Login</a>
             <else>
                 <a href="{model.accountLink}" role="menuitem">
                     Hi {model.user.first_name || model.user.username}
