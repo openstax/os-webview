@@ -110,7 +110,7 @@ export default class Select extends Controller {
 
     updateOptions() {
         this.model.options = this.options = Select[CONVERT_OPTIONS](this.select.options);
-        this.select.value = '';
+        this.model.selected = Select[CONVERT_OPTIONS](this.select.querySelectorAll('option[selected]'));
         this.update();
     }
 
