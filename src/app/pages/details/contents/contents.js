@@ -10,7 +10,7 @@ function isUnit(entry) {
 }
 
 function isPreface(entry) {
-    return entry.title.match(/^(?:Preface|Introduction(?!:)|Connection for AP)/);
+    return entry.title.match(/^(?:Preface|Introduction(?!:)|Connection for AP|Thinking Ahead$)/);
 }
 
 export default class Contents extends Controller {
