@@ -34,6 +34,7 @@ export default class Detail extends Controller {
         }
         this.model = {
             detail,
+            mailBody: encodeURIComponent(`I have a question about my errata submission ${window.location.href}`),
             detailDataPairs: [
                 ['Submission ID', 'id'], ['Title', 'bookTitle'], ['Source', 'source'],
                 ['Status', 'displayStatus'],
