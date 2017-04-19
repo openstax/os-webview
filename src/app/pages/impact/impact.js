@@ -1,5 +1,6 @@
 import CMSPageController from '~/controllers/cms';
 import shell from '~/components/shell/shell';
+import $ from '~/helpers/$';
 import {description as template} from './impact.html';
 
 export default class Impact extends CMSPageController {
@@ -24,6 +25,7 @@ export default class Impact extends CMSPageController {
         this.model = this.pageData;
         this.update();
         shell.hideLoader();
+        $.insertHtml(this.el, this.model);
     }
 
 }
