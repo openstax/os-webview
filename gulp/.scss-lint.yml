@@ -18,7 +18,7 @@ linters:
         style: include_zero
 
     NestingDepth:
-        max_depth: 5
+        max_depth: 6
         ignore_parent_selectors: true
 
     PropertyUnits:

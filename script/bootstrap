@@ -1,2 +1,24 @@
-#!/bin/sh
-npm install
+#!/bin/bash
+
+set -e
+
+# Set up the correct version of node
+if [[ ! "${CI}" = "true" ]] # Skip the nvm stuff if running in Travis
+then
+  >&2 echo "==> Setting up node version"
+  if [[ -f ~/.nvm/nvm.sh ]]
+  then
+    source ~/.nvm/nvm.sh
+    nvm use
+  else
+    >&2 echo "Skipping the node version setup because nvm does not appear to be installed."
+    >&2 echo "See https://github.com/creationix/nvm for install instructions."
+    >&2 echo "Using node: $(node --version)"
+    >&2 echo "Using npm: $(npm --version)"
+  fi
+
+fi
+
+# Set up the correct version of ruby
+
+# Install system dependencies

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+source ./script/bootstrap || exit 1
+
+npm test || exit 2

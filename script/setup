@@ -1,0 +1,6 @@
+#!/bin/bash
+
+source ./script/bootstrap || exit 1
+
+>&2 echo "==> Installing node packages"
+npm install || exit 2
