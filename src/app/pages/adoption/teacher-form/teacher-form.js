@@ -19,7 +19,7 @@ export default class TeacherForm extends SalesforceForm {
         this.regions = {
             contactInfo: '[data-id="contactInfo"]'
         };
-        this.defaultTitle = window.location.search.substr(1);
+        this.defaultTitle = decodeURIComponent(window.location.search.substr(1));
         const validationMessage = (name) => {
             const field = this.el && this.el.querySelector(`[name="${name}"]`);
 
