@@ -12,7 +12,7 @@ const studentModel = {
     headline: 'Help Us Make More Free Books!',
     subhead: `Like having a textbook for free? Your donation helps us provide access
     to free textbooks for more students like you.`,
-    amounts: [5, 10, 15, 25, 50, 100]
+    amounts: [10, 15, 25, 50, 100]
 };
 
 const thankYouModel = {
@@ -37,7 +37,7 @@ export default class Give extends CMSPageController {
             subhead: '',
             paymentMethods: [],
             thankYouUrl: `${settings.apiOrigin}/give-confirmation`,
-            amounts: [5, 25, 50, 100, 500, 1000],
+            amounts: [10, 25, 50, 100, 500, 1000],
             page2: history.state && (history.state.page === 2),
             validationMessage: (name) => {
                 const el = this.el.querySelector(`[name="${name}"]`);
@@ -151,7 +151,7 @@ export default class Give extends CMSPageController {
     onLoaded() {
         document.title = this.model.amounts ? 'Give - OpenStax' : 'Thanks - OpenStax';
         if (this.model.amounts) {
-            const amount = history.state && history.state.amount || 5;
+            const amount = history.state && history.state.amount || 10;
 
             this.setAmount(amount);
         }
