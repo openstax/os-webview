@@ -71,9 +71,9 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "^~/(.*)": "<rootDir>/dev/app/$1",
+      "^~/(.*)": "<rootDir>/dist/app/$1",
       "superb": "<rootDir>/jspm_packages/npm/superb.js@0.2.13/dist/superb.js",
-      "settings": "<rootDir>/dev/settings",
+      "settings": "<rootDir>/dist/settings",
       "fetch": "<rootDir>/jspm_packages/npm/whatwg-fetch@1.1.1/fetch.js"
     },
     "setupFiles": [
