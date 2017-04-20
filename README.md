@@ -13,10 +13,7 @@
 
 ## Requirements
 
-* Node.js v5.11+
 * Ruby v2.2.3+
-* Gulp v4.0.0-alpha.2+
-* JSPM v0.17.0-beta.22+
 * SCSS-Lint v0.48.0+ (for testing)
 
 ## Installation
@@ -25,19 +22,7 @@ All Mac installation instructions assume you already have [Homebrew](http://brew
 
 ### Install Node.js
 
-#### Mac OS X
-
-```bash
-brew install node
-```
-
-#### Debian / Ubuntu
-
-```bash
-curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-sudo apt-get install -y nodejs build-essential
-sudo ln -s /usr/bin/nodejs /usr/bin/node
-```
+See https://github.com/creationix/nvm
 
 ### Install Ruby
 

@@ -2,9 +2,9 @@ language: node_js
 before_install:
   - rvm install 2.3.1
   - gem install scss_lint
-  - npm install -g jspm # This is only here so the autho token can be provided
-  - jspm config registries.github.auth $JSPM_GITHUB_AUTH_TOKEN
 sudo: false
+notifications:
+  email: false
 env:
   global:
     - CXX=g++-4.8

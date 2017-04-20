@@ -5,7 +5,6 @@
   "scripts": {
     "start": "gulp dev",
     "build": "gulp",
-    "prepublish": "jspm install",
     "upgrade": "jspm update",
     "test": "gulp dev-build && nyc --reporter=text ava --serial ./test/src/*/*.js && ./script/postprocess-coverage && nyc report --reporter=html --reporter=json --reporter=text"
   },

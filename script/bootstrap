@@ -9,7 +9,7 @@ then
   if [[ -f ~/.nvm/nvm.sh ]]
   then
     source ~/.nvm/nvm.sh
-    nvm install
+    nvm install $(< .nvmrc)
   else
     >&2 echo "Skipping the node version setup because nvm does not appear to be installed."
     >&2 echo "See https://github.com/creationix/nvm for install instructions."
