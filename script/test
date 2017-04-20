@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [[ ! -f "./jspm_packages/system.js" ]]; then
+  >&2 echo "It looks like you forgot to run ./script/setup first."
+  exit 2
+fi
+
+source ./script/bootstrap || exit 1
+
+npm test || exit 3

@@ -13,31 +13,12 @@
 
 ## Requirements
 
-* Node.js v5.11+
-* Ruby v2.2.3+
-* Gulp v4.0.0-alpha.2+
-* JSPM v0.17.0-beta.22+
-* SCSS-Lint v0.48.0+ (for testing)
+* [nvm](https://github.com/creationix/nvm)
+* [rbenv](https://github.com/rbenv/rbenv)
 
 ## Installation
 
 All Mac installation instructions assume you already have [Homebrew](http://brew.sh) installed.
-
-### Install Node.js
-
-#### Mac OS X
-
-```bash
-brew install node
-```
-
-#### Debian / Ubuntu
-
-```bash
-curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-sudo apt-get install -y nodejs build-essential
-sudo ln -s /usr/bin/nodejs /usr/bin/node
-```
 
 ### Install Ruby
 
@@ -104,8 +85,7 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.1/install.sh | b
 ```bash
 git clone git@github.com:openstax/os-webview.git
 cd os-webview
-nvm use         # uses the correct version of node
-npm install
+./script/setup
 ```
 
 **Note:** If you have not previously used JSPM, you may be prompted to set up your GitHub credentials.  It is recommended you do this in order to prevent being rate limited by GitHub.  You can [generate an access token](https://github.com/settings/tokens) in your GitHub account settings for JSPM, rather than providing your login credentials.
@@ -117,29 +97,29 @@ If you are not prompted, you can manually bring it up with `jspm registry config
 To build the site for development and load it in your default web browser with [BrowserSync](http://www.browsersync.io), simply run:
 
 ```bash
-gulp dev
+./script/server
 ```
 
 That will create a new `dev` directory from which the site is served.  Changes should be made to files in the `src` directory.  Gulp will automatically watch for changes in `src`, perform any compilation and transpilation necessary, and update the result in `dev`.
 
-You can also run individual tasks.  Enter `gulp --tasks` to see the full list.
+You can also run individual tasks.  Enter `$(npm bin)/gulp --tasks` to see the full list.
 
 ## Testing
 
 To run the linters and unit tests locally, enter:
 
 ```bash
-gulp test
+./script/test
 ```
 
-You can also just run the linters (`gulp lint`) or unit tests (`gulp ava`) individually without rebuilding.
+You can also just run the linters (`$(npm bin)/gulp lint`) or unit tests (`$(npm bin)/gulp ava`) individually without rebuilding.
 
 **Note:** The unit tests require the dev build to be built (in the `dev` directory).
 
 ## Build for Production
 
 ```bash
-gulp
+./script/build
 ```
 
 You must configure your web server to host the files in the `dist` directory that gets created.  No special configuration is required, although it is highly recommended to serve the site using HTTP/2.

@@ -4,3 +4,8 @@ node_modules/
 /dist/
 .nyc_output/
 coverage/
+
+# rbenv directories
+/vendor/
+.bundle/config
+/Gemfile.lock
