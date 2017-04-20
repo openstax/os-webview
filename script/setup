@@ -11,4 +11,4 @@ if [[ ${JSPM_GITHUB_AUTH_TOKEN} ]]; then
 fi
 
 >&2 echo "==> Installing JSPM packages"
-$(npm bin)/jspm install || exit 3
+$(npm bin)/jspm --log warn install || exit 3
