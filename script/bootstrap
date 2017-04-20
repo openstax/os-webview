@@ -2,6 +2,11 @@
 
 set -e
 
+# Resolve all dependencies that the application requires to run.
+# From https://github.com/github/scripts-to-rule-them-all/blob/master/script/bootstrap
+# Also from https://github.com/Connexions/cnx-rulesets
+
+
 # Set up the correct version of node
 if [[ ! "${CI}" = "true" ]] # Skip the nvm stuff if running in Travis
 then
@@ -20,5 +25,44 @@ then
 fi
 
 # Set up the correct version of ruby
+
+# Note: Skip rbenv for Travis because it already has ruby
+if [ ! "${CI}" = "true" ] && [ -f ".ruby-version" ]; then
+  if [[ -n $(which rbenv) ]]; then
+
+    if [ -z "$(rbenv version-name 2>/dev/null)" ]; then
+      >&2 echo "==> Installing Ruby…"
+      rbenv install --skip-existing
+    fi
+  else
+    >&2 echo "WARNING: Skipping rbenv. Using local ruby"
+  fi
+
+  # Initialize rbenv (if installed)
+  [[ -n $(which rbenv) ]] && eval "$(rbenv init -)"
+
+  which bundle >/dev/null 2>&1  || {
+    >&2 echo "==> Installing Ruby Bundler gem…"
+    gem install bundler || {
+      >&2 echo ''
+      >&2 echo ''
+      >&2 echo '--------------- Error -------------'
+      >&2 echo 'Problem installing ruby bundler.'
+      exit 1
+    }
+
+    [[ -n $(which rbenv) ]] && rbenv rehash
+
+  }
+fi
+
+if [ -f "Gemfile" ]; then
+  >&2 echo "==> Installing gem dependencies…"
+  which bundle
+  bundle check --path vendor/gems >/dev/null 2>&1  || {
+    bundle install --path vendor/gems --quiet --without production
+  }
+fi
+
 
 # Install system dependencies

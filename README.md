@@ -13,16 +13,12 @@
 
 ## Requirements
 
-* Ruby v2.2.3+
-* SCSS-Lint v0.48.0+ (for testing)
+* [nvm](https://github.com/creationix/nvm)
+* [rbenv](https://github.com/rbenv/rbenv)
 
 ## Installation
 
 All Mac installation instructions assume you already have [Homebrew](http://brew.sh) installed.
-
-### Install Node.js
-
-See https://github.com/creationix/nvm
 
 ### Install Ruby
 
