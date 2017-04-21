@@ -5,6 +5,6 @@ if [[ ! -f "./jspm_packages/system.js" ]]; then
   exit 2
 fi
 
-source ./script/build || exit 1
+source ./script/bootstrap || exit 1
 
 npm test || exit 3
