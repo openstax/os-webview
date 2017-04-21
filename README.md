@@ -112,7 +112,7 @@ To run the linters and unit tests locally, enter:
 ./script/test
 ```
 
-You can also just run the linters (`$(npm bin)/gulp lint`) or unit tests (`$(npm bin)/gulp ava`) individually without rebuilding.
+You can also just run the linters (`$(npm bin)/gulp lint`) individually without rebuilding.
 
 **Note:** The unit tests require the dev build to be built (in the `dev` directory).
 
