@@ -6,6 +6,7 @@
     "start": "gulp dev",
     "build": "gulp",
     "upgrade": "jspm update",
+    "pretest": "npm run-script build",
     "test": "jest --coverage ./test/src/*/*.js"
   },
   "repository": {
