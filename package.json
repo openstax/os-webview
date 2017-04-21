@@ -7,7 +7,7 @@
     "build": "gulp",
     "upgrade": "jspm update",
     "avatest": "gulp dev-build && nyc --reporter=text ava --serial ./test/src/*/*.js && ./script/postprocess-coverage && nyc report --reporter=html --reporter=json --reporter=text",
-    "test": "jest ./test/src/*/*.js"
+    "test": "jest --coverage ./test/src/*/*.js"
   },
   "repository": {
     "type": "git",
