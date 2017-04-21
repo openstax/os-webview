@@ -6,7 +6,8 @@
     "start": "gulp dev",
     "build": "gulp",
     "upgrade": "jspm update",
-    "test": "gulp dev-build && nyc --reporter=text ava --serial ./test/src/*/*.js && ./script/postprocess-coverage && nyc report --reporter=html --reporter=json --reporter=text"
+    "pretest": "npm run-script build",
+    "test": "jest --coverage ./test/src/*/*.js"
   },
   "repository": {
     "type": "git",
@@ -15,8 +16,8 @@
   "license": "AGPL-3.0",
   "dependencies": {},
   "devDependencies": {
-    "ava": "^0.19.1",
     "babel-eslint": "7.2.1",
+    "babel-jest": "19.0.0",
     "babel-plugin-transform-async-to-generator": "6.24.1",
     "babel-plugin-transform-class-properties": "6.24.1",
     "babel-plugin-transform-decorators": "6.24.1",
@@ -31,7 +32,6 @@
     "find-pkg": "0.1.2",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-autoprefixer": "3.1.1",
-    "gulp-ava": "0.16.0",
     "gulp-babel": "6.1.2",
     "gulp-cli": "^1.2.2",
     "gulp-clip-empty-files": "0.1.2",
@@ -42,6 +42,7 @@
     "gulp-humans": "2.0.2",
     "gulp-if": "2.0.2",
     "gulp-imagemin": "3.2.0",
+    "gulp-jest": "^1.0.0",
     "gulp-load-plugins": "1.5.0",
     "gulp-real-favicon": "0.2.2",
     "gulp-rename": "1.2.2",
@@ -53,14 +54,28 @@
     "gulp-uglify": "2.1.2",
     "gulp-util": "3.0.8",
     "gulp-wrap": "0.13.0",
+    "jest": "19.0.2",
+    "jest-cli": "19.0.2",
     "jsdom": "9.12.0",
     "jsdom-global": "2.1.1",
     "jspm": "0.17.0-beta.23",
-    "nyc": "^10.0.0",
+    "regenerator-runtime": "^0.10.3",
     "require-dir": "0.3.1",
     "sw-precache": "5.1.0",
     "systemjs-builder": "0.16.4",
+    "systemjs-jest": "^1.0.0",
     "yargs": "7.0.2"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^~/(.*)": "<rootDir>/dist/app/$1",
+      "superb": "<rootDir>/jspm_packages/npm/superb.js@0.2.13/dist/superb.js",
+      "settings": "<rootDir>/dist/settings",
+      "fetch": "<rootDir>/jspm_packages/npm/whatwg-fetch@1.1.1/fetch.js"
+    },
+    "setupFiles": [
+      "<rootDir>/test/setupFile.js"
+    ]
   },
   "jspm": {
     "main": "src/app/main.js",
@@ -78,11 +93,19 @@
       "recordo": "npm:recordo@0.0.6",
       "superb": "npm:superb.js@^0.2.7"
     },
-    "devDependencies": {},
+    "devDependencies": {
+      "console": "github:jspm/nodelibs-console@^0.2.0-alpha",
+      "element-dataset": "npm:element-dataset@^2.2.5",
+      "jest": "npm:jest@^19.0.2",
+      "punycode": "github:jspm/nodelibs-punycode@^0.2.0-alpha",
+      "source-map": "npm:source-map@0.2",
+      "uglify-js": "npm:uglify-js@^2.6",
+      "uglify-to-browserify": "npm:uglify-to-browserify@1.0"
+    },
     "peerDependencies": {
       "assert": "github:jspm/nodelibs-assert@^0.2.0-alpha",
       "bcrypt-pbkdf": "npm:bcrypt-pbkdf@^1.0.0",
-      "buffer": "github:jspm/nodelibs-buffer@0.2.0-alpha",
+      "buffer": "github:jspm/nodelibs-buffer@^0.2.0-alpha",
       "child_process": "github:jspm/nodelibs-child_process@^0.2.0-alpha",
       "constants": "github:jspm/nodelibs-constants@^0.2.0-alpha",
       "crypto": "github:jspm/nodelibs-crypto@^0.2.0-alpha",
@@ -90,7 +113,7 @@
       "dns": "github:jspm/nodelibs-dns@^0.2.0-alpha",
       "ecc-jsbn": "npm:ecc-jsbn@~0.1.1",
       "events": "github:jspm/nodelibs-events@^0.2.0-alpha",
-      "fs": "github:jspm/nodelibs-fs@0.2.0-alpha",
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha",
       "fsevents": "npm:fsevents@^1.0.0",
       "http": "github:jspm/nodelibs-http@^0.2.0-alpha",
       "https": "github:jspm/nodelibs-https@^0.2.0-alpha",
@@ -100,7 +123,7 @@
       "module": "github:jspm/nodelibs-module@^0.2.0-alpha",
       "net": "github:jspm/nodelibs-net@^0.2.0-alpha",
       "os": "github:jspm/nodelibs-os@^0.2.0-alpha",
-      "path": "github:jspm/nodelibs-path@0.2.0-alpha",
+      "path": "github:jspm/nodelibs-path@^0.2.0-alpha",
       "process": "github:jspm/nodelibs-process@^0.2.0-alpha",
       "querystring": "github:jspm/nodelibs-querystring@^0.2.0-alpha",
       "stream": "github:jspm/nodelibs-stream@^0.2.0-alpha",
@@ -140,10 +163,19 @@
           "util": "@node/util"
         }
       },
+      "npm:esprima@2.7.3": {
+        "jspmNodeConversion": false
+      },
       "npm:inherits@2.0.3": {
         "ignore": [
           "test.js"
         ]
+      },
+      "npm:lodash@4.17.4": {
+        "map": {
+          "buffer": "@empty",
+          "process": "@empty"
+        }
       },
       "npm:ms@0.7.2": {
         "jspmNodeConversion": false,
@@ -165,13 +197,6 @@
         }
       }
     }
-  },
-  "ava": {
-    "require": [
-      "./test/helpers/jspm_loader",
-      "./test/helpers/setup-browser-env.js"
-    ],
-    "verbose": true
   },
   "engines": {
     "node": ">=6.2"

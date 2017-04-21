@@ -35,7 +35,8 @@ export default class RadioPanel extends Controller {
 
     @on('click .filter-button')
     setCategory(event) {
-        const newValue = event.target.dataset.value;
+        const target = event.target;
+        const newValue = target.dataset ? target.dataset.value : target.getAttribute('data-value');
 
         if (newValue !== this.selectedValue) {
             this.active = false;

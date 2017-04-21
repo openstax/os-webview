@@ -209,6 +209,13 @@ SystemJS.config({
         "pbkdf2": "npm:pbkdf2@3.0.9"
       }
     },
+    "npm:form-data@2.1.2": {
+      "map": {
+        "combined-stream": "npm:combined-stream@1.0.5",
+        "mime-types": "npm:mime-types@2.1.15",
+        "asynckit": "npm:asynckit@0.4.0"
+      }
+    },
     "npm:stream-browserify@1.0.0": {
       "map": {
         "inherits": "npm:inherits@2.0.3",
@@ -444,21 +451,21 @@ SystemJS.config({
     },
     "npm:babel-polyfill@6.23.0": {
       "map": {
-        "regenerator-runtime": "npm:regenerator-runtime@0.10.3",
         "core-js": "npm:core-js@2.4.1",
+        "regenerator-runtime": "npm:regenerator-runtime@0.10.3",
         "babel-runtime": "npm:babel-runtime@6.23.0"
       }
     },
     "npm:fsevents@1.1.1": {
       "map": {
-        "nan": "npm:nan@2.6.1",
+        "nan": "npm:nan@2.5.1",
         "node-pre-gyp": "npm:node-pre-gyp@0.6.34"
       }
     },
     "npm:babel-runtime@6.23.0": {
       "map": {
-        "core-js": "npm:core-js@2.4.1",
-        "regenerator-runtime": "npm:regenerator-runtime@0.10.3"
+        "regenerator-runtime": "npm:regenerator-runtime@0.10.3",
+        "core-js": "npm:core-js@2.4.1"
       }
     },
     "npm:clipboard@1.6.1": {
@@ -470,15 +477,15 @@ SystemJS.config({
     },
     "npm:node-pre-gyp@0.6.34": {
       "map": {
-        "mkdirp": "npm:mkdirp@0.5.1",
-        "tar": "npm:tar@2.2.1",
-        "tar-pack": "npm:tar-pack@3.4.0",
-        "request": "npm:request@2.81.0",
-        "rimraf": "npm:rimraf@2.6.1",
         "nopt": "npm:nopt@4.0.1",
+        "tar-pack": "npm:tar-pack@3.4.0",
         "rc": "npm:rc@1.2.1",
-        "semver": "npm:semver@5.3.0",
-        "npmlog": "npm:npmlog@4.0.2"
+        "mkdirp": "npm:mkdirp@0.5.1",
+        "rimraf": "npm:rimraf@2.6.1",
+        "tar": "npm:tar@2.2.1",
+        "npmlog": "npm:npmlog@4.0.2",
+        "request": "npm:request@2.81.0",
+        "semver": "npm:semver@5.3.0"
       }
     },
     "npm:good-listener@1.2.2": {
@@ -488,22 +495,22 @@ SystemJS.config({
     },
     "npm:stream-http@2.7.0": {
       "map": {
-        "readable-stream": "npm:readable-stream@2.2.9",
-        "to-arraybuffer": "npm:to-arraybuffer@1.0.1",
         "builtin-status-codes": "npm:builtin-status-codes@3.0.0",
         "xtend": "npm:xtend@4.0.1",
+        "to-arraybuffer": "npm:to-arraybuffer@1.0.1",
+        "readable-stream": "npm:readable-stream@2.2.6",
         "inherits": "npm:inherits@2.0.3"
       }
     },
     "npm:tar-pack@3.4.0": {
       "map": {
+        "readable-stream": "npm:readable-stream@2.2.6",
         "rimraf": "npm:rimraf@2.6.1",
         "tar": "npm:tar@2.2.1",
-        "readable-stream": "npm:readable-stream@2.2.9",
-        "once": "npm:once@1.4.0",
+        "debug": "npm:debug@2.6.3",
         "fstream": "npm:fstream@1.0.11",
         "fstream-ignore": "npm:fstream-ignore@1.0.5",
-        "debug": "npm:debug@2.6.3",
+        "once": "npm:once@1.4.0",
         "uid-number": "npm:uid-number@0.0.6"
       }
     },
@@ -520,35 +527,35 @@ SystemJS.config({
     },
     "npm:request@2.81.0": {
       "map": {
-        "tunnel-agent": "npm:tunnel-agent@0.6.0",
-        "performance-now": "npm:performance-now@0.2.0",
-        "har-validator": "npm:har-validator@4.2.1",
-        "safe-buffer": "npm:safe-buffer@5.0.1",
-        "qs": "npm:qs@6.4.0",
+        "tough-cookie": "npm:tough-cookie@2.3.2",
         "caseless": "npm:caseless@0.12.0",
+        "har-validator": "npm:har-validator@4.2.1",
+        "qs": "npm:qs@6.4.0",
+        "aws-sign2": "npm:aws-sign2@0.6.0",
         "combined-stream": "npm:combined-stream@1.0.5",
         "extend": "npm:extend@3.0.0",
-        "forever-agent": "npm:forever-agent@0.6.1",
-        "aws-sign2": "npm:aws-sign2@0.6.0",
-        "form-data": "npm:form-data@2.1.4",
-        "hawk": "npm:hawk@3.1.3",
-        "isstream": "npm:isstream@0.1.2",
-        "json-stringify-safe": "npm:json-stringify-safe@5.0.1",
-        "tough-cookie": "npm:tough-cookie@2.3.2",
-        "aws4": "npm:aws4@1.6.0",
-        "is-typedarray": "npm:is-typedarray@1.0.0",
-        "oauth-sign": "npm:oauth-sign@0.8.2",
-        "stringstream": "npm:stringstream@0.0.5",
-        "mime-types": "npm:mime-types@2.1.15",
         "http-signature": "npm:http-signature@1.1.1",
-        "uuid": "npm:uuid@3.0.1"
+        "is-typedarray": "npm:is-typedarray@1.0.0",
+        "json-stringify-safe": "npm:json-stringify-safe@5.0.1",
+        "stringstream": "npm:stringstream@0.0.5",
+        "isstream": "npm:isstream@0.1.2",
+        "mime-types": "npm:mime-types@2.1.15",
+        "uuid": "npm:uuid@3.0.1",
+        "tunnel-agent": "npm:tunnel-agent@0.6.0",
+        "performance-now": "npm:performance-now@0.2.0",
+        "safe-buffer": "npm:safe-buffer@5.0.1",
+        "forever-agent": "npm:forever-agent@0.6.1",
+        "form-data": "npm:form-data@2.1.2",
+        "hawk": "npm:hawk@3.1.3",
+        "aws4": "npm:aws4@1.6.0",
+        "oauth-sign": "npm:oauth-sign@0.8.2"
       }
     },
     "npm:rc@1.2.1": {
       "map": {
+        "ini": "npm:ini@1.3.4",
         "strip-json-comments": "npm:strip-json-comments@2.0.1",
         "deep-extend": "npm:deep-extend@0.4.1",
-        "ini": "npm:ini@1.3.4",
         "minimist": "npm:minimist@1.2.0"
       }
     },
@@ -565,13 +572,13 @@ SystemJS.config({
     },
     "npm:browserify-sign@4.0.4": {
       "map": {
-        "inherits": "npm:inherits@2.0.3",
-        "create-hash": "npm:create-hash@1.1.2",
         "create-hmac": "npm:create-hmac@1.1.4",
-        "parse-asn1": "npm:parse-asn1@5.1.0",
-        "browserify-rsa": "npm:browserify-rsa@4.0.1",
         "elliptic": "npm:elliptic@6.4.0",
-        "bn.js": "npm:bn.js@4.11.6"
+        "inherits": "npm:inherits@2.0.3",
+        "bn.js": "npm:bn.js@4.11.6",
+        "browserify-rsa": "npm:browserify-rsa@4.0.1",
+        "parse-asn1": "npm:parse-asn1@5.1.0",
+        "create-hash": "npm:create-hash@1.1.2"
       }
     },
     "npm:string_decoder@1.0.0": {
@@ -586,29 +593,22 @@ SystemJS.config({
     },
     "npm:fstream@1.0.11": {
       "map": {
-        "mkdirp": "npm:mkdirp@0.5.1",
         "rimraf": "npm:rimraf@2.6.1",
-        "inherits": "npm:inherits@2.0.3",
-        "graceful-fs": "npm:graceful-fs@4.1.11"
-      }
-    },
-    "npm:form-data@2.1.4": {
-      "map": {
-        "combined-stream": "npm:combined-stream@1.0.5",
-        "mime-types": "npm:mime-types@2.1.15",
-        "asynckit": "npm:asynckit@0.4.0"
+        "mkdirp": "npm:mkdirp@0.5.1",
+        "graceful-fs": "npm:graceful-fs@4.1.11",
+        "inherits": "npm:inherits@2.0.3"
       }
     },
     "npm:osenv@0.1.4": {
       "map": {
-        "os-homedir": "npm:os-homedir@1.0.2",
-        "os-tmpdir": "npm:os-tmpdir@1.0.2"
+        "os-tmpdir": "npm:os-tmpdir@1.0.2",
+        "os-homedir": "npm:os-homedir@1.0.2"
       }
     },
     "npm:har-validator@4.2.1": {
       "map": {
         "har-schema": "npm:har-schema@1.0.5",
-        "ajv": "npm:ajv@4.11.6"
+        "ajv": "npm:ajv@4.11.5"
       }
     },
     "npm:debug@2.6.3": {
@@ -624,13 +624,13 @@ SystemJS.config({
     "npm:gauge@2.7.3": {
       "map": {
         "console-control-strings": "npm:console-control-strings@1.1.0",
-        "aproba": "npm:aproba@1.1.1",
-        "wide-align": "npm:wide-align@1.1.0",
-        "strip-ansi": "npm:strip-ansi@3.0.1",
         "string-width": "npm:string-width@1.0.2",
-        "has-unicode": "npm:has-unicode@2.0.1",
         "object-assign": "npm:object-assign@4.1.1",
-        "signal-exit": "npm:signal-exit@3.0.2"
+        "has-unicode": "npm:has-unicode@2.0.1",
+        "signal-exit": "npm:signal-exit@3.0.2",
+        "wide-align": "npm:wide-align@1.1.0",
+        "aproba": "npm:aproba@1.1.1",
+        "strip-ansi": "npm:strip-ansi@3.0.1"
       }
     },
     "npm:parse-asn1@5.1.0": {
@@ -644,27 +644,21 @@ SystemJS.config({
     },
     "npm:elliptic@6.4.0": {
       "map": {
-        "inherits": "npm:inherits@2.0.3",
         "bn.js": "npm:bn.js@4.11.6",
-        "hmac-drbg": "npm:hmac-drbg@1.0.1",
-        "minimalistic-crypto-utils": "npm:minimalistic-crypto-utils@1.0.1",
+        "inherits": "npm:inherits@2.0.3",
         "hash.js": "npm:hash.js@1.0.3",
+        "hmac-drbg": "npm:hmac-drbg@1.0.0",
         "minimalistic-assert": "npm:minimalistic-assert@1.0.0",
+        "minimalistic-crypto-utils": "npm:minimalistic-crypto-utils@1.0.1",
         "brorand": "npm:brorand@1.1.0"
-      }
-    },
-    "npm:ajv@4.11.6": {
-      "map": {
-        "co": "npm:co@4.6.0",
-        "json-stable-stringify": "npm:json-stable-stringify@1.0.1"
       }
     },
     "npm:sshpk@1.11.0": {
       "map": {
         "assert-plus": "npm:assert-plus@1.0.0",
-        "asn1": "npm:asn1@0.2.3",
+        "getpass": "npm:getpass@0.1.6",
         "dashdash": "npm:dashdash@1.14.1",
-        "getpass": "npm:getpass@0.1.6"
+        "asn1": "npm:asn1@0.2.3"
       }
     },
     "npm:jsprim@1.4.0": {
@@ -673,13 +667,6 @@ SystemJS.config({
         "json-schema": "npm:json-schema@0.2.3",
         "extsprintf": "npm:extsprintf@1.0.2",
         "verror": "npm:verror@1.3.6"
-      }
-    },
-    "npm:hmac-drbg@1.0.1": {
-      "map": {
-        "hash.js": "npm:hash.js@1.0.3",
-        "minimalistic-crypto-utils": "npm:minimalistic-crypto-utils@1.0.1",
-        "minimalistic-assert": "npm:minimalistic-assert@1.0.0"
       }
     },
     "npm:json-stable-stringify@1.0.1": {
@@ -691,6 +678,30 @@ SystemJS.config({
       "map": {
         "concat-map": "npm:concat-map@0.0.1",
         "balanced-match": "npm:balanced-match@0.4.2"
+      }
+    },
+    "npm:readable-stream@2.2.6": {
+      "map": {
+        "isarray": "npm:isarray@1.0.0",
+        "inherits": "npm:inherits@2.0.3",
+        "string_decoder": "npm:string_decoder@0.10.31",
+        "buffer-shims": "npm:buffer-shims@1.0.0",
+        "process-nextick-args": "npm:process-nextick-args@1.0.7",
+        "core-util-is": "npm:core-util-is@1.0.2",
+        "util-deprecate": "npm:util-deprecate@1.0.2"
+      }
+    },
+    "npm:hmac-drbg@1.0.0": {
+      "map": {
+        "hash.js": "npm:hash.js@1.0.3",
+        "minimalistic-crypto-utils": "npm:minimalistic-crypto-utils@1.0.1",
+        "minimalistic-assert": "npm:minimalistic-assert@1.0.0"
+      }
+    },
+    "npm:ajv@4.11.5": {
+      "map": {
+        "json-stable-stringify": "npm:json-stable-stringify@1.0.1",
+        "co": "npm:co@4.6.0"
       }
     }
   }

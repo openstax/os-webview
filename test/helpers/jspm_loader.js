@@ -5,9 +5,7 @@ const url = require('url');
 const load = Module._load;
 
 function debug() {
-    if (process.env.AVA_JSPM_LOADER_DEBUG) {
-        console.log.apply(console, arguments);
-    }
+    console.log.apply(console, arguments);
 }
 
 const pjsonLoc = require('find-pkg').sync(process.cwd());

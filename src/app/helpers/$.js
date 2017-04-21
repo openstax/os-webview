@@ -6,6 +6,8 @@ $.isTouchDevice = () => (
     (navigator.msMaxTouchPoints > 0)
 );
 
+$.isNode = () => (typeof process !== 'undefined') && (process.release.name === 'node');
+
 $.browserId = () => {
     const ua = navigator.userAgent;
     let M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
@@ -171,11 +173,13 @@ $.htmlToText = (html) => {
     return temp.textContent;
 };
 
+/* eslint complexity: 0 */
 $.insertHtml = (containerEl, model) => {
     if (containerEl) {
         for (const htmlEl of containerEl.querySelectorAll('[data-html]')) {
             /* eslint no-eval: 0 */
-            const expr = `model.${htmlEl.dataset.html}`;
+            const html = htmlEl.dataset ? htmlEl.dataset.html : htmlEl.getAttribute('data-html');
+            const expr = `model.${html}`;
 
             try {
                 htmlEl.innerHTML = eval(expr) || '';
@@ -185,6 +189,7 @@ $.insertHtml = (containerEl, model) => {
         }
     }
 };
+/* eslint complexity: 1 */
 
 $.parseSearchString = (searchString) => {
     const result = {};

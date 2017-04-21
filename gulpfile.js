@@ -22,6 +22,11 @@ gulp.task('dev-build', gulp.series(
     'default'
 ));
 
+gulp.task('dist-build', gulp.series(
+    'production',
+    'default'
+));
+
 gulp.task('dev', gulp.series(
     'dev-build',
     'watch'
