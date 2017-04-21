@@ -57,8 +57,10 @@
                         Using this book, or interested in adopting it for your
                         course?
                     </p>
-                    <a href="{`/adoption?${model.salesforce_abbreviation}`}" class="btn hide-if-coming-soon">Adopt This Book</a>
-                    <a href="{`/interest?${model.salesforce_abbreviation}`}" class="secondary btn">Sign up for info</a>
+                    <if condition="model.salesforce_abbreviation">
+                        <a href="{`/adoption?${encodeURIComponent(model.salesforce_abbreviation)}`}" class="btn hide-if-coming-soon">Adopt This Book</a>
+                        <a href="{`/interest?${encodeURIComponent(model.salesforce_abbreviation)}`}" class="secondary btn">Sign up for info</a>
+                    </if>
                 </div>
             </div>
             </section>
