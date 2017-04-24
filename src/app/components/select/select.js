@@ -1,4 +1,5 @@
 import {Controller} from 'superb';
+import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './select.html';
 
@@ -86,7 +87,6 @@ export default class Select extends Controller {
             throw new Error('A select component must be given a placeholder element to inject HTML into.');
         }
 
-
         this.model = {
             open: false,
             select: this.select,
@@ -125,17 +125,13 @@ export default class Select extends Controller {
             this.select.selectedIndex = -1;
         }
 
-        let event;
-
-        if (typeof window.Event === 'function') {
-            event = new Event('change', {bubbles: true});
-        } else {
-            // Work around IE which shows invalid even when selections are made
+        // Avoid doing this before setup
+        if (this.model.noneMessage) {
+            // Work around IE and Firefox which do not recognize a selection of None
             this.select.required = this.isRequired && this.model.selected.size === 0;
-            event = document.createEvent('Event');
-            event.initEvent('change', true, true);
+            this.update();
         }
-        this.select.dispatchEvent(event);
+        this.select.dispatchEvent($.newEvent('change'));
     }
 
     onUpdate() {
