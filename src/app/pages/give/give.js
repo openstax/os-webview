@@ -12,7 +12,7 @@ const studentModel = {
     headline: 'Help Us Make More Free Books!',
     subhead: `Like having a textbook for free? Your donation helps us provide access
     to free textbooks for more students like you.`,
-    amounts: [10, 15, 25, 50, 100]
+    amounts: [10, 15, 20, 30, 50, 100]
 };
 
 const thankYouModel = {
