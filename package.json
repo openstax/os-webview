@@ -97,6 +97,7 @@
       "console": "github:jspm/nodelibs-console@^0.2.0-alpha",
       "element-dataset": "npm:element-dataset@^2.2.5",
       "jest": "npm:jest@^19.0.2",
+      "jest-fetch-mock": "npm:jest-fetch-mock@^1.0.8",
       "punycode": "github:jspm/nodelibs-punycode@^0.2.0-alpha",
       "source-map": "npm:source-map@0.2",
       "uglify-js": "npm:uglify-js@^2.6",

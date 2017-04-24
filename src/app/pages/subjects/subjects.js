@@ -31,12 +31,10 @@ export default class Subjects extends CMSPageController {
 
         shell.showLoader();
 
-        if (!$.isNode()) {
-            router.replaceState({
-                filter: this.categoryFromPath(),
-                path: pagePath
-            });
-        }
+        router.replaceState({
+            filter: this.categoryFromPath(),
+            path: pagePath
+        });
         this.filterSubjectsEvent = () => {
             const category = history.state.filter;
 
@@ -55,15 +53,13 @@ export default class Subjects extends CMSPageController {
 
         this.bookViewer.filterSubjects(category);
 
-        if (!$.isNode()) {
-            const yTarget = history.state.y;
+        const yTarget = history.state.y;
 
-            router.navigate(path, {
-                filter: category,
-                path: pagePath
-            });
-            window.scrollTo(0, yTarget);
-        }
+        router.navigate(path, {
+            filter: category,
+            path: pagePath
+        });
+        window.scrollTo(0, yTarget);
     }
 
     onDataLoaded() {

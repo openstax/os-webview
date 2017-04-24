@@ -10,6 +10,7 @@ SystemJS.config({
     "punycode": "github:jspm/nodelibs-punycode@0.2.0-alpha",
     "uglify-to-browserify": "npm:uglify-to-browserify@1.0.2",
     "element-dataset": "npm:element-dataset@2.2.6"
+    "jest-fetch-mock": "npm:jest-fetch-mock@1.0.8"
   },
   packages: {
     "npm:jest@19.0.2": {
@@ -971,6 +972,11 @@ SystemJS.config({
     "npm:source-map-support@0.4.15": {
       "map": {
         "source-map": "npm:source-map@0.5.6"
+      }
+    },
+    "npm:jest-fetch-mock@1.0.8": {
+      "map": {
+        "whatwg-fetch": "npm:whatwg-fetch@1.0.0"
       }
     }
   }

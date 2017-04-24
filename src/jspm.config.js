@@ -49,7 +49,7 @@ SystemJS.config({
     "dns": "github:jspm/nodelibs-dns@0.2.0-alpha",
     "ecc-jsbn": "npm:ecc-jsbn@0.1.1",
     "events": "github:jspm/nodelibs-events@0.2.2",
-    "fetch": "npm:whatwg-fetch@1.1.1",
+    "fetch": "npm:whatwg-fetch@1.0.0",
     "fs": "github:jspm/nodelibs-fs@0.2.0-alpha",
     "fsevents": "npm:fsevents@1.1.1",
     "http": "github:jspm/nodelibs-http@0.2.0-alpha",

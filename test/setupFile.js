@@ -1,6 +1,9 @@
-Object.defineProperty(document, 'currentScript', {
-  value: document.createElement('script'),
-});
+global.fetch = require('jest-fetch-mock');
+
+// Polyfill
+Array.prototype.includes = function (member) {
+    return this.indexOf(member) >= 0;
+}
 
 class LocalStorageMock {
   constructor() {
