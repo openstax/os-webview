@@ -260,6 +260,17 @@ export default class Errata extends Controller {
                 this.model.bookTitle = detail.bookTitle;
                 setModelDetail(detail);
                 shell.hideLoader();
+                detail.showDatesInBar = detail.barStatus === '' || detail.reviewed_date;
+                detail.createdDate = new Date(detail.created).toLocaleDateString();
+                detail.reviewedDate = detail.reviewed_date ? new Date(detail.reviewed_date).toLocaleDateString() : '';
+                detail.correctedDate = detail.reviewedDate;
+                if (detail.corrected_date) {
+                    detail.correctedDate = new Date(detail.corrected_date).toLocaleDateString();
+                }
+                if (detail.thirdNodeClass === '') {
+                    detail.correctedDate = '';
+                }
+                this.update();
             } else {
                 window.location = '/404';
             }
