@@ -153,12 +153,12 @@ class Header extends Controller {
     }
 
     toggleFullScreenNav(button) {
+        const wasAriaExpanded = button.getAttribute('aria-expanded') === 'true';
+
+        button.setAttribute('aria-expanded', !wasAriaExpanded);
         document.body.classList.toggle('no-scroll');
         this.el.classList.toggle('active');
         this.removeAllOpenClasses();
-
-        button.classList.toggle('expanded');
-        button.setAttribute('aria-expanded', !!button.classList.contains('expanded'));
     }
 
     removeClass(array, className) {
@@ -199,7 +199,6 @@ class Header extends Controller {
         this.el.classList.remove('active');
         this.removeAllOpenClasses();
 
-        button.classList.remove('expanded');
         button.setAttribute('aria-expanded', 'false');
     }
 
