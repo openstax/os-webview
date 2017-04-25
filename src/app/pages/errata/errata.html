@@ -79,12 +79,15 @@
                 <div class="progress-bar-labels">
                     <div class="label">
                         <div class="event">In Review</div>
+                        <div if="model.detail.showDatesInBar" class="date">{model.detail.createdDate}</div>
                     </div>
                     <div class="label">
                         <div class="event">Reviewed</div>
+                        <div if="model.detail.showDatesInBar" class="date">{model.detail.reviewedDate}</div>
                     </div>
                     <div class="label">
                         <div class="event">{model.detail.barStatus || 'Corrected'}</div>
+                        <div if="model.detail.showDatesInBar" class="date">{model.detail.correctedDate}</div>
                     </div>
                 </div>
                 <div class="progress-bar">
