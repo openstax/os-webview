@@ -31,7 +31,9 @@ export default class Blog extends CMSPageController {
             articlePage: '.article.page'
         };
         this.slug = '/news';
-        this.model = {};
+        this.model = {
+            rssUrl: `${settings.apiOrigin}/blog-feed/rss/`
+        };
         shell.showLoader();
 
         this.handlePathChange = () => {
