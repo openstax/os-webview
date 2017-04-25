@@ -164,4 +164,25 @@ $.newEvent = (eventType) => {
     return event;
 };
 
+$.fade = (element, {fromOpacity, toOpacity, steps=10}) => {
+    return new Promise((resolve) => {
+        let opacity = fromOpacity;
+        const byStep = (toOpacity - fromOpacity)/steps;
+        const doStep = function () {
+            opacity += byStep;
+            if ((byStep > 0 && opacity >= toOpacity) ||
+                (byStep < 0 && opacity <= toOpacity)) {
+                element.style.opacity = toOpacity;
+                resolve();
+                return true;
+            }
+            element.style.opacity = opacity;
+            requestAnimationFrame(doStep);
+            return false;
+        };
+
+        requestAnimationFrame(doStep);
+    });
+};
+
 export default $;
