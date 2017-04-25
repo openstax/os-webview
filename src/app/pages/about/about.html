@@ -30,6 +30,7 @@
                     </div>
                     <div id="{member.name}" class="details" role="tooltip"
                      aria-hidden="{model.tapped ? false : true}">
+                        <button class="btn dismiss" tabindex="1"><i class="fa fa-times"></i></button>
                         <div class="name">{member.name}</div>
                         <div if="member.position" class="title">{member.position}</div>
                         <div class="description">{member.description}</div>
