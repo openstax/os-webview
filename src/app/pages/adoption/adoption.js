@@ -45,6 +45,7 @@ export default class AdoptionForm extends Controller {
             this.regions.roleSelector.attach(new FormSelect({
                 placeholder: 'I am a',
                 validationMessage: () => '',
+                instructions: 'Please select one',
                 options
             }));
         });
