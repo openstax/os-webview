@@ -173,23 +173,22 @@ $.htmlToText = (html) => {
     return temp.textContent;
 };
 
-/* eslint complexity: 0 */
 $.insertHtml = (containerEl, model) => {
-    if (containerEl) {
-        for (const htmlEl of containerEl.querySelectorAll('[data-html]')) {
-            /* eslint no-eval: 0 */
-            const html = htmlEl.dataset ? htmlEl.dataset.html : htmlEl.getAttribute('data-html');
-            const expr = `model.${html}`;
+    /* eslint complexity: 0 */
+    const containers = containerEl ? containerEl.querySelectorAll('[data-html]') : [];
 
-            try {
-                htmlEl.innerHTML = eval(expr) || '';
-            } catch (e) {
-                console.warn('Eval', expr, e);
-            }
+    for (const htmlEl of containers) {
+        /* eslint no-eval: 0 */
+        const html = htmlEl.dataset ? htmlEl.dataset.html : htmlEl.getAttribute('data-html');
+        const expr = `model.${html}`;
+
+        try {
+            htmlEl.innerHTML = eval(expr) || '';
+        } catch (e) {
+            console.warn('Eval', expr, e);
         }
     }
 };
-/* eslint complexity: 1 */
 
 $.parseSearchString = (searchString) => {
     const result = {};
@@ -200,6 +199,19 @@ $.parseSearchString = (searchString) => {
         (k in result) ? result[k].push(decodeURIComponent(v)) : result[k] = [decodeURIComponent(v)];
     });
     return result;
+};
+
+$.newEvent = (eventType) => {
+    let event;
+
+    if (typeof window.Event === 'function') {
+        event = new Event(eventType, {bubbles: true});
+    } else {
+        event = document.createEvent('Event');
+        event.initEvent(eventType, true, true);
+    }
+
+    return event;
 };
 
 export default $;
