@@ -50,6 +50,7 @@ export default class InterestForm extends Controller {
             this.regions.roleSelector.attach(new FormSelect({
                 placeholder: 'I am a',
                 validationMessage: () => '',
+                instructions: 'Please select one',
                 options
             }));
         });

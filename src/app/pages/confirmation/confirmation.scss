@@ -122,9 +122,15 @@ $page-background: #fbfbfb;
     }
 
     .below-header-text {
-        font-weight: bold;
-        margin-bottom: 3rem;
+        display: flex;
+        justify-content: center;
+        margin: 3rem auto;
+        max-width: 80rem;
         text-align: center;
+
+        @include phone {
+            text-align: left;
+        }
     }
 
     .buttons {
