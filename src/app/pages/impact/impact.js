@@ -1,6 +1,7 @@
 import CMSPageController from '~/controllers/cms';
 import shell from '~/components/shell/shell';
 import $ from '~/helpers/$';
+import {makeDocModel} from '~/models/usermodel';
 import {description as template} from './impact.html';
 
 export default class Impact extends CMSPageController {
@@ -26,6 +27,15 @@ export default class Impact extends CMSPageController {
         this.update();
         shell.hideLoader();
         $.insertHtml(this.el, this.model);
+
+        const row1 = this.model.row_1[0];
+
+        if (row1.document) {
+            makeDocModel(row1.document).load().then((data) => {
+                row1.link = data.file;
+                this.update();
+            });
+        }
     }
 
 }
