@@ -106,6 +106,7 @@ export default class AboutUs extends CMSPageController {
 
     @on('click .headshot')
     openBios(e) {
+        /* eslint complexity: 0 */
         e.stopPropagation();
 
         const tapped = Number(e.delegateTarget.getAttribute('data-id'));
@@ -121,9 +122,14 @@ export default class AboutUs extends CMSPageController {
             const topMost = Math.min(elRect.top, ttRect.top);
             const bottomMost = Math.max(elRect.bottom, ttRect.bottom);
             const totalHeight = bottomMost - topMost;
-            const offset = (window.innerHeight - totalHeight) / 2 - 40;
 
-            $.scrollTo(elRect.top < ttRect.top ? el : tooltipEl, offset);
+            if (topMost < 0) {
+                $.scrollTo(elRect.top < ttRect.top ? el : tooltipEl, 0);
+            }
+
+            if (bottomMost > window.innerHeight) {
+                $.scrollTo(elRect.top < ttRect.top ? el : tooltipEl, window.innerHeight - totalHeight - 60);
+            }
         }
     }
 

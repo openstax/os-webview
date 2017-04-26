@@ -169,11 +169,4 @@ export default class DetailsLoaded extends Controller {
         }
     }
 
-/*
-    onLoaded() {
-        $.applyScrollFix(this);
-        const slug = window.location.pathname.replace(/.*\//, '');
-  }
-  */
-
 }

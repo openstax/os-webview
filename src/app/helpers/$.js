@@ -88,56 +88,6 @@ $.scrollTo = (el, offset = 0) => {
     });
 };
 
-$.applyScrollFix = (view) => {
-    let freezePosition = null;
-    const setFreezePosition = () => {
-        freezePosition = document.documentElement.scrollTop || document.body.scrollTop;
-    };
-    const handleMouseLeave = (e) => {
-        if (!e.currentTarget.contains(e.relatedTarget)) {
-            freezePosition = null;
-        }
-    };
-    const handleWheelEvent = (e) => {
-        const el = e.currentTarget;
-        const delta = e.deltaY || e.wheelDelta / 4;
-
-        el.scrollTop = el.scrollTop + delta;
-        e.preventDefault();
-    };
-    const touchOutside = (el) => (
-        (e) => {
-            if (!el.contains(e.target)) {
-                freezePosition = null;
-            }
-        }
-    );
-    let scrollStart;
-    const setScrollStart = (e) => {
-        scrollStart = e.currentTarget.scrollTop + e.touches[0].pageY;
-    };
-    const scroll = (e) => {
-        e.currentTarget.scrollTop = scrollStart - event.touches[0].pageY;
-        event.preventDefault();
-    };
-
-    for (const el of view.el.querySelectorAll('.mac-scroll')) {
-        view.attachListenerTo(el, 'scroll', setFreezePosition);
-        view.attachListenerTo(el, 'mouseleave', handleMouseLeave);
-        view.attachListenerTo(el, 'mousewheel', handleWheelEvent);
-        view.attachListenerTo(window, 'touchstart', touchOutside(el));
-        if ($.isTouchDevice() && window.innerWidth < 769) {
-            view.attachListenerTo(el, 'touchstart', setScrollStart);
-            view.attachListenerTo(el, 'touchmove', scroll);
-        }
-    }
-    view.attachListenerTo(window, 'scroll', () => {
-        if (freezePosition !== null) {
-            window.scrollTo(0, freezePosition);
-        }
-    });
-};
-
 $.hashClick = (event, options = {doHistory: true}) => {
     const node = event.delegateTarget;
     const destUrl = `${node.pathname}${node.hash}`;
@@ -212,6 +162,27 @@ $.newEvent = (eventType) => {
     }
 
     return event;
+};
+
+$.fade = (element, {fromOpacity, toOpacity, steps=10}) => {
+    return new Promise((resolve) => {
+        let opacity = fromOpacity;
+        const byStep = (toOpacity - fromOpacity)/steps;
+        const doStep = function () {
+            opacity += byStep;
+            if ((byStep > 0 && opacity >= toOpacity) ||
+                (byStep < 0 && opacity <= toOpacity)) {
+                element.style.opacity = toOpacity;
+                resolve();
+                return true;
+            }
+            element.style.opacity = opacity;
+            requestAnimationFrame(doStep);
+            return false;
+        };
+
+        requestAnimationFrame(doStep);
+    });
 };
 
 export default $;

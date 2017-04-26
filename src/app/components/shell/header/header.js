@@ -3,6 +3,7 @@ import stickyNote from '../sticky-note/sticky-note';
 import UpperMenu from './upper-menu/upper-menu';
 import MainMenu from './main-menu/main-menu';
 import settings from 'settings';
+import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 import linkHelper from '~/helpers/link';
 import userModel, {sfUserModel} from '~/models/usermodel';
@@ -153,12 +154,29 @@ class Header extends Controller {
     }
 
     toggleFullScreenNav(button) {
-        document.body.classList.toggle('no-scroll');
-        this.el.classList.toggle('active');
-        this.removeAllOpenClasses();
+        const wasActive = this.el.classList.contains('active');
+        const reconfigure = () => {
+            button.setAttribute('aria-expanded', !wasActive);
+            document.body.classList.toggle('no-scroll');
+            this.el.classList.toggle('active');
+            this.removeAllOpenClasses();
+        };
 
-        button.classList.toggle('expanded');
-        button.setAttribute('aria-expanded', !!button.classList.contains('expanded'));
+
+        this.el.style.transition = 'none';
+        if (wasActive) {
+            $.fade(this.el, {fromOpacity: 1, toOpacity: 0}).then(() => {
+                reconfigure();
+                this.el.style.opacity = 1;
+                this.el.style.transition = null;
+            });
+        } else {
+            this.el.style.opacity = 0;
+            reconfigure();
+            $.fade(this.el, {fromOpacity: 0, toOpacity: 1}).then(() => {
+                this.el.style.transition = null;
+            });
+        }
     }
 
     removeClass(array, className) {
@@ -199,7 +217,6 @@ class Header extends Controller {
         this.el.classList.remove('active');
         this.removeAllOpenClasses();
 
-        button.classList.remove('expanded');
         button.setAttribute('aria-expanded', 'false');
     }
 
