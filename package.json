@@ -16,7 +16,7 @@
   "license": "AGPL-3.0",
   "dependencies": {},
   "devDependencies": {
-    "babel-eslint": "7.2.1",
+    "babel-eslint": "7.2.3",
     "babel-jest": "19.0.0",
     "babel-plugin-transform-async-to-generator": "6.24.1",
     "babel-plugin-transform-class-properties": "6.24.1",
@@ -49,14 +49,14 @@
     "gulp-replace": "0.5.4",
     "gulp-sass": "3.1.0",
     "gulp-scss-lint": "0.4.0",
-    "gulp-sourcemaps": "2.5.1",
+    "gulp-sourcemaps": "2.6.0",
     "gulp-superviewsjs": "github:dak/gulp-superviewsjs",
     "gulp-uglify": "2.1.2",
     "gulp-util": "3.0.8",
     "gulp-wrap": "0.13.0",
     "jest": "19.0.2",
     "jest-cli": "19.0.2",
-    "jsdom": "9.12.0",
+    "jsdom": "10.0.0",
     "jsdom-global": "2.1.1",
     "jspm": "0.17.0-beta.23",
     "regenerator-runtime": "^0.10.3",
@@ -64,7 +64,7 @@
     "sw-precache": "5.1.0",
     "systemjs-builder": "0.16.4",
     "systemjs-jest": "^1.0.0",
-    "yargs": "7.0.2"
+    "yargs": "7.1.0"
   },
   "jest": {
     "moduleNameMapper": {
@@ -146,7 +146,7 @@
           "_stream_transform": "readable-stream/transform"
         }
       },
-      "npm:debug@2.6.3": {
+      "npm:debug@2.6.4": {
         "main": "browser.js",
         "jspmNodeConversion": false,
         "format": "cjs",
@@ -177,24 +177,9 @@
           "process": "@empty"
         }
       },
-      "npm:ms@0.7.2": {
+      "npm:ms@0.7.3": {
         "jspmNodeConversion": false,
         "format": "cjs"
-      },
-      "npm:readable-stream@1.1.14": {
-        "map": {
-          "stream": "stream-browserify/index"
-        },
-        "systemjs": {
-          "main": "readable.js"
-        },
-        "dependencies": {
-          "core-util-is": "~1.0.0",
-          "inherits": "~2.0.1",
-          "isarray": "0.0.1",
-          "string_decoder": "~0.10.0",
-          "stream-browserify": "^1.0.0"
-        }
       }
     }
   },

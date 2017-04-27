@@ -12,6 +12,4 @@ fi
 jspm update
 ncu -u
 rm -rf node_modules jspm_packages
-script/bootstrap
-echo "CAUTION: Do not use superb 0.2.15. It causes problems in the router."
-echo "Use 0.2.13, or test carefully for later versions."
+script/setup

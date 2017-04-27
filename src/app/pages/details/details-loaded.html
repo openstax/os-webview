@@ -80,7 +80,7 @@
     <section class="resources block">
         <div class="container">
             <if condition="model.community_resource_url">
-                <div class="row">
+                <div id="resources" class="row">
                     <h3>Community Resources</h3>
                     <p>
                         Find community-submitted resources for
@@ -91,7 +91,7 @@
                 </div>
             </if>
             <if condition="model.book_faculty_resources.length">
-                <div id="resources" class="row">
+                <div class="row">
                     <h3>OpenStax Instructor Resources</h3>
                     <p if="!model.hideInstructorInstructions">
                         Access free resources integrated with your book.
