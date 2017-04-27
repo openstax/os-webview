@@ -23,6 +23,12 @@ $hero-break-width: 880px;
     }
 }
 
+@include phone {
+    .frozen {
+        overflow: hidden;
+    }
+}
+
 .about-page {
     background-color: rgba(color(neutral-lighter), 0.2);
 

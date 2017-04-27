@@ -131,6 +131,7 @@ export default class AboutUs extends CMSPageController {
                 $.scrollTo(elRect.top < ttRect.top ? el : tooltipEl, window.innerHeight - totalHeight - 60);
             }
         }
+        document.body.classList.toggle('frozen', this.model.tapped);
     }
 
     @on('click')
