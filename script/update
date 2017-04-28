@@ -11,5 +11,4 @@ fi
 
 jspm update
 ncu -u
-rm -rf node_modules jspm_packages
 script/setup
