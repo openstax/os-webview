@@ -60,7 +60,7 @@ class SalesforceForm extends CMSPageController {
         if (! this.submitClicked) {
             e.stopImmediatePropagation();
             e.preventDefault();
-            return false;
+            return;
         }
         this.submitClicked = false;
         if (this.beforeSubmit()) {
@@ -69,7 +69,6 @@ class SalesforceForm extends CMSPageController {
         } else {
             e.stopImmediatePropagation();
             e.preventDefault();
-            return false;
         }
     }
 
