@@ -59,12 +59,17 @@ class SalesforceForm extends CMSPageController {
         // a second submit event. This stops that.
         if (! this.submitClicked) {
             e.stopImmediatePropagation();
-            return;
+            e.preventDefault();
+            return false;
         }
         this.submitClicked = false;
         if (this.beforeSubmit()) {
             this.submitted = true;
             this.update();
+        } else {
+            e.stopImmediatePropagation();
+            e.preventDefault();
+            return false;
         }
     }
 
