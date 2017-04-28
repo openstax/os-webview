@@ -2,65 +2,21 @@
 @import 'mixins';
 
 .subjects-page {
-    .container {
-        display: flex;
-        flex-flow: row wrap;
-        height: 100%;
-        margin: 0 auto;
-        max-width: $boxed-width;
-        padding: 0 1.5rem;
-        width: 100%;
+
+    h2 {
+        padding-top: 5rem;
 
         @include phone {
-            display: block;
-        }
-    }
-
-    .container[data-html="page_description"] {
-        padding: 6rem 1.5rem 9rem;
-
-        @include desktop {
-            text-align: center;
-        }
-
-        h2 {
-            font-size: 4rem;
-            font-weight: 600;
-            width: 100%;
-        }
-
-        p {
-            font-size: 1.8rem;
-
-            @include desktop {
-                margin-left: auto;
-                margin-right: auto;
-                width: 80%;
-            }
+            align-items: flex-start;
         }
     }
 
     .feature-block {
-        margin-top: 5rem;
-        overflow: hidden;
-        transition: opacity 0.2s;
+        display: block;
 
         @include desktop {
-            opacity: 1;
-        }
-
-        .container {
-            @include tablet {
-                display: block;
-            }
-        }
-
-        h2 {
-            flex: 1 0 100%;
-
-            @include desktop {
-                text-align: center;
-            }
+            display: flex;
+            flex-direction: row;
         }
     }
 
@@ -82,19 +38,15 @@
         color: color(neutral-dark);
         flex: 1 28%;
         font-size: 1.6rem;
+        padding: 0 1.5rem;
 
         @include desktop {
             text-align: center;
         }
 
-        &:nth-child(3) {
-            @include desktop {
-                margin: 0 2rem;
-            }
-        }
-
         .title {
             font-weight: 600;
+            margin-bottom: 0;
 
             @include desktop {
                 text-align: center;
@@ -106,6 +58,10 @@
         background-color: lighten(color(neutral-lighter), 8%);
         padding: 8rem 0;
         position: relative;
+
+        .container {
+            width: 100%;
+        }
 
         .book-category {
             flex: 1 1 auto;

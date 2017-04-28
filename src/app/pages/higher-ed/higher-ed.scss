@@ -2,7 +2,6 @@
 @import 'mixins';
 
 $breakpoint-1: 908px;
-
 $hero-break-width: 880px;
 
 .higher-ed-page {
@@ -190,6 +189,7 @@ $hero-break-width: 880px;
             list-style-type: none;
             margin: 3.2vw 0;
             padding: 4.29vw 0;
+            width: 100%;
 
             @include collapsed {
                 flex-direction: column;
@@ -261,17 +261,10 @@ $hero-break-width: 880px;
         padding-top: 8rem;
     }
 
-    .buckets {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
     .buckets-section {
         display: flex;
-        justify-content: space-between;
-        padding-bottom: 8rem;
-        padding-top: 8rem;
+        padding: 8rem 0;
+        width: 100%;
 
         @include collapsed {
             flex-direction: column;
@@ -279,9 +272,11 @@ $hero-break-width: 880px;
 
         .bucket {
             flex: 1 1 50%;
+            margin: 0 1.5rem;
 
             @include collapsed {
                 flex: 1 1 auto;
+                margin-bottom: 1.5rem;
             }
 
             &.our-impact {
@@ -290,18 +285,6 @@ $hero-break-width: 880px;
                 background-position: 0 0;
                 background-repeat: no-repeat;
                 background-size: cover;
-                margin-bottom: 0;
-                margin-right: 3rem;
-
-                @include collapsed {
-                    margin-bottom: 3rem;
-                    margin-right: 0;
-                    text-align: left;
-                }
-
-                @include desktop {
-                    margin-bottom: 0;
-                }
             }
 
             .quote {

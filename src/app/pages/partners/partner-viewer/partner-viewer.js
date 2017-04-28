@@ -11,7 +11,7 @@ class Icons extends Controller {
     init(model) {
         this.template = iconTemplate;
         this.view = {
-            classes: ['container']
+            classes: ['container', 'boxed']
         };
         this.model = model;
     }
@@ -23,7 +23,7 @@ class Blurbs extends Controller {
     init(model) {
         this.template = blurbTemplate;
         this.view = {
-            classes: ['blurbs', 'container']
+            classes: ['blurbs', 'text-content']
         };
         this.model = model;
     }

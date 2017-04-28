@@ -59,10 +59,6 @@
         margin: 0 auto;
         max-width: 100%;
         width: 100%; // IE fix
-
-        @include desktop {
-            max-width: 80%;
-        }
     }
 
     .boxed p p,
