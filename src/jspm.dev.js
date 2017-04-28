@@ -32,7 +32,7 @@ SystemJS.config({
         "istanbul-lib-instrument": "npm:istanbul-lib-instrument@1.7.0",
         "jest-runtime": "npm:jest-runtime@19.0.3",
         "jest-jasmine2": "npm:jest-jasmine2@19.0.2",
-        "jest-config": "npm:jest-config@19.0.3",
+        "jest-config": "npm:jest-config@19.0.4",
         "jest-snapshot": "npm:jest-snapshot@19.0.2",
         "which": "npm:which@1.2.14",
         "string-length": "npm:string-length@1.0.1",
@@ -619,11 +619,6 @@ SystemJS.config({
         "amdefine": "npm:amdefine@1.0.1"
       }
     },
-    "npm:source-map-support@0.4.14": {
-      "map": {
-        "source-map": "npm:source-map@0.5.6"
-      }
-    },
     "npm:fill-range@2.2.3": {
       "map": {
         "repeat-element": "npm:repeat-element@1.1.2",
@@ -827,18 +822,6 @@ SystemJS.config({
         "babel-runtime": "npm:babel-runtime@6.23.0"
       }
     },
-    "npm:jest-config@19.0.3": {
-      "map": {
-        "chalk": "npm:chalk@1.1.3",
-        "jest-environment-jsdom": "npm:jest-environment-jsdom@19.0.2",
-        "jest-jasmine2": "npm:jest-jasmine2@19.0.2",
-        "jest-regex-util": "npm:jest-regex-util@19.0.0",
-        "jest-resolve": "npm:jest-resolve@19.0.2",
-        "jest-environment-node": "npm:jest-environment-node@19.0.2",
-        "pretty-format": "npm:pretty-format@19.0.0",
-        "jest-validate": "npm:jest-validate@19.0.2"
-      }
-    },
     "npm:jest-haste-map@19.0.2": {
       "map": {
         "graceful-fs": "npm:graceful-fs@4.1.11",
@@ -856,7 +839,7 @@ SystemJS.config({
         "jest-util": "npm:jest-util@19.0.2",
         "micromatch": "npm:micromatch@2.3.11",
         "yargs": "npm:yargs@6.6.0",
-        "jest-config": "npm:jest-config@19.0.3",
+        "jest-config": "npm:jest-config@19.0.4",
         "jest-haste-map": "npm:jest-haste-map@19.0.2",
         "babel-core": "npm:babel-core@6.24.1",
         "jest-resolve": "npm:jest-resolve@19.0.2",
@@ -875,7 +858,7 @@ SystemJS.config({
         "babel-types": "npm:babel-types@6.24.1",
         "babel-runtime": "npm:babel-runtime@6.23.0",
         "babylon": "npm:babylon@6.17.0",
-        "debug": "npm:debug@2.6.4",
+        "debug": "npm:debug@2.6.6",
         "lodash": "npm:lodash@4.17.4",
         "slash": "npm:slash@1.0.0",
         "source-map": "npm:source-map@0.5.6",
@@ -931,7 +914,7 @@ SystemJS.config({
         "babel-runtime": "npm:babel-runtime@6.23.0",
         "babel-types": "npm:babel-types@6.24.1",
         "babylon": "npm:babylon@6.17.0",
-        "debug": "npm:debug@2.6.4",
+        "debug": "npm:debug@2.6.6",
         "globals": "npm:globals@9.17.0",
         "lodash": "npm:lodash@4.17.4",
         "invariant": "npm:invariant@2.2.2"
@@ -944,7 +927,7 @@ SystemJS.config({
         "lodash": "npm:lodash@4.17.4",
         "mkdirp": "npm:mkdirp@0.5.1",
         "babel-runtime": "npm:babel-runtime@6.23.0",
-        "source-map-support": "npm:source-map-support@0.4.14",
+        "source-map-support": "npm:source-map-support@0.4.15",
         "home-or-tmp": "npm:home-or-tmp@2.0.0"
       }
     },
@@ -971,6 +954,23 @@ SystemJS.config({
         "is-builtin-module": "npm:is-builtin-module@1.0.0",
         "hosted-git-info": "npm:hosted-git-info@2.4.2",
         "validate-npm-package-license": "npm:validate-npm-package-license@3.0.1"
+      }
+    },
+    "npm:jest-config@19.0.4": {
+      "map": {
+        "chalk": "npm:chalk@1.1.3",
+        "jest-environment-jsdom": "npm:jest-environment-jsdom@19.0.2",
+        "jest-jasmine2": "npm:jest-jasmine2@19.0.2",
+        "jest-regex-util": "npm:jest-regex-util@19.0.0",
+        "jest-environment-node": "npm:jest-environment-node@19.0.2",
+        "jest-validate": "npm:jest-validate@19.0.2",
+        "jest-resolve": "npm:jest-resolve@19.0.2",
+        "pretty-format": "npm:pretty-format@19.0.0"
+      }
+    },
+    "npm:source-map-support@0.4.15": {
+      "map": {
+        "source-map": "npm:source-map@0.5.6"
       }
     }
   }

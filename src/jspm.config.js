@@ -419,7 +419,7 @@ SystemJS.config({
     "npm:babel-polyfill@6.23.0": {
       "map": {
         "core-js": "npm:core-js@2.4.1",
-        "regenerator-runtime": "npm:regenerator-runtime@0.10.4",
+        "regenerator-runtime": "npm:regenerator-runtime@0.10.5",
         "babel-runtime": "npm:babel-runtime@6.23.0"
       }
     },
@@ -431,7 +431,7 @@ SystemJS.config({
     },
     "npm:babel-runtime@6.23.0": {
       "map": {
-        "regenerator-runtime": "npm:regenerator-runtime@0.10.4",
+        "regenerator-runtime": "npm:regenerator-runtime@0.10.5",
         "core-js": "npm:core-js@2.4.1"
       }
     },
@@ -474,7 +474,7 @@ SystemJS.config({
         "readable-stream": "npm:readable-stream@2.2.9",
         "rimraf": "npm:rimraf@2.6.1",
         "tar": "npm:tar@2.2.1",
-        "debug": "npm:debug@2.6.4",
+        "debug": "npm:debug@2.6.6",
         "fstream": "npm:fstream@1.0.11",
         "fstream-ignore": "npm:fstream-ignore@1.0.5",
         "once": "npm:once@1.4.0",
@@ -500,7 +500,7 @@ SystemJS.config({
         "qs": "npm:qs@6.4.0",
         "aws-sign2": "npm:aws-sign2@0.6.0",
         "combined-stream": "npm:combined-stream@1.0.5",
-        "extend": "npm:extend@3.0.0",
+        "extend": "npm:extend@3.0.1",
         "http-signature": "npm:http-signature@1.1.1",
         "is-typedarray": "npm:is-typedarray@1.0.0",
         "json-stringify-safe": "npm:json-stringify-safe@5.0.1",
@@ -640,11 +640,6 @@ SystemJS.config({
         "delegates": "npm:delegates@1.0.0"
       }
     },
-    "npm:debug@2.6.4": {
-      "map": {
-        "ms": "npm:ms@0.7.3"
-      }
-    },
     "npm:form-data@2.1.4": {
       "map": {
         "combined-stream": "npm:combined-stream@1.0.5",
@@ -676,6 +671,11 @@ SystemJS.config({
     "npm:getpass@0.1.7": {
       "map": {
         "assert-plus": "npm:assert-plus@1.0.0"
+      }
+    },
+    "npm:debug@2.6.6": {
+      "map": {
+        "ms": "npm:ms@0.7.3"
       }
     }
   }
