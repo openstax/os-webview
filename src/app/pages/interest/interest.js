@@ -45,7 +45,7 @@ export default class InterestForm extends Controller {
             $.insertHtml(this.el, this.model);
         });
         rolesPromise.then((roles) => {
-            const options = roles.map((opt) => ({label: opt.name, value: opt.name}));
+            const options = roles.map((opt) => ({label: opt.display_name, value: opt.salesforce_name}));
 
             this.regions.roleSelector.attach(new FormSelect({
                 placeholder: 'I am a',
@@ -54,17 +54,6 @@ export default class InterestForm extends Controller {
                 options
             }));
         });
-        /*
-        TODO: MOVE TO TEACHER FORM
-        this.formResponseEl = this.el.querySelector('#form-response');
-        this.goToConfirmation = () => {
-            if (this.submitted) {
-                this.submitted = false;
-                router.navigate('/interest-confirmation');
-            }
-        };
-        this.formResponseEl.addEventListener('load', this.goToConfirmation);
-        */
     }
 
     @on('change [data-id="selectedRole"] select')
