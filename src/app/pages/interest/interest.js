@@ -54,17 +54,6 @@ export default class InterestForm extends Controller {
                 options
             }));
         });
-        /*
-        TODO: MOVE TO TEACHER FORM
-        this.formResponseEl = this.el.querySelector('#form-response');
-        this.goToConfirmation = () => {
-            if (this.submitted) {
-                this.submitted = false;
-                router.navigate('/interest-confirmation');
-            }
-        };
-        this.formResponseEl.addEventListener('load', this.goToConfirmation);
-        */
     }
 
     @on('change [data-id="selectedRole"] select')
