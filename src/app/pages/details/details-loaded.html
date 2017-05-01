@@ -13,8 +13,12 @@
                             </div>
                         </div>
                     </if>
-                    <if condition="model.book_faculty_resources.length">
+                    <if condition="model.community_resource_url">
                         <a href="#resources" class="tab"><span>Instructor Resources</span></a>
+                    <else>
+                        <a if="model.book_faculty_resources.length" href="#faculty-resources" class="tab">
+                            <span>Instructor Resources</span>
+                        </a>
                     </if>
                     <if condition="model.book_student_resources.length">
                         <a href="#student-resources-section" class="tab"><span>Student Resources</span></a>
@@ -91,7 +95,7 @@
                 </div>
             </if>
             <if condition="model.book_faculty_resources.length">
-                <div class="row">
+                <div id="faculty-resources" class="row">
                     <h3>OpenStax Instructor Resources</h3>
                     <p if="!model.hideInstructorInstructions">
                         Access free resources integrated with your book.
