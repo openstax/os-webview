@@ -10,7 +10,6 @@ export default class Tos extends CMSPageController {
 
     init() {
         this.template = template;
-        this.css = '/app/pages/tos/tos.css';
         this.view = {
             classes: ['tos-page', 'page']
         };

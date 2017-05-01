@@ -8,11 +8,6 @@ $text-dark2: rgba(0, 0, 0, 0.7);
 
     .container {
         align-items: left;
-        display: flex;
-        flex-direction: column;
-        margin: 0 auto;
-        max-width: $boxed-width;
-        padding: 0 1.5rem;
 
         @include desktop {
             align-items: center;
@@ -111,17 +106,13 @@ $text-dark2: rgba(0, 0, 0, 0.7);
     }
 
     .blurbs {
-        align-items: center;
         background-color: color(neutral-lightest);
         font-weight: 400;
         margin-bottom: 1.5rem;
+        padding: 3rem 1.5rem;
 
-        @include tablet {
-            padding: 3rem calc(34.7vw - 16rem);
-        }
-
-        @include desktop {
-            padding: 3rem 11.5rem;
+        @include phone {
+            padding: 0 1.5rem;
         }
 
         .text {
@@ -134,7 +125,8 @@ $text-dark2: rgba(0, 0, 0, 0.7);
                 display: none;
             }
 
-            p {
+            p,
+            div {
                 width: 100%;
             }
         }

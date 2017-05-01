@@ -1,6 +1,6 @@
 <template args="model">
     <div class="hero">
-        <div class="container">
+        <div class="text-content">
             <h1>{model.title}</h1>
             <p>{model.page_description}
             </p>
@@ -8,7 +8,7 @@
     </div>
     <div class="blurbs">
         <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
-        <div class="container">
+        <div class="boxed">
             <div class="funder" each="funder in model.funders">
                 <div class="logo">
                   <img src="{funder.funder_logo}">

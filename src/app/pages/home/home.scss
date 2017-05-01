@@ -988,36 +988,15 @@ $tablet-book-size: 16.5rem;
     .buckets {
         display: flex;
         flex-direction: column;
-        justify-content: center;
     }
 
     .buckets-section {
-        padding-bottom: 6rem;
-        padding-top: 3rem;
-
-        @media (max-width: 600px) {
-            padding-top: 6rem;
-        }
+        padding: 1rem 1.5rem 6rem;
 
         .bucket {
-            &:first-child {
-                margin-bottom: 1.5rem;
-
-                @include desktop {
-                    margin-bottom: 5rem;
-                }
-            }
+            flex-basis: 30rem;
+            margin: 2rem 0;
+            width: 100%;
         }
-    }
-}
-
-.quote-buckets {
-    .quotes {
-        padding: 6rem 1.5rem;
-    }
-
-    .attribution {
-        margin-left: 2rem;
-        text-align: right;
     }
 }

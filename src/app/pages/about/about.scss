@@ -120,29 +120,22 @@ $hero-break-width: 880px;
 
     .meta {
         background-color: color(neutral-lightest);
+        font-size: 1.8rem;
+        line-height: 2.6rem;
         padding: 8rem 0;
+
+        @include desktop {
+            text-align: center;
+        }
 
         h2 {
             margin: 0;
         }
-
-        p {
-            font-size: 1.8rem;
-            line-height: 2.6rem;
-
-            @include desktop {
-                margin-left: auto;
-                margin-right: auto;
-                text-align: center;
-                width: 80%;
-            }
-         }
     }
 
-    section {
-        display: flex;
-        flex-flow: column nowrap;
-        justify-content: center;
+    .our-team,
+    .strategic-advisors {
+        width: 100%;
     }
 
     h2 {

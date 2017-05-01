@@ -7,15 +7,6 @@ $text-black2: rgba(0, 0, 0, 0.7);
 .foundation-page {
     line-height: 3rem;
 
-    .container {
-        display: block;
-        height: 100%;
-        margin: 0 auto;
-        max-width: $boxed-width;
-        padding: 0 1.5rem;
-        width: 100%;
-    }
-
     .hero {
         background-color: color(deep-green);
         color: color(neutral-lightest);

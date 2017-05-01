@@ -125,8 +125,6 @@ $page-background: #fbfbfb;
         display: flex;
         justify-content: center;
         margin: 3rem auto;
-        max-width: 80rem;
-        text-align: center;
 
         @include phone {
             text-align: left;

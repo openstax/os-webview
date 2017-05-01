@@ -185,19 +185,11 @@ $hero-break-width: 880px;
             @include constrained-variable-text(1.8, 0.2);
 
             line-height: 1.7;
-            margin-left: 4rem;
-            margin-right: 4rem;
         }
 
         .text-content {
-            margin: 0 auto;
-            padding: 5rem 0;
-            width: 78vw;
-
-            @include phone {
-                padding: 5rem 1.5rem;
-                width: 100%;
-            }
+            padding-bottom: 5rem;
+            padding-top: 5rem;
         }
 
         .partners {
@@ -216,11 +208,10 @@ $hero-break-width: 880px;
             }
 
             > li {
-                flex: 1 1 20%;
                 padding: 4rem;
 
                 @media (max-width: $hero-break-width) {
-                    flex: 1 1 auto;
+                    // flex: 1 1 auto;
                 }
 
                 a {
@@ -233,7 +224,14 @@ $hero-break-width: 880px;
                 }
 
                 img {
-                    max-width: 12rem;
+                    width: 12rem;
+                }
+
+                &.spacer {
+                    height: 0.1rem;
+                    margin: 0 4rem;
+                    padding: 0;
+                    width: 12rem;
                 }
             }
         }

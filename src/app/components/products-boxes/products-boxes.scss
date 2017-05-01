@@ -2,10 +2,6 @@
 @import 'mixins';
 
 .products-boxes {
-    display: flex;
-    justify-content: space-between;
-    margin: 0 auto;
-    max-width: $boxed-width;
 
     @include collapsed {
         flex-direction: column;

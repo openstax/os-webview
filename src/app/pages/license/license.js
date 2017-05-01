@@ -6,7 +6,6 @@ export default class License extends CMSPageController {
 
     init() {
         this.template = template;
-        this.css = '/app/pages/license/license.css';
         this.view = {
             classes: ['license-page', 'page']
         };

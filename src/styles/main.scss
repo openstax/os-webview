@@ -23,6 +23,7 @@ body {
 
 * {
     box-sizing: border-box;
+    width: auto;
 }
 
 iframe {
@@ -73,12 +74,6 @@ sup {
     position: relative;
     top: -0.25em; // em because it is relative to current font size
     vertical-align: top;
-}
-
-.text-content {
-    flex-direction: column;
-    margin: 0 auto;
-    max-width: 120rem;
 }
 
 .go-to {
@@ -204,6 +199,10 @@ sup {
     }
 }
 
+#header {
+    z-index: 2;
+}
+
 #main {
     flex: 1 0 auto;
     padding-top: 5.6rem;
@@ -216,6 +215,10 @@ sup {
     &.with-overlay {
         z-index: 1;
     }
+}
+
+#footer {
+    z-index: 0;
 }
 
 #maincontent {
@@ -235,12 +238,40 @@ sup {
     flex-flow: column nowrap;
 }
 
-.boxed {
+.boxed,
+.text-content {
+    align-items: center;
     display: flex;
     flex-flow: column nowrap;
     margin: 0 auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    width: 100%;
+
+    &.left-justified {
+        align-items: flex-start;
+    }
+
+    > * {
+        max-width: 100%;
+    }
+
+}
+
+.text-content {
+    max-width: $text-width;
+}
+
+.boxed {
     max-width: $boxed-width;
-    padding: 0 1.5rem;
+}
+
+// The items in the row will provide the padding
+.boxed-row {
+    display: flex;
+    flex-flow: row nowrap;
+    margin: 0 auto;
+    max-width: $boxed-width;
     width: 100%;
 }
 
@@ -270,7 +301,7 @@ sup {
     p {
         margin-left: auto;
         margin-right: auto;
-        max-width: 80%;
+        max-width: $text-width;
 
         @include phone {
             max-width: 100%;
@@ -280,6 +311,17 @@ sup {
 
 .strips {
     width: 100%;
+}
+
+.quote-buckets {
+    .quotes {
+        padding: 6rem 0;
+    }
+
+    .attribution {
+        margin-left: 2rem;
+        text-align: right;
+    }
 }
 
 [href=""],  // for testing empty links
