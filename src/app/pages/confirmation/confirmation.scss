@@ -23,6 +23,7 @@ $page-background: #fbfbfb;
         }
 
         .subhead {
+            justify-content: flex-start;
             padding-top: 4rem;
 
             h1 {
@@ -62,6 +63,7 @@ $page-background: #fbfbfb;
 
             &.centered {
                 align-items: center;
+                flex-basis: 100%;
                 margin-left: auto;
                 text-align: center;
             }
