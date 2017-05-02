@@ -30,6 +30,10 @@
         }
     }
 
+    [data-id="contactInfo"] {
+        min-width: 70%;
+    }
+
     [data-id="form"]:empty {
         display: block;
         height: 20rem;

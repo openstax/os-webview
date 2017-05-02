@@ -11,7 +11,7 @@ export default class ManagedComponent {
     }
 
     findRegion() {
-        const el = this.parent.el.querySelector(`component[data-id=${this.id}]`);
+        const el = this.parent.el.querySelector(`plug-in[data-id=${this.id}]`);
 
         return el ? new Region(el, this.parent) : null;
     }
