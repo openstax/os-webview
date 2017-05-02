@@ -79,7 +79,7 @@ export default class ContactInfo extends Controller {
 
         if (schoolUrlComponent) {
             const schoolUrlModel = schoolUrlComponent.component.model;
-            const isHomeSchool = this.model.selectedRole === 'Homeschool Instructor';
+            const isHomeSchool = (/home ?school/i).test(this.model.selectedRole);
 
             schoolUrlModel.required = !isHomeSchool;
             if (schoolUrlModel.value === 'http://' && isHomeSchool) {
