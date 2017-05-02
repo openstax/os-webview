@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
 // Biology book details
 import details from '../data/details';
@@ -10,8 +9,6 @@ describe('GetThisTitle', () => {
         "bubbles": true,
         "cancelable": false
     });
-
-    fetch.mockResponse({json: () => {console.log("CALLING JSON")}});
 
     it('initializes', () => {
         expect(p).toBeTruthy();

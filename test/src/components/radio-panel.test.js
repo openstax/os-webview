@@ -13,7 +13,6 @@ describe('RadioPanel', () => {
 
     it('creates', () => {
         expect(p).toBeTruthy();
-        console.log(p.el.innerHTML);
     });
 
     it('changes values', () => {

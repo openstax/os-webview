@@ -1,3 +1,7 @@
+import 'babel-polyfill';
+
+jest.mock('~/components/shell/shell');
+
 global.fetch = require('jest-fetch-mock');
 
 // Polyfill
