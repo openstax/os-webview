@@ -1,7 +1,7 @@
 <template args="model">
     <iframe name="form-response" id="form-response" src="" width="0" height="0"></iframe>
     <form accept-charset="UTF-8" class="form" target="form-response"
-     action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="post">
+     action="https://{model.salesforceHome}/servlet/servlet.WebToLead?encoding=UTF-8" method="post">
         <div>
             <input name="utf8" type="hidden" value="✓">
             <input type="hidden" name="oid" value="00DU0000000Kwch">

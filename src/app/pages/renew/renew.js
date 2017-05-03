@@ -2,6 +2,7 @@ import SalesforceForm from '~/controllers/salesforce-form';
 import router from '~/router';
 import selectHandler from '~/handlers/select';
 import salesforce from '~/models/salesforce';
+import settings from 'settings';
 import partnerPromise from '~/models/partners';
 import {description as template} from './renew.html';
 
@@ -20,6 +21,7 @@ export default class AdoptionForm extends SalesforceForm {
                 'adopted',
                 'recommended'
             ]),
+            salesforceHome: settings.salesforceHome,
             validationMessage: (name) => {
                 const el = this.el.querySelector(`[name="${name}"]`);
 
