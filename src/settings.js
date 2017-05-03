@@ -1,10 +1,11 @@
 const settings = {
-    titleSuffix: ' - OpenStax',
-    analyticsID: 'UA-73668038-1',
-    tagManagerID: 'GTM-W6N7PB',
-    webmaster: 'webmaster@openstax.org',
-    apiOrigin: 'http://oscms-dev.openstax.org',
     accountHref: 'https://accounts-qa.openstax.org',
+    analyticsID: 'UA-73668038-1',
+    apiOrigin: 'http://oscms-dev.openstax.org',
+    tagManagerID: 'GTM-W6N7PB',
+    testingEnvironment: (/(localhost|oscms-)/).test(window.location.hostname),
+    titleSuffix: ' - OpenStax',
+    webmaster: 'webmaster@openstax.org',
     touchnet: {
         test: {
             url: 'https://ebank.rice.edu:8443/C21279test_upay/web/index.jsp',
@@ -14,8 +15,9 @@ const settings = {
             url: 'https://ebank.rice.edu/C21279_upay/web/index.jsp',
             id: 106
         }
-    },
-    testingEnvironment: (/(localhost|oscms-)/).test(window.location.hostname)
+    }
 };
+
+settings.salesforceHome = settings.testingEnvironment ? 'test.salesforce.com' : 'www.salesforce.com';
 
 export default settings;

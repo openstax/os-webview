@@ -19,7 +19,8 @@ export default class CompCopyForm extends SalesforceForm {
         };
         this.model = {
             validationMessage: (name) =>
-                this.hasBeenSubmitted ? this.el.querySelector(`[name="${name}"]`).validationMessage : ''
+                this.hasBeenSubmitted ? this.el.querySelector(`[name="${name}"]`).validationMessage : '',
+            salesforceHome: settings.salesforceHome
         };
         this.slug = 'pages/comp-copy';
     }

@@ -48,6 +48,7 @@ export default class Contact extends SalesforceForm {
             classes: ['contact-page', 'page']
         };
         this.model = {
+            salesforceHome: settings.salesforceHome,
             subjects,
             tagline: '',
             title: '',
