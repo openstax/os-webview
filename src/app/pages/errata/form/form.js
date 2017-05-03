@@ -54,8 +54,9 @@ export default class Form extends Controller {
     @on('change [type="file"]')
     updateFiles(e) {
         const varName = e.target.name.replace('_', '');
+        const stripPath = (fullPath) => fullPath.replace(/.*\\/, '');
 
-        this.model[varName] = e.target.value;
+        this.model[varName] = stripPath(e.target.value);
         if (this.model.file2 && !this.model.file1) {
             this.model.file1 = this.model.file2;
             this.model.file2 = '';
