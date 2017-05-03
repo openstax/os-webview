@@ -56,6 +56,13 @@ export default class FormattedAs extends Controller {
         for (const bodyUnit of this.model.body) {
             this.regions.body.append(bodyUnitView(bodyUnit));
         }
+        if (this.format === 'synopsis') {
+            const bodyLinks = this.regions.body.el.querySelectorAll('a');
+
+            for (const el of bodyLinks) {
+                el.tabIndex = -1;
+            }
+        }
         setTimeout(() => {
             const disqusThreadBlock = d.getElementById('disqus_thread');
 

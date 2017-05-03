@@ -6,10 +6,13 @@
                 <a class="btn inverted" href="/give?student">Give Now</a>
             </div>
             <div class="multi-button">
-                <button class="btn inverted" href="/give" data-amount="10">Give $10</button>
-                <button class="btn inverted" href="/give" data-amount="25">Give $25</button>
-                <button class="btn inverted" href="/give" data-amount="50">Give $50</button>
-                <button class="btn inverted" href="/give"  data-amount="?">Give Other Amount</button>
+                <button each="lv in [10, 25, 50]"
+                    class="btn inverted" href="/give" tabindex="1" data-amount="{lv}">
+                    Give ${lv}
+                </button>
+                <button class="btn inverted" href="/give" tabindex="1" data-amount="?">
+                    Give Other Amount
+                </button>
             </div>
         </if>
     </div>

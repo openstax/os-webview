@@ -100,7 +100,8 @@ export default class Partners extends CMSPageController {
     @on('click .logo-text')
     onLogoClick(e) {
         e.preventDefault();
-        const href = e.delegateTarget.getAttribute('href');
+        this.cameFrom = e.delegateTarget;
+        const href = this.cameFrom.getAttribute('href');
         const el = document.getElementById(href.substr(1));
         const state = {
             filter: history.state.filter,
@@ -110,13 +111,16 @@ export default class Partners extends CMSPageController {
 
         const pushOrReplaceState = history.state.target ? 'replaceState' : 'pushState';
 
-        $.scrollTo(el);
+        $.scrollTo(el).then(() => {
+            el.querySelector('.to-top').focus();
+        });
         history[pushOrReplaceState](state, '', href);
     }
 
     @on('click .to-top')
     scrollToFilterButtons(e) {
         e.preventDefault();
+        e.target.blur();
         const hasTarget = 'target' in history.state;
         const state = {
             filter: history.state.filter,
@@ -129,6 +133,10 @@ export default class Partners extends CMSPageController {
             } else {
                 history.replaceState(state, '', state.target);
             }
+            if (this.cameFrom) {
+                this.cameFrom.focus();
+            }
+            this.cameFrom = null;
         });
     }
 
