@@ -1,20 +1,12 @@
 @import 'variables';
 @import 'mixins';
 
+[aria-role="button"],
 button,
 .btn {
-    background-color: color(neutral-medium);
-    color: color(neutral-light);
     cursor: pointer;
     display: inline-block;
-    font-size: inherit;
-    font-weight: 500;
-    outline: 0;
-    padding: 1rem;
-    text-align: center;
-    text-transform: uppercase;
     touch-action: manipulation;
-    transition: all 0.2s ease-in-out;
 
     &:focus {
         border-radius: 0.3rem;
@@ -25,6 +17,18 @@ button,
     &:focus {
         text-decoration: none;
     }
+}
+
+button,
+.btn {
+    background-color: color(neutral-medium);
+    color: color(neutral-light);
+    font-size: inherit;
+    font-weight: 500;
+    padding: 1rem;
+    text-align: center;
+    text-transform: uppercase;
+    transition: all 0.2s ease-in-out;
 }
 
 .btn-large {

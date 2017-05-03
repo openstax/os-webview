@@ -184,6 +184,14 @@ export default class Give extends CMSPageController {
         this.setAmount(+event.target.dataset.value);
     }
 
+    @on('keydown .amount')
+    operateByKey(event) {
+        if ([13, 32].includes(event.keyCode)) {
+            event.preventDefault();
+            this.selectAmount(event);
+        }
+    }
+
     @on('change .amount-input')
     setCustomAmount(event) {
         this.setAmount(+event.target.value);
