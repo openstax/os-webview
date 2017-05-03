@@ -10,8 +10,9 @@ export default class AdoptionForm extends SalesforceForm {
     init() {
         super.init();
         this.template = template;
+        this.css = '/app/pages/renew/renew.css';
         this.view = {
-            classes: ['adoption-form']
+            classes: ['renewal-form']
         };
         this.model = {
             partners: [],

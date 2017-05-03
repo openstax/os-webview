@@ -22,8 +22,8 @@ export default class AdoptionForm extends Controller {
             classes: ['adoption-page', 'page']
         };
         this.regions = {
-            roleSelector: 'component[data-id="selectedRole"]',
-            form: 'component[data-id="form"]'
+            roleSelector: 'plug-in[data-id="selectedRole"]',
+            form: 'plug-in[data-id="form"]'
         };
         this.form = null;
         this.model = {};

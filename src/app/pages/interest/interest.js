@@ -29,8 +29,8 @@ export default class InterestForm extends Controller {
             defaultTitle
         };
         this.regions = {
-            roleSelector: 'component[data-id="selectedRole"]',
-            form: 'component[data-id="form"]'
+            roleSelector: 'plug-in[data-id="selectedRole"]',
+            form: 'plug-in[data-id="form"]'
         };
     }
 
