@@ -2,6 +2,7 @@ import SalesforceForm from '~/controllers/salesforce-form';
 import router from '~/router';
 import $ from '~/helpers/$';
 import settings from 'settings';
+import salesforce from '~/models/salesforce';
 import selectHandler from '~/handlers/select';
 import {description as template} from './comp-copy.html';
 
@@ -20,7 +21,7 @@ export default class CompCopyForm extends SalesforceForm {
         this.model = {
             validationMessage: (name) =>
                 this.hasBeenSubmitted ? this.el.querySelector(`[name="${name}"]`).validationMessage : '',
-            salesforceHome: settings.salesforceHome
+            salesforceHome: salesforce.salesforceHome
         };
         this.slug = 'pages/comp-copy';
     }

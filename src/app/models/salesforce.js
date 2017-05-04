@@ -1,3 +1,5 @@
+import settings from 'settings';
+
 const adoptionName = '[name="00NU00000055spw"]';
 const adoptionOptions = [{
     key: 'adopted',
@@ -30,7 +32,8 @@ function adoption(options) {
 
 const salesforce = {
     adoption,
-    adoptionName
+    adoptionName,
+    salesforceHome: settings.testingEnvironment ? 'test.salesforce.com' : 'www.salesforce.com'
 };
 
 export default salesforce;

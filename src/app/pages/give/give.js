@@ -5,6 +5,7 @@ import selectHandler from '~/handlers/select';
 import $ from '~/helpers/$';
 import shell from '~/components/shell/shell';
 import settings from 'settings';
+import salesforce from '~/models/salesforce';
 import Share from '~/components/share/share';
 import {description as template} from './give.html';
 
@@ -34,7 +35,7 @@ export default class Give extends CMSPageController {
         this.template = template;
         this.model = {
             headline: '',
-            salesforceHome: settings.salesforceHome,
+            salesforceHome: salesforce.salesforceHome,
             subhead: '',
             paymentMethods: [],
             thankYouUrl: `${settings.apiOrigin}/give-confirmation`,

@@ -1,6 +1,5 @@
 import SalesforceForm from '~/controllers/salesforce-form';
 import salesforce from '~/models/salesforce';
-import settings from 'settings';
 import router from '~/router';
 import FormInput from '~/components/form-input/form-input';
 import FormSelect from '~/components/form-select/form-select';
@@ -111,7 +110,7 @@ export default class TeacherForm extends SalesforceForm {
 
         this.model = Object.assign(model, {
             validationMessage,
-            salesforceHome: settings.salesforceHome
+            salesforceHome: salesforce.salesforceHome
         });
 
         this.inputComponents = Object.keys(inputs).map((k) =>
