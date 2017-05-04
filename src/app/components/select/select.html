@@ -4,7 +4,7 @@
             <if condition="model.selected.size">
                 <li each="tag in model.selected">
                     <span class="label" data-value="{$item}">{$value}</span>
-                    <span class="remover">×</span>
+                    <span class="remover" aria-role="button" tabindex="0">×</span>
                 </li>
             <else>
                 <li>
@@ -20,6 +20,7 @@
         </if>
     </if>
     <ul class="options{model.open ? ' open' : ''}">
-        <li each="option in model.options" class="option" data-value="{$item}">{$value}</li>
+        <li each="option in model.options" class="option{$item === model.activeItem ? ' active' : ''}"
+        data-value="{$item}">{$value}</li>
     </ul>
 </template>

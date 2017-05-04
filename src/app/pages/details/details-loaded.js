@@ -138,6 +138,14 @@ export default class DetailsLoaded extends Controller {
         document.body.style.overflow = 'hidden';
     }
 
+    @on('keydown .table-of-contents-link')
+    operateByKey(event) {
+        if ([13, 32].includes(event.keyCode)) {
+            event.preventDefault();
+            this.showTableOfContents(event);
+        }
+    }
+
     @on('click')
     hideTOC(event) {
         if (event.target !== this.openedWith) {

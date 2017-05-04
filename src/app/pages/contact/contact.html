@@ -17,7 +17,7 @@
                     <label>
                         What is your question about?
                         <span class="invalid-message">{model.validationMessage('subject')}</span>
-                        <div skip="true"></div>
+                        <div skip="true" tabindex="0"></div>
                         <select name="subject">
                             <option each="subject in model.subjects" value="{subject}">{subject}</option>
                         </select>

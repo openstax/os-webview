@@ -170,8 +170,18 @@ export default class Select extends Controller {
 
     @on('click .option')
     toggleOption(e) {
-        const value = e.delegateTarget.getAttribute('data-value');
-        const text = e.delegateTarget.textContent;
+        const selectedItem = this.selectingByMouse ? e.delegateTarget : this.el.querySelector('.option.active');
+        const value = selectedItem.getAttribute('data-value');
+        const text = selectedItem.textContent;
+        const handleRequireNone = () => {
+            if ('requireNone' in this.select.dataset) {
+                if (value === '') {
+                    this.model.selected.clear();
+                } else {
+                    this.model.selected.delete('');
+                }
+            }
+        };
 
         if (!this.select.multiple) {
             this.model.selected.clear();
@@ -180,13 +190,7 @@ export default class Select extends Controller {
             e.stopPropagation();
         }
 
-        if ('requireNone' in this.select.dataset) {
-            if (value === '') {
-                this.model.selected.clear();
-            } else {
-                this.model.selected.delete('');
-            }
-        }
+        handleRequireNone();
 
         if (this.model.selected.has(value)) {
             this.model.selected.delete(value);
@@ -197,6 +201,14 @@ export default class Select extends Controller {
 
         this.update();
         this.updateSelectElement();
+    }
+
+    @on('keydown .option.active')
+    selectByEnter(event) {
+        if (event.keyCode === 32) {
+            event.preventDefault();
+            this.toggleOption(event);
+        }
     }
 
     @on('click .remover')
@@ -211,6 +223,14 @@ export default class Select extends Controller {
         this.updateSelectElement();
     }
 
+    @on('keydown .remover')
+    removeByEnter(event) {
+        if (event.keyCode === 32) {
+            event.preventDefault();
+            this.removeOption(event);
+        }
+    }
+
     @on('click')
     toggleDropdown(e) {
         e.preventDefault();
@@ -221,7 +241,45 @@ export default class Select extends Controller {
         this.handler.closeDropdowns();
 
         this.model.open = open;
+        this.clearKeyboardSelection();
         this.update();
+    }
+
+    @on('mouseover .option')
+    clearKeyboardSelection(event) {
+        this.selectingByMouse = true;
+    }
+
+    @on('keydown')
+    operateByKey(event) {
+        const upCode = 38;
+        const downCode = 40;
+
+        if (this.model.open) {
+            const options = this.select.options;
+
+            if (event.keyCode === downCode) {
+                event.preventDefault();
+                this.activeIndex = Math.min(this.activeIndex + 1, options.length - 1);
+                const option = this.select.options[this.activeIndex];
+
+                this.model.activeItem = option.value;
+                this.update();
+                this.selectingByMouse = false;
+            }
+            if (event.keyCode === upCode) {
+                event.preventDefault();
+                this.activeIndex = Math.max(this.activeIndex - 1, 0);
+                const option = this.select.options[this.activeIndex];
+
+                this.model.activeItem = option.value;
+                this.update();
+                this.selectingByMouse = false;
+            }
+        } else if ([13, 32].includes(event.keyCode)) {
+            this.toggleDropdown(event);
+            this.activeIndex = -1;
+        }
     }
 
     static [CONVERT_OPTIONS](collection) {
