@@ -76,6 +76,7 @@ $text-black3: rgba(0, 0, 0, 0.54);
         }
 
         &:focus {
+            position: relative;
             z-index: 1;
         }
 

@@ -38,9 +38,4 @@ export default class FormSelect extends Controller {
         this.proxyWidget.updateOptions();
     }
 
-    @on('focusin .proxy-select')
-    dealWithFocus() {
-        console.debug("Got focus");
-    }
-
 }
