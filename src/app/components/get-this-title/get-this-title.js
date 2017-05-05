@@ -1,5 +1,6 @@
 import {Controller} from 'superb';
 import {on} from '~/helpers/controller/decorators';
+import $ from '~/helpers/$';
 import userModel from '~/models/usermodel';
 import router from '~/router';
 import {highSchoolSlugs} from '~/models/book-titles';
@@ -80,7 +81,7 @@ export default class GetThisTitle extends Controller {
 
     @on('keydown .submenu .remover')
     operateByKey(event) {
-        if ([13, 32].includes(event.keyCode)) {
+        if ([$.key.space, $.key.enter].includes(event.keyCode)) {
             event.preventDefault();
             this.hideSubmenu();
         }

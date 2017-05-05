@@ -140,7 +140,7 @@ export default class DetailsLoaded extends Controller {
 
     @on('keydown .table-of-contents-link')
     operateByKey(event) {
-        if ([13, 32].includes(event.keyCode)) {
+        if ([$.key.space, $.key.enter].includes(event.keyCode)) {
             event.preventDefault();
             this.showTableOfContents(event);
         }
@@ -152,6 +152,21 @@ export default class DetailsLoaded extends Controller {
             this.model.tocIsOpen = false;
             this.update();
             document.body.style.overflow = '';
+        }
+    }
+
+    @on('keydown')
+    handleKeysInTOC(event) {
+        if (this.model.tocIsOpen) {
+            const remover = this.el.querySelector('.toc-remover');
+
+            if ([$.key.enter, $.key.esc].includes(event.keyCode)) {
+                this.model.tocIsOpen = false;
+                this.update();
+            } else if (![$.key.space, $.key.up, $.key.down].includes(event.keyCode)) {
+                remover.focus();
+                event.preventDefault();
+            }
         }
     }
 

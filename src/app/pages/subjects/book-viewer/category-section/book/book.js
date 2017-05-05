@@ -38,14 +38,18 @@ export default class Book extends Controller {
         this.update();
     }
 
+    openMenu() {
+        this.model.detailsOpenClass = this.model.detailsOpenClass === 'open' ? '' : 'open';
+        this.update();
+        this.getThis.model.submenu = '';
+        this.getThis.update();
+        $.scrollTo(this.el);
+    }
+
     @on('click img')
     selectOrDetails(event) {
         if ($.isTouchDevice()) {
-            this.model.detailsOpenClass = this.model.detailsOpenClass === 'open' ? '' : 'open';
-            this.update();
-            this.getThis.model.submenu = '';
-            this.getThis.update();
-            $.scrollTo(this.el);
+            this.openMenu();
         } else {
             // Clicking the book cover is the same as clicking the CTA button
             this.el.querySelector('.cta>.btn').click(event);
@@ -54,15 +58,15 @@ export default class Book extends Controller {
 
     @on('keydown img')
     operateByKey(event) {
-        if ([13, 32].includes(event.keyCode)) {
+        if ([$.key.space, $.key.enter].includes(event.keyCode)) {
             event.preventDefault();
-            this.selectOrDetails(event);
+            this.openMenu();
         }
     }
 
     @on('keydown')
     escClosesSubmenu(event) {
-        if (event.keyCode === 27) {
+        if (event.keyCode === $.key.esc) {
             this.hideChildren();
         }
     }

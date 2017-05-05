@@ -185,4 +185,14 @@ $.fade = (element, {fromOpacity, toOpacity, steps=10}) => {
     });
 };
 
+$.key = {
+    esc: 27,
+    space: 32,
+    enter: 13,
+    up: 38,
+    down: 40,
+    left: 37,
+    right: 39
+};
+
 export default $;

@@ -53,7 +53,7 @@ export default class Select extends Controller {
                 return bDiff - aDiff;
             });
 
-            if (e.keyCode === 13) {
+            if (e.keyCode === $.key.enter) {
                 // Pick the topmost element
                 const notScrolledPast = Array.from(items)
                 .filter((el) => el.getBoundingClientRect().top - listTop >= 0);
@@ -205,7 +205,7 @@ export default class Select extends Controller {
 
     @on('keydown .option.active')
     selectByEnter(event) {
-        if (event.keyCode === 32) {
+        if (event.keyCode === $.key.space) {
             event.preventDefault();
             this.toggleOption(event);
         }
@@ -225,7 +225,7 @@ export default class Select extends Controller {
 
     @on('keydown .remover')
     removeByEnter(event) {
-        if (event.keyCode === 32) {
+        if (event.keyCode === $.key.space) {
             event.preventDefault();
             this.removeOption(event);
         }
@@ -252,13 +252,10 @@ export default class Select extends Controller {
 
     @on('keydown')
     operateByKey(event) {
-        const upCode = 38;
-        const downCode = 40;
-
         if (this.model.open) {
             const options = this.select.options;
 
-            if (event.keyCode === downCode) {
+            if (event.keyCode === $.key.down) {
                 event.preventDefault();
                 this.activeIndex = Math.min(this.activeIndex + 1, options.length - 1);
                 const option = this.select.options[this.activeIndex];
@@ -267,7 +264,7 @@ export default class Select extends Controller {
                 this.update();
                 this.selectingByMouse = false;
             }
-            if (event.keyCode === upCode) {
+            if (event.keyCode === $.key.up) {
                 event.preventDefault();
                 this.activeIndex = Math.max(this.activeIndex - 1, 0);
                 const option = this.select.options[this.activeIndex];
@@ -276,7 +273,7 @@ export default class Select extends Controller {
                 this.update();
                 this.selectingByMouse = false;
             }
-        } else if ([13, 32].includes(event.keyCode)) {
+        } else if ([$.key.enter, $.key.space].includes(event.keyCode)) {
             this.toggleDropdown(event);
             this.activeIndex = -1;
         }

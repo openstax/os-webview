@@ -235,7 +235,7 @@ class Header extends Controller {
 
     @on('keydown .expand')
     onKeydownToggleFullScreenNav(e) {
-        if (document.activeElement === e.target && (e.keyCode === 13 || e.keyCode === 32)) {
+        if (document.activeElement === e.target && [$.key.space, $.key.enter].includes(e.keyCode)) {
             e.preventDefault();
             this.toggleFullScreenNav(e.target);
         }
@@ -245,13 +245,11 @@ class Header extends Controller {
     @on('keydown a[role="menuitem"]:focus')
     nextOrPrevious(event) {
         const container = event.target.parentNode;
-        const leftCode = 37;
-        const rightCode = 39;
 
-        if (event.keyCode === leftCode) {
+        if (event.keyCode === $.key.left) {
             container.previousSibling && container.previousSibling.querySelector('[role="menuitem"]').focus();
         }
-        if (event.keyCode === rightCode) {
+        if (event.keyCode === $.key.right) {
             container.nextSibling && container.nextSibling.querySelector('[role="menuitem"]').focus();
         }
     }

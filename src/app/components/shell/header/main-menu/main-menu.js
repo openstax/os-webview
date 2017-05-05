@@ -37,22 +37,17 @@ export default class MainMenu extends Controller {
         /* eslint complexity: 0 */
         const menu = event.target.nextSibling.children;
         const lastIndex = menu.length - 1;
-        const upCode = 38;
-        const downCode = 40;
-        const enterCode = 13;
-        const spaceCode = 32;
-        const escCode = 27;
         const newTarget = () => menu[this.selectedIndex].querySelector('a');
 
         switch (event.keyCode) {
-        case downCode:
+        case $.key.down:
             if (this.selectedIndex < lastIndex) {
                 ++this.selectedIndex;
             }
             event.preventDefault();
             this.update();
             break;
-        case upCode:
+        case $.key.up:
             --this.selectedIndex;
             if (this.selectedIndex < 0) {
                 this.selectedIndex = 0;
@@ -60,12 +55,12 @@ export default class MainMenu extends Controller {
             event.preventDefault();
             this.update();
             break;
-        case enterCode:
-        case spaceCode:
+        case $.key.enter:
+        case $.key.space:
             event.preventDefault();
             newTarget().dispatchEvent($.newEvent('click'));
             // Falls through!
-        case escCode:
+        case $.key.esc:
             document.activeElement.blur();
             break;
         default:

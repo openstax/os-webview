@@ -186,7 +186,7 @@ export default class Give extends CMSPageController {
 
     @on('keydown .amount')
     operateByKey(event) {
-        if ([13, 32].includes(event.keyCode)) {
+        if ([$.key.enter, $.key.space].includes(event.keyCode)) {
             event.preventDefault();
             this.selectAmount(event);
         }
