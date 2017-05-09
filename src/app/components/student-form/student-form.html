@@ -1,23 +1,6 @@
-<template args="model">
-    <plug-in data-id="popup" skip="true"></plug-in>
-    <form action="{model.postUrl}" method="post" class="text-content">
-        <div class="row">
-            <div class="col">
-                <plug-in data-id="firstName" skip="true"></plug-in>
-                <plug-in data-id="lastName" skip="true"></plug-in>
-            </div>
-            <div class="col">
-                <plug-in data-id="email" skip="true"></plug-in>
-                <plug-in data-id="school" skip="true"></plug-in>
-            </div>
-        </div>
-        <div class="cta">
-            <label>
-                <input type="checkbox" name="email_updates" value="0" checked />
-                <input if="!model.isChecked" type="hidden" name="email_updates" value="1" />
-                Receive email updates from OpenStax.
-            </label>
-            <input name="commit" class="btn" type="submit" value="Submit" role="button" />
-        </div>
-    </form>
-</template>
+<div class="text-content">
+    Students don't need to fill out any forms to use our books. Access them free now!
+    <div class="cta">
+        <a onclick="history.back()" class="btn">Go back</a>
+    </div>
+</div>

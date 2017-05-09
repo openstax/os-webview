@@ -39,7 +39,7 @@
     .text-content {
         width: 100%;
 
-        > plug-in {
+        > plug-in:not('[data-id="selectedRole"]') {
             width: 100%;
         }
     }
