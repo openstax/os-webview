@@ -252,6 +252,7 @@ export default class Select extends Controller {
 
     @on('keydown')
     operateByKey(event) {
+        /* eslint complexity: 0 */
         if (this.model.open) {
             const options = this.select.options;
 
@@ -272,6 +273,9 @@ export default class Select extends Controller {
                 this.model.activeItem = option.value;
                 this.update();
                 this.selectingByMouse = false;
+            }
+            if (event.keyCode === $.key.esc) {
+                this.closeDropdown();
             }
         } else if ([$.key.enter, $.key.space].includes(event.keyCode)) {
             this.toggleDropdown(event);
