@@ -18,6 +18,4 @@ const settings = {
     }
 };
 
-settings.salesforceHome = settings.testingEnvironment ? 'test.salesforce.com' : 'www.salesforce.com';
-
 export default settings;
