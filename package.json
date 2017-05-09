@@ -73,6 +73,7 @@
       "settings": "<rootDir>/dist/settings",
       "fetch": "<rootDir>/jspm_packages/npm/whatwg-fetch@1.1.1/fetch.js"
     },
+    "coveragePathIgnorePatterns": ["/jspm_packages"],
     "setupFiles": [
       "<rootDir>/test/setupFile.js"
     ]
@@ -88,7 +89,7 @@
       "jspm:browser": "src/jspm.browser.js"
     },
     "dependencies": {
-      "babel-polyfill": "npm:babel-polyfill@^6.9.1",
+      "babel-polyfill": "npm:babel-polyfill@^6.23.0",
       "fetch": "npm:whatwg-fetch@^1.0.0",
       "recordo": "npm:recordo@0.0.6",
       "superb": "npm:superb.js@^0.2.7"
