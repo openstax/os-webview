@@ -112,7 +112,7 @@ export default class Partners extends CMSPageController {
         const pushOrReplaceState = history.state.target ? 'replaceState' : 'pushState';
 
         $.scrollTo(el).then(() => {
-            el.querySelector('.to-top').focus();
+            el.querySelector('a').focus();
         });
         history[pushOrReplaceState](state, '', href);
     }
