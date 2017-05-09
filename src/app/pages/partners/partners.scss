@@ -67,8 +67,11 @@ $text-dark2: rgba(0, 0, 0, 0.7);
         }
 
         .logo {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            min-height: 14rem;
             min-width: 22rem;
-            padding: 4rem;
 
             &.hidden {
                 display: none;
@@ -87,7 +90,6 @@ $text-dark2: rgba(0, 0, 0, 0.7);
                 }
             }
 
-            .logo-text,
             img {
                 max-height: 7.5rem;
                 max-width: 14rem;

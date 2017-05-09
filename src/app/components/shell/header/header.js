@@ -132,27 +132,6 @@ class Header extends Controller {
         return height;
     }
 
-    @on('click .skiptocontent a')
-    skipToContent() {
-        const el = document.getElementById('maincontent');
-
-        function removeTabIndex() {
-            this.removeAttribute('tabindex');
-            this.removeEventListener('blur', removeTabIndex, false);
-            this.removeEventListener('focusout', removeTabIndex, false);
-        }
-
-        if (el) {
-            if (!(/^(?:a|select|input|button|textarea)$/i).test(el.tagName)) {
-                el.tabIndex = -1;
-                el.addEventListener('blur', removeTabIndex, false);
-                el.addEventListener('focusout', removeTabIndex, false);
-            }
-
-            el.focus();
-        }
-    }
-
     toggleFullScreenNav(button) {
         const wasActive = this.el.classList.contains('active');
         const reconfigure = () => {
@@ -237,6 +216,7 @@ class Header extends Controller {
             e.preventDefault();
             e.stopPropagation();
             if (!dropDownMenu.classList.contains('open')) {
+                // FIX: this should all be done in the view
                 this.removeAllOpenClasses();
                 this.el.classList.add('open');
                 parentItem.classList.add('open');
@@ -255,12 +235,26 @@ class Header extends Controller {
 
     @on('keydown .expand')
     onKeydownToggleFullScreenNav(e) {
-        if (document.activeElement === e.target && (e.keyCode === 13 || e.keyCode === 32)) {
+        if (document.activeElement === e.target && [$.key.space, $.key.enter].includes(e.keyCode)) {
             e.preventDefault();
             this.toggleFullScreenNav(e.target);
         }
     }
 
+    // Left and right arrows go through menu items
+    @on('keydown a[role="menuitem"]:focus')
+    nextOrPrevious(event) {
+        const container = event.target.parentNode;
+
+        if (event.keyCode === $.key.left) {
+            container.previousSibling && container.previousSibling.querySelector('[role="menuitem"]').focus();
+        }
+        if (event.keyCode === $.key.right) {
+            container.nextSibling && container.nextSibling.querySelector('[role="menuitem"]').focus();
+        }
+    }
+
+    // FIX: should be done in the view
     openThisDropdown(menu) {
         menu.setAttribute('aria-expanded', 'true');
 
@@ -286,6 +280,7 @@ class Header extends Controller {
         }
     }
 
+    // FIX: should be done in the view
     closeDropdownMenus(all) {
         const menus = this.el.querySelectorAll('.dropdown-menu');
 

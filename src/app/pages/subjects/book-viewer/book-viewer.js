@@ -1,4 +1,5 @@
 import {Controller} from 'superb';
+import {on} from '~/helpers/controller/decorators';
 import CategorySelector from '~/components/category-selector/category-selector';
 import CategorySection from './category-section/category-section';
 
@@ -65,6 +66,15 @@ export default class BookViewer extends Controller {
         }
         for (const controller of this.categorySections) {
             controller.filter(category);
+        }
+    }
+
+    @on('focusin .cover img')
+    closeAnyOpenDetails() {
+        for (const section of this.regions.self.controllers) {
+            for (const c of section.regions.books.controllers) {
+                c.hideChildren();
+            }
         }
     }
 

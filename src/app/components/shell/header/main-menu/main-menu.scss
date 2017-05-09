@@ -13,30 +13,10 @@
     @at-root .fixed#{&} {
         left: 0;
         overflow: visible;
-    }
 
-    .container {
-        align-items: flex-start;
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        justify-content: space-between;
-        margin: 0 auto;
-        max-width: $boxed-width;
-
-        @include desktop {
-            align-items: center;
-            flex-direction: row;
-        }
-
-        @at-root :not(.active)#{&} {
-            @include phone {
-                position: relative;
-            }
-
-            @include tablet {
-                position: relative;
-            }
+        .dropdown-menu {
+            position: fixed;
+            top: 5.5rem;
         }
     }
 
@@ -75,12 +55,12 @@
         font-weight: 600;
         height: 0;
         overflow: hidden;
+        padding: 0;
 
         @at-root .active#{&} {
             display: flex;
             height: auto;
             margin: 0;
-            padding: 0;
         }
 
         @include desktop {
@@ -128,6 +108,7 @@
                 }
             }
 
+            :focus ~ .dropdown-menu,
             &:hover .dropdown-menu {
                 border-top: 0.5rem solid color(orange);
                 display: block;
@@ -139,17 +120,6 @@
                 width: auto;
 
                 @at-root .fixed#{&} {
-                    position: fixed;
-                    top: 5.5rem;
-                }
-
-                a {
-                    color: color(gray);
-                    display: block;
-
-                    &:hover {
-                        color: color(cyan);
-                    }
                 }
             }
 
@@ -175,14 +145,17 @@
             font-weight: 300;
             padding-left: 0;
 
-            @include desktop {
+            a {
+                color: color(gray);
                 display: block;
-                height: 0;
-                opacity: 0;
-                overflow: hidden;
-                position: absolute;
-                width: 0;
             }
+
+            // scss-lint:disable SelectorDepth
+            .active > a,
+            a:hover {
+                color: color(cyan);
+            }
+            // scss-lint:enable SelectorDepth
         }
     }
 

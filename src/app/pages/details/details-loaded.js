@@ -138,12 +138,35 @@ export default class DetailsLoaded extends Controller {
         document.body.style.overflow = 'hidden';
     }
 
+    @on('keydown .table-of-contents-link')
+    operateByKey(event) {
+        if ([$.key.space, $.key.enter].includes(event.keyCode)) {
+            event.preventDefault();
+            this.showTableOfContents(event);
+        }
+    }
+
     @on('click')
     hideTOC(event) {
         if (event.target !== this.openedWith) {
             this.model.tocIsOpen = false;
             this.update();
             document.body.style.overflow = '';
+        }
+    }
+
+    @on('keydown')
+    handleKeysInTOC(event) {
+        if (this.model.tocIsOpen) {
+            const remover = this.el.querySelector('.toc-remover');
+
+            if ([$.key.enter, $.key.esc].includes(event.keyCode)) {
+                this.model.tocIsOpen = false;
+                this.update();
+            } else if (![$.key.space, $.key.up, $.key.down].includes(event.keyCode)) {
+                remover.focus();
+                event.preventDefault();
+            }
         }
     }
 

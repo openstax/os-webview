@@ -75,7 +75,12 @@ $text-black3: rgba(0, 0, 0, 0.54);
             text-align: center;
         }
 
-        &.selected {
+        &:focus {
+            position: relative;
+            z-index: 1;
+        }
+
+        &[aria-pressed="true"] {
             order: -1;
 
             @include desktop {
@@ -95,7 +100,7 @@ $text-black3: rgba(0, 0, 0, 0.54);
             }
         }
 
-        &:not(.selected) {
+        &:not([aria-pressed="true"]) {
             height: 0;
             opacity: 0;
             padding: 0;

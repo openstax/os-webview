@@ -12,7 +12,7 @@ export default class RadioPanel extends Controller {
         };
         this.model = {
             items,
-            isSelected: (value) => this.selectedValue === value ? ' selected' : ''
+            isSelected: (value) => this.selectedValue === value
         };
         this.active = false;
         this.onChange = onChange;
@@ -44,6 +44,14 @@ export default class RadioPanel extends Controller {
         }
         this.updateSelected(newValue);
         this.onChange(newValue);
+    }
+
+    @on('keydown .filter-button')
+    operateByKey(event) {
+        if ([$.key.space, $.key.enter].includes(event.keyCode)) {
+            event.preventDefault();
+            this.setCategory(event);
+        }
     }
 
 }

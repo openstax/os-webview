@@ -28,6 +28,11 @@ $button-size: 2.8rem;
         }
     }
 
+    :focus {
+        border-radius: 0.3rem;
+        box-shadow: 0 0 5px 3px rgba(color(cyan), 0.7);
+    }
+
     > .meta-nav {
         order: 1;
     }
@@ -38,6 +43,31 @@ $button-size: 2.8rem;
         @include desktop {
             height: 6rem;
             transform: translate3d(0, 0, 0);
+        }
+
+        .container {
+            align-items: flex-start;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: space-between;
+            margin: 0 auto;
+            max-width: $boxed-width;
+
+            @include desktop {
+                align-items: center;
+                flex-direction: row;
+            }
+
+            @at-root :not(.active)#{&} {
+                @include phone {
+                    position: relative;
+                }
+
+                @include tablet {
+                    position: relative;
+                }
+            }
         }
     }
 

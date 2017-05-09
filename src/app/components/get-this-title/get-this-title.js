@@ -1,5 +1,6 @@
 import {Controller} from 'superb';
 import {on} from '~/helpers/controller/decorators';
+import $ from '~/helpers/$';
 import userModel from '~/models/usermodel';
 import router from '~/router';
 import {highSchoolSlugs} from '~/models/book-titles';
@@ -59,6 +60,8 @@ export default class GetThisTitle extends Controller {
         event.preventDefault();
         this.model.submenu = 'pdf';
         this.update();
+        // Focus on first link
+        this.el.querySelector('.pdf-submenu a').focus();
     }
 
     @on('click .show-print-submenu')
@@ -66,12 +69,22 @@ export default class GetThisTitle extends Controller {
         event.preventDefault();
         this.model.submenu = 'print';
         this.update();
+        // Focus on first link
+        this.el.querySelector('.print-submenu a').focus();
     }
 
     @on('click .submenu .remover')
     hideSubmenu() {
         this.model.submenu = '';
         this.update();
+    }
+
+    @on('keydown .submenu .remover')
+    operateByKey(event) {
+        if ([$.key.space, $.key.enter].includes(event.keyCode)) {
+            event.preventDefault();
+            this.hideSubmenu();
+        }
     }
 
     @on('click [href*="cnx.org/content"],:not(.show-pdf-submenu)[href$=".pdf"]')

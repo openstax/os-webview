@@ -137,7 +137,8 @@ select {
             padding: 0.5rem 1rem;
             width: 100%;
 
-            &:hover {
+            &:hover,
+            &.active {
                 background-color: rgba(color(neutral-lighter), 0.3);
             }
         }
