@@ -5,4 +5,9 @@
      pattern="{model.pattern}" min="{model.min}" max="{model.max}"
      placeholder="{model.placeholder}"
      required="{model.required ? '' : null}">
+    <div if="model.matches" class="suggestions">
+        <div class="suggestion-box">
+            <div class="suggestion{match === model.activeSuggestion ? ' active' : ''}" each="match in model.matches">{match}</div>
+        </div>
+    </div>
 </template>

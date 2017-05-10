@@ -2,6 +2,7 @@ import {Controller} from 'superb';
 import Popup from '~/components/popup/popup';
 import FormInput from '~/components/form-input/form-input';
 import ManagedComponent from '~/helpers/controller/managed-component';
+import {schoolPromise} from '~/models/schools';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './contact-info.html';
 
@@ -50,7 +51,8 @@ export default class ContactInfo extends Controller {
                 type: 'text',
                 label: 'School name',
                 required: true,
-                validationMessage: this.model.validationMessage
+                validationMessage: this.model.validationMessage,
+                suggestions: []
             }),
             schoolUrl: new FormInput({
                 name: 'URL',
@@ -66,6 +68,18 @@ export default class ContactInfo extends Controller {
         this.components = Object.keys(inputs).map((k) =>
             new ManagedComponent(inputs[k], k, this)
         );
+        this.componentsById = {};
+        for (const c of this.components) {
+            this.componentsById[c.id] = c.component;
+        }
+        schoolPromise.then((schools) => {
+            const schoolComponent = this.componentsById.school;
+
+            this.knownSchools = schools;
+            if (schoolComponent) {
+                schoolComponent.model.suggestions = schools;
+            }
+        });
     }
 
     onLoaded() {
@@ -74,18 +88,30 @@ export default class ContactInfo extends Controller {
         }
     }
 
+    schoolMatchesSuggestion() {
+        const value = this.componentsById.school.el.querySelector('input').value;
+
+        return this.knownSchools && this.knownSchools.includes(value);
+    }
+
+    schoolUrlIsRequired() {
+        const isHomeSchool = (/home ?school/i).test(this.model.selectedRole);
+
+        return !isHomeSchool && !this.schoolMatchesSuggestion();
+    }
+
     updateSchoolUrlModel() {
-        const schoolUrlComponent = this.components.find((c) => c.id === 'schoolUrl');
+        const schoolUrlComponent = this.componentsById.schoolUrl;
 
         if (schoolUrlComponent) {
-            const schoolUrlModel = schoolUrlComponent.component.model;
-            const isHomeSchool = (/home ?school/i).test(this.model.selectedRole);
+            const schoolUrlModel = schoolUrlComponent.model;
+            const schoolUrlValue = schoolUrlComponent.getValue();
 
-            schoolUrlModel.required = !isHomeSchool;
-            if (schoolUrlModel.value === 'http://' && isHomeSchool) {
-                schoolUrlModel.value = '';
-            } else if (schoolUrlModel.value === '' && !isHomeSchool) {
-                schoolUrlModel.value = 'http://';
+            schoolUrlModel.required = this.schoolUrlIsRequired();
+            if (schoolUrlValue === 'http://' && !schoolUrlModel.required) {
+                schoolUrlComponent.setValue('');
+            } else if ((schoolUrlModel.required || schoolUrlValue) && !schoolUrlValue.includes('//')) {
+                schoolUrlComponent.setValue(`http://${schoolUrlValue}`);
             }
         }
     }
@@ -95,6 +121,11 @@ export default class ContactInfo extends Controller {
         for (const c of this.components) {
             c.update();
         }
+    }
+
+    @on('focusout [name="company"],[name="URL"]')
+    updateOnChange(event) {
+        this.update();
     }
 
     checkSchoolName() {
