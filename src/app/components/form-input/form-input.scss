@@ -6,11 +6,14 @@
         height: 0;
         overflow: visible;
         position: relative;
+        z-index: 2;
     }
 
     .suggestion-box {
         background-color: color(neutral-lightest);
         box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(color(gray), 0.1);
+        max-height: 50vh;
+        overflow: auto;
     }
 
     .suggestion {
