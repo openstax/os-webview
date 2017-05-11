@@ -13,6 +13,7 @@ class OrderItems extends CMSPageController {
     init(model) {
         this.template = oiTemplate;
         this.model = model;
+        this.model.amazonUrl = 'https://www.amazon.com/s?marketplaceID=ATVPDKIKX0DER&me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&redirect=true';
         this.slug = 'books';
     }
 

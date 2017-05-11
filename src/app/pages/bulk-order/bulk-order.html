@@ -1,4 +1,8 @@
 <template args="model">
+    <div class="instructions text-content">
+        If you are ordering fewer than 25 books, place your order via our
+        <a href="{model.amazonUrl}">Amazon.com storefront</a>.
+    </div>
     <form action="{`${model.origin}/api/mail/send_mail/`}" class="form" method="post">
         <input type="hidden" name="csrfmiddlewaretoken" value="{model.csrfToken}" />
         <input name="message_body" type="hidden" value="{model.messageBody}" />
