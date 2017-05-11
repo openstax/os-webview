@@ -21,6 +21,7 @@
             display: block;
 
             @include desktop {
+                align-items: stretch;
                 display: flex;
                 flex-flow: row wrap;
                 padding: 0;
