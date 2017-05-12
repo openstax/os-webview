@@ -82,6 +82,8 @@
         .content {
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
+            min-height: 30rem;
         }
 
         .viewport {

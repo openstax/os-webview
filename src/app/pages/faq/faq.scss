@@ -58,22 +58,4 @@
             }
         }
     }
-
-    .info-box {
-        background-color: color(neutral-lightest);
-        display: inline-block;
-        padding: 1.5rem;
-
-        .in-color {
-            color: color(blue);
-        }
-
-        .fa {
-            width: 2em;
-        }
-    }
-
-    .one-line {
-        white-space: nowrap;
-    }
 }
