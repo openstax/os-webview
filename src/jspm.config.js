@@ -9,16 +9,10 @@ SystemJS.config({
       "uglify-js": "npm:uglify-js@2.8.22",
       "source-map": "npm:source-map@0.2.0",
       "element-dataset": "npm:element-dataset@2.2.6",
-      "jest-fetch-mock": "npm:jest-fetch-mock@1.1.1",
       "punycode": "github:jspm/nodelibs-punycode@0.2.0-alpha",
       "console": "github:jspm/nodelibs-console@0.2.0-alpha"
     },
     "packages": {
-      "npm:jest-fetch-mock@1.1.1": {
-        "map": {
-          "whatwg-fetch": "npm:whatwg-fetch@1.0.0"
-        }
-      },
       "npm:uglify-js@2.8.22": {
         "map": {
           "source-map": "npm:source-map@0.5.6",
