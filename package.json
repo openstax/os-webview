@@ -180,6 +180,9 @@
       "npm:ms@0.7.3": {
         "jspmNodeConversion": false,
         "format": "cjs"
+      },
+      "npm:safe-buffer@5.0.1": {
+        "browser": "index.js"
       }
     }
   },
