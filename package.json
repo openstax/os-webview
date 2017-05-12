@@ -73,7 +73,9 @@
       "settings": "<rootDir>/dist/settings",
       "fetch": "<rootDir>/jspm_packages/npm/whatwg-fetch@1.1.1/fetch.js"
     },
-    "coveragePathIgnorePatterns": ["/jspm_packages"],
+    "coveragePathIgnorePatterns": [
+      "/jspm_packages"
+    ],
     "setupFiles": [
       "<rootDir>/test/setupFile.js"
     ]
@@ -182,6 +184,9 @@
       "npm:ms@0.7.3": {
         "jspmNodeConversion": false,
         "format": "cjs"
+      },
+      "npm:safe-buffer@5.0.1": {
+        "browser": "index.js"
       }
     }
   },

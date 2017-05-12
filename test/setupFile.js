@@ -3,6 +3,7 @@ import 'babel-polyfill';
 jest.mock('~/components/shell/shell');
 
 global.fetch = require('jest-fetch-mock');
+global.regeneratorRuntime = regeneratorRuntime;
 
 // Polyfill
 Array.prototype.includes = function (member) {

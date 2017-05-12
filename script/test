@@ -7,7 +7,7 @@ fi
 
 source ./script/bootstrap || exit 2
 
-$(npm bin)/jspm install || exit 3
-npm install || exit 4
+$(npm bin)/jspm --log warn install || exit 3
+npm --quiet install || exit 4
 
 npm test || exit 5
