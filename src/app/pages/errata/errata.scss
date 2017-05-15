@@ -35,6 +35,10 @@ $bar-size: 0.2rem;
             margin-bottom: 2rem;
         }
 
+        > .text-area {
+            text-align: left;
+        }
+
         h1 {
             color: color(blue);
             font-size: 4.8rem;
