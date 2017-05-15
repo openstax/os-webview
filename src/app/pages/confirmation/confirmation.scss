@@ -70,6 +70,10 @@ $page-background: #fbfbfb;
 
             &.left-aligned {
                 text-align: left;
+
+                > * {
+                    margin-left: 0;
+                }
             }
         }
 
