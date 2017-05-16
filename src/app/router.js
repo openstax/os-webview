@@ -66,7 +66,6 @@ class AppRouter extends Router {
         this.route('give-confirmation', 'give');
         this.route('adoption-confirmation', 'confirmation');
         this.route('interest-confirmation', 'confirmation');
-        this.route('student-confirmation', 'confirmation');
 
         PAGES.forEach((page) => {
             const isSplat = page.match(/\/\*/);

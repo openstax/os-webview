@@ -39,7 +39,11 @@ const models = {
     errata: {
         headline: 'Thanks for your help!',
         adoptionQuestion: `Your contribution helps keep OpenStax resources high quality
-        and up to date.`
+        and up to date.`,
+        belowHeader: {
+            text: 'Have more errata to submit?',
+            buttons: []
+        }
     },
     interest: {
         headline: 'Thanks for telling us about yourself!',
@@ -48,24 +52,6 @@ const models = {
         adoptionLinkText: 'Get verified',
         subjectLinkText: 'Explore our books',
         studentImage: 'student-chemistry.png'
-    },
-    student: {
-        headline: 'Get started with OpenStax!',
-        studentImage: 'student-algebra.png',
-        belowHeader: {
-            text: 'Download our getting started guide for our books or use our' +
-            ' toolkit to help bring more free, openly licensed books to your campus.',
-            buttons: [
-                {
-                    text: 'Getting Started Guide',
-                    colorScheme: 'white-on-blue'
-                },
-                {
-                    text: 'Student Toolkit',
-                    colorScheme: 'white-on-gold'
-                }
-            ]
-        }
     }
 };
 
@@ -107,6 +93,11 @@ export default class Confirmation extends Controller {
             const queryDict = $.parseSearchString(window.location.search);
 
             Detail.detailPromise(queryDict.id).then((detail) => {
+                this.model.belowHeader.buttons.push({
+                    text: `submit ${detail.bookTitle} errata`,
+                    colorScheme: 'white-on-blue',
+                    url: `/errata/form?book=${encodeURIComponent(detail.bookTitle)}`
+                });
                 Errata.setDisplayStatus(detail);
                 this.regions.detail.attach(new Detail(detail));
             });
