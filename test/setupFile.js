@@ -1,26 +1,9 @@
-Object.defineProperty(document, 'currentScript', {
-  value: document.createElement('script'),
-});
+import 'babel-polyfill';
+import 'isomorphic-fetch';
+import {LocalStorage} from 'node-localstorage';
 
-class LocalStorageMock {
-  constructor() {
-    this.store = {};
-  }
-
-  clear() {
-    this.store = {};
-  }
-
-  getItem(key) {
-    return this.store[key];
-  }
-
-  setItem(key, value) {
-    this.store[key] = value.toString();
-  }
-};
-
-global.localStorage = new LocalStorageMock;
+jest.mock('~/components/shell/shell');
+global.localStorage = new LocalStorage('./scratch');
 
 window.MutationObserver = function () {};
 window.MutationObserver.prototype.observe = function () {};

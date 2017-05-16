@@ -23,6 +23,8 @@
     "babel-plugin-transform-decorators": "6.24.1",
     "babel-plugin-transform-decorators-legacy": "1.3.4",
     "babel-plugin-transform-object-assign": "6.22.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.4.0",
     "babel-preset-es2015": "6.24.1",
     "babel-runtime": "^6.20.0",
     "browser-sync": "2.18.8",
@@ -54,11 +56,14 @@
     "gulp-uglify": "2.1.2",
     "gulp-util": "3.0.8",
     "gulp-wrap": "0.13.0",
+    "isomorphic-fetch": "^2.2.1",
     "jest": "19.0.2",
     "jest-cli": "19.0.2",
     "jsdom": "10.0.0",
     "jsdom-global": "2.1.1",
     "jspm": "0.17.0-beta.23",
+    "node-localstorage": "^1.3.0",
+    "recordo": "0.0.6",
     "regenerator-runtime": "^0.10.5",
     "require-dir": "0.3.1",
     "sw-precache": "5.1.0",
@@ -70,9 +75,14 @@
     "moduleNameMapper": {
       "^~/(.*)": "<rootDir>/dist/app/$1",
       "superb": "<rootDir>/jspm_packages/npm/superb.js@0.2.16/dist/superb.js",
+      "recordo": "<rootDir>/jspm_packages/npm/recordo.js@0.0.6/dist/recordo.js",
       "settings": "<rootDir>/dist/settings",
       "fetch": "<rootDir>/jspm_packages/npm/whatwg-fetch@1.1.1/fetch.js"
     },
+    "coveragePathIgnorePatterns": [
+      "/jspm_packages",
+      "/analytics"
+    ],
     "setupFiles": [
       "<rootDir>/test/setupFile.js"
     ]
@@ -88,7 +98,7 @@
       "jspm:browser": "src/jspm.browser.js"
     },
     "dependencies": {
-      "babel-polyfill": "npm:babel-polyfill@^6.9.1",
+      "babel-polyfill": "npm:babel-polyfill@^6.23.0",
       "fetch": "npm:whatwg-fetch@^1.0.0",
       "recordo": "npm:recordo@0.0.6",
       "superb": "npm:superb.js@^0.2.7"

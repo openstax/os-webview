@@ -2,9 +2,12 @@
 
 if [[ ! -f "./jspm_packages/system.js" ]]; then
   >&2 echo "It looks like you forgot to run ./script/setup first."
-  exit 2
+  exit 1
 fi
 
-source ./script/bootstrap || exit 1
+source ./script/bootstrap || exit 2
 
-npm test || exit 3
+$(npm bin)/jspm --log warn install || exit 3
+npm --quiet install || exit 4
+
+npm test || exit 5
