@@ -1,4 +1,5 @@
 import CMSPageController from '~/controllers/cms';
+import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 
 class SalesforceForm extends CMSPageController {
@@ -43,6 +44,7 @@ class SalesforceForm extends CMSPageController {
 
         this.hasBeenSubmitted = true;
         if (invalid) {
+            $.scrollTo(invalid.parentNode);
             event.preventDefault();
             this.update();
         }
