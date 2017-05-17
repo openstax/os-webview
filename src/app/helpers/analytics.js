@@ -21,6 +21,7 @@ class Analytics {
             .then(
                 () => {
                     window.ga('send', fields);
+                    window.ga2('send', fields);
                 },
                 () => {
                     console.warn('GA FAILED TO IMPORT');
@@ -200,8 +201,13 @@ class Analytics {
                 q: [['create', settings.analyticsID, 'auto']],
                 l: Date.now()
             };
+            window.ga2 = {
+                q: [['create', settings.analyticsID2, 'auto']],
+                l: Date.now()
+            };
         } else {
             window.ga('create', settings.analyticsID, 'auto');
+            window.ga2('create', settings.analyticsID2, 'auto');
         }
 
         document.addEventListener('submit', (e) => {
