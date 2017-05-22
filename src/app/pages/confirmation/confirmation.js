@@ -98,6 +98,7 @@ export default class Confirmation extends Controller {
                     colorScheme: 'white-on-blue',
                     url: `/errata/form?book=${encodeURIComponent(detail.bookTitle)}`
                 });
+                this.update();
                 Errata.setDisplayStatus(detail);
                 this.regions.detail.attach(new Detail(detail));
             });
