@@ -21,7 +21,7 @@ class Analytics {
             .then(
                 () => {
                     window.ga('send', fields);
-                    window.ga2('send', fields);
+                    window.ga('ga2.send', fields);
                 },
                 () => {
                     console.warn('GA FAILED TO IMPORT');
@@ -198,16 +198,13 @@ class Analytics {
         if (typeof window.ga !== 'function') {
             window.GoogleAnalyticsObject = 'ga';
             window.ga = {
-                q: [['create', settings.analyticsID, 'auto']],
-                l: Date.now()
-            };
-            window.ga2 = {
-                q: [['create', settings.analyticsID2, 'auto']],
+                q: [['create', settings.analyticsID, 'auto'],
+                    ['create', settings.analyticsID2, 'auto', {name: 'ga2'}]],
                 l: Date.now()
             };
         } else {
             window.ga('create', settings.analyticsID, 'auto');
-            window.ga2('create', settings.analyticsID2, 'auto');
+            window.ga('create', settings.analyticsID2, 'auto', {name: 'ga2'});
         }
 
         document.addEventListener('submit', (e) => {
