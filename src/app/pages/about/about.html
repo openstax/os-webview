@@ -25,7 +25,7 @@
                 <div each="member in group.members" class="headshot{model.tapped === member.id ? ' tapped' : ''}{member.hidden ? ' hidden' : ''}" data-id="{member.id}">
                     <div class="picture-area{' text-'+member.textColor+' bg-'+member.bgColor}{member.image ? ' has-picture' : ''}"
                      aria-describedby="{member.name}">
-                        <img if="member.image" src="{member.image}">
+                        <img if="member.image" src="{member.image}" alt="photo of {member.name}">
                         <div class="name">{member.name}</div>
                     </div>
                     <div id="{member.name}" class="details" role="tooltip"

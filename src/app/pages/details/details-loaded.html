@@ -1,6 +1,6 @@
 <template args="model">
     <section class="container book-info">
-        <div class="cover-wrap{model.comingSoon}"><img src="{model.cover_url}" class="book-cover"></div>
+        <div class="cover-wrap{model.comingSoon}"><img src="{model.cover_url}" alt="" class="book-cover"></div>
             <section class="details">
                 <h1 class="title" data-html="title" skip="true"></h1>
                 <div class="tabs">
@@ -178,7 +178,7 @@
                 <tr if="model.license_name">
                     <th>License</th>
                     <td class="license">
-                        <img src="{model.licenseIcon}">
+                        <img src="{model.licenseIcon}" alt="">
                         <div>
                             <div class="text">{model.license_name} v{model.license_version}</div>
                             <div class="extra-text"></div>
