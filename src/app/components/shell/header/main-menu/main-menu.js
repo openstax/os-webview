@@ -12,7 +12,28 @@ export default class MainMenu extends Controller {
         };
         this.css = '/app/components/shell/header/main-menu/main-menu.css';
         this.model = model;
-        this.model.activeState = (num) => this.selectedIndex === num ? 'active' : '';
+        this.model.openDropdown = null;
+
+        this.resetSelection = (event) => {
+            const target = event.target;
+            const isDropdownItem = target.parentNode.parentNode.classList.contains('dropdown-menu');
+
+            if (!isDropdownItem) {
+                this.selectedIndex = -1;
+                if (target.href) {
+                    this.model.openDropdown = target.href.replace(/.*\//, '');
+                } else {
+                    this.model.openDropdown = null;
+                }
+                this.update();
+            }
+        };
+
+        document.addEventListener('focusin', this.resetSelection);
+    }
+
+    onClose() {
+        document.removeEventListener('focusin', this.resetSelection);
     }
 
     onLoaded() {
@@ -26,18 +47,20 @@ export default class MainMenu extends Controller {
         e.target.href += `?next=${encodedLocation}`;
     }
 
-    @on('focusin a[role="menuitem"][aria-haspopup="true"]')
-    resetSelection(event) {
-        this.selectedIndex = -1;
-        this.update();
-    }
-
-    @on('keydown a[role="menuitem"][aria-haspopup="true"]:focus')
+    @on('keydown a[role="menuitem"][aria-haspopup="true"]')
+    @on('keydown .dropdown-menu a[role="menuitem"]')
     moveSelection(event) {
         /* eslint complexity: 0 */
-        const menu = event.target.nextSibling.children;
+        const target = event.target;
+        const menu = target.hasAttribute('aria-haspopup') ?
+         target.nextSibling.children : target.parentNode.parentNode.children;
         const lastIndex = menu.length - 1;
-        const newTarget = () => menu[this.selectedIndex].querySelector('a');
+        const newTarget = () => {
+            if (this.selectedIndex < 0 && !target.hasAttribute('aria-haspopup')) {
+                return target.parentNode.parentNode.previousSibling;
+            }
+            return menu[this.selectedIndex].querySelector('a');
+        };
 
         switch (event.keyCode) {
         case $.key.down:
@@ -46,14 +69,16 @@ export default class MainMenu extends Controller {
             }
             event.preventDefault();
             this.update();
+            newTarget().focus();
             break;
         case $.key.up:
             --this.selectedIndex;
             if (this.selectedIndex < 0) {
-                this.selectedIndex = 0;
+                this.selectedIndex = -1;
             }
             event.preventDefault();
             this.update();
+            newTarget().focus();
             break;
         case $.key.enter:
         case $.key.space:

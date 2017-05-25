@@ -108,7 +108,7 @@
                 }
             }
 
-            :focus ~ .dropdown-menu,
+            .dropdown-menu[aria-expanded="true"],
             &:hover .dropdown-menu {
                 border-top: 0.5rem solid color(orange);
                 display: block;
@@ -151,7 +151,7 @@
             }
 
             // scss-lint:disable SelectorDepth
-            .active > a,
+            a:focus,
             a:hover {
                 color: color(cyan);
             }
