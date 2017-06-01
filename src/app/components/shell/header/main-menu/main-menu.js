@@ -20,7 +20,7 @@ export default class MainMenu extends Controller {
 
             if (!isDropdownItem) {
                 this.selectedIndex = -1;
-                if (target.href) {
+                if (target.href && this.el.contains(target)) {
                     this.model.openDropdown = target.href.replace(/.*\//, '');
                 } else {
                     this.model.openDropdown = null;
