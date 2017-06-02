@@ -1,0 +1,613 @@
+@import 'variables';
+@import 'mixins';
+
+$sea-bottom: rgb(0, 36, 106);
+$sea-top: rgb(6, 71, 119);
+$sickly-green: rgb(168, 189, 122);
+$lighter-gray: rgb(229, 229, 229);
+$snow-top: rgb(242, 242, 242);
+$snow-top-mid: rgb(243, 243, 243);
+$snow-top-wide: rgb(244, 244, 244);
+$snow-bottom: rgb(213, 213, 213);
+$work-top: rgb(0, 128, 158);
+$work-bottom: rgb(0, 125, 164);
+$money-green: rgb(122, 188, 125);
+
+.openstax-tutor-page {
+    font-size: 1.8rem;
+    line-height: 1.67;
+
+    .smaller {
+        font-size: 1.6rem;
+    }
+
+    // scss-lint:disable IdSelector
+
+    section {
+        overflow-x: hidden;
+        overflow-y: hidden;
+        padding: 8rem 0;
+        position: relative;
+
+        h1 {
+            color: inherit;
+            width: auto;
+        }
+
+        .background-imagery {
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100%;
+            left: 0;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: -1;
+
+            > img {
+                position: absolute;
+            }
+        }
+    }
+
+    .divider {
+        background-color: transparent;
+        z-index: 1;
+    }
+
+    #new-frontier {
+        color: color(blue);
+        padding-bottom: 0;
+        z-index: 2;
+
+        .background-imagery {
+            background: linear-gradient($lighter-gray, color(gold));
+
+            > img {
+                bottom: 0;
+                left: -1%;
+                width: 101%;
+            }
+        }
+
+        .above-head {
+            align-items: center;
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+
+            > :first-child {
+                margin: 0 3rem;
+            }
+
+            .btn {
+                padding: 1rem 2rem;
+            }
+        }
+
+        h1 {
+            .subhead {
+                font-size: 2.4rem;
+                font-weight: bold;
+                letter-spacing: normal;
+                margin-bottom: 8rem;
+                margin-top: 4rem;
+                padding: 0;
+
+                @include phone {
+                    text-align: left;
+                }
+            }
+        }
+
+        .two-halves {
+            align-items: flex-end;
+            display: flex;
+            width: 100%;
+
+            > * {
+                flex-basis: 50%;
+
+                @include phone {
+                    flex-basis: 100%;
+
+                    &:first-child {
+                        display: none;
+                    }
+                }
+
+                &:nth-child(2) {
+                    padding-bottom: 2vw;
+                }
+            }
+
+            .btn {
+                font-size: 2rem;
+                margin-bottom: 6rem;
+                margin-top: 2rem;
+                padding: 1.5rem 4rem;
+                width: auto;
+            }
+
+            #moose {
+                margin-left: 3%;
+                margin-right: 5%;
+                max-height: 28vw;
+                width: 100%;
+            }
+
+            #tutor-logo {
+                width: calc(15rem + 20%);
+            }
+        }
+
+        + .divider {
+            background-color: red;
+            bottom: 0;
+            height: 0;
+            position: relative;
+            width: 100%;
+            z-index: 2;
+
+            > img {
+                height: 10vw;
+                position: absolute;
+                top: 0;
+                transform: translateY(-55%);
+                width: 100%;
+            }
+        }
+    }
+
+    #how-it-works {
+        color: color(neutral-lightest);
+        padding-bottom: 8vw;
+
+        .background-imagery {
+            background: linear-gradient($work-top, $work-bottom);
+
+            > img {
+                bottom: -10vw;
+                left: -5%;
+                width: 130%;
+            }
+        }
+
+        h1 {
+            color: color(gold);
+        }
+
+        h2,
+        h3 {
+            color: inherit;
+            line-height: inherit;
+        }
+
+        h2 {
+            font-size: 2.4rem;
+        }
+
+        .icon-row {
+            display: flex;
+            margin-bottom: 12vw;
+            margin-top: 8rem;
+
+            .blurb {
+                flex-basis: 25%;
+                text-align: center;
+            }
+        }
+    }
+
+    #what-students-get {
+        color: color(neutral-lightest);
+
+        .background-imagery {
+            background: linear-gradient($sea-top, $sea-bottom);
+
+            >img {
+                max-height: 50%;
+                max-width: 30%;
+                top: 10%;
+
+                &:nth-child(2) {
+                    max-height: 30%;
+                    right: 0;
+                    top: 20%;
+                }
+            }
+        }
+
+        h1 {
+            margin-bottom: 3rem;
+        }
+
+        .description,
+        .caption {
+            text-align: center;
+        }
+
+        .viewer {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+
+            i {
+                font-size: 5rem;
+                width: auto;
+            }
+
+            img {
+                height: 40rem;
+                margin: 3rem 2rem 1rem;
+                width: 64rem;
+            }
+        }
+
+        .thumbnails {
+            display: flex;
+            justify-content: space-between;
+            margin: 3rem 0 8rem;
+        }
+
+    }
+
+    #feature-matrix {
+        color: color(neutral-lightest);
+
+        .background-imagery {
+            background: linear-gradient(0deg,
+                color(gold),
+                rgba(13, 192, 220, 1) calc(8% + 5vw),
+                rgba(11, 166, 201, 1) calc(24% + 5vw),
+                rgba(7, 120, 167, 1) calc(45% + 2vw),
+                rgba(2, 57, 122, 1) 78%,
+                $sea-bottom);
+
+            > img {
+                &:first-child {
+                    height: calc(5vw + 10rem);
+                    left: 11%;
+                    top: 0;
+                }
+
+                &:nth-child(2) {
+                    bottom: calc(12vw + 3rem);
+                    height: calc(3vw + 5rem);
+                    left: 12%;
+                }
+
+                &:nth-child(3) {
+                    bottom: 20vw;
+                    height: calc(3vw + 5rem);
+                    right: 8%;
+                }
+            }
+        }
+
+        h1 {
+            margin-bottom: 3rem;
+        }
+
+        table {
+            margin-bottom: 3rem;
+            width: 100%;
+        }
+
+        td {
+            background-color: color(blue);
+            border: thin solid transparent;
+            padding: 1rem 5rem;
+
+            .description {
+                font-size: 1.3rem;
+            }
+
+            .key {
+                display: flex;
+                justify-content: space-around;
+                width: 100%;
+            }
+        }
+
+        .availability {
+            color: color(blue);
+
+            .book-covers {
+                display: flex;
+                justify-content: center;
+
+                img {
+                    height: 8rem;
+                    margin: 1.5rem;
+                    width: 8rem;
+                }
+            }
+        }
+
+        .divider {
+            height: 10vw;
+
+            > img {
+                left: -2%;
+                position: relative;
+                width: 105%;
+            }
+        }
+    }
+
+    #where-money-goes {
+        overflow-y: visible;
+        padding-bottom: 30vw;
+        padding-top: 0;
+
+        .background-imagery {
+            background: linear-gradient($snow-top 80%, $snow-bottom);
+            overflow-y: visible;
+            top: -10vw;
+
+            @media (min-width: 1400px) {
+                background: linear-gradient($snow-top-mid 80%, $snow-bottom);
+            }
+
+            @media (min-width: 1700px) {
+                background: linear-gradient($snow-top-wide 80%, $snow-bottom);
+            }
+
+            > img {
+                bottom: 0;
+                left: -2%;
+                width: 106%;
+            }
+        }
+
+        h1,
+        .section-description {
+            color: color(blue);
+            margin-bottom: 3rem;
+        }
+
+        .color-bar {
+            background-color: color(gold);
+            height: 25rem;
+            position: relative;
+            width: 66%;
+
+            > div {
+                bottom: 0;
+                left: 0;
+                position: absolute;
+                top: 0;
+                z-index: 0;
+            }
+
+            .segment {
+                &:nth-child(1) {
+                    background-color: $sickly-green;
+                    width: 90%;
+                }
+
+                &:nth-child(2) {
+                    background-color: $money-green;
+                    width: 80%;
+                }
+
+                &:nth-child(3) {
+                    background-color: color(cyan);
+                    width: 50%;
+                }
+            }
+
+            .content {
+                align-items: center;
+                display: flex;
+                font-size: 4.8rem;
+                font-weight: bold;
+                justify-content: center;
+                width: 100%;
+
+                .circle {
+                    align-items: center;
+                    background-color: rgba(color(neutral-lightest), 0.1);
+                    border-radius: 50%;
+                    display: flex;
+                    height: 15rem;
+                    justify-content: center;
+                    width: 15rem;
+                }
+            }
+        }
+
+        .breakdown {
+            display: flex;
+            flex-wrap: wrap;
+            width: 66%;
+        }
+
+        .box-and-description {
+            align-items: center;
+            display: flex;
+            flex: 0 0 50%;
+            margin-top: 3rem;
+
+            .box {
+                align-items: center;
+                display: flex;
+                flex: 0 0 6rem;
+                font-size: 2.4rem;
+                font-weight: bold;
+                height: 6rem;
+                justify-content: center;
+            }
+
+            &:first-child .box {
+                background-color: color(cyan);
+            }
+
+            &:nth-child(2) .box {
+                background-color: $money-green;
+            }
+
+            &:nth-child(3) .box {
+                background-color: $sickly-green;
+            }
+
+            &:last-child .box {
+                background-color: color(gold);
+            }
+
+            .description {
+                flex-basis: 50%;
+                line-height: normal;
+                margin: 1rem;
+            }
+        }
+
+    }
+
+    #faq {
+        h1 {
+            margin-bottom: 8rem;
+
+            @include phone {
+                margin-bottom: 1rem;
+                margin-top: 0;
+            }
+        }
+
+        .questions {
+            align-items: flex-start;
+            color: color(blue);
+        }
+
+        .qna {
+            // margin-bottom: 2rem;
+            margin-left: 8rem;
+
+            @include phone {
+                margin-left: 0;
+            }
+        }
+
+        .toggled-item {
+            align-items: center;
+            display: flex;
+
+            &.hidden {
+                display: none;
+            }
+        }
+
+        .question {
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        .toggler {
+            align-items: center;
+            background-color: color(gold);
+            color: color(neutral-lightest);
+            display: flex;
+            flex: 0 0 1.25em;
+            height: 1.25em;
+            justify-content: center;
+            margin-right: 1.5rem;
+            padding: 0;
+
+            span {
+                padding-bottom: 0.2rem;
+                padding-left: 0.2rem;
+            }
+        }
+
+        .placeholder {
+            visibility: hidden;
+        }
+
+        .divider {
+            height: 10vw;
+            width: 100%;
+
+            @include tablet {
+                height: 8vw;
+            }
+
+            @include phone {
+                height: 3vw;
+            }
+
+            > img {
+                width: 100%;
+            }
+        }
+    }
+
+    #learn-more {
+
+        padding-top: 4vw;
+
+        .background-imagery {
+            background: linear-gradient(color(cyan) 80%, gold);
+
+            > img {
+                bottom: -8vw;
+                left: -5vw;
+                width: 110%;
+            }
+        }
+
+        h1 {
+            color: color(blue);
+            margin: 0;
+            padding: 0;
+        }
+
+        .subhead {
+            display: flex;
+            font-size: 2.4rem;
+            justify-content: center;
+            padding-bottom: 4rem;
+            padding-top: 2rem;
+        }
+
+        .buttons-row {
+            display: flex;
+            padding-bottom: 10vw;
+        }
+
+        .button-box {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            margin: 0 3rem;
+            max-width: 32rem;
+            text-align: center;
+
+            .btn {
+                background-color: color(blue);
+                margin-bottom: 3rem;
+                padding: 1rem 3rem;
+            }
+        }
+
+        .divider {
+            > img {
+                bottom: -7vw;
+                left: -4%;
+                position: absolute;
+                transform: translateY(30vw);
+                width: 108%;
+            }
+        }
+    }
+
+    .btn {
+        color: color(neutral-lightest);
+        padding: 1em 2em;
+    }
+
+    .white-on-blue {
+        background-color: color(blue);
+    }
+}
