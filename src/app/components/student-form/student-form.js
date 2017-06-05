@@ -1,4 +1,5 @@
 import {Controller} from 'superb';
+import {on} from '~/helpers/controller/decorators';
 import {description as template} from './student-form.html';
 
 export default class StudentForm extends Controller {
@@ -9,6 +10,11 @@ export default class StudentForm extends Controller {
             classes: ['student-form']
         };
         this.css = '/app/components/student-form/student-form.css';
+    }
+
+    @on('click button')
+    goBack() {
+        history.back();
     }
 
 }

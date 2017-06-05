@@ -64,9 +64,14 @@ $bar-size: 0.2rem;
                 padding-bottom: 3rem;
             }
 
-            .tooltip > p:first-child {
-                margin-top: 0;
+            .tooltip {
+                padding: 3rem;
+
+                > p:first-child {
+                    margin-top: 0;
+                }
             }
+
         }
     }
 
