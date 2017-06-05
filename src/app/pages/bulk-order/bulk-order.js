@@ -21,7 +21,17 @@ class OrderItems extends CMSPageController {
         const pages = this.pageData.books
         .filter((book) => highSchoolSlugs.includes(book.slug));
 
-        this.model.orderItems = pages.map((p) => ({item: p.title, quantity: 0, list: p.amazon_price, min: 25}));
+        this.model.orderItems = pages.map((p) => ({
+            item: p.title,
+            quantity: 0,
+            list: p.amazon_price,
+            min: 25,
+            validationMessage: (name) => {
+                const el = this.el.querySelector(`[name="${name}"]`);
+
+                return (this.parent.hasBeenSubmitted && el) ? el.validationMessage : '';
+            }
+        }));
         this.update();
         $.insertHtml(this.el, this.model);
     }
@@ -34,6 +44,7 @@ class OrderItems extends CMSPageController {
         if (row) {
             this.model.orderItems[row].quantity = +el.value;
         }
+        this.update();
     }
 
 }
@@ -120,6 +131,10 @@ export default class BulkOrder extends Controller {
         if (invalid) {
             event.preventDefault();
             this.update();
+        }
+
+        for (const child of this.regions.orderItems.controllers) {
+            child.update();
         }
     }
 
