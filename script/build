@@ -2,4 +2,4 @@
 
 source ./script/bootstrap || exit 1
 
-npm run-script build || exit 2
+npm --silent run-script build || exit 2
