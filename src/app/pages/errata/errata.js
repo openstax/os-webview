@@ -351,4 +351,12 @@ export default class Errata extends Controller {
         this.update();
     }
 
+    @on('keydown [data-sort-fn]')
+    operateSorterByKey(e) {
+        if ([$.key.enter, $.key.space].includes(e.keyCode)) {
+            this.clickSorter(e);
+            e.preventDefault();
+        }
+    }
+
 }
