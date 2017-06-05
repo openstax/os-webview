@@ -21,7 +21,7 @@ class OrderItems extends CMSPageController {
         const pages = this.pageData.books
         .filter((book) => highSchoolSlugs.includes(book.slug));
 
-        this.model.orderItems = pages.map((p) => ({item: p.title, quantity: 0, list: p.amazon_price}));
+        this.model.orderItems = pages.map((p) => ({item: p.title, quantity: 0, list: p.amazon_price, min: 25}));
         this.update();
         $.insertHtml(this.el, this.model);
     }
