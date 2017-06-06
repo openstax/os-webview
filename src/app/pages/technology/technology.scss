@@ -1,0 +1,176 @@
+@import 'variables';
+@import 'mixins';
+
+.technology-page {
+    h1,
+    h2,
+    h3 {
+        color: inherit;
+        margin: 0;
+        padding: 0;
+    }
+
+    section {
+        overflow-x: hidden;
+        padding: 6rem 0;
+    }
+
+    .btn {
+        font-size: 1.4rem;
+        padding: 1rem 2rem;
+    }
+
+    // scss-lint:disable IdSelector
+
+    #banner {
+        background-color: color(neutral-lighter);
+        min-height: 40rem;
+        position: relative;
+
+        @include phone {
+            min-height: 0;
+        }
+
+        .boxed {
+            display: block;
+            min-height: inherit;
+            position: relative;
+
+            @include phone {
+                padding: 0;
+            }
+        }
+
+        .main-box {
+            background-color: color(orange);
+            color: color(neutral-lightest);
+            opacity: 0.9;
+            padding: 3rem;
+            position: absolute;
+            top: 25%;
+            width: 60%;
+            z-index: 2;
+
+            @include phone {
+                position: static;
+                width: 100%;
+            }
+
+            @include desktop {
+                margin-left: 4rem;
+                padding: 4rem;
+            }
+
+            .description {
+                max-width: 50rem;
+            }
+
+            .outlined {
+                border: 0.15rem solid rgba(color(neutral-lightest), 0.5);
+            }
+        }
+
+        .box {
+            background-color: color(orange);
+            height: 15rem;
+            left: calc(25% - 4rem);
+            opacity: 0.3;
+            position: absolute;
+            top: 4rem;
+            width: 37%;
+
+            @include phone {
+                display: none;
+            }
+
+            &.first {
+                bottom: 10%;
+                left: 4rem;
+                top: auto;
+                width: 50%;
+            }
+        }
+
+        .student {
+            bottom: 0;
+            position: absolute;
+            right: 0;
+
+            @include phone {
+                display: none;
+            }
+        }
+    }
+
+    #steps {
+        background-color: color(turquoise);
+        color: color(neutral-lightest);
+
+        h2 {
+            margin-bottom: 4rem;
+        }
+
+        .boxed-row {
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .step {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+
+            img {
+                margin-bottom: 2rem;
+            }
+        }
+    }
+
+    #tutor {
+        padding-bottom: 0;
+        position: relative;
+
+        .header {
+            width: 100%;
+        }
+
+        .border-image {
+            transform: translate(-5.5%, 4%);
+            width: 108%;
+        }
+
+        .btn {
+            background-color: color(cyan);
+            color: color(neutral-lightest);
+            margin-left: 3rem;
+
+            &:first-child {
+                background-color: color(blue);
+                margin-left: 0;
+            }
+        }
+
+        .at-the-bottom {
+            bottom: 10%;
+            left: 0;
+            position: absolute;
+            width: 100%;
+            z-index: 2;
+
+            .boxed {
+                flex-direction: row;
+                justify-content: flex-end;
+                position: relative;
+            }
+        }
+
+        .off-to-the-right {
+            flex-basis: 50%;
+        }
+    }
+
+    .white-on-orange {
+        background-color: color(orange);
+        color: color(neutral-lightest);
+    }
+}

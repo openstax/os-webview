@@ -33,7 +33,8 @@ const PAGES = [
     'renew',
     'subjects',
     'subjects/*path',
-    'support'
+    'support',
+    'technology'
 ];
 
 // CustomEvent polyfill
