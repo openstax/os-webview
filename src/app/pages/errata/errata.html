@@ -36,7 +36,8 @@
             <thead>
                 <tr>
                     <th each="md in model.summaryMetaData" class="{md.cssClass || ''}"
-                     data-sort-fn="{md.sortFn}" data-sort-key="{md.key}">
+                     data-sort-fn="{md.sortFn}" data-sort-key="{md.key}"
+                     role="button" tabindex="{md.sortFn ? 0 : null}" >
                      {md.label || ''}
                     <if condition="model.summarySortedBy === md.key">
                         <span class="{`sortdir${model.summarySortDirection}`}"></span>
