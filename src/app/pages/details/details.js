@@ -22,6 +22,10 @@ export default class Details extends CMSPageController {
         } else {
             this.slug = `books/${bookTitle}`;
         }
+        // Special handling for books whose slugs have changed
+        if (/university-physics$/.test(this.slug)) {
+            this.slug += '-volume-1';
+        }
         shell.showLoader();
     }
 
