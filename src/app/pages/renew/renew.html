@@ -53,28 +53,12 @@
             <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
             <div class="text-content labeled-inputs row book-info">
                 <div id="primary-book" class="col">
-                    <label>
-                        Your OpenStax book:
-                        <span class="invalid-message">{model.validationMessage('00NU00000053nzR')}</span>
-                        <div skip="true"></div>
-                        <select name="00NU00000053nzR" required>
-                            <option each="title in model.titles" value="{title.value ? title.value : title}">
-                                {title.text ? title.text : title}
-                            </option>
-                        </select>
-                    </label>
+                    <plug-in data-id="yourBook" skip="true"></plug-in>
                     <p>
                         Don't see your book? Fill out our <a href="/interest">interest form</a>.
                     </p>
 
-                    <label>
-                        How are you using this book? <small><i>(optional)</i></small>
-                        <span class="invalid-message">{model.validationMessage('00NU00000055spw')}</span>
-                        <div skip="true"></div>
-                        <select name="00NU00000055spw">
-                            <option each="key in model.salesforce" value="{key.value}">{key.text}</option>
-                        </select>
-                    </label>
+                    <plug-in data-id="adoptionStatus" skip="true"></plug-in>
 
                     <label>
                         How many students are using this book in your courses each semester?
@@ -82,15 +66,7 @@
                         <input name="00NU00000052VId" type="number" min="0" required>
                     </label>
 
-                    <label>
-                        Which partner resources are you using with your book?
-                        <span class="invalid-message">{model.validationMessage('00NU0000005VmTu')}</span>
-                        <div skip="true"></div>
-                        <select multiple name="00NU0000005VmTu">
-                            <option each="partner in model.partners" value="{partner}">{partner}</option>
-                            <option value="" data-other="other-partner">Other (specify below)</option>
-                        </select>
-                    </label>
+                    <plug-in data-id="partnerResources" skip="true"></plug-in>
 
                     <label id="other-partner">
                         Other
@@ -99,40 +75,12 @@
                         placeholder="Partner resources not listed above?">
                     </label>
 
-                    <label class="question">
-                        Which of our partners would you like to give permission to contact you about additional resources to support our books?
-                        <span class="invalid-message">{model.validationMessage('00NU00000055spm')}</span>
-                        <div skip="true"></div>
-                        <select multiple name="00NU00000055spm">
-                            <option value="Online homework partners">Online homework partners</option>
-                            <option value="Adaptive courseware partners">Adaptive courseware partners</option>
-                            <option value="Customization tool partners">Customization tool partners</option>
-                        </select>
-                    </label>
+                    <plug-in data-id="partnerContact" skip="true"></plug-in>
                 </div>
 
                 <div class="col">
-                    <label class="question">
-                        Are you interested in having your OpenStax experience featured
-                        on our website, social media, and/or emails?
-                        <span class="invalid-message">{model.validationMessage('00NU00000055sq6')}</span>
-                        <div skip="true"></div>
-                        <select name="00NU00000055sq6" required>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                        </select>
-                    </label>
-
-                    <label class="question">
-                        May we contact you about opportunities to participate in future
-                        pilots or research studies?
-                        <span class="invalid-message">{model.validationMessage('00NU00000055sqB')}</span>
-                        <div skip="true"></div>
-                        <select name="00NU00000055sqB" required>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                        </select>
-                    </label>
+                    <plug-in data-id="featureMe" skip="true"></plug-in>
+                    <plug-in data-id="contactMe" skip="true"></plug-in>
 
                     <label>
                         Do you have any feedback you'd like to share? <small><i>(optional)</i></small>
