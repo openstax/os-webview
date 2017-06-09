@@ -110,6 +110,12 @@ export default class DetailsLoaded extends Controller {
             insertToc();
             insertPartners();
             this.update();
+
+            if (window.location.hash) {
+                const id = window.location.hash.substr(1);
+
+                $.scrollTo(document.getElementById(id));
+            }
         });
 
         this.toggleFixedClass();

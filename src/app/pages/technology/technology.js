@@ -1,6 +1,9 @@
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
+import FormSelect from '~/components/form-select/form-select';
 import shell from '~/components/shell/shell';
+import {on} from '~/helpers/controller/decorators';
+import {bookPromise} from '~/models/book-titles';
 import {description as template} from './technology.html';
 
 export default class Accessibility extends CMSPageController {
@@ -13,6 +16,9 @@ export default class Accessibility extends CMSPageController {
         };
         this.slug = 'pages/accessibility'; // TODO: replace with technology
         shell.showLoader();
+        this.regions = {
+            bookSelector: 'book-selector'
+        };
         this.model = {
             banner: {
                 headline: 'Technology',
@@ -28,19 +34,22 @@ export default class Accessibility extends CMSPageController {
                 headline: 'Selecting the right technology is as easy as 1 2 3',
                 items: [
                     {
-                        imageUrl: 'http://via.placeholder.com/150x150',
                         headline: 'Choose your book',
-                        description: '<p>Lorem ipsum about book</p>'
+                        selector: new FormSelect({
+                            name: 'book',
+                            placeholder: 'Select your OpenStax book',
+                            validationMessage: () => ''
+                        })
                     },
                     {
-                        imageUrl: 'http://via.placeholder.com/150x150',
                         headline: 'Get your instructor resources',
-                        description: '<p>Lorem ipsum about resources</p>'
+                        description: 'View Instructor Resources',
+                        hash: '#faculty-resources'
                     },
                     {
-                        imageUrl: 'http://via.placeholder.com/150x150',
                         headline: 'Choose your learning technology',
-                        description: '<p>Lorem ipsum about technology</p>'
+                        description: 'View Learning Technologies',
+                        hash: '#partner-resources'
                     }]
             },
             tutor: {
@@ -66,11 +75,28 @@ export default class Accessibility extends CMSPageController {
 
     onLoaded() {
         document.title = 'Technology - OpenStax';
+        this.regions.bookSelector.attach(this.model.steps.items[0].selector);
+        bookPromise.then((data) => {
+            const options = data.map((obj) => ({label: obj.title, value: obj.meta.slug}))
+            .sort((a, b) => a.label.localeCompare(b.label));
+
+            this.model.steps.items[0].selector.setOptions(options);
+        });
     }
 
     onDataLoaded() {
         $.insertHtml(this.el, this.model);
         shell.hideLoader();
+    }
+
+    @on('change select[name="book"]')
+    updateLinks(e) {
+        const slug = e.target.value;
+        const url = slug ? `/details/books/${slug}` : null;
+        const items = this.model.steps.items;
+
+        items[1].url = items[2].url = url;
+        this.update();
     }
 
 }

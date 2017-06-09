@@ -13,6 +13,10 @@
     section {
         overflow-x: hidden;
         padding: 6rem 0;
+
+        @include phone {
+            padding: 0;
+        }
     }
 
     .btn {
@@ -20,14 +24,22 @@
         padding: 1rem 2rem;
     }
 
+    .outlined {
+        border: 0.15rem solid rgba(color(neutral-lightest), 0.5);
+    }
     // scss-lint:disable IdSelector
 
     #banner {
         background-color: color(neutral-lighter);
-        min-height: 40rem;
+        background-image: url('/images/technology/library.jpg');
+        background-position: right;
+        background-repeat: no-repeat;
+        background-size: cover;
+        min-height: 40vw;
         position: relative;
 
         @include phone {
+            background-image: none;
             min-height: 0;
         }
 
@@ -42,96 +54,156 @@
         }
 
         .main-box {
-            background-color: color(orange);
-            color: color(neutral-lightest);
-            opacity: 0.9;
-            padding: 3rem;
-            position: absolute;
-            top: 25%;
+            left: 0;
+            position: relative;
+            top: 5vw;
             width: 60%;
             z-index: 2;
 
             @include phone {
+                height: 100%;
                 position: static;
                 width: 100%;
             }
 
-            @include desktop {
-                margin-left: 4rem;
-                padding: 4rem;
+            .orange-part {
+                background-color: color(orange);
+                color: color(neutral-lightest);
+                opacity: 0.9;
+                padding: 3rem;
+
+                @include phone {
+                    height: 100%;
+                    min-height: 40rem;
+                }
+
+                @include desktop {
+                    margin-left: 4rem;
+                    padding: 4rem;
+                }
             }
 
             .description {
                 max-width: 50rem;
-            }
 
-            .outlined {
-                border: 0.15rem solid rgba(color(neutral-lightest), 0.5);
+                @include phone {
+                    max-width: 70%;
+                }
             }
         }
 
         .box {
             background-color: color(orange);
             height: 15rem;
-            left: calc(25% - 4rem);
             opacity: 0.3;
             position: absolute;
-            top: 4rem;
-            width: 37%;
+            right: 10%;
+            top: -4rem;
+            width: 60%;
+            // z-index: -1;
 
             @include phone {
                 display: none;
             }
 
             &.first {
-                bottom: 10%;
-                left: 4rem;
+                bottom: -7vw;
+                height: 100%;
+                left: -3%;
                 top: auto;
-                width: 50%;
+                width: 90%;
             }
         }
 
-        .student {
+        .student-overlay {
+            background-image: url('/images/technology/student.png');
+            background-position: right bottom;
+            background-repeat: no-repeat;
+            background-size: contain;
             bottom: 0;
+            height: 80%;
             position: absolute;
-            right: 0;
-
-            @include phone {
-                display: none;
-            }
+            right: calc(6% - 15rem);
+            width: calc(100% + 15rem);
+            z-index: 2;
         }
     }
 
     #steps {
         background-color: color(turquoise);
         color: color(neutral-lightest);
+        overflow: visible;
+
+        @include phone {
+            padding: 4rem;
+        }
 
         h2 {
             margin-bottom: 4rem;
+            text-align: center;
         }
 
         .boxed-row {
+            display: block;
             justify-content: space-between;
             width: 100%;
+
+            @include desktop {
+                display: flex;
+            }
         }
 
         .step {
-            align-items: center;
             display: flex;
+            flex-basis: 100%;
             flex-direction: column;
+            margin: 0 1.5rem;
 
-            img {
-                margin-bottom: 2rem;
+            h3 {
+                color: color(gold);
+                font-size: 3rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .btn {
+                background-color: transparent;
+                color: color(neutral-lightest);
+            }
+
+            .dimmed {
+                opacity: 0.6;
+            }
+
+            a {
+                color: inherit;
+                position: relative;
+
+                &::after {
+                    @include triangle(
+                        $direction: right,
+                        $position: top calc(50% - 0.7rem) right -2.1rem,
+                        $color: color(gold),
+                        $size: 0.7rem
+                    );
+                }
             }
         }
     }
 
     #tutor {
+        min-height: 40rem;
         padding-bottom: 0;
         position: relative;
 
         .header {
+            color: lighten(rgb(66, 66, 66), 13%);
             width: 100%;
+
+            img {
+                margin-top: 1rem;
+                min-width: 20rem;
+                width: 20%;
+            }
         }
 
         .border-image {
@@ -157,6 +229,11 @@
             width: 100%;
             z-index: 2;
 
+            @include phone {
+                position: relative;
+                top: 3rem;
+            }
+
             .boxed {
                 flex-direction: row;
                 justify-content: flex-end;
@@ -166,6 +243,18 @@
 
         .off-to-the-right {
             flex-basis: 50%;
+            min-width: 40rem;
+
+            @include phone {
+                flex-basis: 100%;
+                min-width: 0;
+
+                .buttons a {
+                    display: block;
+                    margin: 1rem 0;
+                    width: 100%;
+                }
+            }
         }
     }
 
