@@ -20,6 +20,15 @@
         }
     }
 
+    .training-wheel-overlay {
+        background-color: rgba(color(neutral-light), 0.5);
+        height: 100vh;
+        left: 0;
+        position: fixed;
+        top: 0;
+        width: 100vw;
+    }
+
     .logo-wrapper {
         align-items: center;
         display: flex;
@@ -156,6 +165,57 @@
                 color: color(cyan);
             }
             // scss-lint:enable SelectorDepth
+        }
+    }
+
+    .training-wheel {
+        background-color: color(neutral-lightest);
+        overflow: visible;
+        padding: 3rem;
+        position: absolute;
+        transform: translate(-110%, -50%);
+
+        &::after {
+            @include triangle(
+                $direction: right,
+                $position: top 33% right -2.4rem,
+                $color: color(neutral-lightest),
+                $size: 2.4rem
+            );
+        }
+
+        .put-away {
+            cursor: pointer;
+            font-size: 2.4rem;
+            height: 0;
+            overflow: visible;
+            text-align: right;
+            transform: translate(0.5em, -1em);
+        }
+
+        img {
+            max-width: 75%;
+        }
+
+        hr {
+            border-bottom: thin solid color(orange);
+        }
+
+        .message {
+            font-size: 1.4rem;
+        }
+
+        .button-row {
+            display: flex;
+            font-size: 1.4rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+
+            button {
+                background-color: color(blue);
+                color: color(neutral-lightest);
+
+            }
         }
     }
 

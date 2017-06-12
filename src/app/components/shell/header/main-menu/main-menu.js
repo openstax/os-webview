@@ -40,11 +40,25 @@ export default class MainMenu extends Controller {
         this.model.initialRenderDone = true;
     }
 
+    showTutorTrainingWheel() {
+        this.model.trainingWheelActive = true;
+        this.update();
+        this.el.querySelector('.nav-menu-item.login a').focus();
+        this.el.querySelector('.tutor-menu-item a').focus();
+    }
+
     @on('click a[data-set-redirect]')
     setRedirect(e) {
         const encodedLocation = encodeURIComponent(window.location.href);
 
         e.target.href += `?next=${encodedLocation}`;
+    }
+
+    @on('click .training-wheel .put-away')
+    @on('click .training-wheel button')
+    putAwayTrainingWheel() {
+        this.model.trainingWheelActive = false;
+        this.update();
     }
 
     @on('keydown a[role="menuitem"][aria-haspopup="true"]')
