@@ -146,13 +146,15 @@ export default class Home extends CMSPageController {
         window.addEventListener('scroll', this.parallaxOnScroll, false);
 
         this.modelInterval = setInterval(() => {
-            this.banners[this.currentBanner].hide()
-            .then(() => {
-                ++this.currentBanner;
-                this.currentBanner %= this.banners.length;
-                this.parallaxBannerUpdate(this.banners[this.currentBanner].el);
-                this.banners[this.currentBanner].show();
-            });
+            if (!document.hidden) {
+                this.banners[this.currentBanner].hide()
+                .then(() => {
+                    ++this.currentBanner;
+                    this.currentBanner %= this.banners.length;
+                    this.parallaxBannerUpdate(this.banners[this.currentBanner].el);
+                    this.banners[this.currentBanner].show();
+                });
+            }
         }, 11000);
 
         const quotesData = this.pageData.row_1.map((columnData) => {
