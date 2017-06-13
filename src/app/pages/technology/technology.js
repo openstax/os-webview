@@ -55,8 +55,9 @@ export default class Accessibility extends CMSPageController {
             tutor: {
                 headline: 'The new frontier in education',
                 subhead: 'Improve how your students learn with research-based technology - for only $10.',
-                description: '<p>OpenStax Tutor is a personalized learning tool that helps students focus ' +
-                    'their studying efforts and gives instructors greater insigt into blah blah blah...',
+                description: '<p>OpenStax Tutor is a personalized learning tool that helps students focus' +
+                    ' their studying efforts and gives instructors greater insight into student' +
+                    ' performance, all integrated with OpenStax content.',
                 buttons: [
                     {
                         url: '#',
