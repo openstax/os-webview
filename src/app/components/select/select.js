@@ -112,6 +112,9 @@ export default class Select extends Controller {
         this.model.options = this.options = Select[CONVERT_OPTIONS](this.select.options);
         this.model.selected = Select[CONVERT_OPTIONS](this.select.querySelectorAll('option[selected]'));
         this.update();
+        if (this.model.selected.size === 0) {
+            this.select.options.selectedIndex = -1;
+        }
     }
 
     updateSelectElement() {

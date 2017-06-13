@@ -3,6 +3,7 @@ import settings from 'settings';
 export const userUrl = `${settings.apiOrigin}/api/user`;
 const sfUserUrl = `${settings.apiOrigin}/api/user_salesforce`;
 const docUrlBase = `${settings.apiOrigin}/api/documents`;
+const accountsUrl = `${settings.accountHref}/api/user`;
 
 const LOADED = Symbol();
 const LOADED_TIME = Symbol();
@@ -31,5 +32,6 @@ class UserModel {
 }
 
 export const sfUserModel = new UserModel(sfUserUrl);
+export const accountsModel = new UserModel(accountsUrl);
 export const makeDocModel = (docId) => new UserModel(`${docUrlBase}/${docId}`);
 export default new UserModel(userUrl);
