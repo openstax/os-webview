@@ -1,0 +1,58 @@
+<template args="model">
+    <section id="banner">
+        <div class="boxed">
+            <div class="main-box">
+                <div class="box first"></div>
+                <div class="box second"></div>
+                <div class="orange-part">
+                    <h1>{model.banner.headline}</h1>
+                    <div class="description" data-html="banner.description" skip="true"></div>
+                    <a class="btn outlined white-on-orange" href={model.banner.button.url}>
+                        {model.banner.button.text}
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="student-overlay"></div>
+    </section>
+    <section id="steps">
+        <div class="text-content">
+            <h2>{model.steps.headline}</h2>
+        </div>
+        <div class="boxed-row">
+            <div each="step in model.steps.items" class="step">
+                <h3>{1 + $item}.</h3>
+                <div>{step.headline}</div>
+                <book-selector if="step.selector" skip="true"></book-selector>
+                <div if="step.description" class="outlined btn {step.url ? '' : 'dimmed'}">
+                    <if condition="step.url">
+                        <a href="{`${step.url}${step.hash}`}">{step.description}</a>
+                    <else>
+                        {step.description}
+                    </if>
+                </div>
+            </div>
+        </div>
+    </section>
+    <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
+    <section id="tutor">
+        <div class="boxed">
+            <div class="header">
+                <h2>{model.tutor.headline}</h2>
+                <img src="/images/openstax-tutor/tutor-logo.svg">
+            </div>
+        </div>
+        <div class="at-the-bottom">
+            <div class="boxed">
+                <div class="off-to-the-right">
+                    <h3>{model.tutor.subhead}</h3>
+                    <div data-html="tutor.description" skip="true"></div>
+                    <div class="buttons">
+                        <a each="b in model.tutor.buttons" href="{b.url}" alt="{b.description}" class="btn">{b.text}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <img class="border-image" src="/images/technology/technology-bearscape.svg">
+    </section>
+</template>
