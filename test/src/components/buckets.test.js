@@ -1,5 +1,5 @@
 import Buckets from '~/components/buckets/buckets';
-import higherEd from '../data/higher-education';
+import higherEd from '../data/buckets';
 
 describe('Buckets', () => {
     const data = higherEd.row_3.map((x) => ('value' in x) ? x.value : x);

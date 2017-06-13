@@ -73,7 +73,7 @@ export default class MainMenu extends Controller {
             if (this.selectedIndex < 0 && !target.hasAttribute('aria-haspopup')) {
                 return target.parentNode.parentNode.previousSibling;
             }
-            return menu[this.selectedIndex].querySelector('a');
+            return menu[this.selectedIndex] ? menu[this.selectedIndex].querySelector('a') : null;
         };
 
         switch (event.keyCode) {
@@ -96,8 +96,13 @@ export default class MainMenu extends Controller {
             break;
         case $.key.enter:
         case $.key.space:
-            event.preventDefault();
-            newTarget().dispatchEvent($.newEvent('click'));
+            if (newTarget()) {
+                event.preventDefault();
+                newTarget().dispatchEvent($.newEvent('click'));
+            } else {
+                // ordinary event handling
+                break;
+            }
             // Falls through!
         case $.key.esc:
             document.activeElement.blur();
