@@ -9,9 +9,11 @@ $snow-top: rgb(242, 242, 242);
 $snow-top-mid: rgb(243, 243, 243);
 $snow-top-wide: rgb(244, 244, 244);
 $snow-bottom: rgb(213, 213, 213);
+$tree-color: #007297;
 $work-top: rgb(0, 128, 158);
-$work-bottom: rgb(0, 125, 164);
+$work-bottom: lighten(rgb(0, 125, 164), 5%);
 $money-green: rgb(122, 188, 125);
+$deep-teal: rgb(0, 114, 151);
 
 .openstax-tutor-page {
     font-size: 1.8rem;
@@ -21,12 +23,59 @@ $money-green: rgb(122, 188, 125);
         font-size: 1.6rem;
     }
 
-    // scss-lint:disable IdSelector
+    .sticky-footer {
+        bottom: 0;
+        display: flex;
+        font-size: 1.6rem;
+        max-height: 10rem;
+        padding: 2rem 3rem;
+        position: fixed;
+        /* property  duration  delay */
+        transition: padding  0.1s,
+                    height   0.3s  0.2s;
+        width: 100%;
+        z-index: 3;
 
+        &.collapsed {
+            max-height: 0;
+            padding: 0;
+            transition: padding  0.3s,
+                        height   0.1s;
+
+            .button-group {
+                opacity: 0;
+                transition: opacity 0.2s;
+            }
+        }
+
+        .button-group {
+            padding-left: 6rem;
+            transition: opacity 0.2s 0.1s;
+
+            &:first-child {
+                padding-left: 0;
+
+                .btn {
+                    background-color: color(cyan);
+                }
+            }
+        }
+
+        .btn {
+            background-color: $deep-teal;
+            font-size: 1.4rem;
+            margin-right: 2rem;
+            padding: 1rem 3rem;
+            width: 17rem;
+
+        }
+    }
+
+    // scss-lint:disable IdSelector
     section {
         overflow-x: hidden;
         overflow-y: hidden;
-        padding: 8rem 0;
+        padding: 6rem 0;
         position: relative;
 
         h1 {
@@ -59,6 +108,7 @@ $money-green: rgb(122, 188, 125);
     #new-frontier {
         color: color(blue);
         padding-bottom: 0;
+        padding-top: 1.5rem;
         z-index: 2;
 
         .background-imagery {
@@ -77,12 +127,22 @@ $money-green: rgb(122, 188, 125);
             justify-content: flex-end;
             width: 100%;
 
+            @include phone {
+                display: block;
+            }
+
             > :first-child {
                 margin: 0 3rem;
             }
 
             .btn {
                 padding: 1rem 2rem;
+                white-space: nowrap;
+
+                @include phone {
+                    font-size: 1.4rem;
+                    white-space: normal;
+                }
             }
         }
 
@@ -165,7 +225,7 @@ $money-green: rgb(122, 188, 125);
         padding-bottom: 8vw;
 
         .background-imagery {
-            background: linear-gradient($work-top, $work-bottom);
+            background: linear-gradient($tree-color 3%, $work-top 15%, $work-top 60%, $work-bottom);
 
             > img {
                 bottom: -10vw;
@@ -190,12 +250,27 @@ $money-green: rgb(122, 188, 125);
 
         .icon-row {
             display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
             margin-bottom: 12vw;
-            margin-top: 8rem;
+            margin-top: 2rem;
 
             .blurb {
-                flex-basis: 25%;
+                flex: 1 1 100%;
+                margin: 3rem 1.5rem;
                 text-align: center;
+
+                @include tablet {
+                    flex-basis: calc(50% - 3rem);
+                }
+
+                @include desktop {
+                    flex-basis: 0;
+                }
+
+                img {
+                    width: 40%;
+                }
             }
         }
     }
@@ -234,11 +309,12 @@ $money-green: rgb(122, 188, 125);
             justify-content: center;
 
             i {
+                cursor: pointer;
                 font-size: 5rem;
                 width: auto;
             }
 
-            img {
+            iframe {
                 height: 40rem;
                 margin: 3rem 2rem 1rem;
                 width: 64rem;
@@ -292,7 +368,23 @@ $money-green: rgb(122, 188, 125);
 
         table {
             margin-bottom: 3rem;
-            width: 100%;
+            width: 100;
+
+            .wide-body {
+                display: none;
+
+                @include desktop {
+                    display: table-row-group;
+                }
+            }
+
+            .narrow-body {
+                display: table-row-group;
+
+                @include desktop {
+                    display: none;
+                }
+            }
         }
 
         td {
@@ -300,7 +392,7 @@ $money-green: rgb(122, 188, 125);
             border: thin solid transparent;
             padding: 1rem 5rem;
 
-            .description {
+            .description.smaller {
                 font-size: 1.3rem;
             }
 
@@ -308,6 +400,12 @@ $money-green: rgb(122, 188, 125);
                 display: flex;
                 justify-content: space-around;
                 width: 100%;
+            }
+
+            img {
+                height: 3.5rem;
+                margin-right: 1rem;
+                vertical-align: middle;
             }
         }
 
@@ -339,13 +437,13 @@ $money-green: rgb(122, 188, 125);
 
     #where-money-goes {
         overflow-y: visible;
-        padding-bottom: 30vw;
+        padding-bottom: 20vw;
         padding-top: 0;
 
         .background-imagery {
-            background: linear-gradient($snow-top 80%, $snow-bottom);
+            background: linear-gradient($snow-top 80%, $snow-bottom 98%, color(neutral-lightest));
             overflow-y: visible;
-            top: -10vw;
+            top: 0;
 
             @media (min-width: 1400px) {
                 background: linear-gradient($snow-top-mid 80%, $snow-bottom);
@@ -370,9 +468,14 @@ $money-green: rgb(122, 188, 125);
 
         .color-bar {
             background-color: color(gold);
-            height: 25rem;
+            height: 40vw;
             position: relative;
-            width: 66%;
+            width: 100%;
+
+            @include desktop {
+                height: 30.8rem;
+                width: 74rem;
+            }
 
             > div {
                 bottom: 0;
@@ -407,14 +510,23 @@ $money-green: rgb(122, 188, 125);
                 justify-content: center;
                 width: 100%;
 
+                @include phone {
+                    font-size: 4rem;
+                }
+
                 .circle {
                     align-items: center;
                     background-color: rgba(color(neutral-lightest), 0.1);
                     border-radius: 50%;
                     display: flex;
-                    height: 15rem;
+                    height: calc(5rem + 12vw);
                     justify-content: center;
-                    width: 15rem;
+                    width: calc(5rem + 12vw);
+
+                    @include desktop {
+                        height: 15rem;
+                        width: 15rem;
+                    }
                 }
             }
         }
@@ -422,7 +534,11 @@ $money-green: rgb(122, 188, 125);
         .breakdown {
             display: flex;
             flex-wrap: wrap;
-            width: 66%;
+            width: 100%;
+
+            @include desktop {
+                width: 74rem;
+            }
         }
 
         .box-and-description {
@@ -458,7 +574,6 @@ $money-green: rgb(122, 188, 125);
             }
 
             .description {
-                flex-basis: 50%;
                 line-height: normal;
                 margin: 1rem;
             }
@@ -469,6 +584,7 @@ $money-green: rgb(122, 188, 125);
     #faq {
         h1 {
             margin-bottom: 8rem;
+            margin-top: 0;
 
             @include phone {
                 margin-bottom: 1rem;
@@ -548,7 +664,7 @@ $money-green: rgb(122, 188, 125);
         padding-top: 4vw;
 
         .background-imagery {
-            background: linear-gradient(color(cyan) 80%, gold);
+            background: linear-gradient(color(cyan) 80%, gold 98%, color(neutral-dark));
 
             > img {
                 bottom: -8vw;
@@ -567,36 +683,40 @@ $money-green: rgb(122, 188, 125);
             display: flex;
             font-size: 2.4rem;
             justify-content: center;
-            padding-bottom: 4rem;
+            padding-bottom: 0;
             padding-top: 2rem;
         }
 
         .buttons-row {
             display: flex;
             padding-bottom: 10vw;
+
+            @include phone {
+                display: block;
+            }
         }
 
         .button-box {
             align-items: center;
             display: flex;
             flex-direction: column;
-            margin: 0 3rem;
+            margin: 3rem 1.5rem 0;
             max-width: 32rem;
             text-align: center;
 
             .btn {
                 background-color: color(blue);
-                margin-bottom: 3rem;
+                margin-bottom: 2rem;
                 padding: 1rem 3rem;
             }
         }
 
         .divider {
             > img {
-                bottom: -7vw;
+                bottom: 0;
                 left: -4%;
                 position: absolute;
-                transform: translateY(30vw);
+                transform: translateY(37vw);
                 width: 108%;
             }
         }
@@ -609,5 +729,6 @@ $money-green: rgb(122, 188, 125);
 
     .white-on-blue {
         background-color: color(blue);
+        color: color(neutral-lightest);
     }
 }

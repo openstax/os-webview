@@ -1,5 +1,15 @@
 <template args="model">
     <if condition="model.frontier">
+        <div class="sticky-footer white-on-blue {model.footerHeight}">
+            <div class="button-group">
+                <a href="{model.footerStarted.link}" class="btn">{model.footerStarted.text}</a>
+                {model.footerStarted.description}
+            </div>
+            <div if="model.footerSignUp" class="button-group">
+                <a href="{model.footerSignUp.link}" class="btn">{model.footerSignUp.text}</a>
+                {model.footerSignUp.description}
+            </div>
+        </div>
         <section id="new-frontier">
             <div class="background-imagery">
                 <img id="mountains" src="/images/openstax-tutor/mountains.svg">
@@ -37,9 +47,9 @@
             </div>
             <div class="icon-row boxed-row">
                 <div each="item in model.howItWorks.blurbs" class="blurb">
-                    <img alt="{item.iconDescription}">
+                    <img alt="{item.iconDescription}" src="{item.imageUrl}">
                     <h3>{item.headline}</h3>
-                    <div>{item.description}</div>
+                    <div class="smaller">{item.description}</div>
                 </div>
             </div>
         </section>
@@ -53,13 +63,14 @@
                 <div class="description" data-html="whatStudentsGet.description" skip="true"></div>
                 <div class="carousel">
                     <div class="viewer">
-                        <i class="fa fa-chevron-left"></i>
-                        <img alt="{model.whatStudentsGet.currentImageDescription}"
-                        src="{model.whatStudentsGet.currentImageUrl}">
-                        <i class="fa fa-chevron-right"></i>
+                        <i class="fa fa-chevron-left" role="button" data-decrement></i>
+                        <iframe width="560" height="315"
+                         src="{model.whatStudentsGet.videos[model.whatStudentsGet.selectedVideoIndex].url}"
+                         frameborder="0" allowfullscreen></iframe>
+                        <i class="fa fa-chevron-right" role="button" data-increment></i>
                     </div>
                     <div class="caption">
-                        {model.whatStudentsGet.currentImageDescription}
+                        {model.whatStudentsGet.videos[model.whatStudentsGet.selectedVideoIndex].description}
                     </div>
                     <div class="thumbnails">
                         <img each="item in model.whatStudentsGet.images" alt="{item.description}" src="{item.url}">
@@ -76,8 +87,39 @@
             <div class="boxed">
                 <h1>{model.featureMatrix.headline}</h1>
                 <table>
-                    <thead></thead>
-                    <tbody>
+                    <tbody class="wide-body">
+                        <tr each="pair in model.featureMatrix.featurePairs">
+                            <td>{pair[0].text}</td>
+                            <td>
+                                <!-- using <if><else></if> fouled the HTML structure -->
+                                <img if="pair[0].image" alt="{pair[0].image.description}" src="{pair[0].image.url}">
+                                <if condition="!pair[0].image">
+                                    <div class="description {pair[1].value.length > 6 ? 'smaller' : ''}">{pair[0].value}</div>
+                                </if>
+                            </td>
+                            <td if="pair[1].text">{pair[1].text}</td>
+                            <td if="pair[1].text">
+                                <!-- using <if><else></if> fouled the HTML structure -->
+                                <img if="pair[1].image" alt="{pair[1].image.description}" src="{pair[1].image.url}">
+                                <if condition="!pair[1].image">
+                                    <div class="description {pair[1].value.length > 6 ? 'smaller' : ''}">{pair[1].value}</div>
+                                </if>
+                            </td>
+                            <td if="!pair[1].text" colspan="2">
+                                <div class="key">
+                                    <div>
+                                        <img alt="available indicator" src="{model.featureMatrix.availableIcon}">
+                                        Available
+                                    </div>
+                                    <div>
+                                        <img alt="unavailable indicator" src="{model.featureMatrix.unavailableIcon}">
+                                        Unavailable
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody class="narrow-body">
                         <tr each="pair in model.featureMatrix.featurePairs">
                             <td>{pair[0].text}</td>
                             <td>
@@ -87,6 +129,8 @@
                                     <div class="description">{pair[0].value}</div>
                                 </if>
                             </td>
+                        </tr>
+                        <tr each="pair in model.featureMatrix.featurePairs">
                             <td if="pair[1].text">{pair[1].text}</td>
                             <td if="pair[1].text">
                                 <!-- using <if><else></if> fouled the HTML structure -->
