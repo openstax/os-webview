@@ -62,14 +62,68 @@ export default class Tutor extends CMSPageController {
                 ]
             },
             whatStudentsGet: {
-                currentImageDescription: 'some image description',
-                currentImageCaption: 'Learning algorithms show where students struggle, then' +
-                ' refocus efforts accordingly',
+                currentImage: null,
                 images: [
-                    {description: 'first image', url: '#', caption: 'some text below'},
-                    {description: 'second image', url: '#', caption: 'some text below 2'},
-                    {description: 'third image', url: '#', caption: 'some text below 3'},
-                    {description: 'fourth image', url: '#', caption: 'some text below 4'}
+                    {
+                        description: 'first image',
+                        url: '/images/openstax-tutor/1-dashboard/1-dashboard.png',
+                        caption: 'some text below'
+                    },
+                    {
+                        description: 'second image',
+                        url: '/images/openstax-tutor/1-dashboard/2-clock.png',
+                        caption: 'some text below'
+                    },
+                    {
+                        description: 'third image',
+                        url: '/images/openstax-tutor/1-dashboard/3-past-work.png',
+                        caption: 'some text below'
+                    },
+                    {
+                        description: 'fourth image',
+                        url: '/images/openstax-tutor/1-dashboard/4-browse.png',
+                        caption: 'some text below'
+                    },
+                    {
+                        description: 'fifth image',
+                        url: '/images/openstax-tutor/1-dashboard/5-forecast.mp4',
+                        caption: 'some text below'
+                    },
+                    {
+                        description: 'sixth image',
+                        url: '/images/openstax-tutor/2-reading/1-physics.mp4',
+                        caption: 'some text below'
+                    },
+                    {
+                        description: 'seventh image',
+                        url: '/images/openstax-tutor/2-reading/2-bio.mp4',
+                        caption: 'some text below'
+                    },
+                    {
+                        description: 'eighth image',
+                        url: '/images/openstax-tutor/2-reading/3-soci.mp4',
+                        caption: 'some text below'
+                    },
+                    {
+                        description: 'ninth image',
+                        url: '/images/openstax-tutor/3-homework/1-physics.mp4',
+                        caption: 'some text below'
+                    },
+                    {
+                        description: 'tenth image',
+                        url: '/images/openstax-tutor/3-homework/2-bio1.mp4',
+                        caption: 'some text below'
+                    },
+                    {
+                        description: 'eleventh image',
+                        url: '/images/openstax-tutor/3-homework/3-bio2.mp4',
+                        caption: 'some text below'
+                    },
+                    {
+                        description: 'twelfth image',
+                        url: '/images/openstax-tutor/3-homework/4-soci.mp4',
+                        caption: 'some text below'
+                    }
                 ]
 
             },
@@ -123,6 +177,10 @@ export default class Tutor extends CMSPageController {
         this.slug = 'pages/tutor-marketing';
     }
 
+    onDataError(e) {
+        console.warn(e);
+    }
+
     onDataLoaded() {
         const data = this.pageData;
 
@@ -147,11 +205,7 @@ export default class Tutor extends CMSPageController {
         Object.assign(this.model.whatStudentsGet, {
             headline: data.section_3_heading,
             description: data.section_3_paragraph,
-            videos: data.marketing_videos.map((v) => ({
-                description: v.video_blurb,
-                url: v.video_url
-            })),
-            selectedVideoIndex: 0
+            currentImage: this.model.whatStudentsGet.images[0]
         });
         Object.assign(this.model.featureMatrix, {
             headline: data.section_4_heading,
@@ -236,6 +290,22 @@ export default class Tutor extends CMSPageController {
             ++wsg.selectedVideoIndex;
             this.update();
         }
+    }
+
+    @on('click .thumbnails > div')
+    setCurrentImage(e) {
+        const target = e.delegateTarget;
+        const childNumber = Array.from(target.parentNode.children).indexOf(target);
+        const data = this.model.whatStudentsGet;
+        const videoTag = this.el.querySelector('#what-students-get video');
+
+        data.currentImage = data.images[childNumber];
+        this.update();
+        // Updating the source element in the HTML is not intended to work!
+        if (videoTag) {
+            videoTag.src = data.currentImage.url;
+        }
+        e.preventDefault();
     }
 
 }

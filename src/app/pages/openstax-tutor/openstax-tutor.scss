@@ -314,6 +314,12 @@ $deep-teal: rgb(0, 114, 151);
                 width: auto;
             }
 
+            img,
+            video {
+                max-height: 48rem;
+                max-width: 64rem;
+            }
+
             iframe {
                 height: 40rem;
                 margin: 3rem 2rem 1rem;
@@ -323,8 +329,26 @@ $deep-teal: rgb(0, 114, 151);
 
         .thumbnails {
             display: flex;
+            height: 14rem;
             justify-content: space-between;
             margin: 3rem 0 8rem;
+            overflow-x: auto;
+            overflow-y: hidden;
+
+            >div {
+                cursor: pointer;
+                height: 100%;
+                margin-left: 2rem;
+
+                &:first-child {
+                    margin-left: 0;
+                }
+
+                img,
+                video {
+                    height: 100%;
+                }
+            }
         }
 
     }

@@ -64,16 +64,33 @@
                 <div class="carousel">
                     <div class="viewer">
                         <i class="fa fa-chevron-left" role="button" data-decrement></i>
-                        <iframe width="560" height="315"
-                         src="{model.whatStudentsGet.videos[model.whatStudentsGet.selectedVideoIndex].url}"
-                         frameborder="0" allowfullscreen></iframe>
+                        <if condition="model.whatStudentsGet.currentImage">
+                            <if condition="model.whatStudentsGet.currentImage.url.substr(-3) === 'png'">
+                                <img alt="{model.whatStudentsGet.currentImage.description}"
+                                 src="{model.whatStudentsGet.currentImage.url}">
+                             <else>
+                                 <video controls preload="metadata">
+                                     <source src="{model.whatStudentsGet.currentImage.url}" type="video/mp4">
+                                 </video>
+                             </if>
+                         <else>
+                             <img alt="no selected image">
+                         </if>
                         <i class="fa fa-chevron-right" role="button" data-increment></i>
                     </div>
-                    <div class="caption">
-                        {model.whatStudentsGet.videos[model.whatStudentsGet.selectedVideoIndex].description}
+                    <div class="caption" if="model.whatStudentsGet.currentImage">
+                        {model.whatStudentsGet.currentImage.caption}
                     </div>
                     <div class="thumbnails">
-                        <img each="item in model.whatStudentsGet.images" alt="{item.description}" src="{item.url}">
+                        <div each="item in model.whatStudentsGet.images">
+                            <if condition="item.url.substr(-3) === 'png'">
+                                <img alt="{item.description}" src="{item.url}">
+                            <else>
+                                <video preload="metadata">
+                                    <source src="{item.url}" type="video/mp4">
+                                </video>
+                            </if>
+                        </div>
                     </div>
                 </div>
             </div>
