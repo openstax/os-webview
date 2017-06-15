@@ -3,17 +3,17 @@ import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './openstax-tutor.html';
 
+const availableUrl = '/images/openstax-tutor/available-flag.svg';
+const unavailableUrl = '/images/openstax-tutor/unavailable-flag.svg';
+const availableImageData = {url: availableUrl, description: 'available'};
+const unavailableImageData = {url: unavailableUrl, description: 'not available'};
+
 export default class Tutor extends CMSPageController {
 
     static description = 'OpenStax Tutor Beta is a personalized learning tool ' +
         'that improves how students learn with research-based technology, for only $10.';
 
     init() {
-        const availableUrl = '/images/openstax-tutor/available-flag.svg';
-        const unavailableUrl = '/images/openstax-tutor/unavailable-flag.svg';
-        const availableImageData = {url: availableUrl, description: 'available'};
-        const unavailableImageData = {url: unavailableUrl, description: 'not available'};
-
         this.template = template;
         this.view = {
             classes: ['openstax-tutor-page', 'page']
@@ -128,29 +128,7 @@ export default class Tutor extends CMSPageController {
             featureMatrix: {
                 availableIcon: availableUrl,
                 unavailableIcon: unavailableUrl,
-                featurePairs: [
-                    [{text: 'Integrated digital textbook', image: availableImageData},
-                     {text: 'Student Performance Forecast', image: availableImageData}],
-                    [{text: 'Video', image: availableImageData},
-                     {text: 'Full LMS Integration', value: 'Nope but we may have this in the future'}],
-                    [{text: 'Assignable Questions', image: availableImageData},
-                     {text: 'Conditional Release of Assignments', image: unavailableImageData}],
-                    [{text: 'Spaced Practice', image: availableImageData},
-                     {text: 'Sig/Fig Tolerance Adjustments', image: unavailableImageData}],
-                    [{text: 'Personalized Questions', image: availableImageData},
-                        {
-                            text: 'Ability to Add Own Questions',
-                            value: 'Sort of. You can add external assignments in the form of X.'
-                        }],
-                    [{text: 'Student Performance Analytics', image: availableImageData},
-                     {text: 'Ability to Delete Questions', image: availableImageData}],
-                    [{text: 'Easy to Build Assignments', image: availableImageData},
-                     {text: 'Open Ended Responses', image: availableImageData}],
-                    [{text: 'Print Function', image: availableImageData},
-                     {text: 'Cost', value: '$10'}],
-                    [{text: 'Permanent Access to Textbook Content', image: availableImageData},
-                     {}]
-                ],
+                featurePairs: [],
                 availableBooks: [
                     {description: 'College Physics cover', url: '#'},
                     {description: 'Biology cover', url: '#'},
@@ -236,6 +214,24 @@ export default class Tutor extends CMSPageController {
                 }
             ].filter((obj) => obj.text) // only keep the ones with text values
         });
+
+        this.model.featureMatrix.featurePairs = data.resource_availability
+        .map((obj) => ({
+            text: obj.name,
+            image: obj.available ? availableImageData : unavailableImageData,
+            value: obj.alternate_text
+        }))
+        .reduce((result, value, index, arr) => {
+            if (index % 2 === 0) {
+                const newPair = arr.slice(index, index + 2);
+
+                if (newPair.length < 2) {
+                    newPair.push({});
+                }
+                result.push(newPair);
+            }
+            return result;
+        }, []);
 
         this.update();
         $.insertHtml(this.el, this.model);

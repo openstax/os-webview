@@ -112,7 +112,7 @@ function eslint() {
             'max-depth': ['error', 4],
             'max-len': ['error', 120, 4, {'ignoreUrls': true}],
             'max-nested-callbacks': ['error', 3],
-            'max-params': ['error', 3],
+            'max-params': ['error', 4],
             'new-cap': 'error',
             'new-parens': 'error',
             'newline-after-var': ['error', 'always'],
