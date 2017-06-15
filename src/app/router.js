@@ -24,7 +24,6 @@ const PAGES = [
     'foundation',
     'give',
     'give/*path',
-    'higher-ed',
     'interest',
     'impact',
     'license',
@@ -68,6 +67,7 @@ class AppRouter extends Router {
         this.route('give-confirmation', 'give');
         this.route('adoption-confirmation', 'confirmation');
         this.route('interest-confirmation', 'confirmation');
+        this.route('higher-ed', 'home');
 
         PAGES.forEach((page) => {
             const isSplat = page.match(/\/\*/);
