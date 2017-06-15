@@ -5,10 +5,8 @@ import {description as template} from './openstax-tutor.html';
 
 export default class Tutor extends CMSPageController {
 
-    // TODO Update description
-    static description = 'Since 2012, OpenStax has saved students millions ' +
-        'through free, peer-reviewed college textbooks. Learn more about our ' +
-        'impact on the 3,000+ schools who use our books.';
+    static description = 'OpenStax Tutor Beta is a personalized learning tool ' +
+        'that improves how students learn with research-based technology, for only $10.';
 
     init() {
         const availableUrl = '/images/openstax-tutor/available-flag.svg';
@@ -274,37 +272,44 @@ export default class Tutor extends CMSPageController {
         this.update();
     }
 
+    setCurrentImage(index) {
+        const videoTag = this.el.querySelector('#what-students-get video');
+        const wsg = this.model.whatStudentsGet;
+
+        wsg.currentImage = wsg.images[index];
+        this.update();
+        // Updating the source element in the HTML is not intended to work!
+        if (videoTag) {
+            videoTag.src = wsg.currentImage.url;
+        }
+    }
+
     @on('click .viewer [role="button"][data-decrement]')
     decrementVideoIndex() {
-        if (this.model.whatStudentsGet.selectedVideoIndex > 0) {
-            --this.model.whatStudentsGet.selectedVideoIndex;
-            this.update();
+        const wsg = this.model.whatStudentsGet;
+        const childNumber = wsg.images.indexOf(wsg.currentImage);
+
+        if (childNumber > 0) {
+            this.setCurrentImage(childNumber - 1);
         }
     }
 
     @on('click .viewer [role="button"][data-increment]')
     incrementVideoIndex() {
         const wsg = this.model.whatStudentsGet;
+        const childNumber = wsg.images.indexOf(wsg.currentImage);
 
-        if (wsg.selectedVideoIndex < wsg.videos.length - 1) {
-            ++wsg.selectedVideoIndex;
-            this.update();
+        if (childNumber < wsg.images.length - 1) {
+            this.setCurrentImage(childNumber + 1);
         }
     }
 
     @on('click .thumbnails > div')
-    setCurrentImage(e) {
+    setCurrentImageByClick(e) {
         const target = e.delegateTarget;
         const childNumber = Array.from(target.parentNode.children).indexOf(target);
-        const data = this.model.whatStudentsGet;
-        const videoTag = this.el.querySelector('#what-students-get video');
 
-        data.currentImage = data.images[childNumber];
-        this.update();
-        // Updating the source element in the HTML is not intended to work!
-        if (videoTag) {
-            videoTag.src = data.currentImage.url;
-        }
+        this.setCurrentImage(childNumber);
         e.preventDefault();
     }
 
