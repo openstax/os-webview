@@ -110,20 +110,20 @@
                             <td>{pair[0].text}</td>
                             <td>
                                 <!-- using <if><else></if> fouled the HTML structure -->
-                                <img if="pair[0].image" alt="{pair[0].image.description}" src="{pair[0].image.url}">
-                                <if condition="!pair[0].image">
-                                    <div class="description {pair[1].value.length > 6 ? 'smaller' : ''}">{pair[0].value}</div>
+                                <img if="!pair[0].value" alt="{pair[0].image.description}" src="{pair[0].image.url}">
+                                <if condition="pair[0].value">
+                                    <div class="description {pair[0].value.length > 6 ? 'smaller' : ''}">{pair[0].value}</div>
                                 </if>
                             </td>
-                            <td if="pair[1].text">{pair[1].text}</td>
-                            <td if="pair[1].text">
+                            <td if="pair[1].image">{pair[1].text}</td>
+                            <td if="pair[1].image">
                                 <!-- using <if><else></if> fouled the HTML structure -->
-                                <img if="pair[1].image" alt="{pair[1].image.description}" src="{pair[1].image.url}">
-                                <if condition="!pair[1].image">
+                                <img if="!pair[1].value" alt="{pair[1].image.description}" src="{pair[1].image.url}">
+                                <if condition="pair[1].value">
                                     <div class="description {pair[1].value.length > 6 ? 'smaller' : ''}">{pair[1].value}</div>
                                 </if>
                             </td>
-                            <td if="!pair[1].text" colspan="2">
+                            <td if="!pair[1].image" colspan="2">
                                 <div class="key">
                                     <div>
                                         <img alt="available indicator" src="{model.featureMatrix.availableIcon}">
