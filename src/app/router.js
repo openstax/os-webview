@@ -28,6 +28,7 @@ const PAGES = [
     'interest',
     'impact',
     'license',
+    'openstax-tutor',
     'partners',
     'partners/*path',
     'renew',

@@ -1,0 +1,253 @@
+<template args="model">
+    <if condition="model.frontier">
+        <div class="sticky-footer white-on-blue {model.footerHeight}">
+            <div class="button-group">
+                <a href="{model.footerStarted.link}" class="btn">{model.footerStarted.text}</a>
+                {model.footerStarted.description}
+            </div>
+            <div if="model.footerSignUp" class="button-group">
+                <a href="{model.footerSignUp.link}" class="btn">{model.footerSignUp.text}</a>
+                {model.footerSignUp.description}
+            </div>
+        </div>
+        <section id="new-frontier">
+            <div class="background-imagery">
+                <img id="mountains" src="/images/openstax-tutor/mountains.svg">
+            </div>
+            <div class="boxed">
+                <div class="above-head smaller">
+                    <div>Using OpenStax tutor?</div>
+                    <a class="btn">Access Your Course</a>
+                </div>
+                <h1>
+                    {model.frontier.headline}
+                    <span class="subhead">{model.frontier.subhead}</span>
+                </h1>
+                <div class="two-halves">
+                    <img id="moose" alt="Vector line drawing of moose" src="/images/openstax-tutor/moose.svg">
+                    <div>
+                        <img id="tutor-logo" alt="OpenStax Tutor beta logo" src="/images/openstax-tutor/tutor-logo.svg">
+                        <div data-html="frontier.description" skip="true"></div>
+                        <a class="btn white-on-blue" href="{model.frontier.learnMore.href}">
+                            {model.frontier.learnMore.text}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="divider"><img alt="dividing line of pine trees" src="/images/openstax-tutor/tree-divider.svg"></div>
+        <section id="how-it-works">
+            <div class="background-imagery">
+                <img src="images/openstax-tutor/work-landscape-waves.svg">
+            </div>
+            <div class="text-content">
+                <h1>{model.howItWorks.headline}</h1>
+                <h2>{model.howItWorks.subhead}</h2>
+                <div data-html="howItWorks.description" skip="true"></div>
+            </div>
+            <div class="icon-row boxed-row">
+                <div each="item in model.howItWorks.blurbs" class="blurb">
+                    <img alt="{item.iconDescription}" src="{item.imageUrl}">
+                    <h3>{item.headline}</h3>
+                    <div class="smaller">{item.description}</div>
+                </div>
+            </div>
+        </section>
+        <section id="what-students-get">
+            <div class="background-imagery">
+                <img alt="sea creatures and bubbles" src="/images/openstax-tutor/sea-creatures-left.svg">
+                <img alt="bubbles" src="/images/openstax-tutor/sea-creatures-right.svg">
+            </div>
+            <div class="text-content">
+                <h1>{model.whatStudentsGet.headline}</h1>
+                <div class="description" data-html="whatStudentsGet.description" skip="true"></div>
+                <div class="carousel">
+                    <div class="viewer">
+                        <i class="fa fa-chevron-left" role="button" data-decrement></i>
+                        <if condition="model.whatStudentsGet.currentImage">
+                            <if condition="model.whatStudentsGet.currentImage.url.substr(-3) === 'png'">
+                                <img alt="{model.whatStudentsGet.currentImage.description}"
+                                 src="{model.whatStudentsGet.currentImage.url}">
+                             <else>
+                                 <video controls preload="metadata">
+                                     <source src="{model.whatStudentsGet.currentImage.url}" type="video/mp4">
+                                 </video>
+                             </if>
+                         <else>
+                             <img alt="no selected image">
+                         </if>
+                        <i class="fa fa-chevron-right" role="button" data-increment></i>
+                    </div>
+                    <div class="caption" if="model.whatStudentsGet.currentImage">
+                        {model.whatStudentsGet.currentImage.caption}
+                    </div>
+                    <div class="thumbnails">
+                        <div each="item in model.whatStudentsGet.images">
+                            <if condition="item.url.substr(-3) === 'png'">
+                                <img alt="{item.description}" src="{item.url}">
+                            <else>
+                                <video preload="metadata">
+                                    <source src="{item.url}" type="video/mp4">
+                                </video>
+                            </if>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="feature-matrix">
+            <div class="background-imagery">
+                <img alt="sparkles" aria-role="presentation" src="/images/openstax-tutor/sparkles-1.svg">
+                <img alt="sparkles" aria-role="presentation" src="/images/openstax-tutor/sparkles-2.svg">
+                <img alt="sparkles" aria-role="presentation" src="/images/openstax-tutor/sparkles-3.svg">
+            </div>
+            <div class="boxed">
+                <h1>{model.featureMatrix.headline}</h1>
+                <table>
+                    <tbody class="wide-body">
+                        <tr each="pair in model.featureMatrix.featurePairs">
+                            <td>{pair[0].text}</td>
+                            <td>
+                                <!-- using <if><else></if> fouled the HTML structure -->
+                                <img if="pair[0].image" alt="{pair[0].image.description}" src="{pair[0].image.url}">
+                                <if condition="!pair[0].image">
+                                    <div class="description {pair[1].value.length > 6 ? 'smaller' : ''}">{pair[0].value}</div>
+                                </if>
+                            </td>
+                            <td if="pair[1].text">{pair[1].text}</td>
+                            <td if="pair[1].text">
+                                <!-- using <if><else></if> fouled the HTML structure -->
+                                <img if="pair[1].image" alt="{pair[1].image.description}" src="{pair[1].image.url}">
+                                <if condition="!pair[1].image">
+                                    <div class="description {pair[1].value.length > 6 ? 'smaller' : ''}">{pair[1].value}</div>
+                                </if>
+                            </td>
+                            <td if="!pair[1].text" colspan="2">
+                                <div class="key">
+                                    <div>
+                                        <img alt="available indicator" src="{model.featureMatrix.availableIcon}">
+                                        Available
+                                    </div>
+                                    <div>
+                                        <img alt="unavailable indicator" src="{model.featureMatrix.unavailableIcon}">
+                                        Unavailable
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody class="narrow-body">
+                        <tr each="pair in model.featureMatrix.featurePairs">
+                            <td>{pair[0].text}</td>
+                            <td>
+                                <!-- using <if><else></if> fouled the HTML structure -->
+                                <img if="pair[0].image" alt="{pair[0].image.description}" src="{pair[0].image.url}">
+                                <if condition="!pair[0].image">
+                                    <div class="description">{pair[0].value}</div>
+                                </if>
+                            </td>
+                        </tr>
+                        <tr each="pair in model.featureMatrix.featurePairs">
+                            <td if="pair[1].text">{pair[1].text}</td>
+                            <td if="pair[1].text">
+                                <!-- using <if><else></if> fouled the HTML structure -->
+                                <img if="pair[1].image" alt="{pair[1].image.description}" src="{pair[1].image.url}">
+                                <if condition="!pair[1].image">
+                                    <div class="description">{pair[1].value}</div>
+                                </if>
+                            </td>
+                            <td if="!pair[1].text" colspan="2">
+                                <div class="key">
+                                    <div>
+                                        <img alt="available indicator" src="{model.featureMatrix.availableIcon}">
+                                        Available
+                                    </div>
+                                    <div>
+                                        <img alt="unavailable indicator" src="{model.featureMatrix.unavailableIcon}">
+                                        Unavailable
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="availability">
+                    <span>{model.featureMatrix.availability}</span>
+                    <div class="book-covers">
+                        <img each="item in model.featureMatrix.availableBooks" alt="{item.description}" src="{item.url}">
+                    </div>
+                </div>
+
+            </div>
+            <div class="divider">
+                <img alt="snowy mountain divider" aria-role="presentation" src="/images/openstax-tutor/snow-background.svg">
+            </div>
+        </section>
+        <section id="where-money-goes">
+            <div class="background-imagery">
+                <img alt="wolf and bear in the snow" src="/images/openstax-tutor/snowscape.svg">
+            </div>
+            <div class="text-content">
+                <h1>{model.whereMoneyGoes.headline}</h1>
+                <div class="section-description" data-html="whereMoneyGoes.description" skip="true"></div>
+                <div class="color-bar">
+                    <div class="segment"></div>
+                    <div class="segment"></div>
+                    <div class="segment"></div>
+                    <div class="content">
+                        <div class="circle">
+                            $10
+                        </div>
+                    </div>
+                </div>
+                <div class="breakdown">
+                    <div class="box-and-description" each="item in model.whereMoneyGoes.items">
+                        <div class="box">${item.amount}</div>
+                        <div class="description smaller">{item.description}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="divider"></div>
+        </section>
+        <section id="faq">
+            <div class="background-imagery"></div>
+            <div class="boxed">
+                <h1>{model.faq.headline}</h1>
+            </div>
+            <div class="questions text-content">
+                <div each="item in model.faq.items" class="smaller qna">
+                    <div class="toggled-item" aria-role="button" data-index="{$item}">
+                        <div class="toggler">
+                            <span>{item.isOpen ? '–' : '+'}</span>
+                        </div>
+                        <div class="question" data-html="faq.items[{$item}].question" skip="true"></div>
+                    </div>
+                    <div class="toggled-item {item.isOpen ? '' : 'hidden'}">
+                        <div class="toggler placeholder"></div>
+                        <div class="answer" data-html="faq.items[{$item}].answer" skip="true"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="divider">
+                <img alt="mountains or possibly icebergs" src="/images/openstax-tutor/bergs.svg">
+            </div>
+        </section>
+        <section id="learn-more">
+            <div class="background-imagery">
+            </div>
+            <div class="boxed">
+                <h1>{model.learnMore.headline}</h1>
+            </div>
+            <div class="text-content">
+                <div class="subhead">{model.learnMore.subhead}</div>
+                <div class="buttons-row">
+                    <div each="item in model.learnMore.buttons" class="button-box">
+                        <a class="btn" href="{item.url}">{item.text}</a>
+                        <div class="smaller">{item.description}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="divider"><img src="/images/openstax-tutor/bottom-divider.svg"></div>
+        </section>
+    </if>
+</template>
