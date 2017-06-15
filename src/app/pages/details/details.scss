@@ -27,9 +27,12 @@
     }
 
     .table-of-contents {
+        align-items: center;
         background-color: rgba(color(neutral-lightest), 0.97);
         bottom: 0;
+        display: flex;
         height: 100%;
+        justify-content: center;
         left: 0;
         opacity: 1;
         position: fixed;
@@ -69,21 +72,20 @@
 
         .box {
             font-weight: 500;
-            max-height: 100vh;
+            max-height: 100%;
             overflow-y: auto;
             padding: 3rem;
             padding-top: 6rem;
-            position: absolute;
+            position: static;
+            width: 100%;
 
             @include desktop {
                 background-color: rgba(color(neutral-lightest), 0.97);
-                left: 50%;
-                max-height: 50rem;
-                max-width: 60rem;
+                margin-top: 11rem;
+                max-height: calc(100% - 16rem);
                 padding-top: 3rem;
-                top: 50%;
-                transform: translate3d(-50%, -50%, 0);
-                width: 100%;
+                position: relative;
+                width: auto;
             }
 
             .subunit {
