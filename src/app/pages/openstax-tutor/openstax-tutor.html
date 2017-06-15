@@ -82,7 +82,8 @@
                         {model.whatStudentsGet.currentImage.caption}
                     </div>
                     <div class="thumbnails">
-                        <div each="item in model.whatStudentsGet.images">
+                        <div each="item in model.whatStudentsGet.images"
+                         class="{item === model.whatStudentsGet.currentImage ? 'active' : ''}">
                             <if condition="item.url.substr(-3) === 'png'">
                                 <img alt="{item.description}" src="{item.url}">
                             <else>

@@ -73,8 +73,7 @@ $deep-teal: rgb(0, 114, 151);
 
     // scss-lint:disable IdSelector
     section {
-        overflow-x: hidden;
-        overflow-y: hidden;
+        overflow: hidden;
         padding: 6rem 0;
         position: relative;
 
@@ -340,6 +339,11 @@ $deep-teal: rgb(0, 114, 151);
                 height: 100%;
                 margin-left: 2rem;
 
+                &.active img,
+                &.active video {
+                    border: 0.2rem solid color(cyan);
+                }
+
                 &:first-child {
                     margin-left: 0;
                 }
@@ -355,6 +359,7 @@ $deep-teal: rgb(0, 114, 151);
 
     #feature-matrix {
         color: color(neutral-lightest);
+        z-index: 0;
 
         .background-imagery {
             background: linear-gradient(0deg,
@@ -364,6 +369,7 @@ $deep-teal: rgb(0, 114, 151);
                 rgba(7, 120, 167, 1) calc(45% + 2vw),
                 rgba(2, 57, 122, 1) 78%,
                 $sea-bottom);
+            overflow-y: visible;
 
             > img {
                 &:first-child {
@@ -460,13 +466,11 @@ $deep-teal: rgb(0, 114, 151);
     }
 
     #where-money-goes {
-        overflow-y: visible;
         padding-bottom: 20vw;
         padding-top: 0;
 
         .background-imagery {
             background: linear-gradient($snow-top 80%, $snow-bottom 98%, color(neutral-lightest));
-            overflow-y: visible;
             top: 0;
 
             @media (min-width: 1400px) {
