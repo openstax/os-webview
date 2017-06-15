@@ -8,84 +8,94 @@ import {description as template} from './technology.html';
 
 export default class Accessibility extends CMSPageController {
 
+    static description = 'OpenStax has teamed up with our partners to offer a ' +
+        'variety of low-cost, innovative learning tools and courseware that ' +
+        'integrate with OpenStax textbooks.';
+
     init() {
         this.template = template;
         this.css = '/app/pages/technology/technology.css';
         this.view = {
             classes: ['technology-page', 'page']
         };
-        this.slug = 'pages/accessibility'; // TODO: replace with technology
+        this.slug = 'pages/technology';
         shell.showLoader();
-        this.regions = {
-            bookSelector: 'book-selector'
-        };
-        this.model = {
-            banner: {
-                headline: 'Technology',
-                description: '<p>Higher ed meets high tech. This is everything we want' +
-                ' to say about this in about 20 words.</p>',
-                button: {
-                    url: '#',
-                    text: 'Learn More'
-                },
-                student: '#'
-            },
-            steps: {
-                headline: 'Selecting the right technology is as easy as 1 2 3',
-                items: [
-                    {
-                        headline: 'Choose your book',
-                        selector: new FormSelect({
-                            name: 'book',
-                            placeholder: 'Select your OpenStax book',
-                            validationMessage: () => ''
-                        })
-                    },
-                    {
-                        headline: 'Get your instructor resources',
-                        description: 'View Instructor Resources',
-                        hash: '#faculty-resources'
-                    },
-                    {
-                        headline: 'Choose your learning technology',
-                        description: 'View Learning Technologies',
-                        hash: '#partner-resources'
-                    }]
-            },
-            tutor: {
-                headline: 'The new frontier in education',
-                subhead: 'Improve how your students learn with research-based technology - for only $10.',
-                description: '<p>OpenStax Tutor is a personalized learning tool that helps students focus' +
-                    ' their studying efforts and gives instructors greater insight into student' +
-                    ' performance, all integrated with OpenStax content.',
-                buttons: [
-                    {
-                        url: '#',
-                        text: 'Learn More',
-                        description: 'some alt text'
-                    },
-                    {
-                        url: '#',
-                        text: 'Go to OpenStax Tutor',
-                        description: 'some alt text'
-                    }
-                ]
-            }
-        };
     }
 
     onLoaded() {
         document.title = 'Technology - OpenStax';
-        this.regions.bookSelector.attach(this.model.steps.items[0].selector);
+    }
+
+    attachBookSelector() {
+        const Region = this.regions.self.constructor;
+        const target = this.el.querySelector('book-selector');
+        const region = new Region(target, this);
+
         bookPromise.then((data) => {
             const options = data.map((obj) => ({label: obj.title, value: obj.meta.slug}))
             .sort((a, b) => a.label.localeCompare(b.label));
 
             this.model.steps.items[0].selector.setOptions(options);
+            region.attach(this.model.steps.items[0].selector);
         });
     }
 
+    onDataError(e) {
+        console.warn(e);
+    }
+
     onDataLoaded() {
+        const data = this.pageData;
+
+        this.model = {};
+        this.model.banner = {
+            headline: data.intro_heading,
+            description: data.intro_description,
+            button: {
+                url: data.banner_cta_link,
+                text: data.banner_cta
+            }
+        };
+        this.model.steps = {
+            headline: data.select_tech_heading,
+            items: [
+                {
+                    headline: data.select_tech_step_1,
+                    selector: new FormSelect({
+                        name: 'book',
+                        placeholder: 'Select your OpenStax book',
+                        validationMessage: () => ''
+                    })
+                },
+                {
+                    headline: data.select_tech_step_2,
+                    description: 'View Instructor Resources',
+                    hash: '#faculty-resources'
+                },
+                {
+                    headline: data.select_tech_step_3,
+                    description: 'View Learning Technologies',
+                    hash: '#partner-resources'
+                }
+            ]
+        };
+        this.model.tutor = {
+            headline: data.new_frontier_heading,
+            subhead: data.new_frontier_subheading,
+            description: data.new_frontier_description,
+            buttons: [
+                {
+                    url: data.new_frontier_cta_link_1,
+                    text: data.new_frontier_cta_1
+                },
+                {
+                    url: data.new_frontier_cta_link_2,
+                    text: data.new_frontier_cta_2
+                }
+            ]
+        };
+        this.update();
+        this.attachBookSelector();
         $.insertHtml(this.el, this.model);
         shell.hideLoader();
     }
