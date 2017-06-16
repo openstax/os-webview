@@ -22,6 +22,8 @@ export default class MainMenu extends Controller {
                 this.selectedIndex = -1;
                 if (target.href && this.el.contains(target)) {
                     this.model.openDropdown = target.href.replace(/.*\//, '');
+                } else if (target.dataset.keepOpen) {
+                    // Just leave openDropdown alone
                 } else {
                     this.model.openDropdown = null;
                 }
@@ -59,6 +61,30 @@ export default class MainMenu extends Controller {
     putAwayTrainingWheel() {
         this.model.trainingWheelActive = false;
         this.update();
+    }
+
+    @on('focusout .tutor-menu-item a')
+    preventLeaving(e) {
+        const trainingWheelEl = this.el.querySelector('.training-wheel');
+
+        if (this.model.trainingWheelActive) {
+            setTimeout(() => {
+                if (this.model.trainingWheelActive &&
+                    !trainingWheelEl.contains(document.activeElement)
+                ) {
+                    this.putAwayTrainingWheel();
+                    this.showTutorTrainingWheel();
+                }
+            }, 0);
+        }
+    }
+
+    @on('focusout .button-row button')
+    isolateModal() {
+        if (this.model.trainingWheelActive) {
+            this.putAwayTrainingWheel();
+            this.showTutorTrainingWheel();
+        }
     }
 
     @on('keydown a[role="menuitem"][aria-haspopup="true"]')

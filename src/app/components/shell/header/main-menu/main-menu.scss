@@ -184,13 +184,17 @@
             );
         }
 
-        .put-away {
-            cursor: pointer;
+        .put-away-row {
             font-size: 2.4rem;
             height: 0;
             overflow: visible;
             text-align: right;
             transform: translate(0.5em, -1em);
+
+            .put-away {
+                background: transparent;
+                color: inherit;
+            }
         }
 
         img {
