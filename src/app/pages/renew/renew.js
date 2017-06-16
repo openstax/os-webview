@@ -54,7 +54,7 @@ export default class AdoptionForm extends SalesforceForm {
             }),
             partnerResources: new FormSelect({
                 name: '00NU0000005VmTu',
-                label: 'Which partner resources are you using with your book?',
+                label: 'Which technology are you using with your book?',
                 instructions: 'You may select more than one.',
                 multiple: true,
                 validationMessage
