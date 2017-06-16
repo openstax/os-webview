@@ -41,7 +41,7 @@ export default class TeacherForm extends SalesforceForm {
                 name: '00NU0000005Vls8',
                 type: 'text',
                 label: 'Other',
-                placeholder: 'Technologies not listed above?',
+                placeholder: 'Technology not listed above?',
                 validationMessage
             }),
             otherInstructors: new FormInput({
@@ -55,7 +55,7 @@ export default class TeacherForm extends SalesforceForm {
             }),
             partnerResources: new FormSelect({
                 name: '00NU0000005VmTu',
-                label: 'Which technologies are you using with your book?',
+                label: 'Which technology are you using with your book?',
                 instructions: 'You may select more than one.',
                 multiple: true,
                 validationMessage

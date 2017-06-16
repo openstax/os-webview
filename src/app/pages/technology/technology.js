@@ -74,7 +74,7 @@ export default class Accessibility extends CMSPageController {
                 },
                 {
                     headline: data.select_tech_step_3,
-                    description: 'View Learning Technologies',
+                    description: 'View Learning Technology',
                     hash: '#partner-resources'
                 }
             ]
