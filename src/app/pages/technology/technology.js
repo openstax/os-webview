@@ -52,7 +52,7 @@ export default class Accessibility extends CMSPageController {
             headline: data.intro_heading,
             description: data.intro_description,
             button: {
-                url: data.banner_cta_link,
+                url: '#steps-target',
                 text: data.banner_cta
             }
         };
@@ -60,21 +60,18 @@ export default class Accessibility extends CMSPageController {
             headline: data.select_tech_heading,
             items: [
                 {
-                    headline: data.select_tech_step_1,
                     selector: new FormSelect({
                         name: 'book',
-                        placeholder: 'Select your OpenStax book',
+                        placeholder: data.select_tech_step_1,
                         validationMessage: () => ''
                     })
                 },
                 {
-                    headline: data.select_tech_step_2,
-                    description: 'View Instructor Resources',
+                    description: data.select_tech_step_2,
                     hash: '#faculty-resources'
                 },
                 {
-                    headline: data.select_tech_step_3,
-                    description: 'View Learning Technology',
+                    description: data.select_tech_step_3,
                     hash: '#partner-resources'
                 }
             ]
@@ -98,6 +95,11 @@ export default class Accessibility extends CMSPageController {
         this.attachBookSelector();
         $.insertHtml(this.el, this.model);
         shell.hideLoader();
+    }
+
+    @on('click a[href^="#"]')
+    hashClick(e) {
+        $.hashClick(e);
     }
 
     @on('change select[name="book"]')

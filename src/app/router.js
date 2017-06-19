@@ -123,7 +123,7 @@ class AppRouter extends Router {
 
         e.preventDefault();
 
-        if (linkHelper.isExternal(href)) {
+        if (linkHelper.isExternal(href) || el.target) {
             if (el.dataset.local === 'true') {
                 document.location.href = href;
             } else {
