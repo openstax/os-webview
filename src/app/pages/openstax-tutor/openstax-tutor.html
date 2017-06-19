@@ -1,6 +1,6 @@
 <template args="model">
     <if condition="model.frontier">
-        <div class="sticky-footer white-on-blue {model.footerHeight}">
+        <div class="sticky-footer {model.footerHeight}">
             <div class="button-group">
                 <a href="{model.footerStarted.link}" class="btn">{model.footerStarted.text}</a>
                 {model.footerStarted.description}
@@ -16,8 +16,8 @@
             </div>
             <div class="boxed">
                 <div class="above-head smaller">
-                    <div>Using OpenStax tutor?</div>
-                    <a class="btn">Access Your Course</a>
+                    <div>Using OpenStax Tutor Beta?</div>
+                    <a href="https://tutor.openstax.org/dashboard" class="btn">Access Your Course</a>
                 </div>
                 <h1>
                     {model.frontier.headline}
@@ -37,16 +37,68 @@
         </section>
         <div class="divider"><img alt="dividing line of pine trees" src="/images/openstax-tutor/tree-divider.svg"></div>
         <section id="how-it-works">
+            <div id="how-it-works-target"></div>
             <div class="background-imagery">
                 <img src="images/openstax-tutor/work-landscape-waves.svg">
             </div>
             <div class="text-content">
                 <h1>{model.howItWorks.headline}</h1>
                 <h2>{model.howItWorks.subhead}</h2>
-                <div data-html="howItWorks.description" skip="true"></div>
+                <div class="description" data-html="howItWorks.description" skip="true"></div>
             </div>
-            <div class="icon-row boxed-row">
-                <div each="item in model.howItWorks.blurbs" class="blurb">
+            <div class="blurb-table boxed by-4">
+                <div class="icon-row boxed-row">
+                    <div each="item in model.howItWorks.blurbs" class="blurb">
+                        <img alt="{item.iconDescription}" src="{item.imageUrl}">
+                    </div>
+                </div>
+                <div class="icon-row boxed-row">
+                    <div each="item in model.howItWorks.blurbs" class="blurb">
+                        <h3>{item.headline}</h3>
+                    </div>
+                </div>
+                <div class="icon-row boxed-row">
+                    <div each="item in model.howItWorks.blurbs" class="blurb">
+                        <div class="smaller">{item.description}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="blurb-table boxed by-2">
+                <div class="icon-row boxed-row">
+                    <div each="item in model.howItWorks.blurbs.slice(0,2)" class="blurb">
+                        <img alt="{item.iconDescription}" src="{item.imageUrl}">
+                    </div>
+                </div>
+                <div class="icon-row boxed-row">
+                    <div each="item in model.howItWorks.blurbs.slice(0,2)" class="blurb">
+                        <h3>{item.headline}</h3>
+                    </div>
+                </div>
+                <div class="icon-row boxed-row">
+                    <div each="item in model.howItWorks.blurbs.slice(0,2)" class="blurb">
+                        <div class="smaller">{item.description}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="blurb-table boxed by-2">
+                <div class="icon-row boxed-row">
+                    <div each="item in model.howItWorks.blurbs.slice(2)" class="blurb">
+                        <img alt="{item.iconDescription}" src="{item.imageUrl}">
+                    </div>
+                </div>
+                <div class="icon-row boxed-row">
+                    <div each="item in model.howItWorks.blurbs.slice(2)" class="blurb">
+                        <h3>{item.headline}</h3>
+                    </div>
+                </div>
+                <div class="icon-row boxed-row">
+                    <div each="item in model.howItWorks.blurbs.slice(2)" class="blurb">
+                        <div class="smaller">{item.description}</div>
+                    </div>
+                </div>
+            </div>
+            <div each="item in model.howItWorks.blurbs" class="blurb-table by-1">
+                <div class="blurb">
                     <img alt="{item.iconDescription}" src="{item.imageUrl}">
                     <h3>{item.headline}</h3>
                     <div class="smaller">{item.description}</div>
@@ -69,7 +121,7 @@
                                 <img alt="{model.whatStudentsGet.currentImage.description}"
                                  src="{model.whatStudentsGet.currentImage.url}">
                              <else>
-                                 <video controls preload="metadata">
+                                 <video autoplay controls preload="metadata">
                                      <source src="{model.whatStudentsGet.currentImage.url}" type="video/mp4">
                                  </video>
                              </if>
@@ -78,8 +130,8 @@
                          </if>
                         <i class="fa fa-chevron-right" role="button" data-increment></i>
                     </div>
-                    <div class="caption" if="model.whatStudentsGet.currentImage">
-                        {model.whatStudentsGet.currentImage.caption}
+                    <div class="caption smaller" if="model.whatStudentsGet.currentImage">
+                        {model.whatStudentsGet.currentImage.description}
                     </div>
                     <div class="thumbnails">
                         <div each="item in model.whatStudentsGet.images"

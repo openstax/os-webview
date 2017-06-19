@@ -24,7 +24,9 @@ $deep-teal: rgb(0, 114, 151);
     }
 
     .sticky-footer {
+        background-color: rgba(color(blue), 0.85);
         bottom: 0;
+        color: color(neutral-lightest);
         display: flex;
         font-size: 1.6rem;
         max-height: 10rem;
@@ -34,7 +36,7 @@ $deep-teal: rgb(0, 114, 151);
         transition: padding  0.1s,
                     height   0.3s  0.2s;
         width: 100%;
-        z-index: 3;
+        z-index: 4;
 
         &.collapsed {
             max-height: 0;
@@ -49,6 +51,8 @@ $deep-teal: rgb(0, 114, 151);
         }
 
         .button-group {
+            align-items: center;
+            display: flex;
             padding-left: 6rem;
             transition: opacity 0.2s 0.1s;
 
@@ -145,6 +149,10 @@ $deep-teal: rgb(0, 114, 151);
             }
         }
 
+        .boxed {
+            align-items: flex-start;
+        }
+
         h1 {
             .subhead {
                 font-size: 2.4rem;
@@ -223,6 +231,12 @@ $deep-teal: rgb(0, 114, 151);
         color: color(neutral-lightest);
         padding-bottom: 8vw;
 
+        #how-it-works-target {
+            height: 0;
+            position: absolute;
+            top: -3.5vw;
+        }
+
         .background-imagery {
             background: linear-gradient($tree-color 3%, $work-top 15%, $work-top 60%, $work-bottom);
 
@@ -247,30 +261,73 @@ $deep-teal: rgb(0, 114, 151);
             font-size: 2.4rem;
         }
 
-        .icon-row {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-bottom: 12vw;
-            margin-top: 2rem;
+        .description {
+            text-align: center;
+        }
+
+        .blurb-table {
+            margin: 0 auto;
+            padding: 3rem 0;
+            width: 100%;
+        }
+
+        .by-4 {
+            display: none;
+
+            @include desktop {
+                display: block;
+            }
 
             .blurb {
-                flex: 1 1 100%;
-                margin: 3rem 1.5rem;
-                text-align: center;
-
-                @include tablet {
-                    flex-basis: calc(50% - 3rem);
-                }
-
-                @include desktop {
-                    flex-basis: 0;
-                }
-
-                img {
-                    width: 40%;
-                }
+                width: 25%;
             }
+        }
+
+        .by-2 {
+            display: none;
+
+            @include tablet {
+                display: block;
+            }
+
+            .blurb {
+                width: 50%;
+            }
+        }
+
+        .by-1 {
+            display: none;
+
+            @include phone {
+                display: block;
+                width: 100%;
+            }
+
+            .blurb {
+                display: block;
+                width: 100%;
+            }
+        }
+
+        .blurb {
+            display: table-cell;
+            padding: 0 1.5rem;
+            text-align: center;
+
+            > * {
+                margin: 0;
+                padding: 0;
+            }
+
+            > img {
+                width: 40%;
+            }
+        }
+
+
+        .icon-row {
+            display: table-row;
+            margin: 0 auto;
         }
     }
 
@@ -306,6 +363,8 @@ $deep-teal: rgb(0, 114, 151);
             align-items: center;
             display: flex;
             justify-content: center;
+            margin-top: 1.5rem;
+            max-width: 100vw;
 
             i {
                 cursor: pointer;
@@ -315,20 +374,16 @@ $deep-teal: rgb(0, 114, 151);
 
             img,
             video {
-                max-height: 48rem;
-                max-width: 64rem;
-            }
-
-            iframe {
-                height: 40rem;
-                margin: 3rem 2rem 1rem;
-                width: 64rem;
+                margin: 1.5rem 3rem;
+                max-height: 60rem;
+                max-width: calc(100vw - 14rem);
+                width: 100%;
             }
         }
 
         .thumbnails {
             display: flex;
-            height: 14rem;
+            height: 12rem;
             justify-content: space-between;
             margin: 3rem 0 8rem;
             overflow-x: auto;
@@ -337,7 +392,8 @@ $deep-teal: rgb(0, 114, 151);
             >div {
                 cursor: pointer;
                 height: 100%;
-                margin-left: 2rem;
+                max-width: 25rem;
+                padding-left: 3rem;
 
                 &.active img,
                 &.active video {
@@ -345,12 +401,13 @@ $deep-teal: rgb(0, 114, 151);
                 }
 
                 &:first-child {
-                    margin-left: 0;
+                    padding-left: 0;
                 }
 
                 img,
                 video {
                     height: 100%;
+                    max-width: 22rem;
                 }
             }
         }
@@ -492,6 +549,7 @@ $deep-teal: rgb(0, 114, 151);
         .section-description {
             color: color(blue);
             margin-bottom: 3rem;
+            text-align: center;
         }
 
         .color-bar {
@@ -682,7 +740,10 @@ $deep-teal: rgb(0, 114, 151);
             }
 
             > img {
-                width: 100%;
+                left: -0.9%;
+                position: relative;
+                width: 101%;
+                z-index: 3;
             }
         }
     }
@@ -692,7 +753,7 @@ $deep-teal: rgb(0, 114, 151);
         padding-top: 4vw;
 
         .background-imagery {
-            background: linear-gradient(color(cyan) 80%, gold 98%, color(neutral-dark));
+            background: linear-gradient(to top, color(neutral-dark), gold 1%, color(cyan) 9vw);
 
             > img {
                 bottom: -8vw;
@@ -740,6 +801,8 @@ $deep-teal: rgb(0, 114, 151);
         }
 
         .divider {
+            pointer-events: none;
+
             > img {
                 bottom: 0;
                 left: -4%;
