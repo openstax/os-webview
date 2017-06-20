@@ -156,6 +156,7 @@
             </div>
             <div class="boxed">
                 <h1>{model.featureMatrix.headline}</h1>
+                <div class="description" data-html="featureMatrix.description" skip="true"></div>
                 <table>
                     <tbody class="wide-body">
                         <tr each="pair in model.featureMatrix.featurePairs">
@@ -279,6 +280,9 @@
                         <div class="toggler placeholder"></div>
                         <div class="answer" data-html="faq.items[{$item}].answer" skip="true"></div>
                     </div>
+                </div>
+                <div class="see-more qna">See more answers in our
+                    <a href="http://openstax.force.com/support?l=en_US&c=Products%3ATutor">knowledge base</a>.
                 </div>
             </div>
             <div class="divider">

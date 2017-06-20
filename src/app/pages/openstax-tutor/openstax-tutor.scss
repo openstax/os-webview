@@ -24,9 +24,10 @@ $deep-teal: rgb(0, 114, 151);
     }
 
     .sticky-footer {
-        background-color: rgba(color(blue), 0.85);
+        background-color: rgba(245, 245, 245, 0.85);
+        border-top: thin solid #d5d5d5;
         bottom: 0;
-        color: color(neutral-lightest);
+        color: #424242;
         display: flex;
         font-size: 1.6rem;
         max-height: 10rem;
@@ -115,10 +116,10 @@ $deep-teal: rgb(0, 114, 151);
         z-index: 2;
 
         .background-imagery {
-            background: linear-gradient($lighter-gray, color(gold));
+            background: linear-gradient($lighter-gray 55%, rgba(color(gold), 0.6));
 
             > img {
-                bottom: 0;
+                bottom: -1.7vw;
                 left: -1%;
                 width: 101%;
             }
@@ -158,8 +159,7 @@ $deep-teal: rgb(0, 114, 151);
                 font-size: 2.4rem;
                 font-weight: bold;
                 letter-spacing: normal;
-                margin-bottom: 8rem;
-                margin-top: 4rem;
+                margin: 3rem 0;
                 padding: 0;
 
                 @include phone {
@@ -205,7 +205,8 @@ $deep-teal: rgb(0, 114, 151);
             }
 
             #tutor-logo {
-                width: calc(15rem + 20%);
+                max-width: 100%;
+                width: calc(20rem + 20%);
             }
         }
 
@@ -363,8 +364,8 @@ $deep-teal: rgb(0, 114, 151);
             align-items: center;
             display: flex;
             justify-content: center;
-            margin-top: 1.5rem;
-            max-width: 100vw;
+            margin: 1.5rem auto;
+            max-width: 76rem;
 
             i {
                 cursor: pointer;
@@ -383,16 +384,16 @@ $deep-teal: rgb(0, 114, 151);
 
         .thumbnails {
             display: flex;
-            height: 12rem;
+            height: 10rem;
             justify-content: space-between;
-            margin: 3rem 0 8rem;
+            margin: 1.5rem 0 8rem;
             overflow-x: auto;
             overflow-y: hidden;
 
             >div {
                 cursor: pointer;
                 height: 100%;
-                max-width: 25rem;
+                max-width: 23rem;
                 padding-left: 3rem;
 
                 &.active img,
@@ -407,7 +408,7 @@ $deep-teal: rgb(0, 114, 151);
                 img,
                 video {
                     height: 100%;
-                    max-width: 22rem;
+                    max-width: 20rem;
                 }
             }
         }
@@ -453,8 +454,12 @@ $deep-teal: rgb(0, 114, 151);
             margin-bottom: 3rem;
         }
 
+        .description {
+            text-align: center;
+        }
+
         table {
-            margin-bottom: 3rem;
+            margin: 3rem 0;
             width: 100;
 
             .wide-body {
@@ -690,6 +695,10 @@ $deep-teal: rgb(0, 114, 151);
             @include phone {
                 margin-left: 0;
             }
+        }
+
+        .see-more {
+            margin-top: 3rem;
         }
 
         .toggled-item {

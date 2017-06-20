@@ -22,11 +22,11 @@ export default class Tutor extends CMSPageController {
         this.model = {
             footerStarted: {
                 text: 'Get Started',
-                description: 'Try OpenStax Tutor today.'
+                description: 'Tour your preview course.'
             },
             footerSignUp: {
                 text: 'Sign Up',
-                description: 'Join an OpenStax Tutor webinar to answer all your questions'
+                description: 'Join a webinar to get all your questions answered.'
             },
             frontier: false,
             howItWorks: {
@@ -61,64 +61,55 @@ export default class Tutor extends CMSPageController {
                 currentImage: null,
                 images: [
                     {
-                        description: 'first image',
                         url: '/images/openstax-tutor/1-dashboard/1-dashboard.png',
-                        caption: 'some text below'
+                        description: 'The dashboard gives students an overview of their assignments and progress.'
                     },
                     {
-                        description: 'second image',
                         url: '/images/openstax-tutor/1-dashboard/2-clock.png',
-                        caption: 'some text below'
+                        description: 'A red clock icon shows which assignments were submitted late. '
                     },
                     {
-                        description: 'third image',
                         url: '/images/openstax-tutor/1-dashboard/3-past-work.png',
-                        caption: 'some text below'
+                        description: 'Past due assignments are moved to the All Past Work tab.'
                     },
                     {
-                        description: 'fourth image',
                         url: '/images/openstax-tutor/1-dashboard/4-browse.png',
-                        caption: 'some text below'
+                        description: 'Students can access their textbook content by clicking Browse the Book.'
                     },
                     {
-                        description: 'fifth image',
                         url: '/images/openstax-tutor/1-dashboard/5-forecast.mp4',
-                        caption: 'some text below'
+                        description: 'The student performance forecast shows them how they’re doing overall.'
                     },
                     {
-                        description: 'sixth image',
                         url: '/images/openstax-tutor/2-reading/1-physics.mp4',
-                        caption: 'some text below'
+                        description: 'Reading assignments present the textbook in manageable chunks.'
                     },
                     {
-                        description: 'seventh image',
                         url: '/images/openstax-tutor/2-reading/2-bio.mp4',
-                        caption: 'some text below'
+                        description: 'Students will get three personalized questions per section you assign.'
                     },
                     {
-                        description: 'eighth image',
                         url: '/images/openstax-tutor/2-reading/3-soci.mp4',
-                        caption: 'some text below'
+                        description: 'First, students are prompted to recall an answer from memory. ' +
+                        'Multiple choice options follow.'
                     },
                     {
-                        description: 'ninth image',
                         url: '/images/openstax-tutor/3-homework/1-physics.mp4',
-                        caption: 'some text below'
+                        description: 'Homework assignments include instructor-assigned questions, ' +
+                        'and questions chosen by OpenStax Tutor Beta.'
                     },
                     {
-                        description: 'tenth image',
                         url: '/images/openstax-tutor/3-homework/2-bio1.mp4',
-                        caption: 'some text below'
+                        description: 'First, OpenStax Tutor Beta prompts students to recall an answer from memory.'
                     },
                     {
-                        description: 'eleventh image',
                         url: '/images/openstax-tutor/3-homework/3-bio2.mp4',
-                        caption: 'some text below'
+                        description: 'After submitting an answer, students are given a multiple choice question.'
                     },
                     {
-                        description: 'twelfth image',
                         url: '/images/openstax-tutor/3-homework/4-soci.mp4',
-                        caption: 'some text below'
+                        description: 'Students get feedback right away, unless the instructor has ' +
+                        'selected delayed feedback on the assignment.'
                     }
                 ]
 
@@ -183,6 +174,10 @@ export default class Tutor extends CMSPageController {
         });
         Object.assign(this.model.featureMatrix, {
             headline: data.section_4_heading,
+            description: data.section_4_description ||
+             'Thousands of students have piloted OpenStax Tutor Beta. Here are the features ' +
+             'we’ve prioritized, and more are on the way. Have suggestions for future development? ' +
+             'Send us an email at <a href="mailto:info@openstaxtutor.org">info@openstaxtutor.org</a>.',
             availability: data.section_4_book_heading,
             availableBooks: data.marketing_books.map((b) => ({
                 description: b.title,
