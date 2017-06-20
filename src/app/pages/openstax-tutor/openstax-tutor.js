@@ -21,12 +21,10 @@ export default class Tutor extends CMSPageController {
         this.css = '/app/pages/openstax-tutor/openstax-tutor.css';
         this.model = {
             footerStarted: {
-                url: '#',
                 text: 'Get Started',
                 description: 'Try OpenStax Tutor today.'
             },
             footerSignUp: {
-                url: '#',
                 text: 'Sign Up',
                 description: 'Join an OpenStax Tutor webinar to answer all your questions'
             },
@@ -169,7 +167,7 @@ export default class Tutor extends CMSPageController {
             subhead: data.section_1_subheading,
             description: data.section_1_paragraph,
             learnMore: {
-                href: data.section_1_cta_link,
+                href: '#how-it-works-target',
                 text: data.section_1_cta_text
             }
         };
@@ -214,6 +212,8 @@ export default class Tutor extends CMSPageController {
                 }
             ].filter((obj) => obj.text) // only keep the ones with text values
         });
+        this.model.footerStarted.link = data.section_7_cta_link_1;
+        this.model.footerSignUp.link = data.section_7_cta_link_2;
 
         this.model.featureMatrix.featurePairs = data.resource_availability
         .map((obj) => ({
@@ -278,6 +278,11 @@ export default class Tutor extends CMSPageController {
         if (videoTag) {
             videoTag.src = wsg.currentImage.url;
         }
+    }
+
+    @on('click a[href^="#"]')
+    hashClick(e) {
+        $.hashClick(e);
     }
 
     @on('click .viewer [role="button"][data-decrement]')
