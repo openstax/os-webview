@@ -35,12 +35,17 @@
         background-position: right;
         background-repeat: no-repeat;
         background-size: cover;
-        min-height: 40vw;
+        height: 60rem;
+        overflow: hidden;
         position: relative;
 
         @include phone {
             background-image: none;
             min-height: 0;
+        }
+
+        h1 {
+            font-size: 6rem;
         }
 
         .boxed {
@@ -62,7 +67,7 @@
             left: 0;
             position: relative;
             top: 5vw;
-            width: 60%;
+            width: 100%;
             z-index: 2;
 
             @include phone {
@@ -81,16 +86,31 @@
                     height: 100%;
                     min-height: 40rem;
                     padding-bottom: calc(50vw + 4rem);
+                    width: 100%;
                 }
 
                 @include desktop {
                     margin-left: 4rem;
+                    margin-right: 4rem;
                     padding: 4rem;
+                    width: calc(100% - 7rem);
                 }
+
             }
 
             .description {
-                max-width: 50rem;
+
+                @media (min-width: 1200px) {
+                    width: 48rem;
+                }
+
+                @media (max-width: 1200px) {
+                    width: 40%;
+                }
+
+                @media (max-width: 500px) {
+                    width: 100%;
+                }
             }
         }
 
@@ -99,21 +119,22 @@
             height: 15rem;
             opacity: 0.3;
             position: absolute;
-            right: 10%;
-            top: -4rem;
-            width: 60%;
-            // z-index: -1;
+            width: 80%;
 
             @include phone {
                 display: none;
             }
 
             &.first {
-                bottom: -7vw;
-                height: 100%;
-                left: -3%;
-                top: auto;
-                width: 90%;
+                bottom: -3vw;
+                height: 90%;
+                left: -1%;
+            }
+
+            &.second {
+                left: 21%;
+                top: -6rem;
+                width: 48%;
             }
         }
 
@@ -123,12 +144,21 @@
             background-repeat: no-repeat;
             background-size: contain;
             bottom: 0;
-            height: 75%;
+            height: 95%;
             pointer-events: none;
             position: absolute;
-            right: calc(6% - 15rem);
-            width: calc(100% + 15rem);
+            right: 0;
+            width: calc(80% + 15rem);
             z-index: 2;
+
+            @media (max-width: 1200px) {
+                height: calc(45% + 25vw);
+                right: calc(15% - 18rem);
+            }
+
+            @include phone {
+                width: calc(25rem + 85%);
+            }
         }
     }
 
