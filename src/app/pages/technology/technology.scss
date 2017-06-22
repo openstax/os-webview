@@ -46,6 +46,10 @@
 
         h1 {
             font-size: 6rem;
+
+            @include phone {
+                font-size: 4.8rem;
+            }
         }
 
         .boxed {
@@ -55,6 +59,7 @@
             position: relative;
 
             @include phone {
+                height: 100%;
                 padding: 0;
             }
 
@@ -74,6 +79,10 @@
                 height: 100%;
                 position: static;
                 width: 100%;
+            }
+
+            @media (min-width: 1400px) {
+                top: 7rem;
             }
 
             .orange-part {
@@ -108,7 +117,11 @@
                     width: 40%;
                 }
 
-                @media (max-width: 500px) {
+                @include tablet {
+                    width: calc(5rem + 60%);
+                }
+
+                @include phone {
                     width: 100%;
                 }
             }
@@ -145,19 +158,23 @@
             background-size: contain;
             bottom: 0;
             height: 95%;
+            left: 20%;
             pointer-events: none;
             position: absolute;
-            right: 0;
             width: calc(80% + 15rem);
             z-index: 2;
 
-            @media (max-width: 1200px) {
-                height: calc(45% + 25vw);
-                right: calc(15% - 18rem);
+            @include phone {
+                background-position: 35% bottom;
+                background-size: calc(60vw + 45rem) auto;
+                left: 0;
+                width: 100%;
             }
 
-            @include phone {
-                width: calc(25rem + 85%);
+            @media (min-width: 1400px) {
+                left: auto;
+                right: calc(50% - 85rem);
+                width: 143rem;
             }
         }
     }
