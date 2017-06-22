@@ -135,16 +135,11 @@
     #steps {
         background-color: color(turquoise);
         color: color(neutral-lightest);
+        min-height: 35rem;
         overflow: visible;
 
         @include phone {
             padding: 4rem;
-        }
-
-        #steps-target {
-            height: 0;
-            position: relative;
-            top: -20vh;
         }
 
         h2 {

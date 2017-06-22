@@ -52,7 +52,7 @@ export default class Accessibility extends CMSPageController {
             headline: data.intro_heading,
             description: data.intro_description,
             button: {
-                url: '#steps-target',
+                url: '#steps',
                 text: data.banner_cta
             }
         };
