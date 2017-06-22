@@ -3,11 +3,11 @@
         <div class="sticky-footer {model.footerHeight}">
             <div class="button-group">
                 <a href="{model.footerStarted.link}" class="btn">{model.footerStarted.text}</a>
-                {model.footerStarted.description}
+                <div class="description">{model.footerStarted.description}</div>
             </div>
             <div if="model.footerSignUp" class="button-group">
                 <a href="{model.footerSignUp.link}" class="btn">{model.footerSignUp.text}</a>
-                {model.footerSignUp.description}
+                <div class="description">{model.footerSignUp.description}</div>
             </div>
         </div>
         <section id="new-frontier">
@@ -117,21 +117,23 @@
                     <div class="viewer">
                         <i class="fa fa-chevron-left" role="button" data-decrement></i>
                         <if condition="model.whatStudentsGet.currentImage">
-                            <if condition="model.whatStudentsGet.currentImage.url.substr(-3) === 'png'">
-                                <img alt="{model.whatStudentsGet.currentImage.description}"
-                                 src="{model.whatStudentsGet.currentImage.url}">
-                             <else>
-                                 <video autoplay controls preload="metadata">
-                                     <source src="{model.whatStudentsGet.currentImage.url}" type="video/mp4">
-                                 </video>
-                             </if>
+                            <div class="viewport">
+                                <if condition="model.whatStudentsGet.currentImage.url.substr(-3) === 'png'">
+                                    <img class="{model.whatStudentsGet.transitioning}" alt="{model.whatStudentsGet.currentImage.description}"
+                                     src="{model.whatStudentsGet.currentImage.url}">
+                                 <else>
+                                     <video class="{model.whatStudentsGet.transitioning}" controls preload="metadata">
+                                         <source src="{model.whatStudentsGet.currentImage.url}" type="video/mp4">
+                                     </video>
+                                 </if>
+                             </div>
                          <else>
                              <img alt="no selected image">
                          </if>
                         <i class="fa fa-chevron-right" role="button" data-increment></i>
                     </div>
-                    <div class="caption smaller" if="model.whatStudentsGet.currentImage">
-                        {model.whatStudentsGet.currentImage.description}
+                    <div class="caption smaller" data-html="whatStudentsGet.currentImage.description"
+                     if="model.whatStudentsGet.currentImage" skip="true">
                     </div>
                     <div class="thumbnails">
                         <div each="item in model.whatStudentsGet.images"
@@ -163,7 +165,9 @@
                             <td>{pair[0].text}</td>
                             <td>
                                 <!-- using <if><else></if> fouled the HTML structure -->
-                                <img if="!pair[0].value" alt="{pair[0].image.description}" src="{pair[0].image.url}">
+                                <div if="!pair[0].value" class="center-image">
+                                    <img alt="{pair[0].image.description}" src="{pair[0].image.url}">
+                                </div>
                                 <if condition="pair[0].value">
                                     <div class="description {pair[0].value.length > 6 ? 'smaller' : ''}">{pair[0].value}</div>
                                 </if>
@@ -171,7 +175,9 @@
                             <td if="pair[1].image">{pair[1].text}</td>
                             <td if="pair[1].image">
                                 <!-- using <if><else></if> fouled the HTML structure -->
-                                <img if="!pair[1].value" alt="{pair[1].image.description}" src="{pair[1].image.url}">
+                                <div if="!pair[1].value" class="center-image">
+                                    <img alt="{pair[1].image.description}" src="{pair[1].image.url}">
+                                </div>
                                 <if condition="pair[1].value">
                                     <div class="description {pair[1].value.length > 6 ? 'smaller' : ''}">{pair[1].value}</div>
                                 </if>
@@ -195,9 +201,11 @@
                             <td>{pair[0].text}</td>
                             <td>
                                 <!-- using <if><else></if> fouled the HTML structure -->
-                                <img if="pair[0].image" alt="{pair[0].image.description}" src="{pair[0].image.url}">
-                                <if condition="!pair[0].image">
-                                    <div class="description">{pair[0].value}</div>
+                                <div if="!pair[0].value" class="center-image">
+                                    <img alt="{pair[0].image.description}" src="{pair[0].image.url}">
+                                </div>
+                                <if condition="pair[0].value">
+                                    <div class="description smaller">{pair[0].value}</div>
                                 </if>
                             </td>
                         </tr>
@@ -205,9 +213,11 @@
                             <td if="pair[1].text">{pair[1].text}</td>
                             <td if="pair[1].text">
                                 <!-- using <if><else></if> fouled the HTML structure -->
-                                <img if="pair[1].image" alt="{pair[1].image.description}" src="{pair[1].image.url}">
-                                <if condition="!pair[1].image">
-                                    <div class="description">{pair[1].value}</div>
+                                <div if="!pair[1].value" class="center-image">
+                                    <img alt="{pair[1].image.description}" src="{pair[1].image.url}">
+                                </div>
+                                <if condition="pair[1].value">
+                                    <div class="description smaller">{pair[1].value}</div>
                                 </if>
                             </td>
                             <td if="!pair[1].text" colspan="2">
@@ -225,6 +235,7 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="caption smaller">Available for OpenStax Tutor Beta for College Physics</div>
                 <div class="availability">
                     <span>{model.featureMatrix.availability}</span>
                     <div class="book-covers">
@@ -281,8 +292,10 @@
                         <div class="answer" data-html="faq.items[{$item}].answer" skip="true"></div>
                     </div>
                 </div>
-                <div class="see-more qna">See more answers in our
-                    <a href="http://openstax.force.com/support?l=en_US&c=Products%3ATutor">knowledge base</a>.
+                <div class="see-more qna">
+                    <a href="http://openstax.force.com/support?l=en_US&c=Products%3ATutor">
+                        See more answers in our knowledge base
+                    </a>.
                 </div>
             </div>
             <div class="divider">

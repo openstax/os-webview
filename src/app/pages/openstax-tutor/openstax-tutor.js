@@ -22,37 +22,37 @@ export default class Tutor extends CMSPageController {
         this.model = {
             footerStarted: {
                 text: 'Get Started',
-                description: 'Tour your preview course.'
+                description: 'Preview and create a course.'
             },
             footerSignUp: {
-                text: 'Sign Up',
-                description: 'Join a webinar to get all your questions answered.'
+                text: 'Join a Webinar',
+                description: 'Get advice from pioneers of the tool.'
             },
             frontier: false,
             howItWorks: {
                 blurbs: [
                     {
-                        iconDescription: 'Learning icon',
-                        headline: 'Personalized learning',
-                        description: 'based on each student’s understanding of the text',
-                        imageUrl: '/images/openstax-tutor/personalized.svg'
-                    },
-                    {
-                        iconDescription: 'Feedback icon',
-                        headline: 'Algorithms provide feedback',
-                        description: 'meaning the student gets the right help, right now',
-                        imageUrl: '/images/openstax-tutor/two-step.svg'
+                        iconDescription: 'Spaced practice icon',
+                        headline: 'Spaced practice',
+                        description: 'Helps students remember what they previously learned',
+                        imageUrl: '/images/openstax-tutor/spaced-practice.svg'
                     },
                     {
                         iconDescription: 'People icon',
                         headline: 'Personalized questions',
-                        description: 'focus on the topics each student needs the most help with',
+                        description: 'Help students learn where they need it most',
                         imageUrl: '/images/openstax-tutor/personalized.svg'
                     },
                     {
+                        iconDescription: 'Feedback icon',
+                        headline: 'Two-step questions',
+                        description: 'Help students study more effectively',
+                        imageUrl: '/images/openstax-tutor/two-step.svg'
+                    },
+                    {
                         iconDescription: '$10 icon',
-                        headline: '$10',
-                        description: 'per student per semester. Yes, really.',
+                        headline: 'Low cost',
+                        description: '$10 per course saves students money',
                         imageUrl: '/images/openstax-tutor/ten-dollar-bill.svg'
                     }
                 ]
@@ -62,7 +62,8 @@ export default class Tutor extends CMSPageController {
                 images: [
                     {
                         url: '/images/openstax-tutor/1-dashboard/1-dashboard.png',
-                        description: 'The dashboard gives students an overview of their assignments and progress.'
+                        description: '<b>The dashboard</b> gives students an overview of ' +
+                        'their assignments and progress.'
                     },
                     {
                         url: '/images/openstax-tutor/1-dashboard/2-clock.png',
@@ -264,15 +265,46 @@ export default class Tutor extends CMSPageController {
     }
 
     setCurrentImage(index) {
-        const videoTag = this.el.querySelector('#what-students-get video');
+        const isVideo = (url) => (/.mp4/).test(url);
         const wsg = this.model.whatStudentsGet;
 
-        wsg.currentImage = wsg.images[index];
+        wsg.transitioning = 'transitioning';
         this.update();
-        // Updating the source element in the HTML is not intended to work!
-        if (videoTag) {
-            videoTag.src = wsg.currentImage.url;
-        }
+
+        setTimeout(() => {
+            wsg.transitioning = '';
+            wsg.currentImage = wsg.images[index];
+            this.update();
+            $.insertHtml(this.el.querySelector('#what-students-get'), this.model);
+            const videoTag = this.el.querySelector('#what-students-get .viewer video');
+            const thumbnailEl = this.el.querySelector('#what-students-get .thumbnails');
+            const thumbnailWidth = thumbnailEl.scrollWidth;
+            const thumbnailScrollDest = thumbnailWidth * index / wsg.images.length;
+
+            const scrollStep = () => {
+                const stepSize = 25;
+                const currentPosition = thumbnailEl.scrollLeft;
+                const direction = thumbnailScrollDest < currentPosition ? -1 : 1;
+                const isLastStep = Math.abs(thumbnailScrollDest - currentPosition) < stepSize;
+
+                thumbnailEl.scrollLeft = isLastStep ? thumbnailScrollDest : currentPosition + direction * stepSize;
+
+                if (!isLastStep) {
+                    window.requestAnimationFrame(scrollStep);
+                }
+            };
+
+            window.requestAnimationFrame(scrollStep);
+
+            // Updating the source element in the HTML is not intended to work!
+            if (isVideo(wsg.currentImage.url)) {
+                videoTag.src = wsg.currentImage.url;
+                setTimeout(() => {
+                    videoTag.currentTime = 0;
+                    videoTag.play();
+                }, 400);
+            }
+        }, 400);
     }
 
     @on('click a[href^="#"]')

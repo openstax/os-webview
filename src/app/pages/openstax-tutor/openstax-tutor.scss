@@ -30,14 +30,19 @@ $deep-teal: rgb(0, 114, 151);
         color: #424242;
         display: flex;
         font-size: 1.6rem;
+        justify-content: space-around;
         max-height: 10rem;
-        padding: 2rem 3rem;
+        padding: 1rem;
         position: fixed;
         /* property  duration  delay */
         transition: padding  0.1s,
                     height   0.3s  0.2s;
         width: 100%;
         z-index: 4;
+
+        @include desktop {
+            padding: 2rem 3rem;
+        }
 
         &.collapsed {
             max-height: 0;
@@ -54,8 +59,17 @@ $deep-teal: rgb(0, 114, 151);
         .button-group {
             align-items: center;
             display: flex;
-            padding-left: 6rem;
+            justify-content: center;
+            padding-left: 2rem;
             transition: opacity 0.2s 0.1s;
+
+            @include desktop {
+                padding-left: 6rem;
+            }
+
+            @include phone {
+                padding: 0;
+            }
 
             &:first-child {
                 padding-left: 0;
@@ -68,11 +82,23 @@ $deep-teal: rgb(0, 114, 151);
 
         .btn {
             background-color: $deep-teal;
+            flex-basis: 20rem;
             font-size: 1.4rem;
             margin-right: 2rem;
             padding: 1rem 3rem;
-            width: 17rem;
 
+            @include phone {
+                flex-basis: calc(100% - 1.5rem);
+                margin: 0;
+            }
+        }
+
+        .description {
+            flex: 1 1 100%;
+
+            @include phone {
+                display: none;
+            }
         }
     }
 
@@ -365,7 +391,7 @@ $deep-teal: rgb(0, 114, 151);
             display: flex;
             justify-content: center;
             margin: 1.5rem auto;
-            max-width: 76rem;
+            max-width: calc(110vh - 20rem);
 
             i {
                 cursor: pointer;
@@ -373,22 +399,34 @@ $deep-teal: rgb(0, 114, 151);
                 width: auto;
             }
 
-            img,
-            video {
-                margin: 1.5rem 3rem;
-                max-height: 60rem;
-                max-width: calc(100vw - 14rem);
+            .viewport {
+                margin: 1.5rem 3rem 0;
+                overflow-x: hidden;
                 width: 100%;
             }
+
+            img,
+            video {
+                max-height: 60rem;
+                max-width: calc(100vw - 14rem);
+                transition: all 0.3s;
+                width: 100%;
+
+                &.transitioning {
+                    opacity: 0;
+                }
+            }
         }
+
 
         .thumbnails {
             display: flex;
             height: 10rem;
             justify-content: space-between;
-            margin: 1.5rem 0 8rem;
+            margin: 3rem 0 8rem;
             overflow-x: auto;
             overflow-y: hidden;
+            transition: 0.5s ease-in-out;
 
             >div {
                 cursor: pointer;
@@ -459,7 +497,7 @@ $deep-teal: rgb(0, 114, 151);
         }
 
         table {
-            margin: 3rem 0;
+            margin: 3rem 0 0;
             width: 100;
 
             .wide-body {
@@ -479,10 +517,31 @@ $deep-teal: rgb(0, 114, 151);
             }
         }
 
+        .caption {
+            color: color(blue);
+            font-size: 1.3rem;
+            margin: 0.5rem 0 1rem 0.5rem;
+            text-align: left;
+            width: 100%;
+        }
+
         td {
             background-color: color(blue);
             border: thin solid transparent;
-            padding: 1rem 5rem;
+            padding: 1rem 3rem;
+
+            @media (min-width: 1200px) {
+                padding-left: 5rem;
+            }
+
+            &:nth-child(even) {
+                padding-left: 3rem;
+                width: 30%;
+
+                @include desktop {
+                    width: 15%;
+                }
+            }
 
             .description.smaller {
                 font-size: 1.3rem;
@@ -494,9 +553,14 @@ $deep-teal: rgb(0, 114, 151);
                 width: 100%;
             }
 
+            .center-image {
+                display: flex;
+                justify-content: center;
+            }
+
             img {
                 height: 3.5rem;
-                margin-right: 1rem;
+                margin: 1rem;
                 vertical-align: middle;
             }
         }
@@ -691,6 +755,7 @@ $deep-teal: rgb(0, 114, 151);
         .qna {
             // margin-bottom: 2rem;
             margin-left: 8rem;
+            width: 100%;
 
             @include phone {
                 margin-left: 0;
@@ -698,12 +763,15 @@ $deep-teal: rgb(0, 114, 151);
         }
 
         .see-more {
-            margin-top: 3rem;
+            font-weight: bold;
+            margin-top: 1rem;
+            padding-left: 3.5rem;
         }
 
         .toggled-item {
             align-items: center;
             display: flex;
+            width: 100%;
 
             &.hidden {
                 display: none;
