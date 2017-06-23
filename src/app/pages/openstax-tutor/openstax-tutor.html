@@ -158,7 +158,7 @@
             </div>
             <div class="boxed">
                 <h1>{model.featureMatrix.headline}</h1>
-                <div class="description" data-html="featureMatrix.description" skip="true"></div>
+                <div class="description text-content" data-html="featureMatrix.description" skip="true"></div>
                 <table>
                     <tbody class="wide-body">
                         <tr each="pair in model.featureMatrix.featurePairs">
@@ -235,7 +235,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="caption smaller">Available for OpenStax Tutor Beta for College Physics</div>
+                <div class="caption smaller">*Available for OpenStax Tutor Beta for College Physics</div>
                 <div class="availability">
                     <span>{model.featureMatrix.availability}</span>
                     <div class="book-covers">
@@ -275,7 +275,6 @@
             <div class="divider"></div>
         </section>
         <section id="faq">
-            <div class="background-imagery"></div>
             <div class="boxed">
                 <h1>{model.faq.headline}</h1>
             </div>
@@ -294,8 +293,8 @@
                 </div>
                 <div class="see-more qna">
                     <a href="http://openstax.force.com/support?l=en_US&c=Products%3ATutor">
-                        See more answers in our knowledge base
-                    </a>.
+                        See more answers in our knowledge base.
+                    </a>
                 </div>
             </div>
             <div class="divider">
@@ -303,8 +302,6 @@
             </div>
         </section>
         <section id="learn-more">
-            <div class="background-imagery">
-            </div>
             <div class="boxed">
                 <h1>{model.learnMore.headline}</h1>
             </div>
@@ -317,7 +314,7 @@
                     </div>
                 </div>
             </div>
-            <div class="divider"><img src="/images/openstax-tutor/bottom-divider.svg"></div>
+            <img class="divider" src="/images/openstax-tutor/bottom-divider.svg">
         </section>
     </if>
 </template>
