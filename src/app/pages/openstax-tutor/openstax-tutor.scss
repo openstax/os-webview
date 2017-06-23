@@ -116,10 +116,11 @@ $deep-teal: rgb(0, 114, 151);
         .background-imagery {
             background-repeat: no-repeat;
             background-size: cover;
-            height: 100%;
+            bottom: 0;
             left: 0;
             overflow: hidden;
             position: absolute;
+            right: 0;
             top: 0;
             width: 100%;
             z-index: -1;
@@ -737,6 +738,8 @@ $deep-teal: rgb(0, 114, 151);
     }
 
     #faq {
+        background: linear-gradient(to top, color(cyan) 0, transparent 5px, transparent);
+
         h1 {
             margin-bottom: 8rem;
             margin-top: 0;
@@ -826,18 +829,9 @@ $deep-teal: rgb(0, 114, 151);
     }
 
     #learn-more {
-
-        padding-top: 4vw;
-
-        .background-imagery {
-            background: linear-gradient(to top, color(neutral-dark), gold 1%, color(cyan) 9vw);
-
-            > img {
-                bottom: -8vw;
-                left: -5vw;
-                width: 110%;
-            }
-        }
+        background: linear-gradient(to top, color(neutral-dark) 0%, gold 1%, color(cyan) 9vw);
+        height: 60rem;
+        padding: 4vw 0 0;
 
         h1 {
             color: color(blue);
@@ -855,7 +849,6 @@ $deep-teal: rgb(0, 114, 151);
 
         .buttons-row {
             display: flex;
-            padding-bottom: 10vw;
 
             @include phone {
                 display: block;
@@ -878,15 +871,12 @@ $deep-teal: rgb(0, 114, 151);
         }
 
         .divider {
+            bottom: 0;
+            left: -4%;
             pointer-events: none;
-
-            > img {
-                bottom: 0;
-                left: -4%;
-                position: absolute;
-                transform: translateY(37vw);
-                width: 108%;
-            }
+            position: absolute;
+            transform: translateY(37vw);
+            width: 108%;
         }
     }
 

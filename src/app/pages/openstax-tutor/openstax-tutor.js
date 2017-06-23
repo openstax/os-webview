@@ -286,10 +286,11 @@ export default class Tutor extends CMSPageController {
                 const currentPosition = thumbnailEl.scrollLeft;
                 const direction = thumbnailScrollDest < currentPosition ? -1 : 1;
                 const isLastStep = Math.abs(thumbnailScrollDest - currentPosition) < stepSize;
+                const nextPosition = isLastStep ? thumbnailScrollDest : currentPosition + direction * stepSize;
 
-                thumbnailEl.scrollLeft = isLastStep ? thumbnailScrollDest : currentPosition + direction * stepSize;
+                thumbnailEl.scrollLeft = nextPosition;
 
-                if (!isLastStep) {
+                if (!isLastStep && thumbnailEl.scrollLeft === nextPosition) {
                     window.requestAnimationFrame(scrollStep);
                 }
             };
