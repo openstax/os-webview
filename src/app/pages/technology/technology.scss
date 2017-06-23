@@ -35,12 +35,21 @@
         background-position: right;
         background-repeat: no-repeat;
         background-size: cover;
-        min-height: 40vw;
+        height: 60rem;
+        overflow: hidden;
         position: relative;
 
         @include phone {
             background-image: none;
             min-height: 0;
+        }
+
+        h1 {
+            font-size: 6rem;
+
+            @include phone {
+                font-size: 4.8rem;
+            }
         }
 
         .boxed {
@@ -50,6 +59,7 @@
             position: relative;
 
             @include phone {
+                height: 100%;
                 padding: 0;
             }
 
@@ -62,13 +72,17 @@
             left: 0;
             position: relative;
             top: 5vw;
-            width: 60%;
+            width: 100%;
             z-index: 2;
 
             @include phone {
                 height: 100%;
                 position: static;
                 width: 100%;
+            }
+
+            @media (min-width: 1400px) {
+                top: 7rem;
             }
 
             .orange-part {
@@ -81,16 +95,35 @@
                     height: 100%;
                     min-height: 40rem;
                     padding-bottom: calc(50vw + 4rem);
+                    width: 100%;
                 }
 
                 @include desktop {
                     margin-left: 4rem;
+                    margin-right: 4rem;
                     padding: 4rem;
+                    width: calc(100% - 7rem);
                 }
+
             }
 
             .description {
-                max-width: 50rem;
+
+                @media (min-width: 1200px) {
+                    width: 48rem;
+                }
+
+                @media (max-width: 1200px) {
+                    width: 40%;
+                }
+
+                @include tablet {
+                    width: calc(5rem + 60%);
+                }
+
+                @include phone {
+                    width: 100%;
+                }
             }
         }
 
@@ -99,21 +132,22 @@
             height: 15rem;
             opacity: 0.3;
             position: absolute;
-            right: 10%;
-            top: -4rem;
-            width: 60%;
-            // z-index: -1;
+            width: 80%;
 
             @include phone {
                 display: none;
             }
 
             &.first {
-                bottom: -7vw;
-                height: 100%;
-                left: -3%;
-                top: auto;
-                width: 90%;
+                bottom: -3vw;
+                height: 90%;
+                left: -1%;
+            }
+
+            &.second {
+                left: 21%;
+                top: -6rem;
+                width: 48%;
             }
         }
 
@@ -123,28 +157,36 @@
             background-repeat: no-repeat;
             background-size: contain;
             bottom: 0;
-            height: 75%;
+            height: 95%;
+            left: 20%;
             pointer-events: none;
             position: absolute;
-            right: calc(6% - 15rem);
-            width: calc(100% + 15rem);
+            width: calc(80% + 15rem);
             z-index: 2;
+
+            @include phone {
+                background-position: 35% bottom;
+                background-size: calc(60vw + 45rem) auto;
+                left: 0;
+                width: 100%;
+            }
+
+            @media (min-width: 1400px) {
+                left: auto;
+                right: calc(50% - 85rem);
+                width: 143rem;
+            }
         }
     }
 
     #steps {
         background-color: color(turquoise);
         color: color(neutral-lightest);
+        min-height: 35rem;
         overflow: visible;
 
         @include phone {
             padding: 4rem;
-        }
-
-        #steps-target {
-            height: 0;
-            position: relative;
-            top: -20vh;
         }
 
         h2 {
@@ -204,15 +246,39 @@
         }
     }
 
+    .strips {
+        margin: 0;
+    }
+
     #tutor {
-        min-height: 48vw;
+        background-color: #f5f5f5;
+        height: 70rem;
         overflow-y: hidden;
-        padding: 0;
+        padding: 4rem 0 0;
         position: relative;
+
+        @include desktop {
+            padding-top: 8rem;
+        }
+
+        h2 {
+            font-size: 2.1rem;
+            line-height: 1.6;
+        }
+
+        .boxed {
+            position: relative;
+            z-index: 1;
+        }
 
         .header {
             color: lighten(rgb(66, 66, 66), 13%);
+            max-height: 14rem;
             width: 100%;
+
+            @include phone {
+                max-height: 18rem;
+            }
 
             img {
                 margin-top: 2rem;
@@ -225,8 +291,9 @@
             bottom: 0;
             left: -5.6%;
             position: absolute;
+            transform: translateY(5%);
             width: 108%;
-            z-index: -1;
+            z-index: 0;
         }
 
         .btn {
@@ -234,52 +301,43 @@
             color: color(neutral-lightest);
             margin-left: 3rem;
 
+            @include phone {
+                margin-left: 0;
+                margin-top: 1.5rem;
+                width: 100%;
+            }
+
             &:first-child {
                 background-color: color(blue);
                 margin-left: 0;
             }
         }
 
-        .at-the-bottom {
-            left: 0;
-            padding-bottom: 1.5rem;
-            position: relative;
-            top: 0;
-            width: 100%;
-            z-index: 2;
+        .tall-relative {
+            height: 70rem;
+            margin-top: 3rem;
 
             @include phone {
-                margin-bottom: 4rem;
                 margin-top: 2rem;
-                position: static;
             }
-
 
             @include desktop {
-                min-height: 40vw;
-                top: calc(15vw - 10rem);
+                margin-top: 0;
+                position: relative;
             }
 
-            .boxed {
-                flex-direction: row;
-                justify-content: flex-end;
-                position: relative;
+            p {
+                margin: 1rem 0 2rem;
             }
         }
 
-        .off-to-the-right {
-            flex-basis: 50%;
-            min-width: 40rem;
+        .description-block {
 
-            @include phone {
-                flex-basis: 100%;
-                min-width: 0;
-
-                .buttons a {
-                    display: block;
-                    margin: 1rem 0;
-                    width: 100%;
-                }
+            @include desktop {
+                bottom: 30rem;
+                position: absolute;
+                right: 10rem;
+                width: 50rem;
             }
         }
     }

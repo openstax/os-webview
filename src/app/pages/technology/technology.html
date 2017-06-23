@@ -17,7 +17,6 @@
             <div class="student-overlay"></div>
         </section>
         <section id="steps">
-            <div id="steps-target"></div>
             <div class="text-content">
                 <h2>{model.steps.headline}</h2>
             </div>
@@ -39,18 +38,16 @@
         <section id="tutor">
             <div class="boxed">
                 <div class="header">
-                    <h2>{model.tutor.headline}</h2>
+                    <h1>{model.tutor.headline}</h1>
                     <img src="/images/openstax-tutor/tutor-logo.svg">
                 </div>
             </div>
-            <div class="at-the-bottom">
-                <div class="boxed">
-                    <div class="off-to-the-right">
-                        <h3>{model.tutor.subhead}</h3>
-                        <div data-html="tutor.description" skip="true"></div>
-                        <div class="buttons">
-                            <a each="b in model.tutor.buttons" href="{b.url}" class="btn">{b.text}</a>
-                        </div>
+            <div class="boxed tall-relative">
+                <div class="description-block">
+                    <h2>{model.tutor.subhead}</h2>
+                    <div data-html="tutor.description" skip="true"></div>
+                    <div class="buttons">
+                        <a each="b in model.tutor.buttons" href="{b.url}" class="btn">{b.text}</a>
                     </div>
                 </div>
             </div>
