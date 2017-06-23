@@ -134,7 +134,7 @@ export default class Tutor extends CMSPageController {
                 ]
             },
             faq: {
-                headline: 'Ask your questions now, you won’t have any later! '
+                headline: 'Frequently asked questions'
             },
             learnMore: {
                 buttons: []
