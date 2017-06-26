@@ -176,9 +176,9 @@ export default class Tutor extends CMSPageController {
         Object.assign(this.model.featureMatrix, {
             headline: data.section_4_heading,
             description: data.section_4_description ||
-             'Thousands of students have piloted OpenStax Tutor Beta. Here are the features ' +
+             '<p>Thousands of students have piloted OpenStax Tutor Beta. Here are the features ' +
              'we’ve prioritized, and more are on the way. Have suggestions for future development? ' +
-             'Send us an email at <a href="mailto:info@openstaxtutor.org">info@openstaxtutor.org</a>.',
+             'Send us an email at <a href="mailto:info@openstaxtutor.org">info@openstaxtutor.org</a>.</p>',
             availability: data.section_4_book_heading,
             availableBooks: data.marketing_books.map((b) => ({
                 description: b.title,

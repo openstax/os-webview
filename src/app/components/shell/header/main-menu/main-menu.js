@@ -45,8 +45,13 @@ export default class MainMenu extends Controller {
     showTutorTrainingWheel() {
         this.model.trainingWheelActive = true;
         this.update();
-        this.el.querySelector('.nav-menu-item.login a').focus();
-        this.el.querySelector('.tutor-menu-item a').focus();
+    }
+
+    onUpdate() {
+        if (this.model.trainingWheelActive) {
+            this.el.querySelector('.nav-menu-item.login a').focus();
+            this.el.querySelector('.tutor-menu-item a').focus();
+        }
     }
 
     @on('click a[data-set-redirect]')
