@@ -51,7 +51,7 @@
                 </a>
             </if>
 
-            <ul if="model.user.username" class="dropdown-menu" role="menu" aria-expanded="{model.openDropdown === 'profile'}" aria-label="User Menu">
+            <ul if="model.user.username" class="dropdown-menu" role="menu" aria-expanded="{model.openDropdown === 'profile' || model.trainingWheelActive}" aria-label="User Menu">
                 <li role="presentation">
                     <a href="{model.accountLink}" role="menuitem" tabindex="-1">
                         Account Profile

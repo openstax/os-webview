@@ -74,7 +74,11 @@ class Header extends Controller {
                 this.update();
                 this.mainMenu.update();
                 if (user.accounts_id) {
-                    if (user.groups.includes('Tutor') && !localStorage.hasSeenTutorTrainingWheel) {
+                    if (
+                        user.groups.includes('Tutor') &&
+                        !localStorage.hasSeenTutorTrainingWheel &&
+                        window.location.hash === ''
+                    ) {
                         this.mainMenu.showTutorTrainingWheel();
                         localStorage.setItem('hasSeenTutorTrainingWheel', true);
                     }
