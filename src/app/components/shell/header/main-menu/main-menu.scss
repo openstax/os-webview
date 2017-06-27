@@ -20,13 +20,27 @@
         }
     }
 
+
+
     .training-wheel-overlay {
-        background-color: rgba(color(neutral-light), 0.5);
-        height: 100vh;
-        left: 0;
-        position: fixed;
-        top: 0;
-        width: 100vw;
+        @include desktop {
+            background-color: rgba(color(neutral-light), 0.5);
+            height: 100vh;
+            left: 0;
+            position: fixed;
+            top: 0;
+            width: 100vw;
+            z-index: 1;
+        }
+    }
+
+    .training-wheel,
+    .training-wheel-overlay {
+        display: none;
+
+        @include desktop {
+            display: block;
+        }
     }
 
     .logo-wrapper {
@@ -174,6 +188,7 @@
         padding: 3rem;
         position: absolute;
         transform: translate(-110%, -50%);
+        z-index: 3;
 
         &::after {
             @include triangle(
