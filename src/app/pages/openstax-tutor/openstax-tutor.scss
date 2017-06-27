@@ -558,6 +558,13 @@ $deep-teal: rgb(0, 114, 151);
                 display: flex;
                 justify-content: space-around;
                 width: 100%;
+
+                > div {
+                    align-items: center;
+                    display: flex;
+                    flex-basis: 20rem;
+                    justify-content: center;
+                }
             }
 
             .center-image {
