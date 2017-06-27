@@ -12,6 +12,10 @@
     width: 100vw;
     z-index: 1;
 
+    &:empty {
+        padding: 0;
+    }
+
     &.temporary-banner {
         background-color: color(yellow);
         color: color(blue);
