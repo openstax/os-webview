@@ -17,7 +17,8 @@
                 Subjects
                 <svg class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 30"><title>arrow</title><path d="M12,1L26,16,12,31,8,27,18,16,8,5Z" transform="translate(-8 -1)"/></svg>
             </a>
-            <ul class="dropdown-menu" role="menu" aria-expanded="{model.openDropdown === 'subjects'}" aria-label="Subjects menu">
+            <ul class="dropdown-menu" role="menu"
+             aria-expanded="{model.openDropdown === 'subjects'}" aria-label="Subjects menu">
                 <li role="presentation"><a href="/subjects" role="menuitem" tabindex="-1">All</a></li>
                 <li role="presentation"><a href="/subjects/math" role="menuitem" tabindex="-1">Math</a></li>
                 <li role="presentation"><a href="/subjects/science" role="menuitem" tabindex="-1">Science</a></li>
@@ -28,7 +29,9 @@
         </li>
         <li class="nav-menu-item dropdown" role="presentation">
             <a href="/technology" role="menuitem" aria-haspopup="true">Technology<svg class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 30"><title>arrow</title><path d="M12,1L26,16,12,31,8,27,18,16,8,5Z" transform="translate(-8 -1)"/></svg></a>
-            <ul class="dropdown-menu" role="menu" aria-expanded="{model.openDropdown === 'technology'}" aria-label="Technology menu">
+            <ul class="dropdown-menu" role="menu"
+             aria-expanded="{model.openDropdown === 'technology'}"
+             aria-label="Technology menu">
                 <li role="presentation"><a href="/technology" role="menuitem" tabindex="-1">Technology Options</a></li>
                 <li role="presentation"><a href="/openstax-tutor" role="menuitem" tabindex="-1">About OpenStax Tutor</a></li>
                 <li role="presentation"><a href="/partners" role="menuitem" tabindex="-1">OpenStax Partners</a></li>
@@ -36,7 +39,9 @@
         </li>
         <li class="nav-menu-item dropdown" role="presentation">
             <a href="/impact" role="menuitem" aria-haspopup="true">Our Impact<svg class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 30"><title>arrow</title><path d="M12,1L26,16,12,31,8,27,18,16,8,5Z" transform="translate(-8 -1)"/></svg></a>
-            <ul class="dropdown-menu" role="menu" aria-expanded="{model.openDropdown === 'impact'}" aria-label="Our Impact menu">
+            <ul class="dropdown-menu" role="menu"
+             aria-expanded="{model.openDropdown === 'impact'}"
+             aria-label="Our Impact menu">
                 <li role="presentation"><a href="/impact" role="menuitem" tabindex="-1">Explore Our Impact</a></li>
                 <li role="presentation"><a href="/foundation" role="menuitem" tabindex="-1">Foundation Support</a></li>
             </ul>
@@ -51,7 +56,9 @@
                 </a>
             </if>
 
-            <ul if="model.user.username" class="dropdown-menu" role="menu" aria-expanded="{model.openDropdown === 'profile' || model.trainingWheelActive}" aria-label="User Menu">
+            <ul if="model.user.username" class="dropdown-menu" role="menu"
+             aria-expanded="{model.trainingWheelActive || (model.openDropdown === 'profile')}"
+             aria-label="User Menu">
                 <li role="presentation">
                     <a href="{model.accountLink}" role="menuitem" tabindex="-1">
                         Account Profile

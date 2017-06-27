@@ -76,8 +76,7 @@ class Header extends Controller {
                 if (user.accounts_id) {
                     if (
                         user.groups.includes('Tutor') &&
-                        !localStorage.hasSeenTutorTrainingWheel &&
-                        window.location.hash === ''
+                        !localStorage.hasSeenTutorTrainingWheel
                     ) {
                         this.mainMenu.showTutorTrainingWheel();
                         localStorage.setItem('hasSeenTutorTrainingWheel', true);
@@ -309,19 +308,9 @@ class Header extends Controller {
         }
     }
 
-    // FIX: should be done in the view
     closeDropdownMenus(all) {
-        const menus = this.el.querySelectorAll('.dropdown-menu');
-
-        for (const menu of menus) {
-            if (all || !menu.contains(document.activeElement)) {
-                menu.setAttribute('aria-expanded', 'false');
-
-                for (const a of menu.querySelectorAll('a')) {
-                    a.setAttribute('tabindex', '-1');
-                }
-            }
-        }
+        this.mainMenu.model.openDropdown = null;
+        this.mainMenu.update();
     }
 
     updateHeaderStyle() {

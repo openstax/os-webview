@@ -68,22 +68,6 @@ export default class MainMenu extends Controller {
         this.update();
     }
 
-    @on('focusout .tutor-menu-item a')
-    preventLeaving(e) {
-        const trainingWheelEl = this.el.querySelector('.training-wheel');
-
-        if (this.model.trainingWheelActive) {
-            setTimeout(() => {
-                if (this.model.trainingWheelActive &&
-                    !trainingWheelEl.contains(document.activeElement)
-                ) {
-                    this.putAwayTrainingWheel();
-                    this.showTutorTrainingWheel();
-                }
-            }, 0);
-        }
-    }
-
     @on('focusout .button-row button')
     isolateModal() {
         if (this.model.trainingWheelActive) {

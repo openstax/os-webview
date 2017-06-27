@@ -58,37 +58,6 @@
             @at-root .active#{&} {
                 padding-left: 0;
             }
-
-            .dropdown-menu {
-                display: none;
-                flex-direction: column;
-                // overflow: hidden;
-                transition: opacity 0.3s;
-
-                @include desktop {
-                    display: flex;
-                    height: 0;
-                    opacity: 0;
-                    visibility: hidden;
-                    width: 0;
-                }
-            }
-
-            &:hover .dropdown-menu {
-                @include desktop {
-                    background-color: darken(color(neutral-lightest), 12%);
-                    border-top: 0;
-                    display: flex;
-                    font-size: 1.4rem;
-                    height: auto;
-                    opacity: 1;
-                    padding: 1rem;
-                    position: absolute;
-                    transform: translateX(-30%);
-                    visibility: visible;
-                    width: auto;
-                }
-            }
         }
     }
 
