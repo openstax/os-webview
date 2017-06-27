@@ -5,6 +5,5 @@ describe('Share', () => {
 
     it('creates', () => {
         expect(p).toBeTruthy();
-        console.log(p.el.innerHTML);
     });
 });

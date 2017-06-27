@@ -297,9 +297,8 @@ export default class Tutor extends CMSPageController {
 
             window.requestAnimationFrame(scrollStep);
 
-            // Updating the source element in the HTML is not intended to work!
+            // Delay play start
             if (isVideo(wsg.currentImage.url)) {
-                videoTag.src = wsg.currentImage.url;
                 setTimeout(() => {
                     videoTag.currentTime = 0;
                     videoTag.play();
