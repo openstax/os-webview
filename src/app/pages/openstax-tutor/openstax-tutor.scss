@@ -399,6 +399,7 @@ $deep-teal: rgb(0, 114, 151);
             justify-content: center;
             margin: 1.5rem auto;
             max-width: calc(110vh - 17rem);
+            min-width: 68rem;
 
             i {
                 cursor: pointer;
