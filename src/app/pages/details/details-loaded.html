@@ -165,24 +165,41 @@
             <tbody>
                 <tr if="model.publish_date">
                     <th>Publish Date</th>
-                    <td id='publish-date'>{model.publish_date}</td>
+                    <td id='publish-date'>{model.formattedPublishDate}</td>
                 </tr>
-                <tr if="model.isbn_10">
-                    <th>ISBN-10</th>
-                    <td id='isbn-10'>{model.isbn_10}</td>
+                <tr if="model.print_isbn">
+                    <th>Print</th>
+                    <td>
+                        <div if="model.print_isbn.isbn_10">ISBN-10: {model.print_isbn.isbn_10}</div>
+                        <div if="model.print_isbn.isbn_13">ISBN-13: {model.print_isbn.isbn_13}</div>
+                    </td>
                 </tr>
-                <tr if="model.isbn_13">
-                    <th>ISBN-13</th>
-                    <td id='isbn-13'>{model.isbn_13}</td>
+                <tr if="model.pdf_isbn">
+                    <th>Digital</th>
+                    <td>
+                        <div if="model.pdf_isbn.isbn_10">ISBN-10: {model.pdf_isbn.isbn_10}</div>
+                        <div if="model.pdf_isbn.isbn_13">ISBN-13: {model.pdf_isbn.isbn_13}</div>
+                    </td>
+                </tr>
+                <tr if="model.ebook_isbn">
+                    <th>iBooks</th>
+                    <td>
+                        <div if="model.ebook_isbn.isbn_10">ISBN-10: {model.ebook_isbn.isbn_10}</div>
+                        <div if="model.ebook_isbn.isbn_13">ISBN-13: {model.ebook_isbn.isbn_13}</div>
+                    </td>
                 </tr>
                 <tr if="model.license_name">
                     <th>License</th>
                     <td class="license">
-                        <img src="{model.licenseIcon}" alt="">
                         <div>
-                            <div class="text">{model.license_name} v{model.license_version}</div>
-                            <div class="extra-text"></div>
-                            <div data-html="license_text" skip="true"></div>
+                            <img src="{model.licenseIcon}" alt="">
+                            <div>
+                                <div if="!model.license_text">
+                                    <span data-html="title" skip="true"></span> by OpenStax is licensed under
+                                    <span class="text">{model.license_name} v{model.license_version}</span>
+                                </div>
+                                <div if="model.license_text" data-html="license_text" skip="true"></div>
+                            </div>
                         </div>
                     </td>
                 </tr>
