@@ -142,9 +142,7 @@
                             <if condition="item.url.substr(-3) === 'png'">
                                 <img alt="{item.description}" src="{item.url}">
                             <else>
-                                <video preload="metadata">
-                                    <source src="{item.url}" type="video/mp4">
-                                </video>
+                                <video preload="auto" src="{item.url}"></video>
                             </if>
                         </div>
                     </div>
