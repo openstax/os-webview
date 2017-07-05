@@ -72,14 +72,6 @@ export default class MainMenu extends Controller {
         this.update();
     }
 
-    @on('focusout .button-row button')
-    isolateModal() {
-        if (this.model.trainingWheelActive) {
-            this.putAwayTrainingWheel();
-            this.showTutorTrainingWheel();
-        }
-    }
-
     @on('keydown a[role="menuitem"][aria-haspopup="true"]')
     @on('keydown .dropdown-menu a[role="menuitem"]')
     moveSelection(event) {
