@@ -149,7 +149,7 @@ $deep-teal: rgb(0, 114, 151);
         z-index: 2;
 
         .background-imagery {
-            background: linear-gradient($lighter-gray 55%, rgba(color(gold), 0.6));
+            background: linear-gradient(rgb(229, 299, 229), color(gold));
 
             > img {
                 bottom: -1.7vw;
@@ -188,6 +188,8 @@ $deep-teal: rgb(0, 114, 151);
         }
 
         h1 {
+            font-size: 6rem;
+
             .subhead {
                 font-size: 2.4rem;
                 font-weight: bold;
@@ -283,6 +285,7 @@ $deep-teal: rgb(0, 114, 151);
 
         h1 {
             color: color(gold);
+            font-size: 6rem;
         }
 
         h2,
@@ -301,7 +304,7 @@ $deep-teal: rgb(0, 114, 151);
 
         .blurb-table {
             margin: 0 auto;
-            padding: 3rem 0;
+            padding: 3rem 0 13vw;
             width: 100%;
         }
 
@@ -354,6 +357,7 @@ $deep-teal: rgb(0, 114, 151);
             }
 
             > img {
+                max-height: 8rem;
                 width: 40%;
             }
         }
