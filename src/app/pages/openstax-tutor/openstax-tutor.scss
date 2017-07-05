@@ -285,6 +285,7 @@ $deep-teal: rgb(0, 114, 151);
 
         h1 {
             color: color(gold);
+            font-size: 6rem;
         }
 
         h2,
@@ -303,7 +304,7 @@ $deep-teal: rgb(0, 114, 151);
 
         .blurb-table {
             margin: 0 auto;
-            padding: 3rem 0;
+            padding: 3rem 0 13vw;
             width: 100%;
         }
 
@@ -356,6 +357,7 @@ $deep-teal: rgb(0, 114, 151);
             }
 
             > img {
+                max-height: 8rem;
                 width: 40%;
             }
         }
