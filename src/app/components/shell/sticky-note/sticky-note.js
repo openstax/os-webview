@@ -3,6 +3,8 @@ import router from '~/router';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './sticky-note.html';
 
+const isExpired = (str) => new Date(str) < Date.now();
+
 class StickyNote extends CMSPageController {
 
     init() {
@@ -16,24 +18,28 @@ class StickyNote extends CMSPageController {
     }
 
     onDataLoaded() {
-        const isExpired = (str) => new Date(str) < Date.now();
-
         this.expired = true;
         if (this.pageData.emergency_content && !isExpired(this.pageData.emergency_expires)) {
             this.model.temporary = true;
             this.model.content = this.pageData.emergency_content;
             this.el.classList.add('temporary-banner');
             this.expired = false;
-        } else {
-            if (isExpired(this.pageData.expires)) {
-                this.forceHide(true);
-                localStorage.removeItem('visitedGive');
-            } else {
-                this.expired = Number(localStorage.visitedGive || 0) > 5;
-            }
-            this.model.content = this.expired ? null : this.pageData.content;
+        } else if (isExpired(this.pageData.expires)) {
+            this.forceHide(true);
+            localStorage.removeItem('visitedGive');
         }
+        this.onLoaded();
         this.update();
+    }
+
+    onLoaded() {
+        const expiredNow = !this.model.temporary && Number(localStorage.visitedGive || 0) > 5;
+
+        if (expiredNow !== this.expired) {
+            this.expired = expiredNow;
+            this.model.content = this.pageData && !this.expired && this.pageData.content;
+            this.update();
+        }
     }
 
     forceHide(whether) {
