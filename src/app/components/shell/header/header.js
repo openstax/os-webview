@@ -292,8 +292,6 @@ class Header extends Controller {
     }
 
     resetHeader(e) {
-        const target = e.target;
-
         const urlClick = e && linkHelper.validUrlClick(e);
 
         if (urlClick) {

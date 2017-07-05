@@ -50,7 +50,11 @@ export default class MainMenu extends Controller {
     onUpdate() {
         if (this.model.trainingWheelActive) {
             this.el.querySelector('.nav-menu-item.login a').focus();
-            this.el.querySelector('.tutor-menu-item a').focus();
+            const tutorMenuItem = this.el.querySelector('.tutor-menu-item a');
+
+            if (tutorMenuItem) {
+                tutorMenuItem.focus();
+            }
         }
     }
 
