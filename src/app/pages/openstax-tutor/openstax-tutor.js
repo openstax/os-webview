@@ -231,6 +231,7 @@ export default class Tutor extends CMSPageController {
 
         this.update();
         $.insertHtml(this.el, this.model);
+        this.onLoaded();
 
         let lastYOffset = 0;
 
@@ -249,6 +250,17 @@ export default class Tutor extends CMSPageController {
         };
 
         window.addEventListener('scroll', this.handleScroll);
+    }
+
+    onLoaded() {
+        if (window.location.hash) {
+            const id = window.location.hash.substr(1);
+            const target = document.getElementById(id);
+
+            if (target && this.model.footerHeight) {
+                window.requestAnimationFrame(() => $.scrollTo(target));
+            }
+        }
     }
 
     onClose() {
