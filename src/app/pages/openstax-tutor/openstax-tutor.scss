@@ -190,6 +190,10 @@ $deep-teal: rgb(0, 114, 151);
         h1 {
             font-size: 6rem;
 
+            @include phone {
+                font-size: 5rem;
+            }
+
             .subhead {
                 font-size: 2.4rem;
                 font-weight: bold;
@@ -286,6 +290,11 @@ $deep-teal: rgb(0, 114, 151);
         h1 {
             color: color(gold);
             font-size: 6rem;
+            text-align: center;
+
+            @include phone {
+                font-size: 5rem;
+            }
         }
 
         h2,
