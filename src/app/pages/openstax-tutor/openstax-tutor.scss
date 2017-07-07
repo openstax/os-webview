@@ -149,7 +149,7 @@ $deep-teal: rgb(0, 114, 151);
         z-index: 2;
 
         .background-imagery {
-            background: linear-gradient(rgb(229, 299, 229), color(gold));
+            background: linear-gradient(#f5f5f5, #febd3e);
 
             > img {
                 bottom: -1.7vw;
@@ -189,6 +189,10 @@ $deep-teal: rgb(0, 114, 151);
 
         h1 {
             font-size: 6rem;
+
+            @include phone {
+                font-size: 5rem;
+            }
 
             .subhead {
                 font-size: 2.4rem;
@@ -286,6 +290,11 @@ $deep-teal: rgb(0, 114, 151);
         h1 {
             color: color(gold);
             font-size: 6rem;
+            text-align: center;
+
+            @include phone {
+                font-size: 5rem;
+            }
         }
 
         h2,
