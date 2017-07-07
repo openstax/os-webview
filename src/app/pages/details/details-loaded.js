@@ -1,6 +1,7 @@
 import settings from 'settings';
 import {Controller} from 'superb';
 import $ from '~/helpers/$';
+import {formatDateForBlog as formatDate} from '~/helpers/data';
 import {on} from '~/helpers/controller/decorators';
 import router from '~/router';
 import {sfUserModel} from '~/models/usermodel';
@@ -30,8 +31,8 @@ export default class DetailsLoaded extends Controller {
     }
 
     onLoaded() {
-        $.insertHtml(this.el, this.model);
         this.regions.getThisTitle.append(new GetThisTitle(this.model));
+        this.model.formattedPublishDate = formatDate(this.model.publish_date);
         sfUserModel.load().then((user) => {
             let alternateLink = null;
             let isInstructor = true;
@@ -100,7 +101,6 @@ export default class DetailsLoaded extends Controller {
             };
 
             checkForNonInstructor();
-            $.insertHtml(this.el, this.model);
 
             setLockState();
             this.model.hideInstructorInstructions = isInstructor || user.pending_verification;
@@ -110,6 +110,7 @@ export default class DetailsLoaded extends Controller {
             insertToc();
             insertPartners();
             this.update();
+            $.insertHtml(this.el, this.model);
 
             if (window.location.hash) {
                 const id = window.location.hash.substr(1);
@@ -118,10 +119,15 @@ export default class DetailsLoaded extends Controller {
             }
         });
 
+        $.insertHtml(this.el, this.model);
         this.toggleFixedClass();
         this.boundToggleFixedClass = this.toggleFixedClass.bind(this);
         window.addEventListener('scroll', this.boundToggleFixedClass);
         window.addEventListener('resize', this.boundToggleFixedClass);
+    }
+
+    onUpdate() {
+
     }
 
     onClose() {

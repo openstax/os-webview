@@ -536,12 +536,31 @@
             white-space: nowrap;
         }
 
+        th,
+        td {
+            padding: 0.75rem;
+
+            &:first-child {
+                padding-left: 0;
+            }
+        }
+
         .license {
             display: block;
             vertical-align: top;
 
+            > div {
+                align-items: flex-start;
+                display: flex;
+
+                p:first-child {
+                    margin-top: 0;
+                }
+            }
+
             img {
                 height: 4rem;
+                margin-top: 0.7rem;
                 padding-right: 1rem;
             }
         }
