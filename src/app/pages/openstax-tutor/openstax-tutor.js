@@ -129,8 +129,8 @@ export default class Tutor extends CMSPageController {
                 items: [
                     {amount: 5, description: 'Pays for our engineers and researchers'},
                     {amount: 3, description: 'Pays for authors to keep content current'},
-                    {amount: 1, description: 'Pays for our customer service posse'},
-                    {amount: 1, description: 'Pays for, well, this'}
+                    {amount: 1, description: 'Pays for our Support team'},
+                    {amount: 1, description: 'Helps us keep the lights on'}
                 ]
             },
             faq: {

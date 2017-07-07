@@ -59,6 +59,10 @@ class Header extends Controller {
                         .find((app) => app.name === 'OpenStax Tutor');
 
                     if (foundTutor) {
+                        if (!this.model.user.groups.includes('Tutor')) {
+                            this.model.user.groups.push('Tutor');
+                        }
+                        this.update();
                         this.mainMenu.showTutorTrainingWheel();
                         clearInterval(userPollInterval);
                     }
