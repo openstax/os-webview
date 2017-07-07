@@ -182,10 +182,21 @@
                     </td>
                 </tr>
                 <tr if="model.ibook_isbn_10 || model.ibook_isbn_10">
-                    <th>iBooks</th>
+                    <th>iBooks
+                        <span if="model.ibook_volume_2_isbn_10 || model.ibook_volume_2_isbn_13">
+                            Part 1
+                        </span>
+                    </th>
                     <td>
                         <div if="model.ibook_isbn_10">ISBN-10: {model.ibook_isbn_10}</div>
                         <div if="model.ibook_isbn_13">ISBN-13: {model.ibook_isbn_13}</div>
+                    </td>
+                </tr>
+                <tr if="model.ibook_volume_2_isbn_10 || model.ibook_volume_2_isbn_13">
+                    <th>iBooks Part 2</th>
+                    <td>
+                        <div if="model.ibook_isbn_10">ISBN-10: {model.ibook_volume_2_isbn_10}</div>
+                        <div if="model.ibook_isbn_13">ISBN-13: {model.ibook_volume_2_isbn_13}</div>
                     </td>
                 </tr>
                 <tr if="model.license_name">
