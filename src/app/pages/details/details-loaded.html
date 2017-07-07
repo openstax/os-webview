@@ -167,25 +167,25 @@
                     <th>Publish Date</th>
                     <td id='publish-date'>{model.formattedPublishDate}</td>
                 </tr>
-                <tr if="model.print_isbn">
+                <tr if="model.print_isbn_10 || model.print_isbn_13">
                     <th>Print</th>
                     <td>
-                        <div if="model.print_isbn.isbn_10">ISBN-10: {model.print_isbn.isbn_10}</div>
-                        <div if="model.print_isbn.isbn_13">ISBN-13: {model.print_isbn.isbn_13}</div>
+                        <div if="model.print_isbn_10">ISBN-10: {model.print_isbn_10}</div>
+                        <div if="model.print_isbn_13">ISBN-13: {model.print_isbn_13}</div>
                     </td>
                 </tr>
-                <tr if="model.pdf_isbn">
+                <tr if="model.digital_isbn_10 || model.digital_isbn_13">
                     <th>Digital</th>
                     <td>
-                        <div if="model.pdf_isbn.isbn_10">ISBN-10: {model.pdf_isbn.isbn_10}</div>
-                        <div if="model.pdf_isbn.isbn_13">ISBN-13: {model.pdf_isbn.isbn_13}</div>
+                        <div if="model.digital_isbn_10">ISBN-10: {model.digital_isbn_10}</div>
+                        <div if="model.digital_isbn_13">ISBN-13: {model.digital_isbn_13}</div>
                     </td>
                 </tr>
-                <tr if="model.ebook_isbn">
+                <tr if="model.ibook_isbn_10 || model.ibook_isbn_10">
                     <th>iBooks</th>
                     <td>
-                        <div if="model.ebook_isbn.isbn_10">ISBN-10: {model.ebook_isbn.isbn_10}</div>
-                        <div if="model.ebook_isbn.isbn_13">ISBN-13: {model.ebook_isbn.isbn_13}</div>
+                        <div if="model.ibook_isbn_10">ISBN-10: {model.ibook_isbn_10}</div>
+                        <div if="model.ibook_isbn_13">ISBN-13: {model.ibook_isbn_13}</div>
                     </td>
                 </tr>
                 <tr if="model.license_name">

@@ -32,15 +32,6 @@ export default class DetailsLoaded extends Controller {
 
     onLoaded() {
         this.regions.getThisTitle.append(new GetThisTitle(this.model));
-        this.model.print_isbn = {
-            isbn_10: this.model.isbn_10,
-            isbn_13: this.model.isbn_13
-        };
-        this.model.ebook_isbn = this.model.print_isbn;
-        this.model.pdf_isbn = this.model.print_isbn;
-        delete this.model.isbn_10;
-        delete this.model.isbn_13;
-
         this.model.formattedPublishDate = formatDate(this.model.publish_date);
         sfUserModel.load().then((user) => {
             let alternateLink = null;
