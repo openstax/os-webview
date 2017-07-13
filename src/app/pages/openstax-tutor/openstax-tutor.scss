@@ -139,6 +139,7 @@ $deep-teal: rgb(0, 114, 151);
 
     .divider {
         background-color: transparent;
+        pointer-events: none;
         z-index: 1;
     }
 
