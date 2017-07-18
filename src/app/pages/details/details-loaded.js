@@ -102,6 +102,9 @@ export default class DetailsLoaded extends Controller {
 
             checkForNonInstructor();
 
+            // Needs to run before any children are inserted
+            $.insertHtml(this.el, this.model);
+
             setLockState();
             this.model.hideInstructorInstructions = isInstructor || user.pending_verification;
             insertResources(this.model.book_faculty_resources, 'instructorResources');
@@ -110,7 +113,6 @@ export default class DetailsLoaded extends Controller {
             insertToc();
             insertPartners();
             this.update();
-            $.insertHtml(this.el, this.model);
 
             if (window.location.hash) {
                 const id = window.location.hash.substr(1);
