@@ -57,16 +57,30 @@ class Analytics {
         ));
     }
 
+    sendPageEvent(category, action, label) {
+        if (linkHelper.isProduction()) {
+            this.sendEvent({
+                eventCategory: category,
+                eventAction: action,
+                eventLabel: href,
+                location: window.location.href
+            });
+        } else {
+            console.debug('[Non production] Send to analytics:', {
+                category, action, label
+            });
+        }
+    }
+
     sendUrlEvent(category, href, action = 'download') {
         if (linkHelper.isProduction()) {
             const source = this.lookupUrl(href) || 'unknown';
 
-            this.sendEvent({
-                eventCategory: `${category} ${source}`,
-                eventAction: action,
-                eventLabel: href,
-                location: location.href
-            });
+            this.sendPageEvent(
+                `${category} ${source}`,
+                action,
+                href
+            );
         }
     }
 

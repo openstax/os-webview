@@ -1,6 +1,7 @@
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
+import analytics from '~/helpers/analytics';
 import {description as template} from './openstax-tutor.html';
 
 const availableUrl = '/images/openstax-tutor/available-flag.svg';
@@ -67,7 +68,7 @@ export default class Tutor extends CMSPageController {
                     },
                     {
                         url: '/images/openstax-tutor/1-dashboard/2-clock.png',
-                        description: 'A red clock icon shows which assignments were submitted late. '
+                        description: 'A red clock icon shows which assignments were submitted late.'
                     },
                     {
                         url: '/images/openstax-tutor/1-dashboard/3-past-work.png',
@@ -321,7 +322,49 @@ export default class Tutor extends CMSPageController {
 
     @on('click a[href^="#"]')
     hashClick(e) {
+        analytics.sendPageEvent(
+            'OXT marketing page Learn more',
+            'scroll',
+            e.delegateTarget.href
+        );
         $.hashClick(e);
+    }
+
+    @on('click a:not([href^="#"])')
+    externalLinkClick(e) {
+        const target = e.delegateTarget;
+        const linkText = target.textContent;
+        const footerEl = this.el.querySelector('.sticky-footer');
+        const pageOrFooter = footerEl.contains(target) ? 'footer' : 'page';
+
+        analytics.sendPageEvent(
+            `OXT marketing page [${linkText}] ${pageOrFooter}`,
+            'open',
+            target.href
+        );
+    }
+
+    @on('click .carousel .viewer [role="button"]')
+    carouselArrowClick(e) {
+        analytics.sendPageEvent(
+            'OXT marketing page video carousel',
+            'scroll',
+            'video'
+        );
+    }
+
+    @on('click .carousel .thumbnails > div')
+    carouselThumbnailClick(e) {
+        const clickedThumbnail = e.delegateTarget;
+        const thumbnails = Array.from(this.el.querySelectorAll('.carousel .thumbnails > div'));
+        const itemIndex = thumbnails.indexOf(clickedThumbnail);
+        const blurb = $.htmlToText(this.model.whatStudentsGet.images[itemIndex].description);
+
+        analytics.sendPageEvent(
+            `OXT marketing button [${blurb}]`,
+            'open',
+            'video'
+        );
     }
 
     @on('click .viewer [role="button"][data-decrement]')
