@@ -58,17 +58,17 @@ class Analytics {
     }
 
     sendPageEvent(category, action, label) {
+        const eventPacket = {
+            eventCategory: category,
+            eventAction: action,
+            eventLabel: label,
+            location: window.location.href
+        };
+
         if (linkHelper.isProduction()) {
-            this.sendEvent({
-                eventCategory: category,
-                eventAction: action,
-                eventLabel: href,
-                location: window.location.href
-            });
+            this.sendEvent(eventPacket);
         } else {
-            console.debug('[Non production] Send to analytics:', {
-                category, action, label
-            });
+            console.debug('[Non production] Send to analytics:', eventPacket);
         }
     }
 
