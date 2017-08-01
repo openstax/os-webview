@@ -259,7 +259,7 @@ export default class Tutor extends CMSPageController {
             const target = document.getElementById(id);
 
             if (target && this.model.footerHeight) {
-                window.requestAnimationFrame(() => $.scrollTo(target));
+                window.requestAnimationFrame(() => $.scrollTo(target, -59)); // Don't need space for menu
             }
         }
     }
