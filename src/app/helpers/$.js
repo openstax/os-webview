@@ -97,6 +97,17 @@ $.scrollTo = (el, offset = 0) => {
     });
 };
 
+$.scrollToHash = () => {
+    if (window.location.hash) {
+        const id = window.location.hash.substr(1);
+        const target = document.getElementById(id);
+
+        if (target) {
+            window.requestAnimationFrame(() => $.scrollTo(target, -59)); // Don't need space for menu
+        }
+    }
+};
+
 $.hashClick = (event, options = {doHistory: true}) => {
     const node = event.delegateTarget;
     const destUrl = `${node.pathname}${node.hash}`;

@@ -254,14 +254,7 @@ export default class Tutor extends CMSPageController {
     }
 
     onLoaded() {
-        if (window.location.hash) {
-            const id = window.location.hash.substr(1);
-            const target = document.getElementById(id);
-
-            if (target && this.model.footerHeight) {
-                window.requestAnimationFrame(() => $.scrollTo(target, -59)); // Don't need space for menu
-            }
-        }
+        $.scrollToHash();
     }
 
     onClose() {
