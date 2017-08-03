@@ -4,6 +4,7 @@ import $ from '~/helpers/$';
 import shell from '~/components/shell/shell';
 import settings from 'settings';
 import {bookPromise} from '~/models/book-titles';
+import router from '~/router';
 import userModel from '~/models/usermodel';
 import Form from './form/form';
 import Detail from './detail/detail';
@@ -210,6 +211,9 @@ export default class Errata extends Controller {
             if (response.accounts_id) {
                 this.model.title = () => `Suggest a Correction for ${this.model.selectedTitle}`;
                 bookPromise.then((books) => {
+                    if (!books.find((info) => info.title === title)) {
+                        router.navigate('/404');
+                    }
                     Object.assign(this.model, {
                         mode: 'form',
                         selectedTitle: title,
@@ -305,6 +309,8 @@ export default class Errata extends Controller {
                 this.fetchReleaseNotes(entry.meta.slug);
                 this.model.summaryBook = entry.id;
                 this.model.title = () => `${entry.title} Errata`;
+            } else {
+                router.navigate('/404');
             }
             this.model.mode = 'summary';
             summaryPromise.then((summary) => {

@@ -67,8 +67,12 @@ const targetStep = 100;
 const targetTicks = 20;
 
 $.scrollTo = (el, offset = 0) => {
-    const rect = el.getBoundingClientRect();
-    const offsetTop = rect.top - spaceForMenu - offset;
+    const getOffsetTop = () => {
+        const rect = el.getBoundingClientRect();
+
+        return rect.top - spaceForMenu - offset;
+    };
+    const offsetTop = getOffsetTop();
     const direction = Math.sign(offsetTop);
     let magnitude = Math.abs(offsetTop);
     const chosenStep = (targetStep + magnitude / targetTicks) / 2;
@@ -81,11 +85,27 @@ $.scrollTo = (el, offset = 0) => {
             window.scrollTo(0, scrollBody + direction * step);
             magnitude -= step;
             if (magnitude <= 0) {
+                // Just ensure that we are there
+                const finalScrollBody = document.documentElement.scrollTop || document.body.scrollTop;
+                const finalPosition = getOffsetTop() + finalScrollBody;
+
+                window.scrollTo(0, finalPosition);
                 clearInterval(i);
                 resolve();
             }
         }, tick);
     });
+};
+
+$.scrollToHash = () => {
+    if (window.location.hash) {
+        const id = window.location.hash.substr(1);
+        const target = document.getElementById(id);
+
+        if (target) {
+            window.requestAnimationFrame(() => $.scrollTo(target, -59)); // Don't need space for menu
+        }
+    }
 };
 
 $.hashClick = (event, options = {doHistory: true}) => {

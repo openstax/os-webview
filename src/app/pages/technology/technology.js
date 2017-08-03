@@ -95,6 +95,7 @@ export default class Accessibility extends CMSPageController {
         this.attachBookSelector();
         $.insertHtml(this.el, this.model);
         shell.hideLoader();
+        $.scrollToHash();
     }
 
     @on('click a[href^="#"]')
