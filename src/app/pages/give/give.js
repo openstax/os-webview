@@ -80,6 +80,23 @@ export default class Give extends CMSPageController {
                 this.togglePage();
             }
         };
+        const sendToSalesforce = () => {
+            if (localStorage.getItem('donation:email')) {
+                this.el.querySelector('[name=first_name]').value = localStorage.getItem('donation:first_name');
+                this.el.querySelector('[name=last_name]').value = localStorage.getItem('donation:last_name');
+                this.el.querySelector('[name=email]').value = localStorage.getItem('donation:email');
+                this.el.querySelector('[name=phone]').value = localStorage.getItem('donation:phone');
+                this.el.querySelector('[name=Donation_Amount__c]').value = localStorage.getItem('donation:amount');
+                document.getElementById('donation-update').submit();
+                localStorage.removeItem('donation:first_name');
+                localStorage.removeItem('donation:last_name');
+                localStorage.removeItem('donation:email');
+                localStorage.removeItem('donation:phone');
+                localStorage.removeItem('donation:amount');
+            } else {
+                console.warn('No stored email to sent to SalesForce');
+            }
+        };
 
         if ('student' in queryDict) {
             Object.assign(this.model, studentModel);
@@ -92,18 +109,6 @@ export default class Give extends CMSPageController {
             this.regions.share.attach(new Share(`${settings.apiOrigin}/give`,
             'Contribute to OpenStax (I did)!'));
             this.model.isThanks = true;
-
-            this.el.querySelector('[name=first_name]').value = localStorage.getItem('donation:first_name');
-            this.el.querySelector('[name=last_name]').value = localStorage.getItem('donation:last_name');
-            this.el.querySelector('[name=email]').value = localStorage.getItem('donation:email');
-            this.el.querySelector('[name=phone]').value = localStorage.getItem('donation:phone');
-            this.el.querySelector('[name=Donation_Amount__c]').value = localStorage.getItem('donation:amount');
-            document.getElementById('donation-update').submit();
-            localStorage.removeItem('donation:first_name');
-            localStorage.removeItem('donation:last_name');
-            localStorage.removeItem('donation:email');
-            localStorage.removeItem('donation:phone');
-            localStorage.removeItem('donation:amount');
         }
         if ('amount' in queryDict) {
             handleAmount(+queryDict.amount);
