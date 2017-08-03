@@ -30,7 +30,6 @@ const PAGES = [
     'openstax-tutor',
     'partners',
     'partners/*path',
-    'renew',
     'subjects',
     'subjects/*path',
     'support',
