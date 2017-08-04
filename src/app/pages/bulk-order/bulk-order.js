@@ -23,7 +23,7 @@ class OrderItems extends CMSPageController {
 
         this.model.orderItems = pages.map((p) => ({
             item: p.title,
-            quantity: 0,
+            quantity: 25,
             list: p.amazon_price,
             min: 25,
             validationMessage: (name) => {
