@@ -10,7 +10,6 @@ import {description as template} from './contact.html';
 const subjects = [
     'General',
     'Adopting OpenStax Textbooks',
-    'Concept Coach',
     'OpenStax Tutor Support',
     'OpenStax CNX',
     'Donations',
@@ -33,7 +32,7 @@ class ContactData extends CMSPageController {
 export default class Contact extends SalesforceForm {
 
     static description = 'If you have a question or feedback about our books, ' +
-        'OpenStax Tutor, Concept Coach, partnerships, or any other topic, ' +
+        'OpenStax Tutor, partnerships, or any other topic, ' +
         'contact us here. We\'d love to hear from you!';
 
     init() {
