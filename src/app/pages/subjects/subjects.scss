@@ -3,12 +3,9 @@
 
 .subjects-page {
 
-    h2 {
-        padding-top: 5rem;
-
-        @include phone {
-            align-items: flex-start;
-        }
+    .subject {
+        margin-bottom: 0;
+        margin-top: 2rem;
     }
 
     .feature-block {
@@ -56,7 +53,7 @@
 
     .books {
         background-color: lighten(color(neutral-lighter), 8%);
-        padding: 8rem 0;
+        padding: 6rem 0;
         position: relative;
 
         .container {

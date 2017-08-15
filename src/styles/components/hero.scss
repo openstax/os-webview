@@ -2,12 +2,10 @@
 @import 'mixins';
 
 .hero {
-    @include variable-sized-text(1.8, 0.2);
-
+    font-size: 1.8rem;
     font-weight: 300;
-    letter-spacing: 0.11rem;
     line-height: 1.4;
-    padding: 8rem 1.5rem;
+    padding: 6rem 1.5rem;
     text-align: left;
 
     @include desktop {
@@ -20,17 +18,20 @@
     }
 
     h1 {
-        @include variable-sized-text(6, 0.2);
-
         color: inherit;
+        font-size: 6rem;
         font-weight: bold;
-        letter-spacing: -0.2rem;
+        letter-spacing: -0.035 * 6rem;
         line-height: calc(5 / 6);
         margin-bottom: 1rem;
         margin-top: 0;
 
         @include phone {
             font-size: 5rem;
+        }
+
+        ~ p {
+            margin-top: 3rem;
         }
     }
 
@@ -42,6 +43,11 @@
         letter-spacing: -0.2rem;
         line-height: 1;
         margin-bottom: 1rem;
+    }
+
+    p {
+        margin: 2rem auto 0;
+        max-width: calc(#{$text-width} - 3rem);
     }
 
     .cta {
