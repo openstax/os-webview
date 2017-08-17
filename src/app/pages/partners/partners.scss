@@ -17,7 +17,6 @@ $text-dark2: rgba(0, 0, 0, 0.7);
     .hero {
         background-color: color(green);
         color: color(neutral-lightest);
-        padding-bottom: 11rem;
 
         h1 {
             color: inherit;
@@ -63,7 +62,7 @@ $text-dark2: rgba(0, 0, 0, 0.7);
             display: flex;
             flex-flow: row wrap;
             justify-content: center;
-            padding-top: 9rem;
+            padding-top: 6rem;
         }
 
         .logo {
