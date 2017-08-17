@@ -1,16 +1,5 @@
 import header from '~/components/shell/header/header';
-
-function clickEvent() {
-    return new MouseEvent('click', {
-        'view': window,
-        'bubbles': true,
-        'cancelable': true
-    });
-}
-
-function clickLink(link) {
-    link.dispatchEvent(clickEvent());
-}
+import {clickElement} from '../../test-utils';
 
 describe('Header', () => {
 
@@ -39,17 +28,17 @@ describe('Header', () => {
     it('opens dropdowns', () => {
         const link = header.el.querySelector('.dropdown > a');
 
-        clickLink(link);
+        clickElement(link);
     });
 
     it('closes dropdowns', () => {
-        clickLink(document.body);
+        clickElement(document.body);
     });
 
     it('toggle fullscreen', () => {
         const link = header.el.querySelector('.expand');
 
-        clickLink(link);
+        clickElement(link);
     });
 
     const mainMenu = header.mainMenu;
@@ -57,7 +46,7 @@ describe('Header', () => {
     it('mainMenu handles redirect click', () => {
         const link = mainMenu.el.querySelector('a[data-set-redirect]');
 
-        clickLink(link);
+        clickElement(link);
     });
 
     it('mainMenu shows training wheel', () => {

@@ -1,14 +1,10 @@
 import GetThisTitle from '~/components/get-this-title/get-this-title';
+import {clickElement} from '../../test-utils';
 // Biology book details
 import details from '../data/details';
 
 describe('GetThisTitle', () => {
     const p = new GetThisTitle(details);
-    const clickEvent = new MouseEvent("click", {
-        "view": window,
-        "bubbles": true,
-        "cancelable": false
-    });
 
     it('initializes', () => {
         expect(p).toBeTruthy();
@@ -30,13 +26,13 @@ describe('GetThisTitle', () => {
     it('handles PDF click', () => {
         const pdfLink = p.el.querySelector('.show-pdf-submenu');
 
-        pdfLink.dispatchEvent(clickEvent);
+        clickElement(pdfLink);
         expect(p.model.submenu).toBe('pdf');
     });
     it('handles Print Copy click', () => {
         const pcLink = p.el.querySelector('.show-print-submenu');
 
-        pcLink.dispatchEvent(clickEvent);
+        clickElement(pcLink);
         expect(p.model.submenu).toBe('print');
     });
 });

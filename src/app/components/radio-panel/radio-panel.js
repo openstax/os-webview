@@ -48,7 +48,7 @@ export default class RadioPanel extends Controller {
 
     @on('keydown .filter-button')
     operateByKey(event) {
-        if ([$.key.space, $.key.enter].includes(event.keyCode)) {
+        if ([' ', 'Enter'].includes(event.key)) {
             event.preventDefault();
             this.setCategory(event);
         }

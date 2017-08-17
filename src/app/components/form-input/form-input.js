@@ -56,8 +56,8 @@ export default class FormInput extends Controller {
             let matchIndex = this.model.matches.indexOf(this.model.activeSuggestion);
             const lastIndex = this.model.matches.length - 1;
 
-            switch (event.keyCode) {
-            case $.key.up:
+            switch (event.key) {
+            case 'ArrowUp':
                 if (matchIndex > 0) {
                     --matchIndex;
                 } else {
@@ -66,7 +66,7 @@ export default class FormInput extends Controller {
                 this.setActiveSuggestion(this.model.matches[matchIndex]);
                 event.preventDefault();
                 break;
-            case $.key.down:
+            case 'ArrowDown':
                 if (matchIndex < lastIndex) {
                     ++matchIndex;
                 } else {
@@ -75,7 +75,7 @@ export default class FormInput extends Controller {
                 this.setActiveSuggestion(this.model.matches[matchIndex]);
                 event.preventDefault();
                 break;
-            case $.key.enter:
+            case 'Enter':
                 this.setValue(this.model.matches[matchIndex]);
                 event.preventDefault();
                 break;
