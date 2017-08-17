@@ -1,12 +1,5 @@
 import Tutor from '~/pages/openstax-tutor/openstax-tutor';
-
-function clickEvent() {
-    return new MouseEvent('click', {
-        'view': window,
-        'bubbles': true,
-        'cancelable': true
-    });
-}
+import {clickElement} from '../../test-utils';
 
 describe('Tutor', () => {
     const p = new Tutor();
@@ -167,6 +160,6 @@ describe('Tutor', () => {
     it('accepts thumbnail click', () => {
         const link = p.el.querySelector('.thumbnails > div');
 
-        link.dispatchEvent(clickEvent());
+        clickElement(link);
     });
 });
