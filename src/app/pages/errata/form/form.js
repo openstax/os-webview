@@ -7,7 +7,6 @@ import {on} from '~/helpers/controller/decorators';
 import {description as template} from './form.html';
 
 const sourceNames = {
-    cc: 'OpenStax Concept Coach',
     tutor: 'OpenStax Tutor'
 };
 

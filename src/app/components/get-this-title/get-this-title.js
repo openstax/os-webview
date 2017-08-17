@@ -24,7 +24,6 @@ export default class GetThisTitle extends Controller {
             ibookLink2: data.ibook_link_volume_2,
             webviewLink: data.webview_link,
             comingSoon: data.coming_soon,
-            conceptCoachLink: data.concept_coach_link,
             bookshareLink: data.bookshare_link,
             pdfLink: (data.high_resolution_pdf_url || data.low_resolution_pdf_url),
             printLink,

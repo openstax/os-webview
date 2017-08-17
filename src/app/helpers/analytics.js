@@ -130,7 +130,6 @@ class Analytics {
             'high_resolution_pdf_url': 'Book HR',
             'low_resolution_pdf_url': 'Book LR',
             'webview_link': 'CNX',
-            'concept_coach_link': 'Concept Coach',
             'amazon_link': 'Amazon'
         };
 

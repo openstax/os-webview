@@ -124,8 +124,7 @@ export default class Errata extends Controller {
             ],
             sourceTypes: [
                 'Textbook', 'iBooks version', 'Instructor solution manual',
-                'Student solution manual', 'OpenStax Tutor', 'OpenStax Concept Coach',
-                'Other'
+                'Student solution manual', 'OpenStax Tutor', 'Other'
             ],
             subnotes: {'Textbook': 'includes print, PDF, and web view'},
             summaryMetaData: [
