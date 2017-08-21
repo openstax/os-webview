@@ -4,7 +4,7 @@ $breakpoints: (
     wide-desktop: 1024px
 );
 
-$text-width: 100rem;
+$text-width: 80rem;
 $boxed-width: 1200px; // For @media, 120rem != 1200px
 
 @function breakpoints($breakpoint) {
