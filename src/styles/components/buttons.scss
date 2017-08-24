@@ -1,5 +1,4 @@
-@import 'variables';
-@import 'mixins';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 [aria-role="button"],
 button,
@@ -11,7 +10,7 @@ button,
 
     &:focus {
         border-radius: 0.3rem;
-        box-shadow: 0 0 5px 3px rgba(color(cyan), 0.7);
+        box-shadow: 0 0 5px 3px rgba(os-color(light-blue), 0.7);
     }
 
     &:hover,
@@ -22,8 +21,8 @@ button,
 
 button,
 .btn {
-    background-color: color(neutral-medium);
-    color: color(neutral-light);
+    background-color: ui-color(secondary);
+    color: ui-color(white);
     font-size: inherit;
     font-weight: 500;
     padding: 1rem;
@@ -38,32 +37,30 @@ button,
 
 // Call-to-action buttons generally have this style
 .cta > .btn {
-    background-color: color(orange);
-    border: 0;
-    color: color(neutral-lightest);
     font-variant: small-caps;
     padding: 1.5rem 2rem;
     text-transform: lowercase;
 }
 
-@each $name, $type in $os-colors {
-    .btn-#{$name} {
-        background-color: color($name);
-        color: color(neutral-lightest);
+.cta > .btn,
+.btn-orange {
+    background-color: ui-color(primary);
+    border: 0;
+    color: ui-color(white);
 
-        &:active,
-        &:hover,
-        &:focus {
-            background-color: darken(color($name), 5%);
-        };
+    &:active {
+        background-color: ui-color(primary-active);
+    }
+
+    &:hover {
+        background-color: ui-color(primary-hover);
     }
 }
 
-@each $name, $color in $os-colors {
-    .btn-focus-#{$name} {
-        &:focus {
-            box-shadow: 0 0 2pt 2pt $color;
-            outline: 0;
-        }
-    }
+.btn-cyan {
+    background-color: os-color(light-blue);
+}
+
+.btn-gold {
+    background-color: os-color(gold);
 }

@@ -1,26 +1,22 @@
-@import 'variables';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 $custom-radio-size:                 20px;
 $custom-radio-border-width:         1px;
 $custom-radio-transition-speed:     100ms;
-$custom-radio-inset-shadow:         inset 0 0.1em 1px -0.1em rgba(0, 0, 0, 0.3);
+$custom-radio-inset-shadow:         inset 0 0.1em 1px -0.1em ui-color(default);
 
-$custom-radio-pip-color:            color(cyan);
+$custom-radio-pip-color:            os-color(light-blue);
 $custom-radio-pip-size:             round($custom-radio-size * 0.75);
 
 // States
-$custom-radio-unchecked-bg:         white;
-$custom-radio-unchecked-border:     transparentize(gray, 0.6);
+$custom-radio-unchecked-bg:         ui-color(white);
+$custom-radio-unchecked-border:     ui-color(secondary-hover);
 
 $custom-radio-checked-bg:           $custom-radio-unchecked-bg;
 $custom-radio-checked-border:       $custom-radio-unchecked-border;
 
-$custom-radio-active-inset-shadow:  inset 0 0 2px 3px rgba(0, 0, 0, 0.1);
-
-$custom-radio-focus-shadow:         0 0 0 2px transparentize(dodgerblue, 0.5);
-
-$custom-radio-disabled-bg:          lighten(black, 91.8%);
-$custom-radio-disabled-pip-color:   rgba(color(cyan), 0.40);
+$custom-radio-disabled-bg:          ui-color(form-border);
+$custom-radio-disabled-pip-color:   transparentize(os-color(light-blue), 0.40);
 
 
 // Check variable values

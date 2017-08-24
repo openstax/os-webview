@@ -1,24 +1,16 @@
 // scss-lint:disable IdSelector
-@import 'variables';
-@import 'mixins';
 @import 'fonts';
+@import '../../node_modules/pattern-library/core/pattern-library/elements/document';
+@import '../../node_modules/pattern-library/core/pattern-library/elements/headings';
 
 html {
     font-family: 'Neue Helvetica W01', sans-serif;
-    font-size: 62.5%;
     font-weight: 300;
-    line-height: 1.42857143;
-    text-size-adjust: 100%; /* Prevent font scaling in landscape while allowing user zoom */
 }
 
 body {
-    color: $text-dark;
     display: flex;
     flex-direction: column;
-    font-size: 1.6rem;
-    line-height: 2.5rem;
-    margin: 0;
-    min-height: 100vh;
 }
 
 * {
@@ -35,16 +27,16 @@ iframe {
 }
 
 a {
-    color: color(cyan);
+    color: os-color(light-blue);
     text-decoration: none;
 
     &:focus,
     &:hover {
-        color: darken(color(cyan), 10%);
+        color: darken(os-color(light-blue), 10%);
     }
 
     &:active {
-        color: lighten(color(cyan), 10%);
+        color: lighten(os-color(light-blue), 10%);
     }
 }
 
@@ -81,8 +73,9 @@ sup {
 }
 
 .go-to {
-    color: color(cyan);
-    font-size: 1.7rem;
+    @extend %text-body-large;
+
+    color: os-color(light-blue);
     font-weight: 500;
 }
 
@@ -103,35 +96,37 @@ sup {
 }
 
 .download-link {
-    color: color(cyan);
-    font-size: 1.4rem;
+    @extend %text-helper-label;
+
+    color: os-color(light-blue);
     font-weight: 500;
     text-transform: uppercase;
 
     &.unavailable,
     &:hover {
-        color: darken(color(cyan), 10%);
+        color: darken(os-color(light-blue), 10%);
     }
 }
 
 .scrolldown-chevron {
+    @extend %text-h2;
+
     align-items: center;
     display: flex;
-    font-size: 3rem;
     height: 0;
     justify-content: space-around;
     position: relative;
     top: -3rem;
     z-index: 100;
 
-    @include phone {
+    @include width-up-to($phone-max) {
         display: none;
     }
 
     i {
-        color: color(neutral-lightest);
+        color: text-color(white);
         padding: 0 2rem 0.4rem;
-        text-shadow: 0 0.2rem 0.2rem rgba(color(neutral-dark), 0.25);
+        text-shadow: 0 0.2rem 0.2rem rgba(ui-color(footer-bg), 0.25);
     }
 }
 
@@ -177,24 +172,24 @@ sup {
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color: rgba(color(neutral-darkest), 0.3);
-        border: thin solid color(neutral-lightest);
+        background-color: rgba(ui-color(footer-bg), 0.3);
+        border: thin solid ui-color(white);
         border-radius: 0.8rem;
     }
 
     &::-webkit-scrollbar-track {
-        background-color: color(neutral-lightest);
+        background-color: ui-color(white);
         border-radius: 0.8rem;
     }
 }
 
 .nojs {
-    background-color: darken(color(cyan), 15%);
+    background-color: darken(os-color(light-blue), 15%);
     height: 100vh;
     width: 100vw;
 
     p {
-        background-color: color(neutral-lightest);
+        background-color: ui-color(white);
         left: 50%;
         padding: 5rem 3rem;
         position: absolute;
@@ -212,7 +207,7 @@ sup {
     padding-top: 5.6rem;
     z-index: 0;
 
-    @include desktop {
+    @include wider-than($tablet-max) {
         padding-top: 11rem;
     }
 
@@ -263,11 +258,11 @@ sup {
 }
 
 .text-content {
-    max-width: $text-width;
+    max-width: $text-content-max;
 }
 
 .boxed {
-    max-width: $boxed-width;
+    max-width: $content-max;
 }
 
 // The items in the row will provide the padding
@@ -275,14 +270,14 @@ sup {
     display: flex;
     flex-flow: row nowrap;
     margin: 0 auto;
-    max-width: $boxed-width;
+    max-width: $content-max;
     width: 100%;
 }
 
 .no-style.page .boxed {
     margin: 4rem auto 8rem;
 
-    @include desktop {
+    @include wider-than($tablet-max) {
         text-align: center;
     }
 }
@@ -291,7 +286,7 @@ sup {
     align-items: center;
     display: flex;
     font-weight: normal;
-    max-width: $boxed-width;
+    max-width: $content-max;
     padding: 8rem 1.5rem;
     text-align: center;
     width: 100%;
@@ -305,9 +300,9 @@ sup {
     p {
         margin-left: auto;
         margin-right: auto;
-        max-width: $text-width;
+        max-width: $text-content-max;
 
-        @include phone {
+        @include width-up-to($phone-max) {
             max-width: 100%;
         }
     }
@@ -330,7 +325,7 @@ sup {
 
 [href=""],  // for testing empty links
 [href="#"] {
-    border: 0.3rem solid color(danger);
+    border: 0.3rem solid ui-color(error-border);
 }
 
 @import 'components/animations';
@@ -338,12 +333,9 @@ sup {
 @import 'components/buttons';
 @import 'components/filter-buttons';
 @import 'components/forms';
-@import 'components/headers';
 @import 'components/hero';
 @import 'components/loader';
 @import 'components/radio-buttons';
-@import 'components/responsive';
 @import 'components/social';
-@import 'components/strips';
 @import 'components/tooltip';
 @import 'components/tag-multi-select';

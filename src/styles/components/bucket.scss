@@ -1,4 +1,5 @@
 @import 'mixins';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 .quote-bucket .image {
     background-repeat: no-repeat;
@@ -77,27 +78,16 @@
         position: relative;
 
         .title {
-            @include constrained-variable-text(4.8, 0.2);
+            @extend %text-h1;
 
             display: block;
-            font-weight: 700;
-            letter-spacing: -0.02em; // Because font scales
-            line-height: 1;
-            margin-bottom: 1.2rem;
             max-width: 100%;
         }
 
         .blurb {
-            @include constrained-variable-text(1.8, 0.2);
+            @extend %text-body-large;
 
             display: block;
-            line-height: 1.75;
-        }
-
-        button {
-            font-size: 1.8rem;
-            margin-top: 2.5rem;
-            padding: 1.5rem 2rem;
         }
     }
 }

@@ -1,10 +1,4 @@
-@import 'variables';
-@import 'mixins';
-
-$light-line: #e0e0e0;
-$lightest-gray: #fafafa;
-$text-black: rgba(0, 0, 0, 0.87);
-$text-black3: rgba(0, 0, 0, 0.54);
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 .strips-and-filter {
     position: relative;
@@ -12,33 +6,35 @@ $text-black3: rgba(0, 0, 0, 0.54);
 
     .strips {
         margin-bottom: 0;
+        position: absolute;
+        z-index: 1;
     }
 }
 
 .filter {
-    color: color(gray);
+    color: os-color(gray);
     left: 50%;
     max-width: 70rem;
     position: absolute;
-    transform: translate(-50%, -2.8rem);
+    top: -2.5rem;
+    transform: translateX(-50%);
     width: 100%;
     z-index: 1;
 
     &::before,
     &::after {
         border-right: 0.2rem solid;
-        color: color(neutral-lighter);
         content: '';
         display: block;
         height: 1.2rem;
         position: absolute;
         right: 4.3rem;
-        top: 2rem;
+        top: 2.2rem;
         transform: rotate3d(0, 0, 1, 135deg);
         width: 0;
         z-index: 1;
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             display: none;
         }
     }
@@ -50,28 +46,38 @@ $text-black3: rgba(0, 0, 0, 0.54);
 }
 
 .filter-buttons {
-    background-color: lighten(color(neutral-lighter), 8%);
-    border: 0.1rem solid color(neutral-lighter);
+    @extend %text-body-large;
+
+    align-items: flex-start;
+    background-color: ui-color(white);
+    border: 0.1rem solid ui-color(default-active);
     display: flex;
     flex-flow: column nowrap;
-    font-size: 1.8rem;
-    line-height: 1.8rem;
+    height: auto;
+    justify-content: center;
     margin: 0 1.5rem;
+    min-height: $form-element-height;
 
-    @include desktop {
+    @include wider-than($tablet-max) {
+        background-color: lighten(ui-color(default-active), 8%);
         border-right: 0;
         flex-flow: row nowrap;
+        justify-content: center;
         margin: 0;
     }
 
     .filter-button {
+        align-items: center;
         cursor: pointer;
+        display: flex;
+        height: $form-element-height;
         overflow: hidden;
-        padding: 1.5rem;
+        padding: 0 1.5rem;
 
-        @include desktop {
-            border-right: 0.1rem solid color(neutral-lighter);
+        @include wider-than($tablet-max) {
+            border-right: 0.1rem solid ui-color(default-active);
             flex: 1 auto;
+            justify-content: center;
             text-align: center;
         }
 
@@ -83,19 +89,18 @@ $text-black3: rgba(0, 0, 0, 0.54);
         &[aria-pressed="true"] {
             order: -1;
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 order: 0;
             }
 
             &::before {
-                color: color(neutral-lighter);
                 content: 'Filter By: ';
                 display: inline;
                 font-weight: 500;
+                margin-right: 1rem;
 
-                @include desktop {
-                    content: '';
-                    font-weight: 300;
+                @include wider-than($tablet-max) {
+                    display: none;
                 }
             }
         }
@@ -108,28 +113,26 @@ $text-black3: rgba(0, 0, 0, 0.54);
             width: 0;
 
             @at-root .active#{&} {
-                height: inherit;
+                height: $form-element-height;
                 opacity: 1;
-                padding: 1rem 1.5rem;
+                padding-left: 2rem;
                 width: 100%;
 
-                @include desktop {
-                    height: auto;
-                    padding: 1.5rem;
+                @include wider-than($tablet-max) {
                     width: auto;
                 }
             }
 
-            @include desktop {
-                background-color: color(neutral-lightest);
-                height: auto;
+            @include wider-than($tablet-max) {
+                background-color: ui-color(white);
+                height: $form-element-height;
                 opacity: 1;
-                padding: 1.5rem;
+                padding: 0 1.5rem;
                 width: auto;
             }
 
             &:hover {
-                background-color: color(neutral-lightest);
+                background-color: ui-color(white);
             }
         }
     }
