@@ -1,19 +1,19 @@
-@import 'variables';
-@import 'mixins';
+@import '../../node_modules/pattern-library/core/pattern-library/elements/document';
 
 .page-footer {
-    background-color: color(neutral-dark);
-    color: color(neutral-light);
+    @include set-font(helper-label);
+
+    background-color: ui-color(footer-bg);
+    color: text-color(footer);
     display: flex;
     flex-flow: column wrap;
-    font-size: 1.4rem;
     justify-content: center;
 
-    @include desktop {
+    @include wider-than($tablet-max) {
         text-align: center;
     }
 
-    @include phone {
+    @include width-up-to($phone-max) {
         text-align: left;
     }
 
@@ -23,17 +23,15 @@
         opacity: 0.85;
         width: 90rem;
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             padding: 0;
         }
     }
 
     .hero-quote {
-        @include constrained-variable-text(5.5, 0.2);
+        @include set-font(h1);
 
-        font-weight: bold;
-        letter-spacing: -0.2rem;
-        line-height: 1;
+        color: text-color(footer-header);
         padding: 3rem 0;
 
         .narrow-block {
@@ -44,7 +42,7 @@
     [role="contentinfo"] {
         flex-wrap: wrap;
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             padding: 0 5rem 1rem;
         }
 
@@ -54,13 +52,15 @@
             margin: 0 0 2rem;
             padding: 0;
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 justify-content: center;
             }
         }
 
         li > a {
-            padding-right: 1.5rem;
+            color: inherit;
+            padding-right: 2rem;
+            text-decoration: underline;
         }
 
         p {
@@ -72,13 +72,14 @@
         margin-bottom: 1rem;
 
         a {
+            background-color: ui-color(secondary);
             background-size: 130%;
             height: 5rem;
             margin: 1rem;
             width: 5rem;
 
             &:hover {
-                background-color: rgba(color(neutral-light), 0.7);
+                background-color: ui-color(secondary-hover);
             }
         }
     }

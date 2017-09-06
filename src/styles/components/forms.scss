@@ -3,21 +3,23 @@
 $enough-for-two-columns: 640px;
 
 form {
+    @include layout-container($content-max);
 
-    label,
-    p {
-        color: os-color(blue);
+    label {
+        @include set-font(helper-label);
+
+        color: text-color(helper);
     }
 
     .subhead {
-        @extend %text-body-large;
+        @include set-font(body-large);
 
         font-weight: 400;
         text-align: center;
     }
 
     [type="submit"] {
-        @extend %text-body-large;
+        @include set-font(body-large);
 
         appearance: none;
         float: right;
@@ -54,13 +56,9 @@ form {
         border: 0;
     }
 
-    label {
-        display: block;
-        margin: 2rem 0;
-    }
 
     .invalid-message {
-        @extend %text-helper-label;
+        @include set-font(helper-label);
 
         color: text-color(error);
         display: block;
@@ -126,7 +124,7 @@ form {
     [type="date"],
     textarea,
     .selected-button {
-        @extend %text-body-regular;
+        @include set-font(body-regular);
 
         appearance: none;
         border: 0.1rem solid ui-color(form-border);
@@ -158,7 +156,7 @@ form {
     }
 
     .select-instructions {
-        @extend %text-helper-label;
+        @include set-font(helper-label);
 
         color: text-color(helper);
         display: block;

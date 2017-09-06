@@ -1,15 +1,14 @@
-@import 'variables';
 @import 'mixins';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
+
 
 
 .get-this-title {
     .remover {
+        @include set-font(h3);
         @include absolute(top 0 right 0);
 
         cursor: pointer;
-        font-size: 2rem;
-        font-weight: bold;
-        line-height: 1rem;
         text-align: center;
     }
 
@@ -17,7 +16,7 @@
         position: relative;
 
         p {
-            color: color(gray);
+            color: text-color(helper);
         }
 
         &.pdf .pdf-submenu,
@@ -42,8 +41,8 @@
 
         .coming-soon-wrapper {
             align-items: center;
-            border: thin solid color(neutral-lighter);
-            color: color(neutral-medium);
+            border: thin solid ui-color(form-border);
+            color: text-color(helper);
             display: flex;
             font-weight: 500;
             height: 7rem;
@@ -56,7 +55,7 @@
             .coming-soon {
                 border-bottom-left-radius: 1.5rem;
                 border-top-left-radius: 1.5rem;
-                box-shadow: 0 0.1rem 0.2rem 0.1rem rgba(94, 96, 98, 0.4);
+                box-shadow: 0 0.1rem 0.2rem 0.1rem rgba(ui-color(default), 0.4);
                 height: 3.2rem;
                 position: absolute;
                 right: -0.2rem;
@@ -66,15 +65,16 @@
 
         button,
         .btn {
-            color: color(neutral-lightest);
+            background-color: ui-color(secondary);
+            color: text-color(white);
             font-variant: normal;
             padding: 1.5rem;
             text-transform: uppercase;
             width: 100%;
 
-            &:hover {
-                background-color: darken(color(neutral-medium), 5%);
-                transform: scale3d(1, 1, 1);
+            &:hover,
+            &:focus {
+                background-color: ui-color(secondary-hover);
             }
         }
     }
@@ -95,8 +95,7 @@
     }
 
     .option {
-        border-bottom: 0.1rem solid color(neutral-lighter);
-        font-size: 1.6rem;
+        border-bottom: 0.1rem solid ui-color(form-border);
         padding: 0.5rem;
 
         &:last-child {
@@ -110,18 +109,18 @@
         }
 
         a {
-            color: color(cyan);
+            color: text-color(link);
 
             &:hover {
-                color: darken(color(cyan), 10%);
+                color: text-color(link-hover);
             }
         }
     }
 
     .fa:not(.fa-times) {
-        color: darken(color(cyan), 10%);
-        font-size: 1.8rem;
+        color: darken(os-color(light-blue), 10%);
         margin-left: -3rem;
+        transform: scale(1.2);
         width: 2.5rem;
     }
 }

@@ -78,14 +78,14 @@
         position: relative;
 
         .title {
-            @extend %text-h1;
+            @include set-font(h1);
 
             display: block;
             max-width: 100%;
         }
 
         .blurb {
-            @extend %text-body-large;
+            @include set-font(body-large);
 
             display: block;
         }

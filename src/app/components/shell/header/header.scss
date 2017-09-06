@@ -1,11 +1,10 @@
-@import 'variables';
-@import 'mixins';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 $button-size: 2.8rem;
 
 .page-header {
     align-items: center;
-    background-color: rgba(color(neutral-lightest), 0.98);
+    background-color: rgba(ui-color(white), 0.98);
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
@@ -16,11 +15,15 @@ $button-size: 2.8rem;
     width: 100%;
     z-index: 1;
 
-    @include desktop {
+    @include wider-than($tablet-max) {
         left: 0;
         position: absolute;
         right: 0;
         top: 0;
+
+        a {
+            text-decoration: none;
+        }
 
         a:active,
         a:focus {
@@ -30,7 +33,7 @@ $button-size: 2.8rem;
 
     :focus {
         border-radius: 0.3rem;
-        box-shadow: 0 0 5px 3px rgba(color(cyan), 0.7);
+        box-shadow: 0 0 5px 3px rgba(os-color(light-blue), 0.7);
     }
 
     > .meta-nav {
@@ -40,7 +43,7 @@ $button-size: 2.8rem;
     > .nav {
         order: 2;
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             height: 6rem;
             transform: translate3d(0, 0, 0);
         }
@@ -52,19 +55,19 @@ $button-size: 2.8rem;
             height: 100%;
             justify-content: space-between;
             margin: 0 auto;
-            max-width: $boxed-width;
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 align-items: center;
                 flex-direction: row;
+                max-width: $content-max;
             }
 
             @at-root :not(.active)#{&} {
-                @include phone {
+                @include width-up-to($phone-max) {
                     position: relative;
                 }
 
-                @include tablet {
+                @include width-between($phone-max, $tablet-max) {
                     position: relative;
                 }
             }
@@ -95,9 +98,9 @@ $button-size: 2.8rem;
 
     @at-root .fixed#{&} {
         > .nav {
-            background-color: color(neutral-lightest);
+            background-color: ui-color(white);
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 position: fixed;
                 top: -6rem;
                 transform: translate3d(0, 6rem, 0);
@@ -107,11 +110,11 @@ $button-size: 2.8rem;
     }
 
     &.transparent {
-        @include desktop {
+        @include wider-than($tablet-max) {
             background: transparent;
 
             .nav {
-                background-color: rgba(color(neutral-darkest), 0.2);
+                background-color: rgba(black, 0.2);
             }
         }
     }
@@ -127,7 +130,7 @@ $button-size: 2.8rem;
             transition: transform 0.3s ease-in-out;
 
             a {
-                color: color(gray);
+                color: os-color(gray);
             }
 
             .chevron {
@@ -166,13 +169,11 @@ $button-size: 2.8rem;
         width: 19rem;
 
         .close {
-            color: color(cyan);
-            font-size: 1.6rem;
-            font-weight: 600;
+            color: os-color(light-blue);
         }
 
         .chevron {
-            fill: color(cyan);
+            fill: os-color(light-blue);
             height: 1.33rem;
             margin-right: 1rem;
             transform: rotate(180deg);
@@ -188,31 +189,6 @@ $button-size: 2.8rem;
     > .skiptocontent {
         display: none;
     }
-
-    // > .skiptocontent {
-    //     a {
-    //         background-color: color(primary);
-    //         border-bottom-right-radius: 1rem;
-    //         clip: rect(0.1rem, 0.1rem, 0.1rem, 0.1rem);
-    //         color: color(neutral-lightest);
-    //         height: 0.1rem;
-    //         left: 0;
-    //         outline: 0;
-    //         position: absolute;
-    //         top: 0;
-    //         width: 0.1rem;
-    //         z-index: 1;
-    //
-    //         &:focus {
-    //             clip: auto;
-    //             font-size: 2rem;
-    //             height: auto;
-    //             padding: 0.5rem 1rem;
-    //             transition: top 0.1s ease-in, background 0.5s linear;
-    //             width: auto;
-    //         }
-    //     }
-    // }
 
     &.active {
         sticky-note {
@@ -238,7 +214,7 @@ $button-size: 2.8rem;
         transition: 0.3s;
         user-select: none;
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             display: none;
 
             @at-root .sticky#{&} {
@@ -256,7 +232,7 @@ $button-size: 2.8rem;
 
         span {
             // create middle line
-            background: color(gray);
+            background: os-color(gray);
             display: inline-block;
             height: $button-size / 7;
             position: relative;
@@ -266,7 +242,7 @@ $button-size: 2.8rem;
             // create the upper and lower lines as pseudo-elements of the middle line
             &::before,
             &::after {
-                background: color(gray);
+                background: os-color(gray);
                 content: '';
                 display: inline-block;
                 height: $button-size / 7;

@@ -1,13 +1,8 @@
-@import 'variables';
-@import 'mixins';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 .page-header .sticky-note {
-    @include constrained-variable-text(1.8, 0.2);
-
-    background-color: color(orange);
-    color: color(neutral-lightest);
-    font-weight: 500;
-    line-height: 1.2;
+    background-color: os-color(orange);
+    color: text-color(white);
     padding: 1rem 0;
     width: 100vw;
     z-index: 1;
@@ -17,13 +12,13 @@
     }
 
     &.temporary-banner {
-        background-color: color(yellow);
-        color: color(blue);
+        background-color: os-color(yellow);
+        color: os-color(blue);
     }
 
     .inverted {
-        background-color: color(neutral-lightest);
-        color: color(orange);
+        background-color: ui-color(white);
+        color: os-color(orange);
     }
 
     > .container {
@@ -47,7 +42,7 @@
     .multi-button {
         display: none;
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             display: flex;
         }
     }
@@ -56,7 +51,7 @@
         display: flex;
         justify-content: center;
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             display: none;
         }
     }

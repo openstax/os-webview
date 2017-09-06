@@ -1,5 +1,5 @@
-@import 'variables';
-@import 'mixins';
+@import 'mixins/triangle';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 .technology-page {
     h1,
@@ -14,7 +14,7 @@
         overflow-x: hidden;
         padding: 6rem 0;
 
-        @include phone {
+        @include width-up-to($phone-max) {
             padding: 0;
         }
     }
@@ -25,12 +25,11 @@
     }
 
     .outlined {
-        border: 0.15rem solid rgba(color(neutral-lightest), 0.5);
+        border: 0.15rem solid rgba(ui-color(white), 0.5);
     }
     // scss-lint:disable IdSelector
 
     #banner {
-        background-color: color(neutral-lighter);
         background-image: url('/images/technology/library.jpg');
         background-position: right;
         background-repeat: no-repeat;
@@ -39,7 +38,7 @@
         overflow: hidden;
         position: relative;
 
-        @include phone {
+        @include width-up-to($phone-max) {
             background-image: none;
             min-height: 0;
         }
@@ -47,7 +46,7 @@
         h1 {
             font-size: 6rem;
 
-            @include phone {
+            @include width-up-to($phone-max) {
                 font-size: 4.8rem;
             }
         }
@@ -58,12 +57,12 @@
             padding-bottom: 8rem;
             position: relative;
 
-            @include phone {
+            @include width-up-to($phone-max) {
                 height: 100%;
                 padding: 0;
             }
 
-            @include tablet {
+            @include width-between($phone-max, $tablet-max) {
                 padding-bottom: 12rem;
             }
         }
@@ -75,30 +74,30 @@
             width: 100%;
             z-index: 2;
 
-            @include phone {
+            @include width-up-to($phone-max) {
                 height: 100%;
                 position: static;
                 width: 100%;
             }
 
-            @media (min-width: 1400px) {
+            @include wider-than($content-max) {
                 top: 7rem;
             }
 
             .orange-part {
-                background-color: color(orange);
-                color: color(neutral-lightest);
+                background-color: os-color(orange);
+                color: text-color(white);
                 opacity: 0.9;
                 padding: 3rem;
 
-                @include phone {
+                @include width-up-to($phone-max) {
                     height: 100%;
                     min-height: 40rem;
                     padding-bottom: calc(50vw + 4rem);
                     width: 100%;
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     margin-left: 4rem;
                     margin-right: 4rem;
                     padding: 4rem;
@@ -109,32 +108,32 @@
 
             .description {
 
-                @media (min-width: 1200px) {
+                @include wider-than($content-max) {
                     width: 48rem;
                 }
 
-                @media (max-width: 1200px) {
+                @include width-up-to($content-max) {
                     width: 40%;
                 }
 
-                @include tablet {
+                @include width-between($phone-max, $tablet-max) {
                     width: calc(5rem + 60%);
                 }
 
-                @include phone {
+                @include width-up-to($phone-max) {
                     width: 100%;
                 }
             }
         }
 
         .box {
-            background-color: color(orange);
+            background-color: os-color(orange);
             height: 15rem;
             opacity: 0.3;
             position: absolute;
             width: 80%;
 
-            @include phone {
+            @include width-up-to($phone-max) {
                 display: none;
             }
 
@@ -164,14 +163,14 @@
             width: calc(80% + 15rem);
             z-index: 2;
 
-            @include phone {
+            @include width-up-to($phone-max) {
                 background-position: 35% bottom;
                 background-size: calc(60vw + 45rem) auto;
                 left: 0;
                 width: 100%;
             }
 
-            @media (min-width: 1400px) {
+            @include wider-than($content-max) {
                 left: auto;
                 right: calc(50% - 85rem);
                 width: 143rem;
@@ -180,12 +179,12 @@
     }
 
     #steps {
-        background-color: color(turquoise);
-        color: color(neutral-lightest);
+        background-color: os-color(deep-green);
+        color: text-color(white);
         min-height: 35rem;
         overflow: visible;
 
-        @include phone {
+        @include width-up-to($phone-max) {
             padding: 4rem;
         }
 
@@ -199,7 +198,7 @@
             justify-content: space-between;
             width: 100%;
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 display: flex;
             }
         }
@@ -211,19 +210,19 @@
             margin: 0 1.5rem;
             padding: 1.5rem 0;
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 padding: 0;
             }
 
             h3 {
-                color: color(gold);
+                color: os-color(gold);
                 font-size: 3rem;
                 margin-bottom: 0.5rem;
             }
 
             .btn {
                 background-color: transparent;
-                color: color(neutral-lightest);
+                color: text-color(white);
             }
 
             .dimmed {
@@ -238,7 +237,7 @@
                     @include triangle(
                         $direction: right,
                         $position: top calc(50% - 0.7rem) right -2.1rem,
-                        $color: color(gold),
+                        $color: os-color(gold),
                         $size: 0.7rem
                     );
                 }
@@ -257,7 +256,7 @@
         padding: 4rem 0 0;
         position: relative;
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             padding-top: 8rem;
         }
 
@@ -276,7 +275,7 @@
             max-height: 14rem;
             width: 100%;
 
-            @include phone {
+            @include width-up-to($phone-max) {
                 max-height: 18rem;
             }
 
@@ -297,18 +296,18 @@
         }
 
         .btn {
-            background-color: color(cyan);
-            color: color(neutral-lightest);
+            background-color: os-color(light-blue);
+            color: text-color(white);
             margin-left: 3rem;
 
-            @include phone {
+            @include width-up-to($phone-max) {
                 margin-left: 0;
                 margin-top: 1.5rem;
                 width: 100%;
             }
 
             &:first-child {
-                background-color: color(blue);
+                background-color: os-color(blue);
                 margin-left: 0;
             }
         }
@@ -317,11 +316,11 @@
             height: 70rem;
             margin-top: 3rem;
 
-            @include phone {
+            @include width-up-to($phone-max) {
                 margin-top: 2rem;
             }
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 margin-top: 0;
                 position: relative;
             }
@@ -333,7 +332,7 @@
 
         .description-block {
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 bottom: 30rem;
                 position: absolute;
                 right: 10rem;
@@ -343,7 +342,7 @@
     }
 
     .white-on-orange {
-        background-color: color(orange);
-        color: color(neutral-lightest);
+        background-color: os-color(orange);
+        color: text-color(white);
     }
 }

@@ -37,9 +37,8 @@ button,
 
 // Call-to-action buttons generally have this style
 .cta > .btn {
-    font-variant: small-caps;
     padding: 1.5rem 2rem;
-    text-transform: lowercase;
+    text-transform: uppercase;
 }
 
 .cta > .btn,

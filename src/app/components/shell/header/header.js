@@ -242,7 +242,7 @@ class Header extends Controller {
         const parentItem = $this.parentNode;
         const dropDownMenu = $this.nextElementSibling;
 
-        if (w <= 768) {
+        if (w <= 960) {
             e.preventDefault();
             e.stopPropagation();
             if (!dropDownMenu.classList.contains('open')) {

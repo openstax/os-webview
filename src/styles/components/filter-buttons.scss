@@ -1,4 +1,4 @@
-@import '../../node_modules/pattern-library/core/pattern-library/headers';
+@import '../../node_modules/pattern-library/core/pattern-library/molecules';
 
 .strips-and-filter {
     position: relative;
@@ -46,39 +46,31 @@
 }
 
 .filter-buttons {
-    @extend %text-body-large;
-
-    align-items: flex-start;
-    background-color: ui-color(white);
-    border: 0.1rem solid ui-color(default-active);
-    display: flex;
-    flex-flow: column nowrap;
-    height: auto;
-    justify-content: center;
-    margin: 0 1.5rem;
-    min-height: $form-element-height;
+    @include set-font(body-large);
+    @include width-up-to($tablet-max) {
+        align-items: flex-start;
+        background-color: ui-color(white);
+        border: 0.1rem solid ui-color(default-active);
+        display: flex;
+        flex-flow: column nowrap;
+        height: auto;
+        justify-content: center;
+        margin: 0 1.5rem;
+        min-height: $form-element-height;
+    }
 
     @include wider-than($tablet-max) {
-        background-color: lighten(ui-color(default-active), 8%);
-        border-right: 0;
-        flex-flow: row nowrap;
-        justify-content: center;
-        margin: 0;
+        @include button-bar();
     }
 
     .filter-button {
-        align-items: center;
-        cursor: pointer;
-        display: flex;
-        height: $form-element-height;
-        overflow: hidden;
-        padding: 0 1.5rem;
-
-        @include wider-than($tablet-max) {
-            border-right: 0.1rem solid ui-color(default-active);
-            flex: 1 auto;
-            justify-content: center;
-            text-align: center;
+        @include width-up-to($tablet-max) {
+            align-items: center;
+            cursor: pointer;
+            display: flex;
+            height: $form-element-height;
+            overflow: hidden;
+            padding: 0 1.5rem;
         }
 
         &:focus {
@@ -87,52 +79,38 @@
         }
 
         &[aria-pressed="true"] {
-            order: -1;
-
             @include wider-than($tablet-max) {
+                @include button-bar-selected();
+
                 order: 0;
             }
 
-            &::before {
-                content: 'Filter By: ';
-                display: inline;
-                font-weight: 500;
-                margin-right: 1rem;
+            @include width-up-to($tablet-max) {
+                order: -1;
 
-                @include wider-than($tablet-max) {
-                    display: none;
+                &::before {
+                    content: 'Filter By: ';
+                    display: inline;
+                    font-weight: 500;
+                    margin-right: 1rem;
                 }
             }
         }
 
         &:not([aria-pressed="true"]) {
-            height: 0;
-            opacity: 0;
-            padding: 0;
-            transition: opacity 0.3s;
-            width: 0;
+            @include width-up-to($tablet-max) {
+                height: 0;
+                opacity: 0;
+                padding: 0;
+                transition: opacity 0.3s;
+                width: 0;
 
-            @at-root .active#{&} {
-                height: $form-element-height;
-                opacity: 1;
-                padding-left: 2rem;
-                width: 100%;
-
-                @include wider-than($tablet-max) {
-                    width: auto;
+                @at-root .active#{&} {
+                    height: $form-element-height;
+                    opacity: 1;
+                    padding-left: 2rem;
+                    width: 100%;
                 }
-            }
-
-            @include wider-than($tablet-max) {
-                background-color: ui-color(white);
-                height: $form-element-height;
-                opacity: 1;
-                padding: 0 1.5rem;
-                width: auto;
-            }
-
-            &:hover {
-                background-color: ui-color(white);
             }
         }
     }

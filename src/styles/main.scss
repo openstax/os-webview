@@ -27,17 +27,7 @@ iframe {
 }
 
 a {
-    color: os-color(light-blue);
-    text-decoration: none;
-
-    &:focus,
-    &:hover {
-        color: darken(os-color(light-blue), 10%);
-    }
-
-    &:active {
-        color: lighten(os-color(light-blue), 10%);
-    }
+    @include link();
 }
 
 p {
@@ -73,9 +63,9 @@ sup {
 }
 
 .go-to {
-    @extend %text-body-large;
+    @include set-font(body-large);
+    @include link();
 
-    color: os-color(light-blue);
     font-weight: 500;
 }
 
@@ -96,7 +86,7 @@ sup {
 }
 
 .download-link {
-    @extend %text-helper-label;
+    @include set-font(helper-label);
 
     color: os-color(light-blue);
     font-weight: 500;
@@ -109,7 +99,7 @@ sup {
 }
 
 .scrolldown-chevron {
-    @extend %text-h2;
+    @include set-font(h2);
 
     align-items: center;
     display: flex;
@@ -295,20 +285,10 @@ sup {
         line-height: 1;
         margin: 0;
     }
-
-    h1,
-    p {
-        margin-left: auto;
-        margin-right: auto;
-        max-width: $text-content-max;
-
-        @include width-up-to($phone-max) {
-            max-width: 100%;
-        }
-    }
 }
 
 .strips {
+    position: absolute;
     width: 100%;
 }
 

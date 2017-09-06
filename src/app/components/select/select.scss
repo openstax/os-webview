@@ -1,5 +1,6 @@
-@import 'variables';
-@import 'mixins';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
+
+$form-element-height: 5rem;
 
 select {
     display: none;
@@ -8,30 +9,32 @@ select {
 .select {
     align-items: center;
     background-color: white;
-    border: thin solid rgba(color(gray), 0.33);
+    border: thin solid rgba(os-color(gray), 0.33);
+    color: text-color(normal);
     cursor: pointer;
     display: flex;
-    height: 4.8rem;
-    padding-right: 4.8rem;
+    height: $form-element-height;
+    padding-right: $form-element-height;
     position: relative;
 
     &::before {
-        background-color: rgba(color(neutral-lighter), 0.2);
+        background-color: ui-color(default);
         content: '';
         display: block;
-        height: 4.8rem;
+        height: $form-element-height;
+        max-height: 100%;
         position: absolute;
         right: 0;
         top: 0;
-        width: 4.8rem;
+        width: $form-element-height;
     }
 
     &::after {
-        color: color(gray);
+        color: os-color(gray);
         position: absolute;
         right: 1.2rem;
         text-align: center;
-        top: 0.4rem;
+        top: 0.8rem;
         transform: rotate(90deg);
         transform-origin: 63% 55%;
         transition: All 0.2s ease-in-out;
@@ -73,45 +76,41 @@ select {
         }
 
         .label {
-            background-color: rgba(color(gray), 0.2);
+            background-color: rgba(os-color(gray), 0.2);
 
             &.none {
                 background-color: transparent;
-                color: color(neutral-light);
-                font-size: 1.6rem;
-                margin-left: -0.84rem;
+                color: text-color(helper);
+                font-weight: 500;
+                margin-left: -1rem;
             }
         }
 
         .remover {
-            background-color: color(cyan);
-            color: color(neutral-lightest);
+            background-color: os-color(light-blue);
+            color: text-color(white);
             cursor: cursor;
-            font-size: inherit;
         }
     }
 
     .item {
-        color: color(neutral-dark);
-        font-size: 1.6rem;
         font-weight: 500;
-        line-height: 1;
         padding: 1rem;
 
         &.none {
-            color: color(neutral-light);
+            color: text-color(helper);
         }
     }
 
     .options {
-        background-color: color(neutral-lightest);
-        border-bottom-color: color(cyan);
-        border-left-color: rgba(color(gray), 0.33);
-        border-right-color: rgba(color(gray), 0.33);
+        background-color: ui-color(white);
+        border-bottom-color: os-color(light-blue);
+        border-left-color: rgba(os-color(gray), 0.33);
+        border-right-color: rgba(os-color(gray), 0.33);
         border-style: solid;
-        border-top-color: color(neutral-lightest);
+        border-top-color: ui-color(white);
         border-width: 0.1rem;
-        box-shadow: 0 0.2rem 0.3rem rgba(color(neutral-lighter), 0.8);
+        box-shadow: 0 0.2rem 0.3rem rgba(ui-color(default), 0.8);
         cursor: pointer;
         display: none;
         left: 0;
@@ -130,8 +129,7 @@ select {
         }
 
         > .option {
-            background-color: color(neutral-lightest);
-            color: color(neutral-dark);
+            background-color: ui-color(white);
             font-weight: 600;
             line-height: 1;
             padding: 0.5rem 1rem;
@@ -139,7 +137,7 @@ select {
 
             &:hover,
             &.active {
-                background-color: rgba(color(neutral-lighter), 0.3);
+                background-color: ui-color(default-hover);
             }
         }
 

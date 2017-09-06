@@ -1,8 +1,5 @@
-@import 'variables';
-@import 'mixins';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
-$label-1: #575958;
-$label-3: #4a4a4a;
 $graytop-border: #f4f4f4;
 $graytop-start: #fcfcfc;
 
@@ -14,19 +11,19 @@ detail-block {
     > div {
         width: 100%;
 
-        @include phone {
+        @include width-up-to($phone-max) {
             padding: 1rem;
         }
 
         > .body-block {
-            background-color: color(neutral-lightest);
+            background-color: ui-color(white);
         }
     }
 
     .info {
         padding: 3rem 4rem;
 
-        @include phone {
+        @include width-up-to($phone-max) {
             padding: 2rem 1rem;
         }
     }
@@ -35,7 +32,7 @@ detail-block {
         display: table-row;
         height: 4rem;
 
-        @include phone {
+        @include width-up-to($phone-max) {
             display: block;
             height: auto;
             padding-bottom: 1rem;
@@ -48,7 +45,7 @@ detail-block {
             padding: 1rem 0;
             word-wrap: break-word;
 
-            @include phone {
+            @include width-up-to($phone-max) {
                 display: block;
                 line-height: 1.3;
                 padding: 0;
@@ -56,12 +53,12 @@ detail-block {
         }
 
         .label {
-            color: $label-3;
+            color: text-color(helper);
             font-weight: bold;
             text-align: left;
             width: 20rem;
 
-            @include phone {
+            @include width-up-to($phone-max) {
                 width: auto;
             }
         }
@@ -69,24 +66,24 @@ detail-block {
         .value {
             max-width: calc(100% - 20rem);
 
-            @include phone {
+            @include width-up-to($phone-max) {
                 max-width: 100%;
             }
         }
     }
 
     .body-block.graytop {
-        background-image: linear-gradient(to bottom, $graytop-start, rgba(color(neutral-lightest), 0) 40%);
+        background-image: linear-gradient(to bottom, $graytop-start, rgba(ui-color(white), 0) 40%);
         border-top: thin solid $graytop-border;
     }
 
     .note {
-        color: $label-1;
-        font-size: 1.2rem;
-        line-height: normal;
+        @include set-font(helper-label);
+
+        color: text-color(helper);
         margin: 1rem 0 4rem 4rem;
 
-        @include phone {
+        @include width-up-to($phone-max) {
             margin-bottom: 6rem;
             margin-left: 1rem;
         }
