@@ -1,5 +1,4 @@
-@import 'variables';
-@import 'mixins';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 $sea-bottom: rgb(0, 36, 106);
 $sea-top: rgb(6, 71, 119);
@@ -16,11 +15,15 @@ $money-green: rgb(122, 188, 125);
 $deep-teal: rgb(0, 114, 151);
 
 .openstax-tutor-page {
-    font-size: 1.8rem;
-    line-height: 1.67;
+    @include set-font(body-large);
 
-    .smaller {
-        font-size: 1.6rem;
+    .smaller,
+    .sticky-footer {
+        @include set-font(body-regular);
+    }
+
+    h1 {
+        text-align: center;
     }
 
     .sticky-footer {
@@ -29,7 +32,6 @@ $deep-teal: rgb(0, 114, 151);
         bottom: 0;
         color: #424242;
         display: flex;
-        font-size: 1.6rem;
         justify-content: space-around;
         max-height: 9rem;
         padding: 1rem;
@@ -40,7 +42,7 @@ $deep-teal: rgb(0, 114, 151);
         width: 100%;
         z-index: 4;
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             padding: 2rem 3rem;
         }
 
@@ -64,11 +66,11 @@ $deep-teal: rgb(0, 114, 151);
             padding-left: 2rem;
             transition: opacity 0.2s 0.1s;
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 padding-left: 6rem;
             }
 
-            @include phone {
+            @include width-up-to($phone-max) {
                 padding: 0;
             }
 
@@ -76,19 +78,20 @@ $deep-teal: rgb(0, 114, 151);
                 padding-left: 0;
 
                 .btn {
-                    background-color: color(cyan);
+                    background-color: os-color(light-blue);
                 }
             }
         }
 
         .btn {
+            @include set-font(helper-label);
+
             background-color: $deep-teal;
             flex-basis: 20rem;
-            font-size: 1.4rem;
             margin-right: 2rem;
             padding: 1rem 3rem;
 
-            @include phone {
+            @include width-up-to($phone-max) {
                 flex-basis: calc(100% - 1.5rem);
                 margin: 0;
             }
@@ -102,7 +105,7 @@ $deep-teal: rgb(0, 114, 151);
         .description {
             flex: 1 1 50%;
 
-            @include phone {
+            @include width-up-to($phone-max) {
                 display: none;
             }
         }
@@ -144,7 +147,7 @@ $deep-teal: rgb(0, 114, 151);
     }
 
     #new-frontier {
-        color: color(blue);
+        color: os-color(blue);
         padding-bottom: 0;
         padding-top: 1.5rem;
         z-index: 2;
@@ -165,7 +168,7 @@ $deep-teal: rgb(0, 114, 151);
             justify-content: flex-end;
             width: 100%;
 
-            @include phone {
+            @include width-up-to($phone-max) {
                 display: block;
             }
 
@@ -177,8 +180,9 @@ $deep-teal: rgb(0, 114, 151);
                 padding: 1rem 2rem;
                 white-space: nowrap;
 
-                @include phone {
-                    font-size: 1.4rem;
+                @include width-up-to($phone-max) {
+                    @include set-font(helper-label);
+
                     white-space: normal;
                 }
             }
@@ -189,20 +193,17 @@ $deep-teal: rgb(0, 114, 151);
         }
 
         h1 {
-            font-size: 6rem;
 
-            @include phone {
-                font-size: 5rem;
+            @include wider-than($phone-max) {
+                @include set-font(hero-h1);
             }
 
             .subhead {
-                font-size: 2.4rem;
-                font-weight: bold;
-                letter-spacing: normal;
+                @include set-font(h3);
                 margin: 3rem 0;
                 padding: 0;
 
-                @include phone {
+                @include width-up-to($phone-max) {
                     text-align: left;
                 }
             }
@@ -216,7 +217,7 @@ $deep-teal: rgb(0, 114, 151);
             > * {
                 flex-basis: 50%;
 
-                @include phone {
+                @include width-up-to($phone-max) {
                     flex-basis: 100%;
 
                     &:first-child {
@@ -230,11 +231,8 @@ $deep-teal: rgb(0, 114, 151);
             }
 
             .btn {
-                font-size: 2rem;
                 margin-bottom: 6rem;
                 margin-top: 2rem;
-                padding: 1.5rem 4rem;
-                width: auto;
             }
 
             #moose {
@@ -269,7 +267,7 @@ $deep-teal: rgb(0, 114, 151);
     }
 
     #how-it-works {
-        color: color(neutral-lightest);
+        color: text-color(white);
         padding-bottom: 8vw;
 
         #how-it-works-target {
@@ -289,23 +287,16 @@ $deep-teal: rgb(0, 114, 151);
         }
 
         h1 {
-            color: color(gold);
-            font-size: 6rem;
+            color: os-color(gold);
             text-align: center;
 
-            @include phone {
-                font-size: 5rem;
+            @include wider-than($phone-max) {
+                @include set-font(hero-h1);
             }
         }
 
-        h2,
-        h3 {
-            color: inherit;
-            line-height: inherit;
-        }
-
         h2 {
-            font-size: 2.4rem;
+            @include set-font(h3);
         }
 
         .description {
@@ -321,7 +312,7 @@ $deep-teal: rgb(0, 114, 151);
         .by-4 {
             display: none;
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 display: block;
             }
 
@@ -333,7 +324,7 @@ $deep-teal: rgb(0, 114, 151);
         .by-2 {
             display: none;
 
-            @include tablet {
+            @include width-between($phone-max, $tablet-max) {
                 display: block;
             }
 
@@ -345,7 +336,7 @@ $deep-teal: rgb(0, 114, 151);
         .by-1 {
             display: none;
 
-            @include phone {
+            @include width-up-to($phone-max) {
                 display: block;
                 width: 100%;
             }
@@ -380,7 +371,7 @@ $deep-teal: rgb(0, 114, 151);
     }
 
     #what-students-get {
-        color: color(neutral-lightest);
+        color: text-color(white);
 
         .background-imagery {
             background: linear-gradient($sea-top, $sea-bottom);
@@ -417,7 +408,7 @@ $deep-teal: rgb(0, 114, 151);
 
             i {
                 cursor: pointer;
-                font-size: 5rem;
+                font-size: 320%;
                 width: auto;
             }
 
@@ -458,7 +449,7 @@ $deep-teal: rgb(0, 114, 151);
 
                 &.active img,
                 &.active video {
-                    border: 0.2rem solid color(cyan);
+                    border: 0.2rem solid os-color(light-blue);
                 }
 
                 &:first-child {
@@ -476,12 +467,12 @@ $deep-teal: rgb(0, 114, 151);
     }
 
     #feature-matrix {
-        color: color(neutral-lightest);
+        color: text-color(white);
         z-index: 0;
 
         .background-imagery {
             background: linear-gradient(0deg,
-                color(gold),
+                os-color(gold),
                 rgba(13, 192, 220, 1) calc(8% + 5vw),
                 rgba(11, 166, 201, 1) calc(24% + 5vw),
                 rgba(7, 120, 167, 1) calc(45% + 2vw),
@@ -525,7 +516,7 @@ $deep-teal: rgb(0, 114, 151);
             .wide-body {
                 display: none;
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     display: table-row-group;
                 }
             }
@@ -533,22 +524,22 @@ $deep-teal: rgb(0, 114, 151);
             .narrow-body {
                 display: table-row-group;
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     display: none;
                 }
             }
         }
 
         .caption {
-            color: color(blue);
-            font-size: 1.3rem;
+            @include set-font(helper-label);
+            color: os-color(blue);
             margin: 0.5rem 0 1rem 0.5rem;
             text-align: left;
             width: 100%;
         }
 
         td {
-            background-color: color(blue);
+            background-color: os-color(blue);
             border: thin solid transparent;
             padding: 1rem 3rem;
 
@@ -560,13 +551,13 @@ $deep-teal: rgb(0, 114, 151);
                 padding-left: 3rem;
                 width: 30%;
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     width: 15%;
                 }
             }
 
             .description.smaller {
-                font-size: 1.3rem;
+                @include set-font(helper-label);
             }
 
             .key {
@@ -595,7 +586,7 @@ $deep-teal: rgb(0, 114, 151);
         }
 
         .availability {
-            color: color(blue);
+            color: os-color(blue);
 
             .book-covers {
                 display: flex;
@@ -625,7 +616,7 @@ $deep-teal: rgb(0, 114, 151);
         padding-top: 0;
 
         .background-imagery {
-            background: linear-gradient($snow-top 80%, $snow-bottom 98%, color(neutral-lightest));
+            background: linear-gradient($snow-top 80%, $snow-bottom 98%, ui-color(white));
             top: 0;
 
             @media (min-width: 1400px) {
@@ -645,18 +636,18 @@ $deep-teal: rgb(0, 114, 151);
 
         h1,
         .section-description {
-            color: color(blue);
+            color: os-color(blue);
             margin-bottom: 3rem;
             text-align: center;
         }
 
         .color-bar {
-            background-color: color(gold);
+            background-color: os-color(gold);
             height: 40vw;
             position: relative;
             width: 100%;
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 height: 30.8rem;
                 width: 74rem;
             }
@@ -681,33 +672,32 @@ $deep-teal: rgb(0, 114, 151);
                 }
 
                 &:nth-child(3) {
-                    background-color: color(cyan);
+                    background-color: os-color(light-blue);
                     width: 50%;
                 }
             }
 
             .content {
+                @include set-font(h1);
                 align-items: center;
                 display: flex;
-                font-size: 4.8rem;
-                font-weight: bold;
                 justify-content: center;
                 width: 100%;
 
-                @include phone {
-                    font-size: 4rem;
+                @include width-up-to($phone-max) {
+                    @include set-font(h2);
                 }
 
                 .circle {
                     align-items: center;
-                    background-color: rgba(color(neutral-lightest), 0.1);
+                    background-color: rgba(ui-color(white), 0.1);
                     border-radius: 50%;
                     display: flex;
                     height: calc(5rem + 12vw);
                     justify-content: center;
                     width: calc(5rem + 12vw);
 
-                    @include desktop {
+                    @include wider-than($tablet-max) {
                         height: 15rem;
                         width: 15rem;
                     }
@@ -720,7 +710,7 @@ $deep-teal: rgb(0, 114, 151);
             flex-wrap: wrap;
             width: 100%;
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 width: 74rem;
             }
         }
@@ -732,17 +722,18 @@ $deep-teal: rgb(0, 114, 151);
             margin-top: 3rem;
 
             .box {
+                @include set-font(h3);
+
                 align-items: center;
                 display: flex;
                 flex: 0 0 6rem;
-                font-size: 2.4rem;
-                font-weight: bold;
                 height: 6rem;
                 justify-content: center;
+                letter-spacing: normal;
             }
 
             &:first-child .box {
-                background-color: color(cyan);
+                background-color: os-color(light-blue);
             }
 
             &:nth-child(2) .box {
@@ -754,7 +745,7 @@ $deep-teal: rgb(0, 114, 151);
             }
 
             &:last-child .box {
-                background-color: color(gold);
+                background-color: os-color(gold);
             }
 
             .description {
@@ -766,13 +757,13 @@ $deep-teal: rgb(0, 114, 151);
     }
 
     #faq {
-        background: linear-gradient(to top, color(cyan) 0, transparent 5px, transparent);
+        background: linear-gradient(to top, os-color(light-blue) 0, ui-color(white) 5px, ui-color(white));
 
         h1 {
             margin-bottom: 8rem;
             margin-top: 0;
 
-            @include phone {
+            @include width-up-to($phone-max) {
                 margin-bottom: 1rem;
                 margin-top: 0;
             }
@@ -780,7 +771,7 @@ $deep-teal: rgb(0, 114, 151);
 
         .questions {
             align-items: flex-start;
-            color: color(blue);
+            color: os-color(blue);
         }
 
         .qna {
@@ -788,7 +779,7 @@ $deep-teal: rgb(0, 114, 151);
             margin-left: 8rem;
             width: 100%;
 
-            @include phone {
+            @include width-up-to($phone-max) {
                 margin-left: 0;
             }
         }
@@ -816,8 +807,8 @@ $deep-teal: rgb(0, 114, 151);
 
         .toggler {
             align-items: center;
-            background-color: color(gold);
-            color: color(neutral-lightest);
+            background-color: os-color(gold);
+            color: text-color(white);
             display: flex;
             flex: 0 0 1.25em;
             height: 1.25em;
@@ -839,11 +830,11 @@ $deep-teal: rgb(0, 114, 151);
             height: 10vw;
             width: 100%;
 
-            @include tablet {
+            @include width-between($phone-max, $tablet-max) {
                 height: 8vw;
             }
 
-            @include phone {
+            @include width-up-to($phone-max) {
                 height: 3vw;
             }
 
@@ -857,19 +848,19 @@ $deep-teal: rgb(0, 114, 151);
     }
 
     #learn-more {
-        background: linear-gradient(to top, color(neutral-dark) 0%, gold 1%, color(cyan) 9vw);
+        background: linear-gradient(to top, ui-color(footer-bg) 0%, gold 1%, os-color(light-blue) 9vw);
         height: 60rem;
         padding: 4vw 0 0;
 
         h1 {
-            color: color(blue);
+            color: os-color(blue);
             margin: 0;
             padding: 0;
         }
 
         .subhead {
             display: flex;
-            font-size: 2.4rem;
+            font-size: 150%;
             justify-content: center;
             padding-bottom: 0;
             padding-top: 2rem;
@@ -878,7 +869,7 @@ $deep-teal: rgb(0, 114, 151);
         .buttons-row {
             display: flex;
 
-            @include phone {
+            @include width-up-to($phone-max) {
                 display: block;
             }
         }
@@ -892,7 +883,7 @@ $deep-teal: rgb(0, 114, 151);
             text-align: center;
 
             .btn {
-                background-color: color(blue);
+                background-color: os-color(blue);
                 margin-bottom: 2rem;
                 padding: 1rem 3rem;
             }
@@ -909,12 +900,12 @@ $deep-teal: rgb(0, 114, 151);
     }
 
     .btn {
-        color: color(neutral-lightest);
+        color: text-color(white);
         padding: 1em 2em;
     }
 
     .white-on-blue {
-        background-color: color(blue);
-        color: color(neutral-lightest);
+        background-color: os-color(blue);
+        color: text-color(white);
     }
 }

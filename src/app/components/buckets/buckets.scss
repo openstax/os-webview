@@ -1,10 +1,11 @@
-@import 'variables';
-@import 'mixins';
+@import 'mixins/triangle';
+@import 'mixins/responsive';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 .buckets-section {
 
     .bucket {
-        color: color(neutral-lightest);
+        color: text-color(white);
         max-width: 100%;
 
         @include collapsed {
@@ -16,7 +17,7 @@
         }
 
         &.our-impact {
-            background-color: color(neutral-medium);
+            background-color: os-color(gray);
 
             > .image {
                 background-image: url('/images/home/buckets/our-impact.jpg');
@@ -31,7 +32,7 @@
                     @include triangle(
                         $direction: right,
                         $position: top 27% right -2.4rem,
-                        $color: color(gray),
+                        $color: os-color(gray),
                         $size: 2.4rem
                     );
 
@@ -39,20 +40,20 @@
                         @include triangle(
                             $direction: top,
                             $position: top -2.4rem right 5rem left auto,
-                            $color: color(gray),
+                            $color: os-color(gray),
                             $size: 2.4rem
                         );
                     }
                 }
 
                 .title {
-                    color: color(cyan);
+                    color: os-color(light-blue);
                 }
             }
         }
 
         &.partners {
-            background-color: color(orange);
+            background-color: os-color(orange);
             background-image: url('/images/home/buckets/partners.jpg');
             background-repeat: no-repeat;
             background-size: cover;

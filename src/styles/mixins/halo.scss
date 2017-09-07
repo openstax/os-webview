@@ -1,6 +1,7 @@
-$halo-color: color(neutral-lightest);
-$transparent: rgba(#000, 0);
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
+
+$halo-color: ui-color(white);
 
 @mixin halo() {
-    background-image: radial-gradient(circle farthest-side at 60% 60%, rgba($halo-color, 0.40), $transparent);
+    background-image: radial-gradient(circle farthest-side at 60% 60%, rgba($halo-color, 0.40), transparent);
 }

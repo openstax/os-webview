@@ -1,4 +1,4 @@
-@import 'variables';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 .bulk-order.page {
     table th {
@@ -6,7 +6,7 @@
     }
 
     [type="submit"] {
-        background-color: color(orange);
+        background-color: os-color(orange);
         color: color(neutral-lightest);
         float: none;
     }

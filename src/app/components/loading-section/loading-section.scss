@@ -1,4 +1,4 @@
-@import 'variables';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 .os-loader {
     background-color: #efefef;
@@ -22,7 +22,7 @@
 
     .os-overlay {
         animation: loaderBubble 1s forwards;
-        background-image: linear-gradient(to right, color(orange) 50%, color(cyan) 50%);
+        background-image: linear-gradient(to right, os-color(orange) 50%, os-color(light-blue) 50%);
         background-size: 200% 100%;
         height: 100vh;
         left: 0;
@@ -72,7 +72,7 @@
 
             to {
                 background-color: white;
-                box-shadow: 0 1px 0 rgba(color(gray), 0.6);
+                box-shadow: 0 1px 0 rgba(os-color(gray), 0.6);
                 transform: rotateY(180deg);
             }
         }

@@ -94,13 +94,11 @@ sup {
 .download-link {
     @include set-font(helper-label);
 
-    color: os-color(light-blue);
     font-weight: 500;
     text-transform: uppercase;
 
-    &.unavailable,
-    &:hover {
-        color: darken(os-color(light-blue), 10%);
+    &.unavailable {
+        color: text-color(link-hover);
     }
 }
 

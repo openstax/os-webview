@@ -1,15 +1,16 @@
-@import 'variables';
-@import 'mixins';
+@import 'mixins/triangle';
+@import 'mixins/coming-soon';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
+
+$special-breakpoint: 54rem;
 
 .details-page {
     position: relative;
 
     h1 {
+        margin-bottom: 1rem;
+        margin-top: 0;
         word-wrap: break-word;
-
-        @media (min-width: 500px) {
-            margin-top: 0;
-        }
     }
 
     h2,
@@ -28,7 +29,7 @@
 
     .table-of-contents {
         align-items: center;
-        background-color: rgba(color(neutral-lightest), 0.97);
+        background-color: rgba(ui-color(white), 0.97);
         bottom: 0;
         display: flex;
         height: 100%;
@@ -42,8 +43,8 @@
         width: 100%;
         z-index: 100;
 
-        @include desktop {
-            background-color: rgba(color(neutral-dark), 0.93);
+        @include wider-than($tablet-max) {
+            background-color: rgba(ui-color(footer-bg), 0.93);
         }
 
         ol {
@@ -79,8 +80,8 @@
             position: static;
             width: 100%;
 
-            @include desktop {
-                background-color: rgba(color(neutral-lightest), 0.97);
+            @include wider-than($tablet-max) {
+                background-color: rgba(ui-color(white), 0.97);
                 margin-top: 11rem;
                 max-height: calc(100% - 16rem);
                 padding-top: 3rem;
@@ -99,14 +100,10 @@
         display: flex;
         flex-flow: column nowrap;
         margin: 0 auto;
-        max-width: $boxed-width;
+        max-width: $content-max;
         padding: 0 1.5rem;
 
-        @include tablet {
-            flex-flow: row wrap;
-        }
-
-        @include desktop {
+        @include wider-than($phone-max) {
             flex-flow: row wrap;
         }
     }
@@ -118,12 +115,6 @@
         width: 100%;
     }
 
-    .btn:hover,
-    .btn:focus {
-        background-color: darken(color(orange), 5%);
-        transform: scale3d(1, 1, 1);
-    }
-
     .btn.hidden {
         display: none;
     }
@@ -131,12 +122,12 @@
     .book-info {
         margin-bottom: 6rem;
 
-        @media (min-width: 500px) {
+        @include wider-than($special-breakpoint) {
             justify-content: space-between;
             margin: 6rem auto;
         }
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             justify-content: flex-start;
         }
 
@@ -147,12 +138,12 @@
             position: relative;
             width: 100vw;
 
-            @media (min-width: 500px) {
+            @include wider-than($special-breakpoint) {
                 margin: 0 1.5rem 3rem 0;
                 width: 25rem;
             }
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 width: 25rem;
             }
 
@@ -170,12 +161,7 @@
             margin-bottom: 3rem;
             order: 2;
 
-            @media (min-width: 500px) {
-                flex: 0 0 auto;
-                width: 20rem;
-            }
-
-            @include desktop {
+            @include wider-than($tablet-max) {
                 left: 50%;
                 margin-bottom: 0;
                 max-width: 120rem;
@@ -192,13 +178,6 @@
                 position: absolute;
                 top: auto;
                 z-index: 0;
-
-                .box {
-                    left: calc(100% - 26.5rem);
-                    position: relative;
-                    right: auto;
-                    top: 0;
-                }
             }
 
             h2 {
@@ -206,10 +185,23 @@
             }
 
             .box {
-                background-color: rgba(color(neutral-lightest), 0.95);
+                background-color: rgba(ui-color(white), 0.95);
+                margin-left: -$normal-margin;
+                margin-right: -$normal-margin;
+                padding: $normal-margin;
 
-                @include desktop {
-                    padding: 1.5rem;
+                @include width-between($phone-max, $special-breakpoint) {
+                    width: calc(100% + #{2 * $normal-margin});
+                }
+
+                @include width-between($special-breakpoint, $tablet-max) {
+                    float: right;
+                    margin: 0;
+                    max-width: 25rem;
+                }
+
+                @include wider-than($tablet-max) {
+                    margin: 0;
                     position: absolute;
                     right: 1.5rem;
                     top: 0;
@@ -217,61 +209,34 @@
                 }
             }
 
-            .notes {
-                color: color(gray);
-            }
-
             .cta {
-                color: color(gray);
+                color: text-color(helper);
 
                 .btn:last-child {
-                    background-color: color(neutral-medium);
-                    margin-top: 1rem;
-
-                    &:hover,
-                    &:focus {
-                        background-color: darken(color(neutral-medium), 5%);
-                        transform: scale3d(1, 1, 1);
-                    }
+                    @include button(secondary);
+                    margin: 1rem 0 0;
+                    width: 100%;
                 }
             }
         }
 
         .details {
-            font-size: 1.6rem;
-            line-height: 2.6rem;
             order: 3;
 
-            @include tablet {
+            @include width-between($phone-max, $tablet-max) {
                 flex: 1 100%;
             }
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 flex: 1 0;
                 order: 2;
                 padding: 0 25rem 0 0;
-            }
-
-            @media (min-width: 830px) {
-                padding-left: 1.5rem;
-            }
-
-            h1 {
-                line-height: 1;
-            }
-
-            a {
-                color: color(cyan);
-
-                &:hover {
-                    color: darken(color(cyan), 10%);
-                }
             }
         }
 
         .tabs {
             a:not(:last-child)::after {
-                color: color(neutral-dark);
+                color: ui-color(footer-bg);
                 content: ' | ';
                 display: inline;
             }
@@ -287,68 +252,63 @@
     }
 
     .endorsement {
-        background-color: color(green);
-        color: color(neutral-lightest);
+        background-color: os-color(green);
+        color: text-color(white);
 
         blockquote {
+            margin-left: 5rem;
             position: relative;
             quotes: '\201C''\201D''\2018''\2019';
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 margin-left: 7.5rem;
             }
 
             &::before {
-                color: color(gold);
+                color: os-color(gold);
                 content: open-quote;
-                font-size: 15rem;
-                left: -5.5rem;
+                font-size: 900%;
+                left: -6rem;
                 line-height: 0;
                 position: absolute;
-                top: 6rem;
+                top: 5rem;
 
-                @include desktop {
-                    font-size: 18rem;
-                    left: -9rem;
-                    top: 7rem;
+                @include wider-than($tablet-max) {
+                    font-size: 1100%;
+                    left: -8rem;
+                    top: 6rem;
                 }
             }
 
-            p {
-                font-size: 3.2rem;
+            @mixin quotation-styling() {
                 font-style: italic;
                 font-weight: 500;
-                letter-spacing: -0.15rem;
-                line-height: 5rem;
+                letter-spacing: normal;
+            }
+
+            p {
+                @include set-font(h3);
+                @include quotation-styling();
                 margin: 0 0 3rem;
 
-                @include phone {
-                    font-size: 2.6rem;
-                    letter-spacing: -0.1rem;
-                    line-height: 4rem;
-                }
-
-                @include tablet {
-                    font-size: 2.9rem;
-                    letter-spacing: -0.1rem;
-                    line-height: 4.5rem;
+                @include wider-than($phone-max) {
+                    @include set-font(h2);
+                    @include quotation-styling();
                 }
             }
 
             .attribution {
+                @include set-font(h4);
+                @include quotation-styling();
                 display: flex;
                 flex-direction: column;
-                font-size: 2.1rem;
                 justify-content: flex-end;
-                letter-spacing: normal;
-                line-height: 2.5rem;
                 margin-top: 2.5rem;
                 text-align: right;
 
-                @include phone {
-                    font-size: 1.7rem;
-                    line-height: 2rem;
-                    margin-top: 2rem;
+                @include wider-than($phone-max) {
+                    @include set-font(h3);
+                    @include quotation-styling();
                 }
             }
         }
@@ -356,7 +316,7 @@
         .container {
             padding: 6rem 1.5rem;
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 padding: 6rem 25rem 6rem 1.5rem;
             }
         }
@@ -367,9 +327,6 @@
     }
 
     .resources {
-        background-color: lighten(color(neutral-lighter), 8%);
-        font-size: 1.6rem;
-        line-height: 2.6rem;
 
         h2 {
             margin-bottom: 0;
@@ -378,7 +335,7 @@
         .container {
             padding: 6rem 1.5rem;
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 padding: 6rem 27.5rem 6rem 1.5rem;
             }
         }
@@ -389,7 +346,7 @@
         }
 
         .student-resources-cta {
-            background-color: color(gold);
+            background-color: os-color(gold);
             background-image: url('/images/details/student-resources-bg-lg.jpg');
             background-position: left 70%;
             background-repeat: no-repeat;
@@ -398,12 +355,8 @@
             min-height: 60rem;
             transition: All ease-in-out 0.3s;
 
-            @include phone {
+            @include width-up-to($phone-max) {
                 min-height: 70rem;
-            }
-
-            @media screen and (min-width: 1920px) {
-                background-position: right 40%;
             }
 
             .container {
@@ -417,19 +370,19 @@
             }
 
             h2 {
-                color: color(blue);
-                font-size: 3.6rem;
+                @include set-font(h2);
+                color: os-color(blue);
                 margin-bottom: 3rem;
                 max-width: 56rem;
                 width: 100%;
             }
 
             a {
-                background-color: color(yellow);
+                background-color: os-color(yellow);
                 padding: 1.5rem 3rem;
 
                 &:hover {
-                    background-color: darken(color(yellow), 5%);
+                    background-color: darken(os-color(yellow), 5%);
                 }
             }
         }
@@ -439,39 +392,23 @@
         display: flex;
         flex-flow: column nowrap;
 
-        @media (min-width: #{breakpoints(phone) + 1}) {
+        @include wider-than($phone-max) {
             flex-flow: row wrap;
         }
 
         > div {
-            background-color: color(neutral-lightest);
+            background-color: ui-color(white);
             display: flex;
+            flex: 1 0 24rem;
             flex-flow: column nowrap;
             justify-content: space-between;
-            margin-bottom: 1.5rem;
+            margin-bottom: $normal-margin;
+            margin-right: $normal-margin;
             padding: 1.5rem;
             position: relative;
 
-            @media (min-width: #{breakpoints(phone) + 1}) {
-                flex: 0 0 48%;
-
-                &:nth-child(odd):not(:only-child):not(:last-child) {
-                    margin-right: 1.5rem;
-                }
-
-                &:last-child {
-                    margin-right: 0;
-                }
-            }
-
-            @media (min-width: 900px) {
-                flex: 1 0 28%;
-                margin-right: 1.5rem;
-                max-width: 31%;
-            }
-
             h4 {
-                color: color(blue);
+                color: os-color(blue);
                 margin-bottom: 1rem;
             }
 
@@ -481,7 +418,7 @@
                 justify-content: space-between;
 
                 .locked-state {
-                    color: lighten(color(neutral-light), 18%);
+                    color: ui-color(secondary);
                     font-size: 130%;
                     margin-right: 1rem;
                 }
@@ -497,8 +434,6 @@
     }
 
     .authors {
-        font-size: 1.6rem;
-        line-height: 2.6rem;
         padding: 6rem 0 0;
 
         &:last-child {
@@ -508,7 +443,7 @@
         .container {
             flex-flow: column wrap;
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 padding: 0 27.5rem 0 1.5rem;
             }
         }
@@ -553,14 +488,16 @@
             > div {
                 align-items: flex-start;
                 display: flex;
+                flex-flow: row wrap;
 
-                p:first-child {
-                    margin-top: 0;
+                > div {
+                    flex-basis: 25rem;
                 }
             }
 
             img {
                 height: 4rem;
+                margin-bottom: 1rem;
                 margin-top: 0.7rem;
                 padding-right: 1rem;
             }
@@ -568,15 +505,13 @@
     }
 
     .errata {
-        font-size: 1.6rem;
-        line-height: 2.6rem;
         margin: 0 0 6rem;
         padding: 6rem 0 0;
 
         .container {
             flex-flow: column wrap;
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 padding: 0 27.5rem 0 1.5rem;
             }
         }
@@ -593,10 +528,6 @@
 
         .go-to {
             position: relative;
-
-            &:hover {
-                color: darken(color(cyan), 10%);
-            }
         }
     }
 }
