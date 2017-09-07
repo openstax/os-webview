@@ -28,6 +28,10 @@ iframe {
 
 a {
     @include link();
+
+    &.btn {
+        text-decoration: none;
+    }
 }
 
 p {
@@ -71,6 +75,8 @@ sup {
 
 .go-to,
 .with-arrow {
+    text-decoration: none;
+
     &::after {
         content: '▸';
         font-size: 120%;

@@ -65,17 +65,11 @@
 
         button,
         .btn {
-            background-color: ui-color(secondary);
-            color: text-color(white);
-            font-variant: normal;
-            padding: 1.5rem;
-            text-transform: uppercase;
-            width: 100%;
+            @include button(secondary);
 
-            &:hover,
-            &:focus {
-                background-color: ui-color(secondary-hover);
-            }
+            margin-left: 0;
+            padding: 1.5rem;
+            width: 100%;
         }
     }
 

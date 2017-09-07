@@ -47,9 +47,8 @@
             }
 
             .name {
+                @include set-font(h4);
                 color: os-color(green);
-                font-size: 1.8rem;
-                font-weight: 500;
             }
 
             .description {

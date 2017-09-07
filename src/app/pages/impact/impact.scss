@@ -1,9 +1,8 @@
-@import 'variables';
-@import 'mixins';
+@import 'mixins/responsive';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 $breakpoint-1: 908px;
 $breakpoint-2: 761px;
-$iphone-five: 374px;
 $hero-break-width: 880px;
 
 .impact-page {
@@ -14,7 +13,7 @@ $hero-break-width: 880px;
 
     .hero {
         align-items: center;
-        background-color: color(green);
+        background-color: os-color(green);
         background-image: url('/images/impact/banner-bg.jpg');
         background-size: cover;
         display: flex;
@@ -25,14 +24,9 @@ $hero-break-width: 880px;
         text-align: left;
         width: 100%;
 
-        @media (max-width: $hero-break-width) {
-            min-height: 0;
-        }
-
         @include collapsed {
             align-items: stretch;
             background: none;
-            // height: calc(100vh - 6rem);
             max-height: 53rem;
         }
 
@@ -40,7 +34,7 @@ $hero-break-width: 880px;
             display: flex;
             flex-flow: column wrap;
             margin: 0 auto;
-            max-width: $boxed-width;
+            max-width: $content-max;
             width: 100%;
             z-index: 1;
 
@@ -64,7 +58,7 @@ $hero-break-width: 880px;
             transition: All ease 0.2s;
             width: calc(50rem + 30%);
 
-            @media screen and (min-width: $boxed-width + 1) {
+            @include wider-than($content-max) {
                 left: 0;
                 width: 86rem;
             }
@@ -80,28 +74,28 @@ $hero-break-width: 880px;
         }
 
         .overlay {
-            color: color(neutral-lightest);
+            color: text-color(white);
             display: flex;
             justify-content: flex-end;
             padding: 4rem;
             z-index: 2;
 
-            @media screen and (min-width: $boxed-width + 1) {
+            @include wider-than($content-max) {
                 padding-left: calc(-61rem + 55%);
             }
 
             @include collapsed {
-                background-color: color(green);
+                background-color: os-color(green);
                 width: 100%;
                 z-index: 0;
             }
 
             .text-block {
-                background-color: rgba(saturate(color(green), 10%), 0.85);
+                background-color: rgba(os-color(green), 0.85);
                 flex-basis: 50%;
                 padding: 4rem;
 
-                @media screen and (min-width: $breakpoint-2) and (max-width: $hero-break-width) {
+                @include width-between($breakpoint-2, $hero-break-width) {
                     flex-basis: 60%;
                 }
 
@@ -114,15 +108,16 @@ $hero-break-width: 880px;
 
             h1 {
                 color: inherit;
-                line-height: 0.8;
+                line-height: 1;
 
-                @media screen and (max-width: $iphone-five) {
-                    font-size: 4.5rem;
+                @include width-up-to($phone-max) {
+                    @include set-font(h1);
                 }
             }
 
             .blurb {
-                font-size: 1.8rem;
+                @include set-font(body-large);
+
                 padding: 1em 0;
 
                 @include collapsed {
@@ -133,11 +128,11 @@ $hero-break-width: 880px;
 
         .square-1,
         .square-2 {
-            background-color: color(green);
+            background-color: os-color(green);
             opacity: 0.3;
             position: absolute;
 
-            @media (max-width: $breakpoint-1) {
+            @include width-up-to($breakpoint-1) {
                 display: none;
             }
         }
@@ -159,33 +154,14 @@ $hero-break-width: 880px;
     }
 
     .cta .btn {
-        color: color(neutral-lightest);
-        font-size: 110%;
-        margin-top: 3.5rem;
+        @include button(primary);
     }
 
     .affiliates {
-        color: color(gray);
+        @include set-font(body-large);
+
+        color: os-color(gray);
         text-align: center;
-
-        h2,
-        a {
-            color: inherit;
-        }
-
-        h2 {
-            @include constrained-variable-text(4.8, 0.2);
-
-            font-weight: 500;
-            letter-spacing: -0.15rem;
-        }
-
-        p,
-        .cta {
-            @include constrained-variable-text(1.8, 0.2);
-
-            line-height: 1.7;
-        }
 
         .text-content {
             padding-bottom: 5rem;
@@ -194,34 +170,21 @@ $hero-break-width: 880px;
 
         .partners {
             align-items: center;
-            border-bottom: 0.4rem solid rgba(color(neutral-light), 0.10);
-            border-top: 0.4rem solid rgba(color(neutral-light), 0.10);
+            border-bottom: 0.4rem solid ui-color(form-border);
+            border-top: 0.4rem solid ui-color(form-border);
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
             margin: auto;
-            max-width: $boxed-width;
+            max-width: $content-max;
             padding: 1.5rem 0 0;
 
-            @media (max-width: $breakpoint-1) {
+            @include width-up-to($breakpoint-1) {
                 justify-content: space-around;
             }
 
             > li {
                 padding: 4rem;
-
-                @media (max-width: $hero-break-width) {
-                    // flex: 1 1 auto;
-                }
-
-                a {
-                    transition: All ease-in-out 0.3s;
-
-                    &:hover,
-                    &:focus {
-                        opacity: 0.7;
-                    }
-                }
 
                 img {
                     width: 12rem;
@@ -240,9 +203,8 @@ $hero-break-width: 880px;
             padding: 4rem 1.5rem 5rem;
 
             a {
-                font-size: 1.4rem;
+                @include set-font(helper-label);
                 font-weight: 500;
-                position: relative;
                 text-transform: uppercase;
             }
         }

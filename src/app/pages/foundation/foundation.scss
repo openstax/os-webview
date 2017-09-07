@@ -1,18 +1,15 @@
-@import 'variables';
-@import 'mixins';
-
-$text-black: rgba(0, 0, 0, 0.87);
-$text-black2: rgba(0, 0, 0, 0.7);
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 .foundation-page {
     line-height: 3rem;
 
     .hero {
-        background-color: color(deep-green);
-        color: color(neutral-lightest);
+        @include set-font(body-large);
+        background-color: os-color(deep-green);
+        color: text-color(white);
 
         h1 {
-            color: color(neutral-lightest);
+            color: inherit;
         }
     }
 
@@ -21,47 +18,40 @@ $text-black2: rgba(0, 0, 0, 0.7);
     }
 
     .blurbs {
-        background-color: lighten(color(neutral-light), 35%);
-        line-height: 2.3rem;
+        background-color: ui-color(form-bg);
         min-height: 10rem;
         padding: 8rem 0;
         position: relative;
     }
 
     .strips {
-        left: 0;
-        margin-bottom: 0;
-        position: absolute;
-        right: 0;
         top: 0;
     }
 
     .funder {
+        @include set-font(body-large);
+
         align-items: left;
-        background-color: color(neutral-lightest);
-        color: $text-black2;
+        background-color: ui-color(white);
         display: flex;
         flex-flow: column nowrap;
-        font-size: 1.7rem;
-        font-weight: 400;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
         padding: 3rem;
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             align-items: center;
             flex-flow: row nowrap;
         }
 
         h2 {
-            font-size: 2rem;
-            letter-spacing: -0.08rem;
+            @include set-font(h3);
         }
 
         .logo {
             flex: 0 0 auto;
             margin-bottom: 3rem;
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 flex: 0 0 25%;
                 margin-bottom: 0;
                 margin-right: 3rem;

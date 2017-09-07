@@ -1,5 +1,5 @@
-@import 'variables';
-@import 'mixins';
+@import 'mixins/coming-soon';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 .subjects-page {
 
@@ -11,7 +11,7 @@
     .feature-block {
         display: block;
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             display: flex;
             flex-direction: row;
         }
@@ -24,7 +24,7 @@
             position: fixed;
             top: 9rem;
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 position: absolute;
                 top: inherit;
             }
@@ -32,12 +32,10 @@
     }
 
     .blurb {
-        color: color(neutral-dark);
         flex: 1 28%;
-        font-size: 1.6rem;
         padding: 0 1.5rem;
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             text-align: center;
         }
 
@@ -45,14 +43,13 @@
             font-weight: 600;
             margin-bottom: 0;
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 text-align: center;
             }
         }
     }
 
     .books {
-        background-color: lighten(color(neutral-lighter), 8%);
         padding: 6rem 0;
         position: relative;
 
@@ -65,10 +62,9 @@
             width: 100%;
 
             .subject {
-                color: color(gray);
-                font-size: 2.5rem;
+                @include set-font(h3);
                 font-style: italic;
-                font-weight: 300;
+                font-weight: normal;
             }
         }
 
@@ -86,19 +82,19 @@
             margin: 1rem;
             position: relative;
 
-            @media (min-width: $boxed-width - 660) {
+            @include wider-than($content-max - 66rem) {
                 flex-basis: calc(50% - 2rem);
             }
 
-            @media (min-width: $boxed-width - 440) {
+            @include wider-than($content-max - 44rem) {
                 flex-basis: calc(33.3% - 2rem);
             }
 
-            @media (min-width: $boxed-width - 220) {
+            @include wider-than($content-max - 22rem) {
                 flex-basis: calc(25% - 2rem);
             }
 
-            @media (min-width: $boxed-width) {
+            @include wider-than($content-max) {
                 flex-basis: calc(20% - 2rem);
             }
 
@@ -122,7 +118,7 @@
         }
 
         .details {
-            background: color(neutral-lightest);
+            background: ui-color(white);
             box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(94, 96, 98, 0.1);
             height: 0;
             left: -5%;
@@ -140,7 +136,7 @@
 
             &::before {
                 border: 2rem solid;
-                border-color: transparent transparent color(neutral-lightest);
+                border-color: transparent transparent ui-color(white);
                 bottom: 100%;
                 content: '';
                 left: 50%;
@@ -150,22 +146,12 @@
 
             .cta > .btn {
                 font-size: 90%;
-                font-variant: normal;
-                font-weight: 400;
-                text-transform: uppercase;
                 white-space: nowrap;
-                width: 100%;
-            }
-
-            .cta > .btn:hover,
-            .cta > .btn:focus {
-                background-color: darken(color(orange), 5%);
-                transform: scale3d(1, 1, 1);
             }
         }
 
         .cover:hover .details {
-            @include desktop {
+            @include wider-than($tablet-max) {
                 @include get-this-is-visible;
             }
         }

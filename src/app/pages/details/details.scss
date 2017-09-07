@@ -206,8 +206,9 @@
             }
 
             .box {
+                background-color: rgba(color(neutral-lightest), 0.95);
+
                 @include desktop {
-                    background-color: rgba(color(neutral-lightest), 0.95);
                     padding: 1.5rem;
                     position: absolute;
                     right: 1.5rem;

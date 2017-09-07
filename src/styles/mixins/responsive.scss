@@ -29,17 +29,3 @@
         @content;
     }
 }
-
-@mixin variable-sized-text($base-size, $grow-factor) {
-    $factor: $grow-factor * $base-size / 100;
-    $base-rems: $base-size * 1rem;
-    font-size: calc(#{$base-size * 1rem} + #{$factor * 100vw} - #{$factor * $boxed-width});
-}
-
-@mixin constrained-variable-text($base-size, $grow-factor) {
-    @media (min-width: #{$boxed-width}) {
-        font-size: #{$base-size * 1rem};
-    }
-
-    @include variable-sized-text($base-size, $grow-factor)
-}

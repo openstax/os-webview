@@ -1,20 +1,15 @@
-@import 'variables';
-@import 'mixins';
-
-$label-4: #5f6163;
-$table-dark-row: #f6f6f6;
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 .form-container {
     background-color: inherit;
-    color: $label-4;
     margin-bottom: 18rem;
     padding: 0 1.5rem;
 
     > div {
-        background-color: color(neutral-lightest);
+        background-color: ui-color(white);
         padding: 2rem 9rem;
 
-        @include phone {
+        @include width-up-to($phone-max) {
             padding: 2rem 1.5rem;
         }
     }
@@ -24,21 +19,20 @@ $table-dark-row: #f6f6f6;
     }
 
     .question {
-        font-size: 1.8rem;
-        font-weight: bold;
+        @include set-font(h4);
         margin-bottom: 1rem;
         margin-top: 3rem;
     }
 
     ::placeholder {
-        color: lighten($label-4, 20%);
+        color: text-color(helper);
     }
 
     label {
         align-items: center;
-        color: $label-4;
+        color: text-color(helper);
         display: flex;
-        height: 4.2rem;
+        height: $form-element-height;
         margin: 0;
         padding-left: 2rem;
         position: relative;
@@ -46,7 +40,6 @@ $table-dark-row: #f6f6f6;
 
         input:not(.hidden) {
             display: inline;
-            // height: auto;
             margin-left: 1rem;
             position: static;
         }
@@ -60,17 +53,16 @@ $table-dark-row: #f6f6f6;
     }
 
     .radio-columns {
-        font-size: 1.6rem;
-
         [type="text"] {
             width: auto;
         }
     }
 
     .subnote {
-        font-size: 1.2rem;
+        @include set-font(helper-label);
+
+        color: text-color(helper);
         font-style: italic;
-        line-height: normal;
 
         &.wide {
             margin-bottom: 1rem;
@@ -84,40 +76,31 @@ $table-dark-row: #f6f6f6;
     }
 
     .btn {
-        background-color: $table-dark-row;
-        border: 0;
-        color: $label-4;
-        display: flex;
-        font-size: 1.6rem;
-        height: 4.7rem;
-        justify-content: center;
-        margin: 0 0 3rem;
+        @include button();
+
         text-indent: inherit;
-        text-transform: none;
-        width: 12rem;
+        width: 9em;
     }
 
     [type="submit"].btn {
-        background-color: color(orange);
-        color: color(neutral-lightest);
+        @include button(primary);
         float: none;
-        text-transform: uppercase;
+        width: 9em;
 
         &[disabled] {
-            background-color: $label-4;
+            background-color: ui-color(secondary);
         }
     }
 
     [type="text"][readonly] {
-        background-color: lighten(black, 91.8%);
-        color: lighten($label-4, 15%);
+        opacity: 0.8;
     }
 
     .helpbox {
-        background-color: lighten(color(cyan), 47%);
-        border: thin solid darken(color(cyan), 20%);
+        background-color: lighten(os-color(light-blue), 47%);
+        border: thin solid darken(os-color(light-blue), 20%);
         border-radius: 0.2rem;
-        color: darken(color(cyan), 22%);
+        color: darken(os-color(light-blue), 22%);
         line-height: 1.5;
         margin-top: 1rem;
         overflow: hidden;

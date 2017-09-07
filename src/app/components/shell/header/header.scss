@@ -63,11 +63,7 @@ $button-size: 2.8rem;
             }
 
             @at-root :not(.active)#{&} {
-                @include width-up-to($phone-max) {
-                    position: relative;
-                }
-
-                @include width-between($phone-max, $tablet-max) {
+                @include width-up-to($tablet-max) {
                     position: relative;
                 }
             }
