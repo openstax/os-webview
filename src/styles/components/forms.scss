@@ -3,7 +3,6 @@
 $enough-for-two-columns: 640px;
 
 form {
-    @include layout-container($content-max);
 
     label {
         @include set-font(helper-label);

@@ -190,7 +190,7 @@ $tablet-book-size: 16.5rem;
         @media (min-width: 650px) {
             background-color: $now-i-can-color;
             color: text-color(white);
-            display: initial;
+            display: block;
             font-size: 225%;
             font-weight: 500;
             height: 2.5em;

@@ -59,9 +59,9 @@
         .logo {
             align-items: center;
             display: flex;
+            flex-basis: 22rem;
             justify-content: center;
-            min-height: 14rem;
-            min-width: 22rem;
+            padding: 3rem 0;
 
             &.hidden {
                 display: none;

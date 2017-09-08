@@ -267,16 +267,16 @@ $special-breakpoint: 54rem;
             &::before {
                 color: os-color(gold);
                 content: open-quote;
-                font-size: 900%;
-                left: -6rem;
+                left: -3.5rem;
                 line-height: 0;
                 position: absolute;
-                top: 5rem;
+                top: 4.5rem;
+                transform: scale(9);
 
                 @include wider-than($tablet-max) {
-                    font-size: 1100%;
-                    left: -8rem;
-                    top: 6rem;
+                    left: -5rem;
+                    top: 5.5rem;
+                    transform: scale(11);
                 }
             }
 

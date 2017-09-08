@@ -66,6 +66,10 @@
         .text {
             align-items: flex-start;
             display: block;
+
+            @include width-up-to($phone-max) {
+                @include set-font(body-regular);
+            }
         }
     }
 }

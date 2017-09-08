@@ -359,7 +359,7 @@ $deep-teal: rgb(0, 114, 151);
 
             > img {
                 max-height: 8rem;
-                width: 40%;
+                max-width: 40%;
             }
         }
 
@@ -579,8 +579,9 @@ $deep-teal: rgb(0, 114, 151);
             }
 
             img {
-                height: 3.5rem;
                 margin: 1rem;
+                max-height: 4rem;
+                max-width: 4rem;
                 vertical-align: middle;
             }
         }
@@ -860,14 +861,16 @@ $deep-teal: rgb(0, 114, 151);
 
         .subhead {
             display: flex;
-            font-size: 150%;
             justify-content: center;
             padding-bottom: 0;
-            padding-top: 2rem;
+            padding-top: 1rem;
+            transform: scale(1.5);
         }
 
         .buttons-row {
             display: flex;
+            justify-content: center;
+            width: 100%;
 
             @include width-up-to($phone-max) {
                 display: block;
@@ -877,10 +880,15 @@ $deep-teal: rgb(0, 114, 151);
         .button-box {
             align-items: center;
             display: flex;
+            flex: 0 0 50%;
             flex-direction: column;
             margin: 3rem 1.5rem 0;
             max-width: 32rem;
             text-align: center;
+
+            > * {
+                max-width: 100%;
+            }
 
             .btn {
                 background-color: os-color(blue);

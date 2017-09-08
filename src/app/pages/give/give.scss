@@ -73,6 +73,7 @@
             display: flex;
             flex-flow: row wrap;
             justify-content: center;
+            padding: 0;
 
             [type="submit"] {
                 @include button(primary);
@@ -93,12 +94,14 @@
             display: flex;
             flex: 0 0 100%;
             flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: center;
         }
 
         .amount,
         .amount-input {
             height: $form-element-height;
+            margin-left: 0.5rem;
+            margin-right: 0.5rem;
 
             &.selected {
                 background-color: os-color(light-blue);
@@ -111,7 +114,7 @@
             background-color: ui-color(white);
             color: text-color(normal);
             cursor: pointer;
-            flex: 0 0 10rem;
+            flex: 1 0 9rem;
             margin-bottom: 1rem;
             padding: 0.5rem 0;
             text-align: center;
@@ -122,13 +125,14 @@
         }
 
         .amount-input {
-            flex: 0 0 21rem;
-            max-width: 21rem;
+            flex: 1 0 19.5rem;
+            max-width: 20.5rem;
             padding-left: 1.5rem;
 
             @include width-up-to($phone-max) {
                 flex-basis: 100%;
-                max-width: 100%;
+                margin-bottom: 0.5rem;
+                max-width: calc(100% - 1rem);
             }
 
             &::placeholder {
