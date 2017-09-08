@@ -1406,7 +1406,7 @@ SystemJS.config({
         "browserify-aes": "npm:browserify-aes@1.0.8",
         "create-hash": "npm:create-hash@1.1.3",
         "evp_bytestokey": "npm:evp_bytestokey@1.0.3",
-        "pbkdf2": "npm:pbkdf2@3.0.13",
+        "pbkdf2": "npm:pbkdf2@3.0.14",
         "asn1.js": "npm:asn1.js@4.9.1"
       }
     },
@@ -1552,7 +1552,7 @@ SystemJS.config({
         "inherits": "npm:inherits@2.0.3",
         "diffie-hellman": "npm:diffie-hellman@5.0.2",
         "browserify-sign": "npm:browserify-sign@4.0.4",
-        "pbkdf2": "npm:pbkdf2@3.0.13"
+        "pbkdf2": "npm:pbkdf2@3.0.14"
       }
     },
     "npm:npmlog@4.1.2": {
@@ -1578,15 +1578,6 @@ SystemJS.config({
         "resolve": "npm:resolve@1.4.0",
         "through": "npm:through@2.3.8",
         "defined": "npm:defined@1.0.0"
-      }
-    },
-    "npm:pbkdf2@3.0.13": {
-      "map": {
-        "create-hash": "npm:create-hash@1.1.3",
-        "create-hmac": "npm:create-hmac@1.1.6",
-        "ripemd160": "npm:ripemd160@2.0.1",
-        "safe-buffer": "npm:safe-buffer@5.1.1",
-        "sha.js": "npm:sha.js@2.4.8"
       }
     },
     "npm:randombytes@2.0.5": {
@@ -1760,6 +1751,15 @@ SystemJS.config({
       "map": {
         "concat-map": "npm:concat-map@0.0.1",
         "balanced-match": "npm:balanced-match@1.0.0"
+      }
+    },
+    "npm:pbkdf2@3.0.14": {
+      "map": {
+        "create-hash": "npm:create-hash@1.1.3",
+        "create-hmac": "npm:create-hmac@1.1.6",
+        "safe-buffer": "npm:safe-buffer@5.1.1",
+        "ripemd160": "npm:ripemd160@2.0.1",
+        "sha.js": "npm:sha.js@2.4.8"
       }
     }
   }

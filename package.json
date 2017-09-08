@@ -28,56 +28,56 @@
     "babel-preset-env": "^1.4.0",
     "babel-preset-es2015": "6.24.1",
     "babel-runtime": "^6.20.0",
-    "browser-sync": "2.18.11",
+    "browser-sync": "2.18.13",
     "connect-history-api-fallback": "1.3.0",
-    "del": "2.2.2",
-    "eslint": "3.19.0",
-    "find-pkg": "0.1.2",
+    "del": "3.0.0",
+    "eslint": "4.6.1",
+    "find-pkg": "1.0.0",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-autoprefixer": "4.0.0",
-    "gulp-babel": "6.1.2",
+    "gulp-babel": "7.0.0",
     "gulp-cli": "^1.2.2",
     "gulp-clip-empty-files": "0.1.2",
     "gulp-cssnano": "2.1.2",
     "gulp-env": "0.4.0",
-    "gulp-eslint": "3.0.1",
+    "gulp-eslint": "4.0.0",
     "gulp-htmlmin": "3.0.0",
     "gulp-humans": "2.0.2",
     "gulp-if": "2.0.2",
-    "gulp-imagemin": "3.2.0",
-    "gulp-jest": "^1.0.0",
+    "gulp-imagemin": "3.3.0",
+    "gulp-jest": "^2.0.0",
     "gulp-load-plugins": "1.5.0",
     "gulp-real-favicon": "0.2.2",
     "gulp-rename": "1.2.2",
-    "gulp-replace": "0.5.4",
+    "gulp-replace": "0.6.1",
     "gulp-sass": "3.1.0",
-    "gulp-scss-lint": "0.4.0",
-    "gulp-sourcemaps": "2.6.0",
+    "gulp-scss-lint": "0.5.0",
+    "gulp-sourcemaps": "2.6.1",
     "gulp-superviewsjs": "github:dak/gulp-superviewsjs",
-    "gulp-uglify": "2.1.2",
+    "gulp-uglify": "3.0.0",
     "gulp-util": "3.0.8",
     "gulp-wrap": "0.13.0",
     "isomorphic-fetch": "^2.2.1",
-    "jest": "20.0.3",
-    "jest-cli": "20.0.3",
-    "jsdom": "10.1.0",
+    "jest": "21.0.2",
+    "jest-cli": "21.0.2",
+    "jsdom": "11.2.0",
     "jsdom-global": "3.0.2",
     "jspm": "0.17.0-beta.23",
     "node-localstorage": "^1.3.0",
     "pattern-library": "github:openstax/pattern-library",
     "recordo": "0.0.6",
-    "regenerator-runtime": "^0.10.5",
-    "require-dir": "0.3.1",
-    "sw-precache": "5.1.1",
-    "systemjs-builder": "0.16.4",
+    "regenerator-runtime": "^0.11.0",
+    "require-dir": "0.3.2",
+    "sw-precache": "5.2.0",
+    "systemjs-builder": "0.16.10",
     "systemjs-jest": "^1.0.0",
-    "yargs": "8.0.1"
+    "yargs": "8.0.2"
   },
   "jest": {
     "moduleNameMapper": {
       "^~/(.*)": "<rootDir>/dist/app/$1",
       "superb": "<rootDir>/jspm_packages/npm/superb.js@0.2.16/dist/superb.js",
-      "recordo": "<rootDir>/jspm_packages/npm/recordo.js@0.0.6/dist/recordo.js",
+      "recordo": "<rootDir>/jspm_packages/npm/recordo@0.0.6/dist/recordo.js",
       "settings": "<rootDir>/dist/settings",
       "fetch": "<rootDir>/jspm_packages/npm/whatwg-fetch@1.1.1/fetch.js"
     },
@@ -87,6 +87,11 @@
     ],
     "setupFiles": [
       "<rootDir>/test/setupFile.js"
+    ],
+    "modulePathIgnorePatterns": [
+        "dev/jspm_packages",
+        "dist/jspm_packages",
+        "package.json"
     ]
   },
   "jspm": {
@@ -111,7 +116,7 @@
       "element-dataset": "npm:element-dataset@^2.2.5",
       "jest": "npm:jest@^19.0.2",
       "punycode": "github:jspm/nodelibs-punycode@^0.2.0-alpha",
-      "source-map": "npm:source-map@0.2",
+      "source-map": "npm:source-map@~0.5.6",
       "uglify-js": "npm:uglify-js@^2.6",
       "uglify-to-browserify": "npm:uglify-to-browserify@1.0"
     },
@@ -187,7 +192,7 @@
           "process": "@empty"
         }
       },
-      "npm:pbkdf2@3.0.13": {
+      "npm:pbkdf2@3.0.14": {
         "main": "browser.js"
       },
       "npm:safe-buffer@5.1.1": {
