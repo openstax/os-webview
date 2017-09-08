@@ -41,22 +41,22 @@ export default class Select extends Controller {
             // Scroll selection to next element beginning with key
             const listTop = listEl.getBoundingClientRect().top;
             const target = Array.from(items)
-            .filter((el) => el.textContent.toLowerCase().substr(0, 1) === k)
-            .sort((a, b) => {
-                const aDiff = a.getBoundingClientRect().top - listTop;
-                const bDiff = b.getBoundingClientRect().top - listTop;
-                const sTop = listEl.scrollTop;
+                .filter((el) => el.textContent.toLowerCase().substr(0, 1) === k)
+                .sort((a, b) => {
+                    const aDiff = a.getBoundingClientRect().top - listTop;
+                    const bDiff = b.getBoundingClientRect().top - listTop;
+                    const sTop = listEl.scrollTop;
 
-                if (aDiff <= 0 && bDiff <= 0 || aDiff > 0 && bDiff > 0) {
-                    return aDiff - bDiff;
-                }
-                return bDiff - aDiff;
-            });
+                    if (aDiff <= 0 && bDiff <= 0 || aDiff > 0 && bDiff > 0) {
+                        return aDiff - bDiff;
+                    }
+                    return bDiff - aDiff;
+                });
 
             if (e.key === 'Enter') {
                 // Pick the topmost element
                 const notScrolledPast = Array.from(items)
-                .filter((el) => el.getBoundingClientRect().top - listTop >= 0);
+                    .filter((el) => el.getBoundingClientRect().top - listTop >= 0);
 
                 if (notScrolledPast.length) {
                     notScrolledPast[0].click();

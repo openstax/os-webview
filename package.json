@@ -159,7 +159,7 @@
           "_stream_transform": "readable-stream/transform"
         }
       },
-      "npm:debug@2.6.7": {
+      "npm:debug@2.6.8": {
         "main": "browser.js",
         "jspmNodeConversion": false,
         "format": "cjs",
@@ -176,9 +176,6 @@
           "util": "@node/util"
         }
       },
-      "npm:esprima@2.7.3": {
-        "jspmNodeConversion": false
-      },
       "npm:inherits@2.0.3": {
         "ignore": [
           "test.js"
@@ -190,10 +187,10 @@
           "process": "@empty"
         }
       },
-      "npm:pbkdf2@3.0.12": {
+      "npm:pbkdf2@3.0.13": {
         "main": "browser.js"
       },
-      "npm:safe-buffer@5.0.1": {
+      "npm:safe-buffer@5.1.1": {
         "browser": "index.js"
       }
     }

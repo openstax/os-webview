@@ -8,10 +8,10 @@ import {on} from '~/helpers/controller/decorators';
 import {description as template} from './interest.html';
 
 const headerInfoPromise = fetch(`${settings.apiOrigin}/api/pages/interest-form`)
-.then((r) => r.json());
+    .then((r) => r.json());
 
 const rolesPromise = fetch(`${settings.apiOrigin}/api/snippets/roles`)
-.then((r) => r.json());
+    .then((r) => r.json());
 
 export default class InterestForm extends Controller {
 

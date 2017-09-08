@@ -70,7 +70,7 @@ export default class TeacherForm extends SalesforceForm {
                 name: '00NU00000055spw',
                 label: 'How are you using this book?',
                 options: salesforce.adoption(['adopted', 'recommended'])
-                .map((opt) => ({label: opt.text, value: opt.value})),
+                    .map((opt) => ({label: opt.text, value: opt.value})),
                 validationMessage
             }),
             partnerContact: new FormSelect({
@@ -137,8 +137,8 @@ export default class TeacherForm extends SalesforceForm {
         partnerPromise.then((partners) => {
             const partnerComponent = this.inputComponents.find((c) => c.id === 'partnerResources');
             const options = partners.map((p) => p.title)
-            .sort((a, b) => a.localeCompare(b))
-            .map((title) => ({label: title, value: title}));
+                .sort((a, b) => a.localeCompare(b))
+                .map((title) => ({label: title, value: title}));
 
             options.push({label: 'Other (specify below)', value: 'other-partner'});
             partnerComponent.component.setOptions(options);

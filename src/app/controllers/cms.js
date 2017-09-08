@@ -33,10 +33,10 @@ class CMSPageController extends Controller {
 
         if (typeof data.image === 'number') {
             promises.push(fetch(`${settings.apiOrigin}/api/images/${data.image}`)
-            .then((response) => response.json())
-            .then((json) => {
-                data.image = json.file;
-            }));
+                .then((response) => response.json())
+                .then((json) => {
+                    data.image = json.file;
+                }));
         }
 
         for (const prop in data) {

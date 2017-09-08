@@ -33,7 +33,7 @@ export default class Accessibility extends CMSPageController {
 
         bookPromise.then((data) => {
             const options = data.map((obj) => ({label: obj.title, value: obj.meta.slug}))
-            .sort((a, b) => a.label.localeCompare(b.label));
+                .sort((a, b) => a.label.localeCompare(b.label));
 
             this.model.steps.items[0].selector.setOptions(options);
             region.attach(this.model.steps.items[0].selector);

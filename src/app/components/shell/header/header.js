@@ -196,7 +196,7 @@ class Header extends Controller {
                 array[i].classList.remove(className);
             } else {
                 const names = array[i].className.split(' ')
-                .filter((name) => name !== className);
+                    .filter((name) => name !== className);
 
                 array[i].className = names.join('');
             }

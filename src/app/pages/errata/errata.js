@@ -65,7 +65,7 @@ export default class Errata extends Controller {
             this.selectedFilter = selectedItem;
             history.replaceState('', '',
                 selectedItem ? `#${selectedItem}` :
-                window.location.href.replace(location.hash, '')
+                    window.location.href.replace(location.hash, '')
             );
             this.update();
         });
@@ -287,7 +287,7 @@ export default class Errata extends Controller {
 
         fetch(url).then((r) => r.json()).then((bookInfo) => {
             const notes = bookInfo.book_faculty_resources
-            .find((entry) => entry.resource_heading === 'Errata Release Notes');
+                .find((entry) => entry.resource_heading === 'Errata Release Notes');
 
             if (notes) {
                 this.model.releaseNotes = notes.link_document_url;

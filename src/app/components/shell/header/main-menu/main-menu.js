@@ -78,7 +78,7 @@ export default class MainMenu extends Controller {
         /* eslint complexity: 0 */
         const target = event.target;
         const menu = target.hasAttribute('aria-haspopup') ?
-         target.nextSibling.children : target.parentNode.parentNode.children;
+            target.nextSibling.children : target.parentNode.parentNode.children;
         const lastIndex = menu.length - 1;
         const newTarget = () => {
             if (this.selectedIndex < 0 && !target.hasAttribute('aria-haspopup')) {

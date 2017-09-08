@@ -62,12 +62,12 @@ export default class Blog extends CMSPageController {
     onDataLoaded() {
         if (!this.articles) {
             this.articleSlugs = Object.keys(this.pageData.articles)
-            .sort((a, b) => {
-                const articleA = this.pageData.articles[a];
-                const articleB = this.pageData.articles[b];
+                .sort((a, b) => {
+                    const articleA = this.pageData.articles[a];
+                    const articleB = this.pageData.articles[b];
 
-                return articleA.date < articleB.date ? 1 : -1;
-            });
+                    return articleA.date < articleB.date ? 1 : -1;
+                });
 
             this.articles = {};
             for (const rawSlug of this.articleSlugs) {

@@ -12,20 +12,20 @@ class SalesforceForm extends CMSPageController {
         const seenTitles = {};
 
         this.salesforceTitles = Object.keys(this.pageData.books)
-        .map((key) => this.pageData.books[key])
-        .filter((book) => {
-            const abbrev = book.salesforce_abbreviation;
-            const seen = abbrev in seenTitles;
+            .map((key) => this.pageData.books[key])
+            .filter((book) => {
+                const abbrev = book.salesforce_abbreviation;
+                const seen = abbrev in seenTitles;
 
-            seenTitles[abbrev] = true;
-            return abbrev && !seen;
-        })
-        .map((book) => ({
-            text: book.salesforce_name,
-            value: book.salesforce_abbreviation,
-            comingSoon: book.coming_soon
-        }))
-        .sort((a, b) => a.text < b.text ? -1 : 1);
+                seenTitles[abbrev] = true;
+                return abbrev && !seen;
+            })
+            .map((book) => ({
+                text: book.salesforce_name,
+                value: book.salesforce_abbreviation,
+                comingSoon: book.coming_soon
+            }))
+            .sort((a, b) => a.text < b.text ? -1 : 1);
     }
 
     @on('focusout input')
