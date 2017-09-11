@@ -124,7 +124,7 @@ export default class Errata extends Controller {
             ],
             sourceTypes: [
                 'Textbook', 'iBooks version', 'Instructor solution manual',
-                'Student solution manual', 'OpenStax Tutor', 'Other'
+                'Student solution manual', 'Other'
             ],
             subnotes: {'Textbook': 'includes print, PDF, and web view'},
             summaryMetaData: [
@@ -210,9 +210,12 @@ export default class Errata extends Controller {
             if (response.accounts_id) {
                 this.model.title = () => `Suggest a Correction for ${this.model.selectedTitle}`;
                 bookPromise.then((books) => {
-                    if (!books.find((info) => info.title === title)) {
+                    const entry = books.find((info) => info.title === title);
+
+                    if (!entry) {
                         router.navigate('/404');
                     }
+
                     Object.assign(this.model, {
                         mode: 'form',
                         selectedTitle: title,
@@ -225,6 +228,12 @@ export default class Errata extends Controller {
                     this.regions.form.attach(form);
                     this.update();
                     shell.hideLoader();
+
+                    const slug = entry.meta.slug;
+
+                    this.fetchReleaseNotes(slug).then(() => {
+                        form.update();
+                    });
                 });
             } else {
                 window.location = userModel.loginLink();
@@ -285,10 +294,15 @@ export default class Errata extends Controller {
     fetchReleaseNotes(slug) {
         const url = `${settings.apiOrigin}/api/books/${slug}`;
 
-        fetch(url).then((r) => r.json()).then((bookInfo) => {
+        return fetch(url).then((r) => r.json()).then((bookInfo) => {
             const notes = bookInfo.book_faculty_resources
                 .find((entry) => entry.resource_heading === 'Errata Release Notes');
 
+            if (bookInfo.tutor_marketing_book) {
+                if (!this.model.sourceTypes.includes('OpenStax Tutor')) {
+                    this.model.sourceTypes.splice(-1, 0, 'OpenStax Tutor');
+                }
+            };
             if (notes) {
                 this.model.releaseNotes = notes.link_document_url;
                 this.update();
