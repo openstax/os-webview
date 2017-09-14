@@ -93,11 +93,11 @@ export default class Confirmation extends Controller {
             const queryDict = $.parseSearchString(window.location.search);
 
             Detail.detailPromise(queryDict.id).then((detail) => {
-                this.model.belowHeader.buttons.push({
+                this.model.belowHeader.buttons = [{
                     text: `submit ${detail.bookTitle} errata`,
                     colorScheme: 'white-on-blue',
                     url: `/errata/form?book=${encodeURIComponent(detail.bookTitle)}`
-                });
+                }];
                 this.update();
                 Errata.setDisplayStatus(detail);
                 this.regions.detail.attach(new Detail(detail));
