@@ -225,7 +225,7 @@ class Analytics {
                 return;
             }
 
-            if (e.target.action.indexOf('https://www.salesforce.com/') === 0) {
+            if (e.target.action.indexOf('https://webto.salesforce.com/') === 0) {
                 const formData = new FormData(e.target);
 
                 this.sendEvent({

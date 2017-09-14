@@ -33,7 +33,7 @@ function adoption(options) {
 const salesforce = {
     adoption,
     adoptionName,
-    salesforceHome: settings.testingEnvironment ? 'test.salesforce.com' : 'www.salesforce.com'
+    salesforceHome: settings.testingEnvironment ? 'test.salesforce.com' : 'webto.salesforce.com'
 };
 
 export default salesforce;
