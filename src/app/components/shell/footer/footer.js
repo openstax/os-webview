@@ -1,8 +1,9 @@
-import {Controller} from 'superb';
+import CMSPageController from '~/controllers/cms';
+import $ from '~/helpers/$';
 import settings from 'settings';
 import {description as template} from './footer.html';
 
-class Footer extends Controller {
+class Footer extends CMSPageController {
 
     init() {
         this.template = template;
@@ -12,6 +13,7 @@ class Footer extends Controller {
             classes: ['page-footer']
         };
         this.model = {};
+        this.slug = 'footer';
         /* eslint arrow-parens: 0 */
         (async () => {
             try {
@@ -26,6 +28,25 @@ class Footer extends Controller {
                 console.log(e);
             }
         })();
+    }
+
+    onDataLoaded() {
+        const pd = this.pageData;
+
+        Object.assign(this.model, {
+            apStatement: pd.ap_statement,
+            copyright: pd.copyright,
+            supporters: pd.supporters,
+            twitterLink: pd.twitter_link,
+            facebookLink: pd.facebook_link,
+            linkedinLink: pd.linkedin_link
+        });
+        this.update();
+        this.onLoaded();
+    }
+
+    onLoaded() {
+        $.insertHtml(this.el, this.model);
     }
 
 }
