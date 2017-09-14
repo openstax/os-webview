@@ -113,6 +113,18 @@ class AppRouter extends Router {
 
     static linkHandler(e) {
         const el = linkHelper.validUrlClick(e);
+        const handleExternalLink = (href) => {
+            if (el.dataset.local === 'true') {
+                document.location.href = href;
+            } else {
+                analytics.record(href);
+                const newWindow = window.open(href, '_blank');
+
+                if (newWindow === null) {
+                    document.location.href = href;
+                }
+            }
+        };
 
         if (!el) {
             return;
@@ -123,12 +135,7 @@ class AppRouter extends Router {
         e.preventDefault();
 
         if (linkHelper.isExternal(href) || el.target) {
-            if (el.dataset.local === 'true') {
-                document.location.href = href;
-            } else {
-                analytics.record(href);
-                window.open(href, '_blank');
-            }
+            handleExternalLink(href);
         } else {
             this.navigate(href);
         }
