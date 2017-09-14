@@ -1,17 +1,16 @@
-@import 'variables';
-@import 'mixins';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 .support-page {
     .hero {
-        background-color: color(cyan);
-        color: color(neutral-lightest);
+        background-color: os-color(light-blue);
+        color: text-color(white);
 
         h1 {
             margin-bottom: 2.5rem;
         }
 
         a {
-            color: color(blue);
+            color: os-color(blue);
         }
     }
 
@@ -20,7 +19,6 @@
     }
 
     .main {
-        background-color: lighten(color(neutral-lighter), 8%);
         padding: 0;
     }
 
@@ -30,27 +28,17 @@
         justify-content: space-between;
 
         .resource-box {
-            background-color: color(neutral-lightest);
+            background-color: ui-color(white);
             display: flex;
-            flex: 1 1 100%;
+            flex: 1 0 20rem;
             flex-direction: column;
             justify-content: space-between;
             margin: 1.5rem;
-            min-width: 25rem;
             padding: 1.5rem;
 
-            @media (min-width: 600px) {
-                flex-basis: calc(50% - 3rem);
-            }
-
-            @media (min-width: 1150px) {
-                flex-basis: calc(25% - 3rem);
-            }
-
             .name {
-                color: color(green);
-                font-size: 1.8rem;
-                font-weight: 500;
+                @include set-font(h4);
+                color: os-color(green);
             }
 
             .description {

@@ -1,21 +1,19 @@
-@import 'variables';
-@import 'mixins';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 .faq-page {
-    background-color: lighten(color(neutral-lighter), 8%);
     padding-bottom: 4rem;
 
     .hero {
-        background-color: color(gray);
-        color: color(neutral-lightest);
+        background-color: os-color(gray);
+        color: text-color(white);
 
         h1 {
-            color: color(orange);
+            color: os-color(orange);
         }
     }
 
     .desktop-row {
-        @include desktop {
+        @include wider-than($tablet-max) {
             flex-direction: row;
             justify-content: space-between;
         }
@@ -25,9 +23,9 @@
         margin-bottom: 1em;
 
         .question {
-            color: color(blue);
+            @include set-font(h4);
+            color: os-color(blue);
             cursor: pointer;
-            font-weight: bold;
             padding-left: 0.9em;
             text-indent: -0.9em;
 

@@ -1,8 +1,5 @@
-@import 'variables';
-@import 'mixins';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
-$intro-text-color: color(tutor-gray);
-$block-bgcolor: #f6f6f6;
 $narrow-tablet: 700px;
 
 .calculator {
@@ -18,10 +15,9 @@ $narrow-tablet: 700px;
     }
 
     .intro-paragraph {
-        color: $intro-text-color;
+        @include set-font(h3);
+
         display: flex;
-        font-size: 2.1rem;
-        font-weight: bold;
         justify-content: center;
         margin-bottom: 3rem;
         max-width: 100%;
@@ -34,7 +30,7 @@ $narrow-tablet: 700px;
         margin-bottom: 3rem;
         width: 100%;
 
-        @media (max-width: $narrow-tablet) {
+        @include width-up-to($narrow-tablet) {
             align-items: center;
             flex-direction: column;
             justify-content: flex-start;
@@ -47,7 +43,7 @@ $narrow-tablet: 700px;
             max-width: 39rem;
             min-height: 37rem;
 
-            @media (max-width: $narrow-tablet) {
+            @include width-up-to($narrow-tablet) {
                 width: 100%;
             }
 
@@ -56,25 +52,24 @@ $narrow-tablet: 700px;
 
     .btn.cta {
         border: 0;
-        font-size: 1.6rem;
         margin-bottom: 6rem;
         padding: 1.5rem 3rem;
     }
 
     .block {
-        background-color: $block-bgcolor;
-        color: color(blue);
+        background-color: ui-color(form-bg);
+        color: os-color(blue);
         font-weight: bold;
         position: relative;
         vertical-align: top;
 
         &.active {
-            background-color: color(neutral-lightest);
-            box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(color(gray), 0.1);
+            background-color: ui-color(white);
+            box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(os-color(gray), 0.1);
             z-index: 1;
 
             .active-indicator {
-                border-top-color: $block-bgcolor;
+                border-top-color: ui-color(form-border);
             }
         }
 
@@ -89,7 +84,8 @@ $narrow-tablet: 700px;
             position: relative;
 
             > span {
-                font-size: 2rem;
+                @include set-font(h3);
+
                 position: absolute;
                 top: 20%;
 
@@ -104,7 +100,7 @@ $narrow-tablet: 700px;
             border: 0;
             color: inherit;
             font-family: inherit;
-            font-size: 9.5rem;
+            font-size: 560%;
             font-weight: inherit;
             outline: none;
             padding: 0;
@@ -130,7 +126,7 @@ $narrow-tablet: 700px;
         }
 
         .instructions {
-            color: $intro-text-color;
+            color: text-color(helper);
             font-weight: normal;
             max-width: 100%;
             text-align: center;
@@ -138,7 +134,7 @@ $narrow-tablet: 700px;
 
         .active-indicator {
             align-items: center;
-            border-top: thin solid color(neutral-lightest);
+            border-top: thin solid ui-color(white);
             bottom: 0;
             display: flex;
             height: 9rem;
@@ -159,7 +155,7 @@ $narrow-tablet: 700px;
         transition: opacity 0.3s ease-in-out;
         width: 100%;
 
-        @include phone {
+        @include width-up-to($phone-max) {
             margin-bottom: 6rem;
         }
 
@@ -177,7 +173,7 @@ $narrow-tablet: 700px;
             flex-direction: column;
             justify-content: center;
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 flex-basis: 50rem;
             }
 
@@ -188,13 +184,13 @@ $narrow-tablet: 700px;
                 justify-content: flex-start;
                 line-height: 1;
 
-                @include phone {
+                @include width-up-to($phone-max) {
                     transform: scale(0.7);
                 }
             }
 
             .giant {
-                font-size: 5rem;
+                @include set-font(h1);
                 width: auto;
             }
 
@@ -205,8 +201,8 @@ $narrow-tablet: 700px;
 
         .share {
             align-items: center;
-            background-color: color(blue);
-            color: color(neutral-lightest);
+            background-color: os-color(blue);
+            color: ui-color(white);
             display: flex;
             flex-direction: column;
             padding: 4rem;

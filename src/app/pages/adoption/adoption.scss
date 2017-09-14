@@ -1,9 +1,9 @@
-@import 'variables';
-@import 'mixins';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 .adoption-page {
 
     .subhead {
+        @include layout-container($text-content-max);
         padding-bottom: 2rem;
     }
 
@@ -29,6 +29,7 @@
     }
 
     .cta {
+        @include layout-container($text-content-max);
         display: flex;
         flex-direction: row;
         justify-content: space-between;

@@ -1,14 +1,7 @@
-@import 'variables';
-@import 'mixins';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 // Just for math book
 $tablet-book-size: 16.5rem;
-
-@mixin tablet {
-    @media (min-width: #{breakpoints(phone) + 1}) {
-        @content;
-    }
-}
 
 @mixin desktop-plus {
     @media (min-width: 1025px) {
@@ -34,12 +27,12 @@ $tablet-book-size: 16.5rem;
     transition: opacity 0.2s;
     width: 100%;
 
-    @include tablet {
+    @include wider-than($phone-max) {
         background-color: transparent;
         height: 60rem;
     }
 
-    @include desktop {
+    @include wider-than($tablet-max) {
         height: 65rem;
     }
 
@@ -47,7 +40,7 @@ $tablet-book-size: 16.5rem;
         display: none;
         transform: translate3d(0, 0, 0);
 
-        @include tablet {
+        @include wider-than($phone-max) {
             background-image: url("/images/home/subjects/#{$subject}/background.jpg");
             background-position: center top;
             background-size: cover;
@@ -78,7 +71,7 @@ $tablet-book-size: 16.5rem;
         padding: 0 1.5rem;
         position: relative;
 
-        @include tablet {
+        @include wider-than($phone-max) {
             flex-direction: row;
         }
     }
@@ -166,7 +159,7 @@ $tablet-book-size: 16.5rem;
         height: 60%; // Bounds height; use width in individual pages to control size
         z-index: 3;
 
-        @include tablet {
+        @include wider-than($phone-max) {
             bottom: 0;
         }
 
@@ -182,7 +175,7 @@ $tablet-book-size: 16.5rem;
         position: absolute;
         width: calc(100% - 3rem);
 
-        @include tablet {
+        @include wider-than($phone-max) {
             width: auto;
         }
 
@@ -192,23 +185,22 @@ $tablet-book-size: 16.5rem;
     }
 
     .now-i-can {
-        background-color: $now-i-can-color;
-        color: color(neutral-lightest);
         display: none;
-        font-size: 3rem;
-        position: relative;
-        width: $now-i-can-width;
 
         @media (min-width: 650px) {
-            display: initial;
-            font-size: 3.6rem;
+            background-color: $now-i-can-color;
+            color: text-color(white);
+            display: block;
+            font-size: 225%;
             font-weight: 500;
             height: 2.5em;
             line-height: 2.5;
             margin-bottom: 1.5rem;
             padding: 0;
+            position: relative;
             text-align: center;
             text-transform: none;
+            width: $now-i-can-width;
             z-index: 3;
         }
 
@@ -217,7 +209,7 @@ $tablet-book-size: 16.5rem;
         }
 
         &::after {
-            border-bottom: 0.1rem solid color(neutral-lightest);
+            border-bottom: 0.1rem solid ui-color(white);
             content: '';
             position: absolute;
             right: 1.5rem;
@@ -263,8 +255,7 @@ $tablet-book-size: 16.5rem;
         }
 
         .btn {
-            color: color(neutral-lightest);
-            font-size: 1.6rem;
+            color: text-color(white);
             height: 6rem;
             line-height: 6rem;
             padding: 0 1.5rem;
@@ -287,13 +278,13 @@ $tablet-book-size: 16.5rem;
     }
 
     .subject-links {
-        @include tablet {
+        @include wider-than($phone-max) {
             width: 45rem;
         }
     }
 
     .explore-subject {
-        @include tablet {
+        @include wider-than($phone-max) {
             background-color: $subject-button-color;
         }
 
@@ -303,7 +294,7 @@ $tablet-book-size: 16.5rem;
     }
 
     .explore-all {
-        @include tablet {
+        @include wider-than($phone-max) {
             background-color: $all-subject-button-color;
         }
 
@@ -314,10 +305,10 @@ $tablet-book-size: 16.5rem;
 }
 
 .home-page {
-    background-color: lighten(color(neutral-lighter), 8%);
+    // background-color: lighten(color(neutral-lighter), 8%);
     flex: 1 0 auto;
 
-    @include desktop {
+    @include wider-than($tablet-max) {
         margin-top: -6rem;
     }
 
@@ -325,11 +316,11 @@ $tablet-book-size: 16.5rem;
         height: 45rem;
         position: relative;
 
-        @include tablet {
+        @include wider-than($phone-max) {
             height: 60rem;
         }
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             height: 65rem;
         }
 
@@ -343,13 +334,13 @@ $tablet-book-size: 16.5rem;
         .banner.math {
             @include banner(
                 math,
-                color(blue),
-                rgba(color(cyan), 0.85),
+                os-color(blue),
+                rgba(os-color(light-blue), 0.85),
                 61rem,
                 39rem,
-                rgba(color(blue), 0.3),
-                color(orange),
-                color(turquoise)
+                rgba(os-color(blue), 0.3),
+                os-color(orange),
+                os-color(deep-green)
             );
 
             background-color: transparent;
@@ -372,7 +363,7 @@ $tablet-book-size: 16.5rem;
                 will-change: transform;
                 z-index: 1;
 
-                @include tablet {
+                @include wider-than($phone-max) {
                     height: 54rem;
                 }
               }
@@ -380,7 +371,7 @@ $tablet-book-size: 16.5rem;
             .book {
                 display: none;
 
-                @include tablet {
+                @include wider-than($phone-max) {
                     background-image: url('/images/subjects/algebra_trigonometry.svg');
                     background-position: top left;
                     display: block;
@@ -390,7 +381,7 @@ $tablet-book-size: 16.5rem;
                     width: $tablet-book-size;
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     height: 30rem;
                     left: 31.5rem;
                     top: 10rem;
@@ -408,7 +399,7 @@ $tablet-book-size: 16.5rem;
                     position: absolute;
                     width: $tablet-book-size;
 
-                    @include desktop {
+                    @include wider-than($tablet-max) {
                         height: 30rem;
                         left: -30rem;
                         width: 30rem;
@@ -419,7 +410,7 @@ $tablet-book-size: 16.5rem;
             .second-book {
                 display: none;
 
-                @include tablet {
+                @include wider-than($phone-max) {
                     background-image: url('/images/subjects/precalculus.svg');
                     background-position: top left;
                     display: block;
@@ -429,7 +420,7 @@ $tablet-book-size: 16.5rem;
                     width: $tablet-book-size;
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     height: 30rem;
                     left: 61.5rem;
                     top: 10rem;
@@ -447,7 +438,7 @@ $tablet-book-size: 16.5rem;
                     position: absolute;
                     width: $tablet-book-size;
 
-                    @include desktop {
+                    @include wider-than($tablet-max) {
                         height: 30rem;
                         left: 30rem;
                         width: 30rem;
@@ -461,12 +452,12 @@ $tablet-book-size: 16.5rem;
                 right: 2rem;
                 width: 23rem;
 
-                @include tablet {
+                @include wider-than($phone-max) {
                     bottom: 0;
                     width: 45rem;
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     right: 15rem;
                 }
             }
@@ -474,7 +465,7 @@ $tablet-book-size: 16.5rem;
             .align-edge {
                 bottom: 1.5rem;
 
-                @include tablet {
+                @include wider-than($phone-max) {
                     bottom: 6rem;
                 }
             }
@@ -483,13 +474,13 @@ $tablet-book-size: 16.5rem;
         .banner.astronomy {
             @include banner(
                 astronomy,
-                color(blue),
-                rgba(color(cyan), 0.85),
+                os-color(blue),
+                rgba(os-color(light-blue), 0.85),
                 61rem,
                 39rem,
-                rgba(color(blue), 0.3),
-                color(gold),
-                color(blue)
+                rgba(os-color(blue), 0.3),
+                os-color(gold),
+                os-color(blue)
             );
 
             .chart {
@@ -518,7 +509,7 @@ $tablet-book-size: 16.5rem;
             }
 
             .square-3 {
-                @include tablet {
+                @include wider-than($phone-max) {
                     bottom: 0;
                     display: block;
                     height: 20rem;
@@ -526,7 +517,7 @@ $tablet-book-size: 16.5rem;
                     width: 45rem;
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     height: 17rem;
                     left: 30%;
                     top: 30rem;
@@ -535,7 +526,7 @@ $tablet-book-size: 16.5rem;
             }
 
             .square-4 {
-                @include tablet {
+                @include wider-than($phone-max) {
                     bottom: 15rem;
                     display: block;
                     height: 26rem;
@@ -543,7 +534,7 @@ $tablet-book-size: 16.5rem;
                     width: 26rem;
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     height: 43rem;
                     left: 64rem;
                     top: 19rem;
@@ -552,7 +543,7 @@ $tablet-book-size: 16.5rem;
             }
 
             .book {
-                @include tablet {
+                @include wider-than($phone-max) {
                     height: 28rem;
                     left: calc(52.3% - 15.7rem);
                     top: 10vw;
@@ -563,7 +554,7 @@ $tablet-book-size: 16.5rem;
                     right: auto;
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     left: 37%;
                     top: 10rem;
                 }
@@ -573,14 +564,14 @@ $tablet-book-size: 16.5rem;
                 right: 1.5rem;
                 width: calc(35% + 15rem);
 
-                @include tablet {
+                @include wider-than($phone-max) {
                     bottom: -0.1rem;
                     height: calc(20vw + 35.5rem);
                     left: calc(65% - 28.7rem);
                     width: calc(20vw + 35.5rem);
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     height: 56rem;
                     left: 36%;
                     width: 56rem;
@@ -588,12 +579,12 @@ $tablet-book-size: 16.5rem;
             }
 
             .align-edge {
-                @include tablet {
+                @include wider-than($phone-max) {
                     bottom: 5.5rem;
                     left: 1.5rem;
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     left: 9rem;
                 }
             }
@@ -602,13 +593,13 @@ $tablet-book-size: 16.5rem;
         .banner.biology {
             @include banner(
                 biology,
-                color(green),
-                rgba(color(gray), 0.85),
+                os-color(green),
+                rgba(os-color(gray), 0.85),
                 50rem,
                 29rem,
-                rgba(color(green), 0.22),
-                color(gold),
-                color(green)
+                rgba(os-color(green), 0.22),
+                os-color(gold),
+                os-color(green)
             );
 
             .diagram {
@@ -642,7 +633,7 @@ $tablet-book-size: 16.5rem;
             }
 
             .square-3 {
-                @include tablet {
+                @include wider-than($phone-max) {
                     bottom: 0;
                     display: block;
                     height: 34rem;
@@ -650,7 +641,7 @@ $tablet-book-size: 16.5rem;
                     width: 45rem;
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     height: 40%;
                     left: 10rem;
                     top: 30%;
@@ -659,7 +650,7 @@ $tablet-book-size: 16.5rem;
             }
 
             .square-4 {
-                @include tablet {
+                @include wider-than($phone-max) {
                     bottom: 15rem;
                     display: block;
                     height: 26rem;
@@ -667,7 +658,7 @@ $tablet-book-size: 16.5rem;
                     width: 26rem;
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     height: 33rem;
                     left: 64rem;
                     top: 20%;
@@ -681,7 +672,7 @@ $tablet-book-size: 16.5rem;
                 left: -2rem;
                 top: -1rem;
 
-                @include tablet {
+                @include wider-than($phone-max) {
                     background-position: center right;
                     height: 28rem;
                     left: 40%;
@@ -689,7 +680,7 @@ $tablet-book-size: 16.5rem;
                     width: 28rem;
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     left: 37%;
                     top: 9rem;
                 }
@@ -700,13 +691,13 @@ $tablet-book-size: 16.5rem;
                 right: calc(20% - 4rem);
                 width: calc(30% + 13rem);
 
-                @include tablet {
+                @include wider-than($phone-max) {
                     height: calc(20vw + 33.3rem);
                     left: -10%;
                     width: 45.4rem;
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     height: 53rem;
                     left: 10%;
                     width: 45.4rem;
@@ -714,12 +705,12 @@ $tablet-book-size: 16.5rem;
             }
 
             .align-edge {
-                @include tablet {
+                @include wider-than($phone-max) {
                     bottom: 5.5rem;
                     right: 5%;
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     right: 15%;
                 }
             }
@@ -728,17 +719,17 @@ $tablet-book-size: 16.5rem;
         .banner.chemistry {
             @include banner(
                 chemistry,
-                color(orange),
-                rgba(color(gray), 0.85),
+                os-color(orange),
+                rgba(os-color(gray), 0.85),
                 41rem,
                 19rem,
-                rgba(color(orange), 0.20),
-                color(orange),
-                color(turquoise)
+                rgba(os-color(orange), 0.20),
+                os-color(orange),
+                os-color(medium-blue)
             );
 
             .book {
-                @include tablet {
+                @include wider-than($phone-max) {
                     background-position: bottom left;
                     height: 30rem;
                     left: auto;
@@ -747,7 +738,7 @@ $tablet-book-size: 16.5rem;
                     width: 30rem;
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     right: 45%;
                     top: 7.1rem;
                 }
@@ -761,14 +752,14 @@ $tablet-book-size: 16.5rem;
                 width: 22rem;
                 z-index: 2;
 
-                @include tablet {
+                @include wider-than($phone-max) {
                     bottom: 0;
                     height: 53rem;
                     right: calc(19% - 6.6rem);
                     width: calc(20% + 24rem);
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     right: calc(43% - 30rem);
                     width: 44.4rem;
                 }
@@ -794,11 +785,11 @@ $tablet-book-size: 16.5rem;
                 left: 10%;
                 width: 45rem;
 
-                @include tablet {
+                @include wider-than($phone-max) {
                     display: block;
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     bottom: auto;
                     height: 36rem;
                     top: 30%;
@@ -812,11 +803,11 @@ $tablet-book-size: 16.5rem;
                 right: 0;
                 width: 26rem;
 
-                @include tablet {
+                @include wider-than($phone-max) {
                     display: block;
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     bottom: 4rem;
                     height: 35rem;
                     right: 5rem;
@@ -837,12 +828,12 @@ $tablet-book-size: 16.5rem;
                 bottom: 1.5rem;
                 left: 1.5rem;
 
-                @include tablet {
+                @include wider-than($phone-max) {
                     bottom: calc(5vw - 0.9rem);
                     left: calc(20% - 8.1rem);
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     bottom: 5rem;
                 }
             }
@@ -851,19 +842,19 @@ $tablet-book-size: 16.5rem;
         .banner.us-history {
             @include banner(
                 us-history,
-                color(blue),
-                rgba(color(turquoise), 0.85),
+                os-color(blue),
+                rgba(os-color(medium-blue), 0.85),
                 56rem,
                 32rem,
-                rgba(color(blue), 0.15),
-                color(orange),
-                color(blue)
+                rgba(os-color(blue), 0.15),
+                os-color(orange),
+                os-color(blue)
             );
 
             .book {
                 width: calc(40% + 6rem);
 
-                @include tablet {
+                @include wider-than($phone-max) {
                     height: 30rem;
                     left: auto;
                     right: calc(30% + 3rem);
@@ -880,13 +871,13 @@ $tablet-book-size: 16.5rem;
                 right: calc(20% - 4rem);
                 width: calc(30% + 11rem);
 
-                @include tablet {
+                @include wider-than($phone-max) {
                     height: 53rem;
                     right: calc(20% - 10.4rem);
                     width: calc(20vw + 24.9rem);
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     height: 53rem;
                     right: calc(15% - 5rem);
                     width: 45.4rem;
@@ -910,11 +901,11 @@ $tablet-book-size: 16.5rem;
                 left: -10rem;
                 width: 45rem;
 
-                @include tablet {
+                @include wider-than($phone-max) {
                     display: block;
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     bottom: auto;
                     height: 78%;
                     top: 17%;
@@ -928,11 +919,11 @@ $tablet-book-size: 16.5rem;
                 right: 0;
                 width: 26rem;
 
-                @include tablet {
+                @include wider-than($phone-max) {
                     display: block;
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     bottom: 5rem;
                     height: 33rem;
                     right: 5rem;
@@ -973,12 +964,12 @@ $tablet-book-size: 16.5rem;
             }
 
             .align-edge {
-                @include tablet {
+                @include wider-than($phone-max) {
                     bottom: 5.5rem;
                     left: calc(20% - 7.4rem);
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     left: 14rem;
                 }
             }

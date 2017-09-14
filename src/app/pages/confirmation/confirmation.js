@@ -73,8 +73,8 @@ export default class Confirmation extends Controller {
         this.referringPage = window.location.pathname.replace('/confirmation/', '');
         if (this.referringPage === window.location.pathname) {
             this.referringPage = window.location.pathname
-            .replace('-confirmation', '')
-            .replace(/^\//, '');
+                .replace('-confirmation', '')
+                .replace(/^\//, '');
         }
         this.model = models[this.referringPage];
         if (this.referringPage === 'errata') {

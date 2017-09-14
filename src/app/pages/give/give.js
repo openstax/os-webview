@@ -107,7 +107,7 @@ export default class Give extends CMSPageController {
             } catch (e) { }
 
             this.regions.share.attach(new Share(`${settings.apiOrigin}/give`,
-            'Contribute to OpenStax (I did)!'));
+                'Contribute to OpenStax (I did)!'));
             this.model.isThanks = true;
         }
         if ('amount' in queryDict) {

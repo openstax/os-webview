@@ -118,7 +118,7 @@ export default class Home extends CMSPageController {
             const student = bookBanner.querySelector('.container .student');
 
             backgroundImage.setAttribute('style',
-                                       `transform:translate3d(0, ${this.pos(-200, relativeY, 0)}px, 0)`);
+                `transform:translate3d(0, ${this.pos(-200, relativeY, 0)}px, 0)`);
             bookCover.setAttribute('style', `transform:translate3d(0, ${this.pos(-100, relativeY, 0)}px, 0)`);
             student.setAttribute('style', `transform:translate3d(0, ${this.pos(200, relativeY, 0)}px, 0)`);
         };
@@ -148,12 +148,12 @@ export default class Home extends CMSPageController {
         this.modelInterval = setInterval(() => {
             if (!document.hidden) {
                 this.banners[this.currentBanner].hide()
-                .then(() => {
-                    ++this.currentBanner;
-                    this.currentBanner %= this.banners.length;
-                    this.parallaxBannerUpdate(this.banners[this.currentBanner].el);
-                    this.banners[this.currentBanner].show();
-                });
+                    .then(() => {
+                        ++this.currentBanner;
+                        this.currentBanner %= this.banners.length;
+                        this.parallaxBannerUpdate(this.banners[this.currentBanner].el);
+                        this.banners[this.currentBanner].show();
+                    });
             }
         }, 11000);
 

@@ -1,5 +1,7 @@
-@import 'variables';
-@import 'mixins';
+@import 'mixins/responsive';
+@import 'mixins/triangle';
+@import 'mixins/halo';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 $breakpoint-1: 908px;
 $breakpoint-2: 806px;
@@ -29,12 +31,12 @@ $hero-break-width: 880px;
     }
 }
 
+
 .about-page {
-    background-color: rgba(color(neutral-lighter), 0.2);
 
     .hero {
         align-items: center;
-        background-color: color(blue);
+        background-color: os-color(blue);
         background-image: url('/images/about/banner-about.jpg');
         background-repeat: no-repeat;
         background-size: cover;
@@ -65,7 +67,7 @@ $hero-break-width: 880px;
             display: flex;
             flex-flow: column wrap;
             margin: 0 auto;
-            max-width: $boxed-width;
+            max-width: $content-max;
             width: 100%;
             z-index: 1;
 
@@ -77,13 +79,13 @@ $hero-break-width: 880px;
         }
 
         .overlay {
-            background-color: rgba(saturate(color(blue), 10%), 0.85);
-            color: color(neutral-lightest);
+            background-color: rgba(saturate(os-color(blue), 10%), 0.85);
+            color: text-color(white);
             display: flex;
             justify-content: flex-end;
             padding: 4rem;
 
-            @media screen and (min-width: $boxed-width + 1) {
+            @include wider-than($content-max) {
                 padding-left: calc(-61rem + 55%);
             }
 
@@ -104,7 +106,8 @@ $hero-break-width: 880px;
             }
 
             .blurb {
-                font-size: 1.8rem;
+                @include set-font(body-large);
+
                 padding: 1em 0;
             }
         }
@@ -119,9 +122,9 @@ $hero-break-width: 880px;
     }
 
     .meta {
-        background-color: color(neutral-lightest);
-        font-size: 1.8rem;
-        line-height: 2.6rem;
+        @include set-font(body-large);
+
+        background-color: ui-color(white);
         padding: 8rem 0;
 
         @include desktop {
@@ -174,16 +177,17 @@ $hero-break-width: 880px;
     }
 
     .dismiss {
+        @include set-font(h3);
+
         background-color: transparent;
         color: inherit;
-        font-size: 2.2rem;
         position: absolute;
         right: 0.5rem;
         top: 0.5rem;
     }
 
     .details {
-        background-color: color(neutral-lightest);
+        background-color: ui-color(white);
         bottom: 0;
         box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(94, 96, 98, 0.1);
         cursor: default;
@@ -201,7 +205,7 @@ $hero-break-width: 880px;
 
         &::before {
             border: 2rem solid;
-            border-color: transparent transparent color(neutral-lightest);
+            border-color: transparent transparent ui-color(white);
             bottom: 100%;
             content: '';
             left: 50%;
@@ -426,20 +430,19 @@ $hero-break-width: 880px;
         }
 
         .name {
-            color: color(orange);
-            font-size: 2.2rem;
-            font-weight: 500;
+            @include set-font(h3);
+
+            color: os-color(orange);
             margin-bottom: 0.5rem;
             padding: 0 3rem;
         }
 
         .title {
-            color: color(gray);
-            font-variant: small-caps;
-            font-weight: 600;
-            line-height: 1;
+            @include set-font(helper-label);
+
+            color: text-color(helper);
             padding: 0 3rem;
-            text-transform: lowercase;
+            text-transform: uppercase;
         }
 
         .description {
@@ -467,87 +470,87 @@ $hero-break-width: 880px;
         }
 
         &.text-red .name {
-            color: color(red);
+            color: os-color(red);
         }
 
         &.text-orange .name {
-            color: color(orange);
+            color: os-color(orange);
         }
 
         &.text-yellow .name {
-            color: color(yellow);
+            color: os-color(yellow);
         }
 
         &.text-gold .name {
-            color: color(gold);
+            color: os-color(gold);
         }
 
         &.text-green .name {
-            color: color(green);
+            color: os-color(green);
         }
 
         &.text-deep-green .name {
-            color: color(deep-green);
+            color: os-color(deep-green);
         }
 
         &.text-turquoise .name {
-            color: color(turquoise);
+            color: os-color(medium-blue);
         }
 
         &.text-cyan .name {
-            color: color(cyan);
+            color: os-color(light-blue);
         }
 
         &.text-blue .name {
-            color: color(blue);
+            color: os-color(blue);
         }
 
         &.text-gray .name {
-            color: color(gray);
+            color: os-color(gray);
         }
 
         &.text-white .name {
-            color: color(neutral-lightest);
+            color: text-color(white);
         }
 
         &.bg-red {
-            background-color: color(red);
+            background-color: os-color(red);
         }
 
         &.bg-orange {
-            background-color: color(orange);
+            background-color: os-color(orange);
         }
 
         &.bg-yellow {
-            background-color: color(yellow);
+            background-color: os-color(yellow);
         }
 
         &.bg-gold {
-            background-color: color(gold);
+            background-color: os-color(gold);
         }
 
         &.bg-green {
-            background-color: color(green);
+            background-color: os-color(green);
         }
 
         &.bg-deep-green {
-            background-color: color(deep-green);
+            background-color: os-color(deep-green);
         }
 
         &.bg-turquoise {
-            background-color: color(turquoise);
+            background-color: os-color(medium-blue);
         }
 
         &.bg-cyan {
-            background-color: color(cyan);
+            background-color: os-color(light-blue);
         }
 
         &.bg-blue {
-            background-color: color(blue);
+            background-color: os-color(blue);
         }
 
         &.bg-gray {
-            background-color: color(gray);
+            background-color: os-color(gray);
         }
 
         img {
@@ -564,10 +567,9 @@ $hero-break-width: 880px;
         }
 
         .name {
-            @include constrained-variable-text(3.6, 0.2);
-            font-weight: bold;
+            @include set-font(h2);
+
             left: -0.2rem;
-            letter-spacing: -0.15rem;
             line-height: 3.6rem;
             position: absolute;
             top: -0.5rem;
@@ -591,7 +593,7 @@ $hero-break-width: 880px;
             top: auto;
 
             &::before {
-                border-color: color(neutral-lightest) transparent transparent;
+                border-color: ui-color(white) transparent transparent;
                 bottom: auto;
                 top: 100%;
             }

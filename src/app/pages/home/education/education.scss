@@ -1,14 +1,10 @@
-@import 'variables';
-@import 'mixins';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
-@mixin tablet {
-    @media (min-width: #{breakpoints(phone) + 1}) {
-        @content;
-    }
-}
+$girl-breakpoint: 60rem;
+$button-breakpoint: 100rem;
 
 .education {
-    @media (min-width: 600px) {
+    @include wider-than(60rem) {
         height: 74rem;
         overflow: hidden;
         position: relative;
@@ -23,7 +19,7 @@
     background-repeat: no-repeat;
     background-size: cover;
 
-    @media (min-width: 600px) {
+    @include wider-than(60rem) {
         bottom: 0;
         height: 71rem;
         left: 0;
@@ -36,24 +32,24 @@
         flex-flow: column nowrap;
         height: 100%;
         margin: 0 auto;
-        max-width: $boxed-width;
+        max-width: $content-max;
         padding: 3rem 1.5rem;
         position: relative;
 
-        @include tablet {
+        @include wider-than($phone-max) {
             flex-flow: row wrap;
         }
     }
 
     .quote {
-        background-color: rgba(color(cyan), 0.8);
-        color: color(neutral-lightest);
+        background-color: rgba(os-color(light-blue), 0.8);
+        color: text-color(white);
         margin-bottom: 1.5rem;
         padding: 3rem;
         top: 5rem;
         width: 100%;
 
-        @media (min-width: 600px) {
+        @include wider-than(60rem) {
             width: calc(100% - 3rem);
 
             > p {
@@ -61,60 +57,45 @@
             }
         }
 
-        > p:first-child {
-            font-size: 2.2rem;
-            font-weight: 300;
-            margin: 0;
-
-            @include desktop {
-                font-size: 2.6rem;
-                font-weight: 300;
-                letter-spacing: 0.1rem;
-            }
-        }
-
-        h3 {
-            color: color(yellow);
-            font-size: 4.6rem;
-            letter-spacing: -0.2rem;
-            line-height: 1;
-            margin: 1rem 0;
-
-            @include desktop {
-                font-size: 7rem;
-                width: 37rem;
-            }
-
-        }
-
-        > p:last-child {
-            font-size: 1.8rem;
-            font-weight: 300;
-            margin: 1.5rem 0;
-
-            @include desktop {
-                font-weight: 300;
-                letter-spacing: 0.1rem;
-                line-height: 2.8rem;
-            }
-        }
-
-        @media (min-width: 1000px) {
+        @include wider-than($button-breakpoint) {
             > p,
             > h3 {
                 width: 50rem;
             }
         }
 
+        > p:first-child {
+            @include set-font(h3);
+            font-weight: normal;
+            letter-spacing: normal;
+            margin: 0;
+        }
+
+        h3 {
+            @include set-font(h1);
+            color: os-color(yellow);
+            margin: 1rem 0;
+
+            @include wider-than($tablet-max) {
+                @include set-font(hero-h1);
+                width: 37rem;
+            }
+
+        }
+
+        > p:last-child {
+            @include set-font(body-large);
+            margin: 1.5rem 0;
+        }
 
         .btn {
             background-color: transparent;
-            border: 0.1rem solid color(neutral-lightest);
-            color: color(neutral-lightest);
+            border: 0.1rem solid ui-color(white);
+            color: text-color(white);
 
             &:hover {
-                background-color: rgba(color(neutral-lightest), 0.90);
-                color: color(cyan);
+                background-color: rgba(ui-color(white), 0.90);
+                color: os-color(light-blue);
             }
         }
     }
@@ -123,12 +104,12 @@
         width: 100%;
         z-index: 3;
 
-        @media (min-width: 600px) {
+        @include wider-than(60rem) {
             bottom: 3rem;
             margin-top: 1.5rem;
         }
 
-        @media (min-width: 1000px) {
+        @include wider-than($button-breakpoint) {
             bottom: 13rem;
         }
 
@@ -140,7 +121,7 @@
             padding: 0;
             width: 100%;
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 flex-flow: row wrap;
             }
         }
@@ -148,11 +129,11 @@
         li {
             flex: 0 0 auto;
 
-            @media (min-width: 600px) {
+            @include wider-than(60rem) {
                 width: 60%;
             }
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 flex: 0 0 40%;
                 max-width: 37rem;
             }
@@ -160,11 +141,11 @@
             &:first-child {
                 margin-bottom: 1.5rem;
 
-                @media (min-width: 600px) {
+                @include wider-than(60rem) {
                     margin-bottom: 1.5rem;
                 }
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     margin-bottom: 0;
                     margin-right: 3rem;
                 }
@@ -172,41 +153,34 @@
         }
 
         .btn {
-            box-shadow: 0 0 1rem rgba(color(neutral-dark), 0.2);
+            box-shadow: 0 0 1rem rgba(os-color(gray), 0.4);
             display: inline-block;
             text-align: left;
             text-transform: none;
             width: 100%;
 
-            @media (min-width: 600px) {
+            @include wider-than(60rem) {
                 padding-left: 1.5rem;
                 padding-right: 1.5rem;
-
             }
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 height: 12.7rem;
             }
 
-            &:hover,
-            &:focus {
-                transform: scale3d(1, 1, 1);
-            }
-
             &.k-12 > .title {
-                color: color(orange);
+                color: os-color(orange);
             }
         }
 
         .title {
-            color: color(yellow);
+            @include set-font(h3);
+            color: os-color(yellow);
             display: block;
-            font-size: 2.4rem;
         }
 
         .blurb {
-            font-size: 1.6rem;
-            font-weight: 300;
+            font-weight: normal;
         }
     }
 
@@ -215,19 +189,19 @@
     .student,
     .quote,
     .links {
-        @media (min-width: 600px) {
+        @include wider-than(60rem) {
             position: absolute;
         }
     }
 
     .square-1,
     .square-2 {
-        background-color: rgba(color(cyan), 0.2);
+        background-color: rgba(os-color(light-blue), 0.2);
         display: none;
         position: absolute;
         z-index: 0;
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             display: initial;
         }
      }
@@ -257,7 +231,7 @@
         width: calc(15rem + 30%);
         z-index: 2;
 
-        @media (min-width: 1000px) {
+        @include wider-than($button-breakpoint) {
             background-position: right bottom;
             background-size: auto 100%;
             right: 0;

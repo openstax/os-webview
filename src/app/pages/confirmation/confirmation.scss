@@ -1,21 +1,15 @@
-@import 'variables';
-@import 'mixins';
-
-$confirmation-green: #0c9372;
-$page-background: #fbfbfb;
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 .confirmation-page {
-    background-color: darken(color(neutral-lightest), 5%);
-
     .page-intro {
-        background-color: $confirmation-green;
+        background-color: os-color(deep-green);
         display: flex;
         justify-content: center;
 
         .subhead,
         .subhead h1 {
             align-items: center;
-            color: color(neutral-lightest);
+            color: text-color(white);
             display: flex;
             flex-direction: row;
             justify-content: center;
@@ -32,7 +26,7 @@ $page-background: #fbfbfb;
         }
 
         .header-link {
-            color: color(blue);
+            color: os-color(blue);
             line-height: 2;
 
             &:hover {
@@ -41,11 +35,12 @@ $page-background: #fbfbfb;
         }
 
         .text-content {
+            @include set-font(body-large);
+
             align-items: flex-start;
             display: flex;
             flex: 1 1 50%;
             flex-direction: column;
-            font-size: 1.8rem;
             margin-left: 14rem;
             padding-bottom: 4rem;
 
@@ -53,11 +48,7 @@ $page-background: #fbfbfb;
                 margin-left: calc(54vw - 41.4rem);
             }
 
-            @include tablet {
-                margin-left: 0;
-            }
-
-            @include phone {
+            @include width-up-to($tablet-max) {
                 margin-left: 0;
             }
 
@@ -79,7 +70,6 @@ $page-background: #fbfbfb;
 
         img {
             display: inline-block;
-            flex: 1 0 20rem;
             height: calc(35rem - 2vw);
             left: -14rem;
             position: relative;
@@ -88,33 +78,26 @@ $page-background: #fbfbfb;
                 left: calc(41.4rem - 54vw);
             }
 
-            @include phone {
-                display: none;
-            }
-
-            @include tablet {
+            @include width-up-to($tablet-max) {
                 display: none;
             }
         }
     }
 
     .btn.cta {
-        background-color: color(orange);
-        color: color(neutral-lightest);
-        display: inline-block;
-        font-size: 1.6rem;
-        margin: 1rem 0;
-        padding: 1em 2em;
+        @include button(primary);
+
+        margin: 1rem 0 2rem;
     }
 
     .go-back {
-        color: color(neutral-lightest);
-        font-size: 1.4rem;
+        @include set-font(helper-label);
+
+        color: text-color(white);
 
         &::before {
             content: '▸';
             display: inline-block;
-            font-size: 100%;
             padding-left: 0.3em;
             transform: rotate(180deg);
             vertical-align: middle;
@@ -122,7 +105,7 @@ $page-background: #fbfbfb;
     }
 
     .wrapper {
-        background-color: $page-background;
+        background-color: ui-color(form-bg);
         min-height: 13rem;
         padding-top: 2rem;
     }
@@ -132,31 +115,21 @@ $page-background: #fbfbfb;
         justify-content: center;
         margin: 3rem auto;
 
-        @include phone {
+        @include width-up-to($phone-max) {
             text-align: left;
-        }
-    }
-
-    .buttons {
-        display: flex;
-        justify-content: center;
-
-        .btn {
-            font-size: 1.4rem;
-            margin: 0 1rem;
         }
     }
 
     .white-on-blue,
     .white-on-gold {
-        color: color(neutral-lightest);
+        color: text-color(white);
     }
 
     .white-on-blue {
-        background-color: color(blue);
+        background-color: os-color(blue);
     }
 
     .white-on-gold {
-        background-color: color(gold);
+        background-color: os-color(gold);
     }
 }

@@ -1,22 +1,14 @@
-@import 'variables';
-@import 'mixins';
-
-@mixin tablet-up {
-    @media (min-width: #{breakpoints(phone) + 1}) {
-        @content;
-    }
-}
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 .contact-page {
-    background-color: rgba(color(neutral-lighter), 0.2);
 
     .subhead {
         padding: 0;
     }
 
     .hero {
-        background-color: color(green);
-        color: color(neutral-lightest);
+        background-color: os-color(green);
+        color: text-color(white);
         padding: 6rem 1.5rem;
 
         h1 {
@@ -32,20 +24,20 @@
     .boxed {
         padding: 4rem 1.5rem  0;
 
-        @include tablet-up {
+        @include wider-than($tablet-max) {
             flex-flow: row wrap;
         }
 
         .col {
             padding-bottom: 4rem;
 
-            @include tablet-up {
+            @include wider-than($tablet-max) {
                 flex: 1 1 60%;
                 max-width: 60%;
             }
 
             &:last-child {
-                @include tablet-up {
+                @include wider-than($tablet-max) {
                     flex: 1 1 40%;
                     max-width: 40%;
                     padding-left: 3rem;
@@ -57,15 +49,16 @@
             }
 
             a {
-                font-size: 1.4rem;
+                @include set-font(body-large);
+                font-variant: small-caps;
                 font-weight: bold;
-                text-transform: uppercase;
+                text-transform: lowercase;
             }
         }
     }
 
     form {
-        color: color(blue);
+        color: os-color(blue);
 
         textarea {
             height: auto;
@@ -74,13 +67,7 @@
     }
 
     .btn {
-        background-color: color(orange);
         float: none;
-    }
-
-    .btn:hover,
-    .btn:focus {
-        background-color: darken(color(orange), 5%);
     }
 
     .labeled-control {

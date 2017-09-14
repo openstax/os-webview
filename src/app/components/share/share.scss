@@ -1,5 +1,8 @@
-@import 'variables';
-@import 'mixins';
+@import '../../node_modules/pattern-library/core/pattern-library/molecules';
+
+$facebook-blue: #3b5998;
+$twitter-blue: #00aced;
+$linkedin-blue: #0077b5;
 
 .share-buttons {
     .buttons {
@@ -8,47 +11,44 @@
         margin: 1rem 0;
         width: 100%;
 
-        @include phone {
+        @include width-up-to($phone-max) {
             flex-direction: column;
             width: auto;
         }
 
         .btn {
+            @include button(secondary);
+
             align-items: center;
             background-image: none;
-            border: 0;
-            color: color(neutral-lightest);
             display: flex;
-            font-size: 1.6rem;
             font-weight: normal;
             justify-content: flex-start;
             margin: 1rem 0.5rem;
-            padding: 0.8rem;
-            padding-left: 2.5rem;
+            padding-left: 1.5rem;
             text-transform: none;
-            width: 16rem;
 
-            @include tablet {
+            @include wider-than($phone-max + 100) {
                 padding-left: 2.2rem;
                 width: 15rem;
             }
 
             &.facebook {
-                background-color: color(facebook-blue);
+                background-color: $facebook-blue;
             }
 
             &.twitter {
-                background-color: color(twitter-blue);
+                background-color: $twitter-blue;
             }
 
             &.linkedin {
-                background-color: color(linkedin-blue);
+                background-color: $linkedin-blue;
             }
 
             .social-icon {
-                color: color(neutral-lightest);
-                font-size: 2rem;
+                color: text-color(white);
                 margin-right: 1rem;
+                transform: scale(1.5);
             }
         }
     }

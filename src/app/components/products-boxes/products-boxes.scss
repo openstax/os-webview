@@ -1,5 +1,5 @@
-@import 'variables';
-@import 'mixins';
+@import 'mixins/responsive';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 .products-boxes {
 
@@ -39,7 +39,7 @@
         }
 
         .image {
-            background-color: color(gold);
+            background-color: os-color(gold);
             background-position: center center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -49,18 +49,18 @@
         }
 
         &:last-child .image {
-            background-color: color(yellow);
+            background-color: os-color(yellow);
         }
 
         h3 {
-            color: color(gray);
+            color: os-color(gray);
             font-weight: 700;
             margin: 0;
         }
 
         a {
             background: 0;
-            color: color(cyan);
+            color: os-color(light-blue);
             display: inline-block;
             font-weight: 500;
             padding: 0;

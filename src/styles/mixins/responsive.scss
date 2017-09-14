@@ -1,45 +1,5 @@
-@import 'variables';
-
-@mixin phone {
-    @media (max-width: #{breakpoints(phone)}) {
-        @content;
-    }
-}
-
-@mixin tablet {
-    @media (min-width: #{breakpoints(phone) + 1}) and (max-width: #{breakpoints(tablet)}) {
-        @content;
-    }
-}
-
-@mixin desktop {
-    @media (min-width: #{breakpoints(tablet) + 1}) {
-        @content;
-    }
-}
-
-@mixin wide-desktop {
-    @media (min-width: #{breakpoints(wide-desktop)}) {
-        @content;
-    }
-}
-
 @mixin collapsed {
     @media (max-width: 760px) {
         @content;
     }
-}
-
-@mixin variable-sized-text($base-size, $grow-factor) {
-    $factor: $grow-factor * $base-size / 100;
-    $base-rems: $base-size * 1rem;
-    font-size: calc(#{$base-size * 1rem} + #{$factor * 100vw} - #{$factor * $boxed-width});
-}
-
-@mixin constrained-variable-text($base-size, $grow-factor) {
-    @media (min-width: #{$boxed-width}) {
-        font-size: #{$base-size * 1rem};
-    }
-
-    @include variable-sized-text($base-size, $grow-factor)
 }

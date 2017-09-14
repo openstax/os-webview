@@ -1,8 +1,8 @@
-@import 'variables';
-@import 'mixins';
+@import 'mixins/triangle';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 .page-header .nav {
-    box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(color(gray), 0.1);
+    box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(os-color(gray), 0.1);
     height: auto;
     width: 100%;
 
@@ -20,11 +20,9 @@
         }
     }
 
-
-
     .training-wheel-overlay {
-        @include desktop {
-            background-color: rgba(color(neutral-light), 0.5);
+        @include wider-than($tablet-max) {
+            background-color: rgba(ui-color(default-active), 0.5);
             height: 100vh;
             left: 0;
             position: fixed;
@@ -38,16 +36,17 @@
     .training-wheel-overlay {
         display: none;
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             display: block;
         }
     }
 
     .logo-wrapper {
+        @include set-font(helper-label);
+
         align-items: center;
         display: flex;
         flex: 0 auto;
-        font-size: 1.4rem;
         padding: 0.5rem 1.5rem;
 
         @at-root .active#{&} {
@@ -56,7 +55,7 @@
             top: 0;
         }
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             left: auto;
             position: static;
             top: auto;
@@ -72,10 +71,10 @@
     }
 
     .main-menu {
+        @include set-font(h4);
+
         display: none;
         flex-direction: column;
-        font-size: 1.8rem;
-        font-weight: 600;
         height: 0;
         overflow: hidden;
         padding: 0;
@@ -86,21 +85,12 @@
             margin: 0;
         }
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             display: flex;
             flex-flow: row nowrap;
-            font-size: 1.55rem;
             height: auto;
             justify-content: flex-end;
             margin: 0;
-        }
-
-        @media (min-width: 800px) {
-            font-size: 1.65rem;
-        }
-
-        @media (min-width: 1100px) {
-            font-size: 1.8rem;
         }
     }
 
@@ -111,17 +101,17 @@
             margin-bottom: 1rem;
         }
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             margin: 0.5rem 1rem;
             padding: 0 0.25rem;
 
             > a {
-                color: color(gray);
+                color: os-color(gray);
                 display: inline-block;
                 padding: 1.2rem 0;
 
                 @at-root .transparent#{&} {
-                    color: color(neutral-lightest);
+                    color: text-color(white);
                 }
             }
 
@@ -133,7 +123,7 @@
 
             .dropdown-menu[aria-expanded="true"],
             &:hover .dropdown-menu {
-                border-top: 0.5rem solid color(orange);
+                border-top: 0.5rem solid os-color(green);
                 display: block;
                 height: auto;
                 opacity: 1;
@@ -147,7 +137,7 @@
             }
 
             &:not(.dropdown):hover {
-                border-bottom: 0.5rem solid color(green);
+                border-bottom: 0.5rem solid os-color(green);
                 margin-bottom: 0;
             }
         }
@@ -161,29 +151,29 @@
         }
 
         .dropdown-menu {
-            background-color: color(neutral-lightest);
-            color: color(gray);
+            @include set-font(body-regular);
+
+            background-color: ui-color(white);
+            color: os-color(gray);
             display: none;
-            font-size: 1.6rem;
-            font-weight: 300;
             padding-left: 0;
 
             a {
-                color: color(gray);
+                color: os-color(gray);
                 display: block;
             }
 
             // scss-lint:disable SelectorDepth
             a:focus,
             a:hover {
-                color: color(cyan);
+                color: os-color(light-blue);
             }
             // scss-lint:enable SelectorDepth
         }
     }
 
     .training-wheel {
-        background-color: color(neutral-lightest);
+        background-color: ui-color(white);
         overflow: visible;
         padding: 3rem;
         position: absolute;
@@ -194,13 +184,14 @@
             @include triangle(
                 $direction: right,
                 $position: top 33% right -2.4rem,
-                $color: color(neutral-lightest),
+                $color: ui-color(white),
                 $size: 2.4rem
             );
         }
 
         .put-away-row {
-            font-size: 2.4rem;
+            @include set-font(h3);
+
             height: 0;
             overflow: visible;
             text-align: right;
@@ -217,40 +208,41 @@
         }
 
         hr {
-            border-bottom: thin solid color(orange);
+            border-bottom: thin solid os-color(orange);
         }
 
         .message {
-            font-size: 1.4rem;
+            @include set-font(helper-label);
         }
 
         .button-row {
+            @include set-font(helper-label);
+
             display: flex;
-            font-size: 1.4rem;
             justify-content: flex-end;
             margin-top: 2rem;
 
             button {
-                background-color: color(blue);
-                color: color(neutral-lightest);
+                background-color: os-color(blue);
+                color: text-color(white);
 
             }
         }
     }
 
     .chevron {
-        fill: color(blue);
+        fill: os-color(blue);
         height: 1.33rem;
         margin-left: 1rem;
         width: 0.8rem;
 
-        @include desktop {
-            fill: color(gray);
+        @include wider-than($tablet-max) {
+            fill: os-color(gray);
             transform: rotate(90deg);
             transform-origin: center;
 
             @at-root .transparent#{&} {
-                fill: color(neutral-lightest);
+                fill: text-color(white);
             }
         }
     }
@@ -282,7 +274,7 @@
         .logo-color {
             display: inline-block;
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 @at-root .transparent#{&} {
                     display: none;
                 }
@@ -292,7 +284,7 @@
         .logo-white {
             display: none;
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 @at-root .transparent#{&} {
                     display: inline-block;
                 }
@@ -301,7 +293,7 @@
     }
 
     .logo-quote {
-        color: color(gray);
+        color: os-color(gray);
         display: inline-block;
         height: 0;
         transform: scale3d(0, 0, 0);
@@ -314,7 +306,7 @@
         }
 
         @at-root .transparent#{&} {
-            color: color(neutral-lightest);
+            color: text-color(white);
         }
 
     }

@@ -1,14 +1,12 @@
-@import 'variables';
-
-$faint-gray: rgba(color(gray), 0.33);
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 .tag-multi-select {
     background-color: white;
-    border: 0.1rem solid $faint-gray;
+    border: 0.1rem solid ui-color(form-border);
     display: flex;
-    min-height: 4.8rem;
+    min-height: $form-element-height;
     min-width: 12rem;
-    padding-right: 4.8rem;
+    padding-right: $form-element-height;
     position: relative;
 
     .tag-list {

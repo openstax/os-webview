@@ -1,7 +1,4 @@
-@import 'variables';
-@import 'mixins';
-
-$text-dark2: rgba(0, 0, 0, 0.7);
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 .partners-page {
     line-height: 3rem;
@@ -9,27 +6,21 @@ $text-dark2: rgba(0, 0, 0, 0.7);
     .container {
         align-items: left;
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             align-items: center;
         }
     }
 
     .hero {
-        background-color: color(green);
-        color: color(neutral-lightest);
+        background-color: os-color(green);
+        color: text-color(white);
 
         h1 {
             color: inherit;
             margin-bottom: 0.5em;
         }
 
-        p {
-            @include constrained-variable-text(1.8, 0.2);
-        }
-
         .ally-logo {
-            // border: solid color(neutral-lightest) 0.15em;
-            border-radius: 0.15em;
             display: block;
             height: 100%;
             margin-top: 2rem;
@@ -46,7 +37,7 @@ $text-dark2: rgba(0, 0, 0, 0.7);
     }
 
     .icons {
-        color: color(gray);
+        color: os-color(gray);
         display: block;
         font-weight: 500;
         margin: 0 auto;
@@ -68,9 +59,9 @@ $text-dark2: rgba(0, 0, 0, 0.7);
         .logo {
             align-items: center;
             display: flex;
+            flex-basis: 22rem;
             justify-content: center;
-            min-height: 14rem;
-            min-width: 22rem;
+            padding: 3rem 0;
 
             &.hidden {
                 display: none;
@@ -101,18 +92,18 @@ $text-dark2: rgba(0, 0, 0, 0.7);
 
         > hr {
             border: 0;
-            border-bottom: solid 3px color(neutral-lighter);
+            border-bottom: solid 3px ui-color(form-border);
             width: 100%;
         }
     }
 
     .blurbs {
-        background-color: color(neutral-lightest);
+        background-color: ui-color(white);
         font-weight: 400;
         margin-bottom: 1.5rem;
         padding: 3rem 1.5rem;
 
-        @include phone {
+        @include width-up-to($phone-max) {
             padding: 0 1.5rem;
         }
 

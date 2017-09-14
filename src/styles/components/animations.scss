@@ -1,4 +1,4 @@
-@import 'variables';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 @keyframes fadeIn {
     from { opacity: 0; }
@@ -7,7 +7,7 @@
 
 @keyframes pulse {
     from {
-        background-color: rgba(color(primary), 0.2);
+        background-color: rgba(os-color(blue), 0.2);
     }
 }
 

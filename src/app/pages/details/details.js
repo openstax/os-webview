@@ -49,7 +49,7 @@ export default class Details extends CMSPageController {
 
         if (model.license_name) {
             model.licenseIcon = model.license_name.match(/share/i) ?
-            '/images/details/by-nc-sa.svg' : '/images/details/by.svg';
+                '/images/details/by-nc-sa.svg' : '/images/details/by.svg';
         }
 
         model.comingSoon = this.pageData.coming_soon ? ' coming-soon' : '';

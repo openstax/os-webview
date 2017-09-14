@@ -213,22 +213,22 @@ export default class Tutor extends CMSPageController {
         this.model.footerSignUp.link = data.section_7_cta_link_2;
 
         this.model.featureMatrix.featurePairs = data.resource_availability
-        .map((obj) => ({
-            text: obj.name,
-            image: obj.available ? availableImageData : unavailableImageData,
-            value: obj.alternate_text
-        }))
-        .reduce((result, value, index, arr) => {
-            if (index % 2 === 0) {
-                const newPair = arr.slice(index, index + 2);
+            .map((obj) => ({
+                text: obj.name,
+                image: obj.available ? availableImageData : unavailableImageData,
+                value: obj.alternate_text
+            }))
+            .reduce((result, value, index, arr) => {
+                if (index % 2 === 0) {
+                    const newPair = arr.slice(index, index + 2);
 
-                if (newPair.length < 2) {
-                    newPair.push({});
+                    if (newPair.length < 2) {
+                        newPair.push({});
+                    }
+                    result.push(newPair);
                 }
-                result.push(newPair);
-            }
-            return result;
-        }, []);
+                return result;
+            }, []);
 
         this.update();
         $.insertHtml(this.el, this.model);

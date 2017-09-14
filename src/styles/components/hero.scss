@@ -1,14 +1,11 @@
-@import 'variables';
-@import 'mixins';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 .hero {
-    font-size: 1.8rem;
-    font-weight: 300;
-    line-height: 1.4;
+    background-color: ui-color(white);
     padding: 6rem 1.5rem;
     text-align: left;
 
-    @include desktop {
+    @include wider-than($tablet-max) {
         align-items: center;
         text-align: center;
     }
@@ -19,16 +16,8 @@
 
     h1 {
         color: inherit;
-        font-size: 6rem;
-        font-weight: bold;
-        letter-spacing: -0.035 * 6rem;
-        line-height: calc(5 / 6);
         margin-bottom: 1rem;
         margin-top: 0;
-
-        @include phone {
-            font-size: 5rem;
-        }
 
         ~ p {
             margin-top: 3rem;
@@ -36,22 +25,19 @@
     }
 
     h2 {
-        @include variable-sized-text(4.8, 0.2);
+        @include set-font(h1);
 
         color: inherit;
-        font-weight: bold;
-        letter-spacing: -0.2rem;
-        line-height: 1;
-        margin-bottom: 1rem;
     }
 
+    // DEPRECATED: this should be in pattern-library
     p {
         margin: 2rem auto 0;
-        max-width: calc(#{$text-width} - 3rem);
+        max-width: calc(#{$text-content-max} - 3rem);
     }
 
     .cta {
-        @include variable-sized-text(1.4, 0.2);
+        @include set-font(helper-label);
 
         font-weight: bold;
         text-transform: capitalize;
@@ -59,9 +45,8 @@
 
     .boxed p,
     .container p {
-        @include variable-sized-text(1.8, 0.2);
+        @include set-font(body-large);
 
-        line-height: 1.67;
         margin: 0 auto;
         max-width: 100%;
         width: 100%; // IE fix

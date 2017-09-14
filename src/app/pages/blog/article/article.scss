@@ -1,11 +1,4 @@
-@import 'variables';
-@import 'mixins';
-
-@mixin tablet {
-    @media (min-width: #{breakpoints(phone) + 1}) {
-        @content;
-    }
-}
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 .blog.page {
     .article {
@@ -23,25 +16,30 @@
             width: 100%;
 
             .boxed {
-                max-width: 64rem;
+                max-width: $text-content-max;
             }
 
             .quote {
-                background-color: lighten(color(neutral-lighter), 8%);
+                background-color: ui-color(form-bg);
                 padding: 1rem 3rem;
             }
 
             figcaption {
-                font-size: 80%;
+                @include set-font(helper-label);
+
+                color: text-color(helper);
+
+                :first-child {
+                    margin-top: 0;
+                }
             }
 
             .tags {
                 display: flex;
 
                 .tag {
-                    @include constrained-variable-text(1.4, 0.16);
-                    background-color: lighten(color(neutral-lighter), 8%);
-                    color: lighten(color(neutral-dark), 8%);
+                    background-color: ui-color(form-bg);
+                    color: text-color(helper);
                     margin-right: 1.5rem;
                     padding: 0.35em 1.1em;
                 }
@@ -49,26 +47,20 @@
         }
 
         h2 {
-            font-size: 2.1rem;
-            letter-spacing: 0;
-            line-height: 2.6rem;
-            margin-top: 2rem;
+            @include set-font(h3);
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 margin-top: 0;
             }
 
-            a {
+            a:not(:hover) {
                 color: inherit;
-
-                &:hover {
-                    text-decoration: underline;
-                }
+                text-decoration: inherit;
             }
         }
 
         h3 {
-            font-size: 1.6rem;
+            @include set-font(h4);
         }
 
         .img {
@@ -91,13 +83,12 @@
         }
 
         .meta {
-            border-bottom: thin solid color(neutral-lighter);
-            color: color(neutral-light);
+            border-bottom: thin solid ui-color(form-border);
             padding-bottom: 1rem;
+            width: 100%;
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 border: 0;
-                width: 100%;
             }
 
             p {
@@ -107,7 +98,7 @@
         }
 
         .author {
-            color: color(cyan);
+            color: os-color(light-blue);
             font-style: italic;
         }
     }
@@ -129,40 +120,31 @@
         .article {
             width: 100%;
 
-            @include wide-desktop {
+            @include wider-than($tablet-max) {
                 flex-flow: row nowrap;
                 margin-bottom: 0;
                 padding: 2.5rem 0;
             }
 
             h2 {
-                @include desktop {
-                    font-size: 3.6rem;
-                    letter-spacing: -0.2rem;
-                    line-height: 4rem;
-                    margin-top: 2rem;
-                }
+                @include wider-than($tablet-max) {
+                    @include set-font(h2);
 
-                @include wide-desktop {
-                    margin-top: 0;
-                }
-            }
-
-            h3 {
-                @include desktop {
-                    font-size: 2.1rem;
+                    margin: 2rem 0 1rem;
                 }
             }
 
             .body {
-                font-size: 1.8rem;
+                @include set-font(body-large);
+
                 height: 15rem;
+                margin-bottom: 1rem;
                 max-height: 15rem;
                 overflow: hidden;
             }
 
             .go-to {
-                font-size: 1.4rem;
+                @include set-font(helper-label);
             }
 
             .img {
@@ -170,7 +152,7 @@
                 flex-basis: 100%;
                 height: 32rem;
 
-                @include wide-desktop {
+                @include wider-than($tablet-max) {
                     flex-basis: 50%;
                     margin-right: 3rem;
                 }
@@ -184,7 +166,7 @@
                 flex-basis: 100%;
                 max-width: 100%;
 
-                @include wide-desktop {
+                @include wider-than($tablet-max) {
                     flex-basis: 50%;
                     max-width: 50%;
                 }
@@ -197,20 +179,19 @@
     .articles .container {
 
         > .article {
-            // align-items: flex-start;
-            background-color: color(neutral-lightest);
+            background-color: ui-color(white);
             display: block;
             flex-basis: 100%;
             max-width: 100%;
             width: 100%;
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 flex-basis: calc(50% - 3rem);
                 margin: 1.5rem;
                 max-width: calc(50% - 3rem);
             }
 
-            @media (min-width: $boxed-width) {
+            @include wider-than($content-max) {
                 flex-basis: calc(33% - 2.6rem);
                 max-width: calc(33% - 2.6rem);
             }
@@ -223,7 +204,7 @@
             /* two articles */
             &:first-child:nth-last-child(2),
             &:first-child:nth-last-child(2) ~ div {
-                @include desktop {
+                @include wider-than($tablet-max) {
                     flex-basis: calc(50% - 3rem);
                 }
             }
@@ -233,7 +214,7 @@
                 flex-basis: 100%;
                 max-width: 100%;
 
-                @include desktop {
+                @include wider-than($tablet-max) {
                     padding: 1.5rem;
                 }
             }
@@ -241,29 +222,25 @@
     }
 
     .go-to {
-        font-size: 1.2rem;
+        @include set-font(helper-label);
+
         text-transform: uppercase;
     }
 
     .body {
         column-width: 100%;
-        line-height: 1.5;
-
-        @include phone {
-            font-size: 1.5rem;
-        }
     }
 
     .pinned .article,
     .articles .article {
         a:hover {
-            color: color(cyan);
-            text-decoration: none;
+            color: os-color(light-blue);
         }
     }
 
     .meta .btn {
-        font-size: 1.2rem;
+        @include set-font(helper-label);
+
         padding: 0.3em 1em;
     }
 }

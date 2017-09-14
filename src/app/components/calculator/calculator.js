@@ -113,11 +113,11 @@ export default class Calculator extends Controller {
         this.model.waiting = true;
         this.update();
         $.scrollTo(this.el.querySelector('.output'))
-        .then(() => {
-            this.model.waiting = false;
-            this.update();
-            this.attachShareButtons();
-        });
+            .then(() => {
+                this.model.waiting = false;
+                this.update();
+                this.attachShareButtons();
+            });
     }
 
 }

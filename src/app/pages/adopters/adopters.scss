@@ -1,19 +1,14 @@
-@import 'variables';
-@import 'mixins';
-
-@mixin large-screen {
-    @media (min-width: 1000px) {
-        @content;
-    }
-}
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 .adopters-page {
+
+    @extend %content;
 
     h1 {
         margin-bottom: 2rem;
         text-align: center;
 
-        @include phone {
+        @include width-up-to($phone-max) {
             padding-left: 1.5rem;
             text-align: left;
         }
@@ -22,20 +17,19 @@
     .adopters {
         column-count: 3;
         column-gap: 5rem;
-        font-size: 1.5rem;
-        font-weight: 400;
         list-style-type: none;
+        width: 100%;
 
-        @include phone {
+        @include width-up-to($phone-max) {
             column-count: 1;
             padding-left: 1.5rem;
         }
 
-        @include tablet {
+        @include width-between($phone-max, $tablet-max) {
             column-count: 2;
         }
 
-        @include large-screen {
+        @include wider-than($content-max) {
             column-count: 4;
         }
     }

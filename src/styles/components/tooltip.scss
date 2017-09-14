@@ -1,3 +1,5 @@
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
+
 .with-tooltip {
     cursor: default;
     display: block;
@@ -12,8 +14,8 @@
     }
 
     &:hover .tooltip {
-        background-color: color(neutral-lightest);
-        box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(94, 96, 98, 0.1);
+        background-color: ui-color(white);
+        box-shadow: 0 0.1rem 0.3rem 0.2rem transparentize(os-color(gray), 0.1);
         cursor: default;
         display: block;
         height: auto;
@@ -28,7 +30,7 @@
 
         &::before {
             border: 2rem solid;
-            border-color: transparent transparent color(neutral-lightest);
+            border-color: transparent transparent ui-color(white);
             bottom: 100%;
             content: '';
             left: 50%;

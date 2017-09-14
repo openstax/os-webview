@@ -19,7 +19,7 @@ class OrderItems extends CMSPageController {
 
     onDataLoaded() {
         const pages = this.pageData.books
-        .filter((book) => highSchoolSlugs.includes(book.slug));
+            .filter((book) => highSchoolSlugs.includes(book.slug));
 
         this.model.orderItems = pages.map((p) => ({
             item: p.title,
@@ -81,12 +81,12 @@ export default class BulkOrder extends Controller {
         selectHandler.setup(this);
         this.regions.orderItems.attach(new OrderItems(this.model));
         fetch(`${this.model.origin}/api/mail/send_mail/`, {credentials: 'include'})
-        .then((data) => data.json())
-        .then((data) => {
-            this.model.csrfToken = data.csrf_token;
-            document.cookie = `csrftoken=${data.csrf_token}`;
-            this.update();
-        });
+            .then((data) => data.json())
+            .then((data) => {
+                this.model.csrfToken = data.csrf_token;
+                document.cookie = `csrftoken=${data.csrf_token}`;
+                this.update();
+            });
     }
 
     updateMessageBody() {
@@ -106,10 +106,10 @@ export default class BulkOrder extends Controller {
         Country: ${country}
         `;
         this.model.orderItems.filter((line) => line.quantity)
-        .forEach((line) => {
-            this.model.messageBody += `
-            ${line.item} x ${line.quantity}`;
-        });
+            .forEach((line) => {
+                this.model.messageBody += `
+                ${line.item} x ${line.quantity}`;
+            });
     }
 
     @on('focusout input')

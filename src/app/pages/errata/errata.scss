@@ -1,33 +1,18 @@
-@import 'variables';
-@import 'mixins';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
-@mixin wide-desktop {
-    @media (min-width: 900px) {
-        @content;
-    }
-}
-
-$page-background: #f0f0f0;
-$label-1: #575958;
-$label-2: #999;
-$table-border: #dcdcdc;
-$table-dark-row: #f6f6f6;
-$node-gray: #efefef;
 $node-size: 2.5rem;
 $bar-size: 0.2rem;
 
 .errata-page {
-    background-color: $page-background;
-
     .hero {
-        background-color: color(cyan);
+        background-color: os-color(light-blue);
         display: flex;
         flex-direction: column;
         justify-content: center;
         min-height: 22rem;
         padding: 3rem;
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             padding: 0;
         }
 
@@ -36,26 +21,20 @@ $bar-size: 0.2rem;
         }
 
         h1 {
-            color: color(blue);
-            font-size: 4.8rem;
+            color: os-color(blue);
 
-            @include phone {
-                font-size: 3.6rem;
-                letter-spacing: -0.24rem;
-                line-height: 1;
+            @include width-up-to($phone-max) {
+                @include set-font(h1);
             }
         }
 
         .instructions {
-            color: color(neutral-lightest);
-            font-size: 1.6rem;
+            color: text-color(white);
             margin-top: 1rem;
         }
 
         .with-tooltip {
-            color: color(blue);
-            font-size: 1.6rem;
-            letter-spacing: normal;
+            color: os-color(blue);
             margin-bottom: 3rem;
             margin-top: 0.5rem;
 
@@ -79,6 +58,10 @@ $bar-size: 0.2rem;
         margin-bottom: 8rem;
     }
 
+    .filter {
+        width: auto;
+    }
+
     .body-block {
         padding: 0;
         width: 100%;
@@ -86,10 +69,12 @@ $bar-size: 0.2rem;
 
     .summary-table,
     .summary-table-mobile {
-        background-color: color(neutral-lightest);
-        border: thin solid $table-border;
+        @include set-font(helper-label);
+
+
+        background-color: text-color(white);
+        border: thin solid ui-color(form-border);
         border-collapse: collapse;
-        font-size: 1.4rem;
         margin-bottom: 13rem;
         max-width: 100%;
 
@@ -106,7 +91,7 @@ $bar-size: 0.2rem;
 
             &:hover .will-sort,
             &:focus .will-sort {
-                color: $label-2;
+                color: ui-color(secondary-hover);
                 display: inline-block;
             }
         }
@@ -127,7 +112,7 @@ $bar-size: 0.2rem;
         .sortdir-1::after {
             content: '▸';
             display: inline-block;
-            font-size: 120%;
+            font-size: 140%;
             margin-bottom: 0.3rem;
             text-align: center;
             transform-origin: 50% 50%;
@@ -144,7 +129,7 @@ $bar-size: 0.2rem;
 
         th,
         td {
-            border: thin solid $table-border;
+            border: thin solid ui-color(form-border);
         }
 
         th,
@@ -175,17 +160,17 @@ $bar-size: 0.2rem;
         table-layout: fixed;
         width: 100%;
 
-        @include wide-desktop {
+        @include wider-than($tablet-max) {
             display: table;
         }
 
         th {
-            border-bottom: 0.2rem solid color(blue);
-            color: color(blue);
+            border-bottom: 0.2rem solid os-color(blue);
+            color: os-color(blue);
         }
 
         tbody tr:nth-child(even) {
-            background-color: $table-dark-row;
+            background-color: ui-color(form-bg);
         }
     }
 
@@ -194,7 +179,7 @@ $bar-size: 0.2rem;
         table-layout: fixed;
         width: 100%;
 
-        @include wide-desktop {
+        @include wider-than($tablet-max) {
             display: none;
         }
 
@@ -204,11 +189,11 @@ $bar-size: 0.2rem;
     }
 
     .progress-bar-container {
-        background-color: color(neutral-lightest);
+        background-color: text-color(white);
         margin-bottom: 2rem;
         padding: 3rem 4rem 0;
 
-        @include phone {
+        @include width-up-to($phone-max) {
             margin: 0 1rem;
             padding: 1rem;
             padding-bottom: 0;
@@ -223,22 +208,19 @@ $bar-size: 0.2rem;
     }
 
     .progress-bar-labels {
+        @include set-font(helper-label);
+
         display: flex;
-        font-size: 1.4rem;
         justify-content: space-between;
         margin-top: 0;
 
-        @include phone {
-            font-size: 1.2rem;
-        }
-
         .event {
-            color: $label-1;
+            color: text-color(helper);
             font-weight: bold;
         }
 
         .when {
-            color: $label-2;
+            color: ui-color(secondary-hover);
         }
 
         .label {
@@ -255,7 +237,7 @@ $bar-size: 0.2rem;
     }
 
     .progress-bar {
-        background-color: color(neutral-lightest);
+        background-color: text-color(white);
         display: flex;
         flex-flow: column;
         height: 5rem;
@@ -275,16 +257,16 @@ $bar-size: 0.2rem;
 
         .node,
         .bar {
-            background-color: $node-gray;
-            box-shadow: inset 0 1px 3px rgba(color(neutral-darkest), 0.2);
+            background-color: ui-color(page-bg);
+            box-shadow: inset 0 1px 3px rgba(ui-color(footer-bg), 0.4);
 
             &.filled {
-                background-color: color(green);
+                background-color: os-color(green);
                 box-shadow: none;
             }
 
             &.filled-no {
-                background-color: color(tutor-gray);
+                background-color: os-color(gray);
                 box-shadow: none;
             }
         }
@@ -306,11 +288,11 @@ $bar-size: 0.2rem;
     }
 
     .info {
-        color: $label-1;
+        color: text-color(helper);
         display: table;
         padding: 2rem 2rem 4rem 4rem;
 
-        @include phone {
+        @include width-up-to($phone-max) {
             display: block;
             padding-bottom: 2rem;
             padding-left: 1rem;

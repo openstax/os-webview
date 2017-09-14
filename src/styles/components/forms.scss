@@ -1,47 +1,27 @@
-@import 'variables';
-@import 'mixins';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
-@mixin phone {
-    @media (max-width: 640px) {
-        @content;
-    }
-}
-
-$text-secondary: rgba(color(neutral-darkest), 0.7);
+$enough-for-two-columns: 640px;
 
 form {
-    font-size: 1.5rem;
-    font-weight: 400;
-    line-height: 3rem;
 
-    label,
-    p {
-        color: color(primary);
-    }
+    label {
+        @include set-font(helper-label);
 
-    small {
-        color: rgba(color(neutral-light), 0.5);
-        font-size: 1.1rem;
-        font-style: italic;
-        font-weight: 300;
-        padding-left: 0.313rem;
+        color: text-color(helper);
     }
 
     .subhead {
-        font-size: 1.7rem;
+        @include set-font(body-large);
+
         font-weight: 400;
         text-align: center;
     }
 
     [type="submit"] {
+        @include set-font(body-large);
+
         appearance: none;
-        background-color: color(primary);
-        border: 0;
-        border-radius: 0;
-        color: color(neutral-lightest);
         float: right;
-        font-size: 1.8rem;
-        font-weight: 600;
         margin: 0.84rem 0;
         padding: 1rem 2rem;
         width: 15rem;
@@ -64,7 +44,7 @@ form {
             max-width: 50%; // important for ellipsis on inputs
             padding: 0 1.5rem;
 
-            @include phone {
+            @include width-up-to($enough-for-two-columns) {
                 flex: 1 1 auto;
                 max-width: 100%;
             }
@@ -75,13 +55,12 @@ form {
         border: 0;
     }
 
-    label {
-        display: block;
-        margin: 2rem 0;
-    }
 
     .invalid-message {
-        color: color(danger);
+        @include set-font(helper-label);
+
+        color: text-color(error);
+        display: block;
         font-style: italic;
     }
 
@@ -92,7 +71,7 @@ form {
 
         label,
         .form-item {
-            color: color(primary);
+            color: os-color(blue);
             display: flex;
 
             > span,
@@ -133,7 +112,7 @@ form {
 
     .invalid > .validation-message {
         background-color: none;
-        color: color(danger);
+        color: text-color(error);
         display: block;
     }
 
@@ -144,15 +123,14 @@ form {
     [type="date"],
     textarea,
     .selected-button {
+        @include set-font(body-regular);
+
         appearance: none;
-        border: 0.1rem solid rgba(color(gray), 0.2);
+        border: 0.1rem solid ui-color(form-border);
         border-radius: 0;
-        color: color(neutral-dark);
         display: inline-block;
-        font-family: inherit;
-        font-size: 1.6rem;
         font-weight: 500;
-        height: 4.8rem;
+        height: $form-element-height;
         overflow: hidden;
         padding: 0.84rem;
         text-overflow: ellipsis;
@@ -160,12 +138,12 @@ form {
         width: 100%;
 
         &:focus {
-            border-bottom: solid color(cyan) 0.2rem;
+            border-bottom: solid os-color(light-blue) 0.2rem;
             outline: 0;
         }
 
         &.visited:invalid {
-            border-bottom: solid color(danger) 0.2rem;
+            border-bottom: solid ui-color(error-border) 0.2rem;
             outline: 0;
         }
     }
@@ -177,9 +155,11 @@ form {
     }
 
     .select-instructions {
-        font-size: 1.2rem;
+        @include set-font(helper-label);
+
+        color: text-color(helper);
+        display: block;
         font-style: italic;
-        opacity: 0.8;
     }
 
     [type="date"] {
@@ -191,7 +171,7 @@ form {
     }
 
     .wrapper {
-        background-color: rgba(color(neutral-lighter), 0.2);
+        background-color: ui-color(form-bg);
 
         .strips {
             margin-bottom: 0;

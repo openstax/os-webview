@@ -1,8 +1,6 @@
-@import 'variables';
-@import 'mixins';
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
 
 .page-header > .meta-nav {
-    font-size: 1.6rem;
     height: 0;
     overflow: hidden;
     width: 0;
@@ -12,9 +10,10 @@
         white-space: nowrap;
     }
 
-    @include desktop {
-        background-color: lighten(color(neutral-lighter), 8%);
-        font-size: 1.4rem;
+    @include wider-than($tablet-max) {
+        @include set-font(helper-label);
+
+        background-color: ui-color(default);
         height: 5rem;
         order: 1;
         overflow: inherit;
@@ -27,10 +26,10 @@
         display: flex;
         flex-direction: row;
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             justify-content: flex-end;
             margin: 0 auto;
-            max-width: $boxed-width;
+            max-width: $content-max;
         }
     }
 
@@ -38,7 +37,7 @@
         display: flex;
         flex-direction: column;
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             flex-direction: row;
             justify-content: flex-end;
         }
@@ -62,28 +61,25 @@
     }
 
     .nav-menu-item a {
-        color: color(cyan);
 
-        @include desktop {
-            color: color(gray);
+        @include wider-than($tablet-max) {
+            color: os-color(gray);
 
             &:hover {
-                color: color(cyan);
-
                 .chevron {
-                    fill: color(cyan);
+                    fill: os-color(light-blue);
                 }
             }
         }
 
         .chevron {
-            fill: color(cyan);
+            fill: os-color(light-blue);
             height: 1rem;
             margin-left: 0.5em;
             width: 0.6rem;
 
-            @include desktop {
-                fill: color(gray);
+            @include wider-than($tablet-max) {
+                fill: os-color(gray);
                 transform: rotate(90deg);
                 transform-origin: center;
             }
@@ -92,8 +88,8 @@
 
     .logo-wrapper {
         align-items: center;
-        background: rgba(color(neutral-lighter), 0.2);
-        border-top: 0.1rem solid rgba(color(neutral-lighter), 0.5);
+        background: ui-color(default);
+        border-top: 0.1rem solid ui-color(form-border);
         display: flex;
         flex-flow: row nowrap;
         justify-content: space-between;
@@ -112,7 +108,7 @@
             width: 100%;
         }
 
-        @include desktop {
+        @include wider-than($tablet-max) {
             background: transparent;
             border: 0;
             opacity: 1;
@@ -121,11 +117,11 @@
         }
 
         &::after {
-            color: color(gray);
+            color: os-color(gray);
             content: '\00a9  Rice University';
             order: 2;
 
-            @include desktop {
+            @include wider-than($tablet-max) {
                 display: none;
             }
         }

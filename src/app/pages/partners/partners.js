@@ -67,9 +67,9 @@ export default class Partners extends CMSPageController {
     onDataLoaded() {
         this.model = Object.assign(this.model, this.pageData);
         this.model.allPartners = Object.keys(this.pageData.allies)
-        .sort((a, b) => a < b ? -1 : 1)
-        .map((slug) => this.pageData.allies[slug])
-        .filter((info) => !info.do_not_display);
+            .sort((a, b) => a < b ? -1 : 1)
+            .map((slug) => this.pageData.allies[slug])
+            .filter((info) => !info.do_not_display);
 
         this.partnerViewer = new PartnerViewer(this.model);
         this.regions.iconViewer.attach(this.partnerViewer.iconViewer);
