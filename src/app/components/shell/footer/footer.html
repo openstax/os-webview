@@ -31,33 +31,25 @@
             </ul>
 
             <p>
-                Supported by Rice University, the Laura and John Arnold Foundation,
-                Bill & Melinda Gates Foundation, the William and Flora Hewlett Foundation,
-                the Calvin K. Kazanjian Economics Foundation, the Maxfield Foundation,
-                the Bill and Stephanie Sick Fund, and the Michelson 20MM Foundation.
+                {model.supporters}
             </p>
 
-            <p>
-                © 1999-{(new Date()).getYear()+1900}, Rice University. Except where otherwise noted,
-                textbooks on this site are licensed under a Creative Commons Attribution
-                4.0 International License.
-            </p>
+            <p>{model.copyright}</p>
 
             <p>
-                Advanced Placement<sup>®</sup> and AP<sup>®</sup> are trademarks registered and/or
-                owned by the College Board, which was not involved in the
-                production of, and does not endorse, this site.
+                <!-- ap is not rich text, but will contain HTML markup. -->
+                <ap-html data-html="apStatement"></ap-html>
             </p>
         </div>
 
         <div class="social" role="directory">
-            <a class="btn btn-social facebook" href="https://www.facebook.com/openstax" title="facebook">
+            <a class="btn btn-social facebook" href="{model.facebookLink}" title="facebook">
                 Facebook
             </a>
-            <a class="btn btn-social twitter" href="https://twitter.com/openstax" title="twitter">
+            <a class="btn btn-social twitter" href="{model.twitterLink}" title="twitter">
                 Twitter
             </a>
-            <a class="btn btn-social linkedin" href="https://www.linkedin.com/company/openstax" title="linkedin">
+            <a class="btn btn-social linkedin" href="{model.linkedinLink}" title="linkedin">
                 LinkedIn
             </a>
         </div>
