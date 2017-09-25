@@ -10,14 +10,7 @@
         <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
         <div class="boxed">
             <div class="funder" each="funder in model.funders">
-                <div class="logo">
-                  <img src="{funder.funder_logo}" alt="">
-                </div>
-                <div class="text">
-                    <h2>{funder.title}</h2>
-                    <p>{funder.description}
-                    </p>
-                </div>
+                <h2>{funder.title}</h2>
             </div>
         </div>
     </div>
