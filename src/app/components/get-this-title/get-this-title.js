@@ -5,11 +5,12 @@ import userModel from '~/models/usermodel';
 import router from '~/router';
 import {highSchoolSlugs} from '~/models/book-titles';
 import {description as template} from './get-this-title.html';
+import {description as polishTemplate} from './get-this-title-polish.html';
 
 export default class GetThisTitle extends Controller {
 
     init(data) {
-        this.template = template;
+        this.template = data.slug === 'books/fizyka-uniwersytecka-polska' ? polishTemplate : template;
         this.css = '/app/components/get-this-title/get-this-title.css';
         this.regions = {
             submenu: '.submenu'
