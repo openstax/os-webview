@@ -20,7 +20,7 @@
     .blurbs {
         background-color: ui-color(form-bg);
         min-height: 10rem;
-        padding: 8rem 0;
+        padding: 4rem 0;
         position: relative;
     }
 
@@ -31,12 +31,10 @@
     .funder {
         @include set-font(body-large);
 
-        align-items: left;
-        background-color: ui-color(white);
         display: flex;
-        flex-flow: column nowrap;
+        justify-content: center;
         margin-bottom: 1rem;
-        padding: 3rem;
+        width: 100%;
 
         @include wider-than($tablet-max) {
             align-items: center;
