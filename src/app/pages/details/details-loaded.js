@@ -10,11 +10,12 @@ import Resource from './resource/resource';
 import Contents from './contents/contents';
 import Partner from './partner/partner';
 import {description as template} from './details-loaded.html';
+import {description as polishTemplate} from './details-loaded-polish.html';
 
 export default class DetailsLoaded extends Controller {
 
     init(model) {
-        this.template = template;
+        this.template = (/polska/).test(model.slug) ? polishTemplate : template;
         this.css = '/app/pages/details/details.css';
         this.view = {
             classes: ['details-page']

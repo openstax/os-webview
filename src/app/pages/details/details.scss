@@ -106,6 +106,10 @@ $special-breakpoint: 54rem;
         @include wider-than($phone-max) {
             flex-flow: row wrap;
         }
+
+        &:empty {
+            display: none;
+        }
     }
 
     .cta > .btn {
