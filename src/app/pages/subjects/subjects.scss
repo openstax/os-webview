@@ -132,6 +132,8 @@
 
             &.open {
                 @include get-this-is-visible;
+
+                min-width: 23rem;
             }
 
             &::before {
@@ -153,6 +155,8 @@
         .cover:hover .details {
             @include wider-than($tablet-max) {
                 @include get-this-is-visible;
+
+                min-width: 23rem;
             }
         }
     }
