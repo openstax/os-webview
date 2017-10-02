@@ -89,9 +89,9 @@
       "<rootDir>/test/setupFile.js"
     ],
     "modulePathIgnorePatterns": [
-        "dev/jspm_packages",
-        "dist/jspm_packages",
-        "package.json"
+      "dev/jspm_packages",
+      "dist/jspm_packages",
+      "package.json"
     ]
   },
   "jspm": {
@@ -164,7 +164,7 @@
           "_stream_transform": "readable-stream/transform"
         }
       },
-      "npm:debug@2.6.8": {
+      "npm:debug@2.6.9": {
         "main": "browser.js",
         "jspmNodeConversion": false,
         "format": "cjs",

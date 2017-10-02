@@ -7,11 +7,10 @@ fi
 source ./script/bootstrap || exit 1
 
 >&2 echo "==> Installing node packages"
-npm install || exit 2
-
-if [[ ${JSPM_GITHUB_AUTH_TOKEN} ]]; then
-  >&2 echo "==> Configuring jspm to use the GitHub Auth token to download packages from GitHub"
-  $(npm bin)/jspm config registries.github.auth ${JSPM_GITHUB_AUTH_TOKEN}
+if [[ $(which yarn) ]]; then
+  yarn install || exit 2
+else
+  npm install || exit 2
 fi
 
 >&2 echo "==> Installing JSPM packages"
