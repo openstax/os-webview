@@ -1,0 +1,19 @@
+#!/bin/bash
+DIRNAME=`dirname "$0"`
+cd "$DIRNAME/.."
+
+>&2 echo "==> Upgrading 3rd-party dependencies. If you just want to update your local version, use ./script/update"
+sleep 2
+
+$(npm bin)/jspm update --yes
+$(npm bin)/ncu -u
+script/setup
+
+
+if [[ $(which yarn) ]]; then
+  >&2 echo "==> Updating node packages and yarn.lock file"
+  yarn update || exit 2
+else
+  >&2 echo "==> ERROR: Could not find yarn so cannot update the yarn.lock file"
+  exit 1
+fi

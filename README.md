@@ -127,3 +127,8 @@ You must configure your web server to host the files in the `dist` directory tha
 ## Configuration
 
 The `settings.js` file can be used to modify a number of site-wide configurations.
+
+
+## Upgrading Dependencies
+
+You can upgrade dependencies manually or you can upgrade all of them by running `./script/upgrade && ./script/test`.
