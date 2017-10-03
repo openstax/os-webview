@@ -27,35 +27,35 @@ fi
 # Set up the correct version of ruby
 
 # Note: Skip rbenv for Travis because it already has ruby
-if [ ! "${CI}" = "true" ] && [ -f ".ruby-version" ]; then
-  if [[ -n $(which rbenv) ]]; then
+if [ ! "${CI}" = "true" ]; then
+  if [ -f ".ruby-version" ]; then
+    if [[ -n $(which rbenv) ]]; then
 
-    if [ -z "$(rbenv version-name 2>/dev/null)" ]; then
-      >&2 echo "==> Installing Ruby…"
-      rbenv install --skip-existing
+      if [ -z "$(rbenv version-name 2>/dev/null)" ]; then
+        >&2 echo "==> Installing Ruby…"
+        rbenv install --skip-existing
+      fi
+    else
+      >&2 echo "WARNING: Skipping rbenv. Using local ruby"
     fi
-  else
-    >&2 echo "WARNING: Skipping rbenv. Using local ruby"
   fi
 
-fi
+  # Initialize rbenv (if installed)
+  [[ -n $(which rbenv) ]] && eval "$(rbenv init -)"
 
-# Initialize rbenv (if installed)
-[[ -n $(which rbenv) ]] && eval "$(rbenv init -)"
+  which bundle >/dev/null 2>&1  || {
+    >&2 echo "==> Installing Ruby Bundler gem…"
+    gem install bundler || {
+      >&2 echo ''
+      >&2 echo ''
+      >&2 echo '--------------- Error -------------'
+      >&2 echo 'Problem installing ruby bundler.'
+      exit 1
+    }
 
-which bundle >/dev/null 2>&1  || {
-  >&2 echo "==> Installing Ruby Bundler gem…"
-  gem install bundler || {
-    >&2 echo ''
-    >&2 echo ''
-    >&2 echo '--------------- Error -------------'
-    >&2 echo 'Problem installing ruby bundler.'
-    exit 1
+    [[ -n $(which rbenv) ]] && rbenv rehash
   }
-
-  [[ -n $(which rbenv) ]] && rbenv rehash
-
-}
+fi
 
 if [ -f "Gemfile" ]; then
   >&2 echo "==> Installing gem dependencies…"
