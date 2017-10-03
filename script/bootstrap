@@ -27,8 +27,8 @@ fi
 # Set up the correct version of ruby
 
 # Note: Skip rbenv for Travis because it already has ruby
-if [ ! "${CI}" = "true" ]; then
-  if [ -f ".ruby-version" ]; then
+if [[ "${CI}" != "true" ]]; then
+  if [[ -f ".ruby-version" ]]; then
     if [[ -n $(which rbenv) ]]; then
 
       if [ -z "$(rbenv version-name 2>/dev/null)" ]; then
