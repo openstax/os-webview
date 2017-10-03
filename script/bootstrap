@@ -38,23 +38,24 @@ if [ ! "${CI}" = "true" ] && [ -f ".ruby-version" ]; then
     >&2 echo "WARNING: Skipping rbenv. Using local ruby"
   fi
 
-  # Initialize rbenv (if installed)
-  [[ -n $(which rbenv) ]] && eval "$(rbenv init -)"
-
-  which bundle >/dev/null 2>&1  || {
-    >&2 echo "==> Installing Ruby Bundler gem…"
-    gem install bundler || {
-      >&2 echo ''
-      >&2 echo ''
-      >&2 echo '--------------- Error -------------'
-      >&2 echo 'Problem installing ruby bundler.'
-      exit 1
-    }
-
-    [[ -n $(which rbenv) ]] && rbenv rehash
-
-  }
 fi
+
+# Initialize rbenv (if installed)
+[[ -n $(which rbenv) ]] && eval "$(rbenv init -)"
+
+which bundle >/dev/null 2>&1  || {
+  >&2 echo "==> Installing Ruby Bundler gem…"
+  gem install bundler || {
+    >&2 echo ''
+    >&2 echo ''
+    >&2 echo '--------------- Error -------------'
+    >&2 echo 'Problem installing ruby bundler.'
+    exit 1
+  }
+
+  [[ -n $(which rbenv) ]] && rbenv rehash
+
+}
 
 if [ -f "Gemfile" ]; then
   >&2 echo "==> Installing gem dependencies…"
