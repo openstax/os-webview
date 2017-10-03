@@ -8,11 +8,9 @@ set -e
 
 
 # Set up the correct version of node
-if [[ ! "${CI}" = "true" ]] # Skip the nvm stuff if running in Travis
-then
+if [[ "${CI}" != "true" ]]; then # Skip the nvm stuff if running in Travis
   >&2 echo "==> Setting up node version"
-  if [[ -f ~/.nvm/nvm.sh ]]
-  then
+  if [[ -f ~/.nvm/nvm.sh ]]; then
     source ~/.nvm/nvm.sh
     nvm install $(< .nvmrc)
   else
