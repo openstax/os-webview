@@ -41,7 +41,7 @@ if [[ "${CI}" != "true" ]]; then
   # Initialize rbenv (if installed)
   [[ -n $(which rbenv) ]] && eval "$(rbenv init -)"
 
-  which bundle >/dev/null 2>&1  || {
+  gem list -i bundler >/dev/null 2>&1  || {
     >&2 echo "==> Installing Ruby Bundler gem…"
     gem install bundler || {
       >&2 echo ''
