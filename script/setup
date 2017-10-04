@@ -6,15 +6,8 @@ fi
 
 source ./script/bootstrap || exit 1
 
->&2 echo "==> Installing node packages"
-if [[ $(which yarn) ]]; then
-  >&2 echo "Using existing system version of yarn"
-  yarn install || exit 2
-else
-  >&2 echo "Installing yarn locally and then installing packages"
-  npm install yarn
-  $(npm bin)/yarn install || exit 2
-fi
+>&2 echo "==> Installing node packages using https://yarnpkg.com"
+yarn install || exit 2
 
 >&2 echo "==> Installing JSPM packages"
 $(npm bin)/jspm install || exit 3
