@@ -23,6 +23,7 @@ export default class GetThisTitle extends Controller {
         this.model = {
             ibookLink: data.ibook_link,
             ibookLink2: data.ibook_link_volume_2,
+            kindleLink: data.kindle_link,
             webviewLink: data.webview_link,
             comingSoon: data.coming_soon,
             bookshareLink: data.bookshare_link,

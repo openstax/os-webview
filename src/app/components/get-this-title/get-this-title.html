@@ -78,7 +78,7 @@
             <if condition="model.ibookLink">
                 <div if="model.ibookLink2" class="option">
                     <span class="option-header">
-                        <span class="fa fa-tablet"></span>
+                        <span class="fa fa-apple"></span>
                         Download on iBooks
                     </span>
                     <a href="{model.ibookLink}"
@@ -93,11 +93,18 @@
                 <div if="!model.ibookLink2" class="option">
                     <a href="{model.ibookLink}"
                         tabindex="{model.submenu === '' ? 0 : -1}">
-                        <span class="fa fa-tablet"></span>
+                        <span class="fa fa-apple"></span>
                         Download on iBooks
                     </a>
                 </div>
             </if>
+            <div if="model.kindleLink" class="option">
+                <a href="{model.kindleLink}"
+                    tabindex="{model.submenu === '' ? 0 : -1}">
+                    <span class="fa fa-amazon"></span>
+                    Download for Kindle
+                </a>
+            </div>
         </div>
     </div>
 </template>
