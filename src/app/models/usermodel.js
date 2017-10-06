@@ -1,7 +1,6 @@
 import settings from 'settings';
 
 export const userUrl = `${settings.apiOrigin}/api/user`;
-const sfUserUrl = `${settings.apiOrigin}/api/user_salesforce`;
 const docUrlBase = `${settings.apiOrigin}/api/documents`;
 const accountsUrl = `${settings.accountHref}/api/user`;
 
@@ -31,7 +30,18 @@ class UserModel {
 
 }
 
-export const sfUserModel = new UserModel(sfUserUrl);
+const _sfUserModel = new UserModel(accountsUrl); // loads multiple times
+const _userModel = new UserModel(userUrl).load(); // loads once
+
+export const sfUserModel = {
+    load: () =>
+        Promise.all([_sfUserModel.load(), _userModel]).then(([sfUser, user]) => {
+            /* eslint camelcase: 0 */
+            return Object.assign(user, {
+                pending_verification: sfUser.faculty_status === 'pending_faculty'
+            });
+        })
+};
 export const accountsModel = new UserModel(accountsUrl);
 export const makeDocModel = (docId) => new UserModel(`${docUrlBase}/${docId}`);
 export default new UserModel(userUrl);
