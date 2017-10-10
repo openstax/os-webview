@@ -83,7 +83,8 @@ export default class TeacherForm extends SalesforceForm {
 
         this.model = Object.assign(model, {
             validationMessage,
-            salesforceHome: salesforce.salesforceHome
+            salesforceHome: salesforce.salesforceHome,
+            salesforceOid: salesforce.oid
         });
 
         this.inputComponents = Object.keys(inputs)

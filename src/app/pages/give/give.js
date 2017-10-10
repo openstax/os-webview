@@ -36,6 +36,7 @@ export default class Give extends CMSPageController {
         this.model = {
             headline: '',
             salesforceHome: salesforce.salesforceHome,
+            salesforceOid: salesforce.oid,
             subhead: '',
             paymentMethods: [],
             thankYouUrl: `${settings.apiOrigin}/give-confirmation`,

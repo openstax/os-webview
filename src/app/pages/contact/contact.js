@@ -49,6 +49,7 @@ export default class Contact extends SalesforceForm {
         };
         this.model = {
             salesforceHome: salesforce.salesforceHome,
+            salesforceOid: salesforce.oid,
             subjects,
             tagline: '',
             title: '',
