@@ -1,9 +1,9 @@
 <template args="model">
     <iframe name="form-response" id="form-response" src="" width="0" height="0"></iframe>
-    <form accept-charset="UTF-8" action="https://{model.salesforceHome}/servlet/servlet.WebToLead?encoding=UTF-8"
+    <form accept-charset="UTF-8" action="https://{model.salesforce.salesforceHome}/servlet/servlet.WebToLead?encoding=UTF-8"
      target="form-response" class="new_adoption_interest form" method="post">
         <div>
-            <input type="hidden" name="oid" value="{model.salesforceOid}">
+            <input type="hidden" name="oid" value="{model.salesforce.oid}">
             <input type="hidden" name="lead_source" value="OS Interest Form">
             <input type="hidden" name="00NU00000055spw" value="High Interest in Adopting">
             <input type="hidden" name="Role__c" value="{model.userRole}">

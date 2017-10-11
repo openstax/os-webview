@@ -5,11 +5,11 @@
     </div>
     <iframe name="form-response" id="form-response" src="" width="0" height="0"></iframe>
     <form accept-charset="UTF-8" class="form" target="form-response" if="model.introHeading"
-     action="https://{model.salesforceHome}/servlet/servlet.WebToLead?encoding=UTF-8" method="post">
+     action="https://{model.salesforce.salesforceHome}/servlet/servlet.WebToLead?encoding=UTF-8" method="post">
         <div class="text-content">
              <div>
                 <input name="utf8" type="hidden" value="✓">
-                <input type=hidden name="oid" value="{model.salesforceOid}">
+                <input type=hidden name="oid" value="{model.salesforce.oid}">
                 <input type=hidden name="lead_source" value="Comp Request">
             </div>
 
