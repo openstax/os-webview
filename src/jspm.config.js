@@ -1015,43 +1015,43 @@ SystemJS.config({
     "npm:*.json"
   ],
   map: {
-    "assert": "npm:jspm-nodelibs-assert@0.2.0-alpha",
+    "assert": "npm:jspm-nodelibs-assert@0.2.0",
     "babel-polyfill": "npm:babel-polyfill@6.26.0",
     "babel-runtime": "npm:babel-runtime@6.26.0",
     "bcrypt-pbkdf": "npm:bcrypt-pbkdf@1.0.1",
-    "buffer": "npm:jspm-nodelibs-buffer@0.2.0-alpha",
-    "child_process": "npm:jspm-nodelibs-child_process@0.2.0-alpha",
-    "constants": "npm:jspm-nodelibs-constants@0.2.0-alpha",
-    "crypto": "npm:jspm-nodelibs-crypto@0.2.0-alpha",
-    "dgram": "npm:jspm-nodelibs-dgram@0.2.0-alpha",
-    "dns": "npm:jspm-nodelibs-dns@0.2.0-alpha",
+    "buffer": "npm:jspm-nodelibs-buffer@0.2.0",
+    "child_process": "npm:jspm-nodelibs-child_process@0.2.0",
+    "constants": "npm:jspm-nodelibs-constants@0.2.0",
+    "crypto": "npm:jspm-nodelibs-crypto@0.2.0",
+    "dgram": "npm:jspm-nodelibs-dgram@0.2.0",
+    "dns": "npm:jspm-nodelibs-dns@0.2.0",
     "ecc-jsbn": "npm:ecc-jsbn@0.1.1",
     "events": "npm:jspm-nodelibs-events@0.2.2",
     "fetch": "npm:whatwg-fetch@1.1.1",
-    "fs": "npm:jspm-nodelibs-fs@0.2.0-alpha",
+    "fs": "npm:jspm-nodelibs-fs@0.2.0",
     "fsevents": "npm:fsevents@1.1.2",
-    "http": "npm:jspm-nodelibs-http@0.2.0-alpha",
-    "https": "npm:jspm-nodelibs-https@0.2.0-alpha",
+    "http": "npm:jspm-nodelibs-http@0.2.0",
+    "https": "npm:jspm-nodelibs-https@0.2.0",
     "incremental-dom": "npm:incremental-dom@0.5.1",
     "jodid25519": "npm:jodid25519@1.0.2",
     "jsbn": "npm:jsbn@0.1.1",
-    "module": "npm:jspm-nodelibs-module@0.2.0-alpha",
-    "net": "npm:jspm-nodelibs-net@0.2.0-alpha",
+    "module": "npm:jspm-nodelibs-module@0.2.0",
+    "net": "npm:jspm-nodelibs-net@0.2.0",
     "os": "npm:jspm-nodelibs-os@0.2.2",
     "path": "npm:jspm-nodelibs-path@0.2.3",
-    "process": "npm:jspm-nodelibs-process@0.2.0-alpha",
+    "process": "npm:jspm-nodelibs-process@0.2.0",
     "querystring": "npm:jspm-nodelibs-querystring@0.2.2",
     "recordo": "npm:recordo@0.0.6",
-    "stream": "npm:jspm-nodelibs-stream@0.2.0-alpha",
-    "string_decoder": "npm:jspm-nodelibs-string_decoder@0.2.0-alpha",
+    "stream": "npm:jspm-nodelibs-stream@0.2.0",
+    "string_decoder": "npm:jspm-nodelibs-string_decoder@0.2.0",
     "superb": "npm:superb.js@0.2.16",
-    "tls": "npm:jspm-nodelibs-tls@0.2.0-alpha",
-    "tty": "npm:jspm-nodelibs-tty@0.2.0-alpha",
+    "tls": "npm:jspm-nodelibs-tls@0.2.0",
+    "tty": "npm:jspm-nodelibs-tty@0.2.0",
     "tweetnacl": "npm:tweetnacl@0.14.5",
-    "url": "npm:jspm-nodelibs-url@0.2.0-alpha",
-    "util": "npm:jspm-nodelibs-util@0.2.0-alpha",
-    "vm": "npm:jspm-nodelibs-vm@0.2.0-alpha",
-    "zlib": "npm:jspm-nodelibs-zlib@0.2.0-alpha"
+    "url": "npm:jspm-nodelibs-url@0.2.0",
+    "util": "npm:jspm-nodelibs-util@0.2.0",
+    "vm": "npm:jspm-nodelibs-vm@0.2.0",
+    "zlib": "npm:jspm-nodelibs-zlib@0.2.0"
   },
   packages: {
     "npm:ecc-jsbn@0.1.1": {
@@ -1102,37 +1102,37 @@ SystemJS.config({
         "tiny-emitter": "npm:tiny-emitter@2.0.2"
       }
     },
-    "npm:jspm-nodelibs-stream@0.2.0-alpha": {
+    "npm:jspm-nodelibs-stream@0.2.0": {
       "map": {
         "stream-browserify": "npm:stream-browserify@2.0.1"
       }
     },
-    "npm:jspm-nodelibs-zlib@0.2.0-alpha": {
+    "npm:jspm-nodelibs-zlib@0.2.0": {
       "map": {
         "zlib-browserify": "npm:browserify-zlib@0.1.4"
       }
     },
-    "npm:jspm-nodelibs-string_decoder@0.2.0-alpha": {
+    "npm:jspm-nodelibs-string_decoder@0.2.0": {
       "map": {
         "string_decoder-browserify": "npm:string_decoder@0.10.31"
       }
     },
-    "npm:jspm-nodelibs-url@0.2.0-alpha": {
+    "npm:jspm-nodelibs-url@0.2.0": {
       "map": {
         "url-browserify": "npm:url@0.11.0"
       }
     },
-    "npm:jspm-nodelibs-crypto@0.2.0-alpha": {
+    "npm:jspm-nodelibs-crypto@0.2.0": {
       "map": {
         "crypto-browserify": "npm:crypto-browserify@3.11.1"
       }
     },
-    "npm:jspm-nodelibs-http@0.2.0-alpha": {
+    "npm:jspm-nodelibs-http@0.2.0": {
       "map": {
         "http-browserify": "npm:stream-http@2.7.2"
       }
     },
-    "npm:jspm-nodelibs-buffer@0.2.0-alpha": {
+    "npm:jspm-nodelibs-buffer@0.2.0": {
       "map": {
         "buffer-browserify": "npm:buffer@4.9.1"
       }
