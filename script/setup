@@ -8,6 +8,3 @@ source ./script/bootstrap || exit 1
 
 >&2 echo "==> Installing node packages using https://yarnpkg.com"
 yarn install || exit 2
-
->&2 echo "==> Installing JSPM packages"
-$(npm bin)/jspm install || exit 3
