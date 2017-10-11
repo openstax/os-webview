@@ -991,7 +991,6 @@ SystemJS.config({
   nodeConfig: {
     "paths": {
       "npm:": "jspm_packages/npm/",
-      "github:": "jspm_packages/github/",
       "~/": "src/app/",
       "settings": "src/settings"
     }
@@ -1013,47 +1012,46 @@ SystemJS.config({
 SystemJS.config({
   packageConfigPaths: [
     "npm:@*/*.json",
-    "npm:*.json",
-    "github:*/*.json"
+    "npm:*.json"
   ],
   map: {
-    "assert": "github:jspm/nodelibs-assert@0.2.0-alpha",
+    "assert": "npm:jspm-nodelibs-assert@0.2.0-alpha",
     "babel-polyfill": "npm:babel-polyfill@6.26.0",
     "babel-runtime": "npm:babel-runtime@6.26.0",
     "bcrypt-pbkdf": "npm:bcrypt-pbkdf@1.0.1",
-    "buffer": "github:jspm/nodelibs-buffer@0.2.0-alpha",
-    "child_process": "github:jspm/nodelibs-child_process@0.2.0-alpha",
-    "constants": "github:jspm/nodelibs-constants@0.2.0-alpha",
-    "crypto": "github:jspm/nodelibs-crypto@0.2.0-alpha",
-    "dgram": "github:jspm/nodelibs-dgram@0.2.0-alpha",
-    "dns": "github:jspm/nodelibs-dns@0.2.0-alpha",
+    "buffer": "npm:jspm-nodelibs-buffer@0.2.0-alpha",
+    "child_process": "npm:jspm-nodelibs-child_process@0.2.0-alpha",
+    "constants": "npm:jspm-nodelibs-constants@0.2.0-alpha",
+    "crypto": "npm:jspm-nodelibs-crypto@0.2.0-alpha",
+    "dgram": "npm:jspm-nodelibs-dgram@0.2.0-alpha",
+    "dns": "npm:jspm-nodelibs-dns@0.2.0-alpha",
     "ecc-jsbn": "npm:ecc-jsbn@0.1.1",
-    "events": "github:jspm/nodelibs-events@0.2.2",
+    "events": "npm:jspm-nodelibs-events@0.2.2",
     "fetch": "npm:whatwg-fetch@1.1.1",
-    "fs": "github:jspm/nodelibs-fs@0.2.0-alpha",
+    "fs": "npm:jspm-nodelibs-fs@0.2.0-alpha",
     "fsevents": "npm:fsevents@1.1.2",
-    "http": "github:jspm/nodelibs-http@0.2.0-alpha",
-    "https": "github:jspm/nodelibs-https@0.2.0-alpha",
+    "http": "npm:jspm-nodelibs-http@0.2.0-alpha",
+    "https": "npm:jspm-nodelibs-https@0.2.0-alpha",
     "incremental-dom": "npm:incremental-dom@0.5.1",
     "jodid25519": "npm:jodid25519@1.0.2",
     "jsbn": "npm:jsbn@0.1.1",
-    "module": "github:jspm/nodelibs-module@0.2.0-alpha",
-    "net": "github:jspm/nodelibs-net@0.2.0-alpha",
-    "os": "github:jspm/nodelibs-os@0.2.2",
-    "path": "github:jspm/nodelibs-path@0.2.3",
-    "process": "github:jspm/nodelibs-process@0.2.0-alpha",
-    "querystring": "github:jspm/nodelibs-querystring@0.2.2",
+    "module": "npm:jspm-nodelibs-module@0.2.0-alpha",
+    "net": "npm:jspm-nodelibs-net@0.2.0-alpha",
+    "os": "npm:jspm-nodelibs-os@0.2.2",
+    "path": "npm:jspm-nodelibs-path@0.2.3",
+    "process": "npm:jspm-nodelibs-process@0.2.0-alpha",
+    "querystring": "npm:jspm-nodelibs-querystring@0.2.2",
     "recordo": "npm:recordo@0.0.6",
-    "stream": "github:jspm/nodelibs-stream@0.2.0-alpha",
-    "string_decoder": "github:jspm/nodelibs-string_decoder@0.2.0-alpha",
+    "stream": "npm:jspm-nodelibs-stream@0.2.0-alpha",
+    "string_decoder": "npm:jspm-nodelibs-string_decoder@0.2.0-alpha",
     "superb": "npm:superb.js@0.2.16",
-    "tls": "github:jspm/nodelibs-tls@0.2.0-alpha",
-    "tty": "github:jspm/nodelibs-tty@0.2.0-alpha",
+    "tls": "npm:jspm-nodelibs-tls@0.2.0-alpha",
+    "tty": "npm:jspm-nodelibs-tty@0.2.0-alpha",
     "tweetnacl": "npm:tweetnacl@0.14.5",
-    "url": "github:jspm/nodelibs-url@0.2.0-alpha",
-    "util": "github:jspm/nodelibs-util@0.2.0-alpha",
-    "vm": "github:jspm/nodelibs-vm@0.2.0-alpha",
-    "zlib": "github:jspm/nodelibs-zlib@0.2.0-alpha"
+    "url": "npm:jspm-nodelibs-url@0.2.0-alpha",
+    "util": "npm:jspm-nodelibs-util@0.2.0-alpha",
+    "vm": "npm:jspm-nodelibs-vm@0.2.0-alpha",
+    "zlib": "npm:jspm-nodelibs-zlib@0.2.0-alpha"
   },
   packages: {
     "npm:ecc-jsbn@0.1.1": {
@@ -1104,37 +1102,37 @@ SystemJS.config({
         "tiny-emitter": "npm:tiny-emitter@2.0.2"
       }
     },
-    "github:jspm/nodelibs-stream@0.2.0-alpha": {
+    "npm:jspm-nodelibs-stream@0.2.0-alpha": {
       "map": {
         "stream-browserify": "npm:stream-browserify@2.0.1"
       }
     },
-    "github:jspm/nodelibs-zlib@0.2.0-alpha": {
+    "npm:jspm-nodelibs-zlib@0.2.0-alpha": {
       "map": {
         "zlib-browserify": "npm:browserify-zlib@0.1.4"
       }
     },
-    "github:jspm/nodelibs-string_decoder@0.2.0-alpha": {
+    "npm:jspm-nodelibs-string_decoder@0.2.0-alpha": {
       "map": {
         "string_decoder-browserify": "npm:string_decoder@0.10.31"
       }
     },
-    "github:jspm/nodelibs-url@0.2.0-alpha": {
+    "npm:jspm-nodelibs-url@0.2.0-alpha": {
       "map": {
         "url-browserify": "npm:url@0.11.0"
       }
     },
-    "github:jspm/nodelibs-crypto@0.2.0-alpha": {
+    "npm:jspm-nodelibs-crypto@0.2.0-alpha": {
       "map": {
         "crypto-browserify": "npm:crypto-browserify@3.11.1"
       }
     },
-    "github:jspm/nodelibs-http@0.2.0-alpha": {
+    "npm:jspm-nodelibs-http@0.2.0-alpha": {
       "map": {
         "http-browserify": "npm:stream-http@2.7.2"
       }
     },
-    "github:jspm/nodelibs-buffer@0.2.0-alpha": {
+    "npm:jspm-nodelibs-buffer@0.2.0-alpha": {
       "map": {
         "buffer-browserify": "npm:buffer@4.9.1"
       }
