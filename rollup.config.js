@@ -1,6 +1,6 @@
 import resolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
-import handlebars from 'rollup-plugin-handlebars-plus';
+import superviews from 'rollup-plugin-superviews';
 
 export default {
   input: 'src/app/main.js',
@@ -10,40 +10,15 @@ export default {
   },
   // name: 'MyModule',
   plugins: [
+    superviews({
+      include: 'src/**/*.html',
+      // name: 'render', // if not provided defaults to 'render'
+      // argstr: 'ctrl', // if not provided defaults to 'ctrl'
+      // mode: 'es6' // if not provided defaults to 'es6'
+    }),
     babel({
       runtimeHelpers: true,
       exclude: 'node_modules/**'
-    }),
-    handlebars({
-      handlebars: {
-        // The module ID of the Handlebars runtime, exporting `Handlebars` as `default`.
-        // As a shortcut, you can pass this as the value of `handlebars` above.
-        // See the "Handlebars" section below.
-        // id: 'handlebars', // Default: the path of Handlebars' CJS definition within this module
-
-        // Options to pass to Handlebars' `parse` and `precompile` methods.
-        options: {
-          // Whether to generate sourcemaps for the templates
-          sourceMap: true // Default: true
-        }
-      },
-
-      // The ID(s) of modules to import before every template, see the "Helpers" section below.
-      // Can be a string too.
-      // helpers: ['/utils/HandlebarsHelpers.js'], // Default: none
-
-      // In case you want to compile files with other extensions.
-      templateExtension: '.html', // Default: '.hbs'
-
-      // A function that can determine whether or not a template is a partial.
-      isPartial: (name) => name.startsWith('_'), // Default: as at left
-
-      // The absolute paths of the root directory(ies) from which to try to resolve the partials.
-      // You must also register these with `rollup-plugin-root-import`.
-      // partialRoot: partialRoots, // Default: none
-
-      // The module ID of jQuery, see the "jQuery" section below.
-      // jquery: 'jquery' // Default: none
     }),
     resolve({
       // use "module" field for ES6 module if possible
