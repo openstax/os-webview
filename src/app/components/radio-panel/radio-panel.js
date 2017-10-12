@@ -1,7 +1,7 @@
 import {Controller} from 'superb';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
-import {description as template} from './radio-panel.html';
+import {render as template} from './radio-panel.html';
 
 export default class RadioPanel extends Controller {
 

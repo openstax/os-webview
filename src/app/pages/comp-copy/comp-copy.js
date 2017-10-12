@@ -4,7 +4,7 @@ import $ from '~/helpers/$';
 import settings from 'settings';
 import salesforce from '~/models/salesforce';
 import selectHandler from '~/handlers/select';
-import {description as template} from './comp-copy.html';
+import {render as template} from './comp-copy.html';
 
 const booksPromise = fetch(`${settings.apiOrigin}/api/books`)
     .then((r) => r.json())

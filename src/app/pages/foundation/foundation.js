@@ -1,6 +1,6 @@
 import CMSPageController from '~/controllers/cms';
 import shell from '~/components/shell/shell';
-import {description as template} from './foundation.html';
+import {render as template} from './foundation.html';
 
 export default class Foundation extends CMSPageController {
 

@@ -1,5 +1,5 @@
 import {Controller} from 'superb';
-import {description as template} from './loading-section.html';
+import {render as template} from './loading-section.html';
 
 export default class LoadingSection extends Controller {
 

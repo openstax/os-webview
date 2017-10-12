@@ -1,6 +1,6 @@
 import {Controller} from 'superb';
 import $ from '~/helpers/$';
-import {description as template} from './product-box.html';
+import {render as template} from './product-box.html';
 
 export default class ProductBox extends Controller {
 

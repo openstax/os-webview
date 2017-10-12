@@ -1,6 +1,6 @@
 import {Controller} from 'superb';
 import $ from '~/helpers/$';
-import {description as template} from './resource.html';
+import {render as template} from './resource.html';
 
 export default class Resource extends Controller {
 

@@ -4,7 +4,7 @@ import FormSelect from '~/components/form-select/form-select';
 import shell from '~/components/shell/shell';
 import {on} from '~/helpers/controller/decorators';
 import {bookPromise} from '~/models/book-titles';
-import {description as template} from './technology.html';
+import {render as template} from './technology.html';
 
 export default class Accessibility extends CMSPageController {
 

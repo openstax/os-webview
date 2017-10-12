@@ -1,6 +1,6 @@
 import {Controller} from 'superb';
 import $ from '~/helpers/$';
-import {description as template} from './partner.html';
+import {render as template} from './partner.html';
 
 export default class Partner extends Controller {
 

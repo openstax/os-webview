@@ -1,7 +1,7 @@
 import {Controller} from 'superb';
 import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
-import {description as template} from './select.html';
+import {render as template} from './select.html';
 
 const CONVERT_OPTIONS = Symbol();
 

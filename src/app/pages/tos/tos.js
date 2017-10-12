@@ -1,6 +1,6 @@
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
-import {description as template} from './tos.html';
+import {render as template} from './tos.html';
 
 export default class Tos extends CMSPageController {
 

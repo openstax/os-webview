@@ -2,7 +2,7 @@ import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 import analytics from '~/helpers/analytics';
-import {description as template} from './openstax-tutor.html';
+import {render as template} from './openstax-tutor.html';
 
 const availableUrl = '/images/openstax-tutor/available-flag.svg';
 const unavailableUrl = '/images/openstax-tutor/unavailable-flag.svg';

@@ -1,7 +1,7 @@
 import settings from 'settings';
 import shell from '~/components/shell/shell';
 import CMSPageController from '~/controllers/cms';
-import {description as template} from './adopters.html';
+import {render as template} from './adopters.html';
 
 export default class Adopters extends CMSPageController {
 

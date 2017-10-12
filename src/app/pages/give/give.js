@@ -7,7 +7,7 @@ import shell from '~/components/shell/shell';
 import settings from 'settings';
 import salesforce from '~/models/salesforce';
 import Share from '~/components/share/share';
-import {description as template} from './give.html';
+import {render as template} from './give.html';
 
 const studentModel = {
     headline: 'Help Us Make More Free Books!',

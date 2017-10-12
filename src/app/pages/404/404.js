@@ -1,5 +1,5 @@
 import {Controller} from 'superb';
-import {description as template} from './404.html';
+import {render as template} from './404.html';
 
 export default class NotFound extends Controller {
 

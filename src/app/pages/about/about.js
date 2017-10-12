@@ -1,6 +1,6 @@
 import CMSPageController from '~/controllers/cms';
 import {on} from '~/helpers/controller/decorators';
-import {description as template} from './about.html';
+import {render as template} from './about.html';
 import $ from '~/helpers/$';
 import shell from '~/components/shell/shell';
 

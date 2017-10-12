@@ -1,7 +1,7 @@
 import {Controller} from 'superb';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
-import {description as template} from './main-menu.html';
+import {render as template} from './main-menu.html';
 
 export default class MainMenu extends Controller {
 

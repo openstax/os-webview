@@ -1,5 +1,5 @@
 import {Controller} from 'superb';
-import {description as template} from './banner.html';
+import {render as template} from './banner.html';
 
 export default class Banner extends Controller {
 

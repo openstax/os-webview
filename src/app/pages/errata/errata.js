@@ -9,7 +9,7 @@ import userModel from '~/models/usermodel';
 import Form from './form/form';
 import Detail from './detail/detail';
 import RadioPanel from '~/components/radio-panel/radio-panel';
-import {description as template} from './errata.html';
+import {render as template} from './errata.html';
 
 function setDisplayStatus(detail) {
     const result = {

@@ -5,7 +5,7 @@ import $ from '~/helpers/$';
 import shell from '~/components/shell/shell';
 import BookViewer from './book-viewer/book-viewer';
 import CategorySelector from '~/components/category-selector/category-selector';
-import {description as template} from './subjects.html';
+import {render as template} from './subjects.html';
 
 const pagePath = '/subjects';
 

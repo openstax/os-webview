@@ -1,6 +1,6 @@
 import {Controller} from 'superb';
 import Contents from './contents';
-import {description as template} from './content-item.html';
+import {render as template} from './content-item.html';
 
 export default class ContentItem extends Controller {
 

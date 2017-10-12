@@ -1,6 +1,6 @@
 import {Controller} from 'superb';
 import $ from '~/helpers/$';
-import {description as template} from './bucket.html';
+import {render as template} from './bucket.html';
 
 export default class Bucket extends Controller {
 

@@ -2,7 +2,7 @@ import {Controller} from 'superb';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
-import {description as template} from './book.html';
+import {render as template} from './book.html';
 
 export default class Book extends Controller {
 

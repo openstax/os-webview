@@ -4,7 +4,7 @@ import router from '~/router';
 import shell from '~/components/shell/shell';
 import CMSPageController from '~/controllers/cms';
 import Article from './article/article';
-import {description as template} from './blog.html';
+import {render as template} from './blog.html';
 
 
 function slugWithNewsPrefix(slug) {

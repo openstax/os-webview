@@ -4,7 +4,7 @@ import FormInput from '~/components/form-input/form-input';
 import ManagedComponent from '~/helpers/controller/managed-component';
 import {schoolPromise} from '~/models/schools';
 import {on} from '~/helpers/controller/decorators';
-import {description as template} from './contact-info.html';
+import {render as template} from './contact-info.html';
 
 export default class ContactInfo extends Controller {
 

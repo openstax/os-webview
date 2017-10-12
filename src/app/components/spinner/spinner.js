@@ -1,6 +1,6 @@
 import {Controller} from 'superb';
 import {on} from '~/helpers/controller/decorators';
-import {description as template} from './spinner.html';
+import {render as template} from './spinner.html';
 
 export default class Spinner extends Controller {
 

@@ -7,7 +7,7 @@ import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 import linkHelper from '~/helpers/link';
 import userModel, {sfUserModel, accountsModel} from '~/models/usermodel';
-import {description as template} from './header.html';
+import {render as template} from './header.html';
 
 class Header extends Controller {
 
