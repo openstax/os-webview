@@ -1,8 +1,8 @@
 import {Controller} from 'superb';
 import bodyUnitView from '~/components/body-units/body-units';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
-import {description as featureTemplate} from './feature.html';
-import {description as synopsisTemplate} from './synopsis.html';
+import {render as featureTemplate} from './feature.html';
+import {render as synopsisTemplate} from './synopsis.html';
 
 export default class FormattedAs extends Controller {
 

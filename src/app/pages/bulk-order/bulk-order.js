@@ -6,7 +6,7 @@ import $ from '~/helpers/$';
 import selectHandler from '~/handlers/select';
 import {highSchoolSlugs} from '~/models/book-titles';
 import {render as template} from './bulk-order.html';
-import {description as oiTemplate} from './order-items.html';
+import {render as oiTemplate} from './order-items.html';
 
 class OrderItems extends CMSPageController {
 

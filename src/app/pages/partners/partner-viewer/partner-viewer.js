@@ -1,7 +1,7 @@
 import {Controller} from 'superb';
 import $ from '~/helpers/$';
-import {description as iconTemplate} from './icons.html';
-import {description as blurbTemplate} from './blurbs.html';
+import {render as iconTemplate} from './icons.html';
+import {render as blurbTemplate} from './blurbs.html';
 
 // The PartnerViewer is an ordinary class that has two CMSPageController members,
 // Icons and Blurbs

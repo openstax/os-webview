@@ -1,6 +1,6 @@
 import {Controller} from 'superb';
 import $ from '~/helpers/$';
-import {description as alignedImageTemplate} from './aligned-image.html';
+import {render as alignedImageTemplate} from './aligned-image.html';
 import Quote from '~/components/quotes/quote/quote';
 
 const template = () => '';

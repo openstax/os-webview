@@ -10,7 +10,7 @@ import Resource from './resource/resource';
 import Contents from './contents/contents';
 import Partner from './partner/partner';
 import {render as template} from './details-loaded.html';
-import {description as polishTemplate} from './details-loaded-polish.html';
+import {render as polishTemplate} from './details-loaded-polish.html';
 
 export default class DetailsLoaded extends Controller {
 
