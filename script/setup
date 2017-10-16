@@ -7,4 +7,4 @@ fi
 source ./script/bootstrap || exit 1
 
 >&2 echo "==> Installing node packages using https://yarnpkg.com"
-yarn install || exit 2
+yarn install --flat || exit 2
