@@ -1,4 +1,4 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import {render as template} from './loading-section.html';
 
 export default class LoadingSection extends Controller {

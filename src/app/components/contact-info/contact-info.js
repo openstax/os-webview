@@ -1,4 +1,4 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import Popup from '~/components/popup/popup';
 import FormInput from '~/components/form-input/form-input';
 import ManagedComponent from '~/helpers/controller/managed-component';

@@ -1,6 +1,6 @@
-import {Controller} from 'superb';
-import {on} from '~/helpers/controller/decorators';
-import $ from '~/helpers/$';
+import {Controller} from 'superb.js';
+import {on} from '../../../../helpers/controller/decorators';
+import $ from '../../../../helpers/$';
 import {render as template} from './main-menu.html';
 
 export default class MainMenu extends Controller {

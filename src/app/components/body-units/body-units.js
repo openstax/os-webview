@@ -1,4 +1,4 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import {render as alignedImageTemplate} from './aligned-image.html';
 import Quote from '~/components/quotes/quote/quote';

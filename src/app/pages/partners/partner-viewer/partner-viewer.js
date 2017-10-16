@@ -1,4 +1,4 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import {render as iconTemplate} from './icons.html';
 import {render as blurbTemplate} from './blurbs.html';

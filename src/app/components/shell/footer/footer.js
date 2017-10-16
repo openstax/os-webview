@@ -1,6 +1,6 @@
-import CMSPageController from '~/controllers/cms';
-import $ from '~/helpers/$';
-import settings from 'settings';
+import settings from '../../../../settings';
+import CMSPageController from '../../../controllers/cms';
+import $ from '../../../helpers/$';
 import {render as template} from './footer.html';
 
 class Footer extends CMSPageController {

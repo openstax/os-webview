@@ -1,4 +1,4 @@
-import settings from 'settings';
+import settings from '../../settings';
 
 export const userUrl = `${settings.apiOrigin}/api/user`;
 const sfUserUrl = `${settings.apiOrigin}/api/user_salesforce`;

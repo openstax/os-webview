@@ -1,4 +1,4 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import {makeDocModel} from '~/models/usermodel';
 import {render as template} from './quote.html';

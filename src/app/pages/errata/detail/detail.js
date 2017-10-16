@@ -1,4 +1,4 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import {bookPromise} from '~/models/book-titles';
 import settings from 'settings';

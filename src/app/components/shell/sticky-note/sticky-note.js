@@ -1,6 +1,6 @@
-import CMSPageController from '~/controllers/cms';
-import router from '~/router';
-import {on} from '~/helpers/controller/decorators';
+import CMSPageController from '../../../controllers/cms';
+import router from '../../../router';
+import {on} from '../../../helpers/controller/decorators';
 import {render as template} from './sticky-note.html';
 
 const isExpired = (str) => new Date(str) < Date.now();

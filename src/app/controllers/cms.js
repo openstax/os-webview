@@ -1,5 +1,5 @@
-import settings from 'settings';
-import {Controller} from 'superb';
+import settings from '../../settings';
+import {Controller} from 'superb.js';
 
 const TRANSFORM_DATA = Symbol();
 const LOAD_IMAGES = Symbol();
