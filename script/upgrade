@@ -1,6 +1,6 @@
 #!/bin/bash
-DIRNAME=`dirname "$0"`
-cd "$DIRNAME/.."
+
+cd "$(dirname "$0")/.."
 
 >&2 echo "==> Upgrading 3rd-party dependencies. If you just want to update your local version, use ./script/update"
 sleep 2

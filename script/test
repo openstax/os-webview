@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd "$(dirname "$0")/.."
+
 source ./script/bootstrap || exit 2
 
 npm test || exit 5
