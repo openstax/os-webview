@@ -18,6 +18,8 @@ export default {
       // mode: 'es6' // if not provided defaults to 'es6'
     }),
     babel({
+      babelrc: false, // jest-babel uses that file which contains `"presets": ["env"]` which rollup does not like
+      plugins: ["transform-decorators-legacy"],
       runtimeHelpers: true,
       exclude: 'node_modules/**'
     }),
