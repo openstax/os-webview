@@ -5,4 +5,4 @@ cd "$(dirname "$0")/.."
 source ./script/bootstrap || exit 1
 
 >&2 echo "==> Installing node packages using https://yarnpkg.com"
-yarn install --flat || exit 2
+yarn install || exit 2

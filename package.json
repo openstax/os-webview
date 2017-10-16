@@ -79,6 +79,27 @@
     "systemjs-jest": "^1.0.0",
     "yargs": "8.0.2"
   },
+  "jest": {
+    "moduleNameMapper": {
+      "^~/(.*)": "<rootDir>/dist/app/$1",
+      "superb": "<rootDir>/node_modules/superb.js/dist/superb.js",
+      "recordo": "<rootDir>/node_modules/recordo/dist/recordo.js",
+      "settings": "<rootDir>/dist/settings",
+      "fetch": "<rootDir>/node_modules/whatwg-fetch/fetch.js"
+    },
+    "coveragePathIgnorePatterns": [
+      "/jspm_packages",
+      "/analytics"
+    ],
+    "setupFiles": [
+      "<rootDir>/test/setupFile.js"
+    ],
+    "modulePathIgnorePatterns": [
+      "dev/jspm_packages",
+      "dist/jspm_packages",
+      "package.json"
+    ]
+  },
   "jspm": {
     "main": "src/app/main.js",
     "directories": {
