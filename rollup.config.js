@@ -1,16 +1,25 @@
-import commonjs from 'rollup-plugin-commonjs';
-import resolve from 'rollup-plugin-node-resolve';
-import babel from 'rollup-plugin-babel';
-import superviews from 'rollup-plugin-superviews';
+const replace = require('rollup-plugin-replace');
+const commonjs = require('rollup-plugin-commonjs');
+const resolve = require('rollup-plugin-node-resolve');
+const babel = require('rollup-plugin-babel');
+const superviews = require('rollup-plugin-superviews');
+const uglify = require('rollup-plugin-uglify');
+const { minify } = require('uglify-es');
 
-export default {
+module.exports = {
   input: 'src/app/main.js',
+  format: 'cjs', // copied from below because the gulp task requires it???
   output: {
-    file: 'dist/bundle.js',
+    file: 'dist/main.js',
+    sourcemap: true,
+    sourcemapFile: 'main.js.map',
     format: 'cjs' // 'iife'
   },
   // name: 'MyModule',
   plugins: [
+    replace({
+      'process.env.NODE_ENV': JSON.stringify( 'production' )
+    }),
     superviews({
       include: 'src/**/*.html',
       // name: 'render', // if not provided defaults to 'render'
@@ -90,6 +99,7 @@ export default {
       // or a `id => boolean` function. Only use this
       // option if you know what you're doing!
       // ignore: [ 'conditional-runtime-dependency' ]
-    })
+    }),
+    uglify({}, minify)
   ]
 };

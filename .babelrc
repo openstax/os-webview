@@ -1,4 +1,5 @@
 {
+  "presets": ["es2015-rollup"],
   "plugins": ["transform-decorators-legacy"],
   "env": {
     "test": {

@@ -207,20 +207,17 @@ function compileScripts() {
     .pipe(gulp.dest(config.dest));
 }
 
-function minifyScripts() {
-    return gulp.src([
-        `${config.dest}/**/*.js`
-    ])
-    .pipe(pi.uglify({
-        preserveComments: false,
-        screwIE8: true
-    }))
-    .pipe(gulp.dest(config.dest));
-}
+// function minifyScripts() {
+//     return gulp.src([
+//         `${config.dest}/**/*.js`
+//     ])
+//     .pipe(pi.uglify())
+//     .pipe(gulp.dest(config.dest));
+// }
 
 gulp.task(eslint);
 gulp.task(compileScripts);
-gulp.task('minify-scripts', minifyScripts);
+// gulp.task('minify-scripts', minifyScripts);
 
 gulp.task('scripts', gulp.series(
     eslint,

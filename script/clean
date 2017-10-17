@@ -1,9 +1,10 @@
-#!/bin/bash
+#!/bin/bash -v
 
 cd "$(dirname "$0")/.."
 
-[[ -f ./node_modules/ ]] && rm -rf ./node_modules/
-[[ -f ./jspm_packages/ ]] && rm -rf ./jspm_packages/
-[[ -f ./vendor/ ]] && rm -rf ./vendor/
-[[ -f ./dist/ ]] && rm -rf ./dist/
-[[ -f ./coverage/ ]] && rm -rf ./coverage/
+[[ -d ./node_modules/ ]] && rm -rf ./node_modules/
+[[ -d ./jspm_packages/ ]] && rm -rf ./jspm_packages/
+[[ -d ./vendor/ ]] && rm -rf ./vendor/
+[[ -d ./dev/ ]] && rm -rf ./dev/
+[[ -d ./dist/ ]] && rm -rf ./dist/
+[[ -d ./coverage/ ]] && rm -rf ./coverage/

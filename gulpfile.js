@@ -14,7 +14,9 @@ gulp.task('default', gulp.series(
         'templates',
         'images'
     ),
-    'jspm-builder'
+    // )
+    // 'jspm-builder'
+    'rollup'
 ));
 
 gulp.task('dev-build', gulp.series(
@@ -36,7 +38,7 @@ gulp.task('dist', gulp.series(
     'production',
     'default',
     'precache',
-    'minify-scripts',
+    // 'minify-scripts',
     'humans'
 ));
 

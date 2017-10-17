@@ -531,6 +531,12 @@ babel-plugin-check-es2015-constants@^6.22.0:
   dependencies:
     babel-runtime "^6.22.0"
 
+babel-plugin-external-helpers@^6.18.0:
+  version "6.22.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-external-helpers/-/babel-plugin-external-helpers-6.22.0.tgz#2285f48b02bd5dede85175caf8c62e86adccefa1"
+  dependencies:
+    babel-runtime "^6.22.0"
+
 babel-plugin-istanbul@^4.0.0:
   version "4.1.5"
   resolved "https://registry.yarnpkg.com/babel-plugin-istanbul/-/babel-plugin-istanbul-4.1.5.tgz#6760cdd977f411d3e175bb064f2bc327d99b2b6e"
@@ -874,7 +880,15 @@ babel-preset-env@^1.4.0:
     invariant "^2.2.2"
     semver "^5.3.0"
 
-babel-preset-es2015@6.24.1:
+babel-preset-es2015-rollup@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/babel-preset-es2015-rollup/-/babel-preset-es2015-rollup-3.0.0.tgz#854b63ecde2ee98cac40e882f67bfcf185b1f24a"
+  dependencies:
+    babel-plugin-external-helpers "^6.18.0"
+    babel-preset-es2015 "^6.3.13"
+    require-relative "^0.8.7"
+
+babel-preset-es2015@6.24.1, babel-preset-es2015@^6.3.13:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-preset-es2015/-/babel-preset-es2015-6.24.1.tgz#d44050d6bc2c9feea702aaf38d727a0210538939"
   dependencies:
@@ -1078,6 +1092,12 @@ binary@~0.3.0:
 binaryextensions@~1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/binaryextensions/-/binaryextensions-1.0.1.tgz#1e637488b35b58bda5f4774bf96a5212a8c90755"
+
+bl@^0.9.1:
+  version "0.9.5"
+  resolved "https://registry.yarnpkg.com/bl/-/bl-0.9.5.tgz#c06b797af085ea00bc527afc8efcf11de2232054"
+  dependencies:
+    readable-stream "~1.0.26"
 
 bl@^1.0.0:
   version "1.2.1"
@@ -3489,7 +3509,7 @@ gulp-sourcemaps@1.6.0:
     through2 "^2.0.0"
     vinyl "^1.0.0"
 
-gulp-sourcemaps@2.6.1:
+gulp-sourcemaps@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/gulp-sourcemaps/-/gulp-sourcemaps-2.6.1.tgz#833a4e28f0b8f4661075032cd782417f7cd8fb0b"
   dependencies:
@@ -6463,7 +6483,7 @@ read-pkg@^2.0.0:
     normalize-package-data "^2.3.2"
     path-type "^2.0.0"
 
-"readable-stream@>=1.0.33-1 <1.1.0-0", readable-stream@~1.0.0, readable-stream@~1.0.31:
+"readable-stream@>=1.0.33-1 <1.1.0-0", readable-stream@~1.0.0, readable-stream@~1.0.26, readable-stream@~1.0.31:
   version "1.0.34"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-1.0.34.tgz#125820e34bc842d2f2aaafafe4c2916ee32c157c"
   dependencies:
@@ -6716,6 +6736,10 @@ require-main-filename@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/require-main-filename/-/require-main-filename-1.0.1.tgz#97f717b69d48784f5f526a6c5aa8ffdda055a4d1"
 
+require-relative@^0.8.7:
+  version "0.8.7"
+  resolved "https://registry.yarnpkg.com/require-relative/-/require-relative-0.8.7.tgz#7999539fc9e047a37928fa196f8e1563dabd36de"
+
 require-uncached@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/require-uncached/-/require-uncached-1.0.3.tgz#4e0d56d6c9662fd31e43011c4b95aa49955421d3"
@@ -6830,6 +6854,14 @@ rollup-plugin-node-resolve@^3.0.0:
     is-module "^1.0.0"
     resolve "^1.1.6"
 
+rollup-plugin-replace@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-replace/-/rollup-plugin-replace-2.0.0.tgz#19074089c8ed57184b8cc64e967a03d095119277"
+  dependencies:
+    magic-string "^0.22.4"
+    minimatch "^3.0.2"
+    rollup-pluginutils "^2.0.1"
+
 rollup-plugin-superviews@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/rollup-plugin-superviews/-/rollup-plugin-superviews-1.0.0.tgz#fcea32a8aab2349fd4308434253550a2f61b6949"
@@ -6837,6 +6869,12 @@ rollup-plugin-superviews@^1.0.0:
     magic-string "^0.22.4"
     rollup-pluginutils "^2.0.1"
     superviews.js "^3.0.4"
+
+rollup-plugin-uglify@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-uglify/-/rollup-plugin-uglify-2.0.1.tgz#67b37ad1efdafbd83af4c36b40c189ee4866c969"
+  dependencies:
+    uglify-js "^3.0.9"
 
 rollup-pluginutils@^1.5.0:
   version "1.5.2"
@@ -6852,6 +6890,12 @@ rollup-pluginutils@^2.0.1:
     estree-walker "^0.3.0"
     micromatch "^2.3.11"
 
+rollup-stream@^1.24.1:
+  version "1.24.1"
+  resolved "https://registry.yarnpkg.com/rollup-stream/-/rollup-stream-1.24.1.tgz#9bc002afba51c517e6daa3e17f9559580a460f89"
+  dependencies:
+    rollup "^0.49.2"
+
 rollup@^0.31.2:
   version "0.31.2"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.31.2.tgz#b479fe0a5faf7c310b8cc963da4dd0eb0a6174d0"
@@ -6863,6 +6907,10 @@ rollup@^0.36.3:
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.36.4.tgz#a224494c5386c1d73d38f7bb86f69f5eb011a3d2"
   dependencies:
     source-map-support "^0.4.0"
+
+rollup@^0.49.2:
+  version "0.49.3"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.49.3.tgz#4cce32643dd8cf2154c69ff0e43470067db0adbf"
 
 rollup@^0.50.0:
   version "0.50.0"
@@ -7204,7 +7252,7 @@ source-map@0.5.x, source-map@^0.5.1, source-map@^0.5.3, source-map@^0.5.6, sourc
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
 
-source-map@0.X:
+source-map@0.X, source-map@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
 
@@ -7901,6 +7949,13 @@ ua-parser-js@0.7.12:
   version "0.7.12"
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.12.tgz#04c81a99bdd5dc52263ea29d24c6bf8d4818a4bb"
 
+uglify-es@^3.1.3:
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/uglify-es/-/uglify-es-3.1.3.tgz#a21eeb149cb120a1f8302563689e19496550780b"
+  dependencies:
+    commander "~2.11.0"
+    source-map "~0.5.1"
+
 uglify-js@3.1.x, uglify-js@^3.0.5:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.1.2.tgz#b50bcf15a5fd9e9ed40afbcdef3b59d6891b291f"
@@ -7916,6 +7971,13 @@ uglify-js@^2.4.23, uglify-js@^2.6, uglify-js@^2.6.1:
     yargs "~3.10.0"
   optionalDependencies:
     uglify-to-browserify "~1.0.0"
+
+uglify-js@^3.0.9:
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.1.4.tgz#8e1efa1244b207588e525c9c1835a33458b90aee"
+  dependencies:
+    commander "~2.11.0"
+    source-map "~0.6.1"
 
 uglify-js@~2.7.5:
   version "2.7.5"
@@ -8109,6 +8171,13 @@ vinyl-assign@^1.0.1:
     object-assign "^4.0.1"
     readable-stream "^2.0.0"
 
+vinyl-buffer@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/vinyl-buffer/-/vinyl-buffer-1.0.0.tgz#ca067ea08431d507722b1de5083f602616ebc234"
+  dependencies:
+    bl "^0.9.1"
+    through2 "^0.6.1"
+
 vinyl-bufferstream@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/vinyl-bufferstream/-/vinyl-bufferstream-1.0.1.tgz#0537869f580effa4ca45acb47579e4b9fe63081a"
@@ -8149,6 +8218,13 @@ vinyl-fs@^2.0.0, vinyl-fs@^2.2.0, vinyl-fs@^2.4.3:
     through2-filter "^2.0.0"
     vali-date "^1.0.0"
     vinyl "^1.0.0"
+
+vinyl-source-stream@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/vinyl-source-stream/-/vinyl-source-stream-1.1.0.tgz#44cbe5108205279deb0c5653c094a2887938b1ab"
+  dependencies:
+    through2 "^0.6.1"
+    vinyl "^0.4.3"
 
 vinyl-sourcemaps-apply@^0.2.0, vinyl-sourcemaps-apply@^0.2.1:
   version "0.2.1"

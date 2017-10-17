@@ -11,5 +11,5 @@ echo "==> Note: The tests do not actually test the built file."
 echo "==> Note: The tests do not actually test the built file."
 sleep 2
 
+./script/build || exit 5
 npm test || exit 5
-npm run-script build || exit 5
