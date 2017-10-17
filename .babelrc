@@ -1,4 +1,9 @@
 {
-  "presets": ["env"],
-  "plugins": ["transform-decorators-legacy"]
+  "plugins": ["transform-decorators-legacy"],
+  "env": {
+    "test": {
+      "presets": ["env"],
+      "plugins": ["transform-decorators-legacy"]
+    }
+  }
 }
