@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import 'fetch';
-import $ from '~/helpers/$';
-import router from '~/router';
+import $ from './helpers/$';
+import router from './router';
 
 // NOTE: precaching is disabled. uglify will remove this code block since it's unreachable
 if (false && '@ENV@' === 'production' && 'serviceWorker' in navigator) {
