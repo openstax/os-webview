@@ -3,7 +3,7 @@ import 'isomorphic-fetch';
 import {LocalStorage} from 'node-localstorage';
 
 jest.mock('~/components/shell/shell');
-global.localStorage = new LocalStorage('./scratch');
+global.localStorage = new LocalStorage('./local-storage-scratch');
 
 window.MutationObserver = function () {};
 window.MutationObserver.prototype.observe = function () {};
@@ -16,7 +16,7 @@ window.MutationObserver.prototype.observe = function () {};
         window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
                                    || window[vendors[x]+'CancelRequestAnimationFrame'];
     }
- 
+
     if (!window.requestAnimationFrame)
         window.requestAnimationFrame = function(callback, element) {
             var currTime = Date.now();
