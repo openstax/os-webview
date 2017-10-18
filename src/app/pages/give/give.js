@@ -109,6 +109,7 @@ export default class Give extends CMSPageController {
             this.regions.share.attach(new Share(`${settings.apiOrigin}/give`,
                 'Contribute to OpenStax (I did)!'));
             this.model.isThanks = true;
+            sendToSalesforce();
         }
         if ('amount' in queryDict) {
             handleAmount(+queryDict.amount);
@@ -231,7 +232,7 @@ export default class Give extends CMSPageController {
         this.update();
     }
 
-    @on('click [type="submit"]')
+    @on('click .labeled-inputs [type="submit"]')
     doCustomValidation(event) {
         const invalid = this.el.querySelector('form :invalid');
 
