@@ -1,7 +1,7 @@
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
 import shell from '~/components/shell/shell';
-import {description as template} from './accessibility-statement.html';
+import {render as template} from './accessibility-statement.html';
 
 export default class Accessibility extends CMSPageController {
 

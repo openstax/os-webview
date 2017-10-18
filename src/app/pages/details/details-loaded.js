@@ -1,5 +1,5 @@
 import settings from 'settings';
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
 import {on} from '~/helpers/controller/decorators';
@@ -9,8 +9,8 @@ import GetThisTitle from '~/components/get-this-title/get-this-title';
 import Resource from './resource/resource';
 import Contents from './contents/contents';
 import Partner from './partner/partner';
-import {description as template} from './details-loaded.html';
-import {description as polishTemplate} from './details-loaded-polish.html';
+import {render as template} from './details-loaded.html';
+import {render as polishTemplate} from './details-loaded-polish.html';
 
 export default class DetailsLoaded extends Controller {
 

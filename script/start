@@ -3,5 +3,5 @@
 cd "$(dirname "$0")/.."
 
 # source ./script/bootstrap || exit 1
-# npm run-script build || exit 2
-$(npm bin)/gulp dist
+
+npm run-script start || exit 2

@@ -1,13 +1,13 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
+import settings from '../../../../settings';
+import $ from '../../../helpers/$';
+import {on} from '../../../helpers/controller/decorators';
+import linkHelper from '../../../helpers/link';
+import userModel, {sfUserModel, accountsModel} from '../../../models/usermodel';
 import stickyNote from '../sticky-note/sticky-note';
 import UpperMenu from './upper-menu/upper-menu';
 import MainMenu from './main-menu/main-menu';
-import settings from 'settings';
-import $ from '~/helpers/$';
-import {on} from '~/helpers/controller/decorators';
-import linkHelper from '~/helpers/link';
-import userModel, {sfUserModel, accountsModel} from '~/models/usermodel';
-import {description as template} from './header.html';
+import {render as template} from './header.html';
 
 class Header extends Controller {
 

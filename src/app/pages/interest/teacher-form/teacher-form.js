@@ -5,7 +5,7 @@ import FormInput from '~/components/form-input/form-input';
 import FormSelect from '~/components/form-select/form-select';
 import ManagedComponent from '~/helpers/controller/managed-component';
 import ContactInfo from '~/components/contact-info/contact-info';
-import {description as template} from './teacher-form.html';
+import {render as template} from './teacher-form.html';
 
 export default class TeacherForm extends SalesforceForm {
 

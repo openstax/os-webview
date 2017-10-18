@@ -1,4 +1,4 @@
-import settings from 'settings';
+import settings from '../../settings';
 
 export const userUrl = `${settings.apiOrigin}/api/user`;
 const docUrlBase = `${settings.apiOrigin}/api/documents`;

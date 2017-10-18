@@ -1,6 +1,6 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
-import {description as template} from './share.html';
+import {render as template} from './share.html';
 
 /* eslint-disable */
 (function(d, s, id) {

@@ -3,7 +3,7 @@ import {makeDocModel} from '~/models/usermodel';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import shell from '~/components/shell/shell';
-import {description as template} from './faq.html';
+import {render as template} from './faq.html';
 
 export default class FAQ extends CMSPageController {
 

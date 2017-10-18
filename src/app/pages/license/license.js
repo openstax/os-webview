@@ -1,6 +1,6 @@
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
-import {description as template} from './license.html';
+import {render as template} from './license.html';
 
 export default class License extends CMSPageController {
 

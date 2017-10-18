@@ -1,13 +1,8 @@
 #!/bin/bash
 
-if [ "$1" != "fast" ]; then
-    rm -rf jspm_packages node_modules
-fi
+cd "$(dirname "$0")/.."
 
 source ./script/bootstrap || exit 1
 
 >&2 echo "==> Installing node packages using https://yarnpkg.com"
 yarn install || exit 2
-
->&2 echo "==> Installing JSPM packages"
-$(npm bin)/jspm install || exit 3

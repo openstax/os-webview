@@ -1,4 +1,4 @@
-import settings from '~/../settings';
+import settings from '../../settings';
 
 const EXTERNAL = /^((f|ht)tps?:)?\/\//;
 const ABSOLUTE_OPENSTAX = new RegExp(`(https?://openstax.org|${settings.apiOrigin})(?!/accounts|/blog-feed/)`);

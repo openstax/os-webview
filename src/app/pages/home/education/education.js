@@ -1,6 +1,6 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
-import {description as template} from './education.html';
+import {render as template} from './education.html';
 
 export default class Education extends Controller {
 

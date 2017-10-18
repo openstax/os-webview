@@ -1,12 +1,12 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import CMSPageController from '~/controllers/cms';
 import {on} from '~/helpers/controller/decorators';
 import settings from 'settings';
 import $ from '~/helpers/$';
 import selectHandler from '~/handlers/select';
 import {highSchoolSlugs} from '~/models/book-titles';
-import {description as template} from './bulk-order.html';
-import {description as oiTemplate} from './order-items.html';
+import {render as template} from './bulk-order.html';
+import {render as oiTemplate} from './order-items.html';
 
 class OrderItems extends CMSPageController {
 

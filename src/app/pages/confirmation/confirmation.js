@@ -1,4 +1,4 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import settings from 'settings';
 import $ from '~/helpers/$';
 import userModel from '~/models/usermodel';
@@ -6,7 +6,7 @@ import Popup from '~/components/popup/popup';
 import Calculator from '~/components/calculator/calculator';
 import Errata from '~/pages/errata/errata';
 import Detail from '~/pages/errata/detail/detail';
-import {description as template} from './confirmation.html';
+import {render as template} from './confirmation.html';
 
 const applyLink = `${settings.accountHref}/faculty_access/apply?r=${encodeURIComponent(settings.apiOrigin)}`;
 

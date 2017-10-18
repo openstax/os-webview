@@ -1,11 +1,11 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import settings from 'settings';
 import FormSelect from '~/components/form-select/form-select';
 import StudentForm from '~/components/student-form/student-form';
 import TeacherForm from './teacher-form/teacher-form';
 import {on} from '~/helpers/controller/decorators';
-import {description as template} from './adoption.html';
+import {render as template} from './adoption.html';
 
 const headerInfoPromise = fetch(`${settings.apiOrigin}/api/pages/adoption-form`)
     .then((r) => r.json());

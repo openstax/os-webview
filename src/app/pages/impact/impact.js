@@ -2,7 +2,7 @@ import CMSPageController from '~/controllers/cms';
 import shell from '~/components/shell/shell';
 import $ from '~/helpers/$';
 import {makeDocModel} from '~/models/usermodel';
-import {description as template} from './impact.html';
+import {render as template} from './impact.html';
 
 export default class Impact extends CMSPageController {
 

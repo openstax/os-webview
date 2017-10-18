@@ -44,16 +44,16 @@ function jspmBuilder() {
     });
 }
 
-gulp.task(copyDependencies);
-gulp.task('jspm-builder', gulp.parallel(
-    copyDependencies,
-    jspmBuilder
-));
-
-gulp.task('jspm:watch', () => {
-    gulp.watch('./jspm_packages/**/*', config.watchOpts)
-    .on('change', gulp.series(
-        'jspm-builder',
-        'reload-browser'
-    ));
-});
+// gulp.task(copyDependencies);
+// gulp.task('jspm-builder', gulp.parallel(
+//     copyDependencies,
+//     jspmBuilder
+// ));
+//
+// gulp.task('jspm:watch', () => {
+//     gulp.watch('./jspm_packages/**/*', config.watchOpts)
+//     .on('change', gulp.series(
+//         'jspm-builder',
+//         'reload-browser'
+//     ));
+// });

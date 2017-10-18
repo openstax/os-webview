@@ -1,10 +1,10 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import settings from 'settings';
 import Share from '~/components/share/share';
 import {on} from '~/helpers/controller/decorators';
 import Spinner from '~/components/spinner/spinner';
-import {description as template} from './calculator.html';
+import {render as template} from './calculator.html';
 
 export default class Calculator extends Controller {
 

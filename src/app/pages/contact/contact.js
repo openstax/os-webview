@@ -5,7 +5,7 @@ import router from '~/router';
 import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 import selectHandler from '~/handlers/select';
-import {description as template} from './contact.html';
+import {render as template} from './contact.html';
 
 const subjects = [
     'General',

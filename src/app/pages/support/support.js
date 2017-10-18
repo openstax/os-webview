@@ -1,7 +1,7 @@
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
 import shell from '~/components/shell/shell';
-import {description as template} from './support.html';
+import {render as template} from './support.html';
 
 const supportHost = 'http://openstax.force.com/support?l=en_US';
 

@@ -2,6 +2,8 @@
 
 set -e
 
+cd "$(dirname "$0")/.."
+
 # Resolve all dependencies that the application requires to run.
 # From https://github.com/github/scripts-to-rule-them-all/blob/master/script/bootstrap
 # Also from https://github.com/Connexions/cnx-rulesets

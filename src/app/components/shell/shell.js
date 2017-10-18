@@ -1,8 +1,8 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import header from './header/header';
 import footer from './footer/footer';
-import {initialize, injectButtons} from 'recordo';
-import {description as template} from './shell.html';
+// import {initialize, injectButtons} from 'recordo';
+import {render as template} from './shell.html';
 
 class Shell extends Controller {
 
@@ -34,10 +34,10 @@ class Shell extends Controller {
         this.mainObserver.observe(document.getElementById('main'), {childList: true});
 
         // Start recordo
-        initialize({ignoreAjaxResponse: true});
-        if (/collect=true/.test(window.location.search)) {
-            injectButtons();
-        }
+        // initialize({ignoreAjaxResponse: true});
+        // if (/collect=true/.test(window.location.search)) {
+        //     injectButtons();
+        // }
     }
 
     showLoader() {

@@ -1,7 +1,7 @@
-import {Router} from 'superb';
-import analytics from '~/helpers/analytics';
-import linkHelper from '~/helpers/link';
-import shell from '~/components/shell/shell';
+import {Router} from 'superb.js';
+import analytics from './helpers/analytics';
+import linkHelper from './helpers/link';
+import shell from './components/shell/shell';
 
 const PAGES = [
     '404',

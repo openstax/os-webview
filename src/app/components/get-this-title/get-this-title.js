@@ -1,11 +1,11 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import userModel from '~/models/usermodel';
 import router from '~/router';
 import {highSchoolSlugs} from '~/models/book-titles';
-import {description as template} from './get-this-title.html';
-import {description as polishTemplate} from './get-this-title-polish.html';
+import {render as template} from './get-this-title.html';
+import {render as polishTemplate} from './get-this-title-polish.html';
 
 export default class GetThisTitle extends Controller {
 

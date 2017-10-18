@@ -1,12 +1,12 @@
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
-import {utils} from 'superb';
+import {utils} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import shell from '~/components/shell/shell';
 import Quotes from '~/components/quotes/quotes';
 import Buckets from '~/components/buckets/buckets';
 import Education from './education/education';
-import {description as template} from './home.html';
+import {render as template} from './home.html';
 import {shuffle} from '~/helpers/data';
 import Banner from './banners/banner';
 

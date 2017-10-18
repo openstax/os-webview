@@ -1,4 +1,4 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import Quote from './quote/quote';
 
 export default class Quotes extends Controller {

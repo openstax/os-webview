@@ -1,8 +1,8 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import {bookPromise} from '~/models/book-titles';
 import settings from 'settings';
-import {description as template} from './detail.html';
+import {render as template} from './detail.html';
 
 export default class Detail extends Controller {
 

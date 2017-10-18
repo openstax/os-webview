@@ -1,7 +1,7 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import {makeDocModel} from '~/models/usermodel';
-import {description as template} from './quote.html';
+import {render as template} from './quote.html';
 
 export default class Quote extends Controller {
 

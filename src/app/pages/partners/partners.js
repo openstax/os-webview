@@ -6,7 +6,7 @@ import shell from '~/components/shell/shell';
 import CategorySelector from '~/components/category-selector/category-selector';
 import PartnerViewer from './partner-viewer/partner-viewer';
 import {on} from '~/helpers/controller/decorators';
-import {description as template} from './partners.html';
+import {render as template} from './partners.html';
 
 const pagePath = '/partners';
 

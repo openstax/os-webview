@@ -1,4 +1,4 @@
-import shell from '~/components/shell/shell';
+import shell from '../../components/shell/shell';
 
 const Region = shell.regions.self.constructor;
 

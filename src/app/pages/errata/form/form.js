@@ -1,10 +1,10 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import settings from 'settings';
 import $ from '~/helpers/$';
 import selectHandler from '~/handlers/select';
 import router from '~/router';
 import {on} from '~/helpers/controller/decorators';
-import {description as template} from './form.html';
+import {render as template} from './form.html';
 
 const sourceNames = {
     tutor: 'OpenStax Tutor'

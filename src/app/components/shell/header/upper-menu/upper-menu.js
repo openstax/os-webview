@@ -1,6 +1,6 @@
-import {Controller} from 'superb';
-import settings from 'settings';
-import {description as template} from './upper-menu.html';
+import {Controller} from 'superb.js';
+import settings from '../../../../../settings';
+import {render as template} from './upper-menu.html';
 
 export default class UpperMenu extends Controller {
 

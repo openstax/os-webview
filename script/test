@@ -1,13 +1,15 @@
 #!/bin/bash
 
-if [[ ! -f "./jspm_packages/system.js" ]]; then
-  >&2 echo "It looks like you forgot to run ./script/setup first."
-  exit 1
-fi
+cd "$(dirname "$0")/.."
 
 source ./script/bootstrap || exit 2
 
-$(npm bin)/jspm --log warn install || exit 3
-npm --quiet install || exit 4
+echo "==> Note: The tests do not actually test the built file."
+echo "==> Note: The tests do not actually test the built file."
+echo "==> Note: The tests do not actually test the built file."
+echo "==> Note: The tests do not actually test the built file."
+echo "==> Note: The tests do not actually test the built file."
+sleep 2
 
+./script/build || exit 5
 npm test || exit 5
