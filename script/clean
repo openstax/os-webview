@@ -1,0 +1,10 @@
+#!/bin/bash
+
+cd "$(dirname "$0")/.."
+
+[[ -d ./node_modules/ ]] && rm -rf ./node_modules/
+[[ -d ./vendor/ ]] && rm -rf ./vendor/
+[[ -d ./dev/ ]] && rm -rf ./dev/
+[[ -d ./dist/ ]] && rm -rf ./dist/
+[[ -d ./coverage/ ]] && rm -rf ./coverage/
+[[ -d ./local-storage-scratch/ ]] && rm -rf ./local-storage-scratch/

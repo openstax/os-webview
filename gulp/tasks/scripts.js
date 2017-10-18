@@ -7,10 +7,7 @@ const pi = require('gulp-load-plugins')({
 
 function eslint() {
     return gulp.src([
-        `${config.src}/**/*.js`,
-        `!${config.src}/jspm.browser.js`,
-        `!${config.src}/jspm.config.js`,
-        `!${config.src}/jspm.dev.js`
+        `${config.src}/**/*.js`
     ], {
         since: gulp.lastRun('eslint')
     })

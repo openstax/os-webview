@@ -5,7 +5,6 @@ cd "$DIRNAME/.."
 >&2 echo "==> Upgrading 3rd-party dependencies. If you just want to update your local version, use ./script/update"
 sleep 2
 
-$(npm bin)/jspm update --yes
 $(npm bin)/ncu -u
 script/setup
 
