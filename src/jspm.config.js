@@ -992,7 +992,8 @@ SystemJS.config({
     "paths": {
       "npm:": "jspm_packages/npm/",
       "~/": "src/app/",
-      "settings": "src/settings"
+      "settings": "src/settings",
+      "github:": "jspm_packages/github/"
     }
   },
   packages: {
@@ -1012,23 +1013,24 @@ SystemJS.config({
 SystemJS.config({
   packageConfigPaths: [
     "npm:@*/*.json",
-    "npm:*.json"
+    "npm:*.json",
+    "github:*/*.json"
   ],
   map: {
-    "assert": "npm:jspm-nodelibs-assert@0.2.0",
+    "assert": "github:jspm/nodelibs-assert@0.2.0-alpha",
     "babel-polyfill": "npm:babel-polyfill@6.26.0",
     "babel-runtime": "npm:babel-runtime@6.26.0",
     "bcrypt-pbkdf": "npm:bcrypt-pbkdf@1.0.1",
-    "buffer": "npm:jspm-nodelibs-buffer@0.2.0",
+    "buffer": "github:jspm/nodelibs-buffer@0.2.0-alpha",
     "child_process": "npm:jspm-nodelibs-child_process@0.2.0",
-    "constants": "npm:jspm-nodelibs-constants@0.2.0",
-    "crypto": "npm:jspm-nodelibs-crypto@0.2.0",
+    "constants": "github:jspm/nodelibs-constants@0.2.0-alpha",
+    "crypto": "github:jspm/nodelibs-crypto@0.2.0-alpha",
     "dgram": "npm:jspm-nodelibs-dgram@0.2.0",
     "dns": "npm:jspm-nodelibs-dns@0.2.0",
     "ecc-jsbn": "npm:ecc-jsbn@0.1.1",
-    "events": "npm:jspm-nodelibs-events@0.2.2",
+    "events": "github:jspm/nodelibs-events@0.2.2",
     "fetch": "npm:whatwg-fetch@1.1.1",
-    "fs": "npm:jspm-nodelibs-fs@0.2.0",
+    "fs": "github:jspm/nodelibs-fs@0.2.0-alpha",
     "fsevents": "npm:fsevents@1.1.2",
     "http": "npm:jspm-nodelibs-http@0.2.0",
     "https": "npm:jspm-nodelibs-https@0.2.0",
@@ -1037,20 +1039,20 @@ SystemJS.config({
     "jsbn": "npm:jsbn@0.1.1",
     "module": "npm:jspm-nodelibs-module@0.2.0",
     "net": "npm:jspm-nodelibs-net@0.2.0",
-    "os": "npm:jspm-nodelibs-os@0.2.2",
-    "path": "npm:jspm-nodelibs-path@0.2.3",
-    "process": "npm:jspm-nodelibs-process@0.2.0",
+    "os": "github:jspm/nodelibs-os@0.2.2",
+    "path": "github:jspm/nodelibs-path@0.2.3",
+    "process": "github:jspm/nodelibs-process@0.2.0-alpha",
     "querystring": "npm:jspm-nodelibs-querystring@0.2.2",
     "recordo": "npm:recordo@0.0.6",
-    "stream": "npm:jspm-nodelibs-stream@0.2.0",
-    "string_decoder": "npm:jspm-nodelibs-string_decoder@0.2.0",
+    "stream": "github:jspm/nodelibs-stream@0.2.0-alpha",
+    "string_decoder": "github:jspm/nodelibs-string_decoder@0.2.2",
     "superb": "npm:superb.js@0.2.16",
     "tls": "npm:jspm-nodelibs-tls@0.2.0",
     "tty": "npm:jspm-nodelibs-tty@0.2.0",
     "tweetnacl": "npm:tweetnacl@0.14.5",
     "url": "npm:jspm-nodelibs-url@0.2.0",
-    "util": "npm:jspm-nodelibs-util@0.2.0",
-    "vm": "npm:jspm-nodelibs-vm@0.2.0",
+    "util": "github:jspm/nodelibs-util@0.2.0-alpha",
+    "vm": "github:jspm/nodelibs-vm@0.2.0-alpha",
     "zlib": "npm:jspm-nodelibs-zlib@0.2.0"
   },
   packages: {
@@ -1102,19 +1104,9 @@ SystemJS.config({
         "tiny-emitter": "npm:tiny-emitter@2.0.2"
       }
     },
-    "npm:jspm-nodelibs-stream@0.2.0": {
-      "map": {
-        "stream-browserify": "npm:stream-browserify@2.0.1"
-      }
-    },
     "npm:jspm-nodelibs-zlib@0.2.0": {
       "map": {
         "zlib-browserify": "npm:browserify-zlib@0.1.4"
-      }
-    },
-    "npm:jspm-nodelibs-string_decoder@0.2.0": {
-      "map": {
-        "string_decoder-browserify": "npm:string_decoder@0.10.31"
       }
     },
     "npm:jspm-nodelibs-url@0.2.0": {
@@ -1122,19 +1114,9 @@ SystemJS.config({
         "url-browserify": "npm:url@0.11.0"
       }
     },
-    "npm:jspm-nodelibs-crypto@0.2.0": {
-      "map": {
-        "crypto-browserify": "npm:crypto-browserify@3.11.1"
-      }
-    },
     "npm:jspm-nodelibs-http@0.2.0": {
       "map": {
         "http-browserify": "npm:stream-http@2.7.2"
-      }
-    },
-    "npm:jspm-nodelibs-buffer@0.2.0": {
-      "map": {
-        "buffer-browserify": "npm:buffer@4.9.1"
       }
     },
     "npm:good-listener@1.2.2": {
@@ -1693,6 +1675,21 @@ SystemJS.config({
       "map": {
         "json-stable-stringify": "npm:json-stable-stringify@1.0.1",
         "co": "npm:co@4.6.0"
+      }
+    },
+    "github:jspm/nodelibs-buffer@0.2.0-alpha": {
+      "map": {
+        "buffer-browserify": "npm:buffer@4.9.1"
+      }
+    },
+    "github:jspm/nodelibs-crypto@0.2.0-alpha": {
+      "map": {
+        "crypto-browserify": "npm:crypto-browserify@3.11.1"
+      }
+    },
+    "github:jspm/nodelibs-stream@0.2.0-alpha": {
+      "map": {
+        "stream-browserify": "npm:stream-browserify@2.0.1"
       }
     }
   }

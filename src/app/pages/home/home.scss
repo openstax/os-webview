@@ -305,7 +305,6 @@ $tablet-book-size: 16.5rem;
 }
 
 .home-page {
-    // background-color: lighten(color(neutral-lighter), 8%);
     flex: 1 0 auto;
 
     @include wider-than($tablet-max) {
