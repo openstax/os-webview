@@ -34,6 +34,29 @@ export default class DetailsLoaded extends Controller {
     onLoaded() {
         this.regions.getThisTitle.append(new GetThisTitle(this.model));
         this.model.formattedPublishDate = formatDate(this.model.publish_date);
+        const insertToc = () => {
+            if (this.model.table_of_contents) {
+                const tocController = new Contents(this.model.table_of_contents, {tag: 'ol'});
+
+                this.regions.tableOfContents.attach(tocController);
+            }
+        };
+        const insertPartners = () => {
+            for (const partner of this.model.book_allies) {
+                const partnerTemplateHelper = {
+                    name: partner.ally_heading,
+                    blurb: partner.ally_short_description,
+                    url: partner.book_link_url,
+                    linkText: partner.book_link_text,
+                    logoUrl: partner.ally_color_logo
+                };
+
+                this.regions.partners.append(new Partner(partnerTemplateHelper));
+            }
+        };
+
+        insertToc();
+        insertPartners();
         sfUserModel.load().then((user) => {
             let alternateLink = null;
             let isInstructor = true;
@@ -48,26 +71,6 @@ export default class DetailsLoaded extends Controller {
                     const altLink = res.resource_unlocked ? null : alternateLink;
 
                     this.regions[regionName].append(new Resource(res, altLink));
-                }
-            };
-            const insertPartners = () => {
-                for (const partner of this.model.book_allies) {
-                    const partnerTemplateHelper = {
-                        name: partner.ally_heading,
-                        blurb: partner.ally_short_description,
-                        url: partner.book_link_url,
-                        linkText: partner.book_link_text,
-                        logoUrl: partner.ally_color_logo
-                    };
-
-                    this.regions.partners.append(new Partner(partnerTemplateHelper));
-                }
-            };
-            const insertToc = () => {
-                if (this.model.table_of_contents) {
-                    const tocController = new Contents(this.model.table_of_contents, {tag: 'ol'});
-
-                    this.regions.tableOfContents.attach(tocController);
                 }
             };
             const handlePending = () => {
@@ -111,8 +114,6 @@ export default class DetailsLoaded extends Controller {
             insertResources(this.model.book_faculty_resources, 'instructorResources');
             alternateLink = null;
             insertResources(this.model.book_student_resources, 'studentResources');
-            insertToc();
-            insertPartners();
             this.update();
 
             if (window.location.hash) {
