@@ -9,7 +9,7 @@
     }
 
     .suggestion-box {
-        background-color: color(neutral-lightest);
+        background-color: ui-color(white);
         box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(os-color(gray), 0.1);
         max-height: 50vh;
         overflow: auto;
