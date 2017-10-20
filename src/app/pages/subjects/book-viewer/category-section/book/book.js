@@ -12,7 +12,9 @@ export default class Book extends Controller {
             coverUrl: bookInfo.cover_url,
             slug: bookInfo.slug,
             detailsOpenClass: '',
-            title: bookInfo.title
+            title: bookInfo.title,
+            detailsLinkText: bookInfo.slug === 'books/fizyka-dla-szkół-wyższych-polska' ?
+                'szczegóły i zasoby' : 'details & resources'
         };
         this.view = {
             classes: ['cover']
