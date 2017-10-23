@@ -1,6 +1,6 @@
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
-import {utils} from 'superb';
+import {utils} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import shell from '~/components/shell/shell';
 import Quotes from '~/components/quotes/quotes';

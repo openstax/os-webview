@@ -1,4 +1,4 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import Book from './book/book';
 import $ from '~/helpers/$';
 import {description as template} from './category-section.html';

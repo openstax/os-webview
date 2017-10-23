@@ -1,4 +1,4 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import Bucket from './bucket/bucket';
 
 const bucketClasses = ['our-impact', 'partners'];
