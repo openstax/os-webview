@@ -2,7 +2,8 @@ import 'babel-polyfill';
 import 'isomorphic-fetch';
 import {LocalStorage} from 'node-localstorage';
 
-jest.mock('~/components/shell/shell');
+// jest.mock('~/components/shell/shell');
+// jest.mock('../dist/app/components/shell/shell');
 global.localStorage = new LocalStorage('./local-storage-scratch');
 
 window.MutationObserver = function () {};
