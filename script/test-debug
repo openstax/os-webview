@@ -1,0 +1,15 @@
+#!/bin/bash
+
+source ./script/bootstrap || exit 2
+
+
+echo ""
+echo ""
+echo ""
+echo "NOTE: This only runs the tests. It does not rebuild the source files"
+echo ""
+echo ""
+echo "(waiting for a bit)"
+sleep 3
+
+npm run-script test-debug || exit 5
