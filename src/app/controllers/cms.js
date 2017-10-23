@@ -22,7 +22,11 @@ class CMSPageController extends Controller {
 
                     this.onDataLoaded();
                 } catch (e) {
-                    this.onDataError(e);
+                    if (this.onDataError) {
+                        this.onDataError(e);
+                    } else {
+                        console.error(e);
+                    }
                 }
             })();
         }
