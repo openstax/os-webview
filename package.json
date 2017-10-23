@@ -6,8 +6,8 @@
     "start": "gulp dev",
     "build": "gulp",
     "pretest": "npm run-script build",
-    "test": "jest --coverage ./test/src/*/*.js",
-    "test-debug": "jest --coverage ./test/src/*/*.js"
+    "test": "jest ./test/src/*/*.js",
+    "test-debug": "jest ./test/src/*/*.js"
   },
   "repository": {
     "type": "git",
@@ -87,6 +87,8 @@
       "settings": "<rootDir>/dist/settings",
       "fetch": "<rootDir>/node_modules/whatwg-fetch/fetch.js"
     },
+    "collectCoverage": true,
+    "coverageReporters": ["json", "lcov"],
     "coveragePathIgnorePatterns": [
       "/analytics"
     ],
