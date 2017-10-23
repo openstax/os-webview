@@ -1,0 +1,17 @@
+#!/bin/bash
+
+source ./script/bootstrap || exit 1
+
+echo ""
+echo ""
+echo ""
+echo "NOTE: Remember to start Chrome with --disable-web-security"
+echo ""
+echo ""
+echo "(waiting for a bit)"
+sleep 3
+
+
+./script/build || exit 1
+
+$(npm bin)/http-server ./dist/

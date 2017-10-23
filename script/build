@@ -3,3 +3,5 @@
 source ./script/bootstrap || exit 1
 
 npm run-script build || exit 2
+
+$(npm bin)/webpack --config webpack.config.js

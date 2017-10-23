@@ -15,11 +15,13 @@
   },
   "license": "AGPL-3.0",
   "dependencies": {
+    "http-server": "^0.10.0",
     "rollup": "^0.50.0",
     "rollup-plugin-commonjs": "^8.2.3",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-replace": "^2.0.0",
     "superb.js": "^0.2.16",
+    "webpack": "^3.8.1",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
@@ -82,13 +84,14 @@
   "jest": {
     "moduleNameMapper": {
       "^~/(.*)": "<rootDir>/dist/app/$1",
-      "superb": "<rootDir>/node_modules/superb.js/dist/superb.js",
       "recordo": "<rootDir>/node_modules/recordo/dist/recordo.js",
-      "settings": "<rootDir>/dist/settings",
-      "fetch": "<rootDir>/node_modules/whatwg-fetch/fetch.js"
+      "settings": "<rootDir>/dist/settings"
     },
     "collectCoverage": true,
-    "coverageReporters": ["json", "lcov"],
+    "coverageReporters": [
+      "json",
+      "lcov"
+    ],
     "coveragePathIgnorePatterns": [
       "/analytics"
     ],
