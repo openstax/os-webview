@@ -1,4 +1,4 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import {description as template} from './404.html';
 
 export default class NotFound extends Controller {

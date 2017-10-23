@@ -1,4 +1,4 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import settings from 'settings';
 import {description as template} from './upper-menu.html';
 

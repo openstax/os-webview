@@ -1,4 +1,4 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import header from './header/header';
 import footer from './footer/footer';
 import {initialize, injectButtons} from 'recordo';

@@ -1,5 +1,5 @@
 import settings from 'settings';
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
 import {on} from '~/helpers/controller/decorators';

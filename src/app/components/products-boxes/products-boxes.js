@@ -1,4 +1,4 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import ProductBox from './product-box/product-box';
 
 export default class ProductsBoxes extends Controller {

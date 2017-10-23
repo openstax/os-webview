@@ -1,5 +1,5 @@
 import 'babel-polyfill';
-import 'fetch';
+import 'whatwg-fetch';
 import $ from './helpers/$';
 import router from './router';
 

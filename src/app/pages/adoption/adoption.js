@@ -1,4 +1,4 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import settings from 'settings';
 import FormSelect from '~/components/form-select/form-select';
