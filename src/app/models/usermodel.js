@@ -40,7 +40,8 @@ export const sfUserModel = {
             return Object.assign(user, {
                 pending_verification: sfUser.faculty_status === 'pending_faculty'
             });
-        })
+        }),
+    loginLink: _sfUserModel.loginLink
 };
 export const accountsModel = new UserModel(accountsUrl);
 export const makeDocModel = (docId) => new UserModel(`${docUrlBase}/${docId}`);
