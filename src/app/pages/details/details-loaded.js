@@ -32,6 +32,9 @@ export default class DetailsLoaded extends Controller {
     }
 
     onLoaded() {
+        // Needs to run before any children are inserted
+        $.insertHtml(this.el, this.model);
+
         this.regions.getThisTitle.append(new GetThisTitle(this.model));
         this.model.formattedPublishDate = formatDate(this.model.publish_date);
         const insertToc = () => {
@@ -57,7 +60,8 @@ export default class DetailsLoaded extends Controller {
 
         insertToc();
         insertPartners();
-        sfUserModel.load().then((user) => {
+
+        const handleUserDependentLoading = (user) => {
             let alternateLink = null;
             let isInstructor = true;
             const encodedLocation = encodeURIComponent(window.location.href);
@@ -106,9 +110,6 @@ export default class DetailsLoaded extends Controller {
 
             checkForNonInstructor();
 
-            // Needs to run before any children are inserted
-            $.insertHtml(this.el, this.model);
-
             setLockState();
             this.model.hideInstructorInstructions = isInstructor || user.pending_verification;
             insertResources(this.model.book_faculty_resources, 'instructorResources');
@@ -121,9 +122,10 @@ export default class DetailsLoaded extends Controller {
 
                 $.scrollTo(document.getElementById(id));
             }
-        });
+        };
 
-        $.insertHtml(this.el, this.model);
+        sfUserModel.load().then(handleUserDependentLoading, (err) => handleUserDependentLoading({}));
+
         this.toggleFixedClass();
         this.boundToggleFixedClass = this.toggleFixedClass.bind(this);
         window.addEventListener('scroll', this.boundToggleFixedClass);
