@@ -17,7 +17,8 @@ const subjects = [
     'Media Inquiries',
     'Foundational Support',
     'OpenStax Partners',
-    'Website'
+    'Website',
+    'OpenStax Polska'
 ];
 
 class ContactData extends CMSPageController {
@@ -91,6 +92,16 @@ export default class Contact extends SalesforceForm {
         this.model = Object.assign(this.model, this.pageData);
         this.update();
         $.insertHtml(this.el, this.model);
+    }
+
+    @on('change [name="subject"]')
+    setFormTarget(event) {
+        if (event.target.value === 'OpenStax Polska') {
+            this.model.formTarget = '/api/mail/send_mail';
+        } else {
+            this.model.formTarget = `https://${this.model.salesforceHome}/servlet/servlet.WebToCase?encoding=UTF-8`;
+        }
+        this.update();
     }
 
 }
