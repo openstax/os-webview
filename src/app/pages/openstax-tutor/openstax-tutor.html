@@ -16,8 +16,8 @@
             </div>
             <div class="boxed">
                 <div class="above-head smaller">
-                    <div>Using OpenStax Tutor Beta?</div>
-                    <a href="https://tutor.openstax.org/dashboard" class="btn">Access Your Course</a>
+                    <div>{model.access.text}</div>
+                    <a href="{model.access.url}" class="btn">{model.access.label}</a>
                 </div>
                 <h1>
                     {model.frontier.headline}
@@ -234,7 +234,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="caption smaller">*Available for OpenStax Tutor Beta for College Physics</div>
+                <div class="caption smaller">{model.featureMatrix.resourceFinePrint}</div>
                 <div class="availability">
                     <span>{model.featureMatrix.availability}</span>
                     <div class="book-covers">
@@ -292,7 +292,7 @@
                 </div>
                 <div class="see-more smaller qna">
                     <a href="http://openstax.force.com/support?l=en_US&c=Products%3ATutor">
-                        See more answers in our knowledge base.
+                        {model.faq.knowledgeBaseCopy}
                     </a>
                 </div>
             </div>
