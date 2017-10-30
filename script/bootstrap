@@ -42,8 +42,8 @@ do_progress() { progress "$1"; try "${@:2}"; }
 _quiet_progress() { echo -e -n "${c_yellow}==>${c_none} $1 ${c_dark}...${c_none} "; }
 _quiet_try() {
   SECONDS=0
-  _myout=$(mktemp -t 'stdout')
-  _myerr=$(mktemp -t 'stderr')
+  _myout=$(mktemp -t 'bootstrap_stdout_XXXXXX')
+  _myerr=$(mktemp -t 'bootstrap_stderr_XXXXXX')
   __NESTED_PROGRESS__="true" "$@" > "${_myout}" 2> "${_myerr}" || {
     echo "" # start on a new line
     cat "${_myout}"
