@@ -14,4 +14,4 @@ sleep 3
 
 ./script/build || exit 1
 
-$(npm bin)/http-server ./dist/
+"$(npm bin)/http-server" ./dist/

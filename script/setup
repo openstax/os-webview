@@ -1,6 +1,50 @@
 #!/bin/bash
+cd "$(dirname "$0")/.." || exit 111
+source ./script/bootstrap || exit 111
 
-source ./script/bootstrap || exit 1
+set -e
 
->&2 echo "==> Installing node packages using https://yarnpkg.com"
-yarn install || exit 2
+# JavaScript stuff
+do_progress_quiet "Installing JavaScript Packages" \
+  yarn --prefer-offline
+
+# Python stuff
+if [[ -f "./requirements.txt" || -f "./setup.py" ]]; then
+
+  if [[ -n "${VIRTUAL_ENV}" ]]; then
+    if [[ -f "./requirements.txt" ]]; then
+      do_progress_quiet "Installing python packages" \
+        pip install -r "./requirements.txt"
+    else
+      if [[ -f "./setup.py" ]]; then
+        do_progress_quiet "Installing python packages from setup.py" \
+          python setup.py install
+      fi
+    fi
+  else
+    echo "ERROR. Not in a virtualenv"
+    exit 1
+  fi
+fi
+
+# Ruby stuff
+if [[ -f "./Gemfile" ]]; then
+  bundle check --path ./vendor/gems >/dev/null 2>&1  || {
+    do_progress_quiet "Installing ruby gems" \
+      bundle install --path ./vendor/gems --quiet --without production
+  }
+fi
+
+
+# Setup stuff that is custom to this repo
+
+# Clone the rhaptos.cnxmlutils repo in here
+if [[ ! -d ./vendor/rhaptos.cnxmlutils/.git/ ]]; then
+  do_progress_quiet "Installing ./vendor/rhaptos.cnxmlutils/" \
+    git clone https://github.com/Connexions/rhaptos.cnxmlutils.git ./vendor/rhaptos.cnxmlutils/
+fi
+
+do_progress_quiet "Checking out branch in ./vendor/rhaptos.cnxmlutils/ (see https://github.com/Connexions/rhaptos.cnxmlutils/pull/157)" \
+  cd "./vendor/rhaptos.cnxmlutils/" && git checkout rng-fixes && git pull
+
+_say "${c_green}Successfully set up${c_none}"

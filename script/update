@@ -1,8 +1,8 @@
 #!/bin/bash
-DIRNAME=`dirname "$0"`
-cd "$DIRNAME/.."
+cd "$(dirname "$0")/.." || exit 111
 
 >&2 echo "==> Updating local setup. If you just want to upgrade 3rd-party dependencies, use ./script/upgrade instead"
 sleep 2
 
-script/setup
+./script/clean
+./script/setup

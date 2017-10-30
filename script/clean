@@ -1,6 +1,5 @@
 #!/bin/bash
-
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/.." || exit 111
 
 [[ -d ./node_modules/ ]] && rm -rf ./node_modules/
 [[ -d ./vendor/ ]] && rm -rf ./vendor/
