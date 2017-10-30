@@ -88,11 +88,7 @@ cd os-webview
 ./script/setup
 ```
 
-**Note:** If you have not previously used JSPM, you may be prompted to set up your GitHub credentials.  It is recommended you do this in order to prevent being rate limited by GitHub.  You can [generate an access token](https://github.com/settings/tokens) in your GitHub account settings for JSPM, rather than providing your login credentials.
-
-If you are not prompted, you can manually bring it up with `jspm registry config github`.
-
-## Development
+## Build and Run the Development Server
 
 To build the site for development and load it in your default web browser with [BrowserSync](http://www.browsersync.io), simply run:
 

@@ -1,4 +1,4 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import Contents from './contents';
 import {description as template} from './content-item.html';
 

@@ -23,7 +23,7 @@ function humans() {
             })}`,
             'Standards: ECMAScript 2016, HTML5, CSS3, WCAG2A',
             'Components: SystemJS, SuperbJS, Incremental DOM',
-            'Software: Gulp, JSPM, SCSS, Superviews.js'
+            'Software: Gulp, SCSS, Superviews.js'
         ]
     }))
     .pipe(gulp.dest(config.dest));

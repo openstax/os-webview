@@ -1,4 +1,6 @@
+const path = require('path');
 const gulp = require('gulp');
+const webpack = require('webpack-stream');
 const argv = require('yargs').argv;
 const config = require('../config');
 const pi = require('gulp-load-plugins')({
@@ -7,10 +9,7 @@ const pi = require('gulp-load-plugins')({
 
 function eslint() {
     return gulp.src([
-        `${config.src}/**/*.js`,
-        `!${config.src}/jspm.browser.js`,
-        `!${config.src}/jspm.config.js`,
-        `!${config.src}/jspm.dev.js`
+        `${config.src}/**/*.js`
     ], {
         since: gulp.lastRun('eslint')
     })
@@ -186,9 +185,9 @@ function eslint() {
     }));
 }
 
-function compileScripts() {
+function compileScriptsBabel() {
     return gulp.src(`${config.src}/**/*.js`, {
-        since: gulp.lastRun('compileScripts')
+        // since: gulp.lastRun('compileScriptsBabel')
     })
     // .pipe(pi.sourcemaps.init({loadMaps: true}))
     .pipe(pi.sourcemaps.init())
@@ -207,6 +206,29 @@ function compileScripts() {
     .pipe(gulp.dest(config.dest));
 }
 
+function compileScriptsWebpack() {
+    return gulp.src([
+        `${config.dest}/app/main.js`
+    ]).pipe(webpack({
+      // watch: true, // This causes gulp to freeze and not serve
+      output: {
+        path: path.resolve(config.dest),
+        filename: "bundle.js",
+        publicPath: "/", // for where to request chunks when the SinglePageApp changes the URL
+        chunkFilename: "chunk-[chunkhash].js"
+      },
+      resolve: {
+        alias: {
+          "settings": path.resolve(config.dest, "settings.js"),
+          "~": path.resolve(config.dest, "app/"),
+        }
+      },
+      devtool: "sourcemap"
+    }))
+    .pipe(pi.sourcemaps.write('.'))
+    .pipe(gulp.dest(config.dest));
+}
+
 function minifyScripts() {
     return gulp.src([
         `${config.dest}/**/*.js`
@@ -219,19 +241,22 @@ function minifyScripts() {
 }
 
 gulp.task(eslint);
-gulp.task(compileScripts);
+gulp.task(compileScriptsBabel);
+gulp.task(compileScriptsWebpack);
 gulp.task('minify-scripts', minifyScripts);
 
 gulp.task('scripts', gulp.series(
     eslint,
-    compileScripts
+    compileScriptsBabel,
+    compileScriptsWebpack
 ));
 
 gulp.task('scripts:watch', () => {
     gulp.watch(`${config.src}/**/*.js`, config.watchOpts)
     .on('change', gulp.series(
         eslint,
-        compileScripts,
+        compileScriptsBabel,
+        compileScriptsWebpack,
         'reload-browser'
     ));
 });

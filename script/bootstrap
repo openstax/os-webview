@@ -1,99 +1,166 @@
 #!/bin/bash
-
-set -e
+# shellcheck disable=SC2155
 
 # Resolve all dependencies that the application requires to run.
 # From https://github.com/github/scripts-to-rule-them-all/blob/master/script/bootstrap
-# Also from https://github.com/Connexions/cnx-rulesets
 
+cd "$(dirname "$0")/.." || exit 111
 
-if [ -f "Brewfile" ] && [ "$(uname -s)" = "Darwin" ]; then
-  >&2 echo "==> Updating Homebrew…"
-  brew update || exit 1
+# Turn on tracing if in debug mode
+[[ ${TRACE} == "true" ]] && set -x
 
-  brew bundle check >/dev/null 2>&1  || {
-    >&2 echo "==> Installing Homebrew dependencies…"
-    brew bundle || exit 1
+# https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
+if [[ $(tput colors) -ge 8 ]]; then
+  declare -x c_red=$(tput setaf 1)
+  declare -x c_green=$(tput setaf 2)
+  declare -x c_blue=$(tput setaf 4)
+  declare -x c_purple=$(tput setaf 5)
+  declare -x c_dark=$(tput setaf 8)
+  declare -x c_yellow=$(tput setaf 11)
+  declare -x c_cyan=$(tput setaf 14)
+  declare -x c_none=$(tput sgr0) # Keep this last so TRACE=true does not cause everything to be cyan
+fi
+
+_say() { echo -e "$1"; }
+progress() { _say "${c_yellow}==>${c_none} $1"; }
+# https://stackoverflow.com/a/25515370
+yell() { >&2 _say "$0: ${c_red}$*${c_none}"; }
+die() {
+  yell "$1"
+  if [[ $2 ]]; then
+    err_code=$2
+  else
+    err_code=112
+  fi
+  exit ${err_code}
+}
+try() { __NESTED_PROGRESS__="true" "$@" || die "${c_red}ERROR: could not run [$*]${c_none}" 112; }
+
+do_progress() { progress "$1"; try "${@:2}"; }
+
+# Alternative that outputs only when an error occurs
+_quiet_progress() { echo -e -n "${c_yellow}==>${c_none} $1 ${c_dark}...${c_none} "; }
+_quiet_try() {
+  SECONDS=0
+  _myout=$(mktemp -t 'stdout')
+  _myerr=$(mktemp -t 'stderr')
+  __NESTED_PROGRESS__="true" "$@" > "${_myout}" 2> "${_myerr}" || {
+    echo "" # start on a new line
+    cat "${_myout}"
+    >&2 cat "${_myerr}"
+    rm "${_myout}" "${_myerr}"
+    die "${c_red}ERROR: could not run [$*]${c_none}"
   }
-fi
-
-
-# Set up the correct version of node
-if [[ "${CI}" != "true" ]]; then # Skip the nvm stuff if running in Travis
-  >&2 echo "==> Setting up node version"
-  if [[ -f ~/.nvm/nvm.sh ]]; then
-    source ~/.nvm/nvm.sh
-    nvm install $(< .nvmrc)
-  else
-    >&2 echo "Skipping the node version setup because nvm does not appear to be installed."
-    >&2 echo "See https://github.com/creationix/nvm for install instructions."
-    >&2 echo "Using node: $(node --version)"
-    >&2 echo "Using npm: $(npm --version)"
+  rm "${_myout}" "${_myerr}"
+}
+_quiet_ok() {
+  time_spent=""
+  if [[ ${SECONDS} -gt 5 ]]; then
+    time_spent=" ${c_dark}(${SECONDS} sec)${c_none}"
   fi
-fi
+  _say "${c_green}OK${c_none}${time_spent}";
+}
+do_progress_quiet() {
+  # Keep it loud when running in Travis or Jenkins
+  if [[ "${CI}" == "true" || "${JENKINS_URL}" != "" || "${TRACE}" || "${DEBUG}" || "${VERBOSE}" || "${__NESTED_PROGRESS__}" == "true" ]]; then
+    do_progress "$@"
+  else
+    _quiet_progress "$1"
+    _quiet_try "${@:2}" # Skip the 1st arg but use the rest
+    _quiet_ok
+  fi
+}
 
-# Install https://yarnpkg.com (package manager)
-if [[ ! $(which yarn) ]]; then
-  # Prompt when on debian
-  if [[ $(which apt-key) ]]; then
-    read -p "Would you like to install yarn (y/N)?" choice
-    echo # Move to a new line
-    if [[ "${choice}" =~ ^[Yy]$ ]]; then
-      >&2 echo "==> Installing yarn. You may be prompted for a password"
-      curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - || exit 1
-      echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list || exit 1
-      sudo apt-get update && sudo apt-get install yarn || exit 1
+# This provides a > 10% speedup because we do not have to reinitialize node and ruby
+if [[ ! ${BOOTSTRAP_ALREADY_RAN} ]]; then
+
+  # Install homebrew packages if running on macOS
+  if [[ -f "Brewfile" ]] && [[ "$(uname -s)" = "Darwin" ]]; then
+    [[ $(which brew) ]] || die "Homebrew is not installed. See https://brew.sh"
+    [[ $(xcode-select --print-path) == "/Library/Developer/CommandLineTools" ]] || _say "${c_red}WARNING:${c_none} You may need to uninstall XCode and just install the command line tools"
+
+    brew bundle check >/dev/null 2>&1  || {
+      do_progress "Installing Homebrew dependencies…" \
+        brew bundle
+    }
+  fi
+
+  # Python: Install & Activate python virtualenv
+  if [[ ! "${CI}" = "true" && -f "./setup.py" ]]; then
+    # Only install & activate the virtualenv if not already in one
+    if [[ -z "${VIRTUAL_ENV}" ]]; then
+
+      if [[ ! $(which virtualenv) ]]; then
+        # macOS needs a little extra love
+        if [[ -f "Brewfile" ]] && [[ "$(uname -s)" = "Darwin" ]]; then
+          do_progress_quiet "Unlinking homebrew python (just-in-case)" \
+            brew unlink python
+          do_progress_quiet "Relinking homebrew python" \
+            brew link python
+        fi
+
+        do_progress_quiet "Installing Python virtualenv" \
+          pip install virtualenv
+      fi
+      if [[ ! -d "./venv/" ]]; then
+        do_progress_quiet "Setting up a python virtualenv" \
+          virtualenv ./venv/
+      fi
+      do_progress_quiet "Activating virtualenv" \
+        source ./venv/bin/activate
     else
-      echo "Yarn is not installed. Exiting"
-      exit 1
+      [[ ${DEBUG} ]] && _say "Skipping virtualenv because already in one"
     fi
-  else
-    echo "Not sure how to install yarn automatically. If you are using macOS do you have https://brew.sh installed?"
-    exit 1
   fi
-fi
 
+  # Javascript environment
+  if [[ -f "./package.json" ]]; then
+    [[ $(which yarn) ]] || die "ERROR: Install yarn by going to https://yarnpkg.com"
+  fi
+  if [[ -f "./.nvmrc" ]]; then
+    # Set up the correct version of node (Travis automatically does this)
+    if [[ ! "${CI}" = "true" ]]; then
+      if [[ ! -f "${HOME}/.nvm/nvm.sh" ]]; then
+        die "ERROR: Install nvm by going to https://github.com/creationix/nvm"
+      fi
+      # shellcheck disable=SC1090
+      source "${HOME}/.nvm/nvm.sh" --no-use
+      do_progress_quiet "Setting correct node version (see ./.nvmrc)" \
+        nvm install "$(< ./.nvmrc)"
+    fi
+  fi
 
-# Set up the correct version of ruby
-
-# Note: Skip rbenv for Travis because it already has ruby
-if [[ "${CI}" != "true" ]]; then
-  if [[ -f ".ruby-version" ]]; then
+  # Note: Skip rbenv for Travis because it already has ruby
+  if [[ ! "${CI}" = "true" ]] && [[ -f ".ruby-version" ]]; then
     if [[ -n $(which rbenv) ]]; then
-
-      if [ -z "$(rbenv version-name 2>/dev/null)" ]; then
-        >&2 echo "==> Installing Ruby…"
-        rbenv install --skip-existing
+      progress "Setting correct ruby version (see ./.ruby-version)"
+      rbenv_version="$(rbenv version-name 2>/dev/null)"
+      if [[ -z "${rbenv_version}" ]]; then
+        do_progress_quiet "Installing Ruby" \
+          rbenv install --skip-existing
       fi
     else
       >&2 echo "WARNING: Skipping rbenv. Using local ruby"
     fi
+
+    # Initialize rbenv (if installed)
+    [[ -n $(which rbenv) ]] && eval "$(rbenv init -)"
+
+    gem list -i bundler >/dev/null 2>&1  || {
+      progress "Installing Ruby Bundler gem…"
+      gem install bundler || {
+        >&2 echo ''
+        >&2 echo ''
+        >&2 echo '--------------- Error -------------'
+        >&2 echo 'Problem installing ruby bundler.'
+        exit 1
+      }
+
+      [[ -n $(which rbenv) ]] && rbenv rehash
+
+    }
   fi
 
-  # Initialize rbenv (if installed)
-  [[ -n $(which rbenv) ]] && eval "$(rbenv init -)"
-
-  gem list -i bundler >/dev/null 2>&1  || {
-    >&2 echo "==> Installing Ruby Bundler gem…"
-    gem install bundler || {
-      >&2 echo ''
-      >&2 echo ''
-      >&2 echo '--------------- Error -------------'
-      >&2 echo 'Problem installing ruby bundler.'
-      exit 1
-    }
-
-    [[ -n $(which rbenv) ]] && rbenv rehash
-  }
+  # Trust that subshells will maintain the python/node/ruby version
+  declare -x BOOTSTRAP_ALREADY_RAN="true"
 fi
-
-if [ -f "Gemfile" ]; then
-  >&2 echo "==> Installing gem dependencies…"
-  which bundle
-  bundle check --path vendor/gems >/dev/null 2>&1  || {
-    bundle install --path vendor/gems --quiet --without production
-  }
-fi
-
-
-# Install system dependencies

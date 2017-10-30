@@ -1,4 +1,4 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import ContentItem from './content-item';
 
 function hasContents(entry) {

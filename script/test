@@ -1,13 +1,7 @@
 #!/bin/bash
-
-if [[ ! -f "./jspm_packages/system.js" ]]; then
-  >&2 echo "It looks like you forgot to run ./script/setup first."
-  exit 1
-fi
-
-source ./script/bootstrap || exit 2
-
-$(npm bin)/jspm --log warn install || exit 3
-npm --quiet install || exit 4
+source ./script/bootstrap || exit 111
+cd "$(dirname "$0")/.." || exit 111
 
 npm test || exit 5
+
+shellcheck ./script/*

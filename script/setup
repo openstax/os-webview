@@ -1,13 +1,41 @@
 #!/bin/bash
+cd "$(dirname "$0")/.." || exit 111
+source ./script/bootstrap || exit 111
 
-if [ "$1" = "lean" ]; then
-    rm -rf jspm_packages node_modules
+set -e
+
+# JavaScript stuff
+do_progress_quiet "Installing JavaScript Packages" \
+  yarn --prefer-offline
+
+# Python stuff
+if [[ -f "./requirements.txt" || -f "./setup.py" ]]; then
+
+  if [[ -n "${VIRTUAL_ENV}" ]]; then
+    if [[ -f "./requirements.txt" ]]; then
+      do_progress_quiet "Installing python packages" \
+        pip install -r "./requirements.txt"
+    else
+      if [[ -f "./setup.py" ]]; then
+        do_progress_quiet "Installing python packages from setup.py" \
+          python setup.py install
+      fi
+    fi
+  else
+    echo "ERROR. Not in a virtualenv"
+    exit 1
+  fi
 fi
 
-source ./script/bootstrap || exit 1
+# Ruby stuff
+if [[ -f "./Gemfile" ]]; then
+  bundle check --path ./vendor/gems >/dev/null 2>&1  || {
+    do_progress_quiet "Installing ruby gems" \
+      bundle install --path ./vendor/gems --quiet --without production
+  }
+fi
 
->&2 echo "==> Installing node packages using https://yarnpkg.com"
-yarn install || exit 2
 
->&2 echo "==> Installing JSPM packages"
-$(npm bin)/jspm install || exit 3
+# Setup stuff that is custom to this repo
+
+_say "${c_green}Successfully set up${c_none}"

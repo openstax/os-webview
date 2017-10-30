@@ -2,8 +2,30 @@ import 'babel-polyfill';
 import 'isomorphic-fetch';
 import {LocalStorage} from 'node-localstorage';
 
-jest.mock('~/components/shell/shell');
-global.localStorage = new LocalStorage('./scratch');
+jest.mock('~/components/shell/sticky-note/sticky-note', () => {
+  class MockedStickyNote {
+
+      constructor() {
+        this.el = global.document.createElement('div')
+        this.el.appendChild(global.document.createTextNode('STUB_FOR_STICKY_NOTE'))
+      }
+
+      // init() { }
+      // onDataLoaded() { }
+      // onLoaded() { }
+
+      forceHide(whether) {
+      }
+
+      // From CMSPageController:
+      onAttached() {
+      }
+
+  }
+  return new MockedStickyNote();
+})
+
+global.localStorage = new LocalStorage('./local-storage-scratch');
 
 window.MutationObserver = function () {};
 window.MutationObserver.prototype.observe = function () {};
@@ -16,7 +38,7 @@ window.MutationObserver.prototype.observe = function () {};
         window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
                                    || window[vendors[x]+'CancelRequestAnimationFrame'];
     }
- 
+
     if (!window.requestAnimationFrame)
         window.requestAnimationFrame = function(callback, element) {
             var currTime = Date.now();

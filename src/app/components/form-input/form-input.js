@@ -1,4 +1,4 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './form-input.html';

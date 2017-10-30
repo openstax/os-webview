@@ -1,4 +1,4 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import settings from 'settings';
 import Share from '~/components/share/share';

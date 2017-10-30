@@ -1,4 +1,4 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import Select from '~/components/select/select';
 import selectHandler from '~/handlers/select';
 import $ from '~/helpers/$';

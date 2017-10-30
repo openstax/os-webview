@@ -1,4 +1,4 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import RadioPanel from '~/components/radio-panel/radio-panel';
 

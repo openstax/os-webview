@@ -53,13 +53,8 @@
         </script>
 
         <script async src="https://cdn.rawgit.com/eligrey/classList.js/e87db36a95b2381a8c3ed44582a3926185cede70/classList.min.js"></script>
-        <script src="/jspm_packages/system.js"></script>
-        <script src="/jspm.browser.js"></script>
-        <script src="/jspm.config.js"></script>
-        <script src="/libs/dependencies.js"></script>
-
         <script>
-            SystemJS.import('app/main');
+            // SystemJS.import('app/main');
             /* Set meta description for initial page load */
             const descriptions = {
                 '/about': 'OpenStax is a nonprofit based at Rice University, ' +
@@ -107,5 +102,6 @@
         <noscript>
             <div class="nojs"><p>You must enable JavaScript in order to use this site.</p></div>
         </noscript>
+        <script async src="/bundle.js"></script>
     </body>
 </html>

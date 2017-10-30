@@ -1,5 +1,5 @@
 import settings from 'settings';
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 
 const TRANSFORM_DATA = Symbol();
 const LOAD_IMAGES = Symbol();
@@ -22,7 +22,11 @@ class CMSPageController extends Controller {
 
                     this.onDataLoaded();
                 } catch (e) {
-                    this.onDataError(e);
+                    if (this.onDataError) {
+                        this.onDataError(e);
+                    } else {
+                        console.error(e);
+                    }
                 }
             })();
         }

@@ -1,4 +1,4 @@
-import {Controller} from 'superb';
+import {Controller} from 'superb.js';
 import bodyUnitView from '~/components/body-units/body-units';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
 import {description as featureTemplate} from './feature.html';

@@ -55,11 +55,11 @@ describe('FormSelect', () => {
         const selectEl = p.proxyWidget.el;
 
         doKeyDown(selectEl, 'ArrowDown');
-        console.log('Active Item:', p.proxyWidget.model.activeItem, p.proxyWidget.activeIndex);
+        // console.log('Active Item:', p.proxyWidget.model.activeItem, p.proxyWidget.activeIndex);
         doKeyDown(selectEl, 'ArrowDown');
-        console.log('Active Item:', p.proxyWidget.model.activeItem, p.proxyWidget.activeIndex);
-        console.log('Active?', p.proxyWidget.el.querySelector('.option.active'));
+        // console.log('Active Item:', p.proxyWidget.model.activeItem, p.proxyWidget.activeIndex);
+        // console.log('Active?', p.proxyWidget.el.querySelector('.option.active'));
         doKeyDown(p.proxyWidget.el.querySelector('.option.active'), 'Escape');
-        console.log('Selected?', p.proxyWidget.model.selected);
+        // console.log('Selected?', p.proxyWidget.model.selected);
     });
 });

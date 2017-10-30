@@ -3,6 +3,7 @@ node_modules/
 /dev/
 /dist/
 coverage/
+/local-storage-scratch/
 
 # rbenv directories
 /vendor/
