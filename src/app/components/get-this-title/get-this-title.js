@@ -10,7 +10,7 @@ import {description as polishTemplate} from './get-this-title-polish.html';
 export default class GetThisTitle extends Controller {
 
     init(data) {
-        this.template = data.slug === 'books/fizyka-uniwersytecka-polska' ? polishTemplate : template;
+        this.template = data.slug === 'books/fizyka-dla-szkół-wyższych-polska' ? polishTemplate : template;
         this.css = '/app/components/get-this-title/get-this-title.css';
         this.regions = {
             submenu: '.submenu'

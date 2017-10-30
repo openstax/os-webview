@@ -13,29 +13,6 @@ export default class MainMenu extends Controller {
         this.css = '/app/components/shell/header/main-menu/main-menu.css';
         this.model = model;
         this.model.openDropdown = null;
-
-        this.resetSelection = (event) => {
-            const target = event.target;
-            const isDropdownItem = target.parentNode.parentNode.classList.contains('dropdown-menu');
-
-            if (!isDropdownItem) {
-                this.selectedIndex = -1;
-                if (target.href && this.el.contains(target)) {
-                    this.model.openDropdown = target.href.replace(/.*\//, '');
-                } else if (target.dataset.keepOpen) {
-                    // Just leave openDropdown alone
-                } else {
-                    this.model.openDropdown = null;
-                }
-                this.update();
-            }
-        };
-
-        document.addEventListener('focusin', this.resetSelection);
-    }
-
-    onClose() {
-        document.removeEventListener('focusin', this.resetSelection);
     }
 
     onLoaded() {
@@ -55,6 +32,25 @@ export default class MainMenu extends Controller {
             if (tutorMenuItem) {
                 tutorMenuItem.focus();
             }
+        }
+    }
+
+    @on('focusin [aria-haspopup="true"]')
+    openDropdown() {
+        const target = document.activeElement;
+
+        this.selectedIndex = -1;
+        this.model.openDropdown = target.href.replace(/.*\//, '');
+        this.openDropdown = target.parentNode;
+        this.update();
+    }
+
+    @on('mouseout')
+    closeDropdown() {
+        if (this.openDropdown) {
+            this.model.openDropdown = null;
+            this.openDropdown = null;
+            this.update();
         }
     }
 

@@ -231,15 +231,16 @@ $special-breakpoint: 54rem;
             @include wider-than($tablet-max) {
                 flex: 1 0;
                 order: 2;
-                padding: 0 25rem 0 0;
+                padding: 0 26.5rem 0 0;
             }
         }
 
         .tabs {
             a:not(:last-child)::after {
                 color: ui-color(footer-bg);
-                content: ' | ';
+                content: '|';
                 display: inline;
+                margin: 0 0.5rem;
             }
         }
 

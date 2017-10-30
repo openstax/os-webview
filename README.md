@@ -88,7 +88,7 @@ cd os-webview
 ./script/setup
 ```
 
-## Development
+## Build and Run the Development Server
 
 To build the site for development and load it in your default web browser with [BrowserSync](http://www.browsersync.io), simply run:
 

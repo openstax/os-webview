@@ -21,125 +21,21 @@ export default class Tutor extends CMSPageController {
         };
         this.css = '/app/pages/openstax-tutor/openstax-tutor.css';
         this.model = {
-            footerStarted: {
-                text: 'Get Started',
-                description: 'Preview and create a course.'
-            },
-            footerSignUp: {
-                text: 'Join a Webinar',
-                description: 'Get advice from pioneers of the tool.'
-            },
             frontier: false,
-            howItWorks: {
-                blurbs: [
-                    {
-                        iconDescription: 'Spaced practice icon',
-                        headline: 'Spaced practice',
-                        description: 'Helps students remember what they previously learned',
-                        imageUrl: '/images/openstax-tutor/spaced-practice.svg'
-                    },
-                    {
-                        iconDescription: 'People icon',
-                        headline: 'Personalized questions',
-                        description: 'Help students learn where they need it most',
-                        imageUrl: '/images/openstax-tutor/personalized.svg'
-                    },
-                    {
-                        iconDescription: 'Feedback icon',
-                        headline: 'Two-step questions',
-                        description: 'Help students study more effectively',
-                        imageUrl: '/images/openstax-tutor/two-step.svg'
-                    },
-                    {
-                        iconDescription: '$10 icon',
-                        headline: 'Low cost',
-                        description: '$10 per course saves students money',
-                        imageUrl: '/images/openstax-tutor/ten-dollar-bill.svg'
-                    }
-                ]
-            },
+            howItWorks: {},
             whatStudentsGet: {
                 currentImage: null,
                 images: [
-                    {
-                        url: '/images/openstax-tutor/1-dashboard/1-dashboard.png',
-                        description: '<b>The dashboard</b> gives students an overview of ' +
-                        'their assignments and progress.'
-                    },
-                    {
-                        url: '/images/openstax-tutor/1-dashboard/2-clock.png',
-                        description: 'A red clock icon shows which assignments were submitted late.'
-                    },
-                    {
-                        url: '/images/openstax-tutor/1-dashboard/3-past-work.png',
-                        description: 'Past due assignments are moved to the All Past Work tab.'
-                    },
-                    {
-                        url: '/images/openstax-tutor/1-dashboard/4-browse.png',
-                        description: 'Students can access their textbook content by clicking Browse the Book.'
-                    },
-                    {
-                        url: '/images/openstax-tutor/1-dashboard/5-forecast.mp4',
-                        description: 'The student performance forecast shows them how they’re doing overall.'
-                    },
-                    {
-                        url: '/images/openstax-tutor/2-reading/1-physics.mp4',
-                        description: 'Reading assignments present the textbook in manageable chunks.'
-                    },
-                    {
-                        url: '/images/openstax-tutor/2-reading/2-bio.mp4',
-                        description: 'Students will get three personalized questions per section you assign.'
-                    },
-                    {
-                        url: '/images/openstax-tutor/2-reading/3-soci.mp4',
-                        description: 'First, students are prompted to recall an answer from memory. ' +
-                        'Multiple choice options follow.'
-                    },
-                    {
-                        url: '/images/openstax-tutor/3-homework/1-physics.mp4',
-                        description: 'Homework assignments include instructor-assigned questions, ' +
-                        'and questions chosen by OpenStax Tutor Beta.'
-                    },
-                    {
-                        url: '/images/openstax-tutor/3-homework/2-bio1.mp4',
-                        description: 'First, OpenStax Tutor Beta prompts students to recall an answer from memory.'
-                    },
-                    {
-                        url: '/images/openstax-tutor/3-homework/3-bio2.mp4',
-                        description: 'After submitting an answer, students are given a multiple choice question.'
-                    },
-                    {
-                        url: '/images/openstax-tutor/3-homework/4-soci.mp4',
-                        description: 'Students get feedback right away, unless the instructor has ' +
-                        'selected delayed feedback on the assignment.'
-                    }
                 ]
 
             },
             featureMatrix: {
                 availableIcon: availableUrl,
-                unavailableIcon: unavailableUrl,
-                featurePairs: [],
-                availableBooks: [
-                    {description: 'College Physics cover', url: '#'},
-                    {description: 'Biology cover', url: '#'},
-                    {description: 'Sociology 2e cover', url: '#'}
-                ]
+                unavailableIcon: unavailableUrl
             },
-            whereMoneyGoes: {
-                items: [
-                    {amount: 5, description: 'Pays for our engineers and researchers'},
-                    {amount: 3, description: 'Pays for authors to keep content current'},
-                    {amount: 1, description: 'Pays for our Support team'},
-                    {amount: 1, description: 'Helps us keep the lights on'}
-                ]
-            },
-            faq: {
-                headline: 'Frequently asked questions'
-            },
-            learnMore: {
-                buttons: []
-            }
+            whereMoneyGoes: {},
+            faq: {},
+            learnMore: {}
         };
         this.slug = 'pages/tutor-marketing';
     }
@@ -155,43 +51,65 @@ export default class Tutor extends CMSPageController {
         Object.assign(this.model, data);
         this.model.footerHeight = 'collapsed';
         this.update();
+        this.model.access = {
+            text: data.access_tagline,
+            label: data.access_button_cta,
+            url: data.access_button_link
+        };
         this.model.frontier = {
             headline: data.section_1_heading,
             subhead: data.section_1_subheading,
             description: data.section_1_paragraph,
             learnMore: {
-                href: '#how-it-works-target',
+                href: data.section_1_cta_link,
                 text: data.section_1_cta_text
             }
         };
         Object.assign(this.model.howItWorks, {
             headline: data.section_2_heading,
             subhead: data.section_2_subheading,
-            description: data.section_2_paragraph
+            description: data.section_2_paragraph,
+            blurbs: [1, 2, 3, 4].map((num) => (
+                {
+                    headline: data[`icon_${num}_subheading`],
+                    iconDescription: `${data[`icon_${num}_subheading`]} icon`,
+                    description: data[`icon_${num}_paragraph`],
+                    imageUrl: data[`icon_${num}_image_url`]
+                }
+            ))
         });
         Object.assign(this.model.whatStudentsGet, {
             headline: data.section_3_heading,
             description: data.section_3_paragraph,
-            currentImage: this.model.whatStudentsGet.images[0]
+            images: data.marketing_videos.map((entry) => ({
+                url: entry.video_url || entry.video_file || entry.image_url || entry.image,
+                description: entry.video_image_blurb
+            }))
         });
+        this.model.whatStudentsGet.currentImage = this.model.whatStudentsGet.images[0];
+
         Object.assign(this.model.featureMatrix, {
             headline: data.section_4_heading,
-            description: data.section_4_description ||
-             '<p>Thousands of students have piloted OpenStax Tutor Beta. Here are the features ' +
-             'we’ve prioritized, and more are on the way. Have suggestions for future development? ' +
-             'Send us an email at <a href="mailto:info@openstaxtutor.org">info@openstaxtutor.org</a>.</p>',
+            description: data.section_4_paragraph ||
+             '<p>XX THIS TEXT NEEDS TO BE ENTERED INTO THE CMS XX</p>',
             availability: data.section_4_book_heading,
             availableBooks: data.marketing_books.map((b) => ({
                 description: b.title,
                 url: b.cover_url
-            }))
+            })),
+            resourceFinePrint: data.section_4_resource_fine_print
         });
         Object.assign(this.model.whereMoneyGoes, {
             headline: data.section_5_heading,
-            description: data.section_5_paragraph
+            description: data.section_5_paragraph,
+            items: [5, 3, 1, 1].map((v, index) => ({
+                amount: v, description: data[`section_5_dollar_${index + 1}_paragraph`]
+            }))
         });
         Object.assign(this.model.faq, {
-            items: data.faqs
+            headline: data.section_6_heading,
+            items: data.faqs,
+            knowledgeBaseCopy: data.section_6_knowledge_base_copy
         });
         Object.assign(this.model.learnMore, {
             headline: data.section_7_heading,
@@ -209,8 +127,17 @@ export default class Tutor extends CMSPageController {
                 }
             ].filter((obj) => obj.text) // only keep the ones with text values
         });
-        this.model.footerStarted.link = data.section_7_cta_link_1;
-        this.model.footerSignUp.link = data.section_7_cta_link_2;
+
+        this.model.footerStarted = {
+            text: data.floating_footer_button_1_cta,
+            description: data.floating_footer_button_1_caption,
+            link: data.floating_footer_button_1_link
+        };
+        this.model.footerSignUp = {
+            text: data.floating_footer_button_2_cta,
+            description: data.floating_footer_button_2_caption,
+            link: data.floating_footer_button_2_link
+        };
 
         this.model.featureMatrix.featurePairs = data.resource_availability
             .map((obj) => ({
