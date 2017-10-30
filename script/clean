@@ -8,3 +8,5 @@ cd "$(dirname "$0")/.."
 [[ -d ./dist/ ]] && rm -rf ./dist/
 [[ -d ./coverage/ ]] && rm -rf ./coverage/
 [[ -d ./local-storage-scratch/ ]] && rm -rf ./local-storage-scratch/
+
+echo Cleaned
