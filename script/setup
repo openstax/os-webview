@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$1" != "fast" ]; then
+if [ "$1" = "lean" ]; then
     rm -rf jspm_packages node_modules
 fi
 
