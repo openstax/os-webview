@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [ "$1" = "lean" ]; then
+    rm -rf jspm_packages node_modules
+fi
+
 source ./script/bootstrap || exit 1
 
 >&2 echo "==> Installing node packages using https://yarnpkg.com"

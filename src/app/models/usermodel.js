@@ -16,10 +16,24 @@ class UserModel {
     }
 
     load() {
-        if (Date.now() > this[LOADED_TIME] + CACHE_FOR_MS) {
-            this[LOADED] = fetch(this.url, {credentials: 'include'}).then((response) => response.json());
-        }
-        return this[LOADED];
+        const proxyPromise = new Promise((resolve) => {
+            const handleError = (err) => {
+                console.warn('Error fetching', this.url, err);
+                resolve({});
+            };
+
+            if (Date.now() > this[LOADED_TIME] + CACHE_FOR_MS) {
+                this[LOADED] = fetch(this.url, {credentials: 'include'}).then((response) => response.json());
+            }
+            this[LOADED].then(
+                (response) => resolve(response),
+                handleError
+            ).catch(
+                handleError
+            );
+        });
+
+        return proxyPromise;
     }
 
     loginLink(returnTo) {

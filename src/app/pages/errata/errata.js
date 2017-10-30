@@ -26,6 +26,8 @@ function setDisplayStatus(detail) {
         } else {
             result.status = 'Will Correct';
         }
+    } else if (detail.status === 'Completed' && detail.resolution === 'Duplicate') {
+        result.status = result.barStatus = 'Duplicate';
     } else {
         result.status = result.barStatus = 'No Correction';
     }
