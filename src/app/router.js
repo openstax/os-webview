@@ -77,8 +77,6 @@ class AppRouter extends Router {
 
                 // TODO: Fix this loader so pages are included explicitly
                 this.route(pageRegExp).load((params) => {
-                    console.log('sdkjfhskjdhf');
-                    console.log(basePage);
                     return System.import(`~/pages/${basePage}/${basePage}`).then((m) => {
                         const Controller = m.default;
 
