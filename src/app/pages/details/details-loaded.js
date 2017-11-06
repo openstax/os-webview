@@ -1,7 +1,7 @@
 import settings from 'settings';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
-import {formatDateForBlog as formatDate} from '~/helpers/data';
+import {formatDateForBlog as formatDate, shuffle} from '~/helpers/data';
 import {on} from '~/helpers/controller/decorators';
 import router from '~/router';
 import {sfUserModel} from '~/models/usermodel';
@@ -45,7 +45,7 @@ export default class DetailsLoaded extends Controller {
             }
         };
         const insertPartners = () => {
-            for (const partner of this.model.book_allies) {
+            for (const partner of shuffle(this.model.book_allies)) {
                 const partnerTemplateHelper = {
                     name: partner.ally_heading,
                     blurb: partner.ally_short_description,
