@@ -16,21 +16,11 @@ class Analytics {
     }
 
     send(fields) {
-        try {
-            SystemJS.import('ga')
-                .then(
-                    () => {
-                        window.ga('send', fields);
-                        window.ga('ga2.send', fields);
-                    },
-                    () => {
-                        console.warn('GA FAILED TO IMPORT');
-                    }
-                ).catch((e) => {
-                    console.warn('Caught trying to import ga:', e);
-                });
-        } catch (e) {
-            console.warn('Caught SYSTEM JS nonsense', e);
+        if (typeof window.ga === 'function') {
+            window.ga('send', fields);
+            window.ga('ga2.send', fields);
+        } else {
+            console.warn('Google Analytics not loaded; did not send', fields);
         }
     }
 
