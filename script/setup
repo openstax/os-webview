@@ -2,8 +2,6 @@
 cd "$(dirname "$0")/.." || exit 111
 source ./script/bootstrap || exit 111
 
-set -e
-
 # JavaScript stuff
 do_progress_quiet "Installing JavaScript Packages" \
   yarn --prefer-offline
@@ -11,19 +9,15 @@ do_progress_quiet "Installing JavaScript Packages" \
 # Python stuff
 if [[ -f "./requirements.txt" || -f "./setup.py" ]]; then
 
-  if [[ -n "${VIRTUAL_ENV}" ]]; then
-    if [[ -f "./requirements.txt" ]]; then
-      do_progress_quiet "Installing python packages" \
-        pip install -r "./requirements.txt"
-    else
-      if [[ -f "./setup.py" ]]; then
-        do_progress_quiet "Installing python packages from setup.py" \
-          python setup.py install
-      fi
-    fi
+  [[ -n "${VIRTUAL_ENV}" ]] || die "Not in a virtualenv"
+  if [[ -f "./requirements.txt" ]]; then
+    do_progress_quiet "Installing python packages" \
+      pip install -r "./requirements.txt"
   else
-    echo "ERROR. Not in a virtualenv"
-    exit 1
+    if [[ -f "./setup.py" ]]; then
+      do_progress_quiet "Installing python packages from setup.py" \
+        python setup.py install
+    fi
   fi
 fi
 
@@ -36,6 +30,10 @@ if [[ -f "./Gemfile" ]]; then
 fi
 
 
-# Setup stuff that is custom to this repo
+# Load anything that is repo-specific
+if [[ -f "./script/_setup.sh" ]]; then
+  # shellcheck disable=SC1091
+  source ./script/_setup.sh || exit 111
+fi
 
 _say "${c_green}Successfully set up${c_none}"
