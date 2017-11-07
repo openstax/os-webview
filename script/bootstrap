@@ -4,9 +4,11 @@
 # Resolve all dependencies that the application requires to run.
 # From https://github.com/github/scripts-to-rule-them-all/blob/master/script/bootstrap
 
-cd "$(dirname "$0")/.." || exit 111
+if [[ $0 != "-bash" ]]; then
+  cd "$(dirname "$0")/.." || exit 111
+fi
 
-# Turn on tracing if in debug mode
+# Turn on tracing if desired
 [[ ${TRACE} == "true" ]] && set -x
 
 # https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
@@ -27,12 +29,8 @@ progress() { _say "${c_yellow}==>${c_none} $1"; }
 yell() { >&2 _say "$0: ${c_red}$*${c_none}"; }
 die() {
   yell "$1"
-  if [[ $2 ]]; then
-    err_code=$2
-  else
-    err_code=112
-  fi
-  exit ${err_code}
+  # shellcheck disable=SC2086
+  exit ${2:-112} # Use the 2nd arg or 112 as the default
 }
 try() { __NESTED_PROGRESS__="true" "$@" || die "${c_red}ERROR: could not run [$*]${c_none}" 112; }
 
@@ -62,7 +60,7 @@ _quiet_ok() {
 }
 do_progress_quiet() {
   # Keep it loud when running in Travis or Jenkins
-  if [[ "${CI}" == "true" || "${JENKINS_URL}" != "" || "${TRACE}" || "${DEBUG}" || "${VERBOSE}" || "${__NESTED_PROGRESS__}" == "true" ]]; then
+  if [[ "${TRACE}" || "${DEBUG}" || "${VERBOSE}" || "${__NESTED_PROGRESS__}" == "true" ]]; then
     do_progress "$@"
   else
     _quiet_progress "$1"
@@ -76,11 +74,11 @@ if [[ ! ${BOOTSTRAP_ALREADY_RAN} ]]; then
 
   # Install homebrew packages if running on macOS
   if [[ -f "Brewfile" ]] && [[ "$(uname -s)" = "Darwin" ]]; then
-    [[ $(which brew) ]] || die "Homebrew is not installed. See https://brew.sh"
+    [[ $(which brew) ]] || die "Install Homebrew by going to https://brew.sh"
     [[ $(xcode-select --print-path) == "/Library/Developer/CommandLineTools" ]] || _say "${c_red}WARNING:${c_none} You may need to uninstall XCode and just install the command line tools"
 
     brew bundle check >/dev/null 2>&1  || {
-      do_progress "Installing Homebrew dependencies…" \
+      do_progress_quiet "Installing Homebrew dependencies" \
         brew bundle
     }
   fi
@@ -115,13 +113,13 @@ if [[ ! ${BOOTSTRAP_ALREADY_RAN} ]]; then
 
   # Javascript environment
   if [[ -f "./package.json" ]]; then
-    [[ $(which yarn) ]] || die "ERROR: Install yarn by going to https://yarnpkg.com"
+    [[ $(which yarn) ]] || die "Install yarn by going to https://yarnpkg.com"
   fi
   if [[ -f "./.nvmrc" ]]; then
     # Set up the correct version of node (Travis automatically does this)
     if [[ ! "${CI}" = "true" ]]; then
       if [[ ! -f "${HOME}/.nvm/nvm.sh" ]]; then
-        die "ERROR: Install nvm by going to https://github.com/creationix/nvm"
+        die "Install nvm by going to https://github.com/creationix/nvm"
       fi
       # shellcheck disable=SC1090
       source "${HOME}/.nvm/nvm.sh" --no-use
@@ -133,34 +131,30 @@ if [[ ! ${BOOTSTRAP_ALREADY_RAN} ]]; then
   # Note: Skip rbenv for Travis because it already has ruby
   if [[ ! "${CI}" = "true" ]] && [[ -f ".ruby-version" ]]; then
     if [[ -n $(which rbenv) ]]; then
-      progress "Setting correct ruby version (see ./.ruby-version)"
-      rbenv_version="$(rbenv version-name 2>/dev/null)"
-      if [[ -z "${rbenv_version}" ]]; then
-        do_progress_quiet "Installing Ruby" \
+      if [[ -z "$(rbenv version-name 2>/dev/null)" ]]; then
+        do_progress_quiet "Installing Ruby (see ./.ruby-version)" \
           rbenv install --skip-existing
       fi
+      do_progress_quiet "Setting correct ruby version (see ./.ruby-version)" \
+        eval "$(rbenv init -)"
     else
-      >&2 echo "WARNING: Skipping rbenv. Using local ruby"
+      _say "WARNING: Skipping rbenv. Using local ruby"
     fi
 
-    # Initialize rbenv (if installed)
-    [[ -n $(which rbenv) ]] && eval "$(rbenv init -)"
-
     gem list -i bundler >/dev/null 2>&1  || {
-      progress "Installing Ruby Bundler gem…"
-      gem install bundler || {
-        >&2 echo ''
-        >&2 echo ''
-        >&2 echo '--------------- Error -------------'
-        >&2 echo 'Problem installing ruby bundler.'
-        exit 1
-      }
+      do_progress_quiet "Installing Ruby Bundler gem"
+        gem install bundler
 
       [[ -n $(which rbenv) ]] && rbenv rehash
-
     }
   fi
 
   # Trust that subshells will maintain the python/node/ruby version
   declare -x BOOTSTRAP_ALREADY_RAN="true"
+fi
+
+# Load anything that is repo-specific
+if [[ -f "./script/_bootstrap.sh" ]]; then
+  # shellcheck disable=SC1091
+ source ./script/_bootstrap.sh || exit 111
 fi
