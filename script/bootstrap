@@ -84,7 +84,7 @@ if [[ ! ${BOOTSTRAP_ALREADY_RAN} ]]; then
   fi
 
   # Python: Install & Activate python virtualenv
-  if [[ ! "${CI}" = "true" && -f "./setup.py" ]]; then
+  if [[ ! "${CI}" = "true" ]] && [[ -f "./setup.py" || -f "./requirements.txt" ]]; then
     # Only install & activate the virtualenv if not already in one
     if [[ -z "${VIRTUAL_ENV}" ]]; then
 
