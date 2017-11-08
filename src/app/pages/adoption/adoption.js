@@ -32,7 +32,9 @@ export default class AdoptionForm extends Controller {
     onLoaded() {
         document.title = 'Adoption Form - OpenStax';
         // Pardot tracking
-        piTracker(window.location.href.split('#')[0]);
+        if ('piTracker' in window) {
+            piTracker(window.location.href.split('#')[0]);
+        }
         headerInfoPromise.then((response) => {
             this.model.introHeading = response.intro_heading;
             this.model.introDescription = response.intro_description;

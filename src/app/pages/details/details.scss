@@ -236,11 +236,15 @@ $special-breakpoint: 54rem;
         }
 
         .tabs {
-            a:not(:last-child)::after {
-                color: ui-color(footer-bg);
-                content: '|';
-                display: inline;
-                margin: 0 0.5rem;
+            a {
+                text-decoration-line: none;
+
+                &:not(:last-child)::after {
+                    color: ui-color(footer-bg);
+                    content: '|';
+                    display: inline;
+                    margin: 0 0.5rem;
+                }
             }
         }
 
