@@ -32,7 +32,7 @@ export default class Book extends Controller {
             this.el.classList.add('coming-soon');
         }
         if (this.bookInfo.slug === 'books/fizyka-uniwersytecka-polska') {
-          this.el.classList.add('polish');
+            this.el.classList.add('polish');
         }
     }
 
