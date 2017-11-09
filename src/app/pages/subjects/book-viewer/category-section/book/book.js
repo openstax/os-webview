@@ -31,6 +31,9 @@ export default class Book extends Controller {
         if (this.bookInfo.coming_soon) {
             this.el.classList.add('coming-soon');
         }
+        if (this.bookInfo.slug === 'books/fizyka-uniwersytecka-polska') {
+            this.el.classList.add('polish');
+        }
     }
 
     hideChildren() {
