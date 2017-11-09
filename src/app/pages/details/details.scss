@@ -155,6 +155,10 @@ $special-breakpoint: 54rem;
                 @include coming-soon;
             }
 
+            &.coming-soon.polish::before {
+                background-image: url('/images/subjects/coming-soon-polish.svg');
+            }
+
             > img {
                 width: 100%;
             }
