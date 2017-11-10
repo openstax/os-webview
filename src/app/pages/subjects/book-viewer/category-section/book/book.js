@@ -13,7 +13,7 @@ export default class Book extends Controller {
             slug: bookInfo.slug,
             detailsOpenClass: '',
             title: bookInfo.title,
-            detailsLinkText: bookInfo.slug === 'books/fizyka-dla-szkół-wyższych-polska' ?
+            detailsLinkText: bookInfo.slug.substr(-6) === 'polska' ?
                 'szczegóły i zasoby' : 'details & resources'
         };
         this.view = {
@@ -31,7 +31,7 @@ export default class Book extends Controller {
         if (this.bookInfo.coming_soon) {
             this.el.classList.add('coming-soon');
         }
-        if (this.bookInfo.slug === 'books/fizyka-uniwersytecka-polska') {
+        if (this.bookInfo.slug.substr(-6) === 'polska') {
             this.el.classList.add('polish');
         }
     }
