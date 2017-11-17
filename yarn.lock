@@ -71,9 +71,13 @@ acorn@^3.0.4:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-3.3.0.tgz#45e37fb39e8da3f25baee3ff5369e2bb5f22017a"
 
-acorn@^5.0.0, acorn@^5.0.3, acorn@^5.1.1, acorn@^5.1.2:
+acorn@^5.0.0, acorn@^5.0.3, acorn@^5.1.1:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.1.2.tgz#911cb53e036807cf0fa778dc5d370fbd864246d7"
+
+acorn@^5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.2.1.tgz#317ac7821826c22c702d66189ab8359675f135d7"
 
 after@0.8.1:
   version "0.8.1"
@@ -880,8 +884,8 @@ babel-polyfill@^6.23.0:
     regenerator-runtime "^0.10.5"
 
 babel-preset-env@^1.4.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/babel-preset-env/-/babel-preset-env-1.6.0.tgz#2de1c782a780a0a5d605d199c957596da43c44e4"
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/babel-preset-env/-/babel-preset-env-1.6.1.tgz#a18b564cc9b9afdf4aae57ae3c1b0d99188e6f48"
   dependencies:
     babel-plugin-check-es2015-constants "^6.22.0"
     babel-plugin-syntax-trailing-function-commas "^6.22.0"
@@ -6354,8 +6358,8 @@ path-type@^2.0.0:
     pify "^2.0.0"
 
 "pattern-library@github:openstax/pattern-library":
-  version "0.5.0-a"
-  resolved "https://codeload.github.com/openstax/pattern-library/tar.gz/547015b34145b4f0c520e9d53641784991e79cc5"
+  version "0.5.1"
+  resolved "https://codeload.github.com/openstax/pattern-library/tar.gz/73c78049a1e88877c05efe13fa5f2226af5deb61"
   dependencies:
     node-sass "^4.5.3"
 
@@ -7185,10 +7189,10 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     inherits "^2.0.1"
 
 rollup-plugin-commonjs@^8.2.3:
-  version "8.2.3"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-commonjs/-/rollup-plugin-commonjs-8.2.3.tgz#63e86effcc4d9ead629c68b510db44594e63ee00"
+  version "8.2.6"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-commonjs/-/rollup-plugin-commonjs-8.2.6.tgz#27e5b9069ff94005bb01e01bb46a1e4873784677"
   dependencies:
-    acorn "^5.1.2"
+    acorn "^5.2.1"
     estree-walker "^0.5.0"
     magic-string "^0.22.4"
     resolve "^1.4.0"
@@ -7225,8 +7229,8 @@ rollup@^0.36.3:
     source-map-support "^0.4.0"
 
 rollup@^0.50.0:
-  version "0.50.0"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.50.0.tgz#4c158f4e780e6cb33ff0dbfc184a52cc58cd5f3b"
+  version "0.50.1"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.50.1.tgz#e4dafcbf8d2bb0d9f5589d0cc6f64d76b8815730"
 
 rsvp@^3.0.13, rsvp@^3.0.20:
   version "3.6.2"
