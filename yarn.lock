@@ -6358,8 +6358,8 @@ path-type@^2.0.0:
     pify "^2.0.0"
 
 "pattern-library@github:openstax/pattern-library":
-  version "0.5.1"
-  resolved "https://codeload.github.com/openstax/pattern-library/tar.gz/73c78049a1e88877c05efe13fa5f2226af5deb61"
+  version "0.5.2"
+  resolved "https://codeload.github.com/openstax/pattern-library/tar.gz/530a0a396ffa0e92ca3bca56b25466368722eb43"
   dependencies:
     node-sass "^4.5.3"
 
