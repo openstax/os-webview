@@ -67,7 +67,10 @@ export default class DetailsLoaded extends Controller {
             const encodedLocation = encodeURIComponent(window.location.href);
             const setLockState = () => {
                 for (const res of this.model.book_faculty_resources) {
-                    res.showLock = res.resource_unlocked || isInstructor ? 'fa-unlock-alt' : 'fa-lock';
+                    if (isInstructor) {
+                        res.resource_unlocked = true;
+                    }
+                    res.showLock = res.resource_unlocked ? 'fa-unlock-alt' : 'fa-lock';
                 }
             };
             const insertResources = (resources, regionName) => {
