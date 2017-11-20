@@ -111,8 +111,8 @@
     }
 
     .fa:not(.fa-times) {
-        color: darken(os-color(light-blue), 10%);
         margin-left: -3rem;
+        text-align: center;
         transform: scale(1.2);
         width: 2.5rem;
     }
