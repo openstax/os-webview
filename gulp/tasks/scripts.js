@@ -220,6 +220,14 @@ function compileScriptsWebpack() {
         publicPath: "/", // for where to request chunks when the SinglePageApp changes the URL
         chunkFilename: "chunk-[chunkhash].js"
       },
+      module: {
+        rules: [
+          {
+            test: /\.(js|css)\.map$/,
+            loader: 'ignore-loader'
+          }
+        ]
+      },
       resolve: {
         alias: {
           "settings": path.resolve(config.dest, "settings.js"),
