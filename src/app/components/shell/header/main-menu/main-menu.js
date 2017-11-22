@@ -40,7 +40,7 @@ export default class MainMenu extends Controller {
         const target = document.activeElement;
 
         this.selectedIndex = -1;
-        this.model.openDropdown = target.href.replace(/.*\//, '');
+        this.model.openDropdown = target.href ? target.href.replace(/.*\//, '') : null;
         this.openDropdown = target.parentNode;
         this.update();
     }
