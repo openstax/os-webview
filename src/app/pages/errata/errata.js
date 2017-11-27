@@ -118,6 +118,7 @@ export default class Errata extends Controller {
             mode: 'detail',
             instructions: 'Errata submissions are displayed below until a new PDF is published online.',
             moreAbout: 'More about our correction schedule',
+            errataHoverHtml: '<p>...loading...</p>',
             errorTypes: [
                 'Typo', 'Broken link', 'Incorrect calculation or solution',
                 'Other factual inaccuracy in content',
@@ -316,6 +317,13 @@ export default class Errata extends Controller {
         // Fetch the summary data once
         const summaryPromise = fetch(`${settings.apiOrigin}/api/errata/?book_title=${book}`)
             .then((r) => r.json());
+        const hoverPromise = fetch(`${settings.apiOrigin}/api/pages/errata/`)
+            .then((r) => r.json());
+
+        hoverPromise.then((response) => {
+            this.model.errataHoverHtml = response.correction_schedule;
+            this.update();
+        });
 
         bookPromise.then((bookList) => {
             const entry = bookList.find((info) => info.title === book);
