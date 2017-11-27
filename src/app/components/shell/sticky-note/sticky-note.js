@@ -49,7 +49,7 @@ class StickyNote extends CMSPageController {
         }
     }
 
-    @on('click .multi-button > a')
+    @on('click .multi-button > [data-amount]')
     goToForm(e) {
         const amount = e.target.dataset.amount;
 
