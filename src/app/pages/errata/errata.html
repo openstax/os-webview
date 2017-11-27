@@ -6,23 +6,7 @@
                 <div class="instructions">{model.instructions}</div>
                 <div class="with-tooltip">
                     {model.moreAbout}
-                    <div class="tooltip">
-                        <p>Textbook corrections are incorporated into the web view version regularly.
-                          Instructor and student resources, such as test banks and student solution manuals, are
-                          also updated regularly online.  New PDF versions of OpenStax textbooks that reflect
-                          errata are updated, with release notes, in June. If there are no substantial changes
-                          for a book in a certain year, the PDF will not be updated that year.</p>
-                          <p if="model.releaseNotes">
-                              <a href="{model.releaseNotes}">
-                                  <i class="fa fa-cloud-download" aria-hidden="true"></i>
-                                  Download the latest release notes
-                              </a>
-                          </p>
-                          <p>
-                          Errata for OpenStax Tutor are updated at the end of each semester.
-                          </p>
-                          Have questions?  Please email <a href="mailto:errata@openstax.org">errata@openstax.org</a>
-                      </div>
+                    <div class="tooltip" data-html="errataHoverHtml"></div>
                 </div>
             </div>
         </div>
