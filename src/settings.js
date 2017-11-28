@@ -19,4 +19,7 @@ const settings = {
     }
 };
 
+console.debug('Setting SETTINGS', settings);
+window.SETTINGS = settings;
+
 export default settings;
