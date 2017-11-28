@@ -13,9 +13,8 @@ gulp.task('default', gulp.series(
         'scripts',
         'templates',
         'images'
-    // ),
-    )
-    // 'jspm-builder'
+    ),
+    'webpack'
 ));
 
 gulp.task('dev-build', gulp.series(
