@@ -1,3 +1,4 @@
+// BEGIN settings block
 const settings = {
     accountHref: 'https://accounts-qa.openstax.org',
     analyticsID: 'UA-73668038-1',
@@ -20,3 +21,4 @@ const settings = {
 };
 
 export default settings;
+// END settings block
