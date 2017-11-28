@@ -212,9 +212,7 @@ function compileScriptsWebpack() {
     ]).pipe(webpack({
       // watch: true, // This causes gulp to freeze and not serve
       externals: {
-          settings: {
-              root: 'SETTINGS'
-          }
+          settings: 'SETTINGS'
       },
       output: {
         path: path.resolve(config.dest),
