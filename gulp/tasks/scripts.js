@@ -211,7 +211,7 @@ function compileScriptsWebpack() {
         `${config.dest}/app/main.js`
     ]).pipe(webpack({
       // watch: true, // This causes gulp to freeze and not serve
-      externals: /settings\.js$/,
+      externals: 'settings',
       output: {
         path: path.resolve(config.dest),
         filename: "bundle.js",
