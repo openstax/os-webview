@@ -78,7 +78,7 @@
                 width: 100%;
             }
 
-            @include wider-than($content-max) {
+            @include wider-than($media-content-max) {
                 top: 7rem;
             }
 
@@ -106,11 +106,11 @@
 
             .description {
 
-                @include wider-than($content-max) {
+                @include wider-than($media-content-max) {
                     width: 48rem;
                 }
 
-                @include width-up-to($content-max) {
+                @include width-up-to($media-content-max) {
                     width: 40%;
                 }
 
@@ -168,7 +168,7 @@
                 width: 100%;
             }
 
-            @include wider-than($content-max) {
+            @include wider-than($media-content-max) {
                 left: auto;
                 right: calc(50% - 85rem);
                 width: 143rem;

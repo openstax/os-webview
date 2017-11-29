@@ -56,7 +56,7 @@
             position: relative;
             width: 100%;
 
-            @include wider-than($content-max) {
+            @include wider-than($media-content-max) {
                 background-size: calc(28rem + 80vw);
                 height: calc(4rem + 40vw);
                 max-height: 80vh;
