@@ -85,7 +85,7 @@ $hero-break-width: 880px;
             justify-content: flex-end;
             padding: 4rem;
 
-            @include wider-than($content-max) {
+            @include wider-than($media-content-max) {
                 padding-left: calc(-61rem + 55%);
             }
 
