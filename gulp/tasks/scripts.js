@@ -188,8 +188,6 @@ function compileScriptsBabel() {
     return gulp.src(`${config.src}/**/*.js`, {
         // since: gulp.lastRun('compileScriptsBabel')
     })
-    // .pipe(pi.sourcemaps.init({loadMaps: true}))
-    .pipe(pi.sourcemaps.init())
     .pipe(pi.replace(/@VERSION@/g, config.version))
     .pipe(pi.replace(/@ENV@/g, config.env))
     .pipe(pi.babel({
@@ -201,24 +199,19 @@ function compileScriptsBabel() {
             'transform-object-assign'
         ]
     }))
-    .pipe(pi.sourcemaps.write('.'))
     .pipe(gulp.dest(config.dest));
 }
 
-function minifyScripts() {
-    return gulp.src([
-        `${config.dest}/**/*.js`
-    ])
-    .pipe(pi.uglify({
-        preserveComments: false,
-        screwIE8: true
-    }))
+function copySettings() {
+    return gulp.src(`${config.src}/settings-example.js`)
+    .pipe(pi.rename('settings.js'))
+    .pipe(pi.replace(/export/, '//export'))
     .pipe(gulp.dest(config.dest));
 }
 
 gulp.task(eslint);
 gulp.task(compileScriptsBabel);
-gulp.task('minify-scripts', minifyScripts);
+gulp.task(copySettings);
 
 gulp.task('scripts', gulp.series(
     eslint,

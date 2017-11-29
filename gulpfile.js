@@ -29,6 +29,7 @@ gulp.task('dist-build', gulp.series(
 
 gulp.task('dev', gulp.series(
     'dev-build',
+    'copySettings',
     'watch'
 ));
 
@@ -36,7 +37,6 @@ gulp.task('dist', gulp.series(
     'production',
     'default',
     'precache',
-    'minify-scripts',
     'humans'
 ));
 
