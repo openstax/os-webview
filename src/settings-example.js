@@ -21,4 +21,6 @@ const settings = {
 
 window.SETTINGS = settings;
 
-// export default settings;
+// Do not include this line in settings.js
+// It is necessary here, because Jest uses this file for tests
+export default settings;
