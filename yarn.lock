@@ -4149,6 +4149,10 @@ ieee754@^1.1.4:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.8.tgz#be33d40ac10ef1926701f6f08a2d86fbfd1ad3e4"
 
+ignore-loader@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/ignore-loader/-/ignore-loader-0.1.2.tgz#d81f240376d0ba4f0d778972c3ad25874117a463"
+
 ignore@^3.3.3:
   version "3.3.5"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.5.tgz#c4e715455f6073a8d7e5dae72d2fc9d71663dba6"
@@ -6358,8 +6362,8 @@ path-type@^2.0.0:
     pify "^2.0.0"
 
 "pattern-library@github:openstax/pattern-library":
-  version "0.5.2"
-  resolved "https://codeload.github.com/openstax/pattern-library/tar.gz/530a0a396ffa0e92ca3bca56b25466368722eb43"
+  version "0.5.3"
+  resolved "https://codeload.github.com/openstax/pattern-library/tar.gz/07f98555e9d6326cff1c0e42fb23eac234706b45"
   dependencies:
     node-sass "^4.5.3"
 
