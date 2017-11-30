@@ -13,9 +13,8 @@ gulp.task('default', gulp.series(
         'scripts',
         'templates',
         'images'
-    // ),
-    )
-    // 'jspm-builder'
+    ),
+    'webpack'
 ));
 
 gulp.task('dev-build', gulp.series(
@@ -30,6 +29,7 @@ gulp.task('dist-build', gulp.series(
 
 gulp.task('dev', gulp.series(
     'dev-build',
+    'copySettings',
     'watch'
 ));
 
@@ -37,7 +37,6 @@ gulp.task('dist', gulp.series(
     'production',
     'default',
     'precache',
-    'minify-scripts',
     'humans'
 ));
 
