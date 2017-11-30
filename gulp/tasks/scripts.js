@@ -1,4 +1,3 @@
-const path = require('path');
 const gulp = require('gulp');
 const webpack = require('webpack-stream');
 const argv = require('yargs').argv;
@@ -189,8 +188,6 @@ function compileScriptsBabel() {
     return gulp.src(`${config.src}/**/*.js`, {
         // since: gulp.lastRun('compileScriptsBabel')
     })
-    // .pipe(pi.sourcemaps.init({loadMaps: true}))
-    .pipe(pi.sourcemaps.init())
     .pipe(pi.replace(/@VERSION@/g, config.version))
     .pipe(pi.replace(/@ENV@/g, config.env))
     .pipe(pi.babel({
@@ -202,56 +199,23 @@ function compileScriptsBabel() {
             'transform-object-assign'
         ]
     }))
-    .pipe(pi.sourcemaps.write('.'))
     .pipe(gulp.dest(config.dest));
 }
 
-function compileScriptsWebpack() {
-    return gulp.src([
-        `${config.dest}/app/main.js`
-    ]).pipe(webpack({
-      // watch: true, // This causes gulp to freeze and not serve
-      externals: {
-          settings: 'SETTINGS'
-      },
-      output: {
-        path: path.resolve(config.dest),
-        filename: "bundle.js",
-        publicPath: "/", // for where to request chunks when the SinglePageApp changes the URL
-        chunkFilename: "chunk-[chunkhash].js"
-      },
-      resolve: {
-        alias: {
-          "settings": path.resolve(config.dest, "settings.js"),
-          "~": path.resolve(config.dest, "app/"),
-        }
-      },
-      devtool: "sourcemap"
-    }))
-    .pipe(pi.sourcemaps.write('.'))
-    .pipe(gulp.dest(config.dest));
-}
-
-function minifyScripts() {
-    return gulp.src([
-        `${config.dest}/**/*.js`
-    ])
-    .pipe(pi.uglify({
-        preserveComments: false,
-        screwIE8: true
-    }))
+function copySettings() {
+    return gulp.src(`${config.src}/settings-example.js`)
+    .pipe(pi.rename('settings.js'))
+    .pipe(pi.replace(/export/, '//export'))
     .pipe(gulp.dest(config.dest));
 }
 
 gulp.task(eslint);
 gulp.task(compileScriptsBabel);
-gulp.task(compileScriptsWebpack);
-gulp.task('minify-scripts', minifyScripts);
+gulp.task(copySettings);
 
 gulp.task('scripts', gulp.series(
     eslint,
-    compileScriptsBabel,
-    compileScriptsWebpack
+    compileScriptsBabel
 ));
 
 gulp.task('scripts:watch', () => {
@@ -259,7 +223,7 @@ gulp.task('scripts:watch', () => {
     .on('change', gulp.series(
         eslint,
         compileScriptsBabel,
-        compileScriptsWebpack,
+        'webpack',
         'reload-browser'
     ));
 });

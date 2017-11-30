@@ -54,7 +54,7 @@
             </section>
             <section class="floating-menu {model.bottom}">
                 <div class="box">
-                <h2>Weź tę książkę</h2>
+                <h2>Przejdź do książki</h2>
                 <div class="get-this-book" skip="true"></div>
                 <div class="notes"></div>
                 <div class="cta">
@@ -205,8 +205,10 @@
                             <img src="{model.licenseIcon}" alt="">
                             <div>
                                 <div if="!model.license_text">
-                                    Podręcznik <span data-html="title" skip="true"></span> został opracowany przez Openstax Polska
-                                    i jest udostępniany na licencji <span class="text">{model.license_name} v{model.license_version}</span>.
+                                    Podręcznik Fizyka dla szkół wyższych został
+                                    opracowany przez OpenStax Polska i jest
+                                    udostępniany na licencji Creative Commons
+                                    uznanie autorstwa v4.0.
                                 </div>
                                 <div if="model.license_text" data-html="license_text" skip="true"></div>
                             </div>
