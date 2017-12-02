@@ -189,8 +189,7 @@ function compileScriptsBabel() {
     return gulp.src(`${config.src}/**/*.js`, {
         // since: gulp.lastRun('compileScriptsBabel')
     })
-    // .pipe(pi.sourcemaps.init({loadMaps: true}))
-    .pipe(pi.sourcemaps.init())
+    .pipe(pi.sourcemaps.init({loadMaps: true}))
     .pipe(pi.replace(/@VERSION@/g, config.version))
     .pipe(pi.replace(/@ENV@/g, config.env))
     .pipe(pi.babel({
@@ -202,6 +201,11 @@ function compileScriptsBabel() {
             'transform-object-assign'
         ]
     }))
+    // prefix the sourcemaps with with '../src/' so webpack can find them
+    .pipe(pi.sourcemaps.mapSources(function(sourcePath, file) {
+      const rel = path.relative(path.dirname(`${config.dest}/${sourcePath}`), `${config.src}/${sourcePath}`)
+      return rel;
+    }))
     .pipe(pi.sourcemaps.write('.'))
     .pipe(gulp.dest(config.dest));
 }
@@ -211,6 +215,11 @@ function compileScriptsWebpack() {
         `${config.dest}/app/main.js`
     ]).pipe(webpack({
       // watch: true, // This causes gulp to freeze and not serve
+      externals: {
+          settings: {
+              root: 'SETTINGS'
+          }
+      },
       output: {
         path: path.resolve(config.dest),
         filename: "bundle.js",
@@ -222,6 +231,15 @@ function compileScriptsWebpack() {
           "settings": path.resolve(config.dest, "settings.js"),
           "~": path.resolve(config.dest, "app/"),
         }
+      },
+      module: {
+        rules: [
+          {
+            test: /\.js$/,
+            use: ["source-map-loader"],
+            enforce: "pre"
+          }
+        ]
       },
       devtool: "sourcemap"
     }))
