@@ -42,13 +42,8 @@ function scsslint() {
 
 function compileStyles(src, dest) {
     return src
-        .pipe(pi.if(config.env !== 'production', pi.sourcemaps.init()))
-        .pipe(pi.sass({
-            includePaths: [
-                './styles',
-                './src/styles'
-            ]
-        }))
+        .pipe(pi.sourcemaps.init({loadMaps: true}))
+        .pipe(pi.sass())
         .pipe(pi.autoprefixer(config.browsers))
         .pipe(pi.if(config.env === 'production', pi.cssnano({
             reduceIdents: {
@@ -58,10 +53,10 @@ function compileStyles(src, dest) {
                 keyframes: false
             }
         })))
-        .pipe(pi.if(config.env !== 'production', pi.sourcemaps.write('.', {
+        .pipe(pi.sourcemaps.write('.', {
             includeContent: false,
             sourceRoot: './'
-        })))
+        }))
         .pipe(gulp.dest(dest || config.dest))
         .pipe(bs.stream({match: '**/*.css'}));
 }
@@ -94,8 +89,8 @@ gulp.task(compileChangedStyles);
 gulp.task(compileMainStyle);
 
 gulp.task('styles', gulp.series(
-    scsslint,
-    compileAllStyles
+    scsslint
+    // compileAllStyles
 ));
 
 gulp.task('styles:watch', () => {

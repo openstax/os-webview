@@ -8,7 +8,7 @@ function templates() {
     return gulp.src(`${config.src}/app/**/*.html`, {
         since: gulp.lastRun('templates')
     })
-    .pipe(pi.if(config.env !== 'production', pi.sourcemaps.init()))
+    .pipe(pi.sourcemaps.init({loadMaps: true}))
     .pipe(pi.rename((uri) => {
         uri.extname = '.html.js';
     }))
@@ -22,7 +22,7 @@ function templates() {
         compact: false,
         presets: ['es2015']
     }))
-    .pipe(pi.if(config.env !== 'production', pi.sourcemaps.write('.')))
+    .pipe(pi.sourcemaps.write('.'))
     .pipe(gulp.dest(`${config.dest}/app`));
 }
 
