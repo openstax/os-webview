@@ -37,8 +37,10 @@ function webpack() {
                 "settings": path.resolve(config.dest, "settings.js"),
                 "~": path.resolve(config.dest, "app/"),
             }
-        }
+        },
+        devtool: "source-map"
     }))
+    .pipe(pi.sourcemaps.write('.'))
     .pipe(gulp.dest(config.dest));
 }
 

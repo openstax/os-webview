@@ -9,6 +9,7 @@ function templates() {
     return gulp.src(`${config.src}/app/**/*.html`, {
         since: gulp.lastRun('templates')
     })
+    .pipe(pi.sourcemaps.init())
     .pipe(pi.htmlmin({
         collapseWhitespace: true
     }))
@@ -22,6 +23,7 @@ function templates() {
     .pipe(pi.rename((uri) => {
         uri.extname = '.html.js';
     }))
+    .pipe(pi.sourcemaps.write('.'))
     .pipe(gulp.dest(`${config.dest}/app`));
 }
 

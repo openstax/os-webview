@@ -42,6 +42,7 @@ function scsslint() {
 
 function compileStyles(src, dest) {
     return src
+        .pipe(pi.sourcemaps.init())
         .pipe(pi.sass({
             includePaths: [
                 './styles',
@@ -57,6 +58,10 @@ function compileStyles(src, dest) {
                 keyframes: false
             }
         })))
+        .pipe(pi.sourcemaps.write('.', {
+            includeContent: false,
+            sourceRoot: './'
+        }))
         .pipe(gulp.dest(dest || config.dest))
         .pipe(bs.stream({match: '**/*.css'}));
 }

@@ -188,6 +188,8 @@ function compileScriptsBabel() {
     return gulp.src(`${config.src}/**/*.js`, {
         // since: gulp.lastRun('compileScriptsBabel')
     })
+    .pipe(pi.sourcemaps.init({loadMaps: true}))
+    .pipe(pi.sourcemaps.init())
     .pipe(pi.replace(/@VERSION@/g, config.version))
     .pipe(pi.replace(/@ENV@/g, config.env))
     .pipe(pi.babel({
@@ -199,6 +201,7 @@ function compileScriptsBabel() {
             'transform-object-assign'
         ]
     }))
+    .pipe(pi.sourcemaps.write('.'))
     .pipe(gulp.dest(config.dest));
 }
 
