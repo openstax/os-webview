@@ -42,7 +42,7 @@ function scsslint() {
 
 function compileStyles(src, dest) {
     return src
-        .pipe(pi.if(config.env !== 'production', pi.sourcemaps.init()))
+        .pipe(pi.sourcemaps.init())
         .pipe(pi.sass({
             includePaths: [
                 './styles',
@@ -58,10 +58,10 @@ function compileStyles(src, dest) {
                 keyframes: false
             }
         })))
-        .pipe(pi.if(config.env !== 'production', pi.sourcemaps.write('.', {
+        .pipe(pi.sourcemaps.write('.', {
             includeContent: false,
             sourceRoot: './'
-        })))
+        }))
         .pipe(gulp.dest(dest || config.dest))
         .pipe(bs.stream({match: '**/*.css'}));
 }
