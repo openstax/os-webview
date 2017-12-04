@@ -191,7 +191,7 @@
                 max-width: calc(50% - 3rem);
             }
 
-            @include wider-than($content-max) {
+            @include wider-than($media-content-max) {
                 flex-basis: calc(33% - 2.6rem);
                 max-width: calc(33% - 2.6rem);
             }
