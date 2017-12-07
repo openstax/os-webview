@@ -1,0 +1,42 @@
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
+
+$width: 3.5rem;
+$small-dot: 0.6rem;
+$large-dot: 1.4rem;
+
+.section-navigator {
+    align-items: center;
+    background-color: ui-color(white);
+    border-radius: $width / 2;
+    bottom: 50%;
+    box-shadow: 0.5rem 0.5rem 3.5rem 0.5rem rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    padding: ($width / 2) 0;
+    position: fixed;
+    right: 5rem;
+    width: $width;
+    z-index: 5;
+
+    .hotspot {
+        align-items: center;
+        cursor: pointer;
+        display: flex;
+        height: 3rem;
+        justify-content: center;
+        width: 100%;
+
+        .dot {
+            background-color: text-color(normal);
+            border-radius: 50%;
+            height: $small-dot;
+            width: $small-dot;
+        }
+
+        &.selected > .dot {
+            background-color: os-color(light-blue);
+            height: $large-dot;
+            width: $large-dot;
+        }
+    }
+}

@@ -1,5 +1,6 @@
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
+import SectionNavigator from './section-navigator/section-navigator';
 import {on} from '~/helpers/controller/decorators';
 import analytics from '~/helpers/analytics';
 import {description as template} from './openstax-tutor.html';
@@ -38,6 +39,9 @@ export default class Tutor extends CMSPageController {
             learnMore: {}
         };
         this.slug = 'pages/tutor-marketing';
+        this.regions = {
+            sectionNavigator: 'section-navigator'
+        };
     }
 
     onDataError(e) {
@@ -182,6 +186,15 @@ export default class Tutor extends CMSPageController {
 
     onLoaded() {
         $.scrollToHash();
+        try {
+            const sectionIds = Array.from(this.el.querySelectorAll('section[id]'))
+                .map((el) => el.id);
+            const sectionNavigator = new SectionNavigator(sectionIds);
+
+            this.regions.sectionNavigator.append(sectionNavigator);
+        } catch (e) {
+            console.debug('Caught', e);
+        }
     }
 
     onClose() {

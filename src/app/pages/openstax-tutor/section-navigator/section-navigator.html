@@ -1,0 +1,7 @@
+<template args="model">
+    <div
+        each="id in model.idList"
+        class="{`hotspot ${model.selectedId === id ? 'selected' : null}`}"
+        data-id={id}
+    ><span class="dot"></span></div>
+</template>
