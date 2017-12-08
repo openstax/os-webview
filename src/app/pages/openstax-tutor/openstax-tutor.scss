@@ -14,16 +14,44 @@ $work-bottom: lighten(rgb(0, 125, 164), 5%);
 $money-green: rgb(122, 188, 125);
 $deep-teal: rgb(0, 114, 151);
 
+.openstax-tutor-footer {
+    background-color: $deep-teal;
+}
+
 .openstax-tutor-page {
     @include set-font(body-large);
+
+    font-weight: 300;
+    letter-spacing: 0.02em;
+
+    .floating-tools {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        right: 5rem;
+        top: 50%;
+        transform: translateY(-60%);
+        z-index: 5;
+
+        > * {
+            margin-bottom: 2rem;
+        }
+
+        @media (max-height: $phone-max * 1.25) {
+            top: 12rem;
+            transform: none;
+        }
+
+        @media (max-height: $phone-max) {
+            top: 10rem;
+            transform: scale(0.9);
+        }
+    }
 
     .smaller,
     .sticky-footer {
         @include set-font(body-regular);
-    }
-
-    h1 {
-        text-align: center;
     }
 
     .sticky-footer {
@@ -111,6 +139,24 @@ $deep-teal: rgb(0, 114, 151);
         }
     }
 
+    button,
+    .btn {
+        @extend %button;
+
+        border-radius: 0.25rem;
+        font-weight: inherit;
+        letter-spacing: inherit;
+        text-transform: none;
+
+        &.primary {
+            @extend %primary;
+
+            display: inline-flex;
+            font-weight: inherit;
+            letter-spacing: inherit;
+        }
+    }
+
     // scss-lint:disable IdSelector
     section {
         overflow: hidden;
@@ -177,35 +223,21 @@ $deep-teal: rgb(0, 114, 151);
             }
 
             .btn {
-                padding: 1rem 2rem;
-                white-space: nowrap;
-
-                @include width-up-to($phone-max) {
-                    @include set-font(helper-label);
-
-                    white-space: normal;
-                }
+                background-color: os-color(medium-blue);
             }
         }
 
-        .boxed {
+        .text-content {
             align-items: flex-start;
         }
 
-        h1 {
+        #tutor-logo {
+            width: 28rem;
+        }
 
+        h1 {
             @include wider-than($phone-max) {
                 @include set-font(hero-h1);
-            }
-
-            .subhead {
-                @include set-font(h3);
-                margin: 3rem 0;
-                padding: 0;
-
-                @include width-up-to($phone-max) {
-                    text-align: left;
-                }
             }
         }
 
@@ -240,11 +272,6 @@ $deep-teal: rgb(0, 114, 151);
                 margin-right: 5%;
                 max-height: 28vw;
                 width: 100%;
-            }
-
-            #tutor-logo {
-                max-width: 100%;
-                width: calc(20rem + 20%);
             }
         }
 
@@ -467,67 +494,36 @@ $deep-teal: rgb(0, 114, 151);
     }
 
     #feature-matrix {
-        color: text-color(white);
         z-index: 0;
 
-        .background-imagery {
-            background: linear-gradient(0deg,
-                os-color(gold),
-                rgba(13, 192, 220, 1) calc(8% + 5vw),
-                rgba(11, 166, 201, 1) calc(24% + 5vw),
-                rgba(7, 120, 167, 1) calc(45% + 2vw),
-                rgba(2, 57, 122, 1) 78%,
-                $sea-bottom);
-            overflow-y: visible;
+        .two-cells {
+            display: flex;
+            flex-flow: row nowrap;
 
-            > img {
-                &:first-child {
-                    height: calc(5vw + 10rem);
-                    left: 11%;
-                    top: 0;
+            .cell {
+                flex-basis: 50%;
+            }
+
+            .fa-check-circle {
+                color: text-color(footer-header);
+                font-size: 2.4rem;
+                margin: 0.3rem 2rem;
+
+                &.true {
+                    color: os-color(green);
                 }
 
-                &:nth-child(2) {
-                    bottom: calc(12vw + 3rem);
-                    height: calc(3vw + 5rem);
-                    left: 12%;
-                }
-
-                &:nth-child(3) {
-                    bottom: 20vw;
-                    height: calc(3vw + 5rem);
-                    right: 8%;
+                &.spacer {
+                    visibility: hidden;
                 }
             }
         }
 
         h1 {
+            @extend %text-h2;
+
             margin-bottom: 3rem;
-        }
-
-        .description {
-            text-align: center;
-        }
-
-        table {
-            margin: 3rem 0 0;
-            width: 100;
-
-            .wide-body {
-                display: none;
-
-                @include wider-than($tablet-max) {
-                    display: table-row-group;
-                }
-            }
-
-            .narrow-body {
-                display: table-row-group;
-
-                @include wider-than($tablet-max) {
-                    display: none;
-                }
-            }
+            margin-top: 1rem;
         }
 
         .caption {
@@ -536,54 +532,6 @@ $deep-teal: rgb(0, 114, 151);
             margin: 0.5rem 0 1rem 0.5rem;
             text-align: left;
             width: 100%;
-        }
-
-        td {
-            background-color: os-color(blue);
-            border: thin solid transparent;
-            padding: 1rem 3rem;
-
-            @media (min-width: 1200px) {
-                padding-left: 5rem;
-            }
-
-            &:nth-child(even) {
-                padding-left: 3rem;
-                width: 30%;
-
-                @include wider-than($tablet-max) {
-                    width: 15%;
-                }
-            }
-
-            .description.smaller {
-                @include set-font(helper-label);
-            }
-
-            .key {
-                display: flex;
-                justify-content: space-around;
-                width: 100%;
-
-                > div {
-                    align-items: center;
-                    display: flex;
-                    flex-basis: 20rem;
-                    justify-content: center;
-                }
-            }
-
-            .center-image {
-                display: flex;
-                justify-content: center;
-            }
-
-            img {
-                margin: 1rem;
-                max-height: 4rem;
-                max-width: 4rem;
-                vertical-align: middle;
-            }
         }
 
         .availability {

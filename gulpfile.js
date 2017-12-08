@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 require('require-dir')('./gulp/tasks', {recurse: true});
 
-gulp.task('default', gulp.series(
+gulp.task('before-webpack', gulp.series(
     'clean',
     gulp.parallel(
         'copy',
@@ -13,7 +13,11 @@ gulp.task('default', gulp.series(
         'scripts',
         'templates',
         'images'
-    ),
+    )
+));
+
+gulp.task('default', gulp.series(
+    'before-webpack',
     'webpack'
 ));
 
@@ -46,5 +50,6 @@ gulp.task('lint', gulp.parallel(
 ));
 
 gulp.task('test', gulp.series(
-    'dev-build'
+    'development',
+    'before-webpack'
 ));

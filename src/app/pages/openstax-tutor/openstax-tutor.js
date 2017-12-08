@@ -1,6 +1,7 @@
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
 import SectionNavigator from './section-navigator/section-navigator';
+import PulsingDot from './pulsing-dot/pulsing-dot';
 import {on} from '~/helpers/controller/decorators';
 import analytics from '~/helpers/analytics';
 import {description as template} from './openstax-tutor.html';
@@ -31,8 +32,6 @@ export default class Tutor extends CMSPageController {
 
             },
             featureMatrix: {
-                availableIcon: availableUrl,
-                unavailableIcon: unavailableUrl
             },
             whereMoneyGoes: {},
             faq: {},
@@ -40,7 +39,7 @@ export default class Tutor extends CMSPageController {
         };
         this.slug = 'pages/tutor-marketing';
         this.regions = {
-            sectionNavigator: 'section-navigator'
+            floatingTools: '.floating-tools'
         };
     }
 
@@ -143,23 +142,7 @@ export default class Tutor extends CMSPageController {
             link: data.floating_footer_button_2_link
         };
 
-        this.model.featureMatrix.featurePairs = data.resource_availability
-            .map((obj) => ({
-                text: obj.name,
-                image: obj.available ? availableImageData : unavailableImageData,
-                value: obj.alternate_text
-            }))
-            .reduce((result, value, index, arr) => {
-                if (index % 2 === 0) {
-                    const newPair = arr.slice(index, index + 2);
-
-                    if (newPair.length < 2) {
-                        newPair.push({});
-                    }
-                    result.push(newPair);
-                }
-                return result;
-            }, []);
+        this.model.featureMatrix.features = data.resource_availability;
 
         this.update();
         $.insertHtml(this.el, this.model);
@@ -182,6 +165,7 @@ export default class Tutor extends CMSPageController {
         };
 
         window.addEventListener('scroll', this.handleScroll);
+        document.querySelector('.page-footer').classList.add('openstax-tutor-footer');
     }
 
     onLoaded() {
@@ -190,8 +174,10 @@ export default class Tutor extends CMSPageController {
             const sectionIds = Array.from(this.el.querySelectorAll('section[id]'))
                 .map((el) => el.id);
             const sectionNavigator = new SectionNavigator(sectionIds);
+            const pulsingDot = new PulsingDot();
 
-            this.regions.sectionNavigator.append(sectionNavigator);
+            this.regions.floatingTools.attach(sectionNavigator);
+            this.regions.floatingTools.append(pulsingDot);
         } catch (e) {
             console.debug('Caught', e);
         }
@@ -199,6 +185,7 @@ export default class Tutor extends CMSPageController {
 
     onClose() {
         window.removeEventListener('scroll', this.handleScroll);
+        document.querySelector('.page-footer').classList.add('openstax-tutor-footer');
     }
 
     @on('click .toggled-item[aria-role="button"]')

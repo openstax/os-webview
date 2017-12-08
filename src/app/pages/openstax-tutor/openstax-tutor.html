@@ -1,5 +1,6 @@
 <template args="model">
-    <section-navigator skip="true"></section-navigator>
+    <div class="floating-tools" skip="true">
+    </div>
     <if condition="model.frontier">
         <div class="sticky-footer {model.footerHeight}">
             <div class="button-group">
@@ -15,21 +16,21 @@
             <div class="background-imagery">
                 <img id="mountains" src="/images/openstax-tutor/mountains.svg">
             </div>
-            <div class="boxed">
+            <div class="text-content">
                 <div class="above-head smaller">
                     <div>{model.access.text}</div>
-                    <a href="{model.access.url}" class="btn">{model.access.label}</a>
+                    <a href="{model.access.url}" class="btn small">{model.access.label}</a>
                 </div>
+                <img id="tutor-logo" alt="OpenStax Tutor beta logo" src="/images/openstax-tutor/tutor-logo.svg">
                 <h1>
                     {model.frontier.headline}
-                    <span class="subhead">{model.frontier.subhead}</span>
                 </h1>
+                <span>{model.frontier.subhead}</span>
                 <div class="two-halves">
                     <img id="moose" alt="Vector line drawing of moose" src="/images/openstax-tutor/moose.svg">
                     <div>
-                        <img id="tutor-logo" alt="OpenStax Tutor beta logo" src="/images/openstax-tutor/tutor-logo.svg">
                         <div data-html="frontier.description" skip="true"></div>
-                        <a class="btn white-on-blue" href="{model.frontier.learnMore.href}">
+                        <a class="btn primary" href="{model.frontier.learnMore.href}">
                             {model.frontier.learnMore.text}
                         </a>
                     </div>
@@ -151,98 +152,24 @@
             </div>
         </section>
         <section id="feature-matrix">
-            <div class="background-imagery">
-                <img alt="sparkles" aria-role="presentation" src="/images/openstax-tutor/sparkles-1.svg">
-                <img alt="sparkles" aria-role="presentation" src="/images/openstax-tutor/sparkles-2.svg">
-                <img alt="sparkles" aria-role="presentation" src="/images/openstax-tutor/sparkles-3.svg">
-            </div>
             <div class="boxed">
-                <h1>{model.featureMatrix.headline}</h1>
-                <div class="description text-content" data-html="featureMatrix.description" skip="true"></div>
-                <table>
-                    <tbody class="wide-body">
-                        <tr each="pair in model.featureMatrix.featurePairs">
-                            <td>{pair[0].text}</td>
-                            <td>
-                                <!-- using <if><else></if> fouled the HTML structure -->
-                                <div if="!pair[0].value" class="center-image">
-                                    <img alt="{pair[0].image.description}" src="{pair[0].image.url}">
-                                </div>
-                                <if condition="pair[0].value">
-                                    <div class="description {pair[0].value.length > 6 ? 'smaller' : ''}">{pair[0].value}</div>
-                                </if>
-                            </td>
-                            <td if="pair[1].image">{pair[1].text}</td>
-                            <td if="pair[1].image">
-                                <!-- using <if><else></if> fouled the HTML structure -->
-                                <div if="!pair[1].value" class="center-image">
-                                    <img alt="{pair[1].image.description}" src="{pair[1].image.url}">
-                                </div>
-                                <if condition="pair[1].value">
-                                    <div class="description {pair[1].value.length > 6 ? 'smaller' : ''}">{pair[1].value}</div>
-                                </if>
-                            </td>
-                            <td if="!pair[1].image" colspan="2">
-                                <div class="key">
-                                    <div>
-                                        <img alt="available indicator" src="{model.featureMatrix.availableIcon}">
-                                        <div>Available</div>
-                                    </div>
-                                    <div>
-                                        <img alt="unavailable indicator" src="{model.featureMatrix.unavailableIcon}">
-                                        <div>Unavailable</div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tbody class="narrow-body">
-                        <tr each="pair in model.featureMatrix.featurePairs">
-                            <td>{pair[0].text}</td>
-                            <td>
-                                <!-- using <if><else></if> fouled the HTML structure -->
-                                <div if="!pair[0].value" class="center-image">
-                                    <img alt="{pair[0].image.description}" src="{pair[0].image.url}">
-                                </div>
-                                <if condition="pair[0].value">
-                                    <div class="description smaller">{pair[0].value}</div>
-                                </if>
-                            </td>
-                        </tr>
-                        <tr each="pair in model.featureMatrix.featurePairs">
-                            <td if="pair[1].text">{pair[1].text}</td>
-                            <td if="pair[1].text">
-                                <!-- using <if><else></if> fouled the HTML structure -->
-                                <div if="!pair[1].value" class="center-image">
-                                    <img alt="{pair[1].image.description}" src="{pair[1].image.url}">
-                                </div>
-                                <if condition="pair[1].value">
-                                    <div class="description smaller">{pair[1].value}</div>
-                                </if>
-                            </td>
-                            <td if="!pair[1].text" colspan="2">
-                                <div class="key">
-                                    <div>
-                                        <img alt="available indicator" src="{model.featureMatrix.availableIcon}">
-                                        Available
-                                    </div>
-                                    <div>
-                                        <img alt="unavailable indicator" src="{model.featureMatrix.unavailableIcon}">
-                                        Unavailable
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="caption smaller">{model.featureMatrix.resourceFinePrint}</div>
-                <div class="availability">
-                    <span>{model.featureMatrix.availability}</span>
-                    <div class="book-covers">
-                        <img each="item in model.featureMatrix.availableBooks" alt="{item.description}" src="{item.url}">
+                <div class="two-cells">
+                    <div class="cell text-content">
+                        <h1>{model.featureMatrix.headline}</h1>
+                        <div class="description" data-html="featureMatrix.description" skip="true"></div>
+
+                    </div>
+                    <div class="cell">
+                        <div each="feature in model.featureMatrix.features">
+                            <i class="{`fa fa-check-circle ${feature.available}`}"></i>
+                            {feature.name}
+                        </div>
+                        <div class="caption smaller">
+                            <i class="fa fa-check-circle spacer"></i>
+                            {model.featureMatrix.resourceFinePrint}
+                        </div>
                     </div>
                 </div>
-
             </div>
             <div class="divider">
                 <img alt="snowy mountain divider" aria-role="presentation" src="/images/openstax-tutor/snow-background.svg">
