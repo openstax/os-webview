@@ -4,11 +4,13 @@ $width: 3.8rem;
 $small-dot: 0.6rem;
 $large-dot: 1.4rem;
 
+$hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
+
 .section-navigator {
     align-items: center;
     background-color: ui-color(white);
     border-radius: $width / 2;
-    box-shadow: 0.5rem 0.5rem 3.5rem 0.5rem rgba(0, 0, 0, 0.2);
+    box-shadow: $hover-shadow;
     display: flex;
     flex-direction: column;
     padding: ($width / 2) 0;

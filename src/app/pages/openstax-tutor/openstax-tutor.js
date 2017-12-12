@@ -285,34 +285,7 @@ export default class Tutor extends CMSPageController {
             'open',
             'video'
         );
-    }
-
-    @on('click .viewer [role="button"][data-decrement]')
-    decrementVideoIndex() {
-        const wsg = this.model.whatStudentsGet;
-        const childNumber = wsg.images.indexOf(wsg.currentImage);
-
-        if (childNumber > 0) {
-            this.setCurrentImage(childNumber - 1);
-        }
-    }
-
-    @on('click .viewer [role="button"][data-increment]')
-    incrementVideoIndex() {
-        const wsg = this.model.whatStudentsGet;
-        const childNumber = wsg.images.indexOf(wsg.currentImage);
-
-        if (childNumber < wsg.images.length - 1) {
-            this.setCurrentImage(childNumber + 1);
-        }
-    }
-
-    @on('click .thumbnails > div')
-    setCurrentImageByClick(e) {
-        const target = e.delegateTarget;
-        const childNumber = Array.from(target.parentNode.children).indexOf(target);
-
-        this.setCurrentImage(childNumber);
+        this.setCurrentImage(itemIndex);
         e.preventDefault();
     }
 

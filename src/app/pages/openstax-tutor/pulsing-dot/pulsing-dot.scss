@@ -68,12 +68,12 @@ $pulse-color: #f5d01b;
     }
 
     @keyframes pulse {
-        50% {
+        40% {
             opacity: 0.1;
             transform: scale(1);
         }
 
-        75% {
+        70% {
             opacity: 0.7;
             transform: scale(1.35);
         }
