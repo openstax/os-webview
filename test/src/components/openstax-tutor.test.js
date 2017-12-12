@@ -150,13 +150,6 @@ describe('Tutor', () => {
         p.onDataLoaded();
     });
 
-    it('increments and decrements video index', () => {
-        const wsg = p.model.whatStudentsGet;
-
-        p.incrementVideoIndex();
-        p.decrementVideoIndex();
-    });
-
     it('accepts thumbnail click', () => {
         const link = p.el.querySelector('.thumbnails > div');
 

@@ -7,6 +7,7 @@ import analytics from '~/helpers/analytics';
 import {description as template} from './openstax-tutor.html';
 import 'particles.js/particles';
 import particleConfig from './particlesjs-config';
+import {debounce} from 'lodash';
 
 const availableUrl = '/images/openstax-tutor/available-flag.svg';
 const unavailableUrl = '/images/openstax-tutor/unavailable-flag.svg';
@@ -106,10 +107,7 @@ export default class Tutor extends CMSPageController {
         });
         Object.assign(this.model.whereMoneyGoes, {
             headline: data.section_5_heading,
-            description: data.section_5_paragraph,
-            items: [5, 3, 1, 1].map((v, index) => ({
-                amount: v, description: data[`section_5_dollar_${index + 1}_paragraph`]
-            }))
+            description: data.section_5_paragraph
         });
         Object.assign(this.model.faq, {
             headline: data.section_6_heading,
@@ -152,22 +150,26 @@ export default class Tutor extends CMSPageController {
 
         let lastYOffset = 0;
 
-        this.handleScroll = (event) => {
+        this.handleScroll = debounce((event) => {
             const newYOffset = window.pageYOffset;
+            const distanceFromBottom = document.body.offsetHeight - window.innerHeight - newYOffset;
 
-            if (lastYOffset < 100 && newYOffset >= 100) {
-                this.model.footerHeight = null;
-                this.update();
-            }
-            if (lastYOffset >= 100 && newYOffset < 100) {
-                this.model.footerHeight = 'collapsed';
-                this.update();
-            }
+            this.model.footerHeight =
+                (newYOffset < 100) || (distanceFromBottom < 100) ? 'collapsed' : '';
+            this.update();
             lastYOffset = newYOffset;
-        };
+        }, 80);
 
         window.addEventListener('scroll', this.handleScroll);
-        document.querySelector('.page-footer').classList.add('openstax-tutor-footer');
+        const pageFooter = document.querySelector('.page-footer');
+        const mainSection = document.getElementById('main');
+
+        if (pageFooter) {
+            pageFooter.classList.add('openstax-tutor-footer');
+        }
+        if (mainSection) {
+            mainSection.classList.add('openstax-tutor-main');
+        }
     }
 
     onLoaded() {
@@ -182,13 +184,16 @@ export default class Tutor extends CMSPageController {
             this.regions.floatingTools.attach(sectionNavigator);
             this.regions.floatingTools.append(pulsingDot);
 
-            window.particlesJS('particles', particleConfig);
+            if (document.getElementById('particles')) {
+                window.particlesJS('particles', particleConfig);
+            }
         }
     }
 
     onClose() {
         window.removeEventListener('scroll', this.handleScroll);
         document.querySelector('.page-footer').classList.add('openstax-tutor-footer');
+        document.getElementById('main').classList.remove('openstax-tutor-main');
     }
 
     @on('click .toggled-item[aria-role="button"]')

@@ -9,6 +9,11 @@ $sea-bottom: rgb(19, 30, 42);
 
 $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
+// scss-lint:disable IdSelector
+#main.openstax-tutor-main {
+    z-index: 1;
+}
+
 .openstax-tutor-footer {
     background-color: $sea-bottom;
 }
@@ -50,14 +55,14 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
     }
 
     .sticky-footer {
-        background-color: rgba(245, 245, 245, 0.9);
-        border-top: thin solid #d5d5d5;
+        background-color: $sea-water;
         bottom: 0;
-        color: #424242;
+        color: text-color(white);
         display: flex;
+        font-weight: inherit;
         justify-content: space-around;
         max-height: 9rem;
-        padding: 1rem;
+        padding: 0.5rem 1rem;
         position: fixed;
         /* property  duration  delay */
         transition: padding  0.1s,
@@ -66,7 +71,7 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
         z-index: 4;
 
         @include wider-than($tablet-max) {
-            padding: 2rem 3rem;
+            padding: $normal-margin 3rem;
         }
 
         &.collapsed {
@@ -87,6 +92,7 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
             flex: 1 1 40%;
             justify-content: center;
             padding-left: 2rem;
+            text-align: right;
             transition: opacity 0.2s 0.1s;
 
             @include wider-than($tablet-max) {
@@ -99,10 +105,15 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
             &:first-child {
                 padding-left: 0;
+                text-align: left;
 
                 .btn {
                     background-color: os-color(light-blue);
                 }
+            }
+
+            :first-child {
+                margin-right: $normal-margin;
             }
         }
 
@@ -110,8 +121,9 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
             @include set-font(helper-label);
 
             background-color: $deep-teal;
+            border: 0;
             flex-basis: 20rem;
-            margin-right: 2rem;
+            margin: 0;
             padding: 1rem 3rem;
 
             @include width-up-to($phone-max) {
