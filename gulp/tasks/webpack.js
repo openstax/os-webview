@@ -25,6 +25,10 @@ function webpack() {
                 {
                     test: /\.css$/,
                     loader: 'ignore-loader'
+                },
+                {
+                    test: /\.map$/,
+                    loader: 'ignore-loader'
                 }
             ]
         },
