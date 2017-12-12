@@ -5,6 +5,8 @@ import PulsingDot from './pulsing-dot/pulsing-dot';
 import {on} from '~/helpers/controller/decorators';
 import analytics from '~/helpers/analytics';
 import {description as template} from './openstax-tutor.html';
+import 'particles.js/particles';
+import particleConfig from './particlesjs-config';
 
 const availableUrl = '/images/openstax-tutor/available-flag.svg';
 const unavailableUrl = '/images/openstax-tutor/unavailable-flag.svg';
@@ -169,17 +171,18 @@ export default class Tutor extends CMSPageController {
     }
 
     onLoaded() {
-        $.scrollToHash();
-        try {
+        if (this.model.frontier) {
+            $.scrollToHash();
             const sectionIds = Array.from(this.el.querySelectorAll('section[id]'))
                 .map((el) => el.id);
             const sectionNavigator = new SectionNavigator(sectionIds);
             const pulsingDot = new PulsingDot();
 
+
             this.regions.floatingTools.attach(sectionNavigator);
             this.regions.floatingTools.append(pulsingDot);
-        } catch (e) {
-            console.debug('Caught', e);
+
+            window.particlesJS('particles', particleConfig);
         }
     }
 
