@@ -3,15 +3,13 @@ const config = require('../config');
 const pi = require('gulp-load-plugins')({
     pattern: ['gulp-*', 'gulp.*', 'del']
 });
+const webpack = require('./webpack');
 
 function templates() {
     return gulp.src(`${config.src}/app/**/*.html`, {
         since: gulp.lastRun('templates')
     })
-    .pipe(pi.if(config.env !== 'production', pi.sourcemaps.init()))
-    .pipe(pi.rename((uri) => {
-        uri.extname = '.html.js';
-    }))
+    .pipe(pi.sourcemaps.init())
     .pipe(pi.htmlmin({
         collapseWhitespace: true
     }))
@@ -22,7 +20,10 @@ function templates() {
         compact: false,
         presets: ['es2015']
     }))
-    .pipe(pi.if(config.env !== 'production', pi.sourcemaps.write('.')))
+    .pipe(pi.rename((uri) => {
+        uri.extname = '.html.js';
+    }))
+    .pipe(pi.sourcemaps.write('.'))
     .pipe(gulp.dest(`${config.dest}/app`));
 }
 
@@ -32,6 +33,7 @@ gulp.task('templates:watch', () => {
     gulp.watch(`${config.src}/**/*.html`, config.watchOpts)
     .on('change', gulp.series(
         templates,
+        'webpack',
         'reload-browser'
     ));
 });
