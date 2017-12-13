@@ -58,7 +58,7 @@ $hero-break-width: 880px;
             transition: All ease 0.2s;
             width: calc(50rem + 30%);
 
-            @include wider-than($content-max) {
+            @include wider-than($media-content-max) {
                 left: 0;
                 width: 86rem;
             }
@@ -80,7 +80,7 @@ $hero-break-width: 880px;
             padding: 4rem;
             z-index: 2;
 
-            @include wider-than($content-max) {
+            @include wider-than($media-content-max) {
                 padding-left: calc(-61rem + 55%);
             }
 

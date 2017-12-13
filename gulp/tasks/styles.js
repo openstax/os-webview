@@ -43,7 +43,12 @@ function scsslint() {
 function compileStyles(src, dest) {
     return src
         .pipe(pi.sourcemaps.init({loadMaps: true}))
-        .pipe(pi.sass())
+        .pipe(pi.sass({
+            includePaths: [
+                './styles',
+                './src/styles'
+            ]
+        }))
         .pipe(pi.autoprefixer(config.browsers))
         .pipe(pi.if(config.env === 'production', pi.cssnano({
             reduceIdents: {

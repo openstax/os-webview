@@ -4,6 +4,7 @@ const config = require('../config');
 const pi = require('gulp-load-plugins')({
     pattern: ['gulp-*', 'gulp.*', 'del']
 });
+const webpack = require('./webpack');
 
 function templates() {
     const configSrcApp = `${config.src}/app`
@@ -41,6 +42,7 @@ gulp.task('templates:watch', () => {
     gulp.watch(`${config.src}/**/*.html`, config.watchOpts)
     .on('change', gulp.series(
         templates,
+        'webpack',
         'reload-browser'
     ));
 });

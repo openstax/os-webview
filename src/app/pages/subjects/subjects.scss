@@ -82,19 +82,19 @@
             margin: 1rem;
             position: relative;
 
-            @include wider-than($content-max - 66rem) {
+            @include wider-than($media-content-max - 66em) {
                 flex-basis: calc(50% - 2rem);
             }
 
-            @include wider-than($content-max - 44rem) {
+            @include wider-than($media-content-max - 44em) {
                 flex-basis: calc(33.3% - 2rem);
             }
 
-            @include wider-than($content-max - 22rem) {
+            @include wider-than($media-content-max - 22em) {
                 flex-basis: calc(25% - 2rem);
             }
 
-            @include wider-than($content-max) {
+            @include wider-than($media-content-max) {
                 flex-basis: calc(20% - 2rem);
             }
 

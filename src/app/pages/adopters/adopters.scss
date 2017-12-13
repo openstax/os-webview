@@ -29,7 +29,7 @@
             column-count: 2;
         }
 
-        @include wider-than($content-max) {
+        @include wider-than($media-content-max) {
             column-count: 4;
         }
     }

@@ -15,7 +15,9 @@
   },
   "license": "AGPL-3.0",
   "dependencies": {
+    "hard-source-webpack-plugin": "^0.5.3",
     "http-server": "^0.10.0",
+    "ignore-loader": "^0.1.2",
     "rollup": "^0.50.0",
     "rollup-plugin-commonjs": "^8.2.3",
     "rollup-plugin-node-resolve": "^3.0.0",
@@ -87,7 +89,7 @@
     "moduleNameMapper": {
       "^~/(.*)": "<rootDir>/dist/app/$1",
       "recordo": "<rootDir>/node_modules/recordo/dist/recordo.js",
-      "settings": "<rootDir>/dist/settings"
+      "settings": "<rootDir>/src/settings-example.js"
     },
     "collectCoverage": true,
     "coverageReporters": [
