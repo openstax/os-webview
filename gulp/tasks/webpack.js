@@ -21,9 +21,7 @@ function webpack() {
     ]).pipe(webpackStream({
       // watch: true, // This causes gulp to freeze and not serve
       externals: {
-          settings: {
-              root: 'SETTINGS'
-          }
+          settings: 'SETTINGS'
       },
       output: {
         path: path.resolve(config.dest),
@@ -55,7 +53,7 @@ function webpack() {
           }
         ]
       },
-      devtool: "sourcemap"
+      devtool: "source-map"
     }))
     // .pipe(pi.sourcemaps.write('.'))
     .pipe(gulp.dest(config.dest));

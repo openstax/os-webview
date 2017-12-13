@@ -93,10 +93,7 @@ gulp.task(compileAllStyles);
 gulp.task(compileChangedStyles);
 gulp.task(compileMainStyle);
 
-gulp.task('styles', gulp.series(
-    scsslint
-    // compileAllStyles
-));
+gulp.task('styles', scsslint);
 
 gulp.task('styles:watch', () => {
     gulp.watch([

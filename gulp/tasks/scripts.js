@@ -217,13 +217,6 @@ function copySettings() {
     .pipe(gulp.dest(config.dest));
 }
 
-function copySettings() {
-    return gulp.src(`${config.src}/settings-example.js`)
-    .pipe(pi.rename('settings.js'))
-    .pipe(pi.replace(/export/, '//export'))
-    .pipe(gulp.dest(config.dest));
-}
-
 gulp.task(eslint);
 gulp.task(compileScriptsBabel);
 gulp.task(copySettings);
