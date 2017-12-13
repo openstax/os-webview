@@ -4,8 +4,18 @@ const pi = require('gulp-load-plugins')();
 const path = require('path');
 const webpackStream = require('webpack-stream');
 const webpack2 = require('webpack');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+
 
 function webpack() {
+    const isDevelopment = config.env === 'development'
+    const plugins = isDevelopment ?
+        [new HardSourceWebpackPlugin()] :
+        [
+            new webpack2.optimize.UglifyJsPlugin(),
+            new webpack2.optimize.MinChunkSizePlugin({minChunkSize: 16000}),
+        ];
+
     return gulp.src([
         `${config.dest}/app/main.js`
     ])
@@ -25,20 +35,21 @@ function webpack() {
                 {
                     test: /\.css$/,
                     loader: 'ignore-loader'
+                },
+                {
+                    test: /\.map$/,
+                    loader: 'ignore-loader'
                 }
             ]
         },
-        plugins: [
-            new webpack2.optimize.UglifyJsPlugin(),
-            new webpack2.optimize.MinChunkSizePlugin({minChunkSize: 16000})
-        ],
+        plugins,
         resolve: {
             alias: {
                 "settings": path.resolve(config.dest, "settings.js"),
                 "~": path.resolve(config.dest, "app/"),
             }
         },
-        devtool: "source-map"
+        devtool: 'source-map'
     }))
     .pipe(pi.sourcemaps.write('.'))
     .pipe(gulp.dest(config.dest));
