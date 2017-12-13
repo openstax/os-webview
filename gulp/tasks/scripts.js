@@ -210,15 +210,10 @@ function compileScriptsBabel() {
     .pipe(gulp.dest(config.dest));
 }
 
-
-function minifyScripts() {
-    return gulp.src([
-        `${config.dest}/**/*.js`
-    ])
-    .pipe(pi.uglify({
-        preserveComments: false,
-        screwIE8: true
-    }))
+function copySettings() {
+    return gulp.src(`${config.src}/settings-example.js`)
+    .pipe(pi.rename('settings.js'))
+    .pipe(pi.replace(/export/, '//export'))
     .pipe(gulp.dest(config.dest));
 }
 
