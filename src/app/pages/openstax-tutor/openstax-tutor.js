@@ -1,8 +1,13 @@
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
+import SectionNavigator from './section-navigator/section-navigator';
+import PulsingDot from './pulsing-dot/pulsing-dot';
 import {on} from '~/helpers/controller/decorators';
 import analytics from '~/helpers/analytics';
 import {description as template} from './openstax-tutor.html';
+import 'particles.js/particles';
+import particleConfig from './particlesjs-config';
+import {debounce} from 'lodash';
 
 const availableUrl = '/images/openstax-tutor/available-flag.svg';
 const unavailableUrl = '/images/openstax-tutor/unavailable-flag.svg';
@@ -29,15 +34,17 @@ export default class Tutor extends CMSPageController {
                 ]
 
             },
-            featureMatrix: {
-                availableIcon: availableUrl,
-                unavailableIcon: unavailableUrl
-            },
+            featureMatrix: {},
+            comingSoon: {},
             whereMoneyGoes: {},
+            science: {},
             faq: {},
             learnMore: {}
         };
         this.slug = 'pages/tutor-marketing';
+        this.regions = {
+            floatingTools: '.floating-tools'
+        };
     }
 
     onDataError(e) {
@@ -99,12 +106,17 @@ export default class Tutor extends CMSPageController {
             })),
             resourceFinePrint: data.section_4_resource_fine_print
         });
+        Object.assign(this.model.comingSoon, {
+            headline: data.section_4_coming_soon_heading,
+            description: data.section_4_coming_soon_text
+        });
         Object.assign(this.model.whereMoneyGoes, {
             headline: data.section_5_heading,
-            description: data.section_5_paragraph,
-            items: [5, 3, 1, 1].map((v, index) => ({
-                amount: v, description: data[`section_5_dollar_${index + 1}_paragraph`]
-            }))
+            description: data.section_5_paragraph
+        });
+        Object.assign(this.model.science, {
+            headline: data.section_5_science_heading,
+            description: data.section_5_science_paragraph
         });
         Object.assign(this.model.faq, {
             headline: data.section_6_heading,
@@ -139,23 +151,7 @@ export default class Tutor extends CMSPageController {
             link: data.floating_footer_button_2_link
         };
 
-        this.model.featureMatrix.featurePairs = data.resource_availability
-            .map((obj) => ({
-                text: obj.name,
-                image: obj.available ? availableImageData : unavailableImageData,
-                value: obj.alternate_text
-            }))
-            .reduce((result, value, index, arr) => {
-                if (index % 2 === 0) {
-                    const newPair = arr.slice(index, index + 2);
-
-                    if (newPair.length < 2) {
-                        newPair.push({});
-                    }
-                    result.push(newPair);
-                }
-                return result;
-            }, []);
+        this.model.featureMatrix.features = data.resource_availability;
 
         this.update();
         $.insertHtml(this.el, this.model);
@@ -163,29 +159,50 @@ export default class Tutor extends CMSPageController {
 
         let lastYOffset = 0;
 
-        this.handleScroll = (event) => {
+        this.handleScroll = debounce((event) => {
             const newYOffset = window.pageYOffset;
+            const distanceFromBottom = document.body.offsetHeight - window.innerHeight - newYOffset;
 
-            if (lastYOffset < 100 && newYOffset >= 100) {
-                this.model.footerHeight = null;
-                this.update();
-            }
-            if (lastYOffset >= 100 && newYOffset < 100) {
-                this.model.footerHeight = 'collapsed';
-                this.update();
-            }
+            this.model.footerHeight =
+                (newYOffset < 100) || (distanceFromBottom < 100) ? 'collapsed' : '';
+            this.update();
             lastYOffset = newYOffset;
-        };
+        }, 80);
 
         window.addEventListener('scroll', this.handleScroll);
+        const pageFooter = document.querySelector('.page-footer');
+        const mainSection = document.getElementById('main');
+
+        if (pageFooter) {
+            pageFooter.classList.add('openstax-tutor-footer');
+        }
+        if (mainSection) {
+            mainSection.classList.add('openstax-tutor-main');
+        }
     }
 
     onLoaded() {
-        $.scrollToHash();
+        if (this.model.frontier) {
+            $.scrollToHash();
+            const sectionIds = Array.from(this.el.querySelectorAll('section[id]'))
+                .map((el) => el.id);
+            const sectionNavigator = new SectionNavigator(sectionIds);
+            const pulsingDot = new PulsingDot();
+
+
+            this.regions.floatingTools.attach(sectionNavigator);
+            this.regions.floatingTools.append(pulsingDot);
+
+            if (document.getElementById('particles')) {
+                window.particlesJS('particles', particleConfig);
+            }
+        }
     }
 
     onClose() {
         window.removeEventListener('scroll', this.handleScroll);
+        document.querySelector('.page-footer').classList.add('openstax-tutor-footer');
+        document.getElementById('main').classList.remove('openstax-tutor-main');
     }
 
     @on('click .toggled-item[aria-role="button"]')
@@ -240,6 +257,17 @@ export default class Tutor extends CMSPageController {
         }, 400);
     }
 
+    @on('click .activate-popup')
+    activatePopup(event) {
+        const headlineEl = document.querySelector('#new-frontier .headline');
+        const popupEl = document.querySelector('.popup-text');
+
+        headlineEl.classList.add('expanded');
+        popupEl.classList.remove('hidden');
+        event.target.classList.add('hidden');
+        event.preventDefault();
+    }
+
     @on('click a[href^="#"]')
     hashClick(e) {
         analytics.sendPageEvent(
@@ -285,34 +313,7 @@ export default class Tutor extends CMSPageController {
             'open',
             'video'
         );
-    }
-
-    @on('click .viewer [role="button"][data-decrement]')
-    decrementVideoIndex() {
-        const wsg = this.model.whatStudentsGet;
-        const childNumber = wsg.images.indexOf(wsg.currentImage);
-
-        if (childNumber > 0) {
-            this.setCurrentImage(childNumber - 1);
-        }
-    }
-
-    @on('click .viewer [role="button"][data-increment]')
-    incrementVideoIndex() {
-        const wsg = this.model.whatStudentsGet;
-        const childNumber = wsg.images.indexOf(wsg.currentImage);
-
-        if (childNumber < wsg.images.length - 1) {
-            this.setCurrentImage(childNumber + 1);
-        }
-    }
-
-    @on('click .thumbnails > div')
-    setCurrentImageByClick(e) {
-        const target = e.delegateTarget;
-        const childNumber = Array.from(target.parentNode.children).indexOf(target);
-
-        this.setCurrentImage(childNumber);
+        this.setCurrentImage(itemIndex);
         e.preventDefault();
     }
 

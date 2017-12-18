@@ -1,121 +1,67 @@
 <template args="model">
+    <div class="floating-tools" skip="true">
+    </div>
     <if condition="model.frontier">
         <div class="sticky-footer {model.footerHeight}">
             <div class="button-group">
-                <a href="{model.footerStarted.link}" class="btn">{model.footerStarted.text}</a>
+                <a href="{model.footerStarted.link}" class="btn medium">{model.footerStarted.text}</a>
                 <div class="description">{model.footerStarted.description}</div>
             </div>
             <div if="model.footerSignUp" class="button-group">
-                <a href="{model.footerSignUp.link}" class="btn">{model.footerSignUp.text}</a>
                 <div class="description">{model.footerSignUp.description}</div>
+                <a href="{model.footerSignUp.link}" class="btn medium">{model.footerSignUp.text}</a>
             </div>
         </div>
         <section id="new-frontier">
             <div class="background-imagery">
-                <img id="mountains" src="/images/openstax-tutor/mountains.svg">
+                <div class="top-image"></div>
+                <div class="middle-image"></div>
+                <div class="bottom-image"></div>
             </div>
-            <div class="boxed">
+            <div class="text-content">
                 <div class="above-head smaller">
                     <div>{model.access.text}</div>
-                    <a href="{model.access.url}" class="btn">{model.access.label}</a>
+                    <a href="{model.access.url}" class="btn small">{model.access.label}</a>
                 </div>
-                <h1>
-                    {model.frontier.headline}
-                    <span class="subhead">{model.frontier.subhead}</span>
-                </h1>
-                <div class="two-halves">
-                    <img id="moose" alt="Vector line drawing of moose" src="/images/openstax-tutor/moose.svg">
-                    <div>
-                        <img id="tutor-logo" alt="OpenStax Tutor beta logo" src="/images/openstax-tutor/tutor-logo.svg">
-                        <div data-html="frontier.description" skip="true"></div>
-                        <a class="btn white-on-blue" href="{model.frontier.learnMore.href}">
-                            {model.frontier.learnMore.text}
-                        </a>
-                    </div>
+                <div class="headline">
+                    <img id="tutor-logo" alt="OpenStax Tutor beta logo" src="/images/openstax-tutor/tutor-logo.svg">
+                    <h1>
+                        {model.frontier.headline}
+                    </h1>
+                    <div class="blurb">{model.frontier.subhead}</div>
+                    <div class="popup-text hidden" data-html="frontier.description" skip="true"></div>
+                    <button type="button" class="activate-popup primary">
+                        {model.frontier.learnMore.text}
+                    </button>
                 </div>
             </div>
         </section>
-        <div class="divider"><img alt="dividing line of pine trees" src="/images/openstax-tutor/tree-divider.svg"></div>
         <section id="how-it-works">
             <div id="how-it-works-target"></div>
-            <div class="background-imagery">
-                <img src="images/openstax-tutor/work-landscape-waves.svg">
-            </div>
-            <h1 class="boxed">{model.howItWorks.headline}</h1>
             <div class="text-content">
+                <h1 class="boxed">{model.howItWorks.headline}</h1>
                 <h2>{model.howItWorks.subhead}</h2>
                 <div class="description" data-html="howItWorks.description" skip="true"></div>
             </div>
-            <div class="blurb-table boxed by-4">
-                <div class="icon-row boxed-row">
-                    <div each="item in model.howItWorks.blurbs" class="blurb">
+            <div class="blurb-table boxed">
+                <div each="item in model.howItWorks.blurbs" class="blurb">
+                    <div class="icon">
                         <img alt="{item.iconDescription}" src="{item.imageUrl}">
                     </div>
-                </div>
-                <div class="icon-row boxed-row">
-                    <div each="item in model.howItWorks.blurbs" class="blurb">
-                        <h3>{item.headline}</h3>
-                    </div>
-                </div>
-                <div class="icon-row boxed-row">
-                    <div each="item in model.howItWorks.blurbs" class="blurb">
-                        <div class="smaller">{item.description}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="blurb-table boxed by-2">
-                <div class="icon-row boxed-row">
-                    <div each="item in model.howItWorks.blurbs.slice(0,2)" class="blurb">
-                        <img alt="{item.iconDescription}" src="{item.imageUrl}">
-                    </div>
-                </div>
-                <div class="icon-row boxed-row">
-                    <div each="item in model.howItWorks.blurbs.slice(0,2)" class="blurb">
-                        <h3>{item.headline}</h3>
-                    </div>
-                </div>
-                <div class="icon-row boxed-row">
-                    <div each="item in model.howItWorks.blurbs.slice(0,2)" class="blurb">
-                        <div class="smaller">{item.description}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="blurb-table boxed by-2">
-                <div class="icon-row boxed-row">
-                    <div each="item in model.howItWorks.blurbs.slice(2)" class="blurb">
-                        <img alt="{item.iconDescription}" src="{item.imageUrl}">
-                    </div>
-                </div>
-                <div class="icon-row boxed-row">
-                    <div each="item in model.howItWorks.blurbs.slice(2)" class="blurb">
-                        <h3>{item.headline}</h3>
-                    </div>
-                </div>
-                <div class="icon-row boxed-row">
-                    <div each="item in model.howItWorks.blurbs.slice(2)" class="blurb">
-                        <div class="smaller">{item.description}</div>
-                    </div>
-                </div>
-            </div>
-            <div each="item in model.howItWorks.blurbs" class="blurb-table by-1">
-                <div class="blurb">
-                    <img alt="{item.iconDescription}" src="{item.imageUrl}">
                     <h3>{item.headline}</h3>
                     <div class="smaller">{item.description}</div>
                 </div>
             </div>
         </section>
         <section id="what-students-get">
-            <div class="background-imagery">
-                <img alt="sea creatures and bubbles" src="/images/openstax-tutor/sea-creatures-left.svg">
-                <img alt="bubbles" src="/images/openstax-tutor/sea-creatures-right.svg">
-            </div>
+            <div class="background-imagery"></div>
             <div class="text-content">
                 <h1>{model.whatStudentsGet.headline}</h1>
                 <div class="description" data-html="whatStudentsGet.description" skip="true"></div>
+            </div>
+            <div class="boxed">
                 <div class="carousel">
                     <div class="viewer">
-                        <i class="fa fa-chevron-left" role="button" data-decrement></i>
                         <if condition="model.whatStudentsGet.currentImage">
                             <div class="viewport">
                                 <if condition="model.whatStudentsGet.currentImage.url.substr(-3) === 'png'">
@@ -131,10 +77,9 @@
                          <else>
                              <img alt="no selected image">
                          </if>
-                        <i class="fa fa-chevron-right" role="button" data-increment></i>
-                    </div>
-                    <div class="caption smaller" data-html="whatStudentsGet.currentImage.description"
-                     if="model.whatStudentsGet.currentImage" skip="true">
+                         <div class="caption smaller" data-html="whatStudentsGet.currentImage.description"
+                          if="model.whatStudentsGet.currentImage" skip="true">
+                         </div>
                     </div>
                     <div class="thumbnails">
                         <div each="item in model.whatStudentsGet.images"
@@ -150,129 +95,47 @@
             </div>
         </section>
         <section id="feature-matrix">
-            <div class="background-imagery">
-                <img alt="sparkles" aria-role="presentation" src="/images/openstax-tutor/sparkles-1.svg">
-                <img alt="sparkles" aria-role="presentation" src="/images/openstax-tutor/sparkles-2.svg">
-                <img alt="sparkles" aria-role="presentation" src="/images/openstax-tutor/sparkles-3.svg">
-            </div>
-            <div class="boxed">
-                <h1>{model.featureMatrix.headline}</h1>
-                <div class="description text-content" data-html="featureMatrix.description" skip="true"></div>
-                <table>
-                    <tbody class="wide-body">
-                        <tr each="pair in model.featureMatrix.featurePairs">
-                            <td>{pair[0].text}</td>
-                            <td>
-                                <!-- using <if><else></if> fouled the HTML structure -->
-                                <div if="!pair[0].value" class="center-image">
-                                    <img alt="{pair[0].image.description}" src="{pair[0].image.url}">
-                                </div>
-                                <if condition="pair[0].value">
-                                    <div class="description {pair[0].value.length > 6 ? 'smaller' : ''}">{pair[0].value}</div>
-                                </if>
-                            </td>
-                            <td if="pair[1].image">{pair[1].text}</td>
-                            <td if="pair[1].image">
-                                <!-- using <if><else></if> fouled the HTML structure -->
-                                <div if="!pair[1].value" class="center-image">
-                                    <img alt="{pair[1].image.description}" src="{pair[1].image.url}">
-                                </div>
-                                <if condition="pair[1].value">
-                                    <div class="description {pair[1].value.length > 6 ? 'smaller' : ''}">{pair[1].value}</div>
-                                </if>
-                            </td>
-                            <td if="!pair[1].image" colspan="2">
-                                <div class="key">
-                                    <div>
-                                        <img alt="available indicator" src="{model.featureMatrix.availableIcon}">
-                                        <div>Available</div>
-                                    </div>
-                                    <div>
-                                        <img alt="unavailable indicator" src="{model.featureMatrix.unavailableIcon}">
-                                        <div>Unavailable</div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tbody class="narrow-body">
-                        <tr each="pair in model.featureMatrix.featurePairs">
-                            <td>{pair[0].text}</td>
-                            <td>
-                                <!-- using <if><else></if> fouled the HTML structure -->
-                                <div if="!pair[0].value" class="center-image">
-                                    <img alt="{pair[0].image.description}" src="{pair[0].image.url}">
-                                </div>
-                                <if condition="pair[0].value">
-                                    <div class="description smaller">{pair[0].value}</div>
-                                </if>
-                            </td>
-                        </tr>
-                        <tr each="pair in model.featureMatrix.featurePairs">
-                            <td if="pair[1].text">{pair[1].text}</td>
-                            <td if="pair[1].text">
-                                <!-- using <if><else></if> fouled the HTML structure -->
-                                <div if="!pair[1].value" class="center-image">
-                                    <img alt="{pair[1].image.description}" src="{pair[1].image.url}">
-                                </div>
-                                <if condition="pair[1].value">
-                                    <div class="description smaller">{pair[1].value}</div>
-                                </if>
-                            </td>
-                            <td if="!pair[1].text" colspan="2">
-                                <div class="key">
-                                    <div>
-                                        <img alt="available indicator" src="{model.featureMatrix.availableIcon}">
-                                        Available
-                                    </div>
-                                    <div>
-                                        <img alt="unavailable indicator" src="{model.featureMatrix.unavailableIcon}">
-                                        Unavailable
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="caption smaller">{model.featureMatrix.resourceFinePrint}</div>
-                <div class="availability">
-                    <span>{model.featureMatrix.availability}</span>
-                    <div class="book-covers">
-                        <img each="item in model.featureMatrix.availableBooks" alt="{item.description}" src="{item.url}">
+            <div class="text-content two-cells">
+                <div class="cell text-content">
+                    <h1>{model.featureMatrix.headline}</h1>
+                    <div class="description" data-html="featureMatrix.description" skip="true"></div>
+                    <div class="box">
+                        <h2>{model.comingSoon.headline}</h2>
+                        <div class="future-text" data-html="comingSoon.description" skip="true"></div>
+                        <img class="stamp" src="/images/openstax-tutor/icon-megaphone.svg">
+                        <img class="bottom-edge" src="/images/openstax-tutor/cs-background.svg">
+                        <div class="gradient-strip"></div>
                     </div>
                 </div>
-
-            </div>
-            <div class="divider">
-                <img alt="snowy mountain divider" aria-role="presentation" src="/images/openstax-tutor/snow-background.svg">
+                <div class="cell">
+                    <div each="feature in model.featureMatrix.features">
+                        <i class="{`fa fa-check-circle ${feature.available}`}"></i>
+                        {feature.name}
+                    </div>
+                    <div class="caption smaller">
+                        <i class="fa fa-check-circle spacer"></i>
+                        {model.featureMatrix.resourceFinePrint}
+                    </div>
+                </div>
             </div>
         </section>
         <section id="where-money-goes">
-            <div class="background-imagery">
-                <img alt="wolf and bear in the snow" src="/images/openstax-tutor/snowscape.svg">
-            </div>
             <div class="text-content">
                 <h1>{model.whereMoneyGoes.headline}</h1>
                 <div class="section-description" data-html="whereMoneyGoes.description" skip="true"></div>
-                <div class="color-bar">
-                    <div class="segment"></div>
-                    <div class="segment"></div>
-                    <div class="segment"></div>
-                    <div class="content">
-                        <div class="circle">
-                            $10
-                        </div>
-                    </div>
-                </div>
-                <div class="breakdown">
-                    <div class="box-and-description" each="item in model.whereMoneyGoes.items">
-                        <div class="box">${item.amount}</div>
-                        <div class="description smaller">{item.description}</div>
-                    </div>
-                </div>
             </div>
-            <div class="divider"></div>
+            <img class="boxed" src="/images/openstax-tutor/ten-dollars.svg">
         </section>
+        <section id="science">
+            <div id="particles" skip="true"></div>
+            <div class="text-content">
+                <h1>{model.science.headline}</h1>
+                <div data-html="science.description" skip="true"></div>
+            </div>
+        </section>
+        <div class="divider">
+            <img src="/images/openstax-tutor/faq-top-background.svg">
+        </div>
         <section id="faq">
             <div class="boxed">
                 <h1>{model.faq.headline}</h1>
@@ -280,13 +143,12 @@
             <div class="questions text-content">
                 <div each="item in model.faq.items" class="smaller qna">
                     <div class="toggled-item" aria-role="button" data-index="{$item}">
-                        <div class="toggler">
-                            <span>{item.isOpen ? '–' : '+'}</span>
-                        </div>
                         <div class="question" data-html="faq.items[{$item}].question" skip="true"></div>
+                        <div class="toggler{item.isOpen ? ' open' : ''}">
+                            <i class="fa {item.isOpen ? 'fa-chevron-up' : 'fa-chevron-down'}"></i>
+                        </div>
                     </div>
                     <div class="toggled-item {item.isOpen ? '' : 'hidden'}">
-                        <div class="toggler placeholder"></div>
                         <div class="answer" data-html="faq.items[{$item}].answer" skip="true"></div>
                     </div>
                 </div>
@@ -296,16 +158,13 @@
                     </a>
                 </div>
             </div>
-            <div class="divider">
-                <img alt="mountains or possibly icebergs" src="/images/openstax-tutor/bergs.svg">
-            </div>
         </section>
         <section id="learn-more">
             <div class="boxed">
                 <h1>{model.learnMore.headline}</h1>
             </div>
             <div class="text-content">
-                <div class="subhead">{model.learnMore.subhead}</div>
+                <div>{model.learnMore.subhead}</div>
                 <div class="buttons-row">
                     <div each="item in model.learnMore.buttons" class="button-box">
                         <a class="btn" href="{item.url}">{item.text}</a>
@@ -313,7 +172,6 @@
                     </div>
                 </div>
             </div>
-            <img class="divider" src="/images/openstax-tutor/bottom-divider.svg">
         </section>
     </if>
 </template>

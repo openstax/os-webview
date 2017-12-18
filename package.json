@@ -18,6 +18,7 @@
     "hard-source-webpack-plugin": "^0.5.3",
     "http-server": "^0.10.0",
     "ignore-loader": "^0.1.2",
+    "particles.js": "^2.0.0",
     "rollup": "^0.50.0",
     "rollup-plugin-commonjs": "^8.2.3",
     "rollup-plugin-node-resolve": "^3.0.0",
