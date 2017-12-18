@@ -28,13 +28,11 @@
                     <h1>
                         {model.frontier.headline}
                     </h1>
-                    <span>{model.frontier.subhead}</span>
-                    <div>
-                        <div data-html="frontier.description" skip="true"></div>
-                        <a class="btn primary" href="{model.frontier.learnMore.href}">
-                            {model.frontier.learnMore.text}
-                        </a>
-                    </div>
+                    <div class="blurb">{model.frontier.subhead}</div>
+                    <div class="popup-text hidden" data-html="frontier.description" skip="true"></div>
+                    <button type="button" class="activate-popup primary">
+                        {model.frontier.learnMore.text}
+                    </button>
                 </div>
             </div>
         </section>
@@ -102,11 +100,8 @@
                     <h1>{model.featureMatrix.headline}</h1>
                     <div class="description" data-html="featureMatrix.description" skip="true"></div>
                     <div class="box">
-                        <h2>Coming fall 2018</h2>
-                        <div class="future-text">
-                            <p>Full LMS integration</p>
-                            <p>Algorithmic question generation</p>
-                        </div>
+                        <h2>{model.comingSoon.headline}</h2>
+                        <div class="future-text" data-html="comingSoon.description" skip="true"></div>
                         <img class="stamp" src="/images/openstax-tutor/icon-megaphone.svg">
                         <img class="bottom-edge" src="/images/openstax-tutor/cs-background.svg">
                         <div class="gradient-strip"></div>
@@ -134,15 +129,8 @@
         <section id="science">
             <div id="particles" skip="true"></div>
             <div class="text-content">
-                <h1>The science behind OpenStax Tutor Beta</h1>
-                <p>
-                    Our team build OpenStax Tutor Beta on machine learning and proven
-                    cognitive science principles that help students succeed.
-                </p>
-                <p>
-                    Learn more about our data scientists' work
-                    <a href="whevever">here</a>.
-                </p>
+                <h1>{model.science.headline}</h1>
+                <div data-html="science.description" skip="true"></div>
             </div>
         </section>
         <div class="divider">

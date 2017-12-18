@@ -6,6 +6,7 @@ $faq-icon-closed: ui-color(form-bg);
 $faq-icon-open: rgb(40, 127, 171);
 $sea-water: rgb(39, 62, 88);
 $sea-bottom: rgb(19, 30, 42);
+$sky: rgb(195, 234, 231);
 
 $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
@@ -198,6 +199,7 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
         z-index: 2;
 
         .background-imagery {
+            z-index: -1;
 
             .top-image,
             .middle-image,
@@ -277,6 +279,25 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
         .headline {
             margin: 0 auto;
             max-width: 32em;
+            padding: $normal-margin;
+
+            &.expanded {
+                background-color: rgba(ui-color(white), 0.85);
+            }
+        }
+
+        .blurb {
+            margin-bottom: $normal-margin;
+            max-width: 32rem;
+        }
+
+        .activate-popup {
+            cursor: pointer;
+            margin-left: 0;
+
+            &.hidden {
+                display: none;
+            }
         }
 
         #tutor-logo {
@@ -284,45 +305,12 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
         }
 
         h1 {
+            margin-bottom: $normal-margin;
+
             @include wider-than($phone-max) {
                 @include set-font(hero-h1);
             }
         }
-
-        .two-halves {
-            align-items: flex-end;
-            display: flex;
-            width: 100%;
-
-            > * {
-                flex-basis: 50%;
-
-                @include width-up-to($phone-max) {
-                    flex-basis: 100%;
-
-                    &:first-child {
-                        display: none;
-                    }
-                }
-
-                &:nth-child(2) {
-                    padding-bottom: 2vw;
-                }
-            }
-
-            .btn {
-                margin-bottom: 6rem;
-                margin-top: 2rem;
-            }
-
-            #moose {
-                margin-left: 3%;
-                margin-right: 5%;
-                max-height: 28vw;
-                width: 100%;
-            }
-        }
-
     }
 
     #how-it-works {

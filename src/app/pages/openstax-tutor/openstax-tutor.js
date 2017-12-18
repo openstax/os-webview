@@ -34,9 +34,10 @@ export default class Tutor extends CMSPageController {
                 ]
 
             },
-            featureMatrix: {
-            },
+            featureMatrix: {},
+            comingSoon: {},
             whereMoneyGoes: {},
+            science: {},
             faq: {},
             learnMore: {}
         };
@@ -105,9 +106,17 @@ export default class Tutor extends CMSPageController {
             })),
             resourceFinePrint: data.section_4_resource_fine_print
         });
+        Object.assign(this.model.comingSoon, {
+            headline: data.section_4_coming_soon_heading,
+            description: data.section_4_coming_soon_text
+        });
         Object.assign(this.model.whereMoneyGoes, {
             headline: data.section_5_heading,
             description: data.section_5_paragraph
+        });
+        Object.assign(this.model.science, {
+            headline: data.section_5_science_heading,
+            description: data.section_5_science_paragraph
         });
         Object.assign(this.model.faq, {
             headline: data.section_6_heading,
@@ -246,6 +255,17 @@ export default class Tutor extends CMSPageController {
                 }, 400);
             }
         }, 400);
+    }
+
+    @on('click .activate-popup')
+    activatePopup(event) {
+        const headlineEl = document.querySelector('#new-frontier .headline');
+        const popupEl = document.querySelector('.popup-text');
+
+        headlineEl.classList.add('expanded');
+        popupEl.classList.remove('hidden');
+        event.target.classList.add('hidden');
+        event.preventDefault();
     }
 
     @on('click a[href^="#"]')
