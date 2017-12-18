@@ -1,0 +1,8 @@
+<template args="model">
+    <label if="model.label" class="field-label">{model.label}</label>
+    <label if="model.instructions" class="hint">{' ' + model.instructions}</label>
+    <div class="invalid-message">{model.validationMessage(model.name)}</div>
+    <div each="item in model.options" class="control-group">
+        <label><input type="checkbox" name="{model.name}" value="{item.value}">{item.label}</label>
+    </div>
+</template>

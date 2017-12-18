@@ -10,7 +10,7 @@ const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 function webpack() {
     const isDevelopment = config.env === 'development'
     const plugins = isDevelopment ?
-        [new HardSourceWebpackPlugin()] :
+        [] : //[new HardSourceWebpackPlugin()] :
         [
             new webpack2.optimize.UglifyJsPlugin(),
             new webpack2.optimize.MinChunkSizePlugin({minChunkSize: 16000}),

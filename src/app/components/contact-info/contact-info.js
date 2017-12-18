@@ -11,9 +11,6 @@ export default class ContactInfo extends Controller {
     init(model) {
         this.template = template;
         this.model = model;
-        this.view = {
-            classes: ['labeled-inputs', 'row', 'top-of-form']
-        };
         this.regions = {
             popup: 'pop-up'
         };

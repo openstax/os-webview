@@ -23,7 +23,8 @@ class SalesforceForm extends CMSPageController {
             .map((book) => ({
                 text: book.salesforce_name,
                 value: book.salesforce_abbreviation,
-                comingSoon: book.coming_soon
+                comingSoon: book.coming_soon,
+                subject: book.subject
             }))
             .sort((a, b) => a.text < b.text ? -1 : 1);
     }
@@ -40,7 +41,12 @@ class SalesforceForm extends CMSPageController {
 
     @on('click [type="submit"]')
     doCustomValidation(event) {
-        const invalid = this.el.querySelector('form :invalid');
+        const invalid = Array.from(this.el.querySelectorAll('form :invalid'))
+            .find((el) => {
+                const r = el.getBoundingClientRect();
+
+                return r.top !== r.bottom;
+            });
 
         this.hasBeenSubmitted = true;
         if (invalid) {
@@ -49,6 +55,7 @@ class SalesforceForm extends CMSPageController {
             this.update();
         }
         this.submitClicked = true;
+        return invalid;
     }
 
     beforeSubmit() {

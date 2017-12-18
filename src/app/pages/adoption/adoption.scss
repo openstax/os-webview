@@ -2,30 +2,94 @@
 
 .adoption-page {
 
-    .subhead {
-        @include layout-container($text-content-max);
-        padding-bottom: 2rem;
+    .hero h1 {
+        @include set-font(h1);
+    }
+
+    .strips {
+        position: static;
     }
 
     [data-id="selectedRole"] {
         display: flex;
-        justify-content: center;
+        // justify-content: center;
         margin: auto;
-        padding: 0 1.5rem;
-        width: 30rem;
+        padding: 4rem 1.5rem;
+        width: 47rem;
 
         > label {
             flex-basis: 100%;
         }
     }
 
-    label > * {
-        max-width: 100%;
+    .grouping {
+        align-items: flex-start;
+        width: 47rem;
+    }
+
+    h2 {
+        @include set-font(h4);
+
+        margin: 0;
+    }
+
+    plug-in {
+        display: block;
+        margin-bottom: $normal-margin;
+    }
+
+    .flexrow {
+        display: flex;
+        margin: 0 -0.5rem;
+    }
+
+    button {
+        @extend %button;
+
+        &.primary {
+            @extend %primary;
+        }
+
+        &.secondary {
+            @extend %secondary;
+        }
+    }
+
+    .field-label {
+        font-weight: bold;
     }
 
     [data-id="form"]:empty {
         display: block;
         height: 20rem;
+    }
+
+    .two-columns {
+        column-count: 2;
+        width: 100%;
+
+        > * {
+            width: 22rem;
+        }
+    }
+
+    .control-group > label {
+        align-items: center;
+        display: flex;
+
+        [type="radio"],
+        [type="checkbox"] {
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+    }
+
+    .hint {
+        font-style: italic;
+    }
+
+    .form-checkboxgroup > label + :not(label),
+    .form-radiogroup > label + :not(label) {
+        margin-top: $normal-margin;
     }
 
     .cta {
@@ -37,19 +101,8 @@
         width: 100%;
     }
 
-    .text-content {
-        width: 100%;
-
-        > plug-in:not('[data-id="selectedRole"]') {
-            width: 100%;
-        }
-    }
-
-    .row .col {
-        flex-basis: 50%;
-    }
-
     .top-of-form {
+        margin-top: -2rem;
         padding-top: inherit;
     }
 
