@@ -12,9 +12,8 @@
 
     [data-id="selectedRole"] {
         display: flex;
-        // justify-content: center;
         margin: auto;
-        padding: 4rem 1.5rem;
+        padding: 4rem 0;
         width: 47rem;
 
         > label {
@@ -56,21 +55,13 @@
     }
 
     .field-label {
+        display: block;
         font-weight: bold;
     }
 
-    [data-id="form"]:empty {
+    [data-id="form"] {
         display: block;
-        height: 20rem;
-    }
-
-    .two-columns {
-        column-count: 2;
-        width: 100%;
-
-        > * {
-            width: 22rem;
-        }
+        min-height: 20rem;
     }
 
     .control-group > label {

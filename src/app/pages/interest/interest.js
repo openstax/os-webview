@@ -76,6 +76,7 @@ export default class InterestForm extends Controller {
         }
         this.model.userRole = newRole;
         this.form.update();
+        $.scrollTo(this.form.el);
     }
 
 }

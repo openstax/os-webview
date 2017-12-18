@@ -9,39 +9,27 @@
             <input type="hidden" name="Role__c" value="{model.userRole}">
         </div>
         <div class="text-content">
-            <plug-in data-id="contactInfo" skip="true"></plug-in>
-        </div>
+            <div
+                class="grouping {model.currentSection === 1 ? '' : 'hidden'}"
+            >
+                <h2>Tell us about you.</h2>
+                <plug-in data-id="contactInfo" skip="true"></plug-in>
+                <div class="flexrow"><button type="button" class="btn primary next">Next</button></div>
+            </div>
+            <div class="grouping {model.currentSection === 2 ? '' : 'hidden'}">
+                <h2>Tell us about the book</h2>
+                <plug-in data-id="whichBook" skip="true"></plug-in>
+                <plug-in data-id="howMany" skip="true"></plug-in>
+                <plug-in data-id="partnerContact" skip="true"></plug-in>
 
-        <div class="wrapper">
-            <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
-            <div class="text-content labeled-inputs row book-info">
+                <plug-in data-id="hearAbout" skip="true"></plug-in>
 
-                <div class="col">
-                    <plug-in data-id="whichBook" skip="true"></plug-in>
-                    <plug-in data-id="howMany" skip="true"></plug-in>
-                    <plug-in data-id="partnerContact" skip="true"></plug-in>
-                </div>
-
-                <div class="col">
-
-                    <plug-in data-id="hearAbout" skip="true"></plug-in>
-
-                    <label id="other-source" class="hidden">
-                        Other:
-                        <input name="00NU00000055spr" type="text"
-                        placeholder="Heard about us some other way?">
-                    </label>
-
-                    <label>
-                        Do you have any feedback you'd like to share with us?
-                        <textarea cols="50" name="00NU00000056Rls" rows="4" skip="true"></textarea>
-                    </label>
-
-                    <div class="cta">
-                        <input name="commit" class="btn" type="submit" value="Submit" role="button" aria-disabled="false">
-                    </div>
+                <div class="flexrow">
+                    <button type="button" class="secondary back">Back</button>
+                    <button type="submit" class="btn primary">Submit</button>
                 </div>
             </div>
         </div>
+
     </form>
 </template>
