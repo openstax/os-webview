@@ -3,7 +3,6 @@ import settings from 'settings';
 import $ from '~/helpers/$';
 import userModel from '~/models/usermodel';
 import Popup from '~/components/popup/popup';
-import Calculator from '~/components/calculator/calculator';
 import Errata from '~/pages/errata/errata';
 import Detail from '~/pages/errata/detail/detail';
 import {description as template} from './confirmation.html';
@@ -12,12 +11,11 @@ const applyLink = `${settings.accountHref}/faculty_access/apply?r=${encodeURICom
 
 const models = {
     adoption: {
-        headline: 'Thanks! You\'re A Textbook Hero',
-        adoptionQuestion: 'Have you adopted another OpenStax book?',
+        headline: 'Thank you! You\'re a textbook hero.',
+        adoptionQuestion: 'Want to tell us about another OpenStax book you\'re using?',
         adoptionUrl: '/adoption',
-        adoptionLinkText: 'Add another book',
-        subjectLinkText: 'Go back to our books',
-        studentImage: 'student-algebra.png'
+        adoptionLinkText: 'Report another adopted textbook',
+        studentImage: 'student-chemistry.png'
     },
     compCopy: {
         headline: 'Thank you for requesting a download from iBooks.',
@@ -46,11 +44,11 @@ const models = {
         }
     },
     interest: {
-        headline: 'Thanks for telling us about yourself!',
-        adoptionQuestion: 'Have you been verified as an instructor?',
-        adoptionUrl: applyLink,
-        adoptionLinkText: 'Get verified',
-        subjectLinkText: 'Explore our books',
+        headline: 'Thank you',
+        adoptionQuestion: 'Add email@openstax.org to your address book. You will' +
+        ' receive an email soonish.',
+        adoptionUrl: '/subjects',
+        adoptionLinkText: 'Back to the books',
         studentImage: 'student-chemistry.png'
     }
 };
@@ -66,7 +64,6 @@ export default class Confirmation extends Controller {
         };
         this.regions = {
             popup: 'pop-up',
-            calculator: 'savings-calculator',
             detail: 'detail-block'
         };
 
@@ -75,6 +72,9 @@ export default class Confirmation extends Controller {
             this.referringPage = window.location.pathname
                 .replace('-confirmation', '')
                 .replace(/^\//, '');
+        }
+        if (this.referringPage === 'adoption') {
+            this.view.classes.push('adoption');
         }
         this.model = models[this.referringPage];
         if (this.referringPage === 'errata') {
@@ -85,9 +85,6 @@ export default class Confirmation extends Controller {
     onLoaded() {
         if (this.model.popupText) {
             this.regions.popup.attach(new Popup(this.model.popupText));
-        }
-        if (['adoption', 'interest'].includes(this.referringPage)) {
-            this.regions.calculator.attach(new Calculator(this.referringPage));
         }
         if (this.referringPage === 'errata') {
             const queryDict = $.parseSearchString(window.location.search);
