@@ -25,15 +25,13 @@
                 </div>
                 <div class="headline">
                     <img id="tutor-logo" alt="OpenStax Tutor beta logo" src="/images/openstax-tutor/tutor-logo.svg">
-                    <h1>
-                        {model.frontier.headline}
-                    </h1>
+                    <h1>{model.frontier.headline}</h1>
                     <div class="blurb">{model.frontier.subhead}</div>
-                    <div class="popup-text hidden" data-html="frontier.description" skip="true"></div>
-                    <button type="button" class="activate-popup primary">
+                    <a href="{model.frontier.learnMore.href}" class="btn primary">
                         {model.frontier.learnMore.text}
-                    </button>
+                    </a>
                 </div>
+                <div class="popup-text {model.frontier.popupHidden}" data-html="frontier.description" skip="true"></div>
             </div>
         </section>
         <section id="how-it-works">
@@ -84,11 +82,7 @@
                     <div class="thumbnails">
                         <div each="item in model.whatStudentsGet.images"
                          class="{item === model.whatStudentsGet.currentImage ? 'active' : ''}">
-                            <if condition="item.url.substr(-3) === 'png'">
-                                <img alt="{item.description}" src="{item.url}">
-                            <else>
-                                <video preload="auto" src="{item.url}"></video>
-                            </if>
+                            {item.video_title || 'No title set'}
                         </div>
                     </div>
                 </div>

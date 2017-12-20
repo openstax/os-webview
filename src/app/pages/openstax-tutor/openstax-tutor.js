@@ -70,8 +70,13 @@ export default class Tutor extends CMSPageController {
             learnMore: {
                 href: data.section_1_cta_link,
                 text: data.section_1_cta_text
-            }
+            },
+            popupHidden: 'hidden'
         };
+        setTimeout(() => {
+            this.model.frontier.popupHidden = '';
+            this.update();
+        }, 4000);
         Object.assign(this.model.howItWorks, {
             headline: data.section_2_heading,
             subhead: data.section_2_subheading,
@@ -255,17 +260,6 @@ export default class Tutor extends CMSPageController {
                 }, 400);
             }
         }, 400);
-    }
-
-    @on('click .activate-popup')
-    activatePopup(event) {
-        const headlineEl = document.querySelector('#new-frontier .headline');
-        const popupEl = document.querySelector('.popup-text');
-
-        headlineEl.classList.add('expanded');
-        popupEl.classList.remove('hidden');
-        event.target.classList.add('hidden');
-        event.preventDefault();
     }
 
     @on('click a[href^="#"]')
