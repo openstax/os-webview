@@ -43,7 +43,11 @@ export default class SectionNavigator extends Controller {
     @on('click .hotspot')
     selectDot(event) {
         this.model.selectedId = event.delegateTarget.dataset.id;
-        const targetEl = document.getElementById(this.model.selectedId);
+        let targetEl = document.getElementById(`${this.model.selectedId}-target`);
+
+        if (!targetEl) {
+            targetEl = document.getElementById(this.model.selectedId);
+        }
 
         $.scrollTo(targetEl);
         this.update();
