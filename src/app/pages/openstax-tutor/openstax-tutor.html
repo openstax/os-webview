@@ -82,7 +82,8 @@
                     <div class="thumbnails">
                         <div each="item in model.whatStudentsGet.images"
                          class="{item === model.whatStudentsGet.currentImage ? 'active' : ''}">
-                            {item.video_title || 'No title set'}
+                            <span class="big-screen">{item.video_title || 'No title set'}</span>
+                            <span class="small-screen" data-html="whatStudentsGet.images[{$item}].description" skip="true"></span>
                         </div>
                     </div>
                 </div>
@@ -90,18 +91,8 @@
         </section>
         <section id="feature-matrix">
             <div class="text-content two-cells">
-                <div class="cell text-content">
-                    <h1>{model.featureMatrix.headline}</h1>
-                    <div class="description" data-html="featureMatrix.description" skip="true"></div>
-                    <div class="box">
-                        <h2>{model.comingSoon.headline}</h2>
-                        <div class="future-text" data-html="comingSoon.description" skip="true"></div>
-                        <img class="stamp" src="/images/openstax-tutor/icon-megaphone.svg">
-                        <img class="bottom-edge" src="/images/openstax-tutor/cs-background.svg">
-                        <div class="gradient-strip"></div>
-                    </div>
-                </div>
                 <div class="cell">
+                    <h1 class="small-screen">{model.featureMatrix.headline}</h1>
                     <div each="feature in model.featureMatrix.features">
                         <i class="{`fa fa-check-circle ${feature.available}`}"></i>
                         {feature.name}
@@ -111,6 +102,17 @@
                         {model.featureMatrix.resourceFinePrint}
                     </div>
                 </div>
+                <div class="cell text-content">
+                    <h1 class="big-screen">{model.featureMatrix.headline}</h1>
+                    <div class="description" data-html="featureMatrix.description" skip="true"></div>
+                    <div class="box">
+                        <h2>{model.comingSoon.headline}</h2>
+                        <div class="future-text" data-html="comingSoon.description" skip="true"></div>
+                        <img class="stamp" src="/images/openstax-tutor/icon-megaphone.svg">
+                        <img class="bottom-edge" src="/images/openstax-tutor/cs-background.svg">
+                        <div class="gradient-strip"></div>
+                    </div>
+                </div>
             </div>
         </section>
         <section id="where-money-goes">
@@ -118,7 +120,28 @@
                 <h1>{model.whereMoneyGoes.headline}</h1>
                 <div class="section-description" data-html="whereMoneyGoes.description" skip="true"></div>
             </div>
-            <img class="boxed" src="/images/openstax-tutor/ten-dollars.svg">
+            <img class="boxed big-screen" src="/images/openstax-tutor/ten-dollars.svg">
+            <div class="boxed small-screen">
+                <img src="/images/openstax-tutor/ten-dollars-mobile@2x.png">
+                <div class="box">
+                    <div class="flexrow">
+                        <div class="dot dot-1"></div>
+                        <div>Pays for our engineers and researchers</div>
+                    </div>
+                    <div class="flexrow">
+                        <div class="dot dot-2"></div>
+                        <div>Pays for authors to keep content current</div>
+                    </div>
+                    <div class="flexrow">
+                        <div class="dot dot-3"></div>
+                        <div>Pays for our Support team</div>
+                    </div>
+                    <div class="flexrow">
+                        <div class="dot dot-4"></div>
+                        <div>Helps us keep the lights on</div>
+                    </div>
+                </div>
+            </div>
         </section>
         <section id="science">
             <div id="particles" skip="true"></div>
