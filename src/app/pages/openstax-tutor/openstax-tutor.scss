@@ -31,7 +31,7 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
     .social > .btn {
         background-color: $sea-water;
     }
- }
+}
 
 .openstax-tutor-page {
 
@@ -339,7 +339,7 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
             background-color: ui-color(white);
             border-radius: 0.5rem;
             box-shadow: $hover-shadow;
-            padding: 0 2rem 18rem;
+            padding: 0 2rem 1rem;
             position: absolute;
             right: 14rem;
             top: 30rem;
@@ -467,6 +467,8 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
         h1 {
             margin-bottom: 3rem;
+
+            text-align: center;
         }
 
         .description,
@@ -521,18 +523,26 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
                 top: 20%;
                 transform: translateX(30%);
                 width: 20%;
+
+                @include width-up-to($tablet-max) {
+                    display: none;
+                }
             }
         }
 
 
         .thumbnails {
-            display: flex;
+            display: inline-flex;
             height: 8rem;
-            justify-content: center;
-            margin: 3rem 0 8rem;
+            justify-content: space-between;
+            margin: 3rem auto 8rem;
+            max-width: 100%;
             overflow-x: auto;
-            overflow-y: hidden;
             transition: 0.5s ease-in-out;
+
+            @include width-up-to($tablet-max) {
+                height: auto;
+            }
 
             >div {
                 align-items: center;
