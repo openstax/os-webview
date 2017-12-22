@@ -8,6 +8,10 @@ $sea-water: rgb(39, 62, 88);
 $sea-bottom: rgb(19, 30, 42);
 $sky: rgb(195, 234, 231);
 
+$dot-1: rgb(29, 104, 140);
+$dot-2: rgb(40, 123, 166);
+$dot-3: rgb(40, 170, 197);
+$dot-4: rgb(148, 221, 228);
 $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
 // scss-lint:disable IdSelector
@@ -17,6 +21,15 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
 .openstax-tutor-footer {
     background-color: $sea-bottom;
+    color: ui-color(white);
+
+    .hero-quote {
+        color: inherit;
+    }
+
+    .social > .btn {
+        background-color: $sea-water;
+    }
 }
 
 .openstax-tutor-page {
