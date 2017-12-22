@@ -8,6 +8,11 @@ $sea-water: rgb(39, 62, 88);
 $sea-bottom: rgb(19, 30, 42);
 $sky: rgb(195, 234, 231);
 
+$dot-1: rgb(29, 104, 140);
+$dot-2: rgb(40, 123, 166);
+$dot-3: rgb(40, 170, 197);
+$dot-4: rgb(148, 221, 228);
+
 $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
 // scss-lint:disable IdSelector
@@ -17,6 +22,15 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
 .openstax-tutor-footer {
     background-color: $sea-bottom;
+    color: ui-color(white);
+
+    .hero-quote {
+        color: inherit;
+    }
+
+    .social > .btn {
+        background-color: $sea-water;
+    }
 }
 
 .openstax-tutor-page {
@@ -24,6 +38,12 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
     background-color: ui-color(white);
     font-weight: 300;
     letter-spacing: 0.02em;
+
+    h1 {
+        @include width-up-to($phone-max) {
+            @include set-font(h2);
+        }
+    }
 
     .floating-tools {
         align-items: center;
@@ -37,6 +57,10 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
         > * {
             margin-bottom: 2rem;
+        }
+
+        @media(max-width: $phone-max) {
+            display: none;
         }
 
         @media (max-height: $phone-max * 1.25) {
@@ -170,6 +194,10 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
         overflow: hidden;
         padding: 6rem 0;
         position: relative;
+
+        @include width-up-to($phone-max) {
+            padding: 3rem 2rem;
+        }
 
         h1 {
             color: inherit;
@@ -311,17 +339,22 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
             background-color: ui-color(white);
             border-radius: 0.5rem;
             box-shadow: $hover-shadow;
-            padding: 0 $normal-margin;
+            padding: 0 2rem 1rem;
             position: absolute;
             right: 14rem;
             top: 30rem;
             width: calc(40% - 10rem);
 
             @include width-up-to($tablet-max) {
-                margin-left: 10%;
+                margin-left: calc(10% + #{$normal-margin});
                 margin-right: 10rem;
+                margin-top: $normal-margin;
                 position: static;
                 width: auto;
+            }
+
+            @include width-up-to($phone-max) {
+                margin-right: calc(10% + #{$normal-margin});
             }
         }
     }
@@ -333,7 +366,7 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
         .text-content,
         #how-it-works-target {
-            margin-top: -10vw;
+            margin-top: -10rem;
         }
 
         h1 {
@@ -345,7 +378,9 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
         }
 
         h2 {
-            @include set-font(h3);
+            @include set-font(h4);
+
+            text-align: center;
         }
 
         .description {
@@ -356,6 +391,10 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
             margin: 0 auto;
             padding: 3rem 0;
             width: 100%;
+
+            @include width-up-to($phone-max) {
+                padding-bottom: 0;
+            }
         }
 
 
@@ -428,6 +467,8 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
         h1 {
             margin-bottom: 3rem;
+
+            text-align: center;
         }
 
         .description,
@@ -482,21 +523,30 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
                 top: 20%;
                 transform: translateX(30%);
                 width: 20%;
+
+                @include width-up-to($tablet-max) {
+                    display: none;
+                }
             }
         }
 
 
         .thumbnails {
-            display: flex;
+            display: inline-flex;
             height: 8rem;
-            justify-content: center;
-            margin: 3rem 0 8rem;
+            justify-content: space-between;
+            margin: 3rem auto 8rem;
+            max-width: 100%;
             overflow-x: auto;
-            overflow-y: hidden;
             transition: 0.5s ease-in-out;
+
+            @include width-up-to($tablet-max) {
+                height: auto;
+            }
 
             >div {
                 align-items: center;
+                background-color: ui-color(white);
                 border: thin solid ui-color(form-border);
                 border-radius: 0.4rem;
                 cursor: pointer;
@@ -505,7 +555,17 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
                 height: 100%;
                 justify-content: center;
                 margin: 0 $normal-margin;
+                min-width: 13rem;
+                padding: $normal-margin;
                 width: 18rem;
+
+                @include width-up-to($tablet-max) {
+                    min-width: 50vw;
+
+                    .big-screen {
+                        display: none;
+                    }
+                }
 
                 &.active,
                 &.active {
@@ -513,14 +573,13 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
                     box-shadow: $hover-shadow;
                 }
 
-                &:first-child {
-                    padding-left: 0;
-                }
+                .small-screen {
+                    display: none;
 
-                img,
-                video {
-                    height: 100%;
-                    max-width: 20rem;
+                    @include width-up-to($tablet-max) {
+                        display: inline;
+                        font-weight: normal;
+                    }
                 }
             }
         }
@@ -535,9 +594,37 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
             display: flex;
             flex-flow: row nowrap;
 
+            @include width-up-to($phone-max) {
+                display: block;
+
+                .big-screen {
+                    display: none;
+                }
+            }
+
+            .small-screen {
+                display: none;
+                margin-left: 2rem;
+                margin-right: 2rem;
+
+                @include width-up-to($phone-max) {
+                    display: block;
+                }
+            }
+
             .cell {
                 align-items: flex-start;
                 flex-basis: 50%;
+
+                &:first-child {
+                    order: 2;
+
+                    > div {
+                        display: flex;
+                        margin-right: 2rem;
+                        padding-bottom: 1rem;
+                    }
+                }
             }
 
             .fa-check-circle {
@@ -592,10 +679,11 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
             }
 
             .future-text {
-                line-height: normal;
+                line-height: 1.6;
 
                 p {
                     margin-top: 0;
+                    max-width: calc(100% - 4rem);
                 }
             }
         }
@@ -621,6 +709,59 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
     #where-money-goes {
         .text-content {
             margin-bottom: 5%;
+            text-align: center;
+        }
+
+        .big-screen {
+            @include width-up-to($phone-max) {
+                display: none;
+            }
+        }
+
+        .small-screen {
+            display: none;
+
+            @include width-up-to($phone-max) {
+                display: flex;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+
+                .flexrow {
+                    align-items: center;
+                    display: flex;
+                    height: 2.5rem;
+                }
+
+                .box {
+                    box-shadow: $hover-shadow;
+                    font-size: 75%;
+                    padding: 2rem $normal-margin;
+                }
+
+                .dot {
+                    border-radius: 0.6rem;
+                    height: 1.2rem;
+                    margin-right: 1rem;
+                    width: 1.2rem;
+                }
+
+                .dot-1 {
+                    background-color: $dot-1;
+                }
+
+                .dot-2 {
+                    background-color: $dot-2;
+                }
+
+                .dot-3 {
+                    background-color: $dot-3;
+                }
+
+                .dot-4 {
+                    background-color: $dot-4;
+                }
+            }
         }
     }
 
@@ -654,7 +795,7 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
         background-repeat: no-repeat;
         background-size: 100% 100%;
         color: text-color(white);
-        margin-top: -1.7vw;
+        margin-top: calc(-2rem - 2vmin);
 
         h1 {
             margin-bottom: 8rem;
@@ -729,12 +870,13 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
     #learn-more {
         background-color: $sea-water;
         background-image: url('/images/openstax-tutor/ocean-bottom.svg');
-        background-position: left calc(100% + 0.2rem);
+        background-position: left calc(100% + 0.4rem);
         background-repeat: no-repeat;
         background-size: cover;
         color: text-color(white);
         min-height: 25vw;
-        padding: 4vw 0;
+        padding-bottom: 4rem;
+        text-align: center;
 
         h1 {
             @include set-font(h2);
@@ -750,8 +892,9 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
             justify-content: center;
             width: 100%;
 
-            @include width-up-to($phone-max) {
-                display: block;
+            @include width-up-to($tablet-max) {
+                align-items: center;
+                flex-direction: column;
             }
         }
 
