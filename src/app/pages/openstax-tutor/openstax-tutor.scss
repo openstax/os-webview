@@ -12,6 +12,7 @@ $dot-1: rgb(29, 104, 140);
 $dot-2: rgb(40, 123, 166);
 $dot-3: rgb(40, 170, 197);
 $dot-4: rgb(148, 221, 228);
+
 $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
 // scss-lint:disable IdSelector
@@ -30,13 +31,19 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
     .social > .btn {
         background-color: $sea-water;
     }
-}
+ }
 
 .openstax-tutor-page {
 
     background-color: ui-color(white);
     font-weight: 300;
     letter-spacing: 0.02em;
+
+    h1 {
+        @include width-up-to($phone-max) {
+            @include set-font(h2);
+        }
+    }
 
     .floating-tools {
         align-items: center;
@@ -48,8 +55,8 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
         transform: translateY(-60%);
         z-index: 5;
 
-        > * {
-            margin-bottom: 2rem;
+        @include width-up-to($phone-max) {
+            display: none;
         }
 
         @media (max-height: $phone-max * 1.25) {
@@ -60,6 +67,10 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
         @media (max-height: $phone-max) {
             top: 10rem;
             transform: scale(0.9);
+        }
+
+        > * {
+            margin-bottom: 2rem;
         }
     }
 
@@ -184,8 +195,13 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
         padding: 6rem 0;
         position: relative;
 
+        @include width-up-to($phone-max) {
+            padding: 3rem 2rem;
+        }
+
         h1 {
             color: inherit;
+            margin-top: $normal-margin;
             width: auto;
         }
 
@@ -291,12 +307,10 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
         .headline {
             margin: 0 auto;
+            margin-left: 10%;
             max-width: 32em;
             padding: $normal-margin;
-
-            &.expanded {
-                background-color: rgba(ui-color(white), 0.85);
-            }
+            padding-right: 10rem;
         }
 
         .blurb {
@@ -304,13 +318,9 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
             max-width: 32rem;
         }
 
-        .activate-popup {
+        .btn {
             cursor: pointer;
             margin-left: 0;
-
-            &.hidden {
-                display: none;
-            }
         }
 
         #tutor-logo {
@@ -324,6 +334,29 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
                 @include set-font(hero-h1);
             }
         }
+
+        .popup-text {
+            background-color: ui-color(white);
+            border-radius: 0.5rem;
+            box-shadow: $hover-shadow;
+            padding: 0 2rem 18rem;
+            position: absolute;
+            right: 14rem;
+            top: 30rem;
+            width: calc(40% - 10rem);
+
+            @include width-up-to($tablet-max) {
+                margin-left: calc(10% + #{$normal-margin});
+                margin-right: 10rem;
+                margin-top: $normal-margin;
+                position: static;
+                width: auto;
+            }
+
+            @include width-up-to($phone-max) {
+                margin-right: calc(10% + #{$normal-margin});
+            }
+        }
     }
 
     #how-it-works {
@@ -331,8 +364,9 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
         overflow: visible;
         z-index: 3;
 
-        .text-content {
-            margin-top: -10vw;
+        .text-content,
+        #how-it-works-target {
+            margin-top: -10rem;
         }
 
         h1 {
@@ -344,7 +378,9 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
         }
 
         h2 {
-            @include set-font(h3);
+            @include set-font(h4);
+
+            text-align: center;
         }
 
         .description {
@@ -355,6 +391,10 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
             margin: 0 auto;
             padding: 3rem 0;
             width: 100%;
+
+            @include width-up-to($phone-max) {
+                padding-bottom: 0;
+            }
         }
 
 
@@ -495,14 +535,21 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
             transition: 0.5s ease-in-out;
 
             >div {
+                align-items: center;
+                border: thin solid ui-color(form-border);
+                border-radius: 0.4rem;
                 cursor: pointer;
+                display: flex;
+                font-weight: bold;
                 height: 100%;
-                max-width: 23rem;
-                padding-left: 3rem;
+                justify-content: center;
+                margin: 0 $normal-margin;
+                width: 18rem;
 
-                &.active img,
-                &.active video {
-                    border: 0.2rem solid os-color(light-blue);
+                &.active,
+                &.active {
+                    border-color: os-color(light-blue);
+                    box-shadow: $hover-shadow;
                 }
 
                 &:first-child {
