@@ -544,8 +544,9 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
                 height: auto;
             }
 
-            >div {
+            > div {
                 align-items: center;
+                background-color: ui-color(white);
                 border: thin solid ui-color(form-border);
                 border-radius: 0.4rem;
                 cursor: pointer;
@@ -554,7 +555,17 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
                 height: 100%;
                 justify-content: center;
                 margin: 0 $normal-margin;
+                min-width: 13rem;
+                padding: $normal-margin;
                 width: 18rem;
+
+                @include width-up-to($tablet-max) {
+                    min-width: 50vw;
+
+                    .big-screen {
+                        display: none;
+                    }
+                }
 
                 &.active,
                 &.active {
@@ -562,14 +573,13 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
                     box-shadow: $hover-shadow;
                 }
 
-                &:first-child {
-                    padding-left: 0;
-                }
+                .small-screen {
+                    display: none;
 
-                img,
-                video {
-                    height: 100%;
-                    max-width: 20rem;
+                    @include width-up-to($tablet-max) {
+                        display: inline;
+                        font-weight: normal;
+                    }
                 }
             }
         }
@@ -584,9 +594,37 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
             display: flex;
             flex-flow: row nowrap;
 
+            @include width-up-to($phone-max) {
+                display: block;
+
+                .big-screen {
+                    display: none;
+                }
+            }
+
+            .small-screen {
+                display: none;
+                margin-left: 2rem;
+                margin-right: 2rem;
+
+                @include width-up-to($phone-max) {
+                    display: block;
+                }
+            }
+
             .cell {
                 align-items: flex-start;
                 flex-basis: 50%;
+
+                &:first-child {
+                    order: 2;
+
+                    > div {
+                        display: flex;
+                        margin-right: 2rem;
+                        padding-bottom: 1rem;
+                    }
+                }
             }
 
             .fa-check-circle {
@@ -641,10 +679,11 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
             }
 
             .future-text {
-                line-height: normal;
+                line-height: 1.6;
 
                 p {
                     margin-top: 0;
+                    max-width: calc(100% - 4rem);
                 }
             }
         }
