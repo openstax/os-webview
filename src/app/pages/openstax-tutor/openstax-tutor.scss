@@ -559,13 +559,13 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
                 padding: $normal-margin;
                 width: 18rem;
 
-                @include width-up-to($tablet-max) {
-                    min-width: 50vw;
-
-                    .big-screen {
-                        display: none;
-                    }
-                }
+                // @include width-up-to($tablet-max) {
+                //     min-width: 50vw;
+                //
+                //     .big-screen {
+                //         display: none;
+                //     }
+                // }
 
                 &.active,
                 &.active {
@@ -573,14 +573,14 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
                     box-shadow: $hover-shadow;
                 }
 
-                .small-screen {
-                    display: none;
-
-                    @include width-up-to($tablet-max) {
-                        display: inline;
-                        font-weight: normal;
-                    }
-                }
+                // .small-screen {
+                //     display: none;
+                //
+                //     @include width-up-to($tablet-max) {
+                //         display: inline;
+                //         font-weight: normal;
+                //     }
+                // }
             }
         }
 
@@ -594,37 +594,37 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
             display: flex;
             flex-flow: row nowrap;
 
-            @include width-up-to($phone-max) {
-                display: block;
-
-                .big-screen {
-                    display: none;
-                }
-            }
-
-            .small-screen {
-                display: none;
-                margin-left: 2rem;
-                margin-right: 2rem;
-
-                @include width-up-to($phone-max) {
-                    display: block;
-                }
-            }
+            // @include width-up-to($phone-max) {
+            //     display: block;
+            //
+            //     .big-screen {
+            //         display: none;
+            //     }
+            // }
+            //
+            // .small-screen {
+            //     display: none;
+            //     margin-left: 2rem;
+            //     margin-right: 2rem;
+            //
+            //     @include width-up-to($phone-max) {
+            //         display: block;
+            //     }
+            // }
 
             .cell {
                 align-items: flex-start;
                 flex-basis: 50%;
 
-                &:first-child {
-                    order: 2;
-
-                    > div {
-                        display: flex;
-                        margin-right: 2rem;
-                        padding-bottom: 1rem;
-                    }
-                }
+                // &:first-child {
+                //     order: 2;
+                //
+                //     > div {
+                //         display: flex;
+                //         margin-right: 2rem;
+                //         padding-bottom: 1rem;
+                //     }
+                // }
             }
 
             .fa-check-circle {
