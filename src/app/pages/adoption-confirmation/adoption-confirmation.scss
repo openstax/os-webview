@@ -1,0 +1,99 @@
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
+@import 'components/radio-buttons';
+
+.adoption-confirmation {
+
+    .hero {
+
+        padding: 0;
+    }
+
+    .header-2 {
+        padding: 6rem 0;
+
+        h1 {
+            @include set-font(h1);
+        }
+    }
+
+    .strip-container {
+        height: 1rem;
+    }
+
+    .form-checkboxgroup,
+    .form-radiogroup {
+        margin: $normal-margin 0;
+
+        > label + :not(label) {
+            margin-top: $normal-margin;
+        }
+    }
+
+    .field-label {
+        display: block;
+        font-weight: bold;
+    }
+
+    .hint {
+        font-style: italic;
+    }
+
+    .control-group {
+        flex: 1 1 30%;
+        height: auto;
+
+        > label {
+            align-items: center;
+            display: inline-flex;
+
+            [type="radio"],
+            [type="checkbox"] {
+                margin: 0.5rem 1rem 0.5rem 0;
+            }
+
+            [type="checkbox"] {
+                height: auto;
+                max-width: 1em;
+            }
+
+            [type="radio"] {
+                @extend %radiobutton;
+            }
+        }
+    }
+
+    .content {
+        @extend %content;
+
+        min-height: 55rem;
+    }
+
+    .flexrow {
+        @extend %content;
+
+        justify-content: flex-start;
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
+    }
+
+    .form {
+        @extend %form;
+    }
+
+    button {
+        @extend %button;
+
+        &.primary,
+        &.cta {
+            @extend %primary;
+        }
+
+        &.secondary {
+            @extend %secondary;
+        }
+    }
+
+}

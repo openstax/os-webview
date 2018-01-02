@@ -1,3 +1,5 @@
+@import '../../node_modules/pattern-library/core/pattern-library/headers';
+
 .interest-form {
     .top-of-form {
         padding-top: inherit;
@@ -7,32 +9,66 @@
         padding-bottom: 2rem;
     }
 
-    .cta {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-        padding: 0;
-        width: 100%;
-    }
-
     [data-id="selectedRole"] {
         display: flex;
-        justify-content: center;
         margin: auto;
-        padding: 0 1.5rem;
-        width: 30rem;
+        padding: 4rem 0;
+        width: 47rem;
 
         > label {
             flex-basis: 100%;
         }
     }
 
-    [data-id="contactInfo"] {
-        min-width: 70%;
+    .grouping {
+        align-items: flex-start;
+        width: 47rem;
     }
 
-    [data-id="form"]:empty {
+    h2 {
+        @include set-font(h4);
+
+        margin: 0;
+    }
+
+    plug-in {
         display: block;
-        height: 20rem;
+        margin-bottom: $normal-margin;
+    }
+
+    .flexrow {
+        display: flex;
+        margin: 0 -0.5rem;
+    }
+
+    button {
+        @extend %button;
+
+        &.primary {
+            @extend %primary;
+        }
+
+        &.secondary {
+            @extend %secondary;
+        }
+    }
+
+    .field-label {
+        display: block;
+        font-weight: bold;
+    }
+
+    .hint {
+        font-style: italic;
+    }
+
+    .form-checkboxgroup > label + :not(label),
+    .form-radiogroup > label + :not(label) {
+        margin-top: $normal-margin;
+    }
+
+    [data-id="form"] {
+        display: block;
+        min-height: 20rem;
     }
 }

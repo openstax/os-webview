@@ -9,6 +9,7 @@ const PAGES = [
     'accessibility-statement',
     'adopters',
     'adoption',
+    'adoption-confirmation',
     'article',
     'blog',
     'blog/*path',
@@ -64,7 +65,6 @@ class AppRouter extends Router {
         this.route(/^(\d+)/, 'cms');
         this.route(/^to[us]$/, 'tos');
         this.route('give-confirmation', 'give');
-        this.route('adoption-confirmation', 'confirmation');
         this.route('interest-confirmation', 'confirmation');
         this.route('higher-ed', 'home');
 

@@ -1,8 +1,12 @@
 import SalesforceForm from '~/controllers/salesforce-form';
 import salesforce from '~/models/salesforce';
 import router from '~/router';
+import {on} from '~/helpers/controller/decorators';
+import $ from '~/helpers/$';
 import FormInput from '~/components/form-input/form-input';
 import FormSelect from '~/components/form-select/form-select';
+import FormRadioGroup from '~/components/form-radiogroup/form-radiogroup';
+import FormCheckboxGroup from '~/components/form-checkboxgroup/form-checkboxgroup';
 import ManagedComponent from '~/helpers/controller/managed-component';
 import ContactInfo from '~/components/contact-info/contact-info';
 import partnerPromise from '~/models/partners';
@@ -33,15 +37,14 @@ export default class TeacherForm extends SalesforceForm {
                 name: '00NU00000052VId',
                 type: 'number',
                 min: '1',
-                label: 'How many students are using this book in your courses each semester?',
+                label: 'How many students are using this book in your courses this semester?',
                 required: true,
                 validationMessage
             }),
             otherPartner: new FormInput({
                 name: '00NU0000005Vls8',
                 type: 'text',
-                label: 'Other',
-                placeholder: 'Technology not listed above?',
+                label: 'Other (include all other technologies you use)',
                 validationMessage
             }),
             otherInstructors: new FormInput({
@@ -53,34 +56,26 @@ export default class TeacherForm extends SalesforceForm {
                 ' book per semester?',
                 validationMessage
             }),
-            partnerResources: new FormSelect({
-                name: '00NU0000005VmTu',
-                label: 'Which technology are you using with your book?',
-                instructions: 'You may select more than one.',
-                multiple: true,
-                validationMessage
-            }),
             yourBook: new FormSelect({
                 name: '00NU00000053nzR',
                 label: 'Your OpenStax book:',
                 required: true,
                 validationMessage
             }),
-            adoptionStatus: new FormSelect({
+            adoptionStatus: new FormRadioGroup({
                 name: '00NU00000055spw',
-                label: 'How are you using this book?',
+                label: 'How are you using your book?',
                 options: salesforce.adoption(['adopted', 'recommended'])
                     .map((opt) => ({label: opt.text, value: opt.value})),
-                validationMessage
+                validationMessage,
+                required: true
             }),
-            partnerContact: new FormSelect({
+            partnerContact: new FormCheckboxGroup({
                 name: '00NU00000055spm',
-                labelHtml: 'Which of our <a href="/partners">partners</a> would' +
-                    ' you like to give permission to contact you about additional' +
-                    ' resources to support our books?',
-                instructions: 'You may select more than one',
+                label: 'Which of our partners would you like to give permission' +
+                    ' to contact you about additional resources to support our books?',
+                instructions: 'Select all that apply.',
                 options: [
-                    {label: 'None', value: ''},
                     {label: 'Online homework partners', value: 'Online homework partners'},
                     {label: 'Adaptive courseware partners', value: 'Adaptive courseware partners'},
                     {label: 'Customization tool partners', value: 'Customization tool partners'}
@@ -90,27 +85,33 @@ export default class TeacherForm extends SalesforceForm {
                 requireNone: true,
                 validationMessage
             }),
-            featureMe: new FormSelect({
+            featureMe: new FormRadioGroup({
                 name: '00NU00000055sq6',
                 label: 'Are you interested in having your OpenStax experience' +
                     ' featured on our website, social media, and/or emails?',
                 options: FormSelect.YES_NO_OPTIONS,
                 required: true,
+                value: '0',
+                classes: ['two-columns'],
                 validationMessage
             }),
-            contactMe: new FormSelect({
+            contactMe: new FormRadioGroup({
                 name: '00NU00000055sqB',
                 label: 'May we contact you about opportunities to participate in' +
                     ' future pilots or research studies?',
                 options: FormSelect.YES_NO_OPTIONS,
                 required: true,
+                value: '0',
+                classes: ['two-columns'],
                 validationMessage
             })
         };
 
         this.model = Object.assign(model, {
             validationMessage,
-            salesforce
+            salesforce,
+            currentSection: 1,
+            showOtherBlank: false
         });
 
         this.inputComponents = Object.keys(inputs).map((k) =>
@@ -119,14 +120,12 @@ export default class TeacherForm extends SalesforceForm {
     }
 
     setBookOptions() {
-        const bookComponent = this.inputComponents.find((c) => c.id === 'yourBook');
-        const options = this.salesforceTitles.map((title) => ({
-            label: title.text,
-            value: title.value,
-            selected: this.defaultTitle === title.value
-        }));
-
-        bookComponent.component.setOptions(options);
+        this.model.subjects = Array.from(new Set(this.salesforceTitles.map((book) => book.subject))).sort();
+        this.model.booksBySubject = (subject) => {
+            return this.salesforceTitles
+                .filter((b) => b.subject === subject)
+                .sort();
+        };
     }
 
     onLoaded() {
@@ -135,14 +134,12 @@ export default class TeacherForm extends SalesforceForm {
             c.attach();
         }
         partnerPromise.then((partners) => {
-            const partnerComponent = this.inputComponents.find((c) => c.id === 'partnerResources');
             const options = partners.map((p) => p.title)
                 .sort((a, b) => a.localeCompare(b))
                 .map((title) => ({label: title, value: title}));
 
             options.push({label: 'Other (specify below)', value: 'other-partner'});
-            partnerComponent.component.setOptions(options);
-            partnerComponent.update();
+            this.model.partnerResourceOptions = options;
         });
         this.contactInfo = new ContactInfo(this.model);
         this.regions.contactInfo.attach(this.contactInfo);
@@ -173,8 +170,34 @@ export default class TeacherForm extends SalesforceForm {
         this.contactInfo && this.contactInfo.update();
     }
 
-    beforeSubmit() {
-        return !this.contactInfo.checkSchoolName();
+    @on('click button.next')
+    nextSection(event) {
+        const invalid = super.doCustomValidation(event);
+
+        if (invalid) {
+            return;
+        }
+        if (!this.contactInfo.checkSchoolName() && this.model.currentSection < 4) {
+            this.model.currentSection += 1;
+            event.preventDefault();
+            this.hasBeenSubmitted = false;
+            this.update();
+            $.scrollTo(this.el);
+        }
+    }
+
+    @on('click button.back')
+    previousSection(event) {
+        this.model.currentSection -= 1;
+        this.update();
+        $.scrollTo(this.el);
+        event.preventDefault();
+    }
+
+    @on('change [value="other-partner"]')
+    toggleOtherBlank(event) {
+        this.model.showOtherBlank = event.target.checked;
+        this.update();
     }
 
     doCustomValidation(event) {

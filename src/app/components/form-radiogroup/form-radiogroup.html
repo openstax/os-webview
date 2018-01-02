@@ -1,0 +1,17 @@
+<template args="model">
+    <label class="field-label">{model.label}</label>
+    <div class="invalid-message">{model.validationMessage(model.name)}</div>
+    <div class="{model.classes ? model.classes.join(' ') : ''}">
+        <div each="item in model.options" class="control-group">
+            <label>
+                <input type="radio"
+                    name="{model.name}"
+                    value="{item.value}"
+                    checked="{item.value === model.value ? 'checked' : null}"
+                    required="{model.required}"
+                >
+                {item.label}
+            </label>
+        </div>
+    </div>
+</template>

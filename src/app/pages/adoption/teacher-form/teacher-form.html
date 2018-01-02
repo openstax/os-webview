@@ -9,40 +9,72 @@
             <input type="hidden" name="Role__c" value="{model.userRole}">
         </div>
         <div class="text-content">
-            <plug-in data-id="contactInfo" skip="true"></plug-in>
-        </div>
-        <div class="wrapper">
-            <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
-
-            <div class="text-content labeled-inputs row book-info">
-                <div id="primary-book" class="col">
-                    <plug-in data-id="yourBook" skip="true"></plug-in>
-                    <p>
-                        Don't see your book? Fill out our <a href="/interest">interest form</a>.
-                    </p>
-
-                    <plug-in data-id="adoptionStatus" skip="true"></plug-in>
-                    <plug-in data-id="howMany" skip="true"></plug-in>
-                    <plug-in data-id="partnerResources" skip="true"></plug-in>
-                    <plug-in data-id="otherPartner" skip="true"></plug-in>
-                    <plug-in data-id="otherInstructors" skip="true"></plug-in>
+            <div
+                class="grouping {model.currentSection === 1 ? '' : 'hidden'}"
+            >
+                <h2>Tell us about you.</h2>
+                <plug-in data-id="contactInfo" skip="true"></plug-in>
+                <div class="flexrow"><button type="button" class="btn primary next">Next</button></div>
+            </div>
+            <div
+                class="grouping {model.currentSection === 2 ? '' : 'hidden'}"
+            >
+                <h2>Which book are you currently using?</h2>
+                <br>
+                <div class="invalid-message">{model.validationMessage('00NU00000053nzR')}</div>
+                <div each="subject in model.subjects">
+                    <label class="field-label">{subject}</label>
+                    <div class="{model.booksBySubject(subject).length > 1 ? 'two-columns' : ''}">
+                        <div each="book in model.booksBySubject(subject)" class="control-group">
+                            <label><input type="radio" name="00NU00000053nzR" required>{book.text}</label>
+                        </div>
+                    </div>
+                    <br>
                 </div>
-
-                <div class="col">
-                    <plug-in data-id="partnerContact" skip="true"></plug-in>
-                    <plug-in data-id="featureMe" skip="true"></plug-in>
-                    <plug-in data-id="contactMe" skip="true"></plug-in>
-
-                    <label>
-                        Any feedback you'd like to share with us?
-                        <span class="invalid-message">{model.validationMessage('00NU00000056Rls')}</span>
-                        <textarea cols="50" name="00NU00000056Rls" rows="10" skip="true"></textarea>
-                    </label>
+                <div class="hint">
+                    Don't see your book? Fill out our <a href="/interest">interest form</a>.
+                </div>
+                <br>
+                <plug-in data-id="adoptionStatus" skip="true"></plug-in>
+                <br>
+                <plug-in data-id="howMany" skip="true"></plug-in>
+                <br>
+                <div class="flexrow">
+                    <button type="button" class="btn secondary back">Back</button>
+                    <button type="button" class="btn primary next">Next</button>
                 </div>
             </div>
-            <div class="cta boxed">
-                <span></span>
-                <input name="commit" class="btn" type="submit" value="Submit" role="button" aria-disabled="false">
+            <div
+                class="grouping {model.currentSection === 3 ? '' : 'hidden'}"
+            >
+                <h2>Tell use about the technology you use.</h2>
+                <div class="hint">Check all that apply</div>
+                <br>
+                <div class="two-columns">
+                    <div each="partner in model.partnerResourceOptions" class="control-group">
+                        <label><input type="checkbox" name="00NU0000005VmTu" value={partner.value}>{partner.label}</label>
+                    </div>
+                </div>
+                <br>
+                <div  class="{model.showOtherBlank ? '' : 'hidden'}">
+                    <plug-in data-id="otherPartner" skip="true"></plug-in>
+                </div>
+                <br>
+                <div class="flexrow">
+                    <button type="button" class="btn secondary back">Back</button>
+                    <button type="submit" class="btn primary">Submit</button>
+                </div>
+            </div>
+            <div
+                class="grouping {model.currentSection === 4 ? '' : 'hidden'}"
+            >
+                <plug-in data-id="partnerContact" skip="true"></plug-in>
+                <plug-in data-id="featureMe" skip="true"></plug-in>
+                <plug-in data-id="contactMe" skip="true"></plug-in>
+                <div class="flexrow">
+                    <button type="button" class="btn secondary back">Back</button>
+                    <button type="submit" class="btn primary">Submit</button>
+                </div>
             </div>
         </div>
     </form>

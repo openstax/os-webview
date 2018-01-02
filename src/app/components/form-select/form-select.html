@@ -1,7 +1,7 @@
 <template args="model">
-    <if condition="model.label">{model.label}</if>
-    <span data-html="labelHtml" skip="true"></span>
-    <span if="model.instructions" class="select-instructions">{' ' + model.instructions}</span>
+    <label if="model.label" class="field-label">{model.label}</label>
+    <label class="field-label" data-html="labelHtml" skip="true"></label>
+    <label if="model.instructions" class="field-label">{' ' + model.instructions}</label>
     <span class="invalid-message">{model.validationMessage(model.name)}</span>
     <div class="proxy-select" tabindex="0" skip="true"></div>
     <select name="{model.name}"
