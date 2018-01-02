@@ -55,11 +55,7 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
         transform: translateY(-60%);
         z-index: 5;
 
-        > * {
-            margin-bottom: 2rem;
-        }
-
-        @media(max-width: $phone-max) {
+        @include width-up-to($phone-max) {
             display: none;
         }
 
@@ -71,6 +67,10 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
         @media (max-height: $phone-max) {
             top: 10rem;
             transform: scale(0.9);
+        }
+
+        > * {
+            margin-bottom: 2rem;
         }
     }
 
@@ -544,7 +544,7 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
                 height: auto;
             }
 
-            >div {
+            > div {
                 align-items: center;
                 background-color: ui-color(white);
                 border: thin solid ui-color(form-border);
@@ -617,13 +617,14 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
                 flex-basis: 50%;
 
                 &:first-child {
-                    // order: 2;
+                    margin-right: 2rem;
+                    order: 2;
+                }
 
-                    > div {
-                        display: flex;
-                        margin-right: 2rem;
-                        padding-bottom: 1rem;
-                    }
+                .flexrow {
+                    align-items: flex-start;
+                    display: flex;
+                    padding-bottom: 2rem;
                 }
             }
 
@@ -795,7 +796,7 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
         background-repeat: no-repeat;
         background-size: 100% 100%;
         color: text-color(white);
-        margin-top: calc(-2rem - 2vmin);
+        margin-top: calc(-2rem - 2vmin); // keeps divider and background images overlapped
 
         h1 {
             margin-bottom: 8rem;

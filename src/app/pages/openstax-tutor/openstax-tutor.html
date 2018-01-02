@@ -93,11 +93,11 @@
             <div class="text-content two-cells">
                 <div class="cell">
                     <h1 class="small-screen">{model.featureMatrix.headline}</h1>
-                    <div each="feature in model.featureMatrix.features">
+                    <div class="flexrow" each="feature in model.featureMatrix.features">
                         <i class="{`fa fa-check-circle ${feature.available}`}"></i>
                         {feature.name}
                     </div>
-                    <div class="caption smaller">
+                    <div class="flexrow caption smaller">
                         <i class="fa fa-check-circle spacer"></i>
                         {model.featureMatrix.resourceFinePrint}
                     </div>
