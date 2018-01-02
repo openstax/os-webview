@@ -617,13 +617,14 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
                 flex-basis: 50%;
 
                 &:first-child {
+                    margin-right: 2rem;
                     order: 2;
-                //
-                //     > div {
-                //         display: flex;
-                //         margin-right: 2rem;
-                //         padding-bottom: 1rem;
-                //     }
+                }
+
+                .flexrow {
+                    align-items: flex-start;
+                    display: flex;
+                    padding-bottom: 2rem;
                 }
             }
 
