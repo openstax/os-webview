@@ -25,15 +25,13 @@
                 </div>
                 <div class="headline">
                     <img id="tutor-logo" alt="OpenStax Tutor beta logo" src="/images/openstax-tutor/tutor-logo.svg">
-                    <h1>
-                        {model.frontier.headline}
-                    </h1>
+                    <h1>{model.frontier.headline}</h1>
                     <div class="blurb">{model.frontier.subhead}</div>
-                    <div class="popup-text hidden" data-html="frontier.description" skip="true"></div>
-                    <button type="button" class="activate-popup primary">
+                    <a href="{model.frontier.learnMore.href}" class="btn primary">
                         {model.frontier.learnMore.text}
-                    </button>
+                    </a>
                 </div>
+                <div class="popup-text {model.frontier.popupHidden}" data-html="frontier.description" skip="true"></div>
             </div>
         </section>
         <section id="how-it-works">
@@ -84,11 +82,8 @@
                     <div class="thumbnails">
                         <div each="item in model.whatStudentsGet.images"
                          class="{item === model.whatStudentsGet.currentImage ? 'active' : ''}">
-                            <if condition="item.url.substr(-3) === 'png'">
-                                <img alt="{item.description}" src="{item.url}">
-                            <else>
-                                <video preload="auto" src="{item.url}"></video>
-                            </if>
+                            <span class="big-screen">{item.video_title || 'No title set'}</span>
+                            <span class="small-screen" data-html="whatStudentsGet.images[{$item}].description" skip="true"></span>
                         </div>
                     </div>
                 </div>
@@ -96,8 +91,19 @@
         </section>
         <section id="feature-matrix">
             <div class="text-content two-cells">
+                <div class="cell">
+                    <h1 class="small-screen">{model.featureMatrix.headline}</h1>
+                    <div class="flexrow" each="feature in model.featureMatrix.features">
+                        <i class="{`fa fa-check-circle ${feature.available}`}"></i>
+                        {feature.name}
+                    </div>
+                    <div class="flexrow caption smaller">
+                        <i class="fa fa-check-circle spacer"></i>
+                        {model.featureMatrix.resourceFinePrint}
+                    </div>
+                </div>
                 <div class="cell text-content">
-                    <h1>{model.featureMatrix.headline}</h1>
+                    <h1 class="big-screen">{model.featureMatrix.headline}</h1>
                     <div class="description" data-html="featureMatrix.description" skip="true"></div>
                     <div class="box">
                         <h2>{model.comingSoon.headline}</h2>
@@ -107,16 +113,6 @@
                         <div class="gradient-strip"></div>
                     </div>
                 </div>
-                <div class="cell">
-                    <div each="feature in model.featureMatrix.features">
-                        <i class="{`fa fa-check-circle ${feature.available}`}"></i>
-                        {feature.name}
-                    </div>
-                    <div class="caption smaller">
-                        <i class="fa fa-check-circle spacer"></i>
-                        {model.featureMatrix.resourceFinePrint}
-                    </div>
-                </div>
             </div>
         </section>
         <section id="where-money-goes">
@@ -124,7 +120,28 @@
                 <h1>{model.whereMoneyGoes.headline}</h1>
                 <div class="section-description" data-html="whereMoneyGoes.description" skip="true"></div>
             </div>
-            <img class="boxed" src="/images/openstax-tutor/ten-dollars.svg">
+            <img class="boxed big-screen" src="/images/openstax-tutor/ten-dollars.svg">
+            <div class="boxed small-screen">
+                <img src="/images/openstax-tutor/ten-dollars-mobile@2x.png">
+                <div class="box">
+                    <div class="flexrow">
+                        <div class="dot dot-1"></div>
+                        <div>Pays for our engineers and researchers</div>
+                    </div>
+                    <div class="flexrow">
+                        <div class="dot dot-2"></div>
+                        <div>Pays for authors to keep content current</div>
+                    </div>
+                    <div class="flexrow">
+                        <div class="dot dot-3"></div>
+                        <div>Pays for our Support team</div>
+                    </div>
+                    <div class="flexrow">
+                        <div class="dot dot-4"></div>
+                        <div>Helps us keep the lights on</div>
+                    </div>
+                </div>
+            </div>
         </section>
         <section id="science">
             <div id="particles" skip="true"></div>
