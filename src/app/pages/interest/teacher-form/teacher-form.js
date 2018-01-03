@@ -1,8 +1,10 @@
 import SalesforceForm from '~/controllers/salesforce-form';
 import router from '~/router';
+import {on} from '~/helpers/controller/decorators';
+import $ from '~/helpers/$';
 import salesforce from '~/models/salesforce';
+import FormCheckboxGroup from '~/components/form-checkboxgroup/form-checkboxgroup';
 import FormInput from '~/components/form-input/form-input';
-import FormSelect from '~/components/form-select/form-select';
 import ManagedComponent from '~/helpers/controller/managed-component';
 import ContactInfo from '~/components/contact-info/contact-info';
 import {description as template} from './teacher-form.html';
@@ -27,10 +29,10 @@ export default class TeacherForm extends SalesforceForm {
             return '';
         };
         const inputs = {
-            whichBook: new FormSelect({
+            whichBook: new FormCheckboxGroup({
                 name: '00NU00000053nzR',
                 label: 'Which OpenStax textbook(s) are you interested in adopting?',
-                instructions: 'Select at least one.',
+                instructions: 'Select all that apply.',
                 required: true,
                 multiple: true,
                 validationMessage
@@ -43,14 +45,12 @@ export default class TeacherForm extends SalesforceForm {
                 required: true,
                 validationMessage
             }),
-            partnerContact: new FormSelect({
+            partnerContact: new FormCheckboxGroup({
                 name: '00NU00000055spm',
-                labelHtml: 'Which of our <a href="/partners">partners</a> would' +
-                    ' you like to give permission to contact you about additional' +
-                    ' resources to support our books?',
-                instructions: 'You may select more than one',
+                label: 'Which of our partners would you like to give permission' +
+                    ' to contact you about additional resources to support our books?',
+                instructions: 'Select all that apply.',
                 options: [
-                    {label: 'None', value: ''},
                     {label: 'Online homework partners', value: 'Online homework partners'},
                     {label: 'Adaptive courseware partners', value: 'Adaptive courseware partners'},
                     {label: 'Customization tool partners', value: 'Customization tool partners'}
@@ -60,10 +60,10 @@ export default class TeacherForm extends SalesforceForm {
                 requireNone: true,
                 validationMessage
             }),
-            hearAbout: new FormSelect({
+            hearAbout: new FormCheckboxGroup({
                 name: '00NU00000055spr',
                 label: 'How did you hear about OpenStax?',
-                instructions: 'Select at least one.',
+                instructions: 'Select all that apply.',
                 options: [
                     {value: 'Web search', label: 'Web search'},
                     {value: 'Colleague', label: 'Colleague'},
@@ -72,8 +72,7 @@ export default class TeacherForm extends SalesforceForm {
                     {value: 'Facebook', label: 'Facebook'},
                     {value: 'Twitter', label: 'Twitter'},
                     {value: 'Webinar', label: 'Webinar'},
-                    {value: 'Partner organization', label: 'Partner organization'},
-                    {value: '', label: 'Other (specify below)'}
+                    {value: 'Partner organization', label: 'Partner organization'}
                 ],
                 multiple: true,
                 required: true,
@@ -83,7 +82,9 @@ export default class TeacherForm extends SalesforceForm {
 
         this.model = Object.assign(model, {
             validationMessage,
-            salesforce
+            salesforce,
+            currentSection: 1,
+            showOtherBlank: false
         });
 
         this.inputComponents = Object.keys(inputs)
@@ -91,14 +92,16 @@ export default class TeacherForm extends SalesforceForm {
     }
 
     setBookOptions() {
-        const bookComponent = this.inputComponents.find((c) => c.id === 'whichBook');
-        const options = this.salesforceTitles.map((title) => ({
+        const whichBookComponent = this.inputComponents
+            .find((c) => c.id === 'whichBook')
+            .component;
+
+        whichBookComponent.model.options = this.salesforceTitles.map((title) => ({
             label: title.text,
             value: title.value,
             selected: this.model.defaultTitle === title.value
         }));
-
-        bookComponent.component.setOptions(options);
+        whichBookComponent.update();
     }
 
     onLoaded() {
@@ -142,6 +145,36 @@ export default class TeacherForm extends SalesforceForm {
     doCustomValidation(event) {
         super.doCustomValidation(event);
         this.contactInfo.update();
+    }
+
+    @on('click button.next')
+    nextSection(event) {
+        const invalid = super.doCustomValidation(event);
+
+        if (invalid) {
+            return;
+        }
+        if (!this.contactInfo.checkSchoolName() && this.model.currentSection < 4) {
+            this.model.currentSection += 1;
+            event.preventDefault();
+            this.hasBeenSubmitted = false;
+            this.update();
+            $.scrollTo(this.el);
+        }
+    }
+
+    @on('click button.back')
+    previousSection(event) {
+        this.model.currentSection -= 1;
+        this.update();
+        $.scrollTo(this.el);
+        event.preventDefault();
+    }
+
+    @on('change [type="checkbox"]:not([value]')
+    toggleOtherBlank(event) {
+        this.model.showOtherBlank = event.target.checked;
+        this.update();
     }
 
 }

@@ -25,13 +25,15 @@ $custom-radio-disabled-pip-color:   transparentize(os-color(light-blue), 0.40);
 @if ($custom-radio-pip-size % 2 == 1) { $custom-radio-pip-size: $custom-radio-pip-size - 1; }
 
 
+%radiobutton,
 [type="radio"] {
     -webkit-appearance: none;
     border-radius: 100%;
     display: inline-block;
     height: 2rem;
+    max-width: $custom-radio-size;
     outline: none;
-    width: $custom-radio-size;
+    padding: 0;
 
     // Radio
     // -----

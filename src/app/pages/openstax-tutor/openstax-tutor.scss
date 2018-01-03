@@ -1,40 +1,93 @@
 @import '../../../node_modules/pattern-library/core/pattern-library/headers';
 
-$sea-bottom: rgb(0, 36, 106);
-$sea-top: rgb(6, 71, 119);
-$sickly-green: rgb(168, 189, 122);
-$lighter-gray: rgb(229, 229, 229);
-$snow-top: rgb(242, 242, 242);
-$snow-top-mid: rgb(243, 243, 243);
-$snow-top-wide: rgb(244, 244, 244);
-$snow-bottom: rgb(213, 213, 213);
-$tree-color: #007297;
-$work-top: rgb(0, 128, 158);
-$work-bottom: lighten(rgb(0, 125, 164), 5%);
-$money-green: rgb(122, 188, 125);
 $deep-teal: rgb(0, 114, 151);
+$mid-background: rgb(244, 240, 237);
+$faq-icon-closed: ui-color(form-bg);
+$faq-icon-open: rgb(40, 127, 171);
+$sea-water: rgb(39, 62, 88);
+$sea-bottom: rgb(19, 30, 42);
+$sky: rgb(195, 234, 231);
+
+$dot-1: rgb(29, 104, 140);
+$dot-2: rgb(40, 123, 166);
+$dot-3: rgb(40, 170, 197);
+$dot-4: rgb(148, 221, 228);
+
+$hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
+
+// scss-lint:disable IdSelector
+#main.openstax-tutor-main {
+    z-index: 1;
+}
+
+.openstax-tutor-footer {
+    background-color: $sea-bottom;
+    color: ui-color(white);
+
+    .hero-quote {
+        color: inherit;
+    }
+
+    .social > .btn {
+        background-color: $sea-water;
+    }
+}
 
 .openstax-tutor-page {
-    @include set-font(body-large);
+
+    background-color: ui-color(white);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+
+    h1 {
+        @include width-up-to($phone-max) {
+            @include set-font(h2);
+        }
+    }
+
+    .floating-tools {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        right: 5rem;
+        top: 50%;
+        transform: translateY(-60%);
+        z-index: 5;
+
+        @include width-up-to($phone-max) {
+            display: none;
+        }
+
+        @media (max-height: $phone-max * 1.25) {
+            top: 12rem;
+            transform: none;
+        }
+
+        @media (max-height: $phone-max) {
+            top: 10rem;
+            transform: scale(0.9);
+        }
+
+        > * {
+            margin-bottom: 2rem;
+        }
+    }
 
     .smaller,
     .sticky-footer {
         @include set-font(body-regular);
     }
 
-    h1 {
-        text-align: center;
-    }
-
     .sticky-footer {
-        background-color: rgba(245, 245, 245, 0.9);
-        border-top: thin solid #d5d5d5;
+        background-color: $sea-water;
         bottom: 0;
-        color: #424242;
+        color: text-color(white);
         display: flex;
+        font-weight: inherit;
         justify-content: space-around;
         max-height: 9rem;
-        padding: 1rem;
+        padding: 0.5rem 1rem;
         position: fixed;
         /* property  duration  delay */
         transition: padding  0.1s,
@@ -43,7 +96,7 @@ $deep-teal: rgb(0, 114, 151);
         z-index: 4;
 
         @include wider-than($tablet-max) {
-            padding: 2rem 3rem;
+            padding: $normal-margin 3rem;
         }
 
         &.collapsed {
@@ -64,6 +117,7 @@ $deep-teal: rgb(0, 114, 151);
             flex: 1 1 40%;
             justify-content: center;
             padding-left: 2rem;
+            text-align: right;
             transition: opacity 0.2s 0.1s;
 
             @include wider-than($tablet-max) {
@@ -76,10 +130,15 @@ $deep-teal: rgb(0, 114, 151);
 
             &:first-child {
                 padding-left: 0;
+                text-align: left;
 
                 .btn {
                     background-color: os-color(light-blue);
                 }
+            }
+
+            :first-child {
+                margin-right: $normal-margin;
             }
         }
 
@@ -87,8 +146,9 @@ $deep-teal: rgb(0, 114, 151);
             @include set-font(helper-label);
 
             background-color: $deep-teal;
+            border: 0;
             flex-basis: 20rem;
-            margin-right: 2rem;
+            margin: 0;
             padding: 1rem 3rem;
 
             @include width-up-to($phone-max) {
@@ -111,20 +171,44 @@ $deep-teal: rgb(0, 114, 151);
         }
     }
 
+    button,
+    .btn {
+        @extend %button;
+
+        border-radius: 0.25rem;
+        font-weight: inherit;
+        letter-spacing: inherit;
+        text-transform: none;
+
+        &.primary {
+            @extend %primary;
+
+            display: inline-flex;
+            font-weight: inherit;
+            letter-spacing: inherit;
+        }
+    }
+
     // scss-lint:disable IdSelector
     section {
         overflow: hidden;
         padding: 6rem 0;
         position: relative;
 
+        @include width-up-to($phone-max) {
+            padding: 3rem 2rem;
+        }
+
         h1 {
             color: inherit;
+            margin-top: $normal-margin;
             width: auto;
         }
 
         .background-imagery {
             background-repeat: no-repeat;
             background-size: cover;
+            // background-color: transparent;
             bottom: 0;
             left: 0;
             overflow: hidden;
@@ -132,33 +216,69 @@ $deep-teal: rgb(0, 114, 151);
             right: 0;
             top: 0;
             width: 100%;
-            z-index: -1;
-
-            > img {
-                position: absolute;
-            }
         }
-    }
-
-    .divider {
-        background-color: transparent;
-        pointer-events: none;
-        z-index: 1;
     }
 
     #new-frontier {
         color: os-color(blue);
+        height: 100vh;
+        min-height: 75vw;
         padding-bottom: 0;
         padding-top: 1.5rem;
         z-index: 2;
 
         .background-imagery {
-            background: linear-gradient(#f5f5f5, #febd3e);
+            z-index: -1;
 
-            > img {
-                bottom: -1.7vw;
-                left: -1%;
-                width: 101%;
+            .top-image,
+            .middle-image,
+            .bottom-image {
+                background-position: center bottom;
+                background-repeat: no-repeat;
+                background-size: contain;
+                position: absolute;
+                width: 100%;
+                z-index: -1;
+
+                @include width-up-to($media-content-max) {
+                    background-position: left bottom;
+                    left: calc(40vw - #{$media-content-max} * 0.4);
+                    width: $media-content-max;
+                }
+            }
+
+            .top-image {
+                background-image: url('/images/openstax-tutor/hr-curved-bg.svg');
+                bottom: 35vw;
+                height: 43vw;
+
+                @include width-up-to($media-content-max) {
+                    bottom: calc(0.35 * #{$media-content-max});
+                    height: calc(0.6 * #{$media-content-max});
+                }
+            }
+
+            .middle-image {
+                background-image: url('/images/openstax-tutor/hr-mountain.svg');
+                bottom: 0;
+                height: 60vw;
+                margin: 0 -3vw;
+                width: calc(100% + 10rem);
+
+                @include width-up-to($media-content-max) {
+                    height: calc(0.6 * #{$media-content-max});
+                    width: calc(#{$media-content-max} + 10rem);
+                }
+            }
+
+            .bottom-image {
+                background-image: url('/images/openstax-tutor/dr-cliff.svg');
+                bottom: -2vw;
+                height: 33vw;
+
+                @include width-up-to($media-content-max) {
+                    height: calc(0.33 * #{$media-content-max});
+                }
             }
         }
 
@@ -177,117 +297,79 @@ $deep-teal: rgb(0, 114, 151);
             }
 
             .btn {
-                padding: 1rem 2rem;
-                white-space: nowrap;
-
-                @include width-up-to($phone-max) {
-                    @include set-font(helper-label);
-
-                    white-space: normal;
-                }
+                background-color: os-color(medium-blue);
             }
         }
 
-        .boxed {
+        .text-content {
             align-items: flex-start;
         }
 
+        .headline {
+            margin: 0 auto;
+            margin-left: 10%;
+            max-width: 32em;
+            padding: $normal-margin;
+            padding-right: 10rem;
+        }
+
+        .blurb {
+            margin-bottom: $normal-margin;
+            max-width: 32rem;
+        }
+
+        .btn {
+            cursor: pointer;
+            margin-left: 0;
+        }
+
+        #tutor-logo {
+            width: 28rem;
+        }
+
         h1 {
+            margin-bottom: $normal-margin;
 
             @include wider-than($phone-max) {
                 @include set-font(hero-h1);
             }
-
-            .subhead {
-                @include set-font(h3);
-                margin: 3rem 0;
-                padding: 0;
-
-                @include width-up-to($phone-max) {
-                    text-align: left;
-                }
-            }
         }
 
-        .two-halves {
-            align-items: flex-end;
-            display: flex;
-            width: 100%;
+        .popup-text {
+            background-color: ui-color(white);
+            border-radius: 0.5rem;
+            box-shadow: $hover-shadow;
+            padding: 0 2rem 1rem;
+            position: absolute;
+            right: 14rem;
+            top: 30rem;
+            width: calc(40% - 10rem);
 
-            > * {
-                flex-basis: 50%;
-
-                @include width-up-to($phone-max) {
-                    flex-basis: 100%;
-
-                    &:first-child {
-                        display: none;
-                    }
-                }
-
-                &:nth-child(2) {
-                    padding-bottom: 2vw;
-                }
+            @include width-up-to($tablet-max) {
+                margin-left: calc(10% + #{$normal-margin});
+                margin-right: 10rem;
+                margin-top: $normal-margin;
+                position: static;
+                width: auto;
             }
 
-            .btn {
-                margin-bottom: 6rem;
-                margin-top: 2rem;
-            }
-
-            #moose {
-                margin-left: 3%;
-                margin-right: 5%;
-                max-height: 28vw;
-                width: 100%;
-            }
-
-            #tutor-logo {
-                max-width: 100%;
-                width: calc(20rem + 20%);
-            }
-        }
-
-        + .divider {
-            background-color: red;
-            bottom: 0;
-            height: 0;
-            position: relative;
-            width: 100%;
-            z-index: 2;
-
-            > img {
-                height: 10vw;
-                position: absolute;
-                top: 0;
-                transform: translateY(-55%);
-                width: 100%;
+            @include width-up-to($phone-max) {
+                margin-right: calc(10% + #{$normal-margin});
             }
         }
     }
 
     #how-it-works {
-        color: text-color(white);
-        padding-bottom: 8vw;
+        background-color: $mid-background;
+        overflow: visible;
+        z-index: 3;
 
+        .text-content,
         #how-it-works-target {
-            height: 0;
-            position: absolute;
-            top: -3.5vw;
-        }
-
-        .background-imagery {
-            background: linear-gradient($tree-color 3%, $work-top 15%, $work-top 60%, $work-bottom);
-
-            > img {
-                bottom: -10vw;
-                left: -5%;
-                width: 130%;
-            }
+            margin-top: -10rem;
         }
 
         h1 {
-            color: os-color(gold);
             text-align: center;
 
             @include wider-than($phone-max) {
@@ -296,7 +378,9 @@ $deep-teal: rgb(0, 114, 151);
         }
 
         h2 {
-            @include set-font(h3);
+            @include set-font(h4);
+
+            text-align: center;
         }
 
         .description {
@@ -305,92 +389,86 @@ $deep-teal: rgb(0, 114, 151);
 
         .blurb-table {
             margin: 0 auto;
-            padding: 3rem 0 13vw;
+            padding: 3rem 0;
             width: 100%;
-        }
-
-        .by-4 {
-            display: none;
-
-            @include wider-than($tablet-max) {
-                display: block;
-            }
-
-            .blurb {
-                width: 25%;
-            }
-        }
-
-        .by-2 {
-            display: none;
-
-            @include width-between($phone-max, $tablet-max) {
-                display: block;
-            }
-
-            .blurb {
-                width: 50%;
-            }
-        }
-
-        .by-1 {
-            display: none;
 
             @include width-up-to($phone-max) {
-                display: block;
-                width: 100%;
+                padding-bottom: 0;
             }
+        }
 
-            .blurb {
-                display: block;
-                width: 100%;
-            }
+
+        .boxed {
+            align-items: stretch;
+            display: flex;
+            flex-flow: row wrap;
+            width: 100%;
+
         }
 
         .blurb {
-            display: table-cell;
-            padding: 0 1.5rem;
-            text-align: center;
+            align-items: center;
+            display: flex;
+            flex-basis: 100%;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 0 $normal-margin;
 
-            > * {
-                margin: 0;
-                padding: 0;
+            @include wider-than($phone-max) {
+                flex-basis: 50%;
             }
 
-            > img {
-                max-height: 8rem;
-                max-width: 40%;
+            @include wider-than($tablet-max) {
+                flex-basis: 25%;
             }
-        }
 
+            .icon {
+                align-items: center;
+                display: flex;
+                height: 8rem;
+                width: 10rem;
 
-        .icon-row {
-            display: table-row;
-            margin: 0 auto;
+                > img {
+                    max-height: 100%;
+                    max-width: 100%;
+                }
+            }
+
+            > h3 {
+                @include set-font(h4);
+
+                color: os-color(blue);
+            }
+
+            .smaller {
+                height: 4em;
+                text-align: center;
+            }
         }
     }
 
     #what-students-get {
-        color: text-color(white);
+        // Would be simple background color, as the background image scales, it
+        // reveals some of the background.
+        background-image: linear-gradient(to top, ui-color(white), ui-color(white) 8vw, $mid-background 8vw);
 
         .background-imagery {
-            background: linear-gradient($sea-top, $sea-bottom);
+            background-image: url('/images/openstax-tutor/dm-trees.svg');
+            background-position: bottom center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            margin: 7% -4%;
+            width: calc(100% + 12rem);
+        }
 
-            >img {
-                max-height: 50%;
-                max-width: 30%;
-                top: 10%;
-
-                &:nth-child(2) {
-                    max-height: 30%;
-                    right: 0;
-                    top: 20%;
-                }
-            }
+        .carousel {
+            z-index: 1;
         }
 
         h1 {
             margin-bottom: 3rem;
+
+            text-align: center;
         }
 
         .description,
@@ -399,12 +477,15 @@ $deep-teal: rgb(0, 114, 151);
         }
 
         .viewer {
-            align-items: center;
-            display: flex;
-            justify-content: center;
-            margin: 1.5rem auto;
-            max-width: calc(110vh - 17rem);
-            min-width: 68rem;
+            background-image: url('/images/openstax-tutor/dm-mac@2x.png');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            height: auto;
+            margin: 3.5rem auto -12%;
+            padding: 1.5% 18.6% 15.6% 13%;
+            pointer-events: none;
+            position: relative;
+            z-index: 3;
 
             i {
                 cursor: pointer;
@@ -413,7 +494,9 @@ $deep-teal: rgb(0, 114, 151);
             }
 
             .viewport {
-                margin: 1.5rem 3rem 0;
+                height: 100%;
+                margin-left: 5.5%;
+                margin-top: 3%;
                 overflow-x: hidden;
                 width: 100%;
             }
@@ -429,37 +512,74 @@ $deep-teal: rgb(0, 114, 151);
                     opacity: 0;
                 }
             }
+
+            .caption {
+                background-color: ui-color(white);
+                box-shadow: $hover-shadow;
+                padding: 2 * $normal-margin;
+                position: absolute;
+                right: 0;
+                text-align: left;
+                top: 20%;
+                transform: translateX(30%);
+                width: 20%;
+
+                @include width-up-to($tablet-max) {
+                    display: none;
+                }
+            }
         }
 
 
         .thumbnails {
-            display: flex;
+            display: inline-flex;
             height: 8rem;
             justify-content: space-between;
-            margin: 3rem 0 8rem;
+            margin: 3rem auto 8rem;
+            max-width: 100%;
             overflow-x: auto;
-            overflow-y: hidden;
             transition: 0.5s ease-in-out;
 
-            >div {
+            @include width-up-to($tablet-max) {
+                height: auto;
+            }
+
+            > div {
+                align-items: center;
+                background-color: ui-color(white);
+                border: thin solid ui-color(form-border);
+                border-radius: 0.4rem;
                 cursor: pointer;
+                display: flex;
+                font-weight: bold;
                 height: 100%;
-                max-width: 23rem;
-                padding-left: 3rem;
+                justify-content: center;
+                margin: 0 $normal-margin;
+                min-width: 13rem;
+                padding: $normal-margin;
+                width: 18rem;
 
-                &.active img,
-                &.active video {
-                    border: 0.2rem solid os-color(light-blue);
+                @include width-up-to($tablet-max) {
+                    min-width: 50vw;
+
+                    .big-screen {
+                        display: none;
+                    }
                 }
 
-                &:first-child {
-                    padding-left: 0;
+                &.active,
+                &.active {
+                    border-color: os-color(light-blue);
+                    box-shadow: $hover-shadow;
                 }
 
-                img,
-                video {
-                    height: 100%;
-                    max-width: 20rem;
+                .small-screen {
+                    display: none;
+
+                    @include width-up-to($tablet-max) {
+                        display: inline;
+                        font-weight: normal;
+                    }
                 }
             }
         }
@@ -467,298 +587,216 @@ $deep-teal: rgb(0, 114, 151);
     }
 
     #feature-matrix {
-        color: text-color(white);
         z-index: 0;
 
-        .background-imagery {
-            background: linear-gradient(0deg,
-                os-color(gold),
-                rgba(13, 192, 220, 1) calc(8% + 5vw),
-                rgba(11, 166, 201, 1) calc(24% + 5vw),
-                rgba(7, 120, 167, 1) calc(45% + 2vw),
-                rgba(2, 57, 122, 1) 78%,
-                $sea-bottom);
-            overflow-y: visible;
+        .two-cells {
+            align-items: flex-start;
+            display: flex;
+            flex-flow: row nowrap;
 
-            > img {
+            @include width-up-to($phone-max) {
+                display: block;
+
+                .big-screen {
+                    display: none;
+                }
+            }
+
+            .small-screen {
+                display: none;
+                margin-left: 2rem;
+                margin-right: 2rem;
+
+                @include width-up-to($phone-max) {
+                    display: block;
+                }
+            }
+
+            .cell {
+                align-items: flex-start;
+                flex-basis: 50%;
+
                 &:first-child {
-                    height: calc(5vw + 10rem);
-                    left: 11%;
-                    top: 0;
+                    margin-right: 2rem;
+                    order: 2;
                 }
 
-                &:nth-child(2) {
-                    bottom: calc(12vw + 3rem);
-                    height: calc(3vw + 5rem);
-                    left: 12%;
+                .flexrow {
+                    align-items: flex-start;
+                    display: flex;
+                    padding-bottom: 2rem;
+                }
+            }
+
+            .fa-check-circle {
+                color: text-color(footer-header);
+                font-size: 2.4rem;
+                margin: 0.3rem 2rem;
+
+                &.true {
+                    color: os-color(green);
                 }
 
-                &:nth-child(3) {
-                    bottom: 20vw;
-                    height: calc(3vw + 5rem);
-                    right: 8%;
+                &.spacer {
+                    visibility: hidden;
+                }
+            }
+
+            .box {
+                @include set-font(body-regular);
+
+                border: thin solid ui-color(form-border);
+                box-shadow: $hover-shadow;
+                margin-top: 4rem;
+                padding: (2 * $normal-margin);
+                position: relative;
+
+                h2 {
+                    @include set-font(h4);
+
+                    color: os-color(blue);
+                    margin-top: 0;
+                }
+
+                .bottom-edge {
+                    margin: 0 (-2 * $normal-margin) -3.6rem;
+                    width: calc(100% + (2 * $normal-margin));
+                }
+
+                .gradient-strip {
+                    background-image: linear-gradient(to right, os-color(green) 0%, os-color(light-blue) 70%);
+                    height: 0.5rem;
+                    margin: 0 (-2 * $normal-margin);
+                    transform: translateY(2 * $normal-margin);
+                    width: calc(100% + (2 * $normal-margin));
+                }
+
+                .stamp {
+                    position: absolute;
+                    right: $normal-margin;
+                    top: $normal-margin;
+                    width: 6rem;
+                }
+            }
+
+            .future-text {
+                line-height: 1.6;
+
+                p {
+                    margin-top: 0;
+                    max-width: calc(100% - 4rem);
                 }
             }
         }
 
         h1 {
+            @extend %text-h2;
+
             margin-bottom: 3rem;
-        }
-
-        .description {
-            text-align: center;
-        }
-
-        table {
-            margin: 3rem 0 0;
-            width: 100;
-
-            .wide-body {
-                display: none;
-
-                @include wider-than($tablet-max) {
-                    display: table-row-group;
-                }
-            }
-
-            .narrow-body {
-                display: table-row-group;
-
-                @include wider-than($tablet-max) {
-                    display: none;
-                }
-            }
+            margin-top: 1rem;
         }
 
         .caption {
             @include set-font(helper-label);
-            color: os-color(blue);
+
+            color: text-color(helper);
+            display: flex;
             margin: 0.5rem 0 1rem 0.5rem;
             text-align: left;
             width: 100%;
         }
-
-        td {
-            background-color: os-color(blue);
-            border: thin solid transparent;
-            padding: 1rem 3rem;
-
-            @media (min-width: 1200px) {
-                padding-left: 5rem;
-            }
-
-            &:nth-child(even) {
-                padding-left: 3rem;
-                width: 30%;
-
-                @include wider-than($tablet-max) {
-                    width: 15%;
-                }
-            }
-
-            .description.smaller {
-                @include set-font(helper-label);
-            }
-
-            .key {
-                display: flex;
-                justify-content: space-around;
-                width: 100%;
-
-                > div {
-                    align-items: center;
-                    display: flex;
-                    flex-basis: 20rem;
-                    justify-content: center;
-                }
-            }
-
-            .center-image {
-                display: flex;
-                justify-content: center;
-            }
-
-            img {
-                margin: 1rem;
-                max-height: 4rem;
-                max-width: 4rem;
-                vertical-align: middle;
-            }
-        }
-
-        .availability {
-            color: os-color(blue);
-
-            .book-covers {
-                display: flex;
-                justify-content: center;
-
-                img {
-                    height: 8rem;
-                    margin: 1.5rem;
-                    width: 8rem;
-                }
-            }
-        }
-
-        .divider {
-            height: 10vw;
-
-            > img {
-                left: -2%;
-                position: relative;
-                width: 105%;
-            }
-        }
     }
 
     #where-money-goes {
-        padding-bottom: 20vw;
-        padding-top: 0;
-
-        .background-imagery {
-            background: linear-gradient($snow-top 80%, $snow-bottom 98%, ui-color(white));
-            top: 0;
-
-            @media (min-width: 1400px) {
-                background: linear-gradient($snow-top-mid 80%, $snow-bottom);
-            }
-
-            @media (min-width: 1700px) {
-                background: linear-gradient($snow-top-wide 80%, $snow-bottom);
-            }
-
-            > img {
-                bottom: 0;
-                left: -2%;
-                width: 106%;
-            }
-        }
-
-        h1,
-        .section-description {
-            color: os-color(blue);
-            margin-bottom: 3rem;
+        .text-content {
+            margin-bottom: 5%;
             text-align: center;
         }
 
-        .color-bar {
-            background-color: os-color(gold);
-            height: 40vw;
-            position: relative;
-            width: 100%;
-
-            @include wider-than($tablet-max) {
-                height: 30.8rem;
-                width: 74rem;
+        .big-screen {
+            @include width-up-to($phone-max) {
+                display: none;
             }
+        }
 
-            > div {
-                bottom: 0;
-                left: 0;
-                position: absolute;
-                top: 0;
-                z-index: 0;
-            }
+        .small-screen {
+            display: none;
 
-            .segment {
-                &:nth-child(1) {
-                    background-color: $sickly-green;
-                    width: 90%;
-                }
-
-                &:nth-child(2) {
-                    background-color: $money-green;
-                    width: 80%;
-                }
-
-                &:nth-child(3) {
-                    background-color: os-color(light-blue);
-                    width: 50%;
-                }
-            }
-
-            .content {
-                @include set-font(h1);
-                align-items: center;
+            @include width-up-to($phone-max) {
                 display: flex;
-                justify-content: center;
+                margin: 0;
+                padding: 0;
                 width: 100%;
 
-                @include width-up-to($phone-max) {
-                    @include set-font(h2);
-                }
-
-                .circle {
+                .flexrow {
                     align-items: center;
-                    background-color: rgba(ui-color(white), 0.1);
-                    border-radius: 50%;
                     display: flex;
-                    height: calc(5rem + 12vw);
-                    justify-content: center;
-                    width: calc(5rem + 12vw);
+                    height: 2.5rem;
+                }
 
-                    @include wider-than($tablet-max) {
-                        height: 15rem;
-                        width: 15rem;
-                    }
+                .box {
+                    box-shadow: $hover-shadow;
+                    font-size: 75%;
+                    padding: 2rem $normal-margin;
+                }
+
+                .dot {
+                    border-radius: 0.6rem;
+                    height: 1.2rem;
+                    margin-right: 1rem;
+                    width: 1.2rem;
+                }
+
+                .dot-1 {
+                    background-color: $dot-1;
+                }
+
+                .dot-2 {
+                    background-color: $dot-2;
+                }
+
+                .dot-3 {
+                    background-color: $dot-3;
+                }
+
+                .dot-4 {
+                    background-color: $dot-4;
                 }
             }
         }
+    }
 
-        .breakdown {
-            display: flex;
-            flex-wrap: wrap;
-            width: 100%;
-
-            @include wider-than($tablet-max) {
-                width: 74rem;
-            }
+    #science {
+        .text-content {
+            text-align: center;
         }
+    }
 
-        .box-and-description {
-            align-items: center;
-            display: flex;
-            flex: 0 0 50%;
-            margin-top: 3rem;
+    #particles {
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
 
-            .box {
-                @include set-font(h3);
+    .divider {
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 1;
 
-                align-items: center;
-                display: flex;
-                flex: 0 0 6rem;
-                height: 6rem;
-                justify-content: center;
-                letter-spacing: normal;
-            }
-
-            &:first-child .box {
-                background-color: os-color(light-blue);
-            }
-
-            &:nth-child(2) .box {
-                background-color: $money-green;
-            }
-
-            &:nth-child(3) .box {
-                background-color: $sickly-green;
-            }
-
-            &:last-child .box {
-                background-color: os-color(gold);
-            }
-
-            .description {
-                line-height: normal;
-                margin: 1rem;
-            }
+        > img {
+            margin: 0 -3vw;
         }
-
     }
 
     #faq {
-        background: linear-gradient(to top, os-color(light-blue) 0, ui-color(white) 5px, ui-color(white));
+        background-image: url('/images/openstax-tutor/ocean-top.jpg');
+        background-position: center top;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        color: text-color(white);
+        margin-top: calc(-2rem - 2vmin); // keeps divider and background images overlapped
 
         h1 {
             margin-bottom: 8rem;
@@ -772,12 +810,14 @@ $deep-teal: rgb(0, 114, 151);
 
         .questions {
             align-items: flex-start;
-            color: os-color(blue);
+            background-color: ui-color(white);
+            color: text-color(normal);
+            padding: 0;
         }
 
         .qna {
-            // margin-bottom: 2rem;
-            margin-left: 8rem;
+            border-bottom: thin solid ui-color(form-border);
+            padding: $normal-margin 4rem;
             width: 100%;
 
             @include width-up-to($phone-max) {
@@ -794,6 +834,7 @@ $deep-teal: rgb(0, 114, 151);
         .toggled-item {
             align-items: center;
             display: flex;
+            justify-content: space-between;
             width: 100%;
 
             &.hidden {
@@ -802,69 +843,49 @@ $deep-teal: rgb(0, 114, 151);
         }
 
         .question {
+            @include set-font(body-large);
+
             display: inline-block;
-            font-weight: bold;
+            font-weight: 500;
         }
 
         .toggler {
             align-items: center;
-            background-color: os-color(gold);
-            color: text-color(white);
+            background-color: $faq-icon-closed;
+            color: inherit;
             display: flex;
             flex: 0 0 1.25em;
             height: 1.25em;
             justify-content: center;
             margin-right: 1.5rem;
-            padding: 0;
+            padding: 1rem 0.4rem 1.4rem;
 
-            span {
-                padding-bottom: 0.2rem;
-                padding-left: 0.2rem;
+            &.open {
+                background-color: $faq-icon-open;
+                color: ui-color(white);
             }
         }
 
-        .placeholder {
-            visibility: hidden;
-        }
-
-        .divider {
-            height: 10vw;
-            width: 100%;
-
-            @include width-between($phone-max, $tablet-max) {
-                height: 8vw;
-            }
-
-            @include width-up-to($phone-max) {
-                height: 3vw;
-            }
-
-            > img {
-                left: -0.9%;
-                position: relative;
-                width: 101%;
-                z-index: 3;
-            }
-        }
     }
 
     #learn-more {
-        background: linear-gradient(to top, ui-color(footer-bg) 0%, gold 1%, os-color(light-blue) 9vw);
-        height: 60rem;
-        padding: 4vw 0 0;
+        background-color: $sea-water;
+        background-image: url('/images/openstax-tutor/ocean-bottom.svg');
+        background-position: left calc(100% + 0.4rem);
+        background-repeat: no-repeat;
+        background-size: cover;
+        color: text-color(white);
+        min-height: 25vw;
+        padding-bottom: 4rem;
+        text-align: center;
 
         h1 {
-            color: os-color(blue);
-            margin: 0;
-            padding: 0;
-        }
+            @include set-font(h2);
 
-        .subhead {
-            display: flex;
-            justify-content: center;
-            padding-bottom: 0;
-            padding-top: 1rem;
-            transform: scale(1.5);
+            color: os-color(gold);
+            font-weight: 500;
+            margin-top: 0;
+            padding: 0;
         }
 
         .buttons-row {
@@ -872,18 +893,22 @@ $deep-teal: rgb(0, 114, 151);
             justify-content: center;
             width: 100%;
 
-            @include width-up-to($phone-max) {
-                display: block;
+            @include width-up-to($tablet-max) {
+                align-items: center;
+                flex-direction: column;
             }
         }
 
         .button-box {
             align-items: center;
+            background-color: ui-color(white);
+            color: text-color(normal);
             display: flex;
             flex: 0 0 50%;
             flex-direction: column;
             margin: 3rem 1.5rem 0;
             max-width: 32rem;
+            padding: 4rem;
             text-align: center;
 
             > * {
@@ -896,24 +921,15 @@ $deep-teal: rgb(0, 114, 151);
                 padding: 1rem 3rem;
             }
         }
-
-        .divider {
-            bottom: 0;
-            left: -4%;
-            pointer-events: none;
-            position: absolute;
-            transform: translateY(37vw);
-            width: 108%;
-        }
     }
 
     .btn {
         color: text-color(white);
+        font-weight: 500;
         padding: 1em 2em;
     }
 
     .white-on-blue {
         background-color: os-color(blue);
-        color: text-color(white);
     }
 }

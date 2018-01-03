@@ -104,6 +104,10 @@
         }
     }
 
+    .strips {
+        position: static;
+    }
+
     .wrapper {
         background-color: ui-color(form-bg);
         min-height: 13rem;

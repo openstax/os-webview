@@ -49,12 +49,13 @@ $button-size: 2.8rem;
         }
 
         .container {
-            align-items: flex-start;
+            align-items: center;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             height: 100%;
             justify-content: space-between;
             margin: 0 auto;
+            padding: 0 $normal-margin;
 
             @include wider-than($tablet-max) {
                 align-items: center;
@@ -193,20 +194,13 @@ $button-size: 2.8rem;
     }
 
     .expand {
-        -moz-appearance: none;
-        -webkit-appearance: none;
-        appearance: none;
         background: transparent;
         border: 0;
         border-radius: none;
         box-shadow: none;
         cursor: pointer;
-        display: inline-block;
         order: 2;
         padding: 0;
-        position: absolute;
-        right: 1.5rem;
-        top: 2rem;
         transition: 0.3s;
         user-select: none;
 
@@ -218,6 +212,12 @@ $button-size: 2.8rem;
                 margin-left: 2rem;
                 order: 3;
             }
+        }
+
+        &[aria-expanded="true"] {
+            position: absolute;
+            right: 2rem;
+            top: 0;
         }
 
         &:hover,

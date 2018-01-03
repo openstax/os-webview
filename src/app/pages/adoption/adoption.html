@@ -1,8 +1,9 @@
 <template args="model">
-    <div if="model.introHeading" class="text-content subhead">
+    <div if="model.introHeading" class="hero">
         <h1>{model.introHeading}</h1>
         <span data-html="introDescription" skip="true"></span>
     </div>
+    <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
     <div class="text-content">
         <plug-in data-id="selectedRole" skip="true"></plug-in>
     </div>
