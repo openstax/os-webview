@@ -4,4 +4,7 @@ source ./script/bootstrap || exit 111
 
 try npm run-script build
 
-try "$(npm bin)/node-sass" --source-map true --source-map-contents true --output dist/styles/ src/styles/main.scss
+try "$(npm bin)/node-sass" --source-map true --source-map-contents true \
+--output dist/styles/ \
+--include-path ./node_modules \
+src/styles/main.scss

@@ -46,7 +46,8 @@ function compileStyles(src, dest) {
         .pipe(pi.sass({
             includePaths: [
                 './styles',
-                './src/styles'
+                './src/styles',
+                './node_modules'
             ]
         }))
         .pipe(pi.autoprefixer(config.browsers))
@@ -93,7 +94,10 @@ gulp.task(compileAllStyles);
 gulp.task(compileChangedStyles);
 gulp.task(compileMainStyle);
 
-gulp.task('styles', scsslint);
+gulp.task('styles', gulp.series(
+    scsslint,
+    compileAllStyles
+));
 
 gulp.task('styles:watch', () => {
     gulp.watch([
