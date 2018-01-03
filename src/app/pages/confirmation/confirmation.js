@@ -10,13 +10,6 @@ import {description as template} from './confirmation.html';
 const applyLink = `${settings.accountHref}/faculty_access/apply?r=${encodeURIComponent(settings.apiOrigin)}`;
 
 const models = {
-    adoption: {
-        headline: 'Thank you! You\'re a textbook hero.',
-        adoptionQuestion: 'Want to tell us about another OpenStax book you\'re using?',
-        adoptionUrl: '/adoption',
-        adoptionLinkText: 'Report another adopted textbook',
-        studentImage: 'student-chemistry.png'
-    },
     compCopy: {
         headline: 'Thank you for requesting a download from iBooks.',
         adoptionQuestion: 'Have you adopted an OpenStax book?',
@@ -45,8 +38,8 @@ const models = {
     },
     interest: {
         headline: 'Thank you',
-        adoptionQuestion: 'Add email@openstax.org to your address book. You will' +
-        ' receive an email soonish.',
+        adoptionQuestion: 'Please add info@openstax.org to your address book. You\'ll' +
+        ' receive an email from us soon.',
         adoptionUrl: '/subjects',
         adoptionLinkText: 'Back to the books',
         studentImage: 'student-chemistry.png'
