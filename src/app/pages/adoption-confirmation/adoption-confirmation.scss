@@ -22,7 +22,7 @@
 
     .form-checkboxgroup,
     .form-radiogroup {
-        margin: $normal-margin 0;
+        margin: $normal-margin 0 (2 * $normal-margin);
 
         > label + :not(label) {
             margin-top: $normal-margin;
@@ -30,17 +30,19 @@
     }
 
     .field-label {
+        @include set-font(body-regular);
+        color: text-color(normal);
         display: block;
-        font-weight: bold;
     }
 
     .hint {
         font-style: italic;
     }
 
-    .control-group {
+    .radio-control-group {
         flex: 1 1 30%;
         height: auto;
+        max-width: 10rem;
 
         > label {
             align-items: center;
@@ -81,6 +83,8 @@
 
     .form {
         @extend %form;
+
+        background-color: ui-color(default);
     }
 
     button {

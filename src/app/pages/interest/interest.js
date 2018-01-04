@@ -50,9 +50,9 @@ export default class InterestForm extends Controller {
             const options = roles.map((opt) => ({label: opt.display_name, value: opt.salesforce_name}));
 
             this.regions.roleSelector.attach(new FormSelect({
-                placeholder: 'I am a',
+                instructions: 'I am a',
                 validationMessage: () => '',
-                instructions: 'Please select one',
+                placeholder: 'Please select one',
                 options
             }));
         });

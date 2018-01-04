@@ -5,6 +5,10 @@
         padding-top: inherit;
     }
 
+    .text-content {
+        @extend %text-content;
+    }
+
     .subhead {
         padding-bottom: 2rem;
     }
@@ -31,14 +35,17 @@
         margin: 0;
     }
 
-    plug-in {
-        display: block;
-        margin-bottom: $normal-margin;
-    }
-
     .flexrow {
         display: flex;
-        margin: 0 -0.5rem;
+        margin-top: 4rem;
+    }
+
+    .form-checkboxgroup {
+        margin-bottom: 5rem;
+    }
+
+    .form-input > .control-group {
+        margin-bottom: 5rem;
     }
 
     button {
@@ -51,11 +58,6 @@
         &.secondary {
             @extend %secondary;
         }
-    }
-
-    .field-label {
-        display: block;
-        font-weight: bold;
     }
 
     .hint {

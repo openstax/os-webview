@@ -1,8 +1,9 @@
 <template args="model">
     <label if="model.label" class="field-label">{model.label}</label>
+    <label if="model.longLabel" class="field-long-label">{model.longLabel}</label>
     <label if="model.instructions" class="hint">{' ' + model.instructions}</label>
     <div class="invalid-message">{model.validationMessage(model.name)}</div>
-    <div each="item in model.options" class="control-group">
+    <div each="item in model.options" class="checkbox-control-group">
         <label>
             <if condition="item.value">
                 <input type="checkbox"

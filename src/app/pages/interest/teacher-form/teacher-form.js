@@ -31,7 +31,7 @@ export default class TeacherForm extends SalesforceForm {
         const inputs = {
             whichBook: new FormCheckboxGroup({
                 name: '00NU00000053nzR',
-                label: 'Which OpenStax textbook(s) are you interested in adopting?',
+                longLabel: 'Which OpenStax textbook(s) are you interested in adopting?',
                 instructions: 'Select all that apply.',
                 required: true,
                 multiple: true,
@@ -39,7 +39,7 @@ export default class TeacherForm extends SalesforceForm {
             }),
             howMany: new FormInput({
                 name: '00NU00000052VId',
-                label: 'How many students do you teach each semester?',
+                longLabel: 'How many students do you teach each semester?',
                 type: 'number',
                 min: '1',
                 required: true,
@@ -47,7 +47,7 @@ export default class TeacherForm extends SalesforceForm {
             }),
             partnerContact: new FormCheckboxGroup({
                 name: '00NU00000055spm',
-                label: 'Which of our partners would you like to give permission' +
+                longLabel: 'Which of our partners would you like to give permission' +
                     ' to contact you about additional resources to support our books?',
                 instructions: 'Select all that apply.',
                 options: [
@@ -62,7 +62,7 @@ export default class TeacherForm extends SalesforceForm {
             }),
             hearAbout: new FormCheckboxGroup({
                 name: '00NU00000055spr',
-                label: 'How did you hear about OpenStax?',
+                longLabel: 'How did you hear about OpenStax?',
                 instructions: 'Select all that apply.',
                 options: [
                     {value: 'Web search', label: 'Web search'},
