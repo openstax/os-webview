@@ -51,7 +51,7 @@ $pulse-color: #f5d01b;
         color: text-color(helper);
         display: block;
         left: - $normal-margin;
-        padding: $normal-margin;
+        padding: 0 $normal-margin;
         position: absolute;
         top: 50%;
         transform: translate(-100%, -50%);
