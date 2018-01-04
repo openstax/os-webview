@@ -250,11 +250,16 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
             .top-image {
                 background-image: url('/images/openstax-tutor/hr-curved-bg.svg');
                 bottom: 35vw;
-                height: 43vw;
+                height: 40vw;
 
                 @include width-up-to($media-content-max) {
                     bottom: calc(0.35 * #{$media-content-max});
-                    height: calc(0.6 * #{$media-content-max});
+                    height: calc(0.39 * #{$media-content-max});
+                }
+
+                @include width-up-to($phone-max) {
+                    background-position: 40%;
+                    bottom: 35vh;
                 }
             }
 
@@ -268,6 +273,10 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
                 @include width-up-to($media-content-max) {
                     height: calc(0.6 * #{$media-content-max});
                     width: calc(#{$media-content-max} + 10rem);
+                }
+
+                @include width-up-to($tablet-max) {
+                    height: 80vh;
                 }
             }
 
@@ -290,6 +299,7 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
             @include width-up-to($phone-max) {
                 display: block;
+                margin-left: $normal-margin;
             }
 
             > :first-child {
@@ -298,6 +308,11 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
             .btn {
                 background-color: os-color(medium-blue);
+
+                @include width-up-to($phone-max) {
+                    display: inline-flex;
+                    margin-left: 3rem;
+                }
             }
         }
 
@@ -311,11 +326,25 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
             max-width: 32em;
             padding: $normal-margin;
             padding-right: 10rem;
+
+            @include width-up-to($phone-max) {
+                max-width: calc(100% - #{$normal-margin});
+                padding-right: 0;
+            }
+        }
+
+        .headline-text {
+            // background-color: rgba($sky, 0.66);
+            background-image: linear-gradient(to bottom, rgba($sky, 0), rgba($sky, 0.2) 30%, rgba($sky, 0.8) 60%);
+            border-radius: 0.5rem;
+            margin-left: -$normal-margin;
+            padding: $normal-margin;
         }
 
         .blurb {
             margin-bottom: $normal-margin;
-            max-width: 32rem;
+            max-width: calc(100% - 5rem);
+            width: 32rem;
         }
 
         .btn {
@@ -324,6 +353,7 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
         }
 
         #tutor-logo {
+            max-width: 100%;
             width: 28rem;
         }
 
@@ -367,6 +397,10 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
         .text-content,
         #how-it-works-target {
             margin-top: -10rem;
+
+            @include width-up-to($phone-max) {
+                margin-top: 0;
+            }
         }
 
         h1 {

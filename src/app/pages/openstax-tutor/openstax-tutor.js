@@ -73,10 +73,6 @@ export default class Tutor extends CMSPageController {
             },
             popupHidden: 'hidden'
         };
-        setTimeout(() => {
-            this.model.frontier.popupHidden = '';
-            this.update();
-        }, 4000);
         Object.assign(this.model.howItWorks, {
             headline: data.section_2_heading,
             subhead: data.section_2_subheading,
@@ -172,6 +168,12 @@ export default class Tutor extends CMSPageController {
                 (newYOffset < 100) || (distanceFromBottom < 100) ? 'collapsed' : '';
             this.update();
             lastYOffset = newYOffset;
+
+            // Popup appears on scroll
+            if (this.model.frontier.popupHidden !== '') {
+                this.model.frontier.popupHidden = '';
+                this.update();
+            }
         }, 80);
 
         window.addEventListener('scroll', this.handleScroll);
