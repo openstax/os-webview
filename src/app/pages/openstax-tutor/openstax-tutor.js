@@ -186,6 +186,10 @@ export default class Tutor extends CMSPageController {
         if (mainSection) {
             mainSection.classList.add('openstax-tutor-main');
         }
+
+        const pulsingDot = new PulsingDot({html: data.pop_up_text});
+
+        this.regions.floatingTools.append(pulsingDot);
     }
 
     onLoaded() {
@@ -194,11 +198,8 @@ export default class Tutor extends CMSPageController {
             const sectionIds = Array.from(this.el.querySelectorAll('section[id]'))
                 .map((el) => el.id);
             const sectionNavigator = new SectionNavigator(sectionIds);
-            const pulsingDot = new PulsingDot();
-
 
             this.regions.floatingTools.attach(sectionNavigator);
-            this.regions.floatingTools.append(pulsingDot);
 
             if (document.getElementById('particles')) {
                 window.particlesJS('particles', particleConfig);
