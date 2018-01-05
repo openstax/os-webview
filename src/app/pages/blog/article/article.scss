@@ -130,14 +130,14 @@
                 @include wider-than($tablet-max) {
                     @include set-font(h2);
 
-                    margin: 2rem 0 1rem;
+                    margin: -0.5rem 0 1rem;
                 }
             }
 
             .body {
                 @include set-font(body-large);
 
-                height: 15rem;
+                height: 13rem;
                 margin-bottom: 1rem;
                 max-height: 15rem;
                 overflow: hidden;
