@@ -14,4 +14,14 @@
     .unpadded {
         padding: 0;
     }
+
+    .col {
+        min-width: 30rem;
+
+        > label {
+            display: block;
+            height: $form-element-height;
+            margin-bottom: $form-element-height;
+        }
+    }
 }

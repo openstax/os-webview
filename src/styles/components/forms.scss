@@ -27,30 +27,6 @@ form {
         width: 15rem;
     }
 
-    .row {
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: space-between;
-        margin: 0 auto;
-        padding: 8rem 0;
-
-        &.top-of-form {
-            padding-top: 0;
-        }
-
-        .col {
-            display: inline-block;
-            flex: 1 1 32rem;
-            max-width: 50%; // important for ellipsis on inputs
-            padding: 0 1.5rem;
-
-            @include width-up-to($enough-for-two-columns) {
-                flex: 1 1 auto;
-                max-width: 100%;
-            }
-        }
-    }
-
     .control-group {
         margin-bottom: 3rem;
 

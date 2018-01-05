@@ -83,6 +83,13 @@
                 @include width-up-to($phone-max) {
                     flex-basis: 100%;
                 }
+
+                &:hover,
+                &:focus,
+                &:active {
+                    background-color: darken(os-color(gold), 6%);
+                }
+
             }
 
             .boxed {
@@ -169,16 +176,19 @@
         width: 100%;
 
         .col {
-            flex-basis: calc(50% - 2rem);
+            @extend %griditem;
+            @extend %basis-6;
 
-            @include width-up-to($phone-max) {
-                flex-basis: 100%;
+            > label {
+                display: block;
+                height: $form-element-height;
+                margin-bottom: $form-element-height;
+
+                &.two-fields {
+                    height: 2 * $form-element-height;
+                }
             }
         }
-    }
-
-    .btn {
-        padding: 2rem;
     }
 
     .cta-container {
@@ -187,8 +197,9 @@
     }
 
     .cta {
-        background-color: os-color(orange);
-        color: text-color(white);
+        @extend %button%primary;
+
+        display: inline-flex;
         margin-bottom: 7rem;
     }
 
@@ -203,11 +214,5 @@
     .testing-only {
         padding-left: 1.5rem;
         width: 100%;
-    }
-
-    form .boxed {
-        @extend %form;
-
-        max-width: 100%;
     }
 }
