@@ -1,3 +1,4 @@
+const path = require('path');
 const gulp = require('gulp');
 const webpack = require('webpack-stream');
 const argv = require('yargs').argv;
@@ -189,7 +190,6 @@ function compileScriptsBabel() {
         // since: gulp.lastRun('compileScriptsBabel')
     })
     .pipe(pi.sourcemaps.init({loadMaps: true}))
-    .pipe(pi.sourcemaps.init())
     .pipe(pi.replace(/@VERSION@/g, config.version))
     .pipe(pi.replace(/@ENV@/g, config.env))
     .pipe(pi.babel({
@@ -200,6 +200,11 @@ function compileScriptsBabel() {
             'transform-decorators-legacy',
             'transform-object-assign'
         ]
+    }))
+    // prefix the sourcemaps with with '../src/' so webpack can find them
+    .pipe(pi.sourcemaps.mapSources(function(sourcePath, file) {
+      const rel = path.relative(path.dirname(`${config.dest}/${sourcePath}`), `${config.src}/${sourcePath}`)
+      return rel;
     }))
     .pipe(pi.sourcemaps.write('.'))
     .pipe(gulp.dest(config.dest));

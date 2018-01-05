@@ -1,3 +1,4 @@
+const path = require('path');
 const gulp = require('gulp');
 const config = require('../config');
 const pi = require('gulp-load-plugins')({
@@ -6,10 +7,15 @@ const pi = require('gulp-load-plugins')({
 const webpack = require('./webpack');
 
 function templates() {
-    return gulp.src(`${config.src}/app/**/*.html`, {
+    const configSrcApp = `${config.src}/app`
+    const configDestApp = `${config.dest}/app`
+    return gulp.src(`${configSrcApp}/**/*.html`, {
         since: gulp.lastRun('templates')
     })
-    .pipe(pi.sourcemaps.init())
+    .pipe(pi.sourcemaps.init({loadMaps: true}))
+    .pipe(pi.rename((uri) => {
+        uri.extname = '.html.js';
+    }))
     .pipe(pi.htmlmin({
         collapseWhitespace: true
     }))
@@ -20,11 +26,14 @@ function templates() {
         compact: false,
         presets: ['es2015']
     }))
-    .pipe(pi.rename((uri) => {
-        uri.extname = '.html.js';
+    // prefix the sourcemaps with with '../src/' so webpack can find them
+    .pipe(pi.sourcemaps.mapSources(function(sourcePath, file) {
+      const sourcePathHtml = sourcePath.replace('.html.js', '.html');
+      const rel = path.relative(path.dirname(`${configDestApp}/${sourcePath}`), `${configSrcApp}/${sourcePathHtml}`)
+      return rel;
     }))
     .pipe(pi.sourcemaps.write('.'))
-    .pipe(gulp.dest(`${config.dest}/app`));
+    .pipe(gulp.dest(`${configDestApp}`));
 }
 
 gulp.task(templates);

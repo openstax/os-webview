@@ -1,5 +1,5 @@
-@import 'mixins/responsive';
-@import '../../node_modules/pattern-library/core/pattern-library/headers';
+@import '../mixins/responsive';
+@import 'pattern-library/core/pattern-library/headers';
 
 .quote-bucket .image {
     background-repeat: no-repeat;

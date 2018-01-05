@@ -2,4 +2,9 @@
 cd "$(dirname "$0")/.." || exit 111
 source ./script/bootstrap || exit 111
 
-npm run-script build || exit 2
+try npm run-script build
+
+try "$(npm bin)/node-sass" --source-map true --source-map-contents true \
+--output dist/styles/ \
+--include-path ./node_modules \
+src/styles/main.scss

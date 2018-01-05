@@ -12,46 +12,50 @@ function webpack() {
     const plugins = isDevelopment ?
         [] : //[new HardSourceWebpackPlugin()] :
         [
-            new webpack2.optimize.UglifyJsPlugin(),
+            new webpack2.optimize.UglifyJsPlugin({ sourceMap: true }),
             new webpack2.optimize.MinChunkSizePlugin({minChunkSize: 16000}),
         ];
 
     return gulp.src([
         `${config.dest}/app/main.js`
-    ])
-    .pipe(webpackStream({
-        // watch: true, // This causes gulp to freeze and not serve
-        output: {
-            path: path.resolve(config.dest),
-            filename: "bundle.js",
-            publicPath: "/", // for where to request chunks when the SinglePageApp changes the URL
-            chunkFilename: "chunk-[chunkhash].js"
-        },
-        externals: {
-            settings: 'SETTINGS'
-        },
-        module: {
-            rules: [
-                {
-                    test: /\.css$/,
-                    loader: 'ignore-loader'
-                },
-                {
-                    test: /\.map$/,
-                    loader: 'ignore-loader'
-                }
-            ]
-        },
-        plugins,
-        resolve: {
-            alias: {
-                "settings": path.resolve(config.dest, "settings.js"),
-                "~": path.resolve(config.dest, "app/"),
-            }
-        },
-        devtool: 'source-map'
+    ]).pipe(webpackStream({
+      // watch: true, // This causes gulp to freeze and not serve
+      externals: {
+          settings: 'SETTINGS'
+      },
+      output: {
+        path: path.resolve(config.dest),
+        filename: "bundle.js",
+        publicPath: "/", // for where to request chunks when the SinglePageApp changes the URL
+        chunkFilename: "chunk-[chunkhash].js"
+      },
+      plugins,
+      resolve: {
+        alias: {
+          "settings": path.resolve(config.dest, "settings.js"),
+          "~": path.resolve(config.dest, "app/"),
+        }
+      },
+      module: {
+        rules: [
+          {
+            test: /\.js$/,
+            use: ["source-map-loader"],
+            enforce: "pre"
+          },
+          {
+              test: /\.css$/,
+              loader: 'ignore-loader'
+          },
+          {
+              test: /\.map$/,
+              loader: 'ignore-loader'
+          }
+        ]
+      },
+      devtool: "source-map"
     }))
-    .pipe(pi.sourcemaps.write('.'))
+    // .pipe(pi.sourcemaps.write('.'))
     .pipe(gulp.dest(config.dest));
 }
 

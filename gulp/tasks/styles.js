@@ -42,11 +42,12 @@ function scsslint() {
 
 function compileStyles(src, dest) {
     return src
-        .pipe(pi.sourcemaps.init())
+        .pipe(pi.sourcemaps.init({loadMaps: true}))
         .pipe(pi.sass({
             includePaths: [
                 './styles',
-                './src/styles'
+                './src/styles',
+                './node_modules'
             ]
         }))
         .pipe(pi.autoprefixer(config.browsers))
