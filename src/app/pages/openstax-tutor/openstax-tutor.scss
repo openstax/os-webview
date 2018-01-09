@@ -568,16 +568,12 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
         .thumbnails {
             display: inline-flex;
-            height: 8rem;
+            height: auto;
             justify-content: space-between;
             margin: 3rem auto 8rem;
             max-width: 100%;
             overflow-x: auto;
             transition: 0.5s ease-in-out;
-
-            @include width-up-to($tablet-max) {
-                height: auto;
-            }
 
             > div {
                 align-items: center;
@@ -586,7 +582,6 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
                 border-radius: 0.4rem;
                 cursor: pointer;
                 display: flex;
-                font-weight: bold;
                 height: 100%;
                 justify-content: center;
                 margin: 0 $normal-margin;
@@ -594,27 +589,10 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
                 padding: $normal-margin;
                 width: 18rem;
 
-                @include width-up-to($tablet-max) {
-                    min-width: 50vw;
-
-                    .big-screen {
-                        display: none;
-                    }
-                }
-
                 &.active,
                 &.active {
                     border-color: os-color(light-blue);
                     box-shadow: $hover-shadow;
-                }
-
-                .small-screen {
-                    display: none;
-
-                    @include width-up-to($tablet-max) {
-                        display: inline;
-                        font-weight: normal;
-                    }
                 }
             }
         }

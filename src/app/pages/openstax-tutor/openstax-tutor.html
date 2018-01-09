@@ -77,15 +77,11 @@
                          <else>
                              <img alt="no selected image">
                          </if>
-                         <div class="caption smaller" data-html="whatStudentsGet.currentImage.description"
-                          if="model.whatStudentsGet.currentImage" skip="true">
-                         </div>
                     </div>
                     <div class="thumbnails">
                         <div each="item in model.whatStudentsGet.images"
                          class="{item === model.whatStudentsGet.currentImage ? 'active' : ''}">
-                            <span class="big-screen">{item.title || 'No title set'}</span>
-                            <span class="small-screen" data-html="whatStudentsGet.images[{$item}].description" skip="true"></span>
+                            <span data-html="whatStudentsGet.images[{$item}].description" skip="true"></span>
                         </div>
                     </div>
                 </div>
