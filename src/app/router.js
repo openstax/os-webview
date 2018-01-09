@@ -33,7 +33,6 @@ const PAGES = [
     'partners/*path',
     'subjects',
     'subjects/*path',
-    'support',
     'technology'
 ];
 
