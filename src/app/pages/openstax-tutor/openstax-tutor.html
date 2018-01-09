@@ -33,7 +33,7 @@
                         {model.frontier.learnMore.text}
                     </a>
                 </div>
-                <div class="popup-text {model.frontier.popupHidden}" data-html="frontier.description" skip="true"></div>
+                <div class="popup-text text-content {model.frontier.popupHidden}" data-html="frontier.description" skip="true"></div>
             </div>
         </section>
         <section id="how-it-works">
@@ -84,7 +84,7 @@
                     <div class="thumbnails">
                         <div each="item in model.whatStudentsGet.images"
                          class="{item === model.whatStudentsGet.currentImage ? 'active' : ''}">
-                            <span class="big-screen">{item.video_title || 'No title set'}</span>
+                            <span class="big-screen">{item.title || 'No title set'}</span>
                             <span class="small-screen" data-html="whatStudentsGet.images[{$item}].description" skip="true"></span>
                         </div>
                     </div>
@@ -96,8 +96,14 @@
                 <div class="cell">
                     <h1 class="small-screen">{model.featureMatrix.headline}</h1>
                     <div class="flexrow" each="feature in model.featureMatrix.features">
-                        <i class="{`fa fa-check-circle ${feature.available}`}"></i>
-                        {feature.name}
+                        <i class="{`fa fa-check-circle ${feature.available || Boolean(feature.alternate_text)}`}"></i>
+                        <div>
+                            {feature.name}
+                            <if condition="feature.alternate_text">
+                                <br>
+                                <span>{feature.alternate_text}</span>
+                            </if>
+                        </div>
                     </div>
                     <div class="flexrow caption smaller">
                         <i class="fa fa-check-circle spacer"></i>
@@ -171,11 +177,7 @@
                         <div class="answer" data-html="faq.items[{$item}].answer" skip="true"></div>
                     </div>
                 </div>
-                <div class="see-more smaller qna">
-                    <a href="http://openstax.force.com/support?l=en_US&c=Products%3ATutor">
-                        {model.faq.knowledgeBaseCopy}
-                    </a>
-                </div>
+                <div class="see-more smaller qna" data-html="faq.knowledgeBaseCopy" skip="true"></div>
             </div>
         </section>
         <section id="learn-more">
