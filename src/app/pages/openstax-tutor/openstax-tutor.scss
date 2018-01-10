@@ -50,7 +50,7 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
         display: flex;
         flex-direction: column;
         position: fixed;
-        right: 5rem;
+        right: 3.5rem;
         top: 50%;
         transform: translateY(-60%);
         z-index: 5;
@@ -176,6 +176,7 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
         @extend %button;
 
         border-radius: 0.25rem;
+        cursor: pointer; // because pattern-library has default; remove when fixed
         font-weight: inherit;
         letter-spacing: inherit;
         text-transform: none;
@@ -192,7 +193,7 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
     // scss-lint:disable IdSelector
     section {
         overflow: hidden;
-        padding: 6rem 0;
+        padding: 6rem 8.5rem 6rem 0;
         position: relative;
 
         @include width-up-to($phone-max) {
@@ -316,17 +317,19 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
             align-items: flex-start;
         }
 
-        .headline {
-            margin: 0 auto;
-            margin-left: 10%;
-            max-width: 32em;
-            padding: $normal-margin;
-            padding-right: 10rem;
+        .headline-and-popup {
+            align-items: flex-end;
+            display: flex;
 
-            @include width-up-to($phone-max) {
-                max-width: calc(100% - #{$normal-margin});
-                padding-right: 0;
+            @include width-up-to($tablet-max) {
+                align-items: stretch;
+                flex-direction: column;
             }
+        }
+
+        .headline {
+            margin: 0;
+            padding: $normal-margin;
         }
 
         .headline-text {
@@ -366,26 +369,9 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
             border-radius: 0.5rem;
             box-shadow: $hover-shadow;
             padding: 0 2rem 1rem;
-            position: absolute;
-            right: 14rem;
-            top: 30rem;
-            width: calc(40% - 13rem);
 
-            @include wider-than($media-content-max) {
-                left: calc(50vw - #{$media-content-max} / 2 + 48rem);
-                width: 40rem;
-            }
-
-            @include width-up-to($tablet-max) {
-                margin-left: calc(10% + #{$normal-margin});
-                margin-right: 10rem;
-                margin-top: $normal-margin;
-                position: static;
-                width: auto;
-            }
-
-            @include width-up-to($phone-max) {
-                margin-right: calc(10% + #{$normal-margin});
+            &.hidden {
+                display: none;
             }
         }
     }
@@ -605,7 +591,7 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
         .two-cells {
             align-items: flex-start;
             display: flex;
-            flex-flow: row nowrap;
+            flex-flow: row wrap;
 
             @include width-up-to($phone-max) {
                 display: block;
@@ -627,9 +613,13 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
             .cell {
                 align-items: flex-start;
-                flex-basis: 50%;
+                flex-basis: 30rem;
+                flex-grow: 0;
+                padding-bottom: 3rem;
 
                 &:first-child {
+                    flex-basis: 24rem;
+                    flex-grow: 1;
                     margin-right: 2rem;
                     order: 2;
                 }
@@ -781,6 +771,7 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
     #science {
         .text-content {
+            position: relative;
             text-align: center;
         }
     }

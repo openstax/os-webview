@@ -1,5 +1,5 @@
 const settings = {
-    accountHref: 'https://accounts-qa.openstax.org',
+    accountHref: 'https://accounts-dev.openstax.org',
     analyticsID: 'UA-73668038-1',
     analyticsID2: 'UA-73668038-2',
     apiOrigin: 'https://oscms-dev.openstax.org',
