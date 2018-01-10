@@ -10,7 +10,7 @@ export default class FormattedAs extends Controller {
         this.template = format === 'feature' ? featureTemplate : synopsisTemplate;
         this.format = format;
         this.model = Object.assign({
-            coverUrl: article.article_image || 'http://placehold.it/370x240',
+            coverUrl: article.article_image || 'https://placehold.it/370x240',
             articleSlug: article.slug
         }, article);
         this.model.date = formatDate(article.date);
