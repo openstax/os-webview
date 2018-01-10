@@ -91,7 +91,8 @@ export default class Tutor extends CMSPageController {
             description: data.section_3_paragraph,
             images: data.marketing_videos.map((entry) => ({
                 url: entry.video_url || entry.video_file || entry.image_url || entry.image,
-                description: entry.video_image_blurb
+                description: entry.video_image_blurb,
+                title: entry.video_title
             }))
         });
         this.model.whatStudentsGet.currentImage = this.model.whatStudentsGet.images[0];

@@ -221,11 +221,19 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
     #new-frontier {
         color: os-color(blue);
-        height: 100vh;
-        min-height: 75vw;
+        height: calc(60vmax + 30rem);
+        min-height: 100vh;
         padding-bottom: 0;
         padding-top: 1.5rem;
         z-index: 2;
+
+        @include width-up-to($media-content-max) {
+            height: 100vmax;
+        }
+
+        @include width-up-to($tablet-max) {
+            height: calc(90vmax + 20rem);
+        }
 
         .background-imagery {
             z-index: -1;
@@ -248,35 +256,23 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
             }
 
             .top-image {
-                background-image: url('/images/openstax-tutor/hr-curved-bg.svg');
-                bottom: 35vw;
-                height: 40vw;
-
-                @include width-up-to($media-content-max) {
-                    bottom: calc(0.35 * #{$media-content-max});
-                    height: calc(0.39 * #{$media-content-max});
-                }
-
-                @include width-up-to($phone-max) {
-                    background-position: 40%;
-                    bottom: 35vh;
-                }
+                background-color: $sky;
+                height: 100%;
+                left: 0;
+                width: 100%;
             }
 
             .middle-image {
                 background-image: url('/images/openstax-tutor/hr-mountain.svg');
                 bottom: 0;
                 height: 60vw;
-                margin: 0 -3vw;
-                width: calc(100% + 10rem);
-
-                @include width-up-to($media-content-max) {
-                    height: calc(0.6 * #{$media-content-max});
-                    width: calc(#{$media-content-max} + 10rem);
-                }
+                left: -6vw;
+                width: calc(107vw + 10rem);
 
                 @include width-up-to($tablet-max) {
                     height: 80vh;
+                    left: calc(-15rem - 15vw);
+                    width: calc(50vw + 80rem);
                 }
             }
 
@@ -373,7 +369,12 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
             position: absolute;
             right: 14rem;
             top: 30rem;
-            width: calc(40% - 10rem);
+            width: calc(40% - 13rem);
+
+            @include wider-than($media-content-max) {
+                left: calc(50vw - #{$media-content-max} / 2 + 48rem);
+                width: 40rem;
+            }
 
             @include width-up-to($tablet-max) {
                 margin-left: calc(10% + #{$normal-margin});
@@ -567,16 +568,12 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
         .thumbnails {
             display: inline-flex;
-            height: 8rem;
+            height: auto;
             justify-content: space-between;
             margin: 3rem auto 8rem;
             max-width: 100%;
             overflow-x: auto;
             transition: 0.5s ease-in-out;
-
-            @include width-up-to($tablet-max) {
-                height: auto;
-            }
 
             > div {
                 align-items: center;
@@ -585,7 +582,6 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
                 border-radius: 0.4rem;
                 cursor: pointer;
                 display: flex;
-                font-weight: bold;
                 height: 100%;
                 justify-content: center;
                 margin: 0 $normal-margin;
@@ -593,27 +589,10 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
                 padding: $normal-margin;
                 width: 18rem;
 
-                @include width-up-to($tablet-max) {
-                    min-width: 50vw;
-
-                    .big-screen {
-                        display: none;
-                    }
-                }
-
                 &.active,
                 &.active {
                     border-color: os-color(light-blue);
                     box-shadow: $hover-shadow;
-                }
-
-                .small-screen {
-                    display: none;
-
-                    @include width-up-to($tablet-max) {
-                        display: inline;
-                        font-weight: normal;
-                    }
                 }
             }
         }
