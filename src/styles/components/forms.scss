@@ -55,7 +55,7 @@ form {
         color: text-color(normal);
         display: flex;
         font-weight: bold;
-        height: 2rem;
+        min-height: 2rem;
     }
 
     fieldset {
