@@ -38,6 +38,7 @@ form {
 
     .control-group,
     .radio-control-group {
+        break-inside: avoid;
 
         > label {
             align-items: center;
