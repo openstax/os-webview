@@ -122,7 +122,7 @@ You must configure your web server to host the files in the `dist` directory tha
 
 ## Configuration
 
-The `settings.js` file can be used to modify a number of site-wide configurations.
+The `settings.js` file can be used to modify a number of site-wide configurations. To edit settings for the development server (for example, to use a local copy of the [CMS](https://github.com/openstax/openstax-cms)), make a copy of `settings-example.js` and rename to `settings.js` at the root level.
 
 
 ## Upgrading Dependencies

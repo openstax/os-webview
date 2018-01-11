@@ -1,5 +1,6 @@
 import settings from 'settings';
 import linkHelper from '~/helpers/link';
+import userModel, {sfUserModel, accountsModel} from '~/models/usermodel';
 
 const RELATIVE_TO_ROOT = /^\//;
 
@@ -209,6 +210,12 @@ class Analytics {
             window.ga('create', settings.analyticsID, 'auto');
             window.ga('create', settings.analyticsID2, 'auto', {name: 'ga2'});
         }
+
+        accountsModel.load().then((accountResponse) => {
+            const role = accountResponse.self_reported_role;
+
+            window.ga('send', 'pageview', {'dimension1': role});
+        });
 
         document.addEventListener('submit', (e) => {
             if (typeof e.target !== 'object' || typeof e.target.action !== 'string') {
