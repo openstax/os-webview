@@ -126,7 +126,7 @@ export default class Errata extends Controller {
                 'Other'
             ],
             sourceTypes: [
-                'Textbook', 'iBooks version', 'Instructor solution manual',
+                'Textbook', 'iBooks version', 'Kindle', 'Instructor solution manual',
                 'Student solution manual', 'Other'
             ],
             subnotes: {'Textbook': 'includes print, PDF, and web view'},
