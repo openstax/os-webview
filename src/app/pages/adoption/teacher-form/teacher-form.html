@@ -21,7 +21,6 @@
             >
                 <h2>Which book are you currently using?</h2>
                 <br>
-                <div class="invalid-message">{model.validationMessage('00NU00000053nzR')}</div>
                 <div each="subject in model.subjects">
                     <label class="field-label">{subject}</label>
                     <div class="{model.booksBySubject(subject).length > 1 ? 'two-columns' : ''}">
@@ -31,6 +30,7 @@
                     </div>
                     <br>
                 </div>
+                <div class="invalid-message">{model.validationMessage('00NU00000053nzR')}</div>
                 <div class="hint">
                     Don't see your book? Fill out our <a href="/interest">interest form</a>.
                 </div>
