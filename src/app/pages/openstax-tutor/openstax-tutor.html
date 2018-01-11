@@ -80,10 +80,16 @@
                              <img alt="no selected image">
                          </if>
                     </div>
+                    <div if="model.whatStudentsGet.currentImage" class="video-description">
+                        <div class="content" skip="true"
+                            data-html="whatStudentsGet.currentImage.description">
+                            {model.whatStudentsGet.currentImage.description}
+                        </div>
+                    </div>
                     <div class="thumbnails">
                         <div each="item in model.whatStudentsGet.images"
                          class="{item === model.whatStudentsGet.currentImage ? 'active' : ''}">
-                            <span data-html="whatStudentsGet.images[{$item}].description" skip="true"></span>
+                            <span data-html="whatStudentsGet.images[{$item}].title" skip="true"></span>
                         </div>
                     </div>
                 </div>

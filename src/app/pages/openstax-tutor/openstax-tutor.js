@@ -73,6 +73,14 @@ export default class Tutor extends CMSPageController {
             },
             popupHidden: 'hidden'
         };
+        // Magic: turn learnmore link into simple hash link
+        const lm = this.model.frontier.learnMore;
+        const hashLink = lm.href.replace(/.*\/openstax-tutor/, '');
+        const targetLink = `${hashLink}-target`;
+        const targetEl = document.getElementById(targetLink);
+
+        lm.href = targetEl ? targetLink : hashLink;
+
         Object.assign(this.model.howItWorks, {
             headline: data.section_2_heading,
             subhead: data.section_2_subheading,
