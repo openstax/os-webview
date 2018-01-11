@@ -26,6 +26,11 @@
         width: 47rem;
     }
 
+    .invalid-message.offset-up {
+        margin-bottom: 1rem;
+        margin-top: -1rem;
+    }
+
     h2 {
         @include set-font(h4);
 

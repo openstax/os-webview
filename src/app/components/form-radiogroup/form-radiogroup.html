@@ -1,7 +1,6 @@
 <template args="model">
     <label if="model.label" class="field-label">{model.label}</label>
     <label if="model.longLabel" class="field-long-label">{model.longLabel}</label>
-    <div class="invalid-message">{model.validationMessage(model.name)}</div>
     <div class="{model.classes ? model.classes.join(' ') : ''}">
         <div each="item in model.options" class="radio-control-group">
             <label>
@@ -15,4 +14,5 @@
             </label>
         </div>
     </div>
+    <div class="invalid-message">{model.validationMessage(model.name)}</div>
 </template>
