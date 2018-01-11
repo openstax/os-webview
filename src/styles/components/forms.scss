@@ -55,7 +55,7 @@ form {
         color: text-color(normal);
         display: flex;
         font-weight: bold;
-        height: 2rem;
+        min-height: 2rem;
     }
 
     fieldset {
@@ -158,7 +158,13 @@ form {
 
     }
 
+    // Turn off invalid-highlighting box-shadow in FF
+    :not(output):invalid {
+        box-shadow: none;
+    }
+
     &.submitted {
+        :not(output),
         [type="text"],
         [type="url"],
         [type="number"],
@@ -166,6 +172,7 @@ form {
         [type="date"],
         textarea,
         .selected-button {
+
             &:invalid {
                 background-color: ui-color(error-bg);
                 border: thin solid ui-color(error-border);
@@ -178,6 +185,14 @@ form {
                     color: text-color(error);
                     display: block;
                 }
+            }
+        }
+
+        [type="checkbox"],
+        [type="radio"] {
+            &:invalid {
+                border: thin solid ui-color(error-border);
+                box-shadow: 0.1rem 0.1rem 0.2rem 0.2rem ui-color(error-border);
             }
         }
     }
