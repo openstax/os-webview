@@ -7,7 +7,7 @@ form {
     label {
         @include set-font(helper-label);
 
-        color: text-color(helper);
+        color: text-color(normal);
     }
 
     .subhead {
@@ -27,28 +27,34 @@ form {
         width: 15rem;
     }
 
-    .row {
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: space-between;
-        margin: 0 auto;
-        padding: 8rem 0;
+    .control-group {
+        margin-bottom: 3rem;
 
-        &.top-of-form {
-            padding-top: 0;
+        .invalid-message {
+            height: 0;
+            overflow: visible;
         }
+    }
 
-        .col {
-            display: inline-block;
-            flex: 1 1 32rem;
-            max-width: 50%; // important for ellipsis on inputs
-            padding: 0 1.5rem;
+    .control-group,
+    .radio-control-group {
 
-            @include width-up-to($enough-for-two-columns) {
-                flex: 1 1 auto;
-                max-width: 100%;
+        > label {
+            align-items: center;
+            display: flex;
+
+            [type="radio"],
+            [type="checkbox"] {
+                margin: 0.5rem 0.5rem 0.5rem 0;
             }
         }
+    }
+
+    .field-label {
+        color: text-color(normal);
+        display: flex;
+        font-weight: bold;
+        height: 2rem;
     }
 
     fieldset {
@@ -61,7 +67,6 @@ form {
 
         color: text-color(error);
         display: block;
-        font-style: italic;
     }
 
     &.labeled-inputs {
@@ -116,6 +121,12 @@ form {
         display: block;
     }
 
+    .field-long-label {
+        @include set-font(body-regular);
+        color: text-color(normal);
+        display: block;
+    }
+
     [type="text"],
     [type="url"],
     [type="number"],
@@ -137,14 +148,36 @@ form {
         white-space: nowrap;
         width: 100%;
 
+        // These come from pattern-library, but it has no placeholders or macros for them
         &:focus {
-            border-bottom: solid os-color(light-blue) 0.2rem;
+            border: thin solid os-color(light-blue);
+            box-shadow: 0 0 4px 0 rgba(os-color(light-blue), 0.5);
             outline: 0;
         }
 
-        &.visited:invalid {
-            border-bottom: solid ui-color(error-border) 0.2rem;
-            outline: 0;
+    }
+
+    &.submitted {
+        [type="text"],
+        [type="url"],
+        [type="number"],
+        [type="email"],
+        [type="date"],
+        textarea,
+        .selected-button {
+            &:invalid {
+                background-color: ui-color(error-bg);
+                border: thin solid ui-color(error-border);
+                box-shadow: none;
+                color: text-color(error);
+                outline: 0;
+
+                ~ .invalid-message {
+                    @extend %text-helper-label;
+                    color: text-color(error);
+                    display: block;
+                }
+            }
         }
     }
 

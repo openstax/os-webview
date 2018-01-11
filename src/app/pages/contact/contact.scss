@@ -64,14 +64,21 @@
             height: auto;
             resize: none;
         }
+
+        > label {
+            display: block;
+            height: $form-element-height;
+            margin-bottom: $form-element-height;
+
+            &.auto-height {
+                height: auto;
+            }
+        }
     }
 
     .btn {
         float: none;
-    }
-
-    .labeled-control {
-        margin-bottom: 2rem;
+        margin: 0;
     }
 
     address {

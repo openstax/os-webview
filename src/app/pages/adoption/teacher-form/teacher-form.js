@@ -27,7 +27,7 @@ export default class TeacherForm extends SalesforceForm {
         const validationMessage = (name) => {
             const field = this.el && this.el.querySelector(`[name="${name}"]`);
 
-            if (this.hasBeenSubmitted && field) {
+            if (this.model && this.model.hasBeenSubmitted && field) {
                 return field.validationMessage;
             }
             return '';
@@ -37,7 +37,7 @@ export default class TeacherForm extends SalesforceForm {
                 name: '00NU00000052VId',
                 type: 'number',
                 min: '1',
-                label: 'How many students are using this book in your courses this semester?',
+                longLabel: 'How many students are using this book in your courses this semester?',
                 required: true,
                 validationMessage
             }),
@@ -64,7 +64,7 @@ export default class TeacherForm extends SalesforceForm {
             }),
             adoptionStatus: new FormRadioGroup({
                 name: '00NU00000055spw',
-                label: 'How are you using your book?',
+                longLabel: 'How are you using your book?',
                 options: salesforce.adoption(['adopted', 'recommended'])
                     .map((opt) => ({label: opt.text, value: opt.value})),
                 validationMessage,
@@ -87,7 +87,7 @@ export default class TeacherForm extends SalesforceForm {
             }),
             featureMe: new FormRadioGroup({
                 name: '00NU00000055sq6',
-                label: 'Are you interested in having your OpenStax experience' +
+                longLabel: 'Are you interested in having your OpenStax experience' +
                     ' featured on our website, social media, and/or emails?',
                 options: FormSelect.YES_NO_OPTIONS,
                 required: true,
@@ -97,7 +97,7 @@ export default class TeacherForm extends SalesforceForm {
             }),
             contactMe: new FormRadioGroup({
                 name: '00NU00000055sqB',
-                label: 'May we contact you about opportunities to participate in' +
+                longLabel: 'May we contact you about opportunities to participate in' +
                     ' future pilots or research studies?',
                 options: FormSelect.YES_NO_OPTIONS,
                 required: true,
@@ -174,13 +174,15 @@ export default class TeacherForm extends SalesforceForm {
     nextSection(event) {
         const invalid = super.doCustomValidation(event);
 
+        this.model.hasBeenSubmitted = true;
         if (invalid) {
+            this.update();
             return;
         }
         if (!this.contactInfo.checkSchoolName() && this.model.currentSection < 4) {
             this.model.currentSection += 1;
             event.preventDefault();
-            this.hasBeenSubmitted = false;
+            this.model.hasBeenSubmitted = false;
             this.update();
             $.scrollTo(this.el);
         }

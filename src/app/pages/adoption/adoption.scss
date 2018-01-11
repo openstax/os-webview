@@ -39,7 +39,7 @@
 
     .flexrow {
         display: flex;
-        margin: 0 -0.5rem;
+        margin-top: 4rem;
     }
 
     button {
@@ -54,28 +54,20 @@
         }
     }
 
-    .field-label {
-        display: block;
-        font-weight: bold;
-    }
-
     [data-id="form"] {
         display: block;
         min-height: 20rem;
     }
 
-    .control-group > label {
-        align-items: center;
-        display: flex;
-
-        [type="radio"],
-        [type="checkbox"] {
-            margin: 0.5rem 0.5rem 0.5rem 0;
-        }
+    .hint {
+        @include set-font(helper-label);
+        color: text-color(helper);
+        font-style: italic;
     }
 
-    .hint {
-        font-style: italic;
+    .two-columns {
+        column-count: 2;
+        margin: $normal-margin 0;
     }
 
     .form-checkboxgroup > label + :not(label),

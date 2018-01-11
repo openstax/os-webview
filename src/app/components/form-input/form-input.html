@@ -1,6 +1,7 @@
 <template args="model">
     <div class="control-group">
-        <label class="field-label">{model.label}</label>
+        <label if="model.label" class="field-label">{model.label}</label>
+        <label if="model.longLabel" class="field-long-label">{model.longLabel}</label>
         <input name="{model.name}" type="{model.type}" value="{model.value}"
          pattern="{model.pattern}" min="{model.min}" max="{model.max}"
          placeholder="{model.placeholder}"
