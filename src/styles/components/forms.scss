@@ -158,7 +158,13 @@ form {
 
     }
 
+    // Turn off invalid-highlighting box-shadow in FF
+    :not(output):invalid {
+        box-shadow: none;
+    }
+
     &.submitted {
+        :not(output),
         [type="text"],
         [type="url"],
         [type="number"],
@@ -166,6 +172,7 @@ form {
         [type="date"],
         textarea,
         .selected-button {
+
             &:invalid {
                 background-color: ui-color(error-bg);
                 border: thin solid ui-color(error-border);
