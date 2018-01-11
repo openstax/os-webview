@@ -213,7 +213,7 @@ class Analytics {
 
         accountsModel.load().then((accountResponse) => {
             const role = accountResponse.self_reported_role;
-            
+
             window.ga('send', 'pageview', {'dimension1': role});
         });
 
