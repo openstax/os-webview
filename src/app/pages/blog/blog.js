@@ -128,8 +128,8 @@ export default class Blog extends CMSPageController {
         router.navigate(href, {
             model: this.model,
             path: '/blog',
-            x: history.state ? history.state.x : 0,
-            y: history.state ? history.state.y : 0
+            x: 0,
+            y: 0
         });
     }
 
