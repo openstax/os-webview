@@ -90,11 +90,13 @@ export default class Subjects extends CMSPageController {
             }
         };
         window.addEventListener('scroll', this.setFilterClass, false);
+        document.getElementById('main').classList.add('subjects-main');
     }
 
     onClose() {
         window.removeEventListener('popstate', this.filterSubjectsEvent);
         window.removeEventListener('scroll', this.setFilterClass, false);
+        document.getElementById('main').classList.remove('subjects-main');
     }
 
 }

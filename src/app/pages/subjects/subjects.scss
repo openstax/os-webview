@@ -1,6 +1,11 @@
 @import 'mixins/coming-soon';
 @import 'pattern-library/core/pattern-library/headers';
 
+// scss-lint:disable IdSelector
+#main.subjects-main {
+    z-index: 1;
+}
+
 .subjects-page {
 
     .subject {
