@@ -34,41 +34,29 @@ export default class Select extends Controller {
         };
 
         this.keyHandler = (e) => {
-            const k = String.fromCharCode(e.keyCode).toLowerCase();
-            const listEl = this.el.querySelector('.options');
-            const items = listEl.querySelectorAll('.option');
-
-            // Scroll selection to next element beginning with key
-            const listTop = listEl.getBoundingClientRect().top;
-            const target = Array.from(items)
-                .filter((el) => el.textContent.toLowerCase().substr(0, 1) === k)
-                .sort((a, b) => {
-                    const aDiff = a.getBoundingClientRect().top - listTop;
-                    const bDiff = b.getBoundingClientRect().top - listTop;
-                    const sTop = listEl.scrollTop;
-
-                    if (aDiff <= 0 && bDiff <= 0 || aDiff > 0 && bDiff > 0) {
-                        return aDiff - bDiff;
-                    }
-                    return bDiff - aDiff;
-                });
-
-            if (e.key === 'Enter') {
-                // Pick the topmost element
-                const notScrolledPast = Array.from(items)
-                    .filter((el) => el.getBoundingClientRect().top - listTop >= 0);
-
-                if (notScrolledPast.length) {
-                    notScrolledPast[0].click();
-                }
+            if (e.key.length > 1) {
+                this.operateByKey(e);
                 return;
             }
+            const k = String.fromCharCode(e.keyCode).toLowerCase();
+            const options = Array.from(this.select.options).map((o) => o.textContent.toLowerCase());
 
-            if (target.length > 0) {
-                const itemTop = target.shift().getBoundingClientRect().top;
-                const scrollDiff = itemTop - listTop;
+            if (isNaN(this.activeIndex)) {
+                this.activeIndex = -1;
+            }
 
-                listEl.scrollTop += scrollDiff;
+            // Look for a match after the current active item, but if not found
+            // see if there's one before
+            let foundIndex = options.findIndex((text, i) =>
+                this.activeIndex < i && text[0] === k);
+
+            if (foundIndex === -1) {
+                foundIndex = options.findIndex((text, i) => text[0] === k);
+            }
+
+            if (foundIndex > -1) {
+                this.activeIndex = foundIndex;
+                this.setActiveItem();
             }
         };
         this.keyHandlerActive = false;
@@ -137,6 +125,35 @@ export default class Select extends Controller {
         this.select.dispatchEvent($.newEvent('change'));
     }
 
+    setActiveItem() {
+        const option = this.select.options[this.activeIndex];
+
+        this.model.activeItem = option.value;
+        this.update();
+        this.selectingByMouse = false;
+        this.scrollToActiveItem();
+    }
+
+    scrollToActiveItem() {
+        const listEl = this.el.querySelector('.options');
+        const listRect = listEl.getBoundingClientRect();
+        const listTop = listRect.top;
+        const listBottom = listRect.bottom;
+        const items = listEl.querySelectorAll('.option');
+        const target = items[this.activeIndex];
+        const itemRect = target.getBoundingClientRect();
+        const itemTop = itemRect.top;
+        const itemBottom = itemRect.bottom;
+        const scrollDiff = itemTop - listTop;
+
+        if (itemBottom > listBottom) {
+            listEl.scrollTop += itemBottom - listBottom;
+        }
+        if (itemTop < listTop) {
+            listEl.scrollTop += itemTop - listTop;
+        }
+    }
+
     onUpdate() {
         this.el.classList.toggle('open', this.model.open);
         this.setKeyHandler();
@@ -146,11 +163,13 @@ export default class Select extends Controller {
         if (this.model.open) {
             if (!this.keyHandlerActive) {
                 this.keyHandlerActive = true;
-                document.addEventListener('keypress', this.keyHandler);
+                // Arrow keys are only triggered by onkeydown!
+                // https://stackoverflow.com/questions/5597060/detecting-arrow-key-presses-in-javascript
+                document.addEventListener('keydown', this.keyHandler);
             }
         } else {
             this.keyHandlerActive = false;
-            document.removeEventListener('keypress', this.keyHandler);
+            document.removeEventListener('keydown', this.keyHandler);
         }
     }
 
@@ -265,20 +284,12 @@ export default class Select extends Controller {
             if (event.key === 'ArrowDown') {
                 event.preventDefault();
                 this.activeIndex = Math.min(this.activeIndex + 1, options.length - 1);
-                const option = this.select.options[this.activeIndex];
-
-                this.model.activeItem = option.value;
-                this.update();
-                this.selectingByMouse = false;
+                this.setActiveItem();
             }
             if (event.key === 'ArrowUp') {
                 event.preventDefault();
                 this.activeIndex = Math.max(this.activeIndex - 1, 0);
-                const option = this.select.options[this.activeIndex];
-
-                this.model.activeItem = option.value;
-                this.update();
-                this.selectingByMouse = false;
+                this.setActiveItem();
             }
             if (event.key === 'Escape') {
                 this.closeDropdown();
