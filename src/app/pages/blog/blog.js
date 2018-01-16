@@ -2,6 +2,7 @@ import settings from 'settings';
 import {on} from '~/helpers/controller/decorators';
 import router from '~/router';
 import shell from '~/components/shell/shell';
+import analytics from '~/helpers/analytics';
 import CMSPageController from '~/controllers/cms';
 import Article from './article/article';
 import {description as template} from './blog.html';
@@ -34,6 +35,7 @@ export default class Blog extends CMSPageController {
         this.model = {
             rssUrl: `${settings.apiOrigin}/blog-feed/rss/`
         };
+        this.timersRunning = [];
         shell.showLoader();
 
         this.handlePathChange = () => {
@@ -59,7 +61,30 @@ export default class Blog extends CMSPageController {
         document.title = 'Blog - OpenStax';
     }
 
+    setTimers() {
+        const fireAt = [
+            [11, '11-30 seconds', '11-30 seconds'],
+            [31, '31 sec - 1 min', '31-60 seconds'],
+            [61, '1-2 minutes', '61-120 seconds'],
+            [121, '2-3 minutes', '121-180 seconds'],
+            [181, '3-4 minutes', '181-240 seconds'],
+            [241, '4-5 minutes', '241-300 seconds'],
+            [301, '5-10 minutes', '301-600 seconds'],
+            [601, '10-30 minutes', '601-1800 seconds'],
+            [1801, 'over 30 min', '1801+ seconds']
+        ];
+        const action = 'time spent';
+
+        analytics.sendPageEvent('TimeOnPage 0-10 seconds', action, '0-10 seconds');
+        this.timersRunning = fireAt.map(([sec, category, label], i) => {
+            return setTimeout(() => {
+                analytics.sendPageEvent(`TimeOnPage ${category}`, action, label);
+            }, sec * 1000);
+        });
+    }
+
     onDataLoaded() {
+        this.setTimers();
         if (!this.articles) {
             this.articleSlugs = Object.keys(this.pageData.articles)
                 .sort((a, b) => {
@@ -131,6 +156,11 @@ export default class Blog extends CMSPageController {
             x: 0,
             y: 0
         });
+
+        for (const timer of this.timersRunning) {
+            clearTimeout(timer);
+        }
+        this.setTimers();
     }
 
 }
