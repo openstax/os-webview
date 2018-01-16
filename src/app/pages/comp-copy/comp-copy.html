@@ -3,59 +3,51 @@
         <h1>{model.introHeading}</h1>
         <html-content class="description" data-html="introDescription" skip="true"></html-content>
     </div>
+    <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
     <iframe name="form-response" id="form-response" src="" width="0" height="0"></iframe>
-    <form accept-charset="UTF-8" class="form" target="form-response" if="model.introHeading"
+    <form accept-charset="UTF-8" class="text-content" target="form-response" if="model.introHeading"
      action="https://{model.salesforce.salesforceHome}/servlet/servlet.WebToLead?encoding=UTF-8" method="post">
-        <div class="text-content">
+        <div class="form">
              <div>
                 <input name="utf8" type="hidden" value="✓">
                 <input type=hidden name="oid" value="{model.salesforce.oid}">
                 <input type=hidden name="lead_source" value="Comp Request">
             </div>
 
-            <div class="labeled-inputs row top-of-form">
-                <div class="col">
-                    <label>
-                        First name
-                        <span class="invalid-message">{model.validationMessage('first_name')}</span>
-                        <input name="first_name" type="text" required>
-                    </label>
-                    <label>
-                        Last name
-                        <span class="invalid-message">{model.validationMessage('last_name')}</span>
-                        <input name="last_name" type="text" required>
-                    </label>
-                    <label>
-                        School name
-                        <span class="invalid-message">{model.validationMessage('company')}</span>
-                        <input name="company" type="text" required>
-                    </label>
-                </div>
-
-                <div class="col">
-                    <label>
-                        School url
-                        <span class="invalid-message">{model.validationMessage('URL')}</span>
-                        <input name="URL" type="text" required>
-                    </label>
-                    <label>
-                        Email address
-                        <span class="invalid-message">{model.validationMessage('email')}</span>
-                        <input name="email" type="email" required>
-                    </label>
-                    <label>
-                        Phone number
-                        <span class="invalid-message">{model.validationMessage('phone')}</span>
-                        <input name="phone" type="text" required>
-                    </label>
-                </div>
+            <div class="labeled-inputs">
+                <label>
+                    First name
+                    <span class="invalid-message">{model.validationMessage('first_name')}</span>
+                    <input name="first_name" type="text" required>
+                </label>
+                <label>
+                    Last name
+                    <span class="invalid-message">{model.validationMessage('last_name')}</span>
+                    <input name="last_name" type="text" required>
+                </label>
+                <label>
+                    School name
+                    <span class="invalid-message">{model.validationMessage('company')}</span>
+                    <input name="company" type="text" required>
+                </label>
+                <label>
+                    School url
+                    <span class="invalid-message">{model.validationMessage('URL')}</span>
+                    <input name="URL" type="text" required>
+                </label>
+                <label>
+                    Email address
+                    <span class="invalid-message">{model.validationMessage('email')}</span>
+                    <input name="email" type="email" required>
+                </label>
+                <label>
+                    Phone number
+                    <span class="invalid-message">{model.validationMessage('phone')}</span>
+                    <input name="phone" type="text" required>
+                </label>
             </div>
-        </div>
 
-    <div class="wrapper">
-    <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
-    <div class="text-content labeled-inputs row book-info">
-        <div class="col">
+            <div class="labeled-inputs">
             <label>
                 Book Requested <span class="invalid-message">{model.validationMessage('00NU00000053nzR')}</span>
                 <div skip="true"></div>
@@ -77,9 +69,6 @@
                 Your department
                 <input name="department" type="text">
             </label>
-        </div>
-
-        <div class="col">
             <label class="form-item">
                 Have you adopted an OpenStax textbook?
                 <span class="invalid-message">{model.validationMessage('00NU00000055sqB')}</span>
@@ -101,8 +90,9 @@
             </label>
 
             <div class="cta">
-                <input type="submit" value="Submit" role="button" class="btn"/>
+                <input type="submit" value="Submit"class="btn">
             </div>
+        </div>
         </div>
     </form>
     </div>
