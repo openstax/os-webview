@@ -23,18 +23,16 @@
                     <div>{model.access.text}</div>
                     <a href="{model.access.url}" class="btn small">{model.access.label}</a>
                 </div>
-                <div class="headline-and-popup">
-                    <div class="headline">
-                        <img id="tutor-logo" alt="OpenStax Tutor beta logo" src="/images/openstax-tutor/tutor-logo.svg">
-                        <div class="headline-text">
-                            <h1>{model.frontier.headline}</h1>
-                            <div class="blurb">{model.frontier.subhead}</div>
-                        </div>
+                <div class="headline">
+                    <img id="tutor-logo" alt="OpenStax Tutor beta logo" src="/images/openstax-tutor/tutor-logo.svg">
+                    <div class="headline-text">
+                        <h1>{model.frontier.headline}</h1>
+                        <div class="blurb">{model.frontier.subhead}</div>
+                        <div class="blurb" data-html="frontier.description" skip="true"></div>
                         <a href="{model.frontier.learnMore.href}" class="btn primary">
                             {model.frontier.learnMore.text}
                         </a>
                     </div>
-                    <div class="popup-text text-content {model.frontier.popupHidden}" data-html="frontier.description" skip="true"></div>
                 </div>
             </div>
         </section>
