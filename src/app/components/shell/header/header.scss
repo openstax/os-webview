@@ -49,9 +49,9 @@ $button-size: 2.8rem;
         }
 
         .container {
-            align-items: center;
+            align-items: flex-start;
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             height: 100%;
             justify-content: space-between;
             margin: 0 auto;
@@ -194,6 +194,7 @@ $button-size: 2.8rem;
     }
 
     .expand {
+        appearance: none;
         background: transparent;
         border: 0;
         border-radius: none;
@@ -201,6 +202,9 @@ $button-size: 2.8rem;
         cursor: pointer;
         order: 2;
         padding: 0;
+        position: absolute;
+        right: 1.5rem;
+        top: 2rem;
         transition: 0.3s;
         user-select: none;
 
