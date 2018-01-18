@@ -1,0 +1,10 @@
+<template args="model">
+    <nav class="dropdown-menu" role="menu"
+     aria-expanded="{model.props.isOpen}" aria-label="Subjects menu">
+        <a each="item in model.props.items"
+            href="{item.url}"
+            role="menuitem"
+            tabindex="-1"
+            data-html="props.items[{$item}].label" skip="true"></a>
+    </nav>
+</template>

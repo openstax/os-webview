@@ -1,6 +1,7 @@
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
+import DropdownMenu from '../dropdown-menu/dropdown-menu';
 import {description as template} from './main-menu.html';
 
 export default class MainMenu extends Controller {
@@ -10,6 +11,10 @@ export default class MainMenu extends Controller {
         this.view = {
             classes: ['container']
         };
+        this.regions = {
+            subjectsDropdown: '.subjects-dropdown',
+            technologyDropdown: '.technology-dropdown'
+        };
         this.css = '/app/components/shell/header/main-menu/main-menu.css';
         this.model = model;
         this.model.openDropdown = null;
@@ -17,6 +22,29 @@ export default class MainMenu extends Controller {
 
     onLoaded() {
         this.model.initialRenderDone = true;
+        this.regions.subjectsDropdown.attach(new DropdownMenu(
+            () => ({
+                isOpen: this.model.openDropdown === 'subjects',
+                items: [
+                    {url: '/subjects', label: 'All'},
+                    {url: '/subjects/math', label: 'Math'},
+                    {url: '/subjects/science', label: 'Science'},
+                    {url: '/subjects/social-sciences', label: 'Social Sciences'},
+                    {url: '/subjects/humanities', label: 'Humanities'},
+                    {url: '/subjects/AP', label: 'AP<sup>®</sup>'}
+                ]
+            })
+        ));
+        this.regions.technologyDropdown.attach(new DropdownMenu(
+            () => ({
+                isOpen: this.model.openDropdown === 'technology',
+                items: [
+                    {url: '/technology', label: 'Technology Options'},
+                    {url: '/openstax-tutor', label: 'About OpenStax Tutor'},
+                    {url: '/partners', label: 'OpenStax Partners'}
+                ]
+            })
+        ))
     }
 
     showTutorTrainingWheel() {
@@ -35,22 +63,31 @@ export default class MainMenu extends Controller {
         }
     }
 
+    updateDropdowns() {
+        this.regions.subjectsDropdown.controllers[0].update();
+        this.regions.technologyDropdown.controllers[0].update();
+    }
+
     @on('focusin [aria-haspopup="true"]')
-    openDropdown() {
-        const target = document.activeElement;
+    @on('mouseover [aria-haspopup="true"]')
+    openDropdown(event) {
+        const target = event.delegateTarget;
 
         this.selectedIndex = -1;
         this.model.openDropdown = target.href ? target.href.replace(/.*\//, '') : null;
         this.openDropdown = target.parentNode;
         this.update();
+        this.updateDropdowns();
     }
 
-    @on('mouseout')
+    @on('focusout [aria-haspopup="true"]')
+    @on('mouseleave [aria-haspopup="true"]')
     closeDropdown() {
         if (this.openDropdown) {
             this.model.openDropdown = null;
             this.openDropdown = null;
             this.update();
+            this.updateDropdowns();
         }
     }
 
@@ -113,6 +150,7 @@ export default class MainMenu extends Controller {
             // Falls through!
         case $.key.esc:
             document.activeElement.blur();
+            this.closeDropdown();
             break;
         default:
             break;

@@ -17,25 +17,18 @@
                 Subjects
                 <svg class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 30"><title>arrow</title><path d="M12,1L26,16,12,31,8,27,18,16,8,5Z" transform="translate(-8 -1)"/></svg>
             </a>
-            <ul class="dropdown-menu" role="menu"
-             aria-expanded="{model.openDropdown === 'subjects'}" aria-label="Subjects menu">
-                <li role="presentation"><a href="/subjects" role="menuitem" tabindex="-1">All</a></li>
-                <li role="presentation"><a href="/subjects/math" role="menuitem" tabindex="-1">Math</a></li>
-                <li role="presentation"><a href="/subjects/science" role="menuitem" tabindex="-1">Science</a></li>
-                <li role="presentation"><a href="/subjects/social-sciences" role="menuitem" tabindex="-1">Social Sciences</a></li>
-                <li role="presentation"><a href="/subjects/humanities" role="menuitem" tabindex="-1">Humanities</a></li>
-                <li role="presentation"><a href="/subjects/ap" role="menuitem" tabindex="-1">AP<sup>®</sup></a></li>
-            </ul>
+            <div class="subjects-dropdown" skip="true"></div>
         </li>
         <li class="nav-menu-item dropdown" role="presentation">
             <a href="/technology" role="menuitem" aria-haspopup="true">Technology<svg class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 30"><title>arrow</title><path d="M12,1L26,16,12,31,8,27,18,16,8,5Z" transform="translate(-8 -1)"/></svg></a>
-            <ul class="dropdown-menu" role="menu"
+            <div class="technology-dropdown" skip="true"></div>
+            <!-- <nav class="dropdown-menu" role="menu"
              aria-expanded="{model.openDropdown === 'technology'}"
              aria-label="Technology menu">
-                <li role="presentation"><a href="/technology" role="menuitem" tabindex="-1">Technology Options</a></li>
-                <li role="presentation"><a href="/openstax-tutor" role="menuitem" tabindex="-1">About OpenStax Tutor</a></li>
-                <li role="presentation"><a href="/partners" role="menuitem" tabindex="-1">OpenStax Partners</a></li>
-            </ul>
+                <a href="/technology" role="menuitem" tabindex="-1">Technology Options</a>
+                <a href="/openstax-tutor" role="menuitem" tabindex="-1">About OpenStax Tutor</a>
+                <a href="/partners" role="menuitem" tabindex="-1">OpenStax Partners</a>
+            </nav> -->
         </li>
         <li class="nav-menu-item" role="presentation">
             <a href="/impact" role="menuitem" aria-haspopup="true">Our Impact</a>

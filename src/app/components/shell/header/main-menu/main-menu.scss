@@ -121,8 +121,7 @@
                 }
             }
 
-            .dropdown-menu[aria-expanded="true"],
-            &:hover .dropdown-menu {
+            .dropdown-menu[aria-expanded="true"] {
                 border-top: 0.5rem solid os-color(green);
                 display: block;
                 height: auto;
