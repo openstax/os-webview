@@ -120,9 +120,11 @@ export default class Errata extends Controller {
             moreAbout: 'More about our correction schedule',
             errataHoverHtml: '<p>...loading...</p>',
             errorTypes: [
-                'Typo', 'Broken link', 'Incorrect calculation or solution',
-                'Other factual inaccuracy in content',
+                'Broken link',
+                'Incorrect answer, calculation, or solution',
                 'General/pedagogical suggestion or question',
+                'Other factual inaccuracy in content',
+                'Typo',
                 'Other'
             ],
             sourceTypes: [
