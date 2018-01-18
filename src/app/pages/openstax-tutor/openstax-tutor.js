@@ -70,8 +70,7 @@ export default class Tutor extends CMSPageController {
             learnMore: {
                 href: data.section_1_cta_link,
                 text: data.section_1_cta_text
-            },
-            popupHidden: 'hidden'
+            }
         };
         // Magic: turn learnmore link into simple hash link
         const lm = this.model.frontier.learnMore;
@@ -177,12 +176,6 @@ export default class Tutor extends CMSPageController {
                 (newYOffset < 100) || (distanceFromBottom < 100) ? 'collapsed' : '';
             this.update();
             lastYOffset = newYOffset;
-
-            // Popup appears on scroll
-            if (this.model.frontier.popupHidden !== '') {
-                this.model.frontier.popupHidden = '';
-                this.update();
-            }
         }, 80);
 
         window.addEventListener('scroll', this.handleScroll);

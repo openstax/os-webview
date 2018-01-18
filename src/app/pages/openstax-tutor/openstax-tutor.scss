@@ -178,8 +178,14 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
         border-radius: 0.25rem;
         cursor: pointer; // because pattern-library has default; remove when fixed
         font-weight: inherit;
+        height: auto;
         letter-spacing: inherit;
         text-transform: none;
+        white-space: nowrap; // Will be fixed in pattern library
+
+        &.small {
+            white-space: nowrap;
+        }
 
         &.primary {
             @extend %primary;
@@ -301,6 +307,10 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
             > :first-child {
                 margin: 0 3rem;
+
+                @include width-up-to($phone-max) {
+                    margin: 0;
+                }
             }
 
             .btn {
@@ -308,23 +318,12 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
                 @include width-up-to($phone-max) {
                     display: inline-flex;
-                    margin-left: 3rem;
                 }
             }
         }
 
         .text-content {
             align-items: flex-start;
-        }
-
-        .headline-and-popup {
-            align-items: flex-end;
-            display: flex;
-
-            @include width-up-to($tablet-max) {
-                align-items: stretch;
-                flex-direction: column;
-            }
         }
 
         .headline {
@@ -334,7 +333,7 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
         .headline-text {
             // background-color: rgba($sky, 0.66);
-            background-image: linear-gradient(to bottom, rgba($sky, 0), rgba($sky, 0.2) 30%, rgba($sky, 0.8) 60%);
+            background-image: linear-gradient(to bottom, rgba($sky, 0), rgba($sky, 0.2) 20%, rgba($sky, 0.8) 50%);
             border-radius: 0.5rem;
             margin-left: -$normal-margin;
             padding: $normal-margin;
@@ -342,8 +341,6 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
         .blurb {
             margin-bottom: $normal-margin;
-            max-width: calc(100% - 5rem);
-            width: 32rem;
         }
 
         .btn {
@@ -361,17 +358,6 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
             @include wider-than($phone-max) {
                 @include set-font(hero-h1);
-            }
-        }
-
-        .popup-text {
-            background-color: ui-color(white);
-            border-radius: 0.5rem;
-            box-shadow: $hover-shadow;
-            padding: 0 2rem 1rem;
-
-            &.hidden {
-                display: none;
             }
         }
     }
