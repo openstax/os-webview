@@ -27,7 +27,7 @@
 
         &.sticky {
             position: fixed;
-            top: 9rem;
+            top: 5.2rem;
 
             @include wider-than($tablet-max) {
                 position: absolute;
@@ -87,19 +87,19 @@
             margin: 1rem;
             position: relative;
 
-            @include wider-than($media-content-max - 66em) {
+            @include wider-than($media-content-max - 52em) {
                 flex-basis: calc(50% - 2rem);
             }
 
-            @include wider-than($media-content-max - 44em) {
+            @include wider-than($media-content-max - 35em) {
                 flex-basis: calc(33.3% - 2rem);
             }
 
-            @include wider-than($media-content-max - 22em) {
+            @include wider-than($media-content-max - 20em) {
                 flex-basis: calc(25% - 2rem);
             }
 
-            @include wider-than($media-content-max) {
+            @include wider-than($media-content-max - 5em) {
                 flex-basis: calc(20% - 2rem);
             }
 
