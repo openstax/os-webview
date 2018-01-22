@@ -1,6 +1,7 @@
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
+import header from '../../header';
 import {description as template} from './dropdown.html';
 
 export default class Dropdown extends Controller {
@@ -62,17 +63,23 @@ export default class Dropdown extends Controller {
         this.frozen = false;
     }
 
+    openMenu() {
+        this.model.isOpen = true;
+        header.recognizeDropdownOpen(this);
+        this.update();
+    }
+
     closeMenu() {
         this.model.isOpen = false;
+        header.recognizeDropdownOpen(null);
         this.update();
     }
 
     @on('focusin')
     @on('mouseover')
-    openMenu() {
+    openDesktopMenu() {
         if (!this.isMobileDisplay()) {
-            this.model.isOpen = true;
-            this.update();
+            this.openMenu();
         }
     }
 
@@ -86,8 +93,7 @@ export default class Dropdown extends Controller {
     @on('click .dropdown > [role="menuitem"]')
     openMobileMenu(event) {
         event.preventDefault();
-        this.model.isOpen = true;
-        this.update();
+        this.openMenu();
     }
 
     @on('keydown')

@@ -121,7 +121,7 @@ class Header extends Controller {
             ticking = false;
         };
 
-        this.onScrollHeader = (evt) => {
+        this.onScrollHeader = () => {
             if (!ticking) {
                 ticking = true;
                 requestAnimationFrame(this.removeAllOpenClassesOnScroll);
@@ -161,6 +161,26 @@ class Header extends Controller {
         return height;
     }
 
+    recognizeDropdownOpen(dropdownComponent) {
+        const isOpen = Boolean(dropdownComponent);
+        const zoneEl = this.el.querySelector('.submenu-zone');
+
+        if (this.openDropdown) {
+            this.openDropdown.el.style.top = '';
+        }
+        this.el.classList.toggle('open', isOpen);
+        this.openDropdown = dropdownComponent;
+
+        // Adjust top of dropdown
+        if (isOpen) {
+            const zoneRect = zoneEl.getBoundingClientRect();
+            const ddRect = this.openDropdown.el.getBoundingClientRect();
+            const diff = zoneRect.top - ddRect.top;
+
+            this.openDropdown.el.style.top = `${diff}px`;
+        }
+    }
+
     toggleFullScreenNav(button) {
         const wasActive = this.el.classList.contains('active');
         const reconfigure = () => {
@@ -187,25 +207,12 @@ class Header extends Controller {
         }
     }
 
-    removeClass(array, className) {
-        const len = array.length;
-
-        for (let i = 0; i < len; i++) {
-            if (array[i].classList) {
-                array[i].classList.remove(className);
-            } else {
-                const names = array[i].className.split(' ')
-                    .filter((name) => name !== className);
-
-                array[i].className = names.join('');
-            }
-        }
-    }
-
     removeAllOpenClasses() {
         this.mainMenu.closeDropdowns();
     }
 
+    @on('click .nav-menu-item:not(.dropdown) [role="menuitem"]')
+    @on('click .dropdown-container [role="menuitem"]')
     closeFullScreenNav() {
         const button = this.el.querySelector('.expand');
 
@@ -230,6 +237,13 @@ class Header extends Controller {
         if (document.activeElement === e.target && [$.key.space, $.key.enter].includes(e.keyCode)) {
             e.preventDefault();
             this.toggleFullScreenNav(e.target);
+        }
+    }
+
+    @on('click .submenu-zone .close')
+    closeSubmenu() {
+        if (this.openDropdown) {
+            this.openDropdown.closeMenu();
         }
     }
 

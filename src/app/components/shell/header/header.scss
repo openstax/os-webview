@@ -80,16 +80,16 @@ $button-size: 2.8rem;
             display: flex;
             justify-content: center;
             order: 2;
+            padding-left: 2rem;
             width: 100%;
         }
 
         > .nav {
             order: 1;
-            width: 100%;
         }
 
         .container {
-            width: 19rem;
+            width: 17rem;
         }
     }
 
@@ -148,6 +148,7 @@ $button-size: 2.8rem;
 
         .close {
             color: os-color(light-blue);
+            cursor: pointer;
         }
 
         .chevron {

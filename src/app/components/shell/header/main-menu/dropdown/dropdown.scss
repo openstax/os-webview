@@ -10,20 +10,15 @@
     min-width: 20rem;
     overflow: visible;
     position: absolute;
-
-    // @include width-up-to($tablet-max) {
-    //     height: 50vh;
-    //     position: fixed;
-    //     right: 4rem;
-    //     top: 4rem;
-    //     width: 50vw;
-    //     z-index: 30;
-    // }
 }
 
 // Keeps rightmost menu from hanging off the screen
 .rightmost .dropdown-container {
     right: -2rem;
+
+    @include width-up-to($tablet-max) {
+        right: auto;
+    }
 }
 
 .dropdown-menu {
@@ -46,6 +41,10 @@
         height: auto;
         opacity: 1;
         transition: opacity 0.3s;
+
+        @include width-up-to($tablet-max) {
+            padding-left: 100rem;
+        }
     }
 
     a {
