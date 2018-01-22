@@ -131,7 +131,7 @@ export default class ContactInfo extends Controller {
         if (this.askedAboutSchool !== schoolName && schoolName.length > 0 && schoolName.length < 5) {
             new ManagedComponent(
                 new Popup('Please enter your full school name without abbreviations.' +
-                ' If this is your full school name, you can hit Next.',
+                ' If this is your full school name, you can click Next.',
                 () => this.popupComponent.detach()),
                 'popup',
                 this
