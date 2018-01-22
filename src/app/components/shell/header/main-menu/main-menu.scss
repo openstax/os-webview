@@ -14,10 +14,6 @@
         left: 0;
         overflow: visible;
 
-        .dropdown-menu {
-            position: fixed;
-            top: 5.5rem;
-        }
     }
 
     .training-wheel-overlay {
@@ -86,11 +82,13 @@
         }
 
         @include wider-than($tablet-max) {
+            align-items: baseline;
             display: flex;
             flex-flow: row nowrap;
             height: auto;
             justify-content: flex-end;
             margin: 0;
+            overflow: visible;
         }
     }
 
@@ -115,27 +113,11 @@
                 }
             }
 
-            @media (max-width: 1242px) {
-                &:last-child .dropdown-menu {
-                    right: 0.2rem;
-                }
-            }
-
             .dropdown-menu[aria-expanded="true"] {
                 border-top: 0.5rem solid os-color(green);
-                display: block;
-                height: auto;
-                opacity: 1;
-                padding: 1rem;
-                position: absolute;
-                transition: opacity 0.3s;
-                width: auto;
-
-                @at-root .fixed#{&} {
-                }
             }
 
-            &:not(.dropdown):hover {
+            &:hover:not(.dropdown) {
                 border-bottom: 0.5rem solid os-color(green);
                 margin-bottom: 0;
             }
@@ -149,26 +131,6 @@
             padding: 0 0.45rem;
         }
 
-        .dropdown-menu {
-            @include set-font(body-regular);
-
-            background-color: ui-color(white);
-            color: os-color(gray);
-            display: none;
-            padding-left: 0;
-
-            a {
-                color: os-color(gray);
-                display: block;
-            }
-
-            // scss-lint:disable SelectorDepth
-            a:focus,
-            a:hover {
-                color: os-color(light-blue);
-            }
-            // scss-lint:enable SelectorDepth
-        }
     }
 
     .training-wheel {

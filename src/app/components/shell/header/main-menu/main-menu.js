@@ -1,7 +1,7 @@
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
-import DropdownMenu from '../dropdown-menu/dropdown-menu';
+import Dropdown from './dropdown/dropdown';
 import {description as template} from './main-menu.html';
 
 export default class MainMenu extends Controller {
@@ -22,9 +22,11 @@ export default class MainMenu extends Controller {
 
     onLoaded() {
         this.model.initialRenderDone = true;
-        this.regions.subjectsDropdown.attach(new DropdownMenu(
+
+        this.regions.subjectsDropdown.attach(new Dropdown(
             () => ({
-                isOpen: this.model.openDropdown === 'subjects',
+                dropdownUrl: '/subjects',
+                dropdownLabel: 'Subjects',
                 items: [
                     {url: '/subjects', label: 'All'},
                     {url: '/subjects/math', label: 'Math'},
@@ -35,16 +37,17 @@ export default class MainMenu extends Controller {
                 ]
             })
         ));
-        this.regions.technologyDropdown.attach(new DropdownMenu(
+        this.regions.technologyDropdown.attach(new Dropdown(
             () => ({
-                isOpen: this.model.openDropdown === 'technology',
+                dropdownUrl: '/technology',
+                dropdownLabel: 'Technology',
                 items: [
                     {url: '/technology', label: 'Technology Options'},
                     {url: '/openstax-tutor', label: 'About OpenStax Tutor'},
                     {url: '/partners', label: 'OpenStax Partners'}
                 ]
             })
-        ))
+        ));
     }
 
     showTutorTrainingWheel() {
@@ -53,42 +56,48 @@ export default class MainMenu extends Controller {
     }
 
     onUpdate() {
-        if (this.model.trainingWheelActive) {
-            this.el.querySelector('.nav-menu-item.login a').focus();
-            const tutorMenuItem = this.el.querySelector('.tutor-menu-item a');
+        /* eslint complexity: 0 */
+        if (this.model.user.username) {
+            const Region = this.regions.self.constructor;
+            const regionEl = this.el.querySelector('.login-dropdown');
+            const loginRegion = new Region(regionEl, this);
+            const tutorItem = {url: 'https://tutor.openstax.org/', label: 'OpenStax Tutor'};
+            const loginItems = [
+                {url: this.model.accountLink, label: 'Account Profile'},
+                tutorItem,
+                {url: this.model.facultyAccessLink, label: 'Request instructor access'},
+                {url: this.model.logout, label: 'Logout'}
+            ];
 
-            if (tutorMenuItem) {
-                tutorMenuItem.focus();
+            if (this.model.user.groups.includes('Faculty') ||
+                this.model.user.groups.includes('Student') ||
+                this.model.user.pending_verification) {
+                loginItems.splice(2, 1);
+            }
+
+            if (this.model.trainingWheelActive) {
+                tutorItem.trainingWheel = true;
+            }
+
+            this.loginMenuComponent = new Dropdown(
+                () => ({
+                    dropdownUrl: this.model.accountLink,
+                    dropdownLabel: `Hi ${this.model.user.first_name || this.model.user.username}`,
+                    items: loginItems
+                })
+            );
+            loginRegion.attach(this.loginMenuComponent);
+
+            if (this.model.trainingWheelActive) {
+                this.loginMenuComponent.freeze();
+                this.loginMenuComponent.openMenu();
             }
         }
     }
 
-    updateDropdowns() {
-        this.regions.subjectsDropdown.controllers[0].update();
-        this.regions.technologyDropdown.controllers[0].update();
-    }
-
-    @on('focusin [aria-haspopup="true"]')
-    @on('mouseover [aria-haspopup="true"]')
-    openDropdown(event) {
-        const target = event.delegateTarget;
-
-        this.selectedIndex = -1;
-        this.model.openDropdown = target.href ? target.href.replace(/.*\//, '') : null;
-        this.openDropdown = target.parentNode;
-        this.update();
-        this.updateDropdowns();
-    }
-
-    @on('focusout [aria-haspopup="true"]')
-    @on('mouseleave [aria-haspopup="true"]')
-    closeDropdown() {
-        if (this.openDropdown) {
-            this.model.openDropdown = null;
-            this.openDropdown = null;
-            this.update();
-            this.updateDropdowns();
-        }
+    closeDropdowns() {
+        this.regions.subjectsDropdown.controllers[0].closeMenu();
+        this.regions.technologyDropdown.controllers[0].closeMenu();
     }
 
     @on('click a[data-set-redirect]')
@@ -103,58 +112,6 @@ export default class MainMenu extends Controller {
     putAwayTrainingWheel() {
         this.model.trainingWheelActive = false;
         this.update();
-    }
-
-    @on('keydown a[role="menuitem"][aria-haspopup="true"]')
-    @on('keydown .dropdown-menu a[role="menuitem"]')
-    moveSelection(event) {
-        /* eslint complexity: 0 */
-        const target = event.target;
-        const menu = target.hasAttribute('aria-haspopup') ?
-            target.nextSibling.children : target.parentNode.parentNode.children;
-        const lastIndex = menu.length - 1;
-        const newTarget = () => {
-            if (this.selectedIndex < 0 && !target.hasAttribute('aria-haspopup')) {
-                return target.parentNode.parentNode.previousSibling;
-            }
-            return menu[this.selectedIndex] ? menu[this.selectedIndex].querySelector('a') : null;
-        };
-
-        switch (event.keyCode) {
-        case $.key.down:
-            if (this.selectedIndex < lastIndex) {
-                ++this.selectedIndex;
-            }
-            event.preventDefault();
-            this.update();
-            newTarget().focus();
-            break;
-        case $.key.up:
-            --this.selectedIndex;
-            if (this.selectedIndex < 0) {
-                this.selectedIndex = -1;
-            }
-            event.preventDefault();
-            this.update();
-            newTarget().focus();
-            break;
-        case $.key.enter:
-        case $.key.space:
-            if (newTarget()) {
-                event.preventDefault();
-                newTarget().dispatchEvent($.newEvent('click'));
-            } else {
-                // ordinary event handling
-                break;
-            }
-            // Falls through!
-        case $.key.esc:
-            document.activeElement.blur();
-            this.closeDropdown();
-            break;
-        default:
-            break;
-        }
     }
 
 }

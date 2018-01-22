@@ -1,0 +1,62 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.dropdown {
+    position: relative;
+}
+
+// This is necessary to allow the menu to be wider than the header item
+.dropdown-container {
+    height: 0;
+    min-width: 20rem;
+    overflow: visible;
+    position: absolute;
+
+    // @include width-up-to($tablet-max) {
+    //     height: 50vh;
+    //     position: fixed;
+    //     right: 4rem;
+    //     top: 4rem;
+    //     width: 50vw;
+    //     z-index: 30;
+    // }
+}
+
+// Keeps rightmost menu from hanging off the screen
+.rightmost .dropdown-container {
+    right: -2rem;
+}
+
+.dropdown-menu {
+    @include set-font(body-regular);
+
+    background-color: ui-color(white);
+    color: os-color(gray);
+    display: none;
+    left: 0;
+    padding: 1rem;
+    width: auto;
+
+    @include wider-than($tablet-max) {
+        box-shadow: 0 0.5rem 0.5rem 0 rgba(black, 0.1);
+    }
+
+    // inline-block allows width control
+    &[aria-expanded="true"] {
+        display: inline-block;
+        height: auto;
+        opacity: 1;
+        transition: opacity 0.3s;
+    }
+
+    a {
+        color: os-color(gray);
+        display: block;
+    }
+
+    // scss-lint:disable SelectorDepth
+    a:focus,
+    a:hover {
+        color: text-color(link-hover);
+    }
+    // scss-lint:enable SelectorDepth
+}

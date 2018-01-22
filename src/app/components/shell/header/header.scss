@@ -20,13 +20,13 @@ $button-size: 2.8rem;
         position: absolute;
         right: 0;
         top: 0;
+    }
 
-        a {
-            text-decoration: none;
-        }
+    a {
+        text-decoration: none;
 
-        a:active,
-        a:focus {
+        &:active,
+        &:focus {
             outline: none;
         }
     }
@@ -55,7 +55,7 @@ $button-size: 2.8rem;
             height: 100%;
             justify-content: space-between;
             margin: 0 auto;
-            padding: 0 $normal-margin;
+            padding: 0;
 
             @include wider-than($tablet-max) {
                 align-items: center;
@@ -136,25 +136,6 @@ $button-size: 2.8rem;
 
             .dropdown > a {
                 font-weight: bold;
-            }
-        }
-    }
-
-    @at-root .active.open#{&} {
-        .nav-menu-item {
-            &:not(.open) {
-                height: 0;
-                margin: 0;
-            }
-
-            &.dropdown > a {
-                display: none;
-            }
-
-            &.dropdown.open > a,
-            .dropdown-menu.open {
-                display: block;
-                padding-left: 100rem;
             }
         }
     }
