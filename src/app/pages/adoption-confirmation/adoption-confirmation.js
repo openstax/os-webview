@@ -18,14 +18,11 @@ export default class AdoptionConfirmation extends Controller {
             header: '.hero',
             content: '.content'
         };
-        this.model = {
-            rssUrl: `${settings.apiOrigin}/blog-feed/rss/`
-        };
     }
 
     onLoaded() {
         this.regions.header.attach(new Header1());
-        this.regions.content.attach(new SupplementalForm(() => this.loadFinalThankYou()));
+        this.regions.content.attach(new SupplementalForm(history.state.email, () => this.loadFinalThankYou()));
     }
 
     loadFinalThankYou() {
