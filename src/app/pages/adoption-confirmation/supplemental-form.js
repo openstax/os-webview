@@ -8,14 +8,15 @@ import {description as template} from './supplemental-form.html';
 
 export default class SupplementalForm extends SalesforceForm {
 
-    init(loadFinalThankYou) {
+    init(email, loadFinalThankYou) {
         this.template = template;
         this.view = {
             classes: ['supplemental-form']
         };
         // this.css = '/app/pages/adoption-confirmation/supplemental-form.css';
         this.model = {
-            salesforce
+            salesforce,
+            email
         };
         this.loadFinalThankYou = loadFinalThankYou;
 

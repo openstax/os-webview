@@ -151,9 +151,13 @@ export default class TeacherForm extends SalesforceForm {
         this.update();
         this.formResponseEl = this.el.querySelector('#form-response');
         this.goToConfirmation = () => {
+            const emailEl = document.querySelector('[name="email"]');
+
             if (this.submitted) {
                 this.submitted = false;
-                router.navigate('/adoption-confirmation');
+                router.navigate('/adoption-confirmation', {
+                    email: emailEl.value
+                });
             }
         };
         this.formResponseEl.addEventListener('load', this.goToConfirmation);
