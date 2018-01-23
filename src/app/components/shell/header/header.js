@@ -46,7 +46,8 @@ class Header extends Controller {
             },
             accountLink: `${settings.accountHref}/profile`,
             facultyAccessLink: `${settings.accountHref}/faculty_access/apply`,
-            currentDropdown: null
+            currentDropdown: null,
+            submenuName: 'Name goes here'
         };
 
         this.upperMenu = new UpperMenu(this.model);
@@ -161,24 +162,32 @@ class Header extends Controller {
         return height;
     }
 
-    recognizeDropdownOpen(dropdownComponent) {
-        const isOpen = Boolean(dropdownComponent);
+    resetDropdownTop() {
+        if (this.currentDropdown) {
+            this.currentDropdown.el.style.top = '';
+        }
+    }
+
+    recognizeDropdownOpen(openDropdown) {
+        const isOpen = Boolean(openDropdown);
         const zoneEl = this.el.querySelector('.submenu-zone');
 
-        if (this.openDropdown) {
-            this.openDropdown.el.style.top = '';
-        }
+        this.resetDropdownTop();
         this.el.classList.toggle('open', isOpen);
-        this.openDropdown = dropdownComponent;
+        if (openDropdown) {
+            this.model.submenuName = openDropdown.label;
+            this.update();
+        }
 
         // Adjust top of dropdown
         if (isOpen) {
             const zoneRect = zoneEl.getBoundingClientRect();
-            const ddRect = this.openDropdown.el.getBoundingClientRect();
-            const diff = zoneRect.top - ddRect.top;
+            const ddRect = openDropdown.el.getBoundingClientRect();
+            const diff = zoneRect.bottom - ddRect.top - 30;
 
-            this.openDropdown.el.style.top = `${diff}px`;
+            openDropdown.el.style.top = `${diff}px`;
         }
+        this.currentDropdown = openDropdown;
     }
 
     toggleFullScreenNav(button) {
@@ -209,6 +218,7 @@ class Header extends Controller {
 
     removeAllOpenClasses() {
         this.mainMenu.closeDropdowns();
+        this.resetDropdownTop();
     }
 
     @on('click .nav-menu-item:not(.dropdown) [role="menuitem"]')
@@ -242,8 +252,9 @@ class Header extends Controller {
 
     @on('click .submenu-zone .close')
     closeSubmenu() {
-        if (this.openDropdown) {
-            this.openDropdown.closeMenu();
+        if (this.currentDropdown) {
+            this.currentDropdown.close();
+            this.resetDropdownTop();
         }
     }
 

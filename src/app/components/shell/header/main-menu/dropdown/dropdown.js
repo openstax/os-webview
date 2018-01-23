@@ -65,7 +65,13 @@ export default class Dropdown extends Controller {
 
     openMenu() {
         this.model.isOpen = true;
-        header.recognizeDropdownOpen(this);
+        if (this.isMobileDisplay()) {
+            header.recognizeDropdownOpen({
+                el: this.el,
+                label: this.model.props.dropdownLabel,
+                close: this.closeMenu.bind(this)
+            });
+        }
         this.update();
     }
 

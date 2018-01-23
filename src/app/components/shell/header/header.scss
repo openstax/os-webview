@@ -160,6 +160,10 @@ $button-size: 2.8rem;
             width: 0.8rem;
         }
 
+        .menu-title {
+            font-weight: bold;
+        }
+
         @at-root .active.open#{&} {
             display: block;
         }
