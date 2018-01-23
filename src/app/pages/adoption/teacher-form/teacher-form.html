@@ -25,7 +25,7 @@
                     <label class="field-label">{subject}</label>
                     <div class="{model.booksBySubject(subject).length > 1 ? 'two-columns' : ''}">
                         <div each="book in model.booksBySubject(subject)" class="radio-control-group">
-                            <label><input type="radio" name="00NU00000053nzR" required>{book.text}</label>
+                            <label><input type="radio" name="00NU00000053nzR" value="{book.value}" required>{book.text}</label>
                         </div>
                     </div>
                     <br>
