@@ -8,16 +8,11 @@
         margin-bottom: 3rem;
 
         > .article {
-            height: 100%;
             margin-bottom: 0;
         }
 
         &.page .article {
             width: 100%;
-
-            .boxed {
-                max-width: $text-content-max;
-            }
 
             .quote {
                 background-color: ui-color(form-bg);
@@ -75,21 +70,22 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            min-height: 30rem;
+            min-height: 24rem;
+
+            @include wider-than($tablet-max) {
+                min-height: 30rem;
+            }
         }
 
         .viewport {
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
         }
 
         .meta {
-            border-bottom: thin solid ui-color(form-border);
             padding-bottom: 1rem;
             width: 100%;
-
-            @include wider-than($tablet-max) {
-                border: 0;
-            }
 
             p {
                 margin: 0;
@@ -103,14 +99,27 @@
         }
     }
 
-    .excerpt .body {
-        column-width: 57em;
-        height: 11rem;
-        max-height: 11rem;
-        width: auto;
+    .boxed {
+        @include width-up-to($tablet-max) {
+            padding: 0;
+        }
+    }
 
-        div :first-child {
-            -webkit-margin-before: 0;
+    .excerpt {
+        display: flex;
+        flex-basis: 100%;
+        flex-direction: column;
+        flex-shrink: 1;
+
+        .body {
+            column-width: 57em;
+            height: 11rem;
+            max-height: 11rem;
+            width: auto;
+
+            div :first-child {
+                -webkit-margin-before: 0;
+            }
         }
     }
 
@@ -122,6 +131,7 @@
 
             @include wider-than($tablet-max) {
                 flex-flow: row nowrap;
+                height: 38.5rem;
                 margin-bottom: 0;
                 padding: 2.5rem 0;
             }
@@ -164,11 +174,14 @@
 
             .content {
                 flex-basis: 100%;
+                max-height: 100%;
                 max-width: 100%;
+                padding: 0 $normal-margin;
 
                 @include wider-than($tablet-max) {
                     flex-basis: 50%;
                     max-width: 50%;
+                    padding: 0;
                 }
             }
         }
@@ -178,6 +191,8 @@
 
     .articles .container {
 
+        padding: 0;
+
         > .article {
             background-color: ui-color(white);
             display: block;
@@ -186,14 +201,14 @@
             width: 100%;
 
             @include wider-than($tablet-max) {
-                flex-basis: calc(50% - 3rem);
+                flex-basis: 50%;
                 margin: 1.5rem;
                 max-width: calc(50% - 3rem);
             }
 
             @include wider-than($media-content-max) {
-                flex-basis: calc(33% - 2.6rem);
-                max-width: calc(33% - 2.6rem);
+                flex-basis: 33%;
+                max-width: calc(33% - 2.61rem);
             }
 
             /* one article */
@@ -210,9 +225,9 @@
             }
 
             .content {
-
                 flex-basis: 100%;
                 max-width: 100%;
+                padding: 0 $normal-margin;
 
                 @include wider-than($tablet-max) {
                     padding: 1.5rem;
