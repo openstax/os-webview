@@ -6,7 +6,7 @@ $special-breakpoint: 54rem;
 
 @mixin menu-is-fixed {
     @include wider-than($tablet-max) {
-        @media (min-height: 40em) {
+        @media (min-height: 768px) {
             @content;
         }
     }
@@ -187,6 +187,11 @@ $special-breakpoint: 54rem;
                 transform: translate3d(-50%, 0, 0);
                 width: 100%;
                 z-index: 1;
+
+                .box {
+                    max-height: 58rem;
+                    overflow-y: auto;
+                }
             }
 
             &.bottom {
