@@ -6,7 +6,7 @@ $special-breakpoint: 54rem;
 
 @mixin menu-is-fixed {
     @include wider-than($tablet-max) {
-        @media (min-height: 40em) {
+        @media (min-height: 768px) {
             @content;
         }
     }
@@ -178,22 +178,20 @@ $special-breakpoint: 54rem;
             order: 2;
 
             @include menu-is-fixed {
-                left: 50%;
-                margin-bottom: 0;
-                max-width: 120rem;
-                order: 3;
-                position: fixed;
-                top: 15rem;
-                transform: translate3d(-50%, 0, 0);
-                width: 100%;
-                z-index: 1;
-            }
-
-            &.bottom {
-                top: 7rem;
+                &.fixed {
+                    left: 50%;
+                    margin-bottom: 0;
+                    max-width: 120rem;
+                    order: 3;
+                    position: fixed;
+                    transform: translateX(-50%);
+                    width: 100%;
+                    z-index: 1;
+                }
             }
 
             h2 {
+                margin-bottom: 0;
                 margin-top: 0;
             }
 
@@ -235,7 +233,6 @@ $special-breakpoint: 54rem;
 
         .details {
             order: 3;
-            padding-right: 26.5rem;
 
             @include width-between($phone-max, $tablet-max) {
                 flex: 1 100%;
@@ -244,6 +241,7 @@ $special-breakpoint: 54rem;
             @include menu-is-fixed {
                 flex: 1 0;
                 order: 2;
+                padding-right: 26.5rem;
             }
         }
 

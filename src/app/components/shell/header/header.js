@@ -133,7 +133,12 @@ class Header extends Controller {
     }
 
     pin() {
-        this.el.classList.add('fixed');
+        if (!this.el.classList.contains('fixed')) {
+            this.el.classList.add('fixed');
+            setTimeout(() => {
+                window.dispatchEvent($.newEvent('resize'));
+            }, 800);
+        }
         return this;
     }
 
@@ -143,7 +148,10 @@ class Header extends Controller {
     }
 
     reset() {
-        this.el.classList.remove('fixed');
+        if (this.el.classList.contains('fixed')) {
+            this.el.classList.remove('fixed');
+            window.dispatchEvent($.newEvent('resize'));
+        }
         this.el.classList.remove('transparent');
         return this;
     }
