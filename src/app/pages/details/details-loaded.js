@@ -28,7 +28,6 @@ export default class DetailsLoaded extends Controller {
             partners: '#partners'
         };
         this.model = model;
-        this.model.bottom = '';
     }
 
     onLoaded() {
@@ -191,23 +190,33 @@ export default class DetailsLoaded extends Controller {
         }
     }
 
+    // Ensure that floating menu stays below menu and above footer
+    // If there is not enough room in the viewport to display the entire
+    // floating menu, then position it statically/relative
     toggleFixedClass() {
-        const floatingMenu = document.querySelector('.floating-menu>.box');
-        const body = document.body;
-        const html = document.documentElement;
-        const height = Math.max(body.scrollHeight, body.offsetHeight,
-            html.clientHeight, html.scrollHeight, html.offsetHeight);
+        const floatingMenu = document.querySelector('.floating-menu');
 
         if (floatingMenu) {
-            const footer = document.getElementById('footer');
-            const footerHeight = Math.max(footer.scrollHeight, footer.offsetHeight);
-            const floatingMenuHeight = Math.max(floatingMenu.scrollHeight, floatingMenu.offsetHeight)+210;
-            const menuOffset = height - footerHeight - floatingMenuHeight;
+            // Need the bounding box of the contents, as the floatingMenu is zero-height
+            const fmRect = floatingMenu.querySelector('.box').getBoundingClientRect();
+            const fmHeight = fmRect.bottom - fmRect.top;
+            const fmStyle = floatingMenu.style;
+            const menuBarRect = document.querySelector('header [role="menubar"]').getBoundingClientRect();
+            const footerRect = document.getElementById('footer').getBoundingClientRect();
+            const margin = 15;
 
-            if ((window.pageYOffset > menuOffset) && (window.innerWidth > 768)) {
-                this.model.bottom = 'bottom';
+            if (window.pageYOffset < 110 || window.innerHeight - 2 * margin - menuBarRect.bottom < fmHeight) {
+                this.model.fmPosition = '';
+            } else if (menuBarRect.bottom + fmHeight + 2 * margin > footerRect.top) {
+                Object.assign(this.model, {
+                    fmPosition: 'fixed',
+                    fmTop: `${footerRect.top - fmHeight - margin}px`
+                });
             } else {
-                this.model.bottom = '';
+                Object.assign(this.model, {
+                    fmPosition: 'fixed',
+                    fmTop: `${menuBarRect.bottom + margin}px`
+                });
             }
             this.update();
         }

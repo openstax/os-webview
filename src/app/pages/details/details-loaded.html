@@ -52,22 +52,25 @@
                     </div>
                 </div>
             </section>
-            <section class="floating-menu {model.bottom}">
-                <div class="box">
-                <h2>Get this book</h2>
-                <div class="get-this-book" skip="true"></div>
-                <div class="notes"></div>
-                <div class="cta">
-                    <p class="interested-text">
-                        Using this book, or interested in adopting it for your
-                        course?
-                    </p>
-                    <if condition="model.salesforce_abbreviation">
-                        <a href="{`/adoption?${encodeURIComponent(model.salesforce_abbreviation)}`}" class="btn hide-if-coming-soon">Adopt This Book</a>
-                        <a href="{`/interest?${encodeURIComponent(model.salesforce_abbreviation)}`}" class="secondary btn">Sign up for info</a>
-                    </if>
+            <section class="floating-menu-container">
+                <div style="{top: model.fmTop}"
+                    class="floating-menu {model.fmPosition}">
+                        <div class="box">
+                        <h2>Get this book</h2>
+                        <div class="get-this-book" skip="true"></div>
+                        <div class="notes"></div>
+                        <div class="cta">
+                            <p class="interested-text">
+                                Using this book, or interested in adopting it for your
+                                course?
+                            </p>
+                            <if condition="model.salesforce_abbreviation">
+                                <a href="{`/adoption?${encodeURIComponent(model.salesforce_abbreviation)}`}" class="btn hide-if-coming-soon">Adopt This Book</a>
+                                <a href="{`/interest?${encodeURIComponent(model.salesforce_abbreviation)}`}" class="secondary btn">Sign up for info</a>
+                            </if>
+                        </div>
+                    </div>
                 </div>
-            </div>
             </section>
     </section>
     <section class="endorsement" if="model.book_quotes.length">
