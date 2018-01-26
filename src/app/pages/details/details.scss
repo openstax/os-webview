@@ -140,18 +140,19 @@ $special-breakpoint: 54rem;
         }
 
         @include wider-than($tablet-max) {
+            flex-wrap: nowrap;
             justify-content: flex-start;
         }
 
         .cover-wrap {
             align-self: flex-start;
-            margin: 0 -1.5rem 3rem;
+            margin: 0 -#{$normal-margin} 3rem;
             order: 1;
             position: relative;
-            width: 100vw;
+            width: calc(100% + $normal-margin);
 
             @include wider-than($special-breakpoint) {
-                margin: 0 1.5rem 3rem 0;
+                margin: 0 $normal-margin 3rem 0;
                 width: 25rem;
             }
 
@@ -172,20 +173,24 @@ $special-breakpoint: 54rem;
             }
         }
 
-        .floating-menu {
-            flex: 1 auto;
-            margin-bottom: 3rem;
-            order: 2;
+        .floating-menu-container {
+            margin: 0;
+            order: 3;
 
+            @include wider-than($phone-max) {
+                flex-basis: 25rem;
+            }
+
+            @include width-between($phone-max, $special-breakpoint) {
+                margin-left: $normal-margin;
+            }
+        }
+
+        .floating-menu {
             @include menu-is-fixed {
                 &.fixed {
-                    left: 50%;
                     margin-bottom: 0;
-                    max-width: 120rem;
-                    order: 3;
                     position: fixed;
-                    transform: translateX(-50%);
-                    width: 100%;
                     z-index: 1;
                 }
             }
@@ -205,18 +210,13 @@ $special-breakpoint: 54rem;
                     width: calc(100% + #{2 * $normal-margin});
                 }
 
-                @include width-between($special-breakpoint, $tablet-max) {
+                @include wider-than($special-breakpoint) {
                     float: right;
                     margin: 0;
                     max-width: 25rem;
                 }
 
                 @include wider-than($tablet-max) {
-                    margin: 0;
-                    position: absolute;
-                    right: 1.5rem;
-                    top: 0;
-                    width: 25rem;
                 }
             }
 
@@ -232,16 +232,11 @@ $special-breakpoint: 54rem;
         }
 
         .details {
-            order: 3;
+            margin-right: $normal-margin;
+            order: 2;
 
-            @include width-between($phone-max, $tablet-max) {
-                flex: 1 100%;
-            }
-
-            @include menu-is-fixed {
-                flex: 1 0;
-                order: 2;
-                padding-right: 26.5rem;
+            @include wider-than($tablet-max) {
+                flex: 1 1 50%;
             }
         }
 
@@ -358,7 +353,9 @@ $special-breakpoint: 54rem;
 
         .row {
             flex: 1 auto;
+            flex-wrap: wrap;
             margin-bottom: 2.5rem;
+            width: 100%;
         }
 
         .student-resources-cta {
@@ -405,8 +402,10 @@ $special-breakpoint: 54rem;
     }
 
     .resource {
+        box-sizing: content-box;
         display: flex;
         flex-flow: column nowrap;
+        width: 100%;
 
         @include wider-than($phone-max) {
             flex-flow: row wrap;
@@ -415,13 +414,16 @@ $special-breakpoint: 54rem;
         > div {
             background-color: ui-color(white);
             display: flex;
-            flex: 1 0 24rem;
             flex-flow: column nowrap;
             justify-content: space-between;
             margin-bottom: $normal-margin;
             margin-right: $normal-margin;
             padding: 1.5rem;
             position: relative;
+
+            @include wider-than($phone-max) {
+                flex: 1 0 22rem;
+            }
 
             h4 {
                 color: os-color(blue);

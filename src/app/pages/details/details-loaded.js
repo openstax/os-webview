@@ -205,7 +205,7 @@ export default class DetailsLoaded extends Controller {
             const footerRect = document.getElementById('footer').getBoundingClientRect();
             const margin = 15;
 
-            if (window.innerHeight - 2 * margin - menuBarRect.bottom < fmHeight) {
+            if (window.pageYOffset < 110 || window.innerHeight - 2 * margin - menuBarRect.bottom < fmHeight) {
                 this.model.fmPosition = '';
             } else if (menuBarRect.bottom + fmHeight + 2 * margin > footerRect.top) {
                 Object.assign(this.model, {
