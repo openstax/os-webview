@@ -6,7 +6,7 @@
         </div>
     </div>
     <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
-    <div class="text-content">
+    <div class="text-content {model.currentSection > 1 ? 'hidden' : ''}">
         <plug-in data-id="selectedRole" skip="true"></plug-in>
     </div>
     <plug-in data-id="form" skip="true"></plug-in>

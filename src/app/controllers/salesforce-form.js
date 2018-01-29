@@ -29,11 +29,6 @@ class SalesforceForm extends CMSPageController {
             .sort((a, b) => a.text < b.text ? -1 : 1);
     }
 
-    // @on('focusout input')
-    // markVisited(event) {
-    //     event.delegateTarget.classList.add('visited');
-    // }
-
     @on('change')
     updateOnChange() {
         this.update();
