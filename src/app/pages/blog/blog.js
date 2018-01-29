@@ -36,6 +36,7 @@ export default class Blog extends CMSPageController {
             rssUrl: `${settings.apiOrigin}/blog-feed/rss/`
         };
         this.timersRunning = [];
+        this.previousSlug = null;
         shell.showLoader();
 
         this.handlePathChange = () => {
@@ -50,6 +51,10 @@ export default class Blog extends CMSPageController {
                     router.navigate('/404', {path: '/blog'}, true);
                     return;
                 }
+                if (this.previousSlug !== slugMatch[1]) {
+                    this.previousSlug = slugMatch[1];
+                    this.setTimers();
+                }
             }
             this.update();
         };
@@ -63,6 +68,7 @@ export default class Blog extends CMSPageController {
 
     setTimers() {
         const fireAt = [
+            [0, '0-10 seconds', '0-10 seconds'],
             [11, '11-30 seconds', '11-30 seconds'],
             [31, '31 sec - 1 min', '31-60 seconds'],
             [61, '1-2 minutes', '61-120 seconds'],
@@ -75,7 +81,7 @@ export default class Blog extends CMSPageController {
         ];
         const action = 'time spent';
 
-        analytics.sendPageEvent('TimeOnPage 0-10 seconds', action, '0-10 seconds');
+        this.clearTimers();
         this.timersRunning = fireAt.map(([sec, category, label], i) => {
             return setTimeout(() => {
                 analytics.sendPageEvent(`TimeOnPage ${category}`, action, label);
@@ -83,8 +89,13 @@ export default class Blog extends CMSPageController {
         });
     }
 
+    clearTimers() {
+        for (const timer of this.timersRunning) {
+            clearTimeout(timer);
+        }
+    }
+
     onDataLoaded() {
-        this.setTimers();
         if (!this.articles) {
             this.articleSlugs = Object.keys(this.pageData.articles)
                 .sort((a, b) => {
@@ -107,6 +118,7 @@ export default class Blog extends CMSPageController {
             this.handlePathChange();
         }
         shell.hideLoader();
+        this.setTimers();
     }
 
     onUpdate() {
@@ -134,6 +146,7 @@ export default class Blog extends CMSPageController {
     }
 
     onClose() {
+        this.clearTimers();
         window.removeEventListener('popstate', this.handlePathChange);
         window.removeEventListener('navigate', this.handlePathChange);
     }
@@ -156,11 +169,6 @@ export default class Blog extends CMSPageController {
             x: 0,
             y: 0
         });
-
-        for (const timer of this.timersRunning) {
-            clearTimeout(timer);
-        }
-        this.setTimers();
     }
 
 }
