@@ -46,7 +46,8 @@ class Header extends Controller {
             },
             accountLink: `${settings.accountHref}/profile`,
             facultyAccessLink: `${settings.accountHref}/faculty_access/apply`,
-            currentDropdown: null
+            currentDropdown: null,
+            submenuName: 'Name goes here'
         };
 
         this.upperMenu = new UpperMenu(this.model);
@@ -98,7 +99,6 @@ class Header extends Controller {
             }
         });
 
-        document.addEventListener('click', this.resetHeader.bind(this));
         window.addEventListener('resize', this.closeFullScreenNav.bind(this));
         window.addEventListener('resize', padParentForStickyNote);
         window.addEventListener('navigate', () => this.update());
@@ -122,7 +122,7 @@ class Header extends Controller {
             ticking = false;
         };
 
-        this.onScrollHeader = (evt) => {
+        this.onScrollHeader = () => {
             if (!ticking) {
                 ticking = true;
                 requestAnimationFrame(this.removeAllOpenClassesOnScroll);
@@ -170,6 +170,34 @@ class Header extends Controller {
         return height;
     }
 
+    resetDropdownTop() {
+        if (this.currentDropdown) {
+            this.currentDropdown.el.style.top = '';
+        }
+    }
+
+    recognizeDropdownOpen(openDropdown) {
+        const isOpen = Boolean(openDropdown);
+        const zoneEl = this.el.querySelector('.submenu-zone');
+
+        this.resetDropdownTop();
+        this.el.classList.toggle('open', isOpen);
+        if (openDropdown) {
+            this.model.submenuName = openDropdown.label;
+            this.update();
+        }
+
+        // Adjust top of dropdown
+        if (isOpen) {
+            const zoneRect = zoneEl.getBoundingClientRect();
+            const ddRect = openDropdown.el.getBoundingClientRect();
+            const diff = zoneRect.bottom - ddRect.top - 30;
+
+            openDropdown.el.style.top = `${diff}px`;
+        }
+        this.currentDropdown = openDropdown;
+    }
+
     toggleFullScreenNav(button) {
         const wasActive = this.el.classList.contains('active');
         const reconfigure = () => {
@@ -196,34 +224,13 @@ class Header extends Controller {
         }
     }
 
-    removeClass(array, className) {
-        const len = array.length;
-
-        for (let i = 0; i < len; i++) {
-            if (array[i].classList) {
-                array[i].classList.remove(className);
-            } else {
-                const names = array[i].className.split(' ')
-                    .filter((name) => name !== className);
-
-                array[i].className = names.join('');
-            }
-        }
-    }
-
     removeAllOpenClasses() {
-        const parentItem = this.el.querySelectorAll('.dropdown');
-        const dropDownMenu = this.el.querySelectorAll('.dropdown-menu');
-
-        if (this.el) {
-            this.el.classList.remove('open');
-        }
-        this.removeClass(parentItem, 'open');
-        this.removeClass(dropDownMenu, 'open');
-        this.closeDropdownMenus(true);
-        this.updateHeaderStyle();
+        this.mainMenu.closeDropdowns();
+        this.resetDropdownTop();
     }
 
+    @on('click .nav-menu-item:not(.dropdown) [role="menuitem"]')
+    @on('click .dropdown-container [role="menuitem"]')
     closeFullScreenNav() {
         const button = this.el.querySelector('.expand');
 
@@ -243,34 +250,6 @@ class Header extends Controller {
         this.toggleFullScreenNav(e.target);
     }
 
-    @on('click .dropdown > a')
-    flyOutMenu(e) {
-        const w = window.innerWidth;
-        const $this = e.target;
-        const parentItem = $this.parentNode;
-        const dropDownMenu = $this.nextElementSibling;
-
-        if (w <= 960) {
-            e.preventDefault();
-            e.stopPropagation();
-            if (!dropDownMenu.classList.contains('open')) {
-                // FIX: this should all be done in the view
-                this.removeAllOpenClasses();
-                this.el.classList.add('open');
-                parentItem.classList.add('open');
-                dropDownMenu.classList.add('open');
-                this.openThisDropdown(dropDownMenu);
-            }
-        }
-    }
-
-    @on('click .submenu-zone .close')
-    closeSubmenu(e) {
-        this.removeAllOpenClasses();
-        e.preventDefault();
-        e.stopPropagation();
-    }
-
     @on('keydown .expand')
     onKeydownToggleFullScreenNav(e) {
         if (document.activeElement === e.target && [$.key.space, $.key.enter].includes(e.keyCode)) {
@@ -279,12 +258,20 @@ class Header extends Controller {
         }
     }
 
+    @on('click .submenu-zone .close')
+    closeSubmenu() {
+        if (this.currentDropdown) {
+            this.currentDropdown.close();
+            this.resetDropdownTop();
+        }
+    }
+
     // Left and right arrows go through menu items
     @on('keydown a[role="menuitem"]:focus')
     nextOrPrevious(event) {
         const target = event.target;
-        const isDropdownItem = target.parentNode.parentNode.classList.contains('dropdown-menu');
-        const container = isDropdownItem ? target.parentNode.parentNode.previousSibling.parentNode : target.parentNode;
+        const isDropdownItem = target.parentNode.classList.contains('dropdown');
+        const container = isDropdownItem ? target.parentNode.parentNode : target.parentNode;
 
         if (event.keyCode === $.key.left) {
             container.previousSibling && container.previousSibling.querySelector('[role="menuitem"]').focus();
@@ -292,35 +279,6 @@ class Header extends Controller {
         if (event.keyCode === $.key.right) {
             container.nextSibling && container.nextSibling.querySelector('[role="menuitem"]').focus();
         }
-    }
-
-    // FIX: should be done in the view
-    openThisDropdown(menu) {
-        menu.setAttribute('aria-expanded', 'true');
-
-        for (const a of menu.querySelectorAll('a')) {
-            a.setAttribute('tabindex', '0');
-        }
-    }
-
-    resetHeader(e) {
-        const urlClick = e && linkHelper.validUrlClick(e);
-
-        if (urlClick) {
-            if (!urlClick.parentNode.classList.contains('dropdown')) {
-                this.closeDropdownMenus(true);
-                this.closeFullScreenNav();
-            }
-        } else if (!this.el.classList.contains('active')) {
-            this.closeFullScreenNav();
-        } else {
-            this.updateHeaderStyle();
-        }
-    }
-
-    closeDropdownMenus(all) {
-        this.mainMenu.model.openDropdown = null;
-        this.mainMenu.update();
     }
 
     updateHeaderStyle() {

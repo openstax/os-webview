@@ -12,75 +12,17 @@
     </span>
 
     <ul class="nav-menu main-menu no-bullets">
-        <li class="nav-menu-item dropdown" role="presentation">
-            <a href="/subjects" role="menuitem" aria-haspopup="true" skip="model.initialRenderDone">
-                Subjects
-                <svg class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 30"><title>arrow</title><path d="M12,1L26,16,12,31,8,27,18,16,8,5Z" transform="translate(-8 -1)"/></svg>
-            </a>
-            <ul class="dropdown-menu" role="menu"
-             aria-expanded="{model.openDropdown === 'subjects'}" aria-label="Subjects menu">
-                <li role="presentation"><a href="/subjects" role="menuitem" tabindex="-1">All</a></li>
-                <li role="presentation"><a href="/subjects/math" role="menuitem" tabindex="-1">Math</a></li>
-                <li role="presentation"><a href="/subjects/science" role="menuitem" tabindex="-1">Science</a></li>
-                <li role="presentation"><a href="/subjects/social-sciences" role="menuitem" tabindex="-1">Social Sciences</a></li>
-                <li role="presentation"><a href="/subjects/humanities" role="menuitem" tabindex="-1">Humanities</a></li>
-                <li role="presentation"><a href="/subjects/ap" role="menuitem" tabindex="-1">AP<sup>®</sup></a></li>
-            </ul>
-        </li>
-        <li class="nav-menu-item dropdown" role="presentation">
-            <a href="/technology" role="menuitem" aria-haspopup="true">Technology<svg class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 30"><title>arrow</title><path d="M12,1L26,16,12,31,8,27,18,16,8,5Z" transform="translate(-8 -1)"/></svg></a>
-            <ul class="dropdown-menu" role="menu"
-             aria-expanded="{model.openDropdown === 'technology'}"
-             aria-label="Technology menu">
-                <li role="presentation"><a href="/technology" role="menuitem" tabindex="-1">Technology Options</a></li>
-                <li role="presentation"><a href="/openstax-tutor" role="menuitem" tabindex="-1">About OpenStax Tutor</a></li>
-                <li role="presentation"><a href="/partners" role="menuitem" tabindex="-1">OpenStax Partners</a></li>
-            </ul>
-        </li>
+        <li class="subjects-dropdown" skip="true"></li>
+        <li class="technology-dropdown" skip="true"></li>
         <li class="nav-menu-item" role="presentation">
-            <a href="/impact" role="menuitem" aria-haspopup="true">Our Impact</a>
+            <a href="/impact" role="menuitem">Our Impact</a>
         </li>
         <li class="nav-menu-item login{model.user.username ? ' dropdown' : ''}">
             <if condition="!model.user.username">
                 <a href="{model.login}" class="pardotTrackClick" data-set-redirect="true" data-local="true" role="menuitem">Login</a>
             <else>
-                <a href="{model.accountLink}" role="menuitem" aria-haspopup="true" aria-expanded="{model.openDropdown === 'login'}">
-                    Hi {model.user.first_name || model.user.username}
-                    <svg width="0" class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 30"><title>arrow</title><path d="M12,1L26,16,12,31,8,27,18,16,8,5Z" transform="translate(-8 -1)"/></svg>
-                </a>
+                <div class="login-dropdown rightmost" skip="true"></div>
             </if>
-
-            <ul if="model.user.username" class="dropdown-menu" role="menu"
-             aria-expanded="{model.trainingWheelActive || (model.openDropdown === 'profile')}"
-             aria-label="User Menu">
-                <li role="presentation">
-                    <a href="{model.accountLink}" role="menuitem" tabindex="-1">
-                        Account Profile
-                    </a>
-                </li>
-                <li class="tutor-menu-item" role="presentation" if="model.user.groups.includes('Tutor')">
-                    <a href="https://tutor.openstax.org/" role="menuitem" tabindex="-1"">OpenStax Tutor</a>
-                    <div if="model.trainingWheelActive" class="training-wheel">
-                        <div class="put-away-row" tabindex="-1"><button class="put-away" tabindex="0" data-keep-open="true">×</button></div>
-                        <img src="/images/openstax-tutor/tutor-logo.svg">
-                        <hr>
-                        <div class="message">You can access your OpenStax Tutor courses here!</div>
-                        <div class="button-row" tabindex="-1"><button tabindex="0" data-keep-open="true">Got It</button></div>
-                    </div>
-                </li>
-                <li if="model.user && !model.user.groups.includes('Faculty')
-                    && !model.user.groups.includes('Student')
-                    && !model.user.pending_verification" role="presentation">
-                    <a href="{model.facultyAccessLink}" data-local="true" role="menuitem" tabindex="-1">
-                        Request instructor access
-                    </a>
-                </li>
-                <li role="presentation" class="logout">
-                    <a href="{model.logout}" data-set-redirect="true" data-local="true" role="menuitem" tabindex="-1">
-                        Logout
-                    </a>
-                </li>
-            </ul>
         </li>
     </ul>
     <button class="expand" aria-haspopup="true" aria-label="Toggle Meta Navigation Menu" tabindex="0">
