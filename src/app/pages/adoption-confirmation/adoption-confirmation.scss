@@ -22,7 +22,7 @@
 
     .form-checkboxgroup,
     .form-radiogroup {
-        margin: $normal-margin 0 (2 * $normal-margin);
+        margin: 0 0 3.5rem;
 
         > label + :not(label) {
             margin-top: $normal-margin;
@@ -70,6 +70,25 @@
         min-height: 40rem;
     }
 
+    .form-header {
+        padding-right: 4rem;
+        transform: translateY(4rem);
+        width: 72rem;
+
+        h2 {
+            @include set-font(h3);
+
+            margin: 0;
+        }
+    }
+
+    [name="form-response"] {
+        height: 0;
+        line-height: 0;
+        margin-top: -4rem;
+        visibility: hidden;
+    }
+
     .flexrow {
         @extend %content;
 
@@ -93,10 +112,8 @@
         &.primary,
         &.cta {
             @extend %primary;
-        }
 
-        &.secondary {
-            @extend %secondary;
+            text-transform: none;
         }
     }
 

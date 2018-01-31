@@ -6,10 +6,18 @@ function clickEvent() {
     });
 }
 
+const keyCodes = {
+    ArrowDown: 40,
+    ArrowUp: 38,
+    Enter: 13,
+    Escape: 27
+};
+
 function doKeyDown(el, key) {
     el.dispatchEvent(
         new KeyboardEvent('keydown', {
             key: key,
+            keyCode: keyCodes[key],
             bubbles: true,
             cancelable: true
         })

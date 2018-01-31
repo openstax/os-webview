@@ -111,7 +111,8 @@ export default class TeacherForm extends SalesforceForm {
             validationMessage,
             salesforce,
             currentSection: 1,
-            showOtherBlank: false
+            showOtherBlank: false,
+            defaultTitle: this.defaultTitle
         });
 
         this.inputComponents = Object.keys(inputs).map((k) =>
@@ -168,6 +169,9 @@ export default class TeacherForm extends SalesforceForm {
     }
 
     onUpdate() {
+        if (this.parent) {
+            this.parent.update();
+        }
         for (const c of this.inputComponents) {
             c.update();
         }

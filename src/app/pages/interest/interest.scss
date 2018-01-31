@@ -41,12 +41,10 @@
         margin-top: 4rem;
     }
 
-    .form-checkboxgroup {
-        margin-bottom: 5rem;
-    }
-
+    .form-checkboxgroup,
     .form-input > .control-group {
-        margin-bottom: 5rem;
+        margin-bottom: 3.5rem;
+        margin-top: $normal-margin;
     }
 
     button {

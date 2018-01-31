@@ -71,7 +71,7 @@ export default class AdoptionForm extends Controller {
         }
         this.model.userRole = newRole;
         this.form.update();
-        $.scrollTo(this.form.el);
+        $.scrollTo(this.el.querySelector('[data-id="selectedRole"]'));
     }
 
 }

@@ -10,10 +10,14 @@
         position: static;
     }
 
+    .hidden {
+        display: none;
+    }
+
     [data-id="selectedRole"] {
         display: flex;
         margin: auto;
-        padding: 4rem 0;
+        padding: 4rem 0 0;
         width: 47rem;
 
         > label {
@@ -24,6 +28,10 @@
     .grouping {
         align-items: flex-start;
         width: 47rem;
+
+        > div {
+            margin-bottom: 1rem;
+        }
     }
 
     .invalid-message.offset-up {
@@ -61,6 +69,8 @@
 
     [data-id="form"] {
         display: block;
+        margin-bottom: 6rem;
+        margin-top: 2rem;
         min-height: 20rem;
     }
 

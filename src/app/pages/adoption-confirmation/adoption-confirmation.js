@@ -16,13 +16,15 @@ export default class AdoptionConfirmation extends Controller {
         };
         this.regions = {
             header: '.hero',
-            content: '.content'
+            content: '.followup-form'
         };
     }
 
     onLoaded() {
+        const email = history.state ? history.state.email : '';
+
         this.regions.header.attach(new Header1());
-        this.regions.content.attach(new SupplementalForm(history.state.email, () => this.loadFinalThankYou()));
+        this.regions.content.attach(new SupplementalForm(email, () => this.loadFinalThankYou()));
     }
 
     loadFinalThankYou() {

@@ -10,6 +10,15 @@
         color: inherit;
     }
 
+    .outlined {
+        @extend %button;
+
+        background-color: transparent;
+        border-color: ui-color(white);
+        color: text-color(white);
+        display: inline-flex;
+    }
+
     .flexrow {
         align-items: flex-end;
         max-width: 100rem;
