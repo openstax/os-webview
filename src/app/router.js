@@ -31,6 +31,7 @@ const PAGES = [
     'openstax-tutor',
     'partners',
     'partners/*path',
+    'privacy-policy',
     'subjects',
     'subjects/*path',
     'technology'
