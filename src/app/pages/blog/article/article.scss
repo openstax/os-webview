@@ -79,12 +79,12 @@
 
         .viewport {
             display: flex;
+            flex: 1 1 15rem;
             flex-direction: column;
             overflow: hidden;
         }
 
         .meta {
-            padding-bottom: 1rem;
             width: 100%;
 
             p {
@@ -107,18 +107,28 @@
 
     .excerpt {
         display: flex;
-        flex-basis: 100%;
         flex-direction: column;
         flex-shrink: 1;
+        height: calc(100% - 2.5rem); // Firefox needs this
 
         .body {
-            column-width: 57em;
-            height: 11rem;
-            max-height: 11rem;
-            width: auto;
+            flex-basis: 100%;
+            flex-shrink: 1;
+
+            > :first-child {
+                height: 12rem;
+                overflow: hidden;
+                width: auto;
+
+                > * {
+                    column-width: 57em;
+                    height: 100%;
+                }
+            }
 
             div :first-child {
-                -webkit-margin-before: 0;
+                margin-bottom: 0;
+                margin-top: 0;
             }
         }
     }
@@ -147,10 +157,13 @@
             .body {
                 @include set-font(body-large);
 
-                height: 13rem;
                 margin-bottom: 1rem;
-                max-height: 15rem;
                 overflow: hidden;
+
+                > :first-child {
+                    max-height: 100%; // IE needs this
+                }
+
             }
 
             .go-to {
@@ -180,6 +193,8 @@
 
                 @include wider-than($tablet-max) {
                     flex-basis: 50%;
+                    height: 32rem;
+                    justify-content: space-between;
                     max-width: 50%;
                     padding: 0;
                 }
@@ -227,10 +242,10 @@
             .content {
                 flex-basis: 100%;
                 max-width: 100%;
-                padding: 0 $normal-margin;
+                padding: 0 $normal-margin $normal-margin;
 
                 @include wider-than($tablet-max) {
-                    padding: 1.5rem;
+                    padding: $normal-margin;
                 }
             }
         }
