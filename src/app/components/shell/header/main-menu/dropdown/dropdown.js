@@ -64,21 +64,25 @@ export default class Dropdown extends Controller {
     }
 
     openMenu() {
-        this.model.isOpen = true;
-        if (this.isMobileDisplay()) {
-            header.recognizeDropdownOpen({
-                el: this.el,
-                label: this.model.props.dropdownLabel,
-                close: this.closeMenu.bind(this)
-            });
+        if (!this.model.isOpen) {
+            this.model.isOpen = true;
+            if (this.isMobileDisplay()) {
+                header.recognizeDropdownOpen({
+                    el: this.el,
+                    label: this.model.props.dropdownLabel,
+                    close: this.closeMenu.bind(this)
+                });
+            }
+            this.update();
         }
-        this.update();
     }
 
     closeMenu() {
-        this.model.isOpen = false;
-        header.recognizeDropdownOpen(null);
-        this.update();
+        if (this.model.isOpen) {
+            this.model.isOpen = false;
+            header.recognizeDropdownOpen(null);
+            this.update();
+        }
     }
 
     @on('focusin')
@@ -90,9 +94,9 @@ export default class Dropdown extends Controller {
     }
 
     @on('focusout')
-    navigateAway() {
-        if (!this.isMobileDisplay() && !this.settingFocus) {
-            this.closeMenuBound();
+    navigateAway(event) {
+        if (event.target === this.el && !this.isMobileDisplay() && !this.settingFocus) {
+            this.closeMenuBound(event);
         }
     }
 
@@ -130,6 +134,7 @@ export default class Dropdown extends Controller {
         case $.key.esc:
             document.activeElement.blur();
             this.closeMenuBound();
+            event.preventDefault();
             break;
         default:
             break;
