@@ -204,10 +204,11 @@ export default class DetailsLoaded extends Controller {
             const menuBarRect = document.querySelector('header [role="menubar"]').getBoundingClientRect();
             const footerRect = document.getElementById('footer').getBoundingClientRect();
             const margin = 15;
+            const newTop = Math.max(menuBarRect.bottom, 0);
 
             if (window.pageYOffset < 110 || window.innerHeight - 2 * margin - menuBarRect.bottom < fmHeight) {
                 this.model.fmPosition = '';
-            } else if (menuBarRect.bottom + fmHeight + 2 * margin > footerRect.top) {
+            } else if (newTop + fmHeight + 2 * margin > footerRect.top) {
                 Object.assign(this.model, {
                     fmPosition: 'fixed',
                     fmTop: `${footerRect.top - fmHeight - margin}px`
@@ -215,7 +216,7 @@ export default class DetailsLoaded extends Controller {
             } else {
                 Object.assign(this.model, {
                     fmPosition: 'fixed',
-                    fmTop: `${menuBarRect.bottom + margin}px`
+                    fmTop: `${newTop + margin}px`
                 });
             }
             this.update();
