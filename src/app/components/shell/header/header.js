@@ -119,6 +119,7 @@ class Header extends Controller {
 
         this.removeAllOpenClassesOnScroll = () => {
             this.removeAllOpenClasses();
+            this.updateHeaderStyle();
             ticking = false;
         };
 
