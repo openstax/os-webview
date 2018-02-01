@@ -19,12 +19,11 @@
 
     .boxed {
         margin: 0 auto;
-        max-width: 90%;
         opacity: 0.85;
-        width: 90rem;
 
         @include wider-than($tablet-max) {
             padding: 0;
+            width: 86rem; // A little extra-wide to allow list of links to fit
         }
     }
 
@@ -43,7 +42,7 @@
         flex-wrap: wrap;
 
         @include wider-than($tablet-max) {
-            padding: 0 5rem 1rem;
+            padding: 0 0 1rem;
         }
 
         ul {
