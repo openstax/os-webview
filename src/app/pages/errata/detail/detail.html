@@ -5,13 +5,6 @@
                 <div class="label">{pair[0]}</div>
                 <div class="value">{model.detail[pair[1]] || ''}</div>
             </div>
-            <div class="label-value-pair">
-                <div class="label"></div>
-                <div class="value">
-                    Questions about the resolution?
-                    <a href="mailto:support@openstax.org?subject={model.mailSubject}&body={model.mailBody}">Ask us</a>
-                </div>
-            </div>
         </div>
     </div>
     <div class="info body-block {model.detail.barStatus ? 'graytop' : ''}">
