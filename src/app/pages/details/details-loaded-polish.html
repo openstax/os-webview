@@ -52,21 +52,24 @@
                     </div>
                 </div>
             </section>
-            <section class="floating-menu {model.bottom}">
-                <div class="box">
-                <h2>Przejdź do książki</h2>
-                <div class="get-this-book" skip="true"></div>
-                <div class="notes"></div>
-                <div class="cta">
-                    <p class="interested-text">
-                        Używasz tego podręcznika albo chcesz go wykorzystać na swoich zajęciach?
-                    </p>
-                    <if condition="model.salesforce_abbreviation">
-                        <a href="https://openstax.pl/pl/newsletter" class="btn">Dowiedz się więcej</a>
-                        <span class="dummy-last-child"></span>
-                    </if>
+            <section class="floating-menu-container">
+                <div style="{top: model.fmTop}"
+                    class="floating-menu {model.fmPosition}">
+                    <div class="box">
+                        <h2>Przejdź do książki</h2>
+                        <div class="get-this-book" skip="true"></div>
+                        <div class="notes"></div>
+                        <div class="cta">
+                            <p class="interested-text">
+                                Używasz tego podręcznika albo chcesz go wykorzystać na swoich zajęciach?
+                            </p>
+                            <if condition="model.salesforce_abbreviation">
+                                <a href="https://openstax.pl/pl/newsletter" class="btn">Dowiedz się więcej</a>
+                                <span class="dummy-last-child"></span>
+                            </if>
+                        </div>
+                    </div>
                 </div>
-            </div>
             </section>
     </section>
     <section class="endorsement" if="model.book_quotes.length">
