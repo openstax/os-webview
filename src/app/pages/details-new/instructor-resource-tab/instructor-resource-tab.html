@@ -1,0 +1,51 @@
+<template args="model">
+    <div>
+        Access free resources integrated with your book. Sign up for an account
+        to access locked content.
+    </div>
+    <div class="community-resources">
+        <div class="resource-box">
+            <h3>OpenStax Community Resources</h3>
+            <div class="blurb">
+                Placeholder text about access, develop, share resources created by the
+                OpenStax Community that align with OpenStax {model.bookTitle}.
+            </div>
+            <div class="bottom-right">
+                <p>Visit oercommons.org to learn more about what they offer</p>
+                <a href="http://oercommons.org">
+                    <i class="fa fa-external-link-alt"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="resources">
+        <resource-box each="resource in model.resources" skip="true"></resource-box>
+    </div>
+    <if condition="model.allies.length">
+        <div class="ally-blurb">
+            <div>
+            OpenStax Partners provide additional, low-cost resources for your
+            book. See what's offered for this title below and learn more about
+            our <a href="/partners">partners here</a>.</div>
+            <div class="ally-logo">
+                <img
+                 src="http://staxlogos.openstax.org/OSX-ALLY-Green-RGB-150dpi.png"
+                 alt=""
+                 >
+             </div>
+        </div>
+        <div class="resources">
+            <div each="ally in model.allies" class="ally-box resource-box">
+                <div class="top">
+                    <img src="{ally.ally_color_logo}">
+                </div>
+                <div class="bottom">
+                    <a href="{ally.book_link_url}">
+                        {ally.book_link_text}<i class="fa fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </if>
+
+</template>

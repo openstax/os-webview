@@ -87,7 +87,6 @@
     }
 
     .option {
-        border-bottom: 0.1rem solid ui-color(form-border);
         padding: 0.5rem;
 
         &:last-child {
@@ -96,9 +95,16 @@
 
         a,
         .option-header {
-            display: block;
-            padding-left: 3rem;
+            align-items: baseline;
+            display: flex;
+            justify-content: flex-start;
             text-decoration-line: none;
+
+            :first-child {
+                flex-basis: 3rem;
+                margin-right: $normal-margin;
+                text-align: center;
+            }
         }
 
         a {

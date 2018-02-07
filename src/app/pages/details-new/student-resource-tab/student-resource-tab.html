@@ -1,0 +1,10 @@
+<template args="model">
+    <div>
+        Take a look at our student resources that are integrated with your book
+        to help you ace your course. Sign up for an account to access locked
+        content.
+    </div>
+    <div class="resources">
+        <resource-box each="resource in model.resources" skip="true"></resource-box>
+    </div>
+</template>

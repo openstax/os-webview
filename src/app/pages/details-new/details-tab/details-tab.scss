@@ -1,0 +1,65 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.details-tab {
+    @include set-font(body-large);
+
+    display: grid;
+    grid-gap: $normal-margin;
+    grid-template-columns: 23rem auto;
+
+    p {
+        margin: 0;
+    }
+
+    .sidebar {
+        .btn {
+            display: grid;
+            grid-gap: $normal-margin;
+            grid-template-columns: auto auto;
+            width: 100%;
+        }
+    }
+
+    .main {
+        align-items: flex-start;
+    }
+
+    .button-group {
+        display: grid;
+        grid-gap: 1rem;
+        margin: $normal-margin 0 4rem;
+
+        @include wider-than($phone-max) {
+            grid-template-columns: auto auto;
+        }
+    }
+
+    .btn,
+    button {
+        @extend %button;
+
+        margin: 0;
+        padding: 1rem 2rem;
+        text-transform: none;
+
+        &.primary,
+        &[type="submit"] {
+            @extend %primary;
+
+            margin: 0;
+        }
+
+        &.secondary,
+        &[type="reset"] {
+            @extend %secondary;
+
+            margin: 0;
+        }
+    }
+
+    h3,
+    h4 {
+        letter-spacing: normal;
+        margin-bottom: 0;
+    }
+}

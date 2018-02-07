@@ -21,8 +21,14 @@ linters:
         max_depth: 6
         ignore_parent_selectors: true
 
+    PropertySpelling:
+        extra_properties:
+            - grid-gap
+            - grid-template-columns
+            - grid-column-start
+
     PropertyUnits:
-        global: ['em', 'rem', '%', 'vw', 'vh', 'vmin', 'vmax', 's']
+        global: ['em', 'rem', '%', 'vw', 'vh', 'vmin', 'vmax', 's', 'fr']
 
     SelectorDepth:
         max_depth: 5
