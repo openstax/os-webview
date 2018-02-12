@@ -1,4 +1,10 @@
+@import 'pattern-library/core/pattern-library/headers';
+
 .comp-copy-form {
+
+    .text-content {
+        @extend %text-content;
+    }
 
     .subhead .description {
         align-items: center;
@@ -10,13 +16,32 @@
         }
     }
 
-    .cta {
-        @media (min-width: 641px) {
-            margin-top: 12rem;
-        }
+    .strips {
+        position: static;
     }
 
-    .labeled-inputs.row.book-info {
-        align-items: flex-start;
+    .form {
+        @extend %form;
+
+        background-color: transparent;
+    }
+
+    .labeled-inputs {
+        max-width: 40rem;
+        width: 100%;
+
+        input,
+        .select {
+            margin-bottom: 3rem;
+        }
+
+    }
+
+    .btn {
+        @extend %button;
+        @extend %primary;
+
+        float: none;
+        margin-top: 4.5rem;
     }
 }
