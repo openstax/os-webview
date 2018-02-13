@@ -63,20 +63,23 @@ export default class DetailsLoaded extends Controller {
         const handleUserDependentLoading = (user) => {
             let alternateLink = null;
             let isInstructor = true;
+            let isStudent = true;
             const encodedLocation = encodeURIComponent(window.location.href);
             const setLockState = () => {
-                for (const res of this.model.book_faculty_resources) {
-                    if (isInstructor) {
-                        res.resource_unlocked = true;
+                for (const resourceList of [this.model.book_faculty_resources, this.model.book_student_resources]) {
+                    for (const res of resourceList) {
+                        if (isInstructor) {
+                            res.resource_unlocked = true;
+                        }
+                        res.showLock = res.resource_unlocked ? 'fa-unlock-alt' : 'fa-lock';
                     }
-                    res.showLock = res.resource_unlocked ? 'fa-unlock-alt' : 'fa-lock';
                 }
             };
-            const insertResources = (resources, regionName) => {
+            const insertResources = (resources, regionName, role) => {
                 for (const res of resources) {
                     const altLink = res.resource_unlocked ? null : alternateLink;
 
-                    this.regions[regionName].append(new Resource(res, altLink));
+                    this.regions[regionName].append(new Resource(res, altLink, role));
                 }
             };
             const handlePending = () => {
@@ -99,11 +102,14 @@ export default class DetailsLoaded extends Controller {
             const checkForNonInstructor = () => {
                 if (!user || !user.username) {
                     isInstructor = false;
+                    isStudent = false;
                     alternateLink = sfUserModel.loginLink();
                     this.model.extraInstructions =
                         `For locked resources, <a href="${alternateLink}" data-local="true">log in
                         or create an instructor account</a>.`;
-                } else if (!hasGroups || !user.groups.includes('Faculty')) {
+                } else if (hasGroups && user.groups.includes('Faculty')) {
+                    isStudent = false;
+                } else {
                     isInstructor = false;
                     hideResourcesFromStudent();
                     handlePending();
@@ -114,9 +120,9 @@ export default class DetailsLoaded extends Controller {
 
             setLockState();
             this.model.hideInstructorInstructions = isInstructor || user.pending_verification;
-            insertResources(this.model.book_faculty_resources, 'instructorResources');
+            insertResources(this.model.book_faculty_resources, 'instructorResources', 'instructor');
+            insertResources(this.model.book_student_resources, 'studentResources', 'student');
             alternateLink = null;
-            insertResources(this.model.book_student_resources, 'studentResources');
             this.update();
 
             if (window.location.hash) {
