@@ -63,7 +63,8 @@
 
         button,
         .btn {
-            @include button(secondary);
+            @extend %secondary;
+            @include button();
 
             margin-left: 0;
             padding: 1.5rem;

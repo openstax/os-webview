@@ -83,7 +83,8 @@
     }
 
     [type="submit"].btn {
-        @include button(primary);
+        @extend %primary;
+        @include button();
         float: none;
         width: 9em;
 

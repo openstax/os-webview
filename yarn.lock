@@ -7063,9 +7063,9 @@ path-type@^2.0.0:
   dependencies:
     pify "^2.0.0"
 
-"pattern-library@github:openstax/pattern-library":
-  version "1.0.0"
-  resolved "https://codeload.github.com/openstax/pattern-library/tar.gz/a3d01d161d567ab4bfe20d1e09978f8bc47a20ef"
+"pattern-library@github:openstax/pattern-library#v1.1.0":
+  version "1.1.0"
+  resolved "https://codeload.github.com/openstax/pattern-library/tar.gz/5ced6cc4138d3ae7ddd53625e67cbfac66685035"
   dependencies:
     node-sass "^4.7.2"
 
