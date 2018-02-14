@@ -3,45 +3,12 @@
 .tab-group {
     @extend %tab-group;
 
-    // TODO: Move to pattern-library
-    border: 0;
-    justify-content: space-between;
-
     .tab {
         @extend %tab;
         @include set-font(h3);
-
-        // TODO: Move this stuff to the pattern-library
-        border-bottom: 0.4rem solid transparent;
-        cursor: pointer;
-        display: inline-flex;
-        flex-basis: 5%;
-        flex-grow: 1;
-        justify-content: center;
-        margin-bottom: 0;
-        margin-left: 2 * $normal-margin;
-        padding-bottom: $normal-margin;
-        padding-top: 5rem;
-
-        &:first-child {
-            margin-left: 0;
-        }
-
-        &:hover {
-            border-bottom: inherit;
-        }
-
-        &.selected {
-            border-bottom: 0.4rem solid os-color(green);
-        }
     }
 }
 
 .tab-baseline {
-    background-color: ui-color(form-border);
-    border: 0;
-    display: block;
-    height: 0.2rem;
-    margin: 0;
-    width: 100%;
+    @extend %tab-baseline !optional; // TODO: Remove when Pattern Library upgraded
 }
