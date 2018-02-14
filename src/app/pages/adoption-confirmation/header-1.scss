@@ -6,6 +6,10 @@
     background-color: os-color(deep-green);
     color: text-color(white);
 
+    @include wider-than($phone-max) {
+        padding-left: 4rem;
+    }
+
     a {
         color: inherit;
     }
@@ -22,7 +26,6 @@
     .flexrow {
         align-items: flex-end;
         max-width: 100rem;
-        padding-left: $normal-margin;
     }
 
     .text {
