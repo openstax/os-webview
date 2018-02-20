@@ -65,14 +65,12 @@ export default class DetailsLoaded extends Controller {
             let isInstructor = true;
             let isStudent = true;
             const encodedLocation = encodeURIComponent(window.location.href);
-            const setLockState = () => {
-                for (const resourceList of [this.model.book_faculty_resources, this.model.book_student_resources]) {
-                    for (const res of resourceList) {
-                        if (isInstructor) {
-                            res.resource_unlocked = true;
-                        }
-                        res.showLock = res.resource_unlocked ? 'fa-unlock-alt' : 'fa-lock';
+            const setLockState = (resourceList, isRole) => {
+                for (const res of resourceList) {
+                    if (isRole) {
+                        res.resource_unlocked = true;
                     }
+                    res.showLock = res.resource_unlocked ? 'fa-unlock-alt' : 'fa-lock';
                 }
             };
             const insertResources = (resources, regionName, role) => {
@@ -118,9 +116,10 @@ export default class DetailsLoaded extends Controller {
 
             checkForNonInstructor();
 
-            setLockState();
+            setLockState(this.model.book_faculty_resources, isInstructor);
             this.model.hideInstructorInstructions = isInstructor || user.pending_verification;
             insertResources(this.model.book_faculty_resources, 'instructorResources', 'instructor');
+            setLockState(this.model.book_student_resources, isStudent);
             insertResources(this.model.book_student_resources, 'studentResources', 'student');
             alternateLink = null;
             this.update();
