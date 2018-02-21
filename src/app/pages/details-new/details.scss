@@ -32,17 +32,17 @@
             padding: 0;
 
             h1 {
-                @include set-font(hero-h1);
+                @include title-font(4rem);
 
                 text-align: left;
                 white-space: nowrap;
 
                 @include width-between($phone-max, $tablet-max) {
-                    font-size: 10rem;
+                    @include title-font(10rem);
                 }
 
                 @include wider-than($tablet-max) {
-                    font-size: 13rem;
+                    @include title-font(13rem);
                 }
             }
         }

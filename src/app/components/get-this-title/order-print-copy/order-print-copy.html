@@ -1,0 +1,13 @@
+<template args="model">
+    <h1>Order a print copy</h1>
+    <div class="boxes">
+        <a if="model.individualLink" class="button-box" href="{model.individualLink}">
+            <div><span class="fa fa-user"></span> Individual</div>
+            <div>I need to order a personal copy for my course.</div>
+        </a>
+        <a if="model.bulkLink" class="button-box" href="{model.bulkLink}">
+            <div><span class="fa fa-users"></span> Bookstore</div>
+            <div>I need to place a bulk order for a tax-exempt organization.</div>
+        </a>
+    </div>
+</template>

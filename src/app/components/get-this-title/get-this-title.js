@@ -4,6 +4,8 @@ import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import userModel from '~/models/usermodel';
 import router from '~/router';
+import ModalContent from '../modal-content/modal-content';
+import OrderPrintCopy from './order-print-copy/order-print-copy';
 import {highSchoolSlugs} from '~/models/book-titles';
 import {description as template} from './get-this-title.html';
 import {description as polishTemplate} from './get-this-title-polish.html';
@@ -14,7 +16,8 @@ export default class GetThisTitle extends Controller {
         this.template = data.slug.substr(-6) === 'polska' ? polishTemplate : template;
         this.css = `/app/components/get-this-title/get-this-title.css?${VERSION}`;
         this.regions = {
-            submenu: '.submenu'
+            submenu: '.submenu',
+            modal: '.modal-region'
         };
 
         const isHighSchool = highSchoolSlugs.includes(data.slug);
@@ -22,6 +25,7 @@ export default class GetThisTitle extends Controller {
             data.bookstore_coming_soon, isHighSchool].find((x) => x);
 
         this.model = {
+            modalHiddenAttribute: '',
             ibookLink: data.ibook_link,
             ibookLink2: data.ibook_link_volume_2,
             kindleLink: data.kindle_link,
@@ -52,27 +56,23 @@ export default class GetThisTitle extends Controller {
         };
     }
 
+    onLoaded() {
+        this.regions.modal.attach(new ModalContent(new OrderPrintCopy({
+            individualLink: this.model.amazon.link,
+            bulkLink: this.model.bookstore.link
+        })));
+    }
+
     @on('click .btn')
     blurAfterClick(event) {
         event.target.blur();
     }
 
-    @on('click .show-pdf-submenu')
-    showPdfSubmenu(event) {
-        event.preventDefault();
-        this.model.submenu = 'pdf';
-        this.update();
-        // Focus on first link
-        this.el.querySelector('.pdf-submenu a').focus();
-    }
-
     @on('click .show-print-submenu')
     showPrintSubment(event) {
         event.preventDefault();
-        this.model.submenu = 'print';
+        this.model.modalHiddenAttribute = null;
         this.update();
-        // Focus on first link
-        this.el.querySelector('.print-submenu a').focus();
     }
 
     @on('click .submenu .remover')

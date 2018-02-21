@@ -1,0 +1,35 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.order-print-copy {
+    display: grid;
+    grid-gap: 1rem;
+
+    h1 {
+        @include body-font(2.4rem);
+
+        color: text-color(white);
+        padding: 0;
+        text-align: center;
+    }
+
+    .boxes {
+        display: grid;
+        grid-gap: 2rem;
+    }
+
+    .button-box {
+        background-color: ui-color(white);
+        border: 0;
+        border-radius: 0.4rem;
+        color: inherit;
+        display: grid;
+        grid-gap: $normal-margin;
+        grid-template-rows: auto auto;
+        padding: 2rem;
+        text-decoration: none;
+
+        > :first-child {
+            font-weight: bold;
+        }
+    }
+}
