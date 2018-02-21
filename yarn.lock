@@ -7065,7 +7065,7 @@ path-type@^2.0.0:
 
 "pattern-library@github:openstax/pattern-library#v1.1.0":
   version "1.1.0"
-  resolved "https://codeload.github.com/openstax/pattern-library/tar.gz/5ced6cc4138d3ae7ddd53625e67cbfac66685035"
+  resolved "https://codeload.github.com/openstax/pattern-library/tar.gz/d78ce3e21d92c9abaccb9d507e0d2babfef9a8ef"
   dependencies:
     node-sass "^4.7.2"
 

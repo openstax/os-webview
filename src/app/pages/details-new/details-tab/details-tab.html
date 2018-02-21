@@ -6,7 +6,16 @@
             <i class="fa fa-list-ul"></i>
             Table of contents
         </div>
+        <div class="let-us-know">
+            <span>Image here</span>
+            Using this book?<br>
+            Let us know.
+        </div>
+        <div>
+            <a href="/interest?{model.slug}">Sign up to learn more</a>
+        </div>
     </div>
+
     <div class="main text-content">
         <h3>Summary</h3>
         <div data-html="description" skip="true"></div>
@@ -34,8 +43,8 @@
                 suggestion and make necessary changes.
             </p>
             <div class="button-group">
-                <a href="/errata/form?book={encodeURIComponent(model.title)}" class="btn secondary">Suggest a correction</a>
-                <a href="/errata/?book={encodeURIComponent(model.title)}" class="btn default">Errata list</a>
+                <a href="/errata/form?book={encodeURIComponent(model.title)}" class="btn secondary medium">Suggest a correction</a>
+                <a href="/errata/?book={encodeURIComponent(model.title)}" class="btn default medium">Errata list</a>
             </div>
         </if>
         <div if="model.formattedPublishDate">

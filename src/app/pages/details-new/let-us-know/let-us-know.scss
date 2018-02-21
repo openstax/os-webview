@@ -1,0 +1,36 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+$icon-size: 5.5rem;
+
+.let-us-know {
+    align-items: center;
+    display: grid;
+    grid-gap: 2.5rem $normal-margin;
+    grid-template-columns: $icon-size auto;
+    margin-bottom: 4rem;
+
+    .book-icon {
+        align-items: center;
+        background-color: os-color(red);
+        border-radius: 50%;
+        display: flex;
+        height: $icon-size;
+        justify-content: center;
+        width: $icon-size;
+
+        a {
+            color: ui-color(white);
+            font-size: $icon-size * 0.45;
+        }
+    }
+
+    .text {
+        @include set-font(body-large);
+
+        line-height: normal;
+    }
+
+    .link {
+        grid-column: 1 / span 2;
+    }
+}

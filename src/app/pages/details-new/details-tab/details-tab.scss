@@ -12,11 +12,24 @@
     }
 
     .sidebar {
+        display: flex;
+        flex-direction: column;
+
+        > * {
+            margin-bottom: 2.5rem;
+        }
+
         .btn {
+            background-color: ui-color(white);
             display: grid;
             grid-gap: $normal-margin;
             grid-template-columns: auto auto;
             width: 100%;
+        }
+
+        .let-us-know {
+            display: flex;
+            margin-top: 8rem;
         }
     }
 

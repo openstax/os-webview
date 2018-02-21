@@ -1,5 +1,6 @@
 import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
+import PhoneView from './phone-view/phone-view';
 import DetailsTab from './details-tab/details-tab';
 import InstructorResourceTab from './instructor-resource-tab/instructor-resource-tab';
 import StudentResourceTab from './student-resource-tab/student-resource-tab';
@@ -35,6 +36,7 @@ export default class Details extends CMSPageController {
         };
         this.css = `/app/pages/details-new/details.css?${VERSION}`;
         this.regions = {
+            phoneView: '.phone-view',
             tabController: '.tab-controller',
             tabContent: '.tab-content'
         };
@@ -55,7 +57,8 @@ export default class Details extends CMSPageController {
                 title: this.pageData.title,
                 comingSoon: this.pageData.coming_soon ? ' coming-soon' : '',
                 formattedPublishDate: this.pageData.publish_date && formatDate(this.pageData.publish_date),
-                bookInfo: this.pageData
+                bookInfo: this.pageData,
+                slug: this.slug
             };
             const authors = this.pageData.book_contributing_authors;
             const senior = (author) => author.senior_author;
@@ -99,6 +102,18 @@ export default class Details extends CMSPageController {
             }
         }));
 
+        this.regions.phoneView.attach(new PhoneView({
+            bookInfo: this.pageData,
+            detailsTabData: detailsTabData(),
+            tableOfContents: this.pageData.table_of_contents,
+            bookTitle: this.model.bookTitle,
+            slug: this.model.slug,
+            instructorResources: {
+                freeResources: this.pageData.book_faculty_resources,
+                paidResources: this.pageData.book_allies
+            },
+            studentResources: this.pageData.book_student_resources
+        }));
         this.regions.tabController.attach(tabGroup);
         this.regions.tabContent.attach(contentGroup);
     }

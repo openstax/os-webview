@@ -1,0 +1,53 @@
+<template args="model">
+    <div if="model.publish_date">
+        <h4>Publish Date</h4>
+        <div id='publish-date'>{model.formattedPublishDate}</div>
+    </div>
+    <div if="model.print_isbn_10 || model.print_isbn_13">
+        <h4>Print</h4>
+        <div>
+            <div if="model.print_isbn_10">ISBN-10: {model.print_isbn_10}</div>
+            <div if="model.print_isbn_13">ISBN-13: {model.print_isbn_13}</div>
+        </div>
+    </div>
+    <div if="model.digital_isbn_10 || model.digital_isbn_13">
+        <h4>Digital</h4>
+        <div>
+            <div if="model.digital_isbn_10">ISBN-10: {model.digital_isbn_10}</div>
+            <div if="model.digital_isbn_13">ISBN-13: {model.digital_isbn_13}</div>
+        </div>
+    </div>
+    <div if="model.ibook_isbn_10 || model.ibook_isbn_10">
+        <h4>iBooks
+            <span if="model.ibook_volume_2_isbn_10 || model.ibook_volume_2_isbn_13">
+                Part 1
+            </span>
+        </h4>
+        <div>
+            <div if="model.ibook_isbn_10">ISBN-10: {model.ibook_isbn_10}</div>
+            <div if="model.ibook_isbn_13">ISBN-13: {model.ibook_isbn_13}</div>
+        </div>
+    </div>
+    <div if="model.ibook_volume_2_isbn_10 || model.ibook_volume_2_isbn_13">
+        <h4>iBooks Part 2</h4>
+        <div>
+            <div if="model.ibook_isbn_10">ISBN-10: {model.ibook_volume_2_isbn_10}</div>
+            <div if="model.ibook_isbn_13">ISBN-13: {model.ibook_volume_2_isbn_13}</div>
+        </div>
+    </div>
+    <div if="model.license_name">
+        <h4>License</h4>
+        <div class="license">
+            <div>
+                <img src="{model.licenseIcon}" alt="">
+                <div>
+                    <div if="!model.license_text">
+                        <span data-html="title" skip="true"></span> by OpenStax is licensed under
+                        <span class="text">{model.license_name} v{model.license_version}</span>
+                    </div>
+                    <div if="model.license_text" data-html="license_text" skip="true"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

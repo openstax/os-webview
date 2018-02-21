@@ -1,7 +1,6 @@
 import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import Tab from './tab/tab';
-import {on} from '~/helpers/controller/decorators';
 import {description as template} from './tab-group.html';
 
 export default class TabGroup extends Controller {

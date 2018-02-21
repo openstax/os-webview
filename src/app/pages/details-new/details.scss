@@ -2,7 +2,51 @@
 
 .details-page-v2 {
 
-    background-color: ui-color(white);
+    background-image: linear-gradient(to bottom, ui-color(white) 10rem, ui-color(default) 40rem);
+
+    .hero {
+        align-items: flex-end;
+        background-image: linear-gradient(75deg, #aaa, #777);
+        color: text-color(normal);
+        display: flex;
+        height: 16.5rem;
+        overflow: hidden;
+        padding-bottom: 5rem;
+
+        @include width-between($phone-max, $tablet-max) {
+            height: 27.3rem;
+            padding-bottom: 6rem;
+        }
+
+        @include wider-than($tablet-max) {
+            height: 34.3rem;
+            padding-bottom: 7rem;
+        }
+
+        &[data-slug="books/biology"] {
+            background-image: linear-gradient(75deg, #b7eb65, #63a524);
+            color: os-color(gray);
+        }
+
+        .book-title {
+            padding: 0;
+
+            h1 {
+                @include set-font(hero-h1);
+
+                text-align: left;
+                white-space: nowrap;
+
+                @include width-between($phone-max, $tablet-max) {
+                    font-size: 10rem;
+                }
+
+                @include wider-than($tablet-max) {
+                    font-size: 13rem;
+                }
+            }
+        }
+    }
 
     .content {
         @extend %content;
@@ -10,29 +54,35 @@
         justify-content: flex-start;
     }
 
-    .hero {
-        align-items: flex-end;
-        background-image: linear-gradient(75deg, #aaa, #777);
-        color: text-color(normal);
-        display: flex;
-        height: 34.3rem;
-        padding-bottom: 7rem;
+    .phone-view {
+        display: block;
 
-        &[data-slug="books/biology"] {
-            background-image: linear-gradient(75deg, #b7eb65, #63a524);
-            color: os-color(gray);
+        @include wider-than($phone-max) {
+            display: none;
         }
+    }
 
-        .book-title h1 {
-            @include set-font(hero-h1);
+    .bigger-view {
+        display: none;
 
-            font-size: 13rem;
-            white-space: nowrap;
+        @include wider-than($phone-max) {
+            display: block;
         }
     }
 
     .tab-controller {
         width: 100%;
+
+        .tab {
+            @include set-font(body-large);
+
+            font-weight: normal;
+
+            @include wider-than($tablet-max) {
+                font-size: 150%;
+                padding-bottom: $normal-margin;
+            }
+        }
     }
 
     .tab-content {
@@ -51,6 +101,16 @@
 
         @include wider-than($tablet-max) {
             grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        &.ally {
+            @include wider-than($phone-max) {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            @include wider-than($tablet-max) {
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+            }
         }
     }
 
@@ -135,6 +195,10 @@
                 color: os-color(green);
             }
         }
+    }
+
+    .btn.default {
+        background-color: ui-color(white);
     }
 
 }

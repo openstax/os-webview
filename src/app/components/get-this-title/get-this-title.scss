@@ -88,15 +88,21 @@
     }
 
     .option {
-        padding: 0.5rem;
+        font-size: 2.2rem; // This is for the icons
+        padding: 1rem 0.5rem;
 
         &:last-child {
             border-bottom: 0;
         }
 
+        .text {
+            font-size: 1.8rem;
+            white-space: nowrap;
+        }
+
         a,
         .option-header {
-            align-items: baseline;
+            align-items: center;
             display: flex;
             justify-content: flex-start;
             text-decoration-line: none;

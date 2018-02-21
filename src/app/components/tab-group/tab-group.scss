@@ -5,7 +5,10 @@
 
     .tab {
         @extend %tab;
-        @include set-font(h3);
+
+        &.selected {
+            @extend %active;
+        }
     }
 }
 
