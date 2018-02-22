@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './about.html';
@@ -60,7 +61,7 @@ export default class AboutUs extends CMSPageController {
     init() {
         this.slug = 'pages/about-us';
         this.template = template;
-        this.css = '/app/pages/about/about.css?v2.6.0';
+        this.css = `/app/pages/about/about.css?${VERSION}`;
         this.view = {
             classes: ['about-page', 'page', 'hide-until-loaded']
         };

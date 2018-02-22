@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import stickyNote from '../sticky-note/sticky-note';
 import UpperMenu from './upper-menu/upper-menu';
@@ -13,7 +14,7 @@ class Header extends Controller {
 
     init() {
         this.template = template;
-        this.css = '/app/components/shell/header/header.css?v2.6.0';
+        this.css = `/app/components/shell/header/header.css?${VERSION}`;
         this.view = {
             tag: 'header',
             classes: ['page-header', 'hide-until-loaded']

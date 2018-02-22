@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import router from '~/router';
 import CMSPageController from '~/controllers/cms';
 import {on} from '~/helpers/controller/decorators';
@@ -18,7 +19,7 @@ export default class Subjects extends CMSPageController {
     init() {
         this.slug = 'books';
         this.template = template;
-        this.css = '/app/pages/subjects/subjects.css?v2.6.0';
+        this.css = `/app/pages/subjects/subjects.css?${VERSION}`;
         this.view = {
             classes: ['subjects-page', 'hide-until-loaded']
         };

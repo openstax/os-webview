@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import settings from 'settings';
 import $ from '~/helpers/$';
@@ -13,7 +14,7 @@ const sourceNames = {
 export default class Form extends Controller {
 
     init(model) {
-        this.css = '/app/pages/errata/form/form.css?v2.6.0';
+        this.css = `/app/pages/errata/form/form.css?${VERSION}`;
         this.template = template;
         this.model = Object.assign(model, {
             postEndpoint: `${settings.apiOrigin}/api/errata/`,

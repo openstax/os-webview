@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 import router from '~/router';
 import {on} from '~/helpers/controller/decorators';
@@ -9,7 +10,7 @@ class StickyNote extends CMSPageController {
 
     init() {
         this.template = template;
-        this.css = '/app/components/shell/sticky-note/sticky-note.css?v2.6.0';
+        this.css = `/app/components/shell/sticky-note/sticky-note.css?${VERSION}`;
         this.view = {
             classes: ['sticky-note']
         };

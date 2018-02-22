@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import settings from 'settings';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
@@ -16,7 +17,7 @@ export default class DetailsLoaded extends Controller {
 
     init(model) {
         this.template = (/polska/).test(model.slug) ? polishTemplate : template;
-        this.css = '/app/pages/details/details.css?v2.6.0';
+        this.css = `/app/pages/details/details.css?${VERSION}`;
         this.view = {
             classes: ['details-page']
         };

@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
@@ -15,7 +16,7 @@ export default class Popup extends Controller {
             tag: 'pop-up',
             classes: ['page-overlay']
         };
-        this.css = '/app/components/popup/popup.css?v2.6.0';
+        this.css = `/app/components/popup/popup.css?${VERSION}`;
     }
 
     onLoaded() {

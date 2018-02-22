@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import SalesforceForm from '~/controllers/salesforce-form';
 import router from '~/router';
 import $ from '~/helpers/$';
@@ -14,7 +15,7 @@ export default class CompCopyForm extends SalesforceForm {
 
     init() {
         this.template = template;
-        this.css = '/app/pages/comp-copy/comp-copy.css?v2.6.0';
+        this.css = `/app/pages/comp-copy/comp-copy.css?${VERSION}`;
         this.view = {
             classes: ['comp-copy-form']
         };

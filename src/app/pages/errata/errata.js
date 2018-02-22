@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
@@ -49,7 +50,7 @@ export default class Errata extends Controller {
 
     init() {
         this.template = template;
-        this.css = '/app/pages/errata/errata.css?v2.6.0';
+        this.css = `/app/pages/errata/errata.css?${VERSION}`;
         this.view = {
             classes: ['errata-page', 'page']
         };

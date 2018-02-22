@@ -1,6 +1,7 @@
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import settings from 'settings';
+import VERSION from '~/version';
 import Share from '~/components/share/share';
 import {on} from '~/helpers/controller/decorators';
 import Spinner from '~/components/spinner/spinner';
@@ -10,7 +11,7 @@ export default class Calculator extends Controller {
 
     init(referringPage) {
         this.template = template;
-        this.css = '/app/components/calculator/calculator.css?v2.6.0';
+        this.css = `/app/components/calculator/calculator.css?${VERSION}`;
         this.view = {
             classes: ['calculator']
         };

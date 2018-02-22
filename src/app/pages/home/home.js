@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
 import {utils} from 'superb.js';
@@ -67,7 +68,7 @@ export default class Home extends CMSPageController {
     init() {
         this.slug = 'pages/openstax-homepage';
         this.template = template;
-        this.css = '/app/pages/home/home.css?v2.6.0';
+        this.css = `/app/pages/home/home.css?${VERSION}`;
         this.regions = {
             banners: '.book-banners',
             quotes: '.quote-buckets',

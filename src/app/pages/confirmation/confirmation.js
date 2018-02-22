@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import settings from 'settings';
 import $ from '~/helpers/$';
@@ -51,7 +52,7 @@ export default class Confirmation extends Controller {
     init() {
         document.title = 'Thanks! - OpenStax';
         this.template = template;
-        this.css = '/app/pages/confirmation/confirmation.css?v2.6.0';
+        this.css = `/app/pages/confirmation/confirmation.css?${VERSION}`;
         this.view = {
             classes: ['confirmation-page', 'page']
         };

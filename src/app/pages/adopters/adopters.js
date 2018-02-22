@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import settings from 'settings';
 import shell from '~/components/shell/shell';
 import CMSPageController from '~/controllers/cms';
@@ -7,7 +8,7 @@ export default class Adopters extends CMSPageController {
 
     init() {
         this.template = template;
-        this.css = '/app/pages/adopters/adopters.css?v2.6.0';
+        this.css = `/app/pages/adopters/adopters.css?${VERSION}`;
         this.view = {
             classes: ['adopters-page', 'text-content']
         };

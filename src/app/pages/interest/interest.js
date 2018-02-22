@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import settings from 'settings';
@@ -17,7 +18,7 @@ export default class InterestForm extends Controller {
 
     init() {
         this.template = template;
-        this.css = '/app/pages/interest/interest.css?v2.6.0';
+        this.css = `/app/pages/interest/interest.css?${VERSION}`;
         this.view = {
             classes: ['interest-form']
         };
