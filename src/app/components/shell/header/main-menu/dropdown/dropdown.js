@@ -8,7 +8,7 @@ export default class Dropdown extends Controller {
 
     init(getProps) {
         this.template = template;
-        this.css = '/app/components/shell/header/main-menu/dropdown/dropdown.css';
+        this.css = '/app/components/shell/header/main-menu/dropdown/dropdown.css?v2.6.0';
         this.getProps = getProps;
         this.model = {
             isOpen: false,

@@ -7,7 +7,7 @@ export default class FormInput extends Controller {
 
     init(props) {
         this.template = template;
-        this.css = '/app/components/form-input/form-input.css';
+        this.css = '/app/components/form-input/form-input.css?v2.6.0';
         this.model = Object.assign({value: ''}, props);
         this.view = {
             tag: 'label',

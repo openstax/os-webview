@@ -16,7 +16,7 @@ export default class Share extends Controller {
 
     init(pageUrl, message) {
         this.template = template;
-        this.css = '/app/components/share/share.css';
+        this.css = '/app/components/share/share.css?v2.6.0';
         this.view = {
             classes: ['share-buttons']
         };

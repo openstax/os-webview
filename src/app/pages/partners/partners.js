@@ -20,7 +20,7 @@ export default class Partners extends CMSPageController {
         document.title = 'Partners - OpenStax';
         this.slug = 'pages/partners';
         this.template = template;
-        this.css = '/app/pages/partners/partners.css';
+        this.css = '/app/pages/partners/partners.css?v2.6.0';
         this.view = {
             classes: ['partners-page', 'page']
         };

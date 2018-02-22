@@ -8,7 +8,7 @@ export default class Buckets extends Controller {
 
     init(data) {
         this.template = () => '';
-        this.css = '/app/components/buckets/buckets.css';
+        this.css = '/app/components/buckets/buckets.css?v2.6.0';
         this.view = {
             classes: ['buckets-section']
         };

@@ -13,7 +13,7 @@ export default class FAQ extends CMSPageController {
         document.title = 'FAQ - OpenStax';
         this.slug = 'pages/faq';
         this.template = template;
-        this.css = '/app/pages/faq/faq.css';
+        this.css = '/app/pages/faq/faq.css?v2.6.0';
         this.view = {
             classes: ['faq-page', 'page']
         };

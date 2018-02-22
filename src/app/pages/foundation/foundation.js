@@ -11,7 +11,7 @@ export default class Foundation extends CMSPageController {
     init() {
         document.title = 'Sponsors - OpenStax';
         this.template = template;
-        this.css = '/app/pages/foundation/foundation.css';
+        this.css = '/app/pages/foundation/foundation.css?v2.6.0';
         this.view = {
             classes: ['foundation-page', 'page']
         };

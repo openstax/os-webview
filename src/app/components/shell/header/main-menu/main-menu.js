@@ -15,7 +15,7 @@ export default class MainMenu extends Controller {
             subjectsDropdown: '.subjects-dropdown',
             technologyDropdown: '.technology-dropdown'
         };
-        this.css = '/app/components/shell/header/main-menu/main-menu.css';
+        this.css = '/app/components/shell/header/main-menu/main-menu.css?v2.6.0';
         this.model = model;
         this.model.openDropdown = null;
     }

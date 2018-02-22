@@ -15,7 +15,7 @@ export default class SectionNavigator extends Controller {
         this.view = {
             classes: ['section-navigator']
         };
-        this.css = '/app/pages/openstax-tutor/section-navigator/section-navigator.css';
+        this.css = '/app/pages/openstax-tutor/section-navigator/section-navigator.css?v2.6.0';
         this.boundScrollFn = debounce(this.setSelectedIdToNearest.bind(this), 40);
     }
 

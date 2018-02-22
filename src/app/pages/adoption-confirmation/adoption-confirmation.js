@@ -10,7 +10,7 @@ export default class AdoptionConfirmation extends Controller {
 
     init() {
         this.template = template;
-        this.css = '/app/pages/adoption-confirmation/adoption-confirmation.css';
+        this.css = '/app/pages/adoption-confirmation/adoption-confirmation.css?v2.6.0';
         this.view = {
             classes: ['adoption-confirmation', 'page']
         };

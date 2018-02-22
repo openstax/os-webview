@@ -22,7 +22,7 @@ export default class Blog extends CMSPageController {
 
     init() {
         this.template = template;
-        this.css = '/app/pages/blog/blog.css';
+        this.css = '/app/pages/blog/blog.css?v2.6.0';
         this.view = {
             classes: ['blog', 'page']
         };

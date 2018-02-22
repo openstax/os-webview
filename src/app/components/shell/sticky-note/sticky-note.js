@@ -9,7 +9,7 @@ class StickyNote extends CMSPageController {
 
     init() {
         this.template = template;
-        this.css = '/app/components/shell/sticky-note/sticky-note.css';
+        this.css = '/app/components/shell/sticky-note/sticky-note.css?v2.6.0';
         this.view = {
             classes: ['sticky-note']
         };

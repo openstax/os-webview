@@ -14,7 +14,7 @@ export default class PulsingDot extends Controller {
         this.view = {
             classes: ['pulsing-dot']
         };
-        this.css = '/app/pages/openstax-tutor/pulsing-dot/pulsing-dot.css';
+        this.css = '/app/pages/openstax-tutor/pulsing-dot/pulsing-dot.css?v2.6.0';
     }
 
     onLoaded() {

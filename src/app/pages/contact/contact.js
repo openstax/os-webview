@@ -43,7 +43,7 @@ export default class Contact extends SalesforceForm {
             this.onDataLoaded();
         };
         this.template = template;
-        this.css = '/app/pages/contact/contact.css';
+        this.css = '/app/pages/contact/contact.css?v2.6.0';
         this.view = {
             classes: ['contact-page', 'page']
         };

@@ -13,7 +13,7 @@ const sourceNames = {
 export default class Form extends Controller {
 
     init(model) {
-        this.css = '/app/pages/errata/form/form.css';
+        this.css = '/app/pages/errata/form/form.css?v2.6.0';
         this.template = template;
         this.model = Object.assign(model, {
             postEndpoint: `${settings.apiOrigin}/api/errata/`,

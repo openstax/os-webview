@@ -17,7 +17,7 @@ export default class AdoptionForm extends Controller {
 
     init() {
         this.template = template;
-        this.css = '/app/pages/adoption/adoption.css';
+        this.css = '/app/pages/adoption/adoption.css?v2.6.0';
         this.view = {
             classes: ['adoption-page', 'page']
         };

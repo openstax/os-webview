@@ -12,7 +12,7 @@ export default class Impact extends CMSPageController {
 
     init() {
         this.template = template;
-        this.css = '/app/pages/impact/impact.css';
+        this.css = '/app/pages/impact/impact.css?v2.6.0';
         this.view = {
             classes: ['impact-page', 'page']
         };

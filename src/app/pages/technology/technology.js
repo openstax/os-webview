@@ -14,7 +14,7 @@ export default class Accessibility extends CMSPageController {
 
     init() {
         this.template = template;
-        this.css = '/app/pages/technology/technology.css';
+        this.css = '/app/pages/technology/technology.css?v2.6.0';
         this.view = {
             classes: ['technology-page', 'page']
         };

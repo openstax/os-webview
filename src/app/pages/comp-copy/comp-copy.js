@@ -14,7 +14,7 @@ export default class CompCopyForm extends SalesforceForm {
 
     init() {
         this.template = template;
-        this.css = '/app/pages/comp-copy/comp-copy.css';
+        this.css = '/app/pages/comp-copy/comp-copy.css?v2.6.0';
         this.view = {
             classes: ['comp-copy-form']
         };

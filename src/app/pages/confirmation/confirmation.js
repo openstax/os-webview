@@ -51,7 +51,7 @@ export default class Confirmation extends Controller {
     init() {
         document.title = 'Thanks! - OpenStax';
         this.template = template;
-        this.css = '/app/pages/confirmation/confirmation.css';
+        this.css = '/app/pages/confirmation/confirmation.css?v2.6.0';
         this.view = {
             classes: ['confirmation-page', 'page']
         };

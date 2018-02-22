@@ -8,7 +8,7 @@ export default class Header1 extends Controller {
         this.view = {
             classes: ['header-1']
         };
-        this.css = '/app/pages/adoption-confirmation/header-1.css';
+        this.css = '/app/pages/adoption-confirmation/header-1.css?v2.6.0';
     }
 
 }
