@@ -78,15 +78,6 @@
         transition: opacity 0.2s;
     }
 
-    .pdf + .options,
-    .print + .options {
-        height: 0;
-        margin: 0;
-        opacity: 0;
-        overflow: hidden;
-        width: 0;
-    }
-
     .option {
         font-size: 2.2rem; // This is for the icons
         padding: 1rem 0.5rem;
@@ -110,7 +101,6 @@
             :first-child {
                 flex-basis: 3rem;
                 margin-right: $normal-margin;
-                text-align: center;
             }
         }
 
@@ -123,10 +113,10 @@
         }
     }
 
-    .fa:not(.fa-times) {
-        margin-left: -3rem;
-        text-align: center;
-        transform: scale(1.2);
-        width: 2.5rem;
-    }
+    // .fa:not(.fa-times) {
+    //     margin-left: -3rem;
+    //     // text-align: center;
+    //     transform: scale(1.2);
+    //     width: 2.5rem;
+    // }
 }

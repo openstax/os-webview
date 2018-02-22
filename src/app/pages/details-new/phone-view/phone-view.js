@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
@@ -15,7 +16,7 @@ export default class PhoneView extends Controller {
     init(model) {
         this.template = template;
         this.model = model;
-        this.css = '/app/pages/details-new/phone-view/phone-view.css';
+        this.css = `/app/pages/details-new/phone-view/phone-view.css${VERSION}`;
         this.regions = {
             getTheBook: '.get-the-book',
             accordion: '.accordion-region',

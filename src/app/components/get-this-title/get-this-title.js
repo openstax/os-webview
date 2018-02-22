@@ -12,6 +12,7 @@ import {description as polishTemplate} from './get-this-title-polish.html';
 
 export default class GetThisTitle extends Controller {
 
+    // TODO Add table of contents
     init(data) {
         this.template = data.slug.substr(-6) === 'polska' ? polishTemplate : template;
         this.css = `/app/components/get-this-title/get-this-title.css?${VERSION}`;

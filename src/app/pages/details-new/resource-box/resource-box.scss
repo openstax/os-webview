@@ -14,13 +14,21 @@
         grid-column: span 2;
     }
 
-    .top > * {
-        margin: 0 0 5rem;
+    h3 {
+        @include set-font(h4);
+
+        margin: 0;
     }
 
     .bottom {
+        align-items: baseline;
         display: flex;
         justify-content: space-between;
         width: 100%;
+
+        .left {
+            @include set-font(helper-label);
+            color: text-color(helper);
+        }
     }
 }

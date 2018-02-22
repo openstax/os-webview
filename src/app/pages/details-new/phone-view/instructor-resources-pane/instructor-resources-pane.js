@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import ResourceBox from '../../resource-box/resource-box';
 import {description as template} from './instructor-resources-pane.html';
@@ -13,7 +14,8 @@ export default class InstructorResourcePane extends Controller {
         this.regions = {
             freeResources: '.free-resources-region'
         };
-        this.css = '/app/pages/details-new/phone-view/instructor-resources-pane/instructor-resources-pane.css';
+        /* eslint max-len: 0 */
+        this.css = `/app/pages/details-new/phone-view/instructor-resources-pane/instructor-resources-pane.css${VERSION}`;
     }
 
     onLoaded() {

@@ -1,5 +1,6 @@
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
+import $ from '~/helpers/$';
 import {description as template} from './item.html';
 
 export default class AccordionItem extends Controller {
@@ -45,6 +46,7 @@ export default class AccordionItem extends Controller {
             const isOpen = this.props.selectedLabel === this.props.label;
 
             this.props.setSelected(isOpen ? null : this.props.label);
+            $.scrollTo(this.el);
         }
     }
 

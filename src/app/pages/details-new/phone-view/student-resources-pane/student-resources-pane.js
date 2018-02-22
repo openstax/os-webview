@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import ResourceBox from '../../resource-box/resource-box';
 
@@ -9,7 +10,7 @@ export default class StudentResourcePane extends Controller {
         this.view = {
             classes: ['student-resources-pane']
         };
-        this.css = '/app/pages/details-new/phone-view/student-resources-pane/student-resources-pane.css';
+        this.css = `/app/pages/details-new/phone-view/student-resources-pane/student-resources-pane.css${VERSION}`;
     }
 
     onLoaded() {

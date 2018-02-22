@@ -1,82 +1,81 @@
 <template args="model">
     <div class="sidebar">
-        <h3>Get the book</h3>
-        <div class="get-the-book" skip="true"></div>
-        <div class="btn default" role="button">
-            <i class="fa fa-list-ul"></i>
-            Table of contents
-        </div>
-        <div class="let-us-know">
-            <span>Image here</span>
-            Using this book?<br>
-            Let us know.
-        </div>
         <div>
-            <a href="/interest?{model.slug}">Sign up to learn more</a>
+            <h3>Get the book</h3>
+            <div class="get-the-book" skip="true"></div>
         </div>
+        <div class="let-us-know-region" skip="true"></div>
     </div>
 
-    <div class="main text-content">
-        <h3>Summary</h3>
-        <div data-html="description" skip="true"></div>
+    <div class="main">
+        <div>
+            <h3>Summary</h3>
+            <div data-html="description" skip="true"></div>
+        </div>
         <if condition="model.allSenior.length || model.allNonsenior.length">
             <if condition="model.allSenior.length">
-                <h3>Senior Contributing Authors</h3>
-                <div each="author in model.allSenior">
-                    {author.name}<if condition="author.university">, {author.university}</if>
+                <div>
+                    <h3>Senior Contributing Authors</h3>
+                    <div each="author in model.allSenior">
+                        {author.name}<if condition="author.university">, {author.university}</if>
+                    </div>
                 </div>
             </if>
             <if condition="model.allNonsenior.length">
-                <h3> Contributing Authors</h3>
-                <div each="author in model.allNonsenior">
-                    {author.name}<if condition="author.university">, {author.university}</if>
+                <div>
+                    <h3> Contributing Authors</h3>
+                    <div each="author in model.allNonsenior">
+                        {author.name}<if condition="author.university">, {author.university}</if>
+                    </div>
                 </div>
             </if>
         </if>
         <if condition="!model.comingSoon">
-            <h3>Errata</h3>
-            <p>
-                All OpenStax textbooks undergo a rigorous review process. However, like
-                any professional-grade textbook, errors sometimes occur. The good part
-                is, since our books are web-based, we can make updates periodically. If
-                you have a correction to suggest, submit it here. We'll review your
-                suggestion and make necessary changes.
-            </p>
-            <div class="button-group">
-                <a href="/errata/form?book={encodeURIComponent(model.title)}" class="btn secondary medium">Suggest a correction</a>
-                <a href="/errata/?book={encodeURIComponent(model.title)}" class="btn default medium">Errata list</a>
+            <div>
+                <h3>Errata</h3>
+                <p>
+                    All OpenStax textbooks undergo a rigorous review process. However, like
+                    any professional-grade textbook, errors sometimes occur. The good part
+                    is, since our books are web-based, we can make updates periodically. If
+                    you have a correction to suggest, submit it here. We'll review your
+                    suggestion and make necessary changes.
+                </p>
+                <div class="button-group">
+                    <a href="/errata/form?book={encodeURIComponent(model.title)}" class="btn secondary medium">Suggest a correction</a>
+                    <a href="/errata/?book={encodeURIComponent(model.title)}" class="btn default medium">Errata list</a>
+                </div>
             </div>
         </if>
-        <div if="model.formattedPublishDate">
-            <h4>Publish Date:</h4>
-            {model.formattedPublishDate}
-        </div>
-        <div if="model.print_isbn_10 || model.print_isbn_13">
-            <h4>Print:</h4>
-            <div if="model.print_isbn_10">ISBN-10: {model.print_isbn_10}</div>
-            <div if="model.print_isbn_13">ISBN-13: {model.print_isbn_13}</div>
-        </div>
-        <div if="model.digital_isbn_10 || model.digital_isbn_13">
-            <h4>Digital:</h4>
-            <div if="model.digital_isbn_10">ISBN-10: {model.digital_isbn_10}</div>
-            <div if="model.digital_isbn_13">ISBN-13: {model.digital_isbn_13}</div>
-        </div>
-        <div if="model.ibook_isbn_10 || model.ibook_isbn_10">
-            <h4>iBooks<span if="model.ibook_volume_2_isbn_10 || model.ibook_volume_2_isbn_13">
-                    Part 1
-                </span>:
-            </h4>
-            <div if="model.ibook_isbn_10">ISBN-10: {model.ibook_isbn_10}</div>
-            <div if="model.ibook_isbn_13">ISBN-13: {model.ibook_isbn_13}</div>
-        </div>
-        <div if="model.ibook_volume_2_isbn_10 || model.ibook_volume_2_isbn_13">
-            <h4>iBooks Part 2:</h4>
-            <div if="model.ibook_isbn_10">ISBN-10: {model.ibook_volume_2_isbn_10}</div>
-            <div if="model.ibook_isbn_13">ISBN-13: {model.ibook_volume_2_isbn_13}</div>
-        </div>
-        <div if="model.license_name">
-            <h4>License:</h4>
-            <div>
+        <div class="publication-info">
+            <div if="model.formattedPublishDate">
+                <h4>Publish Date:</h4>
+                {model.formattedPublishDate}
+            </div>
+            <div if="model.print_isbn_10 || model.print_isbn_13">
+                <h4>Print:</h4>
+                <div if="model.print_isbn_10">ISBN-10: {model.print_isbn_10}</div>
+                <div if="model.print_isbn_13">ISBN-13: {model.print_isbn_13}</div>
+            </div>
+            <div if="model.digital_isbn_10 || model.digital_isbn_13">
+                <h4>Digital:</h4>
+                <div if="model.digital_isbn_10">ISBN-10: {model.digital_isbn_10}</div>
+                <div if="model.digital_isbn_13">ISBN-13: {model.digital_isbn_13}</div>
+            </div>
+            <div if="model.ibook_isbn_10 || model.ibook_isbn_10">
+                <h4>iBooks<span if="model.ibook_volume_2_isbn_10 || model.ibook_volume_2_isbn_13">
+                        Part 1
+                    </span>:
+                </h4>
+                <div if="model.ibook_isbn_10">ISBN-10: {model.ibook_isbn_10}</div>
+                <div if="model.ibook_isbn_13">ISBN-13: {model.ibook_isbn_13}</div>
+            </div>
+            <div if="model.ibook_volume_2_isbn_10 || model.ibook_volume_2_isbn_13">
+                <h4>iBooks Part 2:</h4>
+                <div if="model.ibook_isbn_10">ISBN-10: {model.ibook_volume_2_isbn_10}</div>
+                <div if="model.ibook_isbn_13">ISBN-13: {model.ibook_volume_2_isbn_13}</div>
+            </div>
+            <div if="model.license_name">
+                <h4>License:</h4>
                 <img src="{model.licenseIcon}" alt="">
                 <div>
                     <div if="!model.license_text">

@@ -4,6 +4,10 @@
 
     background-image: linear-gradient(to bottom, ui-color(white) 10rem, ui-color(default) 40rem);
 
+    @include wider-than($tablet-max) {
+        background: ui-color(white);
+    }
+
     .hero {
         align-items: flex-end;
         background-image: linear-gradient(75deg, #aaa, #777);
@@ -90,10 +94,14 @@
         width: 100%;
     }
 
+    .unbold {
+        font-weight: normal;
+    }
+
     .resources {
         display: grid;
         grid-gap: 2 * $normal-margin  2 * $normal-margin;
-        margin: 2rem 0 6rem;
+        margin: 2rem 0 0;
 
         @include wider-than($phone-max) {
             grid-template-columns: 1fr 1fr;
@@ -110,89 +118,6 @@
 
             @include wider-than($tablet-max) {
                 grid-template-columns: 1fr 1fr 1fr 1fr;
-            }
-        }
-    }
-
-    .ally-blurb {
-        @include set-font(h3);
-
-        display: grid;
-        font-weight: inherit;
-        grid-gap: $normal-margin;
-        grid-template-columns: auto auto;
-
-        .ally-logo > img {
-            height: auto;
-            max-height: 20rem;
-            max-width: 20rem;
-            width: auto;
-        }
-    }
-
-    .ally-box {
-        padding: 0;
-
-        .top {
-            align-items: baseline;
-            display: flex;
-            justify-content: center;
-            padding: 4rem 0;
-        }
-
-        .bottom {
-            align-items: baseline;
-            background-color: os-color(gray);
-            border-bottom-left-radius: 0.4rem;
-            border-bottom-right-radius: 0.4rem;
-            color: ui-color(white);
-            display: flex;
-            justify-content: flex-end;
-            padding: $normal-margin 2rem;
-
-            > a {
-                color: inherit;
-                text-decoration: none;
-
-                > * {
-                    margin-left: 1rem;
-                }
-            }
-
-        }
-
-        img {
-            margin: 0;
-            max-width: 100%;
-            width: 20rem;
-        }
-    }
-
-    .community-resources {
-        margin-top: 4rem;
-
-        .resource-box {
-            margin-bottom: $normal-margin;
-
-            .blurb {
-                @include set-font(h3);
-
-                font-weight: inherit;
-            }
-        }
-
-        .bottom-right {
-            align-items: baseline;
-            display: grid;
-            grid-gap: $normal-margin;
-            grid-template-columns: 1fr auto auto;
-
-            :first-child {
-                grid-column-start: 2;
-            }
-
-            a {
-                color: os-color(green);
             }
         }
     }

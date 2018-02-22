@@ -24,6 +24,8 @@ linters:
     PropertySpelling:
         extra_properties:
             - grid-gap
+            - grid-row-gap
+            - grid-column-gap
             - grid-template-columns
             - grid-template-rows
             - grid-column-start

@@ -1,22 +1,26 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .details-tab {
-    @include set-font(body-large);
-
     display: grid;
     grid-gap: $normal-margin;
-    grid-template-columns: 23rem auto;
 
-    p {
+    @include wider-than($tablet-max) {
+        grid-template-columns: 1fr auto;
+    }
+
+    p,
+    h3 {
         margin: 0;
     }
 
     .sidebar {
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-gap: 6rem;
+        grid-template-columns: 1fr 1fr;
 
-        > * {
-            margin-bottom: 2.5rem;
+        @include wider-than($tablet-max) {
+            grid-template-columns: auto;
+            grid-template-rows: auto 1fr;
         }
 
         .btn {
@@ -26,24 +30,31 @@
             grid-template-columns: auto auto;
             width: 100%;
         }
-
-        .let-us-know {
-            display: flex;
-            margin-top: 8rem;
-        }
     }
 
     .main {
-        align-items: flex-start;
+        display: grid;
+        grid-gap: 3rem;
+        max-width: $text-content-max;
+
+        [data-html="description"] {
+            @include wider-than($tablet-max) {
+                @include set-font(body-large);
+            }
+        }
+    }
+
+    .publication-info {
+        max-width: 30rem;
     }
 
     .button-group {
         display: grid;
         grid-gap: 1rem;
-        margin: $normal-margin 0 4rem;
+        margin: $normal-margin 0 0;
 
         @include wider-than($phone-max) {
-            grid-template-columns: auto auto;
+            grid-template-columns: auto auto 1fr;
         }
     }
 

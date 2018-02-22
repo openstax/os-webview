@@ -1,10 +1,15 @@
 <template args="model">
-    <div class="top"><h3>{model.resource_heading}</h3></div>
+    <div class="top">
+        <h3>{model.resource_heading}</h3>
+        <div data-html="resource_description"></div>
+    </div>
     <div class="bottom">
         <div class="left">
+            <!-- TODO Explore now, Click here to unlock, Available for download -->
             Bottom left
         </div>
         <div class="right">
+            <!-- TODO select the correct icon and color -->
             <i class="fa fa-download"></i><i class="fa fa-lock"></i>
         </div>
     </div>
