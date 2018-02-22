@@ -8,7 +8,7 @@ export default class Header2 extends Controller {
         this.view = {
             classes: ['header-2']
         };
-        // this.css = '/app/pages/adoption-confirmation/header-1.css';
+        // this.css = '/app/pages/adoption-confirmation/header-1.css?v2.6.0';
     }
 
 }

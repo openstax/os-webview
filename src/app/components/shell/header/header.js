@@ -13,7 +13,7 @@ class Header extends Controller {
 
     init() {
         this.template = template;
-        this.css = '/app/components/shell/header/header.css';
+        this.css = '/app/components/shell/header/header.css?v2.6.0';
         this.view = {
             tag: 'header',
             classes: ['page-header', 'hide-until-loaded']

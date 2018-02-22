@@ -16,7 +16,7 @@ export default class DetailsLoaded extends Controller {
 
     init(model) {
         this.template = (/polska/).test(model.slug) ? polishTemplate : template;
-        this.css = '/app/pages/details/details.css';
+        this.css = '/app/pages/details/details.css?v2.6.0';
         this.view = {
             classes: ['details-page']
         };

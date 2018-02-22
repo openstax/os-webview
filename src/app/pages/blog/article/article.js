@@ -5,7 +5,7 @@ export default class Article extends CMSPageController {
 
     init(article, mode) {
         this.template = () => '';
-        this.css = '/app/pages/blog/article/article.css';
+        this.css = '/app/pages/blog/article/article.css?v2.6.0';
         this.view = {
             classes: ['article', 'hide-until-loaded']
         };

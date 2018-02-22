@@ -17,7 +17,7 @@ export default class InterestForm extends Controller {
 
     init() {
         this.template = template;
-        this.css = '/app/pages/interest/interest.css';
+        this.css = '/app/pages/interest/interest.css?v2.6.0';
         this.view = {
             classes: ['interest-form']
         };

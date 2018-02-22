@@ -9,7 +9,7 @@ export default class UpperMenu extends Controller {
         this.view = {
             classes: ['container']
         };
-        this.css = '/app/components/shell/header/upper-menu/upper-menu.css';
+        this.css = '/app/components/shell/header/upper-menu/upper-menu.css?v2.6.0';
         this.model = model;
 
         /* eslint arrow-parens: 0 */

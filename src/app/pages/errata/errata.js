@@ -49,7 +49,7 @@ export default class Errata extends Controller {
 
     init() {
         this.template = template;
-        this.css = '/app/pages/errata/errata.css';
+        this.css = '/app/pages/errata/errata.css?v2.6.0';
         this.view = {
             classes: ['errata-page', 'page']
         };

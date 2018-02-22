@@ -26,7 +26,7 @@ export default class Detail extends Controller {
 
     init(detail) {
         this.template = template;
-        this.css = '/app/pages/errata/detail/detail.css';
+        this.css = '/app/pages/errata/detail/detail.css?v2.6.0';
         detail.date = new Date(detail.created).toLocaleDateString();
         detail.source = detail.resource;
         if (!(/^\/errata/).test(window.location.pathname)) {

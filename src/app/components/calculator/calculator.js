@@ -10,7 +10,7 @@ export default class Calculator extends Controller {
 
     init(referringPage) {
         this.template = template;
-        this.css = '/app/components/calculator/calculator.css';
+        this.css = '/app/components/calculator/calculator.css?v2.6.0';
         this.view = {
             classes: ['calculator']
         };

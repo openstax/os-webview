@@ -57,7 +57,7 @@ export default class Give extends CMSPageController {
             'share': '.share-buttons'
         };
 
-        this.css = '/app/pages/give/give.css';
+        this.css = '/app/pages/give/give.css?v2.6.0';
         this.view = {
             classes: ['give-page']
         };

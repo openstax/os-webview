@@ -56,7 +56,7 @@ export default class BulkOrder extends Controller {
         this.view = {
             classes: ['bulk-order', 'page']
         };
-        this.css = '/app/pages/bulk-order/bulk-order.css';
+        this.css = '/app/pages/bulk-order/bulk-order.css?v2.6.0';
         this.model = {
             origin: settings.apiOrigin,
             orgTypeOptions: [

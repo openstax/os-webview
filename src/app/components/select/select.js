@@ -9,7 +9,7 @@ export default class Select extends Controller {
 
     init(config, handler, parent) {
         this.template = template;
-        this.css = '/app/components/select/select.css';
+        this.css = '/app/components/select/select.css?v2.6.0';
         this.setup(config);
         this.handler = handler;
         this.view = {

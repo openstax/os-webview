@@ -9,7 +9,7 @@ export default class StudentForm extends Controller {
         this.view = {
             classes: ['student-form']
         };
-        this.css = '/app/components/student-form/student-form.css';
+        this.css = '/app/components/student-form/student-form.css?v2.6.0';
     }
 
     @on('click button')

@@ -6,7 +6,7 @@ export default class Spinner extends Controller {
 
     init(model) {
         this.template = template;
-        this.css = '/app/components/spinner/spinner.css';
+        this.css = '/app/components/spinner/spinner.css?v2.6.0';
         this.view = {
             classes: ['spinner']
         };

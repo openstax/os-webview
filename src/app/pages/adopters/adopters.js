@@ -7,7 +7,7 @@ export default class Adopters extends CMSPageController {
 
     init() {
         this.template = template;
-        this.css = '/app/pages/adopters/adopters.css';
+        this.css = '/app/pages/adopters/adopters.css?v2.6.0';
         this.view = {
             classes: ['adopters-page', 'text-content']
         };

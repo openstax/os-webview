@@ -13,7 +13,7 @@ export default class SupplementalForm extends SalesforceForm {
         this.view = {
             classes: ['supplemental-form']
         };
-        // this.css = '/app/pages/adoption-confirmation/supplemental-form.css';
+        // this.css = '/app/pages/adoption-confirmation/supplemental-form.css?v2.6.0';
         this.model = {
             salesforce,
             email

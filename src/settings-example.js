@@ -3,6 +3,7 @@ const settings = {
     analyticsID: 'UA-73668038-1',
     analyticsID2: 'UA-73668038-2',
     apiOrigin: 'https://oscms-dev.openstax.org',
+    buildVersion: '2.6.0',
     tagManagerID: 'GTM-W6N7PB',
     testingEnvironment: (/(localhost|oscms-)/).test(window.location.hostname),
     titleSuffix: ' - OpenStax',

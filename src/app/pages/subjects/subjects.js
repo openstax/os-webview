@@ -18,7 +18,7 @@ export default class Subjects extends CMSPageController {
     init() {
         this.slug = 'books';
         this.template = template;
-        this.css = '/app/pages/subjects/subjects.css';
+        this.css = '/app/pages/subjects/subjects.css?v2.6.0';
         this.view = {
             classes: ['subjects-page', 'hide-until-loaded']
         };

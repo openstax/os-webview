@@ -67,7 +67,7 @@ export default class Home extends CMSPageController {
     init() {
         this.slug = 'pages/openstax-homepage';
         this.template = template;
-        this.css = '/app/pages/home/home.css';
+        this.css = '/app/pages/home/home.css?v2.6.0';
         this.regions = {
             banners: '.book-banners',
             quotes: '.quote-buckets',
