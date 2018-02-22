@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 import {makeDocModel} from '~/models/usermodel';
 import {on} from '~/helpers/controller/decorators';
@@ -13,7 +14,7 @@ export default class FAQ extends CMSPageController {
         document.title = 'FAQ - OpenStax';
         this.slug = 'pages/faq';
         this.template = template;
-        this.css = '/app/pages/faq/faq.css?v2.6.0';
+        this.css = `/app/pages/faq/faq.css?${VERSION}`;
         this.view = {
             classes: ['faq-page', 'page']
         };

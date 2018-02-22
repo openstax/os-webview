@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
 import shell from '~/components/shell/shell';
@@ -7,7 +8,7 @@ export default class Accessibility extends CMSPageController {
 
     init() {
         this.template = template;
-        this.css = '/app/pages/accessibility-statement/accessibility-statement.css?v2.6.0';
+        this.css = `/app/pages/accessibility-statement/accessibility-statement.css?${VERSION}`;
         this.view = {
             classes: ['accessibility-page', 'page']
         };

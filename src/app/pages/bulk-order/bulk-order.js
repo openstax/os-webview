@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import CMSPageController from '~/controllers/cms';
 import {on} from '~/helpers/controller/decorators';
@@ -56,7 +57,7 @@ export default class BulkOrder extends Controller {
         this.view = {
             classes: ['bulk-order', 'page']
         };
-        this.css = '/app/pages/bulk-order/bulk-order.css?v2.6.0';
+        this.css = `/app/pages/bulk-order/bulk-order.css?${VERSION}`;
         this.model = {
             origin: settings.apiOrigin,
             orgTypeOptions: [

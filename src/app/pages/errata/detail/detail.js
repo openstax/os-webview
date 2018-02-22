@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import {bookPromise} from '~/models/book-titles';
@@ -26,7 +27,7 @@ export default class Detail extends Controller {
 
     init(detail) {
         this.template = template;
-        this.css = '/app/pages/errata/detail/detail.css?v2.6.0';
+        this.css = `/app/pages/errata/detail/detail.css?${VERSION}`;
         detail.date = new Date(detail.created).toLocaleDateString();
         detail.source = detail.resource;
         if (!(/^\/errata/).test(window.location.pathname)) {

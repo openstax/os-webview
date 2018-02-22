@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 import FormattedAs from './formatted-as/formatted-as';
 
@@ -5,7 +6,7 @@ export default class Article extends CMSPageController {
 
     init(article, mode) {
         this.template = () => '';
-        this.css = '/app/pages/blog/article/article.css?v2.6.0';
+        this.css = `/app/pages/blog/article/article.css?${VERSION}`;
         this.view = {
             classes: ['article', 'hide-until-loaded']
         };

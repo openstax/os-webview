@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import Header1 from './header-1';
@@ -10,7 +11,7 @@ export default class AdoptionConfirmation extends Controller {
 
     init() {
         this.template = template;
-        this.css = '/app/pages/adoption-confirmation/adoption-confirmation.css?v2.6.0';
+        this.css = `/app/pages/adoption-confirmation/adoption-confirmation.css?${VERSION}`;
         this.view = {
             classes: ['adoption-confirmation', 'page']
         };

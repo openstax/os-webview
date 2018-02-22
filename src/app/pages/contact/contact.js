@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import SalesforceForm from '~/controllers/salesforce-form';
 import CMSPageController from '~/controllers/cms';
 import salesforce from '~/models/salesforce';
@@ -43,7 +44,7 @@ export default class Contact extends SalesforceForm {
             this.onDataLoaded();
         };
         this.template = template;
-        this.css = '/app/pages/contact/contact.css?v2.6.0';
+        this.css = `/app/pages/contact/contact.css?${VERSION}`;
         this.view = {
             classes: ['contact-page', 'page']
         };

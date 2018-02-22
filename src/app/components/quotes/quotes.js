@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import Quote from './quote/quote';
 
@@ -5,7 +6,7 @@ export default class Quotes extends Controller {
 
     init(quotes) {
         this.template = () => '';
-        this.css = '/app/components/quotes/quotes.css?v2.6.0';
+        this.css = `/app/components/quotes/quotes.css?${VERSION}`;
         this.view = {
             classes: ['quotes', `boxes-${quotes.length}`]
         };

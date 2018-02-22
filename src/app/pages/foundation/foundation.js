@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 import shell from '~/components/shell/shell';
 import {description as template} from './foundation.html';
@@ -11,7 +12,7 @@ export default class Foundation extends CMSPageController {
     init() {
         document.title = 'Sponsors - OpenStax';
         this.template = template;
-        this.css = '/app/pages/foundation/foundation.css?v2.6.0';
+        this.css = `/app/pages/foundation/foundation.css?${VERSION}`;
         this.view = {
             classes: ['foundation-page', 'page']
         };

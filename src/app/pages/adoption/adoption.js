@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import settings from 'settings';
@@ -17,7 +18,7 @@ export default class AdoptionForm extends Controller {
 
     init() {
         this.template = template;
-        this.css = '/app/pages/adoption/adoption.css?v2.6.0';
+        this.css = `/app/pages/adoption/adoption.css?${VERSION}`;
         this.view = {
             classes: ['adoption-page', 'page']
         };

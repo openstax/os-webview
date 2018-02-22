@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
 import settings from 'settings';
@@ -7,7 +8,7 @@ class Footer extends CMSPageController {
 
     init() {
         this.template = template;
-        this.css = '/app/components/shell/footer/footer.css?v2.6.0';
+        this.css = `/app/components/shell/footer/footer.css?${VERSION}`;
         this.view = {
             tag: 'footer',
             classes: ['page-footer']

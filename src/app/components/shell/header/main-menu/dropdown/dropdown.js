@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
@@ -8,7 +9,7 @@ export default class Dropdown extends Controller {
 
     init(getProps) {
         this.template = template;
-        this.css = '/app/components/shell/header/main-menu/dropdown/dropdown.css?v2.6.0';
+        this.css = `/app/components/shell/header/main-menu/dropdown/dropdown.css?${VERSION}`;
         this.getProps = getProps;
         this.model = {
             isOpen: false,

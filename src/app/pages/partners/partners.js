@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import settings from 'settings';
 import router from '~/router';
 import CMSPageController from '~/controllers/cms';
@@ -20,7 +21,7 @@ export default class Partners extends CMSPageController {
         document.title = 'Partners - OpenStax';
         this.slug = 'pages/partners';
         this.template = template;
-        this.css = '/app/pages/partners/partners.css?v2.6.0';
+        this.css = `/app/pages/partners/partners.css?${VERSION}`;
         this.view = {
             classes: ['partners-page', 'page']
         };

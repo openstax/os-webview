@@ -1,3 +1,4 @@
+import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
 import FormSelect from '~/components/form-select/form-select';
@@ -14,7 +15,7 @@ export default class Accessibility extends CMSPageController {
 
     init() {
         this.template = template;
-        this.css = '/app/pages/technology/technology.css?v2.6.0';
+        this.css = `/app/pages/technology/technology.css?${VERSION}`;
         this.view = {
             classes: ['technology-page', 'page']
         };
