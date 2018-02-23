@@ -22,7 +22,11 @@ export default class DetailsTab extends Controller {
 
     onLoaded() {
         $.insertHtml(this.el, this.model);
-        this.regions.getTheBook.append(new GetThisTitle(this.model.bookInfo));
+        this.regions.getTheBook.append(
+            new GetThisTitle(
+                Object.assign({includeTOC: true}, this.model.bookInfo)
+            )
+        );
         this.regions.letUsKnow.append(new LetUsKnow(() => ({})));
     }
 

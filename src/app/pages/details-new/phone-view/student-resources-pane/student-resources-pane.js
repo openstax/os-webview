@@ -10,7 +10,7 @@ export default class StudentResourcePane extends Controller {
         this.view = {
             classes: ['student-resources-pane']
         };
-        this.css = `/app/pages/details-new/phone-view/student-resources-pane/student-resources-pane.css${VERSION}`;
+        this.css = `/app/pages/details-new/phone-view/student-resources-pane/student-resources-pane.css?${VERSION}`;
     }
 
     onLoaded() {

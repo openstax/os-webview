@@ -11,7 +11,7 @@ export default class StudentResourceTab extends Controller {
         this.view = {
             classes: ['student-resources']
         };
-        this.css = `/app/pages/details-new/student-resource-tab/student-resource-tab.css${VERSION}`;
+        this.css = `/app/pages/details-new/student-resource-tab/student-resource-tab.css?${VERSION}`;
     }
 
     onLoaded() {

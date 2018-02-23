@@ -9,7 +9,7 @@ export default class AccordionGroup extends Controller {
         this.view = {
             classes: ['accordion-group']
         };
-        this.css = `/app/components/accordion-group/accordion-group.css${VERSION}`;
+        this.css = `/app/components/accordion-group/accordion-group.css?${VERSION}`;
     }
 
     template() {

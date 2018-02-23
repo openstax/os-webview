@@ -16,7 +16,7 @@ export default class PhoneView extends Controller {
     init(model) {
         this.template = template;
         this.model = model;
-        this.css = `/app/pages/details-new/phone-view/phone-view.css${VERSION}`;
+        this.css = `/app/pages/details-new/phone-view/phone-view.css?${VERSION}`;
         this.regions = {
             getTheBook: '.get-the-book',
             accordion: '.accordion-region',
@@ -31,34 +31,38 @@ export default class PhoneView extends Controller {
         // TODO Figure out heading levels: are the accordion titles headers?
         $.insertHtml(this.el, this.model);
         this.regions.getTheBook.append(new GetThisTitle(this.model.bookInfo));
+        const accordionItems = [
+            {
+                title: 'Book details',
+                contentComponent: new DetailsPane(this.model.detailsTabData)
+            },
+            {
+                title: 'Instructor resources',
+                contentComponent: new InstructorResourcePane(this.model.instructorResources)
+            },
+            {
+                title: `Student resources (${this.model.studentResources.length})`,
+                contentComponent: new StudentResourcePane(this.model.studentResources)
+            },
+            {
+                title: 'Report errata',
+                contentComponent: new ErrataPane({
+                    title: this.model.bookTitle
+                })
+            }
+        ];
+
+        if (this.model.tableOfContents) {
+            accordionItems.splice(1, 0, {
+                title: 'Table of contents',
+                contentComponent: new Contents(
+                    this.model.tableOfContents,
+                    {tag: 'ol', classes: ['table-of-contents']}
+                )
+            });
+        }
         this.regions.accordion.append(new AccordionGroup(() => ({
-            items: [
-                {
-                    title: 'Book details',
-                    contentComponent: new DetailsPane(this.model.detailsTabData)
-                },
-                {
-                    title: 'Table of contents',
-                    contentComponent: new Contents(
-                        this.model.tableOfContents,
-                        {tag: 'ol', classes: ['table-of-contents']}
-                    )
-                },
-                {
-                    title: 'Instructor resources',
-                    contentComponent: new InstructorResourcePane(this.model.instructorResources)
-                },
-                {
-                    title: `Student resources (${this.model.studentResources.length})`,
-                    contentComponent: new StudentResourcePane(this.model.studentResources)
-                },
-                {
-                    title: 'Report errata',
-                    contentComponent: new ErrataPane({
-                        title: this.model.bookTitle
-                    })
-                }
-            ]
+            items: accordionItems
         })));
         this.regions.letUsKnow.append(new LetUsKnow(() => ({})));
     }

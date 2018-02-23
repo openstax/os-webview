@@ -1,16 +1,14 @@
 <template args="model">
-    <div class="details-page-v2">
-        <div class="hero" data-slug="{model.slug}">
-            <div class="content book-title">
-                <h1>{model.bookTitle}</h1>
-            </div>
+    <div class="hero" data-slug="{model.slug}">
+        <div class="content book-title">
+            <h1>{model.bookTitle}</h1>
         </div>
-        <div class="content">
-            <div class="phone-view" skip="true"></div>
-            <div class="bigger-view">
-                <div class="tab-controller" skip="true"></div>
-                <div class="tab-content" skip="true"></div>
-            </div>
+    </div>
+    <div class="content {model.detailsTabClass}">
+        <div class="phone-view" skip="true"></div>
+        <div class="bigger-view">
+            <div class="tab-controller" skip="true"></div>
+            <div class="tab-content" skip="true"></div>
         </div>
     </div>
 </template>

@@ -36,26 +36,4 @@
             }
         }
     }
-
-    .table-of-contents {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        padding-left: 2rem;
-
-        > li {
-            font-weight: bold;
-            margin-bottom: 2rem;
-        }
-
-        ol {
-            font-weight: normal;
-            list-style: none;
-            padding-left: 2rem;
-
-            .box {
-                font-weight: bold;
-            }
-        }
-    }
 }

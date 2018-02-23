@@ -14,7 +14,7 @@ export default class DetailsPane extends Controller {
         this.view = {
             classes: ['details-pane']
         };
-        this.css = `/app/pages/details-new/phone-view/details-pane/details-pane.css${VERSION}`;
+        this.css = `/app/pages/details-new/phone-view/details-pane/details-pane.css?${VERSION}`;
         this.regions = {
             authors: '.authors-region',
             productDetails: '.product-details-region'

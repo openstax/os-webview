@@ -11,7 +11,7 @@ export default class CollapsingPane extends Controller {
         this.view = {
             classes: ['collapsing-pane']
         };
-        this.css = `/app/components/collapsing-pane/collapsing-pane.css${VERSION}`;
+        this.css = `/app/components/collapsing-pane/collapsing-pane.css?${VERSION}`;
         this.regions = {
             content: '.content-region'
         };

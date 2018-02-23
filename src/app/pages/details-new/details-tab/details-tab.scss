@@ -23,7 +23,7 @@
             grid-template-rows: auto 1fr;
         }
 
-        .btn {
+        .button-group .btn {
             background-color: ui-color(white);
             display: grid;
             grid-gap: $normal-margin;

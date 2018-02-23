@@ -1,14 +1,38 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.details-page-v2 {
+@mixin set-color-items($bg, $fg) {
+    @at-root .#{$bg} {
+        .hero,
+        .book-icon {
+            background-color: os-color($bg);
+            background-image: linear-gradient(75deg, os-color($bg), darken(os-color($bg), 6));
+            color: $fg;
+        }
+    }
+}
 
-    background-image: linear-gradient(to bottom, ui-color(white) 10rem, ui-color(default) 40rem);
+.details-page-v2 {
+    background-color: ui-color(white);
 
     @include wider-than($tablet-max) {
         background: ui-color(white);
     }
 
+    &.card-background {
+        background-image: linear-gradient(to bottom, ui-color(white) 10rem, ui-color(default) 40rem);
+    }
+
     .hero {
+        @include set-color-items(gold, text-color(white));
+        @include set-color-items(green, ui-color(white));
+        @include set-color-items(blue, text-color(white));
+        @include set-color-items(deep-green, text-color(white));
+        @include set-color-items(gray, text-color(white));
+        @include set-color-items(light-blue, text-color(white));
+        @include set-color-items(orange, text-color(white));
+        @include set-color-items(yellow, os-color(blue));
+        @include set-color-items(red, text-color(white));
+
         align-items: flex-end;
         background-image: linear-gradient(75deg, #aaa, #777);
         color: text-color(normal);
@@ -25,11 +49,6 @@
         @include wider-than($tablet-max) {
             height: 34.3rem;
             padding-bottom: 7rem;
-        }
-
-        &[data-slug="books/biology"] {
-            background-image: linear-gradient(75deg, #b7eb65, #63a524);
-            color: os-color(gray);
         }
 
         .book-title {
@@ -124,6 +143,28 @@
 
     .btn.default {
         background-color: ui-color(white);
+    }
+
+    .table-of-contents {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        padding-left: 2rem;
+
+        > li {
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+
+        ol {
+            font-weight: normal;
+            list-style: none;
+            padding-left: 2rem;
+
+            .box {
+                font-weight: bold;
+            }
+        }
     }
 
 }

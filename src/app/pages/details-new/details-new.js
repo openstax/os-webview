@@ -26,6 +26,42 @@ function getSlugFromTitle(bookTitle) {
     return slug;
 }
 
+const slugToColor = {
+    prealgebra: 'deep-green',
+    'elementary-algebra': 'orange',
+    'intermediate-algebra': 'blue',
+    'college-algebra': 'light-blue',
+    'algebra-and-trigonometry': 'red',
+    'precalculus': 'orange',
+    'calculus-volume': 'gold',
+    'introductory-statistics': 'yellow',
+    'anatomy-and-physiology': 'gray',
+    'astronomy': 'blue',
+    'biology': 'green',
+    'concepts-biology': 'orange',
+    'microbiology': 'light-blue',
+    'chemistry': 'orange',
+    'chemistry-atoms-first': 'deep-green',
+    'college-physics': 'blue',
+    'university-physics-volume': 'green',
+    'american-government': 'light-blue',
+    'principles-economics': 'gray',
+    'principles-macroeconomics': 'gray',
+    'principles-microeconomics': 'gray',
+    psychology: 'green',
+    'introduction-sociology-2e': 'yellow',
+    'us-history': 'blue',
+    'college-physics-ap-courses': 'blue',
+    'principles-macroeconomics-ap-courses': 'gray',
+    'principles-microeconomics-ap-courses': 'gray',
+    'fizyka-uniwersytecka-polska': 'green'
+};
+
+function getColorFromSlug(slug) {
+    const stripped = slug.replace(/.*\/(.*[^\-\d]).*/, '$1');
+
+    return slugToColor[stripped] || 'gray';
+}
 
 export default class Details extends CMSPageController {
 
@@ -41,13 +77,12 @@ export default class Details extends CMSPageController {
             tabContent: '.tab-content'
         };
         this.slug = getSlugFromTitle(bookTitle.toLowerCase());
+        this.view = {
+            classes: ['details-page-v2']
+        };
     }
 
     onDataLoaded() {
-        this.model.bookTitle = this.pageData.title;
-        this.model.slug = this.pageData.slug;
-        this.update();
-
         const tabLabels = ['Book details', 'Instructor resources', 'Student resources'];
         let selectedTab = tabLabels[0];
         const detailsTabData = () => {
@@ -92,15 +127,26 @@ export default class Details extends CMSPageController {
             selectedTab,
             contents
         }));
+        const setDetailsTabClass = () => {
+            this.el.classList.toggle('card-background', selectedTab !== 'Book details');
+        };
         const tabGroup = new TabGroup(() => ({
             tag: 'h2',
             tabLabels,
             selectedTab,
             setSelected(newValue) {
                 selectedTab = newValue;
+                setDetailsTabClass();
                 contentGroup.update();
             }
         }));
+
+        this.model.bookTitle = this.pageData.title;
+        this.model.slug = this.pageData.slug;
+        setDetailsTabClass();
+        this.update();
+
+        this.el.classList.add(getColorFromSlug(this.pageData.slug));
 
         this.regions.phoneView.attach(new PhoneView({
             bookInfo: this.pageData,

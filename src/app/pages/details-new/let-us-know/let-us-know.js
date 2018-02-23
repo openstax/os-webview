@@ -12,7 +12,7 @@ export default class LetUsKnow extends Controller {
         this.view = {
             classes: ['let-us-know']
         };
-        this.css = `/app/pages/details-new/let-us-know/let-us-know.css${VERSION}`;
+        this.css = `/app/pages/details-new/let-us-know/let-us-know.css?${VERSION}`;
     }
 
     updateProps() {

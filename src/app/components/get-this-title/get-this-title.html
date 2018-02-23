@@ -1,5 +1,6 @@
 <template args="model">
     <div class="modal-region" hidden="{model.modalHiddenAttribute}" skip="true"></div>
+    <div class="toc-region" hidden="{model.tocHiddenAttribute}" skip="true"></div>
     <div class="get-this-title">
         <div class="submenu {model.submenu}">
             <div class="print-submenu">
@@ -32,6 +33,12 @@
             </div>
         </div>
         <div class="options">
+            <div if="model.includeTOC" class="option">
+                <a href="/" role="button" class="show-toc">
+                    <span class="fa fa-list-ol"></span>
+                    <span class="text">Table of contents</span>
+                </a>
+            </div>
             <div if="!model.comingSoon && model.webviewLink" class="option">
                 <a href="{model.webviewLink}"
                     tabindex="{model.submenu === '' ? 0 : -1}" data-submenu="{model.submenu}">

@@ -11,7 +11,7 @@ $icon-size: 5.5rem;
 
     .book-icon {
         align-items: center;
-        background-color: os-color(red);
+        background-image: none;
         border-radius: 50%;
         display: flex;
         height: $icon-size;
@@ -19,7 +19,7 @@ $icon-size: 5.5rem;
         width: $icon-size;
 
         a {
-            color: ui-color(white);
+            color: inherit;
             font-size: $icon-size * 0.45;
         }
     }

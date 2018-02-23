@@ -11,7 +11,7 @@ export default class ModalContent extends Controller {
             tag: 'modal-content',
             classes: ['page-overlay']
         };
-        this.css = `/app/components/modal-content/modal-content.css${VERSION}`;
+        this.css = `/app/components/modal-content/modal-content.css?${VERSION}`;
     }
 
     onLoaded() {

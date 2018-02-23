@@ -1,0 +1,35 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+toc-dialog {
+    background-color: ui-color(white);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    max-width: 80rem;
+    width: calc(100% - 16rem);
+
+    .title-bar {
+        @include set-font(h4);
+
+        align-items: baseline;
+        background-color: ui-color(default);
+        display: flex;
+        height: 7.5rem;
+        justify-content: space-between;
+        padding: 3rem;
+    }
+
+    .main {
+        display: grid;
+        grid-template-rows: auto auto;
+        height: calc(100vh - 25.5rem);
+        padding: 3rem;
+
+        .toc-region {
+            overflow-y: auto;
+        }
+
+        .btn {
+            width: 17rem;
+        }
+    }
+}

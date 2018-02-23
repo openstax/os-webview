@@ -11,7 +11,7 @@ export default class OrderPrintCopy extends Controller {
             tag: 'nav',
             classes: ['order-print-copy']
         };
-        this.css = `/app/components/get-this-title/order-print-copy/order-print-copy.css${VERSION}`;
+        this.css = `/app/components/get-this-title/order-print-copy/order-print-copy.css?${VERSION}`;
     }
 
 }

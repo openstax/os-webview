@@ -8,7 +8,7 @@ export default class InstructorResourceTab extends Controller {
     init(model) {
         this.template = template;
         this.model = model;
-        this.css = `/app/pages/details-new/instructor-resource-tab/instructor-resource-tab.css${VERSION}`;
+        this.css = `/app/pages/details-new/instructor-resource-tab/instructor-resource-tab.css?${VERSION}`;
         this.view = {
             classes: ['instructor-resources']
         };
