@@ -6,6 +6,7 @@ import InstructorResourceTab from './instructor-resource-tab/instructor-resource
 import StudentResourceTab from './student-resource-tab/student-resource-tab';
 import TabGroup from '~/components/tab-group/tab-group';
 import ContentGroup from '~/components/content-group/content-group';
+import {sfUserModel} from '~/models/usermodel';
 import {formatDateForBlog as formatDate, shuffle} from '~/helpers/data';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './details.html';
@@ -80,6 +81,23 @@ export default class Details extends CMSPageController {
         this.view = {
             classes: ['details-page-v2']
         };
+        this.checkUserStatus();
+    }
+
+    checkUserStatus() {
+        const isInstructor = (user) => {
+            return user && user.username && 'groups' in user && user.groups.includes('Faculty');
+        };
+        const isStudent = (user) => {
+            return user && user.username && !isInstructor(user);
+        };
+
+        this.model.userStatusPromise = sfUserModel.load().then((user) => {
+            return {
+                isInstructor: isInstructor(user),
+                isStudent: isStudent(user)
+            };
+        });
     }
 
     onDataLoaded() {
@@ -117,10 +135,12 @@ export default class Details extends CMSPageController {
             'Book details': new DetailsTab(detailsTabData()),
             'Instructor resources': new InstructorResourceTab({
                 resources: this.pageData.book_faculty_resources,
-                allies: shuffle(this.pageData.book_allies)
+                allies: shuffle(this.pageData.book_allies),
+                userStatusPromise: this.model.userStatusPromise
             }),
             'Student resources': new StudentResourceTab({
-                resources: this.pageData.book_student_resources
+                resources: this.pageData.book_student_resources,
+                userStatusPromise: this.model.userStatusPromise
             })
         };
         const contentGroup = new ContentGroup(() => ({
@@ -158,7 +178,8 @@ export default class Details extends CMSPageController {
                 freeResources: this.pageData.book_faculty_resources,
                 paidResources: this.pageData.book_allies
             },
-            studentResources: this.pageData.book_student_resources
+            studentResources: this.pageData.book_student_resources,
+            userStatusPromise: this.model.userStatusPromise
         }));
         this.regions.tabController.attach(tabGroup);
         this.regions.tabContent.attach(contentGroup);

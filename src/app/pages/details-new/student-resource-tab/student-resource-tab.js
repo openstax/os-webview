@@ -1,5 +1,6 @@
 import VERSION from '~/version';
 import {Controller} from 'superb.js';
+import settings from 'settings';
 import ResourceBox from '../resource-box/resource-box';
 import {description as template} from './student-resource-tab.html';
 
@@ -18,12 +19,20 @@ export default class StudentResourceTab extends Controller {
         const Region = this.regions.self.constructor;
         const resourceBoxes = this.el.querySelectorAll('resource-box');
 
-        for (const index of this.model.resources.keys()) {
-            const region = new Region(resourceBoxes[index]);
-            const resourceBox = new ResourceBox(this.model.resources[index]);
+        this.model.userStatusPromise.then((userStatus) => {
+            for (const index of this.model.resources.keys()) {
+                const region = new Region(resourceBoxes[index]);
+                const resourceData = this.model.resources[index];
+                const resourceBox = new ResourceBox(
+                    Object.assign({
+                        heading: resourceData.resource_heading,
+                        description: resourceData.resource_description
+                    }, ResourceBox.studentResourceBoxPermissions(resourceData, userStatus))
+                );
 
-            region.attach(resourceBox);
-        }
+                region.attach(resourceBox);
+            }
+        });
     }
 
 }

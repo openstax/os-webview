@@ -1,6 +1,6 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-$icon-size: 5.5rem;
+$icon-size: 6rem;
 
 .instructor-resources {
     display: grid;
@@ -59,7 +59,7 @@ $icon-size: 5.5rem;
             border-radius: 50%;
             color: text-color(white);
             display: flex;
-            font-size: 0.5 * $icon-size;
+            font-size: 0.55 * $icon-size;
             height: $icon-size;
             justify-content: center;
             width: $icon-size;
@@ -70,9 +70,7 @@ $icon-size: 5.5rem;
         }
 
         .blurb {
-            @include set-font(helper-label);
-
-            color: text-color(helper);
+            @include set-font(body-large);
         }
     }
 
@@ -83,10 +81,16 @@ $icon-size: 5.5rem;
         display: grid;
         font-weight: inherit;
         grid-gap: $normal-margin;
-        grid-template-columns: auto auto;
+        grid-template-columns: 1fr auto;
 
         > * {
             grid-column: 1;
+        }
+
+        .blurb-body {
+            @include body-font(2.4rem);
+
+            max-width: $text-content-max;
         }
 
         .ally-logo {
@@ -95,7 +99,7 @@ $icon-size: 5.5rem;
 
             > img {
                 margin-top: 0.5rem;
-                max-height: 5rem;
+                max-height: 6.8rem;
             }
         }
     }

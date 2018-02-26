@@ -38,11 +38,17 @@ export default class PhoneView extends Controller {
             },
             {
                 title: 'Instructor resources',
-                contentComponent: new InstructorResourcePane(this.model.instructorResources)
+                contentComponent: new InstructorResourcePane({
+                    resources: this.model.instructorResources,
+                    userStatusPromise: this.model.userStatusPromise
+                })
             },
             {
                 title: `Student resources (${this.model.studentResources.length})`,
-                contentComponent: new StudentResourcePane(this.model.studentResources)
+                contentComponent: new StudentResourcePane({
+                    resources: this.model.studentResources,
+                    userStatusPromise: this.model.userStatusPromise
+                })
             },
             {
                 title: 'Report errata',

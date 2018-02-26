@@ -40,32 +40,30 @@
     </div>
     <hr>
     <if condition="model.allies.length">
-        <div>
-            <div class="ally-blurb">
-                <!-- TODO Get this from the CMS -->
-                <h2>Want more?</h2>
-                <div>
-                    OpenStax Partners provide additional, low-cost resources for your
-                    book. See what's offered for this title below and learn more about
-                    our partners here.
-                </div>
-                <div class="ally-logo">
-                    <img
-                    src="http://staxlogos.openstax.org/OSX-ALLY-Green-RGB-150dpi.png"
-                    alt=""
-                    >
-                </div>
+        <div class="ally-blurb">
+            <!-- TODO Get this from the CMS -->
+            <h2>Want more?</h2>
+            <div class="blurb-body">
+                OpenStax Partners provide additional, low-cost resources for your
+                book. See what's offered for this title below and learn more about
+                our partners here.
             </div>
-            <div class="ally resources">
-                <div each="ally in model.allies" class="ally-box resource-box">
-                    <div class="top">
-                        <img src="{ally.ally_color_logo}">
-                    </div>
-                    <div class="bottom">
-                        <a href="{ally.book_link_url}">
-                            {ally.book_link_text}<i class="fa fa-external-link-alt"></i>
-                        </a>
-                    </div>
+            <div class="ally-logo">
+                <img
+                src="http://staxlogos.openstax.org/OSX-ALLY-Gray-RGB-150dpi.png"
+                alt=""
+                >
+            </div>
+        </div>
+        <div class="ally resources">
+            <div each="ally in model.allies" class="ally-box resource-box">
+                <div class="top">
+                    <img src="{ally.ally_color_logo}">
+                </div>
+                <div class="bottom">
+                    <a href="{ally.book_link_url}">
+                        {ally.book_link_text}<i class="fa fa-external-link-alt"></i>
+                    </a>
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
 import VERSION from '~/version';
 import {Controller} from 'superb.js';
+import settings from 'settings';
 import ResourceBox from '../../resource-box/resource-box';
 
 export default class StudentResourcePane extends Controller {
@@ -14,11 +15,18 @@ export default class StudentResourcePane extends Controller {
     }
 
     onLoaded() {
-        for (const res of this.model) {
-            const component = new ResourceBox(res);
+        this.model.userStatusPromise.then((userStatus) => {
+            for (const res of this.model.resources) {
+                const component = new ResourceBox(
+                    Object.assign({
+                        heading: res.resource_heading,
+                        description: res.resource_description
+                    }, ResourceBox.studentResourceBoxPermissions(res, userStatus))
+                );
 
-            this.regions.self.append(component);
-        }
+                this.regions.self.append(component);
+            }
+        });
     }
 
 }
