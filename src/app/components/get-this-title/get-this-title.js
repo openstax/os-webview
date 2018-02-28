@@ -4,6 +4,7 @@ import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import userModel from '~/models/usermodel';
 import router from '~/router';
+import ModalDialog from '../dialog/dialog';
 import TocDialog from './toc-dialog/toc-dialog';
 import ModalContent from '../modal-content/modal-content';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
@@ -67,23 +68,46 @@ export default class GetThisTitle extends Controller {
 
     onLoaded() {
         if (this.regions.modal.el) {
-            this.regions.modal.attach(new ModalContent(new OrderPrintCopy({
+            const printCopyContent = new OrderPrintCopy({
                 individualLink: this.model.amazon.link,
-                bulkLink: this.model.bookstore.link
-            })));
+                amazonPrice: this.model.amazon.price,
+                bookstoreLink: this.model.bookstore.link,
+                bulkLink: this.model.isHighSchool ? '/bulk-order?this.model.slug' : null
+            });
+            const printCopyDialog = new ModalDialog({
+                title: 'Order a print copy',
+                contentComponent: printCopyContent,
+                closeDialog: () => {
+                    this.model.modalHiddenAttribute = '';
+                    this.update();
+                    document.body.classList.remove('no-scroll');
+                }
+            });
+
+            this.regions.modal.attach(printCopyDialog);
         }
         if (this.regions.toc.el && this.model.includeTOC) {
-            this.regions.toc.attach(
-                new ModalContent(new TocDialog({
-                    tableOfContents: this.model.tableOfContents,
-                    webviewLink: this.model.webviewLink,
-                    closeDialog: () => {
-                        this.model.tocHiddenAttribute = '';
-                        this.update();
-                    }
-                }))
-            );
+            const tocContent = new TocDialog({
+                tableOfContents: this.model.tableOfContents,
+                webviewLink: this.model.webviewLink
+            });
+            const tocDialog = new ModalDialog({
+                title: 'Table of contents',
+                contentComponent: tocContent,
+                closeDialog: () => {
+                    this.model.tocHiddenAttribute = '';
+                    this.update();
+                    document.body.classList.remove('no-scroll');
+                }
+            });
+
+            this.regions.toc.attach(tocDialog);
         }
+    }
+
+    onClose() {
+        // If they navigate while a modal is open
+        document.body.classList.remove('no-scroll');
     }
 
     @on('click .btn')
@@ -95,6 +119,7 @@ export default class GetThisTitle extends Controller {
     showPrintSubment(event) {
         event.preventDefault();
         this.model.modalHiddenAttribute = null;
+        document.body.classList.add('no-scroll');
         this.update();
     }
 
@@ -125,6 +150,7 @@ export default class GetThisTitle extends Controller {
     showToc(event) {
         event.preventDefault();
         this.model.tocHiddenAttribute = null;
+        document.body.classList.add('no-scroll');
         this.update();
     }
 

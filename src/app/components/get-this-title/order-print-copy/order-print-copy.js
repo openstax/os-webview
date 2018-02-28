@@ -12,6 +12,9 @@ export default class OrderPrintCopy extends Controller {
             classes: ['order-print-copy']
         };
         this.css = `/app/components/get-this-title/order-print-copy/order-print-copy.css?${VERSION}`;
+        this.model.boxCount = ['individualLink', 'bookstoreLink', 'bulkLink'].reduce((accum, key) => {
+            return accum + (this.model[key] ? 1 : 0);
+        }, 0);
     }
 
 }

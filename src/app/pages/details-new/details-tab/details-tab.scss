@@ -63,6 +63,7 @@
     button {
         @extend %button;
 
+        background-color: transparent;
         margin: 0;
         padding: 1rem 2rem;
         text-transform: none;

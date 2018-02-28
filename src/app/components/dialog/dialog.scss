@@ -1,0 +1,46 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+dialog {
+    background-color: transparent;
+    border: 0;
+    color: text-color(normal);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    max-width: 80rem;
+    padding: 0;
+
+    @include wider-than($phone-max) {
+        background-color: ui-color(white);
+        width: calc(100% - 16rem);
+    }
+
+    .title-bar {
+        @include set-font(h4);
+
+        align-items: center;
+        background-color: transparent;
+        color: text-color(white);
+        display: flex;
+        height: 5rem;
+        justify-content: space-between;
+        padding: 0 3rem;
+
+        @include wider-than($phone-max) {
+            background-color: ui-color(default);
+            color: inherit;
+            height: 7.5rem;
+            padding: 3rem;
+        }
+    }
+
+    .put-away {
+        transform: translateY(-0.3rem);
+
+        &::after {
+            @include body-font(3.6rem);
+
+            content: '\00d7';
+            cursor: pointer;
+        }
+    }
+}

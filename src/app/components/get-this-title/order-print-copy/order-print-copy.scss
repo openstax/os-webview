@@ -1,35 +1,82 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .order-print-copy {
-    display: grid;
-    grid-gap: 1rem;
+
+    .larger-version {
+        display: none;
+
+        @include wider-than($phone-max) {
+            display: grid;
+            grid-gap: 2rem;
+        }
+    }
+
+    .phone-version {
+        @include wider-than($phone-max) {
+            display: none;
+        }
+    }
 
     h1 {
-        @include body-font(2.4rem);
+        @include set-font(h2);
 
-        color: text-color(white);
+        color: text-color(helper);
         padding: 0;
         text-align: center;
     }
 
-    .boxes {
-        display: grid;
-        grid-gap: 2rem;
+    h2 {
+        @include set-font(h4);
+
+        margin: 0;
+
+        @include wider-than($phone-max) {
+            @include set-font(h3);
+
+            padding: 0;
+        }
     }
 
-    .button-box {
+    .boxes {
+        box-sizing: border-box;
+        display: grid;
+        grid-gap: 2rem;
+        padding: 2rem;
+
+        @include wider-than($phone-max) {
+            grid-gap: 4rem;
+            padding: 4rem;
+            padding-top: 0;
+
+            &.boxes-1 {
+                grid-template-columns: auto;
+            }
+
+            &.boxes-2 {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            &.boxes-3 {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+    }
+
+    .box {
         background-color: ui-color(white);
         border: 0;
         border-radius: 0.4rem;
+        box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.25);
         color: inherit;
         display: grid;
         grid-gap: $normal-margin;
         grid-template-rows: auto auto;
+        line-height: normal;
         padding: 2rem;
         text-decoration: none;
 
-        > :first-child {
-            font-weight: bold;
+        @include wider-than($phone-max) {
+            padding: 3rem;
         }
     }
 }

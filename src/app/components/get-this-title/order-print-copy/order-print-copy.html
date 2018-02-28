@@ -1,13 +1,47 @@
 <template args="model">
-    <h1>Order a print copy</h1>
-    <div class="boxes">
-        <a if="model.individualLink" class="button-box" href="{model.individualLink}">
-            <div><span class="fa fa-user"></span> Individual</div>
-            <div>I need to order a personal copy for my course.</div>
-        </a>
-        <a if="model.bulkLink" class="button-box" href="{model.bulkLink}">
-            <div><span class="fa fa-users"></span> Bookstore</div>
-            <div>I need to place a bulk order for a tax-exempt organization.</div>
-        </a>
+    <div class="phone-version">
+        <div class="boxes boxes-{model.boxCount}">
+            <a if="model.individualLink" class="box" href="{model.individualLink}">
+                <h2><span class="fa fa-user"></span> Individual</h2>
+                <div>I need to order a personal copy for my course.</div>
+            </a>
+            <a if="model.bookstoreLink" class="box" href="{model.bookstoreLink}">
+                <h2><span class="fa fa-users"></span> Bookstore</h2>
+                <div>I need to place a bulk order for a tax-exempt organization.</div>
+            </a>
+            <a if="model.bulkLink" class="box" href="{model.bulkLink}">
+                <h2><span class="fa fa-users"></span> High school</h2>
+                <div>I need to place a bulk order for a tax-exempt organization.</div>
+            </a>
+        </div>
+    </div>
+    <div class="larger-version">
+        <h1>I am a...</h1>
+        <div class="boxes boxes-{model.boxCount}">
+            <div if="model.individualLink" class="box">
+                <h2><span class="fa fa-user"></span> Individual</h2>
+                <div>and need to order a personal copy for my course.</div>
+                <a class="btn primary" href="{model.individualLink}">
+                    Order on Amazon
+                </a>
+                <!-- <div class="info">
+                    ${model.amazonPrice} from seller "OpenStax"
+                </div> -->
+            </div>
+            <div if="model.bookstoreLink" class="box">
+                <h2><span class="fa fa-users"></span> Bookstore</h2>
+                <div>and need to place a bulk order for a tax-exempt organization.</div>
+                <a class="btn secondary" href="{model.bookstoreLink}">
+                    Order with indiCo
+                </a>
+            </div>
+            <div if="model.bulkLink" class="box">
+                <h2><span class="fa fa-users"></span> High school</h2>
+                <div>and need to place a bulk order for a tax-exempt organization.</div>
+                <a if="model.bulkLink" class="btn" href="{model.bulkLink}">
+                    Order with OpenStax
+                </a>
+            </div>
+        </div>
     </div>
 </template>
