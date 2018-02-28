@@ -70,7 +70,9 @@ export default class PhoneView extends Controller {
         this.regions.accordion.append(new AccordionGroup(() => ({
             items: accordionItems
         })));
-        this.regions.letUsKnow.append(new LetUsKnow(() => ({})));
+        this.regions.letUsKnow.append(new LetUsKnow(() => ({
+            title: this.model.bookTitle
+        })));
     }
 
 }

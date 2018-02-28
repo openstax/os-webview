@@ -12,10 +12,9 @@
 }
 
 .details-page-v2 {
-    background-color: ui-color(white);
 
-    @include wider-than($tablet-max) {
-        background: ui-color(white);
+    @include wider-than($phone-max) {
+        background-color: ui-color(white);
     }
 
     &.card-background {

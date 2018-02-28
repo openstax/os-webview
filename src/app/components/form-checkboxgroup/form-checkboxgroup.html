@@ -7,7 +7,8 @@
             <if condition="item.value">
                 <input type="checkbox"
                     name="{model.name}"
-                    value="{item.value}">
+                    value="{item.value}"
+                    checked="{item.selected ? '' : null}">
             <else>
                 <input type="checkbox">
             </if>

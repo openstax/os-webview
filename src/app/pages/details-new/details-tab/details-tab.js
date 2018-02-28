@@ -27,7 +27,10 @@ export default class DetailsTab extends Controller {
                 Object.assign({includeTOC: true}, this.model.bookInfo)
             )
         );
-        this.regions.letUsKnow.append(new LetUsKnow(() => ({})));
+
+        this.regions.letUsKnow.append(new LetUsKnow(() => ({
+            title: this.model.title
+        })));
     }
 
 }
