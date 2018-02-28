@@ -6,8 +6,8 @@
     "start": "gulp dev",
     "build": "gulp",
     "pretest": "npm run-script build",
-    "test": "jest ./test/src/*/*.js",
-    "test-debug": "jest ./test/src/*/*.js"
+    "test": "jest `find ./test/src -name '*.test.js'`",
+    "test-debug": "jest `find ./test/src -name '*.test.js'`"
   },
   "repository": {
     "type": "git",

@@ -18,7 +18,7 @@ export default class ContentGroup extends Controller {
         for (const target of this.el.children) {
             const region = new Region(target, this);
 
-            region.attach(this.model.contents[target.dataset.forTab]);
+            region.attach(this.model.contents[target.getAttribute('data-for-tab')]);
         }
     }
 
