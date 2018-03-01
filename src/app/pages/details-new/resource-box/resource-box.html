@@ -1,0 +1,22 @@
+<template args="model">
+    <div class="top">
+        <h3>{model.heading}</h3>
+        <div data-html="description"></div>
+    </div>
+    <div class="bottom">
+        <div class="left">
+            <if condition="model.link">
+                <a href="{model.link.url}">{model.link.text}</a>
+            <else>
+                Access pending
+            </if>
+        </div>
+        <div class="right">
+            <if condition="model.link">
+                <a href="{model.link.url}"><i class="fa fa-{model.iconType}"></i></a>
+            <else>
+                <i class="fa fa-lock"></i>
+            </if>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,17 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.tab-group {
+    @extend %tab-group;
+
+    .tab {
+        @extend %tab;
+
+        &.selected {
+            @extend %active;
+        }
+    }
+}
+
+.tab-baseline {
+    @extend %tab-baseline !optional; // TODO: Remove when Pattern Library upgraded
+}

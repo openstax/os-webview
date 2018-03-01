@@ -1,0 +1,15 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.student-resources-pane {
+    display: grid;
+    grid-gap: $normal-margin;
+    grid-template-columns: repeat(5, 20rem);
+    padding: 0 2rem 2.5rem;
+
+    h3 {
+        @include set-font(h4);
+
+        margin-bottom: 2rem;
+    }
+
+}

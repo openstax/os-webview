@@ -76,7 +76,8 @@
             padding: 0;
 
             [type="submit"] {
-                @include button(primary);
+                @extend %primary;
+                @include button();
 
                 background-color: os-color(gold);
 
@@ -170,15 +171,15 @@
     }
 
     .row {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
+        display: grid;
         width: 100%;
 
-        .col {
-            @extend %griditem;
-            @extend %basis-6;
+        @include wider-than($phone-max) {
+            grid-gap: (2 * $normal-margin);
+            grid-template-columns: 1fr 1fr;
+        }
 
+        .col {
             > label {
                 display: block;
                 height: $form-element-height;

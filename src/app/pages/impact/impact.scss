@@ -154,7 +154,8 @@ $hero-break-width: 880px;
     }
 
     .cta .btn {
-        @include button(primary);
+        @extend %primary;
+        @include button();
     }
 
     .affiliates {

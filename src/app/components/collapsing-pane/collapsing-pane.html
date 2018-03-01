@@ -1,0 +1,7 @@
+<template args="model">
+    <div class="control-bar">
+        <div>{model.title}</div>
+        <div class="fa fa-{model.plusOrMinus}"></div>
+    </div>
+    <div class="content-region" hidden="{model.hiddenAttribute}" skip="true"></div>
+</template>

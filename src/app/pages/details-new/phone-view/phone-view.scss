@@ -1,0 +1,39 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.detail-phone-view {
+    .main-grid {
+        display: grid;
+        grid-gap: 1rem;
+        margin-top: -4rem;
+
+        .get-the-book {
+            background-color: ui-color(white);
+            padding: 1rem $normal-margin 0;
+
+            .option {
+                font-size: 1.8rem; // for the icons
+
+                [data-prefix="fab"] { // brand icons seem a little undersized
+                    font-size: 2.2rem;
+                }
+
+                .text {
+                    @include set-font(body-regular);
+                }
+            }
+        }
+
+        .get-the-book,
+        .accordion-item {
+            background-color: ui-color(white);
+            box-shadow: 0 0.2rem 0.6rem 0 rgba(0, 0, 0, 0.25);
+            max-width: 100%;
+
+            .content-pane {
+                margin-right: 2rem;
+                max-width: calc(100vw - #{4 * $normal-margin});
+                overflow-x: auto;
+            }
+        }
+    }
+}

@@ -1,0 +1,169 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+@mixin set-color-items($bg, $fg) {
+    @at-root .#{$bg} {
+        .hero,
+        .book-icon {
+            background-color: os-color($bg);
+            background-image: linear-gradient(75deg, os-color($bg), darken(os-color($bg), 6));
+            color: $fg;
+        }
+    }
+}
+
+.details-page-v2 {
+
+    @include wider-than($phone-max) {
+        background-color: ui-color(white);
+    }
+
+    &.card-background {
+        background-image: linear-gradient(to bottom, ui-color(white) 10rem, ui-color(default) 40rem);
+    }
+
+    .hero {
+        @include set-color-items(gold, text-color(white));
+        @include set-color-items(green, ui-color(white));
+        @include set-color-items(blue, text-color(white));
+        @include set-color-items(deep-green, text-color(white));
+        @include set-color-items(gray, text-color(white));
+        @include set-color-items(light-blue, text-color(white));
+        @include set-color-items(orange, text-color(white));
+        @include set-color-items(yellow, os-color(blue));
+        @include set-color-items(red, text-color(white));
+
+        align-items: flex-end;
+        background-image: linear-gradient(75deg, #aaa, #777);
+        color: text-color(normal);
+        display: flex;
+        height: 16.5rem;
+        overflow: hidden;
+        padding-bottom: 5rem;
+
+        @include width-between($phone-max, $tablet-max) {
+            height: 27.3rem;
+            padding-bottom: 6rem;
+        }
+
+        @include wider-than($tablet-max) {
+            height: 34.3rem;
+            padding-bottom: 7rem;
+        }
+
+        .book-title {
+            padding: 0;
+
+            h1 {
+                @include title-font(4rem);
+
+                text-align: left;
+                white-space: nowrap;
+
+                @include width-between($phone-max, $tablet-max) {
+                    @include title-font(10rem);
+                }
+
+                @include wider-than($tablet-max) {
+                    @include title-font(13rem);
+                }
+            }
+        }
+    }
+
+    .content {
+        @extend %content;
+
+        justify-content: flex-start;
+    }
+
+    .phone-view {
+        display: block;
+
+        @include wider-than($phone-max) {
+            display: none;
+        }
+    }
+
+    .bigger-view {
+        display: none;
+
+        @include wider-than($phone-max) {
+            display: block;
+        }
+    }
+
+    .tab-controller {
+        width: 100%;
+
+        .tab {
+            @include set-font(body-large);
+
+            font-weight: normal;
+
+            @include wider-than($tablet-max) {
+                font-size: 150%;
+                padding-bottom: $normal-margin;
+            }
+        }
+    }
+
+    .tab-content {
+        padding: 4rem 0 6rem;
+        width: 100%;
+    }
+
+    .unbold {
+        font-weight: normal;
+    }
+
+    .resources {
+        display: grid;
+        grid-gap: 2 * $normal-margin  2 * $normal-margin;
+        margin: 2rem 0 0;
+
+        @include wider-than($phone-max) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @include wider-than($tablet-max) {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        &.ally {
+            @include wider-than($phone-max) {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            @include wider-than($tablet-max) {
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+            }
+        }
+    }
+
+    .btn.default {
+        background-color: ui-color(white);
+    }
+
+    .table-of-contents {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        padding-left: 2rem;
+
+        > li {
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+
+        ol {
+            font-weight: normal;
+            list-style: none;
+            padding-left: 2rem;
+
+            .box {
+                font-weight: bold;
+            }
+        }
+    }
+
+}

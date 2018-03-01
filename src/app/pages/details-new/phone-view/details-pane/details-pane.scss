@@ -1,0 +1,15 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.details-pane {
+
+    padding: 0 2rem $normal-margin;
+
+    p:first-child {
+        margin-top: 0;
+    }
+
+    .collapsing-pane > .control-bar {
+        margin-top: $normal-margin;
+        padding-left: 0;
+    }
+}

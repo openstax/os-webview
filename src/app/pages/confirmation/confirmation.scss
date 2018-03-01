@@ -85,7 +85,8 @@
     }
 
     .btn.cta {
-        @include button(primary);
+        @extend %primary;
+        @include button();
 
         margin: 1rem 0 2rem;
     }

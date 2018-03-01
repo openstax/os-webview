@@ -20,6 +20,7 @@ const PAGES = [
     'confirmation/*path',
     'contact',
     'details/*path',
+    'details-new/*path',
     'errata/*path',
     'faq',
     'foundation',
@@ -121,7 +122,6 @@ class AppRouter extends Router {
                 analytics.record(href);
                 const newWindow = window.open(href, '_blank');
 
-                console.log('The new window is', newWindow);
                 if (newWindow === null) {
                     document.location.href = href;
                 }

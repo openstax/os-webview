@@ -29,7 +29,8 @@ pop-up {
         }
 
         button {
-            @include button(primary);
+            @extend %primary;
+            @include button();
         }
     }
 

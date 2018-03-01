@@ -1,0 +1,16 @@
+<template args="model">
+    <h4>Free ({model.freeResources && model.freeResources.length})</h4>
+    <div class="swipe-zone">
+        <div class="free-resources-region" skip="true"></div>
+    </div>
+    <h4>Paid ({model.paidResources && model.paidResources.length})</h4>
+    <div class="swipe-zone">
+        <div class="paid-resources-region">
+            <div class="logo-box" each="res in model.paidResources">
+                <a href="{res.book_link_url}">
+                    <img src="{res.ally_color_logo}" alt="{res.ally_heading}">
+                </a>
+            </div>
+        </div>
+    </div
+</template>

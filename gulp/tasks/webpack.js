@@ -19,7 +19,6 @@ function webpack() {
     return gulp.src([
         `${config.dest}/app/main.js`
     ]).pipe(webpackStream({
-      // watch: true, // This causes gulp to freeze and not serve
       externals: {
           settings: 'SETTINGS'
       },

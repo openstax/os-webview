@@ -224,7 +224,7 @@ $special-breakpoint: 54rem;
                 color: text-color(helper);
 
                 .btn:last-child {
-                    @include button(secondary);
+                    @extend %secondary;
                     margin: 1rem 0 0;
                     width: 100%;
                 }

@@ -1,0 +1,17 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+modal-content {
+    align-items: center;
+    background-color: rgba(ui-color(black), 0.8);
+    bottom: 0;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    left: 0;
+    margin-top: 4rem;
+    padding: 2rem;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 5000;
+}

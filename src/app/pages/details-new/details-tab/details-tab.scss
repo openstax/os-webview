@@ -1,0 +1,104 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.details-tab {
+    display: grid;
+    grid-gap: $normal-margin;
+
+    @include wider-than($tablet-max) {
+        grid-template-columns: 1fr auto;
+    }
+
+    p,
+    h3 {
+        margin: 0;
+    }
+
+    .sidebar {
+        display: grid;
+        grid-gap: 6rem;
+        grid-template-columns: 1fr 1fr;
+
+        @include wider-than($tablet-max) {
+            grid-template-columns: auto;
+            grid-template-rows: auto 1fr;
+        }
+
+        .button-group .btn {
+            background-color: ui-color(white);
+            display: grid;
+            grid-gap: $normal-margin;
+            grid-template-columns: auto auto;
+            width: 100%;
+        }
+    }
+
+    .main {
+        display: grid;
+        grid-gap: 3rem;
+        max-width: $text-content-max;
+
+        [data-html="description"] {
+            @include wider-than($tablet-max) {
+                @include set-font(body-large);
+            }
+        }
+    }
+
+    .publication-info {
+        line-height: normal;
+        max-width: 30rem;
+    }
+
+    .button-group {
+        display: grid;
+        grid-gap: 1rem;
+        margin: $normal-margin 0 0;
+
+        @include wider-than($phone-max) {
+            grid-template-columns: auto auto 1fr;
+        }
+    }
+
+    .btn,
+    button {
+        @extend %button;
+
+        background-color: transparent;
+        margin: 0;
+        padding: 1rem 2rem;
+        text-transform: none;
+
+        &.primary,
+        &[type="submit"] {
+            @extend %primary;
+
+            margin: 0;
+        }
+
+        &.secondary,
+        &[type="reset"] {
+            @extend %secondary;
+
+            margin: 0;
+        }
+    }
+
+    h3,
+    h4 {
+        letter-spacing: normal;
+    }
+
+    h3 {
+        margin-bottom: 0.3rem;
+    }
+
+    h4 {
+        @include title-font(1.6rem);
+
+        margin-bottom: 0;
+
+        ~ img {
+            margin-top: 0.7rem;
+        }
+    }
+}

@@ -23,16 +23,11 @@ describe('GetThisTitle', () => {
             expect(link).toBeTruthy();
         }
     });
-    it('handles PDF click', () => {
-        const pdfLink = p.el.querySelector('.show-pdf-submenu');
-
-        clickElement(pdfLink);
-        expect(p.model.submenu).toBe('pdf');
-    });
     it('handles Print Copy click', () => {
         const pcLink = p.el.querySelector('.show-print-submenu');
 
+        expect(p.model.modalHiddenAttribute).toBe('');
         clickElement(pcLink);
-        expect(p.model.submenu).toBe('print');
+        expect(p.model.modalHiddenAttribute).toBe(null);
     });
 });

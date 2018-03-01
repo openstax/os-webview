@@ -17,7 +17,8 @@ $linkedin-blue: #0077b5;
         }
 
         .btn {
-            @include button(secondary);
+            @extend %button;
+            @extend %secondary;
 
             align-items: center;
             background-image: none;

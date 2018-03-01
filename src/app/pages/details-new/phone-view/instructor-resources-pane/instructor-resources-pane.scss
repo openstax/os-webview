@@ -1,0 +1,48 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.instructor-resources-pane {
+    padding: 0 2rem 2.5rem;
+
+    .swipe-zone {
+        // TODO Handle swiping rather than scroll bar
+        margin: 0 -0.3rem;
+        overflow-x: scroll;
+        padding: 0.3rem; // room for the shadow
+        width: calc(100vw - #{2 * $normal-margin});
+    }
+
+    .free-resources-region,
+    .paid-resources-region {
+        display: grid;
+
+        h3 {
+            @include set-font(h4);
+
+            margin-bottom: 2rem;
+        }
+    }
+
+    .free-resources-region {
+        grid-gap: $normal-margin;
+        grid-template-columns: repeat(5, 20rem);
+    }
+
+    .paid-resources-region {
+        grid-gap: 1rem;
+        grid-template-columns: repeat(5, 7.5rem);
+    }
+
+    .logo-box {
+        align-items: center;
+        border-radius: 0.4rem;
+        // TODO Replace with variable, probably
+        box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+        display: flex;
+        height: 6.4rem;
+        justify-content: center;
+
+        img {
+            max-width: 7.5rem;
+        }
+    }
+}
