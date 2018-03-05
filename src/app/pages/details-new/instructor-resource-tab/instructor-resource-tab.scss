@@ -126,7 +126,7 @@ $icon-size: 6rem;
 
         img {
             margin: 0;
-            max-width: 100%;
+            max-width: calc(100% - #{2 * $normal-margin});
             width: 20rem;
         }
     }

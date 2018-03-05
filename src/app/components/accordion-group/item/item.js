@@ -46,7 +46,9 @@ export default class AccordionItem extends Controller {
             const isOpen = this.props.selectedLabel === this.props.label;
 
             this.props.setSelected(isOpen ? null : this.props.label);
-            $.scrollTo(this.el);
+            if (!isOpen) {
+                $.scrollTo(this.el);
+            }
         }
     }
 

@@ -29,17 +29,18 @@
             <resource-box each="resource in model.resources" skip="true"></resource-box>
         </div>
     </div>
-    <div class="webinars">
+    <a href="/blog/upcoming-openstax-webinars" class="webinars">
         <div class="icon-cell"><span class="fa fa-desktop"></span></div>
         <div>
             <!-- TODO pull text from CMS -->
             <h2>Find a webinar</h2>
             <div class="blurb">
-                Learn more by attending one of our free webinars featuring
+                Learn more by attending
+                one of our free webinars featuring
                 OpenStax authors, staff, and partners.
             </div>
         </div>
-    </div>
+    </a>
     <hr>
     <if condition="model.allies.length">
         <div class="ally-blurb">
@@ -48,7 +49,7 @@
             <div class="blurb-body">
                 OpenStax Partners provide additional, low-cost resources for your
                 book. See what's offered for this title below and learn more about
-                our partners here.
+                our partners <a href="/partners">here</a>.
             </div>
             <div class="ally-logo">
                 <img
