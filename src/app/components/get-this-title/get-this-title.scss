@@ -80,7 +80,7 @@
 
     .option {
         font-size: 2.2rem; // This is for the icons
-        padding: 1rem 0.5rem;
+        padding: 1rem 0.5rem 1rem 0;
 
         &:last-child {
             border-bottom: 0;
@@ -93,15 +93,9 @@
 
         a,
         .option-header {
-            align-items: center;
-            display: flex;
-            justify-content: flex-start;
+            display: grid;
+            grid-template-columns: 3rem auto;
             text-decoration-line: none;
-
-            :first-child {
-                flex-basis: 3rem;
-                margin-right: $normal-margin;
-            }
         }
 
         a {

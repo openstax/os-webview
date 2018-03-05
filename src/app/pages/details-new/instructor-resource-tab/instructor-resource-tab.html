@@ -1,10 +1,12 @@
 <template args="model">
     <div>
-        <!-- TODO: Get this stuff from the CMS -->
-        <h2>Free stuff. <span class="unbold">No catch.</span></h2>
         <div class="free-stuff-blurb">
-            Access free resources integrated with your book. Sign up for an account
-            to access locked content.
+            <!-- TODO: Get this stuff from the CMS -->
+            <h2>Free stuff. <span class="unbold">No catch.</span></h2>
+            <div class="blurb-body">
+                Access free resources integrated with your book. Sign up for an account
+                to access locked content.
+            </div>
         </div>
         <div class="resources">
             <div class="resource-box double">
@@ -56,16 +58,19 @@
             </div>
         </div>
         <div class="ally resources">
-            <div each="ally in model.allies" class="ally-box resource-box">
+            <a each="ally in model.allies"
+            href="{ally.book_link_url}"
+            class="ally-box resource-box"
+            >
                 <div class="top">
                     <img src="{ally.ally_color_logo}">
+                    <div class="hover-blurb" data-html="allies[{$item}].ally_short_description"></div>
                 </div>
                 <div class="bottom">
-                    <a href="{ally.book_link_url}">
-                        {ally.book_link_text}<i class="fa fa-external-link-alt"></i>
-                    </a>
+                    {ally.book_link_text}
+                    <i class="fa fa-external-link-alt"></i>
                 </div>
-            </div>
+            </a>
         </div>
     </if>
 

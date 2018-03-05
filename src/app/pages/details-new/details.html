@@ -4,7 +4,7 @@
             <h1>{model.bookTitle}</h1>
         </div>
     </div>
-    <div class="content {model.detailsTabClass}">
+    <div class="content {model.detailsTabClass || ''}">
         <div class="phone-view" skip="true"></div>
         <div class="bigger-view">
             <div class="tab-controller" skip="true"></div>

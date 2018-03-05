@@ -1,0 +1,16 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.collapsing-pane {
+    width: 100%;
+
+    > .control-bar {
+        display: flex;
+        justify-content: space-between;
+        margin-top: $normal-margin;
+        padding-left: 0;
+    }
+
+    .content-region {
+        padding-bottom: 1rem;
+    }
+}

@@ -1,12 +1,21 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-@mixin set-color-items($bg, $fg) {
-    @at-root .#{$bg} {
+@mixin set-color-items($color) {
+    @at-root .#{$color} {
         .hero,
-        .book-icon {
-            background-color: os-color($bg);
-            background-image: linear-gradient(75deg, os-color($bg), darken(os-color($bg), 6));
-            color: $fg;
+        .book-icon,
+        .webinars .icon-cell {
+            background-color: os-color($color);
+            background-image: linear-gradient(to right, os-color($color), lighten(os-color($color), 7));
+            color: ui-color(white);
+        }
+    }
+
+    @at-root .fg-#{$color} {
+        .hero,
+        .book-icon,
+        .webinars .icon-cell {
+            color: os-color($color);
         }
     }
 }
@@ -15,38 +24,44 @@
 
     @include wider-than($phone-max) {
         background-color: ui-color(white);
-    }
 
-    &.card-background {
-        background-image: linear-gradient(to bottom, ui-color(white) 10rem, ui-color(default) 40rem);
+        &.card-background {
+            > .content {
+                background-image: linear-gradient(to bottom, ui-color(white), ui-color(white) 10rem, ui-color(default) 25rem);
+
+                @include wider-than($tablet-max) {
+                    background-image: linear-gradient(to bottom, ui-color(white), ui-color(white) 15rem, ui-color(default) 30rem);
+                }
+            }
+        }
     }
 
     .hero {
-        @include set-color-items(gold, text-color(white));
-        @include set-color-items(green, ui-color(white));
-        @include set-color-items(blue, text-color(white));
-        @include set-color-items(deep-green, text-color(white));
-        @include set-color-items(gray, text-color(white));
-        @include set-color-items(light-blue, text-color(white));
-        @include set-color-items(orange, text-color(white));
-        @include set-color-items(yellow, os-color(blue));
-        @include set-color-items(red, text-color(white));
+        @include set-color-items(gold);
+        @include set-color-items(green);
+        @include set-color-items(blue);
+        @include set-color-items(deep-green);
+        @include set-color-items(gray);
+        @include set-color-items(light-blue);
+        @include set-color-items(orange);
+        @include set-color-items(yellow);
+        @include set-color-items(red);
 
         align-items: flex-end;
         background-image: linear-gradient(75deg, #aaa, #777);
         color: text-color(normal);
         display: flex;
-        height: 16.5rem;
+        min-height: 16.5rem;
         overflow: hidden;
         padding-bottom: 5rem;
 
         @include width-between($phone-max, $tablet-max) {
-            height: 27.3rem;
+            min-height: 27.3rem;
             padding-bottom: 6rem;
         }
 
         @include wider-than($tablet-max) {
-            height: 34.3rem;
+            min-height: 34.3rem;
             padding-bottom: 7rem;
         }
 
@@ -57,7 +72,7 @@
                 @include title-font(4rem);
 
                 text-align: left;
-                white-space: nowrap;
+                // white-space: nowrap;
 
                 @include width-between($phone-max, $tablet-max) {
                     @include title-font(10rem);

@@ -82,6 +82,12 @@ export default class ResourceBox extends Controller {
         this.view = {
             classes: ['resource-box']
         };
+        if (model.link) {
+            this.view.tag = 'a';
+            this.view.attributes= {
+                href: model.link.url
+            };
+        }
         this.css = `/app/pages/details-new/resource-box/resource-box.css?${VERSION}`;
     }
 
