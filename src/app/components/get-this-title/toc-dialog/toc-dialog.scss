@@ -8,8 +8,10 @@ toc-dialog {
     padding: 3rem;
 
     .toc-region {
-        border: thin solid ui-color(form-border);
+        border-bottom: thin solid ui-color(default);
+        border-top: thin solid ui-color(default);
         overflow-y: auto;
+        padding-top: 1rem;
     }
 
     .btn {

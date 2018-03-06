@@ -1,5 +1,6 @@
 import VERSION from '~/version';
 import {Controller} from 'superb.js';
+import $ from '~/helpers/$';
 import ResourceBox from '../resource-box/resource-box';
 import {description as template} from './instructor-resource-tab.html';
 
@@ -15,6 +16,8 @@ export default class InstructorResourceTab extends Controller {
     }
 
     onLoaded() {
+        $.insertHtml(this.el, this.model);
+
         const Region = this.regions.self.constructor;
         const resourceBoxes = this.el.querySelectorAll('resource-box');
 

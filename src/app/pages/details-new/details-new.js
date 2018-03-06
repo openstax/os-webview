@@ -27,35 +27,36 @@ function getSlugFromTitle(bookTitle) {
     return slug;
 }
 
+// Background, foreground. If not foreground, it's white
 const slugToColor = {
-    prealgebra: 'deep-green',
-    'elementary-algebra': 'orange',
-    'intermediate-algebra': 'blue',
-    'college-algebra': 'light-blue',
-    'algebra-and-trigonometry': 'red',
-    'precalculus': 'orange',
-    'calculus-volume': 'gold',
-    'introductory-statistics': 'yellow',
-    'anatomy-and-physiology': 'gray',
-    'astronomy': 'blue',
-    'biology': 'green',
-    'concepts-biology': 'orange',
-    'microbiology': 'light-blue',
-    'chemistry': 'orange',
-    'chemistry-atoms-first': 'deep-green',
-    'college-physics': 'blue',
-    'university-physics-volume': 'green',
-    'american-government': 'light-blue',
-    'principles-economics': 'gray',
-    'principles-macroeconomics': 'gray',
-    'principles-microeconomics': 'gray',
-    psychology: 'green',
-    'introduction-sociology-2e': 'yellow',
-    'us-history': 'blue',
-    'college-physics-ap-courses': 'blue',
-    'principles-macroeconomics-ap-courses': 'gray',
-    'principles-microeconomics-ap-courses': 'gray',
-    'fizyka-uniwersytecka-polska': 'green'
+    prealgebra: ['deep-green', 'gold'],
+    'elementary-algebra': ['orange', 'gold'],
+    'intermediate-algebra': ['blue', 'gold'],
+    'college-algebra': ['light-blue', 'yellow'],
+    'algebra-and-trigonometry': ['red', 'yellow'],
+    'precalculus': ['orange', 'blue'],
+    'calculus-volume': ['gold', 'blue'],
+    'introductory-statistics': ['yellow', 'green'],
+    'anatomy-and-physiology': ['gray', 'orange'],
+    'astronomy': ['blue'],
+    'biology': ['green', 'gray'],
+    'concepts-biology': ['orange', 'yellow'],
+    'microbiology': ['light-blue', 'orange'],
+    'chemistry': ['orange'],
+    'chemistry-atoms-first': ['deep-green'],
+    'college-physics': ['blue', 'green'],
+    'university-physics-volume': ['green', 'blue'],
+    'american-government': ['light-blue', 'red'],
+    'principles-economics': ['gray'],
+    'principles-macroeconomics': ['gray', 'green'],
+    'principles-microeconomics': ['gray', 'yellow'],
+    psychology: ['green'],
+    'introduction-sociology-2e': ['yellow', 'blue'],
+    'us-history': ['blue', 'orange'],
+    'college-physics-ap-courses': ['blue', 'green'],
+    'principles-macroeconomics-ap-courses': ['gray', 'green'],
+    'principles-microeconomics-ap-courses': ['gray', 'yellow'],
+    'fizyka-uniwersytecka-polska': ['green', 'blue']
 };
 
 function getColorFromSlug(slug) {
@@ -166,7 +167,12 @@ export default class Details extends CMSPageController {
         setDetailsTabClass();
         this.update();
 
-        this.el.classList.add(getColorFromSlug(this.pageData.slug));
+        const colorScheme = getColorFromSlug(this.pageData.slug);
+
+        this.el.classList.add(colorScheme[0]);
+        if (colorScheme.length > 1) {
+            this.el.classList.add(`fg-${colorScheme[1]}`);
+        }
 
         this.regions.phoneView.attach(new PhoneView({
             bookInfo: this.pageData,

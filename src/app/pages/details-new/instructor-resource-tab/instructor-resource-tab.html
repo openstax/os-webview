@@ -1,10 +1,12 @@
 <template args="model">
     <div>
-        <!-- TODO: Get this stuff from the CMS -->
-        <h2>Free stuff. <span class="unbold">No catch.</span></h2>
         <div class="free-stuff-blurb">
-            Access free resources integrated with your book. Sign up for an account
-            to access locked content.
+            <!-- TODO: Get this stuff from the CMS -->
+            <h2>Free stuff. <span class="unbold">No catch.</span></h2>
+            <div class="blurb-body">
+                Access free resources integrated with your book. Sign up for an account
+                to access locked content.
+            </div>
         </div>
         <div class="resources">
             <div class="resource-box double">
@@ -27,17 +29,18 @@
             <resource-box each="resource in model.resources" skip="true"></resource-box>
         </div>
     </div>
-    <div class="webinars">
+    <a href="/blog/upcoming-openstax-webinars" class="webinars">
         <div class="icon-cell"><span class="fa fa-desktop"></span></div>
         <div>
             <!-- TODO pull text from CMS -->
             <h2>Find a webinar</h2>
             <div class="blurb">
-                Learn more by attending one of our free webinars featuring
+                Learn more by attending
+                one of our free webinars featuring
                 OpenStax authors, staff, and partners.
             </div>
         </div>
-    </div>
+    </a>
     <hr>
     <if condition="model.allies.length">
         <div class="ally-blurb">
@@ -46,7 +49,7 @@
             <div class="blurb-body">
                 OpenStax Partners provide additional, low-cost resources for your
                 book. See what's offered for this title below and learn more about
-                our partners here.
+                our partners <a href="/partners">here</a>.
             </div>
             <div class="ally-logo">
                 <img
@@ -56,16 +59,19 @@
             </div>
         </div>
         <div class="ally resources">
-            <div each="ally in model.allies" class="ally-box resource-box">
+            <a each="ally in model.allies"
+            href="{ally.book_link_url}"
+            class="ally-box resource-box"
+            >
                 <div class="top">
                     <img src="{ally.ally_color_logo}">
+                    <div class="hover-blurb" data-html="allies[{$item}].ally_short_description"></div>
                 </div>
                 <div class="bottom">
-                    <a href="{ally.book_link_url}">
-                        {ally.book_link_text}<i class="fa fa-external-link-alt"></i>
-                    </a>
+                    {ally.book_link_text}
+                    <i class="fa fa-external-link-alt"></i>
                 </div>
-            </div>
+            </a>
         </div>
     </if>
 

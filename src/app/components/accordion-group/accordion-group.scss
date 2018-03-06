@@ -7,7 +7,7 @@
 
     .accordion-item {
 
-        .control-bar {
+        > .control-bar {
             align-items: baseline;
             background-color: ui-color(white);
             display: flex;

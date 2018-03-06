@@ -6,14 +6,14 @@
     <div class="bottom">
         <div class="left">
             <if condition="model.link">
-                <a href="{model.link.url}">{model.link.text}</a>
+                {model.link.text}
             <else>
                 Access pending
             </if>
         </div>
         <div class="right">
             <if condition="model.link">
-                <a href="{model.link.url}"><i class="fa fa-{model.iconType}"></i></a>
+                <i class="fa fa-{model.iconType}"></i>
             <else>
                 <i class="fa fa-lock"></i>
             </if>

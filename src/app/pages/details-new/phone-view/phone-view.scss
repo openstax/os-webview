@@ -30,8 +30,7 @@
             max-width: 100%;
 
             .content-pane {
-                margin-right: 2rem;
-                max-width: calc(100vw - #{4 * $normal-margin});
+                max-width: calc(100vw - #{2 * $normal-margin});
                 overflow-x: auto;
             }
         }

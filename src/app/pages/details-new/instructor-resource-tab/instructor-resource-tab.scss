@@ -12,38 +12,18 @@ $icon-size: 6rem;
     }
 
     .free-stuff-blurb {
-        @include set-font(body-large);
+        display: grid;
+        grid-gap: $normal-margin;
+        grid-template-columns: auto;
+        margin-bottom: 4rem;
 
-        margin: 0.7rem 0 3.5rem;
+        @include wider-than($tablet-max) {
+            margin-bottom: 5rem;
+        }
     }
 
-    .community-resources {
-        margin-top: 4rem;
-
-        .resource-box {
-            margin-bottom: $normal-margin;
-
-            .blurb {
-                @include set-font(h3);
-
-                font-weight: inherit;
-            }
-        }
-
-        .bottom-right {
-            align-items: baseline;
-            display: grid;
-            grid-gap: $normal-margin;
-            grid-template-columns: 1fr auto auto;
-
-            :first-child {
-                grid-column-start: 2;
-            }
-
-            a {
-                color: os-color(green);
-            }
-        }
+    .blurb-body {
+        max-width: $text-content-max;
     }
 
     .webinars {
@@ -55,9 +35,7 @@ $icon-size: 6rem;
         // TODO Use book color
         .icon-cell {
             align-items: center;
-            background-color: os-color(green);
             border-radius: 50%;
-            color: text-color(white);
             display: flex;
             font-size: 0.55 * $icon-size;
             height: $icon-size;
@@ -87,12 +65,6 @@ $icon-size: 6rem;
             grid-column: 1;
         }
 
-        .blurb-body {
-            @include body-font(2.4rem);
-
-            max-width: $text-content-max;
-        }
-
         .ally-logo {
             grid-column: 2;
             grid-row: 1 / span 2;
@@ -105,13 +77,41 @@ $icon-size: 6rem;
     }
 
     .ally-box {
+        color: inherit;
         padding: 0;
+        text-decoration: none;
 
         .top {
             align-items: baseline;
             display: flex;
             justify-content: center;
             padding: 4rem 0;
+            position: relative;
+
+            @include wider-than($tablet-max) {
+                &:hover {
+                    .hover-blurb {
+                        opacity: 1;
+                    }
+
+                    img {
+                        opacity: 0;
+                    }
+                }
+            }
+
+            .hover-blurb {
+                left: $normal-margin;
+                opacity: 0;
+                position: absolute;
+                top: 0;
+                transition: opacity 0.3s ease-in-out;
+                width: calc(100% - #{2 * $normal-margin});
+            }
+
+            img {
+                transition: opacity 0.3s ease-in-out;
+            }
         }
 
         .bottom {
@@ -120,19 +120,13 @@ $icon-size: 6rem;
             border-bottom-left-radius: 0.4rem;
             border-bottom-right-radius: 0.4rem;
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
             padding: $normal-margin 2rem;
-
-            > a {
-                color: inherit;
-                text-decoration: none;
-            }
-
         }
 
         img {
             margin: 0;
-            max-width: 100%;
+            max-width: calc(100% - #{2 * $normal-margin});
             width: 20rem;
         }
     }

@@ -32,5 +32,9 @@ $icon-size: 5.5rem;
 
     .link {
         grid-column: 1 / span 2;
+
+        a {
+            text-decoration: none;
+        }
     }
 }
