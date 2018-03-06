@@ -16,8 +16,10 @@ export default class UpperMenu extends Controller {
         /* eslint arrow-parens: 0 */
         (async () => {
             try {
-                const response = await fetch(`${settings.apiOrigin}/api/news`);
-                const data = await response.json();
+                const newsUrl = await fetch(`${settings.apiOrigin}/api/v2/pages/?slug=openstax-news`)
+                    .then((response) => response.json())
+                    .then((response) => response.items[0].meta.detail_url);
+                const data = await fetch(newsUrl).then((response) => response.json());
 
                 if (Object.keys(data.articles).length) {
                     this.model.showBlog = true;

@@ -32,7 +32,7 @@ export default class Blog extends CMSPageController {
             pinned: '.pinned',
             articlePage: '.article.page'
         };
-        this.slug = '/news';
+        this.slug = 'news';
         this.model = {
             rssUrl: `${settings.apiOrigin}/blog-feed/rss/`
         };
