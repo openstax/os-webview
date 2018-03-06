@@ -145,7 +145,8 @@ export default class Details extends CMSPageController {
             'Instructor resources': new InstructorResourceTab({
                 resources: this.pageData.book_faculty_resources,
                 allies: shuffle(this.pageData.book_allies),
-                userStatusPromise: this.userStatusPromise
+                userStatusPromise: this.userStatusPromise,
+                bookInfo: this.pageData
             }),
             'Student resources': new StudentResourceTab({
                 resources: this.pageData.book_student_resources,

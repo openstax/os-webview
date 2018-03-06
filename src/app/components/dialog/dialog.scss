@@ -7,7 +7,9 @@ dialog {
     color: text-color(normal);
     display: grid;
     grid-template-rows: auto auto 1fr;
+    height: auto;
     max-width: 80rem;
+    overflow: hidden;
     padding: 0;
     width: calc(100% - #{2 * $normal-margin});
 
@@ -16,13 +18,13 @@ dialog {
     }
 
     .title-bar {
-        @include set-font(h3);
+        @include set-font(h4);
 
         align-items: flex-end;
         background-color: transparent;
         display: flex;
-        height: 7rem;
         justify-content: space-between;
+        min-height: 7rem;
         padding: 0 3rem;
 
         @include wider-than($phone-max) {
@@ -37,6 +39,7 @@ dialog {
     .put-away {
         @include body-font(1.8rem);
         color: text-color(helper);
+        min-width: 4rem;
         transform: translate(1.5rem, -4rem);
 
         @include wider-than($phone-max) {

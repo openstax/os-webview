@@ -2,6 +2,7 @@ import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import ResourceBox from '../resource-box/resource-box';
+import RequestCompCopy from '../request-comp-copy/request-comp-copy';
 import {description as template} from './instructor-resource-tab.html';
 
 export default class InstructorResourceTab extends Controller {
@@ -35,6 +36,14 @@ export default class InstructorResourceTab extends Controller {
                 region.attach(resourceBox);
             }
         });
+
+        const region = new Region(this.el.querySelector('request-comp-copy'));
+        const component = new RequestCompCopy(() => ({
+            title: this.model.bookInfo.title,
+            coverUrl: this.model.bookInfo.cover_url
+        }));
+
+        region.attach(component);
     }
 
 }

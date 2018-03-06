@@ -30,6 +30,10 @@ class Shell extends Controller {
             this.regions.footer.attach(footer);
             this.mainObserver.disconnect();
         });
+
+        // An extra layer of indirection is necessary so we can reuse the Dialog
+        // and change the getProps function for it
+        this.getDialogProps = () => {};
     }
 
     onLoaded() {
@@ -52,15 +56,12 @@ class Shell extends Controller {
         document.body.classList.remove('no-scroll');
     }
 
-    showDialog(title, content) {
+    showDialog(getProps) {
         const region = this.regions.dialog;
 
-        this.dialogProps = {
-            title,
-            contentComponent: content
-        };
+        this.getDialogProps = getProps;
         if (!this.dialog) {
-            this.dialog = new ModalDialog(() => this.dialogProps, {
+            this.dialog = new ModalDialog(() => this.getDialogProps(), {
                 closeDialog: () => {
                     region.el.setAttribute('hidden', '');
                     document.body.classList.remove('no-scroll');
@@ -72,6 +73,12 @@ class Shell extends Controller {
         }
         region.el.removeAttribute('hidden');
         document.body.classList.add('no-scroll');
+    }
+
+    hideDialog() {
+        if (this.dialog && ! this.regions.dialog.el.hasAttribute('hidden')) {
+            this.dialog.closeDialog();
+        }
     }
 
 }

@@ -25,19 +25,30 @@ class Dialog extends Controller {
         this.props = this.getProps();
 
         return {
-            title: this.props.title
+            title: this.props.title,
+            htmlTitle: this.props.htmlTitle
         };
     }
 
     attachContent() {
-        if (this.props.contentComponent) {
-            this.regions.main.append(this.props.contentComponent);
+        if (this.props.content) {
+            this.regions.main.append(this.props.content);
         }
     }
 
     onUpdate() {
         // Wait for region to be instantiated
-        setTimeout(() => this.attachContent(), 0);
+        setTimeout(() => {
+            this.attachContent();
+        }, 0);
+        if (this.props.htmlTitle) {
+            const el = this.el.querySelector('.html-title');
+
+            el.innerHTML = this.props.htmlTitle;
+        }
+        if (this.props.customClass) {
+            this.el.classList.add(this.props.customClass);
+        }
     }
 
     onLoaded() {
@@ -47,16 +58,21 @@ class Dialog extends Controller {
 
     @on('click .put-away')
     closeDialog() {
-        const contentComponent = this.props.contentComponent;
+        const contentComponent = this.props.content;
 
         if (contentComponent && contentComponent.el && contentComponent.el.parentNode) {
             contentComponent.el.parentNode.removeChild(contentComponent.el);
         }
 
-        this.regions.main.controllers = [];
+        const controllerIndex = this.regions.main.controllers.indexOf(contentComponent);
+
+        this.regions.main.controllers.splice(controllerIndex, 1);
 
         if (this.handlers && this.handlers.closeDialog) {
             this.handlers.closeDialog();
+        }
+        if (this.props.customClass) {
+            this.el.classList.remove(this.props.customClass);
         }
     }
 
@@ -66,14 +82,12 @@ class Dialog extends Controller {
 export default class ModalDialog extends Controller {
 
     init(getProps, handlers) {
-        this.getProps = getProps;
-        this.handlers = handlers;
+        this.dialog = new Dialog(getProps, handlers);
     }
 
     template() {}
 
     onLoaded() {
-        this.dialog = new Dialog(this.getProps, this.handlers);
         this.regions.self.attach(new ModalContent(this.dialog));
     }
 
@@ -81,6 +95,10 @@ export default class ModalDialog extends Controller {
         if (this.dialog) {
             this.dialog.update();
         }
+    }
+
+    closeDialog() {
+        this.dialog.closeDialog();
     }
 
 }

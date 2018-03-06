@@ -2,6 +2,7 @@ import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import settings from 'settings';
 import ResourceBox from '../../resource-box/resource-box';
+import RequestCompCopy from '../../request-comp-copy/request-comp-copy';
 import {description as template} from './instructor-resources-pane.html';
 
 export default class InstructorResourcePane extends Controller {
@@ -35,6 +36,12 @@ export default class InstructorResourcePane extends Controller {
 
                 this.regions.freeResources.append(resourceBox);
             }
+            const component = new RequestCompCopy(() => ({
+                title: this.props.bookInfo.title,
+                coverUrl: this.props.bookInfo.cover_url
+            }));
+
+            this.regions.freeResources.append(component);
             // Paid resources are handled by the template
         });
     }

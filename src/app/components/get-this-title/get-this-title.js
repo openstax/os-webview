@@ -92,7 +92,10 @@ export default class GetThisTitle extends Controller {
     @on('click .show-print-submenu')
     showPrintSubmenu(event) {
         event.preventDefault();
-        shell.showDialog('Order print copy', this.printCopyContent);
+        shell.showDialog(() => ({
+            title: 'Order print copy',
+            content: this.printCopyContent
+        }));
     }
 
     @on('click .submenu .remover')
@@ -121,7 +124,10 @@ export default class GetThisTitle extends Controller {
     @on('click .show-toc')
     showToc(event) {
         event.preventDefault();
-        shell.showDialog('Table of contents', this.tocContent);
+        shell.showDialog(() => ({
+            title: 'Table of contents',
+            content: this.tocContent
+        }));
     }
 
 }
