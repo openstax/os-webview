@@ -16,9 +16,13 @@
             <label each="eType in model.errorTypes">
                 <input type="radio" name="error_type" value="{eType}" required />
                 <span class="label-text">{eType}</span>
-                <input if="eType === 'Other' && model.selectedError === 'Other'" type="text"
-                 class="{model.visitedClass}"
-                 name="error_type_other" maxlength="250" required />
+                <div if="eType === 'Other' && model.selectedError === 'Other'" class="other-group">
+                    <span class="invalid-message">{model.validationMessage('error_type_other')}</span>
+                    <input type="text"
+                    class="{model.visitedClass}"
+                    name="error_type_other" maxlength="250" required
+                    >
+                </div>
             </label>
         </div>
         <div class="helpbox {model.helpBoxVisible()}">
