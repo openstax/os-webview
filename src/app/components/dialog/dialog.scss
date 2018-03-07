@@ -1,27 +1,27 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 dialog {
-    background-color: transparent;
+    background-color: ui-color(white);
     border: 0;
+    border-radius: 0.4rem;
     color: text-color(normal);
     display: grid;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto auto 1fr;
     max-width: 80rem;
     padding: 0;
+    width: calc(100% - #{2 * $normal-margin});
 
     @include wider-than($phone-max) {
-        background-color: ui-color(white);
         width: calc(100% - 16rem);
     }
 
     .title-bar {
-        @include set-font(h4);
+        @include set-font(h3);
 
-        align-items: center;
+        align-items: flex-end;
         background-color: transparent;
-        color: text-color(white);
         display: flex;
-        height: 5rem;
+        height: 7rem;
         justify-content: space-between;
         padding: 0 3rem;
 
@@ -34,13 +34,19 @@ dialog {
     }
 
     .put-away {
-        transform: translateY(-0.3rem);
+        @include body-font(1.8rem);
+        color: text-color(helper);
+        transform: translate(1.5rem, -4rem);
 
-        &::after {
-            @include body-font(3.6rem);
-
-            content: '\00d7';
-            cursor: pointer;
+        &:hover {
+            color: inherit;
         }
+    }
+
+    .main-region {
+        background-color: white;
+        border-bottom-left-radius: 0.4rem;
+        border-bottom-right-radius: 0.4rem;
+        height: auto;
     }
 }
