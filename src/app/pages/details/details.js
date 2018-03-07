@@ -48,8 +48,13 @@ export default class Details extends CMSPageController {
         model.topNonsenior = model.allNonsenior.filter(top);
 
         if (model.license_name) {
-            model.licenseIcon = model.license_name.match(/share/i) ?
-                '/images/details/by-nc-sa.svg' : '/images/details/by.svg';
+            if (model.license_name.match(/share/i)) {
+                model.licenseIcon = '/images/details/by-nc-sa.svg';
+                model.licenseAlt = 'CC BY-NC-SA';
+            } else {
+                model.licenseIcon = '/images/details/by.svg';
+                model.licenseAlt = 'CC BY';
+            }
         }
 
         model.comingSoon = this.pageData.coming_soon ? ' coming-soon' : '';
