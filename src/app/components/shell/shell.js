@@ -1,6 +1,7 @@
 import {Controller} from 'superb.js';
 import header from './header/header';
 import footer from './footer/footer';
+import ModalDialog from '../dialog/dialog';
 import {initialize, injectButtons} from 'recordo';
 import {description as template} from './shell.html';
 
@@ -11,6 +12,7 @@ class Shell extends Controller {
         this.template = template;
         this.regions = {
             header: '#header',
+            dialog: '#dialog',
             main: '#main',
             footer: '#footer'
         };
@@ -48,6 +50,28 @@ class Shell extends Controller {
     hideLoader() {
         document.body.classList.add('page-loaded');
         document.body.classList.remove('no-scroll');
+    }
+
+    showDialog(title, content) {
+        const region = this.regions.dialog;
+
+        this.dialogProps = {
+            title,
+            contentComponent: content
+        };
+        if (!this.dialog) {
+            this.dialog = new ModalDialog(() => this.dialogProps, {
+                closeDialog: () => {
+                    region.el.setAttribute('hidden', '');
+                    document.body.classList.remove('no-scroll');
+                }
+            });
+            region.attach(this.dialog);
+        } else {
+            this.dialog.update();
+        }
+        region.el.removeAttribute('hidden');
+        document.body.classList.add('no-scroll');
     }
 
 }

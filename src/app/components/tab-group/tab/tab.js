@@ -4,24 +4,22 @@ import {description as template} from './tab.html';
 
 export default class Tab extends Controller {
 
-    init(getProps) {
+    init(tag, getProps, handlers) {
         this.getProps = getProps;
-        this.updateProps();
+        this.handlers = handlers;
         this.template = template;
         this.view = {
-            tag: this.props.tag,
+            tag,
             classes: ['tab']
         };
+        this.model = () => this.getModel();
     }
 
-    updateProps() {
+    getModel() {
         this.props = this.getProps();
-        this.model = { label: this.props.label };
-    }
-
-    update() {
-        this.updateProps();
-        super.update();
+        return {
+            label: this.props.label
+        };
     }
 
     onUpdate() {
@@ -30,7 +28,7 @@ export default class Tab extends Controller {
 
     @on('click')
     selectThisTab() {
-        this.props.setSelected(this.props.label);
+        this.handlers.setSelected(this.props.label);
     }
 
 }

@@ -4,17 +4,23 @@ import {description as template} from './order-print-copy.html';
 
 export default class OrderPrintCopy extends Controller {
 
-    init(model) {
+    init(props) {
         this.template = template;
-        this.model = model;
+        this.props = props;
         this.view = {
             tag: 'nav',
             classes: ['order-print-copy']
         };
         this.css = `/app/components/get-this-title/order-print-copy/order-print-copy.css?${VERSION}`;
-        this.model.boxCount = ['individualLink', 'bookstoreLink', 'bulkLink'].reduce((accum, key) => {
-            return accum + (this.model[key] ? 1 : 0);
-        }, 0);
+        this.model = () => this.getModel();
+    }
+
+    getModel() {
+        return Object.assign({
+            boxCount:
+                ['individualLink', 'bookstoreLink', 'bulkLink']
+                    .filter((key) => this.props[key]).length
+        }, this.props);
     }
 
 }

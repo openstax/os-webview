@@ -6,8 +6,8 @@ import {description as template} from './instructor-resources-pane.html';
 
 export default class InstructorResourcePane extends Controller {
 
-    init(model) {
-        this.model = model;
+    init(props) {
+        this.props = props;
         this.template = template;
         this.view = {
             classes: ['instructor-resources-pane']
@@ -17,11 +17,15 @@ export default class InstructorResourcePane extends Controller {
         };
         /* eslint max-len: 0 */
         this.css = `/app/pages/details-new/phone-view/instructor-resources-pane/instructor-resources-pane.css?${VERSION}`;
+        // Static model
+        this.model = {
+            resources: props.resources
+        };
     }
 
     onLoaded() {
-        this.model.userStatusPromise.then((userStatus) => {
-            for (const res of this.model.resources.freeResources) {
+        this.props.userStatusPromise.then((userStatus) => {
+            for (const res of this.props.resources.freeResources) {
                 const resourceBox = new ResourceBox(
                     Object.assign({
                         heading: res.resource_heading,

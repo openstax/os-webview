@@ -6,15 +6,23 @@
         .book-icon,
         .webinars .icon-cell {
             background-color: os-color($color);
+            color: text-color(white);
+        }
+
+        .hero {
             background-image: linear-gradient(to right, os-color($color), lighten(os-color($color), 7));
-            color: ui-color(white);
+        }
+
+        @if ($color == yellow) {
+            .book-icon,
+            .webinars .icon-cell {
+                color: text-color(normal);
+            }
         }
     }
 
     @at-root .fg-#{$color} {
-        .hero,
-        .book-icon,
-        .webinars .icon-cell {
+        .hero {
             color: os-color($color);
         }
     }
@@ -26,7 +34,7 @@
         background-color: ui-color(white);
 
         &.card-background {
-            > .content {
+            > .content-wrapper {
                 background-image: linear-gradient(to bottom, ui-color(white), ui-color(white) 10rem, ui-color(default) 25rem);
 
                 @include wider-than($tablet-max) {

@@ -5,13 +5,15 @@ import $ from '~/helpers/$';
 export default class ModalContent extends Controller {
 
     init(content) {
-        this.template = () => '';
         this.content = content;
         this.view = {
             tag: 'modal-content',
             classes: ['page-overlay']
         };
         this.css = `/app/components/modal-content/modal-content.css?${VERSION}`;
+    }
+
+    template() {
     }
 
     onLoaded() {

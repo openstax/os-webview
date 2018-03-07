@@ -5,9 +5,9 @@ import {description as template} from './collapsing-pane.html';
 
 export default class CollapsingPane extends Controller {
 
-    init(model) {
+    init(props) {
         this.template = template;
-        this.model = model;
+        this.props = props;
         this.view = {
             classes: ['collapsing-pane']
         };
@@ -15,29 +15,28 @@ export default class CollapsingPane extends Controller {
         this.regions = {
             content: '.content-region'
         };
-        this.setOpen(false);
+        this.model = () => this.getModel();
+
+        this.isOpen = false;
+    }
+
+    getModel() {
+        return {
+            title: this.props.title,
+            plusOrMinus: this.isOpen ? 'minus' : 'plus',
+            hiddenAttribute: this.isOpen ? null : ''
+        };
     }
 
     onLoaded() {
-        if (this.model.contentComponent) {
-            this.regions.content.attach(this.model.contentComponent);
-        }
-    }
-
-    setOpen(whether) {
-        this.isOpen = whether;
-        if (whether) {
-            this.model.plusOrMinus = 'minus';
-            this.model.hiddenAttribute = null;
-        } else {
-            this.model.plusOrMinus = 'plus';
-            this.model.hiddenAttribute = '';
+        if (this.props.contentComponent) {
+            this.regions.content.attach(this.props.contentComponent);
         }
     }
 
     @on('click .control-bar')
     toggleOpen() {
-        this.setOpen(!this.isOpen);
+        this.isOpen = !this.isOpen;
         this.update();
     }
 

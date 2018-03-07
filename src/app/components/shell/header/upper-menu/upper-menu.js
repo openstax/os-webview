@@ -5,13 +5,13 @@ import {description as template} from './upper-menu.html';
 
 export default class UpperMenu extends Controller {
 
-    init(model) {
+    init() {
         this.template = template;
         this.view = {
             classes: ['container']
         };
         this.css = `/app/components/shell/header/upper-menu/upper-menu.css?${VERSION}`;
-        this.model = model;
+        this.model = {};
 
         /* eslint arrow-parens: 0 */
         (async () => {

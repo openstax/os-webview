@@ -6,23 +6,24 @@ import {description as template} from './student-resource-tab.html';
 
 export default class StudentResourceTab extends Controller {
 
-    init(model) {
+    init(props) {
         this.template = template;
-        this.model = model;
+        this.props = props;
         this.view = {
             classes: ['student-resources']
+        };
+        this.regions = {
+            resourceBoxes: '.resources'
         };
         this.css = `/app/pages/details-new/student-resource-tab/student-resource-tab.css?${VERSION}`;
     }
 
     onLoaded() {
-        const Region = this.regions.self.constructor;
         const resourceBoxes = this.el.querySelectorAll('resource-box');
 
-        this.model.userStatusPromise.then((userStatus) => {
-            for (const index of this.model.resources.keys()) {
-                const region = new Region(resourceBoxes[index]);
-                const resourceData = this.model.resources[index];
+        this.props.userStatusPromise.then((userStatus) => {
+            for (const index of this.props.resources.keys()) {
+                const resourceData = this.props.resources[index];
                 const resourceBox = new ResourceBox(
                     Object.assign({
                         heading: resourceData.resource_heading,
@@ -30,7 +31,7 @@ export default class StudentResourceTab extends Controller {
                     }, ResourceBox.studentResourceBoxPermissions(resourceData, userStatus))
                 );
 
-                region.attach(resourceBox);
+                this.regions.resourceBoxes.append(resourceBox);
             }
         });
     }
