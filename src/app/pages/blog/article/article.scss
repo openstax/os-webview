@@ -2,8 +2,8 @@
 
 .blog.page {
     article {
-        max-width: $text-content-max;
         margin: auto;
+        max-width: $text-content-max;
         padding: 0 $normal-margin;
 
         @include width-up-to($phone-max) {
@@ -107,11 +107,6 @@
                 position: relative;
             }
         }
-
-        .author {
-            color: os-color(light-blue);
-            font-style: italic;
-        }
     }
 
     .boxed {
@@ -125,6 +120,7 @@
         flex-direction: column;
         flex-shrink: 1;
         height: calc(100% - 2.5rem); // Firefox needs this
+        padding: 0;
 
         .body {
             flex-basis: 100%;
@@ -286,6 +282,11 @@
     .meta .btn {
         @include set-font(helper-label);
 
+        color: text-color(helper);
         padding: 0.3em 1em;
+    }
+
+    .author {
+        font-style: italic;
     }
 }
