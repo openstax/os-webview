@@ -1,6 +1,20 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .blog.page {
+    article {
+        max-width: $text-content-max;
+        margin: auto;
+        padding: 0 $normal-margin;
+
+        @include width-up-to($phone-max) {
+            max-width: 100%;
+        }
+    }
+
+    .strips {
+        bottom: 0;
+    }
+
     .article {
         align-content: flex-start;
         display: flex;
@@ -12,6 +26,7 @@
         }
 
         &.page .article {
+            background-color: ui-color(white);
             width: 100%;
 
             .quote {
