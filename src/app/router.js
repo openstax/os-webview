@@ -38,6 +38,11 @@ const PAGES = [
     'technology'
 ];
 
+if (window.location.hostname === 'localhost') {
+    PAGES.push('a-page-template');
+    PAGES.push('a-example');
+}
+
 // CustomEvent polyfill
 (function () {
     if (typeof window.CustomEvent === 'function') {

@@ -14,7 +14,7 @@ export default class AComponentTemplate extends Controller {
     init(getProps, handlers) {
         this.template = template;
         // Props are managed by the parent; do not modify them.
-        this.props = getProps();
+        this.getProps = getProps;
         // Handlers are callbacks from the parent for state changes in the child
         // Parent and child should agree on what handlers are needed
         this.handlers = handlers;
@@ -25,13 +25,14 @@ export default class AComponentTemplate extends Controller {
         // Check this path
         this.css = `/app/components/a-component-template/a-component-template.css?${VERSION}`;
         // model is an arg for the template and needs its context bound
+        // using a function ensures updates are seen
         this.model = () => this.getModel();
     }
 
     // Returns a dictionary of values to be used in the template
     // Refreshes props, to ensure they're up to date
     getModel() {
-        this.props = getProps();
+        this.props = this.getProps();
 
         return {
             message: this.props.message

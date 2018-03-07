@@ -25,10 +25,7 @@ export default class APageTemplate extends CMSPageController {
             classes: ['a-page-template', 'page']
         };
         this.css = `/app/pages/a-page-template/a-page-template.css?${VERSION}`;
-        // Defines where components may be inserted
-        this.regions = {
-            component: '.component-region'
-        };
+
         // What will it initially try to pull from the CMS
         this.slug = 'pages/accessibility';
 

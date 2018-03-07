@@ -15,6 +15,16 @@ function webpack() {
             new webpack2.optimize.UglifyJsPlugin({ sourceMap: true }),
             new webpack2.optimize.MinChunkSizePlugin({minChunkSize: 16000}),
         ];
+    const output = {
+        path: path.resolve(config.dest),
+        filename: "bundle.js",
+        publicPath: "/", // for where to request chunks when the SinglePageApp changes the URL
+        chunkFilename: "chunk-[chunkhash].js"
+    };
+
+    if (isDevelopment) {
+        delete output.chunkFilename;
+    }
 
     return gulp.src([
         `${config.dest}/app/main.js`
@@ -22,12 +32,7 @@ function webpack() {
       externals: {
           settings: 'SETTINGS'
       },
-      output: {
-        path: path.resolve(config.dest),
-        filename: "bundle.js",
-        publicPath: "/", // for where to request chunks when the SinglePageApp changes the URL
-        chunkFilename: "chunk-[chunkhash].js"
-      },
+      output,
       plugins,
       resolve: {
         alias: {
