@@ -130,7 +130,16 @@
                 <h1>{model.whereMoneyGoes.headline}</h1>
                 <div class="section-description" data-html="whereMoneyGoes.description" skip="true"></div>
             </div>
-            <img class="boxed big-screen" src="/images/openstax-tutor/ten-dollars.svg">
+            <img class="boxed big-screen" src="/images/openstax-tutor/ten-dollars.svg"
+            alt="Diagram of how we spend money"
+            aria-describedby="breakdown-description"
+            >
+            <div id="breakdown-description" style="visibility: hidden; height: 0">
+                $5 pays for our engineers and researchers.
+                $3 pays for authors to keep content current.
+                $1 pays for our Support team.
+                $1 helps us keep the lights on.
+            </div>
             <div class="boxed small-screen">
                 <img src="/images/openstax-tutor/ten-dollars-mobile@2x.png">
                 <div class="box">
