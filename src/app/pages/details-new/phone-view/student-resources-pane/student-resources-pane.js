@@ -5,8 +5,8 @@ import ResourceBox from '../../resource-box/resource-box';
 
 export default class StudentResourcePane extends Controller {
 
-    init(model) {
-        this.model = model;
+    init(props) {
+        this.props = props;
         this.template = () => '';
         this.view = {
             classes: ['student-resources-pane']
@@ -15,8 +15,8 @@ export default class StudentResourcePane extends Controller {
     }
 
     onLoaded() {
-        this.model.userStatusPromise.then((userStatus) => {
-            for (const res of this.model.resources) {
+        this.props.userStatusPromise.then((userStatus) => {
+            for (const res of this.props.resources) {
                 const component = new ResourceBox(
                     Object.assign({
                         heading: res.resource_heading,

@@ -10,38 +10,46 @@ export default class AccordionGroup extends Controller {
             classes: ['accordion-group']
         };
         this.css = `/app/components/accordion-group/accordion-group.css?${VERSION}`;
+
+        this.items = [];
     }
 
     template() {
     }
 
     // Never updates, so just set up the children
-    // Future work: handle updated item list
+    // Future work: use ComponentArray
     onLoaded() {
-        let props = this.getProps();
         let selectedLabel;
-        const items = props.items.map((item) => {
-            const updateItems = () => {
-                props = this.getProps();
-                for (const i of items) {
-                    i.update();
-                }
-            };
+        const handlers = {
+            setSelected: (newValue) => {
+                selectedLabel = newValue;
+                this.updateItems();
+            }
+        };
+        const props = this.getProps();
 
-            return new AccordionItem(() => ({
-                tag: props.tag,
-                label: item.title,
-                contentComponent: item.contentComponent,
-                selectedLabel,
-                setSelected: (newValue) => {
-                    selectedLabel = newValue;
-                    updateItems();
-                }
-            }));
+        this.items = props.items.map((item) => {
+            return new AccordionItem(
+                props.tag,
+                () => ({
+                    label: item.title,
+                    openLabel: item.openTitle || item.title,
+                    contentComponent: item.contentComponent,
+                    selectedLabel
+                }),
+                handlers
+            );
         });
 
-        for (const item of items) {
+        for (const item of this.items) {
             this.regions.self.append(item);
+        }
+    }
+
+    updateItems() {
+        for (const item of this.items) {
+            item.update();
         }
     }
 

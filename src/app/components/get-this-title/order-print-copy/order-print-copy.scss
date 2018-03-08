@@ -76,6 +76,7 @@
         text-decoration: none;
 
         @include wider-than($phone-max) {
+            grid-template-rows: 3rem 2fr auto 1fr;
             justify-items: center;
             padding: 3rem;
             text-align: center;

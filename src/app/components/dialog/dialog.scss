@@ -26,6 +26,7 @@ dialog {
         padding: 0 3rem;
 
         @include wider-than($phone-max) {
+            align-items: center;
             background-color: ui-color(default);
             color: inherit;
             height: 7.5rem;
@@ -37,6 +38,10 @@ dialog {
         @include body-font(1.8rem);
         color: text-color(helper);
         transform: translate(1.5rem, -4rem);
+
+        @include wider-than($phone-max) {
+            transform: none;
+        }
 
         &:hover {
             color: inherit;

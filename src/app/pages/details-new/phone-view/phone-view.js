@@ -13,9 +13,9 @@ import {description as template} from './phone-view.html';
 
 export default class PhoneView extends Controller {
 
-    init(model) {
+    init(props) {
         this.template = template;
-        this.model = model;
+        this.props = props;
         this.css = `/app/pages/details-new/phone-view/phone-view.css?${VERSION}`;
         this.regions = {
             getTheBook: '.get-the-book',
@@ -29,40 +29,41 @@ export default class PhoneView extends Controller {
 
     onLoaded() {
         // TODO Figure out heading levels: are the accordion titles headers?
-        $.insertHtml(this.el, this.model);
-        this.regions.getTheBook.append(new GetThisTitle(this.model.bookInfo));
+        $.insertHtml(this.el, this.props);
+        this.regions.getTheBook.append(new GetThisTitle(this.props.bookInfo));
         const accordionItems = [
             {
                 title: 'Book details',
-                contentComponent: new DetailsPane(this.model.detailsTabData)
+                contentComponent: new DetailsPane(this.props.detailsTabData)
             },
             {
                 title: 'Instructor resources',
                 contentComponent: new InstructorResourcePane({
-                    resources: this.model.instructorResources,
-                    userStatusPromise: this.model.userStatusPromise
+                    resources: this.props.instructorResources,
+                    userStatusPromise: this.props.userStatusPromise
                 })
             },
             {
-                title: `Student resources (${this.model.studentResources.length})`,
+                title: 'Student resources',
+                openTitle: `Student resources (${this.props.studentResources.length})`,
                 contentComponent: new StudentResourcePane({
-                    resources: this.model.studentResources,
-                    userStatusPromise: this.model.userStatusPromise
+                    resources: this.props.studentResources,
+                    userStatusPromise: this.props.userStatusPromise
                 })
             },
             {
                 title: 'Report errata',
                 contentComponent: new ErrataPane({
-                    title: this.model.bookTitle
+                    title: this.props.bookTitle
                 })
             }
         ];
 
-        if (this.model.tableOfContents) {
+        if (this.props.tableOfContents) {
             accordionItems.splice(1, 0, {
                 title: 'Table of contents',
                 contentComponent: new Contents(
-                    this.model.tableOfContents,
+                    this.props.tableOfContents,
                     {tag: 'ol', classes: ['table-of-contents']}
                 )
             });
@@ -71,7 +72,7 @@ export default class PhoneView extends Controller {
             items: accordionItems
         })));
         this.regions.letUsKnow.append(new LetUsKnow(() => ({
-            title: this.model.bookTitle
+            title: this.props.bookTitle
         })));
     }
 
