@@ -52,6 +52,11 @@
         }
     }
 
+    .other-group .invalid-message {
+        display: grid;
+        text-indent: 1rem;
+    }
+
     .radio-columns {
         [type="text"] {
             width: auto;
