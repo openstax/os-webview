@@ -1,9 +1,9 @@
 <template args="model">
-    <main id="maincontent" class="hide-until-loaded {model.loaded}">
+    <div id="maincontent" class="hide-until-loaded {model.loaded}">
         <div class="book-banners" role="banner" skip="true"></div>
-        <span class="scrolldown-chevron"><a href="#education"><i class="fa fa-chevron-down"></i></a></span>
+        <span class="scrolldown-chevron"><a href="#education" aria-label="education"><i class="fa fa-chevron-down"></i></a></span>
         <div class="quote-buckets boxed-row" role="complementary" skip="true"></div>
         <div id="education" class="education" skip="true"></div>
         <div class="buckets boxed-row" skip="true"></div>
-    </main>
+    </div>
 </template>
