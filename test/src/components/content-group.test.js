@@ -13,7 +13,7 @@ describe('ContentGroup', () => {
         selectedTab,
         contents
     }));
-    const panes = Array.from(contentGroup.el.querySelectorAll('[data-for-tab]'));
+    const panes = Array.from(contentGroup.el.children);
 
     it('renders with all but selectedTab hidden', () => {
         expect(panes[0].getAttribute('hidden')).toBe(null);

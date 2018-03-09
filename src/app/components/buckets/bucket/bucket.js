@@ -4,16 +4,16 @@ import {description as template} from './bucket.html';
 
 export default class Bucket extends Controller {
 
-    init(model) {
+    init(props) {
         this.template = template;
         this.view = {
             classes: [
                 'bucket',
-                model.bucketClass,
-                model.image.alignment
+                props.bucketClass,
+                props.image.alignment
             ]
         };
-        this.model = model;
+        this.model = props;
     }
 
     onLoaded() {

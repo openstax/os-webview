@@ -9,17 +9,28 @@ export default class Dropdown extends Controller {
 
     init(getProps) {
         this.template = template;
+        this.getProps = getProps;
         this.css = `/app/components/shell/header/main-menu/dropdown/dropdown.css?${VERSION}`;
-        this.model = {
-            isOpen: false,
-            selectedIndex: -1,
-            props: getProps()
-        };
         this.view = {
-            tag: this.model.props.tag || 'div',
             classes: ['nav-menu-item', 'dropdown']
         };
         this.frozen = false;
+        this.isOpen = false;
+        this.selectedIndex = -1;
+
+        this.model = () => this.getModel();
+    }
+
+    getModel() {
+        this.props = this.getProps();
+
+        return {
+            isOpen: this.isOpen,
+            selectedIndex: this.selectedIndex,
+            dropdownUrl: this.props.dropdownUrl,
+            dropdownLabel: this.props.dropdownLabel,
+            items: this.props.items
+        };
     }
 
     onLoaded() {
@@ -41,10 +52,10 @@ export default class Dropdown extends Controller {
 
     setFocus() {
         this.settingFocus = true;
-        if (this.model.selectedIndex < 0) {
+        if (this.selectedIndex < 0) {
             this.el.querySelector('a').focus();
         } else {
-            this.el.querySelectorAll('.dropdown-menu [role="menuitem"]')[this.model.selectedIndex].focus();
+            this.el.querySelectorAll('.dropdown-menu [role="menuitem"]')[this.selectedIndex].focus();
         }
         this.settingFocus = false;
     }
@@ -64,12 +75,12 @@ export default class Dropdown extends Controller {
     }
 
     openMenu() {
-        if (!this.model.isOpen) {
-            this.model.isOpen = true;
+        if (!this.isOpen) {
+            this.isOpen = true;
             if (this.isMobileDisplay()) {
                 header.recognizeDropdownOpen({
                     el: this.el,
-                    label: this.model.props.dropdownLabel,
+                    label: this.props.dropdownLabel,
                     close: this.closeMenu.bind(this)
                 });
             }
@@ -78,8 +89,8 @@ export default class Dropdown extends Controller {
     }
 
     closeMenu() {
-        if (this.model.isOpen) {
-            this.model.isOpen = false;
+        if (this.isOpen) {
+            this.isOpen = false;
             header.recognizeDropdownOpen(null);
             this.update();
         }
@@ -109,20 +120,20 @@ export default class Dropdown extends Controller {
     @on('keydown')
     moveSelection(event) {
         /* eslint complexity: 0 */
-        const lastIndex = this.model.props.items.length - 1;
+        const lastIndex = this.props.items.length - 1;
 
         switch (event.keyCode) {
         case $.key.down:
-            if (this.model.selectedIndex < lastIndex) {
-                ++this.model.selectedIndex;
+            if (this.selectedIndex < lastIndex) {
+                ++this.selectedIndex;
             }
             event.preventDefault();
             this.setFocus();
             break;
         case $.key.up:
-            --this.model.selectedIndex;
-            if (this.model.selectedIndex < 0) {
-                this.model.selectedIndex = -1;
+            --this.selectedIndex;
+            if (this.selectedIndex < 0) {
+                this.selectedIndex = -1;
             }
             event.preventDefault();
             this.setFocus();

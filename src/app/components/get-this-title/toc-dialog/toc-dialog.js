@@ -5,9 +5,12 @@ import {description as template} from './toc-dialog.html';
 
 export default class TocDialog extends Controller {
 
-    init(model) {
+    init(props) {
         this.template = template;
-        this.model = model;
+        this.props = props;
+        this.model = {
+            webviewLink: props.webviewLink
+        };
         this.view = {
             tag: 'toc-dialog'
         };
@@ -19,7 +22,7 @@ export default class TocDialog extends Controller {
 
     onLoaded() {
         this.regions.toc.attach(
-            new Contents(this.model.tableOfContents, {tag: 'ol', classes: ['table-of-contents']})
+            new Contents(this.props.tableOfContents, {tag: 'ol', classes: ['table-of-contents']})
         );
     }
 

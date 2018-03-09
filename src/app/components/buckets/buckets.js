@@ -6,17 +6,17 @@ const buttonClasses = ['btn-cyan', 'btn-gold'];
 
 export default class Buckets extends Controller {
 
-    init(data) {
+    init(props) {
         this.template = () => '';
         this.css = `/app/components/buckets/buckets.css?${VERSION}`;
         this.view = {
             classes: ['buckets-section']
         };
-        this.model = data;
+        this.props = props;
     }
 
     onLoaded() {
-        for (const bucketData of this.model) {
+        for (const bucketData of this.props) {
             this.regions.self.append(new Bucket(bucketData));
         }
     }

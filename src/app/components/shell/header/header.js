@@ -51,7 +51,7 @@ class Header extends Controller {
             submenuName: 'Name goes here'
         };
 
-        this.upperMenu = new UpperMenu(this.model);
+        this.upperMenu = new UpperMenu();
         this.mainMenu = new MainMenu(this.model);
 
         const pollAccounts = () => {

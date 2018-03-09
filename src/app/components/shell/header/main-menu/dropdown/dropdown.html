@@ -1,7 +1,7 @@
 <template args="model">
-    <a href="{model.props.dropdownUrl}"
+    <a href="{model.dropdownUrl}"
      role="menuitem" aria-haspopup="true">
-     {model.props.dropdownLabel}
+     {model.dropdownLabel}
      <svg class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 30">
          <title>arrow</title>
          <path d="M12,1L26,16,12,31,8,27,18,16,8,5Z" transform="translate(-8 -1)"/>
@@ -12,11 +12,11 @@
          role="menu"
          aria-expanded="{model.isOpen}"
          aria-label="Subjects menu">
-            <div  each="item in model.props.items">
+            <div  each="item in model.items">
                 <a href="{item.url}"
                     role="menuitem"
                     tabindex="-1"
-                    data-html="props.items[{$item}].label" skip="true"></a>
+                    data-html="items[{$item}].label" skip="true"></a>
                 <div if="item.trainingWheel" class="training-wheel">
                     <div class="put-away-row" tabindex="-1"><button class="put-away"
                     tabindex="0" data-keep-open="true">×</button></div>

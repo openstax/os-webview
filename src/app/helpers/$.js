@@ -146,11 +146,12 @@ $.htmlToText = (html) => {
 $.insertHtml = (containerEl, model) => {
     /* eslint complexity: 0 */
     const containers = containerEl ? containerEl.querySelectorAll('[data-html]') : [];
+    const modelValue = model instanceof Function ? model() : model;
 
     for (const htmlEl of containers) {
         /* eslint no-eval: 0 */
         const html = htmlEl.dataset ? htmlEl.dataset.html : htmlEl.getAttribute('data-html');
-        const expr = `model.${html}`;
+        const expr = `modelValue.${html}`;
 
         try {
             htmlEl.innerHTML = eval(expr) || '';
