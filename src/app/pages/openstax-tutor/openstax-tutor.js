@@ -216,7 +216,7 @@ export default class Tutor extends CMSPageController {
         document.getElementById('main').classList.remove('openstax-tutor-main');
     }
 
-    @on('click .toggled-item[aria-role="button"]')
+    @on('click .toggled-item[role="button"]')
     toggleItem(event) {
         const index = event.delegateTarget.dataset.index;
         const item = this.model.faq.items[index];
