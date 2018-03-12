@@ -1,5 +1,6 @@
 import GetThisTitle from '~/components/get-this-title/get-this-title';
 import {clickElement} from '../../test-utils';
+import shell from '~/components/shell/shell';
 // Biology book details
 import details from '../data/details';
 
@@ -23,11 +24,17 @@ describe('GetThisTitle', () => {
             expect(link).toBeTruthy();
         }
     });
-    it('handles Print Copy click', () => {
+    it('handles Print Copy dialog', () => {
         const pcLink = p.el.querySelector('.show-print-submenu');
 
-        expect(p.model.modalHiddenAttribute).toBe('');
+        expect(shell.regions.dialog.el.innerHTML).toBe('');
         clickElement(pcLink);
-        expect(p.model.modalHiddenAttribute).toBe(null);
+        expect(shell.regions.dialog.el.innerHTML).toBeTruthy();
+
+        const dialog = shell.regions.dialog.el;
+        const putAway = dialog.querySelector('.put-away');
+
+        clickElement(putAway);
+        expect(dialog.getAttribute('hidden')).toBe('');
     });
 });
