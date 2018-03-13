@@ -1,6 +1,20 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .blog.page {
+    article {
+        margin: auto;
+        max-width: $text-content-max;
+        padding: 0 $normal-margin;
+
+        @include width-up-to($phone-max) {
+            max-width: 100%;
+        }
+    }
+
+    .strips {
+        bottom: 0;
+    }
+
     .article {
         align-content: flex-start;
         display: flex;
@@ -12,6 +26,7 @@
         }
 
         &.page .article {
+            background-color: ui-color(white);
             width: 100%;
 
             .quote {
@@ -92,11 +107,6 @@
                 position: relative;
             }
         }
-
-        .author {
-            color: os-color(light-blue);
-            font-style: italic;
-        }
     }
 
     .boxed {
@@ -110,6 +120,7 @@
         flex-direction: column;
         flex-shrink: 1;
         height: calc(100% - 2.5rem); // Firefox needs this
+        padding: 0;
 
         .body {
             flex-basis: 100%;
@@ -271,6 +282,11 @@
     .meta .btn {
         @include set-font(helper-label);
 
+        color: text-color(helper);
         padding: 0.3em 1em;
+    }
+
+    .author {
+        font-style: italic;
     }
 }
