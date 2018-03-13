@@ -1,4 +1,4 @@
-import GetThisTitle from '~/components/get-this-title/get-this-title';
+import GetThisTitle from '~/components/get-this-title-new/get-this-title';
 import {clickElement} from '../../test-utils';
 // Biology book details
 import details from '../data/details';

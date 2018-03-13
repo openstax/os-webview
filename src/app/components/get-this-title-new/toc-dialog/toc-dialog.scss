@@ -1,0 +1,18 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+toc-dialog {
+    display: grid;
+    grid-gap: 3rem;
+    grid-template-rows: auto auto;
+    height: calc(100vh - 25.5rem);
+    padding: 3rem;
+
+    .toc-region {
+        border: thin solid ui-color(form-border);
+        overflow-y: auto;
+    }
+
+    .btn {
+        max-width: 17rem;
+    }
+}
