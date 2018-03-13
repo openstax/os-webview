@@ -37,7 +37,9 @@
     }
 
     .flexrow {
-        display: flex;
+        display: grid;
+        grid-gap: 1rem;
+        grid-template-columns: repeat(2, auto) 1fr;
         margin-top: 4rem;
     }
 
