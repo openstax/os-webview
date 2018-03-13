@@ -63,8 +63,8 @@
 
         button,
         .btn {
-            @extend %button;
             @extend %secondary;
+            @include button();
 
             margin-left: 0;
             padding: 1.5rem;
@@ -78,28 +78,30 @@
         transition: opacity 0.2s;
     }
 
-    .pdf + .options,
-    .print + .options {
-        height: 0;
-        margin: 0;
-        opacity: 0;
-        overflow: hidden;
-        width: 0;
-    }
-
     .option {
-        border-bottom: 0.1rem solid ui-color(form-border);
-        padding: 0.5rem;
+        font-size: 2.2rem; // This is for the icons
+        padding: 1rem 0.5rem;
 
         &:last-child {
             border-bottom: 0;
         }
 
+        .text {
+            font-size: 1.8rem;
+            white-space: nowrap;
+        }
+
         a,
         .option-header {
-            display: block;
-            padding-left: 3rem;
+            align-items: center;
+            display: flex;
+            justify-content: flex-start;
             text-decoration-line: none;
+
+            :first-child {
+                flex-basis: 3rem;
+                margin-right: $normal-margin;
+            }
         }
 
         a {
@@ -109,12 +111,5 @@
                 color: text-color(link-hover);
             }
         }
-    }
-
-    .fa:not(.fa-times) {
-        margin-left: -3rem;
-        text-align: center;
-        transform: scale(1.2);
-        width: 2.5rem;
     }
 }
