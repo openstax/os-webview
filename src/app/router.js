@@ -35,8 +35,7 @@ const PAGES = [
     'privacy-policy',
     'subjects',
     'subjects/*path',
-    'technology',
-    'institutional-partnership'
+    'technology'
 ];
 
 // CustomEvent polyfill
@@ -69,7 +68,6 @@ class AppRouter extends Router {
         this.route('give-confirmation', 'give');
         this.route('interest-confirmation', 'confirmation');
         this.route('higher-ed', 'home');
-        this.route('institutional-partnership-application', 'institutional-partnership');
 
         PAGES.forEach((page) => {
             const isSplat = page.match(/\/\*/);
