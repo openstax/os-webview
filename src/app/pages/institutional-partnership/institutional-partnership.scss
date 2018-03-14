@@ -4,8 +4,9 @@
 .institutional-page {
 	.hero {
 		background-image: url('/images/institutional/banner-institutional.jpg');
+		background-position: center center;
 		background-repeat: no-repeat;
-        background-size: cover;
+		background-size: cover;
 		height: 50rem;
 		width: 100%;
 		display: flex;
@@ -19,11 +20,6 @@
             width: 100%;
             z-index: 1;
             align-items: flex-end;
-
-            @include collapsed {
-                align-items: stretch;
-                flex-flow: row wrap;
-            }
         }
 
         .text-block {

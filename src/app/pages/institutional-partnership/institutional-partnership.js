@@ -22,7 +22,7 @@ export default class Institutional extends Controller {
 
     @on('click #btn-tab1')
     showProgramTestimonial() {
-    	this.programTestimonial.classList.add('is-show');
+        this.programTestimonial.classList.add('is-show');
         this.applicationTestimonial.classList.remove('is-show');
     }
 
