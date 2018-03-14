@@ -55,7 +55,7 @@
 				display: flex;
 				flex-wrap: wrap;
 				width: 100%;
-				margin-top: -2.8rem;
+				margin-top: -3rem;
 
 				.input {
 				  	position: absolute;
@@ -64,9 +64,9 @@
 				.label {
 				  	width: 100%;
 				  	cursor: pointer;
-				  	font-weight: bold;
+				  	font-weight: normal;
 				  	font-size: 1.6rem;
-				  	height: 2.8rem;
+				  	height: 3rem;
 				  	display: flex;
 				  	align-items: flex-start;
 				  	color: #5E6062;
@@ -77,16 +77,31 @@
 				}
 				.input:checked + .label {
 				  	background: #fff;
-				  	color: #000;
 				  	border-bottom: 0.4rem solid #63A524;
 				}
 				.panel {
 				  	display: none;
-				  	padding: 3rem 0 6rem;
+				  	padding: 0 0 6rem;
 				  	border-top: 1px solid #D5D5D5;
 				  	width: 100%;
 				  	.panel-content {
 				  		max-width: 80rem;
+				  		h3 {
+				  			margin-top: 3rem;
+				  		}
+				  		p {
+				  			margin-top: 1rem;
+				  		}
+				  		ul {
+				  			margin-bottom: 3rem;
+							li {
+								span {
+									display: block;
+									color: #4B4B4B;
+									font-size: 1.4rem;
+								}
+							}
+						}
 				  	}
 				}
 				.input:checked + .label + .panel {
@@ -121,6 +136,12 @@
 				display: flex;
 				flex-direction: column;
 				justify-content: flex-end;
+				.testimonial-program, .testimonial-application {
+					display: none;
+					&.is-show {
+						display: block;
+					}
+				}
 				.text-block {
 					position: relative;
 					padding-left: 40px;
