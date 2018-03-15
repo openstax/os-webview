@@ -2,155 +2,154 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .institutional-page {
-	.hero {
-  	background-color: #25C0DA;
-		background-image: url('/images/institutional/banner-institutional.jpg');
-		background-position: center center;
-		background-repeat: no-repeat;
-		background-size: cover;
-		height: 50rem;
-		width: 100%;
-		display: flex;
-		align-items: center;
+  .hero {
+    background-color: #25c0da;
+    background-image: url('/images/institutional/banner-institutional.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 50rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  
+    .container-wrap {
+      display: flex;
+      flex-flow: column wrap;
+      margin: 0 auto;
+      max-width: $content-max;
+      width: 100%;
+      z-index: 1;
+      align-items: flex-end;
+    }
+  
+    .text-block {
+      text-align: left;
+      p {
+        font-size: 2.4rem;
+        letter-spacing: -1.5px;
+        color: #00347c;
+      }
+      h1 {
+        font-size: 4.8rem;
+        line-height: 4.8rem;
+        letter-spacing: -2.5px;
+        color: #00347c;
+      }
+    }
+  }
 
-		.container-wrap {
-            display: flex;
-            flex-flow: column wrap;
-            margin: 0 auto;
-            max-width: $content-max;
-            width: 100%;
-            z-index: 1;
-            align-items: flex-end;
+  .tab-background {
+    height: 6rem;
+    background: #fff;
+  }
+
+  .boxed {
+    .details {
+      width: 100%;
+      .tabs {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        margin-top: -3rem;
+      
+        .input {
+          position: absolute;
+          opacity: 0;
         }
+        .label {
+          width: auto;
+          cursor: pointer;
+          font-weight: normal;
+          font-size: 1.6rem;
+          height: 3rem;
+          display: flex;
+          align-items: flex-start;
+          color: #5e6062;
+          margin-right: 3.5rem;
+        }
+        .input:focus + .label {
+          z-index: 1;
+        }
+        .input:checked + .label {
+          background: #fff;
+          border-bottom: 0.4rem solid #63A524;
+        }
+        .panel {
+          display: none;
+          padding: 0 0 6rem;
+          border-top: 1px solid #D5D5D5;
+          width: 100%;
+          order: 99;
+          .panel-content {
+            max-width: 80rem;
+            h5 {
+              margin: 1rem 0;
+              color: #424242;
+            }
+            p {
+              margin-top: 1rem;
+            }
+            ul {
+              margin-bottom: 3rem;
+            li {
+              span {
+                display: block;
+                color: #4B4B4B;
+                font-size: 1.4rem;
+                }
+              }
+            }
+          }
+        }
+        .input:checked + .label + .panel {
+          display: block;
+        }
+      }		
+    }
+  }
 
+  .testimonial {
+    background: #25c0da;
+    margin-top: 4.3rem;
+    padding-bottom: 3em;
+      .boxed {
+        align-items: flex-start;
+      .testimonial-box {
+        width: 80rem;
+        background: #fff;
+        margin-top: -4.3rem;
+        padding: 3rem 4rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        .testimonial-program, .testimonial-application {
+          display: none;
+          &.is-show {
+            display: block;
+          }
+        }
         .text-block {
-        	text-align: left;
-        	p {
-        		font-size: 2.4rem;
-        		letter-spacing: -1.5px;
-        		color: #00347C;
-        	}
-        	h1 {
-        		font-size: 4.8rem;
-        		line-height: 4.8rem;
-        		letter-spacing: -2.5px;
-        		color: #00347C;
-        	}
+          position: relative;
+          padding-left: 40px;
+          &:before {
+            content: url("/images/institutional/icon-quote.svg");
+            position: absolute;;
+            left: 0;
+          }
+          p {
+            margin: 0;
+          }
         }
-
-	}
-
-	.tab-background {
-		height: 6rem;
-		background: #fff;
-	}
-
-	.boxed {
-		.details {
-			width: 100%;
-			.tabs {
-				display: flex;
-				flex-wrap: wrap;
-				width: 100%;
-				margin-top: -3rem;
-
-				.input {
-				  	position: absolute;
-				  	opacity: 0;
-				}
-				.label {
-				  	width: auto;
-				  	cursor: pointer;
-				  	font-weight: normal;
-				  	font-size: 1.6rem;
-				  	height: 3rem;
-				  	display: flex;
-				  	align-items: flex-start;
-				  	color: #5E6062;
-				  	margin-right: 3.5rem;
-				}
-				.input:focus + .label {
-				  	z-index: 1;
-				}
-				.input:checked + .label {
-				  	background: #fff;
-				  	border-bottom: 0.4rem solid #63A524;
-				}
-				.panel {
-				  	display: none;
-				  	padding: 0 0 6rem;
-				  	border-top: 1px solid #D5D5D5;
-				  	width: 100%;
-				  	order: 99;
-				  	.panel-content {
-				  		max-width: 80rem;
-				  		h5 {
-				  			margin: 1rem 0;
-				  			color: #424242;
-				  		}
-				  		p {
-				  			margin-top: 1rem;
-				  		}
-				  		ul {
-				  			margin-bottom: 3rem;
-							li {
-								span {
-									display: block;
-									color: #4B4B4B;
-									font-size: 1.4rem;
-								}
-							}
-						}
-				  	}
-				}
-				.input:checked + .label + .panel {
-				  	display: block;
-				}
-			}		
-		}
-	}
-
-	.testimonial {
-		background: #25C0DA;
-		margin-top: 4.3rem;
-		padding-bottom: 3em;
-		.boxed {
-			align-items: flex-start;
-			.testimonial-box {
-				width: 80rem;
-				background: #fff;
-				margin-top: -4.3rem;
-				padding: 3rem 4rem;
-				display: flex;
-				flex-direction: column;
-				justify-content: flex-end;
-				box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-				.testimonial-program, .testimonial-application {
-					display: none;
-					&.is-show {
-						display: block;
-					}
-				}
-				.text-block {
-					position: relative;
-					padding-left: 40px;
-					&:before {
-						content: url("/images/institutional/icon-quote.svg");
-						position: absolute;;
-						left: 0;
-					}
-					p {
-						margin: 0;
-					}
-				}
-				.writer-info {
-					text-align: right;
-					margin-top: 3rem;
-					p {
-						margin: 0;
-					}
-				}
-			}	
-		}
-	}
+        .writer-info {
+          text-align: right;
+          margin-top: 3rem;
+          p {
+            margin: 0;
+          }
+        }
+      }	
+    }
+  }
 }
