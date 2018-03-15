@@ -129,7 +129,9 @@ $tablet-book-size: 16.5rem;
     .book,
     .second-book {
         background-color: $book-color;
-        background-image: url('/images/subjects/#{$subject}.svg');
+        @if $subject != 'math' {
+            background-image: url('/images/subjects/#{$subject}.svg');
+        }
         background-position: top left;
         height: calc(30vw + 15rem);
         left: 0;
