@@ -1,110 +1,119 @@
 <template args="model">
+    <div class="modal-region" hidden="{model.modalHiddenAttribute}" skip="true"></div>
+    <div class="toc-region" hidden="{model.tocHiddenAttribute}" skip="true"></div>
     <div class="get-this-title">
         <div class="submenu {model.submenu}">
-            <div class="pdf-submenu">
-                <h3>Wybierz wersję PDF</h3>
-                <a class="btn" href="{model.hiRes}"
-                    tabindex="{model.submenu === 'pdf' ? 0 : -1}">Wysoka rozdzielczość</a>
-                <p>Grafika lepszej jakości, ale większy plik i dłuższy czas pobierania</p>
-                <if condition="model.loRes">
-                    <a class="btn" href="{model.loRes}"
-                        tabindex="{model.submenu === 'pdf' ? 0 : -1}">Niska rozdzielczość</a>
-                    <p>Ta sama treść w mniejszym pliku, lecz niektóre grafiki nieco gorszej jakości</p>
-                <else>
-                    <p>Wersja w niskiej rozdzielczości jest niedostępna</p>
-                </if>
-                <div class="remover" aria-role="button"><i class="fa fa-times" aria-hidden="true"
-                    tabindex="{model.submenu === 'pdf' ? 0 : -1}"></i></div>
-            </div>
             <div class="print-submenu">
-                <h3>Złóż zamówienie</h3>
+                <h3>Place an Order</h3>
                 <p if="model.bookstore.link">
                     <a href="{model.bookstore.link}" class="btn"
-                        tabindex="{model.submenu === 'print' ? 0 : -1}">Księgarnia</a>
-                    Zamów w indiCo
+                        tabindex="{model.submenu === 'print' ? 0 : -1}">Bookstore Orders</a>
+                    Order through indiCo
                 </p>
                 <p if="model.isHighSchool">
                     <a href="/bulk-order?{model.slug}" class="btn"
-                        tabindex="{model.submenu === 'print' ? 0 : -1}">Zamów hurtowo</a>
-                    Wypełnij formularz, aby zamówić większą liczbę ezgemplarzy dla swojej uczelni.
+                        tabindex="{model.submenu === 'print' ? 0 : -1}">Bulk Orders</a>
+                    Fill out our form to order in bulk for your school.
                 </p>
                 <p if="model.amazon.link">
                     <a href="{model.amazon.link}" class="btn"
-                        tabindex="{model.submenu === 'print' ? 0 : -1}">Kup dla siebie</a>
-                    w cenie {model.amazon.price} od wydawcy \"OpenStax\" w sklepie Amazon
+                        tabindex="{model.submenu === 'print' ? 0 : -1}">Individual Orders</a>
+                    {model.amazon.price} from seller \"OpenStax\" on Amazon
                 </p>
                 <div if="!model.bookstore.link && model.bookstore.comingSoon" class="coming-soon-wrapper">
                     <img class="coming-soon" src="/images/subjects/coming-soon.svg" alt="coming soon">
-                    KSIĘGARNIA
+                    BOOKSTORE ORDERS
                 </div>
                 <div if="!model.amazon.link && model.amazon.comingSoon" class="coming-soon-wrapper">
                     <img class="coming-soon" src="/images/subjects/coming-soon.svg" alt="coming soon">
-                    KUP DLA SIEBIE
+                    INDIVIDUAL ORDERS
                 </div>
                 <div class="remover" aria-role="button"
                     tabindex="{model.submenu === 'print' ? 0 : -1}"><i class="fa fa-times" aria-hidden="true"></i></div>
             </div>
         </div>
         <div class="options">
+            <div if="model.includeTOC" class="option">
+                <a href="/" role="button" class="show-toc">
+                    <span class="fa fa-list-ol"></span>
+                    <span class="text">Table of contents</span>
+                </a>
+            </div>
             <div if="!model.comingSoon && model.webviewLink" class="option">
                 <a href="{model.webviewLink}"
                     tabindex="{model.submenu === '' ? 0 : -1}" data-submenu="{model.submenu}">
                     <span class="fa fa-laptop"></span>
-                    Zobacz w przeglądarce
-                </a>
-            </div>
-            <div if="model.conceptCoachLink" class="option">
-                <a href="{model.conceptCoachLink}"
-                    tabindex="{model.submenu === '' ? 0 : -1}">
-                    <span class="fa fa-mortar-board"></span>
-                    Zobacz w Concept Coach
+                    <span class="text">View online</span>
                 </a>
             </div>
             <div if="model.pdfLink" class="option">
-                <a role="button" href="{model.pdfLink}" class="show-pdf-submenu"
+                <a href="{model.pdfLink}"
                     tabindex="{model.submenu === '' ? 0 : -1}">
-                    <span class="fa fa-cloud-download"></span>
-                    Pobierz PDF
-                    <if condition="model.comingSoon">{' (wersja redakcyjna)'}</if>
+                    <span class="fas fa-cloud-download-alt"></span>
+                    <span class="text">
+                        <if condition="model.slug.substr(-6) === 'polska'">
+                            {' Pobierz książkę'}
+                        <else>
+                            {' Download a PDF'}
+                            <if condition="model.comingSoon">{' sample'}</if>
+                        </if>
+                    </span>
                 </a>
             </div>
             <div if="model.printLink" class="option">
                 <a href="{model.printLink}" class="show-print-submenu"
                     tabindex="{model.submenu === '' ? 0 : -1}">
                     <span class="fa fa-book"></span>
-                    Zamów egzemplarz drukowany
+                    <span class="text">
+                        Order a print copy
+                    </span>
                 </a>
             </div>
             <div if="model.bookshareLink" class="option">
                 <a href="{model.bookshareLink}"
                     tabindex="{model.submenu === '' ? 0 : -1}">
                     <span class="fa fa-volume-up"></span>
-                    Bookshare
+                    <span class="text">
+                        Bookshare
+                    </span>
                 </a>
             </div>
             <if condition="model.ibookLink">
                 <div if="model.ibookLink2" class="option">
                     <span class="option-header">
-                        <span class="fa fa-tablet"></span>
-                        Pobierz z iBooks
+                        <span class="fab fa-apple"></span>
+                        <span class="text">
+                            Download on iBooks
+                        </span>
                     </span>
                     <a href="{model.ibookLink}"
                         tabindex="{model.submenu === '' ? 0 : -1}">
-                        Część 1
+                        Part 1
                     </a>
                     <a href="{model.ibookLink2}"
                         tabindex="{model.submenu === '' ? 0 : -1}">
-                        Część 2
+                        Part 2
                     </a>
                 </div>
                 <div if="!model.ibookLink2" class="option">
                     <a href="{model.ibookLink}"
                         tabindex="{model.submenu === '' ? 0 : -1}">
-                        <span class="fa fa-tablet"></span>
-                        Pobierz z iBooks
+                        <span class="fab fa-apple"></span>
+                        <span class="text">
+                            Download on iBooks
+                        </span>
                     </a>
                 </div>
             </if>
+            <div if="model.kindleLink" class="option">
+                <a href="{model.kindleLink}"
+                    tabindex="{model.submenu === '' ? 0 : -1}">
+                    <span class="fab fa-amazon"></span>
+                    <span class="text">
+                        Download for Kindle
+                    </span>
+                </a>
+            </div>
         </div>
     </div>
 </template>

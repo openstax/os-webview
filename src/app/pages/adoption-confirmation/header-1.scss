@@ -23,8 +23,14 @@
         display: inline-flex;
     }
 
+    .content {
+        display: flex;
+    }
+
     .flexrow {
         align-items: flex-end;
+        display: flex;
+        justify-content: flex-start;
         max-width: 100rem;
     }
 
