@@ -1,15 +1,14 @@
 import {Controller} from 'superb.js';
 import shell from '~/components/shell/shell';
 import {on} from '~/helpers/controller/decorators';
-import RequestForm from './request-form/request-form';
+import RequestForm from '../request-form/request-form';
 import {description as template} from './request-comp-copy.html';
 
 export default class RequestCompCopy extends Controller {
 
-    init(getProps, handlers) {
+    init(getProps) {
         this.template = template;
         this.getProps = getProps;
-        this.handlers = handlers;
         this.view = {
             classes: ['resource-box']
         };
@@ -22,15 +21,11 @@ export default class RequestCompCopy extends Controller {
 
     createContent() {
         const formHandlers = {
-            done: () => this.closeDialog(),
+            done: () => shell.hideDialog(),
             showConfirmation: () => this.setAltTitle()
         };
 
         return new RequestForm(this.getProps, formHandlers);
-    }
-
-    closeDialog() {
-        shell.hideDialog();
     }
 
     setAltTitle() {

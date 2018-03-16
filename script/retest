@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "Skipping build phase; just running tests"
+
+node_modules/.bin/jest `find ./test/src -name '*.test.js'`

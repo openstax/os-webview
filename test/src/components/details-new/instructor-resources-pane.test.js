@@ -40,6 +40,7 @@ const userStatusPromise = new Promise((resolve) => {
 describe('InstructorResourcesPane', () => {
     it('matches snapshot', () => {
         const pane = new InstructorResourcePane({
+            bookInfo: details,
             resources: instructorResources,
             userStatusPromise: userStatusPromise
         });
