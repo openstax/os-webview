@@ -1,0 +1,179 @@
+@import 'mixins/responsive';
+@import 'pattern-library/core/pattern-library/headers';
+
+.institutional-page {
+    .hero {
+        align-items: center;
+        background-color: os-color(light-blue);
+        background-image: url('/images/institutional/banner-institutional.jpg');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: flex;
+        height: 50rem;
+        width: 100%;
+
+        .container-wrap {
+            align-items: flex-end;
+            display: flex;
+            flex-flow: column wrap;
+            margin: 0 auto;
+            max-width: $content-max;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .text-block {
+            text-align: left;
+
+            p {
+                color: os-color(blue);
+                font-size: 2.4rem;
+                letter-spacing: -0.15rem;
+            }
+
+            h1 {
+                color: os-color(blue);
+                font-size: 4.8rem;
+                letter-spacing: -0.25rem;
+                line-height: 4.8rem;
+            }
+        }
+    }
+
+    .tab-background {
+        background: ui-color(white);
+        height: 6rem;
+    }
+
+    .boxed {
+        .details {
+            width: 100%;
+
+            .tabs {
+                display: flex;
+                flex-wrap: wrap;
+                margin-top: -3rem;
+                width: 100%;
+
+                .input {
+                    opacity: 0;
+                    position: absolute;
+                }
+
+                .label {
+                    align-items: flex-start;
+                    color: text-color(button-bar);
+                    cursor: pointer;
+                    display: flex;
+                    font-size: 1.6rem;
+                    font-weight: normal;
+                    height: 3rem;
+                    margin-right: 3.5rem;
+                    width: auto;
+                }
+
+                .input:focus + .label {
+                    z-index: 1;
+                }
+
+                .input:checked + .label {
+                    background: ui-color(white);
+                    border-bottom: 0.4rem solid os-color(green);
+
+                    + .panel {
+                        display: block;
+                    }
+                }
+
+            }
+        }
+    }
+
+    .panel {
+        border-top: thin solid ui-color(form-border);
+        display: none;
+        order: 99;
+        padding: 0 0 6rem;
+        width: 100%;
+    }
+
+    .panel-content {
+        max-width: 80rem;
+
+        h5 {
+            color: text-color(normal);
+            margin: 1rem 0;
+        }
+
+        p {
+            margin-top: 1rem;
+        }
+
+        ul {
+            margin-bottom: 3rem;
+
+            li {
+                span {
+                    color: #4b4b4b;
+                    display: block;
+                    font-size: 1.4rem;
+                }
+            }
+        }
+    }
+
+    .testimonial {
+        background: os-color(light-blue);
+        margin-top: 4.3rem;
+        padding-bottom: 3em;
+
+        .boxed {
+            align-items: flex-start;
+        }
+
+        .testimonial-box {
+            background: ui-color(white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            margin-top: -4.3rem;
+            padding: 3rem 4rem;
+            width: 80rem;
+
+            .testimonial-program,
+            .testimonial-application {
+                display: none;
+
+                &.is-show {
+                    display: block;
+                }
+            }
+
+            .text-block {
+                padding-left: 4rem;
+                position: relative;
+
+                &::before {
+                    content: url('/images/institutional/icon-quote.svg');
+                    left: 0;
+                    position: absolute;
+                }
+
+                p {
+                    margin: 0;
+                }
+            }
+
+            .writer-info {
+                margin-top: 3rem;
+                text-align: right;
+
+                p {
+                    margin: 0;
+                }
+            }
+        }
+    }
+}

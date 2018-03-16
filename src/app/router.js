@@ -35,7 +35,8 @@ const PAGES = [
     'privacy-policy',
     'subjects',
     'subjects/*path',
-    'technology'
+    'technology',
+    'institutional-partnership'
 ];
 
 if (window.location.hostname === 'localhost') {
@@ -73,6 +74,7 @@ class AppRouter extends Router {
         this.route('give-confirmation', 'give');
         this.route('interest-confirmation', 'confirmation');
         this.route('higher-ed', 'home');
+        this.route('institutional-partnership-application', 'institutional-partnership');
 
         PAGES.forEach((page) => {
             const isSplat = page.match(/\/\*/);
