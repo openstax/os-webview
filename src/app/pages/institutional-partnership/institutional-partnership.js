@@ -14,6 +14,8 @@ export default class Institutional extends Controller {
         };
     }
 
+    // TODO: use a tab component
+
     onLoaded() {
         this.programTestimonial = this.el.querySelector('.testimonial-program');
         this.applicationTestimonial = this.el.querySelector('.testimonial-application');
