@@ -19,6 +19,13 @@ export default class MainMenu extends Controller {
         this.css = `/app/components/shell/header/main-menu/main-menu.css?${VERSION}`;
         this.model = model;
         this.model.openDropdown = null;
+
+        this.loginUrl = this.model.login;
+    }
+
+    updateLoginUrl() {
+        this.model.login = `${this.loginUrl}?next=${encodeURIComponent(window.location.href)}`;
+        this.update();
     }
 
     onLoaded() {
@@ -49,6 +56,9 @@ export default class MainMenu extends Controller {
                 ]
             })
         ));
+
+        window.addEventListener('navigate', () => this.updateLoginUrl());
+        this.updateLoginUrl();
     }
 
     showTutorTrainingWheel() {
