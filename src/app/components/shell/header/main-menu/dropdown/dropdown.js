@@ -47,7 +47,7 @@ export default class Dropdown extends Controller {
     }
 
     onUpdate() {
-        $.insertHtml(this.el, this.model);
+        $.insertHtml(this.el, this.model());
     }
 
     setFocus() {
@@ -106,7 +106,7 @@ export default class Dropdown extends Controller {
 
     @on('focusout')
     navigateAway(event) {
-        if (event.target === this.el && !this.isMobileDisplay() && !this.settingFocus) {
+        if (event.target.parentNode === this.el && !this.isMobileDisplay() && !this.settingFocus) {
             this.closeMenuBound(event);
         }
     }
@@ -150,6 +150,7 @@ export default class Dropdown extends Controller {
         default:
             break;
         }
+        this.update();
     }
 
 }
