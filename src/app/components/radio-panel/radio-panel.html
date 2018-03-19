@@ -1,6 +1,6 @@
 <template args="model">
     <div class="filter-button" each="item in model.items" tabindex="0"
         data-html="items[{$item}].html" data-value="{$value.value}"
-        aria-role="button" aria-pressed="{model.isSelected($value.value)}" skip="true">
+        role="button" aria-pressed="{model.isSelected($value.value)}" skip="true">
     </div>
 </template>

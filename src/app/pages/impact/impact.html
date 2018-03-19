@@ -1,5 +1,5 @@
 <template args="model">
-    <main id="maincontent">
+    <div id="maincontent">
         <div class="hero w-cards">
             <div class="square-1"></div>
             <div class="square-2"></div>
@@ -14,7 +14,7 @@
             </div>
         </div>
         <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
-        <span class="scrolldown-chevron"><a href="#affiliates"><i class="fa fa-chevron-down"></i></a></span>
+        <span class="scrolldown-chevron"><a href="#affiliates" aria-label="affiliates"><i class="fa fa-chevron-down"></i></a></span>
 
         <div id="affiliates" class="affiliates">
             <div class="text-content" each="item in model.row_1">
@@ -39,5 +39,5 @@
                 </a>
             </div>
         </div>
-    </main>
+    </div>
 </template>

@@ -447,13 +447,13 @@
                             <div class="box-row">
                                 <div each="amount in model.amounts" data-value="{amount}"
                                     class="{`amount ${model.selectedAmount === +amount ? 'selected' : ''}`}"
-                                    aria-role="button" aria-pressed="{model.selectedAmount === +amount}"
+                                    role="button" aria-pressed="{model.selectedAmount === +amount}"
                                     tabindex="0">
                                     ${amount}
                                  </div>
                                 <input type="number"
                                  class="{`amount-input ${model.otherAmount === null ? '' : 'selected'}`}"
-                                 placeholder="Other amount" min="5" value="{model.otherAmount}"/>
+                                 placeholder="Other amount" min="5" value="{model.otherAmount}" aria-label="other-amount" />
                             </div>
                             <input class="btn" type="submit" value="donate!" />
                         </form>
@@ -485,7 +485,7 @@
             </div>
         </div>
         <div>
-          <iframe name="form-response" id="form-response" src="" width="0" height="0"></iframe>
+          <iframe name="form-response" id="form-response" src="" width="0" height="0" title="Form response"></iframe>
           <form id="donation-update" accept-charset="UTF-8" class="form" target="form-response"
            action="https://{model.salesforce.salesforceHome}/servlet/servlet.WebToLead?encoding=UTF-8" method="post">
               <input type="hidden" name="oid" value="{model.salesforce.oid}">
