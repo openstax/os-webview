@@ -10,40 +10,40 @@
                 <div class="testing-only" if="model.useTestingSite">
                     <label>
                         <input id="use-testing-site" type="checkbox"
-                         checked="{model.useTestingSite ? '' : null}" />
+                         checked="{model.useTestingSite ? '' : null}">
                         Use testing site (this option will not appear in production.
                         If you uncheck it, it will disappear.)
                     </label>
                 </div>
-                <input name="SUCCESS_LINK" type="hidden" value="{model.thankYouUrl}" />
-                <input type="hidden" name="UPAY_SITE_ID" value="{model.touchnet().id}" />
-                <input type="hidden" name="TNE_ADMIN_EMAIL" value="invoices@cnx.org" />
-                <input type="hidden" name="Donation_To" value="OpenStax" />
-                <input type="hidden" name="Revenue_Amount"  value="0" />
-                <input type="hidden" name="Revenue_Fund_ID"  value="" />
-                <input type="hidden" name="Donation_Fund_ID"  value="17616" />
+                <input name="SUCCESS_LINK" type="hidden" value="{model.thankYouUrl}">
+                <input type="hidden" name="UPAY_SITE_ID" value="{model.touchnet().id}">
+                <input type="hidden" name="TNE_ADMIN_EMAIL" value="invoices@cnx.org">
+                <input type="hidden" name="Donation_To" value="OpenStax">
+                <input type="hidden" name="Revenue_Amount"  value="0">
+                <input type="hidden" name="Revenue_Fund_ID"  value="">
+                <input type="hidden" name="Donation_Fund_ID"  value="17616">
                 <input type="hidden" name="Donation_Amount" value="{model.selectedAmount}">
                 <input type="hidden" name="Rice_Relate" value="Friend">
                 <input type="hidden" name="turn_email_off" value="yes">
                 <input type="hidden" name="recurring_payment_type" value="{model.recurring}">
-                <input each="fieldName in model.billingFields" type="hidden" name="{`BILL_${fieldName}`}" />
+                <input each="fieldName in model.billingFields" type="hidden" name="{`BILL_${fieldName}`}">
                 <div class="labeled-inputs row top-of-form">
                     <div class="col">
                         <label>
                             Title
                             <input type="text" name="Title" class="form-control"
                             placeholder="Mr./Mrs./Dr./Ms./..."
-                             />
+                            >
                              <span class="invalid-message">{model.validationMessage('Title')}</span>
                         </label>
                         <label>
                             First Name
-                            <input type="text" name="First_Name" class="form-control" required />
+                            <input type="text" name="First_Name" class="form-control" required>
                             <span class="invalid-message">{model.validationMessage('First_Name')}</span>
                         </label>
                         <label>
                             Last Name
-                            <input type="text" name="Last_Name" class="form-control" required />
+                            <input type="text" name="Last_Name" class="form-control" required>
                             <span class="invalid-message">{model.validationMessage('Last_Name')}</span>
                         </label>
                         <label>
@@ -53,33 +53,33 @@
                         </label>
                         <label>
                             E-Mail
-                            <input type="email" name="Email" class="form-control" required />
+                            <input type="email" name="Email" class="form-control" required>
                             <span class="invalid-message">{model.validationMessage('Email')}</span>
                         </label>
                         <label>
                             Phone
-                            <input type="text" name="Phone" class="form-control" required />
+                            <input type="text" name="Phone" class="form-control" required>
                             <span class="invalid-message">{model.validationMessage('Phone')}</span>
                         </label>
                         <label>
                             Phone Type
                             <input type="text" name="Phone_Type" class="form-control"
-                            placeholder="Work/Home/Cell/..." required />
+                            placeholder="Work/Home/Cell/..." required>
                             <span class="invalid-message">{model.validationMessage('Phone_Type')}</span>
                         </label>
                     </div>
                     <div class="col">
                         <label class="two-fields">
                             Address
-                            <input type="text" name="Mailing_Address" class="form-control" required />
+                            <input type="text" name="Mailing_Address" class="form-control" required>
                             <span class="invalid-message">{model.validationMessage('Mailing_Address')}</span>
-                            <input type="text" name="Mailing_Address2" class="form-control" />
+                            <input type="text" name="Mailing_Address2" class="form-control">
                         </label>
 
 
                         <label>
                             City
-                            <input type="text" name="Mailing_City" class="form-control" required />
+                            <input type="text" name="Mailing_City" class="form-control" required>
                             <span class="invalid-message">{model.validationMessage('Mailing_City')}</span>
                         </label>
 
@@ -166,14 +166,14 @@
                         </label>
                         <label>
                             Zip Code
-                            <input type="text" name="Mailing_Zip" class="form-control" required />
+                            <input type="text" name="Mailing_Zip" class="form-control" required>
                             <span class="invalid-message">{model.validationMessage('Mailing_Zip')}</span>
                         </label>
 
                         <label>
                             Country
                             <div skip="true"></div>
-                            <select name="Mailing_Country" class="form-control" required />
+                            <select name="Mailing_Country" class="form-control" required>
                                 <option value="US">United States</option>
                                 <option value="CA">Canada</option>
                                 <option value="AF">Afghanistan</option>
@@ -425,7 +425,7 @@
                         <label>
                             Donation Amount
                             <input name="AMT" type="number" min=5 value="{model.selectedAmount}" required
-                            autofocus="{model.selectedAmount == '?' ? '' : null}"/>
+                            autofocus="{model.selectedAmount == '?' ? '' : null}">
                             <span class="invalid-message">{model.validationMessage('AMT')}</span>
                         </label>
                         <p>You will have the option to set up a recurring gift with your donation amount.</p>
@@ -453,9 +453,9 @@
                                  </div>
                                 <input type="number"
                                  class="{`amount-input ${model.otherAmount === null ? '' : 'selected'}`}"
-                                 placeholder="Other amount" min="5" value="{model.otherAmount}"/>
+                                 placeholder="Other amount" min="5" value="{model.otherAmount}">
                             </div>
-                            <input class="btn" type="submit" value="donate!" />
+                            <input class="btn" type="submit" value="donate!">
                         </form>
                     </div>
                 </if>
@@ -465,21 +465,21 @@
         <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
         <div class="text-content" if="model.otherPaymentHeading">
             <h2>{model.otherPaymentHeading}</h2>
-            <hr />
+            <hr>
             <div class="row">
                 <div each="pm in model.paymentMethods.slice(0,2)" class="col">
                     <h3>{pm.heading}</h3>
                     <div data-html="paymentMethods[{$item}].content" skip="true"></div>
                 </div>
             </div>
-            <hr />
+            <hr>
             <div class="row">
                 <div each="pm in model.paymentMethods.slice(2)" class="col">
                     <h3>{pm.heading}</h3>
                     <div data-html="paymentMethods[{$item}+2].content" skip="true"></div>
                 </div>
             </div>
-            <hr />
+            <hr>
             <div class="cta-container">
                 <a href="/contact?subject=Donations" class="btn cta">{model.giveCtaText}</a>
             </div>
