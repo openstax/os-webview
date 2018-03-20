@@ -1,38 +1,40 @@
+import VERSION from '~/version';
 import {Controller} from 'superb.js';
-import {description as template} from './content-group.html';
 
 export default class ContentGroup extends Controller {
 
     init(getProps) {
-        this.template = template;
         this.getProps = getProps;
-        this.updateProps();
         this.view = {
             classes: ['content-group']
         };
+        this.css = `/app/components/content-group/content-group.css?${VERSION}`;
+    }
+
+    template() {
     }
 
     onLoaded() {
-        const Region = this.regions.self.constructor;
+        this.props = this.getProps();
+        for (const label of Object.keys(this.props.contents)) {
+            const component = this.props.contents[label];
 
-        for (const target of this.el.children) {
-            const region = new Region(target, this);
-
-            region.attach(this.model.contents[target.getAttribute('data-for-tab')]);
+            this.regions.self.append(component);
         }
     }
 
-    updateProps() {
-        this.props = this.getProps();
-        this.model = {
-            isHidden: (tab) => tab === this.props.selectedTab ? null : '',
-            contents: this.props.contents
-        };
-    }
-
     update() {
-        this.updateProps();
-        super.update();
+        this.props = this.getProps();
+        for (const label of Object.keys(this.props.contents)) {
+            const component = this.props.contents[label];
+            const hidden = this.props.selectedTab !== label;
+
+            if (hidden) {
+                component.el.setAttribute('hidden', '');
+            } else {
+                component.el.removeAttribute('hidden');
+            }
+        }
     }
 
 }

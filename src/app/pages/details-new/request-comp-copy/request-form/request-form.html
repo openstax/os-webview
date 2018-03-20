@@ -1,0 +1,38 @@
+<template args="model">
+    <if condition="model.beforeSubmit">
+        <div>
+            Instructors with a verified account can request a complimentary
+            iBooks version of their book.
+        </div>
+        <div class="book-requested">
+            <div class="header">Book requested</div>
+            <img src="{model.coverUrl}">
+            {model.title}
+        </div>
+        <form>
+            <div>
+                How many students will be using {model.title} this semester?
+                <div class="hint">
+                    Include sections taught by any teaching assistants that you supervise.
+                </div>
+                <input>
+            </div>
+            <div class="button-row">
+                <button class="primary">Request iBook</button>
+                <button type="cancel">Cancel</button>
+            </div>
+        </form>
+    <else>
+        <div class="confirmation">
+            <div class="confirmation-header">Your request was submitted!</div>
+            {' '}
+            <div class="confirmation-content">
+                We'll send you an email shortly with your download code.
+            </div>
+        </div>
+        <div class="button-row">
+            <button type="button" class="primary close-button">Close</button>
+        </div>
+    </if>
+
+</template>

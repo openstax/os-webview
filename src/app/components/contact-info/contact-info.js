@@ -8,9 +8,9 @@ import {description as template} from './contact-info.html';
 
 export default class ContactInfo extends Controller {
 
-    init(model) {
+    init(props) {
         this.template = template;
-        this.model = model;
+        this.props = props;
         this.regions = {
             popup: 'pop-up'
         };
@@ -20,35 +20,40 @@ export default class ContactInfo extends Controller {
                 type: 'text',
                 label: 'First name',
                 required: true,
-                validationMessage: this.model.validationMessage
+                autocomplete: 'given-name',
+                validationMessage: this.props.validationMessage
             }),
             lastName: new FormInput({
                 name: 'last_name',
                 type: 'text',
                 label: 'Last name',
                 required: true,
-                validationMessage: this.model.validationMessage
+                autocomplete: 'family-name',
+                validationMessage: this.props.validationMessage
             }),
             email: new FormInput({
                 name: 'email',
                 type: 'email',
                 label: 'Email address',
                 required: true,
-                validationMessage: this.model.validationMessage
+                autocomplete: 'email',
+                validationMessage: this.props.validationMessage
             }),
             phone: new FormInput({
                 name: 'phone',
                 type: 'text',
                 label: 'Phone number',
                 required: true,
-                validationMessage: this.model.validationMessage
+                autocomplete: 'tel-national',
+                validationMessage: this.props.validationMessage
             }),
             school: new FormInput({
                 name: 'company',
                 type: 'text',
                 label: 'School name',
                 required: true,
-                validationMessage: this.model.validationMessage,
+                autocomplete: 'organization',
+                validationMessage: this.props.validationMessage,
                 suggestions: []
             }),
             schoolUrl: new FormInput({
@@ -58,7 +63,7 @@ export default class ContactInfo extends Controller {
                 value: 'http://',
                 required: true,
                 pattern: '.*[.][a-zA-Z][a-zA-Z]+',
-                validationMessage: this.model.validationMessage
+                validationMessage: this.props.validationMessage
             })
         };
 
@@ -92,7 +97,7 @@ export default class ContactInfo extends Controller {
     }
 
     schoolUrlIsRequired() {
-        const isHomeSchool = (/home ?school/i).test(this.model.selectedRole);
+        const isHomeSchool = (/home ?school/i).test(this.props.selectedRole);
 
         return !isHomeSchool && !this.schoolMatchesSuggestion();
     }

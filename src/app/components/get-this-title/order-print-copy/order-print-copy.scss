@@ -71,14 +71,15 @@
         display: grid;
         grid-gap: $normal-margin;
         grid-template-rows: auto auto;
-        justify-items: center;
         line-height: normal;
         padding: 2rem;
-        text-align: center;
         text-decoration: none;
 
         @include wider-than($phone-max) {
+            grid-template-rows: 3rem 2fr auto 1fr;
+            justify-items: center;
             padding: 3rem;
+            text-align: center;
         }
     }
 }

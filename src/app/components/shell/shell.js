@@ -1,6 +1,7 @@
 import {Controller} from 'superb.js';
 import header from './header/header';
 import footer from './footer/footer';
+import ModalDialog from '../dialog/dialog';
 import {initialize, injectButtons} from 'recordo';
 import {description as template} from './shell.html';
 
@@ -11,6 +12,7 @@ class Shell extends Controller {
         this.template = template;
         this.regions = {
             header: '#header',
+            dialog: '#dialog',
             main: '#main',
             footer: '#footer'
         };
@@ -28,6 +30,10 @@ class Shell extends Controller {
             this.regions.footer.attach(footer);
             this.mainObserver.disconnect();
         });
+
+        // An extra layer of indirection is necessary so we can reuse the Dialog
+        // and change the getProps function for it
+        this.getDialogProps = () => {};
     }
 
     onLoaded() {
@@ -48,6 +54,31 @@ class Shell extends Controller {
     hideLoader() {
         document.body.classList.add('page-loaded');
         document.body.classList.remove('no-scroll');
+    }
+
+    showDialog(getProps) {
+        const region = this.regions.dialog;
+
+        this.getDialogProps = getProps;
+        if (!this.dialog) {
+            this.dialog = new ModalDialog(() => this.getDialogProps(), {
+                closeDialog: () => {
+                    region.el.setAttribute('hidden', '');
+                    document.body.classList.remove('no-scroll');
+                }
+            });
+            region.attach(this.dialog);
+        } else {
+            this.dialog.update();
+        }
+        region.el.removeAttribute('hidden');
+        document.body.classList.add('no-scroll');
+    }
+
+    hideDialog() {
+        if (this.dialog && ! this.regions.dialog.el.hasAttribute('hidden')) {
+            this.dialog.closeDialog();
+        }
     }
 
 }

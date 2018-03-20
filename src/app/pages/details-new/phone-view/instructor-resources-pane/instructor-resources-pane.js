@@ -2,12 +2,13 @@ import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import settings from 'settings';
 import ResourceBox from '../../resource-box/resource-box';
+import RequestCompCopy from '../../request-comp-copy/request-comp-copy';
 import {description as template} from './instructor-resources-pane.html';
 
 export default class InstructorResourcePane extends Controller {
 
-    init(model) {
-        this.model = model;
+    init(props) {
+        this.props = props;
         this.template = template;
         this.view = {
             classes: ['instructor-resources-pane']
@@ -17,11 +18,15 @@ export default class InstructorResourcePane extends Controller {
         };
         /* eslint max-len: 0 */
         this.css = `/app/pages/details-new/phone-view/instructor-resources-pane/instructor-resources-pane.css?${VERSION}`;
+        // Static model
+        this.model = {
+            resources: props.resources
+        };
     }
 
     onLoaded() {
-        this.model.userStatusPromise.then((userStatus) => {
-            for (const res of this.model.resources.freeResources) {
+        this.props.userStatusPromise.then((userStatus) => {
+            for (const res of this.props.resources.freeResources) {
                 const resourceBox = new ResourceBox(
                     Object.assign({
                         heading: res.resource_heading,
@@ -31,6 +36,12 @@ export default class InstructorResourcePane extends Controller {
 
                 this.regions.freeResources.append(resourceBox);
             }
+            const component = new RequestCompCopy(() => ({
+                title: this.props.bookInfo.title,
+                coverUrl: this.props.bookInfo.cover_url
+            }));
+
+            this.regions.freeResources.append(component);
             // Paid resources are handled by the template
         });
     }

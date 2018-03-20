@@ -20,28 +20,33 @@ export default class TabGroup extends Controller {
     // Never updates, so just set up the children
     // Future work: handle updated tab list
     onLoaded() {
-        let props = this.getProps();
-        const tabs = props.tabLabels.map((label) => {
-            const updateTabs = () => {
-                props = this.getProps();
-                for (const tab of tabs) {
-                    tab.update();
-                }
-            };
+        const props = this.getProps();
+        const handlers = {
+            setSelected: (newValue) => {
+                props.setSelected(newValue);
+                this.updateTabs();
+            }
+        };
 
-            return new Tab(() => ({
-                tag: props.tag,
-                label,
-                selectedLabel: props.selectedTab,
-                setSelected: (newValue) => {
-                    props.setSelected(newValue);
-                    updateTabs();
+        this.tabs = props.tabLabels.map((label) => {
+            const getProps = () => (
+                {
+                    label,
+                    selectedLabel: this.getProps().selectedTab
                 }
-            }));
+            );
+
+            return new Tab(props.tag, getProps, handlers);
         });
 
-        for (const tab of tabs) {
+        for (const tab of this.tabs) {
             this.regions.tabs.append(tab);
+        }
+    }
+
+    updateTabs() {
+        for (const tab of this.tabs) {
+            tab.update();
         }
     }
 

@@ -7,12 +7,10 @@ import {description as template} from './dialog.html';
 
 class Dialog extends Controller {
 
-    init(props) {
+    init(getProps, handlers) {
         this.template = template;
-        this.model = {
-            title: props.title
-        };
-        this.props = props;
+        this.getProps = getProps;
+        this.handlers = handlers;
         this.css = `/app/components/dialog/dialog.css?${VERSION}`;
         this.regions = {
             main: '.main-region'
@@ -20,16 +18,62 @@ class Dialog extends Controller {
         this.view = {
             tag: 'dialog'
         };
+        this.model = () => this.getModel();
+    }
+
+    getModel() {
+        this.props = this.getProps();
+
+        return {
+            title: this.props.title,
+            htmlTitle: this.props.htmlTitle
+        };
+    }
+
+    attachContent() {
+        if (this.props.content) {
+            this.regions.main.append(this.props.content);
+        }
+    }
+
+    onUpdate() {
+        // Wait for region to be instantiated
+        setTimeout(() => {
+            this.attachContent();
+        }, 0);
+        if (this.props.htmlTitle) {
+            const el = this.el.querySelector('.html-title');
+
+            el.innerHTML = this.props.htmlTitle;
+        }
+        if (this.props.customClass) {
+            this.el.classList.add(this.props.customClass);
+        }
     }
 
     onLoaded() {
-        this.regions.main.attach(this.props.contentComponent);
         this.el.setAttribute('aria-labelledby', 'dialog-title');
+        this.attachContent();
     }
 
     @on('click .put-away')
     closeDialog() {
-        this.props.closeDialog();
+        const contentComponent = this.props.content;
+
+        if (contentComponent && contentComponent.el && contentComponent.el.parentNode) {
+            contentComponent.el.parentNode.removeChild(contentComponent.el);
+        }
+
+        const controllerIndex = this.regions.main.controllers.indexOf(contentComponent);
+
+        this.regions.main.controllers.splice(controllerIndex, 1);
+
+        if (this.handlers && this.handlers.closeDialog) {
+            this.handlers.closeDialog();
+        }
+        if (this.props.customClass) {
+            this.el.classList.remove(this.props.customClass);
+        }
     }
 
 }
@@ -37,16 +81,24 @@ class Dialog extends Controller {
 // This just composes the Dialog into ModalContent
 export default class ModalDialog extends Controller {
 
-    init(props) {
-        this.template = () => '';
-        this.props = props;
+    init(getProps, handlers) {
+        this.dialog = new Dialog(getProps, handlers);
     }
 
-    onLoaded() {
-        const dialog = new Dialog(this.props);
-        const modalContainer = new ModalContent(dialog);
+    template() {}
 
-        this.regions.self.attach(modalContainer);
+    onLoaded() {
+        this.regions.self.attach(new ModalContent(this.dialog));
+    }
+
+    update() {
+        if (this.dialog) {
+            this.dialog.update();
+        }
+    }
+
+    closeDialog() {
+        this.dialog.closeDialog();
     }
 
 }

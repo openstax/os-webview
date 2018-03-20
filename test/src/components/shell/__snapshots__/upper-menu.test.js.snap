@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UpperMenu matches snapshot 1`] = `"<ul class=\\"nav-menu meta-menu no-bullets\\" role=\\"menu\\" aria-label=\\"Meta navigation menu\\"><li class=\\"nav-menu-item\\"><a href=\\"/about\\" role=\\"menuitem\\">About Us</a></li><li class=\\"nav-menu-item\\"><a href=\\"/foundation\\" role=\\"menuitem\\">Supporters</a></li><li class=\\"nav-menu-item\\"><a href=\\"/give\\" role=\\"menuitem\\">Give</a></li><li class=\\"nav-menu-item\\"><a href=\\"https://openstax.secure.force.com/help\\" role=\\"menuitem\\">Help</a></li></ul><span class=\\"logo-wrapper\\"><a class=\\"logo rice-logo\\" href=\\"http://www.rice.edu\\" role=\\"menuitem\\"><img src=\\"/images/rice.png\\" alt=\\"Rice University logo\\" height=\\"30\\"></a></span>"`;

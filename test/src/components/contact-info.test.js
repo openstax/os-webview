@@ -20,7 +20,7 @@ describe('ContactInfo', () => {
 
     it('Un-requires schoolUrl if selectedRole is homeschool', () => {
         expect(schoolUrl.required).toBe(true);
-        p.model.selectedRole = 'Homeschool Instructor';
+        p.props.selectedRole = 'Homeschool Instructor';
         p.update();
         expect(schoolUrl.required).toBe(false);
     })

@@ -9,8 +9,7 @@ export default class Popup extends Controller {
     init(message) {
         this.template = template;
         this.model = {
-            message,
-            show: true
+            message
         };
         this.view = {
             tag: 'pop-up',
@@ -29,8 +28,7 @@ export default class Popup extends Controller {
 
     @on('click .dismiss')
     goAway() {
-        this.el.classList.add('hidden');
-        this.onClose();
+        this.detach();
     }
 
     @on('keydown')

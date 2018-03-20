@@ -6,7 +6,7 @@
          pattern="{model.pattern}" min="{model.min}" max="{model.max}"
          placeholder="{model.placeholder}"
          required="{model.required ? '' : null}"
-         autocomplete="{model.matches ? 'off' : 'on'}"
+         autocomplete="{model.autocomplete || (model.matches ? 'off' : 'on')}"
         >
         <div class="invalid-message">{model.validationMessage(model.name)}</div>
         <div if="model.matches" class="suggestions">

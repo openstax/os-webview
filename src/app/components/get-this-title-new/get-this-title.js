@@ -4,9 +4,8 @@ import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import userModel from '~/models/usermodel';
 import router from '~/router';
-import ModalDialog from '../dialog/dialog';
+import shell from '~/components/shell/shell';
 import TocDialog from './toc-dialog/toc-dialog';
-import ModalContent from '../modal-content/modal-content';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
 import {highSchoolSlugs} from '~/models/book-titles';
 import {description as template} from './get-this-title.html';
@@ -67,42 +66,17 @@ export default class GetThisTitle extends Controller {
     }
 
     onLoaded() {
-        if (this.regions.modal.el) {
-            const printCopyContent = new OrderPrintCopy({
-                individualLink: this.model.amazon.link,
-                amazonPrice: this.model.amazon.price,
-                bookstoreLink: this.model.bookstore.link,
-                bulkLink: this.model.isHighSchool ? '/bulk-order?this.model.slug' : null
-            });
-            const printCopyDialog = new ModalDialog({
-                title: 'Order a print copy',
-                contentComponent: printCopyContent,
-                closeDialog: () => {
-                    this.model.modalHiddenAttribute = '';
-                    this.update();
-                    document.body.classList.remove('no-scroll');
-                }
-            });
+        this.printCopyContent = new OrderPrintCopy({
+            individualLink: this.model.amazon.link,
+            amazonPrice: this.model.amazon.price,
+            bookstoreLink: this.model.bookstore.link,
+            bulkLink: this.model.isHighSchool ? '/bulk-order?this.model.slug' : null
+        });
 
-            this.regions.modal.attach(printCopyDialog);
-        }
-        if (this.regions.toc.el && this.model.includeTOC) {
-            const tocContent = new TocDialog({
-                tableOfContents: this.model.tableOfContents,
-                webviewLink: this.model.webviewLink
-            });
-            const tocDialog = new ModalDialog({
-                title: 'Table of contents',
-                contentComponent: tocContent,
-                closeDialog: () => {
-                    this.model.tocHiddenAttribute = '';
-                    this.update();
-                    document.body.classList.remove('no-scroll');
-                }
-            });
-
-            this.regions.toc.attach(tocDialog);
-        }
+        this.tocContent = new TocDialog({
+            tableOfContents: this.model.tableOfContents,
+            webviewLink: this.model.webviewLink
+        });
     }
 
     onClose() {
@@ -118,9 +92,10 @@ export default class GetThisTitle extends Controller {
     @on('click .show-print-submenu')
     showPrintSubment(event) {
         event.preventDefault();
-        this.model.modalHiddenAttribute = null;
-        document.body.classList.add('no-scroll');
-        this.update();
+        shell.showDialog(() => ({
+            title: 'Order a print copy',
+            content: this.printCopyContent
+        }));
     }
 
     @on('click .submenu .remover')
@@ -149,9 +124,10 @@ export default class GetThisTitle extends Controller {
     @on('click .show-toc')
     showToc(event) {
         event.preventDefault();
-        this.model.tocHiddenAttribute = null;
-        document.body.classList.add('no-scroll');
-        this.update();
+        shell.showDialog(() => ({
+            title: 'Table of contents',
+            content: this.tocContent
+        }));
     }
 
 }

@@ -5,16 +5,28 @@ import {description as template} from './item.html';
 
 export default class AccordionItem extends Controller {
 
-    init(getProps) {
+    init(tag, getProps, handlers) {
         this.getProps = getProps;
-        this.updateProps();
+        this.handlers = handlers;
         this.template = template;
         this.view = {
-            tag: this.props.tag,
+            // tag,
             classes: ['accordion-item']
         };
         this.regions = {
             contentPane: '.content-pane'
+        };
+        this.model = () => this.getModel();
+    }
+
+    getModel() {
+        this.props = this.getProps();
+        const isOpen = this.props.selectedLabel === this.props.label;
+
+        return {
+            label: isOpen ? this.props.openLabel : this.props.label,
+            chevronDirection: isOpen ? 'down' : 'right',
+            hiddenAttribute: isOpen ? null : ''
         };
     }
 
@@ -24,28 +36,12 @@ export default class AccordionItem extends Controller {
         }
     }
 
-    updateProps() {
-        this.props = this.getProps();
-        const isOpen = this.props.selectedLabel === this.props.label;
-
-        this.model = {
-            label: this.props.label,
-            chevronDirection: isOpen ? 'down' : 'right',
-            hiddenAttribute: isOpen ? null : ''
-        };
-    }
-
-    update() {
-        this.updateProps();
-        super.update();
-    }
-
     @on('click .control-bar')
     selectThisTab(event) {
         if (event.delegateTarget.parentNode === this.el) {
             const isOpen = this.props.selectedLabel === this.props.label;
 
-            this.props.setSelected(isOpen ? null : this.props.label);
+            this.handlers.setSelected(isOpen ? null : this.props.label);
             if (!isOpen) {
                 $.scrollTo(this.el);
             }

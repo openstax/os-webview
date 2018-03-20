@@ -1,7 +1,8 @@
 <template args="model">
     <div class="title-bar">
-        <span id="dialog-title">{model.title}</span>
-        <span class="put-away" role="button"></span>
+        <span id="dialog-title" class="text-title">{model.title}</span>
+        <span if="model.htmlTitle" class="html-title" skip="true"></span>
+        <span class="put-away fa fa-times" role="button"></span>
     </div>
     <div class="main-region"></div>
 </template>

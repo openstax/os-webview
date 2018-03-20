@@ -69,23 +69,31 @@ export default class Details extends CMSPageController {
 
     init(bookTitle) {
         this.template = template;
-        this.model = {
-            bookTitle: 'loading'
-        };
         this.css = `/app/pages/details-new/details.css?${VERSION}`;
         this.regions = {
             phoneView: '.phone-view',
             tabController: '.tab-controller',
             tabContent: '.tab-content'
         };
-        this.slug = getSlugFromTitle(bookTitle.toLowerCase());
         this.view = {
             classes: ['details-page-v2']
         };
-        this.checkUserStatus();
+
+        this.bookTitle = 'loading';
+        this.slug = getSlugFromTitle(bookTitle.toLowerCase());
+        this.userStatusPromise = this.getUserStatusPromise();
+
+        this.model = () => this.getModel();
     }
 
-    checkUserStatus() {
+    getModel() {
+        return {
+            slug: this.slug,
+            bookTitle: this.bookTitle
+        };
+    }
+
+    getUserStatusPromise() {
         const isInstructor = (user) => {
             return user && user.username && 'groups' in user && user.groups.includes('Faculty');
         };
@@ -93,7 +101,7 @@ export default class Details extends CMSPageController {
             return user && user.username && !isInstructor(user);
         };
 
-        this.model.userStatusPromise = sfUserModel.load().then((user) => {
+        return sfUserModel.load().then((user) => {
             return {
                 isInstructor: isInstructor(user),
                 isStudent: isStudent(user)
@@ -137,11 +145,12 @@ export default class Details extends CMSPageController {
             'Instructor resources': new InstructorResourceTab({
                 resources: this.pageData.book_faculty_resources,
                 allies: shuffle(this.pageData.book_allies),
-                userStatusPromise: this.model.userStatusPromise
+                userStatusPromise: this.userStatusPromise,
+                bookInfo: this.pageData
             }),
             'Student resources': new StudentResourceTab({
                 resources: this.pageData.book_student_resources,
-                userStatusPromise: this.model.userStatusPromise
+                userStatusPromise: this.userStatusPromise
             })
         };
         const contentGroup = new ContentGroup(() => ({
@@ -162,8 +171,8 @@ export default class Details extends CMSPageController {
             }
         }));
 
-        this.model.bookTitle = this.pageData.title;
-        this.model.slug = this.pageData.slug;
+        this.bookTitle = this.pageData.title;
+        this.slug = this.pageData.slug;
         setDetailsTabClass();
         this.update();
 
@@ -178,14 +187,14 @@ export default class Details extends CMSPageController {
             bookInfo: this.pageData,
             detailsTabData: detailsTabData(),
             tableOfContents: this.pageData.table_of_contents,
-            bookTitle: this.model.bookTitle,
-            slug: this.model.slug,
+            bookTitle: this.bookTitle,
+            slug: this.slug,
             instructorResources: {
                 freeResources: this.pageData.book_faculty_resources,
                 paidResources: this.pageData.book_allies
             },
             studentResources: this.pageData.book_student_resources,
-            userStatusPromise: this.model.userStatusPromise
+            userStatusPromise: this.userStatusPromise
         }));
         this.regions.tabController.attach(tabGroup);
         this.regions.tabContent.attach(contentGroup);
