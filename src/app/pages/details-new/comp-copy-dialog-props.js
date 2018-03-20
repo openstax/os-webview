@@ -1,7 +1,12 @@
 import shell from '~/components/shell/shell';
+import settings from 'settings';
 import RequestForm from './request-form/request-form';
 
-function compCopyDialogProps(getProps) {
+const booksPromise = fetch(`${settings.apiOrigin}/api/books`)
+    .then((r) => r.json())
+    .then((r) => r.books.filter((b) => b.comp_copy_available && b.salesforce_abbreviation));
+
+function compCopyDialogProps(props, userStatusPromise) {
     const dialogProps = {
         title: 'Request your complimentary iBooks download'
     };
@@ -14,8 +19,39 @@ function compCopyDialogProps(getProps) {
         done: () => shell.hideDialog(),
         showConfirmation: setAltTitle
     };
+    const userInfo = {};
+    let salesforceTitle = '';
+    let notAvailable = false;
+    const formGetProps = () => Object.assign(
+        {
+            user: userInfo,
+            salesforceTitle,
+            notAvailable
+        },
+        props);
 
-    dialogProps.content = new RequestForm(getProps, formHandlers);
+    dialogProps.content = new RequestForm(formGetProps, formHandlers);
+    userStatusPromise.then((userStatus) => {
+        Object.assign(userInfo, {
+            firstName: userStatus.firstName,
+            lastName: userStatus.lastName,
+            email: userStatus.email
+        });
+        dialogProps.content.update();
+    });
+    booksPromise.then((books) => {
+        const entry = books.find((b) => b.title === props.title);
+
+        if (entry) {
+            salesforceTitle = entry.salesforce_abbreviation;
+            dialogProps.content.update();
+        } else {
+            notAvailable = true;
+            dialogProps.content.update();
+            console.debug("Not available?", formGetProps());
+        }
+    });
+
     return dialogProps;
 }
 

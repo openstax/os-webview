@@ -6,6 +6,7 @@ import InstructorResourceTab from './instructor-resource-tab/instructor-resource
 import StudentResourceTab from './student-resource-tab/student-resource-tab';
 import TabGroup from '~/components/tab-group/tab-group';
 import ContentGroup from '~/components/content-group/content-group';
+import getCompCopyDialogProps from './comp-copy-dialog-props';
 import {sfUserModel} from '~/models/usermodel';
 import {formatDateForBlog as formatDate, shuffle} from '~/helpers/data';
 import {on} from '~/helpers/controller/decorators';
@@ -104,7 +105,11 @@ export default class Details extends CMSPageController {
         return sfUserModel.load().then((user) => {
             return {
                 isInstructor: isInstructor(user),
-                isStudent: isStudent(user)
+                isStudent: isStudent(user),
+                firstName: user.first_name,
+                lastName: user.last_name,
+                email: user.email,
+                userInfo: user
             };
         });
     }
@@ -140,14 +145,23 @@ export default class Details extends CMSPageController {
 
             return model;
         };
+        const compCopyDialogProps = getCompCopyDialogProps(
+            {
+                title: this.pageData.title,
+                coverUrl: this.pageData.cover_url
+            },
+            this.userStatusPromise
+        );
         const contents = {
             'Book details': new DetailsTab(detailsTabData()),
-            'Instructor resources': new InstructorResourceTab({
-                resources: this.pageData.book_faculty_resources,
-                allies: shuffle(this.pageData.book_allies),
-                userStatusPromise: this.userStatusPromise,
-                bookInfo: this.pageData
-            }),
+            'Instructor resources': new InstructorResourceTab(
+                {
+                    resources: this.pageData.book_faculty_resources,
+                    allies: shuffle(this.pageData.book_allies),
+                    userStatusPromise: this.userStatusPromise
+                },
+                compCopyDialogProps
+            ),
             'Student resources': new StudentResourceTab({
                 resources: this.pageData.book_student_resources,
                 userStatusPromise: this.userStatusPromise
@@ -194,7 +208,8 @@ export default class Details extends CMSPageController {
                 paidResources: this.pageData.book_allies
             },
             studentResources: this.pageData.book_student_resources,
-            userStatusPromise: this.userStatusPromise
+            userStatusPromise: this.userStatusPromise,
+            compCopyDialogProps
         }));
         this.regions.tabController.attach(tabGroup);
         this.regions.tabContent.attach(contentGroup);

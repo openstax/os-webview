@@ -40,8 +40,8 @@ export default class PhoneView extends Controller {
                 title: 'Instructor resources',
                 contentComponent: new InstructorResourcePane({
                     resources: this.props.instructorResources,
-                    bookInfo: this.props.bookInfo,
-                    userStatusPromise: this.props.userStatusPromise
+                    userStatusPromise: this.props.userStatusPromise,
+                    compCopyDialogProps: this.props.compCopyDialogProps
                 })
             },
             {

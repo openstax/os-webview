@@ -27,10 +27,6 @@ export default class InstructorResourcePane extends Controller {
     }
 
     onLoaded() {
-        this.dialogProps = compCopyDialogProps(() => ({
-            title: this.props.bookInfo.title,
-            coverUrl: this.props.bookInfo.cover_url
-        }));
         this.props.userStatusPromise.then((userStatus) => {
             for (const res of this.props.resources.freeResources) {
                 const resourceBox = new ResourceBox(
@@ -42,14 +38,13 @@ export default class InstructorResourcePane extends Controller {
 
                 this.regions.freeResources.append(resourceBox);
             }
-            // Paid resources are handled by the template
         });
     }
 
     @on('click a[href$="/comp-copy"]')
     handleCompCopy(event) {
         event.preventDefault();
-        shell.showDialog(() => this.dialogProps);
+        shell.showDialog(() => this.props.compCopyDialogProps);
     }
 
 }

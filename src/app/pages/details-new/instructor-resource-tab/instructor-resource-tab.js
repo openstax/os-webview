@@ -2,14 +2,13 @@ import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import ResourceBox from '../resource-box/resource-box';
-import compCopyDialogProps from '../comp-copy-dialog-props';
 import shell from '~/components/shell/shell';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './instructor-resource-tab.html';
 
 export default class InstructorResourceTab extends Controller {
 
-    init(model) {
+    init(model, compCopyDialogProps) {
         this.template = template;
         this.model = model;
         this.css = `/app/pages/details-new/instructor-resource-tab/instructor-resource-tab.css?${VERSION}`;
@@ -17,10 +16,7 @@ export default class InstructorResourceTab extends Controller {
             classes: ['instructor-resources']
         };
 
-        this.dialogProps = compCopyDialogProps(() => ({
-            title: this.model.bookInfo.title,
-            coverUrl: this.model.bookInfo.cover_url
-        }));
+        this.dialogProps = compCopyDialogProps;
     }
 
     onLoaded() {

@@ -89,6 +89,10 @@
         &.primary {
             @extend %primary;
         }
+
+        &[disabled] {
+            cursor: not-allowed;
+        }
     }
 
     .confirmation-header {
