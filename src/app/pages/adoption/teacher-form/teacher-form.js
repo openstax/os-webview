@@ -162,6 +162,12 @@ export default class TeacherForm extends SalesforceForm {
             }
         };
         this.formResponseEl.addEventListener('load', this.goToConfirmation);
+        // Update book radio group
+        const bookRadios = this.el.querySelectorAll('[name="00NU00000053nzR"]');
+
+        for (const el of bookRadios) {
+            el.checked = el.hasAttribute('checked');
+        }
     }
 
     onClose() {
