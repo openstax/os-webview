@@ -1,5 +1,6 @@
 import InstructorResourcePane from '~/pages/details-new/phone-view/instructor-resources-pane/instructor-resources-pane.js';
 import details from '../../data/details.js'
+import {clickElement} from '../../../test-utils';
 const instructorResources = {
     freeResources: details.book_faculty_resources,
     paidResources: details.book_allies
@@ -38,14 +39,20 @@ const userStatusPromise = new Promise((resolve) => {
 
 
 describe('InstructorResourcesPane', () => {
-    it('matches snapshot', () => {
-        const pane = new InstructorResourcePane({
-            bookInfo: details,
-            resources: instructorResources,
-            userStatusPromise: userStatusPromise
-        });
+    const pane = new InstructorResourcePane({
+        bookInfo: details,
+        resources: instructorResources,
+        userStatusPromise: userStatusPromise
+    });
 
+    it('matches snapshot', () => {
         console.log('To update snapshot: node_modules/.bin/jest --updateSnapshot --testNamePattern=Resource');
         expect(pane.el.innerHTML).toMatchSnapshot();
+    });
+
+    it('handles resource click', () => {
+        const compCopyEl = pane.el.querySelector('.resource-box');
+
+        clickElement(compCopyEl);
     });
 });

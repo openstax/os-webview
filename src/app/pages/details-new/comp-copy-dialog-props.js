@@ -48,7 +48,6 @@ function compCopyDialogProps(props, userStatusPromise) {
         } else {
             notAvailable = true;
             dialogProps.content.update();
-            console.debug("Not available?", formGetProps());
         }
     });
 
