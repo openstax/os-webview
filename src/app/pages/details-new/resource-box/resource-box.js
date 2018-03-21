@@ -2,7 +2,6 @@ import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import settings from 'settings';
 import $ from '~/helpers/$';
-import {on} from '~/helpers/controller/decorators';
 import {description as template} from './resource-box.html';
 
 export default class ResourceBox extends Controller {

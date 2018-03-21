@@ -2,18 +2,21 @@ import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import ResourceBox from '../resource-box/resource-box';
-import RequestCompCopy from '../request-comp-copy/request-comp-copy';
+import shell from '~/components/shell/shell';
+import {on} from '~/helpers/controller/decorators';
 import {description as template} from './instructor-resource-tab.html';
 
 export default class InstructorResourceTab extends Controller {
 
-    init(model) {
+    init(model, compCopyDialogProps) {
         this.template = template;
         this.model = model;
         this.css = `/app/pages/details-new/instructor-resource-tab/instructor-resource-tab.css?${VERSION}`;
         this.view = {
             classes: ['instructor-resources']
         };
+
+        this.dialogProps = compCopyDialogProps;
     }
 
     onLoaded() {
@@ -33,17 +36,15 @@ export default class InstructorResourceTab extends Controller {
                     }, ResourceBox.instructorResourceBoxPermissions(resourceData, userStatus))
                 );
 
-                region.attach(resourceBox);
+                region.append(resourceBox);
             }
         });
+    }
 
-        const region = new Region(this.el.querySelector('request-comp-copy'));
-        const component = new RequestCompCopy(() => ({
-            title: this.model.bookInfo.title,
-            coverUrl: this.model.bookInfo.cover_url
-        }));
-
-        region.attach(component);
+    @on('click a[href$="/comp-copy"]')
+    handleCompCopy(event) {
+        event.preventDefault();
+        shell.showDialog(() => this.dialogProps);
     }
 
 }

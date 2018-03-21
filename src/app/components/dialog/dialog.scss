@@ -20,30 +20,30 @@ dialog {
     .title-bar {
         @include set-font(h4);
 
-        align-items: flex-end;
-        background-color: transparent;
         display: flex;
         justify-content: space-between;
-        min-height: 7rem;
-        padding: 0 3rem;
+
+        @include width-up-to($phone-max) {
+            align-items: flex-end;
+            background-color: transparent;
+            min-height: 7rem;
+            padding: 1rem 1rem 0 3rem;
+        }
 
         @include wider-than($phone-max) {
             align-items: center;
             background-color: ui-color(default);
             color: inherit;
-            height: 7.5rem;
-            padding: 3rem;
+            padding: 2.5rem 3rem;
         }
     }
 
     .put-away {
         @include body-font(1.8rem);
         color: text-color(helper);
-        min-width: 4rem;
-        transform: translate(1.5rem, -4rem);
 
-        @include wider-than($phone-max) {
-            transform: none;
+        @include width-up-to($phone-max) {
+            align-self: start;
         }
 
         &:hover {

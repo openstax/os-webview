@@ -2,6 +2,7 @@
 source ./script/bootstrap || exit 111
 cd "$(dirname "$0")/.." || exit 111
 
-npm test || exit 5
-
+#npm test || exit 5
+which shellcheck
+echo "where the hell is shellcheck?"
 shellcheck ./script/*
