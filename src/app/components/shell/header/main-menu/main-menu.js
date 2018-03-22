@@ -19,6 +19,15 @@ export default class MainMenu extends Controller {
         this.css = `/app/components/shell/header/main-menu/main-menu.css?${VERSION}`;
         this.model = model;
         this.model.openDropdown = null;
+
+        this.loginUrl = this.model.login;
+        this.logoutUrl = this.model.logout;
+    }
+
+    updateLoginUrl() {
+        this.model.login = `${this.loginUrl}?next=${encodeURIComponent(window.location.href)}`;
+        this.model.logout = `${this.logoutUrl}?next=${encodeURIComponent(window.location.href)}`;
+        this.update();
     }
 
     onLoaded() {
@@ -49,6 +58,9 @@ export default class MainMenu extends Controller {
                 ]
             })
         ));
+
+        window.addEventListener('navigate', () => this.updateLoginUrl());
+        this.updateLoginUrl();
     }
 
     showTutorTrainingWheel() {
@@ -67,7 +79,11 @@ export default class MainMenu extends Controller {
                 {url: this.model.accountLink, label: 'Account Profile'},
                 tutorItem,
                 {url: this.model.facultyAccessLink, label: 'Request instructor access'},
-                {url: this.model.logout, label: 'Logout'}
+                {
+                    url: this.model.logout,
+                    label: 'Logout',
+                    isLocal: true
+                }
             ];
 
             if (this.model.user.groups.includes('Faculty') ||
@@ -102,13 +118,6 @@ export default class MainMenu extends Controller {
         if (this.loginMenuComponent) {
             this.loginMenuComponent.closeMenu();
         }
-    }
-
-    @on('click a[data-set-redirect]')
-    setRedirect(e) {
-        const encodedLocation = encodeURIComponent(window.location.href);
-
-        e.target.href += `?next=${encodedLocation}`;
     }
 
     @on('click .training-wheel .put-away')

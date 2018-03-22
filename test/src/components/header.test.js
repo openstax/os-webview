@@ -43,12 +43,6 @@ describe('Header', () => {
 
     const mainMenu = header.mainMenu;
 
-    it('mainMenu handles redirect click', () => {
-        const link = mainMenu.el.querySelector('a[data-set-redirect]');
-
-        clickElement(link);
-    });
-
     it('mainMenu shows training wheel', () => {
         mainMenu.model.user.username = 'Jest';
         mainMenu.model.user.groups.push('Tutor');

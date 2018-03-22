@@ -14,9 +14,12 @@
          aria-label="Subjects menu">
             <div  each="item in model.items">
                 <a href="{item.url}"
-                    role="menuitem"
-                    tabindex="-1"
-                    data-html="items[{$item}].label" skip="true"></a>
+                role="menuitem"
+                tabindex="-1"
+                data-html="items[{$item}].label"
+                data-local="{model.items[$item].isLocal ? 'true' : null}"
+                skip="true"
+                ></a>
                 <div if="item.trainingWheel" class="training-wheel">
                     <div class="put-away-row" tabindex="-1"><button class="put-away"
                     tabindex="0" data-keep-open="true">×</button></div>
