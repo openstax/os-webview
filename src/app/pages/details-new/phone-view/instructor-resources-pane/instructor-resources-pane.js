@@ -32,7 +32,7 @@ export default class InstructorResourcePane extends Controller {
                 const resourceBox = new ResourceBox(
                     Object.assign({
                         heading: res.resource_heading,
-                        description: res.resource_description
+                        description: ''
                     }, ResourceBox.instructorResourceBoxPermissions(res, userStatus))
                 );
 

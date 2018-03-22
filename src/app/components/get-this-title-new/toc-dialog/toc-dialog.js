@@ -18,9 +18,11 @@ export default class TocDialog extends Controller {
     }
 
     onLoaded() {
-        this.regions.toc.attach(
-            new Contents(this.model.tableOfContents, {tag: 'ol', classes: ['table-of-contents']})
-        );
+        if (this.model.tableOfContents) {
+            this.regions.toc.attach(
+                new Contents(this.model.tableOfContents, {tag: 'ol', classes: ['table-of-contents']})
+            );
+        }
     }
 
 }

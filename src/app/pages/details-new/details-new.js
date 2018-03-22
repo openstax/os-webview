@@ -30,40 +30,59 @@ function getSlugFromTitle(bookTitle) {
 
 // Background, foreground. If not foreground, it's white
 const slugToColor = {
-    prealgebra: ['deep-green', 'gold'],
-    'elementary-algebra': ['orange', 'gold'],
-    'intermediate-algebra': ['blue', 'gold'],
-    'college-algebra': ['light-blue', 'yellow'],
     'algebra-and-trigonometry': ['red', 'yellow'],
-    'precalculus': ['orange', 'blue'],
-    'calculus-volume': ['gold', 'blue'],
-    'introductory-statistics': ['yellow', 'green'],
+    'american-government': ['light-blue', 'red'],
     'anatomy-and-physiology': ['gray', 'orange'],
     'astronomy': ['blue'],
     'biology': ['green', 'gray'],
-    'concepts-biology': ['orange', 'yellow'],
-    'microbiology': ['light-blue', 'orange'],
-    'chemistry': ['orange'],
+    'calculus-volume': ['gold', 'blue'],
     'chemistry-atoms-first': ['deep-green'],
-    'college-physics': ['blue', 'green'],
-    'university-physics-volume': ['green', 'blue'],
-    'american-government': ['light-blue', 'red'],
-    'principles-economics': ['gray'],
-    'principles-macroeconomics': ['gray', 'green'],
-    'principles-microeconomics': ['gray', 'yellow'],
-    psychology: ['green'],
-    'introduction-sociology-2e': ['yellow', 'blue'],
-    'us-history': ['blue', 'orange'],
+    'chemistry': ['orange'],
+    'college-algebra': ['light-blue', 'yellow'],
     'college-physics-ap-courses': ['blue', 'green'],
+    'college-physics': ['blue', 'green'],
+    'concepts-biology': ['orange', 'yellow'],
+    'elementary-algebra': ['orange', 'gold'],
+    'fizyka-uniwersytecka-polska': ['green', 'blue'],
+    'intermediate-algebra': ['blue', 'gold'],
+    'introduction-sociology-2e': ['yellow', 'blue'],
+    'introductory-business-statistics': ['light-blue', 'blue'],
+    'introductory-statistics': ['yellow', 'green'],
+    'microbiology': ['light-blue', 'orange'],
+    'prealgebra': ['deep-green', 'gold'],
+    'precalculus': ['orange', 'blue'],
+    'principles-economics': ['gray'],
     'principles-macroeconomics-ap-courses': ['gray', 'green'],
+    'principles-macroeconomics': ['gray', 'green'],
     'principles-microeconomics-ap-courses': ['gray', 'yellow'],
-    'fizyka-uniwersytecka-polska': ['green', 'blue']
+    'principles-microeconomics': ['gray', 'yellow'],
+    'psychology': ['green'],
+    'university-physics-volume': ['green', 'blue'],
+    'us-history': ['blue', 'orange']
 };
 
-function getColorFromSlug(slug) {
-    const stripped = slug.replace(/.*\/(.*[^\-\d]).*/, '$1');
+const reverseGradientSlugs = [
+    'american-government',
+    'biology',
+    'calculus-volume',
+    'fizyka-uniwersytecka-polska',
+    'introduction-sociology-2e',
+    'introductory-business-statistics',
+    'introductory-statistics',
+    'precalculus',
+    'university-physics-volume'
+];
 
-    return slugToColor[stripped] || 'gray';
+function strippedSlug(slug) {
+    return slug.replace(/.*\/(.*[^\-\d]).*/, '$1');
+}
+
+function getColorFromSlug(slug) {
+    return slugToColor[strippedSlug(slug)] || 'gray';
+}
+
+function hasReverseGradient(slug) {
+    return reverseGradientSlugs.includes(strippedSlug(slug));
 }
 
 export default class Details extends CMSPageController {
@@ -83,6 +102,7 @@ export default class Details extends CMSPageController {
         this.bookTitle = 'loading';
         this.slug = getSlugFromTitle(bookTitle.toLowerCase());
         this.userStatusPromise = this.getUserStatusPromise();
+        this.reverseGradient = false;
 
         this.model = () => this.getModel();
     }
@@ -90,7 +110,8 @@ export default class Details extends CMSPageController {
     getModel() {
         return {
             slug: this.slug,
-            bookTitle: this.bookTitle
+            bookTitle: this.bookTitle,
+            reverseGradient: this.reverseGradient
         };
     }
 
@@ -187,10 +208,11 @@ export default class Details extends CMSPageController {
 
         this.bookTitle = this.pageData.title;
         this.slug = this.pageData.slug;
+        this.reverseGradient = hasReverseGradient(this.slug);
         setDetailsTabClass();
         this.update();
 
-        const colorScheme = getColorFromSlug(this.pageData.slug);
+        const colorScheme = getColorFromSlug(this.slug);
 
         this.el.classList.add(colorScheme[0]);
         if (colorScheme.length > 1) {

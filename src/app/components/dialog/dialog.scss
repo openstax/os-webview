@@ -18,7 +18,7 @@ dialog {
     }
 
     .title-bar {
-        @include set-font(h4);
+        @include set-font(h3);
 
         display: flex;
         justify-content: space-between;

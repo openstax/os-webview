@@ -14,20 +14,23 @@ $icon-size: 5.5rem;
         background-image: none;
         border-radius: 50%;
         display: flex;
+        font-size: $icon-size * 0.45;
         height: $icon-size;
         justify-content: center;
         width: $icon-size;
-
-        a {
-            color: inherit;
-            font-size: $icon-size * 0.45;
-        }
     }
 
     .text {
         @include set-font(body-large);
 
+        color: inherit;
         line-height: normal;
+        text-decoration: none;
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
     }
 
     .link {

@@ -73,10 +73,12 @@ export default class GetThisTitle extends Controller {
             bulkLink: this.model.isHighSchool ? '/bulk-order?this.model.slug' : null
         });
 
-        this.tocContent = new TocDialog({
-            tableOfContents: this.model.tableOfContents,
-            webviewLink: this.model.webviewLink
-        });
+        if (this.model.tableOfContents) {
+            this.tocContent = new TocDialog({
+                tableOfContents: this.model.tableOfContents,
+                webviewLink: this.model.webviewLink
+            });
+        }
     }
 
     onClose() {

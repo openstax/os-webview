@@ -10,8 +10,20 @@
     }
 
     .free-stuff-blurb {
+        display: grid;
+        grid-gap: $normal-margin;
+        grid-template-columns: auto;
+        margin-bottom: 4rem;
+
+        @include wider-than($tablet-max) {
+            margin-bottom: 5rem;
+        }
+    }
+
+    .blurb-body {
         @include set-font(body-large);
 
-        margin: 0.7rem 0 0;
+        max-width: $text-content-max;
     }
+
 }

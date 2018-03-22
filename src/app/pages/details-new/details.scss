@@ -11,6 +11,10 @@
 
         .hero {
             background-image: linear-gradient(to right, os-color($color), lighten(os-color($color), 7));
+
+            &.reverse-gradient {
+                background-image: linear-gradient(to right, lighten(os-color($color), 7), os-color($color));
+            }
         }
 
         @if ($color == yellow) {
