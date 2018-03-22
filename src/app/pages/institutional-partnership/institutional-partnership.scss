@@ -41,52 +41,16 @@
         }
     }
 
-    .tab-background {
-        background: ui-color(white);
-        height: 6rem;
+    .tab-controller,
+    .tab-content {
+        width: 100%;
     }
 
     .boxed {
+        align-items: left;
+
         .details {
             width: 100%;
-
-            .tabs {
-                display: flex;
-                flex-wrap: wrap;
-                margin-top: -3rem;
-                width: 100%;
-
-                .input {
-                    opacity: 0;
-                    position: absolute;
-                }
-
-                .label {
-                    align-items: flex-start;
-                    color: text-color(button-bar);
-                    cursor: pointer;
-                    display: flex;
-                    font-size: 1.6rem;
-                    font-weight: normal;
-                    height: 3rem;
-                    margin-right: 3.5rem;
-                    width: auto;
-                }
-
-                .input:focus + .label {
-                    z-index: 1;
-                }
-
-                .input:checked + .label {
-                    background: ui-color(white);
-                    border-bottom: 0.4rem solid os-color(green);
-
-                    + .panel {
-                        display: block;
-                    }
-                }
-
-            }
         }
     }
 
@@ -98,8 +62,8 @@
         width: 100%;
     }
 
-    .panel-content {
-        max-width: 80rem;
+    .tab-content {
+        max-width: $text-content-max;
 
         h5 {
             color: text-color(normal);
@@ -131,10 +95,6 @@
         background: os-color(light-blue);
         margin-top: 4.3rem;
         padding-bottom: 3em;
-
-        .boxed {
-            align-items: flex-start;
-        }
 
         .testimonial-box {
             background: ui-color(white);
