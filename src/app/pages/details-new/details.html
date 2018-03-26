@@ -1,7 +1,11 @@
 <template args="model">
     <div class="hero {model.reverseGradient ? 'reverse-gradient' : ''}" data-slug="{model.slug}">
         <div class="content book-title">
-            <h1>{model.bookTitle}</h1>
+            <h1>
+                <div if="model.titleIntro" class="volume">{model.titleIntro}</div>
+                {model.bookTitle}
+                <div if="model.volume" class="volume">{model.volume}</div>
+            </h1>
         </div>
     </div>
     <div class="content-wrapper">

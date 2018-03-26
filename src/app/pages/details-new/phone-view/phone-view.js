@@ -5,6 +5,7 @@ import GetThisTitle from '~/components/get-this-title-new/get-this-title';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import LetUsKnow from '../let-us-know/let-us-know';
 import DetailsPane from './details-pane/details-pane';
+import TocPane from './toc-pane/toc-pane';
 import Contents from '~/pages/details/contents/contents';
 import InstructorResourcePane from './instructor-resources-pane/instructor-resources-pane';
 import StudentResourcePane from './student-resources-pane/student-resources-pane';
@@ -63,10 +64,17 @@ export default class PhoneView extends Controller {
         if (this.props.tableOfContents) {
             accordionItems.splice(1, 0, {
                 title: 'Table of contents',
-                contentComponent: new Contents(
-                    this.props.tableOfContents,
-                    {tag: 'ol', classes: ['table-of-contents']}
-                )
+                // contentComponent: new Contents(
+                //     this.props.tableOfContents,
+                //     {tag: 'ol', classes: ['table-of-contents']}
+                // )
+                contentComponent: new TocPane({
+                    webviewLink: this.props.webviewLink,
+                    contentPane: new Contents(
+                        this.props.tableOfContents,
+                        {tag: 'ol', classes: ['table-of-contents']}
+                    )
+                })
             });
         }
         this.regions.accordion.append(new AccordionGroup(() => ({

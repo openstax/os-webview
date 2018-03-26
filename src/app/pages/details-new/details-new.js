@@ -69,6 +69,7 @@ const reverseGradientSlugs = [
     'introduction-sociology-2e',
     'introductory-business-statistics',
     'introductory-statistics',
+    'microbiology',
     'precalculus',
     'university-physics-volume'
 ];
@@ -108,11 +109,22 @@ export default class Details extends CMSPageController {
     }
 
     getModel() {
-        return {
+        const breakUpTitle = this.bookTitle.match(
+            /(principles of |introduction to )?(.*) (volume.*|2e.*|for ap.*|dla .*)/i
+        );
+        const model = {
             slug: this.slug,
             bookTitle: this.bookTitle,
             reverseGradient: this.reverseGradient
         };
+
+        if (breakUpTitle) {
+            model.titleIntro = breakUpTitle[1];
+            model.bookTitle = breakUpTitle[2];
+            model.volume = breakUpTitle[3];
+        }
+
+        return model;
     }
 
     getUserStatusPromise() {
@@ -136,6 +148,7 @@ export default class Details extends CMSPageController {
     }
 
     onDataLoaded() {
+        document.title = `${this.pageData.title} - OpenStax`;
         const tabLabels = ['Book details', 'Instructor resources', 'Student resources'];
         let selectedTab = tabLabels[0];
         const detailsTabData = () => {
@@ -231,6 +244,7 @@ export default class Details extends CMSPageController {
             },
             studentResources: this.pageData.book_student_resources,
             userStatusPromise: this.userStatusPromise,
+            webviewLink: this.pageData.webview_link,
             compCopyDialogProps
         }));
         this.regions.tabController.attach(tabGroup);

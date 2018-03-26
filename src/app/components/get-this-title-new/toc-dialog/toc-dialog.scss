@@ -10,6 +10,15 @@ toc-dialog {
     .toc-region {
         border: thin solid ui-color(form-border);
         overflow-y: auto;
+
+        ol {
+            font-weight: bold;
+            list-style: none;
+
+            .subunit {
+                font-weight: normal;
+            }
+        }
     }
 
     .btn {
