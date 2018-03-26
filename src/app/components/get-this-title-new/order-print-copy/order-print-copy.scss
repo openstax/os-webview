@@ -73,10 +73,24 @@
         grid-template-rows: auto auto;
         line-height: normal;
         padding: 2rem;
+        text-align: center;
         text-decoration: none;
 
         @include wider-than($phone-max) {
             padding: 3rem;
         }
     }
+
+    .btn {
+        @extend %button;
+
+        &.primary {
+            @extend %primary;
+        }
+
+        &.secondary {
+            @extend %secondary;
+        }
+    }
+
 }

@@ -73,14 +73,21 @@
     }
 
     .options {
-        margin-bottom: 1rem;
+        display: grid;
+        grid-gap: $normal-margin;
+        margin: 1rem 0;
         opacity: 1;
         transition: opacity 0.2s;
     }
 
     .option {
         font-size: 2.2rem; // This is for the icons
-        padding: 1rem 0.5rem;
+
+        // Brands look a little undersized
+        .fa-apple,
+        .fa-amazon {
+            font-size: 2.5rem;
+        }
 
         &:last-child {
             border-bottom: 0;

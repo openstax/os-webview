@@ -13,6 +13,9 @@ toc-dialog {
     }
 
     .btn {
+        @extend %button;
+        @extend %primary;
+
         max-width: 17rem;
     }
 }
