@@ -65,8 +65,11 @@
     .tab-content {
         max-width: $text-content-max;
 
-        h5 {
+        h3 {
+            @include body-font(1.4rem);
+
             color: text-color(normal);
+            font-weight: bold;
             margin: 1rem 0;
         }
 
