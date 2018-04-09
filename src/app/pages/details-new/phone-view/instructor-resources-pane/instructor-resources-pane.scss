@@ -4,7 +4,6 @@
     padding: 0 2rem 2.5rem;
 
     .swipe-zone {
-        // TODO Handle swiping rather than scroll bar
         margin: 0 -0.3rem;
         overflow-x: scroll;
         padding: 0.3rem; // room for the shadow
@@ -35,8 +34,7 @@
     .logo-box {
         align-items: center;
         border-radius: 0.4rem;
-        // TODO Replace with variable, probably
-        box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+        box-shadow: $card-shadow;
         display: flex;
         height: 9rem;
         justify-content: center;

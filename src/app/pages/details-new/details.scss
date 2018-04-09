@@ -6,14 +6,13 @@
         .book-icon,
         .webinars .icon-cell {
             background-color: os-color($color);
-            color: text-color(white);
         }
 
         .hero {
-            background-image: linear-gradient(to right, os-color($color), lighten(os-color($color), 7));
+            background-image: linear-gradient(to right, darken(os-color($color), 4), lighten(os-color($color), 4));
 
             &.reverse-gradient {
-                background-image: linear-gradient(to right, lighten(os-color($color), 7), os-color($color));
+                background-image: linear-gradient(to right, lighten(os-color($color), 4), darken(os-color($color), 4));
             }
         }
 
@@ -22,12 +21,6 @@
             .webinars .icon-cell {
                 color: text-color(normal);
             }
-        }
-    }
-
-    @at-root .fg-#{$color} {
-        .hero {
-            color: os-color($color);
         }
     }
 }
@@ -48,6 +41,12 @@
         }
     }
 
+    .hero,
+    .book-icon,
+    .webinars .icon-cell {
+        color: text-color(white);
+    }
+
     .hero {
         @include set-color-items(gold);
         @include set-color-items(green);
@@ -61,7 +60,6 @@
 
         align-items: flex-end;
         background-image: linear-gradient(75deg, #aaa, #777);
-        color: text-color(normal);
         display: flex;
         min-height: 16.5rem;
         overflow: hidden;
@@ -83,16 +81,47 @@
             h1 {
                 @include title-font(4rem);
 
+                line-height: 1;
                 text-align: left;
-                // white-space: nowrap;
 
                 @include width-between($phone-max, $tablet-max) {
                     @include title-font(10rem);
+
+                    line-height: 1;
                 }
 
                 @include wider-than($tablet-max) {
                     @include title-font(13rem);
+
+                    line-height: 1;
                 }
+
+                @include wider-than($text-content-max) {
+                    padding-left: $normal-margin;
+                }
+
+                .title-image {
+                    max-width: 100%;
+
+                    @include width-up-to($phone-max) {
+                        height: 12rem;
+                    }
+
+                    @include width-between($phone-max, $tablet-max) {
+                        height: 24rem;
+                    }
+
+                    @include wider-than($tablet-max) {
+                        height: 32rem;
+                    }
+                }
+            }
+
+            .volume {
+                font-size: 50%;
+                font-weight: 300;
+                letter-spacing: normal;
+                line-height: 0.7;
             }
         }
     }

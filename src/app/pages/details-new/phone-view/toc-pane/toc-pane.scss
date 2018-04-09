@@ -1,0 +1,16 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.toc-pane {
+    padding: 0 2rem 2rem;
+
+    .table-of-contents {
+        padding: 0;
+    }
+
+    .btn {
+        @extend %button;
+        @extend %primary;
+
+        width: 100%;
+    }
+}

@@ -114,12 +114,6 @@
         background-color: ui-color(default);
         margin-left: 0;
         margin-right: 0;
-
-        // TODO: Put in pattern library
-        @include width-up-to($phone-max) {
-            padding-left: 0;
-            padding-right: 0;
-        }
     }
 
     button {
