@@ -28,64 +28,6 @@ function getSlugFromTitle(bookTitle) {
     return slug;
 }
 
-// Background, foreground. If not foreground, it's white
-const slugToColor = {
-    'algebra-and-trigonometry': ['red', 'yellow'],
-    'american-government': ['light-blue', 'red'],
-    'anatomy-and-physiology': ['gray', 'orange'],
-    'astronomy': ['blue'],
-    'biology': ['green', 'gray'],
-    'calculus-volume': ['gold', 'blue'],
-    'chemistry-atoms-first': ['deep-green'],
-    'chemistry': ['orange'],
-    'college-algebra': ['light-blue', 'yellow'],
-    'college-physics-ap-courses': ['blue', 'green'],
-    'college-physics': ['blue', 'green'],
-    'concepts-biology': ['orange', 'yellow'],
-    'elementary-algebra': ['orange', 'gold'],
-    'fizyka-uniwersytecka-polska': ['green', 'blue'],
-    'intermediate-algebra': ['blue', 'gold'],
-    'introduction-sociology-2e': ['yellow', 'blue'],
-    'introductory-business-statistics': ['light-blue', 'blue'],
-    'introductory-statistics': ['yellow', 'green'],
-    'microbiology': ['light-blue', 'orange'],
-    'prealgebra': ['deep-green', 'gold'],
-    'precalculus': ['orange', 'blue'],
-    'principles-economics': ['gray'],
-    'principles-macroeconomics-ap-courses': ['gray', 'green'],
-    'principles-macroeconomics': ['gray', 'green'],
-    'principles-microeconomics-ap-courses': ['gray', 'yellow'],
-    'principles-microeconomics': ['gray', 'yellow'],
-    'psychology': ['green'],
-    'university-physics-volume': ['green', 'blue'],
-    'us-history': ['blue', 'orange']
-};
-
-const reverseGradientSlugs = [
-    'american-government',
-    'biology',
-    'calculus-volume',
-    'fizyka-uniwersytecka-polska',
-    'introduction-sociology-2e',
-    'introductory-business-statistics',
-    'introductory-statistics',
-    'microbiology',
-    'precalculus',
-    'university-physics-volume'
-];
-
-function strippedSlug(slug) {
-    return slug.replace(/.*\/(.*[^\-\d]).*/, '$1');
-}
-
-function getColorFromSlug(slug) {
-    return slugToColor[strippedSlug(slug)] || 'gray';
-}
-
-function hasReverseGradient(slug) {
-    return reverseGradientSlugs.includes(strippedSlug(slug));
-}
-
 export default class Details extends CMSPageController {
 
     init(bookTitle) {
@@ -104,25 +46,18 @@ export default class Details extends CMSPageController {
         this.slug = getSlugFromTitle(bookTitle.toLowerCase());
         this.userStatusPromise = this.getUserStatusPromise();
         this.reverseGradient = false;
+        this.titleImage = null;
 
         this.model = () => this.getModel();
     }
 
     getModel() {
-        const breakUpTitle = this.bookTitle.match(
-            /(principles of |introduction to )?(.*) (volume.*|2e.*|for ap.*|dla .*)/i
-        );
         const model = {
             slug: this.slug,
             bookTitle: this.bookTitle,
+            titleImage: this.titleImage,
             reverseGradient: this.reverseGradient
         };
-
-        if (breakUpTitle) {
-            model.titleIntro = breakUpTitle[1];
-            model.bookTitle = breakUpTitle[2];
-            model.volume = breakUpTitle[3];
-        }
 
         return model;
     }
@@ -182,7 +117,8 @@ export default class Details extends CMSPageController {
         const compCopyDialogProps = getCompCopyDialogProps(
             {
                 title: this.pageData.title,
-                coverUrl: this.pageData.cover_url
+                coverUrl: this.pageData.cover_url,
+                prompt: this.pageData.comp_copy_content[0]
             },
             this.userStatusPromise
         );
@@ -192,11 +128,35 @@ export default class Details extends CMSPageController {
                 {
                     resources: this.pageData.book_faculty_resources,
                     allies: shuffle(this.pageData.book_allies),
-                    userStatusPromise: this.userStatusPromise
+                    userStatusPromise: this.userStatusPromise,
+                    freeStuff: {
+                        heading: this.pageData.free_stuff_instructor.content.heading,
+                        blurb: this.pageData.free_stuff_instructor.content.content
+                    },
+                    webinar: {
+                        text: this.pageData.webinar_content.content.heading,
+                        url: this.pageData.webinar_content.link,
+                        blurb: this.pageData.webinar_content.content.content
+                    },
+                    communityResource: {
+                        url: this.pageData.community_resource_url,
+                        cta: this.pageData.community_resource_cta,
+                        blurb: this.pageData.community_resources_blurb,
+                        featureUrl: this.pageData.community_resources_feature_link_url,
+                        featureText: this.pageData.community_resources_feature_text
+                    },
+                    ally: {
+                        heading: this.pageData.ally_content.content.heading,
+                        blurb: this.pageData.ally_content.content.content
+                    }
                 },
                 compCopyDialogProps
             ),
             'Student resources': new StudentResourceTab({
+                freeStuff: {
+                    heading: this.pageData.free_stuff_student.content.heading,
+                    blurb: this.pageData.free_stuff_student.content.content
+                },
                 resources: this.pageData.book_student_resources,
                 userStatusPromise: this.userStatusPromise
             })
@@ -221,16 +181,13 @@ export default class Details extends CMSPageController {
 
         this.bookTitle = this.pageData.title;
         this.slug = this.pageData.slug;
-        this.reverseGradient = hasReverseGradient(this.slug);
         setDetailsTabClass();
+
+        this.el.classList.add(this.pageData.cover_color.toLowerCase());
+        this.reverseGradient = this.pageData.reverse_gradient;
+        this.titleImage = this.pageData.title_image_url;
+
         this.update();
-
-        const colorScheme = getColorFromSlug(this.slug);
-
-        this.el.classList.add(colorScheme[0]);
-        if (colorScheme.length > 1) {
-            this.el.classList.add(`fg-${colorScheme[1]}`);
-        }
 
         this.regions.phoneView.attach(new PhoneView({
             bookInfo: this.pageData,

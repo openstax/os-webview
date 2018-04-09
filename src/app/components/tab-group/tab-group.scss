@@ -13,5 +13,5 @@
 }
 
 .tab-baseline {
-    @extend %tab-baseline !optional; // TODO: Remove when Pattern Library upgraded
+    @extend %tab-baseline;
 }

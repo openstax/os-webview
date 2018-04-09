@@ -6,9 +6,9 @@ const booksPromise = fetch(`${settings.apiOrigin}/api/books`)
     .then((r) => r.json())
     .then((r) => r.books.filter((b) => b.comp_copy_available && b.salesforce_abbreviation));
 
-function compCopyDialogProps(props, userStatusPromise) {
+function getCompCopyDialogProps(props, userStatusPromise) {
     const dialogProps = {
-        title: 'Request your complimentary iBooks download'
+        title: props.prompt
     };
     const setAltTitle = () => {
         dialogProps.htmlTitle = '<span class="fa fa-check"></span>';
@@ -54,4 +54,4 @@ function compCopyDialogProps(props, userStatusPromise) {
     return dialogProps;
 }
 
-export default compCopyDialogProps;
+export default getCompCopyDialogProps;

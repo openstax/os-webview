@@ -1,5 +1,11 @@
 <template args="model">
-    <a class="book-icon" href="/interest"><span class="fa fa-user-plus"></span></a>
-    <div class="text"><a href="/interest">Sign up to<br>learn more</a></div>
-    <div class="link"><a href="/interest?{encodeURIComponent(model.title)}">Using this book? Let us know.</a></div>
+    <a class="book-icon" href="/interest?{encodeURIComponent(model.title)}">
+        <span class="fa fa-user-plus"></span>
+    </a>
+    <a class="text" href="/interest?{encodeURIComponent(model.title)}">
+    Sign up to<br>learn more
+    </a>
+    <a class="link" href="/interest?{encodeURIComponent(model.title)}">
+        Using this book? Let us know.
+    </a>
 </div>

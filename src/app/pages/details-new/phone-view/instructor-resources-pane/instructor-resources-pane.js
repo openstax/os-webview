@@ -2,7 +2,6 @@ import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import settings from 'settings';
 import ResourceBox from '../../resource-box/resource-box';
-import compCopyDialogProps from '../../comp-copy-dialog-props';
 import shell from '~/components/shell/shell';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './instructor-resources-pane.html';

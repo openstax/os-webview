@@ -23,12 +23,6 @@
             }
         }
     }
-
-    @at-root .fg-#{$color} {
-        .hero {
-            color: os-color($color);
-        }
-    }
 }
 
 .details-page-v2 {
@@ -100,6 +94,26 @@
                     @include title-font(13rem);
 
                     line-height: 1;
+                }
+
+                @include wider-than($text-content-max) {
+                    padding-left: $normal-margin;
+                }
+
+                .title-image {
+                    max-width: 100%;
+
+                    @include width-up-to($phone-max) {
+                        height: 12rem;
+                    }
+
+                    @include width-between($phone-max, $tablet-max) {
+                        height: 24rem;
+                    }
+
+                    @include wider-than($tablet-max) {
+                        height: 32rem;
+                    }
                 }
             }
 

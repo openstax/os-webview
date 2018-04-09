@@ -29,7 +29,6 @@ export default class PhoneView extends Controller {
     }
 
     onLoaded() {
-        // TODO Figure out heading levels: are the accordion titles headers?
         $.insertHtml(this.el, this.props);
         this.regions.getTheBook.append(new GetThisTitle(this.props.bookInfo));
         const accordionItems = [

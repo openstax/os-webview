@@ -1,11 +1,5 @@
 <template args="model">
-    <div>
-        All OpenStax textbooks undergo a rigorous review process. However, like
-        any professional-grade textbook, errors sometimes occur. The good part
-        is, since our books are web-based, we can make updates periodically. If
-        you have a correction to suggest, submit it here. We'll review your
-        suggestion and make necessary changes.
-    </div>
+    <div data-html="errataBlurb"></div>
     <div class="button-group">
         <a href="/errata/form?book={encodeURIComponent(model.title)}"
             class="btn secondary">Suggest a correction</a>
