@@ -3,9 +3,6 @@ import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import userModel from '~/models/usermodel';
 import router from '~/router';
-import TocDialog from './toc-dialog/toc-dialog';
-import OrderPrintCopy from './order-print-copy/order-print-copy';
-import shell from '~/components/shell/shell';
 import {highSchoolSlugs} from '~/models/book-titles';
 import {description as template} from './get-this-title.html';
 import {description as polishTemplate} from './get-this-title-polish.html';
@@ -16,11 +13,7 @@ export default class GetThisTitle extends Controller {
         this.template = data.slug.substr(-6) === 'polska' ? polishTemplate : template;
         this.css = '/app/components/get-this-title/get-this-title.css';
         this.regions = {
-            submenu: '.submenu',
-            toc: '.toc-region'
-        };
-        this.view = {
-            classes: ['get-this-title']
+            submenu: '.submenu'
         };
 
         const isHighSchool = highSchoolSlugs.includes(data.slug);
@@ -28,8 +21,6 @@ export default class GetThisTitle extends Controller {
             data.bookstore_coming_soon, isHighSchool].find((x) => x);
 
         this.model = {
-            includeTOC: data.includeTOC,
-            tableOfContents: data.table_of_contents,
             ibookLink: data.ibook_link,
             ibookLink2: data.ibook_link_volume_2,
             kindleLink: data.kindle_link,
@@ -60,21 +51,6 @@ export default class GetThisTitle extends Controller {
         };
     }
 
-    onLoaded() {
-        this.printCopyContent = new OrderPrintCopy({
-            individualLink: this.model.amazon.link,
-            amazonPrice: this.model.amazon.price,
-            bookstoreLink: this.model.bookstore.link,
-            bulkLink: this.model.isHighSchool ? '/bulk-order?this.model.slug' : null
-        });
-        if (this.model.tableOfContents) {
-            this.tocContent = new TocDialog({
-                tableOfContents: this.model.tableOfContents,
-                webviewLink: this.model.webviewLink
-            });
-        }
-    }
-
     @on('click .btn')
     blurAfterClick(event) {
         event.target.blur();
@@ -90,12 +66,12 @@ export default class GetThisTitle extends Controller {
     }
 
     @on('click .show-print-submenu')
-    showPrintSubmenu(event) {
+    showPrintSubment(event) {
         event.preventDefault();
-        shell.showDialog(() => ({
-            title: 'Order print copy',
-            content: this.printCopyContent
-        }));
+        this.model.submenu = 'print';
+        this.update();
+        // Focus on first link
+        this.el.querySelector('.print-submenu a').focus();
     }
 
     @on('click .submenu .remover')
@@ -119,15 +95,6 @@ export default class GetThisTitle extends Controller {
                 router.navigate('/give?student', {path: '/give?student'});
             }
         });
-    }
-
-    @on('click .show-toc')
-    showToc(event) {
-        event.preventDefault();
-        shell.showDialog(() => ({
-            title: 'Table of contents',
-            content: this.tocContent
-        }));
     }
 
 }
