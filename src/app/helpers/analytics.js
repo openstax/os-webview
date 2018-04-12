@@ -213,8 +213,10 @@ class Analytics {
 
         accountsModel.load().then((accountResponse) => {
             const role = accountResponse.self_reported_role;
-
-            window.ga('send', 'pageview', {'dimension1': role});
+            if (typeof role != 'undefined')
+            {
+                window.ga('send', 'pageview', {dimension1: role, nonInteraction: true});
+            }
         });
 
         document.addEventListener('submit', (e) => {
