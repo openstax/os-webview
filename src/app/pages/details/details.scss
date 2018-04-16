@@ -65,7 +65,7 @@
         padding: 2.2rem 0 2.2rem $normal-margin;
 
         @include width-up-to($phone-max) {
-          padding-bottom: 3.5rem;
+            padding-bottom: 3.5rem;
         }
 
         .book-title {
