@@ -1,5 +1,5 @@
 import CollapsingPane from '~/components/collapsing-pane/collapsing-pane';
-import ResourceBox from '~/pages/details-new/resource-box/resource-box';
+import ResourceBox from '~/pages/details/resource-box/resource-box';
 import {clickElement} from '../../test-utils';
 
 describe('CollapsingPane', () => {

@@ -13,7 +13,7 @@ export default class TocPane extends Controller {
         this.regions = {
             toc: '.toc-region'
         };
-        this.css = `/app/pages/details-new/phone-view/toc-pane/toc-pane.css?${VERSION}`;
+        this.css = `/app/pages/details/phone-view/toc-pane/toc-pane.css?${VERSION}`;
         this.model = () => this.getModel();
     }
 

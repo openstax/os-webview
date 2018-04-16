@@ -87,7 +87,7 @@ export default class ResourceBox extends Controller {
                 href: model.link.url
             };
         }
-        this.css = `/app/pages/details-new/resource-box/resource-box.css?${VERSION}`;
+        this.css = `/app/pages/details/resource-box/resource-box.css?${VERSION}`;
     }
 
     onUpdate() {

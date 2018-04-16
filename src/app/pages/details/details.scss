@@ -1,551 +1,219 @@
-@import 'mixins/triangle';
-@import 'mixins/coming-soon';
 @import 'pattern-library/core/pattern-library/headers';
 
-$special-breakpoint: 54rem;
+@mixin set-color-items($color) {
+    @at-root .#{$color} {
+        .hero,
+        .book-icon,
+        .webinars .icon-cell {
+            background-color: os-color($color);
+        }
 
-@mixin menu-is-fixed {
-    @include wider-than($tablet-max) {
-        @media (min-height: 768px) {
-            @content;
+        .hero {
+            background-image: linear-gradient(to right, darken(os-color($color), 4), lighten(os-color($color), 4));
+
+            &.reverse-gradient {
+                background-image: linear-gradient(to right, lighten(os-color($color), 4), darken(os-color($color), 4));
+            }
+        }
+
+        @if ($color == yellow) {
+            .book-icon,
+            .webinars .icon-cell {
+                color: text-color(normal);
+            }
         }
     }
 }
 
-.details-page {
-    position: relative;
+.details-page-v2 {
 
-    h1 {
-        margin-bottom: 1rem;
-        margin-top: 0;
-        word-wrap: break-word;
+    @include wider-than($phone-max) {
+        background-color: ui-color(white);
+
+        &.card-background {
+            > .content-wrapper {
+                background-image: linear-gradient(to bottom, ui-color(white), ui-color(white) 10rem, ui-color(default) 25rem);
+
+                @include wider-than($tablet-max) {
+                    background-image: linear-gradient(to bottom, ui-color(white), ui-color(white) 15rem, ui-color(default) 30rem);
+                }
+            }
+        }
     }
 
-    h2,
-    h3,
-    h4 {
-        letter-spacing: -0.1rem;
+    .hero,
+    .book-icon,
+    .webinars .icon-cell {
+        color: text-color(white);
     }
 
-    .row p a {
-        font-weight: bolder;
-    }
+    .hero {
+        @include set-color-items(gold);
+        @include set-color-items(green);
+        @include set-color-items(blue);
+        @include set-color-items(deep-green);
+        @include set-color-items(gray);
+        @include set-color-items(light-blue);
+        @include set-color-items(orange);
+        @include set-color-items(yellow);
+        @include set-color-items(red);
 
-    .table-of-contents-link {
-        cursor: pointer;
-    }
-
-    .table-of-contents {
-        align-items: center;
-        background-color: rgba(ui-color(white), 0.97);
-        bottom: 0;
+        align-items: flex-end;
+        background-image: linear-gradient(75deg, #aaa, #777);
         display: flex;
-        height: 100%;
-        justify-content: center;
-        left: 0;
-        opacity: 1;
-        position: fixed;
-        right: 0;
-        top: 0;
-        transition: opacity 0.3s;
-        width: 100%;
-        z-index: 100;
+        overflow: hidden;
+        padding: 2.2rem 0 2.2rem $normal-margin;
 
-        @include wider-than($tablet-max) {
-            background-color: rgba(ui-color(footer-bg), 0.93);
+        @include width-up-to($phone-max) {
+          padding-bottom: 3.5rem;
         }
 
-        ol {
-            list-style: none;
-            margin: 0;
+        .book-title {
             padding: 0;
 
-            ol {
-                padding-left: 2rem;
+            h1 {
+                @include title-font(4rem);
+
+                line-height: 1;
+                margin: 0;
+                text-align: left;
+
+                @include width-between($phone-max, $tablet-max) {
+                    @include title-font(10rem);
+
+                    line-height: 1;
+                }
+
+                @include wider-than($tablet-max) {
+                    @include title-font(13rem);
+
+                    line-height: 1;
+                }
+
+                @include wider-than($text-content-max) {
+                    padding-left: $normal-margin;
+                }
+
+                .title-image {
+                    max-width: 100%;
+
+                    @include width-up-to($phone-max) {
+                        height: 12rem;
+                    }
+
+                    @include width-between($phone-max, $tablet-max) {
+                        height: 24rem;
+                    }
+
+                    @include wider-than($tablet-max) {
+                        height: 32rem;
+                    }
+                }
             }
-        }
 
-        &.hidden {
-            display: initial;
-            height: 0;
-            opacity: 0;
-            overflow: hidden;
-            width: 0;
-        }
-
-        .toc-remover {
-            @include absolute(top 0.5rem right 0.5rem);
-
-            cursor: pointer;
-        }
-
-        .box {
-            font-weight: 500;
-            max-height: 100%;
-            overflow-y: auto;
-            padding: 3rem;
-            padding-top: 6rem;
-            position: static;
-            width: 100%;
-
-            @include wider-than($tablet-max) {
-                background-color: rgba(ui-color(white), 0.97);
-                margin-top: 11rem;
-                max-height: calc(100% - 16rem);
-                padding-top: 3rem;
-                position: relative;
-                width: auto;
-            }
-
-            .subunit {
+            .volume {
+                font-size: 50%;
                 font-weight: 300;
+                letter-spacing: normal;
+                line-height: 0.7;
             }
-
         }
     }
 
-    .container {
-        display: flex;
-        flex-flow: column nowrap;
-        margin: 0 auto;
-        max-width: $content-max;
-        padding: 0 1.5rem;
+    .content {
+        @extend %content;
+
+        justify-content: flex-start;
+    }
+
+    .phone-view {
+        display: block;
 
         @include wider-than($phone-max) {
-            flex-flow: row wrap;
-        }
-
-        &:empty {
             display: none;
         }
     }
 
-    .cta > .btn {
-        font-variant: normal;
-        padding: 1.5rem;
-        text-transform: uppercase;
+    .bigger-view {
+        display: none;
+
+        @include wider-than($phone-max) {
+            display: block;
+        }
+    }
+
+    .tab-controller {
+        width: 100%;
+
+        .tab {
+            @include set-font(body-large);
+
+            font-weight: normal;
+
+            @include wider-than($tablet-max) {
+                font-size: 150%;
+                padding-bottom: $normal-margin;
+            }
+        }
+    }
+
+    .tab-content {
+        padding: 4rem 0 6rem;
         width: 100%;
     }
 
-    .btn.hidden {
-        display: none;
-    }
-
-    .book-info {
-        margin-bottom: 6rem;
-
-        @include wider-than($special-breakpoint) {
-            justify-content: space-between;
-            margin: 6rem auto;
-        }
-
-        @include wider-than($tablet-max) {
-            flex-wrap: nowrap;
-            justify-content: flex-start;
-        }
-
-        .cover-wrap {
-            align-self: flex-start;
-            margin: 0 -#{$normal-margin} 3rem;
-            order: 1;
-            position: relative;
-            width: calc(100% + $normal-margin);
-
-            @include wider-than($special-breakpoint) {
-                margin: 0 $normal-margin 3rem 0;
-                width: 25rem;
-            }
-
-            @include menu-is-fixed {
-                width: 25rem;
-            }
-
-            &.coming-soon::before {
-                @include coming-soon;
-            }
-
-            &.coming-soon.polish::before {
-                background-image: url('/images/subjects/coming-soon-polish.svg');
-            }
-
-            > img {
-                width: 100%;
-            }
-        }
-
-        .floating-menu-container {
-            margin: 0;
-            order: 3;
-
-            @include wider-than($phone-max) {
-                flex-basis: 25rem;
-            }
-
-            @include width-between($phone-max, $special-breakpoint) {
-                margin-left: $normal-margin;
-            }
-        }
-
-        .floating-menu {
-            @include menu-is-fixed {
-                &.fixed {
-                    margin-bottom: 0;
-                    position: fixed;
-                    z-index: 1;
-                }
-            }
-
-            h2 {
-                margin-bottom: 0;
-                margin-top: 0;
-            }
-
-            .box {
-                background-color: rgba(ui-color(white), 0.95);
-                margin-left: -$normal-margin;
-                margin-right: -$normal-margin;
-                padding: $normal-margin;
-
-                @include width-between($phone-max, $special-breakpoint) {
-                    width: calc(100% + #{2 * $normal-margin});
-                }
-
-                @include wider-than($special-breakpoint) {
-                    float: right;
-                    margin: 0;
-                    max-width: 25rem;
-                }
-
-                @include wider-than($tablet-max) {
-                }
-            }
-
-            .cta {
-                color: text-color(helper);
-
-                .btn:last-child {
-                    @extend %secondary;
-                    margin: 1rem 0 0;
-                    width: 100%;
-                }
-            }
-        }
-
-        .details {
-            margin-right: $normal-margin;
-            order: 2;
-
-            @include wider-than($tablet-max) {
-                flex: 1 1 50%;
-            }
-        }
-
-        .tabs {
-            a {
-                text-decoration-line: none;
-
-                &:not(:last-child)::after {
-                    color: ui-color(footer-bg);
-                    content: '|';
-                    display: inline;
-                    margin: 0 0.5rem;
-                }
-            }
-        }
-
-        .links {
-            margin: 1rem 0;
-
-            a {
-                position: relative;
-            }
-        }
-    }
-
-    .endorsement {
-        background-color: os-color(green);
-        color: text-color(white);
-
-        blockquote {
-            margin-left: 5rem;
-            position: relative;
-            quotes: '\201C''\201D''\2018''\2019';
-
-            @include wider-than($tablet-max) {
-                margin-left: 7.5rem;
-            }
-
-            &::before {
-                color: os-color(gold);
-                content: open-quote;
-                left: -3.5rem;
-                line-height: 0;
-                position: absolute;
-                top: 4.5rem;
-                transform: scale(9);
-
-                @include wider-than($tablet-max) {
-                    left: -5rem;
-                    top: 5.5rem;
-                    transform: scale(11);
-                }
-            }
-
-            @mixin quotation-styling() {
-                font-style: italic;
-                font-weight: 500;
-                letter-spacing: normal;
-            }
-
-            p {
-                @include set-font(h3);
-                @include quotation-styling();
-                margin: 0 0 3rem;
-
-                @include wider-than($phone-max) {
-                    @include set-font(h2);
-                    @include quotation-styling();
-                }
-            }
-
-            .attribution {
-                @include set-font(h4);
-                @include quotation-styling();
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-end;
-                margin-top: 2.5rem;
-                text-align: right;
-
-                @include wider-than($phone-max) {
-                    @include set-font(h3);
-                    @include quotation-styling();
-                }
-            }
-        }
-
-        .container {
-            padding: 6rem 1.5rem;
-
-            @include wider-than($tablet-max) {
-                padding: 6rem 25rem 6rem 1.5rem;
-            }
-        }
-    }
-
-    .strips {
-        margin: 0;
+    .unbold {
+        font-weight: normal;
     }
 
     .resources {
-
-        h2 {
-            margin-bottom: 0;
-        }
-
-        .container {
-            padding: 6rem 1.5rem;
-
-            @include wider-than($tablet-max) {
-                padding: 6rem 27.5rem 6rem 1.5rem;
-            }
-        }
-
-        .row {
-            flex: 1 auto;
-            flex-wrap: wrap;
-            margin-bottom: 2.5rem;
-            width: 100%;
-        }
-
-        .student-resources-cta {
-            background-color: os-color(gold);
-            background-image: url('/images/details/student-resources-bg-lg.jpg');
-            background-position: left 70%;
-            background-repeat: no-repeat;
-            background-size: cover;
-            display: flex;
-            min-height: 60rem;
-            transition: All ease-in-out 0.3s;
-
-            @include width-up-to($phone-max) {
-                min-height: 70rem;
-            }
-
-            .container {
-                width: 100%;
-            }
-
-            .caption {
-                align-items: flex-start;
-                display: flex;
-                flex-flow: column wrap;
-            }
-
-            h2 {
-                @include set-font(h2);
-                color: os-color(blue);
-                margin-bottom: 3rem;
-                max-width: 56rem;
-                width: 100%;
-            }
-
-            a {
-                background-color: os-color(yellow);
-                padding: 1.5rem 3rem;
-
-                &:hover {
-                    background-color: darken(os-color(yellow), 5%);
-                }
-            }
-        }
-    }
-
-    .resource {
-        box-sizing: content-box;
-        display: flex;
-        flex-flow: column nowrap;
-        width: 100%;
+        display: grid;
+        grid-gap: 2 * $normal-margin  2 * $normal-margin;
+        margin: 2rem 0 0;
 
         @include wider-than($phone-max) {
-            flex-flow: row wrap;
+            grid-template-columns: 1fr 1fr;
         }
 
-        > div {
-            background-color: ui-color(white);
-            display: flex;
-            flex-flow: column nowrap;
-            justify-content: space-between;
-            margin-bottom: $normal-margin;
-            margin-right: $normal-margin;
-            padding: 1.5rem;
-            position: relative;
+        @include wider-than($tablet-max) {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
 
+        &.ally {
             @include wider-than($phone-max) {
-                flex: 1 0 22rem;
+                grid-template-columns: 1fr 1fr 1fr;
             }
-
-            h4 {
-                color: os-color(blue);
-                margin-bottom: 1rem;
-            }
-
-            .link-and-lock {
-                align-items: flex-end;
-                display: flex;
-                justify-content: space-between;
-
-                .locked-state {
-                    color: ui-color(secondary);
-                    font-size: 130%;
-                    margin-right: 1rem;
-                }
-            }
-        }
-
-        .with-tooltip {
-            .tooltip {
-                transform: translateX(-45%);
-                width: 26rem;
-            }
-        }
-    }
-
-    .authors {
-        padding: 6rem 0 0;
-
-        &:last-child {
-            margin-bottom: 6rem;
-        }
-
-        .container {
-            flex-flow: column wrap;
 
             @include wider-than($tablet-max) {
-                padding: 0 27.5rem 0 1.5rem;
+                grid-template-columns: 1fr 1fr 1fr 1fr;
             }
         }
     }
 
-    .partner-info {
-        .logo {
-            align-items: center;
-            display: flex;
-            justify-content: center;
-            margin-bottom: 3rem;
+    .btn.default {
+        background-color: ui-color(white);
+    }
 
-            img {
-                max-width: 100%;
-                width: 20rem;
+    .table-of-contents {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        padding-left: 2rem;
+
+        > li {
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+
+        ol {
+            font-weight: normal;
+            list-style: none;
+            padding-left: 2rem;
+
+            .box {
+                font-weight: bold;
             }
         }
     }
 
-    .publish-info {
-        padding-top: 1rem;
-
-        th {
-            text-align: left;
-            vertical-align: top;
-            white-space: nowrap;
-        }
-
-        th,
-        td {
-            padding: 0.75rem;
-
-            &:first-child {
-                padding-left: 0;
-            }
-        }
-
-        .license {
-            display: block;
-            vertical-align: top;
-
-            > div {
-                align-items: flex-start;
-                display: flex;
-                flex-flow: row wrap;
-
-                > div {
-                    flex-basis: 25rem;
-                }
-            }
-
-            img {
-                height: 4rem;
-                margin-bottom: 1rem;
-                margin-top: 0.7rem;
-                padding-right: 1rem;
-            }
-        }
-    }
-
-    .errata {
-        margin: 0 0 6rem;
-        padding: 6rem 0 0;
-
-        .container {
-            flex-flow: column wrap;
-
-            @include wider-than($tablet-max) {
-                padding: 0 27.5rem 0 1.5rem;
-            }
-        }
-
-        h2 {
-            margin-bottom: 0;
-        }
-
-        .links {
-            cursor: pointer;
-            margin: 0;
-            padding: 0;
-        }
-
-        .go-to {
-            position: relative;
-        }
-    }
 }

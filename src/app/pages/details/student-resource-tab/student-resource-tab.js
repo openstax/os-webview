@@ -16,7 +16,7 @@ export default class StudentResourceTab extends Controller {
         this.regions = {
             resourceBoxes: '.resources'
         };
-        this.css = `/app/pages/details-new/student-resource-tab/student-resource-tab.css?${VERSION}`;
+        this.css = `/app/pages/details/student-resource-tab/student-resource-tab.css?${VERSION}`;
     }
 
     onLoaded() {

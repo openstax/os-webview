@@ -17,7 +17,7 @@ export default class PhoneView extends Controller {
     init(props) {
         this.template = template;
         this.props = props;
-        this.css = `/app/pages/details-new/phone-view/phone-view.css?${VERSION}`;
+        this.css = `/app/pages/details/phone-view/phone-view.css?${VERSION}`;
         this.regions = {
             getTheBook: '.get-the-book',
             accordion: '.accordion-region',

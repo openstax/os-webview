@@ -1,5 +1,5 @@
 import ContentGroup from '~/components/content-group/content-group';
-import ResourceBox from '~/pages/details-new/resource-box/resource-box';
+import ResourceBox from '~/pages/details/resource-box/resource-box';
 
 describe('ContentGroup', () => {
     const contents = {

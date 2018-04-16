@@ -18,7 +18,7 @@ export default class InstructorResourcePane extends Controller {
             freeResources: '.free-resources-region'
         };
         /* eslint max-len: 0 */
-        this.css = `/app/pages/details-new/phone-view/instructor-resources-pane/instructor-resources-pane.css?${VERSION}`;
+        this.css = `/app/pages/details/phone-view/instructor-resources-pane/instructor-resources-pane.css?${VERSION}`;
         // Static model
         this.model = {
             resources: props.resources
