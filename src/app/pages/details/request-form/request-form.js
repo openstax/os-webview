@@ -13,7 +13,7 @@ export default class RequestForm extends Controller {
         this.view = {
             classes: ['comp-copy-request-form']
         };
-        this.css = `/app/pages/details-new/request-form/request-form.css?${VERSION}`;
+        this.css = `/app/pages/details/request-form/request-form.css?${VERSION}`;
         this.model = () => this.getModel();
         this.beforeSubmit = true;
     }

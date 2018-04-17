@@ -1,5 +1,5 @@
 import ModalContent from '~/components/modal-content/modal-content';
-import ResourceBox from '~/pages/details-new/resource-box/resource-box';
+import ResourceBox from '~/pages/details/resource-box/resource-box';
 
 describe('ModalContent', () => {
     const main = document.createElement('div');

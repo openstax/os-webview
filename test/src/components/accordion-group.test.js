@@ -1,5 +1,5 @@
 import AccordionGroup from '~/components/accordion-group/accordion-group';
-import ResourceBox from '~/pages/details-new/resource-box/resource-box';
+import ResourceBox from '~/pages/details/resource-box/resource-box';
 import {clickElement} from '../../test-utils';
 
 describe('AccordionGroup', () => {

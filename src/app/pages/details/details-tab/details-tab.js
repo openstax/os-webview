@@ -13,7 +13,7 @@ export default class DetailsTab extends Controller {
         this.view = {
             classes: ['details-tab']
         };
-        this.css = `/app/pages/details-new/details-tab/details-tab.css?${VERSION}`;
+        this.css = `/app/pages/details/details-tab/details-tab.css?${VERSION}`;
         this.regions = {
             getTheBook: '.get-the-book',
             letUsKnow: '.let-us-know-region'

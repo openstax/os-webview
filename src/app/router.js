@@ -20,7 +20,6 @@ const PAGES = [
     'confirmation/*path',
     'contact',
     'details/*path',
-    'details-new/*path',
     'errata/*path',
     'faq',
     'foundation',

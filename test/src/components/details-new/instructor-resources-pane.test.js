@@ -1,4 +1,4 @@
-import InstructorResourcePane from '~/pages/details-new/phone-view/instructor-resources-pane/instructor-resources-pane.js';
+import InstructorResourcePane from '~/pages/details/phone-view/instructor-resources-pane/instructor-resources-pane.js';
 import details from '../../data/details.js'
 import {clickElement} from '../../../test-utils';
 const instructorResources = {
