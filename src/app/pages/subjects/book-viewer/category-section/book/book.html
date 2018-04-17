@@ -1,10 +1,5 @@
 <template args="model">
-    <h3><img src="{model.coverUrl}" alt="{model.title}" tabindex="0"></h3>
-    <div class="details {model.detailsOpenClass}">
-        <div class="get-this-title-container" skip="true"></div>
-        <div class="cta">
-            <a href="/details/{model.slug}" class="btn"
-                tabindex="{model.detailsOpenClass ? 0 : -1}">{model.detailsLinkText}</a>
-        </div>
-    </div>
+    <a href="/details/{model.slug}">
+        <img src="{model.coverUrl}" alt="{model.title}">
+    </a>
 </template>

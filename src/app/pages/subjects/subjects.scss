@@ -74,34 +74,28 @@
         }
 
         .row {
-            display: flex;
-            flex-flow: row wrap;
-            justify-content: flex-start;
-            margin: 0 -1rem;
-            width: calc(100% + 2rem);
+            display: grid;
+            grid-gap: 4rem 2rem;
+            grid-template-columns: repeat(2, 1fr);
+            margin: $normal-margin 0;
+            width: 100%;
+
+            @include wider-than($media-content-max - 35em) {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            @include wider-than($media-content-max - 20em) {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            @include wider-than($media-content-max - 5em) {
+                grid-template-columns: repeat(5, 1fr);
+            }
         }
 
         .cover {
             cursor: pointer;
-            flex: 0 100%;
-            margin: 1rem;
             position: relative;
-
-            @include wider-than($media-content-max - 52em) {
-                flex-basis: calc(50% - 2rem);
-            }
-
-            @include wider-than($media-content-max - 35em) {
-                flex-basis: calc(33.3% - 2rem);
-            }
-
-            @include wider-than($media-content-max - 20em) {
-                flex-basis: calc(25% - 2rem);
-            }
-
-            @include wider-than($media-content-max - 5em) {
-                flex-basis: calc(20% - 2rem);
-            }
 
             &.coming-soon::before {
                 @include coming-soon;
@@ -111,7 +105,10 @@
                 background-image: url('/images/subjects/coming-soon-polish.svg');
             }
 
+            > a,
             img {
+                display: block;
+                height: 100%;
                 width: 100%;
             }
         }

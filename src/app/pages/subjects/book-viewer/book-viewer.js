@@ -69,13 +69,4 @@ export default class BookViewer extends Controller {
         }
     }
 
-    @on('focusin .cover img')
-    closeAnyOpenDetails() {
-        for (const section of this.regions.self.controllers) {
-            for (const c of section.regions.books.controllers) {
-                c.hideChildren();
-            }
-        }
-    }
-
 }
