@@ -41,11 +41,13 @@ $bar-size: 0.2rem;
             &:hover {
                 margin-bottom: 0;
                 padding-bottom: 3rem;
+
+                .tooltip {
+                    padding: 3rem;
+                }
             }
 
             .tooltip {
-                padding: 3rem;
-
                 > p:first-child {
                     margin-top: 0;
                 }

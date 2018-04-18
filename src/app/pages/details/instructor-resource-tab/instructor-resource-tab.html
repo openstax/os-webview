@@ -1,14 +1,15 @@
 <template args="model">
     <div>
         <div class="free-stuff-blurb">
-            <!-- TODO: Get this stuff from the CMS -->
             <h2 data-html="freeStuff.heading" skip="true"></h2>
             <div data-html="freeStuff.blurb" class="blurb-body" skip="true"></div>
         </div>
         <div class="resources">
             <div class="resource-box double">
-                <h3>OpenStax Community Resources</h3>
-                <!-- TODO: get from CMS -->
+                <div class="top-line">
+                    <h3>{model.communityResource.heading}</h3>
+                    <img src="{model.communityResource.logoUrl}">
+                </div>
                 <div class="blurb">
                   <span data-html="communityResource.blurb" skip="true"></span>
                   <br>
@@ -20,7 +21,6 @@
                 <div class="bottom">
                     <div class="left"></div>
                     <div class="right">
-                        <!-- TODO: get from CMS -->
                         <a href="{model.communityResource.featureUrl}">
                           {model.communityResource.featureText}
                         </a>
@@ -34,7 +34,6 @@
     <a href="{model.webinar.url}" class="webinars">
         <div class="icon-cell"><span class="fa fa-desktop"></span></div>
         <div>
-            <!-- TODO pull text from CMS -->
             <h2>{model.webinar.text}</h2>
             <div class="blurb" data-html="webinar.blurb" skip="true"></div>
         </div>
@@ -42,7 +41,6 @@
     <hr>
     <if condition="model.allies.length">
         <div class="ally-blurb">
-            <!-- TODO Get this from the CMS -->
             <h2>{model.ally.heading}</h2>
             <div class="blurb-body" data-html="ally.blurb" skip="true"></div>
             <div class="ally-logo">
