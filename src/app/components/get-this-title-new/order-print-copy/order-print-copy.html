@@ -24,9 +24,9 @@
                 <a class="btn primary" href="{model.individualLink}">
                     Order on Amazon
                 </a>
-                <!-- <div class="info">
-                    ${model.amazonPrice} from seller "OpenStax"
-                </div> -->
+                <div if="model.amazonPrice" class="info">
+                    ${model.amazonPrice} from seller {'"OpenStax"'}
+                </div>
             </div>
             <div if="model.bookstoreLink" class="box">
                 <h2><span class="fa fa-users"></span> Bookstore</h2>

@@ -20,7 +20,9 @@ export default class StudentResourceTab extends Controller {
     }
 
     onLoaded() {
-        $.insertHtml(this.el, this.model);
+        $.insertHtml(this.el, {
+            freeStuff: this.props.freeStuff
+        });
         const resourceBoxes = this.el.querySelectorAll('resource-box');
 
         this.props.userStatusPromise.then((userStatus) => {

@@ -56,9 +56,8 @@ export default class GetThisTitle extends Controller {
                 blurb: data.amazon_blurb
             },
             bookstore: {
-                link: data.bookstore_link,
-                comingSoon: data.bookstore_coming_soon,
-                blurb: data.bookstore_blurb
+                link: data.bookstore_content && data.bookstore_content.link,
+                comingSoon: data.bookstore_coming_soon
             },
             slug: data.slug
         };
