@@ -70,7 +70,7 @@
         color: inherit;
         display: grid;
         grid-gap: $normal-margin;
-        grid-template-rows: auto auto;
+        grid-template-rows: auto auto auto 1rem;
         line-height: normal;
         padding: 2rem;
         text-align: center;
@@ -91,6 +91,12 @@
         &.secondary {
             @extend %secondary;
         }
+    }
+
+    .info {
+        @include set-font(helper-label);
+
+        color: text-color(helper);
     }
 
 }
