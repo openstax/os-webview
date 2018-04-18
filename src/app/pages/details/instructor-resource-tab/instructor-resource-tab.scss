@@ -33,7 +33,7 @@ $icon-size: 6rem;
         align-items: center;
         display: grid;
         grid-gap: 1rem;
-        grid-template-columns: auto 1fr;
+        grid-template-columns: auto $text-content-max 1fr;
         text-decoration: none;
 
         .icon-cell {

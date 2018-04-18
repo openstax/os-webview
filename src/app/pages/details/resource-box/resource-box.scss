@@ -22,6 +22,17 @@
         grid-column: span 2;
     }
 
+    .top-line {
+        display: flex;
+        justify-content: space-between;
+
+        img {
+            margin-bottom: 0.5rem;
+            max-height: 5rem;
+            max-width: 16rem;
+        }
+    }
+
     h3 {
         @include set-font(h4);
 

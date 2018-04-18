@@ -139,11 +139,13 @@ export default class Details extends CMSPageController {
                         blurb: this.pageData.webinar_content.content.content
                     },
                     communityResource: {
+                        heading: this.pageData.community_resource_heading,
+                        logoUrl: this.pageData.community_resource_logo_url,
                         url: this.pageData.community_resource_url,
                         cta: this.pageData.community_resource_cta,
-                        blurb: this.pageData.community_resources_blurb,
-                        featureUrl: this.pageData.community_resources_feature_link_url,
-                        featureText: this.pageData.community_resources_feature_text
+                        blurb: this.pageData.community_resource_blurb,
+                        featureUrl: this.pageData.community_resource_feature_link_url,
+                        featureText: this.pageData.community_resource_feature_text
                     },
                     ally: {
                         heading: this.pageData.ally_content.content.heading,
