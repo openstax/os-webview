@@ -100,7 +100,10 @@
 
         a,
         .option-header {
+            @include set-font(body-regular);
+
             align-items: center;
+            color: text-color(link);
             display: flex;
             justify-content: flex-start;
             text-decoration-line: none;
@@ -109,14 +112,14 @@
                 flex-basis: 3rem;
                 margin-right: $normal-margin;
             }
+
+            + * {
+                margin-left: 4.5rem;
+            }
         }
 
-        a {
-            color: text-color(link);
-
-            &:hover {
-                color: text-color(link-hover);
-            }
+        a:hover {
+            color: text-color(link-hover);
         }
     }
 }

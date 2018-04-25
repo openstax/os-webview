@@ -33,13 +33,7 @@
         <if condition="!model.comingSoon">
             <div>
                 <h3>Errata</h3>
-                <p>
-                    All OpenStax textbooks undergo a rigorous review process. However, like
-                    any professional-grade textbook, errors sometimes occur. The good part
-                    is, since our books are web-based, we can make updates periodically. If
-                    you have a correction to suggest, submit it here. We'll review your
-                    suggestion and make necessary changes.
-                </p>
+                <p data-html="errataBlurb"></p>
                 <div class="button-group">
                     <a href="/errata/form?book={encodeURIComponent(model.title)}" class="btn secondary medium">Suggest a correction</a>
                     <a href="/errata/?book={encodeURIComponent(model.title)}" class="btn default medium">Errata list</a>

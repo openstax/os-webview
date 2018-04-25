@@ -8,7 +8,7 @@ dialog {
     display: grid;
     grid-template-rows: auto auto 1fr;
     height: auto;
-    max-width: 80rem;
+    max-width: 90rem;
     overflow: hidden;
     padding: 0;
     width: calc(100% - #{2 * $normal-margin});
@@ -56,5 +56,7 @@ dialog {
         border-bottom-left-radius: 0.4rem;
         border-bottom-right-radius: 0.4rem;
         height: auto;
+        max-height: calc(100vh - 7rem);
+        overflow-y: auto;
     }
 }

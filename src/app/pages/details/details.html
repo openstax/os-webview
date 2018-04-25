@@ -1,13 +1,15 @@
 <template args="model">
     <div class="hero {model.reverseGradient ? 'reverse-gradient' : ''}" data-slug="{model.slug}">
         <div class="content book-title">
-            <h1>
-                <if condition="model.titleImage">
+            <if condition="model.titleImage">
+                <h1 class="image-heading">
                     <img class="title-image" src="{model.titleImage}" alt={model.bookTitle}>
-                <else>
+                </h1>
+            <else>
+                <h1>
                     {model.bookTitle}
-                </if>
-            </h1>
+                </h1>
+            </if>
         </div>
     </div>
     <div class="content-wrapper">

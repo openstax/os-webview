@@ -55,7 +55,8 @@ export default class PhoneView extends Controller {
             {
                 title: 'Report errata',
                 contentComponent: new ErrataPane({
-                    title: this.props.bookTitle
+                    title: this.props.bookTitle,
+                    errataBlurb: this.props.errataContent.content.content
                 })
             }
         ];

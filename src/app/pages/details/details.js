@@ -89,12 +89,13 @@ export default class Details extends CMSPageController {
         const detailsTabData = () => {
             /* eslint complexity: 0 */
             const model = {
-                description: this.pageData.description,
-                title: this.pageData.title,
-                comingSoon: this.pageData.coming_soon ? ' coming-soon' : '',
-                formattedPublishDate: this.pageData.publish_date && formatDate(this.pageData.publish_date),
                 bookInfo: this.pageData,
-                slug: this.slug
+                comingSoon: this.pageData.coming_soon ? ' coming-soon' : '',
+                description: this.pageData.description,
+                errataBlurb: this.pageData.errata_content.content.content,
+                formattedPublishDate: this.pageData.publish_date && formatDate(this.pageData.publish_date),
+                slug: this.slug,
+                title: this.pageData.title
             };
             const authors = this.pageData.book_contributing_authors;
             const senior = (author) => author.senior_author;
@@ -118,10 +119,11 @@ export default class Details extends CMSPageController {
             {
                 title: this.pageData.title,
                 coverUrl: this.pageData.cover_url,
-                prompt: this.pageData.comp_copy_content[0]
+                prompt: (this.pageData.comp_copy_content.content || {}).heading
             },
             this.userStatusPromise
         );
+
         const contents = {
             'Book details': new DetailsTab(detailsTabData()),
             'Instructor resources': new InstructorResourceTab(
@@ -193,15 +195,16 @@ export default class Details extends CMSPageController {
 
         this.regions.phoneView.attach(new PhoneView({
             bookInfo: this.pageData,
-            detailsTabData: detailsTabData(),
-            tableOfContents: this.pageData.table_of_contents,
             bookTitle: this.bookTitle,
-            slug: this.slug,
+            detailsTabData: detailsTabData(),
+            errataContent: this.pageData.errata_content,
             instructorResources: {
                 freeResources: this.pageData.book_faculty_resources,
                 paidResources: this.pageData.book_allies
             },
+            slug: this.slug,
             studentResources: this.pageData.book_student_resources,
+            tableOfContents: this.pageData.table_of_contents,
             userStatusPromise: this.userStatusPromise,
             webviewLink: this.pageData.webview_link,
             compCopyDialogProps

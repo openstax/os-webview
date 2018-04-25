@@ -71,7 +71,7 @@
         .book-title {
             padding: 0;
 
-            h1 {
+            h1:not(.image-heading) {
                 @include title-font(4rem);
 
                 line-height: 1;
@@ -109,6 +109,11 @@
                         height: 32rem;
                     }
                 }
+            }
+
+            .image-heading {
+                line-height: 0;
+                margin: 0;
             }
 
             .volume {
