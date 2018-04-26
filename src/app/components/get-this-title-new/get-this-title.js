@@ -69,6 +69,8 @@ export default class GetThisTitle extends Controller {
             amazonPrice: this.model.amazon.price,
             bookstoreLink: this.model.bookstore.link,
             bulkLink: this.model.isHighSchool ? '/bulk-order?this.model.slug' : null
+        }, () => {
+            shell.hideDialog();
         });
 
         if (this.model.tableOfContents) {
