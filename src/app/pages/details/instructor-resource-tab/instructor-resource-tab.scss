@@ -84,9 +84,8 @@ $icon-size: 6rem;
         .top {
             align-items: center;
             display: flex;
-            height: 100%;
+            height: 17rem;
             justify-content: center;
-            padding: 4rem 0;
             position: relative;
             width: 100%;
 
@@ -112,6 +111,8 @@ $icon-size: 6rem;
             }
 
             img {
+                max-height: 7rem;
+                max-width: 22rem;
                 transition: opacity 0.3s ease-in-out;
             }
         }
@@ -124,12 +125,6 @@ $icon-size: 6rem;
             display: flex;
             justify-content: space-between;
             padding: $normal-margin 2rem;
-        }
-
-        img {
-            margin: 0;
-            max-width: calc(100% - #{2 * $normal-margin});
-            width: 20rem;
         }
     }
 }

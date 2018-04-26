@@ -5,7 +5,7 @@
     grid-gap: $normal-margin;
 
     @include wider-than($tablet-max) {
-        grid-template-columns: 1fr auto;
+        grid-template-columns: auto auto;
     }
 
     p,

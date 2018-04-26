@@ -8,6 +8,8 @@
         @include wider-than($phone-max) {
             display: grid;
             grid-gap: 2rem;
+            max-width: 90rem; // Matches dialog width
+            overflow-x: auto;
         }
     }
 
@@ -42,11 +44,13 @@
         display: grid;
         grid-gap: 2rem;
         padding: 2rem;
+        width: 100%;
 
         @include wider-than($phone-max) {
             grid-gap: 4rem;
             padding: 4rem;
             padding-top: 0;
+            width: calc(100% - 4rem);
 
             &.boxes-1 {
                 grid-template-columns: auto;
