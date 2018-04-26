@@ -48,9 +48,10 @@
 
         @include wider-than($phone-max) {
             grid-gap: 4rem;
+            margin: auto;
             padding: 4rem;
             padding-top: 0;
-            width: calc(100% - 4rem);
+            width: fit-content;
 
             &.boxes-1 {
                 grid-template-columns: auto;
@@ -74,19 +75,23 @@
         color: inherit;
         display: grid;
         grid-gap: $normal-margin;
-        grid-template-rows: auto auto auto 1rem;
+        grid-template-rows: auto auto;
         line-height: normal;
         padding: 2rem;
         text-align: center;
         text-decoration: none;
 
         @include wider-than($phone-max) {
-            padding: 3rem;
+            grid-template-rows: auto 5.7rem auto 1fr;
+            max-width: 30rem;
+            padding: 2rem;
         }
     }
 
     .btn {
         @extend %button;
+
+        padding: 1rem;
 
         &.primary {
             @extend %primary;
