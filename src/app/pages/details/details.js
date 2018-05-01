@@ -42,7 +42,7 @@ export default class Details extends CMSPageController {
             classes: ['details-page-v2']
         };
 
-        this.bookTitle = 'loading';
+        this.bookTitle = 'Loading';
         this.slug = getSlugFromTitle(bookTitle.toLowerCase());
         this.userStatusPromise = this.getUserStatusPromise();
         this.reverseGradient = false;
@@ -82,7 +82,14 @@ export default class Details extends CMSPageController {
         });
     }
 
+    onLoaded() {
+        document.body.classList.remove('page-loaded');
+        document.body.classList.add('page-loading');
+    }
+
     onDataLoaded() {
+        document.body.classList.remove('page-loading');
+        document.body.classList.add('page-loaded');
         document.title = `${this.pageData.title} - OpenStax`;
         const tabLabels = ['Book details', 'Instructor resources', 'Student resources'];
         let selectedTab = tabLabels[0];
