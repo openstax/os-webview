@@ -119,7 +119,7 @@ export default class Details extends CMSPageController {
             {
                 title: this.pageData.title,
                 coverUrl: this.pageData.cover_url,
-                prompt: (this.pageData.comp_copy_content.content || {}).heading
+                prompt: (this.pageData.comp_copy_content || ['Request your complimentary iBooks download'])[0]
             },
             this.userStatusPromise
         );
