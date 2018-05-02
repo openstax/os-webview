@@ -41,7 +41,7 @@
             position: absolute;
             top: 0;
             width: 100vw;
-	}
+        }
 
 
         .os-loader--inner {
@@ -85,7 +85,7 @@
                 .os-yellow,
                 .os-blue {
                     animation-delay: 0.5s;
-			      }
+                }
 
                 .os-green {
                     animation: moveGreen 0.6s cubic-bezier(0.81, 0.41, 0.13, 0.74) 0.5s infinite alternate;
@@ -161,7 +161,7 @@
                         transform: matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, -4);
                     }
                 }
-		    }
-	  }
+            }
+        }
     }
 }
