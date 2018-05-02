@@ -91,7 +91,7 @@ export default class Details extends CMSPageController {
         document.body.classList.remove('page-loading');
         document.body.classList.add('page-loaded');
         document.title = `${this.pageData.title} - OpenStax`;
-        const tabLabels = ['Book details', 'Instructor resources', 'Student resources'];
+        const tabLabels = ['Book details'];
         let selectedTab = tabLabels[0];
         const detailsTabData = () => {
             /* eslint complexity: 0 */
@@ -99,7 +99,7 @@ export default class Details extends CMSPageController {
                 bookInfo: this.pageData,
                 comingSoon: this.pageData.coming_soon ? ' coming-soon' : '',
                 description: this.pageData.description,
-                errataBlurb: this.pageData.errata_content.content.content,
+                errataBlurb: this.pageData.errata_content.content && this.pageData.errata_content.content.content,
                 formattedPublishDate: this.pageData.publish_date && formatDate(this.pageData.publish_date),
                 slug: this.slug,
                 title: this.pageData.title
@@ -132,8 +132,11 @@ export default class Details extends CMSPageController {
         );
 
         const contents = {
-            'Book details': new DetailsTab(detailsTabData()),
-            'Instructor resources': new InstructorResourceTab(
+            'Book details': new DetailsTab(detailsTabData())
+        };
+
+        if (this.pageData.free_stuff_instructor.content) {
+            contents['Instructor resources'] = new InstructorResourceTab(
                 {
                     resources: this.pageData.book_faculty_resources,
                     allies: shuffle(this.pageData.book_allies),
@@ -162,16 +165,22 @@ export default class Details extends CMSPageController {
                     }
                 },
                 compCopyDialogProps
-            ),
-            'Student resources': new StudentResourceTab({
+            );
+            tabLabels.push('Instructor resources');
+        }
+
+        if (this.pageData.free_stuff_student.content) {
+            contents['Student resources'] = new StudentResourceTab({
                 freeStuff: {
                     heading: this.pageData.free_stuff_student.content.heading,
                     blurb: this.pageData.free_stuff_student.content.content
                 },
                 resources: this.pageData.book_student_resources,
                 userStatusPromise: this.userStatusPromise
-            })
-        };
+            });
+            tabLabels.push('Student resources');
+        }
+
         const contentGroup = new ContentGroup(() => ({
             selectedTab,
             contents

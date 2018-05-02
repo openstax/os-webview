@@ -56,7 +56,7 @@ export default class PhoneView extends Controller {
                 title: 'Report errata',
                 contentComponent: new ErrataPane({
                     title: this.props.bookTitle,
-                    errataBlurb: this.props.errataContent.content.content
+                    errataBlurb: this.props.errataContent.content && this.props.errataContent.content.content
                 })
             }
         ];
@@ -64,10 +64,6 @@ export default class PhoneView extends Controller {
         if (this.props.tableOfContents) {
             accordionItems.splice(1, 0, {
                 title: 'Table of contents',
-                // contentComponent: new Contents(
-                //     this.props.tableOfContents,
-                //     {tag: 'ol', classes: ['table-of-contents']}
-                // )
                 contentComponent: new TocPane({
                     webviewLink: this.props.webviewLink,
                     contentPane: new Contents(
@@ -77,6 +73,7 @@ export default class PhoneView extends Controller {
                 })
             });
         }
+
         this.regions.accordion.append(new AccordionGroup(() => ({
             items: accordionItems
         })));
