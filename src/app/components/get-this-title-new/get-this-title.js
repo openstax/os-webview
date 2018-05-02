@@ -52,8 +52,7 @@ export default class GetThisTitle extends Controller {
                 price: data.amazon_price.toLocaleString('en-US', {
                     style: 'currency',
                     currency: 'USD'
-                }),
-                blurb: data.amazon_blurb
+                })
             },
             bookstore: {
                 link: data.bookstore_content && data.bookstore_content.link,

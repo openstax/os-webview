@@ -46,9 +46,9 @@ export default class AdoptionForm extends Controller {
             const options = roles.map((opt) => ({label: opt.display_name, value: opt.salesforce_name}));
 
             this.regions.roleSelector.attach(new FormSelect({
-                instructions: 'Please select one',
+                instructions: 'I am a',
                 validationMessage: () => '',
-                placeholder: 'I am a',
+                placeholder: 'Please select one',
                 options
             }));
         });

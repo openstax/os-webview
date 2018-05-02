@@ -1,0 +1,54 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.book-checkbox {
+    @include form-border();
+
+    align-items: center;
+    background-color: ui-color(white);
+    cursor: pointer;
+    display: grid;
+    grid-gap: $normal-margin;
+    grid-template-columns: 1fr auto;
+    height: $form-element-height;
+    padding-left: $normal-margin;
+
+    &.has-image {
+        grid-template-columns: $form-element-height 1fr auto;
+        padding-left: 0;
+    }
+
+    &.checked {
+        background-color: ui-color(default);
+
+        > .indicator {
+            background-color: ui-color(white);
+            border: 0;
+            border-radius: 50%;
+            color: os-color(green);
+            height: 3rem;
+            width: 3rem;
+        }
+    }
+
+    > img {
+        width: 100%;
+    }
+
+    > label {
+        @include set-font(helper-label);
+        color: text-color(normal);
+    }
+
+    >.indicator {
+        @include form-border();
+
+        align-items: center;
+        color: ui-color(form-border);
+        display: flex;
+        font-size: 200%;
+        height: 2rem;
+        justify-content: center;
+        margin-right: $normal-margin;
+        width: 2rem;
+    }
+}

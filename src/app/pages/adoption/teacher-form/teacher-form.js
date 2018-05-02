@@ -5,6 +5,7 @@ import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import FormInput from '~/components/form-input/form-input';
 import FormSelect from '~/components/form-select/form-select';
+import BookCheckbox from '~/components/book-checkbox/book-checkbox';
 import FormRadioGroup from '~/components/form-radiogroup/form-radiogroup';
 import FormCheckboxGroup from '~/components/form-checkboxgroup/form-checkboxgroup';
 import ManagedComponent from '~/helpers/controller/managed-component';
@@ -21,7 +22,8 @@ export default class TeacherForm extends SalesforceForm {
             classes: ['labeled-inputs', 'row', 'top-of-form']
         };
         this.regions = {
-            contactInfo: '[data-id="contactInfo"]'
+            contactInfo: '[data-id="contactInfo"]',
+            partnerCheckboxes: '.partner-checkboxes'
         };
         this.defaultTitle = decodeURIComponent(window.location.search.substr(1));
         const validationMessage = (name) => {
@@ -32,115 +34,63 @@ export default class TeacherForm extends SalesforceForm {
             }
             return '';
         };
-        const inputs = {
-            howMany: new FormInput({
-                name: '00NU00000052VId',
-                type: 'number',
-                min: '1',
-                longLabel: 'How many students are using this book in your courses this semester?',
-                required: true,
-                validationMessage
-            }),
-            otherPartner: new FormInput({
-                name: '00NU0000005Vls8',
-                type: 'text',
-                label: 'Other (include all other technologies you use)',
-                validationMessage
-            }),
-            otherInstructors: new FormInput({
-                name: '00NU00000055sq1',
-                type: 'number',
-                min: '0',
-                label: 'If there are other instructors in your department who will also be using this' +
-                ' book, approximately how many students in your department will be using this' +
-                ' book per semester?',
-                validationMessage
-            }),
-            yourBook: new FormSelect({
-                name: '00NU00000053nzR',
-                label: 'Your OpenStax book:',
-                required: true,
-                validationMessage
-            }),
-            adoptionStatus: new FormRadioGroup({
-                name: '00NU00000055spw',
-                longLabel: 'How are you using your book?',
-                options: salesforce.adoption(['adopted', 'recommended'])
-                    .map((opt) => ({label: opt.text, value: opt.value})),
-                validationMessage,
-                required: true
-            }),
-            partnerContact: new FormCheckboxGroup({
-                name: '00NU00000055spm',
-                label: 'Which of our partners would you like to give permission' +
-                    ' to contact you about additional resources to support our books?',
-                instructions: 'Select all that apply.',
-                options: [
-                    {label: 'Online homework partners', value: 'Online homework partners'},
-                    {label: 'Adaptive courseware partners', value: 'Adaptive courseware partners'},
-                    {label: 'Customization tool partners', value: 'Customization tool partners'}
-                ],
-                multiple: true,
-                required: true,
-                requireNone: true,
-                validationMessage
-            }),
-            featureMe: new FormRadioGroup({
-                name: '00NU00000055sq6',
-                longLabel: 'Are you interested in having your OpenStax experience' +
-                    ' featured on our website, social media, and/or emails?',
-                options: FormSelect.YES_NO_OPTIONS,
-                required: true,
-                value: '0',
-                classes: ['two-columns'],
-                validationMessage
-            }),
-            contactMe: new FormRadioGroup({
-                name: '00NU00000055sqB',
-                longLabel: 'May we contact you about opportunities to participate in' +
-                    ' future pilots or research studies?',
-                options: FormSelect.YES_NO_OPTIONS,
-                required: true,
-                value: '0',
-                classes: ['two-columns'],
-                validationMessage
-            })
-        };
 
         this.model = Object.assign(model, {
             validationMessage,
             salesforce,
             currentSection: 1,
             showOtherBlank: false,
-            defaultTitle: this.defaultTitle
-        });
+            defaultTitle: this.defaultTitle,
+            bookIsSelected: {},
+            selectedBooks: () => this.selectedBooks(),
+            validationMessageFromSelector: (selector) => {
+                const el = this.el.querySelector(selector);
 
-        this.inputComponents = Object.keys(inputs).map((k) =>
-            new ManagedComponent(inputs[k], k, this)
-        );
+                if (el && this.model.hasBeenSubmitted) {
+                    return el.validationMessage;
+                }
+                return '';
+            }
+        });
     }
 
     setBookOptions() {
         this.model.subjects = Array.from(new Set(this.salesforceTitles.map((book) => book.subject))).sort();
-        this.model.booksBySubject = (subject) => {
-            return this.salesforceTitles
+        this.model.booksBySubject = (subject) =>
+            this.salesforceTitles
                 .filter((b) => b.subject === subject)
-                .sort();
-        };
+                .sort()
+                .reduce((a, b) => b.value === a.value ? a : a.concat(b), [])
+        ;
     }
 
     onLoaded() {
         this.model.titles = this.salesforceTitles;
-        for (const c of this.inputComponents) {
-            c.attach();
-        }
         partnerPromise.then((partners) => {
             const options = partners.map((p) => p.title)
                 .sort((a, b) => a.localeCompare(b))
-                .map((title) => ({label: title, value: title}));
+                .map((title) => ({
+                    label: title,
+                    value: title
+                }));
 
-            options.push({label: 'Other (specify below)', value: 'other-partner'});
-            this.model.partnerResourceOptions = options;
+            options.push({
+                label: 'Other (specify below)',
+                value: 'other-partner',
+                onChange: (selected) => {
+                    this.model.showOtherBlank = selected;
+                    this.update();
+                }
+            });
+            options.forEach(({label, value, onChange}) => {
+                const cb = new BookCheckbox(() => ({
+                    name: '00NU0000005VmTu',
+                    value,
+                    label
+                }), onChange);
+
+                this.regions.partnerCheckboxes.append(cb);
+            });
         });
         this.contactInfo = new ContactInfo(this.model);
         this.regions.contactInfo.attach(this.contactInfo);
@@ -150,38 +100,72 @@ export default class TeacherForm extends SalesforceForm {
         super.onDataLoaded();
         this.setBookOptions();
         this.update();
-        this.formResponseEl = this.el.querySelector('#form-response');
-        this.goToConfirmation = () => {
-            const emailEl = document.querySelector('[name="email"]');
+        this.setUpSubmissionQueue();
+        const checkboxSubjectSections = this.el.querySelectorAll('[data-subject]');
+        const Region = this.regions.self.constructor;
 
-            if (this.submitted) {
-                this.submitted = false;
+        for (const subjectEl of checkboxSubjectSections) {
+            const subject = subjectEl.getAttribute('data-subject');
+            const containers = Array.from(subjectEl.querySelectorAll('[data-book-checkbox]'));
+            const books = this.model.booksBySubject(subject);
+
+            for (let i=0; i<containers.length; ++i) {
+                const cEl = containers[i];
+                const book = books[i];
+                const onChange = (checked) => {
+                    this.model.bookIsSelected[book.value] = checked;
+                    this.update();
+                };
+                const checkboxComponent = new BookCheckbox(() => ({
+                    // No name; will provide name at submit time as needed
+                    id: '00NU00000053nzR',
+                    value: book.value,
+                    imageUrl: book.coverUrl,
+                    label: book.text
+                }), onChange);
+                const region = new Region(cEl, this);
+
+                region.attach(checkboxComponent);
+            }
+        }
+    }
+
+    setUpSubmissionQueue() {
+        this.formResponseEl = this.el.querySelector('#form-response');
+        this.submissionQueue = [];
+        this.submissionQueue.nextSubmission = () => {
+            if (this.submissionQueue.length > 0) {
+                const doSubmit = this.submissionQueue.shift();
+
+                doSubmit();
+            } else {
+                const emailEl = document.querySelector('[name="email"]');
+
                 router.navigate('/adoption-confirmation', {
                     email: emailEl.value
                 });
             }
         };
-        this.formResponseEl.addEventListener('load', this.goToConfirmation);
-        // Update book radio group
-        const bookRadios = this.el.querySelectorAll('[name="00NU00000053nzR"]');
 
-        for (const el of bookRadios) {
-            el.checked = el.hasAttribute('checked');
-        }
+        this.formResponseEl.addEventListener('load', this.submissionQueue.nextSubmission);
     }
 
     onClose() {
-        this.formResponseEl.removeEventListener('load', this.goToConfirmation);
+        this.formResponseEl.removeEventListener('load', this.submissionQueue.nextSubmission);
     }
 
     onUpdate() {
         if (this.parent) {
             this.parent.update();
         }
-        for (const c of this.inputComponents) {
-            c.update();
-        }
         this.contactInfo && this.contactInfo.update();
+    }
+
+    selectedBooks() {
+        return this.model ?
+            Object.keys(this.model.bookIsSelected)
+                .filter((b) => this.model.bookIsSelected[b]) :
+            [];
     }
 
     @on('click button.next')
@@ -193,6 +177,12 @@ export default class TeacherForm extends SalesforceForm {
             this.update();
             return;
         }
+
+        if (this.model.currentSection === 2 && this.selectedBooks().length < 1) {
+            this.update();
+            return;
+        }
+
         if (!this.contactInfo.checkSchoolName() && this.model.currentSection < 4) {
             this.model.currentSection += 1;
             event.preventDefault();
@@ -210,10 +200,29 @@ export default class TeacherForm extends SalesforceForm {
         event.preventDefault();
     }
 
-    @on('change [value="other-partner"]')
-    toggleOtherBlank(event) {
-        this.model.showOtherBlank = event.target.checked;
+    @on('submit form')
+    submitViaQueue(event) {
+        event.preventDefault();
+        this.model.submitting = true;
         this.update();
+
+        const selectedBooks = this.selectedBooks();
+        const bookEl = this.el.querySelector('[name="00NU00000053nzR"]');
+        const howUsingEl = this.el.querySelector('[name="00NU00000055spw"]');
+
+        for (const selectedBook of selectedBooks) {
+            const selector = `[name="00NU00000055spw${selectedBook}"]:checked`;
+            const howUsingSource = this.el.querySelector(selector);
+
+            this.submissionQueue.push(() => {
+                bookEl.value = selectedBook;
+                howUsingEl.value = howUsingSource.value;
+                event.target.submit();
+            });
+            // So it is not included in the form submission
+            howUsingSource.disabled = true;
+        }
+        this.submissionQueue.nextSubmission();
     }
 
     doCustomValidation(event) {

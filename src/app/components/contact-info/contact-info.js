@@ -55,15 +55,6 @@ export default class ContactInfo extends Controller {
                 autocomplete: 'organization',
                 validationMessage: this.props.validationMessage,
                 suggestions: []
-            }),
-            schoolUrl: new FormInput({
-                name: 'URL',
-                type: 'url',
-                label: 'School url',
-                value: 'http://',
-                required: true,
-                pattern: '.*[.][a-zA-Z][a-zA-Z]+',
-                validationMessage: this.props.validationMessage
             })
         };
 
@@ -96,30 +87,7 @@ export default class ContactInfo extends Controller {
         return this.knownSchools && this.knownSchools.includes(value);
     }
 
-    schoolUrlIsRequired() {
-        const isHomeSchool = (/home ?school/i).test(this.props.selectedRole);
-
-        return !isHomeSchool && !this.schoolMatchesSuggestion();
-    }
-
-    updateSchoolUrlModel() {
-        const schoolUrlComponent = this.componentsById.schoolUrl;
-
-        if (schoolUrlComponent) {
-            const schoolUrlModel = schoolUrlComponent.model;
-            const schoolUrlValue = schoolUrlComponent.getValue();
-
-            schoolUrlModel.required = this.schoolUrlIsRequired();
-            if (schoolUrlValue === 'http://' && !schoolUrlModel.required) {
-                schoolUrlComponent.setValue('');
-            } else if ((schoolUrlModel.required || schoolUrlValue) && !schoolUrlValue.includes('//')) {
-                schoolUrlComponent.setValue(`http://${schoolUrlValue}`);
-            }
-        }
-    }
-
     onUpdate() {
-        this.updateSchoolUrlModel();
         for (const c of this.components) {
             c.update();
         }

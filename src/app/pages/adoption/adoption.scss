@@ -27,7 +27,11 @@
 
     .grouping {
         align-items: flex-start;
-        width: 47rem;
+        width: 100%;
+
+        &.single-column {
+            width: 47rem;
+        }
 
         > div {
             margin-bottom: 1rem;
@@ -83,8 +87,9 @@
     }
 
     .two-columns {
-        column-count: 2;
-        margin: $normal-margin 0;
+        display: grid;
+        grid-gap: 1rem;
+        grid-template-columns: 1fr 1fr;
     }
 
     .form-checkboxgroup > label + :not(label),
@@ -104,6 +109,22 @@
     .top-of-form {
         margin-top: -2rem;
         padding-top: inherit;
+    }
+
+    .how-using {
+        > div {
+            border-top: thin solid ui-color(form-border);
+            padding: 2rem 0;
+        }
+
+        label {
+            align-items: center;
+            color: text-color(helper);
+            display: grid;
+            grid-gap: 0.5rem;
+            grid-template-columns: auto 1fr;
+            margin-top: 1rem;
+        }
     }
 
     .wrapper {
