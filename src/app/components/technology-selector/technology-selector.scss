@@ -1,0 +1,17 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.technology-selector {
+    width: 100%;
+
+    .prompt {
+        @include set-font(h4);
+
+        margin: 0;
+    }
+
+    .two-columns {
+        display: grid;
+        grid-gap: 1rem;
+        grid-template-columns: 1fr 1fr;
+    }
+}

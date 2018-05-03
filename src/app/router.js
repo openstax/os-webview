@@ -26,6 +26,7 @@ const PAGES = [
     'give',
     'give/*path',
     'interest',
+    'interest-new',
     'impact',
     'license',
     'openstax-tutor',
