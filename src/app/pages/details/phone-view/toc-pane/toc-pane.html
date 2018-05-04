@@ -1,4 +1,6 @@
 <template args="model">
     <div class="toc-region" skip="true"></div>
-    <a class="btn primary" href="{model.webviewLink}">View online</a>
+    <a class="btn primary" href="{model.webviewLink}">
+        {model.polish ? 'Zobacz w przeglądarce' : 'View online'}
+    </a>
 </template>

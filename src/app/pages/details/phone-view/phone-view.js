@@ -29,11 +29,13 @@ export default class PhoneView extends Controller {
     }
 
     onLoaded() {
+        /* eslint complexity: 0 */
         $.insertHtml(this.el, this.props);
         this.regions.getTheBook.append(new GetThisTitle(this.props.bookInfo));
+        const polish = (/^Fizyka/).test(this.props.bookTitle);
         const accordionItems = [
             {
-                title: 'Book details',
+                title: polish ? 'Szczegóły książki' : 'Book details',
                 contentComponent: new DetailsPane(this.props.detailsTabData)
             },
             {
@@ -53,7 +55,7 @@ export default class PhoneView extends Controller {
                 })
             },
             {
-                title: 'Report errata',
+                title: polish ? 'Zgłoś erratę' : 'Report errata',
                 contentComponent: new ErrataPane({
                     title: this.props.bookTitle,
                     errataBlurb: this.props.errataContent.content && this.props.errataContent.content.content
@@ -61,10 +63,15 @@ export default class PhoneView extends Controller {
             }
         ];
 
+        if (polish) {
+            accordionItems.splice(1, 2);
+        }
+
         if (this.props.tableOfContents) {
             accordionItems.splice(1, 0, {
-                title: 'Table of contents',
+                title: polish ? 'Spis treści' : 'Table of contents',
                 contentComponent: new TocPane({
+                    polish,
                     webviewLink: this.props.webviewLink,
                     contentPane: new Contents(
                         this.props.tableOfContents,

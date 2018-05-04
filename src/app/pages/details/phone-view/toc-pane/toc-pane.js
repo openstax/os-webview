@@ -17,10 +17,9 @@ export default class TocPane extends Controller {
         this.model = () => this.getModel();
     }
 
-    // Returns a dictionary of values to be used in the template
-    // Refreshes props, to ensure they're up to date
     getModel() {
         return {
+            polish: this.props.polish,
             webviewLink: this.props.webviewLink
         };
     }

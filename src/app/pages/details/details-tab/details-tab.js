@@ -4,11 +4,12 @@ import $ from '~/helpers/$';
 import GetThisTitle from '~/components/get-this-title-new/get-this-title';
 import LetUsKnow from '../let-us-know/let-us-know';
 import {description as template} from './details-tab.html';
+import {description as templatePolish} from './details-tab-polish.html';
 
 export default class DetailsTab extends Controller {
 
     init(model) {
-        this.template = template;
+        this.template = model.polish ? templatePolish : template;
         this.model = model;
         this.view = {
             classes: ['details-tab']

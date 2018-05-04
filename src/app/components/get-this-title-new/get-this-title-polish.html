@@ -1,50 +1,5 @@
 <template args="model">
     <div class="get-this-title">
-        <div class="submenu {model.submenu}">
-            <div class="pdf-submenu">
-                <h3>Wybierz wersję PDF</h3>
-                <a class="btn" href="{model.hiRes}"
-                    tabindex="{model.submenu === 'pdf' ? 0 : -1}">Wysoka rozdzielczość</a>
-                <p>Grafika lepszej jakości, ale większy plik i dłuższy czas pobierania</p>
-                <if condition="model.loRes">
-                    <a class="btn" href="{model.loRes}"
-                        tabindex="{model.submenu === 'pdf' ? 0 : -1}">Niska rozdzielczość</a>
-                    <p>Ta sama treść w mniejszym pliku, lecz niektóre grafiki nieco gorszej jakości</p>
-                <else>
-                    <p>Wersja w niskiej rozdzielczości jest niedostępna</p>
-                </if>
-                <div class="remover" aria-role="button"><i class="fa fa-times" aria-hidden="true"
-                    tabindex="{model.submenu === 'pdf' ? 0 : -1}"></i></div>
-            </div>
-            <div class="print-submenu">
-                <h3>Złóż zamówienie</h3>
-                <p if="model.bookstore.link">
-                    <a href="{model.bookstore.link}" class="btn"
-                        tabindex="{model.submenu === 'print' ? 0 : -1}">Księgarnia</a>
-                    Zamów w indiCo
-                </p>
-                <p if="model.isHighSchool">
-                    <a href="/bulk-order?{model.slug}" class="btn"
-                        tabindex="{model.submenu === 'print' ? 0 : -1}">Zamów hurtowo</a>
-                    Wypełnij formularz, aby zamówić większą liczbę ezgemplarzy dla swojej uczelni.
-                </p>
-                <p if="model.amazon.link">
-                    <a href="{model.amazon.link}" class="btn"
-                        tabindex="{model.submenu === 'print' ? 0 : -1}">Kup dla siebie</a>
-                    w cenie {model.amazon.price} od wydawcy \"OpenStax\" w sklepie Amazon
-                </p>
-                <div if="!model.bookstore.link && model.bookstore.comingSoon" class="coming-soon-wrapper">
-                    <img class="coming-soon" src="/images/subjects/coming-soon.svg" alt="coming soon">
-                    KSIĘGARNIA
-                </div>
-                <div if="!model.amazon.link && model.amazon.comingSoon" class="coming-soon-wrapper">
-                    <img class="coming-soon" src="/images/subjects/coming-soon.svg" alt="coming soon">
-                    KUP DLA SIEBIE
-                </div>
-                <div class="remover" aria-role="button"
-                    tabindex="{model.submenu === 'print' ? 0 : -1}"><i class="fa fa-times" aria-hidden="true"></i></div>
-            </div>
-        </div>
         <div class="options">
             <div if="!model.comingSoon && model.webviewLink" class="option">
                 <a href="{model.webviewLink}"

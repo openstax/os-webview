@@ -2,36 +2,6 @@
     <div class="modal-region" hidden="{model.modalHiddenAttribute}" skip="true"></div>
     <div class="toc-region" hidden="{model.tocHiddenAttribute}" skip="true"></div>
     <div class="get-this-title">
-        <div class="submenu {model.submenu}">
-            <div class="print-submenu">
-                <h3>Place an Order</h3>
-                <p if="model.bookstore.link">
-                    <a href="{model.bookstore.link}" class="btn"
-                        tabindex="{model.submenu === 'print' ? 0 : -1}">Bookstore Orders</a>
-                    Order through indiCo
-                </p>
-                <p if="model.isHighSchool">
-                    <a href="/bulk-order?{model.slug}" class="btn"
-                        tabindex="{model.submenu === 'print' ? 0 : -1}">Bulk Orders</a>
-                    Fill out our form to order in bulk for your school.
-                </p>
-                <p if="model.amazon.link">
-                    <a href="{model.amazon.link}" class="btn"
-                        tabindex="{model.submenu === 'print' ? 0 : -1}">Individual Orders</a>
-                    {model.amazon.price} from seller \"OpenStax\" on Amazon
-                </p>
-                <div if="!model.bookstore.link && model.bookstore.comingSoon" class="coming-soon-wrapper">
-                    <img class="coming-soon" src="/images/subjects/coming-soon.svg" alt="coming soon">
-                    BOOKSTORE ORDERS
-                </div>
-                <div if="!model.amazon.link && model.amazon.comingSoon" class="coming-soon-wrapper">
-                    <img class="coming-soon" src="/images/subjects/coming-soon.svg" alt="coming soon">
-                    INDIVIDUAL ORDERS
-                </div>
-                <div class="remover" aria-role="button"
-                    tabindex="{model.submenu === 'print' ? 0 : -1}"><i class="fa fa-times" aria-hidden="true"></i></div>
-            </div>
-        </div>
         <div class="options">
             <div if="model.includeTOC && model.tableOfContents" class="option">
                 <a href="/" role="button" class="show-toc">
