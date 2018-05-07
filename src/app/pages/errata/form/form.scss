@@ -75,6 +75,10 @@
         }
     }
 
+    .button-row {
+        @include tight-row();
+    }
+
     .file-button {
         display: flex;
         justify-content: flex-start;
