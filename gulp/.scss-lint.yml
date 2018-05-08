@@ -29,9 +29,12 @@ linters:
             - grid-row-start
             - grid-template-columns
             - grid-template-rows
+            - grid-column-end
             - grid-column-start
+            - grid-row-start
             - justify-items
             - place-items
+            - place-self
 
     PropertyUnits:
         global: ['em', 'rem', '%', 'vw', 'vh', 'vmin', 'vmax', 's', 'fr']
