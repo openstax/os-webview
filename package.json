@@ -1,6 +1,6 @@
 {
   "name": "@openstax/os-webview",
-  "version": "2.10.0",
+  "version": "2.11.0",
   "description": "OpenStax webview",
   "scripts": {
     "start": "gulp dev",
@@ -19,7 +19,7 @@
     "http-server": "^0.10.0",
     "ignore-loader": "^0.1.2",
     "particles.js": "^2.0.0",
-    "pattern-library": "github:openstax/pattern-library#v1.1.4",
+    "pattern-library": "github:openstax/pattern-library#v1.1.5",
     "rollup": "^0.50.0",
     "rollup-plugin-commonjs": "^8.2.3",
     "rollup-plugin-node-resolve": "^3.0.0",
