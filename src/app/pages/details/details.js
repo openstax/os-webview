@@ -91,7 +91,8 @@ export default class Details extends CMSPageController {
         document.body.classList.remove('page-loading');
         document.body.classList.add('page-loaded');
         document.title = `${this.pageData.title} - OpenStax`;
-        const tabLabels = ['Book details'];
+        const polish = (/^Fizyka/).test(this.pageData.title);
+        const tabLabels = [polish ? 'Szczegóły książki' : 'Book details'];
         let selectedTab = tabLabels[0];
         const detailsTabData = () => {
             /* eslint complexity: 0 */
@@ -101,6 +102,7 @@ export default class Details extends CMSPageController {
                 description: this.pageData.description,
                 errataBlurb: this.pageData.errata_content.content && this.pageData.errata_content.content.content,
                 formattedPublishDate: this.pageData.publish_date && formatDate(this.pageData.publish_date),
+                polish,
                 slug: this.slug,
                 title: this.pageData.title
             };
@@ -131,11 +133,15 @@ export default class Details extends CMSPageController {
             this.userStatusPromise
         );
 
-        const contents = {
-            'Book details': new DetailsTab(detailsTabData())
-        };
+        const contents = polish ?
+            {
+                'Szczegóły książki': new DetailsTab(detailsTabData())
+            } :
+            {
+                'Book details': new DetailsTab(detailsTabData())
+            };
 
-        if (this.pageData.free_stuff_instructor.content) {
+        if (!polish && this.pageData.free_stuff_instructor.content) {
             contents['Instructor resources'] = new InstructorResourceTab(
                 {
                     resources: this.pageData.book_faculty_resources,
@@ -169,7 +175,7 @@ export default class Details extends CMSPageController {
             tabLabels.push('Instructor resources');
         }
 
-        if (this.pageData.free_stuff_student.content) {
+        if (!polish && this.pageData.free_stuff_student.content) {
             contents['Student resources'] = new StudentResourceTab({
                 freeStuff: {
                     heading: this.pageData.free_stuff_student.content.heading,

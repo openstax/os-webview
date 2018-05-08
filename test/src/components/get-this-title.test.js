@@ -18,7 +18,7 @@ describe('GetThisTitle', () => {
     });
 
     it('shows links', () => {
-        for (const url of [details.bookstore_content.link, details.webview_link, details.ibook_link]) {
+        for (const url of [details.webview_link, details.ibook_link]) {
             const link = p.el.querySelector(`[href="${url}"]`);
 
             expect(link).toBeTruthy();

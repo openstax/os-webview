@@ -23,18 +23,20 @@ export default class DetailsPane extends Controller {
 
     onLoaded() {
         $.insertHtml(this.el, this.model);
+        const polish = (/^Fizyka/).test(this.model.title);
         const authorComponent = new AuthorList({
+            polish,
             allSenior: this.model.allSenior,
             allNonsenior: this.model.allNonsenior
         });
-        const publicationComponent = new PublicationDetails(this.model);
+        const publicationComponent = new PublicationDetails(this.model, polish);
 
         this.regions.authors.attach(new CollapsingPane({
-            title: 'Authors',
+            title: polish ? 'Autorzy' : 'Authors',
             contentComponent: authorComponent
         }));
         this.regions.productDetails.attach(new CollapsingPane({
-            title: 'Product details',
+            title: polish ? 'Szczegóły Produktu' : 'Product details',
             contentComponent: publicationComponent
         }));
     }

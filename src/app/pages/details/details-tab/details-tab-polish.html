@@ -1,7 +1,7 @@
 <template args="model">
     <div class="sidebar">
         <div>
-            <h3>Get the book</h3>
+            <h3>Przejdź do książki</h3>
             <div class="get-the-book" skip="true"></div>
         </div>
         <div class="let-us-know-region" skip="true"></div>
@@ -9,13 +9,13 @@
 
     <div class="main">
         <div>
-            <h3>Summary</h3>
+            <h3>Podsumowanie</h3>
             <div data-html="description" skip="true"></div>
         </div>
         <if condition="model.allSenior.length || model.allNonsenior.length">
             <if condition="model.allSenior.length">
                 <div>
-                    <h3>Senior Contributing Authors</h3>
+                    <h3>Główni autorzy</h3>
                     <div each="author in model.allSenior">
                         {author.name}<if condition="author.university">, {author.university}</if>
                     </div>
@@ -23,7 +23,7 @@
             </if>
             <if condition="model.allNonsenior.length">
                 <div>
-                    <h3>Contributing Authors</h3>
+                    <h3>Autorzy współpracujący</h3>
                     <div each="author in model.allNonsenior">
                         {author.name}<if condition="author.university">, {author.university}</if>
                     </div>
@@ -35,23 +35,23 @@
                 <h3>Errata</h3>
                 <p data-html="errataBlurb"></p>
                 <div class="button-group">
-                    <a href="/errata/form?book={encodeURIComponent(model.title)}" class="btn secondary medium">Suggest a correction</a>
-                    <a href="/errata/?book={encodeURIComponent(model.title)}" class="btn default medium">Errata list</a>
+                    <a href="/errata/form?book={encodeURIComponent(model.title)}"
+                     class="btn secondary medium">Zgłoś poprawkę</a>
                 </div>
             </div>
         </if>
         <div class="publication-info">
             <div if="model.formattedPublishDate">
-                <h4>Publish Date:</h4>
+                <h4>Data publikacji:</h4>
                 {model.formattedPublishDate}
             </div>
             <div if="model.print_isbn_10 || model.print_isbn_13">
-                <h4>Print:</h4>
+                <h4>Wydrukowane:</h4>
                 <div if="model.print_isbn_10">ISBN-10: {model.print_isbn_10}</div>
                 <div if="model.print_isbn_13">ISBN-13: {model.print_isbn_13}</div>
             </div>
             <div if="model.digital_isbn_10 || model.digital_isbn_13">
-                <h4>Digital:</h4>
+                <h4>Wersja cyfrowa:</h4>
                 <div if="model.digital_isbn_10">ISBN-10: {model.digital_isbn_10}</div>
                 <div if="model.digital_isbn_13">ISBN-13: {model.digital_isbn_13}</div>
             </div>
@@ -69,7 +69,7 @@
                 <div if="model.ibook_isbn_13">ISBN-13: {model.ibook_volume_2_isbn_13}</div>
             </div>
             <div if="model.license_name">
-                <h4>License:</h4>
+                <h4>Licencja:</h4>
                 <img src="{model.licenseIcon}" alt="">
                 <div>
                     <div if="!model.license_text">

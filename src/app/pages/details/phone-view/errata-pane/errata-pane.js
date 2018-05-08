@@ -2,12 +2,13 @@ import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import {description as template} from './errata-pane.html';
+import {description as templatePolish} from './errata-pane-polish.html';
 
 export default class ErrataPane extends Controller {
 
     init(model) {
         this.model = model;
-        this.template = template;
+        this.template = (/^Fizyka/).test(model.title) ? templatePolish : template;
         this.view = {
             classes: ['errata-pane']
         };
