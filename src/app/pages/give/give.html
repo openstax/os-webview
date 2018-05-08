@@ -447,7 +447,7 @@
                             <div class="box-row">
                                 <div each="amount in model.amounts" data-value="{amount}"
                                     class="{`amount ${model.selectedAmount === +amount ? 'selected' : ''}`}"
-                                    aria-role="button" aria-pressed="{model.selectedAmount === +amount}"
+                                    role="button" aria-pressed="{model.selectedAmount === +amount}"
                                     tabindex="0">
                                     ${amount}
                                  </div>

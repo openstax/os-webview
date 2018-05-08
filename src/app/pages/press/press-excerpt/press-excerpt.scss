@@ -1,0 +1,23 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.press-excerpt {
+    display: grid;
+
+    &.with-icon {
+        grid-column-gap: 2rem;
+        grid-template-columns: auto 1fr;
+    }
+
+    > img {
+        grid-row-end: 3;
+        grid-row-start: 1;
+    }
+
+    .byline {
+        @include set-font(helper-label);
+    }
+
+    .headline {
+        font-weight: bold;
+    }
+}

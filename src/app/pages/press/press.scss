@@ -1,0 +1,73 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.press.page {
+    background-color: ui-color(white);
+    padding-bottom: 8rem;
+
+    .hero {
+        background-image: linear-gradient(to left, lighten(os-color(green), 18%), darken(os-color(green), 3%));
+        padding: 14rem 0 5rem;
+
+        h1 {
+            @extend %content;
+
+            color: text-color(white);
+            letter-spacing: normal;
+            text-align: left;
+        }
+    }
+
+    .main-body {
+        @extend %content;
+
+        display: grid;
+        grid-column-gap: 15%;
+        grid-template-columns: 3fr 2fr;
+        padding-top: 4rem;
+    }
+
+    .main-content,
+    .sidebar {
+        display: grid;
+        grid-row-gap: 6rem;
+
+        h2 {
+            line-height: normal;
+            margin: 0;
+        }
+    }
+
+    .sidebar {
+        h2 {
+            @include set-font(h3);
+
+            line-height: 1;
+            margin: 0;
+        }
+
+        > * {
+            display: grid;
+            grid-gap: 1rem;
+        }
+    }
+
+    .press-releases,
+    .news-mentions {
+        display: grid;
+        grid-row-gap: 2rem;
+        grid-template-rows: auto auto 1fr;
+    }
+
+    .icon-row {
+        color: os-color(green);
+        display: grid;
+        grid-gap: 1rem;
+        grid-template-columns: repeat(4, 3.1rem);
+        height: 3.6rem;
+
+        > * {
+            height: 100%;
+            width: 100%;
+        }
+    }
+}
