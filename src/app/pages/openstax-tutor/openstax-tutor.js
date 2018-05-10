@@ -53,6 +53,7 @@ export default class Tutor extends CMSPageController {
     }
 
     onDataLoaded() {
+        /* eslint complexity: 0 */
         const data = this.pageData;
 
         document.title = `${data.title} - OpenStax`;
@@ -193,6 +194,11 @@ export default class Tutor extends CMSPageController {
         const pulsingDot = new PulsingDot({html: data.pop_up_text});
 
         this.regions.floatingTools.append(pulsingDot);
+        if (window.location.hash) {
+            const el = document.getElementById(window.location.hash.substr(1));
+
+            $.scrollTo(el);
+        }
     }
 
     onLoaded() {
