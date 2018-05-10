@@ -23,6 +23,12 @@
         }
     }
 
+    .faq-list {
+        @extend %text-content;
+
+        padding-top: 4rem;
+    }
+
     .qa {
         margin-bottom: 1em;
 
