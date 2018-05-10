@@ -1,4 +1,4 @@
-const VERSION='2.6.0';
+const VERSION='2.11.0';
 // NOTE: You must manually update the version number on bundle.js and main.css
 // in index.html
 
