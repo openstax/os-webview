@@ -1,0 +1,22 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.survey-request {
+    display: grid;
+    grid-gap: 2rem;
+    margin-bottom: 8rem;
+    max-width: $text-content-max;
+    width: 100%;
+
+    h2 {
+        line-height: normal;
+        margin-bottom: 0;
+    }
+
+    .btn {
+        @extend %button;
+
+        &.primary {
+            @extend %primary;
+        }
+    }
+}

@@ -20,6 +20,11 @@
             justify-content: flex-start;
             padding-top: 4rem;
 
+            @include width-up-to($tablet-max) {
+                margin: auto;
+                max-width: $text-content-max;
+            }
+
             h1 {
                 max-width: 100%;
             }
@@ -50,6 +55,7 @@
 
             @include width-up-to($tablet-max) {
                 margin-left: 0;
+                padding-left: 0;
             }
 
             &.centered {
