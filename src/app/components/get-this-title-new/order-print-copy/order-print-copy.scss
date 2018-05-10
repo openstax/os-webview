@@ -20,14 +20,6 @@
     }
 
     h1 {
-        @include set-font(h2);
-
-        color: text-color(helper);
-        padding: 0;
-        text-align: center;
-    }
-
-    h2 {
         @include set-font(h4);
 
         margin: 0;
@@ -50,7 +42,6 @@
             grid-gap: 4rem;
             margin: auto;
             padding: 4rem;
-            padding-top: 0;
             width: fit-content;
 
             &.boxes-1 {
