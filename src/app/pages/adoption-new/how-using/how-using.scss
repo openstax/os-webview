@@ -1,0 +1,27 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.how-using {
+    display: grid;
+    grid-gap: 4rem;
+    margin-top: 4rem;
+
+    > div {
+        border-top: thin solid ui-color(form-border);
+        display: grid;
+        grid-gap: 3rem;
+        padding: 2rem 0;
+    }
+
+    label {
+        align-items: center;
+        color: text-color(helper);
+        display: grid;
+        grid-gap: 0.5rem;
+        grid-template-columns: auto 1fr;
+        margin-top: 1rem;
+    }
+
+    [type="number"] {
+        max-width: 20rem;
+    }
+}

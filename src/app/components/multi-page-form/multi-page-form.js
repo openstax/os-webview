@@ -19,6 +19,10 @@ export default class MultiPageForm extends Controller {
         this.currentPage = 0;
     }
 
+    get currentForm() {
+        return this.props.contents[this.currentPage];
+    }
+
     get lastPage() {
         return this.props.contents.length - 1;
     }
@@ -51,6 +55,17 @@ export default class MultiPageForm extends Controller {
 
     @on('click .next')
     nextPage() {
+        const currentForm = this.currentForm;
+
+        if (currentForm.validate) {
+            const invalid = currentForm.validate();
+
+            if (invalid) {
+                currentForm.update();
+                return;
+            }
+        }
+
         this.currentPage += 1;
         this.update();
     }

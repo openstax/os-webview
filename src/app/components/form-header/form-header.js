@@ -2,19 +2,19 @@ import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 // Several utility functions, including scrollTo and insertHtml
 import $ from '~/helpers/$';
-import {description as template} from './header.html';
+import {description as template} from './form-header.html';
 
 export default class Header extends CMSPageController {
 
     init() {
         this.template = template;
         this.view = {
-            classes: ['interest-form-header']
+            classes: ['adoption-form-header']
         };
         // Check this path
-        this.css = `/app/pages/interest-new/header/header.css?${VERSION}`;
+        this.css = `/app/components/form-header/form-header.css?${VERSION}`;
         this.model = () => this.getModel();
-        this.slug = 'pages/interest-form';
+        this.slug = 'pages/adoption-form';
     }
 
     // Returns a dictionary of values to be used in the template

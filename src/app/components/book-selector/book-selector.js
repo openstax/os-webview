@@ -7,10 +7,11 @@ import {description as template} from './book-selector.html';
 
 export default class BookSelector extends SalesforceForm {
 
-    init(getProps) {
+    init(getProps, onChange) {
         super.init();
         this.template = template;
         this.getProps = getProps;
+        this.onChange = onChange;
         this.view = {
             classes: ['book-selector']
         };
@@ -21,10 +22,27 @@ export default class BookSelector extends SalesforceForm {
         this.booksBySubject = (subject) =>
             this.salesforceTitles
                 .filter((b) => b.subject === subject)
-                .sort()
-                .reduce((a, b) => b.value === a.value ? a : a.concat(b), [])
         ;
+        this.booksSorted = () =>
+            this.salesforceTitles.slice().sort((a, b) => {
+                const subA = this.subjects.indexOf(a.subject);
+                const subB = this.subjects.indexOf(b.subject);
+                const indA = this.salesforceTitles.findIndex((t) => t.value === a.value);
+                const indB = this.salesforceTitles.findIndex((t) => t.value === b.value);
+
+                if (subA < subB) {
+                    return -1;
+                }
+                if (subA > subB) {
+                    return 1;
+                }
+                if (indA < indB) {
+                    return -1;
+                }
+                return 1; // They won't be equal
+            });
         this.bookIsSelected = {};
+        this.validated = false;
     }
 
     getModel() {
@@ -33,8 +51,14 @@ export default class BookSelector extends SalesforceForm {
         return {
             prompt: this.props.prompt,
             subjects: this.subjects,
-            booksBySubject: this.booksBySubject
+            booksBySubject: this.booksBySubject,
+            validationMessage: this.validationMessage
         };
+    }
+
+    get selectedBooks() {
+        return this.booksSorted()
+            .filter((b) => Boolean(this.bookIsSelected[b.value]));
     }
 
     onDataLoaded() {
@@ -55,6 +79,10 @@ export default class BookSelector extends SalesforceForm {
                 const book = books[i];
                 const onChange = (checked) => {
                     this.bookIsSelected[book.value] = checked;
+                    if (this.onChange) {
+                        this.onChange(this.selectedBooks);
+                    }
+                    this.update();
                 };
                 const checkboxComponent = new BookCheckbox(() => ({
                     // No name; will provide name at submit time as needed
@@ -68,6 +96,19 @@ export default class BookSelector extends SalesforceForm {
                 region.attach(checkboxComponent);
             }
         }
+    }
+
+    validate() {
+        this.validated = true;
+        this.update();
+        return Boolean(this.validationMessage);
+    }
+
+    get validationMessage() {
+        if (this.validated && this.props.required && this.selectedBooks.length === 0) {
+            return 'Please select at least one book';
+        }
+        return '';
     }
 
 }

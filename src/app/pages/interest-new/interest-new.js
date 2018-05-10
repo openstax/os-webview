@@ -1,6 +1,6 @@
 import VERSION from '~/version';
 import {Controller} from 'superb.js';
-import Header from './header/header';
+import FormHeader from '~/components/form-header/form-header';
 import RoleSelector from '~/components/role-selector/role-selector';
 import StudentForm from '~/components/student-form/student-form';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
@@ -35,7 +35,7 @@ export default class InterestForm extends Controller {
         if ('piTracker' in window) {
             piTracker(window.location.href.split('#')[0]);
         }
-        this.regions.header.attach(new Header());
+        this.regions.header.attach(new FormHeader('pages/interest-form'));
 
         const studentForm = new StudentForm('http://go.pardot.com/l/218812/2017-04-11/ld9g');
         const validationMessage = (name) => (

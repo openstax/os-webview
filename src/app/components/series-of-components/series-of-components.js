@@ -9,6 +9,10 @@ export default class SeriesOfComponents extends Controller {
         this.contents = contents;
     }
 
+    update() {
+        this.contents.forEach((component) => component.update());
+    }
+
     onLoaded() {
         this.el.classList.add(this.className);
         this.contents.forEach((component) => this.regions.self.append(component));

@@ -3,8 +3,6 @@ import salesforce from '~/models/salesforce';
 import router from '~/router';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
-import FormInput from '~/components/form-input/form-input';
-import FormSelect from '~/components/form-select/form-select';
 import BookCheckbox from '~/components/book-checkbox/book-checkbox';
 import FormRadioGroup from '~/components/form-radiogroup/form-radiogroup';
 import FormCheckboxGroup from '~/components/form-checkboxgroup/form-checkboxgroup';

@@ -14,10 +14,5 @@
             </div>
         </div>
     </div>
-    <div
-     if="model.hasBeenSubmitted && model.selectedBooks().length === 0"
-     class="invalid-message"
-    >
-        Select at least one book
-    </div>
+    <div if="model.validationMessage" class="invalid-message">{model.validationMessage}</div>
 </template>

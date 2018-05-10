@@ -14,6 +14,7 @@ export default class ContactInfo extends Controller {
         this.regions = {
             popup: 'pop-up'
         };
+        const validationMessage = this.props.validationMessage.bind(this);
         const inputs = {
             firstName: new FormInput({
                 name: 'first_name',
@@ -21,7 +22,7 @@ export default class ContactInfo extends Controller {
                 label: 'First name',
                 required: true,
                 autocomplete: 'given-name',
-                validationMessage: this.props.validationMessage
+                validationMessage
             }),
             lastName: new FormInput({
                 name: 'last_name',
@@ -29,7 +30,7 @@ export default class ContactInfo extends Controller {
                 label: 'Last name',
                 required: true,
                 autocomplete: 'family-name',
-                validationMessage: this.props.validationMessage
+                validationMessage
             }),
             email: new FormInput({
                 name: 'email',
@@ -37,7 +38,7 @@ export default class ContactInfo extends Controller {
                 label: 'Email address',
                 required: true,
                 autocomplete: 'email',
-                validationMessage: this.props.validationMessage
+                validationMessage
             }),
             phone: new FormInput({
                 name: 'phone',
@@ -45,7 +46,7 @@ export default class ContactInfo extends Controller {
                 label: 'Phone number',
                 required: true,
                 autocomplete: 'tel-national',
-                validationMessage: this.props.validationMessage
+                validationMessage
             }),
             school: new FormInput({
                 name: 'company',
@@ -53,7 +54,7 @@ export default class ContactInfo extends Controller {
                 label: 'School name',
                 required: true,
                 autocomplete: 'organization',
-                validationMessage: this.props.validationMessage,
+                validationMessage,
                 suggestions: []
             })
         };
@@ -73,6 +74,7 @@ export default class ContactInfo extends Controller {
                 schoolComponent.model.suggestions = schools;
             }
         });
+        this.validated = false;
     }
 
     onLoaded() {
@@ -91,6 +93,13 @@ export default class ContactInfo extends Controller {
         for (const c of this.components) {
             c.update();
         }
+    }
+
+    validate() {
+        const invalid = this.el.querySelector(':invalid');
+
+        this.validated = true;
+        return invalid;
     }
 
     @on('focusout [name="company"],[name="URL"]')
