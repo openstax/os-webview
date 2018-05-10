@@ -20,11 +20,12 @@ export default class PressExcerpt extends Controller {
         return {
             iconUrl: this.props.iconUrl,
             author: this.props.author,
+            source: this.props.source,
             org: this.props.org,
             date: this.props.date,
             headline: this.props.headline,
             excerpt: this.props.excerpt,
-            externalLink: this.props.externalLink
+            url: this.props.url
         };
     }
 

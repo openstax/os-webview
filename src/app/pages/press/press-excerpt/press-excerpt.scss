@@ -9,15 +9,26 @@
     }
 
     > img {
-        grid-row-end: 3;
-        grid-row-start: 1;
+        grid-row-start: span 2;
     }
 
     .byline {
         @include set-font(helper-label);
     }
 
+    .source {
+        font-style: italic;
+    }
+
     .headline {
         font-weight: bold;
+
+        a {
+            text-decoration: none;
+
+            &:not(:hover) {
+                color: inherit;
+            }
+        }
     }
 }

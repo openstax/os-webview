@@ -1,0 +1,20 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.booking {
+    display: grid;
+    grid-gap: $normal-margin;
+    grid-template-columns: auto 1fr;
+
+    img {
+        max-height: 11rem;
+        max-width: 8rem;
+    }
+
+    [data-html="bio"] {
+        grid-column-start: span 2;
+    }
+
+    .name {
+        font-weight: bold;
+    }
+}

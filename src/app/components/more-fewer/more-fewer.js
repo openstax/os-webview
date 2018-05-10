@@ -37,9 +37,19 @@ export default class MoreFewer extends Controller {
         };
     }
 
+    attachIndividualOrArray(contents, region) {
+        if (contents instanceof Array) {
+            contents.forEach((c) => {
+                region.append(c);
+            })
+        } else {
+            region.attach(contents);
+        }
+    }
+
     onLoaded() {
-        this.regions.more.attach(this.props.moreContent);
-        this.regions.fewer.attach(this.props.fewerContent);
+        this.attachIndividualOrArray(this.props.moreContents, this.regions.more);
+        this.attachIndividualOrArray(this.props.fewerContents, this.regions.fewer);
     }
 
     @on('click .see')

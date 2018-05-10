@@ -1,7 +1,9 @@
 <template args="model">
     <div class="hero">
-        <h1>In the news</h1>
+        <h1>{model.headline}</h1>
+        <div class="mobile-selector" skip="true"></div>
     </div>
+    <div class="mobile-view" skip="true"></div>
     <div class="main-body">
         <div class="main-content">
             <div class="press-releases">
@@ -14,21 +16,11 @@
         <div class="sidebar">
             <div class="our-mission">
                 <h2>Our mission</h2>
-                <div>
-                    <span class="intro">To increase access to education</span>
-                    by providing effective educational materials for free, or
-                    at minimal cost.
-                </div>
-                <div>
-                    <span class="intro">To partner with educators to help</span>
-                    by providing effective educational materials for free, or
-                    at minimal cost.
-                </div>
-                <div>
-                    <span class="intro">To increase access to education</span>
-                    by providing effective educational materials for free, or
-                    at minimal cost.
-                </div>
+                <div
+                 each="statement in model.missionStatements"
+                 data-html="missionStatements[{$item}]"
+                 skip="true"
+                ></div>
             </div>
             <div class="press inquiries">
                 <h2>Press inquiries</h2>
@@ -43,9 +35,14 @@
                     <span class="fab fa-twitter-square"></span>
                 </div>
             </div>
-            <div class="book-experts">
-                <h2>Book our experts</h2>
-                A component lays out each entry
+            <a href="{model.pressKitUrl}" class="btn primary">
+                Download press kit
+                <span class="fa fa-download"></span>
+            </a>
+            <div if="model.experts" class="book-experts">
+                <h2>{model.experts.headline}</h2>
+                <div>{model.experts.blurb}</div>
+                <div data-region="bookings" skip="true"></div>
             </div>
         </div>
     </div>

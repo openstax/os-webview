@@ -8,12 +8,27 @@
         background-image: linear-gradient(to left, lighten(os-color(green), 18%), darken(os-color(green), 3%));
         padding: 14rem 0 5rem;
 
+        @include width-up-to($phone-max) {
+            padding-top: 6rem;
+        }
+
         h1 {
             @extend %content;
 
             color: text-color(white);
             letter-spacing: normal;
             text-align: left;
+
+            @include width-up-to($phone-max) {
+                @include title-font(4.8rem);
+            }
+        }
+    }
+
+    .mobile-view,
+    .mobile-selector {
+        @include wider-than($phone-max) {
+            display: none;
         }
     }
 
@@ -21,9 +36,13 @@
         @extend %content;
 
         display: grid;
-        grid-column-gap: 15%;
+        grid-column-gap: calc(100% / 6);
         grid-template-columns: 3fr 2fr;
         padding-top: 4rem;
+
+        @include width-up-to($phone-max) {
+            display: none;
+        }
     }
 
     .main-content,
@@ -35,6 +54,12 @@
             line-height: normal;
             margin: 0;
         }
+    }
+
+    // sidebar and main-content are the same height; the 1fr
+    // uses up the extra space so it isn't distributed
+    .main-content {
+        grid-template-rows: auto auto 1fr;
     }
 
     .sidebar {
@@ -49,13 +74,28 @@
             display: grid;
             grid-gap: 1rem;
         }
+
+        .intro {
+            font-weight: bold;
+        }
+    }
+
+    .our-mission,
+    .book-experts {
+        display: grid;
+        grid-row-gap: 2rem;
+    }
+
+    [data-region="bookings"] {
+        display: grid;
+        grid-row-gap: 4rem;
     }
 
     .press-releases,
     .news-mentions {
         display: grid;
         grid-row-gap: 2rem;
-        grid-template-rows: auto auto 1fr;
+        grid-template-rows: auto auto;
     }
 
     .icon-row {
@@ -68,6 +108,17 @@
         > * {
             height: 100%;
             width: 100%;
+        }
+    }
+
+    button,
+    .btn {
+        @extend %button;
+
+        width: fit-content;
+
+        &.primary {
+            @extend %primary;
         }
     }
 }

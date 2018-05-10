@@ -1,0 +1,40 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.mobile-selector {
+    padding: 1rem 2rem 0;
+
+    .selector-button {
+        @extend %button;
+
+        background-color: ui-color(white);
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .fixed-overlay {
+        background-color: rgba(ui-color(black), 0.5);
+        display: grid;
+        height: 100vh;
+        left: 0;
+        place-items: center;
+        position: fixed;
+        top: 0;
+        width: 100vw;
+
+        [role="menu"] {
+            @extend %card;
+            @include body-font(2.4rem);
+
+            background-color: ui-color(white);
+        }
+
+        [role="menuitem"] {
+            padding: 1rem $normal-margin;
+
+            &.selected {
+                background-color: ui-color(default);
+                border-left: 0.3rem solid os-color(green);
+            }
+        }
+    }
+}

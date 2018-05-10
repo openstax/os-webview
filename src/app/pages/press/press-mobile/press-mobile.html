@@ -1,0 +1,7 @@
+<template args="model">
+    It is {model.mobileSelection}
+    <h2 if="model.mobileSelection === 'Press releases'">Hello press release world!</h2>
+    <h2 if="model.mobileSelection === 'News mentions'">Hello news world!</h2>
+    <h2 if="model.mobileSelection === 'Press inquiries'">Hello inquiring world!</h2>
+    <h2 if="model.mobileSelection === 'Booking'">Hello booking world!</h2>
+</template>
