@@ -5,10 +5,7 @@
 
     background-color: os-color(deep-green);
     color: text-color(white);
-
-    @include wider-than($phone-max) {
-        padding-left: 4rem;
-    }
+    padding: 0;
 
     a {
         color: inherit;
@@ -25,6 +22,7 @@
 
     .content {
         display: flex;
+        padding: 0;
     }
 
     .flexrow {

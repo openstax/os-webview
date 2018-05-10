@@ -20,12 +20,6 @@ $.browserId = () => {
             M = ['Edge', 'Edge', (tem[1] || '')];
         }
     };
-    const checkIE = () => {
-        if (/trident/i.test(M[1])) {
-            tem = ua.match(/\brv[ :]+(\d+)/) || [];
-            M = ['IE', 'IE', (tem[1] || '')];
-        }
-    };
     const checkChrome = () => {
         if (M[1] === 'Chrome' && (tem = ua.match(/\b(OPR|Edge)\/(\d+)/))) {
             M = [tem[1].replace('OPR', 'Opera'), tem[2]];
@@ -38,7 +32,6 @@ $.browserId = () => {
     };
 
     checkEdge();
-    checkIE();
     checkChrome();
     checkFirefox();
     M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
@@ -52,11 +45,10 @@ $.browserId = () => {
 $.isSupported = () => {
     const info = $.browserId();
 
-    return ((info.name === 'Safari' && +info.version >= 9) ||
-     (info.name === 'Edge' && +info.version >= 14) ||
-     (info.name === 'IE' && +info.version >= 11) ||
-     (info.name === 'Firefox' && +info.version >= 37) ||
-     (info.name === 'Chrome' && +info.version >= 40));
+    return ((info.name === 'Safari' && +info.version >= 10.1) ||
+     (info.name === 'Edge' && +info.version >= 16) ||
+     (info.name === 'Firefox' && +info.version >= 52) ||
+     (info.name === 'Chrome' && +info.version >= 57));
 };
 
 $.stringCompare = (a, b) => (a < b) ? -1 : +(a > b);

@@ -6,18 +6,12 @@ import userModel from '~/models/usermodel';
 import Popup from '~/components/popup/popup';
 import Errata from '~/pages/errata/errata';
 import Detail from '~/pages/errata/detail/detail';
+import SurveyRequest from '~/components/survey-request/survey-request';
 import {description as template} from './confirmation.html';
 
 const applyLink = `${settings.accountHref}/faculty_access/apply?r=${encodeURIComponent(settings.apiOrigin)}`;
 
 const models = {
-    compCopy: {
-        headline: 'Thank you for requesting a download from iBooks.',
-        adoptionQuestion: 'Have you adopted an OpenStax book?',
-        adoptionUrl: '/adoption',
-        adoptionLinkText: 'Adopt a book',
-        subjectLinkText: 'Explore our books'
-    },
     'bulk-order': {
         headline: 'Thanks for contacting us',
         simpleMessage: 'We\'ve received your order form.'
@@ -99,6 +93,11 @@ export default class Confirmation extends Controller {
                 this.model.defaultEmail = response.email;
                 this.update();
             });
+        }
+        if (this.referringPage === 'interest') {
+            const surveyRequest = new SurveyRequest();
+
+            this.regions.detail.attach(surveyRequest);
         }
     }
 
