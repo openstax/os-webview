@@ -1,0 +1,10 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.bookings {
+    display: grid;
+    grid-gap: 4rem;
+
+    h2 {
+        @include set-font(h3);
+    }
+}

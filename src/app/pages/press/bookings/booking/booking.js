@@ -10,7 +10,7 @@ export default class Booking extends Controller {
         this.view = {
             classes: ['booking']
         };
-        this.css = `/app/pages/press/booking/booking.css?${VERSION}`;
+        this.css = `/app/pages/press/bookings/booking/booking.css?${VERSION}`;
         this.model = model;
     }
 

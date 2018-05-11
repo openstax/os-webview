@@ -41,7 +41,7 @@ export default class MoreFewer extends Controller {
         if (contents instanceof Array) {
             contents.forEach((c) => {
                 region.append(c);
-            })
+            });
         } else {
             region.attach(contents);
         }

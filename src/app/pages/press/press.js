@@ -1,7 +1,8 @@
 import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
-import Booking from './booking/booking';
+import Bookings from './bookings/bookings';
 import HeadlinePaginator from '~/components/headline-paginator/headline-paginator';
+import Inquiries from './inquiries/inquiries';
 import MobileSelector from './mobile-selector/mobile-selector';
 import MoreFewer from '~/components/more-fewer/more-fewer';
 import PressExcerpt from './press-excerpt/press-excerpt';
@@ -19,12 +20,14 @@ export default class Press extends CMSPageController {
         };
         this.css = `/app/pages/press/press.css?${VERSION}`;
         this.regions = {
-            mobileSelector: '.mobile-selector',
+            mobileSelector: '[data-region="mobile-selector"]',
             mobileView: '.mobile-view',
             pressReleases: '.press-releases',
-            newsMentions: '.news-mentions'
+            newsMentions: '.news-mentions',
+            pressInquiries: '.press-inquiries',
+            bookings: '.book-experts'
         };
-        this.slug = 'pages/press';
+        this.slug = 'press';
         this.model = () => this.getModel();
         this.heading = '';
         this.mobileSelection = 'Press releases';
@@ -265,7 +268,7 @@ export default class Press extends CMSPageController {
             missionStatements: [
                 `<b>To increase access to education</b> by providing effective
                 educational materials for free, or at minimal cost.`,
-                `<b>To partner with educators to help</b> meet the needs of their students.`,
+                '<b>To partner with educators to help</b> meet the needs of their students.',
                 `<b>To leverage our freedom as a non-profit</b> to make learning outcomes
                 &mdash; not financial outcomes &mdash; our metric for success.`
             ],
@@ -314,17 +317,19 @@ export default class Press extends CMSPageController {
     }
 
     onDataLoaded() {
-        const Region = this.regions.self.constructor;
-        const bookingsEl = this.el.querySelector('[data-region="bookings"]');
-        const bookingsRegion = new Region(bookingsEl, this);
+        const model = this.model();
 
-        $.insertHtml(this.el, this.model);
+        $.insertHtml(this.el, model);
         this.buildComponents();
         this.regions.mobileSelector.attach(this.mobileSelector);
         this.regions.mobileView.attach(this.mobileView);
         this.regions.pressReleases.append(this.moreFewer);
         this.regions.newsMentions.append(this.nmPaginator);
-        this.model().experts.bios.forEach((obj) => bookingsRegion.append(new Booking(obj)));
+        this.regions.pressInquiries.attach(new Inquiries({
+            pressInquiries: model.pressInquiries,
+            pressKitUrl: model.pressKitUrl
+        }));
+        this.regions.bookings.attach(new Bookings(model.experts));
     }
 
     getModel() {

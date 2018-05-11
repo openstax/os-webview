@@ -1,7 +1,22 @@
 <template args="model">
-    It is {model.mobileSelection}
-    <h2 if="model.mobileSelection === 'Press releases'">Hello press release world!</h2>
-    <h2 if="model.mobileSelection === 'News mentions'">Hello news world!</h2>
-    <h2 if="model.mobileSelection === 'Press inquiries'">Hello inquiring world!</h2>
-    <h2 if="model.mobileSelection === 'Booking'">Hello booking world!</h2>
+    <div
+     hidden="{model.hiddenUnless('Press releases')}"
+     data-region="releases"
+     skip="true"
+    ></div>
+    <div
+     hidden="{model.hiddenUnless('News mentions')}"
+     data-region="mentions"
+     skip="true"
+    ></div>
+    <div
+     hidden="{model.hiddenUnless('Press inquiries')}"
+     data-region="inquiries"
+     skip="true"
+    ></div>
+    <div
+     hidden="{model.hiddenUnless('Booking')}"
+     data-region="booking"
+     skip="true"
+    ></div>
 </template>

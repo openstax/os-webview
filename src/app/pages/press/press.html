@@ -1,7 +1,7 @@
 <template args="model">
     <div class="hero">
         <h1>{model.headline}</h1>
-        <div class="mobile-selector" skip="true"></div>
+        <div data-region="mobile-selector" skip="true"></div>
     </div>
     <div class="mobile-view" skip="true"></div>
     <div class="main-body">
@@ -22,28 +22,8 @@
                  skip="true"
                 ></div>
             </div>
-            <div class="press inquiries">
-                <h2>Press inquiries</h2>
-                <div>Blah blah blah</div>
-            </div>
-            <div class="find-us">
-                <h2>Find us on</h2>
-                <div class="icon-row">
-                    <span class="fab fa-facebook"></span>
-                    <span class="fab fa-linkedin"></span>
-                    <span class="fab fa-instagram"></span>
-                    <span class="fab fa-twitter-square"></span>
-                </div>
-            </div>
-            <a href="{model.pressKitUrl}" class="btn primary">
-                Download press kit
-                <span class="fa fa-download"></span>
-            </a>
-            <div if="model.experts" class="book-experts">
-                <h2>{model.experts.headline}</h2>
-                <div>{model.experts.blurb}</div>
-                <div data-region="bookings" skip="true"></div>
-            </div>
+            <div class="press-inquiries" skip="true"></div>
+            <div class="book-experts" skip="true"></div>
         </div>
     </div>
 </template>
