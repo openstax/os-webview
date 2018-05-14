@@ -65,14 +65,20 @@
                     {model.file1 ? 'Change' : 'Add file'}
                     <input type="file" class="hidden" name="file_1" class="btn" />
                 </label>
-                <span if="model.file1" class="file-name">{model.file1}</span>
+                <if condition="model.file1">
+                  <span class="file-name">{model.file1}</span>
+                  <span class="clear-file1 fa fa-times" role="button"></span>
+                </if>
             </div>
             <div if="model.file1" class="file-button">
                 <label class="btn">
                     {model.file2 ? 'Change' : 'Add file'}
                     <input type="file" class="hidden" name="file_2" class="btn" />
                 </label>
-                <span if="model.file2" class="file-name">{model.file2}</span>
+                <if condition="model.file2">
+                  <span class="file-name">{model.file2}</span>
+                  <span class="clear-file2 fa fa-times" role="button"></span>
+                </if>
             </div>
             <div>
                 <input type="submit" class="btn" value="Submit" disabled="{model.submitted ? '' : null}" />

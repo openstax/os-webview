@@ -75,15 +75,20 @@
         }
     }
 
-    .button-group {
+    .button-group,
+    .file-button {
+        align-items: center;
         display: grid;
         grid-gap: 1rem;
     }
 
     .file-button {
-        align-items: center;
-        display: flex;
-        justify-content: flex-start;
+        grid-template-columns: auto auto 1fr;
+    }
+
+    .clear-file1,
+    .clear-file2 {
+        cursor: pointer;
     }
 
     .btn {
