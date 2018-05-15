@@ -1,10 +1,11 @@
 import VERSION from '~/version';
+import $ from '~/helpers/$';
 import CMSPageController from '~/controllers/cms';
 import router from '~/router';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './sticky-note.html';
 
-const isExpired = (str) => str && (new Date(str) < Date.now());
+const isExpired = (str) => Boolean(str && (new Date(str) < Date.now()));
 
 class StickyNote extends CMSPageController {
 
@@ -19,16 +20,19 @@ class StickyNote extends CMSPageController {
         this.temporary = false;
         this.content = '';
         this.expired = false;
+        this.expires = '';
     }
 
     getModel() {
         return {
             temporary: this.temporary,
-            content: this.content
+            content: this.content,
+            expires: this.expires
         };
     }
 
     onDataLoaded() {
+        this.expires = this.pageData.expires;
         if (this.pageData.emergency_content && !isExpired(this.pageData.emergency_expires)) {
             this.temporary = true;
             this.content = this.pageData.emergency_content;
@@ -38,6 +42,10 @@ class StickyNote extends CMSPageController {
             this.expired = isExpired(this.pageData.expires);
         }
         this.hideOrUpdate();
+    }
+
+    onUpdate() {
+        $.insertHtml(this.el, this.model);
     }
 
     hideOrUpdate() {

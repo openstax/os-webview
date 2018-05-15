@@ -1,5 +1,5 @@
 <template args="model">
-    <div if="model.content" class="text-content container" role="alert">
+    <div if="model.content && !model.expires" class="text-content container" role="alert">
         {model.content}
         <if condition="!model.temporary">
             <div class="single-button">
@@ -16,4 +16,11 @@
             </div>
         </if>
     </div>
+    <div
+     if="model.expires"
+     class="html-content"
+     role="alert"
+     skip="true"
+     data-html="content"
+    ></div>
 </template>

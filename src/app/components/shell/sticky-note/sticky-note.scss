@@ -30,6 +30,17 @@
         padding-right: 1.5rem;
     }
 
+    > .html-content {
+        @extend %text-content;
+
+        display: block;
+
+        a {
+            color: inherit;
+            text-decoration: underline;
+        }
+    }
+
     .btn {
         font-size: 80%;
         margin-left: 1rem;
