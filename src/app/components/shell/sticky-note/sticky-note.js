@@ -1,10 +1,11 @@
 import VERSION from '~/version';
+import $ from '~/helpers/$';
 import CMSPageController from '~/controllers/cms';
 import router from '~/router';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './sticky-note.html';
 
-const isExpired = (str) => new Date(str) < Date.now();
+const isExpired = (str) => Boolean(str && (new Date(str) < Date.now()));
 
 class StickyNote extends CMSPageController {
 
@@ -15,38 +16,60 @@ class StickyNote extends CMSPageController {
             classes: ['sticky-note']
         };
         this.slug = 'sticky';
-        this.model = {};
+        this.model = () => this.getModel();
+        this.temporary = false;
+        this.content = '';
+        this.expired = false;
+        this.expires = '';
+    }
+
+    getModel() {
+        return {
+            temporary: this.temporary,
+            content: this.content,
+            expires: this.expires
+        };
     }
 
     onDataLoaded() {
-        this.expired = true;
+        this.expires = this.pageData.expires;
         if (this.pageData.emergency_content && !isExpired(this.pageData.emergency_expires)) {
-            this.model.temporary = true;
-            this.model.content = this.pageData.emergency_content;
+            this.temporary = true;
+            this.content = this.pageData.emergency_content;
             this.el.classList.add('temporary-banner');
-            this.expired = false;
-        } else if (isExpired(this.pageData.expires)) {
-            this.forceHide(true);
-            localStorage.removeItem('visitedGive');
+        } else {
+            this.content = this.pageData.content;
+            this.expired = isExpired(this.pageData.expires);
         }
-        this.onLoaded();
-        this.update();
+        this.hideOrUpdate();
     }
 
-    onLoaded() {
-        const expiredNow = !this.model.temporary && Number(localStorage.visitedGive || 0) > 5;
+    onUpdate() {
+        $.insertHtml(this.el, this.model);
+    }
 
-        if (expiredNow !== this.expired) {
-            this.expired = expiredNow;
-            this.model.content = this.pageData && !this.expired && this.pageData.content;
+    hideOrUpdate() {
+        if (this.expired) {
+            this.forceHide(true);
+        } else {
             this.update();
         }
     }
 
+    incrementVisitedGive() {
+        // Safari private window patch
+        try {
+            localStorage.visitedGive = Number(localStorage.visitedGive || 0) + 1;
+        } catch (e) {}
+    }
+
+    // Header calls this every time the URL changes.
     forceHide(whether) {
-        this.el.classList.toggle('hidden', whether || this.model.content === null);
+        this.el.classList.toggle('hidden', whether);
         if (!whether) {
-            this.onLoaded();
+            this.incrementVisitedGive();
+            this.expired = this.expired || Number(localStorage.visitedGive || 0) > 5;
+            this.hideOrUpdate();
         }
     }
 

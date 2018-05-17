@@ -85,10 +85,6 @@ export default class Home extends CMSPageController {
         };
 
         shell.showLoader();
-        // Safari private window patch
-        try {
-            localStorage.visitedGive = Number(localStorage.visitedGive || 0) + 1;
-        } catch (e) {}
     }
 
     @on('click a[href^="#"]')
