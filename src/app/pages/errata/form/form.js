@@ -120,4 +120,17 @@ export default class Form extends Controller {
         e.preventDefault();
     }
 
+    @on('click .clear-file1')
+    clearFile1() {
+        this.model.file1 = this.model.file2;
+        this.model.file2 = '';
+        this.update();
+    }
+
+    @on('click .clear-file2')
+    clearFile2() {
+        this.model.file2 = '';
+        this.update();
+    }
+
 }

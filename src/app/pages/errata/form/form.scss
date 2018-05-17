@@ -75,20 +75,27 @@
         }
     }
 
-    .button-row {
-        @include tight-row();
+    .button-group,
+    .file-button {
+        align-items: center;
+        display: grid;
+        grid-gap: 1rem;
     }
 
     .file-button {
-        display: flex;
-        justify-content: flex-start;
+        grid-template-columns: auto auto 1fr;
+    }
+
+    .clear-file1,
+    .clear-file2 {
+        cursor: pointer;
     }
 
     .btn {
         @include button();
 
+        min-width: 9em;
         text-indent: inherit;
-        width: 9em;
     }
 
     [type="submit"].btn {
