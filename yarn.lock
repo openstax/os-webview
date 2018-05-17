@@ -7108,8 +7108,8 @@ path-type@^2.0.0:
     pify "^2.0.0"
 
 "pattern-library@github:openstax/pattern-library#v1.1.5":
-  version "1.1.4"
-  resolved "https://codeload.github.com/openstax/pattern-library/tar.gz/a75184496ec33efb67913e3ec27f3041dc91f0c3"
+  version "1.1.5"
+  resolved "https://codeload.github.com/openstax/pattern-library/tar.gz/1ec7579443c48c679cefface15f4c4274c132a6e"
   dependencies:
     node-sass "^4.7.2"
 
@@ -9728,8 +9728,8 @@ webpack@^3.4.1:
     yargs "^8.0.2"
 
 webpack@^3.8.1:
-  version "3.11.0"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.11.0.tgz#77da451b1d7b4b117adaf41a1a93b5742f24d894"
+  version "3.12.0"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.12.0.tgz#3f9e34360370602fcf639e97939db486f4ec0d74"
   dependencies:
     acorn "^5.0.0"
     acorn-dynamic-import "^2.0.0"
