@@ -29,6 +29,78 @@ export default class InterestForm extends Controller {
         };
     }
 
+    secondPage() {
+        let validated = false;
+        const validationMessage = function (name) {
+            return this && validated ? this.el.querySelector(`[name="${name}"]`).validationMessage : '';
+        };
+        const bookSelector = new BookSelector(() => ({
+            prompt: 'Which textbook(s) are you interested in adopting?',
+            required: true
+        }));
+        const howManyStudents = new FormInput({
+            name: '00NU00000052VId',
+            longLabel: 'How many students do you teach each semester?',
+            type: 'number',
+            min: '1',
+            required: true,
+            validationMessage: (name) => validationMessage.bind(howManyStudents)(name)
+        });
+        const whichPartners = new FormCheckboxGroup({
+            name: '00NU00000055spm',
+            longLabel: 'Which of our partners would you like to give permission' +
+            ' to contact you about additional resources to support our books?',
+            instructions: 'Select all that apply.',
+            options: [
+                {label: 'Online homework partners', value: 'Online homework partners'},
+                {label: 'Adaptive courseware partners', value: 'Adaptive courseware partners'},
+                {label: 'Customization tool partners', value: 'Customization tool partners'}
+            ],
+            multiple: true,
+            required: true,
+            requireNone: true,
+            validationMessage: (name) => validationMessage.bind(whichPartners)(name)
+        });
+        const howDidYouHear = new FormCheckboxGroup({
+            name: '00NU00000055spr',
+            longLabel: 'How did you hear about OpenStax?',
+            instructions: 'Select all that apply.',
+            options: [
+                {value: 'Web search', label: 'Web search'},
+                {value: 'Colleague', label: 'Colleague'},
+                {value: 'Conference', label: 'Conference'},
+                {value: 'Email', label: 'Email'},
+                {value: 'Facebook', label: 'Facebook'},
+                {value: 'Twitter', label: 'Twitter'},
+                {value: 'Webinar', label: 'Webinar'},
+                {value: 'Partner organization', label: 'Partner organization'}
+            ],
+            multiple: true,
+            required: true,
+            validationMessage: (name) => validationMessage.bind(howDidYouHear)(name)
+        });
+        const result = new SeriesOfComponents({
+            className: 'page-2',
+            contents: [
+                bookSelector,
+                howManyStudents,
+                whichPartners,
+                howDidYouHear
+            ]
+        });
+
+        result.validate = function () {
+            validated = true;
+            const bsv = bookSelector.validate();
+
+            bookSelector.update();
+            result.update();
+
+            return Boolean(bsv || result.el.querySelector(':invalid'));
+        };
+        return result;
+    }
+
     onLoaded() {
         document.title = 'Interest Form - OpenStax';
         // Pardot tracking
@@ -38,62 +110,14 @@ export default class InterestForm extends Controller {
         this.regions.header.attach(new FormHeader('pages/interest-form'));
 
         const studentForm = new StudentForm('http://go.pardot.com/l/218812/2017-04-11/ld9g');
-        const validationMessage = (name) => (
-            this.hasBeenSubmitted ? this.el.querySelector(`[name="${name}"]`).validationMessage : ''
-        );
+        const secondPage = this.secondPage();
         const facultyPages = [
             new ContactInfo({
-                validationMessage
+                validationMessage(name) {
+                    return this.validated ? this.el.querySelector(`[name="${name}"]`).validationMessage : '';
+                }
             }),
-            new SeriesOfComponents({
-                className: 'page-2',
-                contents: [
-                    new BookSelector(() => ({
-                        prompt: 'Which textbook(s) are you interested in adopting?'
-                    })),
-                    new FormInput({
-                        name: '00NU00000052VId',
-                        longLabel: 'How many students do you teach each semester?',
-                        type: 'number',
-                        min: '1',
-                        required: true,
-                        validationMessage
-                    }),
-                    new FormCheckboxGroup({
-                        name: '00NU00000055spm',
-                        longLabel: 'Which of our partners would you like to give permission' +
-                        ' to contact you about additional resources to support our books?',
-                        instructions: 'Select all that apply.',
-                        options: [
-                            {label: 'Online homework partners', value: 'Online homework partners'},
-                            {label: 'Adaptive courseware partners', value: 'Adaptive courseware partners'},
-                            {label: 'Customization tool partners', value: 'Customization tool partners'}
-                        ],
-                        multiple: true,
-                        required: true,
-                        requireNone: true,
-                        validationMessage
-                    }),
-                    new FormCheckboxGroup({
-                        name: '00NU00000055spr',
-                        longLabel: 'How did you hear about OpenStax?',
-                        instructions: 'Select all that apply.',
-                        options: [
-                            {value: 'Web search', label: 'Web search'},
-                            {value: 'Colleague', label: 'Colleague'},
-                            {value: 'Conference', label: 'Conference'},
-                            {value: 'Email', label: 'Email'},
-                            {value: 'Facebook', label: 'Facebook'},
-                            {value: 'Twitter', label: 'Twitter'},
-                            {value: 'Webinar', label: 'Webinar'},
-                            {value: 'Partner organization', label: 'Partner organization'}
-                        ],
-                        multiple: true,
-                        required: true,
-                        validationMessage
-                    })
-                ]
-            }),
+            secondPage,
             new TechnologySelector({
                 prompt: 'Tell us about the technology you use.'
             })
