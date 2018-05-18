@@ -178,7 +178,7 @@
             </div>
             <div class="questions text-content">
                 <div each="item in model.faq.items" class="smaller qna">
-                    <div class="toggled-item" aria-role="button" data-index="{$item}">
+                    <div class="toggled-item" role="button" data-index="{$item}">
                         <div class="question" data-html="faq.items[{$item}].question" skip="true"></div>
                         <div class="toggler{item.isOpen ? ' open' : ''}">
                             <i class="fa {item.isOpen ? 'fa-chevron-up' : 'fa-chevron-down'}"></i>

@@ -1,0 +1,16 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.more-fewer {
+    display: grid;
+    grid-row-gap: 2rem;
+
+    [role="button"] {
+        cursor: pointer;
+    }
+
+    .more:not([hidden]),
+    .fewer:not([hidden]) {
+        display: grid;
+        grid-gap: 4rem;
+    }
+}

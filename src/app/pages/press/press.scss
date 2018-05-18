@@ -1,0 +1,86 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.press.page {
+    background-color: ui-color(white);
+    padding-bottom: 8rem;
+
+    .hero {
+        background-image: linear-gradient(to left, lighten(os-color(green), 18%), darken(os-color(green), 3%));
+        padding: 14rem 0 5rem;
+
+        @include width-up-to($phone-max) {
+            padding-top: 6rem;
+        }
+
+        h1 {
+            @extend %content;
+
+            color: text-color(white);
+            letter-spacing: normal;
+            text-align: left;
+
+            @include width-up-to($phone-max) {
+                @include title-font(4.8rem);
+            }
+        }
+    }
+
+    .mobile-view,
+    .mobile-selector {
+        @include wider-than($phone-max) {
+            display: none;
+        }
+    }
+
+    .main-body {
+        @extend %content;
+
+        display: grid;
+        grid-column-gap: calc(100% / 6);
+        grid-template-columns: 3fr 2fr;
+        padding-top: 4rem;
+
+        @include width-up-to($phone-max) {
+            display: none;
+        }
+    }
+
+    .main-content,
+    .sidebar {
+        display: grid;
+        grid-row-gap: 6rem;
+
+        h2 {
+            line-height: normal;
+            margin: 0;
+        }
+    }
+
+    // sidebar and main-content are the same height; the 1fr
+    // uses up the extra space so it isn't distributed
+    .main-content {
+        grid-template-rows: auto auto 1fr;
+    }
+
+    .our-mission,
+    .book-experts {
+        display: grid;
+        grid-row-gap: 2rem;
+
+        h2 {
+            @include set-font(h3);
+        }
+    }
+
+    [data-region="bookings"] {
+        display: grid;
+        grid-row-gap: 4rem;
+    }
+
+    .press-releases,
+    .news-mentions {
+        display: grid;
+        grid-row-gap: 2rem;
+        grid-template-rows: auto auto;
+    }
+}

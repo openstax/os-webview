@@ -1,0 +1,51 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.inquiries {
+    display: grid;
+    grid-gap: 5rem;
+
+    > div {
+        display: grid;
+        grid-gap: 2rem;
+    }
+
+    .contact {
+        > :first-child {
+            font-weight: bold;
+        }
+    }
+
+    h2 {
+        @include set-font(h3);
+    }
+
+    button,
+    .btn {
+        @extend %button;
+
+        display: grid;
+        grid-gap: 1rem;
+        width: fit-content;
+
+        &.primary {
+            @extend %primary;
+        }
+    }
+
+    .icon-row {
+        color: os-color(green);
+        display: grid;
+        grid-gap: 1rem;
+        grid-template-columns: repeat(4, 3.1rem);
+        height: 3.6rem;
+
+        > a {
+            color: inherit;
+
+            > * {
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
+}
