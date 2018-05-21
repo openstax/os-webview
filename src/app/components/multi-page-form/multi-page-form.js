@@ -6,12 +6,12 @@ import {description as template} from './multi-page-form.html';
 
 export default class MultiPageForm extends Controller {
 
-    init(getProps, handlers) {
+    init(getProps, onSubmit, afterSubmit) {
         this.template = template;
         this.getProps = getProps;
-        this.handlers = handlers;
+        this.onSubmit = onSubmit;
+        this.afterSubmit = afterSubmit;
         this.view = {
-            tag: ['form'],
             classes: ['multi-page-form']
         };
         this.css = `/app/components/multi-page-form/multi-page-form.css?${VERSION}`;
@@ -31,6 +31,7 @@ export default class MultiPageForm extends Controller {
         this.props = this.getProps();
 
         return {
+            action: this.props.action,
             currentPage: this.currentPage,
             lastPage: this.lastPage,
             contents: this.props.contents,
@@ -42,7 +43,6 @@ export default class MultiPageForm extends Controller {
     }
 
     onLoaded() {
-        // TODO: set attributes of form
         const pageRegions = this.el.querySelectorAll('[data-page]');
         const Region = this.regions.self.constructor;
 
@@ -51,6 +51,12 @@ export default class MultiPageForm extends Controller {
 
             region.attach(this.props.contents[i]);
         }
+
+        this.el.querySelector('#form-response').addEventListener('load', this.afterSubmit);
+    }
+
+    onClose() {
+        this.el.querySelector('#form-response').removeEventListener('load', this.afterSubmit);
     }
 
     @on('click .next')
@@ -74,6 +80,16 @@ export default class MultiPageForm extends Controller {
     prevPage() {
         this.currentPage -= 1;
         this.update();
+    }
+
+    @on('submit form')
+    handleSubmit(event) {
+        event.preventDefault();
+        if (this.currentPage < this.lastPage) {
+            this.nextPage();
+        } else {
+            this.onSubmit(event);
+        }
     }
 
 }

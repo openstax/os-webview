@@ -6,16 +6,21 @@ import {description as template} from './how-using.html';
 
 export default class HowUsing extends Controller {
 
-    init(getProps) {
+    init(getProps, onChange) {
         this.template = template;
         this.getProps = getProps;
+        this.onChange = onChange;
         this.view = {
             classes: ['how-using']
         };
-        this.css = `/app/pages/adoption-new/how-using/how-using.css?${VERSION}`;
+        this.css = `/app/pages/adoption/how-using/how-using.css?${VERSION}`;
         this.model = () => this.getModel();
         this.checked = {};
         this.howMany = {};
+        this.value = () => ({
+            checked: this.checked,
+            howMany: this.howMany
+        });
         this.validated = false;
         this.numberValidationMessage = (value) => {
             if (this.validated) {
@@ -44,7 +49,8 @@ export default class HowUsing extends Controller {
             radioName: this.radioName,
             numberName: this.numberName,
             numberValidationMessage: this.numberValidationMessage,
-            radioValidationMessage: this.radioValidationMessage
+            radioValidationMessage: this.radioValidationMessage,
+            disable: this.props.disable
         };
     }
 
@@ -65,6 +71,7 @@ export default class HowUsing extends Controller {
         const radio = event.delegateTarget;
 
         this.checked[radio.name] = radio.value;
+        this.onChange(this.value());
         this.update();
     }
 
@@ -73,6 +80,7 @@ export default class HowUsing extends Controller {
         const input = event.delegateTarget;
 
         this.howMany[input.name] = input.value;
+        this.onChange(this.value());
         this.update();
     }
 
@@ -83,11 +91,11 @@ export default class HowUsing extends Controller {
     }
 
     numberName(value) {
-        return `00NU00000052VId${value}`;
+        return value;
     }
 
     radioName(value) {
-        return `00NU00000055spw${value}`;
+        return value;
     }
 
 }

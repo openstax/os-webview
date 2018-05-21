@@ -8,6 +8,7 @@
                  name="{model.radioName(book.value)}"
                  value="{sfOption.value}"
                  required
+                 disabled="{model.disable ? '' : null}"
                 >
                 {sfOption.text}
             </label>
@@ -24,6 +25,7 @@
              max="999"
              name="{model.numberName(book.value)}"
              required
+             disabled="{model.disable ? '' : null}"
             >
         </div>
         <div if="model.numberValidationMessage(book.value)" class="invalid-message">
