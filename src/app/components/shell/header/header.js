@@ -106,7 +106,12 @@ class Header extends Controller {
     }
 
     onUpdate() {
-        stickyNote.forceHide(window.location.pathname !== '/');
+        const stickyUpdate = window.location.pathname !== '/';
+
+        if (stickyUpdate !== this.lastStickyUpdate) {
+            stickyNote.forceHide(stickyUpdate);
+            this.lastStickyUpdate = stickyUpdate;
+        }
     }
 
     onLoaded() {
