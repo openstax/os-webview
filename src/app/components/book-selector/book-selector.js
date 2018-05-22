@@ -85,8 +85,7 @@ export default class BookSelector extends SalesforceForm {
                     this.update();
                 };
                 const checkboxComponent = new BookCheckbox(() => ({
-                    // No name; will provide name at submit time as needed
-                    id: '00NU00000053nzR',
+                    name: this.props.name,
                     value: book.value,
                     imageUrl: book.coverUrl,
                     label: book.text

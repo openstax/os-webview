@@ -149,7 +149,7 @@ export default class InterestForm extends Controller {
     }
 
     afterSubmit() {
-        if (this.submitQueue.length) {
+        if (this.submitQueue && this.submitQueue.length) {
             const action = this.submitQueue.shift();
 
             action();

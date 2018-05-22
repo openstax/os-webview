@@ -52,7 +52,9 @@ export default class MultiPageForm extends Controller {
             region.attach(this.props.contents[i]);
         }
 
-        this.el.querySelector('#form-response').addEventListener('load', this.afterSubmit);
+        window.requestAnimationFrame(() => {
+            this.el.querySelector('#form-response').addEventListener('load', this.afterSubmit);
+        });
     }
 
     onClose() {
@@ -82,12 +84,20 @@ export default class MultiPageForm extends Controller {
         this.update();
     }
 
+    @on('keydown input')
+    interceptSubmit(event) {
+        if (event.key === 'Enter') {
+            if (this.currentPage < this.lastPage) {
+                event.preventDefault();
+                this.nextPage();
+            }
+        }
+    }
+
     @on('submit form')
     handleSubmit(event) {
-        event.preventDefault();
-        if (this.currentPage < this.lastPage) {
-            this.nextPage();
-        } else {
+        if (this.onSubmit) {
+            event.preventDefault();
             this.onSubmit(event);
         }
     }
