@@ -17,7 +17,7 @@ export default class HeadlinePaginator extends Controller {
             headlines: '.headlines'
         };
         this.model = () => this.getModel();
-        this.perPage=4;
+        this.perPage = 10;
         this.pageNumber = 0;
         this.lastPage = 0;
     }
