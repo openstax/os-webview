@@ -1,0 +1,44 @@
+<template args="model">
+    <div class="hero">
+        <div class="content">
+            <div class="text">
+                <h1>{model.headline}</h1>
+                <div data-html="subhead" skip="true"></div>
+                <div class="larger-screen" data-html="subhead2" skip="true"></div>
+            </div>
+        </div>
+        <div class="images">
+            <img class="desktop-bg" src="/images/bookstore-suppliers/hero-bookstore-print-desktop.png">
+            <div class="clipped">
+                <img class="phone-bg" src="/images/bookstore-suppliers/Hero-isometric-book-bg-mobile.png">
+            </div>
+            <img class="phone-fg" src="/images/bookstore-suppliers/Hero-books-mobile.png">
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="smaller-screen" data-html="subhead2" skip="true"></div>
+        <div class="cards {model.cardsClass}">
+            <div each="supplier in model.suppliers" class="card">
+                <if condition="$item === 0">
+                    <div class="left-stuff">
+                        <img src="{supplier.logoUrl}">
+                        <h2>{supplier.name}</h2>
+                        <div class="blurb" data-html="suppliers[{$item}].description" skip="true"></div>
+                        <a class="btn primary" href="{supplier.buttonUrl}">{supplier.buttonText}</a>
+                    </div>
+                    <div class="right-stuff">
+                        <img src="http://via.placeholder.com/300x400">
+                    </div>
+                <else>
+                    <div class="logo-dot">
+                        <img src="{supplier.logoUrl}">
+                    </div>
+                    <h2>{supplier.name}</h2>
+                    <div class="blurb" data-html="suppliers[{$item}].description" skip="true"></div>
+                    <a class="btn" href="{supplier.buttonUrl}">{supplier.buttonText}</a>
+                </if>
+            </div>
+        </div>
+        <button type="button" class="primary">Download a list of ISBN numbers</button>
+    </div>
+</template>
