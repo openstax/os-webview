@@ -24,10 +24,17 @@
         font-weight: bold;
 
         a {
+            display: block;
             text-decoration: none;
 
             &:not(:hover) {
                 color: inherit;
+            }
+
+            .fa-external-link-alt {
+                font-size: 75%;
+                margin-bottom: 0.1rem;
+                margin-left: 0.1rem;
             }
         }
     }

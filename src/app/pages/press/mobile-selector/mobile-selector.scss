@@ -22,10 +22,11 @@
         width: 100vw;
 
         [role="menu"] {
-            @extend %card;
             @include body-font(2.4rem);
 
             background-color: ui-color(white);
+            border-radius: 0.25rem;
+            width: calc(100% - #{2 * $normal-margin});
         }
 
         [role="menuitem"] {
@@ -34,6 +35,14 @@
             &.selected {
                 background-color: ui-color(default);
                 border-left: 0.3rem solid os-color(green);
+            }
+
+            &:first-child {
+                border-top-right-radius: inherit;
+            }
+
+            &:last-child {
+                border-bottom-right-radius: inherit;
             }
         }
     }
