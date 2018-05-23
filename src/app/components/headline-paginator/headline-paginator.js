@@ -13,9 +13,6 @@ export default class HeadlinePaginator extends Controller {
             classes: ['headline-paginator']
         };
         this.css = `/app/components/headline-paginator/headline-paginator.css?${VERSION}`;
-        this.regions = {
-            headlines: '.headlines'
-        };
         this.model = () => this.getModel();
         this.perPage = 10;
         this.pageNumber = 0;

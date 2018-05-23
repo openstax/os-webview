@@ -224,7 +224,7 @@ sup {
 
 // Boxed Page
 
-.page {
+.page:not([hidden]) {
     display: flex;
     flex-flow: column nowrap;
 }
