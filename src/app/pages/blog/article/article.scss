@@ -1,6 +1,7 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.blog.page {
+.blog.page,
+.press.page {
     article {
         margin: auto;
         max-width: $text-content-max;
@@ -25,33 +26,116 @@
             margin-bottom: 0;
         }
 
-        &.page .article {
-            background-color: ui-color(white);
-            width: 100%;
+        &.page {
+            $boxed-width: 730px;
 
-            .quote {
-                background-color: ui-color(form-bg);
-                padding: 1rem 3rem;
-            }
-
-            figcaption {
-                @include set-font(helper-label);
-
-                color: text-color(helper);
-
-                :first-child {
-                    margin-top: 0;
+            @mixin tablet {
+                @media (min-width: #{breakpoints(phone) + 1}) {
+                    @content;
                 }
             }
 
-            .tags {
-                display: flex;
+            &.hidden {
+                display: none;
+            }
 
-                .tag {
+            .article {
+                background-color: ui-color(white);
+                width: 100%;
+
+                .quote {
                     background-color: ui-color(form-bg);
+                    padding: 1rem 3rem;
+                }
+
+                figcaption {
+                    @include set-font(helper-label);
+
                     color: text-color(helper);
-                    margin-right: 1.5rem;
-                    padding: 0.35em 1.1em;
+
+                    :first-child {
+                        margin-top: 0;
+                    }
+                }
+
+                .tags {
+                    display: flex;
+
+                    .tag {
+                        background-color: ui-color(form-bg);
+                        color: text-color(helper);
+                        margin-right: 1.5rem;
+                        padding: 0.35em 1.1em;
+                    }
+                }
+            }
+
+            .hero {
+                background-position: 60% 40%;
+                background-repeat: no-repeat;
+                background-size: cover;
+                height: 60rem;
+                overflow: hidden;
+                padding: 0;
+                position: relative;
+                width: 100%;
+
+                @include wider-than($media-content-max) {
+                    background-size: calc(28rem + 80vw);
+                    height: calc(4rem + 40vw);
+                    max-height: 80vh;
+                }
+            }
+
+            > .boxed {
+                max-width: $content-max;
+                padding: 2rem 1.5rem 8rem;
+            }
+
+            .meta {
+                color: text-color(helper);
+            }
+
+            .author {
+                font-style: italic;
+
+                &::after {
+                    content: ' | ';
+                }
+            }
+
+            .body {
+                line-height: 1.667;
+
+                img {
+                    margin: 1.5rem 0 0;
+                    width: 100%;
+                }
+
+                .image {
+                    margin-top: 2.5rem;
+                }
+            }
+
+            .tags span {
+                @include set-font(helper-label);
+
+                color: text-color(helper);
+                display: inline-block;
+                margin-right: 1rem;
+                padding: 1rem;
+            }
+
+            .disqus {
+                padding: 4rem 0 0;
+                width: 100%;
+            }
+
+            .articles .boxed {
+                padding: 0 1.5rem;
+
+                @include wider-than($tablet-max) {
+                    padding: 0;
                 }
             }
         }

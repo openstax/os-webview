@@ -5,11 +5,12 @@
 
     &.with-icon {
         grid-column-gap: 2rem;
-        grid-template-columns: auto 1fr;
+        grid-template-columns: 5rem 1fr;
     }
 
     > img {
         grid-row-start: span 2;
+        max-width: 100%;
     }
 
     .byline {

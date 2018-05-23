@@ -91,4 +91,10 @@
         grid-row-gap: 2rem;
         grid-template-rows: auto auto;
     }
+
+    .hero + article,
+    .other.press-releases,
+    .text-content > h1 {
+        width: 100%;
+    }
 }
