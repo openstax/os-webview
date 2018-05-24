@@ -10,9 +10,15 @@
         <div class="images">
             <img class="desktop-bg" src="/images/bookstore-suppliers/hero-bookstore-print-desktop.png">
             <div class="clipped">
-                <img class="phone-bg" src="/images/bookstore-suppliers/Hero-isometric-book-bg-mobile.png">
+                <img class="phone-bg" srcset="
+                    /images/bookstore-suppliers/Hero-isometric-book-bg-mobile.png 1x,
+                    /images/bookstore-suppliers/Hero-isometric-book-bg-mobile@2x.png 2x
+                ">
             </div>
-            <img class="phone-fg" src="/images/bookstore-suppliers/Hero-books-mobile.png">
+            <img class="phone-fg" srcset="
+                /images/bookstore-suppliers/Hero-books-mobile.png 1x,
+                /images/bookstore-suppliers/Hero-books-mobile@2x.png 2x
+            " alt="">
         </div>
     </div>
     <div class="main-content">
@@ -27,7 +33,10 @@
                         <a class="btn primary" href="{supplier.buttonUrl}">{supplier.buttonText}</a>
                     </div>
                     <div class="right-stuff">
-                        <img src="http://via.placeholder.com/300x400">
+                        <img srcset="
+                            /images/bookstore-suppliers/IndiCo-card-banner.png 1x,
+                            /images/bookstore-suppliers/IndiCo-card-banner@2x.png 2x
+                        " alt="">
                     </div>
                 <else>
                     <div class="logo-dot">
@@ -39,6 +48,6 @@
                 </if>
             </div>
         </div>
-        <button type="button" class="primary">Download a list of ISBN numbers</button>
+        <a href="{model.buttonUrl}" class="btn primary">{model.buttonText}</a>
     </div>
 </template>

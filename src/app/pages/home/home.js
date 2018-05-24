@@ -14,7 +14,7 @@ import Banner from './banners/banner';
 const bannerModels = shuffle([{
     subject: 'astronomy',
     subjectURL: '/details/books/astronomy',
-    subjectTitle: 'astronomy',
+    subjectTitle: 'Astronomy',
     quote: 'see beyond this world',
     features: ['chart', 'equation'],
     buttonSpec1: 'btn-gold',
