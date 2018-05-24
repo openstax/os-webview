@@ -11,7 +11,7 @@ export default class FormattedAs extends Controller {
         this.format = format;
         this.model = Object.assign({
             coverUrl: article.article_image || 'https://placehold.it/370x240',
-            articleSlug: article.slug
+            articleSlug: article.slug.replace('news/', '')
         }, article);
         this.model.date = formatDate(article.date);
         this.regions = {

@@ -8,14 +8,6 @@ import CMSPageController from '~/controllers/cms';
 import Article from './article/article';
 import {description as template} from './blog.html';
 
-
-function slugWithNewsPrefix(slug) {
-    if (!(/^news\//).test(slug)) {
-        return `news/${slug}`;
-    }
-    return slug;
-}
-
 export default class Blog extends CMSPageController {
 
     static description = 'Stay up to date with OpenStax news and hear community '+
@@ -47,7 +39,7 @@ export default class Blog extends CMSPageController {
             const slugMatch = window.location.pathname.match(/\/blog\/(.+)/);
 
             if (slugMatch) {
-                this.model.articleSlug = slugWithNewsPrefix(slugMatch[1]);
+                this.model.articleSlug = slugMatch[1];
                 if (!this.articles[this.model.articleSlug]) {
                     router.navigate('/404', {path: '/blog'}, true);
                     return;
@@ -107,8 +99,7 @@ export default class Blog extends CMSPageController {
                 });
 
             this.articles = {};
-            for (const rawSlug of this.articleSlugs) {
-                const slug = slugWithNewsPrefix(rawSlug);
+            for (const slug of this.articleSlugs) {
                 const article = Object.assign({slug}, this.pageData.articles[slug]);
 
                 if (article.pin_to_top) {

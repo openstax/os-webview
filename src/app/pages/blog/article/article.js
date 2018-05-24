@@ -2,6 +2,13 @@ import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 import FormattedAs from './formatted-as/formatted-as';
 
+function slugWithNewsPrefix(slug) {
+    if (!(/^news\//).test(slug)) {
+        return `news/${slug}`;
+    }
+    return slug;
+}
+
 export default class Article extends CMSPageController {
 
     init(article, mode) {
@@ -10,7 +17,7 @@ export default class Article extends CMSPageController {
         this.view = {
             classes: ['article', 'hide-until-loaded']
         };
-        this.slug = article.slug;
+        this.slug = slugWithNewsPrefix(article.slug);
         this.pinned = article.pin_to_top;
         this.preserveWrapping = true;
     }
