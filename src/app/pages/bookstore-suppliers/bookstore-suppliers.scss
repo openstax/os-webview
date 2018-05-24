@@ -146,6 +146,17 @@
         }
     }
 
+    .btn {
+        @extend %button;
+        @extend %secondary;
+
+        width: fit-content;
+
+        &.primary {
+            @extend %primary;
+        }
+    }
+
     .cards {
         display: grid;
         grid-gap: 2rem;
@@ -176,13 +187,6 @@
                 margin: 0;
             }
 
-            .btn {
-                @extend %button;
-                @extend %secondary;
-
-                width: fit-content;
-            }
-
             &:first-child {
 
                 @include width-up-to($phone-max) {
@@ -207,6 +211,10 @@
                     @include wider-than($phone-max) {
                         grid-gap: 3rem;
                         padding: 7rem;
+                    }
+
+                    > img {
+                        max-width: 100%;
                     }
                 }
 
@@ -248,6 +256,10 @@
                         max-height: 80%;
                         max-width: 80%;
                     }
+                }
+
+                .btn {
+                    height: 4rem;
                 }
             }
         }

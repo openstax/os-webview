@@ -11,58 +11,38 @@ export default class BookstoreSuppliers extends CMSPageController {
             classes: ['bookstore-suppliers', 'page']
         };
         this.css = `/app/pages/bookstore-suppliers/bookstore-suppliers.css?${VERSION}`;
-        this.slug = 'pages/bookstores';
+        this.slug = 'pages/print-order';
         this.model = {};
     }
 
-    onLoaded() {
-        // TODO: Remove when back end is implemented
-        this.pageData = {
-            headline: 'Need to order print copies for your campus bookstore?',
-            subhead: 'We\'ve got you covered. Below is a list of your print options.',
-            subhead2: `If you are an instructor or student and would like to order lorem ipsum
-                boogedy boogedy shoo...`,
-            suppliers: [
-                {
-                    name: 'indiCo',
-                    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
-                    logoUrl: 'http://via.placeholder.com/150x80',
-                    buttonUrl: 'http://openstax.org',
-                    buttonText: 'Get started'
-                },
-                {
-                    name: 'Toppan',
-                    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
-                    logoUrl: 'http://via.placeholder.com/150x80',
-                    buttonUrl: 'http://openstax.org',
-                    buttonText: 'Learn more'
-                },
-                {
-                    name: 'Nebraska Book Company',
-                    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
-                    logoUrl: 'http://via.placeholder.com/150x80',
-                    buttonUrl: 'http://openstax.org',
-                    buttonText: 'Learn more'
-                },
-                {
-                    name: 'XanEdu',
-                    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
-                    logoUrl: 'http://via.placeholder.com/150x80',
-                    buttonUrl: 'http://openstax.org',
-                    buttonText: 'Learn more'
-                }
-            ]
-        };
-        this.onDataLoaded();
-    }
-
     onDataLoaded() {
+        const suppliers = [
+            {
+                name: this.pageData.featured_provider_name,
+                description: this.pageData.featured_provider_blurb,
+                logoUrl: this.pageData.featured_provider_logo_url,
+                buttonUrl: this.pageData.featured_provider_link,
+                buttonText: this.pageData.featured_provider_cta
+            }
+        ];
+
+        this.pageData.providers.forEach((p) => {
+            suppliers.push({
+                name: p.name,
+                description: p.blurb,
+                logoUrl: p.icon,
+                buttonUrl: p.url,
+                buttonText: p.cta
+            });
+        });
         this.model = {
-            headline: this.pageData.headline,
-            subhead: this.pageData.subhead,
-            subhead2: this.pageData.subhead2,
-            suppliers: this.pageData.suppliers,
-            cardsClass: (this.pageData.suppliers.length % 2) ? 'by-twos' : ''
+            headline: this.pageData.title,
+            subhead: this.pageData.intro_heading,
+            subhead2: this.pageData.intro_description,
+            suppliers,
+            cardsClass: (suppliers.length % 2) ? 'by-twos' : '',
+            buttonUrl: this.pageData.isbn_download_url,
+            buttonText: this.pageData.isbn_cta
         };
         this.update();
     }
