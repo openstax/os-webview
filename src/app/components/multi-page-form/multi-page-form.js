@@ -76,12 +76,14 @@ export default class MultiPageForm extends Controller {
 
         this.currentPage += 1;
         this.update();
+        this.currentForm.el.querySelector($.focusable).focus();
     }
 
     @on('click .back')
     prevPage() {
         this.currentPage -= 1;
         this.update();
+        this.currentForm.el.querySelector($.focusable).focus();
     }
 
     @on('keydown input')

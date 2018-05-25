@@ -45,4 +45,12 @@ export default class BookCheckbox extends Controller {
         }
     }
 
+    @on('keydown .indicator')
+    toggleOnSpace(event) {
+        if (event.key === ' ' || event.key === 'Enter') {
+            event.preventDefault();
+            this.toggleChecked();
+        }
+    }
+
 }

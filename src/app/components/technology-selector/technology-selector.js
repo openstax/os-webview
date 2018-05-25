@@ -1,6 +1,7 @@
 import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 import BookCheckbox from '~/components/book-checkbox/book-checkbox';
+import FormInput from '~/components/form-input/form-input';
 import {description as template} from './technology-selector.html';
 
 export default class TechnologySelector extends CMSPageController {
@@ -37,13 +38,31 @@ export default class TechnologySelector extends CMSPageController {
         });
         options.forEach(({label, value, onChange}) => {
             const cb = new BookCheckbox(() => ({
-                name: '00NU0000005VmTu',
+                name: 'Partner_Interest__c',
                 value,
                 label
             }), onChange);
 
             this.regions.checkboxes.append(cb);
         });
+    }
+
+    onUpdate() {
+        if (this.model.showOtherBlank) {
+            const otherInput = new FormInput({
+                name: 'Partner_Interest_Other__c',
+                type: 'text',
+                label: 'Other (include all other technologies you use)',
+                required: true,
+                validationMessage(name) {
+                    return this.validated ? this.el.querySelector(`[name="${name}"]`).validationMessage : '';
+                }
+            });
+            const Region = this.regions.self.constructor;
+            const region = new Region(this.el.querySelector('.other-option'));
+
+            region.attach(otherInput);
+        }
     }
 
 }

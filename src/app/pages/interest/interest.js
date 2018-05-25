@@ -71,7 +71,7 @@ export default class InterestForm extends Controller {
             validationMessage: (name) => validationMessage.bind(howManyStudents)(name)
         });
         const whichPartners = new FormCheckboxGroup({
-            name: '00NU00000055spm',
+            name: 'Partner_Category_Interest__c',
             longLabel: 'Which of our partners would you like to give permission' +
             ' to contact you about additional resources to support our books?',
             instructions: 'Select all that apply.',
@@ -86,7 +86,7 @@ export default class InterestForm extends Controller {
             validationMessage: (name) => validationMessage.bind(whichPartners)(name)
         });
         const howDidYouHear = new FormCheckboxGroup({
-            name: '00NU00000055spr',
+            name: 'How_did_you_Hear__c',
             longLabel: 'How did you hear about OpenStax?',
             instructions: 'Select all that apply.',
             options: [

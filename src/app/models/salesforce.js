@@ -1,6 +1,6 @@
 import settings from 'settings';
 
-const adoptionName = '[name="00NU00000055spw"]';
+const adoptionName = '[name="Adoption_Status__c"]';
 const adoptionOptions = [{
     key: 'adopted',
     value: 'Confirmed Adoption Won',
