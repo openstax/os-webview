@@ -24,11 +24,21 @@ export default class Tab extends Controller {
 
     onUpdate() {
         this.el.classList.toggle('selected', this.props.selectedLabel === this.props.label);
+        this.el.tabIndex = 0;
     }
 
     @on('click')
     selectThisTab() {
         this.handlers.setSelected(this.props.label);
+        this.el.blur();
+    }
+
+    @on('keydown')
+    selectOnSpace(event) {
+        if (event.key === ' ') {
+            event.preventDefault();
+            this.selectThisTab();
+        }
     }
 
 }
