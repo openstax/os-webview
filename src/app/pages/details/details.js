@@ -1,12 +1,12 @@
 import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
-import PhoneView from './phone-view/phone-view';
+import ContentGroup from '~/components/content-group/content-group';
 import DetailsTab from './details-tab/details-tab';
+import getCompCopyDialogProps from './comp-copy-dialog-props';
 import InstructorResourceTab from './instructor-resource-tab/instructor-resource-tab';
+import PhoneView from './phone-view/phone-view';
 import StudentResourceTab from './student-resource-tab/student-resource-tab';
 import TabGroup from '~/components/tab-group/tab-group';
-import ContentGroup from '~/components/content-group/content-group';
-import getCompCopyDialogProps from './comp-copy-dialog-props';
 import {sfUserModel} from '~/models/usermodel';
 import {formatDateForBlog as formatDate, shuffle} from '~/helpers/data';
 import {on} from '~/helpers/controller/decorators';
@@ -88,12 +88,16 @@ export default class Details extends CMSPageController {
     }
 
     onDataLoaded() {
+        if (this.pageData.meta.type !== 'books.Book') {
+            window.location = '/_404';
+            return;
+        }
         document.body.classList.remove('page-loading');
         document.body.classList.add('page-loaded');
         document.title = `${this.pageData.title} - OpenStax`;
         const polish = (/^Fizyka/).test(this.pageData.title);
         const tabLabels = [polish ? 'Szczegóły książki' : 'Book details'];
-        let selectedTab = tabLabels[0];
+        let selectedTab = decodeURIComponent(window.location.search.replace('?', '')) || tabLabels[0];
         const detailsTabData = () => {
             /* eslint complexity: 0 */
             const model = {
@@ -202,6 +206,7 @@ export default class Details extends CMSPageController {
                 selectedTab = newValue;
                 setDetailsTabClass();
                 contentGroup.update();
+                window.history.replaceState({}, selectedTab, `?${selectedTab}`);
             }
         }));
 
