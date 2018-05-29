@@ -4,7 +4,6 @@ import linkHelper from './helpers/link';
 import shell from './components/shell/shell';
 
 const PAGES = [
-    '404',
     'about',
     'accessibility-statement',
     'adopters',
