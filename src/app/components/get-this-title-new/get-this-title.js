@@ -17,9 +17,7 @@ export default class GetThisTitle extends Controller {
         this.template = data.slug.substr(-6) === 'polska' ? polishTemplate : template;
         this.css = `/app/components/get-this-title-new/get-this-title.css?${VERSION}`;
         this.regions = {
-            submenu: '.submenu',
-            modal: '.modal-region',
-            toc: '.toc-region'
+            submenu: '.submenu'
         };
         this.view = {
             classes: ['get-this-title']
