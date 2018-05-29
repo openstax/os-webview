@@ -1,0 +1,29 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.multi-page-form {
+    display: grid;
+    grid-gap: 4rem;
+
+    button {
+        @extend %button;
+
+        &.primary {
+            @extend %primary;
+        }
+
+        &.secondary {
+            @extend %secondary;
+        }
+    }
+
+    [hidden] {
+        display: none;
+    }
+
+    .button-row {
+        display: grid;
+        grid-gap: 1rem;
+        grid-template-columns: repeat(9, auto) 1fr;
+        margin-top: 4rem;
+    }
+}

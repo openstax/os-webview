@@ -24,7 +24,8 @@ class SalesforceForm extends CMSPageController {
                 text: book.salesforce_name,
                 value: book.salesforce_abbreviation,
                 comingSoon: book.coming_soon,
-                subject: book.subject
+                subject: book.subject,
+                coverUrl: book.cover_url
             }))
             .sort((a, b) => a.text < b.text ? -1 : 1);
     }

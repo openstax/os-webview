@@ -1,0 +1,13 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.role-selector {
+    min-height: 55rem;
+    padding: 4rem 0 6rem;
+    width: 100%;
+
+    [data-region="selector"] {
+        margin: 2rem auto 4rem;
+        max-width: 47rem;
+        width: 100%;
+    }
+}

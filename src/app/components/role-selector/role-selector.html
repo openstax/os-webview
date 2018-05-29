@@ -1,0 +1,9 @@
+<template args="model">
+    <div data-region="selector" skip="true"></div>
+    <div
+     each="shouldBeHidden in model"
+     hidden="{shouldBeHidden}"
+     data-content="{$item}"
+     skip="true"
+    ></div>
+</template>

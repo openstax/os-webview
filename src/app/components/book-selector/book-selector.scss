@@ -1,0 +1,32 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.book-selector {
+    display: grid;
+    grid-gap: 3rem;
+
+    .prompt {
+        @include set-font(h4);
+
+        margin: 0;
+    }
+
+    .hint {
+        @include set-font(helper-label);
+        color: text-color(helper);
+        font-style: italic;
+    }
+
+    .two-columns {
+        display: grid;
+        grid-gap: 1rem;
+        grid-template-columns: 1fr 1fr;
+
+        @include width-up-to($phone-max) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .field-label {
+        margin-bottom: 1rem;
+    }
+}

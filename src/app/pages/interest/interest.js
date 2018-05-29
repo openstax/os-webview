@@ -1,18 +1,19 @@
 import VERSION from '~/version';
 import {Controller} from 'superb.js';
-import $ from '~/helpers/$';
-import settings from 'settings';
-import FormSelect from '~/components/form-select/form-select';
+import BookSelector from '~/components/book-selector/book-selector';
+import ContactInfo from '~/components/contact-info/contact-info';
+import FormCheckboxGroup from '~/components/form-checkboxgroup/form-checkboxgroup';
+import FormHeader from '~/components/form-header/form-header';
+import FormInput from '~/components/form-input/form-input';
+import HiddenFields from './hidden-fields/hidden-fields';
+import MultiPageForm from '~/components/multi-page-form/multi-page-form';
+import RoleSelector from '~/components/role-selector/role-selector';
+import router from '~/router';
+import salesforce from '~/models/salesforce';
+import SeriesOfComponents from '~/components/series-of-components/series-of-components';
 import StudentForm from '~/components/student-form/student-form';
-import TeacherForm from './teacher-form/teacher-form';
-import {on} from '~/helpers/controller/decorators';
+import TechnologySelector from '~/components/technology-selector/technology-selector';
 import {description as template} from './interest.html';
-
-const headerInfoPromise = fetch(`${settings.apiOrigin}/api/pages/interest-form`)
-    .then((r) => r.json());
-
-const rolesPromise = fetch(`${settings.apiOrigin}/api/snippets/roles`)
-    .then((r) => r.json());
 
 export default class InterestForm extends Controller {
 
@@ -20,19 +21,108 @@ export default class InterestForm extends Controller {
         this.template = template;
         this.css = `/app/pages/interest/interest.css?${VERSION}`;
         this.view = {
-            classes: ['interest-form']
+            classes: ['interest-form-v2']
         };
         const defaultTitle = decodeURIComponent(window.location.search.substr(1));
 
-        this.model = {
-            validationMessage: (name) =>
-                this.hasBeenSubmitted ? this.el.querySelector(`[name="${name}"]`).validationMessage : '',
-            defaultTitle
-        };
         this.regions = {
-            roleSelector: 'plug-in[data-id="selectedRole"]',
+            header: '[data-region="header"]',
+            roleSelector: '[data-region="role-selector"]',
             form: 'plug-in[data-id="form"]'
         };
+    }
+
+    firstPage() {
+        const contactForm = new ContactInfo({
+            validationMessage(name) {
+                return this.validated ? this.el.querySelector(`[name="${name}"]`).validationMessage : '';
+            }
+        });
+        const result = new SeriesOfComponents({
+            className: 'page-1',
+            contents: [
+                new HiddenFields(),
+                contactForm
+            ]
+        });
+
+        result.validate = function () {
+            return contactForm.validate();
+        };
+        return result;
+    }
+
+    secondPage() {
+        let validated = false;
+        const validationMessage = function (name) {
+            return this && validated ? this.el.querySelector(`[name="${name}"]`).validationMessage : '';
+        };
+        const bookSelector = new BookSelector(() => ({
+            prompt: 'Which textbook(s) are you interested in adopting?',
+            required: true,
+            name: 'Subject__c'
+        }));
+        const howManyStudents = new FormInput({
+            name: 'Number_of_Students__c',
+            longLabel: 'How many students do you teach each semester?',
+            type: 'number',
+            min: '1',
+            required: true,
+            validationMessage: (name) => validationMessage.bind(howManyStudents)(name)
+        });
+        const whichPartners = new FormCheckboxGroup({
+            name: 'Partner_Category_Interest__c',
+            longLabel: 'Which of our partners would you like to give permission' +
+            ' to contact you about additional resources to support our books?',
+            instructions: 'Select all that apply.',
+            options: [
+                {label: 'Online homework partners', value: 'Online homework partners'},
+                {label: 'Adaptive courseware partners', value: 'Adaptive courseware partners'},
+                {label: 'Customization tool partners', value: 'Customization tool partners'}
+            ],
+            multiple: true,
+            required: true,
+            requireNone: true,
+            validationMessage: (name) => validationMessage.bind(whichPartners)(name)
+        });
+        const howDidYouHear = new FormCheckboxGroup({
+            name: 'How_did_you_Hear__c',
+            longLabel: 'How did you hear about OpenStax?',
+            instructions: 'Select all that apply.',
+            options: [
+                {value: 'Web search', label: 'Web search'},
+                {value: 'Colleague', label: 'Colleague'},
+                {value: 'Conference', label: 'Conference'},
+                {value: 'Email', label: 'Email'},
+                {value: 'Facebook', label: 'Facebook'},
+                {value: 'Twitter', label: 'Twitter'},
+                {value: 'Webinar', label: 'Webinar'},
+                {value: 'Partner organization', label: 'Partner organization'}
+            ],
+            multiple: true,
+            required: true,
+            validationMessage: (name) => validationMessage.bind(howDidYouHear)(name)
+        });
+        const result = new SeriesOfComponents({
+            className: 'page-2',
+            contents: [
+                bookSelector,
+                howManyStudents,
+                whichPartners,
+                howDidYouHear
+            ]
+        });
+
+        result.validate = function () {
+            validated = true;
+            const bsv = bookSelector.validate();
+
+            bookSelector.update();
+            result.update();
+
+            return Boolean(bsv || result.el.querySelector(':invalid'));
+        };
+        return result;
     }
 
     onLoaded() {
@@ -41,43 +131,37 @@ export default class InterestForm extends Controller {
         if ('piTracker' in window) {
             piTracker(window.location.href.split('#')[0]);
         }
-        headerInfoPromise.then((response) => {
-            this.model.introHeading = response.intro_heading;
-            this.model.introDescription = response.intro_description;
-            this.update();
-            $.insertHtml(this.el, this.model);
-        });
-        rolesPromise.then((roles) => {
-            const options = roles.map((opt) => ({label: opt.display_name, value: opt.salesforce_name}));
+        this.regions.header.attach(new FormHeader('pages/interest-form'));
 
-            this.regions.roleSelector.attach(new FormSelect({
-                instructions: 'I am a',
-                validationMessage: () => '',
-                placeholder: 'Please select one',
-                options
-            }));
-        });
-    }
+        const studentForm = new StudentForm('http://go.pardot.com/l/218812/2017-04-11/ld9g');
+        const facultyPages = [
+            this.firstPage(),
+            this.secondPage(),
+            new TechnologySelector({
+                prompt: 'Tell us about the technology you use.'
+            })
+        ];
+        const facultyForm = new MultiPageForm(
+            () => ({
+                action: `https://${salesforce.salesforceHome}/servlet/servlet.WebToLead?encoding=UTF-8`,
+                contents: facultyPages
+            }),
+            null,
+            () => {
+                router.navigate('/interest-confirmation');
+            }
+        );
 
-    @on('change [data-id="selectedRole"] select')
-    updateSelectedRole(event) {
-        const newRole = event.target.value;
-        const oldRole = this.model.selectedRole;
-
-        if (!newRole) {
-            return;
-        }
-        this.model.selectedRole = newRole;
-        if (newRole === 'Student') {
-            this.form = new StudentForm('http://go.pardot.com/l/218812/2017-04-11/ld9g');
-            this.regions.form.attach(this.form);
-        } else if (newRole && (!oldRole || oldRole === 'Student')) {
-            this.form = new TeacherForm(this.model);
-            this.regions.form.attach(this.form);
-        }
-        this.model.userRole = newRole;
-        this.form.update();
-        $.scrollTo(this.form.el);
+        this.regions.roleSelector.attach(new RoleSelector(() => [
+            {
+                contents: studentForm,
+                hideWhen: (role) => role !== 'Student'
+            },
+            {
+                contents: facultyForm,
+                hideWhen: (role) => ['', 'Student'].includes(role)
+            }
+        ]));
     }
 
 }

@@ -8,6 +8,8 @@ $.isTouchDevice = () => (
 
 $.isNode = () => (typeof process !== 'undefined') && (process.release.name === 'node');
 
+$.focusable = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
 $.booleanAttribute = (whether) => whether ? '' : null;
 
 $.browserId = () => {

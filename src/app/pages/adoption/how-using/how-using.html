@@ -1,0 +1,35 @@
+<template args="model">
+    <div each="book in model.selectedBooks">
+        <div>
+            How are you using {book.text}?
+            <label each="sfOption in model.sfOptions">
+                <input
+                 type="radio"
+                 name="{model.radioName(book.value)}"
+                 value="{sfOption.value}"
+                 required
+                 disabled="{model.disable ? '' : null}"
+                >
+                {sfOption.text}
+            </label>
+            <div if="model.radioValidationMessage(book.value)" class="invalid-message">
+                {model.radioValidationMessage(book.value)}
+            </div>
+        </div>
+        <div>
+            How many students are using {book.text} each semester?
+            <div class="hint">Include sections taught by TAs that you oversee</div>
+            <input
+             type="number"
+             min="1"
+             max="999"
+             name="{model.numberName(book.value)}"
+             required
+             disabled="{model.disable ? '' : null}"
+            >
+        </div>
+        <div if="model.numberValidationMessage(book.value)" class="invalid-message">
+            {model.numberValidationMessage(book.value)}
+        </div>
+    </div>
+</template>

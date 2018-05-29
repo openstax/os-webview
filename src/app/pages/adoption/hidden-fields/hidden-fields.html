@@ -1,0 +1,10 @@
+<template args="model">
+    <input name="utf8" type="hidden" value="✓">
+    <input type="hidden" name="Application_Source__c" value="OS Web/Accounts">
+    <input type="hidden" name="oid" value="{model.salesforce.oid}">
+    <input type="hidden" name="LeadSource" value="Adoption Form">
+    <input type="hidden" name="Role__c" value="Faculty">
+    <input type="hidden" name="Subject__c" value="{model.book}">
+    <input type="hidden" name="Adoption_Status__c" value={model.adoptionStatus}>
+    <input type="hidden" name="Number_of_Students__c" value={model.numberOfStudents}>
+</template>

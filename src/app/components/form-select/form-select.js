@@ -2,6 +2,7 @@ import {Controller} from 'superb.js';
 import Select from '~/components/select/select';
 import selectHandler from '~/handlers/select';
 import $ from '~/helpers/$';
+import {on} from '~/helpers/controller/decorators';
 import {description as template} from './form-select.html';
 
 export default class FormSelect extends Controller {
@@ -11,9 +12,10 @@ export default class FormSelect extends Controller {
         {label: 'No', value: '0'}
     ];
 
-    init(props) {
+    init(props, onChange) {
         this.template = template;
         this.model = props;
+        this.onChange = onChange;
         this.view = {
             tag: 'label',
             classes: ['form-select']
@@ -35,6 +37,13 @@ export default class FormSelect extends Controller {
         this.model.options = options;
         this.update();
         this.proxyWidget.updateOptions();
+    }
+
+    @on('change select')
+    handleChange(event) {
+        if (this.onChange) {
+            this.onChange(event.target.value);
+        }
     }
 
 }

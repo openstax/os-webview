@@ -14,56 +14,48 @@ export default class ContactInfo extends Controller {
         this.regions = {
             popup: 'pop-up'
         };
+        const validationMessage = this.props.validationMessage.bind(this);
         const inputs = {
             firstName: new FormInput({
-                name: 'first_name',
+                name: 'FirstName',
                 type: 'text',
                 label: 'First name',
                 required: true,
                 autocomplete: 'given-name',
-                validationMessage: this.props.validationMessage
+                validationMessage
             }),
             lastName: new FormInput({
-                name: 'last_name',
+                name: 'LastName',
                 type: 'text',
                 label: 'Last name',
                 required: true,
                 autocomplete: 'family-name',
-                validationMessage: this.props.validationMessage
+                validationMessage
             }),
             email: new FormInput({
-                name: 'email',
+                name: 'Email',
                 type: 'email',
                 label: 'Email address',
                 required: true,
                 autocomplete: 'email',
-                validationMessage: this.props.validationMessage
+                validationMessage
             }),
             phone: new FormInput({
-                name: 'phone',
+                name: 'Phone',
                 type: 'text',
                 label: 'Phone number',
                 required: true,
                 autocomplete: 'tel-national',
-                validationMessage: this.props.validationMessage
+                validationMessage
             }),
             school: new FormInput({
-                name: 'company',
+                name: 'Company',
                 type: 'text',
                 label: 'School name',
                 required: true,
                 autocomplete: 'organization',
-                validationMessage: this.props.validationMessage,
+                validationMessage,
                 suggestions: []
-            }),
-            schoolUrl: new FormInput({
-                name: 'URL',
-                type: 'url',
-                label: 'School url',
-                value: 'http://',
-                required: true,
-                pattern: '.*[.][a-zA-Z][a-zA-Z]+',
-                validationMessage: this.props.validationMessage
             })
         };
 
@@ -82,6 +74,7 @@ export default class ContactInfo extends Controller {
                 schoolComponent.model.suggestions = schools;
             }
         });
+        this.validated = false;
     }
 
     onLoaded() {
@@ -96,33 +89,17 @@ export default class ContactInfo extends Controller {
         return this.knownSchools && this.knownSchools.includes(value);
     }
 
-    schoolUrlIsRequired() {
-        const isHomeSchool = (/home ?school/i).test(this.props.selectedRole);
-
-        return !isHomeSchool && !this.schoolMatchesSuggestion();
-    }
-
-    updateSchoolUrlModel() {
-        const schoolUrlComponent = this.componentsById.schoolUrl;
-
-        if (schoolUrlComponent) {
-            const schoolUrlModel = schoolUrlComponent.model;
-            const schoolUrlValue = schoolUrlComponent.getValue();
-
-            schoolUrlModel.required = this.schoolUrlIsRequired();
-            if (schoolUrlValue === 'http://' && !schoolUrlModel.required) {
-                schoolUrlComponent.setValue('');
-            } else if ((schoolUrlModel.required || schoolUrlValue) && !schoolUrlValue.includes('//')) {
-                schoolUrlComponent.setValue(`http://${schoolUrlValue}`);
-            }
-        }
-    }
-
     onUpdate() {
-        this.updateSchoolUrlModel();
         for (const c of this.components) {
             c.update();
         }
+    }
+
+    validate() {
+        const invalid = this.el.querySelector(':invalid');
+
+        this.validated = true;
+        return invalid;
     }
 
     @on('focusout [name="company"],[name="URL"]')

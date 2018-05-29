@@ -9,19 +9,4 @@ describe('ContactInfo', () => {
     it('initializes', () => {
         expect(p).toBeTruthy();
     });
-
-    it('has a schoolUrl', () => {
-        expect(schoolUrl).toBeTruthy();
-    });
-
-    it('pre-fills schoolUrl with http://', () => {
-        expect(schoolUrl.value).toBe('http://');
-    });
-
-    it('Un-requires schoolUrl if selectedRole is homeschool', () => {
-        expect(schoolUrl.required).toBe(true);
-        p.props.selectedRole = 'Homeschool Instructor';
-        p.update();
-        expect(schoolUrl.required).toBe(false);
-    })
 });

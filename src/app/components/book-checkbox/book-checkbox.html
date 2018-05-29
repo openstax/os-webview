@@ -1,0 +1,18 @@
+<template args="model">
+    <input
+      if="model.checked"
+      type="hidden"
+      name="{model.name}"
+      value="{model.value}"
+    >
+    <img if="model.imageUrl" src="{model.imageUrl}">
+    <label>{model.label}</label>
+    <div
+     class="indicator"
+     tabindex="0"
+     role="checkbox"
+     aria-checked="{model.checked}"
+    >
+        <span if="model.checked" class="fa fa-check"></span>
+    </div>
+</template>

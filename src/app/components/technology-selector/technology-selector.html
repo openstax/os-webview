@@ -1,0 +1,6 @@
+<template args="model">
+    <h2 class="prompt">{model.prompt}</h2>
+    <div class="hint">Check all that apply</div>
+    <div class="two-columns" data-region="checkboxes" skip="true"></div>
+    <div class="other-option" if="model.showOtherBlank"></div>
+</template>
