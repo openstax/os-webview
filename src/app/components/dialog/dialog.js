@@ -1,6 +1,7 @@
 import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
+import $ from '~/helpers/$';
 import Contents from '~/pages/details/contents/contents';
 import ModalContent from '../modal-content/modal-content';
 import {description as template} from './dialog.html';
@@ -37,10 +38,6 @@ class Dialog extends Controller {
     }
 
     onUpdate() {
-        // Wait for region to be instantiated
-        setTimeout(() => {
-            this.attachContent();
-        }, 0);
         if (this.props.htmlTitle) {
             const el = this.el.querySelector('.html-title');
 
@@ -49,6 +46,18 @@ class Dialog extends Controller {
         if (this.props.customClass) {
             this.el.classList.add(this.props.customClass);
         }
+        // Wait for region to be instantiated
+        window.requestAnimationFrame(() => {
+            this.attachContent();
+
+            // Wait for content to be drawn
+            window.requestAnimationFrame(() => {
+                const focusableItems = Array.from(this.props.content.el.querySelectorAll($.focusable));
+                const first = focusableItems.find((i) => i.offsetParent !== null);
+
+                first.focus();
+            });
+        });
     }
 
     onLoaded() {
@@ -73,6 +82,13 @@ class Dialog extends Controller {
         }
         if (this.props.customClass) {
             this.el.classList.remove(this.props.customClass);
+        }
+    }
+
+    @on('keydown')
+    closeOnEscape(event) {
+        if (event.key === 'Escape') {
+            this.closeDialog();
         }
     }
 

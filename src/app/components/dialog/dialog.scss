@@ -40,7 +40,11 @@ dialog {
 
     .put-away {
         @include body-font(1.8rem);
+        background-color: transparent;
+        border: 0;
         color: text-color(helper);
+        margin: 0;
+        padding: 0;
 
         @include width-up-to($phone-max) {
             align-self: start;

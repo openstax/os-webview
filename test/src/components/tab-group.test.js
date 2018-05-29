@@ -19,16 +19,16 @@ describe('TabGroup', () => {
     const tabs = tabGroup.el.querySelectorAll('.tab');
 
     it('renders with first tab selected', () => {
-        expect(tabs[0].classList).toContain('selected');
-        expect(tabs[1].classList).not.toContain('selected');
-        expect(tabs[2].classList).not.toContain('selected');
+        expect(tabs[0].getAttribute('aria-current')).toBe('page');
+        expect(tabs[1].getAttribute('aria-current')).toBeNull();
+        expect(tabs[2].getAttribute('aria-current')).toBeNull();
     });
 
     it('changes to clicked tab', () => {
         clickElement(tabs[2]);
-        expect(tabs[0].classList).not.toContain('selected');
-        expect(tabs[1].classList).not.toContain('selected');
-        expect(tabs[2].classList).toContain('selected');
+        expect(tabs[0].getAttribute('aria-current')).toBeNull();
+        expect(tabs[1].getAttribute('aria-current')).toBeNull();
+        expect(tabs[2].getAttribute('aria-current')).toBe('page');
     });
 
     it('properly labels tabs', () => {

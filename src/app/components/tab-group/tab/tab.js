@@ -23,8 +23,13 @@ export default class Tab extends Controller {
     }
 
     onUpdate() {
-        this.el.classList.toggle('selected', this.props.selectedLabel === this.props.label);
         this.el.tabIndex = 0;
+        this.el.setAttribute('role', 'link');
+        if (this.props.selectedLabel === this.props.label) {
+            this.el.setAttribute('aria-current', 'page');
+        } else {
+            this.el.removeAttribute('aria-current');
+        }
     }
 
     @on('click')
@@ -34,8 +39,8 @@ export default class Tab extends Controller {
     }
 
     @on('keydown')
-    selectOnSpace(event) {
-        if (event.key === ' ') {
+    selectOnEnterOrSpace(event) {
+        if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
             this.selectThisTab();
         }
