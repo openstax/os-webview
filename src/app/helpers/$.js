@@ -141,6 +141,18 @@ $.hashClick = (event, options = {doHistory: true}) => {
     event.preventDefault();
 };
 
+$.setPageDescriptionAndTitle = (description, title) => {
+    const descriptionEl = document.querySelector('head meta[name="description"]');
+
+    if (descriptionEl) {
+        descriptionEl.setAttribute('content', description);
+    } else {
+        console.warn('No description meta entry in page header');
+    }
+
+    document.title = `${title} - OpenStax`;
+};
+
 const invalidEmailPatterns = [
     /@(aol|gmail|hotmail|yahoo).com/i
 ];

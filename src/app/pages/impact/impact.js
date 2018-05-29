@@ -23,7 +23,6 @@ export default class Impact extends CMSPageController {
     }
 
     onDataLoaded() {
-        document.title = `${this.pageData.title} - OpenStax`;
         this.model = this.pageData;
         this.update();
         shell.hideLoader();

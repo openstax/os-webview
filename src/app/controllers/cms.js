@@ -1,4 +1,5 @@
 import settings from 'settings';
+import $ from '~/helpers/$';
 import {Controller} from 'superb.js';
 import {bookPromise} from '~/models/book-titles';
 
@@ -50,6 +51,17 @@ class CMSPageController extends Controller {
                     this.pageData.slug = this.slug;
 
                     await this[LOAD_IMAGES](this.pageData);
+
+                    // If this component is the content of main, set page descriptor
+                    const elParentId = this.el && this.el.parentNode.id;
+
+                    if (elParentId === 'main' &&
+                        this.pageData.meta && 'search_description' in this.pageData.meta) {
+                        $.setPageDescriptionAndTitle(
+                            this.pageData.meta.search_description,
+                            this.pageData.meta.seo_title
+                        );
+                    }
 
                     this.onDataLoaded();
                 } catch (e) {

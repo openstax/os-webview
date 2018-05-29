@@ -2,6 +2,7 @@ import {Controller} from 'superb.js';
 import {description as featureTemplate} from './feature.html';
 import {description as synopsisTemplate} from './synopsis.html';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
+import $ from '~/helpers/$';
 import bodyUnitView from '~/components/body-units/body-units';
 
 export default class FormattedAs extends Controller {
@@ -21,6 +22,12 @@ export default class FormattedAs extends Controller {
         this.view = {
             classes: ['article']
         };
+        if (format === 'feature') {
+            $.setPageDescriptionAndTitle(
+                article.meta.search_description,
+                article.meta.seo_title || article.title
+            );
+        }
     }
 
     onLoaded() {
