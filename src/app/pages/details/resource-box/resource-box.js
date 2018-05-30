@@ -20,6 +20,9 @@ export default class ResourceBox extends Controller {
             }
             return 'locked';
         };
+        const loginUrl = userStatus.userInfo && userStatus.userInfo.id ?
+            `${settings.accountHref}/faculty_access/apply?r=${encodedLocation}` :
+            `${settings.apiOrigin}/accounts/login/openstax/?next=${encodedLocation}`;
         const status = resourceStatus();
         const statusToPermissions = {
             unlocked: {
@@ -36,7 +39,7 @@ export default class ResourceBox extends Controller {
                 iconType: 'lock',
                 link: {
                     text: 'Click here to unlock',
-                    url: `${settings.accountHref}/faculty_access/apply?r=${encodedLocation}`
+                    url: loginUrl
                 }
             }
         };
@@ -66,7 +69,7 @@ export default class ResourceBox extends Controller {
                 iconType: 'lock',
                 link: {
                     text: 'Click here to unlock',
-                    url: `${settings.accountHref}/faculty_access/apply?r=${encodedLocation}`
+                    url: `${settings.apiOrigin}/accounts/login/openstax/?next=${encodedLocation}`
                 }
             }
         };
