@@ -6,7 +6,7 @@
     .tab {
         @extend %tab;
 
-        &.selected {
+        &[aria-current] {
             @extend %active;
         }
     }
