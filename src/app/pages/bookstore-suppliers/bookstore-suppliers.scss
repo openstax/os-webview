@@ -45,6 +45,16 @@
             h1 {
                 @include set-font(h1);
             }
+
+            a {
+                color: inherit;
+            }
+
+            div {
+                @include width-up-to($phone-max) {
+                    max-width: 50%;
+                }
+            }
         }
 
         .images {
@@ -66,7 +76,7 @@
                 }
 
                 @include wider-than($tablet-max) {
-                    max-height: 45rem;
+                    max-height: 48rem;
                 }
             }
 
@@ -111,14 +121,14 @@
 
         display: grid;
         grid-gap: 6rem;
-        justify-items: center;
+        justify-content: center;
+        max-width: 100%;
         padding-bottom: 8rem;
-        position: relative;
         z-index: 2;
 
         @include width-up-to($phone-max) {
             background-color: ui-color(white);
-            padding-top: 6rem;
+            padding-top: 8rem;
             z-index: 1;
 
             [data-html="subhead2"] {
@@ -127,11 +137,11 @@
         }
 
         @include width-between($phone-max, $tablet-max) {
-            margin-top: -3rem;
+            padding: 2rem;
         }
 
         @include wider-than($tablet-max) {
-            margin-top: -4rem;
+            margin-top: -3rem;
             max-width: 85rem;
         }
 
@@ -179,6 +189,7 @@
             background-color: ui-color(white);
             display: grid;
             grid-gap: 2rem;
+            overflow: hidden;
 
             h2 {
                 @include set-font(h4);
@@ -208,7 +219,12 @@
                         text-align: center;
                     }
 
-                    @include wider-than($phone-max) {
+                    @include width-between($phone-max, $tablet-max) {
+                        grid-gap: 2rem;
+                        padding: 4rem;
+                    }
+
+                    @include wider-than($tablet-max) {
                         grid-gap: 3rem;
                         padding: 7rem;
                     }
@@ -260,6 +276,12 @@
 
                 .btn {
                     height: 4rem;
+
+                    @include width-between($phone-max, $tablet-max) {
+                        padding-left: 0;
+                        padding-right: 0;
+                        width: 100%;
+                    }
                 }
             }
         }
