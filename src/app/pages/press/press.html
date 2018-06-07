@@ -1,6 +1,6 @@
 <template args="model">
     <div class="hero">
-        <h1>{model.headline}</h1>
+        <h1>{model.headline || 'loading...'}</h1>
         <div data-region="mobile-selector" skip="true"></div>
     </div>
     <div class="mobile-view" skip="true"></div>

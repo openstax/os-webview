@@ -1,5 +1,6 @@
 import VERSION from '~/version';
 import {Controller} from 'superb.js';
+import $ from '~/helpers/$';
 import {description as template} from './bookings.html';
 import Booking from './booking/booking';
 
@@ -19,6 +20,7 @@ export default class bookingsRegion extends Controller {
 
     onLoaded() {
         this.model.bios.forEach((obj) => this.regions.bookings.append(new Booking(obj)));
+        $.insertHtml(this.el, this.model);
     }
 
 }

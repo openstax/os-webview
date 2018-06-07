@@ -1,0 +1,16 @@
+<template args="model">
+    <div if="model.coverUrl" class="hero" style="{backgroundImage: `url(${model.coverUrl})`}">
+        <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
+    </div>
+    <article>
+        <h1>{model.title || 'Loading...'}</h1>
+        <h2 if="model.subheading">{model.subheading}</h2>
+        <div if="model.date" class="meta">
+            <p>
+                <span class="author">{model.author}</span>
+                <span class="date">{model.date}</span>
+            </p>
+        </div>
+        <div class="body"></div>
+    </article>
+</template>
