@@ -51,10 +51,6 @@ export default class MultiPageForm extends Controller {
 
             region.attach(this.props.contents[i]);
         }
-
-        window.requestAnimationFrame(() => {
-            this.el.querySelector('#form-response').addEventListener('load', this.afterSubmit);
-        });
     }
 
     onClose() {
@@ -98,6 +94,10 @@ export default class MultiPageForm extends Controller {
 
     @on('submit form')
     handleSubmit(event) {
+        if (!this.listeningForResponse) {
+            this.listeningForResponse = true;
+            this.el.querySelector('#form-response').addEventListener('load', this.afterSubmit);
+        }
         if (this.onSubmit) {
             event.preventDefault();
             this.onSubmit(event);
