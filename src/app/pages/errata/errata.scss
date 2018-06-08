@@ -85,6 +85,7 @@ $bar-size: 0.2rem;
         }
 
         th {
+            display: table-cell;
             position: relative;
 
             .will-sort {
