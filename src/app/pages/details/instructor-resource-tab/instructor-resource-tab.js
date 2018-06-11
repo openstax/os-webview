@@ -33,7 +33,7 @@ export default class InstructorResourceTab extends Controller {
                     Object.assign({
                         heading: resourceData.resource_heading,
                         description: resourceData.resource_description
-                    }, ResourceBox.instructorResourceBoxPermissions(resourceData, userStatus))
+                    }, ResourceBox.instructorResourceBoxPermissions(resourceData, userStatus, 'Instructor resources'))
                 );
 
                 region.append(resourceBox);

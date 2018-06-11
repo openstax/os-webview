@@ -22,7 +22,7 @@ describe('ResourceBox', () => {
 
     it('handles unlocked instructor resources', () => {
         const resourceBox = new ResourceBox(
-            Object.assign(payload, ResourceBox.instructorResourceBoxPermissions(resourceData, userStatus))
+            Object.assign(payload, ResourceBox.instructorResourceBoxPermissions(resourceData, userStatus, 'Instructor resources'))
         );
         const el = resourceBox.el;
 
@@ -35,7 +35,7 @@ describe('ResourceBox', () => {
     it('handles locked instructor resources', () => {
         resourceData.resource_unlocked = false;
         const resourceBox = new ResourceBox(
-            Object.assign(payload, ResourceBox.instructorResourceBoxPermissions(resourceData, userStatus))
+            Object.assign(payload, ResourceBox.instructorResourceBoxPermissions(resourceData, userStatus, 'Instructor resources'))
         );
         const el = resourceBox.el;
 
@@ -46,7 +46,7 @@ describe('ResourceBox', () => {
     it('allows instructors access to locked resources', () => {
         userStatus.isInstructor = true;
         const resourceBox = new ResourceBox(
-            Object.assign(payload, ResourceBox.instructorResourceBoxPermissions(resourceData, userStatus))
+            Object.assign(payload, ResourceBox.instructorResourceBoxPermissions(resourceData, userStatus, 'Instructor resources'))
         );
         const el = resourceBox.el;
 
@@ -58,7 +58,7 @@ describe('ResourceBox', () => {
     it('handles locked student resources', () => {
         userStatus.isStudent = false;
         const resourceBox = new ResourceBox(
-            Object.assign(payload, ResourceBox.studentResourceBoxPermissions(resourceData, userStatus))
+            Object.assign(payload, ResourceBox.studentResourceBoxPermissions(resourceData, userStatus, 'Student resource'))
         );
         const el = resourceBox.el;
 
@@ -69,7 +69,7 @@ describe('ResourceBox', () => {
     it('allows students access to locked resources', () => {
         userStatus.isStudent = true;
         const resourceBox = new ResourceBox(
-            Object.assign(payload, ResourceBox.studentResourceBoxPermissions(resourceData, userStatus))
+            Object.assign(payload, ResourceBox.studentResourceBoxPermissions(resourceData, userStatus, 'Student resource'))
         );
         const el = resourceBox.el;
 
@@ -82,7 +82,7 @@ describe('ResourceBox', () => {
         delete resourceData.link_document_url;
         resourceData.link_external = 'http://example.com/external_link';
         const resourceBox = new ResourceBox(
-            Object.assign(payload, ResourceBox.studentResourceBoxPermissions(resourceData, userStatus))
+            Object.assign(payload, ResourceBox.studentResourceBoxPermissions(resourceData, userStatus, 'Student resource'))
         );
         const el = resourceBox.el;
 

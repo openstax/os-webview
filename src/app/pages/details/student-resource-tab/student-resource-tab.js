@@ -32,7 +32,7 @@ export default class StudentResourceTab extends Controller {
                     Object.assign({
                         heading: resourceData.resource_heading,
                         description: resourceData.resource_description
-                    }, ResourceBox.studentResourceBoxPermissions(resourceData, userStatus))
+                    }, ResourceBox.studentResourceBoxPermissions(resourceData, userStatus, 'Student resources'))
                 );
 
                 this.regions.resourceBoxes.append(resourceBox);

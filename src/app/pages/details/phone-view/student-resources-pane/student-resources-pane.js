@@ -21,7 +21,7 @@ export default class StudentResourcePane extends Controller {
                     Object.assign({
                         heading: res.resource_heading,
                         description: ''
-                    }, ResourceBox.studentResourceBoxPermissions(res, userStatus))
+                    }, ResourceBox.studentResourceBoxPermissions(res, userStatus, 'Student resources'))
                 );
 
                 this.regions.self.append(component);
