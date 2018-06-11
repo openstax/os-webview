@@ -34,7 +34,11 @@ export default class Dropdown extends Controller {
     }
 
     onLoaded() {
-        this.closeMenuBound = () => {
+        this.closeMenuBound = (event) => {
+            if (this.openedByTouch) {
+                this.openedByTouch = false;
+                return;
+            }
             if (!this.isMobileDisplay() && !this.frozen) {
                 this.closeMenu();
             }
@@ -109,6 +113,11 @@ export default class Dropdown extends Controller {
         if (event.target.parentNode === this.el && !this.isMobileDisplay() && !this.settingFocus) {
             this.closeMenuBound(event);
         }
+    }
+
+    @on('touchstart .dropdown > [role="menuitem"]')
+    openByTouch(event) {
+        this.openedByTouch = true;
     }
 
     @on('click .dropdown > [role="menuitem"]')
