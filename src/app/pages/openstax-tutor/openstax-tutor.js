@@ -173,10 +173,12 @@ export default class Tutor extends CMSPageController {
         this.handleScroll = debounce((event) => {
             const newYOffset = window.pageYOffset;
             const distanceFromBottom = document.body.offsetHeight - window.innerHeight - newYOffset;
+            const newFooterHeight = (newYOffset < 100) || (distanceFromBottom < 100) ? 'collapsed' : '';
 
-            this.model.footerHeight =
-                (newYOffset < 100) || (distanceFromBottom < 100) ? 'collapsed' : '';
-            this.update();
+            if (newFooterHeight !== this.model.footerHeight) {
+                this.model.footerHeight = newFooterHeight;
+                this.update();
+            }
             lastYOffset = newYOffset;
         }, 80);
 
