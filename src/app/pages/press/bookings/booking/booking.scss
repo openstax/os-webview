@@ -3,14 +3,13 @@
 .booking {
     display: grid;
     grid-gap: $normal-margin;
-    grid-template-columns: 8rem 1fr;
+    grid-template-columns: 10rem 1fr;
 
     img {
-        max-height: 11rem;
         max-width: 100%;
     }
 
-    [data-html="bio"] {
+    .span-2 {
         grid-column-start: span 2;
     }
 
