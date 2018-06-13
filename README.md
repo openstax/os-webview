@@ -128,3 +128,11 @@ The `settings.js` file can be used to modify a number of site-wide configuration
 ## Upgrading Dependencies
 
 You can upgrade dependencies manually or you can upgrade all of them by running `./script/upgrade && ./script/test`.
+
+## Updating Version
+
+The version must be updated in each release to help prevent browser caching issues. The version is updated in 3 locations.
+
+1. [version.js](https://github.com/openstax/os-webview/blob/master/src/app/version.js) Update the constant.
+2. [index.html](https://github.com/openstax/os-webview/blob/master/src/index.html) Update the version on reference to main.css and bundle.js
+3. [package.json](https://github.com/openstax/os-webview/blob/master/package.json) Update the version element
