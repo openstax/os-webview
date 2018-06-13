@@ -8,8 +8,9 @@ export default class ResourceBox extends Controller {
 
     // Utility function to set the values associated with whether the resource
     // is available to the user (instructor version)
-    static instructorResourceBoxPermissions(resourceData, userStatus) {
-        const encodedLocation = encodeURIComponent(window.location.href);
+    static instructorResourceBoxPermissions(resourceData, userStatus, search) {
+        const pathWithoutSearch = `${window.location.origin}${window.location.pathname}`;
+        const encodedLocation = encodeURIComponent(`${pathWithoutSearch}?${search}`);
         const isExternal = Boolean(resourceData.link_external);
         const resourceStatus = () => {
             if (resourceData.resource_unlocked || userStatus.isInstructor) {
@@ -48,8 +49,9 @@ export default class ResourceBox extends Controller {
     };
 
     // Utility function for student resources
-    static studentResourceBoxPermissions(resourceData, userStatus) {
-        const encodedLocation = encodeURIComponent(window.location.href);
+    static studentResourceBoxPermissions(resourceData, userStatus, search) {
+        const pathWithoutSearch = `${window.location.origin}${window.location.pathname}`;
+        const encodedLocation = encodeURIComponent(`${pathWithoutSearch}?${search}`);
         const isExternal = Boolean(resourceData.link_external);
         const resourceStatus = () => {
             if (resourceData.resource_unlocked || userStatus.isStudent) {

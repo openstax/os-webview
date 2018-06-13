@@ -32,7 +32,7 @@ export default class InstructorResourcePane extends Controller {
                     Object.assign({
                         heading: res.resource_heading,
                         description: ''
-                    }, ResourceBox.instructorResourceBoxPermissions(res, userStatus))
+                    }, ResourceBox.instructorResourceBoxPermissions(res, userStatus, 'Instructor resources'))
                 );
 
                 this.regions.freeResources.append(resourceBox);

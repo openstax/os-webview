@@ -55,6 +55,8 @@
     }
 
     .books {
+        display: grid;
+        grid-gap: 6.5rem;
         padding: 6rem 0;
         position: relative;
 
