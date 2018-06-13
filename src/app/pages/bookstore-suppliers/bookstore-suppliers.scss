@@ -160,6 +160,7 @@
         @extend %button;
         @extend %secondary;
 
+        justify-self: center;
         width: fit-content;
 
         &.primary {

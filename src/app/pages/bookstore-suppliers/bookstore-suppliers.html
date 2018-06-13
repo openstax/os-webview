@@ -1,5 +1,5 @@
 <template args="model">
-    <div class="hero">
+    <div if="model.headline" class="hero">
         <div class="content">
             <div class="text">
                 <h1>{model.headline}</h1>
@@ -21,7 +21,7 @@
             " alt="">
         </div>
     </div>
-    <div class="main-content">
+    <div if="model.suppliers" class="main-content">
         <div class="smaller-screen" data-html="subhead2" skip="true"></div>
         <div class="cards {model.cardsClass}">
             <div each="supplier in model.suppliers" class="card">
