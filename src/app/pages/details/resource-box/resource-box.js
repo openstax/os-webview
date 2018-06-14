@@ -16,7 +16,7 @@ export default class ResourceBox extends Controller {
             if (resourceData.resource_unlocked || userStatus.isInstructor) {
                 return 'unlocked';
             }
-            if (userStatus.pending_verification) {
+            if (userStatus.pendingVerification) {
                 return 'pending';
             }
             return 'locked';
