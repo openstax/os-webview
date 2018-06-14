@@ -36,6 +36,7 @@ const PAGES = [
     'press',
     'press/*path',
     'privacy-policy',
+    'research',
     'subjects',
     'subjects/*path',
     'technology',

@@ -1,0 +1,49 @@
+<template args="model">
+    <section class="hero">
+        <div class="content">
+            <div>
+                <h1>{model.missionHeader}</h1>
+                <div>{model.missionBody}</div>
+            </div>
+        </div>
+        <div class="images">
+            <img src="/images/research/hero-research-earth@1x.png" alt="">
+            <div class="clipping">
+                <img src="/images/research/hero-research-curves.svg" alt="">
+            </div>
+        </div>
+    </section>
+    <section class="current-projects">
+        <div class="content">
+            <h1>{model.projectsHeader}</h1>
+            <div class="project-cards">
+                <div each="project in model.projects" class="card {project.borderColor}">
+                    <div class="card-content">
+                        <h2>{project.title}</h2>
+                        <div>{project.body}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="people">
+        <div class="content">
+            <h1>{model.peopleHeader}</h1>
+            <people-tabs skip="true"></people-tabs>
+            <tab-content skip="true"></tab-content>
+            <accordion-region skip="true"></accordion-region>
+        </div>
+    </section>
+    <section class="publications">
+        <div class="content">
+            <h1>{model.publicationsHeader}</h1>
+            <div class="publication" each="pub in model.publications">
+                <div class="headline">
+                    {pub.authors} ({pub.date}). {pub.title}
+                </div>
+                <div data-html="publications[{$item}].excerpt"></div>
+                <a href="{pub.downloadLink}">Download pdf <span class="fa fa-external-link-alt"></span></a>
+            </div>
+        </div>
+    </section>
+</template>

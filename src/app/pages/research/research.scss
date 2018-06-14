@@ -1,0 +1,204 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.research.page {
+
+    @include width-up-to($phone-max) {
+        people-tabs,
+        tab-content {
+            display: none;
+        }
+    }
+
+    @include wider-than($phone-max) {
+        accordion-region {
+            display: none;
+        }
+    }
+
+    h1 {
+        @include set-font(h2);
+    }
+
+    section {
+        padding: 6rem 0;
+    }
+
+    .hero {
+        @include set-font(body-large);
+
+        background-color: rgb(0, 191, 217);
+        display: grid;
+        max-width: 100%;
+        padding: 0;
+
+        @include width-up-to($phone-max) {
+            grid-template-rows: auto auto;
+            width: 100%;
+        }
+
+        @include width-between($phone-max, $media-content-max) {
+            grid-gap: 2rem;
+            grid-template-columns: 50vw 1fr;
+        }
+
+        @include wider-than($media-content-max) {
+            grid-template-columns: auto 1fr;
+        }
+
+        h1 {
+            @include set-font(h1);
+        }
+
+        .content {
+            align-items: center;
+            display: grid;
+            text-align: left;
+
+            @include wider-than($media-content-max) {
+                margin-left: calc(50vw - 60rem);
+                max-width: calc(50vw - 22rem);
+                min-height: 60rem;
+                width: 77rem;
+            }
+
+            > div {
+                @include width-up-to($phone-max) {
+                    padding-top: 6rem;
+                }
+
+                @include wider-than($phone-max) {
+                    padding: 6rem 0;
+                }
+            }
+
+        }
+
+        .images {
+            display: grid;
+            place-self: end end;
+            position: relative;
+            width: 100%;
+
+            .clipping {
+                display: grid;
+                max-width: 100%;
+                place-self: end end;
+
+                @include width-up-to($phone-max) {
+                    max-width: 70vw;
+                }
+
+                > img {
+                    place-self: end end;
+                    width: 100%;
+                }
+            }
+
+            > :first-child {
+                bottom: 0;
+                max-width: 100%;
+                position: absolute;
+                right: 0;
+                transform: translateY(35%);
+                z-index: 1;
+
+                @include width-up-to($phone-max) {
+                    max-width: 70vw;
+                    transform: translate(10%, 40%);
+                }
+            }
+        }
+    }
+
+    .current-projects,
+    .publications {
+        background-color: ui-color(white);
+    }
+
+    .content {
+        @extend %content;
+    }
+
+    .project-cards {
+        display: grid;
+        grid-gap: #{2 * $normal-margin};
+        margin-top: 3rem;
+
+        @include width-up-to($phone-max) {
+            grid-template-columns: repeat(5, 30rem);
+            overflow-x: scroll;
+        }
+
+        @include width-between($phone-max, $tablet-max) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @include wider-than($tablet-max) {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+    }
+
+    .card {
+        @extend %card;
+
+        overflow: hidden;
+
+        h2 {
+            @include set-font(h4);
+
+            margin-top: 0;
+        }
+
+        .card-content {
+            border-image: linear-gradient(to right, os-color(blue), lighten(os-color(light-blue), 20%)) 1 stretch;
+            border-top: 0.4rem solid transparent;
+            padding: 4rem;
+        }
+
+        &.green .card-content {
+            border-image: linear-gradient(to right, os-color(deep-green), lighten(os-color(green), 25%)) 1 stretch;
+        }
+
+        &.yellow .card-content {
+            border-image: linear-gradient(to right, os-color(gold), lighten(os-color(yellow), 20%)) 1 stretch;
+        }
+
+        &.red .card-content {
+            border-image: linear-gradient(to right, darken(os-color(red), 10%), lighten(os-color(red), 20%)) 1 stretch;
+        }
+
+        &.orange .card-content {
+            border-image: linear-gradient(to right, darken(os-color(orange), 20%), os-color(gold)) 1 stretch;
+        }
+    }
+
+    .people {
+        h2 {
+            @include set-font(body-large);
+        }
+    }
+
+    .publications {
+        h1 {
+            margin: 0;
+        }
+
+        .content {
+            display: grid;
+            grid-row-gap: 2.5rem;
+        }
+
+        .publication {
+            display: grid;
+            grid-row-gap: 1rem;
+
+            a {
+                width: fit-content;
+            }
+        }
+
+        .headline {
+            font-weight: bold;
+        }
+    }
+}
