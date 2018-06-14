@@ -57,17 +57,12 @@
     .sidebar {
         display: grid;
         grid-row-gap: 6rem;
+        height: fit-content;
 
         h2 {
             line-height: normal;
             margin: 0;
         }
-    }
-
-    // sidebar and main-content are the same height; the 1fr
-    // uses up the extra space so it isn't distributed
-    .main-content {
-        grid-template-rows: auto auto 1fr;
     }
 
     .our-mission,

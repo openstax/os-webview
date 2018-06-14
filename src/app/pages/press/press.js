@@ -118,7 +118,7 @@ export default class Press extends CMSPageController {
                 phone: this.pageData.press_inquiry_phone,
                 email: this.pageData.press_inquiry_email
             },
-            pressKitUrl: this.pageData.press_kit,
+            pressKitUrl: this.pageData.press_kit.meta.download_url,
             experts: {
                 headline: 'Book our experts',
                 blurb: this.pageData.intro,

@@ -19,8 +19,8 @@ export default class bookingsRegion extends Controller {
     }
 
     onLoaded() {
-        this.model.bios.forEach((obj) => this.regions.bookings.append(new Booking(obj)));
         $.insertHtml(this.el, this.model);
+        this.model.bios.forEach((obj) => this.regions.bookings.append(new Booking(obj)));
     }
 
 }
