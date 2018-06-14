@@ -121,7 +121,7 @@ export default class Press extends CMSPageController {
             pressKitUrl: this.pageData.press_kit.meta.download_url,
             experts: {
                 headline: 'Book our experts',
-                blurb: this.pageData.intro,
+                blurb: this.pageData.experts_blurb,
                 bios: this.pageData.experts_bios
                     .map((b) => ({
                         imageUrl: b.expert_image,
@@ -157,11 +157,7 @@ export default class Press extends CMSPageController {
             this.regions.mobileView.attach(this.mobileView);
             this.regions.pressReleases.append(this.moreFewer);
             this.regions.newsMentions.append(this.nmPaginator);
-            this.regions.bookings.attach(new Bookings({
-                headline: 'Book our experts',
-                blurb: this.pageData.intro,
-                bios: this.pageData.experts_bios
-            }));
+            this.regions.bookings.attach(new Bookings(submodels.experts));
         }
     }
 
