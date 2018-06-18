@@ -26,10 +26,11 @@
              name="{model.numberName(book.value)}"
              required
              disabled="{model.disable ? '' : null}"
+             class="{model.numberValidationMessage(book.value) ? 'has-error' : ''}"
             >
-        </div>
-        <div if="model.numberValidationMessage(book.value)" class="invalid-message">
-            {model.numberValidationMessage(book.value)}
+            <div if="model.numberValidationMessage(book.value)" class="invalid-message">
+                {model.numberValidationMessage(book.value)}
+            </div>
         </div>
     </div>
 </template>

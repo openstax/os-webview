@@ -31,7 +31,7 @@ export default class RoleSelector extends CMSPageController {
         const result = this.props.map((p) => $.booleanAttribute(p.hideWhen(this.selectedRole)));
 
         result.hiddenAttribute = $.booleanAttribute(this.isHidden);
-        return result
+        return result;
     }
 
     onLoaded() {
@@ -55,6 +55,7 @@ export default class RoleSelector extends CMSPageController {
         }, (newValue) => {
             this.selectedRole = newValue;
             this.update();
+            $.scrollTo(this.el);
         }));
     }
 

@@ -18,7 +18,8 @@
     }
 
     &.checked {
-        background-color: ui-color(default);
+        background-color: darken(ui-color(default), 3%);
+        font-size: 1.1rem;
 
         > .indicator {
             background-color: ui-color(white);
