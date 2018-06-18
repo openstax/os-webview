@@ -6,17 +6,17 @@ import {description as template} from './multi-page-form.html';
 
 export default class MultiPageForm extends Controller {
 
-    init(getProps, onSubmit, afterSubmit) {
+    init(getProps, handlers) {
         this.template = template;
         this.getProps = getProps;
-        this.onSubmit = onSubmit;
-        this.afterSubmit = afterSubmit;
+        Object.assign(this, handlers);
         this.view = {
             classes: ['multi-page-form']
         };
         this.css = `/app/components/multi-page-form/multi-page-form.css?${VERSION}`;
         this.model = () => this.getModel();
         this.currentPage = 0;
+        this.callOnPageChange();
     }
 
     get currentForm() {
@@ -57,6 +57,12 @@ export default class MultiPageForm extends Controller {
         this.el.querySelector('#form-response').removeEventListener('load', this.afterSubmit);
     }
 
+    callOnPageChange() {
+        if (this.onPageChange) {
+            this.onPageChange(this.currentPage);
+        }
+    }
+
     @on('click .next')
     nextPage() {
         const currentForm = this.currentForm;
@@ -73,6 +79,7 @@ export default class MultiPageForm extends Controller {
         this.currentPage += 1;
         this.update();
         this.currentForm.el.querySelector($.focusable).focus();
+        this.callOnPageChange();
     }
 
     @on('click .back')
@@ -80,6 +87,7 @@ export default class MultiPageForm extends Controller {
         this.currentPage -= 1;
         this.update();
         this.currentForm.el.querySelector($.focusable).focus();
+        this.callOnPageChange();
     }
 
     @on('keydown input')
