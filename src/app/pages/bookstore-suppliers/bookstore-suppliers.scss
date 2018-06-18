@@ -160,6 +160,7 @@
         @extend %button;
         @extend %secondary;
 
+        justify-self: center;
         width: fit-content;
 
         &.primary {
@@ -257,6 +258,7 @@
                 grid-template-rows: auto auto 1fr auto;
                 justify-items: center;
                 padding: 3rem 2rem;
+                text-align: center;
 
                 .logo-dot {
                     align-items: center;
