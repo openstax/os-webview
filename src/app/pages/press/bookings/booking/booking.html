@@ -1,9 +1,9 @@
 <template args="model">
-    <img if="model.expert_image" src="{model.expert_image}">
-    <div class="{model.expert_image ? '' : 'span-2'}">
+    <img if="model.imageUrl" src="{model.imageUrl}">
+    <div class="{model.imageUrl ? '' : 'span-2'}">
         <div class="name">{model.name}</div>
         <div>{model.title}</div>
-        <div>{model.email}</div>
+        <div if="model.contact">{model.contact}</div>
     </div>
     <div data-html="bio" class="span-2" skip="true">
         This should be replaced
