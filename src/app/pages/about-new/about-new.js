@@ -11,53 +11,34 @@ export default class AboutNew extends CMSPageController {
             classes: ['about-new', 'page']
         };
         this.css = `/app/pages/about-new/about-new.css?${VERSION}`;
-        this.slug = 'pages/about-new';
+        this.slug = 'pages/about-us';
 
         this.model = () => this.getModel();
     }
 
     getModel() {
         const data = this.pageData || {};
+        const translateCard = (c) => {
+            const imgEntry = c.find((v) => v.type === 'image');
+            const textEntry = c.find((v) => v.type === 'paragraph');
+
+            return {
+                image: imgEntry.value.image,
+                text: textEntry.value
+            };
+        };
 
         return {
-            whoHeadline: data.who_headline,
-            whoBlurb: data.who_blurb,
-            whoImage: data.who_image,
-            whatHeadline: data.what_headline,
-            whatBlurb: data.what_blurb,
-            cards: data.what_cards,
-            whereHeadline: data.where_headline,
-            whereBlurb: data.where_blurb,
-            map: data.map
+            whoHeadline: data.who_heading,
+            whoBlurb: data.who_paragraph,
+            whoImage: data.who_image_url,
+            whatHeadline: data.what_heading,
+            whatBlurb: data.what_paragraph,
+            cards: (data.what_cards || []).map(translateCard),
+            whereHeadline: data.where_heading,
+            whereBlurb: data.where_paragraph,
+            map: data.where_map_url
         };
-    }
-
-    onLoaded() {
-        const lorem = `
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur auctor porttitor
-        neque ut auctor. Nunc a dui sit amet est ullamcorper dapibus. Aliquam nec finibus
-        velit. Aenean id ligula a turpis pulvinar commodo. Vivamus cursus suscipit mauris
-        sodales congue.
-        <p>
-        <b>Pellentesque</b> habitant morbi tristique senectus et netus et malesuada fames ac turpis
-        egestas. Curabitur vulputate ultricies enim, sit amet pellentesque mauris. In sodales
-        mi ac nisl tempus posuere.
-        `;
-        this.pageData = {
-            who_headline: 'Who we are',
-            who_blurb: lorem,
-            who_image: 'http://via.placeholder.com/800x600',
-            what_headline: 'What we do',
-            what_blurb: lorem.substr(0, 150),
-            what_cards: [1,2,3,4].map(() => ({
-                image: 'http://via.placeholder.com/275x160',
-                text: lorem.substr(0, 100)
-            })),
-            where_headline: 'Where we\'re going',
-            where_blurb: lorem,
-            map: 'http://via.placeholder.com/1100x800'
-        };
-        this.onDataLoaded();
     }
 
     onDataLoaded() {
