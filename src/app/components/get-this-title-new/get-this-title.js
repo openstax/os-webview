@@ -111,15 +111,6 @@ export default class GetThisTitle extends Controller {
         }
     }
 
-    //@on('click [href*="cnx.org/content"],:not(.show-pdf-submenu)[href$=".pdf"]')
-    //showGive() {
-    //    userModel.load().then((userInfo) => {
-    //        if (!userInfo.is_superuser && !userInfo.is_staff) {
-    //            router.navigate('/give?student', {path: '/give?student'});
-    //        }
-    //    });
-    //}
-
     @on('click .show-toc')
     showToc(event) {
         event.preventDefault();
