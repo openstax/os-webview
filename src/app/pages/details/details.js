@@ -74,6 +74,7 @@ export default class Details extends CMSPageController {
             return {
                 isInstructor: isInstructor(user),
                 isStudent: isStudent(user),
+                pendingVerification: user.pending_verification,
                 firstName: user.first_name,
                 lastName: user.last_name,
                 email: user.email,
