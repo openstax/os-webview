@@ -24,4 +24,14 @@
     [type="number"] {
         max-width: 20rem;
     }
+
+    .has-error {
+        background-color: ui-color(error-bg);
+        border-color: ui-color(error-border);
+        color: ui-color(error-fg);
+    }
+
+    .invalid-message {
+        margin-top: $normal-margin;
+    }
 }

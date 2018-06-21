@@ -1,5 +1,5 @@
 <template args="model">
-    <div data-region="selector" skip="true"></div>
+    <div data-region="selector" hidden="{model.hiddenAttribute}" skip="true"></div>
     <div
      each="shouldBeHidden in model"
      hidden="{shouldBeHidden}"

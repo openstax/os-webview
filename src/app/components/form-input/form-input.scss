@@ -22,4 +22,10 @@
             background-color: ui-color(page-bg);
         }
     }
+
+    .has-error {
+        background-color: ui-color(error-bg);
+        border-color: ui-color(error-border);
+        color: ui-color(error-fg);
+    }
 }

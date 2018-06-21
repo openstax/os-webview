@@ -7,6 +7,7 @@
          placeholder="{model.placeholder}"
          required="{model.required ? '' : null}"
          autocomplete="{model.autocomplete || (model.matches ? 'off' : 'on')}"
+         class="{model.validationMessage(model.name) ? 'has-error' : ''}"
         >
         <div class="invalid-message">{model.validationMessage(model.name)}</div>
         <div if="model.matches" class="suggestions">

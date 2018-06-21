@@ -14,6 +14,12 @@
         grid-gap: 1rem;
         grid-template-columns: 1fr 1fr;
         margin-bottom: 1rem;
+        margin-top: $normal-margin;
+
+        :nth-child(10),
+        :nth-child(20) {
+            margin-bottom: 3rem;
+        }
     }
 
     .other-option {

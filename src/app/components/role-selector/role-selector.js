@@ -21,14 +21,17 @@ export default class RoleSelector extends CMSPageController {
         };
         this.slug = 'snippets/roles';
         this.selectedRole = '';
+        this.isHidden = false;
         this.model = () => this.getModel();
     }
 
     getModel() {
         // props are an array of {contents, hideWhen}
         this.props = this.getProps();
+        const result = this.props.map((p) => $.booleanAttribute(p.hideWhen(this.selectedRole)));
 
-        return this.props.map((p) => $.booleanAttribute(p.hideWhen(this.selectedRole)));
+        result.hiddenAttribute = $.booleanAttribute(this.isHidden);
+        return result;
     }
 
     onLoaded() {
@@ -52,6 +55,7 @@ export default class RoleSelector extends CMSPageController {
         }, (newValue) => {
             this.selectedRole = newValue;
             this.update();
+            $.scrollTo(this.el);
         }));
     }
 

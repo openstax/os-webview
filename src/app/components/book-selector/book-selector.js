@@ -63,7 +63,9 @@ export default class BookSelector extends SalesforceForm {
 
     onDataLoaded() {
         super.onDataLoaded();
-        this.subjects = Array.from(new Set(this.salesforceTitles.map((book) => book.subject))).sort();
+        const subjects = this.salesforceTitles.map((book) => book.subject);
+
+        this.subjects = subjects.reduce((a, b) => a.includes(b) ? a : a.concat(b), []);
         this.update();
 
         const Region = this.regions.self.constructor;

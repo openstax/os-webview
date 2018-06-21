@@ -113,11 +113,14 @@ export default class InterestForm extends Controller {
                 action: `https://${salesforce.salesforceHome}/servlet/servlet.WebToLead?encoding=UTF-8`,
                 contents: facultyPages
             }),
-            this.onSubmit.bind(this),
-            this.afterSubmit.bind(this)
+            {
+                onPageChange: this.onPageChange.bind(this),
+                onSubmit: this.onSubmit.bind(this),
+                afterSubmit: this.afterSubmit.bind(this)
+            }
         );
 
-        this.regions.roleSelector.attach(new RoleSelector(() => [
+        this.roleSelector = new RoleSelector(() => [
             {
                 contents: studentForm,
                 hideWhen: (role) => role !== 'Student'
@@ -126,7 +129,15 @@ export default class InterestForm extends Controller {
                 contents: facultyForm,
                 hideWhen: (role) => ['', 'Student'].includes(role)
             }
-        ]));
+        ]);
+        this.regions.roleSelector.attach(this.roleSelector);
+    }
+
+    onPageChange(pageNumber) {
+        if (this.roleSelector) {
+            this.roleSelector.isHidden = pageNumber > 0;
+            this.roleSelector.update();
+        }
     }
 
     onSubmit(event) {
