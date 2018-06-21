@@ -207,6 +207,7 @@ export default class Details extends CMSPageController {
                 setDetailsTabClass();
                 contentGroup.update();
                 window.history.replaceState({}, selectedTab, `?${selectedTab}`);
+                window.dispatchEvent(new CustomEvent('navigate'));
             }
         }));
 

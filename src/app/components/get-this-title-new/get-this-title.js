@@ -14,7 +14,9 @@ import {description as polishTemplate} from './get-this-title-polish.html';
 export default class GetThisTitle extends Controller {
 
     init(data) {
-        this.template = data.slug.substr(-6) === 'polska' ? polishTemplate : template;
+        const polish = (/^Fizyka/).test(data.title);
+
+        this.template = polish ? polishTemplate : template;
         this.css = `/app/components/get-this-title-new/get-this-title.css?${VERSION}`;
         this.regions = {
             submenu: '.submenu'
