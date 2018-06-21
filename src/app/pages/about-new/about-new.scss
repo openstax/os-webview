@@ -1,0 +1,108 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+$offset-bottom-section: 12rem;
+
+.about-new {
+
+    .content {
+        @extend %content;
+    }
+
+    .who {
+        background-color: rgb(191, 222, 251);
+        display: grid;
+        max-width: 100%;
+
+        @include width-between($phone-max, $media-content-max) {
+            grid-gap: 2rem;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @include wider-than($media-content-max) {
+            grid-template-columns: 1fr auto;
+        }
+
+        .content {
+            align-items: center;
+            display: grid;
+            padding-bottom: 2rem;
+
+            @include wider-than($media-content-max) {
+                margin-left: calc(50vw - 60rem);
+                max-width: calc(50vw - 22rem);
+                width: 100%;
+            }
+        }
+
+        img {
+            max-width: 100%;
+            place-self: end end;
+        }
+    }
+
+    .what {
+        h1 {
+            @include set-font(h2);
+        }
+
+        [data-html="whatBlurb"] {
+            @include set-font(body-large);
+
+            max-width: #{$text-content-max - 2 * $normal-margin};
+        }
+    }
+
+    .cards {
+        display: grid;
+        grid-gap: 2rem;
+        grid-template-columns: repeat(4, 26rem);
+        overflow-x: auto;
+        padding: 4rem 0 2rem;
+
+        @include width-between($phone-max, $tablet-max) {
+            grid-template-columns: 26rem 26rem;
+        }
+
+        .card {
+            @extend %card;
+
+            display: grid;
+            grid-template-rows: 15rem auto;
+            overflow: hidden;
+
+            img {
+                height: 100%;
+                place-self: center;
+                width: 100%;
+            }
+
+            .content {
+                background-color: ui-color(white);
+                padding: 4rem;
+            }
+        }
+    }
+
+    .where {
+        padding-bottom: $offset-bottom-section;
+
+        h1 {
+            @include set-font(h2);
+        }
+    }
+
+    .map {
+        background-color: ui-color(white);
+        padding-bottom: 8rem;
+
+        .content {
+            margin-top: -$offset-bottom-section;
+        }
+
+        img {
+            box-shadow: $card-shadow;
+            margin-top: 4rem;
+            max-width: 100%;
+        }
+    }
+}

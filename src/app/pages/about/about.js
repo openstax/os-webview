@@ -59,7 +59,7 @@ export default class AboutUs extends CMSPageController {
         'Read more about who we are and what we do.';
 
     init() {
-        this.slug = 'pages/about-us';
+        this.slug = 'pages/about-us-old';
         this.template = template;
         this.css = `/app/pages/about/about.css?${VERSION}`;
         this.view = {
