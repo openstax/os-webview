@@ -88,8 +88,9 @@ export default class Press extends CMSPageController {
     onDataLoaded() {
         this.update();
         $.insertHtml(this.el, this.model());
+        const asDate = (dateStr) => new Date(dateStr.split('-'));
         const convertedDate = (dateStr) => {
-            const d = (new Date(dateStr.split('-'))).toString().split(' ');
+            const d = (asDate(dateStr)).toString().split(' ');
 
             return `${d[1]} ${d[2]}, ${d[3]}`;
         };
@@ -106,11 +107,13 @@ export default class Press extends CMSPageController {
                     return {
                         author: release.author,
                         date: convertedDate(release.date),
+                        asDate: asDate(release.date),
                         url,
                         headline: release.heading,
                         excerpt: release.excerpt
                     };
-                }),
+                })
+                .sort((a, b) => b.asDate.getTime() - a.asDate.getTime()),
             missionStatements: this.pageData.mission_statements
                 .map((obj) => obj.statement),
             pressInquiries: {
@@ -136,10 +139,11 @@ export default class Press extends CMSPageController {
                     iconUrl: obj.source.logo,
                     source: obj.source.name,
                     date: convertedDate(obj.date),
+                    asDate: asDate(obj.date),
                     headline: obj.headline,
                     url: obj.url
                 }))
-                .sort((a, b) => b.date - a.date)
+                .sort((a, b) => b.asDate.getTime() - a.asDate.getTime())
         };
 
         this.buildComponents(submodels);
