@@ -88,7 +88,7 @@ export default class Press extends CMSPageController {
     onDataLoaded() {
         this.update();
         $.insertHtml(this.el, this.model());
-        const asDate = (dateStr) => new Date(dateStr.split('-'));
+        const asDate = (dateStr) => new Date(dateStr);
         const convertedDate = (dateStr) => {
             const d = (asDate(dateStr)).toString().split(' ');
 
