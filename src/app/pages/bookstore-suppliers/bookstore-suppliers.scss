@@ -117,13 +117,14 @@
     }
 
     .main-content {
-        @extend %text-content;
+        @extend %content;
 
         display: grid;
         grid-gap: 6rem;
         justify-content: center;
         max-width: 100%;
         padding-bottom: 8rem;
+        padding-top: 6rem;
         z-index: 2;
 
         @include width-up-to($phone-max) {
@@ -137,12 +138,11 @@
         }
 
         @include width-between($phone-max, $tablet-max) {
-            padding: 2rem;
+            padding: 4rem $normal-margin;
         }
 
         @include wider-than($tablet-max) {
-            margin-top: -3rem;
-            max-width: 85rem;
+            max-width: 110rem;
         }
 
         button {
@@ -168,6 +168,10 @@
         }
     }
 
+    .intro-blurb {
+        @include set-font(body-large);
+    }
+
     .cards {
         display: grid;
         grid-gap: 2rem;
@@ -177,10 +181,6 @@
 
             &.by-twos {
                 grid-template-columns: 1fr 1fr;
-
-                > .card:first-child {
-                    grid-column-start: span 2;
-                }
             }
         }
 
@@ -190,7 +190,11 @@
             background-color: ui-color(white);
             display: grid;
             grid-gap: 2rem;
+            grid-template-rows: auto auto 1fr auto;
+            justify-items: center;
             overflow: hidden;
+            padding: 3rem 2rem;
+            text-align: center;
 
             h2 {
                 @include set-font(h4);
@@ -199,91 +203,29 @@
                 margin: 0;
             }
 
-            &:first-child {
+            .logo-dot {
+                align-items: center;
+                background-color: ui-color(default);
+                border-radius: 50%;
+                display: flex;
+                height: 12rem;
+                justify-content: center;
+                margin: 1rem 0;
+                width: 12rem;
 
-                @include width-up-to($phone-max) {
-                    grid-template-rows: 2fr 3fr;
-                }
-
-                @include wider-than($phone-max) {
-                    grid-column-start: span 3;
-                    grid-template-columns: 3fr 2fr;
-                }
-
-                .left-stuff {
-                    display: grid;
-
-                    @include width-up-to($phone-max) {
-                        grid-gap: 2rem;
-                        justify-items: center;
-                        padding: 3rem $normal-margin;
-                        text-align: center;
-                    }
-
-                    @include width-between($phone-max, $tablet-max) {
-                        grid-gap: 2rem;
-                        padding: 4rem;
-                    }
-
-                    @include wider-than($tablet-max) {
-                        grid-gap: 3rem;
-                        padding: 7rem;
-                    }
-
-                    > img {
-                        max-width: 100%;
-                    }
-                }
-
-                .right-stuff {
-                    background-color: os-color(yellow);
-                    display: grid;
-
-                    @include width-up-to($phone-max) {
-                        grid-row-start: 1;
-                    }
-
-                    img {
-                        max-height: 70%;
-                        place-self: center;
-                    }
-                }
-
-                .btn {
-                    @extend %primary;
+                > img {
+                    max-height: 80%;
+                    max-width: 80%;
                 }
             }
 
-            &:not(:first-child) {
-                grid-template-rows: auto auto 1fr auto;
-                justify-items: center;
-                padding: 3rem 2rem;
-                text-align: center;
+            .btn {
+                height: 4rem;
 
-                .logo-dot {
-                    align-items: center;
-                    background-color: ui-color(default);
-                    border-radius: 50%;
-                    display: flex;
-                    height: 12rem;
-                    justify-content: center;
-                    margin: 1rem 0;
-                    width: 12rem;
-
-                    > img {
-                        max-height: 80%;
-                        max-width: 80%;
-                    }
-                }
-
-                .btn {
-                    height: 4rem;
-
-                    @include width-between($phone-max, $tablet-max) {
-                        padding-left: 0;
-                        padding-right: 0;
-                        width: 100%;
-                    }
+                @include width-between($phone-max, $tablet-max) {
+                    padding-left: 0;
+                    padding-right: 0;
+                    width: 100%;
                 }
             }
         }
