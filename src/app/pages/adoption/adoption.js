@@ -165,7 +165,7 @@ export default class InterestForm extends Controller {
 
             action();
         } else {
-            const emailEl = document.querySelector('[name="Email"]');
+            const emailEl = document.querySelector('[name="email"]');
 
             router.navigate('/adoption-confirmation', {
                 email: emailEl.value
