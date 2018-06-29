@@ -1,5 +1,9 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.interest-form-header {
+.form-header {
     background-color: ui-color(white);
+
+    h1 {
+        margin-bottom: 2rem;
+    }
 }
