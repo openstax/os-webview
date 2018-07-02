@@ -6,15 +6,15 @@ import {description as template} from './form-header.html';
 
 export default class Header extends CMSPageController {
 
-    init() {
+    init(slug) {
         this.template = template;
+        this.slug = slug;
         this.view = {
-            classes: ['adoption-form-header']
+            classes: ['form-header']
         };
         // Check this path
         this.css = `/app/components/form-header/form-header.css?${VERSION}`;
         this.model = () => this.getModel();
-        this.slug = 'pages/adoption-form';
     }
 
     // Returns a dictionary of values to be used in the template

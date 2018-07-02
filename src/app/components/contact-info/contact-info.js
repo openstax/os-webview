@@ -17,7 +17,7 @@ export default class ContactInfo extends Controller {
         const validationMessage = this.props.validationMessage.bind(this);
         const inputs = {
             firstName: new FormInput({
-                name: 'FirstName',
+                name: 'first_name',
                 type: 'text',
                 label: 'First name',
                 required: true,
@@ -25,7 +25,7 @@ export default class ContactInfo extends Controller {
                 validationMessage
             }),
             lastName: new FormInput({
-                name: 'LastName',
+                name: 'last_name',
                 type: 'text',
                 label: 'Last name',
                 required: true,
@@ -33,7 +33,7 @@ export default class ContactInfo extends Controller {
                 validationMessage
             }),
             email: new FormInput({
-                name: 'Email',
+                name: 'email',
                 type: 'email',
                 label: 'Email address',
                 required: true,
@@ -41,7 +41,7 @@ export default class ContactInfo extends Controller {
                 validationMessage
             }),
             phone: new FormInput({
-                name: 'Phone',
+                name: 'phone',
                 type: 'text',
                 label: 'Phone number',
                 required: true,
@@ -49,7 +49,7 @@ export default class ContactInfo extends Controller {
                 validationMessage
             }),
             school: new FormInput({
-                name: 'Company',
+                name: 'company',
                 type: 'text',
                 label: 'School name',
                 required: true,
