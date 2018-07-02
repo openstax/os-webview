@@ -295,6 +295,12 @@ export default class Select extends Controller {
             if (event.key === 'Escape') {
                 this.closeDropdown();
             }
+            if (event.key === 'Enter') {
+                this.toggleOption(event);
+                if (!this.select.multiple) {
+                    this.closeDropdown();
+                }
+            }
         } else if (['Enter', ' '].includes(event.key)) {
             this.toggleDropdown(event);
             this.activeIndex = -1;
