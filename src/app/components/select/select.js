@@ -226,7 +226,7 @@ export default class Select extends Controller {
         this.updateSelectElement();
     }
 
-    @on('keydown .option.active')
+    @on('keypress .option.active')
     selectByEnter(event) {
         if (event.key === 'Enter') {
             event.preventDefault();
@@ -246,7 +246,7 @@ export default class Select extends Controller {
         this.updateSelectElement();
     }
 
-    @on('keydown .remover')
+    @on('keypress .remover')
     removeByEnter(event) {
         if (event.keyCode === $.key.space) {
             event.preventDefault();
@@ -273,7 +273,7 @@ export default class Select extends Controller {
         this.selectingByMouse = true;
     }
 
-    @on('keydown')
+    @on('keypress')
     operateByKey(event) {
         /* eslint complexity: 0 */
         if (this.model.open) {
@@ -298,12 +298,11 @@ export default class Select extends Controller {
             if (event.key === 'Enter') {
                 this.toggleOption(event);
                 if (!this.select.multiple) {
-                    this.closeDropdown();
+                    window.requestAnimationFrame(() => this.closeDropdown());
                 }
             }
         } else if (['Enter', ' '].includes(event.key)) {
             this.toggleDropdown(event);
-            this.activeIndex = -1;
         }
     }
 

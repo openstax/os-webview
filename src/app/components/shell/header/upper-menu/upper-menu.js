@@ -21,7 +21,7 @@ export default class UpperMenu extends Controller {
                     .then((response) => response.items[0].meta.detail_url);
                 const data = await fetch(newsUrl).then((response) => response.json());
 
-                if (Object.keys(data.articles).length) {
+                if (Reflect.has(data, 'articles') && Object.keys(data.articles).length) {
                     this.model.showBlog = true;
                     this.update();
                 }
