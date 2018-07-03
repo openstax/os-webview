@@ -219,7 +219,8 @@ export default class Errata extends Controller {
                     const entry = books.find((info) => info.title === title);
 
                     if (!entry) {
-                        router.navigate('/404');
+                        window.location = '/_404';
+                        return;
                     }
 
                     Object.assign(this.model, {
