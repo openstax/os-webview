@@ -92,6 +92,10 @@ export default class Select extends Controller {
         }
     }
 
+    onLoaded() {
+        this.el.tabIndex = 0;
+    }
+
     closeDropdown() {
         this.model.open = false;
         this.update();
