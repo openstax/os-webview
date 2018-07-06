@@ -218,11 +218,6 @@ export default class Errata extends Controller {
                 bookPromise.then((books) => {
                     const entry = books.find((info) => info.title === title);
 
-                    if (!entry) {
-                        window.location = '/_404';
-                        return;
-                    }
-
                     Object.assign(this.model, {
                         mode: 'form',
                         selectedTitle: title,
@@ -236,11 +231,13 @@ export default class Errata extends Controller {
                     this.update();
                     shell.hideLoader();
 
-                    const slug = entry.meta.slug;
+                    if (entry) {
+                        const slug = entry.meta.slug;
 
-                    this.fetchReleaseNotes(slug).then(() => {
-                        form.update();
-                    });
+                        this.fetchReleaseNotes(slug).then(() => {
+                            form.update();
+                        });
+                    }
                 });
             } else {
                 window.location = userModel.loginLink();
