@@ -47,7 +47,7 @@ export default class InterestForm extends Controller {
     }
 
     onLoaded() {
-        document.title = 'Interest Form - OpenStax';
+        document.title = 'Adoption Form - OpenStax';
         // Pardot tracking
         if ('piTracker' in window) {
             piTracker(window.location.href.split('#')[0]);
