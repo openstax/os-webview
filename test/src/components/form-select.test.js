@@ -1,5 +1,5 @@
 import FormSelect from '~/components/form-select/form-select';
-import {clickElement, doKeyDown} from '../../test-utils';
+import {clickElement, doKeyPress} from '../../test-utils';
 
 describe('FormSelect', () => {
     const validationMessage = () => '';
@@ -54,8 +54,8 @@ describe('FormSelect', () => {
     it('keyboard-selects', () => {
         const selectEl = p.proxyWidget.el;
 
-        doKeyDown(selectEl, 'ArrowDown');
-        doKeyDown(selectEl, 'ArrowDown');
-        doKeyDown(p.proxyWidget.el.querySelector('.option.active'), 'Escape');
+        doKeyPress(selectEl, 'ArrowDown');
+        doKeyPress(selectEl, 'ArrowDown');
+        doKeyPress(p.proxyWidget.el.querySelector('.option.active'), 'Escape');
     });
 });

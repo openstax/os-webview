@@ -13,9 +13,9 @@ const keyCodes = {
     Escape: 27
 };
 
-function doKeyDown(el, key) {
+function keyEvent(eventName, el, key) {
     el.dispatchEvent(
-        new KeyboardEvent('keydown', {
+        new KeyboardEvent(eventName, {
             key: key,
             keyCode: keyCodes[key],
             bubbles: true,
@@ -24,8 +24,16 @@ function doKeyDown(el, key) {
     );
 }
 
+function doKeyDown(el, key) {
+    keyEvent('keydown', el, key);
+}
+
+function doKeyPress(el, key) {
+    keyEvent('keypress', el, key);
+}
+
 function clickElement(el) {
     el.dispatchEvent(clickEvent());
 }
 
-export {clickElement, doKeyDown};
+export {clickElement, doKeyDown, doKeyPress};
