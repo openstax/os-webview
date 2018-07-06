@@ -22,30 +22,27 @@
         </div>
     </div>
     <div if="model.suppliers" class="main-content">
+        <div class="intro-blurb">{model.featuredSuppliersBlurb}</div>
+        <div class="cards {model.cardsClass}">
+            <div each="supplier in model.featuredSuppliers" class="card">
+                <div class="logo-dot">
+                    <img src="{supplier.logoUrl}">
+                </div>
+                <h2>{supplier.name}</h2>
+                <div class="blurb" data-html="featuredSuppliers[{$item}].description" skip="true"></div>
+                <a class="btn" href="{supplier.buttonUrl}">{supplier.buttonText}</a>
+            </div>
+        </div>
         <div class="smaller-screen" data-html="subhead2" skip="true"></div>
+        <div class="intro-blurb">{model.suppliersBlurb}</div>
         <div class="cards {model.cardsClass}">
             <div each="supplier in model.suppliers" class="card">
-                <if condition="$item === 0">
-                    <div class="left-stuff">
-                        <img src="{supplier.logoUrl}">
-                        <h2>{supplier.name}</h2>
-                        <div class="blurb" data-html="suppliers[{$item}].description" skip="true"></div>
-                        <a class="btn primary" href="{supplier.buttonUrl}">{supplier.buttonText}</a>
-                    </div>
-                    <div class="right-stuff">
-                        <img srcset="
-                            /images/bookstore-suppliers/IndiCo-card-banner.png 1x,
-                            /images/bookstore-suppliers/IndiCo-card-banner@2x.png 2x
-                        " alt="">
-                    </div>
-                <else>
-                    <div class="logo-dot">
-                        <img src="{supplier.logoUrl}">
-                    </div>
-                    <h2>{supplier.name}</h2>
-                    <div class="blurb" data-html="suppliers[{$item}].description" skip="true"></div>
-                    <a class="btn" href="{supplier.buttonUrl}">{supplier.buttonText}</a>
-                </if>
+                <div class="logo-dot">
+                    <img src="{supplier.logoUrl}">
+                </div>
+                <h2>{supplier.name}</h2>
+                <div class="blurb" data-html="suppliers[{$item}].description" skip="true"></div>
+                <a class="btn" href="{supplier.buttonUrl}">{supplier.buttonText}</a>
             </div>
         </div>
         <a href="{model.buttonUrl}" class="btn primary">{model.buttonText}</a>

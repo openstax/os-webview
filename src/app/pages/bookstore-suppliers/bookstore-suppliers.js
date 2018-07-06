@@ -16,31 +16,26 @@ export default class BookstoreSuppliers extends CMSPageController {
     }
 
     onDataLoaded() {
-        const suppliers = [
-            {
-                name: this.pageData.featured_provider_name,
-                description: this.pageData.featured_provider_blurb,
-                logoUrl: this.pageData.featured_provider_logo_url,
-                buttonUrl: this.pageData.featured_provider_link,
-                buttonText: this.pageData.featured_provider_cta
-            }
-        ];
-
-        this.pageData.providers.forEach((p) => {
-            suppliers.push({
-                name: p.name,
-                description: p.blurb,
-                logoUrl: p.icon,
-                buttonUrl: p.url,
-                buttonText: p.cta
-            });
+        const providerToModel = (p) => ({
+            name: p.name,
+            description: p.blurb,
+            logoUrl: p.icon,
+            buttonUrl: p.url,
+            buttonText: p.cta
         });
+        const suppliers = this.pageData.providers.map(providerToModel);
+        const featuredSuppliers = this.pageData.featured_providers.map(providerToModel);
+
         this.model = {
             headline: this.pageData.title,
             subhead: this.pageData.intro_heading,
             subhead2: this.pageData.intro_description,
+            featuredSuppliersBlurb: this.pageData.featured_provider_intro_blurb,
+            featuredSuppliers,
+            featuredCardsClass: (featuredSuppliers.length % 3) ? 'by-twos' : '',
+            suppliersBlurb: this.pageData.other_providers_intro_blurb,
             suppliers,
-            cardsClass: (suppliers.length % 2) ? 'by-twos' : '',
+            cardsClass: (suppliers.length % 3) ? 'by-twos' : '',
             buttonUrl: this.pageData.isbn_download_url,
             buttonText: this.pageData.isbn_cta
         };
