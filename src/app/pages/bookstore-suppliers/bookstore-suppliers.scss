@@ -3,6 +3,9 @@
 .bookstore-suppliers {
 
     @include width-up-to($phone-max) {
+        padding-left: $normal-margin;
+        padding-right: $normal-margin;
+
         .larger-screen {
             display: none;
         }
@@ -58,7 +61,6 @@
         }
 
         .images {
-            height: 100%;
             overflow: visible;
             position: relative;
             width: 100%;
