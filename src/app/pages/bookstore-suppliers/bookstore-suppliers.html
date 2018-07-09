@@ -22,6 +22,7 @@
         </div>
     </div>
     <div if="model.suppliers" class="main-content">
+        <div class="smaller-screen" data-html="subhead2" skip="true"></div>
         <div class="intro-blurb">{model.featuredSuppliersBlurb}</div>
         <div class="cards {model.cardsClass}">
             <div each="supplier in model.featuredSuppliers" class="card">
@@ -33,7 +34,6 @@
                 <a class="btn" href="{supplier.buttonUrl}">{supplier.buttonText}</a>
             </div>
         </div>
-        <div class="smaller-screen" data-html="subhead2" skip="true"></div>
         <div class="intro-blurb">{model.suppliersBlurb}</div>
         <div class="cards {model.cardsClass}">
             <div each="supplier in model.suppliers" class="card">
