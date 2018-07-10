@@ -178,7 +178,7 @@ export default class Select extends Controller {
         }
     }
 
-    @on('mouseover')
+    @on('mouseenter')
     preventPageScrolling(e) {
         const el = document.elementFromPoint(e.clientX, e.clientY);
         const optionsEl = this.el.querySelector('.options');
