@@ -62,6 +62,16 @@ const spaceForMenu = 59;
 const targetStep = 100;
 const targetTicks = 20;
 
+$.isInViewport = (el) => {
+    const rect = el.getBoundingClientRect();
+
+    return (
+        rect.top >= 0 && rect.left >= 0 &&
+            rect.bottom <= window.innerHeight &&
+            rect.right <= window.innerWidth
+    );
+};
+
 $.scrollTo = (el, offset = 0) => {
     const getOffsetTop = () => {
         const rect = el.getBoundingClientRect();
