@@ -162,6 +162,16 @@ export default class Select extends Controller {
     onUpdate() {
         this.el.classList.toggle('open', this.model.open);
         this.setKeyHandler();
+        const optionsList = this.el.querySelector('.options');
+        const focusEl = document.activeElement;
+
+        if (!this.scrolled && optionsList && this.model.open && !$.isInViewport(optionsList)) {
+            $.scrollTo(this.el, window.innerHeight * 0.1);
+            this.scrolled = true;
+        }
+        if (!this.model.open) {
+            this.scrolled = false;
+        }
     }
 
     setKeyHandler() {
@@ -178,7 +188,7 @@ export default class Select extends Controller {
         }
     }
 
-    @on('mouseenter')
+    @on('mouseenter .options')
     preventPageScrolling(e) {
         const el = document.elementFromPoint(e.clientX, e.clientY);
         const optionsEl = this.el.querySelector('.options');
@@ -190,7 +200,7 @@ export default class Select extends Controller {
         }
     }
 
-    @on('mouseleave')
+    @on('mouseleave .options')
     allowPageScrolling() {
         this.handler.startScrolling();
     }
