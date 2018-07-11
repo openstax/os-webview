@@ -61,9 +61,9 @@
         <div class="question">Please add a screenshot or any other file that helps explain the error.</div>
         <div class="button-group">
             <div class="file-button">
-                <label class="btn">
+                <label class="btn" role="button" tabindex="0">
                     {model.file1 ? 'Change' : 'Add file'}
-                    <input type="file" class="hidden" name="file_1" class="btn" />
+                    <input type="file" class="hidden" name="file_1" />
                 </label>
                 <if condition="model.file1">
                   <span class="file-name">{model.file1}</span>
@@ -71,9 +71,9 @@
                 </if>
             </div>
             <div if="model.file1" class="file-button">
-                <label class="btn">
+                <label class="btn" role="button" tabindex="0">
                     {model.file2 ? 'Change' : 'Add file'}
-                    <input type="file" class="hidden" name="file_2" class="btn" />
+                    <input type="file" class="hidden" name="file_2" />
                 </label>
                 <if condition="model.file2">
                   <span class="file-name">{model.file2}</span>

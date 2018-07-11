@@ -45,6 +45,13 @@ export default class Form extends Controller {
         this.update();
     }
 
+    @on('keypress .file-button label')
+    returnToAttachFile(event) {
+        if (event.key === 'Enter') {
+            event.delegateTarget.dispatchEvent($.newEvent('click'));
+        }
+    }
+
     @on('change [name="resource"]')
     updateSelectedSource(e) {
         this.model.selectedSource = e.target.value;
