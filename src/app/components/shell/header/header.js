@@ -25,17 +25,6 @@ class Header extends Controller {
             mainMenu: 'nav.nav'
         };
 
-        // Fix: There must be a better way
-        const padParentForStickyNote = () => {
-            const stickyNoteEl = this.el.querySelector('sticky-note');
-
-            if (stickyNoteEl) {
-                const h = stickyNoteEl.offsetHeight;
-
-                this.el.parentNode.style.minHeight = `${h}px`;
-            }
-        };
-
         const accounts = `${settings.apiOrigin}/accounts`;
 
         this.model = {
@@ -101,7 +90,6 @@ class Header extends Controller {
         });
 
         window.addEventListener('resize', this.closeFullScreenNav.bind(this));
-        window.addEventListener('resize', padParentForStickyNote);
         window.addEventListener('navigate', () => this.update());
     }
 
@@ -137,6 +125,20 @@ class Header extends Controller {
         };
 
         window.addEventListener('scroll', this.onScrollHeader, false);
+
+        // Fix: There must be a better way
+        const padParentForStickyNote = () => {
+            const stickyNoteEl = this.el.querySelector('sticky-note');
+
+            if (stickyNoteEl) {
+                const h = stickyNoteEl.offsetHeight;
+                const p = this.el.parentNode;
+
+                p.style.minHeight = `${h}px`;
+            }
+        };
+
+        window.addEventListener('resize', padParentForStickyNote);
     }
 
     pin() {

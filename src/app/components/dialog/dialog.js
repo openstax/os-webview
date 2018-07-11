@@ -51,12 +51,12 @@ class Dialog extends Controller {
             this.attachContent();
 
             // Wait for content to be drawn
-            window.requestAnimationFrame(() => {
+            setTimeout(() => {
                 const focusableItems = Array.from(this.props.content.el.querySelectorAll($.focusable));
                 const first = focusableItems.find((i) => i.offsetParent !== null);
 
                 first.focus();
-            });
+            }, 20);
         });
     }
 
