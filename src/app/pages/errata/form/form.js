@@ -104,6 +104,15 @@ export default class Form extends Controller {
         const formEl = this.el.querySelector('form');
         const form = new FormData(formEl);
 
+        // Safari cannot handle empty files
+        ['file_1', 'file_2'].forEach((name) => {
+            const fd = form.get(name);
+
+            if (fd && fd.name === '') {
+                form.delete(name);
+            }
+        });
+
         // Programmatically post the form
         fetch(this.model.postEndpoint, {
             method: 'POST',
