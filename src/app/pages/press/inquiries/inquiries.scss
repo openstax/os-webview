@@ -1,6 +1,6 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.inquiries {
+.press.page .inquiries {
     display: grid;
     grid-gap: 5rem;
 
@@ -17,6 +17,8 @@
 
     h2 {
         @include set-font(h3);
+
+        margin-bottom: 0;
     }
 
     button,

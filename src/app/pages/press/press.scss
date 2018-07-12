@@ -2,7 +2,7 @@
 
 .press.page {
     background-color: ui-color(white);
-    padding-bottom: 8rem;
+    padding-bottom: 2rem;
 
     .hero {
         background-image: linear-gradient(to left, lighten(os-color(green), 18%), darken(os-color(green), 3%));
@@ -57,12 +57,19 @@
     .sidebar {
         display: grid;
         grid-row-gap: 6rem;
-        height: fit-content;
 
         h2 {
             line-height: normal;
             margin: 0;
         }
+    }
+
+    .main-content {
+        grid-template-rows: auto auto 1fr;
+    }
+
+    .sidebar {
+        grid-template-rows: auto auto auto 1fr;
     }
 
     .our-mission,
