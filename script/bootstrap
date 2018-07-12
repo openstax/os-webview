@@ -74,7 +74,7 @@ if [[ ! ${BOOTSTRAP_ALREADY_RAN} ]]; then
 
   # Install homebrew packages if running on macOS
   if [[ -f "Brewfile" ]] && [[ "$(uname -s)" = "Darwin" ]]; then
-    [[ $(which brew) ]] || die "Install Homebrew by going to https://brew.sh"
+    [[ $(command -v brew) ]] || die "Install Homebrew by going to https://brew.sh"
     [[ $(xcode-select --print-path) == "/Library/Developer/CommandLineTools" ]] || _say "${c_red}WARNING:${c_none} You may need to uninstall XCode and just install the command line tools"
 
     brew bundle check >/dev/null 2>&1  || {
@@ -88,7 +88,7 @@ if [[ ! ${BOOTSTRAP_ALREADY_RAN} ]]; then
     # Only install & activate the virtualenv if not already in one
     if [[ -z "${VIRTUAL_ENV}" ]]; then
 
-      if [[ ! $(which virtualenv) ]]; then
+      if [[ ! $(command -v virtualenv) ]]; then
         # macOS needs a little extra love
         if [[ -f "Brewfile" ]] && [[ "$(uname -s)" = "Darwin" ]]; then
           do_progress_quiet "Unlinking homebrew python (just-in-case)" \
@@ -113,7 +113,7 @@ if [[ ! ${BOOTSTRAP_ALREADY_RAN} ]]; then
 
   # Javascript environment
   if [[ -f "./package.json" ]]; then
-    [[ $(which yarn) ]] || die "Install yarn by going to https://yarnpkg.com"
+    [[ $(command -v yarn) ]] || die "Install yarn by going to https://yarnpkg.com"
   fi
   if [[ -f "./.nvmrc" ]]; then
     # Set up the correct version of node (Travis automatically does this)
@@ -130,7 +130,7 @@ if [[ ! ${BOOTSTRAP_ALREADY_RAN} ]]; then
 
   # Note: Skip rbenv for Travis because it already has ruby
   if [[ ! "${CI}" = "true" ]] && [[ -f ".ruby-version" ]]; then
-    if [[ -n $(which rbenv) ]]; then
+    if [[ -n $(command -v rbenv) ]]; then
       if [[ -z "$(rbenv version-name 2>/dev/null)" ]]; then
         do_progress_quiet "Installing Ruby (see ./.ruby-version)" \
           rbenv install --skip-existing
@@ -145,7 +145,7 @@ if [[ ! ${BOOTSTRAP_ALREADY_RAN} ]]; then
       do_progress_quiet "Installing Ruby Bundler gem"
         gem install bundler
 
-      [[ -n $(which rbenv) ]] && rbenv rehash
+      [[ -n $(command -v rbenv) ]] && rbenv rehash
     }
   fi
 
