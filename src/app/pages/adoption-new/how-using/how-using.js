@@ -13,7 +13,7 @@ export default class HowUsing extends Controller {
         this.view = {
             classes: ['how-using']
         };
-        this.css = `/app/pages/adoption/how-using/how-using.css?${VERSION}`;
+        this.css = `/app/pages/adoption-new/how-using/how-using.css?${VERSION}`;
         this.model = () => this.getModel();
         this.checked = {};
         this.howMany = {};
