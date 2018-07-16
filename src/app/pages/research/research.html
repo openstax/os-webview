@@ -1,5 +1,5 @@
 <template args="model">
-    <section class="hero">
+    <section if="model" class="hero">
         <div class="content">
             <div>
                 <h1>{model.missionHeader}</h1>
@@ -13,7 +13,7 @@
             </div>
         </div>
     </section>
-    <section class="current-projects">
+    <section if="model" class="current-projects">
         <div class="content">
             <h1>{model.projectsHeader}</h1>
             <div class="project-cards">
@@ -28,13 +28,13 @@
     </section>
     <section class="people">
         <div class="content">
-            <h1>{model.peopleHeader}</h1>
+            <h1 if="model">{model.peopleHeader}</h1>
             <people-tabs skip="true"></people-tabs>
             <tab-content skip="true"></tab-content>
             <accordion-region skip="true"></accordion-region>
         </div>
     </section>
-    <section class="publications">
+    <section if="model" class="publications">
         <div class="content">
             <h1>{model.publicationsHeader}</h1>
             <div class="publication" each="pub in model.publications">

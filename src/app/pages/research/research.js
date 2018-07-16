@@ -23,26 +23,25 @@ export default class Research extends CMSPageController {
             tabGroup: 'people-tabs',
             tabContent: 'tab-content'
         };
-
-        // State
     }
 
     getModel() {
-        const data = this.pageData || {};
+        const data = this.pageData;
         const projectColors = ['blue', 'green', 'yellow', 'red', 'orange'];
 
-        return {
+        return data && {
             missionHeader: data.mission_header,
             missionBody: data.mission_body,
             projectsHeader: data.projects_header,
-            projects: (data.projects || []).map((p, i) => ({
-                borderColor: projectColors[i%5],
-                title: p.title,
-                body: p.body
-            })),
+            projects: data.projects
+                .map((p, i) => ({
+                    borderColor: projectColors[i%5],
+                    title: p.title,
+                    body: p.blurb
+                })),
             peopleHeader: data.people_header,
             publicationsHeader: data.publication_header,
-            publications: (data.publications || [])
+            publications: data.publications
                 .map((p) => ({
                     authors: p.authors,
                     date: new Date(p.date).getYear(),
@@ -53,47 +52,6 @@ export default class Research extends CMSPageController {
         };
     }
 
-    onLoaded() {
-        /* eslint-disable */
-        const lorem = `
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas quis sodales nisl,
-            eget tincidunt velit. Nulla eu tortor libero. Pellentesque habitant morbi tristique
-            senectus et netus et malesuada fames ac turpis egestas. Orci varius natoque penatibus
-            et magnis dis parturient montes, nascetur ridiculus mus. Mauris libero nunc, interdum
-            nec vestibulum eu, laoreet eget sapien. Mauris hendrerit sit amet sem non feugiat.`;
-        const halfLorem = lorem.substr(0, lorem.length / 2);
-
-        this.mockPageData = {
-            alumni: [
-                {
-                    name: 'Roy Johnson',
-                    description: 'JavaScript developer'
-                },
-                {
-                    name: 'Michael Harrison',
-                    description: 'Wagtail developer'
-                }
-
-            ],
-            externals: [
-                {
-                    name: 'Ed Woodward',
-                    description: 'BIT team lead'
-                },
-                {
-                    name: 'Bruce Pike',
-                    description: 'Project manager'
-                }
-
-            ],
-            projects: ['blue', 'green', 'yellow', 'red', 'orange'].map((c) => ({
-                title: `${c} Title`,
-                body: halfLorem
-            })),
-        };
-        /* eslint-enable */
-    }
-
     onDataLoaded() {
         Object.assign(this.pageData, this.mockPageData);
         this.update();
@@ -101,8 +59,8 @@ export default class Research extends CMSPageController {
         let selectedTab = tabLabels[1];
         const contents = {
             'Alumni': new AlumniTab(this.pageData.alumni),
-            'Current members': new MembersTab(() => this.pageData.people),
-            'External collaboration': new AlumniTab(this.pageData.externals)
+            'Current members': new MembersTab(() => this.pageData.current_members),
+            'External collaboration': new AlumniTab(this.pageData.external_collaborators)
         };
         const contentGroup = new ContentGroup(() => ({
             selectedTab,
