@@ -8,7 +8,7 @@ sleep 2
 ./script/setup
 
 
-if [[ $(which yarn) ]]; then
+if [[ $(command -v yarn) ]]; then
   >&2 echo "==> Updating node packages and yarn.lock file"
   yarn upgrade || exit 2
 else
