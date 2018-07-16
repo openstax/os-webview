@@ -1,0 +1,16 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.adoption-form-v2 {
+    [data-page="0"] > div,
+    [data-page="0"]:not([hidden]) ~ .button-row {
+        margin: auto;
+        max-width: 47rem;
+        width: 100%;
+    }
+
+    .hint {
+        @include set-font(helper-label);
+        color: text-color(helper);
+        font-style: italic;
+    }
+}

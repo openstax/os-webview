@@ -1,16 +1,112 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.adoption-form-v2 {
-    [data-page="0"] > div,
-    [data-page="0"]:not([hidden]) ~ .button-row {
+.adoption-page {
+
+    .hero h1 {
+        @include set-font(h1);
+    }
+
+    .strips {
+        position: static;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    [data-id="selectedRole"] {
+        display: flex;
         margin: auto;
-        max-width: 47rem;
-        width: 100%;
+        padding: 4rem 0 0;
+        width: 47rem;
+
+        > label {
+            flex-basis: 100%;
+        }
+    }
+
+    .grouping {
+        align-items: flex-start;
+        width: 47rem;
+
+        > div {
+            margin-bottom: 1rem;
+        }
+    }
+
+    .invalid-message.offset-up {
+        margin-bottom: 1rem;
+        margin-top: -1rem;
+    }
+
+    h2 {
+        @include set-font(h4);
+
+        margin: 0;
+    }
+
+    plug-in {
+        display: block;
+        margin-bottom: $normal-margin;
+    }
+
+    .flexrow {
+        display: grid;
+        grid-gap: 1rem;
+        grid-template-columns: repeat(2, auto) 1fr;
+        margin-top: 4rem;
+    }
+
+    button {
+        @extend %button;
+
+        &.primary {
+            @extend %primary;
+        }
+
+        &.secondary {
+            @extend %secondary;
+        }
+    }
+
+    [data-id="form"] {
+        display: block;
+        margin-bottom: 6rem;
+        margin-top: 2rem;
+        min-height: 20rem;
     }
 
     .hint {
         @include set-font(helper-label);
         color: text-color(helper);
         font-style: italic;
+    }
+
+    .two-columns {
+        column-count: 2;
+        margin: $normal-margin 0;
+    }
+
+    .form-checkboxgroup > label + :not(label),
+    .form-radiogroup > label + :not(label) {
+        margin-top: $normal-margin;
+    }
+
+    .cta {
+        @include layout-container($text-content-max);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0 1.5rem 4rem;
+        width: 100%;
+    }
+
+    .top-of-form {
+        margin-top: -2rem;
+        padding-top: inherit;
+    }
+
+    .wrapper {
+        padding-bottom: 4rem;
     }
 }
