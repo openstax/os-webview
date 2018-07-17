@@ -45,6 +45,13 @@ export default class Form extends Controller {
         this.update();
     }
 
+    @on('keypress .file-button label')
+    returnToAttachFile(event) {
+        if (event.key === 'Enter') {
+            event.delegateTarget.dispatchEvent($.newEvent('click'));
+        }
+    }
+
     @on('change [name="resource"]')
     updateSelectedSource(e) {
         this.model.selectedSource = e.target.value;
@@ -103,6 +110,15 @@ export default class Form extends Controller {
         this.update();
         const formEl = this.el.querySelector('form');
         const form = new FormData(formEl);
+
+        // Safari cannot handle empty files
+        ['file_1', 'file_2'].forEach((name) => {
+            const fd = form.get(name);
+
+            if (fd && fd.name === '') {
+                form.delete(name);
+            }
+        });
 
         // Programmatically post the form
         fetch(this.model.postEndpoint, {
