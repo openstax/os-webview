@@ -1,0 +1,9 @@
+<template args="model">
+    <div each="entry in model" class="card">
+        <div class="content">
+            <img src="{entry.image}">
+            <div class="name">{entry.name}</div>
+            <div>{entry.title}</div>
+        </div>
+    </div>
+</template>
