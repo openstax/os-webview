@@ -113,10 +113,12 @@ export default class MainMenu extends Controller {
     }
 
     closeDropdowns() {
-        this.regions.subjectsDropdown.controllers[0].closeMenu();
-        this.regions.technologyDropdown.controllers[0].closeMenu();
-        if (this.loginMenuComponent) {
-            this.loginMenuComponent.closeMenu();
+        if (!this.model.trainingWheelActive) {
+            this.regions.subjectsDropdown.controllers[0].closeMenu();
+            this.regions.technologyDropdown.controllers[0].closeMenu();
+            if (this.loginMenuComponent) {
+                this.loginMenuComponent.closeMenu();
+            }
         }
     }
 
