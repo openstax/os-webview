@@ -22,7 +22,7 @@ const bannerModels = shuffle([{
     alignedEdge: 'right'
 }, {
     subject: 'biology',
-    subjectURL: '/details/books/biology',
+    subjectURL: '/details/books/biology-2e',
     subjectTitle: 'Biology',
     quote: 'live the wild life',
     features: ['diagram', 'leaf'],
