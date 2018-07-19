@@ -1,0 +1,55 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.banner-carousel {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    height: 100%;
+    position: relative;
+    width: 100%;
+
+    .frame-control {
+        background-color: rgba(ui-color(white), 0.7);
+        border-radius: 0.4rem;
+        border-spacing: 1rem;
+        bottom: 1rem;
+        display: table;
+        left: $normal-margin;
+        position: absolute;
+
+        .dots {
+            display: table-row;
+
+            > div {
+                display: table-cell;
+            }
+
+            .dot {
+                background-color: transparent;
+                border: thin solid text-color(normal);
+                border-radius: 50%;
+                height: 1rem;
+                margin: 0 1rem;
+                width: 1rem;
+
+                &.active {
+                    background-color: os-color(green);
+                    border-color: os-color(green);
+                }
+            }
+        }
+    }
+
+    .image-row {
+        display: grid;
+        grid-template-columns: repeat(6, 100vw);
+        height: 100%;
+        position: absolute;
+
+        > * {
+            background-position: left center;
+            background-size: cover;
+            height: 100%;
+            width: 100vw;
+        }
+    }
+}
