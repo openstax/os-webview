@@ -1,0 +1,241 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+$girl-breakpoint: 60rem;
+$button-breakpoint: 100rem;
+
+.education {
+    @include wider-than(60rem) {
+        height: 74rem;
+        overflow: hidden;
+        position: relative;
+        top: -3rem;
+        width: 100%;
+    }
+}
+
+.education-banner {
+    background-attachment: local;
+    background-image: url('/images/home-new/education/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    @include wider-than(60rem) {
+        bottom: 0;
+        height: 71rem;
+        left: 0;
+        position: absolute;
+        right: 0;
+    }
+
+    .container {
+        display: flex;
+        flex-flow: column nowrap;
+        height: 100%;
+        margin: 0 auto;
+        max-width: $content-max;
+        padding: 3rem 1.5rem;
+        position: relative;
+
+        @include wider-than($phone-max) {
+            flex-flow: row wrap;
+        }
+    }
+
+    .quote {
+        background-color: rgba(os-color(light-blue), 0.8);
+        color: text-color(white);
+        margin-bottom: 1.5rem;
+        padding: 3rem;
+        top: 5rem;
+        width: 100%;
+
+        @include wider-than(60rem) {
+            width: calc(100% - 3rem);
+
+            > p {
+                width: calc(46% + 10rem);
+            }
+        }
+
+        @include wider-than($button-breakpoint) {
+            > p,
+            > h3 {
+                width: 50rem;
+            }
+        }
+
+        > p:first-child {
+            @include set-font(h3);
+            font-weight: normal;
+            letter-spacing: normal;
+            margin: 0;
+        }
+
+        h3 {
+            @include set-font(h1);
+            color: os-color(yellow);
+            margin: 1rem 0;
+
+            @include wider-than($tablet-max) {
+                @include set-font(hero-h1);
+                width: 37rem;
+            }
+
+        }
+
+        > p:last-child {
+            @include set-font(body-large);
+            margin: 1.5rem 0;
+        }
+
+        .btn {
+            background-color: transparent;
+            border: 0.1rem solid ui-color(white);
+            color: text-color(white);
+
+            &:hover {
+                background-color: rgba(ui-color(white), 0.90);
+                color: os-color(light-blue);
+            }
+        }
+    }
+
+    .links {
+        width: 100%;
+        z-index: 3;
+
+        @include wider-than(60rem) {
+            bottom: 3rem;
+            margin-top: 1.5rem;
+        }
+
+        @include wider-than($button-breakpoint) {
+            bottom: 13rem;
+        }
+
+        ul {
+            display: flex;
+            flex-flow: column nowrap;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+
+            @include wider-than($tablet-max) {
+                flex-flow: row wrap;
+            }
+        }
+
+        li {
+            flex: 0 0 auto;
+
+            @include wider-than(60rem) {
+                width: 60%;
+            }
+
+            @include wider-than($tablet-max) {
+                flex: 0 0 40%;
+                max-width: 37rem;
+            }
+
+            &:first-child {
+                margin-bottom: 1.5rem;
+
+                @include wider-than(60rem) {
+                    margin-bottom: 1.5rem;
+                }
+
+                @include wider-than($tablet-max) {
+                    margin-bottom: 0;
+                    margin-right: 3rem;
+                }
+            }
+        }
+
+        .btn {
+            box-shadow: 0 0 1rem rgba(os-color(gray), 0.4);
+            display: inline-block;
+            text-align: left;
+            text-transform: none;
+            width: 100%;
+
+            @include wider-than(60rem) {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+
+            @include wider-than($tablet-max) {
+                height: 12.7rem;
+            }
+
+            &.k-12 > .title {
+                color: os-color(orange);
+            }
+        }
+
+        .title {
+            @include set-font(h3);
+            color: os-color(yellow);
+            display: block;
+        }
+
+        .blurb {
+            font-weight: normal;
+        }
+    }
+
+    .square-1,
+    .square-2,
+    .student,
+    .quote,
+    .links {
+        @include wider-than(60rem) {
+            position: absolute;
+        }
+    }
+
+    .square-1,
+    .square-2 {
+        background-color: rgba(os-color(light-blue), 0.2);
+        display: none;
+        position: absolute;
+        z-index: 0;
+
+        @include wider-than($tablet-max) {
+            display: initial;
+        }
+     }
+
+    .square-1 {
+        bottom: 18rem;
+        height: 12rem;
+        left: -1.5rem;
+        width: 56rem;
+     }
+
+    .square-2 {
+        height: 50rem;
+        right: -5rem;
+        top: 1.5rem;
+        width: 64rem;
+     }
+
+    .student {
+        background-image: url('/images/home-new/education/student.png');
+        background-position: center bottom;
+        background-repeat: no-repeat;
+        background-size: 100% auto;
+        bottom: -1rem;
+        height: 105%;
+        right: calc(-12rem + 12%);
+        width: calc(15rem + 30%);
+        z-index: 2;
+
+        @include wider-than($button-breakpoint) {
+            background-position: right bottom;
+            background-size: auto 100%;
+            right: 0;
+            width: 60rem;
+        }
+    }
+ }

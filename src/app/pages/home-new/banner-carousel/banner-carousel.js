@@ -13,7 +13,7 @@ export default class BannerCarousel extends Controller {
         this.view = {
             classes: ['banner-carousel']
         };
-        this.css = `/app/pages/home/banner-carousel/banner-carousel.css?${VERSION}`;
+        this.css = `/app/pages/home-new/banner-carousel/banner-carousel.css?${VERSION}`;
         this.model = () => this.getModel();
         this.frameNumber = 0;
         this.rowOffset = 0;

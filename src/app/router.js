@@ -26,6 +26,7 @@ const PAGES = [
     'foundation',
     'give',
     'give/*path',
+    'home-new',
     'interest',
     'interest-new',
     'impact',

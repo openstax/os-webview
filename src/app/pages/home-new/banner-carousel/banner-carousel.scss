@@ -8,13 +8,13 @@
     width: 100%;
 
     .frame-control {
-        background-color: rgba(ui-color(white), 0.7);
-        border-radius: 0.4rem;
+        background-color: transparent;
         border-spacing: 1rem;
         bottom: 1rem;
         display: table;
-        left: $normal-margin;
+        left: 50vw;
         position: absolute;
+        transform: translateX(-50%);
 
         .dots {
             display: table-row;
@@ -25,15 +25,14 @@
 
             .dot {
                 background-color: transparent;
-                border: thin solid text-color(normal);
+                border: thin solid text-color(white);
                 border-radius: 50%;
-                height: 1rem;
-                margin: 0 1rem;
-                width: 1rem;
+                margin: 0 0.8rem;
+                vertical-align: middle;
 
                 &.active {
-                    background-color: os-color(green);
-                    border-color: os-color(green);
+                    background-color: os-color(gold);
+                    transform: scale(1.2, 1.2);
                 }
             }
         }
