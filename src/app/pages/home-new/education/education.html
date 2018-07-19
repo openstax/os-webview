@@ -1,0 +1,27 @@
+<template args="model">
+    <div class="container">
+        <div class="square-1"></div>
+        <div class="square-2"></div>
+
+        <div class="quote" data-html="main.content" skip="true"></div>
+
+        <div class="student"></div>
+
+        <div class="links">
+            <ul>
+                <li>
+                    <a class="btn btn-large btn-orange" href="{model.block1.link}">
+                        <span class="title">{model.block1.heading}</span>
+                        <span class="blurb" data-html="block1.content" skip="true"></span>
+                    </a>
+                </li>
+                <li>
+                    <a class="btn btn-large btn-gold k-12" href="{model.block2.link}">
+                        <span class="title">{model.block2.heading}</span>
+                        <span class="blurb" data-html="block2.content" skip="true"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</template>

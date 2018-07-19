@@ -1,0 +1,39 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+// Just for math book
+$tablet-book-size: 16.5rem;
+
+@mixin desktop-plus {
+    @media (min-width: 1025px) {
+        @content;
+    }
+}
+
+.home-page {
+    flex: 1 0 auto;
+
+    @include wider-than($tablet-max) {
+        margin-top: -6rem;
+    }
+
+    .book-banners {
+        height: 50vw;
+        min-height: 30rem;
+        position: relative;
+    }
+
+    .buckets {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .buckets-section {
+        padding: 1rem 1.5rem 6rem;
+
+        .bucket {
+            flex-basis: 30rem;
+            margin: 2rem 0;
+            width: 100%;
+        }
+    }
+}
