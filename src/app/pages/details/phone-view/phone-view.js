@@ -85,7 +85,7 @@ export default class PhoneView extends Controller {
             items: accordionItems
         })));
         this.regions.letUsKnow.append(new LetUsKnow(() => ({
-            title: this.props.bookTitle
+            title: this.props.salesforceAbbreviation
         })));
     }
 

@@ -23,8 +23,6 @@ export default class InterestForm extends Controller {
         this.view = {
             classes: ['interest-form-v2']
         };
-        const defaultTitle = decodeURIComponent(window.location.search.substr(1));
-
         this.regions = {
             header: '[data-region="header"]',
             roleSelector: '[data-region="role-selector"]',
@@ -60,7 +58,8 @@ export default class InterestForm extends Controller {
         const bookSelector = new BookSelector(() => ({
             prompt: 'Which textbook(s) are you interested in adopting?',
             required: true,
-            name: 'Subject__c'
+            name: 'Subject__c',
+            preselectedTitle: decodeURIComponent(window.location.search.substr(1))
         }));
         const howManyStudents = new FormInput({
             name: 'Number_of_Students__c',

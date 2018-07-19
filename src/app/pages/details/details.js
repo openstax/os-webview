@@ -109,7 +109,8 @@ export default class Details extends CMSPageController {
                 formattedPublishDate: this.pageData.publish_date && formatDate(this.pageData.publish_date),
                 polish,
                 slug: this.slug,
-                title: this.pageData.title
+                title: this.pageData.title,
+                salesforceAbbreviation: this.pageData.salesforce_abbreviation
             };
             const authors = this.pageData.book_contributing_authors;
             const senior = (author) => author.senior_author;
@@ -232,6 +233,7 @@ export default class Details extends CMSPageController {
                 paidResources: this.pageData.book_allies
             },
             slug: this.slug,
+            salesforceAbbreviation: this.pageData.salesforce_abbreviation,
             studentResources: this.pageData.book_student_resources,
             tableOfContents: this.pageData.table_of_contents,
             userStatusPromise: this.userStatusPromise,

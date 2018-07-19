@@ -78,7 +78,8 @@ export default class InterestForm extends Controller {
             const bookSelector = new BookSelector(
                 () => ({
                     prompt: 'Which textbook(s) are you interested in adopting?',
-                    required: true
+                    required: true,
+                    preselectedTitle: decodeURIComponent(window.location.search.substr(1))
                 }),
                 (selectedBooks) => {
                     this.selectedBooks = selectedBooks;
