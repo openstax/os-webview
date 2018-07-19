@@ -95,6 +95,9 @@ export default class BookSelector extends SalesforceForm {
                 const region = new Region(cEl, this);
 
                 region.attach(checkboxComponent);
+                if (book.value === this.props.preselectedTitle) {
+                    checkboxComponent.toggleChecked();
+                }
             }
         }
     }

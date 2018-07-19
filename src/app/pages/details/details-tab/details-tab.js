@@ -32,7 +32,7 @@ export default class DetailsTab extends Controller {
         }
 
         this.regions.letUsKnow.append(new LetUsKnow(() => ({
-            title: this.model.title
+            title: this.model.salesforceAbbreviation
         })));
     }
 
