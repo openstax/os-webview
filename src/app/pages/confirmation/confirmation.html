@@ -22,7 +22,11 @@
                         </if>
                     </if>
                 </p>
-                <a if="model.adoptionUrl" href="{model.adoptionUrl}" title="{model.adoptionLinkText}" class="cta btn">{model.adoptionLinkText}</a>
+                <a if="model.adoptionUrl"
+                    href="{model.adoptionUrl}"
+                    title="{model.adoptionLinkText}"
+                    class="btn {model.outlineButton ? 'outlined' : 'cta'}"
+                >{model.adoptionLinkText}</a>
                 <a if="model.subjectLinkText"
                     href="/subjects" title="{model.subjectLinkText}" class="go-back">{model.subjectLinkText}</a>
             </div>

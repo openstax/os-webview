@@ -37,7 +37,8 @@ const models = {
         ' receive an email from us soon.',
         adoptionUrl: '/subjects',
         adoptionLinkText: 'Back to the books',
-        studentImage: 'student-chemistry.png'
+        studentImage: 'student-chemistry.png',
+        outlineButton: true
     }
 };
 

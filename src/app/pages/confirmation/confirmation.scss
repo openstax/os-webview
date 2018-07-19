@@ -90,12 +90,23 @@
         }
     }
 
-    .btn.cta {
-        @extend %primary;
+    .btn {
         @include button();
 
-        margin: 1rem 0 2rem;
+        &.cta {
+            @extend %primary;
+
+            margin: 1rem 0 2rem;
+        }
+
+        &.outlined {
+            background-color: transparent;
+            border-color: ui-color(white);
+            color: text-color(white);
+            display: inline-flex;
+        }
     }
+
 
     .go-back {
         @include set-font(helper-label);

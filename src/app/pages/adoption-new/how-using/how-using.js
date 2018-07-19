@@ -22,11 +22,12 @@ export default class HowUsing extends Controller {
             howMany: this.howMany
         });
         this.validated = false;
+        this.needToDoErrors = false;
         this.numberValidationMessage = (value) => {
             if (this.validated) {
                 const el = this.el.querySelector(`[type="number"][name="${this.numberName(value)}"]`);
 
-                return el.validationMessage;
+                return el && el.validationMessage;
             }
             return null;
         };
@@ -34,7 +35,7 @@ export default class HowUsing extends Controller {
             if (this.validated) {
                 const el = this.el.querySelector(`[type="radio"][name="${this.radioName(value)}"]`);
 
-                return el.validationMessage;
+                return el && el.validationMessage;
             }
             return null;
         };
@@ -64,6 +65,14 @@ export default class HowUsing extends Controller {
         for (const n of this.el.querySelectorAll('[type="number"]')) {
             n.value = this.howMany[n.name] || '';
         }
+        // Error messages won't be right if you don't update a second time
+        if (this.needToDoErrors) {
+            this.needToDoErrors = false;
+            this.update();
+            setTimeout(() => {
+                this.needToDoErrors = this.validated;
+            }, 200);
+        }
     }
 
     @on('change [type="radio"]')
@@ -86,6 +95,7 @@ export default class HowUsing extends Controller {
 
     validate() {
         this.validated = true;
+        this.needToDoErrors = true;
         this.update();
         return this.el.querySelector(':invalid');
     }

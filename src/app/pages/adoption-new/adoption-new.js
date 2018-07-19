@@ -163,13 +163,16 @@ export default class InterestForm extends Controller {
         if (this.submitQueue && this.submitQueue.length) {
             const action = this.submitQueue.shift();
 
-            action();
+            // Ensure a little break between submissions
+            setTimeout(action, 300);
         } else {
             const emailEl = document.querySelector('[name="email"]');
 
-            router.navigate('/adoption-confirmation', {
-                email: emailEl.value
-            });
+            setTimeout(() => {
+                router.navigate('/adoption-confirmation', {
+                    email: emailEl.value
+                });
+            }, 300);
         }
     }
 
