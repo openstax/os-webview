@@ -33,4 +33,8 @@
         color: text-color(helper);
         font-style: italic;
     }
+
+    [type="number"] {
+        max-width: 20rem;
+    }
 }

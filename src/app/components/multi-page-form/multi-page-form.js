@@ -78,7 +78,9 @@ export default class MultiPageForm extends Controller {
 
         this.currentPage += 1;
         this.update();
-        this.currentForm.el.querySelector($.focusable).focus();
+        if (currentForm.el) {
+            currentForm.el.querySelector($.focusable).focus();
+        }
         this.callOnPageChange();
     }
 
