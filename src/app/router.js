@@ -40,6 +40,7 @@ const PAGES = [
     'research',
     'subjects',
     'subjects/*path',
+    'team',
     'technology',
     'institutional-partnership'
 ];
