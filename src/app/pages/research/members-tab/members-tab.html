@@ -1,7 +1,9 @@
 <template args="model">
     <div each="entry in model" class="card">
         <div class="content">
-            <img src="{entry.image}">
+            <div class="image-holder">
+                <img if="entry.photo" class="photo" src="{entry.photo.file}" alt="portrait">
+            </div>
             <div class="name">{entry.name}</div>
             <div>{entry.title}</div>
         </div>

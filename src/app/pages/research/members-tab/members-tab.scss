@@ -27,9 +27,20 @@
             text-align: center;
         }
 
-        img {
+        .image-holder {
+            background-color: ui-color(default);
             border-radius: 50%;
+            height: 14rem;
             margin-bottom: 2rem;
+            overflow: hidden;
+            width: 14rem;
+
+            img {
+                margin-left: -20%;
+                margin-top: 10%;
+                max-height: 140%;
+                max-width: 140%;
+            }
         }
 
         .name {

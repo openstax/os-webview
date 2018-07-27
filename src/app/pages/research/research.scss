@@ -17,6 +17,8 @@
 
     h1 {
         @include set-font(h2);
+
+        margin-bottom: 2rem;
     }
 
     section {
@@ -42,7 +44,7 @@
         }
 
         @include wider-than($media-content-max) {
-            grid-template-columns: auto 1fr;
+            grid-template-columns: minmax(50vw, 3fr) 4fr;
         }
 
         h1 {
@@ -54,9 +56,13 @@
             display: grid;
             text-align: left;
 
+            @include width-between($tablet-max, $media-content-max) {
+                min-height: calc(100vw * #{35em / $media-content-max});
+            }
+
             @include wider-than($media-content-max) {
                 margin-left: calc(50vw - 60rem);
-                max-width: calc(50vw - 22rem);
+                max-width: calc(50% + 24rem);
                 min-height: 60rem;
                 width: 77rem;
             }
@@ -175,6 +181,8 @@
     .people {
         h2 {
             @include set-font(body-large);
+
+            padding-top: 0;
         }
     }
 
@@ -184,6 +192,8 @@
         }
 
         .content {
+            @extend %text-content;
+
             display: grid;
             grid-row-gap: 2.5rem;
         }
