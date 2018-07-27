@@ -3,24 +3,29 @@
     <span class="row-of-four"></span>
     <div
         each="entry in model"
-        class="card {model.selectedCard == $item ? 'open' : ''}"
-        role="{entry.description ? 'button' : ''}"
+        class="card {model.selectedCard == $item ? 'open' : ''} {entry.title ? '' : 'bio'}"
+        role="{entry.title && entry.bio ? 'button' : ''}"
         data-index={$item}
     >
+    <if condition="entry.title">
         <div class="content">
             <div class="image-holder">
-                <img src="{entry.image}">
+                <img src="{entry.photo || ''}">
             </div>
             <div class="name">{entry.name}</div>
             <div>{entry.title}</div>
         </div>
+    <else>
+        <div class="name">{entry.name}</div>
+        <div>{entry.bio}</div>
+    </if>
     </div>
     <div if="model.spacerCount > 3"></div>
     <div if="model.spacerCount > 2"></div>
     <div if="model.spacerCount > 1"></div>
     <div if="model.spacerCount > 0"></div>
-    <div if="model.selectedCard" class="card description {model.isEndOfRow ? 'on-right' : ''}">
+    <div if="model.selectedCard" class="card bio tooltip {model.isEndOfRow ? 'on-right' : ''}">
         <span class="fa fa-times put-away" role="button"></span>
-        {model[model.selectedCard].description}
+        {model[model.selectedCard].bio}
     </div>
 </template>

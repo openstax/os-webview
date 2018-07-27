@@ -14,7 +14,7 @@ export default class Team extends CMSPageController {
             classes: ['team', 'page']
         };
         this.css = `/app/pages/team/team.css?${VERSION}`;
-        this.slug = 'pages/team';
+        this.slug = 'pages/team-page';
         this.regions = {
             accordion: 'accordion-region',
             tabGroup: 'people-tabs',
@@ -25,123 +25,18 @@ export default class Team extends CMSPageController {
 
     getModel() {
         return this.pageData ? {
-            heroHeadline: this.pageData.hero_headline,
-            heroParagraph: this.pageData.hero_paragraph,
-            heroImage: this.pageData.hero_image,
-            headline: this.pageData.headline
+            heroHeadline: this.pageData.header,
+            heroParagraph: this.pageData.subheader,
+            heroImage: this.pageData.header_image_url,
+            headline: this.pageData.team_header
         } : {};
-    }
-
-    onLoaded() {
-        this.pageData = {
-            hero_headline: 'Changing our world is a team effort',
-            hero_paragraph: 'Meet the people behind OpenStax',
-            hero_image: 'https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/images/richard.original.original.jpg',
-            headline: 'Our Team',
-            tabs: [
-                {
-                    heading: 'OpenStax Leadership',
-                    people: [
-                        {
-                            name: 'Richard G. Baraniuk',
-                            title: 'Founder and Director',
-                            image: 'https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/Richard.png'
-                        }
-                    ]
-                },
-                {
-                    heading: 'OpenStax Team',
-                    people: [
-                        {
-                            name: 'Micaela McGlone',
-                            title: 'Research Specialist',
-                            image: 'https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/Micaela.png',
-                            description: `
-                                As a research specialist on the OpenStax team, Micaela's primary
-                                responsibilities include coordinating the pilots of OpenStax Tutor
-                                courseware and preparing proposals and documentation for institutional
-                                review boards. She is a native of San Antonio, Texas (read: an avid Spurs
-                                fan) and a graduate of Washington and Lee University."
-                            `
-                        },
-                        {
-                            name: 'Michael Mulich',
-                            title: 'Consultant'
-                            // no image
-                        },
-                        {
-                            name: 'Dani Nicholson',
-                            title: 'Associate Director, Marketing and Communications',
-                            image: 'https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/Dani.png',
-                            description: `
-                                Dani is a graduate of West Texas A&M University and the University of North Texas.
-                                Before joining OpenStax, she worked in communication and marketing at University
-                                of North Texas, in Creative Solutions at CNBC Europe, and reported for local
-                                newspapers. Dani oversees the communication components to all higher
-                                education-related activities for OpenStax.
-                            `
-                        },
-                        {
-                            name: 'Micaela McGlone',
-                            title: 'Research Specialist',
-                            image: 'https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/Micaela.png',
-                            description: `
-                                As a research specialist on the OpenStax team, Micaela's primary
-                                responsibilities include coordinating the pilots of OpenStax Tutor
-                                courseware and preparing proposals and documentation for institutional
-                                review boards. She is a native of San Antonio, Texas (read: an avid Spurs
-                                fan) and a graduate of Washington and Lee University."
-                            `
-                        },
-                        {
-                            name: 'Michael Mulich',
-                            title: 'Consultant'
-                            // no image
-                        },
-                        {
-                            name: 'Dani Nicholson',
-                            title: 'Associate Director, Marketing and Communications',
-                            image: 'https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/Dani.png',
-                            description: `
-                                Dani is a graduate of West Texas A&M University and the University of North Texas.
-                                Before joining OpenStax, she worked in communication and marketing at University
-                                of North Texas, in Creative Solutions at CNBC Europe, and reported for local
-                                newspapers. Dani oversees the communication components to all higher
-                                education-related activities for OpenStax.
-                            `
-                        }
-                    ]
-                },
-                {
-                    heading: 'Faculty Advisory Board',
-                    people: [
-                        {
-                            name: 'Richard G. Baraniuk',
-                            title: 'Founder and Director',
-                            image: 'https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/Richard.png'
-                        }
-                    ]
-                },
-                {
-                    heading: 'Strategic Advisors',
-                    people: [
-                        {
-                            name: 'Richard G. Baraniuk',
-                            title: 'Founder and Director',
-                            description: 'It\'s beginning to look a lot like Christmas everywhere you go.'
-                        }
-                    ]
-                }
-            ]
-        };
-        this.onDataLoaded();
     }
 
     onDataLoaded() {
         this.update();
         const data = this.pageData;
-        const tabLabels = data.tabs.map((t) => t.heading);
-        const tabContents = data.tabs.map((t) => new PeopleTab(() => t.people));
+        const tabLabels = data.openstax_people.map((t) => t.heading);
+        const tabContents = data.openstax_people.map((t) => new PeopleTab(() => t.people));
         let selectedTab = tabLabels[0];
         const contents = {};
 
@@ -162,7 +57,7 @@ export default class Team extends CMSPageController {
                 contentGroup.update();
             }
         }));
-        const accordionItems = data.tabs.map((t) => (
+        const accordionItems = data.openstax_people.map((t) => (
             {
                 title: t.heading,
                 contentComponent: new PeopleTab(() => t.people)

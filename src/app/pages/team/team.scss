@@ -37,6 +37,7 @@
 
         .picture-content {
             background-color: os-color(light-blue);
+            display: grid;
             max-width: 100rem;
 
             img {

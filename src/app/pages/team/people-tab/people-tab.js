@@ -20,7 +20,7 @@ export default class PeopleTab extends Controller {
 
     getModel() {
         this.props = this.getProps(); // It is an array!
-        const result = this.props.slice();
+        const result = this.props.map((p) => p.value);
 
         // This is a little hacky, but we need spacers to fill out one row
         // beyond the open card. Row length depends on window size
@@ -55,7 +55,7 @@ export default class PeopleTab extends Controller {
 
     /*
         If there is space to the right of the open card, then insert
-        the description directly below the current card. Otherwise, go
+        the bio directly below the current card. Otherwise, go
         one to the left and below.
 
         This gets tricky when you are already in the bottom row
@@ -63,7 +63,7 @@ export default class PeopleTab extends Controller {
     cardBelowOpenCard() {
         const openCard = this.el.querySelector('.card.open');
         const openCardRect = openCard.getBoundingClientRect();
-        const followingCards = this.el.querySelectorAll('.card.open ~ :not(.description)');
+        const followingCards = this.el.querySelectorAll('.card.open ~ :not(.bio)');
         const rowLength = this.getRowLength();
         const isEndOfRow = this.selectedCard % rowLength === rowLength - 1;
         const cardToInsertBefore = Array.from(followingCards)
@@ -80,10 +80,10 @@ export default class PeopleTab extends Controller {
 
     onUpdate() {
         if (this.selectedCard) {
-            const descriptionCard = this.el.querySelector('.card.description');
+            const bioCard = this.el.querySelector('.card.bio');
             const cardToInsertBefore = this.cardBelowOpenCard();
 
-            descriptionCard.parentNode.insertBefore(descriptionCard, cardToInsertBefore);
+            bioCard.parentNode.insertBefore(bioCard, cardToInsertBefore);
         }
     }
 
