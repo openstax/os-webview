@@ -19,22 +19,25 @@ $offset-bottom-section: 12rem;
         }
 
         @include wider-than($media-content-max) {
-            grid-template-columns: 1fr auto;
+            grid-template-columns: minmax(45vw, 3fr) 4fr;
         }
 
         .content {
+            @include set-font(body-large);
+
             align-items: center;
             display: grid;
-            padding-bottom: 2rem;
+            padding: 0 $normal-margin 3rem;
 
             @include wider-than($media-content-max) {
                 margin-left: calc(50vw - 60rem);
-                max-width: calc(50vw - 22rem);
-                width: 100%;
+                max-width: 77rem;
+                width: calc(10vw + 50rem);
             }
         }
 
         img {
+            margin-top: 10rem;
             max-width: 100%;
             place-self: end end;
         }
@@ -71,7 +74,6 @@ $offset-bottom-section: 12rem;
             overflow: hidden;
 
             img {
-                height: 100%;
                 place-self: center;
                 width: 100%;
             }
@@ -84,7 +86,14 @@ $offset-bottom-section: 12rem;
     }
 
     .where {
-        padding-bottom: $offset-bottom-section;
+        align-items: flex-start;
+        padding: 0 0 $offset-bottom-section;
+
+        .text-content {
+            align-items: flex-start;
+            margin: 0;
+            text-align: left;
+        }
 
         h1 {
             @include set-font(h2);
