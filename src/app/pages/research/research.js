@@ -44,7 +44,7 @@ export default class Research extends CMSPageController {
             publications: data.publications
                 .map((p) => ({
                     authors: p.authors,
-                    date: new Date(p.date).getYear(),
+                    date: new Date(p.date).getYear() + 1900,
                     title: p.title,
                     excerpt: p.excerpt,
                     downloadLink: p.download_url
