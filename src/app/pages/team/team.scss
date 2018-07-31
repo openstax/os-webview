@@ -1,0 +1,74 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.team {
+
+    @include width-up-to($phone-max) {
+        people-tabs,
+        tab-content {
+            display: none;
+        }
+    }
+
+    @include wider-than($phone-max) {
+        accordion-region {
+            display: none;
+        }
+    }
+
+    .hero {
+        background-color: os-color(orange);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: 0;
+
+        .text-content {
+            color: text-color(white);
+            display: grid;
+            // height: 100%;
+            margin-right: 0;
+            max-width: #{$media-content-max / 2};
+            padding: 0 $normal-margin;
+            text-align: left;
+
+            h1 {
+                @include set-font(h1);
+            }
+        }
+
+        .picture-content {
+            background-color: os-color(light-blue);
+            display: grid;
+            max-width: 100rem;
+
+            img {
+                max-width: 100%;
+            }
+        }
+    }
+
+    .team {
+        margin: 0 auto;
+        max-width: $media-content-max;
+        padding: 6rem $normal-margin 8rem;
+        text-align: left;
+        width: 100%;
+
+        .tab {
+            @include set-font(body-large);
+
+            margin: 0 #{2 * $normal-margin} 0 0;
+            padding: 0;
+        }
+    }
+
+    accordion-region {
+
+        > .accordion-group .content-pane {
+            background-color: transparent;
+        }
+
+        .people-tab .card.description::before {
+            left: 50%;
+        }
+    }
+}

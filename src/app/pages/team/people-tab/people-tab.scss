@@ -1,0 +1,119 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.people-tab {
+    display: grid;
+    grid-gap: #{2 * $normal-margin};
+    padding: 4rem 0;
+
+    @include width-between($phone-max, $tablet-max) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include wider-than($tablet-max) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .row-of-three,
+    .row-of-four {
+        display: none;
+        position: absolute;
+    }
+
+    .row-of-three {
+        @include width-between($phone-max, $tablet-max) {
+            display: block;
+        }
+    }
+
+    .row-of-four {
+        @include wider-than($tablet-max) {
+            display: block;
+        }
+    }
+
+    .card {
+        @extend %card;
+
+        background-color: ui-color(white);
+        border-top: 0.4rem solid transparent;
+        padding: 4rem;
+
+        &.open {
+            border-color: os-color(green);
+
+            .image-holder {
+                background-color: os-color(green);
+            }
+        }
+
+        &:not(.open) .image-holder {
+            background-color: ui-color(default);
+        }
+
+        .content {
+            display: grid;
+            grid-gap: 1rem;
+            height: fit-content;
+            place-items: center;
+            text-align: center;
+        }
+
+        .image-holder {
+            border-radius: 50%;
+            height: 12rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            width: 12rem;
+
+            img {
+                margin-left: -20%;
+                margin-top: 10%;
+                max-height: 140%;
+                max-width: 140%;
+            }
+        }
+
+        .name {
+            @include set-font(h4);
+        }
+
+        &.tooltip {
+            position: relative;
+
+            @include wider-than($phone-max) {
+                grid-column-end: span 2;
+            }
+
+            &::before {
+                border: 2rem solid;
+                border-color: transparent transparent ui-color(white);
+                bottom: 100%;
+                content: '';
+                left: 25%;
+                margin-left: -2rem;
+                position: absolute;
+            }
+
+            &.on-right::before {
+                left: 75%;
+            }
+
+            .put-away {
+                @include body-font(1.8rem);
+                color: text-color(helper);
+                justify-self: flex-end;
+
+                &:hover {
+                    color: inherit;
+                }
+            }
+        }
+
+        &.bio {
+            display: grid;
+            grid-gap: 2rem;
+            grid-template-rows: auto 1fr;
+            text-align: left;
+        }
+    }
+}
