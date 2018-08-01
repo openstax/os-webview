@@ -3,9 +3,6 @@
 .bookstore-suppliers {
 
     @include width-up-to($phone-max) {
-        padding-left: $normal-margin;
-        padding-right: $normal-margin;
-
         .larger-screen {
             display: none;
         }
@@ -175,8 +172,14 @@
     }
 
     .cards {
+        background-color: ui-color(default);
         display: grid;
         grid-gap: 2rem;
+        margin-left: -$normal-margin;
+        margin-right: -$normal-margin;
+        max-width: calc(100% + $normal-margin);
+        overflow-x: auto;
+        padding: $normal-margin;
 
         @include wider-than($phone-max) {
             grid-template-columns: 1fr 1fr 1fr;
@@ -198,6 +201,7 @@
             grid-gap: 2rem;
             grid-template-rows: auto auto 1fr auto;
             justify-items: center;
+            min-width: 30rem;
             overflow: hidden;
             padding: 3rem 2rem;
             text-align: center;
