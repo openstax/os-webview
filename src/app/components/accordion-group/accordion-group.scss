@@ -8,8 +8,11 @@
     .accordion-item {
 
         > .control-bar {
+            @include form-border();
+
             align-items: center;
             background-color: ui-color(white);
+            border-radius: 0.2rem;
             display: flex;
             height: 5rem;
             justify-content: space-between;

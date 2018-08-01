@@ -80,15 +80,15 @@ export default class Research extends CMSPageController {
         const accordionItems = [
             {
                 title: 'Alumni',
-                contentComponent: new AlumniTab(() => null)
+                contentComponent: new AlumniTab(this.pageData.alumni)
             },
             {
                 title: 'Current members',
-                contentComponent: new MembersTab(() => this.pageData.people)
+                contentComponent: new MembersTab(() => this.pageData.current_members)
             },
             {
                 title: 'External collaboration',
-                contentComponent: new AlumniTab(() => null)
+                contentComponent: new AlumniTab(this.pageData.external_collaborators)
             }
         ];
 

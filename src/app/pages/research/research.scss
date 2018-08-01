@@ -87,8 +87,8 @@
 
             .clipping {
                 display: grid;
-                max-width: 100%;
                 place-self: end end;
+                width: 100%;
 
                 @include width-up-to($phone-max) {
                     max-width: 70vw;
@@ -100,17 +100,22 @@
                 }
             }
 
-            > :first-child {
+            .globe-clipping {
                 bottom: 0;
-                max-width: 100%;
+                overflow: hidden;
                 position: absolute;
                 right: 0;
                 transform: translateY(35%);
+                width: 100%;
                 z-index: 1;
 
                 @include width-up-to($phone-max) {
                     max-width: 70vw;
-                    transform: translate(10%, 40%);
+                }
+
+                img {
+                    max-height: 150%;
+                    transform: translateX(calc(7% + 2rem));
                 }
             }
         }
@@ -118,7 +123,7 @@
 
     .current-projects,
     .publications {
-        background-color: ui-color(white);
+        background-color: lighten(ui-color(default), 3%);
     }
 
     .content {
@@ -147,6 +152,8 @@
     .card {
         @extend %card;
 
+        background-color: ui-color(white);
+        margin-bottom: 0.5rem;
         overflow: hidden;
 
         h2 {
@@ -187,6 +194,8 @@
     }
 
     .publications {
+        max-width: 100%;
+
         h1 {
             margin: 0;
         }

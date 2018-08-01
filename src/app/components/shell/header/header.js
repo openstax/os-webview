@@ -275,21 +275,6 @@ class Header extends Controller {
         }
     }
 
-    // Left and right arrows go through menu items
-    @on('keydown a[role="menuitem"]:focus')
-    nextOrPrevious(event) {
-        const target = event.target;
-        const isDropdownItem = target.parentNode.classList.contains('dropdown');
-        const container = isDropdownItem ? target.parentNode.parentNode : target.parentNode;
-
-        if (event.keyCode === $.key.left) {
-            container.previousSibling && container.previousSibling.querySelector('[role="menuitem"]').focus();
-        }
-        if (event.keyCode === $.key.right) {
-            container.nextSibling && container.nextSibling.querySelector('[role="menuitem"]').focus();
-        }
-    }
-
     updateHeaderStyle() {
         const height = this.height;
 

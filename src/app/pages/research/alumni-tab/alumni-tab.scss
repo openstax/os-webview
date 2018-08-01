@@ -1,10 +1,15 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .alumni-tab {
-    display: grid;
-    grid-gap: 3rem;
-    grid-template-columns: 1fr 1fr 1fr;
+    max-width: 100%;
     padding: 4rem 0;
+
+    .card-container {
+        display: grid;
+        grid-gap: 3rem;
+        grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
+        width: 100%;
+    }
 
     .entry {
         @extend %card;

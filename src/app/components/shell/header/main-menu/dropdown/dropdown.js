@@ -27,7 +27,6 @@ export default class Dropdown extends Controller {
         return {
             isOpen: this.isOpen,
             selectedIndex: this.selectedIndex,
-            dropdownUrl: this.props.dropdownUrl,
             dropdownLabel: this.props.dropdownLabel,
             items: this.props.items
         };
