@@ -1,3 +1,4 @@
+import $ from '~/helpers/$';
 import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 import ContentGroup from '~/components/content-group/content-group';
@@ -96,7 +97,7 @@ export default class Details extends CMSPageController {
         document.body.classList.remove('page-loading');
         document.body.classList.add('page-loaded');
         document.title = `${this.pageData.title} - OpenStax`;
-        const polish = (/^Fizyka/).test(this.pageData.title);
+        const polish = $.isPolish(this.pageData.title);
         const tabLabels = [polish ? 'Szczegóły książki' : 'Book details'];
         let selectedTab = decodeURIComponent(window.location.search.replace('?', '')) || tabLabels[0];
         const detailsTabData = () => {

@@ -20,12 +20,8 @@
                     tabindex="{model.submenu === '' ? 0 : -1}">
                     <span class="fas fa-cloud-download-alt"></span>
                     <span class="text">
-                        <if condition="model.slug.substr(-6) === 'polska'">
-                            {' Pobierz książkę'}
-                        <else>
-                            {' Download a PDF'}
-                            <if condition="model.comingSoon">{' sample'}</if>
-                        </if>
+                        {model.pdfText}
+                        <if condition="model.comingSoon">{model.sampleText}</if>
                     </span>
                 </a>
             </div>

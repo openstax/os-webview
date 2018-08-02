@@ -1,3 +1,4 @@
+import $ from '~/helpers/$';
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './book.html';
@@ -11,7 +12,7 @@ export default class Book extends Controller {
             slug: bookInfo.slug,
             detailsOpenClass: '',
             title: bookInfo.title,
-            detailsLinkText: bookInfo.slug.substr(-6) === 'polska' ?
+            detailsLinkText: $.isPolish(bookInfo.slug) ?
                 'szczegóły i zasoby' : 'details & resources'
         };
         this.view = {
@@ -24,7 +25,7 @@ export default class Book extends Controller {
         if (this.bookInfo.coming_soon) {
             this.el.classList.add('coming-soon');
         }
-        if (this.bookInfo.slug.substr(-6) === 'polska') {
+        if ($.isPolish(this.bookInfo.slug)) {
             this.el.classList.add('polish');
         }
     }
