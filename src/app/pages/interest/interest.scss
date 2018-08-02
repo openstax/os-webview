@@ -1,78 +1,40 @@
 @import 'pattern-library/core/pattern-library/headers';
-@import 'pattern-library/core/pattern-library/headers';
 
-.interest-form {
+.interest-form-v2 {
+    background-color: ui-color(white);
+
     .top-of-form {
+        margin-bottom: 6rem;
         padding-top: inherit;
+    }
+
+    [data-page="0"] > div,
+    [data-page="0"]:not([hidden]) ~ .button-row {
+        margin: auto;
+        max-width: 47rem;
+        width: 100%;
+    }
+
+    .page-2 {
+        display: grid;
+        grid-gap: 4rem;
+
+        > .form-input > .control-group {
+            margin-bottom: 0;
+        }
     }
 
     .text-content {
         @extend %text-content;
     }
 
-    .subhead {
-        padding-bottom: 2rem;
-    }
-
-    [data-id="selectedRole"] {
-        display: flex;
-        margin: auto;
-        padding: 4rem 0;
-        width: 47rem;
-
-        > label {
-            flex-basis: 100%;
-        }
-    }
-
-    .grouping {
-        align-items: flex-start;
-        width: 47rem;
-    }
-
-    h2 {
-        @include set-font(h4);
-
-        margin: 0;
-    }
-
-    .flexrow {
-        display: grid;
-        grid-gap: 1rem;
-        grid-template-columns: repeat(2, auto) 1fr;
-        margin-top: 4rem;
-    }
-
-    .form-checkboxgroup,
-    .form-input > .control-group {
-        margin-bottom: 3.5rem;
-        margin-top: $normal-margin;
-    }
-
-    button {
-        @extend %button;
-
-        &.primary {
-            @extend %primary;
-        }
-
-        &.secondary {
-            @extend %secondary;
-        }
-    }
-
     .hint {
+        @include set-font(helper-label);
+        color: text-color(helper);
         font-style: italic;
     }
 
-    .form-checkboxgroup > label + :not(label),
-    .form-radiogroup > label + :not(label) {
-        margin-top: $normal-margin;
-    }
-
-    [data-id="form"] {
-        display: block;
-        min-height: 20rem;
-        padding-bottom: 8rem;
+    [type="number"] {
+        max-width: 20rem;
     }
 }
