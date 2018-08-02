@@ -1,43 +1,36 @@
 <template args="model">
-    <div class="hero w-cards">
-        <div class="row container-wrap">
-            <div class="overlay">
-                <div class="text-block">
-                    <h1>{model.tagline}</h1>
+    <section class="who">
+        <div class="content">
+            <div class="text-block">
+                <h1>{model.whoHeadline}</h1>
+                <div data-html="whoBlurb" skip="true"></div>
+            </div>
+        </div>
+        <img src="{model.whoImage}">
+    </section>
+    <section class="what">
+        <div class="content">
+            <h1>{model.whatHeadline}</h1>
+            <div data-html="whatBlurb" skip="true"></div>
+            <div class="cards">
+                <div each="card in model.cards" class="card">
+                    <img src="{card.image}" alt="">
+                    <div class="content">
+                        {card.text}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
-
-    <div class="meta">
+    </section>
+    <section class="where content">
         <div class="text-content">
-            <h2>{model.introHeading}</h2>
-            <div data-html="introParagraph" skip="true"></div>
+            <h1>{model.whereHeadline}</h1>
+            <div data-html="whereBlurb" skip="true"></div>
         </div>
-    </div>
-
-    <div class="boxed">
-        <div each="group in model.bios" role="group" class="{group.name === 'team' ? 'our-team' : 'strategic-advisors'}">
-            <h2>{group.name === 'team' ? model.ourTeamHeading : 'Strategic Advisors'}</h2>
-            <div class="headshots">
-                <div each="member in group.members" class="headshot{model.tapped === member.id ? ' tapped' : ''}{member.hidden ? ' hidden' : ''}" data-id="{member.id}">
-                    <div class="picture-area{' text-'+member.textColor+' bg-'+member.bgColor}{member.image ? ' has-picture' : ''}"
-                     aria-describedby="{member.name}">
-                        <img if="member.image" src="{member.image}" alt="photo of {member.name}">
-                        <div class="name">{member.name}</div>
-                    </div>
-                    <div id="{member.name}" class="details" role="tooltip"
-                     aria-hidden="{model.tapped ? false : true}">
-                        <button class="btn dismiss" tabindex="1"><i class="fa fa-times"></i></button>
-                        <div class="name">{member.name}</div>
-                        <div if="member.position" class="title">{member.position}</div>
-                        <div class="description">{member.description}</div>
-                    </div>
-                </div>
-                <div each="spaceholder in [1,2,3]" class="headshot hidden"></div>
-            </div>
+    </section>
+    <div class="map">
+        <div class="content">
+            <img src="{model.map}">
         </div>
     </div>
 </template>

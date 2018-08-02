@@ -1,603 +1,117 @@
-@import 'mixins/responsive';
-@import 'mixins/triangle';
-@import 'mixins/halo';
 @import 'pattern-library/core/pattern-library/headers';
 
-$breakpoint-1: 908px;
-$breakpoint-2: 806px;
-$hero-break-width: 880px;
+$offset-bottom-section: 12rem;
 
-@mixin phone {
-    @media (max-width: 500px) {
-        @content;
+.about {
+
+    .content {
+        @extend %content;
     }
-}
 
-@mixin tablet {
-    @media (min-width: 501px) {
-        @content;
-    }
-}
+    .who {
+        background-color: rgb(191, 222, 251);
+        display: grid;
+        max-width: 100%;
 
-@mixin desktop {
-    @media (min-width: 770px) {
-        @content;
-    }
-}
-
-@include phone {
-    .frozen {
-        overflow: hidden;
-    }
-}
-
-
-.about-page {
-
-    .hero {
-        align-items: center;
-        background-color: os-color(blue);
-        background-image: url('/images/about/banner-about.jpg');
-        background-repeat: no-repeat;
-        background-size: cover;
-        display: flex;
-        height: 60rem;
-        justify-content: center;
-        overflow: hidden;
-        position: relative;
-        text-align: left;
-        width: 100%;
-
-        @media (max-width: $hero-break-width) {
-            min-height: 0;
+        @include width-between($phone-max, $media-content-max) {
+            grid-gap: 2rem;
+            grid-template-columns: 1fr 1fr;
         }
 
-        @include collapsed {
-            height: calc(100vh - 6rem);
-            max-height: 53rem;
+        @include wider-than($media-content-max) {
+            grid-template-columns: minmax(45vw, 3fr) 4fr;
         }
 
-        > div {
-            align-items: stretch;
-            display: flex;
-            width: 100%;
-        }
+        .content {
+            @include set-font(body-large);
 
-        .container-wrap {
-            display: flex;
-            flex-flow: column wrap;
-            margin: 0 auto;
-            max-width: $content-max;
-            width: 100%;
-            z-index: 1;
-
-            @include collapsed {
-                align-items: stretch;
-                flex-flow: row wrap;
-            }
-
-        }
-
-        .overlay {
-            background-color: rgba(saturate(os-color(blue), 10%), 0.85);
-            color: text-color(white);
-            display: flex;
-            justify-content: flex-end;
-            padding: 4rem;
+            align-items: center;
+            display: grid;
+            padding: 0 $normal-margin 3rem;
 
             @include wider-than($media-content-max) {
-                padding-left: calc(-61rem + 55%);
+                margin-left: calc(50vw - 60rem);
+                max-width: 77rem;
+                width: calc(10vw + 50rem);
             }
-
-            @include collapsed {
-                width: 100%;
-            }
-
-            .text-block {
-                flex-basis: 100%;
-            }
-
-            h1 {
-                color: inherit;
-
-                @include desktop {
-                    text-align: center;
-                }
-            }
-
-            .blurb {
-                @include set-font(body-large);
-
-                padding: 1em 0;
-            }
-        }
-    }
-
-    &.hidden {
-        display: none;
-    }
-
-    .strips {
-        margin: 0;
-    }
-
-    .meta {
-        @include set-font(body-large);
-
-        background-color: ui-color(white);
-        padding: 8rem 0;
-
-        @include desktop {
-            text-align: center;
-        }
-
-        h2 {
-            margin: 0;
-        }
-    }
-
-    .our-team,
-    .strategic-advisors {
-        width: 100%;
-    }
-
-    h2 {
-        margin-bottom: 2rem;
-
-        @include desktop {
-            text-align: center;
-        }
-    }
-
-    .headshots {
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: space-between;
-        position: relative;
-
-        .headshot {
-            cursor: pointer;
-            position: relative;
-
-            .overlay {
-                bottom: 0;
-                height: 100%;
-                left: 0;
-                position: absolute;
-                right: 0;
-                top: 0;
-                width: 100%;
-            }
-
-            &.hidden {
-                height: 0;
-                visibility: hidden;
-            }
-        }
-    }
-
-    .dismiss {
-        @include set-font(h3);
-
-        background-color: transparent;
-        color: inherit;
-        position: absolute;
-        right: 0.5rem;
-        top: 0.5rem;
-    }
-
-    .details {
-        background-color: ui-color(white);
-        bottom: 0;
-        box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(94, 96, 98, 0.1);
-        cursor: default;
-        height: 0;
-        left: 0;
-        opacity: 0;
-        overflow: hidden;
-        position: fixed;
-        right: 0;
-        top: 6rem;
-        transform: translate3d(0, -1rem, 0);
-        transition: opacity 0.2s, transform 0.2s;
-        width: 0;
-        z-index: 999;
-
-        &::before {
-            border: 2rem solid;
-            border-color: transparent transparent ui-color(white);
-            bottom: 100%;
-            content: '';
-            left: 50%;
-            margin-left: -2rem;
-            position: absolute;
-        }
-    }
-
-    &.no-touch .headshot:hover:nth-child(3n-2) .details,
-    .headshot.tapped:nth-child(3n-2) .details {
-        @include tablet {
-            left: 0;
-            transform: translate3d(0, 0, 0);
-
-            &::before {
-                left: 5rem;
-                right: auto;
-            }
-        }
-    }
-
-    &.no-touch .headshot:hover:nth-child(3n+1) .details,
-    .headshot.tapped:nth-child(3n+1) .details {
-        @include desktop {
-            left: 0;
-            transform: translate3d(0, 0, 0);
-
-            &::before {
-                left: 5rem;
-                right: auto;
-            }
-        }
-    }
-
-    &.no-touch .headshot:hover:nth-child(3n) .details,
-    .headshot.tapped:nth-child(3n) .details {
-        @include tablet {
-            left: auto;
-            right: 0;
-            transform: translate3d(0, 0, 0);
-
-            &::before {
-                left: auto;
-                right: 5rem;
-            }
-        }
-
-        @include desktop {
-            left: auto;
-            right: 0;
-            transform: translate3d(0, 0, 0);
-
-            &::before {
-                left: auto;
-                right: 4rem;
-            }
-        }
-    }
-
-    &.no-touch .headshot:hover:nth-child(4n) .details,
-    &.no-touch .headshot:hover:nth-child(4n-1) .details,
-    .headshot.tapped:nth-child(4n) .details,
-    .headshot.tapped:nth-child(4n-1) .details {
-        @include desktop {
-            left: auto;
-            right: 0;
-            transform: translate3d(0, 0, 0);
-
-            &::before {
-                left: auto;
-                right: 5rem;
-            }
-        }
-    }
-
-    &.no-touch .headshot:hover:nth-child(4n-3) .details,
-    &.no-touch .headshot:hover:nth-child(4n-2) .details,
-    .headshot.tapped:nth-child(4n-3) .details,
-    .headshot.tapped:nth-child(4n-2) .details {
-        @include desktop {
-            left: 0;
-            right: auto;
-            transform: translate3d(0, 0, 0);
-
-            &::before {
-                left: 5rem;
-                right: auto;
-            }
-        }
-    }
-
-    // min-width 955px 5per row
-    &.no-touch .headshot:hover:nth-child(5n) .details,
-    &.no-touch .headshot:hover:nth-child(5n-1) .details,
-    .headshot.tapped:nth-child(5n) .details,
-    .headshot.tapped:nth-child(5n-1) .details {
-        @media (min-width: 955px) {
-            left: auto;
-            right: 0;
-            transform: translate3d(0, 0, 0);
-
-            &::before {
-                left: auto;
-                right: 5rem;
-            }
-        }
-    }
-
-    &.no-touch .headshot:hover:nth-child(5n+1) .details,
-    &.no-touch .headshot:hover:nth-child(5n+2) .details,
-    .headshot.tapped:nth-child(5n+1) .details,
-    .headshot.tapped:nth-child(5n+2) .details {
-        @media (min-width: 955px) {
-            left: 0;
-            right: auto;
-            transform: translate3d(0, 0, 0);
-
-            &::before {
-                left: 5rem;
-                right: auto;
-            }
-        }
-    }
-
-    // min-width 1140px 6 per row
-    &.no-touch .headshot:hover:nth-child(6n) .details,
-    &.no-touch .headshot:hover:nth-child(6n-1) .details,
-    .headshot.tapped:nth-child(6n) .details,
-    .headshot.tapped:nth-child(6n-1) .details {
-        @media (min-width: 1140px) {
-            left: auto;
-            right: 0;
-            transform: translate3d(0, 0, 0);
-
-            &::before {
-                left: auto;
-                right: 5rem;
-            }
-        }
-    }
-
-    &.no-touch .headshot:hover:nth-child(6n+1) .details,
-    &.no-touch .headshot:hover:nth-child(6n+2) .details,
-    .headshot.tapped:nth-child(6n+1) .details,
-    .headshot.tapped:nth-child(6n+2) .details {
-        @media (min-width: 1140px) {
-            left: 0;
-            right: auto;
-            transform: translate3d(0, 0, 0);
-
-            &::before {
-                left: 5rem;
-                right: auto;
-            }
-        }
-    }
-
-    .headshot {
-        display: flex;
-        flex: 0 0 100%;
-        flex-flow: column nowrap;
-        height: 25rem;
-        justify-content: space-between;
-
-        @media (min-width: 400px) {
-            flex-basis: 48%;
-        }
-
-        @include tablet {
-            flex-basis: 31.5%;
-        }
-
-        @include desktop {
-            flex-basis: 23.5%;
-        }
-
-        @media (min-width: 955px) {
-            flex-basis: 18.5%;
-        }
-
-        @media (min-width: 1140px) {
-            flex-basis: 15%;
-        }
-
-        &.tapped .details {
-            height: 100vh;
-            opacity: 1;
-            padding: 3rem 0;
-            transform: translate3d(0, 0, 0);
-            width: 100%;
-        }
-
-        .remover {
-            @include absolute(top 1.5rem right 1.5rem);
-        }
-    }
-
-    &.no-touch .headshot:hover .details,
-    .headshot.tapped .details {
-        @include tablet {
-            bottom: auto;
-            display: flex;
-            flex-flow: column nowrap;
-            height: auto;
-            left: -109%;
-            margin-top: 3rem;
-            opacity: 1;
-            overflow: visible;
-            padding: 3rem 0;
-            position: absolute;
-            right: auto;
-            top: 18rem;
-            transform: translate3d(0, 0, 0);
-            width: 100%;
-            width: calc(100vw - 3rem);
-        }
-
-        @include desktop {
-            left: 50%;
-            transform: translate3d(-50%, 0, 0);
-            width: 40rem;
-        }
-
-        .name {
-            @include set-font(h3);
-
-            color: os-color(orange);
-            margin-bottom: 0.5rem;
-            padding: 0 3rem;
-        }
-
-        .title {
-            @include set-font(helper-label);
-
-            color: text-color(helper);
-            padding: 0 3rem;
-            text-transform: uppercase;
-        }
-
-        .description {
-            height: calc(100% - 13.7rem);
-            margin: 1.5rem 0 0;
-            overflow-y: auto;
-            padding: 0 3rem;
-            transform: translate3d(0, 0, 0);
-
-            @include tablet {
-                height: auto;
-            }
-        }
-    }
-
-    .picture-area {
-        box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(94, 96, 98, 0.1);
-        height: 100%;
-        margin-bottom: 2.5rem;
-        overflow: hidden;
-        position: relative;
-
-        &.has-picture {
-            @include halo();
-        }
-
-        &.text-red .name {
-            color: os-color(red);
-        }
-
-        &.text-orange .name {
-            color: os-color(orange);
-        }
-
-        &.text-yellow .name {
-            color: os-color(yellow);
-        }
-
-        &.text-gold .name {
-            color: os-color(gold);
-        }
-
-        &.text-green .name {
-            color: os-color(green);
-        }
-
-        &.text-deep-green .name {
-            color: os-color(deep-green);
-        }
-
-        &.text-turquoise .name {
-            color: os-color(medium-blue);
-        }
-
-        &.text-cyan .name {
-            color: os-color(light-blue);
-        }
-
-        &.text-blue .name {
-            color: os-color(blue);
-        }
-
-        &.text-gray .name {
-            color: os-color(gray);
-        }
-
-        &.text-white .name {
-            color: text-color(white);
-        }
-
-        &.bg-red {
-            background-color: os-color(red);
-        }
-
-        &.bg-orange {
-            background-color: os-color(orange);
-        }
-
-        &.bg-yellow {
-            background-color: os-color(yellow);
-        }
-
-        &.bg-gold {
-            background-color: os-color(gold);
-        }
-
-        &.bg-green {
-            background-color: os-color(green);
-        }
-
-        &.bg-deep-green {
-            background-color: os-color(deep-green);
-        }
-
-        &.bg-turquoise {
-            background-color: os-color(medium-blue);
-        }
-
-        &.bg-cyan {
-            background-color: os-color(light-blue);
-        }
-
-        &.bg-blue {
-            background-color: os-color(blue);
-        }
-
-        &.bg-gray {
-            background-color: os-color(gray);
         }
 
         img {
-            bottom: -1rem;
-            height: 80%;
-            position: absolute;
-            right: -8.5rem;
-            z-index: 1;
-
-            @include desktop {
-                left: -1.5rem;
-                right: auto;
-            }
+            margin-top: 10rem;
+            max-width: 100%;
+            place-self: end end;
         }
+    }
 
-        .name {
+    .what {
+        h1 {
             @include set-font(h2);
+        }
 
-            left: -0.2rem;
-            line-height: 3.6rem;
-            position: absolute;
-            top: -0.5rem;
-            word-wrap: break-word;
+        [data-html="whatBlurb"] {
+            @include set-font(body-large);
+
+            max-width: #{$text-content-max - 2 * $normal-margin};
         }
     }
 
-    .strategic-advisors .headshot .picture-area img {
-        bottom: -6%;
-        height: auto;
-        left: auto;
-        max-height: 92%;
-        max-width: 100%;
-        right: 0;
-    }
+    .cards {
+        display: grid;
+        grid-gap: 2rem;
+        grid-template-columns: repeat(4, 26rem);
+        overflow-x: auto;
+        padding: 4rem 0 2rem;
 
-    &.no-touch .strategic-advisors .headshot:hover .details,
-    .strategic-advisors .headshot.tapped .details {
-        @include tablet {
-            bottom: 100%;
-            top: auto;
+        @include width-between($phone-max, $tablet-max) {
+            grid-template-columns: 26rem 26rem;
+        }
 
-            &::before {
-                border-color: ui-color(white) transparent transparent;
-                bottom: auto;
-                top: 100%;
+        .card {
+            @extend %card;
+
+            display: grid;
+            grid-template-rows: 15rem auto;
+            overflow: hidden;
+
+            img {
+                place-self: center;
+                width: 100%;
+            }
+
+            .content {
+                background-color: ui-color(white);
+                padding: 4rem;
             }
         }
     }
 
+    .where {
+        align-items: flex-start;
+        padding: 0 0 $offset-bottom-section;
+
+        .text-content {
+            align-items: flex-start;
+            margin: 0;
+            text-align: left;
+        }
+
+        h1 {
+            @include set-font(h2);
+        }
+    }
+
+    .map {
+        background-color: ui-color(white);
+        padding-bottom: 8rem;
+
+        .content {
+            margin-top: -$offset-bottom-section;
+        }
+
+        img {
+            box-shadow: $card-shadow;
+            margin-top: 4rem;
+            max-width: 100%;
+        }
+    }
 }
