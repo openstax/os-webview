@@ -61,7 +61,7 @@ export default class MainMenu extends Controller {
             () => ({
                 dropdownLabel: 'What we do',
                 items: [
-                    {url: '/about-new', label: 'About Us'},
+                    {url: '/about', label: 'About Us'},
                     {url: '/team', label: 'Team'},
                     {url: '/research', label: 'Research'}
                 ]
