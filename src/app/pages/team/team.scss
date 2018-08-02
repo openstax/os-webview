@@ -18,16 +18,18 @@
     .hero {
         background-color: os-color(orange);
         display: grid;
-        grid-template-columns: 1fr 1fr;
         padding: 0;
+
+        @include wider-than($phone-max) {
+            grid-template-columns: 1fr 1fr;
+        }
 
         .text-content {
             color: text-color(white);
             display: grid;
-            // height: 100%;
             margin-right: 0;
             max-width: #{$media-content-max / 2};
-            padding: 0 $normal-margin;
+            padding: 4rem;
             text-align: left;
 
             h1 {
@@ -36,6 +38,7 @@
         }
 
         .picture-content {
+            align-items: stretch;
             background-color: os-color(light-blue);
             display: grid;
             max-width: 100rem;
@@ -49,9 +52,13 @@
     .team {
         margin: 0 auto;
         max-width: $media-content-max;
-        padding: 6rem $normal-margin 8rem;
+        padding: 2rem $normal-margin 4rem;
         text-align: left;
         width: 100%;
+
+        @include wider-than($phone-max) {
+            padding: 6rem $normal-margin 8rem;
+        }
 
         .tab {
             @include set-font(body-large);

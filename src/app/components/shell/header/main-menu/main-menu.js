@@ -14,7 +14,8 @@ export default class MainMenu extends Controller {
         };
         this.regions = {
             subjectsDropdown: '.subjects-dropdown',
-            technologyDropdown: '.technology-dropdown'
+            technologyDropdown: '.technology-dropdown',
+            whatWeDoDropdown: '.what-we-do-dropdown'
         };
         this.css = `/app/components/shell/header/main-menu/main-menu.css?${VERSION}`;
         this.model = model;
@@ -35,7 +36,6 @@ export default class MainMenu extends Controller {
 
         this.regions.subjectsDropdown.attach(new Dropdown(
             () => ({
-                dropdownUrl: '/subjects',
                 dropdownLabel: 'Subjects',
                 items: [
                     {url: '/subjects', label: 'All'},
@@ -49,12 +49,21 @@ export default class MainMenu extends Controller {
         ));
         this.regions.technologyDropdown.attach(new Dropdown(
             () => ({
-                dropdownUrl: '/technology',
                 dropdownLabel: 'Technology',
                 items: [
                     {url: '/technology', label: 'Technology Options'},
                     {url: '/openstax-tutor', label: 'About OpenStax Tutor'},
                     {url: '/partners', label: 'OpenStax Partners'}
+                ]
+            })
+        ));
+        this.regions.whatWeDoDropdown.attach(new Dropdown(
+            () => ({
+                dropdownLabel: 'What we do',
+                items: [
+                    {url: '/about', label: 'About Us'},
+                    {url: '/team', label: 'Team'},
+                    {url: '/research', label: 'Research'}
                 ]
             })
         ));
