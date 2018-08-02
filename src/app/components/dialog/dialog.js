@@ -55,7 +55,9 @@ class Dialog extends Controller {
                 const focusableItems = Array.from(this.props.content.el.querySelectorAll($.focusable));
                 const first = focusableItems.find((i) => i.offsetParent !== null);
 
-                first.focus();
+                if (first) {
+                    first.focus();
+                }
             }, 20);
         });
     }

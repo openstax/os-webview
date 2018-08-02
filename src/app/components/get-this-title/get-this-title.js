@@ -15,9 +15,16 @@ export default class GetThisTitle extends Controller {
 
     init(data) {
         const polish = (/^Fizyka/).test(data.title);
+        const isHighSchool = highSchoolSlugs.includes(data.slug);
+        // It may or may not come in as an array
+        const arrayOfBookstoreContent = data.bookstore_content ?
+            [].concat(data.bookstore_content)
+                .filter((entry) => entry.heading)
+                .sort((a, b) => a.button_url ? 1 : -1) :
+            [];
 
         this.template = polish ? polishTemplate : template;
-        this.css = `/app/components/get-this-title-new/get-this-title.css?${VERSION}`;
+        this.css = `/app/components/get-this-title/get-this-title.css?${VERSION}`;
         this.regions = {
             submenu: '.submenu'
         };
@@ -25,9 +32,11 @@ export default class GetThisTitle extends Controller {
             classes: ['get-this-title']
         };
 
-        const isHighSchool = highSchoolSlugs.includes(data.slug);
-        const printLink = [data.amazon_link, data.amazon_coming_soon, data.bookstore_link,
-            data.bookstore_coming_soon, isHighSchool].find((x) => x);
+        const printLink = [
+            data.amazon_link,
+            arrayOfBookstoreContent.some((obj) => obj.button_url),
+            isHighSchool
+        ].some((x) => x);
 
         this.model = {
             includeTOC: data.includeTOC,
@@ -42,36 +51,22 @@ export default class GetThisTitle extends Controller {
             bookshareLink: data.bookshare_link,
             pdfLink: (data.high_resolution_pdf_url || data.low_resolution_pdf_url),
             printLink,
-            isHighSchool,
             submenu: '',
             hiRes: data.high_resolution_pdf_url,
             loRes: data.low_resolution_pdf_url,
-            amazon: {
-                link: data.amazon_link,
-                comingSoon: data.amazon_coming_soon,
-                price: data.amazon_price.toLocaleString('en-US', {
-                    style: 'currency',
-                    currency: 'USD'
-                })
-            },
-            bookstore: {
-                link: data.bookstore_content && data.bookstore_content.link,
-                comingSoon: data.bookstore_coming_soon
-            },
             slug: data.slug
         };
-    }
-
-    onLoaded() {
         this.printCopyContent = new OrderPrintCopy({
-            individualLink: this.model.amazon.link,
-            amazonPrice: this.model.amazon.price,
-            bookstoreLink: this.model.bookstore.link,
-            bulkLink: this.model.isHighSchool ? '/bulk-order?this.model.slug' : null
+            amazonLink: data.amazon_link,
+            amazonPrice: data.amazon_price,
+            bulkLink: isHighSchool ? '/bulk-order?this.model.slug' : null,
+            bookstoreContent: arrayOfBookstoreContent
         }, () => {
             shell.hideDialog();
         });
+    }
 
+    onLoaded() {
         if (this.model.tableOfContents) {
             this.tocContent = new TocDialog({
                 tableOfContents: this.model.tableOfContents,

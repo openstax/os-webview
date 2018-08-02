@@ -20,11 +20,12 @@ dialog {
     .title-bar {
         @include set-font(h3);
 
+        border-bottom: thin solid ui-color(form-border);
         display: flex;
         justify-content: space-between;
 
         @include width-up-to($phone-max) {
-            align-items: flex-end;
+            align-items: center;
             background-color: transparent;
             min-height: 7rem;
             padding: 1rem 1rem 0 3rem;

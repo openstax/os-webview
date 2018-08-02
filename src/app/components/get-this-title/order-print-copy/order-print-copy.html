@@ -1,0 +1,51 @@
+<template args="model">
+    <div class="phone-version">
+        <div class="boxes boxes-{model.bookstoreContent.length}">
+            <a each="entry in model.bookstoreContent"
+                class="box"
+                href="{entry.button_url || model.amazonLink}"
+            >
+                <h1>
+                    <if condition="entry.button_url">
+                        <span class="fa fa-users"></span>
+                    <else>
+                        <span class="fa fa-user"></span>
+                    </if>
+                    {' '}{entry.heading}
+                </h1>
+                <div data-html="bookstoreContent[{$item}].content" skip="true"></div>
+            </a>
+        </div>
+    </div>
+    <div class="larger-version">
+        <div class="boxes boxes-{model.bookstoreContent.length}">
+            <div each="entry in model.bookstoreContent" class="box">
+                <h1>
+                    <if condition="entry.button_url">
+                        <span class="fa fa-users"></span>
+                    <else>
+                        <span class="fa fa-user"></span>
+                    </if>
+                    {' '}{entry.heading}
+                </h1>
+                <div data-html="bookstoreContent[{$item}].content" skip="true"></div>
+                <if condition="entry.button_url">
+                    <a class="btn {$item < 2 ? 'secondary' : ''}"
+                        href="entry.button_url"
+                    >
+                        {entry.button_text}
+                    </a>
+                <else>
+                    <a class="btn primary"
+                        href="{model.amazonLink}"
+                    >
+                        {entry.button_text}
+                    </a>
+                    <div if="model.amazonPrice" class="info">
+                        ${model.amazonPrice} from seller {'"OpenStax"'}
+                    </div>
+                </if>
+            </div>
+        </div>
+    </div>
+</template>

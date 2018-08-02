@@ -87,7 +87,7 @@ class CMSPageController extends Controller {
         for (const prop in data) {
             if (data.hasOwnProperty(prop) && Array.isArray(data[prop])) {
                 const arr = data[prop];
-                const contentItem = arr.find((e) => e.type === 'content');
+                const contentItem = arr.filter((e) => e.type === 'content').length === 1;
 
                 if (contentItem) {
                     data[prop] = {};

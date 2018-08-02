@@ -2,6 +2,8 @@
 
 .order-print-copy {
 
+    background-color: ui-color(default);
+
     .larger-version {
         display: none;
 
@@ -73,9 +75,13 @@
         text-decoration: none;
 
         @include wider-than($phone-max) {
-            grid-template-rows: auto 5.7rem auto 1fr;
+            grid-template-rows: auto 6.2rem auto 1fr;
             max-width: 30rem;
             padding: 2rem;
+        }
+
+        p {
+            margin: 0;
         }
     }
 
