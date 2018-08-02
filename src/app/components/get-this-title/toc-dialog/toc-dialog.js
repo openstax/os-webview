@@ -11,7 +11,7 @@ export default class TocDialog extends Controller {
         this.view = {
             tag: 'toc-dialog'
         };
-        this.css = `/app/components/get-this-title-new/toc-dialog/toc-dialog.css?${VERSION}`;
+        this.css = `/app/components/get-this-title/toc-dialog/toc-dialog.css?${VERSION}`;
         this.regions = {
             toc: '.toc-region'
         };

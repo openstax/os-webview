@@ -1,4 +1,5 @@
 import VERSION from '~/version';
+import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 import {Controller} from 'superb.js';
 import {description as template} from './order-print-copy.html';
@@ -12,10 +13,7 @@ export default class OrderPrintCopy extends Controller {
             tag: 'nav',
             classes: ['order-print-copy']
         };
-        this.css = `/app/components/get-this-title-new/order-print-copy/order-print-copy.css?${VERSION}`;
-        this.model.boxCount = ['individualLink', 'bookstoreLink', 'bulkLink'].reduce((accum, key) => {
-            return accum + (this.model[key] ? 1 : 0);
-        }, 0);
+        this.css = `/app/components/get-this-title/order-print-copy/order-print-copy.css?${VERSION}`;
         this.onNavigate = onNavigate;
     }
 
@@ -24,6 +22,10 @@ export default class OrderPrintCopy extends Controller {
         window.requestAnimationFrame(() => {
             this.onNavigate();
         });
+    }
+
+    onLoaded() {
+        $.insertHtml(this.el, this.model);
     }
 
 }
