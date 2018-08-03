@@ -32,7 +32,7 @@ export default class PhoneView extends Controller {
         /* eslint complexity: 0 */
         $.insertHtml(this.el, this.props);
         this.regions.getTheBook.append(new GetThisTitle(this.props.bookInfo));
-        const polish = (/^Fizyka/).test(this.props.bookTitle);
+        const polish = $.isPolish(this.props.bookTitle);
         const accordionItems = [
             {
                 title: polish ? 'Szczegóły książki' : 'Book details',

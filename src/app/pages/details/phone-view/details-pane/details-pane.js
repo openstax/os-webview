@@ -23,7 +23,7 @@ export default class DetailsPane extends Controller {
 
     onLoaded() {
         $.insertHtml(this.el, this.model);
-        const polish = (/^Fizyka/).test(this.model.title);
+        const polish = $.isPolish(this.model.title);
         const authorComponent = new AuthorList({
             polish,
             allSenior: this.model.allSenior,

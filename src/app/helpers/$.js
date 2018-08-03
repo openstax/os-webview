@@ -8,6 +8,8 @@ $.isTouchDevice = () => (
 
 $.isNode = () => (typeof process !== 'undefined') && (process.release.name === 'node');
 
+$.isPolish = (titleOrSlug) => (/fizyka/i).test(titleOrSlug) || (/polska/i).test(titleOrSlug);
+
 $.focusable = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
 $.booleanAttribute = (whether) => whether ? '' : null;

@@ -8,7 +8,7 @@ export default class ErrataPane extends Controller {
 
     init(model) {
         this.model = model;
-        this.template = (/^Fizyka/).test(model.title) ? templatePolish : template;
+        this.template = $.isPolish(model.title) ? templatePolish : template;
         this.view = {
             classes: ['errata-pane']
         };

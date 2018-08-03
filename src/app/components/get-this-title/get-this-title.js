@@ -14,17 +14,22 @@ import {description as polishTemplate} from './get-this-title-polish.html';
 export default class GetThisTitle extends Controller {
 
     init(data) {
-        const polish = (/^Fizyka/).test(data.title);
+        const polish = $.isPolish(data.title);
         const isHighSchool = highSchoolSlugs.includes(data.slug);
         // It may or may not come in as an array
-        const arrayOfBookstoreContent = data.bookstore_content ?
-            [].concat(data.bookstore_content)
-                .filter((entry) => entry.heading)
-                .sort((a, b) => a.button_url ? 1 : -1) :
-            [];
+        const ensureArray = (content) => {
+            if (content) {
+                return []
+                    .concat(data.bookstore_content)
+                    .filter((entry) => entry.heading)
+                    .sort((a, b) => a.button_url ? 1 : -1);
+            }
+            return [];
+        };
+        const arrayOfBookstoreContent = ensureArray(data.bookstore_content);
 
         this.template = polish ? polishTemplate : template;
-        this.css = `/app/components/get-this-title/get-this-title.css?${VERSION}`;
+        this.css = `/app/components/get-this-title-new/get-this-title.css?${VERSION}`;
         this.regions = {
             submenu: '.submenu'
         };
@@ -38,7 +43,7 @@ export default class GetThisTitle extends Controller {
             isHighSchool
         ].some((x) => x);
 
-        this.model = {
+        this.model = () => ({
             includeTOC: data.includeTOC,
             tocHiddenAttribute: '',
             tableOfContents: data.table_of_contents,
@@ -49,13 +54,15 @@ export default class GetThisTitle extends Controller {
             webviewLink: data.webview_link,
             comingSoon: data.coming_soon,
             bookshareLink: data.bookshare_link,
+            pdfText: polish ? ' Pobierz książkę' : ' Download a PDF',
             pdfLink: (data.high_resolution_pdf_url || data.low_resolution_pdf_url),
+            sampleText: polish ? ' przykład' : ' sample',
             printLink,
             submenu: '',
             hiRes: data.high_resolution_pdf_url,
             loRes: data.low_resolution_pdf_url,
             slug: data.slug
-        };
+        });
         this.printCopyContent = new OrderPrintCopy({
             amazonLink: data.amazon_link,
             amazonPrice: data.amazon_price,
