@@ -33,7 +33,9 @@ class CMSPageController extends Controller {
                 apiUrl = await newsPromise;
             }
 
-            return apiUrl;
+            const qsChar = (/\?/.test(apiUrl)) ? '&' : '?';
+
+            return `${apiUrl}${qsChar}format=json`;
         }
 
         if (this.slug) {

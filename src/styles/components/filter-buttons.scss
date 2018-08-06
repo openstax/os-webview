@@ -1,5 +1,7 @@
 @import 'pattern-library/core/pattern-library/molecules';
 
+$width-of-filter-by: 7.5rem;
+
 .strips-and-filter {
     position: relative;
     width: 100%;
@@ -7,6 +9,7 @@
     .strips {
         margin-bottom: 0;
         position: absolute;
+        transform: translateY(-50%);
         z-index: 1;
     }
 }
@@ -14,63 +17,48 @@
 .filter {
     color: os-color(gray);
     left: 50%;
-    max-width: 70rem;
     position: absolute;
-    top: -2.5rem;
-    transform: translateX(-50%);
-    width: 100%;
+    transform: translate(-50%, -50%);
     z-index: 1;
 
-    &::before,
-    &::after {
-        border-right: 0.2rem solid;
-        content: '';
-        display: block;
-        height: 1.2rem;
-        position: absolute;
-        right: 4.3rem;
-        top: 2.2rem;
-        transform: rotate3d(0, 0, 1, 135deg);
-        width: 0;
-        z-index: 1;
-
-        @include wider-than($tablet-max) {
-            display: none;
-        }
-    }
-
-    &::after {
-        right: 3.5rem;
-        transform: rotate3d(0, 0, 1, 45deg);
+    @include width-up-to($tablet-max) {
+        background-color: ui-color(white);
+        border: 0.1rem solid ui-color(default-active);
     }
 }
 
 .filter-buttons {
     @include set-font(body-large);
     @include width-up-to($tablet-max) {
-        align-items: flex-start;
-        background-color: ui-color(white);
-        border: 0.1rem solid ui-color(default-active);
-        display: flex;
-        flex-flow: column nowrap;
         height: auto;
-        justify-content: center;
-        margin: 0 1.5rem;
+        justify-items: right;
         min-height: $form-element-height;
     }
 
     @include wider-than($tablet-max) {
         @include button-bar();
+
+        :not(:first-child) {
+            border-bottom-left-radius: 0;
+            border-top-left-radius: 0;
+        }
+
+        :not(:last-child) {
+            border-bottom-right-radius: 0;
+            border-top-right-radius: 0;
+        }
     }
 
     .filter-button {
+
         @include width-up-to($tablet-max) {
             align-items: center;
             cursor: pointer;
             display: flex;
             height: $form-element-height;
             overflow: hidden;
-            padding: 0 1.5rem;
+            padding: 0 $normal-margin;
+            white-space: nowrap;
         }
 
         &:focus {
@@ -87,13 +75,6 @@
 
             @include width-up-to($tablet-max) {
                 order: -1;
-
-                &::before {
-                    content: 'Filter By: ';
-                    display: inline;
-                    font-weight: 500;
-                    margin-right: 1rem;
-                }
             }
         }
 
@@ -112,6 +93,19 @@
                     width: 100%;
                 }
             }
+        }
+
+        .on-mobile {
+            margin-left: $normal-margin;
+
+            @include wider-than($tablet-max) {
+                display: none;
+            }
+        }
+
+        .filter-by {
+            font-weight: bold;
+            margin-right: 0.7rem;
         }
     }
 }

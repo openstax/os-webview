@@ -48,7 +48,7 @@ describe('Header', () => {
         mainMenu.model.user.groups.push('Tutor');
         mainMenu.update();
 
-        const link = mainMenu.el.querySelector('.tutor-menu-item a');
+        const link = mainMenu.el.querySelector('[href*="tutor.openstax"]');
         const event = new Event('focusout');
         window.requestAnimationFrame = () => null;
 
