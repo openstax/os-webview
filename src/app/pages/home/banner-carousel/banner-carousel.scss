@@ -1,17 +1,18 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .banner-carousel {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
+    display: table-row;
     height: 100%;
     position: relative;
     width: 100%;
 
     .frame-control {
-        background-color: transparent;
-        border-spacing: 1rem;
-        bottom: 1rem;
-        display: table;
+        align-items: center;
+        // background-color: rgba(ui-color(black), 0.2);
+        border-radius: 1.4rem;
+        border-spacing: 0.1rem;
+        bottom: 0;
+        display: grid;
         left: 50vw;
         position: absolute;
         transform: translateX(-50%);
@@ -25,14 +26,15 @@
 
             .dot {
                 background-color: transparent;
-                border: thin solid text-color(white);
+                border: thin solid text-color(helper);
                 border-radius: 50%;
-                margin: 0 0.8rem;
+                margin: 0 0.8rem 0.26rem;
+                transform: scale(0.90, 0.90);
                 vertical-align: middle;
 
                 &.active {
                     background-color: os-color(gold);
-                    transform: scale(1.2, 1.2);
+                    transform: scale(1, 1);
                 }
             }
         }
@@ -47,7 +49,7 @@
         > * {
             background-position: left center;
             background-size: cover;
-            height: 100%;
+            height: 50vw;
             width: 100vw;
         }
     }

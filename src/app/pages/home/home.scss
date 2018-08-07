@@ -17,8 +17,7 @@ $tablet-book-size: 16.5rem;
     }
 
     .book-banners {
-        height: 80vh;
-        min-height: 30rem;
+        height: calc(50vw + 4rem);
         position: relative;
     }
 

@@ -299,6 +299,10 @@ sup {
 .quote-buckets {
     .quotes {
         padding: 6rem 0;
+
+        @include width-up-to($tablet-max) {
+            padding: 3rem 0 4rem;
+        }
     }
 
     .attribution {
