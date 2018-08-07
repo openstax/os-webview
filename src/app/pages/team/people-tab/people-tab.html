@@ -3,14 +3,14 @@
     <span class="row-of-four"></span>
     <div
         each="entry in model"
-        class="card {model.selectedCard == $item ? 'open' : ''} {entry.title ? '' : 'bio'}"
+        class="card {model.selectedCard == $item ? 'open' : ''}"
         role="{entry.title && entry.bio ? 'button' : ''}"
         data-index={$item}
     >
     <if condition="entry.title">
         <div class="content">
             <div class="image-holder">
-                <img src="{entry.photo || ''}">
+                <img src="{entry.photo ? entry.photo.file : ''}">
             </div>
             <div class="name">{entry.name}</div>
             <div>{entry.title}</div>

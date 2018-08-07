@@ -29,7 +29,7 @@ export default class Team extends CMSPageController {
             heroParagraph: this.pageData.subheader,
             heroImage: this.pageData.header_image_url,
             headline: this.pageData.team_header
-        } : {};
+        } : null;
     }
 
     onDataLoaded() {
