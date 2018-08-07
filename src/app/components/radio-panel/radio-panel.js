@@ -10,15 +10,15 @@ export default class RadioPanel extends Controller {
         this.view = {
             classes: ['filter-buttons']
         };
-        this.model = {
+        this.model = () => ({
             items,
             isSelected: (value) => this.selectedValue === value
-        };
+        });
         this.active = false;
         this.onChange = onChange;
     }
 
-    onLoaded() {
+    onUpdate() {
         $.insertHtml(this.el, this.model);
     }
 
@@ -35,7 +35,7 @@ export default class RadioPanel extends Controller {
 
     @on('click .filter-button')
     setCategory(event) {
-        const target = event.target;
+        const target = event.delegateTarget;
         const newValue = target.dataset ? target.dataset.value : target.getAttribute('data-value');
 
         if (newValue !== this.selectedValue) {

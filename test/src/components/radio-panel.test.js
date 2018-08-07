@@ -20,7 +20,7 @@ describe('RadioPanel', () => {
 
         expect(target).toBeTruthy();
         expect(p.selectedValue).toBeUndefined();
-        p.setCategory({target});
+        p.setCategory({delegateTarget: target});
         expect(p.selectedValue).toBe(target.getAttribute('data-value'));
     });
 });

@@ -4,6 +4,21 @@ import $ from '~/helpers/$';
 
 describe('CategorySelector', () => {
     const p = new CategorySelector();
+    const categories = CategorySelector.categories;
+
+    ['Math', 'Science', 'Social Sciences', 'Humanities', 'Business']
+        .forEach((name) => {
+            categories.push({
+                value: name.toLowerCase().replace(' ', '-'),
+                cms: name,
+                html: name
+            });
+        });
+    categories.push({value: 'ap', cms: 'AP', html: 'AP<sup>&reg;</sup>'});
+    for (const c of categories) {
+        CategorySelector.byValue[c.value] = c;
+    }
+    p.update();
 
     it('creates', () => {
         expect(p.el.innerHTML).toBeTruthy();
@@ -13,7 +28,7 @@ describe('CategorySelector', () => {
 
         clickElement(mathButton);
         expect(mathButton.getAttribute('aria-pressed')).toBe('true');
-        expect(p.model.isSelected('math')).toBe(true);
+        expect(p.model().isSelected('math')).toBe(true);
     });
     it('handles selection by key enter', () => {
         const scienceButton = p.el.querySelector('[data-value="science"]');
@@ -27,10 +42,10 @@ describe('CategorySelector', () => {
                 cancelable: true
             })
         );
-        expect(p.model.isSelected('science')).toBe(true);
+        expect(p.model().isSelected('science')).toBe(true);
     });
     it('matches snapshot', () => {
-        console.log('To update snapshot: node_modules/.bin/jest --updateSnapshot --testNamePattern=Category');
+        console.log('To update snapshot: node_modules/.bin/jest --updateSnapshot --testNamePattern=CategorySelector');
         expect(p.el.innerHTML).toMatchSnapshot();
     });
 });
