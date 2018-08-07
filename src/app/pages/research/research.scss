@@ -47,6 +47,10 @@
             grid-template-columns: minmax(50vw, 3fr) 4fr;
         }
 
+        @include wider-than($wide-screen-min) {
+            grid-template-columns: 1fr 1fr;
+        }
+
         h1 {
             @include set-font(h1);
         }
@@ -80,22 +84,15 @@
         }
 
         .images {
-            display: grid;
             place-self: end end;
             position: relative;
             width: 100%;
 
             .clipping {
                 display: grid;
-                place-self: end end;
                 width: 100%;
 
-                @include width-up-to($phone-max) {
-                    max-width: 70vw;
-                }
-
                 > img {
-                    place-self: end end;
                     width: 100%;
                 }
             }
@@ -111,10 +108,12 @@
 
                 @include width-up-to($phone-max) {
                     max-width: 70vw;
+                    transform: translate(-20%, 30%);
                 }
 
                 img {
                     max-height: 150%;
+                    max-width: 100%;
                     transform: translateX(calc(7% + 2rem));
                 }
             }
@@ -163,24 +162,35 @@
         }
 
         .card-content {
-            border-image: linear-gradient(to right, os-color(blue), lighten(os-color(light-blue), 20%)) 1 stretch;
+            border-bottom: 0;
+            border-left: 0;
+            border-right: 0;
             border-top: 0.4rem solid transparent;
             padding: 4rem;
         }
 
+        &.blue .card-content {
+            border-color: inherit;
+            border-image: linear-gradient(to right, os-color(blue), lighten(os-color(light-blue), 20%)) 1 stretch;
+        }
+
         &.green .card-content {
+            border-color: inherit;
             border-image: linear-gradient(to right, os-color(deep-green), lighten(os-color(green), 25%)) 1 stretch;
         }
 
         &.yellow .card-content {
+            border-color: inherit;
             border-image: linear-gradient(to right, os-color(gold), lighten(os-color(yellow), 20%)) 1 stretch;
         }
 
         &.red .card-content {
+            border-color: inherit;
             border-image: linear-gradient(to right, darken(os-color(red), 10%), lighten(os-color(red), 20%)) 1 stretch;
         }
 
         &.orange .card-content {
+            border-color: inherit;
             border-image: linear-gradient(to right, darken(os-color(orange), 20%), os-color(gold)) 1 stretch;
         }
     }
