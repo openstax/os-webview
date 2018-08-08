@@ -67,12 +67,12 @@ export default class PeopleTab extends Controller {
         const rowLength = this.getRowLength();
         const isEndOfRow = this.selectedCard % rowLength === rowLength - 1;
         const cardToInsertBefore = Array.from(followingCards)
+            .slice(0, rowLength)
             .filter((c) => {
                 const r = c.getBoundingClientRect();
 
                 return r.top > openCardRect.top && r.left <= openCardRect.left;
             })
-            .slice(0, rowLength)
             .slice(isEndOfRow ? -2 : -1)[0];
 
         return cardToInsertBefore;
@@ -85,6 +85,9 @@ export default class PeopleTab extends Controller {
 
             bioCard.parentNode.insertBefore(bioCard, cardToInsertBefore);
         }
+        const anyTitles = this.model().some((e) => e.title);
+
+        this.el.classList.toggle('inline-bios', !anyTitles);
     }
 
     @on('click [role="button"]')

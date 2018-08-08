@@ -13,6 +13,10 @@
         grid-template-columns: repeat(4, 1fr);
     }
 
+    &.inline-bios {
+        grid-template-columns: repeat(auto-fill, minmax(32rem, 1fr));
+    }
+
     .row-of-three,
     .row-of-four {
         display: none;
@@ -56,6 +60,10 @@
             height: fit-content;
             place-items: center;
             text-align: center;
+
+            .bio {
+                text-align: left;
+            }
         }
 
         .image-holder {
