@@ -17,7 +17,7 @@ export default class AboutNew extends CMSPageController {
     }
 
     getModel() {
-        const data = this.pageData || {};
+        const data = this.pageData;
         const translateCard = (c) => {
             const imgEntry = c.find((v) => v.type === 'image');
             const textEntry = c.find((v) => v.type === 'paragraph');
@@ -28,7 +28,7 @@ export default class AboutNew extends CMSPageController {
             };
         };
 
-        return {
+        return data && {
             whoHeadline: data.who_heading,
             whoBlurb: data.who_paragraph,
             whoImage: data.who_image_url,
