@@ -22,7 +22,7 @@ export default class Book extends Controller {
     }
 
     onLoaded() {
-        if (this.bookInfo.coming_soon) {
+        if (this.bookInfo.book_state === 'coming_soon') {
             this.el.classList.add('coming-soon');
         }
         if ($.isPolish(this.bookInfo.slug)) {

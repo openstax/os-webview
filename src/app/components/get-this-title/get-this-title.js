@@ -52,7 +52,7 @@ export default class GetThisTitle extends Controller {
             ibookLink2: data.ibook_link_volume_2,
             kindleLink: data.kindle_link,
             webviewLink: data.webview_link,
-            comingSoon: data.coming_soon,
+            comingSoon: data.book_state === 'coming_soon',
             bookshareLink: data.bookshare_link,
             pdfText: polish ? ' Pobierz książkę' : ' Download a PDF',
             pdfLink: (data.high_resolution_pdf_url || data.low_resolution_pdf_url),
