@@ -7,18 +7,20 @@
         role="{entry.title && entry.bio ? 'button' : ''}"
         data-index={$item}
     >
-    <if condition="entry.title">
-        <div class="content">
-            <div class="image-holder">
-                <img src="{entry.photo ? entry.photo.file : ''}">
+        <if condition="entry.title">
+            <div class="content">
+                <div class="image-holder">
+                    <img src="{entry.photo ? entry.photo.file : ''}">
+                </div>
+                <div class="name">{entry.name}</div>
+                <div>{entry.title}</div>
             </div>
-            <div class="name">{entry.name}</div>
-            <div>{entry.title}</div>
-        </div>
-    <else>
-        <div class="name">{entry.name}</div>
-        <div>{entry.bio}</div>
-    </if>
+        <else>
+            <div class="content">
+                <div class="name">{entry.name}</div>
+                <div class="bio">{entry.bio}</div>
+            </div>
+        </if>
     </div>
     <div if="model.spacerCount > 3"></div>
     <div if="model.spacerCount > 2"></div>
