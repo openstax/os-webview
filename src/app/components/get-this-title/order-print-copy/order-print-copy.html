@@ -31,7 +31,7 @@
                 <div data-html="bookstoreContent[{$item}].content" skip="true"></div>
                 <if condition="entry.button_url">
                     <a class="btn {$item < 2 ? 'secondary' : ''}"
-                        href="entry.button_url"
+                        href="{entry.button_url}"
                     >
                         {entry.button_text}
                     </a>
