@@ -8,14 +8,19 @@
 
     .frame-control {
         align-items: center;
-        // background-color: rgba(ui-color(black), 0.2);
-        border-radius: 1.4rem;
         border-spacing: 0.1rem;
         bottom: 0;
         display: grid;
         left: 50vw;
         position: absolute;
         transform: translateX(-50%);
+
+        @include wider-than($tablet-max) {
+            background-color: rgba(ui-color(white), 0.33);
+            border-radius: 1.4rem;
+            bottom: auto;
+            top: calc(50vw - 6rem);
+        }
 
         .dots {
             display: table-row;
