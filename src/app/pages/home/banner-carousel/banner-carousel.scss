@@ -1,10 +1,9 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .banner-carousel {
-    display: table-row;
     height: 100%;
+    overflow-x: hidden;
     position: relative;
-    width: 100%;
 
     .frame-control {
         align-items: center;
@@ -46,10 +45,10 @@
     }
 
     .image-row {
-        display: grid;
-        grid-template-columns: repeat(6, 100vw);
+        display: flex;
         height: 100%;
-        position: absolute;
+        position: relative;
+        width: fit-content;
 
         > * {
             background-position: left center;
