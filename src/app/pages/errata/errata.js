@@ -316,8 +316,9 @@ export default class Errata extends Controller {
 
     summary(book) {
         // Fetch the summary data once
-        const summaryPromise = fetch(`${settings.apiOrigin}/api/errata/?book_title=${book}`)
-            .then((r) => r.json());
+        const summaryPromise = fetch(
+            `${settings.apiOrigin}/api/errata/?book_title=${book}&is_assessment_errata__not=Yes&archived=False`
+        ).then((r) => r.json());
         const hoverPromise = fetch(`${settings.apiOrigin}/api/pages/errata/`)
             .then((r) => r.json());
 
