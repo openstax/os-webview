@@ -104,7 +104,7 @@ export default class Details extends CMSPageController {
             /* eslint complexity: 0 */
             const model = {
                 bookInfo: this.pageData,
-                comingSoon: this.pageData.coming_soon ? ' coming-soon' : '',
+                bookState: this.pageData.book_state,
                 description: this.pageData.description,
                 errataBlurb: this.pageData.errata_content.content && this.pageData.errata_content.content.content,
                 formattedPublishDate: this.pageData.publish_date && formatDate(this.pageData.publish_date),

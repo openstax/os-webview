@@ -23,7 +23,7 @@ class SalesforceForm extends CMSPageController {
             .map((book) => ({
                 text: book.salesforce_name,
                 value: book.salesforce_abbreviation,
-                comingSoon: book.coming_soon,
+                comingSoon: book.book_state === 'coming_soon',
                 subject: book.subject,
                 coverUrl: book.cover_url
             }))
