@@ -43,6 +43,7 @@ export default class GetThisTitle extends Controller {
             isHighSchool
         ].some((x) => x);
 
+        this.submenu = '';
         this.model = () => ({
             includeTOC: data.includeTOC,
             tocHiddenAttribute: '',
@@ -58,7 +59,7 @@ export default class GetThisTitle extends Controller {
             pdfLink: (data.high_resolution_pdf_url || data.low_resolution_pdf_url),
             sampleText: polish ? ' przykład' : ' sample',
             printLink,
-            submenu: '',
+            submenu: this.submenu,
             hiRes: data.high_resolution_pdf_url,
             loRes: data.low_resolution_pdf_url,
             slug: data.slug
@@ -66,7 +67,7 @@ export default class GetThisTitle extends Controller {
         this.printCopyContent = new OrderPrintCopy({
             amazonLink: data.amazon_link,
             amazonPrice: data.amazon_price,
-            bulkLink: isHighSchool ? '/bulk-order?this.model.slug' : null,
+            bulkLink: isHighSchool ? `/bulk-order?${data.slug}` : null,
             bookstoreContent: arrayOfBookstoreContent
         }, () => {
             shell.hideDialog();
@@ -74,10 +75,12 @@ export default class GetThisTitle extends Controller {
     }
 
     onLoaded() {
-        if (this.model.tableOfContents) {
+        const model = this.model();
+
+        if (model.tableOfContents) {
             this.tocContent = new TocDialog({
-                tableOfContents: this.model.tableOfContents,
-                webviewLink: this.model.webviewLink
+                tableOfContents: model.tableOfContents,
+                webviewLink: model.webviewLink
             });
         }
     }
@@ -103,7 +106,7 @@ export default class GetThisTitle extends Controller {
 
     @on('click .submenu .remover')
     hideSubmenu() {
-        this.model.submenu = '';
+        this.submenu = '';
         this.update();
     }
 
