@@ -1,9 +1,11 @@
 <template args="model">
-    <a class="book-icon" href="/interest?{encodeURIComponent(model.title)}">
-        <span class="fa fa-user-plus"></span>
-    </a>
-    <a class="text" href="/interest?{encodeURIComponent(model.title)}">
-    Sign up to<br>learn more
+    <a class="top" href="/interest?{encodeURIComponent(model.title)}">
+        <span class="book-icon">
+            <span class="fa fa-user-plus"></span>
+        </span>
+        <span class="text">
+            Sign up to<br>learn more
+        </span>
     </a>
     <a class="link" href="/adoption?{encodeURIComponent(model.title)}">
         Using this book? Let us know.

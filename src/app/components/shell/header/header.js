@@ -275,6 +275,20 @@ class Header extends Controller {
         }
     }
 
+    @on('click .skiptocontent')
+    skipToContent(event) {
+        event.preventDefault();
+        const mainEl = document.getElementById('main');
+        const focusableItems = Array.from(mainEl.querySelectorAll($.focusable));
+
+        if (focusableItems.length > 0) {
+            const target = focusableItems[0];
+
+            $.scrollTo(target);
+            target.focus();
+        }
+    }
+
     updateHeaderStyle() {
         const height = this.height;
 

@@ -170,7 +170,20 @@ $button-size: 2.8rem;
     }
 
     > .skiptocontent {
-        display: none;
+        left: 0;
+        position: absolute;
+        top: 0;
+        z-index: 10;
+
+        &:not(:focus) {
+            color: transparent;
+        }
+
+        &:focus {
+            background-color: os-color(red);
+            color: text-color(white);
+            padding: 0.5rem $normal-margin;
+        }
     }
 
     &.active {
