@@ -9,10 +9,6 @@ function isUnit(entry) {
     return hasContents(entry) && hasContents(entry.contents[0]);
 }
 
-function isPreface(entry) {
-    return entry.title.match(/^(?:Preface|Introduction$|Connection for AP|Thinking Ahead$)/);
-}
-
 export default class Contents extends Controller {
 
     init(data, view) {
@@ -31,21 +27,21 @@ export default class Contents extends Controller {
                 this.startFrom += entry.contents.length;
             }
         };
-        const doNumber = (entry) => (!(i === this.startFrom && isPreface(entry)) &&
-            (hasContents(entry) || this.parentNumber));
+        const doNumber = (entry, index) =>
+            hasContents(entry) ||
+            (index > 0 && this.parentNumber);
 
-        for (const entry of this.model) {
+        this.model.forEach((entry, index) => {
             let chapterNumber = '';
 
             // If any entry is a Unit, all are Units (even if some don't look have contents)
             if (isUnit(entry)) {
                 isUnitLevel = true;
-            } else {
+            } else if (hasContents(entry)) {
                 this.startFrom = 1;
             }
-            // Only check preface for first chapter in section
-            // Do not number chapters with no contents -- those are appendices
-            if (doNumber(entry)) {
+
+            if (doNumber(entry, index)) {
                 chapterNumber = `${this.parentNumber}${i}`;
                 ++i;
             }
@@ -56,7 +52,7 @@ export default class Contents extends Controller {
                 startFrom: this.startFrom
             }));
             computeStartFrom(entry);
-        }
+        });
     }
 
 }
