@@ -5,9 +5,17 @@ $icon-size: 5.5rem;
 .let-us-know {
     align-items: center;
     display: grid;
-    grid-gap: 2rem $normal-margin;
-    grid-template-columns: $icon-size auto;
+    grid-gap: 2rem;
     margin-bottom: 4rem;
+
+    .top {
+        align-items: center;
+        color: inherit;
+        display: grid;
+        grid-gap: $normal-margin;
+        grid-template-columns: $icon-size auto;
+        text-decoration: none;
+    }
 
     .book-icon {
         align-items: center;
@@ -23,21 +31,6 @@ $icon-size: 5.5rem;
     .text {
         @include set-font(body-large);
 
-        color: inherit;
         line-height: normal;
-        text-decoration: none;
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-    }
-
-    .link {
-        grid-column: 1 / span 2;
-
-        a {
-            text-decoration: none;
-        }
     }
 }
