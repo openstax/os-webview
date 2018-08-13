@@ -16,7 +16,9 @@ export default class MultiPageForm extends Controller {
         this.css = `/app/components/multi-page-form/multi-page-form.css?${VERSION}`;
         this.model = () => this.getModel();
         this.currentPage = 0;
-        this.callOnPageChange();
+        if (this.onPageChange) {
+            this.onPageChange(this.currentPage);
+        }
     }
 
     get currentForm() {
@@ -57,7 +59,12 @@ export default class MultiPageForm extends Controller {
         this.el.querySelector('#form-response').removeEventListener('load', this.afterSubmit);
     }
 
-    callOnPageChange() {
+    onPageUpdate() {
+        this.update();
+        if (this.currentForm.el) {
+            this.currentForm.el.querySelector($.focusable).focus();
+            $.scrollTo(this.currentForm.el);
+        }
         if (this.onPageChange) {
             this.onPageChange(this.currentPage);
         }
@@ -77,19 +84,13 @@ export default class MultiPageForm extends Controller {
         }
 
         this.currentPage += 1;
-        this.update();
-        if (currentForm.el) {
-            currentForm.el.querySelector($.focusable).focus();
-        }
-        this.callOnPageChange();
+        this.onPageUpdate();
     }
 
     @on('click .back')
     prevPage() {
         this.currentPage -= 1;
-        this.update();
-        this.currentForm.el.querySelector($.focusable).focus();
-        this.callOnPageChange();
+        this.onPageUpdate();
     }
 
     @on('keydown input')
