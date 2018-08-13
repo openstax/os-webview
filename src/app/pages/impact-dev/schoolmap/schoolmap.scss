@@ -1,0 +1,98 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+    .schoolmapdiv{
+
+        background-color: rgba(255,255,255,0.9);	
+        background: radial-gradient(circle, rgba(0,36,105,0.15) 0%, rgba(37,192,218,0) 100%);
+
+        @include wider-than(60rem) {
+            height: 100rem;
+            overflow: hidden;
+            position: relative;
+            top: 25rem;
+            width: 100%;		
+            background-color: rgba(255,255,255,0.9);	
+            background: radial-gradient(circle, rgba(0,36,105,0.15) 0%, rgba(37,192,218,0) 100%);
+            
+        }
+
+        @include width-up-to($phone-max) {
+            margin-top: 50%;
+            background-color: rgba(255,255,255,0.9);
+            width: 100%;
+            height: 450px;  
+        }
+    }
+
+    .schoolmapbox{
+        background-attachment: local;
+        background-image: url('/images/home/map2.png');
+        background-repeat: no-repeat;
+       // background-size: 697px 348px ;
+        padding-right: 50%;
+        @include width-up-to($phone-max) {
+           background-size: 350px 180px ;
+           top: 290px;
+           position: relative;
+        }
+        @include wider-than($tablet-max) {
+            padding-right: 47%;
+        }
+        
+        
+        
+            @include wider-than(60rem) {
+                bottom: 0;
+                height: 71rem;
+                position: absolute;
+                right: 0;
+            }
+
+            .txthead{
+              
+                width: 460px;	
+                color: #00347C;	
+                font-size: 36px;	
+                font-weight: bold;	
+                letter-spacing: -1.44px;	
+                line-height: 40px;	
+                margin-left: 50%;
+                margin-top: -35%;
+
+
+                @include width-up-to($phone-max) {
+                    position: relative;
+                    top: -290px;
+                    text-align: center;
+                    font-size: 29px;
+                    margin-left: 20%;
+                    width: 231px;
+                    padding-top: 24%;   
+                }
+            }
+            .txtbdy{
+              
+                width: 555px;	
+                color: #00347C;	
+                font-size: 18px;	
+                line-height: 25px;	
+                text-align: center;
+                margin-left: 45%;
+                margin-top: 3%;
+
+                @include width-up-to($phone-max) {
+                    position: relative;
+                    top: -290px;
+                width: 272px;
+                font-size: 16px;
+                margin-left: 10%;
+                margin-top: 3%;
+                }
+            }
+            .txtbdy a{
+                margin-top: 3%;
+            }
+
+        
+    }
+  
