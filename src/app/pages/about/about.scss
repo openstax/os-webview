@@ -19,6 +19,7 @@ $offset-bottom-section: 12rem;
         }
 
         @include wider-than($media-content-max) {
+            grid-gap: 4rem;
             grid-template-columns: minmax(45vw, 3fr) 4fr;
         }
 
@@ -28,6 +29,7 @@ $offset-bottom-section: 12rem;
             align-items: center;
             display: grid;
             padding: 0 $normal-margin 3rem;
+            z-index: 1;
 
             @include wider-than($media-content-max) {
                 margin-left: calc(50vw - 60rem);
