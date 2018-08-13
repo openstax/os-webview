@@ -1,0 +1,208 @@
+@import 'pattern-library/core/pattern-library/headers';
+.statdiv {
+    background-color: rgba(1, 35, 102, 0.5);
+    background: linear-gradient(90deg, #326ba4 0%, #2e217a 100%);
+    @include wider-than(60rem) {
+        height: 550px;
+        overflow: hidden;
+        position: relative;
+        top: 0rem;
+        width: 100%;
+    }
+    @media (min-width: 768px) and (max-width: 1024px) {
+        height: 470px;
+    }
+    @include width-up-to($phone-max) {
+        height: 500px;
+        overflow: hidden;
+        background-color: rgba(1, 35, 102, 0.5);
+        background: linear-gradient(90deg, #326ba4 0%, #2e217a 100%);
+    }
+}
+
+.statbox {
+
+        margin-left: 7%;
+        margin-top: 7%;
+    
+    @include width-up-to($phone-max) {
+        margin-top: 18%;
+        height: 430px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+        ::-webkit-scrollbar {display: none; }
+    }
+  
+
+    @include wider-than(85rem) {
+        margin-left: 10%;
+        margin-top: 7%;
+    }
+    @include wider-than(100rem) {
+        margin-left: 14%;
+        margin-top: 6%;
+    }
+    @include wider-than(120rem) {
+        margin-left: 20%;
+        margin-top: 5%;
+    }
+    @include wider-than(160rem) {
+        margin-top: 3%;
+        margin-left: 28%;
+    }
+    @include wider-than(180rem) {
+        margin-top: 2%;
+        margin-left: 36%;
+    }
+    .col1 {
+        background-image: url('/images/home/statmap1.png');
+        background-size: 300px 180px;
+        background-repeat: no-repeat;
+        height: 355px;
+        width: 261px;
+        float: left;
+        border-radius: 3px; // background: linear-gradient(224.64deg, rgba(250,188,77,0) 0%, #FABC4D 100%), linear-gradient(0deg, #F4D019 0%, #F4D019 100%);	
+        box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.2);
+        @media (min-width: 768px) and (max-width: 1024px) {
+            height: 323px;
+            width: 210px;
+            background-size: 300px 140px;
+
+        }
+        @include width-up-to($phone-max) {
+            display: inline-block;
+            height: 362px;
+            width: 230px;
+            background-size: 300px 151px;
+        }
+    }
+    .col2 {
+        background-image: url('/images/home/statmap2.png');
+        background-size: 300px 180px;
+        background-repeat: no-repeat;
+        margin-left: 2%;
+        float: left;
+        height: 355px;
+        width: 261px;
+        border-radius: 3px; //background: linear-gradient(224.64deg, rgba(250,188,77,0) 0%, #FABC4D 100%), linear-gradient(0deg, #F4D019 0%, #F4D019 100%);	
+        box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.2);
+        @include width-up-to($phone-max) {
+            display: inline-block;
+            height: 362px;
+            width: 230px;
+            float: none;
+            margin-left: 7%;
+            background-size: 300px 151px;
+        }
+        @media (min-width: 768px) and (max-width: 1024px) {
+            background-size: 300px 140px;
+            height: 323px;
+            width: 210px;
+        }
+    }
+    .col3 {
+        background-image: url('/images/home/statmap3.png');
+        background-size: 300px 180px;
+        background-repeat: no-repeat;
+        margin-left: 2%;
+        float: left;
+        height: 355px;
+        width: 261px;
+        border-radius: 3px; //background: linear-gradient(224.64deg, rgba(250,188,77,0) 0%, #FABC4D 100%), linear-gradient(0deg, #F4D019 0%, #F4D019 100%);	
+        box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.2);
+        @include width-up-to($phone-max) {
+            display: inline-block;
+            height: 362px;
+            width: 230px;
+            float: none;
+            margin-left: 7%;
+            background-size: 300px 151px;
+        }
+        @media (min-width: 768px) and (max-width: 1024px) {
+            background-size: 300px 140px;
+            height: 323px;
+            width: 210px;
+        }
+    }
+    .col4 {
+        background-image: url('/images/home/statmap4.png');
+        background-size: 300px 180px;
+        background-repeat: no-repeat;
+        margin-left: 2%;
+        float: left;
+        width: 261px;
+        height: 355px;
+        border-radius: 3px; //background: linear-gradient(224.64deg, rgba(250,188,77,0) 0%, #FABC4D 100%), linear-gradient(0deg, #F4D019 0%, #F4D019 100%);	
+        box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.2);
+        @include width-up-to($phone-max) {
+            display: inline-block;
+            height: 362px;
+            width: 230px;
+            float: none;
+            margin-left: 7%;
+            background-size: 300px 151px;
+        }
+        @media (min-width: 768px) and (max-width: 1024px) {
+            background-size: 300px 140px;
+            width: 210px;
+            height: 323px;
+        }
+    }
+    .col-in {
+        text-align: center;
+        margin-top: 66%;
+        width: 261px;
+        height: 190px;
+        background-color: #FFFFFF;
+        border-radius: 0 0 3px 3px;
+        @include width-up-to($phone-max) {
+            display: inline-block;
+            width: 230px;
+            height: 210px;
+
+        }
+        @media (min-width: 768px) and (max-width: 1024px) {
+            height: 185px;
+            width: 210px;
+        }
+    }
+    .txt1 {
+        padding-top: 15%;
+        padding-left: 14%;
+        text-align: left;
+        color: #424242;
+        font-size: 56px;
+        font-weight: bold;
+        margin-top: 100px;
+        letter-spacing: -1.2px;
+        line-height: 34px;
+        @media (min-width: 768px) and (max-width: 1024px) {font-size: 40px;}
+        @include width-up-to($phone-max) {
+            margin-top: 0px;
+            padding-top: 17%;
+            padding-left: 8%;
+            font-size: 46px;
+            width: 100px
+        }
+    }
+    .txt2 {
+        
+        display: inline;
+        font-size: 28px;
+    }
+    .scd_txt {
+        color: #424242;
+
+        font-size: 16px;
+        line-height: 25px;
+        padding-right: 7%;
+        padding-left: 14%;
+        padding-top: 4%;
+        text-align: left;
+        @include width-up-to($phone-max) {
+        
+        height: 100px;
+        }
+    }
+}
