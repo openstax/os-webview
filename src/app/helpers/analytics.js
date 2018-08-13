@@ -56,11 +56,7 @@ class Analytics {
             location: window.location.href
         };
 
-        if (linkHelper.isProduction()) {
-            this.sendEvent(eventPacket);
-        } else {
-            console.debug('[Non production] Send to analytics:', eventPacket);
-        }
+        this.sendEvent(eventPacket);
     }
 
     sendUrlEvent(category, href, action = 'download') {
@@ -202,13 +198,17 @@ class Analytics {
         if (typeof window.ga !== 'function') {
             window.GoogleAnalyticsObject = 'ga';
             window.ga = {
-                q: [['create', settings.analyticsID, 'auto'],
-                    ['create', settings.analyticsID2, 'auto', {name: 'ga2'}]],
+                q: [['create', settings.analyticsID, 'auto']],
                 l: Date.now()
             };
+            if (settings.analyticsID2) {
+                window.ga.q.push(['create', settings.analyticsID2, 'auto', {name: 'ga2'}]);
+            }
         } else {
             window.ga('create', settings.analyticsID, 'auto');
-            window.ga('create', settings.analyticsID2, 'auto', {name: 'ga2'});
+            if (settings.analyticsID2) {
+                window.ga('create', settings.analyticsID2, 'auto', {name: 'ga2'});
+            }
         }
 
         accountsModel.load().then((accountResponse) => {

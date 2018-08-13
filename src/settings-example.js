@@ -1,7 +1,6 @@
 const settings = {
     accountHref: 'https://accounts-dev.openstax.org',
-    analyticsID: 'UA-73668038-1',
-    analyticsID2: 'UA-73668038-2',
+    analyticsID: 'UA-73668038-3',
     apiOrigin: 'https://oscms-dev.openstax.org',
     buildVersion: '2.6.0',
     tagManagerID: 'GTM-W6N7PB',
