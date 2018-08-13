@@ -1,0 +1,52 @@
+<template args="model">
+        <div class="search" id="search">
+                <input id="srch_input" class="srch" type="text" placeholder="Search by Country">
+                <img class="searchimg" src="./images/home/search.png" alt="">
+                <button class="filter_btn" value="0">
+                        <span id="filter_icons"><span id='filter_style' class="fas fa-sliders-h"></span></span>
+                        <span id="filter_by">Filter By</span></button>
+                </input>
+                <div id="dropDownList_id" class="dropDownList">
+                </div>
+                <div id="filter_d" class="filter_div">
+                        <div class="filter_container">
+                                <div id="institute_prtnr">
+                                        <label class="label_text">OpenStax institutional partners</label>
+                                        <label id="institute_prtnr_toggle" class="switch">
+                                                <input class='toggleCheck' name="route" type="checkbox" id="prtnrCheckBox" value="1">
+                                                <span class="slider round"></span>
+                                        </label>
+                                </div>
+                                <div id="type_institute">
+                                        <label id="type_institute_txt" class="label_text">Type of Insititution</label>
+                                        <label id="type_institute_toggle" class="switch">
+                                                <input class='toggleCheck' name="route" type="checkbox" id="type_instituteCheckBox" value="false">
+                                                <span class="slider round"></span>
+                                        </label>
+                                </div>
+                                <div id="one_million">
+                                        <label id="one_million_txt" class="label_text">Schools that have saved over $1 million</label>
+                                        <label id="one_million_toggle" class="switch">
+                                                <input class='toggleCheck' name="route" type="checkbox" id="one_millionCheckBox" value="false">
+                                                <span class="slider round"></span>
+                                        </label>
+                                </div>
+                                <div id="testmonal">
+                                        <label id="testmonal_txt" class="label_text">Has testimonial(s)</label>
+                                        <label id="testmonal_toggle" class="switch">
+                                                <input name="route" type="checkbox" id="testmonalCheckBox" value="False">
+                                                <span class="slider round"></span>
+                                        </label>
+                                </div>
+                                <div id="apply_filter">
+                                      <button id="apply_fltr_btn">Apply filters</button>
+                                </div>
+                        </div>
+                </div>
+        </div>
+        <div class="maptxt" id="maptxt">
+                we're changing the world, one book at a time!
+        </div>
+        <div id="onMap" class="onMap"></div>
+
+</template>
