@@ -8,7 +8,7 @@
             <div class="resource-box double">
                 <div class="top-line">
                     <h3>{model.communityResource.heading}</h3>
-                    <img src="{model.communityResource.logoUrl}">
+                    <img src="{model.communityResource.logoUrl}" alt="">
                 </div>
                 <div class="blurb">
                   <span data-html="communityResource.blurb" skip="true"></span>
@@ -55,7 +55,7 @@
             class="ally-box resource-box"
             >
                 <div class="top">
-                    <img src="{ally.ally_color_logo}">
+                    <img src="{ally.ally_color_logo}" alt="{ally.ally_heading}">
                     <div class="hover-blurb" data-html="allies[{$item}].ally_short_description"></div>
                 </div>
                 <div class="bottom">
