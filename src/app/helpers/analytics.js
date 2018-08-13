@@ -19,7 +19,9 @@ class Analytics {
     send(fields) {
         if (typeof window.ga === 'function') {
             window.ga('send', fields);
-            window.ga('ga2.send', fields);
+            if (settings.analyticsID2) {
+                window.ga('ga2.send', fields);
+            }
         } else {
             console.warn('Google Analytics not loaded; did not send', fields);
         }
