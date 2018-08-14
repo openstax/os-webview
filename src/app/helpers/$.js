@@ -141,16 +141,16 @@ $.hashClick = (event, options = {doHistory: true}) => {
     event.preventDefault();
 };
 
-$.setPageDescriptionAndTitle = (description, title) => {
+$.setPageTitleAndDescription = (title, description) => {
     const descriptionEl = document.querySelector('head meta[name="description"]');
+    const defaultDescription = 'Access our free college textbooks and low-cost learning materials.';
 
     if (descriptionEl) {
-        descriptionEl.setAttribute('content', description);
+        descriptionEl.setAttribute('content', description || defaultDescription);
     } else {
         console.warn('No description meta entry in page header');
     }
-
-    document.title = `${title} - OpenStax`;
+    document.title = title ? `${title} - OpenStax` : 'OpenStax';
 };
 
 const invalidEmailPatterns = [

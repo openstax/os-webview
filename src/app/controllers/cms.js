@@ -46,6 +46,17 @@ class CMSPageController extends Controller {
                     const apiUrl = await getUrlFor(this.slug);
                     const data = await fetch(apiUrl, {credentials: 'include'})
                         .then((response) => response.json());
+                    const setTitleAndDescription = () => {
+                        const pageData = this.pageData;
+                        const meta = pageData.meta || {};
+                        const defaultDescription = pageData.description ?
+                            $.htmlToText(pageData.description) : '';
+
+                        $.setPageTitleAndDescription(
+                            meta.seo_title || pageData.title,
+                            meta.search_description || defaultDescription
+                        );
+                    };
 
                     this.pageData = this.preserveWrapping ? data : CMSPageController[TRANSFORM_DATA](data);
                     this.pageData.slug = this.slug;
@@ -55,12 +66,8 @@ class CMSPageController extends Controller {
                     // If this component is the content of main, set page descriptor
                     const elParentId = this.el && this.el.parentNode.id;
 
-                    if (elParentId === 'main' &&
-                        this.pageData.meta && 'search_description' in this.pageData.meta) {
-                        $.setPageDescriptionAndTitle(
-                            this.pageData.meta.search_description,
-                            this.pageData.meta.seo_title
-                        );
+                    if (elParentId === 'main') {
+                        setTitleAndDescription();
                     }
 
                     this.onDataLoaded();

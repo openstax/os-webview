@@ -22,10 +22,14 @@ export default class FormattedAs extends Controller {
         this.view = {
             classes: ['article']
         };
-        if (format === 'feature') {
-            $.setPageDescriptionAndTitle(
-                article.meta.search_description,
-                article.meta.seo_title || article.title
+        this.setTitleAndDescription(article);
+    }
+
+    setTitleAndDescription(article) {
+        if (this.format === 'feature') {
+            $.setPageTitleAndDescription(
+                article.meta.seo_title || article.title,
+                article.meta.search_description || article.subheading
             );
         }
     }
