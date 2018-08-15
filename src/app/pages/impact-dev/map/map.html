@@ -13,16 +13,17 @@
                                 <div id="institute_prtnr">
                                         <label class="label_text">OpenStax institutional partners</label>
                                         <label id="institute_prtnr_toggle" class="switch">
-                                                <input class='toggleCheck' name="route" type="checkbox" id="prtnrCheckBox" value="1">
+                                                <input class='toggleCheck' name="route" type="checkbox" id="prtnrCheckBox" value="false">
                                                 <span class="slider round"></span>
                                         </label>
                                 </div>
                                 <div id="type_institute">
                                         <label id="type_institute_txt" class="label_text">Type of Insititution</label>
-                                        <label id="type_institute_toggle" class="switch">
-                                                <input class='toggleCheck' name="route" type="checkbox" id="type_instituteCheckBox" value="false">
-                                                <span class="slider round"></span>
-                                        </label>
+                                        <select id="type_institute_toggle" class="switch">
+                                                <option value="all">All</option>
+                                                <option value="college">College</option>
+                                                <option value="university">University</option>
+                                        </select>
                                 </div>
                                 <div id="one_million">
                                         <label id="one_million_txt" class="label_text">Schools that have saved over $1 million</label>
@@ -34,12 +35,12 @@
                                 <div id="testmonal">
                                         <label id="testmonal_txt" class="label_text">Has testimonial(s)</label>
                                         <label id="testmonal_toggle" class="switch">
-                                                <input name="route" type="checkbox" id="testmonalCheckBox" value="False">
+                                                <input class='toggleCheck' name="route" type="checkbox" id="testmonalCheckBox" value="false">
                                                 <span class="slider round"></span>
                                         </label>
                                 </div>
                                 <div id="apply_filter">
-                                      <button id="apply_fltr_btn">Apply filters</button>
+                                      <button class="applyFltrBtn" value='0'>Apply filters</button>
                                 </div>
                         </div>
                 </div>
