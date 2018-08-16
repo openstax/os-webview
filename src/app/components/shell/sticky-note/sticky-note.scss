@@ -57,12 +57,17 @@
             }
         }
 
-        .mobile,
-        .desktop {
-            display: none;
+        .xx,
+        .banner-image {
+            display: block;
             margin-bottom: -1rem;
             margin-left: 50%;
             margin-top: -1rem;
+        }
+
+        .mobile,
+        .desktop {
+            display: none;
             transform: translateX(-50%);
             width: 100vw;
         }
