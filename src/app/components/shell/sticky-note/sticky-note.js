@@ -85,6 +85,11 @@ class StickyNote extends CMSPageController {
         });
     }
 
+    @on('click .put-away')
+    putAway() {
+        this.forceHide(true);
+    }
+
 }
 
 const instance = new StickyNote();

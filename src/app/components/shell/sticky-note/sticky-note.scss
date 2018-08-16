@@ -4,6 +4,7 @@
     background-color: os-color(orange);
     color: text-color(white);
     padding: 1rem 0;
+    position: relative;
     width: 100vw;
     z-index: 1;
 
@@ -38,6 +39,49 @@
         a {
             color: inherit;
             text-decoration: underline;
+        }
+
+        .put-away {
+            background-color: rgba(ui-color(white), 0.5);
+            border-radius: 0.4rem;
+            color: text-color(normal);
+            padding: 0.5rem;
+            position: absolute;
+            right: $normal-margin;
+            top: $normal-margin;
+            z-index: 1;
+
+            &:hover,
+            &:active {
+                color: ui-color(black);
+            }
+        }
+
+        .xx,
+        .banner-image {
+            display: block;
+            margin-bottom: -1rem;
+            margin-left: 50%;
+            margin-top: -1rem;
+        }
+
+        .mobile,
+        .desktop {
+            display: none;
+            transform: translateX(-50%);
+            width: 100vw;
+        }
+
+        .mobile {
+            @include width-up-to($phone-max) {
+                display: block;
+            }
+        }
+
+        .desktop {
+            @include wider-than($phone-max) {
+                display: block;
+            }
         }
     }
 
