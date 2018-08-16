@@ -17,6 +17,14 @@ export default class Mapdropdown extends Controller {
 
     onLoaded() {
         $.insertHtml(this.el, this.model);
+        if (window.innerWidth < 960) {
+            const elements= this.el.querySelectorAll('.testimonial_head');
+
+            elements.forEach((v) => {
+                v.setAttribute('style', 'display: block;');
+                console.log(v);
+            });
+        }
     }
     @on('click .toggle_on_off')
     toggleOnoff(event) {
@@ -30,7 +38,6 @@ export default class Mapdropdown extends Controller {
         const mObj = this.model.mapObj;
         const bbox = [[32.958984, -5.353521], [43.50585, 5.615985]];
 
-        debugger;
         mObj.fitBounds(bbox);
         console.log(toggleOnoff);
         filterStyle.classList.toggle('fa-chevron-circle-down');
