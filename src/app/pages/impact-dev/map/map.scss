@@ -94,7 +94,8 @@
         height: 67px;
         .srch {
             height: 70px;
-            width: 649px;
+            min-width: 649px;
+            width: 100%;
             font-size: 16px;
             border: 1px solid #FFFFFF;
             border-radius: 3px;
@@ -112,6 +113,7 @@
             border-bottom: 1px solid #D5D5D5;
             .srch {
                 height: 31px;
+                min-width: 232px;
                 width: 232px;
                 margin-top: 11px;
                 margin-left: 33px;
@@ -144,9 +146,6 @@
         }
         @include wider-than(85rem) {
             margin-left: 8%;
-            .srch {
-                width: 686px;
-            }
         }
         @include wider-than(100rem) {
             margin-left: 9%;
@@ -247,7 +246,7 @@
         padding-left: unset;
         margin: unset;
         max-height: 634px;
-        overflow-y: hidden;
+        overflow-y: scroll;
         border-radius: 3px;
     }
     .search_list_element {

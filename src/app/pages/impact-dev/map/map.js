@@ -1,15 +1,8 @@
 import VERSION from '~/version';
-import {
-    Controller
-} from 'superb.js';
+import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
-import {
-    description as template
-} from './map.html';
-import mapboxgl from 'mapbox-gl';
-import {
-    on
-} from '~/helpers/controller/decorators';
+import {description as template} from './map.html';
+import {on} from '~/helpers/controller/decorators';
 import Dropdown from './mapdropdown';
 
 
@@ -112,7 +105,6 @@ export default class Map1 extends Controller {
     }
     @on('click .toggleCheck')
     changeFltrToggle(event) {
-        console.log(event);
         if (event.delegateTarget.value === 'false') {
             event.delegateTarget.value = 'true';
         } else {
@@ -159,10 +151,27 @@ export default class Map1 extends Controller {
         this.setFilterValuesOnClose();
     }
     setFilterValuesOnClose() {
-        this.el.querySelector('#prtnrCheckBox').value = this.prtnrCheckBox;
+        const prtCheck = this.el.querySelector('#prtnrCheckBox');
+        const oneMillionCheck = this.el.querySelector('#one_millionCheckBox');
+        const tetmonal = this.el.querySelector('#testmonalCheckBox');
+
+        prtCheck.value = this.prtnrCheckBox;
+        this.changeToggleColor(prtCheck, this.prtnrCheckBox);
+
         this.el.querySelector('#type_institute_toggle').value = this.insType;
-        this.el.querySelector('#one_millionCheckBox').value = this.oneMillionCheckBox;
-        this.el.querySelector('#testmonalCheckBox').value = this.testmonalCheckBox;
+
+        oneMillionCheck.value = this.oneMillionCheckBox;
+        this.changeToggleColor(oneMillionCheck, this.oneMillionCheckBox);
+
+        tetmonal.value = this.testmonalCheckBox;
+        this.changeToggleColor(tetmonal, this.testmonalCheckBox);
+    }
+    changeToggleColor(attrName, value) {
+        if (value === 'false') {
+            attrName.checked = false;
+        } else {
+            attrName.checked = true;
+        }
     }
     setFilterValues() {
         this.prtnrCheckBox = this.el.querySelector('#prtnrCheckBox').value;
@@ -185,7 +194,6 @@ export default class Map1 extends Controller {
         if (this.testmonalCheckBox === 'true') {
             fltString += '&testimonial=true';
         }
-        console.log(fltString);
         return fltString;
     }
     validateMob() {
