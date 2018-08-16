@@ -247,7 +247,12 @@
         margin: unset;
         max-height: 634px;
         overflow-y: scroll;
+        overflow-x: hidden;
         border-radius: 3px;
+        @include width-up-to($phone-max) {
+            max-height: 208px;
+            overflow-y: scroll;
+        }
     }
     .search_list_element {
         border-bottom: 1px solid #D5D5D5;
@@ -270,6 +275,15 @@
         font-size: 14px;
         line-height: 16px;
         width: 586px;
+        @include width-up-to($phone-max) {
+            margin-top: 8px;
+            margin-bottom: 9px;
+            height: 16px;
+            width: 292px;	
+            color: #4A4A4A;
+            font-size: 14px;
+            line-height: 16px;
+        }
     }
     .list_heading {
         margin-bottom: 23px;
@@ -282,19 +296,39 @@
         @include wider-than(85rem) {
             width: 625px;
         }
+        @include width-up-to($phone-max) {
+        margin-bottom:unset;
+        height: 19px;	
+        width: 292px;	
+        color: #4A4A4A;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 19px;
+        }
     }
     .toggle_dataList_head {
-        margin-top: 25px
+        margin-top: 25px;
+        @include width-up-to($phone-max) {
+            margin-top: 2px;
+        }
     }
     .left_column {
         border: 1px solid #D5D5D5;
         border-radius: 3px;
+        @include width-up-to($phone-max) {
+            display: block;
+        }
     }
     .right_column {
         border-top: 1px solid #D5D5D5;
         border-bottom: 1px solid #D5D5D5;
         border-right: 1px solid #D5D5D5;
         border-radius: 3px;
+        @include width-up-to($phone-max) {
+            margin-top: 10px;
+            border-left: 1px solid #D5D5D5;
+            display: block;
+        }
     }
     .lColumn_head {
         margin-left: 15px;
@@ -302,23 +336,38 @@
         font-size: 14px;
         font-weight: bold;
         line-height: 17px;
+        @include width-up-to($phone-max) {
+            margin-left: 8px;
+            margin-top: 4px;
+        }
     }
     .lColumn_body {
         margin-left: 16px;
         margin-bottom: 20px;
         margin-top: 10px;
+        @include width-up-to($phone-max) {
+            margin-left: 8px;
+            margin-top: 4px;
+            margin-bottom: 2px;
+        }
     }
     .lCol_body_left {
         margin-right: 16px;
         color: #4A4A4A;
         font-size: 14px;
         line-height: 16px;
+        @include width-up-to($phone-max) {
+            margin-right: 19px;
+        }
     }
     .lCol_body_right {
         margin-right: 24px;
         color: #4A4A4A;
         font-size: 14px;
         line-height: 16px;
+        @include width-up-to($phone-max) {
+        margin-right: 5px;
+        }
     }
     .rColumn_head {
         color: #4A4A4A;
@@ -328,6 +377,10 @@
         margin-right: 56px;
         margin-left: 15px;
         margin-top: 15px;
+        @include width-up-to($phone-max) {
+            margin-left: 8px;
+            margin-top: 4px;
+        }
         @include wider-than(85rem) {
             margin-right: 77px;
         }
@@ -348,6 +401,11 @@
         margin-left: 16px;
         margin-bottom: 20px;
         margin-top: 10px;
+        @include width-up-to($phone-max) {
+            margin-left: 8px;
+            margin-top: 4px;
+            margin-bottom: 2px;
+        }
     }
     .toggle_hide {
         display: none;
@@ -360,6 +418,9 @@
         border-radius: 3px;
         background-color: #FFFFFF;
         margin-top: 15px;
+        @include width-up-to($phone-max) {
+            margin-top: 10px;
+        }
     }
     .toggle_dataList_footer {
         color: #027EB5;
@@ -367,6 +428,12 @@
         line-height: 25px;
         margin-top: 5px;
         margin-bottom: 10px;
+    }
+    .testimonial_head{
+        display: none;
+        font-size: 14px;
+        font-weight: bold;
+        line-height: 17px;
     }
     #sub_testimonial {
         margin-left: 415px;
@@ -376,11 +443,18 @@
         margin-top: 57px;
         margin-left: 51.1px;
         margin-right: 29.9px;
+        @include width-up-to($phone-max) {
+            margin-top: 4px;
+            margin-left: 8px;
+        }
     }
     .tdl_body_desc {
         color: #424242;
         font-size: 16px;
         line-height: 25px;
+        @include width-up-to($phone-max) {
+            font-size: 14px;
+        }
     }
     .tdlb_regards_name {
         color: #4B4B4B;
