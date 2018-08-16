@@ -10,6 +10,7 @@ function scsslint() {
         since: gulp.lastRun('scsslint')
     })
     .pipe(pi.scssLint({
+        'maxBuffer': 30000000000000000000 * 1024,
         config: 'gulp/.scss-lint.yml',
         customReport: (file) => {
             /* eslint prefer-template:0 */
