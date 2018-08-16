@@ -24,8 +24,6 @@
     "particles.js": "^2.0.0",
     "pattern-library": "github:openstax/pattern-library#v1.1.5",
     "react-mapbox-gl": "^3.8.0",
-    "particles.js": "^2.0.0",
-    "pattern-library": "github:openstax/pattern-library#v1.1.5",
     "rollup": "^0.50.0",
     "rollup-plugin-commonjs": "^8.2.3",
     "rollup-plugin-node-resolve": "^3.0.0",
