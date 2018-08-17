@@ -8,7 +8,7 @@ import InstructorResourceTab from './instructor-resource-tab/instructor-resource
 import PhoneView from './phone-view/phone-view';
 import StudentResourceTab from './student-resource-tab/student-resource-tab';
 import TabGroup from '~/components/tab-group/tab-group';
-import {sfUserModel} from '~/models/usermodel';
+import userModel from '~/models/usermodel';
 import {formatDateForBlog as formatDate, shuffle} from '~/helpers/data';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './details.html';
@@ -71,7 +71,7 @@ export default class Details extends CMSPageController {
             return user && user.username && !isInstructor(user);
         };
 
-        return sfUserModel.load().then((user) => {
+        return userModel.load().then((user) => {
             return {
                 isInstructor: isInstructor(user),
                 isStudent: isStudent(user),
