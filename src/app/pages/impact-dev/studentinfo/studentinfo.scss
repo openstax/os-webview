@@ -3,30 +3,31 @@
     .studentinfodiv{
 
         @include wider-than(60rem) {
-            height: 105rem;
+            height: 102rem;
 
         }
+        @media (min-width: 601px) and (max-width: 1200px) {
+            height: 76rem;
+        }
         @include width-up-to($phone-max) {
-
+            height: 128rem;
 
         }
        
     }
 
     .studentinfobox{
-        height: 120rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
 
         @include width-up-to($phone-max) {
-            height: 120rem;
+
+            margin-top: 25px;
             justify-content: normal;
         }
-        @media (min-width: 768px) and (max-width: 1024px) {
-            padding-left: 3%;
-            padding-top: 100px;
-            margin-left:3%;
+        @media (min-width: 601px) and (max-width: 1200px) {
+            height: 75rem;
         }
         
         @include wider-than(85rem) {
@@ -53,8 +54,14 @@
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
+                margin-top: 12rem;
                 @include width-up-to($phone-max) {
                     flex-direction: column;
+                    align-items: center;
+                    margin-top: unset;
+                }
+                @media (min-width: 601px) and (max-width: 1200px) {
+                    margin-top: unset;
                 }
             }
             #second_photo{
@@ -62,7 +69,8 @@
                 flex-direction: row;
                 justify-content: center;
                 @include width-up-to($phone-max) {
-                    flex-direction: column;
+                    flex-direction: column-reverse;
+                    align-items: center;
                 }
             }
 
@@ -77,31 +85,36 @@
 
             .girl_txtdiv{ 
                 margin-right: 4%;
+                @include width-up-to($phone-max) {
+                    margin-right: unset;
+                }
             }
 
             .stds_imgdiv{
-                margin-right: 12%;
+                @include width-up-to($phone-max) {
+                    margin-right: unset;
+                    margin-top: 3rem; 
+                }
             }
 
             #stds_img{
                 position: relative;
                 bottom: 25%;
 
-                @include width-up-to($phone-max) {
+                @include width-up-to($media-content-max) {
                     height: 300px;
-                    margin-top: 100%;
-                    padding-top: 20px;
+                    position: unset;
+                    bottom: unset;
                 }
             }
             .std_txtdiv{ 
-
+                margin-left:7%;
                 @include width-up-to($phone-max) {
-                margin-left: 0px;
-                margin-top: -561px;
+                    margin-top: 5%;
                 }
                 @media (min-width: 768px) and (max-width: 1024px) {
                
-                    margin-left:10%;
+                    
                 }
             }
             #std_txt_head {	
@@ -111,7 +124,7 @@
                 font-weight: bold;	
                 letter-spacing: -1.44px;	
                 line-height: 40px;
-                @include width-up-to($phone-max) {
+                @include width-up-to($media-content-max) {
                     height: 80px;
                     width: 212px;
                     
@@ -124,7 +137,7 @@
                 color: #424242;
                 font-size: 16px;	
                 line-height: 25px;
-                @include width-up-to($phone-max) {
+                @include width-up-to($media-content-max) {
                     width: 260px;
                     margin-top: -30px;
                     font-size: 14px;
@@ -132,24 +145,21 @@
                 }
                 
             }
-
-  
-
-
             #girl_txt_head {	
                 height: 80px;	
-                width: 495px;	
+                width: 44rem;	
                 color: #424242;	
                 font-size: 36px;	
                 font-weight: bold;	
                 letter-spacing: -1.44px;	
                 line-height: 40px;
 
-                @include width-up-to($phone-max) {
+                @include width-up-to($media-content-max) {
                     height: 80px;
-                    width: 212px;
+                    width: 252px;
                     color: #424242;
-                    font-size: 29px;}
+                    font-size: 33px;
+                }
             }
             #girl_txt_body {	
                 height: 110px;	
@@ -157,7 +167,7 @@
                 color: #424242;	
                 font-size: 16px;	
                 line-height: 25px;
-                @include width-up-to($phone-max) {
+                @include width-up-to($media-content-max) {
                     width: 260px;	
                     margin-top: 50px;
                     font-size: 14px;	
@@ -168,23 +178,20 @@
                 font-size: 16px;	
                 font-weight: bold;	
                 line-height: 16px;	
-                text-align: center;
-                position: absolute;
                 border-radius: 2px;
                 background-color: #959595;
                 padding: 15px;
                 @include width-up-to($phone-max) {
-                margin-top: 8%;
+                    margin-top: 15%;
                 }
-               
-                 
+                @include width-up-to($media-content-max) {
+                    margin-top: 8%;	
+                }  
             }
-
-
             #girl_img{
             
-                @include width-up-to($phone-max) {
-                    margin-top: 30%;
+                @include width-up-to($media-content-max) {
+                    margin-top: 10%;
                     height: 300px;
                 }
             }  
