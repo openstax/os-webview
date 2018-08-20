@@ -4,7 +4,15 @@
             <div class="image-holder">
                 <img if="entry.photo" class="photo" src="{entry.photo.file}" alt="portrait">
             </div>
-            <div class="name">{entry.name}</div>
+            <div class="name">
+                <if condition="entry.website">
+                    <a href="{entry.website}">
+                        {entry.name}
+                    </a>
+                <else>
+                    {entry.name}
+                </if>
+            </div>
             <div>{entry.title}</div>
         </div>
     </div>
