@@ -71,9 +71,11 @@ $offset-bottom-section: 12rem;
         .card {
             @extend %card;
 
+            color: inherit;
             display: grid;
             grid-template-rows: 15rem auto;
             overflow: hidden;
+            text-decoration: none;
 
             img {
                 place-self: center;
@@ -82,6 +84,7 @@ $offset-bottom-section: 12rem;
 
             .content {
                 background-color: ui-color(white);
+                height: 100%;
                 padding: 4rem;
             }
         }
