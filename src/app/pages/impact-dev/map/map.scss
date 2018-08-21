@@ -5,11 +5,6 @@
     position: relative;
     top: 6rem;
     width: 100%;
-    @include width-up-to($phone-max) {
-        height: 430px;
-        top: 0rem;
-        width: 100%;
-    }
     @include wider-than(60rem) {
         height: 800px;
         overflow: hidden;
@@ -17,6 +12,15 @@
         top: 0rem;
         width: 100%;
     }
+    @include width-up-to($tablet-max) {
+        top: 0rem;
+    }
+    @include width-up-to($phone-max) {
+        height: 430px;
+        top: 0rem;
+        width: 100%;
+    }
+
 }
 
 .mapbox {
@@ -454,6 +458,9 @@
         line-height: 25px;
         @include width-up-to($phone-max) {
             font-size: 14px;
+            br{
+                display: none;
+            }
         }
     }
     .tdlb_regards_name {
@@ -472,6 +479,11 @@
         line-height: 25px;
         text-align: right;
         margin-top: unset;
+    }
+    .testimonial_Mobclick{
+        position: absolute;
+        top: -133px;
+        right: -107px;
     }
     .filter_btn {
         position: absolute;
