@@ -1,5 +1,7 @@
 <template args="model">
-    <img if="model.imageUrl" src="{model.imageUrl}">
+    <div class="card">
+        <img if="model.imageUrl" src="{model.imageUrl}">
+    </div>
     <div class="{model.imageUrl ? '' : 'span-2'}">
         <div class="name">{model.name}</div>
         <div>{model.title}</div>
