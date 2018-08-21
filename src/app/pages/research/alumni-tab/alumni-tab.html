@@ -1,7 +1,15 @@
 <template args="model">
     <div class="card-container">
         <div each="entry in model" class="entry">
-            <div class="name">{entry.name}</div>
+            <div class="name">
+                <if condition="entry.website">
+                    <a href="{entry.website}">
+                        {entry.name}
+                    </a>
+                    <else>
+                        {entry.name}
+                    </if>
+                </div>
             <div class="description">{entry.title}</div>
         </div>
     </div>
