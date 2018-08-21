@@ -55,12 +55,12 @@ export default class Research extends CMSPageController {
     onDataLoaded() {
         Object.assign(this.pageData, this.mockPageData);
         this.update();
-        const tabLabels = ['Alumni', 'Current members', 'External collaboration'];
+        const tabLabels = ['Alumni', 'Current members', 'External collaborators'];
         let selectedTab = tabLabels[1];
         const contents = {
             'Alumni': new AlumniTab(this.pageData.alumni),
             'Current members': new MembersTab(() => this.pageData.current_members),
-            'External collaboration': new AlumniTab(this.pageData.external_collaborators)
+            'External collaborators': new AlumniTab(this.pageData.external_collaborators)
         };
         const contentGroup = new ContentGroup(() => ({
             selectedTab,
@@ -87,7 +87,7 @@ export default class Research extends CMSPageController {
                 contentComponent: new MembersTab(() => this.pageData.current_members)
             },
             {
-                title: 'External collaboration',
+                title: 'External collaborators',
                 contentComponent: new AlumniTab(this.pageData.external_collaborators)
             }
         ];
