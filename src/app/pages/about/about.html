@@ -13,12 +13,15 @@
             <h1>{model.whatHeadline}</h1>
             <div data-html="whatBlurb" skip="true"></div>
             <div class="cards">
-                <div each="card in model.cards" class="card">
+                <a each="card in model.cards"
+                    class="card"
+                    href="{card.link}"
+                >
                     <img src="{card.image}" alt="">
                     <div class="content">
                         {card.text}
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </section>

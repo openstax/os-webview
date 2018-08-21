@@ -24,7 +24,8 @@ export default class AboutNew extends CMSPageController {
 
             return {
                 image: imgEntry.value.image,
-                text: textEntry.value
+                text: textEntry.value,
+                link: imgEntry.value.link
             };
         };
 
