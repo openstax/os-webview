@@ -15,6 +15,7 @@ const PAGES = [
     'books',
     'bookstore-suppliers',
     'bulk-order',
+    'careers',
     'confirmation',
     'confirmation/*path',
     'contact',
