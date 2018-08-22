@@ -19,4 +19,16 @@
             ></button>
         </div>
     </div>
+    <button if="model.frameNumber > 0"
+        class="left-arrow"
+        type="button"
+    >
+        <span class="fa fa-chevron-left"></span>
+    </button>
+    <button if="model.frameNumber < model.images.length - 1"
+        class="right-arrow"
+        type="button"
+    >
+        <span class="fa fa-chevron-right"></span>
+    </button>
 </template>

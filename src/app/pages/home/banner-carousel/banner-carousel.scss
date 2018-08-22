@@ -57,4 +57,37 @@
             width: 100vw;
         }
     }
+
+    .left-arrow,
+    .right-arrow {
+        background-color: rgba(ui-color(white), 0.33);
+        border-radius: 50%;
+        bottom: 50%;
+        color: text-color(normal);
+        display: grid;
+        font-size: 5rem;
+        height: 6rem;
+        outline: 0;
+        padding: 0;
+        position: absolute;
+        width: 6rem;
+
+        @include width-up-to($phone-max) {
+            font-size: 3rem;
+            height: 3.5rem;
+            width: 3.5rem;
+        }
+
+        > * {
+            width: 100%;
+        }
+    }
+
+    .left-arrow {
+        left: $normal-margin;
+    }
+
+    .right-arrow {
+        right: $normal-margin;
+    }
 }
