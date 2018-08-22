@@ -1,8 +1,13 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.page-header .sticky-note {
+.page-header.fixed .sticky-note {
+    display: none;
+}
+
+.page-header:not(.fixed) .sticky-note {
     background-color: os-color(orange);
     color: text-color(white);
+    max-width: 100vw;
     padding: 1rem 0;
     position: relative;
     width: 100vw;
