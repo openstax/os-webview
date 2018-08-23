@@ -12,10 +12,6 @@ $tablet-book-size: 16.5rem;
 .home-page {
     flex: 1 0 auto;
 
-    @include wider-than($tablet-max) {
-        margin-top: -6rem;
-    }
-
     .book-banners {
         height: calc(50vw + 4rem);
         position: relative;
