@@ -1,5 +1,5 @@
 User-agent: *
 Disallow: /accounts
 Disallow: /admin
-Disallow: /l
-Disallow: /errata
+Disallow: /l/
+Disallow: /errata/
