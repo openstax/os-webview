@@ -277,15 +277,20 @@ class Header extends Controller {
 
     updateHeaderStyle() {
         const height = this.height;
+        const windowTop = window.pageYOffset;
         const blinkThreshold = 27; // threshold to avoid blinking - half the menu height
 
-        if (window.pageYOffset <= height - blinkThreshold) {
+        if (windowTop <= height - blinkThreshold) {
             this.reset();
             if (window.location.pathname === '/') {
                 this.transparent();
             }
-        } else if (window.pageYOffset > height + blinkThreshold && !this.isPinned()) {
+        } else if (windowTop > height + blinkThreshold && !this.isPinned()) {
+            const oldHeight = document.body.scrollHeight; // next line changes body height
+
             this.reset().pin();
+            // Scroll to where you were relative to the bottom of the document
+            window.scrollTo(0, document.body.scrollHeight - oldHeight + windowTop);
         }
     }
 

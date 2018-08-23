@@ -13,7 +13,12 @@ $button-size: 2.8rem;
     width: 100%;
     z-index: 1;
 
-    &.fixed {
+    @include width-up-to($tablet-max) {
+        display: grid;
+    }
+
+    &.fixed,
+    &.active {
         position: fixed;
     }
 
@@ -72,6 +77,7 @@ $button-size: 2.8rem;
         padding-left: 4rem;
 
         > .meta-nav {
+            align-self: start;
             display: flex;
             justify-content: center;
             order: 2;
@@ -80,6 +86,7 @@ $button-size: 2.8rem;
         }
 
         > .nav {
+            align-self: end;
             order: 1;
         }
 
@@ -160,7 +167,10 @@ $button-size: 2.8rem;
         }
 
         @at-root .active.open#{&} {
+            align-self: end;
             display: block;
+            margin: calc(15% + 8rem) auto 0;
+            width: 17rem;
         }
     }
 

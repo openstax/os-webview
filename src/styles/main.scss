@@ -6,6 +6,7 @@
 
 html {
     font-weight: 300;
+    overflow-x: hidden;
 }
 
 body {
@@ -193,7 +194,6 @@ sup {
 
 #header {
     height: fit-content;
-    overflow-x: hidden;
     z-index: 2;
 }
 
