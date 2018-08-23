@@ -3,7 +3,7 @@ import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './banner-carousel.html';
 
-const SCROLL_TICKS = 30;
+const SCROLL_TICKS = 24;
 
 export default class BannerCarousel extends Controller {
 
@@ -28,16 +28,21 @@ export default class BannerCarousel extends Controller {
         };
     }
 
-    @on('change .frame-number')
-    handleChangeFrame(event) {
-        this.changeFrame(event.target.value);
-    }
-
     @on('click .dot')
     handleDotClick(event) {
         const f = event.target.getAttribute('data-index');
 
         this.changeFrame(f);
+    }
+
+    @on('click .left-arrow')
+    handleLeftClick() {
+        this.changeFrame(this.frameNumber - 1);
+    }
+
+    @on('click .right-arrow')
+    handleRightClick(event) {
+        this.changeFrame(this.frameNumber + 1);
     }
 
     changeFrame(newFrameNumber) {
