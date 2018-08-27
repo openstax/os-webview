@@ -68,11 +68,11 @@
                 }
             }
             #map-img{
-                @include width-up-to($phone-max) {
-                    width: 38rem;
-                }
                 @include width-up-to($tablet-max) {
                     width: 60rem;
+                }
+                @include width-up-to($phone-max) {
+                    width: 38rem;
                 }
             }
 }
