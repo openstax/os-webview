@@ -1,11 +1,19 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.page-header .sticky-note {
+sticky-note {
+    width: 100%;
+}
+
+.page-header.fixed .sticky-note {
+    display: none;
+}
+
+.page-header:not(.fixed) .sticky-note {
     background-color: os-color(orange);
     color: text-color(white);
     padding: 1rem 0;
     position: relative;
-    width: 100vw;
+    width: 100%;
     z-index: 1;
 
     &:empty {
@@ -32,9 +40,8 @@
     }
 
     > .html-content {
-        @extend %text-content;
-
-        display: block;
+        display: grid;
+        min-height: 4rem;
 
         a {
             color: inherit;
@@ -57,30 +64,54 @@
             }
         }
 
+        [data-html="content"] {
+            align-self: center;
+            margin-left: $normal-margin;
+            width: calc(100% - 6rem);
+
+            @include width-up-to($phone-max) {
+                justify-self: start;
+            }
+
+            @include wider-than($phone-max) {
+                justify-self: center;
+                max-width: $text-content-max;
+            }
+        }
+
         .xx,
         .banner-image {
             display: block;
             margin-bottom: -1rem;
-            margin-left: 50%;
             margin-top: -1rem;
+            width: 0;
+
+            @include width-up-to($phone-max) {
+                margin-left: -$normal-margin;
+            }
+
+            @include wider-than($phone-max) {
+                margin-left: 50%;
+            }
         }
 
         .mobile,
         .desktop {
             display: none;
-            transform: translateX(-50%);
-            width: 100vw;
         }
 
         .mobile {
             @include width-up-to($phone-max) {
                 display: block;
+                width: 100vw;
             }
         }
 
         .desktop {
             @include wider-than($phone-max) {
                 display: block;
+                transform: translateX(calc(-50% - 0.8rem));
+                width: calc(100vw);
             }
         }
     }

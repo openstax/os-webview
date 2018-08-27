@@ -125,20 +125,6 @@ class Header extends Controller {
         };
 
         window.addEventListener('scroll', this.onScrollHeader, false);
-
-        // Fix: There must be a better way
-        const padParentForStickyNote = () => {
-            const stickyNoteEl = this.el.querySelector('sticky-note');
-
-            if (stickyNoteEl) {
-                const h = stickyNoteEl.offsetHeight;
-                const p = this.el.parentNode;
-
-                p.style.minHeight = `${h}px`;
-            }
-        };
-
-        window.addEventListener('resize', padParentForStickyNote);
     }
 
     pin() {
@@ -291,15 +277,20 @@ class Header extends Controller {
 
     updateHeaderStyle() {
         const height = this.height;
+        const windowTop = window.pageYOffset;
+        const blinkThreshold = 27; // threshold to avoid blinking - half the menu height
 
-        if (window.pageYOffset > height && !this.isPinned()) {
-            this.reset().pin();
-        } else if (window.pageYOffset <= height) {
+        if (windowTop <= height - blinkThreshold) {
+            this.reset();
             if (window.location.pathname === '/') {
-                this.reset().transparent();
-            } else {
-                this.reset();
+                this.transparent();
             }
+        } else if (windowTop > height + blinkThreshold && !this.isPinned()) {
+            const oldHeight = document.body.scrollHeight; // next line changes body height
+
+            this.reset().pin();
+            // Scroll to where you were relative to the bottom of the document
+            window.scrollTo(0, document.body.scrollHeight - oldHeight + windowTop);
         }
     }
 

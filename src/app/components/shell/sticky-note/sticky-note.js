@@ -86,8 +86,9 @@ class StickyNote extends CMSPageController {
     }
 
     @on('click .put-away')
-    putAway() {
+    putAway(e) {
         this.forceHide(true);
+        e.stopPropagation();
     }
 
 }
