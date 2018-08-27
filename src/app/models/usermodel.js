@@ -1,6 +1,5 @@
 import settings from 'settings';
 
-export const userUrl = `${settings.apiOrigin}/api/user`;
 const docUrlBase = `${settings.apiOrigin}/api/documents`;
 const accountsUrl = `${settings.accountHref}/api/user`;
 
@@ -44,19 +43,54 @@ class UserModel {
 
 }
 
-const _sfUserModel = new UserModel(accountsUrl); // loads multiple times
-const _userModel = new UserModel(userUrl).load(); // loads once
+function oldUserModel(sfUserModel) {
+    const findPreferredEmail = (contacts) => (contacts
+        .filter((obj) => obj.type === 'EmailAddress')
+        .reduce((a, b) => {
+            if (b.is_guessed_preferred || (b.is_verified && !a.is_verified)) {
+                return b;
+            }
+            return a;
+        }) || {}).value;
+    const groupsFor = (userInfo) => {
+        const result = userInfo.applications
+            .map((obj) => obj.name)
+            .filter((name) => name === 'OpenStax Tutor');
 
-export const sfUserModel = {
-    load: () =>
-        Promise.all([_sfUserModel.load(), _userModel]).then(([sfUser, user]) => {
-            /* eslint camelcase: 0 */
-            return Object.assign(user, {
-                pending_verification: sfUser.faculty_status === 'pending_faculty'
-            });
-        }),
-    loginLink: _sfUserModel.loginLink
-};
+        if (userInfo.self_reported_role === 'student') {
+            result.push('Student');
+        }
+        if (userInfo.faculty_status === 'confirmed_faculty') {
+            result.push('Faculty');
+        }
+        return result;
+    };
+
+    /* eslint camelcase: 0 */
+    return {
+        id: sfUserModel.id,
+        accounts_id: sfUserModel.id,
+        email: sfUserModel.contact_infos.length ? findPreferredEmail(sfUserModel.contact_infos) : null,
+        first_name: sfUserModel.first_name,
+        groups: groupsFor(sfUserModel),
+        last_name: sfUserModel.last_name,
+        pending_verification: sfUserModel.faculty_status === 'pending_faculty',
+        username: sfUserModel.id
+    };
+}
+
+class ConvertedAccountsUserModel extends UserModel {
+
+    constructor() {
+        super(accountsUrl);
+    }
+
+    load() {
+        return super.load().then(oldUserModel);
+    }
+
+}
+
 export const accountsModel = new UserModel(accountsUrl);
 export const makeDocModel = (docId) => new UserModel(`${docUrlBase}/${docId}`);
-export default new UserModel(userUrl);
+export default new ConvertedAccountsUserModel();

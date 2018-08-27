@@ -7,7 +7,7 @@ import settings from 'settings';
 import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 import linkHelper from '~/helpers/link';
-import userModel, {sfUserModel, accountsModel} from '~/models/usermodel';
+import userModel, {accountsModel} from '~/models/usermodel';
 import {description as template} from './header.html';
 
 class Header extends Controller {
@@ -61,31 +61,23 @@ class Header extends Controller {
             }, 60000);
         };
 
-        userModel.load().then((response) => {
-            const handleUser = (user) => {
-                if (typeof user === 'object') {
-                    this.model.user = user;
+        userModel.load().then((user) => {
+            if (typeof user === 'object') {
+                this.model.user = user;
+            }
+            this.update();
+            this.mainMenu.update();
+            if (user.accounts_id) {
+                if (
+                    user.groups.includes('Tutor') &&
+                    !localStorage.hasSeenTutorTrainingWheel
+                ) {
+                    this.mainMenu.showTutorTrainingWheel();
+                    localStorage.setItem('hasSeenTutorTrainingWheel', true);
                 }
-                this.update();
-                this.mainMenu.update();
-                if (user.accounts_id) {
-                    if (
-                        user.groups.includes('Tutor') &&
-                        !localStorage.hasSeenTutorTrainingWheel
-                    ) {
-                        this.mainMenu.showTutorTrainingWheel();
-                        localStorage.setItem('hasSeenTutorTrainingWheel', true);
-                    }
-                    if (!user.groups.includes('Tutor')) {
-                        pollAccounts();
-                    }
+                if (!user.groups.includes('Tutor')) {
+                    pollAccounts();
                 }
-            };
-
-            if (typeof response === 'object' && response.groups.length === 0) {
-                sfUserModel.load().then(handleUser);
-            } else {
-                handleUser(response);
             }
         });
 

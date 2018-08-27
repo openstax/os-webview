@@ -1,6 +1,6 @@
 import settings from 'settings';
 import linkHelper from '~/helpers/link';
-import userModel, {sfUserModel, accountsModel} from '~/models/usermodel';
+import {accountsModel} from '~/models/usermodel';
 
 const RELATIVE_TO_ROOT = /^\//;
 
