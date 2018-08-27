@@ -1,6 +1,6 @@
 {
   "name": "@openstax/os-webview",
-  "version": "2.18.0",
+  "version": "2.18.1",
   "description": "OpenStax webview",
   "scripts": {
     "start": "gulp dev",
