@@ -38,10 +38,10 @@ export default class Map1 extends Controller {
         }, 8000);
         setTimeout(() => {
             const styleT = 'transition: all 1.5s ease-out;-webkit-transition: all 1.5s ease-out;';
-            const styleFr = '-moz-transition: all 1.5s ease-out;-o-transition: all 1.5s ease-out;left:2%;top:64px;';
+            const styleFr = '-moz-transition: all 1.5s ease-out;-o-transition: all 1.5s ease-out;margin-top: 3rem;';
 
             if (window.innerWidth > 960) {
-                document.getElementById('search').setAttribute('style', styleT + styleFr);
+                document.getElementById('search_container').setAttribute('style', styleT + styleFr);
             }
         }, 10000);
     }
