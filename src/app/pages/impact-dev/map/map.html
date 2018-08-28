@@ -1,13 +1,17 @@
 <template args="model">
+        <div class="search_container" id="search_container">
         <div class="search" id="search">
-                <input id="srch_input" class="srch" type="text" placeholder="Search by Country">
-                <img class="searchimg" src="./images/home/search.png" alt="">
-                <button class="filter_btn" value="0">
-                        <span id="filter_icons"><span id='filter_style' class="fas fa-sliders-h"></span></span>
-                        <span id="filter_by">Filter By</span></button>
-                </input>
-                <div id="dropDownList_id" class="dropDownList">
-                </div>
+                        <div><input id="srch_input" class="srch" type="text" placeholder="Search by country, state, city, or institution name"></input></div>
+                        <div><img class="searchimg" src="./images/home/search.png" alt=""></div>
+                        <div><button class="filter_btn" value="0">
+                                <span id="filter_icons">
+                                        <span id='filter_style' class="fas fa-sliders-h"></span>
+                                </span>
+                                <span id="filter_by">Filter By</span>
+                        </button></div>
+        </div>                            
+                <div id="dropDownList_id" class="dropDownList"></div>
+                
                 <div id="filter_d" class="filter_div">
                         <div class="filter_container">
                                 <div id="institute_prtnr">
@@ -40,14 +44,13 @@
                                         </label>
                                 </div>
                                 <div id="apply_filter">
-                                      <button class="applyFltrBtn" value='0'>Apply filters</button>
+                                        <button class="applyFltrBtn" value='0'>Apply filters</button>
                                 </div>
                         </div>
                 </div>
-        </div>
-        <div class="maptxt" id="maptxt">
-                we're changing the world, one book at a time!
+                <div class="maptxt" id="maptxt">
+                                we're changing the world, one book at a time!
+                </div> 
         </div>
         <div id="onMap" class="onMap"></div>
-
 </template>

@@ -1,17 +1,8 @@
 @import 'pattern-library/core/pattern-library/headers';
 .mapdiv {
-    height: 800px;
-    overflow: hidden;
-    position: relative;
-    top: 6rem;
+    height: 80rem;
+    margin-top: 6rem;
     width: 100%;
-    @include wider-than(60rem) {
-        height: 800px;
-        overflow: hidden;
-        position: relative;
-        top: 0rem;
-        width: 100%;
-    }
     @include width-up-to($tablet-max) {
         top: 0rem;
     }
@@ -29,11 +20,14 @@
     //background-repeat: no-repeat;
     //background-size: cover;
     @include wider-than(60rem) {
-        bottom: 0;
-        height: 77rem;
-        left: 0;
-        position: absolute;
-        right: 0;
+        height: 80rem;
+    }
+    .search_container{
+        width: 67.8rem;
+        position: relative;
+        z-index: 99999;
+        margin-left: 5rem;
+        margin-top: 15rem;
     }
     #map {
         position: relative;
@@ -44,42 +38,24 @@
         opacity: 1;
     }
     .maptxt {
-        position: absolute;
-        top: 26rem;
-        left: 2%;
         width: 55rem;
         color: #FFFFFF;
         font-size: 48px;
         font-weight: bold;
         letter-spacing: -1.92px;
         line-height: 50px;
-        z-index: 99999;
+        padding-top: 4rem;
         @include width-up-to($phone-max) {
             top: 14rem;
             width: 31rem;
             left: 5%
         }
-        @include wider-than(85rem) {
-            margin-left: 8%;
-        }
-        @include wider-than(100rem) {
-            margin-left: 9%;
-        }
-        @include wider-than(120rem) {
-            margin-left: 14%;
-        }
-        @include wider-than(160rem) {
-            margin-left: 21%;
-        }
-        @include wider-than(180rem) {
-            margin-left: 27%;
-        }
     }
     .onMap {
-        position: absolute;
-        height: 74rem;
+        position: relative;
+        height: 80rem;
         overflow: hidden;
-        top: 3rem;
+        bottom: 35.8rem;
         width: 100%;
         background-color: #002469;
         opacity: 0.8;
@@ -89,23 +65,20 @@
         }
     }
     .search {
-        top: 165px;
-        left: 2%;
-        overflow-x: visible;
-        position: fixed;
-        z-index: 999900;
-        position: absolute;
+        width: 63.4rem;
         height: 67px;
+        background-color: white;
+        display: flex;
+        align-items: center;
+        border: 1px solid white;
+        border-radius: 3px;
         .srch {
-            height: 70px;
-            min-width: 649px;
-            width: 100%;
+            width: 45rem;
             font-size: 16px;
             border: 1px solid #FFFFFF;
             border-radius: 3px;
             color: #4A4A4A;
             padding-left: 10px;
-            border-bottom: 1px solid #D5D5D5;
         }
         @include width-up-to($phone-max) {
             position: relative;
@@ -131,9 +104,7 @@
                 right: 310px;
             }
             .filter_btn {
-                position: absolute;
-                right: 20px;
-                top: 10px;
+
                 height: 32px;
                 width: 34px;
                 border: 1px solid #D5D5D5;
@@ -148,31 +119,17 @@
                 display: none;
             }
         }
-        @include wider-than(85rem) {
-            margin-left: 8%;
-        }
-        @include wider-than(100rem) {
-            margin-left: 9%;
-        }
-        @include wider-than(120rem) {
-            margin-left: 14%;
-        }
-        @include wider-than(160rem) {
-            margin-left: 21%;
-        }
-        @include wider-than(180rem) {
-            margin-left: 27%;
-        }
     }
     #dropDownList_id {
-        margin-top: 1px;
+        border-top: 1px solid #D5D5D5;
+        width: 63.4rem;
     }
     .switch {
         position: relative;
         display: inline-block;
         width: 50px;
         height: 26px;
-        top: 8px;
+        margin-left: auto;
     }
     .switch input {
         display: none;
@@ -240,6 +197,7 @@
     }
     .filter_div {
         display: none;
+        width: 63.4rem;
         background-color: white;
         list-style-type: none;
         padding-left: unset;
@@ -249,7 +207,7 @@
         list-style-type: none;
         padding-left: unset;
         margin: unset;
-        max-height: 634px;
+        max-height: 28.8rem;
         overflow-y: scroll;
         overflow-x: hidden;
         border-radius: 3px;
@@ -258,27 +216,38 @@
             overflow-y: scroll;
         }
     }
+    .toggle_on_off{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
     .search_list_element {
         border-bottom: 1px solid #D5D5D5;
-        margin-left: 15px;
-        margin-right: 15px;
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
     .list_show_more {
-        display: inline-block;
-        position: relative;
-        bottom: 17px;
+
     }
     .list_data {
-        display: inline-block;
+        display: flex;
+        flex-direction: column;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+    .angle_circle{
+        background-color: #E5E5E5;
+        border-radius: 50%;
+        height: 32px;
+        width: 32px;
     }
     .list_address {
-        margin-top: 19px;
-        margin-bottom: 12px;
         color: #4A4A4A;
         height: 16px;
         font-size: 14px;
         line-height: 16px;
-        width: 586px;
+        margin-top: 1.7rem;
         @include width-up-to($phone-max) {
             margin-top: 8px;
             margin-bottom: 9px;
@@ -290,15 +259,13 @@
         }
     }
     .list_heading {
-        margin-bottom: 23px;
         color: #4A4A4A;
         height: 22px;
         font-size: 18px;
         font-weight: bold;
         line-height: 23px;
-        width: 586px;
         @include wider-than(85rem) {
-            width: 625px;
+
         }
         @include width-up-to($phone-max) {
         margin-bottom:unset;
@@ -311,7 +278,8 @@
         }
     }
     .toggle_dataList_head {
-        margin-top: 25px;
+        display: flex;
+        flex-direction: row;
         @include width-up-to($phone-max) {
             margin-top: 2px;
         }
@@ -319,23 +287,30 @@
     .left_column {
         border: 1px solid #D5D5D5;
         border-radius: 3px;
+        width: 55%;
         @include width-up-to($phone-max) {
             display: block;
         }
+    }
+    .left_column_inner{
+        padding: 1.5rem 1rem 1.5rem 1rem;
     }
     .right_column {
         border-top: 1px solid #D5D5D5;
         border-bottom: 1px solid #D5D5D5;
         border-right: 1px solid #D5D5D5;
         border-radius: 3px;
+        width: 45%;
         @include width-up-to($phone-max) {
             margin-top: 10px;
             border-left: 1px solid #D5D5D5;
             display: block;
         }
     }
+    .right_column_inner{
+        padding: 1.5rem 1rem 1.5rem 1rem;
+    }
     .lColumn_head {
-        margin-left: 15px;
         color: #4A4A4A;
         font-size: 14px;
         font-weight: bold;
@@ -346,9 +321,10 @@
         }
     }
     .lColumn_body {
-        margin-left: 16px;
-        margin-bottom: 20px;
-        margin-top: 10px;
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
         @include width-up-to($phone-max) {
             margin-left: 8px;
             margin-top: 4px;
@@ -356,7 +332,6 @@
         }
     }
     .lCol_body_left {
-        margin-right: 16px;
         color: #4A4A4A;
         font-size: 14px;
         line-height: 16px;
@@ -365,7 +340,6 @@
         }
     }
     .lCol_body_right {
-        margin-right: 24px;
         color: #4A4A4A;
         font-size: 14px;
         line-height: 16px;
@@ -378,32 +352,12 @@
         font-size: 14px;
         font-weight: bold;
         line-height: 17px;
-        margin-right: 56px;
-        margin-left: 15px;
-        margin-top: 15px;
         @include width-up-to($phone-max) {
             margin-left: 8px;
             margin-top: 4px;
         }
-        @include wider-than(85rem) {
-            margin-right: 77px;
-        }
-        @include wider-than(100rem) {
-            margin-right: 103px;
-        }
-        @include wider-than(120rem) {
-            margin-right: 98px;
-        }
-        @include wider-than(160rem) {
-            margin-right: 77px;
-        }
-        @include wider-than(180rem) {
-            margin-right: 77px;
-        }
     }
     .rColumn_body {
-        margin-left: 16px;
-        margin-bottom: 20px;
         margin-top: 10px;
         @include width-up-to($phone-max) {
             margin-left: 8px;
@@ -430,8 +384,9 @@
         color: #027EB5;
         font-size: 16px;
         line-height: 25px;
-        margin-top: 5px;
-        margin-bottom: 10px;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        text-align: right;
     }
     .testimonial_head{
         display: none;
@@ -439,20 +394,24 @@
         font-weight: bold;
         line-height: 17px;
     }
-    #sub_testimonial {
-        margin-left: 415px;
-        margin-right: 8px;
-    }
     .tdlb_container {
-        margin-top: 57px;
-        margin-left: 51.1px;
-        margin-right: 29.9px;
+        padding: 5rem 2rem 3rem 2rem;
         @include width-up-to($phone-max) {
             margin-top: 4px;
             margin-left: 8px;
         }
     }
+    .tdlb_para {
+        display: flex;
+        flex-direction: row;
+    }
+    .para_quote {
+        font-size: 18px;
+        color: #F66400;
+    }
     .tdl_body_desc {
+        padding-top: 0.7rem;
+        padding-left: 1rem;
         color: #424242;
         font-size: 16px;
         line-height: 25px;
@@ -462,6 +421,9 @@
                 display: none;
             }
         }
+    }
+    .tdl_body_regards {
+        padding-top: 3rem;
     }
     .tdlb_regards_name {
         color: #4B4B4B;
@@ -486,13 +448,10 @@
         right: -107px;
     }
     .filter_btn {
-        position: absolute;
-        right: 10px;
-        top: 16px;
-        background: transparent;
         border: 1px solid #D5D5D5;
         border-radius: 2px;
         background-color: #FFFFFF;
+        margin: 2rem;
     }
     #filter_style {
         width: 18px;
@@ -519,35 +478,39 @@
         margin-left: 15px;
     }
     .filter_container {
-        margin-left: 15px;
+        margin-left: 2rem;
+        margin-right: 2rem;
     }
     .label_text {
         font-size: 16px;
     }
     #institute_prtnr {
-        padding-top: 22px;
+        display: flex;
+        padding: 3rem 0rem 1.5rem 0rem;
     }
     #type_institute {
-        margin-top: 22px;
+        display: flex;
+        padding: 1rem 0rem 1.5rem 0rem;
     }
     #one_million {
-        margin-top: 22px;
+        display: flex;
+        padding: 1rem 0rem 1.5rem 0rem;
     }
     #testmonal {
-        margin-top: 22px;
+        display: flex;
         margin-bottom: 43px;
     }
     #institute_prtnr_toggle {
-        margin-left: 341px;
+
     }
     #type_institute_toggle {
-        margin-left: 432px;
+
     }
     #one_million_toggle {
-        margin-left: 277px;
+
     }
     #testmonal_toggle {
-        margin-left: 430px;
+
     }
     .applyFltrBtn {
         height: 50px;
@@ -604,10 +567,6 @@
         }
     }
     .searchimg {
-        position: absolute;
-        top: 25px;
-        right: 140px;
-        width: 20px;
-        height: 20px;
+        width: 2rem;
     }
 }

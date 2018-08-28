@@ -3,46 +3,51 @@
         <li each="element in model.lData" class="search_list_element">
             <div class="toggle_on_off" id="show-{element.pk}" data-toggle="show" data-value="1234">
                 <div class="list_data">
-                    <p class="list_heading">{element.fields.name}</p>
-                    <p class="list_address">{element.fields.physical_city}, {element.fields.physical_state_province}</p>
+                    <div class="list_heading">{element.fields.name}</div>
+                    <div class="list_address">{element.fields.physical_city}, {element.fields.physical_state_province}</div>
                 </div>
                 <div class="list_show_more">
-                    <i id="icon-{element.pk}" class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                    <i id="icon-{element.pk}" class="fa fa-angle-down angle_circle" aria-hidden="true"></i>
                 </div>
             </div>
             <div id="data-{element.pk}" class="toggle_dataList">
-
                 <div class="toggle_dataList_head">
-                    <tr>
-                        <td class="left_column">
+                    <div class="left_column">
+                        <div class="left_column_inner">
                             <div class="lColumn_head">Student savings</div>
                             <div class="lColumn_body">
-                                <span class="lCol_body_left">This year: $327,000</span>
-                                <span class="lCol_body_right">Cumulative: $1,023,016</span>
+                                <div class="lCol_body_left">This year: $327,000</div>
+                                <div class="lCol_body_right">Cumulative: $1,023,016</div>
                             </div>
-                        </td>
-                        <td class="right_column">
+                        </div>
+                    </div>
+                    <div class="right_column">
+                        <div class="right_column_inner">
                             <div class="rColumn_head">OpenStax Institutional Partner</div>
                             <div class="rColumn_body">Yes</div>
-                        </td>
-                    </tr>
-                </div>                
+                        </div>
+                    </div>
+                </div>
                 <div id="testimonialBody-{element.pk}">
                     <div class="toggle_dataList_body">
                         <div class="tdlb_container">
                             <div id="testimonialHead-{element.pk}" class="testimonial_head">Testimonials</div>
-                            <i class="fas fa-quote-left"></i>
-                            <p class="tdl_body_desc">Teaming up with the other OpenStax Institutional Partner schools
-                                <br> provided a sense of community as we navigated launching OER initiatives
-                                <br> at our own campuses. Learning about other schools’ successes and
-                                <br> frustrations each month was inspiring. I learned so many new techniques
-                                <br> and innovative ideas that I could then apply at my own campus. I loved
-                                <br> the structure of this program. It’s inspiring to see how many students are
-                                <br> impacted by OER adoption – the numbers really add up quickly.
-                            </p>
+                            <div class="tdlb_para">
+                                <div class="para_quote">
+                                    <i class="fas fa-quote-left"></i>
+                                </div>
+                                <div class="tdl_body_desc">Teaming up with the other OpenStax Institutional Partner schools
+                                    <br> provided a sense of community as we navigated launching OER initiatives
+                                    <br> at our own campuses. Learning about other schools’ successes and
+                                    <br> frustrations each month was inspiring. I learned so many new techniques
+                                    <br> and innovative ideas that I could then apply at my own campus. I loved
+                                    <br> the structure of this program. It’s inspiring to see how many students are
+                                    <br> impacted by OER adoption – the numbers really add up quickly.
+                                </div>
+                            </div>
                             <div class="tdl_body_regards">
-                                <p class="tdlb_regards_name">– Erin Davis</p>
-                                <p class="tdlb_regards_desc">Distance Education Library Services Coordinator</p>
+                                <div class="tdlb_regards_name">– Erin Davis</div>
+                                <div class="tdlb_regards_desc">Distance Education Library Services Coordinator</div>
                             </div>
                         </div>
                     </div>
