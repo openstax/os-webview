@@ -35,6 +35,7 @@ export default class Map1 extends Controller {
 
             document.getElementById('onMap').setAttribute('style', styleF + styleS);
             document.getElementById('maptxt').setAttribute('style', styleF + styleS);
+            document.getElementById('maptxt').setAttribute('style', 'display: none');
         }, 8000);
         setTimeout(() => {
             const styleT = 'transition: all 1.5s ease-out;-webkit-transition: all 1.5s ease-out;';
@@ -52,7 +53,7 @@ export default class Map1 extends Controller {
 
         this.validateMob();
         if (filterStatus.value === '1') {
-            this.closeFlterDiv();
+            return;
         }
         if (event.target.value === '') {
             this.model = [];
@@ -61,11 +62,11 @@ export default class Map1 extends Controller {
             if (window.innerWidth < 960) {
                 this.el.querySelector('.search').setAttribute('style', 'top: 370px');
                 searchInput.setAttribute('style', 'border: unset');
-                this.el.querySelector('.searchimg').setAttribute('style', 'display: block');
+                this.el.querySelector('.searchimg').setAttribute('style', 'display: initial');
             }
             this.regions.dataList.attach(list);
         } else if (event.target.textLength > 3) {
-            this.searchRequest(this.filterStatus, event);
+            this.searchRequest(this.filterStatus, event.target.value);
         }
     }
     @on('click .filter_btn')
@@ -95,6 +96,7 @@ export default class Map1 extends Controller {
     @on('click .applyFltrBtn')
     applyFilter(event) {
         const filterValue = event.target.value;
+        const searchInput = this.el.querySelector('.srch');
 
         if (filterValue === '0') {
             event.target.value = '1';
@@ -102,6 +104,7 @@ export default class Map1 extends Controller {
         }
         this.setFilterValues();
         this.closeFlterDiv();
+        this.searchRequest(this.filterStatus, searchInput.value);
     }
     @on('click .toggleCheck')
     changeFltrToggle(event) {
@@ -111,7 +114,7 @@ export default class Map1 extends Controller {
             event.delegateTarget.value = 'false';
         }
     }
-    searchRequest(fltrStatus, event) {
+    searchRequest(fltrStatus, value) {
         let fltString = '';
 
         if (fltrStatus === 'true') {
@@ -119,7 +122,7 @@ export default class Map1 extends Controller {
         }
         (async () => {
             try {
-                const response = await fetch(`${settings.apiOrigin}/api/schools/?name=${event.target.value+fltString}`);
+                const response = await fetch(`${settings.apiOrigin}/api/schools/?name=${value+fltString}`);
                 const data = await response.json();
 
                 if (data.length) {
@@ -131,6 +134,10 @@ export default class Map1 extends Controller {
                         lData: data
                     };
                     const list = new Dropdown(this.model);
+
+                    this.regions.dataList.attach(list);
+                } else {
+                    const list = new Dropdown('empty_result');
 
                     this.regions.dataList.attach(list);
                 }
