@@ -44,8 +44,8 @@ export default class ImpactDev extends CMSPageController {
         const mapObject = new mapboxgl.Map({
             container: 'mapdiv',
             style: 'mapbox://styles/openstax/cjhv1z4iq00of2smldg1o0ktw',
-            center: [-74.50, 40],
-            zoom: 9
+            center: [0, 0],
+            zoom: 2
         });
 
         this.regions.map.append(new Map1(mapObject));
