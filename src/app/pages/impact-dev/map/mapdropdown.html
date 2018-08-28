@@ -1,5 +1,8 @@
 <template args="model">
-    <ul if="model.length!=0" class="search_list">
+        <div if="model=='empty_result'" class="search_emptyResult">
+            No result Found
+        </div>
+    <ul if="model.length!=0 && model!='empty_result'" class="search_list">
         <li each="element in model.lData" class="search_list_element">
             <div class="toggle_on_off" id="show-{element.pk}" data-toggle="show" data-value="1234">
                 <div class="list_data">
