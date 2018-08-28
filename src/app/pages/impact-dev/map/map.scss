@@ -1,18 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
-.mapdiv {
-    height: 80rem;
-    margin-top: 6rem;
-    width: 100%;
-    @include width-up-to($tablet-max) {
-        top: 0rem;
-    }
-    @include width-up-to($phone-max) {
-        height: 430px;
-        top: 0rem;
-        width: 100%;
-    }
 
-}
 
 .mapbox {
     //background-attachment: local;
@@ -22,12 +9,25 @@
     @include wider-than(60rem) {
         height: 80rem;
     }
+    @include width-up-to($phone-max) {
+        height: 43rem;
+    }
     .search_container{
         width: 67.8rem;
         position: relative;
         z-index: 99999;
         margin-left: 5rem;
         margin-top: 15rem;
+        @include width-up-to($phone-max) {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-top: unset;
+            margin-left: unset;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            padding-top: 13rem;
+        }
     }
     #map {
         position: relative;
@@ -46,9 +46,8 @@
         line-height: 50px;
         padding-top: 4rem;
         @include width-up-to($phone-max) {
-            top: 14rem;
+            order: 1;
             width: 31rem;
-            left: 5%
         }
     }
     .onMap {
@@ -61,7 +60,8 @@
         opacity: 0.8;
         z-index: 999;
         @include width-up-to($phone-max) {
-            top: 0rem;
+            height: 44rem;
+            bottom: 43rem
         }
     }
     .search {
@@ -81,32 +81,28 @@
             padding-left: 10px;
         }
         @include width-up-to($phone-max) {
-            position: relative;
-            top: 370px;
-            left: 2%;
-            background: white;
-            height: 52px;
-            width: 344px;
-            border-bottom: 1px solid #D5D5D5;
+            width: 100%;
+            height: 5rem;
+            justify-content: space-around;
+            order: 2;
+            #search_input_div {
+                order: 2;
+            }
+            #search_filter_div {
+                order: 2;
+            }
             .srch {
-                height: 31px;
-                min-width: 232px;
-                width: 232px;
-                margin-top: 11px;
-                margin-left: 33px;
                 font-size: 14px;
-                background-color: #FFFFFF;
-                padding-left: 10px;
-                border: unset;
+                width: unset;
+                padding: 0.6rem;
             }
             .searchimg {
-                top: 15.5px;
-                right: 310px;
+
             }
             .filter_btn {
-
-                height: 32px;
-                width: 34px;
+                width: 3.2rem;
+                height: 3.2rem;
+                margin: unset;
                 border: 1px solid #D5D5D5;
                 border-radius: 3px;
             }
@@ -185,7 +181,7 @@
             transform: translateX(12px);
         }
         #dropDownList_id {
-            margin-top: 10px;
+            order: 3;
         }
 }
     /* Rounded sliders */
@@ -201,6 +197,13 @@
         background-color: white;
         list-style-type: none;
         padding-left: unset;
+    }
+    .search_emptyResult {
+        background-color: white;
+        overflow-x: hidden;
+        border-radius: 3px;
+        font-size: 14px;
+        padding: 1.5rem;
     }
     .search_list {
         background-color: white;
@@ -519,41 +522,40 @@
         background-color: #F36B32;
     }
     #apply_filter {
-        margin-left: 464px;
-        padding-bottom: 15px;
+        text-align: end;
+        padding-bottom: 1.5rem;
     }
     @include width-up-to($phone-max) {
         .filter_div{
-            width: 344px;
-            margin-top: 10px;
+            width: 100%;
+            order: 3;
         }
         .label_text {
             font-size: 14px;
         }
         #institute_prtnr {
-            padding-top: 12px;
+
         }
         #type_institute {
-            margin-top: 12px;
+
         }
         #one_million {
-            margin-top: 12px;
+
         }
         #testmonal {
-            margin-top: 12px;
-            margin-bottom: 24px;
+
         }
         #institute_prtnr_toggle {
-            margin-left: 85px;
+
         }
         #type_institute_toggle {
-            margin-left: 164px;
+
         }
         #one_million_toggle {
-            margin-left: 27px;
+
         }
         #testmonal_toggle {
-            margin-left: 163px;
+
         }
         #apply_fltr_btn {
             height: 38px;
@@ -562,11 +564,11 @@
             background-color: #F36B32;
         }
         #apply_filter {
-            margin-left: 162px;
-            padding-bottom: 9px;
+
         }
     }
     .searchimg {
         width: 2rem;
+        padding-top: 0.2rem;
     }
 }
