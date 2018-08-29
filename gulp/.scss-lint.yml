@@ -11,7 +11,7 @@ linters:
         enabled: false
 
     Indentation:
-        width: 2
+        width: 4
 
     LeadingZero:
         enabled: true

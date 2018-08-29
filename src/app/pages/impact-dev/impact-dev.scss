@@ -4,10 +4,13 @@
 .mapdiv {
     height: 80rem;
     width: 100%;
+
     @include width-up-to($tablet-max) {
-        top: 0rem;
+        top: 0;
     }
+
     @include width-up-to($phone-max) {
         height: 43rem;
     }
+
 }
