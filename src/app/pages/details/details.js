@@ -40,7 +40,8 @@ export default class Details extends CMSPageController {
             tabContent: '.tab-content'
         };
         this.view = {
-            classes: ['details-page-v2']
+            classes: ['details-page-v2'],
+            tag: 'main'
         };
 
         this.bookTitle = 'Loading';

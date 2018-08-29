@@ -21,12 +21,12 @@ export default class InterestForm extends Controller {
         this.template = template;
         this.css = `/app/pages/interest/interest.css?${VERSION}`;
         this.view = {
-            classes: ['interest-form-v2']
+            classes: ['interest-form-v2'],
+            tag: 'main'
         };
         this.regions = {
             header: '[data-region="header"]',
-            roleSelector: '[data-region="role-selector"]',
-            form: 'plug-in[data-id="form"]'
+            roleSelector: '[data-region="role-selector"]'
         };
     }
 

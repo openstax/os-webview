@@ -21,7 +21,8 @@ export default class Subjects extends CMSPageController {
         this.template = template;
         this.css = `/app/pages/subjects/subjects.css?${VERSION}`;
         this.view = {
-            classes: ['subjects-page', 'hide-until-loaded']
+            classes: ['subjects-page', 'hide-until-loaded'],
+            tag: 'main'
         };
         this.regions = {
             filter: '.filter',

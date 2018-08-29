@@ -17,7 +17,8 @@ export default class Blog extends CMSPageController {
         this.template = template;
         this.css = `/app/pages/blog/blog.css?${VERSION}`;
         this.view = {
-            classes: ['blog', 'page']
+            classes: ['blog', 'page'],
+            tag: 'main'
         };
         this.regions = {
             articles: '.articles .container',

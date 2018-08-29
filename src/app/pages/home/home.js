@@ -77,7 +77,7 @@ export default class Home extends CMSPageController {
             // FIX: color schemes should be configured in the CMS
             result.bucketClass = index ? 'partners' : 'our-impact';
             result.btnClass = index ? 'btn-gold' : 'btn-cyan';
-            result.hasImage = !!result.image.image;
+            result.hasImage = Boolean(result.bucketClass === 'our-impact');
 
             return result;
         });

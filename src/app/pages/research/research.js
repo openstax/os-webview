@@ -13,7 +13,8 @@ export default class Research extends CMSPageController {
     init() {
         this.template = template;
         this.view = {
-            classes: ['research', 'page']
+            classes: ['research', 'page'],
+            tag: 'main'
         };
         this.css = `/app/pages/research/research.css?${VERSION}`;
         this.slug = 'pages/research';

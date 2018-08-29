@@ -14,7 +14,8 @@ export default class Foundation extends CMSPageController {
         this.template = template;
         this.css = `/app/pages/foundation/foundation.css?${VERSION}`;
         this.view = {
-            classes: ['foundation-page', 'page']
+            classes: ['foundation-page', 'page'],
+            tag: 'main'
         };
         this.slug = '/pages/foundation-support';
         this.model = {

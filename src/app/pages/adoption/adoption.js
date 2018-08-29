@@ -21,7 +21,8 @@ export default class InterestForm extends Controller {
         this.template = template;
         this.css = `/app/pages/adoption/adoption.css?${VERSION}`;
         this.view = {
-            classes: ['adoption-form-v2']
+            classes: ['adoption-form-v2'],
+            tag: 'main'
         };
         const defaultTitle = decodeURIComponent(window.location.search.substr(1));
 

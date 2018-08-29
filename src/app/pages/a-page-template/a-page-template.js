@@ -9,9 +9,6 @@ import {on} from '~/helpers/controller/decorators';
 // Several utility functions, including scrollTo and insertHtml
 import $ from '~/helpers/$';
 
-// Any components:
-import AComponentTemplate from '~/components/a-component-template/a-component-template';
-
 import {description as template} from './a-page-template.html';
 
 // Global-replace a-page-template with the file name of your component
@@ -22,7 +19,8 @@ export default class APageTemplate extends CMSPageController {
     init() {
         this.template = template;
         this.view = {
-            classes: ['a-page-template', 'page']
+            classes: ['a-page-template', 'page'],
+            tag: 'main' // if the HTML doesn't contain a main tag
         };
         this.css = `/app/pages/a-page-template/a-page-template.css?${VERSION}`;
 
@@ -31,9 +29,6 @@ export default class APageTemplate extends CMSPageController {
 
         // Any other state setup
         this.heading = '';
-        this.componentMessage = 'Loading';
-
-        this.createComponents();
 
         // model is an arg for the template and needs its context bound
         this.model = () => this.getModel();
@@ -47,28 +42,12 @@ export default class APageTemplate extends CMSPageController {
         };
     }
 
-    createComponents() {
-        this.component = new AComponentTemplate(() => ({
-            message: this.componentMessage
-        }));
-    }
-
-    updateComponents() {
-        this.component.update();
-    }
-
-    // Fires when the page has rendered, a good time to attach child components
-    onLoaded() {
-        this.regions.component.attach(this.component);
-    }
-
     // Fires when the slug has been loaded (data returned in this.pageData)
     // Content probably needs to be updated
     onDataLoaded() {
         this.heading = this.pageData.intro_heading;
         this.componentMessage = 'Hey, it\'s loaded';
         this.update();
-        this.updateComponents();
     }
 
 }

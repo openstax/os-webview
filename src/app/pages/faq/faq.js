@@ -16,7 +16,8 @@ export default class FAQ extends CMSPageController {
         this.template = template;
         this.css = `/app/pages/faq/faq.css?${VERSION}`;
         this.view = {
-            classes: ['faq-page', 'page']
+            classes: ['faq-page', 'page'],
+            tag: 'main'
         };
 
         this.model = {};
