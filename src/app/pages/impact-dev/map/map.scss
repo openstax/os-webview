@@ -26,7 +26,7 @@
             margin-left: unset;
             padding-left: 1rem;
             padding-right: 1rem;
-            padding-top: 13rem;
+            padding-top: 20rem;
         }
     }
     #map {
@@ -60,8 +60,8 @@
         opacity: 0.8;
         z-index: 999;
         @include width-up-to($phone-max) {
-            height: 44rem;
-            bottom: 43rem
+            height: 50rem;
+            bottom: 49.1rem
         }
     }
     .search {
@@ -115,6 +115,21 @@
                 display: none;
             }
         }
+    }
+    #backToSearch_div {
+        display: none;
+        order: 2;
+        margin-bottom: 1rem;
+    }
+    #backToSearch_btn {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 28px;
+        background-color: white;
+        box-shadow: 0 10px 30px 0 rgba(0,0,0,0.3);
+    }
+    .left_arrow_bak{
+        color: #4A4A4A;
     }
     #dropDownList_id {
         border-top: 1px solid #D5D5D5;
@@ -182,6 +197,8 @@
         }
         #dropDownList_id {
             order: 3;
+            width: 100%;
+            border-top: unset;
         }
 }
     /* Rounded sliders */
@@ -215,7 +232,7 @@
         overflow-x: hidden;
         border-radius: 3px;
         @include width-up-to($phone-max) {
-            max-height: 208px;
+            max-height: 22.7rem;
             overflow-y: scroll;
         }
     }
@@ -238,6 +255,9 @@
         flex-direction: column;
         padding-top: 2rem;
         padding-bottom: 2rem;
+        @include width-up-to($phone-max) {
+            padding-bottom: 0.7rem;
+        }
     }
     .angle_circle{
         background-color: #E5E5E5;
@@ -247,15 +267,11 @@
     }
     .list_address {
         color: #4A4A4A;
-        height: 16px;
         font-size: 14px;
         line-height: 16px;
-        margin-top: 1.7rem;
+        margin-top: 1.5rem;
         @include width-up-to($phone-max) {
-            margin-top: 8px;
-            margin-bottom: 9px;
-            height: 16px;
-            width: 292px;	
+            margin-top: 0.7rem;	
             color: #4A4A4A;
             font-size: 14px;
             line-height: 16px;
@@ -263,17 +279,10 @@
     }
     .list_heading {
         color: #4A4A4A;
-        height: 22px;
         font-size: 18px;
         font-weight: bold;
         line-height: 23px;
-        @include wider-than(85rem) {
-
-        }
-        @include width-up-to($phone-max) {
-        margin-bottom:unset;
-        height: 19px;	
-        width: 292px;	
+        @include width-up-to($phone-max) {	
         color: #4A4A4A;
         font-size: 16px;
         font-weight: bold;
@@ -285,6 +294,7 @@
         flex-direction: row;
         @include width-up-to($phone-max) {
             margin-top: 2px;
+            flex-direction: column;
         }
     }
     .left_column {
@@ -293,10 +303,14 @@
         width: 55%;
         @include width-up-to($phone-max) {
             display: block;
+            width: 100%;
         }
     }
     .left_column_inner{
         padding: 1.5rem 1rem 1.5rem 1rem;
+        @include width-up-to($phone-max) {
+            padding: 1rem;
+        }
     }
     .right_column {
         border-top: 1px solid #D5D5D5;
@@ -307,11 +321,14 @@
         @include width-up-to($phone-max) {
             margin-top: 10px;
             border-left: 1px solid #D5D5D5;
-            display: block;
+            width: 100%;
         }
     }
     .right_column_inner{
         padding: 1.5rem 1rem 1.5rem 1rem;
+        @include width-up-to($phone-max) {
+            padding: 1rem;
+        }
     }
     .lColumn_head {
         color: #4A4A4A;
@@ -319,8 +336,7 @@
         font-weight: bold;
         line-height: 17px;
         @include width-up-to($phone-max) {
-            margin-left: 8px;
-            margin-top: 4px;
+
         }
     }
     .lColumn_body {
@@ -329,9 +345,7 @@
         flex-direction: row;
         justify-content: space-between;
         @include width-up-to($phone-max) {
-            margin-left: 8px;
-            margin-top: 4px;
-            margin-bottom: 2px;
+            margin-top: 0.5rem;
         }
     }
     .lCol_body_left {
@@ -339,7 +353,7 @@
         font-size: 14px;
         line-height: 16px;
         @include width-up-to($phone-max) {
-            margin-right: 19px;
+
         }
     }
     .lCol_body_right {
@@ -347,7 +361,7 @@
         font-size: 14px;
         line-height: 16px;
         @include width-up-to($phone-max) {
-        margin-right: 5px;
+
         }
     }
     .rColumn_head {
@@ -356,16 +370,13 @@
         font-weight: bold;
         line-height: 17px;
         @include width-up-to($phone-max) {
-            margin-left: 8px;
-            margin-top: 4px;
+
         }
     }
     .rColumn_body {
-        margin-top: 10px;
+        margin-top: 1rem;
         @include width-up-to($phone-max) {
-            margin-left: 8px;
-            margin-top: 4px;
-            margin-bottom: 2px;
+            margin-top: 0.5rem;
         }
     }
     .toggle_hide {
@@ -501,7 +512,7 @@
     }
     #testmonal {
         display: flex;
-        margin-bottom: 43px;
+        margin-bottom: 4.3rem;
     }
     #institute_prtnr_toggle {
 
@@ -526,24 +537,29 @@
         padding-bottom: 1.5rem;
     }
     @include width-up-to($phone-max) {
+        .applyFltrBtn {
+            height: 4rem;
+            width: 12rem;
+        }
         .filter_div{
             width: 100%;
             order: 3;
+            border-top: 1px solid #D5D5D5;
         }
         .label_text {
             font-size: 14px;
         }
         #institute_prtnr {
-
+            padding: 1.5rem 0rem 0.5rem 0rem;
         }
         #type_institute {
-
+            padding: 0.7rem 0rem 0.5rem 0rem;
         }
         #one_million {
-
+            padding: 0.7rem 0rem 1rem 0rem;
         }
         #testmonal {
-
+            margin-bottom: 3.3rem;
         }
         #institute_prtnr_toggle {
 
