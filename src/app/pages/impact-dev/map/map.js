@@ -35,8 +35,7 @@ export default class Map1 extends Controller {
 
             document.getElementById('onMap').setAttribute('style', styleF + styleS);
             document.getElementById('maptxt').setAttribute('style', styleF + styleS);
-            document.getElementById('maptxt').setAttribute('style', 'display: none');
-        }, 8000);
+        }, 3000);
         setTimeout(() => {
             const styleT = 'transition: all 1.5s ease-out;-webkit-transition: all 1.5s ease-out;';
             const styleFr = '-moz-transition: all 1.5s ease-out;-o-transition: all 1.5s ease-out;margin-top: 3rem;';
@@ -44,27 +43,18 @@ export default class Map1 extends Controller {
             if (window.innerWidth > 960) {
                 document.getElementById('search_container').setAttribute('style', styleT + styleFr);
             }
-        }, 10000);
+        }, 3500);
     }
     @on('keyup .srch')
     intercept(event) {
         const filterStatus = this.el.querySelector('.filter_btn');
-        const searchInput = this.el.querySelector('.srch');
 
         this.validateMob();
         if (filterStatus.value === '1') {
             return;
         }
         if (event.target.value === '') {
-            this.model = [];
-            const list = new Dropdown(this.model);
-
-            if (window.innerWidth < 960) {
-                this.el.querySelector('.search').setAttribute('style', 'top: 370px');
-                searchInput.setAttribute('style', 'border: unset');
-                this.el.querySelector('.searchimg').setAttribute('style', 'display: initial');
-            }
-            this.regions.dataList.attach(list);
+            this.hideDataList();
         } else if (event.target.textLength > 3) {
             this.searchRequest(this.filterStatus, event.target.value);
         }
@@ -82,14 +72,14 @@ export default class Map1 extends Controller {
             dListDiv.innerHTML = '';
             filterDiv.setAttribute('style', 'display: block');
             if (window.innerWidth < 960) {
-                this.el.querySelector('.search').setAttribute('style', 'top: 170px');
+                this.el.querySelector('.search_container').setAttribute('style', 'bottom: 23rem');
             }
         } else {
             event.target.value = '0';
             filterDiv.setAttribute('style', 'display: none');
             this.setFilterValuesOnClose();
             if (window.innerWidth < 960) {
-                this.el.querySelector('.search').setAttribute('style', 'top: 370px');
+                this.el.querySelector('.search_container').setAttribute('style', 'top: unset');
             }
         }
     }
@@ -115,6 +105,8 @@ export default class Map1 extends Controller {
         }
     }
     searchRequest(fltrStatus, value) {
+        const searchContainer = this.el.querySelector('.search_container');
+        const bachToSearch = this.el.querySelector('.backToSearch_div');
         let fltString = '';
 
         if (fltrStatus === 'true') {
@@ -127,7 +119,8 @@ export default class Map1 extends Controller {
 
                 if (data.length) {
                     if (window.innerWidth < 960) {
-                        this.el.querySelector('.search').setAttribute('style', 'top: 170px');
+                        searchContainer.setAttribute('style', 'bottom: 28rem;');
+                        bachToSearch.setAttribute('style', 'display: block;');
                     }
                     this.model = {
                         mapObj: this.mapObject,
@@ -139,12 +132,35 @@ export default class Map1 extends Controller {
                 } else {
                     const list = new Dropdown('empty_result');
 
+                    if (window.innerWidth < 960) {
+                        searchContainer.setAttribute('style', 'bottom: 10rem;');
+                        bachToSearch.setAttribute('style', 'display: block;');
+                    }
                     this.regions.dataList.attach(list);
                 }
             } catch (e) {
                 console.log(e);
             }
         })();
+    }
+    @on('click .backToSearch_btn')
+    backToSearch(event) {
+        this.el.querySelector('.srch').value = '';
+        this.hideDataList();
+    }
+    hideDataList() {
+        const searchInput = this.el.querySelector('.srch');
+
+        this.model = [];
+        const list = new Dropdown(this.model);
+
+        if (window.innerWidth < 960) {
+            searchInput.setAttribute('style', 'border: unset');
+            this.el.querySelector('.backToSearch_div').setAttribute('style', 'display: none;');
+            this.el.querySelector('.searchimg').setAttribute('style', 'display: initial');
+            this.el.querySelector('.search_container').setAttribute('style', 'top: unset');
+        }
+        this.regions.dataList.attach(list);
     }
     closeFlterDiv() {
         const filterStyle = this.el.querySelector('#filter_style');
