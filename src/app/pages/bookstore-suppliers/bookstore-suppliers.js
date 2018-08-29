@@ -18,7 +18,7 @@ export default class BookstoreSuppliers extends CMSPageController {
     onDataLoaded() {
         const providerToModel = (p) => ({
             name: p.name,
-            description: p.blurb,
+            description: p.blurb || '',
             logoUrl: p.icon,
             buttonUrl: p.url,
             buttonText: p.cta
