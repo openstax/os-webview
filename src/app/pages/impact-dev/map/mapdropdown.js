@@ -39,9 +39,12 @@ export default class Mapdropdown extends Controller {
         const bbox = [[32.958984, -5.353521], [43.50585, 5.615985]];
         const showing = this.el.querySelectorAll('[data-toggle=hide]');
 
-
-        mObj.fitBounds(bbox);
-        console.log(event);
+        console.log(target.dataset.long);
+        console.log(target.dataset.lat);
+        mObj.flyTo({
+            center: [target.dataset.lat, target.dataset.long],
+            zoom: 10
+        });
         filterStyle.classList.toggle('fa-angle-down');
         filterStyle.classList.toggle('fa-angle-up');
         if (toggleOnoff === 'show') {
@@ -56,7 +59,7 @@ export default class Mapdropdown extends Controller {
                 document.getElementById(`data-${alreadyShowId}`).setAttribute('style', 'display: none;');
             }
             document.getElementById(`data-${unqId}`).setAttribute('style', 'display: block;');
-            searchList.setAttribute('style', 'max-height: 67.4rem;overflow-y: hidden');
+            searchList.setAttribute('style', 'max-height: 67.4rem;');
             target.dataset.toggle='hide';
         } else {
             document.getElementById(`data-${unqId}`).setAttribute('style', 'display: none;');
