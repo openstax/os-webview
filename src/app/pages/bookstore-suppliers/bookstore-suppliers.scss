@@ -128,6 +128,7 @@
 
         @include width-up-to($phone-max) {
             background-color: ui-color(white);
+            grid-gap: 4rem;
             padding-top: 8rem;
             z-index: 1;
 
