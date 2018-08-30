@@ -23,7 +23,8 @@ export default class Tutor extends CMSPageController {
     init() {
         this.template = template;
         this.view = {
-            classes: ['openstax-tutor-page', 'page']
+            classes: ['openstax-tutor-page', 'page'],
+            tag: 'main'
         };
         this.css = `/app/pages/openstax-tutor/openstax-tutor.css?${VERSION}`;
         this.model = {

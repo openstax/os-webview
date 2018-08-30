@@ -8,7 +8,8 @@ export default class BookstoreSuppliers extends CMSPageController {
     init() {
         this.template = template;
         this.view = {
-            classes: ['bookstore-suppliers', 'page']
+            classes: ['bookstore-suppliers', 'page'],
+            tag: 'main'
         };
         this.css = `/app/pages/bookstore-suppliers/bookstore-suppliers.css?${VERSION}`;
         this.slug = 'pages/print-order';

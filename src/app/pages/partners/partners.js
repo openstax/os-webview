@@ -23,7 +23,8 @@ export default class Partners extends CMSPageController {
         this.template = template;
         this.css = `/app/pages/partners/partners.css?${VERSION}`;
         this.view = {
-            classes: ['partners-page', 'page']
+            classes: ['partners-page', 'page'],
+            tag: 'main'
         };
         this.regions = {
             filter: '.filter',

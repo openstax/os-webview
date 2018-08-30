@@ -11,7 +11,8 @@ export default class Team extends CMSPageController {
     init() {
         this.template = template;
         this.view = {
-            classes: ['team', 'page']
+            classes: ['team', 'page'],
+            tag: 'main'
         };
         this.css = `/app/pages/team/team.css?${VERSION}`;
         this.slug = 'pages/team-page';

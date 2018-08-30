@@ -52,7 +52,8 @@ export default class Errata extends Controller {
         this.template = template;
         this.css = `/app/pages/errata/errata.css?${VERSION}`;
         this.view = {
-            classes: ['errata-page', 'page']
+            classes: ['errata-page', 'page'],
+            tag: 'main'
         };
         this.regions = {
             filter: '.filter',

@@ -8,7 +8,8 @@ export default class AboutNew extends CMSPageController {
     init() {
         this.template = template;
         this.view = {
-            classes: ['about', 'page']
+            classes: ['about', 'page'],
+            tag: 'main'
         };
         this.css = `/app/pages/about/about.css?${VERSION}`;
         this.slug = 'pages/about-us';
