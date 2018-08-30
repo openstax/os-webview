@@ -33,11 +33,13 @@ export default class Map1 extends Controller {
             this.fadeOutText();
         }, 3000);
         setTimeout(() => {
-            this.el.querySelector('.onMap').setAttribute('style', 'display: none');
-        }, 4000);
-        setTimeout(() => {
             this.movBar();
         }, 3500);
+    }
+    @on('click .srch')
+    fadeEvent(event) {
+        this.fadeOutText();
+        this.movBar();
     }
     @on('keyup .srch')
     intercept(event) {
@@ -121,8 +123,14 @@ export default class Map1 extends Controller {
         const styleF = '-webkit-transition: opacity 3s ease-in-out;-moz-transition: opacity 3s ease-in-out;';
         const styleS = '-ms-transition: opacity 3s ease-in-out;-o-transition: opacity 3s ease-in-out;opacity: 0;';
 
-        document.getElementById('onMap').setAttribute('style', styleF + styleS);
-        document.getElementById('maptxt').setAttribute('style', styleF + styleS);
+        this.el.querySelector('.onMap').setAttribute('style', styleF + styleS);
+        this.el.querySelector('.maptxt').setAttribute('style', styleF + styleS);
+        setTimeout(() => {
+            this.el.querySelector('.onMap').setAttribute('style', 'display: none');
+            if (window.innerWidth > 960) {
+                this.el.querySelector('.maptxt').setAttribute('style', 'display: none');
+            }
+        }, 3500);
     }
     movBar() {
         if (window.innerWidth > 960) {
