@@ -53,7 +53,7 @@ function oldUserModel(sfUserModel) {
             return a;
         }) || {}).value;
     const groupsFor = (userInfo) => {
-        const result = userInfo.applications
+        const result = (userInfo.applications || [])
             .map((obj) => obj.name)
             .filter((name) => name === 'OpenStax Tutor');
 
@@ -70,7 +70,7 @@ function oldUserModel(sfUserModel) {
     return {
         id: sfUserModel.id,
         accounts_id: sfUserModel.id,
-        email: sfUserModel.contact_infos.length ? findPreferredEmail(sfUserModel.contact_infos) : null,
+        email: (sfUserModel.contact_infos || []).length ? findPreferredEmail(sfUserModel.contact_infos) : null,
         first_name: sfUserModel.first_name,
         groups: groupsFor(sfUserModel),
         last_name: sfUserModel.last_name,
