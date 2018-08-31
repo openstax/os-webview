@@ -30,41 +30,27 @@ export default class Map1 extends Controller {
     onLoaded() {
         $.insertHtml(this.el, this.model);
         setTimeout(() => {
-            const styleF = '-webkit-transition: opacity 3s ease-in-out;-moz-transition: opacity 3s ease-in-out;';
-            const styleS = '-ms-transition: opacity 3s ease-in-out;-o-transition: opacity 3s ease-in-out;opacity: 0;';
-
-            document.getElementById('onMap').setAttribute('style', styleF + styleS);
-            document.getElementById('maptxt').setAttribute('style', styleF + styleS);
-            document.getElementById('maptxt').setAttribute('style', 'display: none');
-        }, 8000);
+            this.fadeOutText();
+        }, 3000);
         setTimeout(() => {
-            const styleT = 'transition: all 1.5s ease-out;-webkit-transition: all 1.5s ease-out;';
-            const styleFr = '-moz-transition: all 1.5s ease-out;-o-transition: all 1.5s ease-out;margin-top: 3rem;';
-
-            if (window.innerWidth > 960) {
-                document.getElementById('search_container').setAttribute('style', styleT + styleFr);
-            }
-        }, 10000);
+            this.movBar();
+        }, 3500);
+    }
+    @on('click .srch')
+    fadeEvent(event) {
+        this.fadeOutText();
+        this.movBar();
     }
     @on('keyup .srch')
     intercept(event) {
         const filterStatus = this.el.querySelector('.filter_btn');
-        const searchInput = this.el.querySelector('.srch');
 
         this.validateMob();
         if (filterStatus.value === '1') {
             return;
         }
         if (event.target.value === '') {
-            this.model = [];
-            const list = new Dropdown(this.model);
-
-            if (window.innerWidth < 960) {
-                this.el.querySelector('.search').setAttribute('style', 'top: 370px');
-                searchInput.setAttribute('style', 'border: unset');
-                this.el.querySelector('.searchimg').setAttribute('style', 'display: initial');
-            }
-            this.regions.dataList.attach(list);
+            this.hideDataList();
         } else if (event.target.textLength > 3) {
             this.searchRequest(this.filterStatus, event.target.value);
         }
@@ -74,6 +60,8 @@ export default class Map1 extends Controller {
         const filterDiv = this.el.querySelector('.filter_div');
         const dListDiv = this.el.querySelector('.dropDownList');
         const filterStyle = this.el.querySelector('#filter_style');
+        const bachToSearch = this.el.querySelector('.backToSearch_div');
+        const searchContainer = this.el.querySelector('.search_container');
 
         filterStyle.classList.toggle('fa-sliders-h');
         filterStyle.classList.toggle('fa-times');
@@ -82,14 +70,16 @@ export default class Map1 extends Controller {
             dListDiv.innerHTML = '';
             filterDiv.setAttribute('style', 'display: block');
             if (window.innerWidth < 960) {
-                this.el.querySelector('.search').setAttribute('style', 'top: 170px');
+                searchContainer.setAttribute('style', 'bottom: 28rem');
+                bachToSearch.setAttribute('style', 'display: block;');
             }
         } else {
             event.target.value = '0';
             filterDiv.setAttribute('style', 'display: none');
             this.setFilterValuesOnClose();
             if (window.innerWidth < 960) {
-                this.el.querySelector('.search').setAttribute('style', 'top: 370px');
+                searchContainer.setAttribute('style', 'top: unset');
+                bachToSearch.setAttribute('style', 'display: none;');
             }
         }
     }
@@ -103,8 +93,9 @@ export default class Map1 extends Controller {
             this.filterStatus = 'true';
         }
         this.setFilterValues();
-        this.closeFlterDiv();
         this.searchRequest(this.filterStatus, searchInput.value);
+        this.resetFilterValues();
+        this.closeFlterDiv();
     }
     @on('click .toggleCheck')
     changeFltrToggle(event) {
@@ -114,7 +105,44 @@ export default class Map1 extends Controller {
             event.delegateTarget.value = 'false';
         }
     }
+    @on('click .backToSearch_btn')
+    backToSearch(event) {
+        this.el.querySelector('.srch').value = '';
+        this.hideDataList();
+    }
+    @on('click .backToResult_btn')
+    backToSearchResult(event) {
+        const searchInput = this.el.querySelector('.srch');
+
+        console.log(event);
+        document.getElementById('backToResult_div').setAttribute('style', 'display: none;');
+        this.el.querySelector('.search').setAttribute('style', 'display: flex;');
+        this.searchRequest(this.filterStatus, searchInput.value);
+    }
+    fadeOutText() {
+        const styleF = '-webkit-transition: opacity 3s ease-in-out;-moz-transition: opacity 3s ease-in-out;';
+        const styleS = '-ms-transition: opacity 3s ease-in-out;-o-transition: opacity 3s ease-in-out;opacity: 0;';
+
+        this.el.querySelector('.onMap').setAttribute('style', styleF + styleS);
+        this.el.querySelector('.maptxt').setAttribute('style', styleF + styleS);
+        setTimeout(() => {
+            this.el.querySelector('.onMap').setAttribute('style', 'display: none');
+            if (window.innerWidth > 960) {
+                this.el.querySelector('.maptxt').setAttribute('style', 'display: none');
+            }
+        }, 3500);
+    }
+    movBar() {
+        if (window.innerWidth > 960) {
+            const styleT = 'transition: all 1.5s ease-out;-webkit-transition: all 1.5s ease-out;';
+            const styleFr = '-moz-transition: all 1.5s ease-out;-o-transition: all 1.5s ease-out;margin-top: 3rem;';
+
+            document.getElementById('search_container').setAttribute('style', styleT + styleFr);
+        }
+    }
     searchRequest(fltrStatus, value) {
+        const searchContainer = this.el.querySelector('.search_container');
+        const bachToSearch = this.el.querySelector('.backToSearch_div');
         let fltString = '';
 
         if (fltrStatus === 'true') {
@@ -127,7 +155,8 @@ export default class Map1 extends Controller {
 
                 if (data.length) {
                     if (window.innerWidth < 960) {
-                        this.el.querySelector('.search').setAttribute('style', 'top: 170px');
+                        searchContainer.setAttribute('style', 'bottom: 28rem;');
+                        bachToSearch.setAttribute('style', 'display: block;');
                     }
                     this.model = {
                         mapObj: this.mapObject,
@@ -139,12 +168,30 @@ export default class Map1 extends Controller {
                 } else {
                     const list = new Dropdown('empty_result');
 
+                    if (window.innerWidth < 960) {
+                        searchContainer.setAttribute('style', 'bottom: 10rem;');
+                        bachToSearch.setAttribute('style', 'display: block;');
+                    }
                     this.regions.dataList.attach(list);
                 }
             } catch (e) {
                 console.log(e);
             }
         })();
+    }
+    hideDataList() {
+        const searchInput = this.el.querySelector('.srch');
+
+        this.model = [];
+        const list = new Dropdown(this.model);
+
+        if (window.innerWidth < 960) {
+            searchInput.setAttribute('style', 'border: unset');
+            this.el.querySelector('.backToSearch_div').setAttribute('style', 'display: none;');
+            this.el.querySelector('.searchimg').setAttribute('style', 'display: initial');
+            this.el.querySelector('.search_container').setAttribute('style', 'top: unset');
+        }
+        this.regions.dataList.attach(list);
     }
     closeFlterDiv() {
         const filterStyle = this.el.querySelector('#filter_style');
@@ -179,6 +226,12 @@ export default class Map1 extends Controller {
         } else {
             attrName.checked = true;
         }
+    }
+    resetFilterValues() {
+        this.prtnrCheckBox = 'false';
+        this.insType = 'all';
+        this.oneMillionCheckBox = 'false';
+        this.testmonalCheckBox = 'false';
     }
     setFilterValues() {
         this.prtnrCheckBox = this.el.querySelector('#prtnrCheckBox').value;

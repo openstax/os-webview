@@ -8,6 +8,12 @@
         top: 0rem;
     }
     @include width-up-to($phone-max) {
-        height: 43rem;
+        height: 50rem;
+    }
+    .mapboxgl-ctrl-bottom-left {
+        display: none;
+    }
+    .mapboxgl-ctrl-bottom-right {
+        display: none;
     }
 }
