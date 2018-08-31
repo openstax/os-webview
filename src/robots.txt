@@ -2,4 +2,5 @@ User-agent: *
 Disallow: /accounts
 Disallow: /admin
 Disallow: /l/
+Disallow: /r/
 Disallow: /errata/
