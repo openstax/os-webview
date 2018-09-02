@@ -152,7 +152,9 @@
     }
 
     .backToSearch_btn,
-    .backToResult_btn {
+    .backToResult_btn,
+    .backToDetail_btn {
+        border-radius: 28px;
         background-color: white;
         border-radius: 2.8rem;
         box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.3);
