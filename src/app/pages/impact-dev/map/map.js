@@ -119,6 +119,13 @@ export default class Map1 extends Controller {
         this.el.querySelector('.search').setAttribute('style', 'display: flex;');
         this.searchRequest(this.filterStatus, searchInput.value);
     }
+    @on('click .backToDetail_btn')
+    backToDetail(event) {
+        document.getElementById('backToResult_div').setAttribute('style', 'display: block;');
+        document.getElementById('backToDetail_div').setAttribute('style', 'display: none;');
+        document.getElementById('detailinfoMOb').setAttribute('style', 'display: block;');
+        document.getElementById('testimonialBodyMob').setAttribute('style', 'display: none;');
+    }
     fadeOutText() {
         const styleF = '-webkit-transition: opacity 3s ease-in-out;-moz-transition: opacity 3s ease-in-out;';
         const styleS = '-ms-transition: opacity 3s ease-in-out;-o-transition: opacity 3s ease-in-out;opacity: 0;';

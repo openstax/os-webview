@@ -4,7 +4,7 @@
         </div>
     <ul if="model.length!=0 && model!='empty_result'" class="search_list">
         <li each="element in model.lData" class="search_list_element">
-            <div class="toggle_on_off" id="show-{element.pk}" data-toggle="show" data-long="{element.fields.long}" data-lat="{element.fields.lat}" data-name="{element.fields.name}" data-city="{element.fields.physical_city}">
+            <div class="toggle_on_off" id="show-{element.pk}" data-toggle="show" data-long="{element.fields.long}" data-lat="{element.fields.lat}" data-name="{element.fields.name}" data-city="{`${element.fields.physical_cityelement}, ${element.fields.physical_state_province}`}">
                 <div class="list_data">
                     <div class="list_heading">{element.fields.name}</div>
                     <div class="list_address">{element.fields.physical_city}, {element.fields.physical_state_province}</div>
@@ -13,54 +13,12 @@
                     <i id="icon-{element.pk}" class="fa fa-angle-down angle_circle" aria-hidden="true"></i>
                 </div>
             </div>
-            <div id="data-{element.pk}" class="toggle_dataList">
-                <div class="toggle_dataList_head">
-                    <div class="left_column">
-                        <div class="left_column_inner">
-                            <div class="lColumn_head">Student savings</div>
-                            <div class="lColumn_body">
-                                <div class="lCol_body_left">This year: ${element.fields.current_year_savings}</div>
-                                <div class="lCol_body_right">Cumulative: ${element.fields.all_time_savings}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="right_column">
-                        <div class="right_column_inner">
-                            <div class="rColumn_head">OpenStax Institutional Partner</div>
-                            <div class="rColumn_body">Yes</div>
-                        </div>
-                    </div>
-                </div>
-                <div id="testimonialBody-{element.pk}">
-                    <div class="toggle_dataList_body">
-                        <div class="tdlb_container">
-                            <div id="testimonialHead-{element.pk}" class="testimonial_head">Testimonials</div>
-                            <div class="tdlb_para">
-                                <div class="para_quote">
-                                    <i class="fas fa-quote-left"></i>
-                                </div>
-                                <div class="tdl_body_desc">Teaming up with the other OpenStax Institutional Partner schools
-                                    <br> provided a sense of community as we navigated launching OER initiatives
-                                    <br> at our own campuses. Learning about other schools’ successes and
-                                    <br> frustrations each month was inspiring. I learned so many new techniques
-                                    <br> and innovative ideas that I could then apply at my own campus. I loved
-                                    <br> the structure of this program. It’s inspiring to see how many students are
-                                    <br> impacted by OER adoption – the numbers really add up quickly.
-                                </div>
-                            </div>
-                            <div class="tdl_body_regards">
-                                <div class="tdlb_regards_name">– Erin Davis</div>
-                                <div class="tdlb_regards_desc">Distance Education Library Services Coordinator</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="toggle_dataList_footer">
-                        <span id="sub_testimonial">submit your testimonials</span> >
-                    </div>
-                </div>
-
+            <div id="data-{element.pk}" class="toggle_dataList data-{element.pk}">
+                <div class="detailinfo-{element.pk}"></div>
+                <div id="testimonialBody-{element.pk}" class="testimonialBody-{element.pk}"></div>
             </div>
-
         </li>
     </ul>
+    <div id="detailinfoMOb" class="detailinfoMOb"></div>
+    <div id="testimonialBodyMob" class="testimonialBodyMob"></div>
 </template>
