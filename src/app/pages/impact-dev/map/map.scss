@@ -124,13 +124,15 @@
         }
     }
     .backToSearch_div,
-    .backToResult_div {
+    .backToResult_div,
+    .backToDetail_div {
         display: none;
         order: 2;
         margin-bottom: 1rem;
     }
     .backToSearch_btn,
-    .backToResult_btn {
+    .backToResult_btn,
+    .backToDetail_btn {
         width: 4rem;
         height: 4rem;
         border-radius: 28px;
@@ -224,6 +226,7 @@
         padding-left: unset;
     }
     .search_emptyResult {
+        width: 100%;
         background-color: white;
         overflow-x: hidden;
         border-radius: 3px;
@@ -232,6 +235,7 @@
     }
     .search_list {
         background-color: white;
+        width: 100%;
         list-style-type: none;
         padding-left: unset;
         margin: unset;
@@ -301,7 +305,6 @@
         display: flex;
         flex-direction: row;
         @include width-up-to($phone-max) {
-            margin-top: 2px;
             flex-direction: column;
         }
     }
@@ -327,7 +330,7 @@
         border-radius: 3px;
         width: 45%;
         @include width-up-to($phone-max) {
-            margin-top: 10px;
+            margin-top: 1rem;
             border-left: 1px solid #D5D5D5;
             width: 100%;
         }
@@ -399,7 +402,7 @@
         background-color: #FFFFFF;
         margin-top: 15px;
         @include width-up-to($phone-max) {
-            margin-top: 10px;
+            margin-top: 0;
         }
     }
     .toggle_dataList_footer {
@@ -415,12 +418,28 @@
         font-size: 14px;
         font-weight: bold;
         line-height: 17px;
-        padding-bottom: 1rem;
+        padding: 2rem 1rem 2rem 1rem;
+        border: 1px solid #D5D5D5;
+        border-radius: 3px;
+        @include width-up-to($phone-max) {
+            display: block;
+            margin-top: 1rem;
+        }
+    }
+    .testimonial_he{
+        display: none;
+        font-size: 14px;
+        font-weight: bold;
+        @include width-up-to($phone-max) {
+            display: block;
+        }
     }
     .tdlb_container {
         padding: 5rem 2rem 3rem 2rem;
         @include width-up-to($phone-max) {
-            padding: 1rem;
+            padding: 0;
+            margin: 1rem;
+            border: 1px solid #D5D5D5;
         }
     }
     .tdlb_para {
@@ -428,6 +447,7 @@
         flex-direction: row;
         @include width-up-to($phone-max) {
             flex-direction: column;
+            padding: 1rem
         }
     }
     .para_quote {
@@ -445,13 +465,16 @@
         line-height: 25px;
         @include width-up-to($phone-max) {
             font-size: 14px;
-            br{
-                display: none;
-            }
+            padding-top: 0;
+            line-height: 2.2rem;
         }
     }
     .tdl_body_regards {
         padding-top: 3rem;
+        @include width-up-to($phone-max) {
+        padding-top: 0;
+        padding-right: 1rem
+        }
     }
     .tdlb_regards_name {
         color: #4B4B4B;
@@ -461,6 +484,9 @@
         text-align: right;
         margin-bottom: unset;
         font-weight: bold;
+        @include width-up-to($phone-max) {
+            font-size: 14px;
+        }
     }
     .tdlb_regards_desc {
         color: #4B4B4B;
@@ -469,6 +495,10 @@
         line-height: 25px;
         text-align: right;
         margin-top: unset;
+        @include width-up-to($phone-max) {
+            font-size: 14px;
+            line-height: 16px;
+        }
     }
     .filter_btn {
         border: 1px solid #D5D5D5;
@@ -596,4 +626,22 @@
         width: 2rem;
         padding-top: 0.2rem;
     }
+    .detailinfoMOb {
+        display: none;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        background: white;
+    }
+    .testimonialBodyMob {
+        display: none;
+        @include width-up-to($phone-max) {
+        }
+    }
+    .detailInfoHead {
+        display: none;
+        @include width-up-to($phone-max) {
+            display: block;
+        }
+    }
+
 }
