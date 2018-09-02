@@ -154,7 +154,6 @@
     .backToSearch_btn,
     .backToResult_btn,
     .backToDetail_btn {
-        border-radius: 28px;
         background-color: white;
         border-radius: 2.8rem;
         box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.3);
@@ -259,12 +258,12 @@
     }
 
     .search_emptyResult {
-        width: 100%;
         background-color: white;
         border-radius: 0.3rem;
         font-size: 1.4rem;
         overflow-x: hidden;
         padding: 1.5rem;
+        width: 100%;
     }
 
     .search_list {
@@ -291,69 +290,71 @@
     }
 
     .search_list_element {
-        border-bottom: 1px solid #D5D5D5;
+        border-bottom: 0.1rem solid #d5d5d5;
         padding-left: 1rem;
         padding-right: 1rem;
-    }
-
-    .list_show_more {
-        align-items: center;      
-        background-color: #E5E5E5;
-        border-radius: 50%;
-        display: flex;
-        height: 3.2rem;
-        justify-content: center;
-        text-align: center;
-        width: 3.2rem;
     }
 
     .list_data {
         display: flex;
         flex-direction: column;
-        padding-top: 2rem;
         padding-bottom: 2rem;
+        padding-top: 2rem;
+
         @include width-up-to($phone-max) {
             padding-bottom: 0.7rem;
         }
     }
+
     .angle_circle{
-        font-size: 1.6rem;
+        background-color: #e5e5e5;
+        border-radius: 50%;
+        height: 3.2rem;
+        width: 3.2rem;
     }
+
     .list_address {
-        color: #4A4A4A;
-        font-size: 14px;
-        line-height: 16px;
+        color: #4a4a4a;
+        font-size: 1.4rem;
+        line-height: 1.6rem;
         margin-top: 1.5rem;
+
         @include width-up-to($phone-max) {
+            color: #4a4a4a;
+            font-size: 1.4rem;
+            line-height: 1.6rem;
             margin-top: 0.7rem;
-            color: #4A4A4A;
-            font-size: 14px;
-            line-height: 16px;
         }
     }
+
     .list_heading {
-        color: #4A4A4A;
-        font-size: 18px;
+        color: #4a4a4a;
+        font-size: 1.8rem;
         font-weight: bold;
-        line-height: 23px;
+        line-height: 2.3rem;
+
         @include width-up-to($phone-max) {
-        color: #4A4A4A;
-        font-size: 16px;
-        font-weight: bold;
-        line-height: 19px;
+            color: #4a4a4a;
+            font-size: 1.6rem;
+            font-weight: bold;
+            line-height: 1.9rem;
         }
     }
+
     .toggle_dataList_head {
         display: flex;
         flex-direction: row;
+
         @include width-up-to($phone-max) {
             flex-direction: column;
         }
     }
+
     .left_column {
         border: 0.1rem solid #d5d5d5;
-        border-radius: 0.3rem 0 0 0.3rem;
+        border-radius: 0.3rem;
         width: 55%;
+
         @include width-up-to($phone-max) {
             border: 0.1rem solid #d5d5d5;
             border-radius: 0.3rem;
@@ -361,101 +362,109 @@
             width: 100%;
         }
     }
-    .left_column_inner{
-        padding: 1.5rem 1rem 1.5rem 1rem;
+
+    .left_column_inner {
+        padding: 1.5rem 1rem;
+
         @include width-up-to($phone-max) {
             padding: 1rem;
         }
     }
+
     .right_column {
-        border-top: 0.1rem solid #d5d5d5;
-        border-right: 0.1rem solid #d5d5d5;
         border-bottom: 0.1rem solid #d5d5d5;
-        border-radius: 0 0.3rem 0.3rem 0;
+        border-radius: 0.3rem;
+        border-right: 0.1rem solid #d5d5d5;
+        border-top: 0.1rem solid #d5d5d5;
         width: 45%;
+
         @include width-up-to($phone-max) {
+            border-left: 0.1rem solid #d5d5d5;
             margin-top: 1rem;
-            border: 0.1rem solid #d5d5d5;
-            border-radius: 0.3rem;
             width: 100%;
         }
     }
+
     .right_column_inner{
-        padding: 1.5rem 1rem 1.5rem 1rem;
+        padding: 1.5rem 1rem;
+
         @include width-up-to($phone-max) {
             padding: 1rem;
         }
     }
-    .lColumn_head {
-        color: #4A4A4A;
-        font-size: 14px;
-        font-weight: bold;
-        line-height: 17px;
-        @include width-up-to($phone-max) {
 
-        }
+    .lColumn_head {
+        color: #4a4a4a;
+        font-size: 1.4rem;
+        font-weight: bold;
+        line-height: 1.7rem;
     }
+
     .lColumn_body {
-        margin-top: 1rem;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        margin-top: 1rem;
+
         @include width-up-to($phone-max) {
             margin-top: 0.5rem;
         }
     }
+
     .lCol_body_left {
-        color: #4A4A4A;
-        font-size: 14px;
-        line-height: 16px;
-        @include width-up-to($phone-max) {
-
-        }
+        color: #4a4a4a;
+        font-size: 1.4rem;
+        line-height: 1.6rem;
     }
+
     .lCol_body_right {
-        color: #4A4A4A;
-        font-size: 14px;
-        line-height: 16px;
-        @include width-up-to($phone-max) {
-
-        }
+        color: #4a4a4a;
+        font-size: 1.4rem;
+        line-height: 1.6rem;
     }
+
     .rColumn_head {
-        color: #4A4A4A;
-        font-size: 14px;
+        color: #4a4a4a;
+        font-size: 1.4rem;
         font-weight: bold;
-        line-height: 17px;
-        @include width-up-to($phone-max) {
-
-        }
+        line-height: 1.7rem;
     }
+
     .rColumn_body {
         margin-top: 1rem;
+
         @include width-up-to($phone-max) {
             margin-top: 0.5rem;
         }
     }
+
     .toggle_hide {
         display: none;
     }
+
     .toggle_dataList {
         display: none;
     }
+
     .toggle_dataList_body {
-        background-color: #FFFFFF;
-        margin-top: 15px;
+        background-color: #fff;
+        border: 0.1rem solid #d5d5d5;
+        border-radius: 0.3rem;
+        margin-top: 1.5rem;
+
         @include width-up-to($phone-max) {
             margin-top: 0;
             padding-top: 0.3rem;
             padding-bottom: 0.3rem;
         }
     }
+
     .toggle_dataList_footer {
-        color: #027EB5;
-        font-size: 16px;
-        line-height: 25px;
-        margin-top: 1rem;
+        color: #027eb5;
+        font-size: 1.6rem;
+        line-height: 2.5rem;
         margin-bottom: 1rem;
+        margin-top: 1rem;
         text-align: right;
         padding-right: 0.3rem;
         
@@ -463,69 +472,79 @@
             padding-right: 1.3rem;
         }
     }
+
     .testimonial_head{
+        border: 0.1rem solid #d5d5d5;
+        border-radius: 0.3rem;
         display: none;
-        font-size: 14px;
+        font-size: 1.4rem;
         font-weight: bold;
-        line-height: 17px;
-        padding: 2rem 1rem 2rem 1rem;
-        border: 1px solid #D5D5D5;
-        border-radius: 3px;
+        line-height: 1.7rem;
+        padding: 2rem 1rem;
+
         @include width-up-to($phone-max) {
             display: block;
             margin-top: 1rem;
         }
     }
+
     .testimonial_he{
         display: none;
-        font-size: 14px;
+        font-size: 1.4rem;
         font-weight: bold;
+
         @include width-up-to($phone-max) {
             display: block;
         }
     }
+
     .tdlb_container {
-        border: 1px solid #d5d5d5;
-        border-radius: 3px;
-        padding: 5rem 2rem 3rem 2rem;
+        padding: 5rem 2rem 3rem;
+
         @include width-up-to($phone-max) {
-            padding: 0;
+            border: 0.1rem solid #d5d5d5;
             margin: 1rem;
-            border: 1px solid #D5D5D5;
+            padding: 0;
         }
     }
+
     .tdlb_para {
         display: flex;
         flex-direction: row;
+
         @include width-up-to($phone-max) {
             flex-direction: column;
-            padding: 1rem
+            padding: 1rem;
         }
     }
+
     .para_quote {
-        font-size: 18px;
-        color: #F66400;
+        color: #f66400;
+        font-size: 1.8rem;
+
         @include width-up-to($phone-max) {
             font-size: 1.2rem;
         }
     }
+
     .tdl_body_desc {
-        padding-top: 0.7rem;
-        padding-left: 1rem;
         color: #424242;
-        font-size: 16px;
-        line-height: 25px;
+        font-size: 1.6rem;
+        line-height: 2.5rem;
+        padding-left: 1rem;
+        padding-top: 0.7rem;
+
         @include width-up-to($phone-max) {
-            font-size: 14px;
-            padding-top: 0;
+            font-size: 1.4rem;
             line-height: 2.2rem;
+            padding-top: 0;
         }
     }
+
     .tdl_body_regards {
         padding-top: 3rem;
 
         @include width-up-to($phone-max) {
-            padding-bottom: 1rem;
             padding-right: 1rem;
             padding-top: 0;
         }
@@ -533,92 +552,111 @@
     }
 
     .tdlb_regards_name {
-        color: #4B4B4B;
-        font-size: 16px;
-        letter-spacing: -0.83px;
-        line-height: 25px;
-        text-align: right;
-        margin-bottom: unset;
+        color: #4b4b4b;
+        font-size: 1.6rem;
         font-weight: bold;
+        letter-spacing: -0.083rem;
+        line-height: 2.5rem;
+        margin-bottom: unset;
+        text-align: right;
+
         @include width-up-to($phone-max) {
-            font-size: 14px;
+            font-size: 1.4rem;
         }
     }
+
     .tdlb_regards_desc {
-        color: #4B4B4B;
-        font-size: 16px;
-        letter-spacing: -0.83px;
-        line-height: 25px;
-        text-align: right;
+        color: #4b4b4b;
+        font-size: 1.6rem;
+        letter-spacing: -0.083rem;
+        line-height: 2.5rem;
         margin-top: unset;
+        text-align: right;
+
         @include width-up-to($phone-max) {
-            font-size: 14px;
-            line-height: 16px;
+            font-size: 1.4rem;
+            line-height: 1.6rem;
         }
     }
+
     .filter_btn {
-        border: 1px solid #D5D5D5;
-        border-radius: 2px;
-        background-color: #FFFFFF;
+        background-color: #fff;
+        border: 0.1rem solid #d5d5d5;
+        border-radius: 0.2rem;
+        margin: 2rem;
     }
+
     #filter_style {
-        width: 18px;
-        font-size: 16px;
+        font-size: 1.6rem;
+        width: 1.8rem;
     }
+
     .fa-sliders-h {
-        color: #5E6062;
+        color: #5e6062;
     }
+
     .fa-times {
-        color: #5E6062;
+        color: #5e6062;
     }
+
     #filter_by {
-        color: #5E6062;
-        font-size: 16px;
-        line-height: 16px;
+        color: #5e6062;
+        font-size: 1.6rem;
+        line-height: 1.6rem;
+        padding-right: 0.2rem;
         text-align: right;
-        padding-right: 2px;
     }
+
     #filter_icons {
-        padding-right: 5px;
-        padding-left: 2px;
+        padding-left: 0.2rem;
+        padding-right: 0.5rem;
     }
+
     element {
-        margin-left: 15px;
+        margin-left: 1.5rem;
     }
+
     .filter_container {
         margin-left: 2rem;
         margin-right: 2rem;
     }
+
     .label_text {
-        font-size: 16px;
+        font-size: 1.6rem;
     }
+
     #institute_prtnr {
         display: flex;
-        padding: 3rem 0rem 1.5rem 0rem;
+        padding: 3rem 0 1.5rem;
     }
+
     #type_institute {
         display: flex;
-        padding: 1rem 0rem 1.5rem 0rem;
+        padding: 1rem 0 1.5rem;
     }
+
     #one_million {
         display: flex;
-        padding: 1rem 0rem 1.5rem 0rem;
+        padding: 1rem 0 1.5rem;
     }
+
     #testmonal {
         display: flex;
         margin-bottom: 4.3rem;
     }
 
     .applyFltrBtn {
-        height: 50px;
-        width: 140px;
-        border-radius: 2px;
-        background-color: #F36B32;
+        background-color: #f36b32;
+        border-radius: 0.2rem;
+        height: 5rem;
+        width: 14rem;
     }
+
     #apply_filter {
-        text-align: end;
         padding-bottom: 1.5rem;
+        text-align: end;
     }
+
     @include width-up-to($phone-max) {
         
         .applyFltrBtn {
@@ -627,25 +665,25 @@
         }
 
         .filter_div{
-            width: 100%;
+            border-top: 0.1rem solid #d5d5d5;
             order: 3;
-            border-top: 1px solid #D5D5D5;
+            width: 100%;
         }
 
         .label_text {
-            font-size: 14px;
+            font-size: 1.4rem;
         }
 
         #institute_prtnr {
-            padding: 1.5rem 0rem 0.5rem 0rem;
+            padding: 1.5rem 0 0.5rem;
         }
 
         #type_institute {
-            padding: 0.7rem 0rem 0.5rem 0rem;
+            padding: 0.7rem 0 0.5rem;
         }
 
         #one_million {
-            padding: 0.7rem 0rem 1rem 0rem;
+            padding: 0.7rem 0 1rem;
         }
 
         #testmonal {
@@ -653,15 +691,31 @@
         }
 
         #apply_fltr_btn {
-            height: 38px;
-            width: 115px;
-            border-radius: 2px;
-            background-color: #F36B32;
+            background-color: #f36b32;
+            border-radius: 0.2rem;
+            height: 3.8rem;
+            width: 11.5rem;
         }
     }
+
     .searchimg {
-        width: 2rem;
         padding-top: 0.2rem;
+        width: 2rem;
+    }
+
+    .detailinfoMOb {
+        background: white;
+        display: none;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .testimonialBodyMob {
+        display: none;
+    }
+
+    .detailInfoHead {
+        display: none;
 
         @include width-up-to($phone-max) {
             padding-top: 0.5rem;
