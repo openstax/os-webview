@@ -13,7 +13,7 @@ export default class Mapdropdown extends Controller {
         this.template = template;
         this.css = `/app/pages/imapct-dev/impact-dev.css?${VERSION}`;
         this.view = {
-            classes: ['toggle_dataList_head']
+            classes: ['toggle-datalist-head']
         };
         this.model = props;
     }
@@ -21,7 +21,7 @@ export default class Mapdropdown extends Controller {
     onLoaded() {
         $.insertHtml(this.el, this.model);
         if (window.innerWidth < 960) {
-            const elements = this.el.querySelectorAll('.testimonial_head');
+            const elements = this.el.querySelectorAll('.testimonial-head');
 
             elements.forEach((v) => {
                 v.setAttribute('style', 'display: block;');
@@ -29,7 +29,7 @@ export default class Mapdropdown extends Controller {
             });
         }
     }
-    @on('click .toggle_on_off')
+    @on('click .toggle-on-off')
     toggleOnoff(event) {
         const target = event.delegateTarget;
         const mObj = this.model.mapObj;
@@ -82,7 +82,7 @@ export default class Mapdropdown extends Controller {
         const unqId = unqIdArr[1];
         const toggleOnoff = target.dataset.toggle;
         const filterStyle = this.el.querySelector(`#icon-${unqId}`);
-        const searchList = this.el.querySelector('.search_list');
+        const searchList = this.el.querySelector('.search-list');
         const mObj = this.model.mapObj;
         const showing = this.el.querySelectorAll('[data-toggle=hide]');
 
@@ -111,7 +111,7 @@ export default class Mapdropdown extends Controller {
     showDetailMob() {
         const searchList = document.getElementsByClassName('search-div-container');
         const detailinfoMOb = this.el.querySelector('.detailinfoMOb');
-        const searchList1 = this.el.querySelector('.search_list');
+        const searchList1 = this.el.querySelector('.search-list');
 
         searchList1.setAttribute('style', 'display: none');
         document.getElementById('search').setAttribute('style', 'display: none');

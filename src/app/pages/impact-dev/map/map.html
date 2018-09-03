@@ -1,5 +1,5 @@
 <template args="model">
-        <div class="search_container" id="search_container">
+        <div class="search-container" id="search-container">
         <div id="backToSearch_div" class="backToSearch_div"><button id="backToSearch_btn" class="backToSearch_btn"><i class="fas fa-arrow-left left_arrow_bak"></i></button></div>
         <div id="backToResult_div" class="backToResult_div"><button id="backToResult_btn" class="backToResult_btn"><i class="fas fa-arrow-left left_arrow_bak"></i></button></div>
         <div id="backToDetail_div" class="backToDetail_div"><button id="backToDetail_btn" class="backToDetail_btn"><i class="fas fa-arrow-left left_arrow_bak"></i></button></div>
@@ -7,55 +7,55 @@
         <div class="search" id="search">
                         <div id="search_input_div"><input id="srch_input" class="srch" type="text" placeholder="Search by country, state, city, or institution name"></input></div>
                         <div id="search_img_div"><img class="searchimg" src="./images/home/search.png" alt=""></div>
-                        <div id="search_filter_div"><button class="filter_btn" value="0">
-                                <span id="filter_icons">
-                                        <span id='filter_style' class="fas fa-sliders-h"></span>
+                        <div id="search_filter_div"><button class="filter-btn" value="0">
+                                <span class="filter-icons">
+                                        <span class="fas fa-sliders-h filter-style"></span>
                                 </span>
-                                <span id="filter_by">Filter By</span>
+                                <span id="filter-by" class="filter-by">Filter By</span>
                         </button></div>
-        </div>                            
-                <div id="dropDownList_id" class="dropDownList"></div>
-                
-                <div id="filter_d" class="filter_div">
-                        <div class="filter_container">
-                                <div id="institute_prtnr">
-                                        <label class="label_text">OpenStax institutional partners</label>
-                                        <label id="institute_prtnr_toggle" class="switch">
+        </div>
+                <div class="dropDownList dropdownlist-id"></div>
+
+                <div id="filter_d" class="filter-div">
+                        <div class="filter-container">
+                                <div class="institute-prtnr">
+                                        <label class="label-text">OpenStax institutional partners</label>
+                                        <label class="switch institute-prtnr-toggle">
                                                 <input class='toggleCheck' name="route" type="checkbox" id="prtnrCheckBox" value="false">
                                                 <span class="slider round"></span>
                                         </label>
                                 </div>
-                                <div id="type_institute">
-                                        <label id="type_institute_txt" class="label_text">Type of Insititution</label>
-                                        <select id="type_institute_toggle" class="switch">
+                                <div class="type-institute">
+                                        <label id="type_institute_txt" class="label-text">Type of Insititution</label>
+                                        <select class="switch type-institute-toggle">
                                                 <option value="all">All</option>
                                                 <option value="college">College</option>
                                                 <option value="university">University</option>
                                         </select>
                                 </div>
-                                <div id="one_million">
-                                        <label id="one_million_txt" class="label_text">Schools that have saved over $1 million</label>
-                                        <label id="one_million_toggle" class="switch">
+                                <div class="one-million">
+                                        <label id="one_million_txt" class="label-text">Schools that have saved over $1 million</label>
+                                        <label class="switch one-million-toggle">
                                                 <input class='toggleCheck' name="route" type="checkbox" id="one_millionCheckBox" value="false">
                                                 <span class="slider round"></span>
                                         </label>
                                 </div>
-                                <div id="testmonal">
-                                        <label id="testmonal_txt" class="label_text">Has testimonial(s)</label>
-                                        <label id="testmonal_toggle" class="switch">
+                                <div class="testmonal">
+                                        <label id="testmonal_txt" class="label-text">Has testimonial(s)</label>
+                                        <label class="switch testmonal-toggle">
                                                 <input class='toggleCheck' name="route" type="checkbox" id="testmonalCheckBox" value="false">
                                                 <span class="slider round"></span>
                                         </label>
                                 </div>
-                                <div id="apply_filter">
-                                        <button class="applyFltrBtn" value='0'>Apply filters</button>
+                                <div class="apply-filter">
+                                        <button class="applyfltrbtn" value='0'>Apply filters</button>
                                 </div>
                         </div>
                 </div>
         </div>
                 <div class="maptxt" id="maptxt">
                         we're changing the world, one book at a time!
-                </div> 
+                </div>
         </div>
-        <div id="onMap" class="onMap"></div>
+        <div id="on-map" class="on-map"></div>
 </template>

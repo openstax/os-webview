@@ -28,23 +28,23 @@
 
     @include width-up-to($phone-max) {
 
-        #institute_prtnr_toggle {
+        .institute-prtnr-toggle {
             margin-left: 8.5rem;
         }
 
-        #type_institute_toggle {
+        .type-institute-toggle {
             margin-left: 16.4rem;
         }
 
-        #one_million_toggle {
+        .one-million-toggle {
             margin-left: 2.7rem;
         }
 
-        #testmonal_toggle {
+        .testmonal-toggle {
             margin-left: 16.3rem;
         }
 
-        #apply_fltr_btn {
+        .apply-fltr-btn {
             background-color: #f36b32;
             border-radius: 0.2rem;
             height: 3.8rem;
@@ -53,7 +53,7 @@
 
     }
 
-    .search_container {
+    .search-container {
         margin-left: 5rem;
         margin-top: 15rem;
         position: relative;
@@ -61,14 +61,14 @@
         z-index: 99999;
     }
 
-    #map {
-        height: 74rem;
-        opacity: 1;
-        overflow: hidden;
-        position: relative;
-        top: -3rem;
-        width: 100%;
-    }
+    // #map {
+    //     height: 74rem;
+    //     opacity: 1;
+    //     overflow: hidden;
+    //     position: relative;
+    //     top: -3rem;
+    //     width: 100%;
+    // }
 
     .maptxt {
         color: white;
@@ -87,7 +87,7 @@
 
     }
 
-    .onMap {
+    .on-map {
         background-color: #002469;
         bottom: 35.8rem;
         height: 80rem;
@@ -138,20 +138,20 @@
                 top: 1.55rem;
             }
 
-            .filter_btn {
+            .filter-btn {
                 border: 0.1rem solid #d5d5d5;
                 border-radius: 0.3rem;
                 height: 3.2rem;
                 width: 3.4rem;
             }
 
-            #filter_style {
+            .filter-style {
                 font-size: 1.5rem;
                 margin-left: -0.5rem;
                 margin-top: -0.2rem;
             }
 
-            #filter_by {
+            .filter-by {
                 display: none;
             }
         }
@@ -167,7 +167,7 @@
 
     }
 
-    #dropDownList_id {
+    .dropdownlist-id {
         border-top: 0.1rem solid #d5d5d5;
         width: 63.4rem;
     }
@@ -224,7 +224,7 @@
                 transform: translateX(1.2rem);
             }
 
-            #dropDownList_id {
+            .dropdownlist-id {
                 margin-top: 1rem;
             }
         }
@@ -251,7 +251,7 @@
         transform: translateX(2.1rem);
     }
 
-    .filter_div {
+    .filter-div {
         background-color: white;
         display: none;
         list-style-type: none;
@@ -259,14 +259,14 @@
         width: 63.4rem;
 
         @include width-up-to($phone-max) {
-            .filter_div {
+            .filter-div {
                 margin-top: 1rem;
                 width: 34.4rem;
             }
         }
     }
 
-    .search_list {
+    .search-list {
         background-color: white;
         border-radius: 0.3rem;
         list-style-type: none;
@@ -282,34 +282,34 @@
         }
     }
 
-    .toggle_on_off {
+    .toggle-on-off {
         align-items: center;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
     }
 
-    .search_list_element {
+    .search-list-element {
         border-bottom: 0.1rem solid #d5d5d5;
         padding-left: 1rem;
         padding-right: 1rem;
     }
 
-    .list_data {
+    .list-data {
         display: flex;
         flex-direction: column;
         padding-bottom: 2rem;
         padding-top: 2rem;
     }
 
-    .angle_circle {
+    .angle-circle {
         background-color: #e5e5e5;
         border-radius: 50%;
         height: 3.2rem;
         width: 3.2rem;
     }
 
-    .list_address {
+    .list-address {
         color: #4a4a4a;
         font-size: 1.4rem;
         height: 1.6rem;
@@ -327,7 +327,7 @@
         }
     }
 
-    .list_heading {
+    .list-heading {
         color: #4a4a4a;
         font-size: 1.8rem;
         font-weight: bold;
@@ -345,7 +345,7 @@
         }
     }
 
-    .toggle_dataList_head {
+    .toggle-datalist-head {
         display: flex;
         flex-direction: row;
 
@@ -354,7 +354,7 @@
         }
     }
 
-    .left_column {
+    .left-column {
         border: 0.1rem solid #d5d5d5;
         border-radius: 0.3rem;
         width: 55%;
@@ -365,11 +365,11 @@
         }
     }
 
-    .left_column_inner {
-        padding: 1.5rem 1rem 1.5rem 1rem;
+    .left-column-inner {
+        padding: 1.5rem 1rem;
     }
 
-    .right_column {
+    .right-column {
         border-bottom: 0.1rem solid #d5d5d5;
         border-radius: 0.3rem;
         border-right: 0.1rem solid #d5d5d5;
@@ -383,11 +383,11 @@
         }
     }
 
-    .right_column_inner {
-        padding: 1.5rem 1rem 1.5rem 1rem;
+    .right-column-inner {
+        padding: 1.5rem 1rem;
     }
 
-    .lColumn_head {
+    .lcolumn-head {
         color: #4a4a4a;
         font-size: 1.4rem;
         font-weight: bold;
@@ -399,7 +399,7 @@
         }
     }
 
-    .lColumn_body {
+    .lcolumn-body {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -412,7 +412,7 @@
         }
     }
 
-    .lCol_body_left {
+    .lcol-body-left {
         color: #4a4a4a;
         font-size: 1.4rem;
         line-height: 1.6rem;
@@ -422,7 +422,7 @@
         }
     }
 
-    .lCol_body_right {
+    .lcol-body-right {
         color: #4a4a4a;
         font-size: 1.4rem;
         line-height: 1.6rem;
@@ -432,7 +432,7 @@
         }
     }
 
-    .rColumn_head {
+    .rcolumn-head {
         color: #4a4a4a;
         font-size: 1.4rem;
         font-weight: bold;
@@ -444,7 +444,7 @@
         }
     }
 
-    .rColumn_body {
+    .rcolumn-body {
         margin-top: 1rem;
 
         @include width-up-to($phone-max) {
@@ -454,15 +454,15 @@
         }
     }
 
-    .toggle_hide {
+    .toggle-hide {
         display: none;
     }
 
-    .toggle_dataList {
+    .toggle-datalist {
         display: none;
     }
 
-    .toggle_dataList_body {
+    .toggle-datalist-body {
         background-color: white;
         border: 0.1rem solid #d5d5d5;
         border-radius: 0.3rem;
@@ -473,7 +473,7 @@
         }
     }
 
-    .toggle_dataList_footer {
+    .toggle-datalist-footer {
         color: #027eb5;
         font-size: 1.6rem;
         line-height: 2.5rem;
@@ -482,14 +482,14 @@
         text-align: right;
     }
 
-    .testimonial_head {
+    .testimonial-head {
         display: none;
         font-size: 1.4rem;
         font-weight: bold;
         line-height: 1.7rem;
     }
 
-    .tdlb_container {
+    .tdlb-container {
         padding: 5rem 2rem 3rem;
 
         @include width-up-to($phone-max) {
@@ -498,7 +498,7 @@
         }
     }
 
-    .tdlb_para {
+    .tdlb-para {
         display: flex;
         flex-direction: row;
 
@@ -508,12 +508,12 @@
         }
     }
 
-    .para_quote {
+    .para-quote {
         color: #f66400;
         font-size: 1.8rem;
     }
 
-    .tdl_body_desc {
+    .tdl-body-desc {
         color: #424242;
         font-size: 1.6rem;
         line-height: 2.5rem;
@@ -529,7 +529,7 @@
         }
     }
 
-    .tdl_body_regards {
+    .tdl-body-regards {
         padding-top: 3rem;
 
         @include width-up-to($phone-max) {
@@ -538,7 +538,7 @@
         }
     }
 
-    .tdlb_regards_name {
+    .tdlb-regards-name {
         color: #4b4b4b;
         font-size: 1.6rem;
         font-weight: bold;
@@ -548,7 +548,7 @@
         text-align: right;
     }
 
-    .tdlb_regards_desc {
+    .tdlb-regards-desc {
         color: #4b4b4b;
         font-size: 1.6rem;
         letter-spacing: -0.083rem;
@@ -557,20 +557,20 @@
         text-align: right;
     }
 
-    .testimonial_Mobclick {
+    .testimonial-mobclick {
         position: absolute;
         right: -10.7rem;
         top: -13.3rem;
     }
 
-    .filter_btn {
+    .filter-btn {
         background-color: white;
         border: 0.1rem solid #d5d5d5;
         border-radius: 0.2rem;
         margin: 2rem;
     }
 
-    #filter_style {
+    .filter-style {
         font-size: 1.6rem;
         width: 1.8rem;
     }
@@ -583,7 +583,7 @@
         color: #5e6062;
     }
 
-    #filter_by {
+    .filter-by {
         color: #5e6062;
         font-size: 1.6rem;
         line-height: 1.6rem;
@@ -591,7 +591,7 @@
         text-align: right;
     }
 
-    #filter_icons {
+    .filter-icons {
         padding-left: 0.2rem;
         padding-right: 0.5rem;
     }
@@ -600,68 +600,68 @@
         margin-left: 1.5rem;
     }
 
-    .filter_container {
+    .filter-container {
         margin-left: 2rem;
         margin-right: 2rem;
     }
 
-    .label_text {
+    .label-text {
         font-size: 1.6rem;
 
         @include width-up-to($phone-max) {
 
-            .label_text {
+            .label-text {
                 font-size: 1.4rem;
             }
         }
     }
 
-    #institute_prtnr {
+    .institute-prtnr {
         display: flex;
-        padding: 3rem 0 1.5rem 0;
+        padding: 3rem 0 1.5rem;
 
         @include width-up-to($phone-max) {
 
-            #institute_prtnr {
+            .institute-prtnr {
                 padding-top: 1.2rem;
             }
         }
 
     }
 
-    #type_institute {
+    .type-institute {
         display: flex;
-        padding: 1rem 0 1.5rem 0;
+        padding: 1rem 0 1.5rem;
 
         @include width-up-to($phone-max) {
 
-            #type_institute {
+            .type-institute {
                 margin-top: 1.2rem;
             }
         }
 
     }
 
-    #one_million {
+    .one-million {
         display: flex;
-        padding: 1rem 0 1.5rem 0;
+        padding: 1rem 0 1.5rem;
 
         @include width-up-to($phone-max) {
 
-            #one_million {
+            .one-million {
                 margin-top: 1.2rem;
             }
         }
 
     }
 
-    #testmonal {
+    .testmonal {
         display: flex;
         margin-bottom: 4.3rem;
 
         @include width-up-to($phone-max) {
 
-            #testmonal {
+            .testmonal {
                 margin-bottom: 2.4rem;
                 margin-top: 1.2rem;
             }
@@ -669,20 +669,20 @@
 
     }
 
-    .applyFltrBtn {
+    .applyfltrbtn {
         background-color: #f36b32;
         border-radius: 0.2rem;
         height: 5rem;
         width: 14rem;
     }
 
-    #apply_filter {
+    .apply-filter {
         margin-left: 46.4rem;
         padding-bottom: 1.5rem;
 
         @include width-up-to($phone-max) {
 
-            #apply_filter {
+            .apply-filter {
                 margin-left: 16.2rem;
                 padding-bottom: 0.9rem;
             }
