@@ -11,7 +11,7 @@ export default class Schoolinfo extends Controller {
         this.template = template;
         this.css = `/app/pages/impact-dev/map/map.css?${VERSION}`;
         this.view = {
-            classes: ['toggle_dataList_body']
+            classes: ['toggle-datalist-body']
         };
         this.model= props;
     }

@@ -12,7 +12,7 @@ export default class Schoolinfo extends Controller {
         this.template = template;
         this.css = `/app/pages/impact-dev/map/map.css?${VERSION}`;
         this.view = {
-            classes: ['toggle_dataList_head']
+            classes: ['toggle-datalist-head']
         };
         this.model= props;
     }
@@ -20,7 +20,7 @@ export default class Schoolinfo extends Controller {
     onLoaded() {
         $.insertHtml(this.el, this.model);
     }
-    @on('click .testimonial_head')
+    @on('click .testimonial-head')
     tesnimonialClick(event) {
         document.getElementById('search_container').setAttribute('style', 'margin-top: 12rem;');
         document.getElementById('backToResult_div').setAttribute('style', 'display: none;');

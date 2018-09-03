@@ -2,18 +2,18 @@
         <div if="model=='empty_result'" class="search_emptyResult">
             No result Found
         </div>
-    <ul if="model.length!=0 && model!='empty_result'" class="search_list">
-        <li each="element in model.lData" class="search_list_element">
-            <div class="toggle_on_off" id="show-{element.pk}" data-toggle="show">
-                <div class="list_data">
-                    <div class="list_heading">{element.fields.name}</div>
-                    <div class="list_address">{element.fields.physical_city}, {element.fields.physical_state_province}</div>
+    <ul if="model.length!=0 && model!='empty_result'" class="search-list">
+        <li each="element in model.lData" class="search-list-element">
+            <div class="toggle-on-off" id="show-{element.pk}" data-toggle="show" data-long="{element.fields.long}" data-lat="{element.fields.lat}" data-name="{element.fields.name}" data-city="{`${element.fields.physical_cityelement}, ${element.fields.physical_state_province}`}">
+                <div class="list-data">
+                    <div class="list-heading">{element.fields.name}</div>
+                    <div class="list-address">{element.fields.physical_city}, {element.fields.physical_state_province}</div>
                 </div>
                 <div class="list_show_more">
-                    <i id="icon-{element.pk}" class="fa fa-chevron-down angle_circle" aria-hidden="true"></i>
+                    <i id="icon-{element.pk}" class="fa fa-angle-down angle-circle" aria-hidden="true"></i>
                 </div>
             </div>
-            <div id="data-{element.pk}" class="toggle_dataList data-{element.pk}">
+            <div id="data-{element.pk}" class="toggle-dataList data-{element.pk}">
                 <div class="detailinfo-{element.pk}"></div>
                 <div id="testimonialBody-{element.pk}" class="testimonialBody-{element.pk}"></div>
             </div>
