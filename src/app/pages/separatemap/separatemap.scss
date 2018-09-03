@@ -1,0 +1,18 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.mapd {
+    height: 80rem;
+    width: 100%;
+    @include width-up-to($tablet-max) {
+        top: 0rem;
+    }
+    @include width-up-to($phone-max) {
+        height: 50rem;
+    }
+    .mapboxgl-ctrl-bottom-left {
+        display: none;
+    }
+    .mapboxgl-ctrl-bottom-right {
+        display: none;
+    }
+}
