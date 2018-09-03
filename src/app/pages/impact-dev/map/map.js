@@ -18,8 +18,9 @@ export default class Map1 extends Controller {
         this.regions = {
             dataList: '.dropDownList'
         };
-        this.model = [];
-        this.mapObject = props;
+        this.model = props.pageType;
+        this.pageTyp = props.pageType;
+        this.mapObject = props.mapObj;
         this.filterStatus = 'false';
         this.prtnrCheckBox = 'false';
         this.insType = 'all';
@@ -29,17 +30,21 @@ export default class Map1 extends Controller {
 
     onLoaded() {
         $.insertHtml(this.el, this.model);
-        setTimeout(() => {
-            this.fadeOutText();
-        }, 3000);
-        setTimeout(() => {
-            this.movBar();
-        }, 3500);
+        debugger;
+        if (this.pageTyp === 'landing') {
+            setTimeout(() => {
+                this.fadeOutText();
+            }, 3000);
+            setTimeout(() => {
+                this.movBar();
+            }, 3500);
+        } else {
+            this.fadOutMovBar();
+        }
     }
     @on('click .srch')
     fadeEvent(event) {
-        this.fadeOutText();
-        this.movBar();
+
     }
     @on('keyup .srch')
     intercept(event) {
@@ -144,7 +149,17 @@ export default class Map1 extends Controller {
             const styleT = 'transition: all 1.5s ease-out;-webkit-transition: all 1.5s ease-out;';
             const styleFr = '-moz-transition: all 1.5s ease-out;-o-transition: all 1.5s ease-out;margin-top: 3rem;';
 
-            document.getElementById('search_container').setAttribute('style', styleT + styleFr);
+            this.el.querySelector('.search_container').setAttribute('style', styleT + styleFr);
+        }
+    }
+    fadOutMovBar() {
+        if (window.innerWidth > 960) {
+            this.el.querySelector('.onMap').setAttribute('style', 'display: none;');
+            this.el.querySelector('.maptxt').setAttribute('style', 'display: none');
+            this.el.querySelector('.search_container').setAttribute('style', 'margin-top: 3rem;');
+        } else {
+            this.el.querySelector('.onMap').setAttribute('style', 'opacity: 0;');
+            this.el.querySelector('.maptxt').setAttribute('style', 'opacity: 0;');
         }
     }
     searchRequest(fltrStatus, value) {

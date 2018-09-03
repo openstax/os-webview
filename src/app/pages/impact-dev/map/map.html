@@ -4,7 +4,17 @@
         <div id="backToResult_div" class="backToResult_div"><button id="backToResult_btn" class="backToResult_btn"><i class="fas fa-arrow-left left_arrow_bak"></i></button></div>
         <div id="backToDetail_div" class="backToDetail_div"><button id="backToDetail_btn" class="backToDetail_btn"><i class="fas fa-arrow-left left_arrow_bak"></i></button></div>
         <div class="search-div-container">
-        <div class="search" id="search">
+        <a if="model=='landing'" href="/separatemap" class="separateMap-link"><div class="search" id="search">
+                        <div id="search_input_div"><input id="srch_input" class="srch" type="text" placeholder="Search by country, state, city, or institution name"></input></div>
+                        <div id="search_img_div"><img class="searchimg" src="./images/home/search.png" alt=""></div>
+                        <div id="search_filter_div"><button class="filter_btn" value="0">
+                                <span id="filter_icons">
+                                        <span id='filter_style' class="fas fa-sliders-h"></span>
+                                </span>
+                                <span id="filter_by">Filter By</span>
+                        </button></div>
+        </div></a>
+        <div if="model=='separate'" class="search" id="search">
                         <div id="search_input_div"><input id="srch_input" class="srch" type="text" placeholder="Search by country, state, city, or institution name"></input></div>
                         <div id="search_img_div"><img class="searchimg" src="./images/home/search.png" alt=""></div>
                         <div id="search_filter_div"><button class="filter_btn" value="0">

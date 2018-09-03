@@ -4,34 +4,23 @@ import $ from '~/helpers/$';
 import { utils } from 'superb.js';
 import { on } from '~/helpers/controller/decorators';
 import shell from '~/components/shell/shell';
-import { description as template } from './impact-dev.html';
+import { description as template } from './separatemap.html';
 import { shuffle } from '~/helpers/data';
-import Map1 from './map/map';
-import State from './statistics/stat';
-import Studentinfo from './studentinfo/studentinfo';
-import Schoolmap from './schoolmap/schoolmap';
+import Map1 from '../impact-dev/map/map';
 import mapboxgl from 'mapbox-gl';
 
+export default class SeparateMap extends CMSPageController {
 
-export default class ImpactDev extends CMSPageController {
-
-    static description = 'Since 2012, OpenStax has saved students millions ' +
-    'through free, peer-reviewed college textbooks. Learn more about our ' +
-    'impact on the 3,000+ schools who use our books.';
     init() {
         this.slug = 'pages/our-impact';
         this.template = template;
-        this.css = `/app/pages/impact-dev/impact-dev.css?${VERSION}`;
+        this.css = this.css = `/app/pages/separatemap/separatemap.css?${VERSION}`;
         this.regions = {
-            map: '.mapdiv',
-            stat: '.statdiv',
-            studentinfo: '.studentinfodiv',
-            schoolmap: '.schoolmapdiv'
+            map: '.mapd'
         };
         this.view = {
-            classes: ['home-page']
+            classes: ['separatemap-page']
         };
-
         this.model = {
             loaded: ''
         };
@@ -41,21 +30,18 @@ export default class ImpactDev extends CMSPageController {
         const tokenn = 'pk.eyJ1Ijoib3BlbnN0YXgiLCJhIjoiY2pnbWtjajZzMDBkczJ6cW1kaDViYW02aCJ9.0w3LCa7lzozzRgXM7xvBfQ';
 
         mapboxgl.accessToken = tokenn;
-        const map = new mapboxgl.Map({
-            container: 'mapdiv',
+        const mapOb = new mapboxgl.Map({
+            container: 'mapd',
             style: 'mapbox://styles/openstax/cjhv1z4iq00of2smldg1o0ktw',
             center: [0, 0],
             zoom: 2
         });
         const mapObject = {
-            mapObj: map,
-            pageType: 'landing'
+            mapObj: mapOb,
+            pageType: 'separate'
         };
 
         this.regions.map.append(new Map1(mapObject));
-        this.regions.stat.attach(new State());
-        this.regions.studentinfo.attach(new Studentinfo());
-        this.regions.schoolmap.attach(new Schoolmap());
 
         this.model.loaded = 'loaded';
         this.update();
