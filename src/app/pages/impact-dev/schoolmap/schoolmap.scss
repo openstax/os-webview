@@ -59,7 +59,7 @@
         }
     }
 
-    .map-img{
+    .map-img {
         @include width-up-to($tablet-max) {
             width: 60rem;
         }
