@@ -1,10 +1,10 @@
+import booksPromise from '~/models/books';
 import shell from '~/components/shell/shell';
 import settings from 'settings';
 import RequestForm from './request-form/request-form';
 
-const booksPromise = fetch(`${settings.apiOrigin}/api/books`)
-    .then((r) => r.json())
-    .then((r) => r.books.filter((b) => b.comp_copy_available && b.salesforce_abbreviation));
+const filteredBooksPromise = booksPromise
+    .then((books) => books.filter((b) => b.comp_copy_available && b.salesforce_abbreviation));
 
 function getCompCopyDialogProps(props, userStatusPromise) {
     const dialogProps = {
@@ -39,7 +39,7 @@ function getCompCopyDialogProps(props, userStatusPromise) {
         });
         dialogProps.content.update();
     });
-    booksPromise.then((books) => {
+    filteredBooksPromise.then((books) => {
         const entry = books.find((b) => b.title === props.title);
 
         if (entry) {

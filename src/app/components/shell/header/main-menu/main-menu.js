@@ -1,4 +1,5 @@
 import VERSION from '~/version';
+import categoryPromise from '~/models/subjectCategories';
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
@@ -33,20 +34,19 @@ export default class MainMenu extends Controller {
 
     onLoaded() {
         this.model.initialRenderDone = true;
+        categoryPromise.then((categories) => {
+            const items = categories.map((obj) => ({
+                url: `/subjects/${obj.value}`,
+                label: obj.html.replace('View ', '')
+            }));
 
-        this.regions.subjectsDropdown.attach(new Dropdown(
-            () => ({
-                dropdownLabel: 'Subjects',
-                items: [
-                    {url: '/subjects', label: 'All'},
-                    {url: '/subjects/math', label: 'Math'},
-                    {url: '/subjects/science', label: 'Science'},
-                    {url: '/subjects/social-sciences', label: 'Social Sciences'},
-                    {url: '/subjects/humanities', label: 'Humanities'},
-                    {url: '/subjects/AP', label: 'AP<sup>®</sup>'}
-                ]
-            })
-        ));
+            this.regions.subjectsDropdown.attach(new Dropdown(
+                () => ({
+                    dropdownLabel: 'Subjects',
+                    items
+                })
+            ));
+        });
         this.regions.technologyDropdown.attach(new Dropdown(
             () => ({
                 dropdownLabel: 'Technology',
@@ -122,7 +122,7 @@ export default class MainMenu extends Controller {
     }
 
     closeDropdowns() {
-        if (!this.model.trainingWheelActive) {
+        if (!this.model.trainingWheelActive && this.regions.subjectsDropdown.controllers.length) {
             this.regions.subjectsDropdown.controllers[0].closeMenu();
             this.regions.technologyDropdown.controllers[0].closeMenu();
             if (this.loginMenuComponent) {
