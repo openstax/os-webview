@@ -78,8 +78,8 @@ export default class Mapdropdown extends Controller {
         const mObj = this.model.mapObj;
         const showing = this.el.querySelectorAll('[data-toggle=hide]');
 
-        filterStyle.classList.toggle('fa-angle-down');
-        filterStyle.classList.toggle('fa-angle-up');
+        filterStyle.classList.toggle('fa-chevron-down');
+        filterStyle.classList.toggle('fa-chevron-up');
         if (toggleOnoff === 'show') {
             if (showing.length) {
                 const alreadyShow = showing[0].id.split('-');

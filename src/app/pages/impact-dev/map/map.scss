@@ -130,17 +130,17 @@
     .backToResult_div,
     .backToDetail_div {
         display: none;
-        order: 2;
         margin-bottom: 1rem;
+        order: 2;
     }
     .backToSearch_btn,
     .backToResult_btn,
     .backToDetail_btn {
-        width: 4rem;
-        height: 4rem;
         border-radius: 28px;
         background-color: white;
         box-shadow: 0 10px 30px 0 rgba(0,0,0,0.3);
+        height: 4rem;
+        width: 4rem;
     }
     .left_arrow_bak{
         color: #4A4A4A;
@@ -263,8 +263,16 @@
         padding-right: 1rem;
     }
     .list_show_more {
-
+        align-items: center;      
+        background-color: #E5E5E5;
+        border-radius: 50%;
+        display: flex;
+        height: 3.2rem;
+        justify-content: center;
+        text-align: center;
+        width: 3.2rem;
     }
+
     .list_data {
         display: flex;
         flex-direction: column;
@@ -275,10 +283,7 @@
         }
     }
     .angle_circle{
-        background-color: #E5E5E5;
-        border-radius: 50%;
-        height: 32px;
-        width: 32px;
+        font-size: 1.6rem;
     }
     .list_address {
         color: #4A4A4A;
@@ -621,28 +626,27 @@
             border-radius: 2px;
             background-color: #F36B32;
         }
-        #apply_filter {
-
-        }
     }
     .searchimg {
         width: 2rem;
         padding-top: 0.2rem;
     }
+
     .detailinfoMOb {
+        background: white;
         display: none;
         padding-left: 1rem;
         padding-right: 1rem;
-        background: white;
     }
     .testimonialBodyMob {
         display: none;
-        @include width-up-to($phone-max) {
-        }
     }
+
     .detailInfoHead {
         display: none;
+
         @include width-up-to($phone-max) {
+
             display: block;
         }
     }
