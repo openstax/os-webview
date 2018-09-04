@@ -47,6 +47,11 @@ export default class ImpactDev extends CMSPageController {
             center: [0, 0],
             zoom: 2
         });
+
+        console.log(map);
+        map.scrollZoom.disable();
+        map.dragPan.disable();
+        map.doubleClickZoom.disable();
         const mapObject = {
             mapObj: map,
             pageType: 'landing'
