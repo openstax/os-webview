@@ -20,14 +20,6 @@ export default class Mapdropdown extends Controller {
 
     onLoaded() {
         $.insertHtml(this.el, this.model);
-        if (window.innerWidth < 960) {
-            const elements = this.el.querySelectorAll('.testimonial-head');
-
-            elements.forEach((v) => {
-                v.setAttribute('style', 'display: block;');
-                console.log(v);
-            });
-        }
     }
     @on('click .toggle-on-off')
     toggleOnoff(event) {

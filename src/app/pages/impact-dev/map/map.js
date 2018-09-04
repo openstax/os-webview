@@ -30,7 +30,6 @@ export default class Map1 extends Controller {
 
     onLoaded() {
         $.insertHtml(this.el, this.model);
-        debugger;
         if (this.pageTyp === 'landing') {
             setTimeout(() => {
                 this.fadeOutText();
@@ -126,6 +125,7 @@ export default class Map1 extends Controller {
     }
     @on('click .backToDetail_btn')
     backToDetail(event) {
+        this.el.querySelector('.search_container').setAttribute('style', 'bottom: 28rem;');
         document.getElementById('backToResult_div').setAttribute('style', 'display: block;');
         document.getElementById('backToDetail_div').setAttribute('style', 'display: none;');
         document.getElementById('detailinfoMOb').setAttribute('style', 'display: block;');
