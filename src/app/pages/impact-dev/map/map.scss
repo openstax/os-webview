@@ -50,7 +50,6 @@
             height: 3.8rem;
             width: 11.5rem;
         }
-
     }
 
     .search-container {
@@ -59,6 +58,31 @@
         position: relative;
         width: 67.8rem;
         z-index: 99999;
+
+        @include width-up-to($phone-max) {
+            display: flex;
+            flex-direction: column;
+            margin-left: unset;
+            margin-top: unset;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            padding-top: 20rem;
+            width: 100%;
+        }
+    }
+
+    .search-div-container {
+        box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.3);
+        width: 63.4rem;
+
+        @include width-up-to($phone-max) {
+            order: 2;
+            width: 100%;
+        }
+    }
+
+    .separate-map-link {
+        display: unset;
     }
 
     // #map {
