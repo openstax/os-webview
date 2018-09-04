@@ -101,12 +101,12 @@ export default class Mapdropdown extends Controller {
         }
     }
     showDetailMob() {
-        const searchList = document.getElementsByClassName('search-div-container');
         const detailinfoMOb = this.el.querySelector('.detailinfoMOb');
-        const searchList1 = this.el.querySelector('.search_list');
+        const searchList = this.el.querySelector('.search_list');
 
-        searchList1.setAttribute('style', 'display: none');
+        searchList.setAttribute('style', 'display: none');
         document.getElementById('search').setAttribute('style', 'display: none');
+        document.getElementById('search_container').setAttribute('style', 'margin-top: 16.8rem;');
         detailinfoMOb.setAttribute('style', 'display: block');
         document.getElementById('backToSearch_div').setAttribute('style', 'display: none;');
         document.getElementById('backToResult_div').setAttribute('style', 'display: block;');

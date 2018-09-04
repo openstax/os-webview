@@ -26,7 +26,7 @@
             margin-left: unset;
             padding-left: 1rem;
             padding-right: 1rem;
-            padding-top: 20rem;
+            margin-top: 20rem;
         }
     }
     .search-div-container {
@@ -247,7 +247,7 @@
         overflow-x: hidden;
         border-radius: 3px;
         @include width-up-to($phone-max) {
-            max-height: 22.7rem;
+            max-height: 20.7rem;
             overflow-y: scroll;
         }
     }
