@@ -53,4 +53,5 @@ export default class SeparateMap extends CMSPageController {
     onClose() {
         shell.regions.footer.el.removeAttribute('hidden');
     }
+
 }

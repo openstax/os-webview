@@ -96,22 +96,20 @@
         }
         @include width-up-to($phone-max) {
             width: 100%;
-            height: 6.5rem;
-            justify-content: space-around;
+            height: 6rem;
             #search_input_div {
                 order: 2;
             }
             #search_filter_div {
+                margin-right: 1rem;
                 order: 2;
             }
             .srch {
                 font-size: 14px;
-                width: unset;
+                width: 26.6rem;
                 padding: 0.6rem;
             }
-            .searchimg {
 
-            }
             .filter_btn {
                 width: 3.2rem;
                 height: 3.2rem;
@@ -639,6 +637,10 @@
     .searchimg {
         width: 2rem;
         padding-top: 0.2rem;
+
+        @include width-up-to($phone-max) {
+            padding-top: 0.5rem;
+        }
     }
 
     .detailinfoMOb {
@@ -663,6 +665,12 @@
     #search_img_div {
         margin-right: 1.7rem;
         margin-left: 2rem;
+
+        @include width-up-to($phone-max) {
+
+            margin-right: 0;
+            margin-left: 1rem;  
+        }
     }
 
 }
