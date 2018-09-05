@@ -4,7 +4,7 @@
         </div>
     <ul if="model.length!=0 && model!='empty_result'" class="search_list">
         <li each="element in model.lData" class="search_list_element">
-            <div class="toggle_on_off" id="show-{element.pk}">
+            <div class="toggle_on_off" id="show-{element.pk}" data-toggle="show">
                 <div class="list_data">
                     <div class="list_heading">{element.fields.name}</div>
                     <div class="list_address">{element.fields.physical_city}, {element.fields.physical_state_province}</div>

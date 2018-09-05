@@ -29,6 +29,11 @@ export default class Map1 extends Controller {
     }
 
     onLoaded() {
+        if (window.innerWidth < 960) {
+            const filterStatus = this.el.querySelector('.srch');
+
+            filterStatus.setAttribute('placeholder', 'Search location or instituion name');
+        }
         $.insertHtml(this.el, this.model);
         if (this.pageTyp === 'landing') {
             setTimeout(() => {
