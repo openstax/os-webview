@@ -20,7 +20,6 @@ export default class MainMenu extends Controller {
         };
         this.css = `/app/components/shell/header/main-menu/main-menu.css?${VERSION}`;
         this.model = model;
-        this.model.openDropdown = null;
 
         this.loginUrl = this.model.login;
         this.logoutUrl = this.model.logout;
@@ -125,6 +124,7 @@ export default class MainMenu extends Controller {
         if (!this.model.trainingWheelActive && this.regions.subjectsDropdown.controllers.length) {
             this.regions.subjectsDropdown.controllers[0].closeMenu();
             this.regions.technologyDropdown.controllers[0].closeMenu();
+            this.regions.whatWeDoDropdown.controllers[0].closeMenu();
             if (this.loginMenuComponent) {
                 this.loginMenuComponent.closeMenu();
             }
