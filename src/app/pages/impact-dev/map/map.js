@@ -74,7 +74,7 @@ export default class Map1 extends Controller {
             dListDiv.innerHTML = '';
             filterDiv.setAttribute('style', 'display: block');
             if (window.innerWidth < 960) {
-                searchContainer.setAttribute('style', 'margin-top: 16.3rem;');
+                searchContainer.setAttribute('style', 'margin-top: 14.5rem;');
                 bachToSearch.setAttribute('style', 'display: block;');
             }
         } else {
@@ -82,7 +82,7 @@ export default class Map1 extends Controller {
             filterDiv.setAttribute('style', 'display: none');
             this.setFilterValuesOnClose();
             if (window.innerWidth < 960) {
-                searchContainer.setAttribute('style', 'margin-top: 44rem;');
+                searchContainer.setAttribute('style', 'margin-top: 42.5rem;');
                 bachToSearch.setAttribute('style', 'display: none;');
             }
         }
@@ -158,7 +158,7 @@ export default class Map1 extends Controller {
         if (window.innerWidth > 960) {
             this.el.querySelector('.search_container').setAttribute('style', 'margin-top: 3rem;');
         } else {
-            this.el.querySelector('.search_container').setAttribute('style', 'margin-top: 44rem;');
+            this.el.querySelector('.search_container').setAttribute('style', 'margin-top: 42.5rem;');
         }
     }
     searchRequest(fltrStatus, value) {
@@ -176,7 +176,7 @@ export default class Map1 extends Controller {
 
                 if (data.length) {
                     if (window.innerWidth < 960) {
-                        searchContainer.setAttribute('style', 'margin-top: 18rem;');
+                        searchContainer.setAttribute('style', 'margin-top: 16.5rem;');
                         bachToSearch.setAttribute('style', 'display: block;');
                     }
                     this.model = {
@@ -190,7 +190,7 @@ export default class Map1 extends Controller {
                     const list = new Dropdown('empty_result');
 
                     if (window.innerWidth < 960) {
-                        searchContainer.setAttribute('style', 'margin-top: 34rem;');
+                        searchContainer.setAttribute('style', 'margin-top: 32.5rem;');
                         bachToSearch.setAttribute('style', 'display: block;');
                     }
                     this.regions.dataList.attach(list);
@@ -210,7 +210,7 @@ export default class Map1 extends Controller {
             searchInput.setAttribute('style', 'border: unset');
             this.el.querySelector('.backToSearch_div').setAttribute('style', 'display: none;');
             this.el.querySelector('.searchimg').setAttribute('style', 'display: initial');
-            this.el.querySelector('.search_container').setAttribute('style', 'margin-top: 44rem;');
+            this.el.querySelector('.search_container').setAttribute('style', 'margin-top: 42.5rem;');
         }
         this.regions.dataList.attach(list);
     }
