@@ -46,10 +46,13 @@ export default class Partners extends CMSPageController {
 
         this.filterPartnersEvent = () => {
             const category = history.state.filter;
-            const cms = CategorySelector.byValue[category].cms;
 
             this.categorySelector.updateSelected(category);
-            this.partnerViewer.filterPartners(cms);
+            CategorySelector.loaded.then(() => {
+                const cms = CategorySelector.byValue[category].cms;
+
+                this.partnerViewer.filterPartners(cms);
+            });
         };
         window.addEventListener('popstate', this.filterPartnersEvent);
     }
@@ -88,7 +91,6 @@ export default class Partners extends CMSPageController {
 
     filterPartners(category) {
         const path = category === 'view-all' ? pagePath : `${pagePath}/${category}`;
-        const cms = CategorySelector.byValue[category].cms;
 
         router.navigate(path, {
             filter: category,
@@ -96,7 +98,11 @@ export default class Partners extends CMSPageController {
             x: history.state.x,
             y: history.state.y
         });
-        this.partnerViewer.filterPartners(cms);
+        CategorySelector.loaded.then(() => {
+            const cms = CategorySelector.byValue[category].cms;
+
+            this.partnerViewer.filterPartners(cms);
+        });
     }
 
     @on('click .logo-text')

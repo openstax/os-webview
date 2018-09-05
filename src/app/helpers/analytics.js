@@ -1,3 +1,4 @@
+import booksPromise from '~/models/books';
 import settings from 'settings';
 import linkHelper from '~/helpers/link';
 import {accountsModel} from '~/models/usermodel';
@@ -166,10 +167,9 @@ class Analytics {
         /* eslint arrow-parens: 0 */
         (async () => {
             try {
-                const response = await fetch(`${settings.apiOrigin}/api/books`);
-                const data = await response.json();
+                const books = await booksPromise;
 
-                this.addBooksToLookupTable(data.books);
+                this.addBooksToLookupTable(books);
             } catch (e) {
                 console.log(e);
             }
