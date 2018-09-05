@@ -16,30 +16,29 @@ export default class Mapdropdown extends Controller {
             classes: ['toggle_dataList_head']
         };
         this.model = props;
+        this.offSet = [];
     }
 
     onLoaded() {
         $.insertHtml(this.el, this.model);
-        if (window.innerWidth < 960) {
-            const elements = this.el.querySelectorAll('.testimonial_head');
-
-            elements.forEach((v) => {
-                v.setAttribute('style', 'display: block;');
-                console.log(v);
-            });
-        }
     }
     @on('click .toggle_on_off')
     toggleOnoff(event) {
         const target = event.delegateTarget;
         const mObj = this.model.mapObj;
+        const lData = this.model.lData;
         const focusId = target.id;
         const unqIdArr = focusId.split('-');
         const unqId = unqIdArr[1];
         const Region = this.regions.self.constructor;
         const indexItem = this.model.lData.findIndex((t) => t.pk === Number(unqId));
+        const lat = lData[indexItem].fields.lat;
+        const long = lData[indexItem].fields.long;
+        const iName = lData[indexItem].fields.name;
+        const pCity = lData[indexItem].fields.physical_city;
+        const pState = lData[indexItem].fields.physical_state_province;
         const modelObj = {
-            dataArray: this.model.lData,
+            dataArray: lData,
             itemIndex: indexItem
         };
 
@@ -51,6 +50,8 @@ export default class Mapdropdown extends Controller {
             const regionDetailInfoMob = new Region(unqClassDetailMob, this);
             const regionTestimonialMob = new Region(unqClassTestMob, this);
 
+            this.offSet = [0, -230];
+
             this.showDetailMob();
             regionDetailInfoMob.attach(new Schoolinfo(modelObj));
             regionTestimonialMob.attach(new Testimonialinfo(modelObj));
@@ -60,19 +61,20 @@ export default class Mapdropdown extends Controller {
             const regionDetailInfo = new Region(unqClassDetail, this);
             const regionTestimonial = new Region(unqClassTest, this);
 
+            this.offSet = [300, 0];
+
             regionDetailInfo.attach(new Schoolinfo(modelObj));
             regionTestimonial.attach(new Testimonialinfo(modelObj));
             this.showDetailScreen(event);
         }
         mObj.flyTo({
-            center: [target.dataset.lat, target.dataset.long],
+            center: [lat, long],
+            offset: this.offSet,
             zoom: 14
         });
-        new mapboxgl.Popup({
-            closeOnClick: false
-        })
-            .setLngLat([target.dataset.lat, target.dataset.long])
-            .setHTML(`<h5>${target.dataset.name}</h5><br>${target.dataset.city}`)
+        new mapboxgl.Popup()
+            .setLngLat([lat, long])
+            .setHTML(`<b>${iName}</b><br>${pCity}, ${pState}`)
             .addTo(mObj);
     }
     showDetailScreen(event) {
@@ -86,8 +88,8 @@ export default class Mapdropdown extends Controller {
         const mObj = this.model.mapObj;
         const showing = this.el.querySelectorAll('[data-toggle=hide]');
 
-        filterStyle.classList.toggle('fa-angle-down');
-        filterStyle.classList.toggle('fa-angle-up');
+        filterStyle.classList.toggle('fa-chevron-down');
+        filterStyle.classList.toggle('fa-chevron-up');
         if (toggleOnoff === 'show') {
             if (showing.length) {
                 const alreadyShow = showing[0].id.split('-');
@@ -109,12 +111,12 @@ export default class Mapdropdown extends Controller {
         }
     }
     showDetailMob() {
-        const searchList = document.getElementsByClassName('search-div-container');
         const detailinfoMOb = this.el.querySelector('.detailinfoMOb');
-        const searchList1 = this.el.querySelector('.search_list');
+        const searchList = this.el.querySelector('.search_list');
 
-        searchList1.setAttribute('style', 'display: none');
+        searchList.setAttribute('style', 'display: none');
         document.getElementById('search').setAttribute('style', 'display: none');
+        document.getElementById('search_container').setAttribute('style', 'margin-top: 16.8rem;');
         detailinfoMOb.setAttribute('style', 'display: block');
         document.getElementById('backToSearch_div').setAttribute('style', 'display: none;');
         document.getElementById('backToResult_div').setAttribute('style', 'display: block;');

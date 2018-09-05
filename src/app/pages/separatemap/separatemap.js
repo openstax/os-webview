@@ -27,6 +27,7 @@ export default class SeparateMap extends CMSPageController {
     }
 
     onDataLoaded() {
+        shell.regions.footer.el.setAttribute('hidden', '');
         const tokenn = 'pk.eyJ1Ijoib3BlbnN0YXgiLCJhIjoiY2pnbWtjajZzMDBkczJ6cW1kaDViYW02aCJ9.0w3LCa7lzozzRgXM7xvBfQ';
 
         mapboxgl.accessToken = tokenn;
@@ -47,6 +48,10 @@ export default class SeparateMap extends CMSPageController {
         this.update();
 
         shell.hideLoader();
+    }
+
+    onClose() {
+        shell.regions.footer.el.removeAttribute('hidden');
     }
 
 }
