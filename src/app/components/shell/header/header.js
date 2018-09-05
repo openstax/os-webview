@@ -82,7 +82,6 @@ class Header extends Controller {
         });
 
         window.addEventListener('resize', this.closeFullScreenNav.bind(this));
-        window.addEventListener('navigate', () => this.update());
     }
 
     onUpdate() {
@@ -117,6 +116,10 @@ class Header extends Controller {
         };
 
         window.addEventListener('scroll', this.onScrollHeader, false);
+        window.addEventListener('navigate', () => {
+            this.closeFullScreenNav();
+            this.update();
+        });
     }
 
     pin() {
