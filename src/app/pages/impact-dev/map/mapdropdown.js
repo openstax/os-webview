@@ -16,6 +16,7 @@ export default class Mapdropdown extends Controller {
             classes: ['toggle_dataList_head']
         };
         this.model = props;
+        this.offSet = [];
     }
 
     onLoaded() {
@@ -25,13 +26,19 @@ export default class Mapdropdown extends Controller {
     toggleOnoff(event) {
         const target = event.delegateTarget;
         const mObj = this.model.mapObj;
+        const lData = this.model.lData;
         const focusId = target.id;
         const unqIdArr = focusId.split('-');
         const unqId = unqIdArr[1];
         const Region = this.regions.self.constructor;
         const indexItem = this.model.lData.findIndex((t) => t.pk === Number(unqId));
+        const lat = lData[indexItem].fields.lat;
+        const long = lData[indexItem].fields.long;
+        const iName = lData[indexItem].fields.name;
+        const pCity = lData[indexItem].fields.physical_city;
+        const pState = lData[indexItem].fields.physical_state_province;
         const modelObj = {
-            dataArray: this.model.lData,
+            dataArray: lData,
             itemIndex: indexItem
         };
 
@@ -43,6 +50,8 @@ export default class Mapdropdown extends Controller {
             const regionDetailInfoMob = new Region(unqClassDetailMob, this);
             const regionTestimonialMob = new Region(unqClassTestMob, this);
 
+            this.offSet = [0, -230];
+
             this.showDetailMob();
             regionDetailInfoMob.attach(new Schoolinfo(modelObj));
             regionTestimonialMob.attach(new Testimonialinfo(modelObj));
@@ -52,19 +61,20 @@ export default class Mapdropdown extends Controller {
             const regionDetailInfo = new Region(unqClassDetail, this);
             const regionTestimonial = new Region(unqClassTest, this);
 
+            this.offSet = [300, 0];
+
             regionDetailInfo.attach(new Schoolinfo(modelObj));
             regionTestimonial.attach(new Testimonialinfo(modelObj));
             this.showDetailScreen(event);
         }
         mObj.flyTo({
-            center: [target.dataset.lat, target.dataset.long],
+            center: [lat, long],
+            offset: this.offSet,
             zoom: 14
         });
-        new mapboxgl.Popup({
-            closeOnClick: false
-        })
-            .setLngLat([target.dataset.lat, target.dataset.long])
-            .setHTML(`<h5>${target.dataset.name}</h5><br>${target.dataset.city}`)
+        new mapboxgl.Popup()
+            .setLngLat([lat, long])
+            .setHTML(`<b>${iName}</b><br>${pCity}, ${pState}`)
             .addTo(mObj);
     }
     showDetailScreen(event) {

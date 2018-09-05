@@ -26,7 +26,7 @@
             margin-left: unset;
             padding-left: 1rem;
             padding-right: 1rem;
-            margin-top: 20rem;
+            margin-top: 18.5rem;
         }
     }
     .search-div-container {
@@ -58,7 +58,10 @@
         padding-top: 4rem;
         @include width-up-to($phone-max) {
             order: 1;
-            width: 31rem;
+            width: 33rem;
+            padding-top: 1rem;
+            padding-bottom: 3rem;
+            padding-left: 2rem;
         }
     }
     .onMap {
@@ -93,7 +96,7 @@
         }
         @include width-up-to($phone-max) {
             width: 100%;
-            height: 5rem;
+            height: 6.5rem;
             justify-content: space-around;
             #search_input_div {
                 order: 2;
@@ -247,7 +250,7 @@
         overflow-x: hidden;
         border-radius: 3px;
         @include width-up-to($phone-max) {
-            max-height: 20.7rem;
+            max-height: 21rem;
             overflow-y: scroll;
         }
     }
@@ -405,12 +408,13 @@
         display: none;
     }
     .toggle_dataList_body {
-        border: 1px solid #D5D5D5;
         border-radius: 3px;
         background-color: #FFFFFF;
         margin-top: 15px;
         @include width-up-to($phone-max) {
             margin-top: 0;
+            padding-top: 0.3rem;
+            padding-bottom: 0.3rem;
         }
     }
     .toggle_dataList_footer {
@@ -420,6 +424,11 @@
         margin-top: 1rem;
         margin-bottom: 1rem;
         text-align: right;
+        padding-right: 0.3rem;
+        
+        @include width-up-to($phone-max) {
+            padding-right: 1.3rem;
+        }
     }
     .testimonial_head{
         display: none;
@@ -444,6 +453,7 @@
     }
     .tdlb_container {
         padding: 5rem 2rem 3rem 2rem;
+        border: 1px solid #d5d5d5;
         @include width-up-to($phone-max) {
             padding: 0;
             margin: 1rem;
@@ -512,7 +522,6 @@
         border: 1px solid #D5D5D5;
         border-radius: 2px;
         background-color: #FFFFFF;
-        margin: 2rem;
     }
     #filter_style {
         width: 18px;
@@ -649,6 +658,11 @@
 
             display: block;
         }
+    }
+
+    #search_img_div {
+        margin-right: 1.7rem;
+        margin-left: 2rem;
     }
 
 }
