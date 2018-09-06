@@ -116,7 +116,7 @@ export default class Mapdropdown extends Controller {
 
         searchList.setAttribute('style', 'display: none');
         document.getElementById('search').setAttribute('style', 'display: none');
-        document.getElementById('search_container').setAttribute('style', 'margin-top: 16.8rem;');
+        document.getElementById('search_container').setAttribute('style', 'margin-top: 24.5rem;');
         detailinfoMOb.setAttribute('style', 'display: block');
         document.getElementById('backToSearch_div').setAttribute('style', 'display: none;');
         document.getElementById('backToResult_div').setAttribute('style', 'display: block;');
