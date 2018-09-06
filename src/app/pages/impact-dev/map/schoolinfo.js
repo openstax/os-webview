@@ -22,7 +22,7 @@ export default class Schoolinfo extends Controller {
     }
     @on('click .testimonial_head')
     tesnimonialClick(event) {
-        document.getElementById('search_container').setAttribute('style', 'margin-top: 8rem;');
+        document.getElementById('search_container').setAttribute('style', 'margin-top: 12rem;');
         document.getElementById('backToResult_div').setAttribute('style', 'display: none;');
         document.getElementById('backToDetail_div').setAttribute('style', 'display: block;');
         document.getElementById('detailinfoMOb').setAttribute('style', 'display: none;');
