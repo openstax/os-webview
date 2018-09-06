@@ -79,7 +79,7 @@ export default class Map1 extends Controller {
             dListDiv.innerHTML = '';
             filterDiv.setAttribute('style', 'display: block');
             if (window.innerWidth < 960) {
-                searchContainer.setAttribute('style', 'margin-top: 14.5rem;');
+                searchContainer.setAttribute('style', 'margin-top: 22.5rem;');
                 bachToSearch.setAttribute('style', 'display: block;');
             }
         } else {
@@ -87,7 +87,7 @@ export default class Map1 extends Controller {
             filterDiv.setAttribute('style', 'display: none');
             this.setFilterValuesOnClose();
             if (window.innerWidth < 960) {
-                searchContainer.setAttribute('style', 'margin-top: 42.5rem;');
+                searchContainer.setAttribute('style', 'margin-top: 50.5rem;');
                 bachToSearch.setAttribute('style', 'display: none;');
             }
         }
@@ -130,7 +130,7 @@ export default class Map1 extends Controller {
     }
     @on('click .backToDetail_btn')
     backToDetail(event) {
-        this.el.querySelector('.search_container').setAttribute('style', 'margin-top: 16.8rem;');
+        this.el.querySelector('.search_container').setAttribute('style', 'margin-top: 24.5rem;');
         document.getElementById('backToResult_div').setAttribute('style', 'display: block;');
         document.getElementById('backToDetail_div').setAttribute('style', 'display: none;');
         document.getElementById('detailinfoMOb').setAttribute('style', 'display: block;');
@@ -163,7 +163,7 @@ export default class Map1 extends Controller {
         if (window.innerWidth > 960) {
             this.el.querySelector('.search_container').setAttribute('style', 'margin-top: 3rem;');
         } else {
-            this.el.querySelector('.search_container').setAttribute('style', 'margin-top: 42.5rem;');
+            this.el.querySelector('.search_container').setAttribute('style', 'margin-top: 50.5rem;');
         }
     }
     searchRequest(fltrStatus, value) {
@@ -181,7 +181,7 @@ export default class Map1 extends Controller {
 
                 if (data.length) {
                     if (window.innerWidth < 960) {
-                        searchContainer.setAttribute('style', 'margin-top: 16.5rem;');
+                        this.searchListHeight(data.length);
                         bachToSearch.setAttribute('style', 'display: block;');
                     }
                     this.model = {
@@ -195,7 +195,7 @@ export default class Map1 extends Controller {
                     const list = new Dropdown('empty_result');
 
                     if (window.innerWidth < 960) {
-                        searchContainer.setAttribute('style', 'margin-top: 32.5rem;');
+                        searchContainer.setAttribute('style', 'margin-top: 40.5rem;');
                         bachToSearch.setAttribute('style', 'display: block;');
                     }
                     this.regions.dataList.attach(list);
@@ -212,10 +212,10 @@ export default class Map1 extends Controller {
         const list = new Dropdown(this.model);
 
         if (window.innerWidth < 960) {
-            searchInput.setAttribute('style', 'border: unset');
+            searchInput.setAttribute('style', 'border: unset;width: 26.6;margin-right: unset;');
             this.el.querySelector('.backToSearch_div').setAttribute('style', 'display: none;');
             this.el.querySelector('.searchimg').setAttribute('style', 'display: initial');
-            this.el.querySelector('.search_container').setAttribute('style', 'margin-top: 42.5rem;');
+            this.el.querySelector('.search_container').setAttribute('style', 'margin-top: 50.5rem;');
         }
         this.regions.dataList.attach(list);
     }
@@ -284,9 +284,24 @@ export default class Map1 extends Controller {
     }
     validateMob() {
         if (window.innerWidth < 960) {
-            this.el.querySelector('.srch').setAttribute('style', 'border: 1px solid #D5D5D5;border-radius: 3px;');
+            this.el.querySelector('.srch').setAttribute('style', 'border: 0.1rem solid #D5D5D5;border-radius: 0.3rem;width: 27.6rem;margin-right: 0.7rem;');
             this.el.querySelector('.searchimg').setAttribute('style', 'display: none');
         }
+    }
+    searchListHeight(length) {
+        const searchContainer = this.el.querySelector('.search_container');
+
+        switch (length) {
+            case 1:
+                searchContainer.setAttribute('style', 'margin-top: 38.5rem;');
+                break;
+            case 2:
+                searchContainer.setAttribute('style', 'margin-top: 31.5rem;');
+                break;
+            default:
+                searchContainer.setAttribute('style', 'margin-top: 24.5rem;');
+                break;
+            }
     }
 
 }
