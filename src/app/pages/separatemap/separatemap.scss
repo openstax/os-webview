@@ -9,6 +9,8 @@
     }
 
     @include width-up-to($phone-max) {
+        display: flex;
+        flex-direction: column-reverse;
         height: 58rem;
     }
 }
@@ -27,9 +29,9 @@
     top: 85rem;
 
     @include width-up-to($phone-max) {
-        z-index: 99999;
         right: 2rem;
         top: 8rem;
+        z-index: 99999;
     }
 }
 
@@ -43,4 +45,8 @@
 
 .mapboxgl-ctrl-bottom-right {
     display: none;
+}
+
+.mapboxgl-canvas {
+    top: 0;
 }
