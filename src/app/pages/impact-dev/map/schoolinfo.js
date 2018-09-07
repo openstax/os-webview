@@ -12,7 +12,7 @@ export default class Schoolinfo extends Controller {
         this.template = template;
         this.css = `/app/pages/impact-dev/map/map.css?${VERSION}`;
         this.view = {
-            classes: ['toggle_dataList_head']
+            classes: ['toggle-datalist-head']
         };
         this.model= props;
     }
@@ -20,13 +20,13 @@ export default class Schoolinfo extends Controller {
     onLoaded() {
         $.insertHtml(this.el, this.model);
     }
-    @on('click .testimonial_head')
+    @on('click .testimonial-head')
     tesnimonialClick(event) {
-        document.getElementById('search_container').setAttribute('style', 'margin-top: 12rem;');
-        document.getElementById('backToResult_div').setAttribute('style', 'display: none;');
-        document.getElementById('backToDetail_div').setAttribute('style', 'display: block;');
-        document.getElementById('detailinfoMOb').setAttribute('style', 'display: none;');
-        document.getElementById('testimonialBodyMob').setAttribute('style', 'display: block;');
+        document.getElementById('search-container').setAttribute('style', 'margin-top: 12rem;');
+        document.getElementById('back-result-div').setAttribute('style', 'display: none;');
+        document.getElementById('back-detail-div').setAttribute('style', 'display: block;');
+        document.getElementById('detail-info-mob').setAttribute('style', 'display: none;');
+        document.getElementById('testimonial-body-mob').setAttribute('style', 'display: block;');
     }
 
 }

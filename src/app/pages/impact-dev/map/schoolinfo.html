@@ -1,22 +1,22 @@
 <template args="model">
-    <div class="list_data detailInfoHead">
-        <div class="list_heading">{model.dataArray[model.itemIndex].fields.name}</div>
-        <div class="list_address">{model.dataArray[model.itemIndex].fields.physical_city}, {model.dataArray[model.itemIndex].fields.physical_state_province}</div>
+    <div class="list-data detailInfoHead">
+        <div class="list-heading">{model.dataArray[model.itemIndex].fields.name}</div>
+        <div class="list-address">{model.dataArray[model.itemIndex].fields.physical_city}, {model.dataArray[model.itemIndex].fields.physical_state_province}</div>
     </div>
-    <div class="left_column">
-        <div class="left_column_inner">
-            <div class="lColumn_head">Student savings</div>
-            <div class="lColumn_body">
-                <div class="lCol_body_left">This year: ${model.dataArray[model.itemIndex].fields.current_year_savings}</div>
-                <div class="lCol_body_right">Cumulative: ${model.dataArray[model.itemIndex].fields.all_time_savings}</div>
+    <div class="left-column">
+        <div class="left-column-inner">
+            <div class="lcolumn-head">Student savings</div>
+            <div class="lcolumn-body">
+                <div class="lcol-body-left">This year: ${model.dataArray[model.itemIndex].fields.current_year_savings}</div>
+                <div class="lcol-body-right">Cumulative: ${model.dataArray[model.itemIndex].fields.all_time_savings}</div>
             </div>
         </div>
     </div>
-    <div class="right_column">
-        <div class="right_column_inner">
-            <div class="rColumn_head">OpenStax Institutional Partner</div>
-            <div class="rColumn_body">Yes</div>
+    <div class="right-column">
+        <div class="right-column-inner">
+            <div class="rcolumn-head">OpenStax Institutional Partner</div>
+            <div class="rcolumn-body">Yes</div>
         </div>
     </div>
-    <div id="testimonialHead-{model.itemIndex}" class="testimonial_head">Testimonials</div>
+    <div id="testimonialHead-{model.itemIndex}" class="testimonial-head">Testimonials</div>
 </template>
