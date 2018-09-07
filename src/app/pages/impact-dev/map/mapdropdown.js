@@ -13,7 +13,7 @@ export default class Mapdropdown extends Controller {
         this.template = template;
         this.css = `/app/pages/imapct-dev/impact-dev.css?${VERSION}`;
         this.view = {
-            classes: ['toggle_dataList_head']
+            classes: ['toggle-datalist-head']
         };
         this.model = props;
         this.offSet = [];
@@ -22,7 +22,7 @@ export default class Mapdropdown extends Controller {
     onLoaded() {
         $.insertHtml(this.el, this.model);
     }
-    @on('click .toggle_on_off')
+    @on('click .toggle-on-off')
     toggleOnoff(event) {
         const target = event.delegateTarget;
         const mObj = this.model.mapObj;
@@ -45,8 +45,8 @@ export default class Mapdropdown extends Controller {
         console.log(event);
         console.log(indexItem);
         if (window.innerWidth < 960) {
-            const unqClassDetailMob = '.detailinfoMOb';
-            const unqClassTestMob = '.testimonialBodyMob';
+            const unqClassDetailMob = '.detail-info-mob';
+            const unqClassTestMob = '.testimonial-body-mob';
             const regionDetailInfoMob = new Region(unqClassDetailMob, this);
             const regionTestimonialMob = new Region(unqClassTestMob, this);
 
@@ -84,7 +84,7 @@ export default class Mapdropdown extends Controller {
         const unqId = unqIdArr[1];
         const toggleOnoff = target.dataset.toggle;
         const filterStyle = this.el.querySelector(`#icon-${unqId}`);
-        const searchList = this.el.querySelector('.search_list');
+        const searchList = this.el.querySelector('.search-list');
         const mObj = this.model.mapObj;
         const showing = this.el.querySelectorAll('[data-toggle=hide]');
 
@@ -111,15 +111,14 @@ export default class Mapdropdown extends Controller {
         }
     }
     showDetailMob() {
-        const detailinfoMOb = this.el.querySelector('.detailinfoMOb');
-        const searchList = this.el.querySelector('.search_list');
+        const detailinfoMOb = this.el.querySelector('.detail-info-mob');
+        const searchList = this.el.querySelector('.search-list');
 
         searchList.setAttribute('style', 'display: none');
         document.getElementById('search').setAttribute('style', 'display: none');
-        document.getElementById('search_container').setAttribute('style', 'margin-top: 24.5rem;');
         detailinfoMOb.setAttribute('style', 'display: block');
-        document.getElementById('backToSearch_div').setAttribute('style', 'display: none;');
-        document.getElementById('backToResult_div').setAttribute('style', 'display: block;');
+        document.getElementById('back-search-div').setAttribute('style', 'display: none;');
+        document.getElementById('back-result-div').setAttribute('style', 'display: block;');
     }
 
 }

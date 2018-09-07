@@ -5,42 +5,48 @@
     width: 100%;
 
     @include width-up-to($tablet-max) {
-        top: 0rem;
+        top: 0;
     }
 
     @include width-up-to($phone-max) {
+        display: flex;
+        flex-direction: column-reverse;
         height: 58rem;
     }
 }
 
-.backToImpact_btn {
-    border-radius: 2.8rem;
+.back-impact-btn {
     background-color: white;
-    box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.3);
+    border-radius: 2.8rem;
+    box-shadow: 0 1rem 3rem 0 rgba(0, 0, 0, 0.3);
     height: 4rem;
     width: 4rem;
 }
 
-.backToImpact_div {
+.back-impact-div {
     position: absolute;
     right: 6rem;
     top: 85rem;
-    
+
     @include width-up-to($phone-max) {
-        z-index: 99999;
         right: 2rem;
         top: 8rem;
+        z-index: 99999;
     }
 }
 
-.left_arrow_bak {
+.left-arrow-bak {
     color: #4a4a4a;
 }
 
 .mapboxgl-ctrl-bottom-left {
-        display: none;
+    display: none;
 }
 
 .mapboxgl-ctrl-bottom-right {
-        display: none;
+    display: none;
+}
+
+.mapboxgl-canvas {
+    top: 0;
 }

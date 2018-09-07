@@ -1,132 +1,116 @@
 @import 'pattern-library/core/pattern-library/headers';
+
 .statdiv {
-    background-color: rgba(1, 35, 102, 0.5);
     background: linear-gradient(90deg, #326ba4 0%, #2e217a 100%);
+    background-color: rgba(1, 35, 102, 0.5);
+
     @include wider-than(60rem) {
         overflow: hidden;
         position: relative;
-        top: 0rem;
+        top: 0;
         width: 100%;
     }
+
     @media (min-width: 601px) and (max-width: 1024px) {
         overflow: hidden;
         position: relative;
-        top: 0rem;
+        top: 0;
         width: 100%;
     }
+
     @include width-up-to($phone-max) {
-        overflow: hidden;
-        background-color: rgba(1, 35, 102, 0.5);
         background: linear-gradient(90deg, #326ba4 0%, #2e217a 100%);
+        background-color: rgba(1, 35, 102, 0.5);
+        overflow: hidden;
     }
 }
 
 .statbox {
-        height: 50rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        @media (min-width: 601px) and (max-width: 1099px) {
-            justify-content: flex-start;
-            overflow-y: hidden;
-            overflow-x: scroll;
-            ::-webkit-scrollbar {display: none; }
-        }
+    align-items: center;
+    display: flex;
+    height: 50rem;
+    justify-content: center;
+
+    @media (min-width: 601px) and (max-width: 1099px) {
+        justify-content: flex-start;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        ::-webkit-scrollbar {display: none; }
+    }
+
     @include width-up-to($phone-max) {
         justify-content: flex-start;
         overflow-x: scroll;
         overflow-y: hidden;
         ::-webkit-scrollbar {display: none; }
     }
-    @include wider-than(85rem) {
 
-    }
-    @include wider-than(100rem) {
-
-    }
-    @include wider-than(120rem) {
-
-    }
-    @include wider-than(160rem) {
-
-    }
-    @include wider-than(180rem) {
-
-    }
     .col1 {
-        width: 26rem;
-        height: 36rem;
-        border-radius: 3px; // background: linear-gradient(224.64deg, rgba(250,188,77,0) 0%, #FABC4D 100%), linear-gradient(0deg, #F4D019 0%, #F4D019 100%);	
+        border-radius: 0.3rem; // background: linear-gradient(224.64deg, rgba(250,188,77,0) 0%, #FABC4D 100%), linear-gradient(0deg, #F4D019 0%, #F4D019 100%);
         box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.2);
+        height: 36rem;
         margin: 0.7rem;
-        @media (min-width: px) and (max-width: 1024px) {
-
-        }
-        @include width-up-to($phone-max) {
-
-        }
-    }
-    .col-img {
-        width: 100%;
-        border-radius: 3px 3px 0 0
-    }
-    .col-img-div {
-    height: 14.8rem;
-    }
-    .col-txt {
         width: 26rem;
-        height: 21.2rem;
-        background-color: #FFFFFF;
-        border-radius: 0 0 3px 3px;
+    }
+
+    .col-img {
+        border-radius: 0.3rem 0.3rem 0 0;
+        width: 100%;
+    }
+
+    .col-img-div {
+        height: 14.8rem;
+    }
+
+    .col-txt {
+        background-color: #fff;
+        border-radius: 0 0 0.3rem 0.3rem;
         display: flex;
         flex-direction: column;
+        height: 21.2rem;
         justify-content: center;
-        @include width-up-to($phone-max) {
-
-        }
-        @media (min-width: 768px) and (max-width: 1174px) {
-
-        }
+        width: 26rem;
     }
-    .uper_txt{
-        flex-direction: row;
+
+    .uper-txt {
         display: flex;
+        flex-direction: row;
         padding-left: 4rem;
     }
-    .lower_txt{
-        padding-left: 4rem;
-        padding-top: 2rem;
-        padding-right: 4rem;
+
+    .lower-txt {
         height: 4rem;
+        padding-left: 4rem;
+        padding-right: 4rem;
+        padding-top: 2rem;
     }
-    .u_txt1 {
+
+    .u-txt1 {
         color: #424242;
-        font-size: 56px;
+        font-size: 5.6rem;
         font-weight: bold;
         letter-spacing: -1.2px;
-        line-height: 34px;
-        @media (min-width: 768px) and (max-width: 1024px) {
-        }
-        @include width-up-to($phone-max) {
-        }
+        line-height: 3.4rem;
     }
-    .u_txt2 {
-        font-size: 28px;
+
+    .u-txt2 {
+        font-size: 2.8rem;
         font-weight: bold;
         padding-top: 1.5rem;
     }
-    .scd_txt {
-        color: #424242;
 
-        font-size: 16px;
-        line-height: 25px;
-        padding-right: 7%;
+    .scd-txt {
+        color: #424242;
+        font-size: 1.6rem;
+        line-height: 2.5rem;
         padding-left: 14%;
+        padding-right: 7%;
         padding-top: 4%;
         text-align: left;
+
         @include width-up-to($phone-max) {
-        white-space: normal;
-        height: 100px;
+            height: 10rem;
+            white-space: normal;
         }
     }
 }

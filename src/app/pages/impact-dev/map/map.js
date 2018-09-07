@@ -52,7 +52,7 @@ export default class Map1 extends Controller {
     }
     @on('keyup .srch')
     intercept(event) {
-        const filterStatus = this.el.querySelector('.filter_btn');
+        const filterStatus = this.el.querySelector('.filter-btn');
 
         this.validateMob();
         if (filterStatus.value === '1') {
@@ -64,13 +64,13 @@ export default class Map1 extends Controller {
             this.searchRequest(this.filterStatus, event.target.value);
         }
     }
-    @on('click .filter_btn')
+    @on('click .filter-btn')
     filterOnOff(event) {
-        const filterDiv = this.el.querySelector('.filter_div');
+        const filterDiv = this.el.querySelector('.filter-div');
         const dListDiv = this.el.querySelector('.dropDownList');
-        const filterStyle = this.el.querySelector('#filter_style');
-        const bachToSearch = this.el.querySelector('.backToSearch_div');
-        const searchContainer = this.el.querySelector('.search_container');
+        const filterStyle = this.el.querySelector('.filter-style');
+        const bachToSearch = this.el.querySelector('.back-search-div');
+        const searchContainer = this.el.querySelector('.search-container');
 
         filterStyle.classList.toggle('fa-sliders-h');
         filterStyle.classList.toggle('fa-times');
@@ -79,7 +79,6 @@ export default class Map1 extends Controller {
             dListDiv.innerHTML = '';
             filterDiv.setAttribute('style', 'display: block');
             if (window.innerWidth < 960) {
-                searchContainer.setAttribute('style', 'margin-top: 22.5rem;');
                 bachToSearch.setAttribute('style', 'display: block;');
             }
         } else {
@@ -87,12 +86,11 @@ export default class Map1 extends Controller {
             filterDiv.setAttribute('style', 'display: none');
             this.setFilterValuesOnClose();
             if (window.innerWidth < 960) {
-                searchContainer.setAttribute('style', 'margin-top: 50.5rem;');
                 bachToSearch.setAttribute('style', 'display: none;');
             }
         }
     }
-    @on('click .applyFltrBtn')
+    @on('click .applyfltrbtn')
     applyFilter(event) {
         const filterValue = event.target.value;
         const searchInput = this.el.querySelector('.srch');
@@ -114,36 +112,34 @@ export default class Map1 extends Controller {
             event.delegateTarget.value = 'false';
         }
     }
-    @on('click .backToSearch_btn')
+    @on('click .back-search-btn')
     backToSearch(event) {
         this.el.querySelector('.srch').value = '';
         this.hideDataList();
     }
-    @on('click .backToResult_btn')
+    @on('click .back-result-btn')
     backToSearchResult(event) {
         const searchInput = this.el.querySelector('.srch');
 
-        console.log(event);
-        document.getElementById('backToResult_div').setAttribute('style', 'display: none;');
+        document.getElementById('back-result-div').setAttribute('style', 'display: none;');
         this.el.querySelector('.search').setAttribute('style', 'display: flex;');
         this.searchRequest(this.filterStatus, searchInput.value);
     }
-    @on('click .backToDetail_btn')
+    @on('click .back-detail-btn')
     backToDetail(event) {
-        this.el.querySelector('.search_container').setAttribute('style', 'margin-top: 24.5rem;');
-        document.getElementById('backToResult_div').setAttribute('style', 'display: block;');
-        document.getElementById('backToDetail_div').setAttribute('style', 'display: none;');
-        document.getElementById('detailinfoMOb').setAttribute('style', 'display: block;');
-        document.getElementById('testimonialBodyMob').setAttribute('style', 'display: none;');
+        document.getElementById('back-result-div').setAttribute('style', 'display: block;');
+        document.getElementById('back-detail-div').setAttribute('style', 'display: none;');
+        document.getElementById('detail-info-mob').setAttribute('style', 'display: block;');
+        document.getElementById('testimonial-body-mob').setAttribute('style', 'display: none;');
     }
     fadeOutText() {
         const styleF = '-webkit-transition: opacity 3s ease-in-out;-moz-transition: opacity 3s ease-in-out;';
         const styleS = '-ms-transition: opacity 3s ease-in-out;-o-transition: opacity 3s ease-in-out;opacity: 0;';
 
-        this.el.querySelector('.onMap').setAttribute('style', styleF + styleS);
+        this.el.querySelector('.on-map').setAttribute('style', styleF + styleS);
         this.el.querySelector('.maptxt').setAttribute('style', styleF + styleS);
         setTimeout(() => {
-            this.el.querySelector('.onMap').setAttribute('style', 'display: none');
+            this.el.querySelector('.on-map').setAttribute('style', 'display: none');
             if (window.innerWidth > 960) {
                 this.el.querySelector('.maptxt').setAttribute('style', 'display: none');
             }
@@ -154,21 +150,21 @@ export default class Map1 extends Controller {
             const styleT = 'transition: all 1.5s ease-out;-webkit-transition: all 1.5s ease-out;';
             const styleFr = '-moz-transition: all 1.5s ease-out;-o-transition: all 1.5s ease-out;margin-top: 3rem;';
 
-            this.el.querySelector('.search_container').setAttribute('style', styleT + styleFr);
+            this.el.querySelector('.search-container').setAttribute('style', styleT + styleFr);
         }
     }
     fadOutMovBar() {
-        this.el.querySelector('.onMap').setAttribute('style', 'display: none;');
+        this.el.querySelector('.on-map').setAttribute('style', 'display: none;');
         this.el.querySelector('.maptxt').setAttribute('style', 'display: none');
         if (window.innerWidth > 960) {
-            this.el.querySelector('.search_container').setAttribute('style', 'margin-top: 3rem;');
+            this.el.querySelector('.search-container').setAttribute('style', 'margin-top: 3rem;');
         } else {
-            this.el.querySelector('.search_container').setAttribute('style', 'margin-top: 50.5rem;');
+            this.el.querySelector('.search-container').setAttribute('style', 'height: 0;margin-bottom: 1rem;');;
         }
     }
     searchRequest(fltrStatus, value) {
-        const searchContainer = this.el.querySelector('.search_container');
-        const bachToSearch = this.el.querySelector('.backToSearch_div');
+        const searchContainer = this.el.querySelector('.search-container');
+        const bachToSearch = this.el.querySelector('.back-search-div');
         let fltString = '';
 
         if (fltrStatus === 'true') {
@@ -181,7 +177,6 @@ export default class Map1 extends Controller {
 
                 if (data.length) {
                     if (window.innerWidth < 960) {
-                        this.searchListHeight(data.length);
                         bachToSearch.setAttribute('style', 'display: block;');
                     }
                     this.model = {
@@ -195,7 +190,6 @@ export default class Map1 extends Controller {
                     const list = new Dropdown('empty_result');
 
                     if (window.innerWidth < 960) {
-                        searchContainer.setAttribute('style', 'margin-top: 40.5rem;');
                         bachToSearch.setAttribute('style', 'display: block;');
                     }
                     this.regions.dataList.attach(list);
@@ -213,16 +207,15 @@ export default class Map1 extends Controller {
 
         if (window.innerWidth < 960) {
             searchInput.setAttribute('style', 'border: unset;width: 26.6;margin-right: unset;');
-            this.el.querySelector('.backToSearch_div').setAttribute('style', 'display: none;');
+            this.el.querySelector('.back-search-div').setAttribute('style', 'display: none;');
             this.el.querySelector('.searchimg').setAttribute('style', 'display: initial');
-            this.el.querySelector('.search_container').setAttribute('style', 'margin-top: 50.5rem;');
         }
         this.regions.dataList.attach(list);
     }
     closeFlterDiv() {
-        const filterStyle = this.el.querySelector('#filter_style');
-        const filterDiv = this.el.querySelector('.filter_div');
-        const filterStatus = this.el.querySelector('.filter_btn');
+        const filterStyle = this.el.querySelector('.filter-style');
+        const filterDiv = this.el.querySelector('.filter-div');
+        const filterStatus = this.el.querySelector('.filter-btn');
 
         filterStyle.classList.toggle('fa-sliders-h');
         filterStyle.classList.toggle('fa-times');
@@ -238,7 +231,7 @@ export default class Map1 extends Controller {
         prtCheck.value = this.prtnrCheckBox;
         this.changeToggleColor(prtCheck, this.prtnrCheckBox);
 
-        this.el.querySelector('#type_institute_toggle').value = this.insType;
+        this.el.querySelector('.type-institute-toggle').value = this.insType;
 
         oneMillionCheck.value = this.oneMillionCheckBox;
         this.changeToggleColor(oneMillionCheck, this.oneMillionCheckBox);
@@ -261,7 +254,7 @@ export default class Map1 extends Controller {
     }
     setFilterValues() {
         this.prtnrCheckBox = this.el.querySelector('#prtnrCheckBox').value;
-        this.insType = this.el.querySelector('#type_institute_toggle').value;
+        this.insType = this.el.querySelector('.type-institute-toggle').value;
         this.oneMillionCheckBox = this.el.querySelector('#one_millionCheckBox').value;
         this.testmonalCheckBox = this.el.querySelector('#testmonalCheckBox').value;
     }
@@ -272,7 +265,7 @@ export default class Map1 extends Controller {
             fltString += '&key_institutional_partner=true';
         }
         if (this.insType !== 'all') {
-            fltString += `&type=${this.el.querySelector('#type_institute_toggle').value}`;
+            fltString += `&type=${this.el.querySelector('.type-institute-toggle').value}`;
         }
         if (this.oneMillionCheckBox === 'true') {
             fltString += '&achieving_the_dream_school=true';
@@ -284,24 +277,26 @@ export default class Map1 extends Controller {
     }
     validateMob() {
         if (window.innerWidth < 960) {
-            this.el.querySelector('.srch').setAttribute('style', 'border: 0.1rem solid #D5D5D5;border-radius: 0.3rem;width: 27.6rem;margin-right: 0.7rem;');
+            const styl = 'border: 0.1rem solid #d5d5d5;border-radius: 0.3rem;width: 27.6rem;margin-right: 0.7rem;';
+
+            this.el.querySelector('.srch').setAttribute('style', styl);
             this.el.querySelector('.searchimg').setAttribute('style', 'display: none');
         }
     }
     searchListHeight(length) {
-        const searchContainer = this.el.querySelector('.search_container');
+        const searchContainer = this.el.querySelector('.search-container');
 
         switch (length) {
-            case 1:
-                searchContainer.setAttribute('style', 'margin-top: 38.5rem;');
-                break;
-            case 2:
-                searchContainer.setAttribute('style', 'margin-top: 31.5rem;');
-                break;
-            default:
-                searchContainer.setAttribute('style', 'margin-top: 24.5rem;');
-                break;
-            }
+        case 1:
+            searchContainer.setAttribute('style', 'margin-top: 38.5rem;');
+            break;
+        case 2:
+            searchContainer.setAttribute('style', 'margin-top: 31.5rem;');
+            break;
+        default:
+            searchContainer.setAttribute('style', 'margin-top: 24.5rem;');
+            break;
+        }
     }
 
 }

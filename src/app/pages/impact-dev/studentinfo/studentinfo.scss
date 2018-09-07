@@ -1,199 +1,188 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-    .studentinfodiv{
-
-        @include wider-than(60rem) {
-            height: 102rem;
-
-        }
-        @media (min-width: 601px) and (max-width: 1200px) {
-            height: 76rem;
-        }
-        @include width-up-to($phone-max) {
-            height: 128rem;
-
-        }
-       
+.studentinfodiv {
+    @include wider-than(60rem) {
+        height: 102rem;
     }
 
-    .studentinfobox{
+    @media (min-width: 601px) and (max-width: 1200px) {
+        height: 76rem;
+    }
+
+    @include width-up-to($phone-max) {
+        height: 128rem;
+    }
+}
+
+.studentinfobox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @include width-up-to($phone-max) {
+        justify-content: normal;
+        margin-top: 2.5rem;
+    }
+
+    @media (min-width: 601px) and (max-width: 1200px) {
+        height: 75rem;
+    }
+
+    .first-photo {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 12rem;
+
+        @include width-up-to($phone-max) {
+            align-items: center;
+            flex-direction: column;
+            margin-top: unset;
+        }
+
+        @media (min-width: 601px) and (max-width: 1200px) {
+            margin-top: unset;
+        }
+    }
+
+    .second-photo {
+        display: flex;
+        flex-direction: row;
         justify-content: center;
 
         @include width-up-to($phone-max) {
-
-            margin-top: 25px;
-            justify-content: normal;
+            align-items: center;
+            flex-direction: column-reverse;
         }
-        @media (min-width: 601px) and (max-width: 1200px) {
-            height: 75rem;
-        }
-        
-        @include wider-than(85rem) {
-       
-        }
-        @include wider-than(100rem) {
-
-        }
-        @include wider-than(120rem) {
-
-        }
-        @include wider-than(160rem) {
-
-        }
-        @include wider-than(180rem) {
-
-        }
-
-
-            @include wider-than(60rem) {
-
-            }
-            #first_photo{
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                margin-top: 12rem;
-                @include width-up-to($phone-max) {
-                    flex-direction: column;
-                    align-items: center;
-                    margin-top: unset;
-                }
-                @media (min-width: 601px) and (max-width: 1200px) {
-                    margin-top: unset;
-                }
-            }
-            #second_photo{
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                @include width-up-to($phone-max) {
-                    flex-direction: column-reverse;
-                    align-items: center;
-                }
-            }
-
-            .girl_imgdiv{
-                bottom: 18%;
-                position: relative;
-                @include width-up-to($phone-max) {
-                    bottom: unset;
-                    position: unset;
-                }
-            }
-
-            .girl_txtdiv{ 
-                margin-right: 4%;
-                @include width-up-to($phone-max) {
-                    margin-right: unset;
-                }
-            }
-
-            .stds_imgdiv{
-                @include width-up-to($phone-max) {
-                    margin-right: unset;
-                    margin-top: 3rem; 
-                }
-            }
-
-            #stds_img{
-                position: relative;
-                bottom: 25%;
-
-                @include width-up-to($media-content-max) {
-                    height: 300px;
-                    position: unset;
-                    bottom: unset;
-                }
-            }
-            .std_txtdiv{ 
-                margin-left:7%;
-                @include width-up-to($phone-max) {
-                    margin-top: 5%;
-                }
-                @media (min-width: 768px) and (max-width: 1024px) {
-               
-                    
-                }
-            }
-            #std_txt_head {	
-                height: 40px;		
-                color: #424242;	
-                font-size: 36px;	
-                font-weight: bold;	
-                letter-spacing: -1.44px;	
-                line-height: 40px;
-                @include width-up-to($media-content-max) {
-                    height: 80px;
-                    width: 212px;
-                    
-                    font-size: 29px;
-                }
-            }
-            #std_txt_body{
-                height: 121px;	
-                width: 402px;
-                color: #424242;
-                font-size: 16px;	
-                line-height: 25px;
-                @include width-up-to($media-content-max) {
-                    width: 260px;
-                    margin-top: -30px;
-                    font-size: 14px;
-                    margin-bottom: 0px;
-                }
-                
-            }
-            #girl_txt_head {	
-                height: 80px;	
-                width: 44rem;	
-                color: #424242;	
-                font-size: 36px;	
-                font-weight: bold;	
-                letter-spacing: -1.44px;	
-                line-height: 40px;
-
-                @include width-up-to($media-content-max) {
-                    height: 80px;
-                    width: 252px;
-                    color: #424242;
-                    font-size: 33px;
-                }
-            }
-            #girl_txt_body {	
-                height: 110px;	
-                width: 402px;	
-                color: #424242;	
-                font-size: 16px;	
-                line-height: 25px;
-                @include width-up-to($media-content-max) {
-                    width: 260px;	
-                    margin-top: 50px;
-                    font-size: 14px;	
-                }
-            }
-            .sbox{
-                color:white;
-                font-size: 16px;	
-                font-weight: bold;	
-                line-height: 16px;	
-                border-radius: 2px;
-                background-color: #959595;
-                padding: 15px;
-                @include width-up-to($phone-max) {
-                    margin-top: 15%;
-                }
-                @include width-up-to($media-content-max) {
-                    margin-top: 8%;	
-                }  
-            }
-            #girl_img{
-            
-                @include width-up-to($media-content-max) {
-                    margin-top: 10%;
-                    height: 300px;
-                }
-            }  
     }
-  
+
+    .girl-imgdiv {
+        bottom: 18%;
+        position: relative;
+
+        @include width-up-to($phone-max) {
+            bottom: unset;
+            position: unset;
+        }
+    }
+
+    .girl-txtdiv {
+        margin-right: 4%;
+
+        @include width-up-to($phone-max) {
+            margin-right: unset;
+        }
+    }
+
+    .stds-imgdiv {
+        @include width-up-to($phone-max) {
+            margin-right: unset;
+            margin-top: 3rem;
+        }
+    }
+
+    .stds-img {
+        bottom: 25%;
+        position: relative;
+
+        @include width-up-to($media-content-max) {
+            bottom: unset;
+            height: 30rem;
+            position: unset;
+        }
+    }
+
+    .std-txtdiv {
+        margin-left: 7%;
+
+        @include width-up-to($phone-max) {
+            margin-top: 5%;
+        }
+    }
+
+    .std-txt-head {
+        color: #424242;
+        font-size: 3.6rem;
+        font-weight: bold;
+        height: 4rem;
+        letter-spacing: -1.44px;
+        line-height: 4rem;
+
+        @include width-up-to($media-content-max) {
+            font-size: 2.9rem;
+            height: 8rem;
+            width: 21.2rem;
+        }
+    }
+
+    .std-txt-body {
+        color: #424242;
+        font-size: 1.6rem;
+        height: 12.1rem;
+        line-height: 2.5rem;
+        width: 40.2rem;
+
+        @include width-up-to($media-content-max) {
+            font-size: 1.4rem;
+            margin-bottom: 0;
+            margin-top: -3rem;
+            width: 26rem;
+        }
+    }
+
+    .girl-txt-head {
+        color: #424242;
+        font-size: 3.6rem;
+        font-weight: bold;
+        height: 8rem;
+        letter-spacing: -1.44px;
+        line-height: 4rem;
+        width: 44rem;
+
+        @include width-up-to($media-content-max) {
+            color: #424242;
+            font-size: 3.3rem;
+            height: 8rem;
+            width: 25.2rem;
+        }
+    }
+
+    .girl-txt-body {
+        color: #424242;
+        font-size: 1.6rem;
+        height: 11rem;
+        line-height: 2.5rem;
+        width: 40.2rem;
+
+        @include width-up-to($media-content-max) {
+            font-size: 1.4rem;
+            margin-top: 5rem;
+            width: 26rem;
+        }
+    }
+
+    .sbox {
+        background-color: #959595;
+        border-radius: 0.2rem;
+        color: white;
+        font-size: 1.6rem;
+        font-weight: bold;
+        line-height: 1.6rem;
+        padding: 1.5rem;
+
+        @include width-up-to($phone-max) {
+            margin-top: 15%;
+        }
+
+        @include width-up-to($media-content-max) {
+            margin-top: 8%;
+        }
+    }
+
+    .girl-img {
+        @include width-up-to($media-content-max) {
+            height: 30rem;
+            margin-top: 10%;
+        }
+    }
+}
