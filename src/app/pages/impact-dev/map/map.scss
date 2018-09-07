@@ -394,11 +394,6 @@
         font-size: 1.4rem;
         font-weight: bold;
         line-height: 1.7rem;
-
-        @include width-up-to($phone-max) {
-            margin-left: 0.8rem;
-            margin-top: 0.4rem;
-        }
     }
 
     .lcolumn-body {
@@ -408,9 +403,7 @@
         margin-top: 1rem;
 
         @include width-up-to($phone-max) {
-            margin-bottom: 0.2rem;
-            margin-left: 0.8rem;
-            margin-top: 0.4rem;
+            margin-top: 0.5rem;
         }
     }
 
@@ -439,20 +432,13 @@
         font-size: 1.4rem;
         font-weight: bold;
         line-height: 1.7rem;
-
-        @include width-up-to($phone-max) {
-            margin-left: 0.8rem;
-            margin-top: 0.4rem;
-        }
     }
 
     .rcolumn-body {
         margin-top: 1rem;
 
         @include width-up-to($phone-max) {
-            margin-bottom: 0.2rem;
-            margin-left: 0.8rem;
-            margin-top: 0.4rem;
+            margin-top: 0.5rem;
         }
     }
 

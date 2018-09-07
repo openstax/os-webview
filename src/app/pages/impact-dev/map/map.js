@@ -79,7 +79,6 @@ export default class Map1 extends Controller {
             dListDiv.innerHTML = '';
             filterDiv.setAttribute('style', 'display: block');
             if (window.innerWidth < 960) {
-                searchContainer.setAttribute('style', 'margin-top: 22.5rem;');
                 bachToSearch.setAttribute('style', 'display: block;');
             }
         } else {
@@ -87,7 +86,6 @@ export default class Map1 extends Controller {
             filterDiv.setAttribute('style', 'display: none');
             this.setFilterValuesOnClose();
             if (window.innerWidth < 960) {
-                searchContainer.setAttribute('style', 'margin-top: 50.5rem;');
                 bachToSearch.setAttribute('style', 'display: none;');
             }
         }
@@ -123,18 +121,16 @@ export default class Map1 extends Controller {
     backToSearchResult(event) {
         const searchInput = this.el.querySelector('.srch');
 
-        console.log(event);
-        document.getElementById('backToResult_div').setAttribute('style', 'display: none;');
+        document.getElementById('back-result-div').setAttribute('style', 'display: none;');
         this.el.querySelector('.search').setAttribute('style', 'display: flex;');
         this.searchRequest(this.filterStatus, searchInput.value);
     }
     @on('click .backToDetail_btn')
     backToDetail(event) {
-        this.el.querySelector('.search_container').setAttribute('style', 'margin-top: 24.5rem;');
-        document.getElementById('backToResult_div').setAttribute('style', 'display: block;');
-        document.getElementById('backToDetail_div').setAttribute('style', 'display: none;');
-        document.getElementById('detailinfoMOb').setAttribute('style', 'display: block;');
-        document.getElementById('testimonialBodyMob').setAttribute('style', 'display: none;');
+        document.getElementById('back-result-div').setAttribute('style', 'display: block;');
+        document.getElementById('back-detail-div').setAttribute('style', 'display: none;');
+        document.getElementById('detail-info-mob').setAttribute('style', 'display: block;');
+        document.getElementById('testimonial-body-mob').setAttribute('style', 'display: none;');
     }
     fadeOutText() {
         const styleF = '-webkit-transition: opacity 3s ease-in-out;-moz-transition: opacity 3s ease-in-out;';
@@ -154,7 +150,16 @@ export default class Map1 extends Controller {
             const styleT = 'transition: all 1.5s ease-out;-webkit-transition: all 1.5s ease-out;';
             const styleFr = '-moz-transition: all 1.5s ease-out;-o-transition: all 1.5s ease-out;margin-top: 3rem;';
 
-            document.getElementById('search-container').setAttribute('style', styleT + styleFr);
+            this.el.querySelector('.search-container').setAttribute('style', styleT + styleFr);
+        }
+    }
+    fadOutMovBar() {
+        this.el.querySelector('.on-map').setAttribute('style', 'display: none;');
+        this.el.querySelector('.maptxt').setAttribute('style', 'display: none');
+        if (window.innerWidth > 960) {
+            this.el.querySelector('.search-container').setAttribute('style', 'margin-top: 3rem;');
+        } else {
+            this.el.querySelector('.search-container').setAttribute('style', 'height: 0;margin-bottom: 1rem;');;
         }
     }
     searchRequest(fltrStatus, value) {
@@ -172,7 +177,6 @@ export default class Map1 extends Controller {
 
                 if (data.length) {
                     if (window.innerWidth < 960) {
-                        this.searchListHeight(data.length);
                         bachToSearch.setAttribute('style', 'display: block;');
                     }
                     this.model = {
@@ -186,7 +190,6 @@ export default class Map1 extends Controller {
                     const list = new Dropdown('empty_result');
 
                     if (window.innerWidth < 960) {
-                        searchContainer.setAttribute('style', 'margin-top: 40.5rem;');
                         bachToSearch.setAttribute('style', 'display: block;');
                     }
                     this.regions.dataList.attach(list);
@@ -206,7 +209,6 @@ export default class Map1 extends Controller {
             searchInput.setAttribute('style', 'border: unset;width: 26.6;margin-right: unset;');
             this.el.querySelector('.backToSearch_div').setAttribute('style', 'display: none;');
             this.el.querySelector('.searchimg').setAttribute('style', 'display: initial');
-            this.el.querySelector('.search-container').setAttribute('style', 'top: unset');
         }
         this.regions.dataList.attach(list);
     }

@@ -9,14 +9,31 @@
     }
 
     @include width-up-to($phone-max) {
+        display: flex;
+        flex-direction: column-reverse;
         height: 58rem;
     }
 
-    .mapboxgl-ctrl-bottom-left {
-        display: none;
+.back-impact-div {
+    position: absolute;
+    right: 6rem;
+    top: 85rem;
+
+    @include width-up-to($phone-max) {
+        right: 2rem;
+        top: 8rem;
+        z-index: 99999;
     }
 
     .mapboxgl-ctrl-bottom-right {
         display: none;
     }
+}
+
+.mapboxgl-ctrl-bottom-right {
+    display: none;
+}
+
+.mapboxgl-canvas {
+    top: 0;
 }
