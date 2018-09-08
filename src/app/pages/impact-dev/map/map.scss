@@ -80,9 +80,11 @@
         width: 55rem;
 
         @include width-up-to($phone-max) {
-            left: 5%;
-            top: 14rem;
-            width: 31rem;
+            order: 1;
+            padding-bottom: 3rem;
+            padding-left: 2rem;
+            padding-top: 1rem;
+            width: 33rem;
         }
 
     }
@@ -98,7 +100,8 @@
         z-index: 999;
 
         @include width-up-to($phone-max) {
-            top: 0;
+            bottom: 42rem;
+            height: 43rem;
         }
 
     }
@@ -113,25 +116,8 @@
         width: 63.4rem;
 
         @include width-up-to($phone-max) {
-            background: white;
-            border-bottom: 0.1rem solid #d5d5d5;
-            height: 5.2rem;
-            left: 2%;
-            position: relative;
-            top: 37rem;
-            width: 34.4rem;
-
-            .srch {
-                background-color: white;
-                border: unset;
-                font-size: 1.4rem;
-                height: 3.1rem;
-                margin-left: 3.3rem;
-                margin-top: 1.1rem;
-                min-width: 23.2rem;
-                padding-left: 1rem;
-                width: 23.2rem;
-            }
+            height: 6rem;
+            width: 100%;
 
             .searchimg {
                 right: 31rem;
@@ -151,25 +137,34 @@
                 margin-top: -0.2rem;
             }
 
-            .filter-by {
-                display: none;
-            }
+        @include width-up-to($phone-max) {
+            font-size: 1.4rem;
+            padding: 0.6rem;
+            width: 26.6rem;
         }
 
-        .srch {
-            border: 0.1rem solid white;
-            border-radius: 0.3rem;
-            color: #4a4a4a;
-            font-size: 1.6rem;
-            padding-left: 1rem;
-            width: 45rem;
-        }
+    .back-search-btn,
+    .back-result-btn,
+    .back-detail-btn {
+        background-color: white;
+        border-radius: 2.8rem;
+        box-shadow: 0 1rem 3rem 0 rgba(0, 0, 0, 0.3);
+        height: 4rem;
+        width: 4rem;
+    }
 
+    .left-arrow-bak {
+        color: #4a4a4a;
     }
 
     .dropdownlist-id {
         border-top: 0.1rem solid #d5d5d5;
         width: 63.4rem;
+
+        @include width-up-to($phone-max) {
+            border-top: unset;
+            width: 100%;
+        }
     }
 
     .switch {
@@ -187,6 +182,7 @@
 
     .slider {
         background-color: #c7cbd2;
+        border-radius: 2rem;
         bottom: 0;
         cursor: pointer;
         left: 0;
@@ -198,6 +194,7 @@
 
     .slider::before {
         background-color: white;
+        border-radius: 2rem;
         bottom: 0.2rem;
         content: '';
         height: 2.2rem;
@@ -259,10 +256,9 @@
         width: 63.4rem;
 
         @include width-up-to($phone-max) {
-            .filter-div {
-                margin-top: 1rem;
-                width: 34.4rem;
-            }
+            border-top: 0.1rem solid #d5d5d5;
+            order: 3;
+            width: 100%;
         }
     }
 
@@ -356,7 +352,7 @@
 
     .left-column {
         border: 0.1rem solid #d5d5d5;
-        border-radius: 0.3rem;
+        border-radius: 0.3rem 0 0 0.3rem;
         width: 55%;
 
         @include width-up-to($phone-max) {
@@ -373,7 +369,7 @@
 
     .right-column {
         border-bottom: 0.1rem solid #d5d5d5;
-        border-radius: 0.3rem;
+        border-radius: 0 0.3rem 0.3rem 0;
         border-right: 0.1rem solid #d5d5d5;
         border-top: 0.1rem solid #d5d5d5;
         width: 45%;
@@ -457,7 +453,9 @@
         margin-top: 1.5rem;
 
         @include width-up-to($phone-max) {
-            margin-top: 1rem;
+            margin-top: 0;
+            padding-bottom: 0.3rem;
+            padding-top: 0.3rem;
         }
     }
 
@@ -467,27 +465,49 @@
         line-height: 2.5rem;
         margin-bottom: 1rem;
         margin-top: 1rem;
-        text-align: right;
         padding-right: 0.3rem;
-        
+        text-align: right;
+
         @include width-up-to($phone-max) {
             padding-right: 1.3rem;
         }
     }
 
     .testimonial-head {
+        border: 0.1rem solid #d5d5d5;
+        border-radius: 0.3rem;
+        cursor: pointer;
         display: none;
         font-size: 1.4rem;
         font-weight: bold;
         line-height: 1.7rem;
+        padding: 2rem 1rem;
+
+        @include width-up-to($phone-max) {
+            display: block;
+            margin-top: 1rem;
+        }
+    }
+
+    .testimonial-div-mob {
+        display: none;
+        font-size: 1.4rem;
+        font-weight: bold;
+
+        @include width-up-to($phone-max) {
+            display: block;
+        }
     }
 
     .tdlb-container {
+        border: 0.1rem solid #d5d5d5;
+        border-radius: 0.3rem;
         padding: 5rem 2rem 3rem;
 
         @include width-up-to($phone-max) {
-            margin-left: 0.8rem;
-            margin-top: 0.4rem;
+            border: 0.1rem solid #d5d5d5;
+            margin: 1rem;
+            padding: 0;
         }
     }
 
@@ -558,10 +578,15 @@
     }
 
     .filter-btn {
-        background-color: white;
+        background-color: #ffffff;
         border: 0.1rem solid #d5d5d5;
         border-radius: 0.2rem;
-        margin: 2rem;
+
+        @include width-up-to($phone-max) {
+            height: 3.2rem;            
+            margin: unset;
+            width: 3.2rem;
+        }
     }
 
     .filter-style {
@@ -668,20 +693,56 @@
         border-radius: 0.2rem;
         height: 5rem;
         width: 14rem;
+
+        @include width-up-to($phone-max) {
+            height: 4rem;
+            width: 12rem;
+        }
     }
 
     .apply-filter {
-        margin-left: 46.4rem;
         padding-bottom: 1.5rem;
+        text-align: end;
+    }
+
+    .searchimg {
+        width: 2rem;
+        padding-top: 0.2rem;
 
         @include width-up-to($phone-max) {
+            padding-top: 0.5rem;
+        }
+    }
+
+    .detail-info-mob {
+        background: white;
+        display: none;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .testimonial-body-mob {
+        display: none;
+    }
+
+    .detail-info-head {
+        display: none;
 
             .apply-filter {
                 margin-left: 16.2rem;
                 padding-bottom: 0.9rem;
             }
         }
+    }
 
+    .search-img-div {
+        margin-left: 2rem;
+        margin-right: 1.7rem;
+
+        @include width-up-to($phone-max) {
+            margin-left: 1rem;
+            margin-right: 0;
+        }
     }
 
     .searchimg {
