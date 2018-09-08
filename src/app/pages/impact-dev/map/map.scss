@@ -98,9 +98,9 @@
 
         @include width-up-to($phone-max) {
             order: 1;
-            padding-top: 1rem;
             padding-bottom: 3rem;
             padding-left: 2rem;
+            padding-top: 1rem;
             width: 33rem;
         }
     }
@@ -116,8 +116,8 @@
         z-index: 999;
 
         @include width-up-to($phone-max) {
-            bottom: 49.1rem;
-            height: 50rem;
+            bottom: 42rem;
+            height: 43rem;
         }
     }
 
@@ -131,8 +131,8 @@
         width: 63.4rem;
 
         @include width-up-to($phone-max) {
-            width: 100%;
             height: 6rem;
+            width: 100%;
 
             .search-input-div {
                 order: 2;
@@ -154,9 +154,9 @@
         width: 45rem;
 
         @include width-up-to($phone-max) {
-            font-size: 14px;
-            width: 26.6rem;
+            font-size: 1.4rem;
             padding: 0.6rem;
+            width: 26.6rem;
         }
     }
 
@@ -171,24 +171,24 @@
     .back-search-btn,
     .back-result-btn,
     .back-detail-btn {
-        border-radius: 28px;
         background-color: white;
-        box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.3);
+        border-radius: 2.8rem;
+        box-shadow: 0 1rem 3rem 0 rgba(0, 0, 0, 0.3);
         height: 4rem;
         width: 4rem;
     }
 
     .left-arrow-bak {
-        color: #4A4A4A;
+        color: #4a4a4a;
     }
 
     .dropdownlist-id {
-        border-top: 1px solid #d5d5d5;
+        border-top: 0.1rem solid #d5d5d5;
         width: 63.4rem;
 
         @include width-up-to($phone-max) {
-            width: 100%;
             border-top: unset;
+            width: 100%;
         }
     }
 
@@ -212,8 +212,8 @@
 
     .slider {
         background-color: #c7cbd2;
+        border-radius: 2rem;
         bottom: 0;
-        border-radius:  2rem;
         cursor: pointer;
         left: 0;
         position: absolute;
@@ -224,8 +224,8 @@
 
     .slider::before {
         background-color: white;
+        border-radius: 2rem;
         bottom: 0.2rem;
-        border-radius:  2rem;
         content: '';
         height: 2.2rem;
         left: 0.3rem;
@@ -274,7 +274,7 @@
         width: 63.4rem;
 
         @include width-up-to($phone-max) {
-            border-top: 1px solid #d5d5d5;
+            border-top: 0.1rem solid #d5d5d5;
             order: 3;
             width: 100%;
         }
@@ -386,7 +386,6 @@
     .left-column {
         border: 0.1rem solid #d5d5d5;
         border-radius: 0.3rem 0 0 0.3rem;
-        border: 0.1rem solid #d5d5d5;
         width: 55%;
 
         @include width-up-to($phone-max) {
@@ -402,10 +401,10 @@
     }
 
     .right-column {
-        border-top: 0.1rem solid #d5d5d5;
-        border-right: 0.1rem solid #d5d5d5;
         border-bottom: 0.1rem solid #d5d5d5;
         border-radius: 0 0.3rem 0.3rem 0;
+        border-right: 0.1rem solid #d5d5d5;
+        border-top: 0.1rem solid #d5d5d5;
         width: 45%;
 
         @include width-up-to($phone-max) {
@@ -481,8 +480,8 @@
 
         @include width-up-to($phone-max) {
             margin-top: 0;
-            padding-top: 0.3rem;
             padding-bottom: 0.3rem;
+            padding-top: 0.3rem;
         }
     }
 
@@ -492,8 +491,8 @@
         line-height: 2.5rem;
         margin-bottom: 1rem;
         margin-top: 1rem;
-        text-align: right;
         padding-right: 0.3rem;
+        text-align: right;
 
         @include width-up-to($phone-max) {
             padding-right: 1.3rem;
@@ -501,13 +500,14 @@
     }
 
     .testimonial-head {
-        border: 1px solid #d5d5d5;
+        border: 0.1rem solid #d5d5d5;
         border-radius: 0.3rem;
+        cursor: pointer;
         display: none;
         font-size: 1.4rem;
         font-weight: bold;
         line-height: 1.7rem;
-        padding: 2rem 1rem 2rem 1rem;
+        padding: 2rem 1rem;
 
         @include width-up-to($phone-max) {
             display: block;
@@ -517,7 +517,7 @@
 
     .testimonial-div-mob {
         display: none;
-        font-size: 14px;
+        font-size: 1.4rem;
         font-weight: bold;
 
         @include width-up-to($phone-max) {
@@ -526,12 +526,12 @@
     }
 
     .tdlb-container {
-        border: 1px solid #d5d5d5;
-        border-radius: 3px;
-        padding: 5rem 2rem 3rem 2rem;
+        border: 0.1rem solid #d5d5d5;
+        border-radius: 0.3rem;
+        padding: 5rem 2rem 3rem;
 
         @include width-up-to($phone-max) {
-            border: 1px solid #d5d5d5;
+            border: 0.1rem solid #d5d5d5;
             margin: 1rem;
             padding: 0;
         }
@@ -604,14 +604,14 @@
     }
 
     .filter-btn {
+        background-color: #ffffff;
         border: 0.1rem solid #d5d5d5;
         border-radius: 0.2rem;
-        background-color: #FFFFFF;
 
         @include width-up-to($phone-max) {
+            height: 3.2rem;            
+            margin: unset;
             width: 3.2rem;
-            height: 3.2rem;
-            width: 3.4rem;
         }
     }
 
@@ -707,10 +707,10 @@
     }
 
     .applyfltrbtn {
-        height: 50px;
-        width: 140px;
-        border-radius: 2px;
-        background-color: #F36b32;
+        background-color: #f36b32;
+        border-radius: 0.2rem;
+        height: 5rem;
+        width: 14rem;
 
         @include width-up-to($phone-max) {
             height: 4rem;
@@ -719,8 +719,8 @@
     }
 
     .apply-filter {
-        text-align: end;
         padding-bottom: 1.5rem;
+        text-align: end;
     }
 
     .searchimg {
@@ -743,7 +743,7 @@
         display: none;
     }
 
-    .detailInfoHead {
+    .detail-info-head {
         display: none;
 
         @include width-up-to($phone-max) {
@@ -752,12 +752,12 @@
     }
 
     .search-img-div {
-        margin-right: 1.7rem;
         margin-left: 2rem;
+        margin-right: 1.7rem;
 
         @include width-up-to($phone-max) {
-            margin-right: 0;
             margin-left: 1rem;
+            margin-right: 0;
         }
     }
 
