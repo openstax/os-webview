@@ -72,8 +72,10 @@ export default class MainMenu extends Controller {
     }
 
     showTutorTrainingWheel() {
-        this.model.trainingWheelActive = true;
-        this.update();
+        if (!$.isMobileDisplay()) {
+            this.model.trainingWheelActive = true;
+            this.update();
+        }
     }
 
     onUpdate() {
@@ -121,13 +123,20 @@ export default class MainMenu extends Controller {
     }
 
     closeDropdowns() {
-        if (!this.model.trainingWheelActive && this.regions.subjectsDropdown.controllers.length) {
-            this.regions.subjectsDropdown.controllers[0].closeMenu();
-            this.regions.technologyDropdown.controllers[0].closeMenu();
-            this.regions.whatWeDoDropdown.controllers[0].closeMenu();
-            if (this.loginMenuComponent) {
-                this.loginMenuComponent.closeMenu();
+        const callCloseMenu = (controller) => {
+            if (controller) {
+                controller.closeMenu();
             }
+        };
+
+        if (!this.model.trainingWheelActive) {
+            ['subjectsDropdown', 'technologyDropdown', 'whatWeDoDropdown']
+                .forEach((c) => {
+                    const region = this.regions[c];
+
+                    region && callCloseMenu(region.controllers[0]);
+                });
+            callCloseMenu(this.loginMenuComponent);
         }
     }
 

@@ -38,7 +38,7 @@ export default class Dropdown extends Controller {
                 this.openedByTouch = false;
                 return;
             }
-            if (!this.isMobileDisplay() && !this.frozen) {
+            if (!$.isMobileDisplay() && !this.frozen) {
                 this.closeMenu();
             }
         };
@@ -63,12 +63,6 @@ export default class Dropdown extends Controller {
         this.settingFocus = false;
     }
 
-    isMobileDisplay() {
-        const w = window.innerWidth;
-
-        return w < 960;
-    }
-
     freeze() {
         this.frozen = true;
     }
@@ -80,7 +74,7 @@ export default class Dropdown extends Controller {
     openMenu() {
         if (!this.isOpen) {
             this.isOpen = true;
-            if (this.isMobileDisplay()) {
+            if ($.isMobileDisplay()) {
                 header.recognizeDropdownOpen({
                     el: this.el,
                     label: this.props.dropdownLabel,
@@ -102,14 +96,14 @@ export default class Dropdown extends Controller {
     @on('focusin')
     @on('mouseover')
     openDesktopMenu() {
-        if (!this.isMobileDisplay()) {
+        if (!$.isMobileDisplay()) {
             this.openMenu();
         }
     }
 
     @on('focusout')
     navigateAway(event) {
-        if (event.target.parentNode === this.el && !this.isMobileDisplay() && !this.settingFocus) {
+        if (event.target.parentNode === this.el && !$.isMobileDisplay() && !this.settingFocus) {
             this.closeMenuBound(event);
         }
     }

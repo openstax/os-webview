@@ -17,7 +17,9 @@
         margin-top: $normal-margin;
 
         :nth-child(10),
-        :nth-child(20) {
+        :nth-child(20),
+        :nth-child(30),
+        :nth-child(40) {
             margin-bottom: 3rem;
         }
     }
