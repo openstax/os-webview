@@ -105,11 +105,13 @@ export default class Mapdropdown extends Controller {
                 document.getElementById(`data-${alreadyShowId}`).setAttribute('style', 'display: none;');
             }
             // searchList.setAttribute('style', 'max-height: 41rem;');
+            searchList.classList.add('active');
             document.getElementById(`data-${unqId}`).setAttribute('style', 'display: block;');
             target.dataset.toggle = 'hide';
         } else {
+            searchList.classList.remove('active');
             document.getElementById(`data-${unqId}`).setAttribute('style', 'display: none;');
-            searchList.setAttribute('style', 'max-height: 28rem;overflow-y: scroll');
+            searchList.setAttribute('style', 'overflow-y: scroll');
             target.dataset.toggle = 'show';
         }
     }

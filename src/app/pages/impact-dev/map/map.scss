@@ -140,7 +140,6 @@
 
             .search-input-div {
                 order: 2;
-                width: 90%;
             }
 
             .search-filter-div {
@@ -316,7 +315,8 @@
         border-radius: 0 0 0.3rem 0.3rem;
         list-style-type: none;
         margin: unset;
-        max-height: calc(100vh - 23.8rem);
+        //max-height: calc(100vh - 23.8rem);
+        max-height: 41rem;
         overflow-x: hidden;
         overflow-y: scroll;
         padding-left: unset;
@@ -325,6 +325,10 @@
             max-height: 21rem;
             overflow-y: scroll;
         }
+
+        &.active {
+            max-height: calc(100vh - 23.8rem);
+        }
     }
 
     .toggle-on-off {
@@ -332,9 +336,16 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+
+        &[data-toggle="hide"] {
+
+            .list-show-more {
+                background-color: #e5e5e5;
+            }
+        }
     }
 
-    .toggle-dataList {
+    .toggle-datalist {
         display: none;
     }
 
@@ -346,7 +357,7 @@
 
     .list-show-more {
         align-items: center;
-        background-color: #e5e5e5;
+        background-color: #f8f8f8;
         border-radius: 50%;
         display: flex;
         height: 3.2rem;
@@ -368,10 +379,8 @@
     }
 
     .angle-circle {
-        background-color: #e5e5e5;
-        border-radius: 50%;
-        height: 3.2rem;
-        width: 3.2rem;
+        font-size: 1.6rem;
+        width: 0.625em;
     }
 
     .list-address {
@@ -413,8 +422,18 @@
 
         @include width-up-to($tablet-max) {
             flex-direction: column;
-            width: 94%;
+            width: 100%;
         }
+    }
+
+    .content-container {
+        display: flex;
+        width: 100%;
+
+        @include width-up-to($tablet-max) {
+            flex-direction: column;
+        }
+
     }
 
     .left-column {
@@ -509,10 +528,6 @@
     }
 
     .toggle-hide {
-        display: none;
-    }
-
-    .toggle-datalist {
         display: none;
     }
 
@@ -781,7 +796,9 @@
 
     .detail-info-mob {
         background: white;
+        border-radius: 0.3rem;
         display: none;
+        padding: 1rem;
         width: 100%;
     }
 

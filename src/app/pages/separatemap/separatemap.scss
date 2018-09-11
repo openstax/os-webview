@@ -40,7 +40,7 @@
     right: 2rem;
     top: auto;
 
-    @include width-up-to($phone-max) {
+    @include width-up-to($tablet-max) {
         bottom: auto;
         right: 2rem;
         top: 8rem;
