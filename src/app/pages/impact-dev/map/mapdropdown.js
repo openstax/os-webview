@@ -43,9 +43,6 @@ export default class Mapdropdown extends Controller {
             mapObject: mObj
         };
 
-
-        console.log(event);
-        console.log(indexItem);
         if (window.innerWidth < 960) {
             const unqClassDetailMob = '.detail-info-mob';
             const unqClassTestMob = '.testimonial-body-mob';
@@ -57,7 +54,9 @@ export default class Mapdropdown extends Controller {
             this.showDetailMob();
             this.flyToPopUp(objS, this.offSet, lData, indexItem);
             regionDetailInfoMob.attach(new Schoolinfo(Object.assign(modelObj, {pObj: this.popUp})));
-            regionTestimonialMob.attach(new Testimonialinfo(modelObj));
+            if (lData[indexItem].fields.testimonial !== null) {
+                regionTestimonialMob.attach(new Testimonialinfo(modelObj));
+            }
         } else {
             const unqClassDetail = `.detailinfo-${unqId}`;
             const unqClassTest = `.testimonialBody-${unqId}`;
@@ -67,7 +66,9 @@ export default class Mapdropdown extends Controller {
             this.offSet = [300, 0];
             this.flyToPopUp(objS, this.offSet, lData, indexItem);
             regionDetailInfo.attach(new Schoolinfo(modelObj));
-            regionTestimonial.attach(new Testimonialinfo(modelObj));
+            if (lData[indexItem].fields.testimonial !== null) {
+                regionTestimonial.attach(new Testimonialinfo(modelObj));
+            }
             this.showDetailScreen(event);
         }
     }
@@ -100,7 +101,7 @@ export default class Mapdropdown extends Controller {
             target.dataset.toggle = 'hide';
         } else {
             document.getElementById(`data-${unqId}`).setAttribute('style', 'display: none;');
-            searchList.setAttribute('style', 'max-height: 28.8rem;overflow-y: scroll');
+            searchList.setAttribute('style', 'max-height: 28rem;overflow-y: scroll');
             target.dataset.toggle = 'show';
         }
     }
@@ -146,4 +147,5 @@ export default class Mapdropdown extends Controller {
             this.popUp.remove();
         }
     }
+
 }

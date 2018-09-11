@@ -22,7 +22,7 @@
                 <div class="rcolumn-body">Yes</div>
             </div>
         </div>
-        <div id="testimonialHead-{model.itemIndex}" class="testimonial-head">Testimonials</div>
+        <div if="model.dataArray[model.itemIndex].fields.testimonial!=null" id="testimonialHead-{model.itemIndex}" class="testimonial-head">Testimonials</div>
     </div>
     <div class="right-btn-link nxt-previous-links" data-index={model.itemIndex} data-action="next"></div>
 </template>
