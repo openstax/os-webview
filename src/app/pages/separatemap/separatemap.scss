@@ -11,7 +11,8 @@
     @include width-up-to($phone-max) {
         display: flex;
         flex-direction: column-reverse;
-        height: 58rem;
+        height: 100%;
+        position: absolute;
     }
 
 .back-impact-div {
