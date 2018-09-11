@@ -6,6 +6,10 @@ $.isTouchDevice = () => (
     (navigator.msMaxTouchPoints > 0)
 );
 
+$.isMobileDisplay = () => {
+    return window.innerWidth < 960;
+};
+
 $.isNode = () => (typeof process !== 'undefined') && (process.release.name === 'node');
 
 $.isPolish = (titleOrSlug) => (/fizyka/i).test(titleOrSlug) || (/polska/i).test(titleOrSlug);
