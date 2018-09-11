@@ -159,7 +159,11 @@ export default class Map1 extends Controller {
         if (window.innerWidth > 960) {
             this.el.querySelector('.search-container').setAttribute('style', 'margin-top: 3rem;');
         } else {
+<<<<<<< abc677991e0136a77783b02e7dcee3f0ea74dfc0
             this.el.querySelector('.search-container').setAttribute('style', 'height: 0;margin-bottom: 1rem;');
+=======
+            this.el.querySelector('.search-container').setAttribute('style', 'height: 0; margin-bottom: 1rem;');
+>>>>>>> Fix seach box styling for tablet
         }
     }
     searchRequest(fltrStatus, value) {
@@ -277,7 +281,11 @@ export default class Map1 extends Controller {
     }
     validateMob() {
         if (window.innerWidth < 960) {
+<<<<<<< abc677991e0136a77783b02e7dcee3f0ea74dfc0
             const styl = 'border: 0.1rem solid #d5d5d5;border-radius: 0.3rem;';
+=======
+            const styl = 'border: 0.1rem solid #d5d5d5; border-radius: 0.2rem; margin-right: 0.7rem;';
+>>>>>>> Fix seach box styling for tablet
 
             this.el.querySelector('.srch').setAttribute('style', styl);
             this.el.querySelector('.searchimg').setAttribute('style', 'display: none');

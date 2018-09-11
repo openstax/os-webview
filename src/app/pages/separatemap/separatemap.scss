@@ -1,19 +1,28 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .mapd {
-    height: 80rem;
+    bottom: 0;
+    height: calc(100% - 11rem);
+    left: 0;
+    margin-top: 11rem;
+    position: absolute;
+    right: 0;
+    top: 0;
     width: 100%;
 
     @include width-up-to($tablet-max) {
-        top: 0;
-    }
-
-    @include width-up-to($phone-max) {
         display: flex;
         flex-direction: column-reverse;
+<<<<<<< abc677991e0136a77783b02e7dcee3f0ea74dfc0
         height: 100%;
         position: absolute;
+=======
+        height: calc(100% - 5.2rem);
+        margin-top: 5.2rem;
+        top: 0;
+>>>>>>> Fix seach box styling for tablet
     }
+
 }
 
 .back-impact-btn {
@@ -25,11 +34,13 @@
 }
 
 .back-impact-div {
-    position: absolute;
-    right: 6rem;
-    top: 85rem;
+    bottom: 2rem;
+    position: fixed;
+    right: 2rem;
+    top: auto;
 
     @include width-up-to($phone-max) {
+        bottom: auto;
         right: 2rem;
         top: 8rem;
         z-index: 99999;
