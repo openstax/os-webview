@@ -130,7 +130,6 @@
 
             .search-input-div {
                 order: 2;
-                width: 90%;
             }
 
             .search-filter-div {
@@ -156,10 +155,6 @@
         @include width-up-to($tablet-max) {
             font-size: 1.4rem;
             padding: 0.6rem;
-<<<<<<< abc677991e0136a77783b02e7dcee3f0ea74dfc0
-            width: 97.5%;
-=======
->>>>>>> Fix seach box styling for tablet
         }
 
         @include width-up-to($phone-max) {
@@ -303,24 +298,20 @@
         border-radius: 0 0 0.3rem 0.3rem;
         list-style-type: none;
         margin: unset;
-<<<<<<< abc677991e0136a77783b02e7dcee3f0ea74dfc0
-        max-height: 28rem;
-=======
-        max-height: calc(100vh - 23.8rem);
->>>>>>> Fix seach box styling for tablet
+        //max-height: calc(100vh - 23.8rem);
+        max-height: 41rem;
         overflow-x: hidden;
         overflow-y: scroll;
         padding-left: unset;
         width: 100%;
 
-<<<<<<< abc677991e0136a77783b02e7dcee3f0ea74dfc0
-        @include width-up-to($phone-max) {
-            max-height: 23rem;
-=======
         @include width-up-to($tablet-max) {
             max-height: 21rem;
->>>>>>> Fix seach box styling for tablet
             overflow-y: scroll;
+        }
+
+        &.active {
+            max-height: calc(100vh - 23.8rem);
         }
     }
 
@@ -329,9 +320,16 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+
+        &[data-toggle="hide"] {
+
+            .list-show-more {
+                background-color: #e5e5e5;
+            }
+        }
     }
 
-    .toggle-dataList {
+    .toggle-datalist {
         display: none;
     }
 
@@ -343,7 +341,7 @@
 
     .list-show-more {
         align-items: center;
-        background-color: #e5e5e5;
+        background-color: #f8f8f8;
         border-radius: 50%;
         display: flex;
         height: 3.2rem;
@@ -357,22 +355,16 @@
         flex-direction: column;
         padding-bottom: 2rem;
         padding-top: 2rem;
-<<<<<<< abc677991e0136a77783b02e7dcee3f0ea74dfc0
-        width: 90%;
-
-        @include width-up-to($phone-max) {
-            padding-bottom: 1rem;
-=======
         width: calc(100% - 4.2rem);
 
         @include width-up-to($tablet-max) {
             padding-bottom: 0.7rem;
->>>>>>> Fix seach box styling for tablet
         }
     }
 
     .angle-circle {
         font-size: 1.6rem;
+        width: 0.625em;
     }
 
     .list-address {
@@ -408,33 +400,20 @@
         display: flex;
         flex-direction: row;
 
-<<<<<<< abc677991e0136a77783b02e7dcee3f0ea74dfc0
-        @include width-up-to($phone-max) {
-        }
-    }
-
-    .nxt-previous-links {
-        display: none;
-
-        @include width-up-to($phone-max) {
-            cursor: pointer;
-            display: block;
-            width: 3%;
+        @include width-up-to($tablet-max) {
+            flex-direction: column;
+            width: 100%;
         }
     }
 
     .content-container {
         display: flex;
-        flex-direction: row;
         width: 100%;
 
-        @include width-up-to($phone-max) {
-=======
         @include width-up-to($tablet-max) {
->>>>>>> Fix seach box styling for tablet
             flex-direction: column;
-            width: 94%;
         }
+
     }
 
     .left-column {
@@ -523,10 +502,6 @@
     }
 
     .toggle-hide {
-        display: none;
-    }
-
-    .toggle-datalist {
         display: none;
     }
 
@@ -653,11 +628,7 @@
     }
 
     .filter-btn {
-<<<<<<< abc677991e0136a77783b02e7dcee3f0ea74dfc0
-        background-color: #fff;
-=======
         background-color: white;
->>>>>>> Fix seach box styling for tablet
         border: 0.1rem solid #d5d5d5;
         border-radius: 0.2rem;
 
@@ -791,7 +762,9 @@
 
     .detail-info-mob {
         background: white;
+        border-radius: 0.3rem;
         display: none;
+        padding: 1rem;
         width: 100%;
     }
 

@@ -13,14 +13,9 @@
     @include width-up-to($tablet-max) {
         display: flex;
         flex-direction: column-reverse;
-<<<<<<< abc677991e0136a77783b02e7dcee3f0ea74dfc0
-        height: 100%;
-        position: absolute;
-=======
         height: calc(100% - 5.2rem);
         margin-top: 5.2rem;
         top: 0;
->>>>>>> Fix seach box styling for tablet
     }
 
 }
@@ -39,7 +34,7 @@
     right: 2rem;
     top: auto;
 
-    @include width-up-to($phone-max) {
+    @include width-up-to($tablet-max) {
         bottom: auto;
         right: 2rem;
         top: 8rem;
