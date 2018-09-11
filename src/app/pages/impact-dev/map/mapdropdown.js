@@ -104,7 +104,7 @@ export default class Mapdropdown extends Controller {
                 showing[0].dataset.toggle = 'show';
                 document.getElementById(`data-${alreadyShowId}`).setAttribute('style', 'display: none;');
             }
-            searchList.setAttribute('style', 'max-height: 62vh;');
+            // searchList.setAttribute('style', 'max-height: 41rem;');
             document.getElementById(`data-${unqId}`).setAttribute('style', 'display: block;');
             target.dataset.toggle = 'hide';
         } else {
