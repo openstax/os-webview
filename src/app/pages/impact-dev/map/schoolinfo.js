@@ -15,6 +15,7 @@ export default class Schoolinfo extends Controller {
             classes: ['toggle-datalist-head']
         };
         this.model= props;
+        this.popObject= props.pObj;
     }
 
     onLoaded() {
@@ -26,6 +27,50 @@ export default class Schoolinfo extends Controller {
         document.getElementById('back-detail-div').setAttribute('style', 'display: block;');
         document.getElementById('detail-info-mob').setAttribute('style', 'display: none;');
         document.getElementById('testimonial-body-mob').setAttribute('style', 'display: block;');
+    }
+
+    @on('click .nxt-previous-links')
+    rightLink(event) {
+        const target = event.delegateTarget;
+        const currentIndex = target.dataset.index;
+        const action = target.dataset.action;
+        const dArray = this.model.dataArray;
+        const offSet = [0, -230];
+        const validIndex = this.chkValidindex(action, dArray, currentIndex);
+
+        if (validIndex !== 'undefined') {
+            const dropdownObj = new Dropdown('empty_model');
+            const objS = {
+                pObject: this.popObject,
+                mapObject: this.model.mapObj
+            };
+
+            this.model.itemIndex = validIndex;
+            const pObject = dropdownObj.flyToPopUp(objS, offSet, dArray, validIndex);
+
+            this.popObject = pObject;
+            this.update();
+        }
+    }
+    chkValidindex(act, arr, currentIndex) {
+        let nextIndex;
+        let rslt;
+
+        if (act === 'next') {
+            nextIndex = Number(currentIndex)+1;
+        } else {
+            nextIndex = Number(currentIndex)-1;
+        }
+
+        const aaa = arr[nextIndex];
+
+        if (nextIndex in arr) {
+            rslt = nextIndex;
+        } else {
+            rslt = 'undefined';
+        }
+
+        return rslt;
     }
 
 }

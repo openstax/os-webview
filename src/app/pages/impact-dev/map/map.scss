@@ -346,7 +346,27 @@
         flex-direction: row;
 
         @include width-up-to($phone-max) {
-            margin-top: 0.2rem;
+        }
+    }
+
+    .nxt-previous-links {
+        display: none;
+
+        @include width-up-to($phone-max) {
+            cursor: pointer;
+            display: block;
+            width: 3%;
+        }
+    }
+
+    .content-container {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+
+        @include width-up-to($phone-max) {
+            flex-direction: column;
+            width: 94%;
         }
     }
 
@@ -377,6 +397,7 @@
         @include width-up-to($phone-max) {
             border-left: 0.1rem solid #d5d5d5;
             display: block;
+            margin-bottom: 1rem;
             margin-top: 1rem;
         }
     }
@@ -485,7 +506,6 @@
 
         @include width-up-to($phone-max) {
             display: block;
-            margin-top: 1rem;
         }
     }
 
@@ -717,8 +737,7 @@
     .detail-info-mob {
         background: white;
         display: none;
-        padding-left: 1rem;
-        padding-right: 1rem;
+        width: 100%;
     }
 
     .testimonial-body-mob {
