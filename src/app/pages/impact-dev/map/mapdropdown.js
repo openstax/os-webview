@@ -17,6 +17,7 @@ export default class Mapdropdown extends Controller {
         };
         this.model = props;
         this.offSet = [];
+        this.popUp = 'empty';
     }
 
     onLoaded() {
@@ -32,18 +33,16 @@ export default class Mapdropdown extends Controller {
         const unqId = unqIdArr[1];
         const Region = this.regions.self.constructor;
         const indexItem = this.model.lData.findIndex((t) => t.pk === Number(unqId));
-        const lat = lData[indexItem].fields.lat;
-        const long = lData[indexItem].fields.long;
-        const iName = lData[indexItem].fields.name;
-        const pCity = lData[indexItem].fields.physical_city;
-        const pState = lData[indexItem].fields.physical_state_province;
         const modelObj = {
             dataArray: lData,
-            itemIndex: indexItem
+            itemIndex: indexItem,
+            mapObj: mObj
+        };
+        const objS = {
+            pObject: this.popUp,
+            mapObject: mObj
         };
 
-        console.log(event);
-        console.log(indexItem);
         if (window.innerWidth < 960) {
             const unqClassDetailMob = '.detail-info-mob';
             const unqClassTestMob = '.testimonial-body-mob';
@@ -53,8 +52,11 @@ export default class Mapdropdown extends Controller {
             this.offSet = [0, -230];
 
             this.showDetailMob();
-            regionDetailInfoMob.attach(new Schoolinfo(modelObj));
-            regionTestimonialMob.attach(new Testimonialinfo(modelObj));
+            this.flyToPopUp(objS, this.offSet, lData, indexItem);
+            regionDetailInfoMob.attach(new Schoolinfo(Object.assign(modelObj, {pObj: this.popUp})));
+            if (lData[indexItem].fields.testimonial !== null) {
+                regionTestimonialMob.attach(new Testimonialinfo(modelObj));
+            }
         } else {
             const unqClassDetail = `.detailinfo-${unqId}`;
             const unqClassTest = `.testimonialBody-${unqId}`;
@@ -62,20 +64,13 @@ export default class Mapdropdown extends Controller {
             const regionTestimonial = new Region(unqClassTest, this);
 
             this.offSet = [300, 0];
-
+            this.flyToPopUp(objS, this.offSet, lData, indexItem);
             regionDetailInfo.attach(new Schoolinfo(modelObj));
-            regionTestimonial.attach(new Testimonialinfo(modelObj));
+            if (lData[indexItem].fields.testimonial !== null) {
+                regionTestimonial.attach(new Testimonialinfo(modelObj));
+            }
             this.showDetailScreen(event);
         }
-        mObj.flyTo({
-            center: [lat, long],
-            offset: this.offSet,
-            zoom: 14
-        });
-        new mapboxgl.Popup()
-            .setLngLat([lat, long])
-            .setHTML(`<b>${iName}</b><br>${pCity}, ${pState}`)
-            .addTo(mObj);
     }
     showDetailScreen(event) {
         const target = event.delegateTarget;
@@ -106,7 +101,7 @@ export default class Mapdropdown extends Controller {
             target.dataset.toggle = 'hide';
         } else {
             document.getElementById(`data-${unqId}`).setAttribute('style', 'display: none;');
-            searchList.setAttribute('style', 'max-height: 28.8rem;overflow-y: scroll');
+            searchList.setAttribute('style', 'max-height: 28rem;overflow-y: scroll');
             target.dataset.toggle = 'show';
         }
     }
@@ -119,6 +114,38 @@ export default class Mapdropdown extends Controller {
         detailinfoMOb.setAttribute('style', 'display: block');
         document.getElementById('back-search-div').setAttribute('style', 'display: none;');
         document.getElementById('back-result-div').setAttribute('style', 'display: block;');
+    }
+    flyToPopUp(objectS, offSet, lData, indexItem) {
+        const lat = lData[indexItem].fields.lat;
+        const long = lData[indexItem].fields.long;
+        const iName = lData[indexItem].fields.name;
+        const pCity = lData[indexItem].fields.physical_city;
+        const pState = lData[indexItem].fields.physical_state_province;
+
+        if (objectS.pObject !== 'empty') {
+            objectS.pObject.remove();
+        }
+        objectS.mapObject.flyTo({
+            center: [lat, long],
+            offset: offSet,
+            zoom: 14
+        });
+
+        const tooltip = new mapboxgl.Popup({
+            closeButton: false,
+            closeOnClick: false
+        });
+
+        tooltip.setLngLat([lat, long]);
+        tooltip.setHTML(`<b>${iName}</b><br>${pCity}, ${pState}`);
+        tooltip.addTo(objectS.mapObject);
+        this.popUp = tooltip;
+        return tooltip;
+    }
+    onClose() {
+        if (this.popUp !== 'empty') {
+            this.popUp.remove();
+        }
     }
 
 }
