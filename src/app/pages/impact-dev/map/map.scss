@@ -119,9 +119,9 @@
             height: 6rem;
             width: 100%;
 
-            .searchimg {
-                right: 31rem;
-                top: 1.55rem;
+            .search-input-div {
+                order: 2;
+                width: 90%;
             }
 
             .filter-btn {
@@ -140,7 +140,7 @@
         @include width-up-to($phone-max) {
             font-size: 1.4rem;
             padding: 0.6rem;
-            width: 26.6rem;
+            width: 97.5%;
         }
 
     .back-search-btn,
