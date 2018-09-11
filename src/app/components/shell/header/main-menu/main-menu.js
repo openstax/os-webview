@@ -1,10 +1,17 @@
 import VERSION from '~/version';
-import categoryPromise from '~/models/subjectCategories';
 import {Controller} from 'superb.js';
+import {description as template} from './main-menu.html';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
+import categoryPromise from '~/models/subjectCategories';
 import Dropdown from './dropdown/dropdown';
-import {description as template} from './main-menu.html';
+import settings from 'settings';
+
+// Slightly hacky; avoiding adding a new item to settings,
+// but probably will do so eventually
+const dqMatch = settings.accountHref.match(/-[^.]+/);
+const domainQualifier = dqMatch ? dqMatch[0] : '';
+const tutorDomain = `https://tutor${domainQualifier}.openstax.org/`;
 
 export default class MainMenu extends Controller {
 
@@ -84,7 +91,7 @@ export default class MainMenu extends Controller {
             const Region = this.regions.self.constructor;
             const regionEl = this.el.querySelector('.login-dropdown');
             const loginRegion = new Region(regionEl, this);
-            const tutorItem = {url: 'https://tutor.openstax.org/', label: 'OpenStax Tutor'};
+            const tutorItem = {url: tutorDomain, label: 'OpenStax Tutor'};
             const loginItems = [
                 {url: this.model.accountLink, label: 'Account Profile'},
                 tutorItem,
