@@ -159,7 +159,7 @@ export default class Map1 extends Controller {
         if (window.innerWidth > 960) {
             this.el.querySelector('.search-container').setAttribute('style', 'margin-top: 3rem;');
         } else {
-            this.el.querySelector('.search-container').setAttribute('style', 'height: 0;margin-bottom: 1rem;');;
+            this.el.querySelector('.search-container').setAttribute('style', 'height: 0;margin-bottom: 1rem;');
         }
     }
     searchRequest(fltrStatus, value) {
