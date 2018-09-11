@@ -277,7 +277,7 @@ export default class Map1 extends Controller {
     }
     validateMob() {
         if (window.innerWidth < 960) {
-            const styl = 'border: 0.1rem solid #d5d5d5;border-radius: 0.3rem;width: 27.6rem;margin-right: 0.7rem;';
+            const styl = 'border: 0.1rem solid #d5d5d5;border-radius: 0.3rem;';
 
             this.el.querySelector('.srch').setAttribute('style', styl);
             this.el.querySelector('.searchimg').setAttribute('style', 'display: none');

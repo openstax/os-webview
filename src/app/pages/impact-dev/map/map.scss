@@ -136,6 +136,7 @@
 
             .search-input-div {
                 order: 2;
+                width: 90%;
             }
 
             .search-filter-div {
@@ -156,7 +157,7 @@
         @include width-up-to($phone-max) {
             font-size: 1.4rem;
             padding: 0.6rem;
-            width: 26.6rem;
+            width: 97.5%;
         }
     }
 
