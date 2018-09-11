@@ -92,7 +92,7 @@
     .on-map {
         background-color: #002469;
         bottom: 35.8rem;
-        height: 80rem;
+        height: 95rem;
         opacity: 0.8;
         overflow: hidden;
         position: relative;
@@ -267,13 +267,13 @@
         border-radius: 0.3rem;
         list-style-type: none;
         margin: unset;
-        max-height: 28.8rem;
+        max-height: 28rem;
         overflow-x: hidden;
         overflow-y: scroll;
         padding-left: unset;
 
         @include width-up-to($phone-max) {
-            max-height: 20.8rem;
+            max-height: 23rem;
             overflow-y: scroll;
         }
     }
@@ -283,6 +283,10 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+    }
+
+    .toggle-dataList {
+        display: none;
     }
 
     .search-list-element {
@@ -300,10 +304,6 @@
         justify-content: center;
         text-align: center;
         width: 3.2rem;
-        
-        @include width-up-to($phone-max) {
-            width: 10%;
-        }
     }
 
     .list-data {
@@ -311,10 +311,10 @@
         flex-direction: column;
         padding-bottom: 2rem;
         padding-top: 2rem;
+        width: 90%;
 
         @include width-up-to($phone-max) {
-            padding-bottom: 0.7rem;
-            width: 90%;
+            padding-bottom: 1rem;
         }
     }
 
@@ -330,7 +330,7 @@
         font-size: 1.4rem;
         height: 1.6rem;
         line-height: 1.6rem;
-        margin-top: 1.7rem;
+        margin-top: 1.3rem;
 
         @include width-up-to($phone-max) {
             color: #4a4a4a;
@@ -486,12 +486,8 @@
 
     .toggle-datalist-body {
         background-color: white;
-        border: 0.1rem solid #d5d5d5;
-        border-radius: 0.3rem;
-        margin-top: 1.5rem;
 
         @include width-up-to($phone-max) {
-            margin-top: 0;
             padding-bottom: 0.3rem;
             padding-top: 0.3rem;
         }
@@ -749,6 +745,10 @@
         @include width-up-to($phone-max) {
             padding-top: 0.5rem;
         }
+    }
+
+    .detailinfo-container {
+        margin-bottom: 1.3rem;
     }
 
     .detail-info-mob {
