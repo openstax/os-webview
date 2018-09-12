@@ -42,6 +42,14 @@ export default class SeparateMap extends CMSPageController {
             pageType: 'separate'
         };
 
+        mapOb.on('mouseenter', 'os-schools', () => {
+            mapOb.getCanvas().style.cursor = 'pointer';
+        });
+
+        mapOb.on('mouseleave', 'os-schools', () => {
+            mapOb.getCanvas().style.cursor = '';
+        });
+
         this.regions.map.append(new Map1(mapObject));
 
         this.model.loaded = 'loaded';
@@ -53,5 +61,6 @@ export default class SeparateMap extends CMSPageController {
     onClose() {
         shell.regions.footer.el.removeAttribute('hidden');
     }
+
 
 }
