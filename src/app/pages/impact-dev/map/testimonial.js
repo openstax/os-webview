@@ -13,7 +13,7 @@ export default class Schoolinfo extends Controller {
         this.view = {
             classes: ['toggle-datalist-body']
         };
-        this.model= props;
+        this.model = props;
     }
 
     onLoaded() {
