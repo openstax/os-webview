@@ -1,4 +1,8 @@
 @import 'pattern-library/core/pattern-library/headers';
+.separate-map-main {
+    display: flex;
+    height: 80vh;
+}
 
 .mapd {
     bottom: 0;
@@ -9,6 +13,8 @@
     right: 0;
     top: 0;
     width: 100%;
+    position: absolute;
+    top: 0;
 
     @include width-up-to($tablet-max) {
         display: flex;
