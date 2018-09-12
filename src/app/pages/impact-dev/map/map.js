@@ -157,7 +157,7 @@ export default class Map1 extends Controller {
         this.el.querySelector('.on-map').setAttribute('style', 'display: none;');
         this.el.querySelector('.maptxt').setAttribute('style', 'display: none');
         if (window.innerWidth > 960) {
-            this.el.querySelector('.search-container').setAttribute('style', 'margin-top: 3rem;');
+            this.el.querySelector('.search-container').setAttribute('style', 'margin-top: 13rem;');
         } else {
             this.el.querySelector('.search-container').setAttribute('style', 'height: 0;margin-bottom: 1rem;');
         }

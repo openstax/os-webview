@@ -1,8 +1,14 @@
 @import 'pattern-library/core/pattern-library/headers';
+.separate-map-main {
+    display: flex;
+    height: 80vh;
+}
 
 .mapd {
-    height: 80rem;
+    height: 100%;
     width: 100%;
+    position: absolute;
+    top: 0;
 
     @include width-up-to($tablet-max) {
         top: 0;
@@ -16,9 +22,9 @@
     }
 
 .back-impact-div {
+    align-self: end;
     position: absolute;
     right: 6rem;
-    top: 85rem;
 
     @include width-up-to($phone-max) {
         right: 2rem;
