@@ -11,7 +11,6 @@ $button-size: 2.8rem;
     right: 0;
     top: 0;
     width: 100%;
-    z-index: 1;
 
     @include width-up-to($tablet-max) {
         display: grid;
@@ -20,6 +19,7 @@ $button-size: 2.8rem;
     &.fixed,
     &.active {
         position: fixed;
+        z-index: 2;
     }
 
     a {
