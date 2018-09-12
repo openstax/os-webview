@@ -45,10 +45,11 @@ export default class Map1 extends Controller {
         } else {
             this.fadOutMovBar();
         }
-    }
-    @on('click .srch')
-    fadeEvent(event) {
+        const glbalObj = this;
 
+        this.mapObject.on('click', 'os-schools', (e) => {
+            glbalObj.searchRequest('single_result', e.features[0].properties.id);
+        });
     }
     @on('keyup .srch')
     intercept(event) {
@@ -172,7 +173,8 @@ export default class Map1 extends Controller {
         }
         (async () => {
             try {
-                const response = await fetch(`${settings.apiOrigin}/api/schools/?name=${value+fltString}`);
+                const callName = this.requestCall(fltrStatus, value, fltString);
+                const response = await fetch(callName);
                 const data = await response.json();
 
                 if (data.length) {
@@ -198,6 +200,16 @@ export default class Map1 extends Controller {
                 console.log(e);
             }
         })();
+    }
+    requestCall(fltStatus, value, fltString) {
+        let callName;
+
+        if (fltStatus === 'single_result') {
+            callName = `${settings.apiOrigin}/api/schools/?id=${value}`;
+        } else {
+            callName = `${settings.apiOrigin}/api/schools/?name=${value+fltString}`;
+        }
+        return callName;
     }
     hideDataList() {
         const searchInput = this.el.querySelector('.srch');

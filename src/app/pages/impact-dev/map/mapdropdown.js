@@ -57,7 +57,7 @@ export default class Mapdropdown extends Controller {
             const regionDetailInfoMob = new Region(unqClassDetailMob, this);
             const regionTestimonialMob = new Region(unqClassTestMob, this);
 
-            this.offSet = [0, -230];
+            this.offSet = [0, -200];
 
             this.showDetailMob();
             this.flyToPopUp(objS, this.offSet, lData, indexItem);
