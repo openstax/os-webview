@@ -159,7 +159,7 @@ export default class Map1 extends Controller {
         if (window.innerWidth > 960) {
             this.el.querySelector('.search-container').setAttribute('style', 'margin-top: 13rem;');
         } else {
-            this.el.querySelector('.search-container').setAttribute('style', 'height: 0;margin-bottom: 1rem;');
+            this.el.querySelector('.search-container').setAttribute('style', 'height: 0; margin-bottom: 1rem;');
         }
     }
     searchRequest(fltrStatus, value) {
@@ -277,7 +277,7 @@ export default class Map1 extends Controller {
     }
     validateMob() {
         if (window.innerWidth < 960) {
-            const styl = 'border: 0.1rem solid #d5d5d5;border-radius: 0.3rem;';
+            const styl = 'border: 0.1rem solid #d5d5d5; border-radius: 0.2rem; margin-right: 0.7rem;';
 
             this.el.querySelector('.srch').setAttribute('style', styl);
             this.el.querySelector('.searchimg').setAttribute('style', 'display: none');

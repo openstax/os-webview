@@ -52,7 +52,7 @@
         width: 67.8rem;
         z-index: 99999;
 
-        @include width-up-to($phone-max) {
+        @include width-up-to($tablet-max) {
             display: flex;
             flex-direction: column;
             height: 42rem;
@@ -69,7 +69,8 @@
         box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.3);
         width: 63.4rem;
 
-        @include width-up-to($phone-max) {
+        @include width-up-to($tablet-max) {
+            max-width: 63.4rem;
             order: 2;
             width: 100%;
         }
@@ -79,14 +80,6 @@
         display: unset;
     }
 
-    // #map {
-    //     height: 74rem;
-    //     opacity: 1;
-    //     overflow: hidden;
-    //     position: relative;
-    //     top: -3rem;
-    //     width: 100%;
-    // }
     .maptxt {
         color: white;
         font-size: 4.8rem;
@@ -128,21 +121,25 @@
         border-radius: 0.3rem;
         display: flex;
         height: 6.7rem;
+        padding: 0 1rem;
         width: 63.4rem;
 
-        @include width-up-to($phone-max) {
+        @include width-up-to($tablet-max) {
             height: 6rem;
             width: 100%;
 
             .search-input-div {
                 order: 2;
-                width: 90%;
             }
 
             .search-filter-div {
-                margin-right: 1rem;
                 order: 2;
             }
+        }
+
+        .search-input-div {
+            flex-grow: 1;
+            padding-right: 1rem;
         }
     }
 
@@ -151,14 +148,19 @@
         border-radius: 0.3rem;
         color: #4a4a4a;
         font-size: 1.6rem;
-        padding-left: 1rem;
-        width: 45rem;
+        height: 3.83rem;
+        transition: all 0.3s ease-in-out;
+        width: 100%;
 
-        @include width-up-to($phone-max) {
+        @include width-up-to($tablet-max) {
             font-size: 1.4rem;
             padding: 0.6rem;
-            width: 97.5%;
         }
+
+        @include width-up-to($phone-max) {
+            height: auto;
+        }
+
     }
 
     .back-search-div,
@@ -187,7 +189,7 @@
         border-top: 0.1rem solid #d5d5d5;
         width: 63.4rem;
 
-        @include width-up-to($phone-max) {
+        @include width-up-to($tablet-max) {
             border-top: unset;
             width: 100%;
         }
@@ -274,8 +276,9 @@
         padding-left: unset;
         width: 63.4rem;
 
-        @include width-up-to($phone-max) {
+        @include width-up-to($tablet-max) {
             border-top: 0.1rem solid #d5d5d5;
+            max-width: 63.4rem;
             order: 3;
             width: 100%;
         }
@@ -283,7 +286,7 @@
 
     .search-empty-result {
         background-color: white;
-        border-radius: 0.3rem;
+        border-radius: 0 0 0.3rem 0.3rem;
         font-size: 1.4rem;
         overflow-x: hidden;
         padding: 1.5rem;
@@ -292,18 +295,23 @@
 
     .search-list {
         background-color: white;
-        border-radius: 0.3rem;
+        border-radius: 0 0 0.3rem 0.3rem;
         list-style-type: none;
         margin: unset;
-        max-height: 28rem;
+        //max-height: calc(100vh - 23.8rem);
+        max-height: 41rem;
         overflow-x: hidden;
         overflow-y: scroll;
         padding-left: unset;
         width: 100%;
 
-        @include width-up-to($phone-max) {
-            max-height: 23rem;
+        @include width-up-to($tablet-max) {
+            max-height: 21rem;
             overflow-y: scroll;
+        }
+
+        &.active {
+            max-height: calc(100vh - 23.8rem);
         }
     }
 
@@ -312,9 +320,16 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+
+        &[data-toggle="hide"] {
+
+            .list-show-more {
+                background-color: #e5e5e5;
+            }
+        }
     }
 
-    .toggle-dataList {
+    .toggle-datalist {
         display: none;
     }
 
@@ -326,7 +341,7 @@
 
     .list-show-more {
         align-items: center;
-        background-color: #e5e5e5;
+        background-color: #f8f8f8;
         border-radius: 50%;
         display: flex;
         height: 3.2rem;
@@ -340,15 +355,16 @@
         flex-direction: column;
         padding-bottom: 2rem;
         padding-top: 2rem;
-        width: 90%;
+        width: calc(100% - 4.2rem);
 
-        @include width-up-to($phone-max) {
-            padding-bottom: 1rem;
+        @include width-up-to($tablet-max) {
+            padding-bottom: 0.7rem;
         }
     }
 
     .angle-circle {
         font-size: 1.6rem;
+        width: 0.625em;
     }
 
     .list-address {
@@ -358,7 +374,7 @@
         line-height: 1.6rem;
         margin-top: 1.3rem;
 
-        @include width-up-to($phone-max) {
+        @include width-up-to($tablet-max) {
             color: #4a4a4a;
             font-size: 1.4rem;
             line-height: 1.6rem;
@@ -371,8 +387,9 @@
         font-size: 1.8rem;
         font-weight: bold;
         line-height: 2.3rem;
+        max-width: 100%;
 
-        @include width-up-to($phone-max) {
+        @include width-up-to($tablet-max) {
             color: #4a4a4a;
             font-size: 1.6rem;
             font-weight: bold;
@@ -383,29 +400,20 @@
         display: flex;
         flex-direction: row;
 
-        @include width-up-to($phone-max) {
-        }
-    }
-
-    .nxt-previous-links {
-        display: none;
-
-        @include width-up-to($phone-max) {
-            cursor: pointer;
-            display: block;
-            width: 3%;
+        @include width-up-to($tablet-max) {
+            flex-direction: column;
+            width: 100%;
         }
     }
 
     .content-container {
         display: flex;
-        flex-direction: row;
         width: 100%;
 
-        @include width-up-to($phone-max) {
+        @include width-up-to($tablet-max) {
             flex-direction: column;
-            width: 94%;
         }
+
     }
 
     .left-column {
@@ -413,7 +421,7 @@
         border-radius: 0.3rem 0 0 0.3rem;
         width: 55%;
 
-        @include width-up-to($phone-max) {
+        @include width-up-to($tablet-max) {
             border: 0.1rem solid #d5d5d5;
             border-radius: 0.3rem;
             display: block;
@@ -433,7 +441,7 @@
         border-top: 0.1rem solid #d5d5d5;
         width: 45%;
 
-        @include width-up-to($phone-max) {
+        @include width-up-to($tablet-max) {
             border: 0.1rem solid #d5d5d5;
             border-left: 0.1rem solid #d5d5d5;
             border-radius: 0.3rem;
@@ -497,10 +505,6 @@
         display: none;
     }
 
-    .toggle-datalist {
-        display: none;
-    }
-
     .toggle-datalist-body {
         background-color: white;
 
@@ -534,7 +538,7 @@
         line-height: 1.7rem;
         padding: 2rem 1rem;
 
-        @include width-up-to($phone-max) {
+        @include width-up-to($tablet-max) {
             display: block;
         }
     }
@@ -543,10 +547,6 @@
         display: none;
         font-size: 1.4rem;
         font-weight: bold;
-
-        @include width-up-to($phone-max) {
-            display: block;
-        }
     }
 
     .tdlb-container {
@@ -628,7 +628,7 @@
     }
 
     .filter-btn {
-        background-color: #fff;
+        background-color: white;
         border: 0.1rem solid #d5d5d5;
         border-radius: 0.2rem;
 
@@ -748,8 +748,8 @@
     }
 
     .searchimg {
-        width: 2rem;
         padding-top: 0.2rem;
+        width: 2rem;
 
         @include width-up-to($phone-max) {
             padding-top: 0.5rem;
@@ -762,34 +762,49 @@
 
     .detail-info-mob {
         background: white;
+        border-radius: 0.3rem;
         display: none;
+        padding: 1rem;
         width: 100%;
     }
 
     .testimonial-body-mob {
         display: none;
+
+        @include width-up-to($tablet-max) {
+            background: white;
+            border-radius: 0.3rem;
+            padding: 0 1rem;
+        }
+
     }
 
     .detail-info-head {
         display: none;
 
-        @include width-up-to($phone-max) {
+        @include width-up-to($tablet-max) {
             display: block;
         }
     }
 
     .search-img-div {
-        margin-left: 2rem;
         margin-right: 1.7rem;
 
-        @include width-up-to($phone-max) {
-            margin-left: 1rem;
+        @include width-up-to($tablet-max) {
             margin-right: 0;
         }
     }
 
     .sub-testimonial {
-        padding-right: 1.5rem;
+        padding-right: 1rem;
         text-decoration: underline;
+    }
+
+    .sub-testimonial-icon {
+
+        svg {
+            height: 1.25rem;
+            width: 0.75rem;
+        }
     }
 }
