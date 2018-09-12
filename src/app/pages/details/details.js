@@ -228,6 +228,7 @@ export default class Details extends CMSPageController {
         this.regions.phoneView.attach(new PhoneView({
             bookInfo: this.pageData,
             bookTitle: this.bookTitle,
+            bookState: this.pageData.book_state,
             detailsTabData: detailsTabData(),
             errataContent: this.pageData.errata_content,
             instructorResources: {

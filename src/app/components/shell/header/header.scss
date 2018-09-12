@@ -52,7 +52,6 @@ $button-size: 2.8rem;
             align-items: flex-start;
             display: flex;
             flex-direction: column;
-            height: 100%;
             justify-content: space-between;
             margin: 0 auto;
             padding: 0;
@@ -169,7 +168,7 @@ $button-size: 2.8rem;
         @at-root .active.open#{&} {
             align-self: end;
             display: block;
-            margin: calc(15% + 8rem) auto 0;
+            margin: 6rem auto 0;
             width: 17rem;
         }
     }

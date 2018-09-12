@@ -53,13 +53,6 @@ export default class PhoneView extends Controller {
                     resources: this.props.studentResources,
                     userStatusPromise: this.props.userStatusPromise
                 })
-            },
-            {
-                title: polish ? 'Zgłoś erratę' : 'Report errata',
-                contentComponent: new ErrataPane({
-                    title: this.props.bookTitle,
-                    errataBlurb: this.props.errataContent.content && this.props.errataContent.content.content
-                })
             }
         ];
 
@@ -77,6 +70,16 @@ export default class PhoneView extends Controller {
                         this.props.tableOfContents,
                         {tag: 'ol', classes: ['table-of-contents']}
                     )
+                })
+            });
+        }
+
+        if (this.props.bookState === 'live') {
+            accordionItems.push({
+                title: polish ? 'Zgłoś erratę' : 'Report errata',
+                contentComponent: new ErrataPane({
+                    title: this.props.bookTitle,
+                    errataBlurb: this.props.errataContent.content && this.props.errataContent.content.content
                 })
             });
         }
