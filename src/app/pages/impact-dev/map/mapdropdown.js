@@ -96,12 +96,14 @@ export default class Mapdropdown extends Controller {
                 showing[0].dataset.toggle = 'show';
                 document.getElementById(`data-${alreadyShowId}`).setAttribute('style', 'display: none;');
             }
-            searchList.setAttribute('style', 'max-height: 62vh;');
+            searchList.classList.add('active');
+
             document.getElementById(`data-${unqId}`).setAttribute('style', 'display: block;');
             target.dataset.toggle = 'hide';
         } else {
+            searchList.classList.remove('active');
             document.getElementById(`data-${unqId}`).setAttribute('style', 'display: none;');
-            searchList.setAttribute('style', 'max-height: 28rem;overflow-y: scroll');
+            searchList.setAttribute('style', 'overflow-y: scroll');
             target.dataset.toggle = 'show';
         }
     }
