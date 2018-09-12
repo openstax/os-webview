@@ -37,16 +37,16 @@ export default class BannerCarousel extends Controller {
 
     @on('click .left-arrow')
     handleLeftClick() {
-        this.changeFrame(this.frameNumber - 1);
+        this.changeFrame(Number(this.frameNumber) - 1);
     }
 
     @on('click .right-arrow')
     handleRightClick(event) {
-        this.changeFrame(this.frameNumber + 1);
+        this.changeFrame(Number(this.frameNumber) + 1);
     }
 
     changeFrame(newFrameNumber) {
-        const oldFrameNumber = this.frameNumber;
+        const oldFrameNumber = Number(this.frameNumber);
         const scrollToFrame = (n) => {
             const divEl = this.el.querySelector('.image-row');
             let posVw = oldFrameNumber * -100;
@@ -67,10 +67,10 @@ export default class BannerCarousel extends Controller {
         };
 
         this.frameNumber = newFrameNumber;
+        this.update();
         if (this.frameNumber >= 0 && this.frameNumber < this.props.length) {
             scrollToFrame(this.frameNumber);
         }
-        this.update();
     }
 
 }
