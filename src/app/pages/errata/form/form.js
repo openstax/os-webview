@@ -109,16 +109,16 @@ export default class Form extends Controller {
         this.model.submitted = true;
         this.update();
         const formEl = this.el.querySelector('form');
-        const form = new FormData(formEl);
 
-        // Safari cannot handle empty files
+        // Safari cannot handle empty files; Edge cannot manipulate FormData
         ['file_1', 'file_2'].forEach((name) => {
-            const fd = form.get(name);
+            const el = formEl.querySelector(`[name="${name}"]`);
 
-            if (fd && fd.name === '') {
-                form.delete(name);
+            if (el && el.value === '') {
+                el.parentNode.removeChild(el);
             }
         });
+        const form = new FormData(formEl);
 
         // Programmatically post the form
         fetch(this.model.postEndpoint, {
