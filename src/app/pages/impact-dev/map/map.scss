@@ -1,5 +1,11 @@
 @import 'pattern-library/core/pattern-library/headers';
 
+$slider-background: #efefef;
+$slider-active-bg: #498de2;
+$slightly-lighter-text: #4a4a4a;
+$slightly-lighter-bg: #f8f8f8;
+$quote-orange: #f66400;
+
 .mapdiv {
     height: 80rem;
 //    margin-top: 6rem;
@@ -28,7 +34,7 @@
 
     @include width-up-to($phone-max) {
         .apply-fltr-btn {
-            background-color: ui-color(secondary);
+            background-color: ui-color(primary);
             border-radius: 0.2rem;
             height: 3.8rem;
             width: 11.5rem;
@@ -73,11 +79,8 @@
     }
 
     .maptxt {
+        @include set-font(h1);
         color: white;
-        font-size: 4.8rem;
-        font-weight: bold;
-        letter-spacing: -0.192rem;
-        line-height: 5rem;
         padding-top: 4rem;
         width: 55rem;
 
@@ -92,7 +95,7 @@
     }
 
     .on-map {
-        background-color: #002469;
+        background-color: os-color(blue);
         bottom: 35.8rem;
         height: 95rem;
         opacity: 0.8;
@@ -138,16 +141,16 @@
     }
 
     .srch {
+        @include set-font(body-regular);
         border: 0.1rem solid white;
         border-radius: 0.3rem;
-        color: #4a4a4a;
-        font-size: 1.6rem;
+        color: $slightly-lighter-text;
         height: 3.83rem;
         transition: all 0.3s ease-in-out;
         width: 100%;
 
         @include width-up-to($tablet-max) {
-            font-size: 1.4rem;
+            @include set-font(helper-label);
             padding: 0.6rem;
         }
 
@@ -176,11 +179,11 @@
     }
 
     .left-arrow-bak {
-        color: #4a4a4a;
+        color: $slightly-lighter-text;
     }
 
     .dropdownlist-id {
-        border-top: 0.1rem solid #d5d5d5;
+        border-top: 0.1rem solid ui-color(form-border);
         width: 63.4rem;
 
         @include width-up-to($tablet-max) {
@@ -216,7 +219,7 @@
     }
 
     .switch-wrap {
-        font-size: 1.4rem;
+        @include set-font(helper-label);
         height: 2.6rem;
         line-height: 2.6rem;
         position: relative;
@@ -241,14 +244,14 @@
         }
 
         &:hover::after {
-            background-color: #efefef;
+            background-color: $slider-background;
             transition: background-color 0.3s ease-in-out;
         }
 
         .type-institute-toggle {
             appearance: none;
             background: white;
-            border: 0.1rem solid #d5d5d5;
+            border: 0.1rem solid ui-color(form-border);
             border-radius: 0.3rem;
             cursor: pointer;
             height: 100%;
@@ -259,13 +262,13 @@
             z-index: 3;
 
             &:hover {
-                background: #fff;
+                background: ui-color(white);
             }
         }
     }
 
     .slider {
-        background-color: #efefef;
+        background-color: $slider-background;
         border-radius: 2rem;
         bottom: 0;
         cursor: pointer;
@@ -321,11 +324,11 @@
     }
 
     input:checked+.slider {
-        background-color: #498de2;
+        background-color: $slider-active-bg;
     }
 
     input:focus+.slider {
-        box-shadow: 0 0 0.1rem #498de2;
+        box-shadow: 0 0 0.1rem $slider-active-bg;
     }
 
     input:checked+.slider::before {
@@ -344,7 +347,7 @@
         width: 63.4rem;
 
         @include width-up-to($tablet-max) {
-            border-top: 0.1rem solid #d5d5d5;
+            border-top: 0.1rem solid ui-color(form-border);
             max-width: 63.4rem;
             order: 3;
             width: 100%;
@@ -352,9 +355,9 @@
     }
 
     .search-empty-result {
+        @include set-font(helper-label);
         background-color: white;
         border-radius: 0 0 0.3rem 0.3rem;
-        font-size: 1.4rem;
         overflow-x: hidden;
         padding: 1.5rem;
         width: 100%;
@@ -390,7 +393,7 @@
         &[data-toggle="hide"] {
 
             .list-show-more {
-                background-color: #e5e5e5;
+                background-color: ui-color(default-hover);
             }
         }
     }
@@ -400,14 +403,14 @@
     }
 
     .search-list-element {
-        border-bottom: 0.1rem solid #d5d5d5;
+        border-bottom: 0.1rem solid ui-color(form-border);
         padding-left: 1rem;
         padding-right: 1rem;
     }
 
     .list-show-more {
         align-items: center;
-        background-color: #f8f8f8;
+        background-color: $slightly-lighter-bg;
         border-radius: 50%;
         display: flex;
         height: 3.2rem;
@@ -435,40 +438,32 @@
     }
 
     .angle-circle {
-        font-size: 1.6rem;
+        @include set-font(body-regular);
         width: 0.625em;
     }
 
     .list-address {
-        color: #4a4a4a;
-        font-size: 1.4rem;
+        @include set-font(helper-label);
+        color: $slightly-lighter-text;
         height: 1.6rem;
         line-height: 1.6rem;
         margin-top: 1.3rem;
 
         @include width-up-to($tablet-max) {
-            color: #4a4a4a;
-            font-size: 1.4rem;
-            height: 1.6rem;
-            line-height: 1.6rem;
-            margin-bottom: 0.9rem;
-            margin-top: 0.8rem;
-            width: 29.2rem;
+            @include set-font(helper-label);
+            margin-top: 0.7rem;
         }
     }
 
     .list-heading {
-        color: #4a4a4a;
-        font-size: 1.8rem;
-        font-weight: bold;
-        height: 2.2rem;
+        @include set-font(h4);
+        color: $slightly-lighter-text;
         line-height: 2.3rem;
         max-width: 100%;
 
         @include width-up-to($tablet-max) {
-            color: #4a4a4a;
-            font-size: 1.63rem;
-            font-weight: bold;
+            @include title-font(1.6rem);
+            color: $slightly-lighter-text;
         }
     }
 
@@ -505,12 +500,12 @@
     }
 
     .left-column {
-        border: 0.1rem solid #d5d5d5;
+        border: 0.1rem solid ui-color(form-border);
         border-radius: 0.3rem 0 0 0.3rem;
         width: 55%;
 
         @include width-up-to($tablet-max) {
-            border: 0.1rem solid #d5d5d5;
+            border: 0.1rem solid ui-color(form-border);
             border-radius: 0.3rem;
             display: block;
             margin-top: 1rem;
@@ -523,15 +518,16 @@
     }
 
     .right-column {
-        border-bottom: 0.1rem solid #d5d5d5;
+        border-bottom: 0.1rem solid ui-color(form-border);
         border-radius: 0 0.3rem 0.3rem 0;
-        border-right: 0.1rem solid #d5d5d5;
-        border-top: 0.1rem solid #d5d5d5;
+        border-right: 0.1rem solid ui-color(form-border);
+        border-top: 0.1rem solid ui-color(form-border);
         width: 45%;
 
         @include width-up-to($tablet-max) {
-            border: 0.1rem solid #d5d5d5;
-            border-left: 0.1rem solid #d5d5d5;
+            border: 0.1rem solid ui-color(form-border);
+            border-left: 0.1rem solid ui-color(form-border);
+            border-radius: 0.3rem;
             display: block;
             margin-bottom: 1rem;
             margin-top: 1rem;
@@ -543,8 +539,8 @@
     }
 
     .lcolumn-head {
-        color: #4a4a4a;
-        font-size: 1.4rem;
+        @include set-font(helper-label);
+        color: $slightly-lighter-text;
         font-weight: bold;
         line-height: 1.7rem;
     }
@@ -560,19 +556,10 @@
         }
     }
 
-    .lcol-body-left {
-        color: #4a4a4a;
-        font-size: 1.4rem;
-        line-height: 1.6rem;
-
-        @include width-up-to($phone-max) {
-            margin-right: 1.9rem;
-        }
-    }
-
+    .lcol-body-left,
     .lcol-body-right {
-        color: #4a4a4a;
-        font-size: 1.4rem;
+        @include set-font(helper-label);
+        color: $slightly-lighter-text;
         line-height: 1.6rem;
 
         @include width-up-to($phone-max) {
@@ -581,8 +568,8 @@
     }
 
     .rcolumn-head {
-        color: #4a4a4a;
-        font-size: 1.4rem;
+        @include set-font(helper-label);
+        color: $slightly-lighter-text;
         font-weight: bold;
         line-height: 1.7rem;
     }
@@ -609,9 +596,8 @@
     }
 
     .toggle-datalist-footer {
-        color: #027eb5;
-        font-size: 1.6rem;
-        line-height: 2.5rem;
+        @include set-font(body-regular);
+        color: text-color(link);
         margin-bottom: 1rem;
         margin-top: 1rem;
         padding-right: 0.3rem;
@@ -623,11 +609,11 @@
     }
 
     .testimonial-head {
-        border: 0.1rem solid #d5d5d5;
+        @include set-font(helper-label);
+        border: 0.1rem solid ui-color(form-border);
         border-radius: 0.3rem;
         cursor: pointer;
         display: none;
-        font-size: 1.4rem;
         font-weight: bold;
         line-height: 1.7rem;
         padding: 2rem 1rem;
@@ -638,18 +624,18 @@
     }
 
     .testimonial-div-mob {
+        @include set-font(helper-label);
         display: none;
-        font-size: 1.4rem;
         font-weight: bold;
     }
 
     .tdlb-container {
-        border: 0.1rem solid #d5d5d5;
+        border: 0.1rem solid ui-color(form-border);
         border-radius: 0.3rem;
         padding: 5rem 2rem 3rem;
 
         @include width-up-to($phone-max) {
-            border: 0.1rem solid #d5d5d5;
+            border: 0.1rem solid ui-color(form-border);
             margin: 1rem;
             padding: 0;
         }
@@ -666,19 +652,18 @@
     }
 
     .para-quote {
-        color: #f66400;
-        font-size: 1.8rem;
+        @include set-font(body-large);
+        color: $quote-orange;
     }
 
     .tdl-body-desc {
-        color: #424242;
-        font-size: 1.6rem;
-        line-height: 2.5rem;
+        @include set-font(body-regular);
+        color: text-color(normal);
         padding-left: 1rem;
         padding-top: 0.7rem;
 
         @include width-up-to($phone-max) {
-            font-size: 1.4rem;
+            @include set-font(helper-label);
 
             br {
                 display: none;
@@ -696,20 +681,10 @@
 
     }
 
+    .tdlb-regards-desc,
     .tdlb-regards-name {
-        color: #4b4b4b;
-        font-size: 1.6rem;
-        font-weight: bold;
-        letter-spacing: -0.083rem;
-        line-height: 2.5rem;
-        margin-bottom: unset;
-        text-align: right;
-    }
-
-    .tdlb-regards-desc {
-        color: #4b4b4b;
-        font-size: 1.6rem;
-        letter-spacing: -0.083rem;
+        @include title-font(1.6rem);
+        color: $slightly-lighter-text;
         line-height: 2.5rem;
         margin-top: unset;
         text-align: right;
@@ -723,7 +698,7 @@
 
     .filter-btn {
         background-color: white;
-        border: 0.1rem solid #d5d5d5;
+        border: 0.1rem solid ui-color(form-border);
         border-radius: 0.2rem;
 
         @include width-up-to($phone-max) {
@@ -734,21 +709,27 @@
     }
 
     .filter-style {
-        font-size: 1.6rem;
+        @include body-font(1.6rem);
         width: 1.8rem;
+
+        @include width-up-to($phone-max) {
+            @include body-font(1.5rem);
+            margin-left: -0.5rem;
+            margin-top: -0.2rem;
+        }
     }
 
     .fa-sliders-h {
-        color: #5e6062;
+        color: text-color(button-bar);
     }
 
     .fa-times {
-        color: #5e6062;
+        color: text-color(button-bar);
     }
 
     .filter-by {
-        color: #5e6062;
-        font-size: 1.6rem;
+        @include set-font(body-regular);
+        color: text-color(button-bar);
         line-height: 1.6rem;
         padding-right: 0.2rem;
         text-align: right;
@@ -769,13 +750,10 @@
     }
 
     .label-text {
-        font-size: 1.6rem;
+        @include set-font(body-regular);
 
         @include width-up-to($phone-max) {
-
-            .label-text {
-                font-size: 1.4rem;
-            }
+            @include set-font(helper-label);
         }
     }
 

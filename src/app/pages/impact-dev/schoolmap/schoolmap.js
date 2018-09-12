@@ -1,6 +1,5 @@
 import VERSION from '~/version';
 import {Controller} from 'superb.js';
-import $ from '~/helpers/$';
 import {description as template} from './schoolmap.html';
 
 export default class Schoolmap extends Controller {
@@ -11,10 +10,6 @@ export default class Schoolmap extends Controller {
         this.view = {
             classes: ['schoolmapbox']
         };
-    }
-
-    onLoaded() {
-        $.insertHtml(this.el);
     }
 
 }

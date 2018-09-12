@@ -41,7 +41,6 @@ export default class Map1 extends Controller {
 
             filterStatus.setAttribute('placeholder', 'Search location or instituion name');
         }
-        $.insertHtml(this.el, this.model);
         if (this.pageTyp === 'landing') {
             setTimeout(() => {
                 this.fadeOutText();
