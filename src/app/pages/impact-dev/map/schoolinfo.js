@@ -4,7 +4,6 @@ import $ from '~/helpers/$';
 import {description as template} from './schoolinfo.html';
 import {on} from '~/helpers/controller/decorators';
 import Dropdown from './mapdropdown';
-import Testimonialinfo from './testimonial';
 
 export default class Schoolinfo extends Controller {
 
@@ -35,6 +34,7 @@ export default class Schoolinfo extends Controller {
         const currentIndex = target.dataset.index;
         const action = target.dataset.action;
         const dArray = this.model.dataArray;
+        const schoolHeader = this.model.shObj;
         const offSet = [0, -230];
         const validIndex = this.chkValidindex(action, dArray, currentIndex);
 
@@ -49,6 +49,8 @@ export default class Schoolinfo extends Controller {
             const pObject = dropdownObj.flyToPopUp(objS, offSet, dArray, validIndex);
 
             this.popObject = pObject;
+            schoolHeader.model = this.model;
+            schoolHeader.update();
             this.update();
         }
     }
