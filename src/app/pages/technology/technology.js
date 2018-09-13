@@ -17,8 +17,7 @@ export default class Accessibility extends CMSPageController {
         this.template = template;
         this.css = `/app/pages/technology/technology.css?${VERSION}`;
         this.view = {
-            classes: ['technology-page', 'page'],
-            tag: 'main'
+            classes: ['technology-page', 'page']
         };
         this.slug = 'pages/technology';
         shell.showLoader();
@@ -70,11 +69,11 @@ export default class Accessibility extends CMSPageController {
                 },
                 {
                     description: data.select_tech_step_2,
-                    hash: '#faculty-resources'
+                    hash: '?Instructor%20resources'
                 },
                 {
                     description: data.select_tech_step_3,
-                    hash: '#partner-resources'
+                    hash: '?Instructor%20resources#technology-options'
                 }
             ]
         };

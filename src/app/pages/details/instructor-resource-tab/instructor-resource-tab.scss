@@ -62,6 +62,7 @@ $icon-size: 6rem;
         font-weight: inherit;
         grid-gap: $normal-margin;
         grid-template-columns: 1fr auto;
+        padding-top: 6rem;
 
         > * {
             grid-column: 1;
