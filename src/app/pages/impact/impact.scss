@@ -1,9 +1,9 @@
 @import 'mixins/responsive';
 @import 'pattern-library/core/pattern-library/headers';
 
-$breakpoint-1: 908px;
-$breakpoint-2: 761px;
-$hero-break-width: 880px;
+$breakpoint-1: 90.8em * $scale-factor;
+$breakpoint-2: 76em * $scale-factor;
+$hero-break-width: 88em * $scale-factor;
 
 .impact-page {
 
@@ -93,6 +93,7 @@ $hero-break-width: 880px;
             .text-block {
                 background-color: rgba(os-color(green), 0.85);
                 flex-basis: 50%;
+                min-width: 40.5rem;
                 padding: 4rem;
 
                 @include width-between($breakpoint-2, $hero-break-width) {
@@ -102,6 +103,7 @@ $hero-break-width: 880px;
                 @include collapsed {
                     background: none;
                     flex-basis: 100%;
+                    min-width: unset;
                     padding: 0;
                 }
             }
