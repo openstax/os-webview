@@ -6,6 +6,7 @@ import {on} from '~/helpers/controller/decorators';
 import Schoolinfo from './schoolinfo';
 import Testimonialinfo from './testimonial';
 import mapboxgl from 'mapbox-gl';
+import SchoolinfoHead from './schoolinfo-head';
 
 export default class Mapdropdown extends Controller {
 
@@ -56,12 +57,14 @@ export default class Mapdropdown extends Controller {
             const unqClassTestMob = '.testimonialBodyMob';
             const regionDetailInfoMob = new Region(unqClassDetailMob, this);
             const regionTestimonialMob = new Region(unqClassTestMob, this);
+            const schHeadObj = new SchoolinfoHead(modelObj);
 
             this.offSet = [0, -200];
 
             this.showDetailMob();
             this.flyToPopUp(objS, this.offSet, lData, indexItem);
-            regionDetailInfoMob.attach(new Schoolinfo(Object.assign(modelObj, {pObj: this.popUp})));
+            regionDetailInfoMob.attach(schHeadObj);
+            regionDetailInfoMob.append(new Schoolinfo(Object.assign(modelObj, {pObj: this.popUp, shObj: schHeadObj})));
             if (lData[indexItem].fields.testimonial !== null) {
                 regionTestimonialMob.attach(new Testimonialinfo(modelObj));
             }

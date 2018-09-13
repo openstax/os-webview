@@ -13,8 +13,6 @@
     right: 0;
     top: 0;
     width: 100%;
-    position: absolute;
-    top: 0;
 
     @include width-up-to($tablet-max) {
         display: flex;

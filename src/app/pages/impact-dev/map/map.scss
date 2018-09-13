@@ -45,7 +45,7 @@
         }
 
         .apply-fltr-btn {
-            background-color: #f36b32;
+            background-color: ui-color(secondary);
             border-radius: 0.2rem;
             height: 3.8rem;
             width: 11.5rem;
@@ -203,6 +203,13 @@
             border-top: unset;
             width: 100%;
         }
+    }
+
+    .single-item-info {
+        background: #fff;
+        max-height: calc(100vh - 23.8rem);
+        overflow-y: scroll;
+        padding: 0 1rem;
     }
 
     .switch {
@@ -378,6 +385,12 @@
         }
     }
 
+    .detail-info-head {
+        @include width-up-to($tablet-max) {
+            padding-left: 1rem;
+        }
+    }
+
     .angle-circle {
         font-size: 1.6rem;
         width: 0.625em;
@@ -421,17 +434,29 @@
         flex-direction: row;
 
         @include width-up-to($tablet-max) {
-            flex-direction: column;
             width: 100%;
+        }
+    }
+
+    .nxt-previous-links {
+        display: none;
+
+        @include width-up-to($tablet-max) {
+            background: #fff;
+            cursor: pointer;
+            display: block;
+            width: 3%;
         }
     }
 
     .content-container {
         display: flex;
+        margin-bottom: 1.3rem;
         width: 100%;
 
         @include width-up-to($tablet-max) {
             flex-direction: column;
+            margin-bottom: 0;
         }
 
     }
@@ -765,7 +790,6 @@
     }
 
     .applyfltrbtn {
-        background-color: #f36b32;
         border-radius: 0.2rem;
         height: 5rem;
         width: 14rem;
@@ -774,6 +798,16 @@
             height: 4rem;
             width: 12rem;
         }
+    }
+
+    .apply-flt-enabled {
+        background-color: #f36b32;
+        cursor: pointer;
+    }
+
+    .apply-flt-disabled {
+        background-color: ui-color(secondary); 
+        cursor: not-allowed;
     }
 
     .apply-filter {
@@ -790,15 +824,10 @@
         }
     }
 
-    .detailinfo-container {
-        margin-bottom: 1.3rem;
-    }
-
     .detail-info-mob {
         background: white;
         border-radius: 0.3rem;
         display: none;
-        padding: 1rem;
         width: 100%;
     }
 
@@ -811,14 +840,6 @@
             padding: 0 1rem;
         }
 
-    }
-
-    .detail-info-head {
-        display: none;
-
-        @include width-up-to($tablet-max) {
-            display: block;
-        }
     }
 
     .search-img-div {

@@ -4,6 +4,10 @@ import $ from '~/helpers/$';
 import {description as template} from './map.html';
 import {on} from '~/helpers/controller/decorators';
 import Dropdown from './mapdropdown';
+import Schoolinfo from './schoolinfo';
+import Testimonialinfo from './testimonial';
+import SchoolinfoHead from './schoolinfo-head';
+import mapboxgl from 'mapbox-gl';
 
 
 export default class Map1 extends Controller {
@@ -21,6 +25,7 @@ export default class Map1 extends Controller {
         this.model = props.pageType;
         this.pageTyp = props.pageType;
         this.mapObject = props.mapObj;
+        this.tooltip = 'close';
         this.filterStatus = 'false';
         this.prtnrCheckBox = 'false';
         this.insType = 'all';
@@ -29,6 +34,8 @@ export default class Map1 extends Controller {
     }
 
     onLoaded() {
+        const glbalObj = this;
+
         if (window.innerWidth < 960) {
             const filterStatus = this.el.querySelector('.srch');
 
@@ -45,23 +52,50 @@ export default class Map1 extends Controller {
         } else {
             this.fadOutMovBar();
         }
-        const glbalObj = this;
 
-        this.mapObject.on('click', 'os-schools', (e) => {
-            glbalObj.searchRequest('single_result', e.features[0].properties.id);
+        this.mapObject.on('click', 'os-schools', (el) => {
+            (async () => {
+                try {
+                    const value = el.features[0].properties.id;
+                    const response = await fetch(`${settings.apiOrigin}/api/schools/?id=${value}`);
+                    const data = await response.json();
+
+                    if (data.length) {
+                        const modelObj = {
+                            dataArray: data,
+                            itemIndex: 0
+                        };
+
+                        this.el.querySelector('.dropDownList').classList.add('single-item-info');
+                        glbalObj.closeTooltip();
+                        glbalObj.markerTooltip(data);
+                        glbalObj.regions.dataList.attach(new SchoolinfoHead(modelObj));
+                        glbalObj.regions.dataList.append(new Schoolinfo(modelObj));
+                        glbalObj.regions.dataList.append(new Testimonialinfo(modelObj));
+                    }
+                } catch (e) {
+                    console.log(e);
+                }
+            })();
         });
+    }
+    @on('click .srch')
+    srchEvent(event) {
+        this.closeTooltip();
     }
     @on('keyup .srch')
     intercept(event) {
         const filterStatus = this.el.querySelector('.filter-btn');
+        const strLength = event.target.textLength;
 
         this.validateMob();
+        this.enableDisableFltr(strLength);
         if (filterStatus.value === '1') {
             return;
         }
         if (event.target.value === '') {
             this.hideDataList();
-        } else if (event.target.textLength > 3) {
+        } else if (strLength > 3) {
             this.searchRequest(this.filterStatus, event.target.value);
         }
     }
@@ -78,6 +112,7 @@ export default class Map1 extends Controller {
         if (event.target.value === '0') {
             event.target.value = '1';
             dListDiv.innerHTML = '';
+            dListDiv.classList.remove('single-item-info');
             filterDiv.setAttribute('style', 'display: block');
             if (window.innerWidth < 960) {
                 bachToSearch.setAttribute('style', 'display: block;');
@@ -91,7 +126,7 @@ export default class Map1 extends Controller {
             }
         }
     }
-    @on('click .applyfltrbtn')
+    @on('click .apply-flt-enabled')
     applyFilter(event) {
         const filterValue = event.target.value;
         const searchInput = this.el.querySelector('.srch');
@@ -133,6 +168,25 @@ export default class Map1 extends Controller {
         document.getElementById('detail-info-mob').setAttribute('style', 'display: block;');
         document.getElementById('testimonial-body-mob').setAttribute('style', 'display: none;');
     }
+    markerTooltip(data) {
+        const iName = data[0].fields.name;
+        const pCity = data[0].fields.physical_city;
+        const pState = data[0].fields.physical_state_province;
+        const mtooltip = new mapboxgl.Popup({
+            closeButton: false,
+            closeOnClick: false
+        });
+
+        mtooltip.setLngLat([data[0].fields.lat, data[0].fields.long]);
+        mtooltip.setHTML(`<b>${iName}</b><br>${pCity}, ${pState}`);
+        mtooltip.addTo(this.mapObject);
+        this.tooltip = mtooltip;
+    }
+    closeTooltip() {
+        if (this.tooltip !== 'close') {
+            this.tooltip.remove();
+        }
+    }
     fadeOutText() {
         const styleF = '-webkit-transition: opacity 3s ease-in-out;-moz-transition: opacity 3s ease-in-out;';
         const styleS = '-ms-transition: opacity 3s ease-in-out;-o-transition: opacity 3s ease-in-out;opacity: 0;';
@@ -158,14 +212,13 @@ export default class Map1 extends Controller {
         this.el.querySelector('.on-map').setAttribute('style', 'display: none;');
         this.el.querySelector('.maptxt').setAttribute('style', 'display: none');
         if (window.innerWidth > 960) {
-            this.el.querySelector('.search-container').setAttribute('style', 'margin-top: 13rem;');
+            this.el.querySelector('.search-container').setAttribute('style', 'margin-top: 3rem;');
         } else {
             this.el.querySelector('.search-container').setAttribute('style', 'height: 0; margin-bottom: 1rem;');
         }
     }
     searchRequest(fltrStatus, value) {
-        const searchContainer = this.el.querySelector('.search-container');
-        const bachToSearch = this.el.querySelector('.backToSearch_div');
+        const bachToSearch = this.el.querySelector('.back-search-div');
         let fltString = '';
 
         if (fltrStatus === 'true') {
@@ -187,6 +240,7 @@ export default class Map1 extends Controller {
                     };
                     const list = new Dropdown(this.model);
 
+                    this.el.querySelector('.dropDownList').classList.remove('single-item-info');
                     this.regions.dataList.attach(list);
                 } else {
                     const list = new Dropdown('empty_result');
@@ -286,6 +340,17 @@ export default class Map1 extends Controller {
             fltString += '&testimonial=true';
         }
         return fltString;
+    }
+    enableDisableFltr(value) {
+        const applyFilterBtn = this.el.querySelector('.applyfltrbtn');
+        
+        if (value > 3) {
+            applyFilterBtn.classList.add('apply-flt-enabled');
+            applyFilterBtn.classList.remove('apply-flt-disabled');
+        } else {
+            applyFilterBtn.classList.remove('apply-flt-enabled');
+            applyFilterBtn.classList.add('apply-flt-disabled');
+        }
     }
     validateMob() {
         if (window.innerWidth < 960) {
