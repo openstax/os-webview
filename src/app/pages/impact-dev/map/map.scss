@@ -27,23 +27,6 @@
     }
 
     @include width-up-to($phone-max) {
-
-        .institute-prtnr-toggle {
-            margin-left: 8.5rem;
-        }
-
-        .type-institute-toggle {
-            margin-left: 16.4rem;
-        }
-
-        .one-million-toggle {
-            margin-left: 2.7rem;
-        }
-
-        .testmonal-toggle {
-            margin-left: 16.3rem;
-        }
-
         .apply-fltr-btn {
             background-color: ui-color(secondary);
             border-radius: 0.2rem;
@@ -55,7 +38,7 @@
 
     .search-container {
         margin-left: 5rem;
-        margin-top: 15rem;
+        margin-top: 3rem;
         position: relative;
         width: 67.8rem;
         z-index: 99999;
@@ -65,6 +48,7 @@
             flex-direction: column;
             height: 42rem;
             justify-content: flex-end;
+            margin-bottom: 1rem;
             margin-left: unset;
             margin-top: 0;
             padding-left: 1rem;
@@ -215,9 +199,15 @@
     .switch {
         display: inline-block;
         height: 2.6rem;
-        margin-left: auto;
         position: relative;
         width: 5rem;
+
+        @include width-up-to($phone-max) {
+            height: 1.6rem;
+            min-width: 3rem;
+            top: 0.4rem;
+            width: 3rem;
+        }
 
         input {
             display: none;
@@ -225,8 +215,57 @@
 
     }
 
+    .switch-wrap {
+        font-size: 1.4rem;
+        height: 2.6rem;
+        line-height: 2.6rem;
+        position: relative;
+        width: 9rem;
+
+        &::after {
+            background-color: white;
+            border-radius: 0 0.2rem 0.2rem 0;
+            bottom: 0;
+            content: '';
+            display: block;
+            font-family: 'FontAwesome';
+            height: 2.4rem;
+            line-height: 2.4rem;
+            padding-left: 0.5rem;
+            pointer-events: none;
+            position: absolute;
+            right: 0.06rem;
+            top: 0.2rem;
+            width: 1.5rem;
+            z-index: 3;
+        }
+
+        &:hover::after {
+            background-color: #efefef;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .type-institute-toggle {
+            appearance: none;
+            background: white;
+            border: 0.1rem solid #d5d5d5;
+            border-radius: 0.3rem;
+            cursor: pointer;
+            height: 100%;
+            padding: 0 0.5rem;
+            position: relative;
+            top: 0;
+            width: 9rem;
+            z-index: 3;
+
+            &:hover {
+                background: #fff;
+            }
+        }
+    }
+
     .slider {
-        background-color: #c7cbd2;
+        background-color: #efefef;
         border-radius: 2rem;
         bottom: 0;
         cursor: pointer;
@@ -290,7 +329,11 @@
     }
 
     input:checked+.slider::before {
-        transform: translateX(2.1rem);
+        transform: translateX(100%);
+
+        @include width-up-to($phone-max) {
+            transform: translateX(100%);
+        }
     }
 
     .filter-div {
@@ -737,47 +780,29 @@
     }
 
     .institute-prtnr {
-        display: flex;
         padding: 3rem 0 1.5rem;
-
-        @include width-up-to($phone-max) {
-
-            .institute-prtnr {
-                padding-top: 1.2rem;
-            }
-        }
-
     }
 
-    .type-institute {
+    .filter-item {
+        align-items: center;
         display: flex;
+        justify-content: space-between;
         padding: 1rem 0 1.5rem;
 
         @include width-up-to($phone-max) {
+            padding-top: 1.2rem;
+        }
 
-            .type-institute {
-                margin-top: 1.2rem;
-            }
+        button {
+            border-radius: 0.2rem;
         }
 
     }
 
-    .one-million {
-        display: flex;
-        padding: 1rem 0 1.5rem;
-
-        @include width-up-to($phone-max) {
-
-            .one-million {
-                margin-top: 1.2rem;
-            }
-        }
-
-    }
-
-    .testmonal {
+    .testimonial {
         display: flex;
         margin-bottom: 4.3rem;
+        padding-top: 0;
 
         @include width-up-to($phone-max) {
 
@@ -789,30 +814,9 @@
 
     }
 
-    .applyfltrbtn {
-        border-radius: 0.2rem;
-        height: 5rem;
-        width: 14rem;
-
-        @include width-up-to($phone-max) {
-            height: 4rem;
-            width: 12rem;
-        }
-    }
-
-    .apply-flt-enabled {
-        background-color: #f36b32;
-        cursor: pointer;
-    }
-
-    .apply-flt-disabled {
-        background-color: ui-color(secondary); 
-        cursor: not-allowed;
-    }
-
     .apply-filter {
+        justify-content: end;
         padding-bottom: 1.5rem;
-        text-align: end;
     }
 
     .searchimg {

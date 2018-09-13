@@ -30,7 +30,7 @@ export default class Map1 extends Controller {
         this.prtnrCheckBox = 'false';
         this.insType = 'all';
         this.oneMillionCheckBox = 'false';
-        this.testmonalCheckBox = 'false';
+        this.testimonialCheckBox = 'false';
     }
 
     onLoaded() {
@@ -211,11 +211,6 @@ export default class Map1 extends Controller {
     fadOutMovBar() {
         this.el.querySelector('.on-map').setAttribute('style', 'display: none;');
         this.el.querySelector('.maptxt').setAttribute('style', 'display: none');
-        if (window.innerWidth > 960) {
-            this.el.querySelector('.search-container').setAttribute('style', 'margin-top: 3rem;');
-        } else {
-            this.el.querySelector('.search-container').setAttribute('style', 'height: 0; margin-bottom: 1rem;');
-        }
     }
     searchRequest(fltrStatus, value) {
         const bachToSearch = this.el.querySelector('.back-search-div');
@@ -292,7 +287,7 @@ export default class Map1 extends Controller {
     setFilterValuesOnClose() {
         const prtCheck = this.el.querySelector('#prtnrCheckBox');
         const oneMillionCheck = this.el.querySelector('#one_millionCheckBox');
-        const tetmonal = this.el.querySelector('#testmonalCheckBox');
+        const tetmonal = this.el.querySelector('#testimonialCheckBox');
 
         prtCheck.value = this.prtnrCheckBox;
         this.changeToggleColor(prtCheck, this.prtnrCheckBox);
@@ -302,8 +297,8 @@ export default class Map1 extends Controller {
         oneMillionCheck.value = this.oneMillionCheckBox;
         this.changeToggleColor(oneMillionCheck, this.oneMillionCheckBox);
 
-        tetmonal.value = this.testmonalCheckBox;
-        this.changeToggleColor(tetmonal, this.testmonalCheckBox);
+        tetmonal.value = this.testimonialCheckBox;
+        this.changeToggleColor(tetmonal, this.testimonialCheckBox);
     }
     changeToggleColor(attrName, value) {
         if (value === 'false') {
@@ -316,13 +311,13 @@ export default class Map1 extends Controller {
         this.prtnrCheckBox = 'false';
         this.insType = 'all';
         this.oneMillionCheckBox = 'false';
-        this.testmonalCheckBox = 'false';
+        this.testimonialCheckBox = 'false';
     }
     setFilterValues() {
         this.prtnrCheckBox = this.el.querySelector('#prtnrCheckBox').value;
         this.insType = this.el.querySelector('.type-institute-toggle').value;
         this.oneMillionCheckBox = this.el.querySelector('#one_millionCheckBox').value;
-        this.testmonalCheckBox = this.el.querySelector('#testmonalCheckBox').value;
+        this.testimonialCheckBox = this.el.querySelector('#testimonialCheckBox').value;
     }
     getFilterValues() {
         let fltString = '';
@@ -336,7 +331,7 @@ export default class Map1 extends Controller {
         if (this.oneMillionCheckBox === 'true') {
             fltString += '&achieving_the_dream_school=true';
         }
-        if (this.testmonalCheckBox === 'true') {
+        if (this.testimonialCheckBox === 'true') {
             fltString += '&testimonial=true';
         }
         return fltString;
