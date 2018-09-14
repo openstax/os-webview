@@ -4,7 +4,7 @@
     background: radial-gradient(circle, rgba(12, 214, 248, 0.35) 0%, rgba(37, 192, 218, 0) 100%);
     background-color: rgba(255, 255, 255, 0.9);
 
-    @include wider-than(60rem) {
+    @include wider-than($phone-max) {
         height: 86rem;
         overflow: hidden;
     }
@@ -31,10 +31,9 @@
 .schoolmapbox {
    // background-size: 697px 348px ;
     .txthead {
-        color: #00347c;
-        font-size: 3.6rem;
-        font-weight: bold;
-        letter-spacing: -1.44px;
+        @include set-font(h2);
+
+        color: os-color(blue);
         width: 45rem;
 
         @include width-up-to($phone-max) {
@@ -45,27 +44,22 @@
     }
 
     .txtbdy {
-        color: #00347c;
-        font-size: 1.8rem;
+        @include set-font(body-large);
+
+        color: os-color(blue);
+        line-height: 2.5rem;
         padding-bottom: 2rem;
         padding-top: 2rem;
         width: 55rem;
 
         @include width-up-to($phone-max) {
-            font-size: 1.8rem;
-            line-height: 2.5rem;
             text-align: center;
             width: 32rem;
         }
     }
 
     .map-img {
-        @include width-up-to($tablet-max) {
-            width: 60rem;
-        }
-
-        @include width-up-to($phone-max) {
-            width: 32rem;
-        }
+        margin-left: 3rem;
+        width: calc(100% - 6rem);
     }
 }
