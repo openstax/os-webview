@@ -292,7 +292,7 @@ export default class Map1 extends Controller {
     setFilterValuesOnClose() {
         const prtCheck = this.el.querySelector('#prtnrCheckBox');
         const oneMillionCheck = this.el.querySelector('#one_millionCheckBox');
-        const tetmonal = this.el.querySelector('#testmonalCheckBox');
+        const tetmonal = this.el.querySelector('#testimonialCheckBox');
 
         prtCheck.value = this.prtnrCheckBox;
         this.changeToggleColor(prtCheck, this.prtnrCheckBox);
@@ -322,7 +322,7 @@ export default class Map1 extends Controller {
         this.prtnrCheckBox = this.el.querySelector('#prtnrCheckBox').value;
         this.insType = this.el.querySelector('.type-institute-toggle').value;
         this.oneMillionCheckBox = this.el.querySelector('#one_millionCheckBox').value;
-        this.testmonalCheckBox = this.el.querySelector('#testmonalCheckBox').value;
+        this.testmonalCheckBox = this.el.querySelector('#testimonialCheckBox').value;
     }
     getFilterValues() {
         let fltString = '';
@@ -343,7 +343,7 @@ export default class Map1 extends Controller {
     }
     enableDisableFltr(value) {
         const applyFilterBtn = this.el.querySelector('.applyfltrbtn');
-        
+
         if (value > 3) {
             applyFilterBtn.classList.add('apply-flt-enabled');
             applyFilterBtn.classList.remove('apply-flt-disabled');
