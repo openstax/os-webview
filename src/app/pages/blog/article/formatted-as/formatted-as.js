@@ -1,8 +1,8 @@
 import {Controller} from 'superb.js';
-import bodyUnitView from '~/components/body-units/body-units';
-import {formatDateForBlog as formatDate} from '~/helpers/data';
 import {description as featureTemplate} from './feature.html';
 import {description as synopsisTemplate} from './synopsis.html';
+import {formatDateForBlog as formatDate} from '~/helpers/data';
+import bodyUnitView from '~/components/body-units/body-units';
 
 export default class FormattedAs extends Controller {
 
@@ -11,7 +11,8 @@ export default class FormattedAs extends Controller {
         this.format = format;
         this.model = Object.assign({
             coverUrl: article.article_image || 'https://placehold.it/370x240',
-            articleSlug: article.slug.replace('news/', '')
+            articleSlug: article.slug.replace('news/', ''),
+            isVisible: false
         }, article);
         this.model.date = formatDate(article.date);
         this.regions = {
@@ -49,9 +50,19 @@ export default class FormattedAs extends Controller {
                 config: disqusConfig
             });
         };
+        const startWithFirstP = () => {
+            const body = this.model.body.slice(0, 1);
+            const text = body[0].value;
+            const firstP = text.match(/<p>/);
+
+            if (firstP && firstP.index > 0) {
+                body[0].value = text.substr(firstP.index);
+            }
+            this.model.body = body;
+        };
 
         if (this.format === 'synopsis') {
-            this.model.body = this.model.body.slice(0, 1);
+            startWithFirstP();
         }
         for (const bodyUnit of this.model.body) {
             this.regions.body.append(bodyUnitView(bodyUnit));
