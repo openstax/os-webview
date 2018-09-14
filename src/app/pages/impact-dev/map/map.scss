@@ -591,7 +591,7 @@ $quote-orange: #f66400;
 
         @include width-up-to($phone-max) {
             padding-bottom: 0.3rem;
-            padding-top: 0.3rem;
+            padding-top: 1rem;
         }
     }
 
@@ -636,7 +636,6 @@ $quote-orange: #f66400;
 
         @include width-up-to($phone-max) {
             border: 0.1rem solid ui-color(form-border);
-            margin: 1rem;
             padding: 0;
         }
     }

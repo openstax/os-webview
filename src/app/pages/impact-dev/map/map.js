@@ -70,7 +70,9 @@ export default class Map1 extends Controller {
                         glbalObj.markerTooltip(data);
                         glbalObj.regions.dataList.attach(new SchoolinfoHead(modelObj));
                         glbalObj.regions.dataList.append(new Schoolinfo(modelObj));
-                        glbalObj.regions.dataList.append(new Testimonialinfo(modelObj));
+                        if (dataArray[itemIndex].fields.testimonial !== null) {
+                            glbalObj.regions.dataList.append(new Testimonialinfo(modelObj));
+                        }
                     }
                 } catch (e) {
                     console.log(e);
@@ -100,6 +102,7 @@ export default class Map1 extends Controller {
     }
     @on('click .filter-btn')
     filterOnOff(event) {
+        const serchInput = this.el.querySelector('.srch');
         const filterDiv = this.el.querySelector('.filter-div');
         const dListDiv = this.el.querySelector('.dropDownList');
         const filterStyle = this.el.querySelector('.filter-style');
@@ -109,6 +112,9 @@ export default class Map1 extends Controller {
         filterStyle.classList.toggle('fa-sliders-h');
         filterStyle.classList.toggle('fa-times');
         if (event.target.value === '0') {
+            filterStyle.classList.toggle('fa-sliders-h');
+            filterStyle.classList.toggle('fa-times');
+            this.enableDisableFltr(serchInput.textLength);
             event.target.value = '1';
             dListDiv.innerHTML = '';
             dListDiv.classList.remove('single-item-info');
@@ -262,6 +268,7 @@ export default class Map1 extends Controller {
     hideDataList() {
         const searchInput = this.el.querySelector('.srch');
 
+        this.el.querySelector('.dropDownList').classList.remove('single-item-info');
         this.model = [];
         const list = new Dropdown(this.model);
 

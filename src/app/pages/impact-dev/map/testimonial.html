@@ -1,21 +1,15 @@
-<template args="model" if="model.dataArray[model.itemIndex].fields.testimonial!=null">
+<template args="model">
             <div class="tdlb-container">
                 <div class="tdlb-para">
                     <div id="testimonialHead-{model.itemIndex}" class="testimonial_he">Testimonials</div>
                     <div class="para-quote">
                         <i class="fas fa-quote-left"></i>
                     </div>
-                    <div class="tdl-body-desc">Teaming up with the other OpenStax Institutional Partner schools
-                        provided a sense of community as we navigated launching OER initiatives
-                        at our own campuses. Learning about other schools’ successes and
-                        frustrations each month was inspiring. I learned so many new techniques
-                        and innovative ideas that I could then apply at my own campus. I loved
-                        the structure of this program.
-                    </div>
+                    <div class="tdl-body-desc">{model.dataArray[model.itemIndex].fields.testimonial}</div>
                 </div>
                 <div class="tdl-body-regards">
-                    <div class="tdlb-regards-name">– Erin Davis</div>
-                    <div class="tdlb-regards-desc">Distance Education Library Services Coordinator</div>
+                    <div class="tdlb-regards-name">{model.dataArray[model.itemIndex].fields.testimonial_name}</div>
+                    <div class="tdlb-regards-desc">{model.dataArray[model.itemIndex].fields.testimonial_position}</div>
                 </div>
             </div>
         <div class="toggle-datalist-footer">
