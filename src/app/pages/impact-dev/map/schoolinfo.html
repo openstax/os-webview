@@ -15,7 +15,7 @@
         <div class="right-column">
             <div class="right-column-inner">
                 <div class="rcolumn-head">OpenStax Institutional Partner</div>
-                <div class="rcolumn-body">Yes</div>
+                <div class="rcolumn-body">{model.dataArray[model.itemIndex].fields.key_institutional_partner === true ? 'Yes' : 'No'}</div>
             </div>
         </div>
         <div if="model.dataArray[model.itemIndex].fields.testimonial!=null" id="testimonialHead-{model.itemIndex}" class="testimonial-head">Testimonials</div>
