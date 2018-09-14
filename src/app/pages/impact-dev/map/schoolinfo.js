@@ -1,6 +1,5 @@
 import VERSION from '~/version';
 import {Controller} from 'superb.js';
-import $ from '~/helpers/$';
 import {description as template} from './schoolinfo.html';
 import {on} from '~/helpers/controller/decorators';
 import Dropdown from './mapdropdown';
@@ -17,9 +16,6 @@ export default class Schoolinfo extends Controller {
         this.popObject= props.pObj;
     }
 
-    onLoaded() {
-        $.insertHtml(this.el, this.model);
-    }
     @on('click .testimonial-head')
     tesnimonialClick(event) {
         document.getElementById('back-result-div').setAttribute('style', 'display: none;');

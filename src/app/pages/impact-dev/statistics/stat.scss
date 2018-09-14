@@ -3,54 +3,31 @@
 .statdiv {
     background: linear-gradient(90deg, #326ba4 0%, #2e217a 100%);
     background-color: rgba(1, 35, 102, 0.5);
-
-    @include wider-than(60rem) {
-        overflow: hidden;
-        position: relative;
-        top: 0;
-        width: 100%;
-    }
-
-    @media (min-width: 601px) and (max-width: 1024px) {
-        overflow: hidden;
-        position: relative;
-        top: 0;
-        width: 100%;
-    }
-
-    @include width-up-to($phone-max) {
-        background: linear-gradient(90deg, #326ba4 0%, #2e217a 100%);
-        background-color: rgba(1, 35, 102, 0.5);
-        overflow: hidden;
-    }
+    width: 100%;
 }
 
 .statbox {
     align-items: center;
-    display: flex;
+    display: grid;
+    grid-column-gap: $normal-margin;
+    grid-template-columns: repeat(4, 26rem);
     height: 50rem;
     justify-content: center;
+    overflow-x: auto;
+    padding: 0 $normal-margin;
+    width: 100%;
 
-    @media (min-width: 601px) and (max-width: 1099px) {
+    @include width-up-to(#{104em * $scale-factor + 4.5em}) {
         justify-content: flex-start;
-        overflow-x: scroll;
-        overflow-y: hidden;
-        ::-webkit-scrollbar {display: none; }
     }
 
-    @include width-up-to($phone-max) {
-        justify-content: flex-start;
-        overflow-x: scroll;
-        overflow-y: hidden;
-        ::-webkit-scrollbar {display: none; }
-    }
+    ::-webkit-scrollbar { display: none; }
 
     .col1 {
         border-radius: 0.3rem; // background: linear-gradient(224.64deg, rgba(250,188,77,0) 0%, #FABC4D 100%), linear-gradient(0deg, #F4D019 0%, #F4D019 100%);
         box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.2);
         height: 36rem;
-        margin: 0.7rem;
-        width: 26rem;
+        width: 100%;
     }
 
     .col-img {

@@ -1,19 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.studentinfodiv {
-    @include wider-than(60rem) {
-        height: 102rem;
-    }
-
-    @media (min-width: 601px) and (max-width: 1200px) {
-        height: 76rem;
-    }
-
-    @include width-up-to($phone-max) {
-        height: 128rem;
-    }
-}
-
 .studentinfobox {
     display: flex;
     flex-direction: column;
@@ -24,7 +10,7 @@
         margin-top: 2.5rem;
     }
 
-    @media (min-width: 601px) and (max-width: 1200px) {
+    @include width-between ($phone-max, $media-content-max) {
         height: 75rem;
     }
 
@@ -32,16 +18,15 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
-        margin-top: 12rem;
+        margin-top: unset;
 
         @include width-up-to($phone-max) {
             align-items: center;
             flex-direction: column;
-            margin-top: unset;
         }
 
-        @media (min-width: 601px) and (max-width: 1200px) {
-            margin-top: unset;
+        @include wider-than($media-content-max) {
+            margin-top: 12rem;
         }
     }
 
@@ -53,6 +38,10 @@
         @include width-up-to($phone-max) {
             align-items: center;
             flex-direction: column-reverse;
+        }
+
+        @include wider-than($phone-max) {
+            margin-top: 2rem;
         }
     }
 
@@ -101,82 +90,46 @@
     }
 
     .std-txt-head {
-        color: #424242;
-        font-size: 3.6rem;
-        font-weight: bold;
-        height: 4rem;
-        letter-spacing: -1.44px;
-        line-height: 4rem;
+        @include set-font(h2);
 
         @include width-up-to($media-content-max) {
-            font-size: 2.9rem;
-            height: 8rem;
+            @include title-font(2.9rem);
             width: 21.2rem;
         }
     }
 
-    .std-txt-body {
-        color: #424242;
-        font-size: 1.6rem;
-        height: 12.1rem;
-        line-height: 2.5rem;
+    .std-txt-body,
+    .girl-txt-body {
+        @include body-font(1.6rem);
+
+        line-height: 1.5;
         width: 40.2rem;
 
         @include width-up-to($media-content-max) {
-            font-size: 1.4rem;
-            margin-bottom: 0;
-            margin-top: -3rem;
+            @include body-font(1.4rem);
+
+            line-height: 1.5;
             width: 26rem;
         }
     }
 
     .girl-txt-head {
-        color: #424242;
-        font-size: 3.6rem;
-        font-weight: bold;
-        height: 8rem;
-        letter-spacing: -1.44px;
-        line-height: 4rem;
+        @include set-font(h2);
+
         width: 44rem;
 
         @include width-up-to($media-content-max) {
-            color: #424242;
-            font-size: 3.3rem;
-            height: 8rem;
+            @include title-font(3.3rem);
+
             width: 25.2rem;
         }
     }
 
-    .girl-txt-body {
-        color: #424242;
-        font-size: 1.6rem;
-        height: 11rem;
-        line-height: 2.5rem;
-        width: 40.2rem;
-
-        @include width-up-to($media-content-max) {
-            font-size: 1.4rem;
-            margin-top: 5rem;
-            width: 26rem;
-        }
-    }
-
     .sbox {
-        background-color: #959595;
-        border-radius: 0.2rem;
-        color: white;
-        font-size: 1.6rem;
-        font-weight: bold;
-        line-height: 1.6rem;
-        padding: 1.5rem;
+        @extend %button;
+        @extend %secondary;
 
-        @include width-up-to($phone-max) {
-            margin-top: 15%;
-        }
-
-        @include width-up-to($media-content-max) {
-            margin-top: 8%;
-        }
+        margin-top: $normal-margin;
     }
 
     .girl-img {

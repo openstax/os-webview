@@ -1,56 +1,14 @@
 <template args="model">
-
-
-        <div class="col1">
-            <div class="col-img-div">
-                    <img class="col-img" src="/images/home/statmap1.png" alt="bag logo">
-            </div>
-            <div class="col-txt">
-            <div class="uper-txt">
-                <div class="u-txt1">3.7</div>
-                <div class="u-txt2">Million</div>
-            </div>
-            <div class="lower-txt">Student use Openstax textbook</div>
-            </div>
+    <div each="item in model" class="col1">
+        <div class="col-img-div">
+            <img class="col-img" src="{item.imageUrl}" alt="bag logo">
         </div>
-
-        <div class="col1">
-            <div class="col-img-div">
-                <img class="col-img" src="/images/home/statmap2.png" alt="statmap logo">
-            </div>
-            <div class="col-txt">
-            <div class="uper-txt">
-                <div class="u-txt1">47</div>
-                <div class="u-txt2">%</div>
-            </div>
-            <div class="lower-txt"> Of degree-granting  institutions in US use  Openstax </div>
+        <div class="col-txt">
+        <div class="uper-txt">
+            <div class="u-txt1">{item.uText1}</div>
+            <div class="u-txt2">{item.uText2}</div>
         </div>
+        <div class="lower-txt">{item.lowerText}</div>
         </div>
-
-        <div class="col1">
-            <div class="col-img-div">
-                <img class="col-img" src="/images/home/statmap3.png" alt="statmap logo">
-            </div>
-                <div class="col-txt">
-                    <div class="uper-txt">
-                        <div class="u-txt1">$389</div>
-                        <div class="u-txt2"> Million </div>
-                    </div>
-                <div class="lower-txt">Student save since 2012</div>
-            </div>
-        </div>
-
-        <div class="col1">
-            <div class="col-img-div">
-                <img class="col-img" src="/images/home/statmap4.png" alt="statmap logo">
-            </div>
-            <div class="col-txt">
-                <div class="uper-txt">
-                        <div class="u-txt1">12,000</div>
-                        <div class="u-txt2"> + </div>
-                    </div>
-                <div class="lower-txt"> Higher ed institutions use Openstax </div>
-            </div>
-        </div>
-
+    </div>
 </template>

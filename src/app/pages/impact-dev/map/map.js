@@ -35,13 +35,13 @@ export default class Map1 extends Controller {
 
     onLoaded() {
         const glbalObj = this;
+        const filterBtn = this.el.querySelector('.filter-btn');
 
         if (window.innerWidth < 960) {
             const filterStatus = this.el.querySelector('.srch');
 
             filterStatus.setAttribute('placeholder', 'Search location or instituion name');
         }
-        $.insertHtml(this.el, this.model);
         if (this.pageTyp === 'landing') {
             setTimeout(() => {
                 this.fadeOutText();
@@ -67,6 +67,9 @@ export default class Map1 extends Controller {
                         };
 
                         this.el.querySelector('.dropDownList').classList.add('single-item-info');
+                        if (filterBtn.value === '1') {
+                            glbalObj.filterDivClose(filterBtn);
+                        }
                         glbalObj.closeTooltip();
                         glbalObj.markerTooltip(data);
                         glbalObj.regions.dataList.attach(new SchoolinfoHead(modelObj));
@@ -105,11 +108,10 @@ export default class Map1 extends Controller {
         const dListDiv = this.el.querySelector('.dropDownList');
         const filterStyle = this.el.querySelector('.filter-style');
         const bachToSearch = this.el.querySelector('.back-search-div');
-        const searchContainer = this.el.querySelector('.search-container');
 
-        filterStyle.classList.toggle('fa-sliders-h');
-        filterStyle.classList.toggle('fa-times');
         if (event.target.value === '0') {
+            filterStyle.classList.toggle('fa-sliders-h');
+            filterStyle.classList.toggle('fa-times');
             event.target.value = '1';
             dListDiv.innerHTML = '';
             dListDiv.classList.remove('single-item-info');
@@ -118,12 +120,21 @@ export default class Map1 extends Controller {
                 bachToSearch.setAttribute('style', 'display: block;');
             }
         } else {
-            event.target.value = '0';
-            filterDiv.setAttribute('style', 'display: none');
-            this.setFilterValuesOnClose();
-            if (window.innerWidth < 960) {
-                bachToSearch.setAttribute('style', 'display: none;');
-            }
+            this.filterDivClose(event.target);
+        }
+    }
+    filterDivClose(event) {
+        const filterDiv = this.el.querySelector('.filter-div');
+        const bachToSearch = this.el.querySelector('.back-search-div');
+        const filterStyle = this.el.querySelector('.filter-style');
+
+        filterStyle.classList.toggle('fa-sliders-h');
+        filterStyle.classList.toggle('fa-times');
+        event.value = '0';
+        filterDiv.setAttribute('style', 'display: none');
+        this.setFilterValuesOnClose();
+        if (window.innerWidth < 960) {
+            bachToSearch.setAttribute('style', 'display: none;');
         }
     }
     @on('click .apply-flt-enabled')
