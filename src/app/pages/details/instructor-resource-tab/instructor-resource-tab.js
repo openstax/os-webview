@@ -37,6 +37,8 @@ export default class InstructorResourceTab extends Controller {
                 );
 
                 region.append(resourceBox);
+
+                $.scrollToHash();
             }
         });
     }
