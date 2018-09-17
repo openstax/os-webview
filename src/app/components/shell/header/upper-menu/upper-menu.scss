@@ -97,6 +97,10 @@
         overflow: hidden;
         width: 0;
 
+        @media (max-height: #{39em * $scale-factor}) {
+            display: none;
+        }
+
         @at-root .active#{&} {
             bottom: 0;
             left: 0;
