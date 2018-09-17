@@ -51,6 +51,7 @@ export default class RequestForm extends Controller {
     }
 
     @on('click .close-button')
+    @on('click [type="reset"]')
     closeDialog() {
         this.handlers.done();
     }
