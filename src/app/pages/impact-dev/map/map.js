@@ -28,7 +28,7 @@ export default class Map1 extends Controller {
         this.tooltip = 'close';
         this.filterStatus = 'false';
         this.prtnrCheckBox = 'false';
-        this.insType = 'all';
+        this.insType = '';
         this.oneMillionCheckBox = 'false';
         this.testmonalCheckBox = 'false';
     }
@@ -330,7 +330,7 @@ export default class Map1 extends Controller {
     }
     resetFilterValues() {
         this.prtnrCheckBox = 'false';
-        this.insType = 'all';
+        this.insType = '';
         this.oneMillionCheckBox = 'false';
         this.testmonalCheckBox = 'false';
     }
@@ -344,16 +344,16 @@ export default class Map1 extends Controller {
         let fltString = '';
 
         if (this.prtnrCheckBox === 'true') {
-            fltString += '&key_institutional_partner=true';
+            fltString += '&key_institutional_partner=TRUE';
         }
-        if (this.insType !== 'all') {
+        if (this.insType !== '') {
             fltString += `&type=${this.el.querySelector('.type-institute-toggle').value}`;
         }
         if (this.oneMillionCheckBox === 'true') {
-            fltString += '&achieving_the_dream_school=true';
+            fltString += '&achieving_the_dream_school=TRUE';
         }
         if (this.testmonalCheckBox === 'true') {
-            fltString += '&testimonial=true';
+            fltString += '&testimonial=TRUE';
         }
         return fltString;
     }
