@@ -77,6 +77,16 @@
             margin: 1rem;
             width: 5rem;
 
+            // Not done with an image like the others
+            &.instagram {
+                color: ui-color(default-active);
+                font-size: 3.6rem;
+
+                > * {
+                    transform: translate(-2%, -8%);
+                }
+            }
+
             &:hover {
                 background-color: ui-color(secondary-hover);
             }
