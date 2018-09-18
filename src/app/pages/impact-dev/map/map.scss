@@ -411,7 +411,7 @@ $quote-orange: #f66400;
 
     .detail-info-head {
         @include width-up-to($tablet-max) {
-            padding-left: 1rem;
+            padding-left: 1.5rem;
         }
     }
 
@@ -781,7 +781,7 @@ $quote-orange: #f66400;
     }
 
     .apply-flt-disabled {
-        background-color: ui-color(secondary); 
+        background-color: ui-color(secondary);
         cursor: not-allowed;
     }
 
@@ -812,7 +812,8 @@ $quote-orange: #f66400;
         @include width-up-to($tablet-max) {
             background: white;
             border-radius: 0.3rem;
-            padding: 0 1rem;
+            padding: 1rem 1rem 0 1rem;
+            width: 100%;
         }
 
     }
