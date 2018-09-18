@@ -5,7 +5,7 @@
                     <div class="para-quote">
                         <i class="fas fa-quote-left"></i>
                     </div>
-                    <div class="tdl-body-desc">{model.dataArray[model.itemIndex].fields.testimonial}</div>
+                    <div class="tdl-body-desc">{model.dataArray[model.itemIndex].fields.testimonial.length > 375 ? model.dataArray[model.itemIndex].fields.testimonial.substr(0, 375-1) + '...' : model.dataArray[model.itemIndex].fields.testimonial}</div>
                 </div>
                 <div class="tdl-body-regards">
                     <div class="tdlb-regards-name">– {model.dataArray[model.itemIndex].fields.testimonial_name}</div>

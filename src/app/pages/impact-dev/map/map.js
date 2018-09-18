@@ -74,7 +74,7 @@ export default class Map1 extends Controller {
                         glbalObj.markerTooltip(data);
                         glbalObj.regions.dataList.attach(new SchoolinfoHead(modelObj));
                         glbalObj.regions.dataList.append(new Schoolinfo(modelObj));
-                        if (dataArray[itemIndex].fields.testimonial !== null) {
+                        if (data[0].fields.testimonial !== null) {
                             glbalObj.regions.dataList.append(new Testimonialinfo(modelObj));
                         }
                     }
