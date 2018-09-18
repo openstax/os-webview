@@ -78,6 +78,15 @@ $.isInViewport = (el) => {
     );
 };
 
+$.overlapsViewport = (el) => {
+    const rect = el.getBoundingClientRect();
+
+    return (
+        (rect.top >= 0 && rect.top <= window.innerHeight) ||
+        (rect.bottom >= 0 && rect.bottom <= window.innerHeight)
+    );
+};
+
 $.scrollTo = (el, offset = 0) => {
     const getOffsetTop = () => {
         const rect = el.getBoundingClientRect();
