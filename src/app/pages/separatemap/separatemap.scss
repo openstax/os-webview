@@ -44,10 +44,14 @@
         top: 8rem;
         z-index: 99999;
     }
+}
 
-    .mapboxgl-ctrl-bottom-right {
-        display: none;
-    }
+.left-arrow-bak {
+    color: #4a4a4a;
+}
+
+.mapboxgl-ctrl-bottom-left {
+    display: none;
 }
 
 .mapboxgl-ctrl-bottom-right {

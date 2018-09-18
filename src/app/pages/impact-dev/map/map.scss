@@ -8,7 +8,6 @@ $quote-orange: #f66400;
 
 .mapdiv {
     height: 80rem;
-//    margin-top: 6rem;
     width: 100%;
 
     @include width-up-to($tablet-max) {
@@ -20,14 +19,9 @@ $quote-orange: #f66400;
         top: 0;
         width: 100%;
     }
-
 }
 
 .mapbox {
-    //background-attachment: local;
-    //background-image: url('/images/home/map.png');
-    //background-repeat: no-repeat;
-    //background-size: cover;
     @include wider-than(60rem) {
         height: 80rem;
     }
@@ -39,14 +33,13 @@ $quote-orange: #f66400;
             height: 3.8rem;
             width: 11.5rem;
         }
-
     }
 
     .search-container {
         margin-left: 5rem;
         margin-top: 3rem;
         position: relative;
-        width: 67.8rem;
+        width: 63.4rem;
         z-index: 99999;
 
         @include width-up-to($tablet-max) {
@@ -81,8 +74,11 @@ $quote-orange: #f66400;
     .maptxt {
         @include set-font(h1);
         color: white;
+        padding-left: 4rem;
         padding-top: 4rem;
-        width: 55rem;
+        position: relative;
+        width: 64rem;
+        z-index: 9999;
 
         @include width-up-to($phone-max) {
             order: 1;
@@ -91,7 +87,6 @@ $quote-orange: #f66400;
             padding-top: 1rem;
             width: 33rem;
         }
-
     }
 
     .on-map {
@@ -108,7 +103,6 @@ $quote-orange: #f66400;
             bottom: 42rem;
             height: 43rem;
         }
-
     }
 
     .search {
@@ -215,7 +209,6 @@ $quote-orange: #f66400;
         input {
             display: none;
         }
-
     }
 
     .switch-wrap {
@@ -291,35 +284,19 @@ $quote-orange: #f66400;
         width: 2.2rem;
 
         @include width-up-to($phone-max) {
-            .slider::before {
-                bottom: 0.15rem;
-                height: 1.4rem;
-                left: 0.2rem;
-                width: 1.4rem;
-            }
-
-            .switch {
-                height: 1.6rem;
-                top: 0.4rem;
-                width: 3rem;
-            }
-
-            input:checked+.slider::before {
-                transform: translateX(1.2rem);
-            }
-
-            .dropdownlist-id {
-                margin-top: 1rem;
-            }
+            bottom: 0.15rem;
+            height: 1.4rem;
+            left: 0.2rem;
+            width: 1.4rem;
         }
+    }
 
-        /* Rounded sliders */
-        &.round {
-            border-radius: 3.4rem;
+    /* Rounded sliders */
+    &.round {
+        border-radius: 3.4rem;
 
-            &::before {
-                border-radius: 50%;
-            }
+        &::before {
+            border-radius: 50%;
         }
     }
 
@@ -373,6 +350,7 @@ $quote-orange: #f66400;
         overflow-x: hidden;
         overflow-y: scroll;
         padding-left: unset;
+        width: 100%;
 
         @include width-up-to($tablet-max) {
             max-height: 21rem;
@@ -531,6 +509,7 @@ $quote-orange: #f66400;
             display: block;
             margin-bottom: 1rem;
             margin-top: 1rem;
+            width: 100%;
         }
     }
 
@@ -561,10 +540,6 @@ $quote-orange: #f66400;
         @include set-font(helper-label);
         color: $slightly-lighter-text;
         line-height: 1.6rem;
-
-        @include width-up-to($phone-max) {
-            margin-right: 0.5rem;
-        }
     }
 
     .rcolumn-head {
@@ -674,10 +649,10 @@ $quote-orange: #f66400;
         padding-top: 3rem;
 
         @include width-up-to($phone-max) {
+            padding-bottom: 1rem;
             padding-right: 1rem;
             padding-top: 0;
         }
-
     }
 
     .tdlb-regards-desc,
@@ -732,6 +707,10 @@ $quote-orange: #f66400;
         line-height: 1.6rem;
         padding-right: 0.2rem;
         text-align: right;
+
+        @include width-up-to($phone-max) {
+            display: none;
+        }
     }
 
     .filter-icons {
@@ -773,7 +752,6 @@ $quote-orange: #f66400;
         button {
             border-radius: 0.2rem;
         }
-
     }
 
     .testimonial {
@@ -782,13 +760,29 @@ $quote-orange: #f66400;
         padding-top: 0;
 
         @include width-up-to($phone-max) {
-
-            .testmonal {
-                margin-bottom: 2.4rem;
-                margin-top: 1.2rem;
-            }
+            margin-bottom: 3.3rem;
         }
+    }
 
+    .applyfltrbtn {
+        border-radius: 0.2rem;
+        height: 5rem;
+        width: 14rem;
+
+        @include width-up-to($phone-max) {
+            height: 4rem;
+            width: 12rem;
+        }
+    }
+
+    .apply-flt-enabled {
+        background-color: #f36b32;
+        cursor: pointer;
+    }
+
+    .apply-flt-disabled {
+        background-color: ui-color(secondary); 
+        cursor: not-allowed;
     }
 
     .apply-filter {

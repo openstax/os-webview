@@ -30,11 +30,12 @@ export default class Map1 extends Controller {
         this.prtnrCheckBox = 'false';
         this.insType = '';
         this.oneMillionCheckBox = 'false';
-        this.testimonialCheckBox = 'false';
+        this.testmonalCheckBox = 'false';
     }
 
     onLoaded() {
         const glbalObj = this;
+        const filterBtn = this.el.querySelector('.filter-btn');
 
         if (window.innerWidth < 960) {
             const filterStatus = this.el.querySelector('.srch');
@@ -66,6 +67,9 @@ export default class Map1 extends Controller {
                         };
 
                         this.el.querySelector('.dropDownList').classList.add('single-item-info');
+                        if (filterBtn.value === '1') {
+                            glbalObj.filterDivClose(filterBtn);
+                        }
                         glbalObj.closeTooltip();
                         glbalObj.markerTooltip(data);
                         glbalObj.regions.dataList.attach(new SchoolinfoHead(modelObj));
@@ -106,11 +110,8 @@ export default class Map1 extends Controller {
         const filterDiv = this.el.querySelector('.filter-div');
         const dListDiv = this.el.querySelector('.dropDownList');
         const filterStyle = this.el.querySelector('.filter-style');
-        const bachToSearch = this.el.querySelector('.backToSearch_div');
-        const searchContainer = this.el.querySelector('.search-container');
+        const bachToSearch = this.el.querySelector('.back-search-div');
 
-        filterStyle.classList.toggle('fa-sliders-h');
-        filterStyle.classList.toggle('fa-times');
         if (event.target.value === '0') {
             filterStyle.classList.toggle('fa-sliders-h');
             filterStyle.classList.toggle('fa-times');
@@ -123,12 +124,21 @@ export default class Map1 extends Controller {
                 bachToSearch.setAttribute('style', 'display: block;');
             }
         } else {
-            event.target.value = '0';
-            filterDiv.setAttribute('style', 'display: none');
-            this.setFilterValuesOnClose();
-            if (window.innerWidth < 960) {
-                bachToSearch.setAttribute('style', 'display: none;');
-            }
+            this.filterDivClose(event.target);
+        }
+    }
+    filterDivClose(event) {
+        const filterDiv = this.el.querySelector('.filter-div');
+        const bachToSearch = this.el.querySelector('.back-search-div');
+        const filterStyle = this.el.querySelector('.filter-style');
+
+        filterStyle.classList.toggle('fa-sliders-h');
+        filterStyle.classList.toggle('fa-times');
+        event.value = '0';
+        filterDiv.setAttribute('style', 'display: none');
+        this.setFilterValuesOnClose();
+        if (window.innerWidth < 960) {
+            bachToSearch.setAttribute('style', 'display: none;');
         }
     }
     @on('click .apply-flt-enabled')
@@ -153,12 +163,12 @@ export default class Map1 extends Controller {
             event.delegateTarget.value = 'false';
         }
     }
-    @on('click .backToSearch_btn')
+    @on('click .back-search-btn')
     backToSearch(event) {
         this.el.querySelector('.srch').value = '';
         this.hideDataList();
     }
-    @on('click .backToResult_btn')
+    @on('click .back-result-btn')
     backToSearchResult(event) {
         const searchInput = this.el.querySelector('.srch');
 
@@ -166,7 +176,7 @@ export default class Map1 extends Controller {
         this.el.querySelector('.search').setAttribute('style', 'display: flex;');
         this.searchRequest(this.filterStatus, searchInput.value);
     }
-    @on('click .backToDetail_btn')
+    @on('click .back-detail-btn')
     backToDetail(event) {
         document.getElementById('back-result-div').setAttribute('style', 'display: block;');
         document.getElementById('back-detail-div').setAttribute('style', 'display: none;');
@@ -216,6 +226,11 @@ export default class Map1 extends Controller {
     fadOutMovBar() {
         this.el.querySelector('.on-map').setAttribute('style', 'display: none;');
         this.el.querySelector('.maptxt').setAttribute('style', 'display: none');
+        if (window.innerWidth > 960) {
+            this.el.querySelector('.search-container').setAttribute('style', 'margin-top: 3rem;');
+        } else {
+            this.el.querySelector('.search-container').setAttribute('style', 'height: 0; margin-bottom: 1rem;');
+        }
     }
     searchRequest(fltrStatus, value) {
         const bachToSearch = this.el.querySelector('.back-search-div');
@@ -274,7 +289,7 @@ export default class Map1 extends Controller {
 
         if (window.innerWidth < 960) {
             searchInput.setAttribute('style', 'border: unset;width: 26.6;margin-right: unset;');
-            this.el.querySelector('.backToSearch_div').setAttribute('style', 'display: none;');
+            this.el.querySelector('.back-search-div').setAttribute('style', 'display: none;');
             this.el.querySelector('.searchimg').setAttribute('style', 'display: initial');
         }
         this.regions.dataList.attach(list);
@@ -303,8 +318,8 @@ export default class Map1 extends Controller {
         oneMillionCheck.value = this.oneMillionCheckBox;
         this.changeToggleColor(oneMillionCheck, this.oneMillionCheckBox);
 
-        tetmonal.value = this.testimonialCheckBox;
-        this.changeToggleColor(tetmonal, this.testimonialCheckBox);
+        tetmonal.value = this.testmonalCheckBox;
+        this.changeToggleColor(tetmonal, this.testmonalCheckBox);
     }
     changeToggleColor(attrName, value) {
         if (value === 'false') {
@@ -317,13 +332,13 @@ export default class Map1 extends Controller {
         this.prtnrCheckBox = 'false';
         this.insType = '';
         this.oneMillionCheckBox = 'false';
-        this.testimonialCheckBox = 'false';
+        this.testmonalCheckBox = 'false';
     }
     setFilterValues() {
         this.prtnrCheckBox = this.el.querySelector('#prtnrCheckBox').value;
         this.insType = this.el.querySelector('.type-institute-toggle').value;
         this.oneMillionCheckBox = this.el.querySelector('#one_millionCheckBox').value;
-        this.testimonialCheckBox = this.el.querySelector('#testimonialCheckBox').value;
+        this.testmonalCheckBox = this.el.querySelector('#testimonialCheckBox').value;
     }
     getFilterValues() {
         let fltString = '';
@@ -344,7 +359,7 @@ export default class Map1 extends Controller {
     }
     enableDisableFltr(value) {
         const applyFilterBtn = this.el.querySelector('.applyfltrbtn');
-        
+
         if (value > 3) {
             applyFilterBtn.classList.add('apply-flt-enabled');
             applyFilterBtn.classList.remove('apply-flt-disabled');
@@ -362,19 +377,19 @@ export default class Map1 extends Controller {
         }
     }
     searchListHeight(length) {
-        const searchContainer = this.el.querySelector('.search_container');
+        const searchContainer = this.el.querySelector('.search-container');
 
         switch (length) {
-            case 1:
-                searchContainer.setAttribute('style', 'margin-top: 38.5rem;');
-                break;
-            case 2:
-                searchContainer.setAttribute('style', 'margin-top: 31.5rem;');
-                break;
-            default:
-                searchContainer.setAttribute('style', 'margin-top: 24.5rem;');
-                break;
-            }
+        case 1:
+            searchContainer.setAttribute('style', 'margin-top: 38.5rem;');
+            break;
+        case 2:
+            searchContainer.setAttribute('style', 'margin-top: 31.5rem;');
+            break;
+        default:
+            searchContainer.setAttribute('style', 'margin-top: 24.5rem;');
+            break;
+        }
     }
 
 }

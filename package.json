@@ -17,7 +17,7 @@
   "dependencies": {
     "hard-source-webpack-plugin": "^0.5.3",
     "http-server": "^0.10.0",
-    "ignore-loader": "^0.1.2",    
+    "ignore-loader": "^0.1.2",
     "mapbox-gl": "^0.47.0",
     "particles.js": "^2.0.0",
     "pattern-library": "github:openstax/pattern-library#v1.1.5",

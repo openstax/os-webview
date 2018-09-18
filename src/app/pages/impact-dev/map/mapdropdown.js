@@ -41,8 +41,8 @@ export default class Mapdropdown extends Controller {
         };
 
         if (window.innerWidth < 960) {
-            const unqClassDetailMob = '.detailinfoMOb';
-            const unqClassTestMob = '.testimonialBodyMob';
+            const unqClassDetailMob = '.detail-info-mob';
+            const unqClassTestMob = '.testimonial-body-mob';
             const regionDetailInfoMob = new Region(unqClassDetailMob, this);
             const regionTestimonialMob = new Region(unqClassTestMob, this);
             const schHeadObj = new SchoolinfoHead(modelObj);
@@ -95,8 +95,8 @@ export default class Mapdropdown extends Controller {
                 showing[0].dataset.toggle = 'show';
                 document.getElementById(`data-${alreadyShowId}`).setAttribute('style', 'display: none;');
             }
-            // searchList.setAttribute('style', 'max-height: 41rem;');
             searchList.classList.add('active');
+
             document.getElementById(`data-${unqId}`).setAttribute('style', 'display: block;');
             target.dataset.toggle = 'hide';
         } else {
@@ -107,14 +107,14 @@ export default class Mapdropdown extends Controller {
         }
     }
     showDetailMob() {
-        const detailinfoMOb = this.el.querySelector('.detailinfoMOb');
-        const searchList1 = this.el.querySelector('.search-list');
+        const detailinfoMOb = this.el.querySelector('.detail-info-mob');
+        const searchList = this.el.querySelector('.search-list');
 
         searchList.setAttribute('style', 'display: none');
         document.getElementById('search').setAttribute('style', 'display: none');
         detailinfoMOb.setAttribute('style', 'display: block');
-        document.getElementById('backToSearch_div').setAttribute('style', 'display: none;');
-        document.getElementById('backToResult_div').setAttribute('style', 'display: block;');
+        document.getElementById('back-search-div').setAttribute('style', 'display: none;');
+        document.getElementById('back-result-div').setAttribute('style', 'display: block;');
     }
     flyToPopUp(objectS, offSet, lData, indexItem) {
         const lat = lData[indexItem].fields.lat;
