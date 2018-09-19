@@ -158,6 +158,11 @@
             @include set-font(h4);
         }
 
+        // TODO: Remove when fixed in Pattern Library
+        a {
+            display: inline;
+        }
+
         .img {
             background-position: center;
             background-repeat: no-repeat;
