@@ -812,7 +812,7 @@ $quote-orange: #f66400;
         @include width-up-to($tablet-max) {
             background: white;
             border-radius: 0.3rem;
-            padding: 1rem 1rem 0 1rem;
+            padding: 1rem 1rem 0;
             width: 100%;
         }
 
