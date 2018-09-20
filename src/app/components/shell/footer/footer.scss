@@ -68,14 +68,18 @@
     }
 
     .social {
-        margin-bottom: 1rem;
+        display: grid;
+        grid-gap: 2rem;
+        grid-template-columns: repeat(auto-fit, 5rem);
+        justify-content: center;
+        margin: 2rem 0;
+        width: 100%;
 
         a {
             background-color: ui-color(secondary);
             background-size: 130%;
             height: 5rem;
-            margin: 1rem;
-            width: 5rem;
+            width: 100%;
 
             // Not done with an image like the others
             &.instagram {
