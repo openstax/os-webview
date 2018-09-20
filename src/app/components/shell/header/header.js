@@ -29,7 +29,7 @@ class Header extends Controller {
 
         this.model = {
             login: `${accounts}/login/openstax/`,
-            logout: `${accounts}/logout/`,
+            logout: `${settings.accountHref}/signout/`,
             user: {
                 username: null,
                 groups: []
