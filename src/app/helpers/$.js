@@ -7,7 +7,7 @@ $.isTouchDevice = () => (
 );
 
 $.isMobileDisplay = () => {
-    return window.innerWidth < 960;
+    return window.innerWidth <= 960;
 };
 
 $.isNode = () => (typeof process !== 'undefined') && (process.release.name === 'node');
