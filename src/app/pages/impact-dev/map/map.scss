@@ -27,6 +27,10 @@ $quote-orange: #f66400;
     }
 
     @include width-up-to($phone-max) {
+        display: flex;
+        flex-direction: column-reverse;
+        height: 43rem;
+
         .apply-fltr-btn {
             background-color: ui-color(primary);
             border-radius: 0.2rem;
@@ -45,7 +49,6 @@ $quote-orange: #f66400;
         @include width-up-to($tablet-max) {
             display: flex;
             flex-direction: column;
-            height: 42rem;
             justify-content: flex-end;
             margin-bottom: 1rem;
             margin-left: unset;
@@ -81,7 +84,6 @@ $quote-orange: #f66400;
         z-index: 9999;
 
         @include width-up-to($phone-max) {
-            order: 1;
             padding-bottom: 3rem;
             padding-left: 2rem;
             padding-top: 1rem;
@@ -100,8 +102,9 @@ $quote-orange: #f66400;
         z-index: 999;
 
         @include width-up-to($phone-max) {
-            bottom: 42rem;
+            bottom: 0;
             height: 43rem;
+            position: absolute;
         }
     }
 
