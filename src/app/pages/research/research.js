@@ -38,7 +38,8 @@ export default class Research extends CMSPageController {
                 .map((p, i) => ({
                     borderColor: projectColors[i%5],
                     title: p.title,
-                    body: p.blurb
+                    body: p.blurb,
+                    url: p.link
                 })),
             peopleHeader: data.people_header,
             publicationsHeader: data.publication_header,

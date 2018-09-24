@@ -161,6 +161,11 @@
             margin-top: 0;
         }
 
+        > a {
+            color: inherit;
+            text-decoration: inherit;
+        }
+
         .card-content {
             border-bottom: 0;
             border-left: 0;
