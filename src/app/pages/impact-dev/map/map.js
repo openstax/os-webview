@@ -91,7 +91,7 @@ export default class Map1 extends Controller {
     @on('keyup .srch')
     intercept(event) {
         const filterStatus = this.el.querySelector('.filter-btn');
-        const strLength = event.target.textLength;
+        const strLength = event.target.value.length;
 
         this.validateMob();
         this.enableDisableFltr(strLength);

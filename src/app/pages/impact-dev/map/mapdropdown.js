@@ -11,7 +11,7 @@ export default class Mapdropdown extends Controller {
 
     init(props) {
         this.template = template;
-        this.css = `/app/pages/imapct-dev/impact-dev.css?${VERSION}`;
+        this.css = `/app/pages/impact-dev/impact-dev.css?${VERSION}`;
         this.view = {
             classes: ['toggle-datalist-head']
         };
