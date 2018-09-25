@@ -157,6 +157,29 @@ $.testInstitutionalEmail = (element) => {
     return true;
 };
 
+$.setCanonicalLink = (path, slug = '') => {
+    const host = 'http://openstax.org';
+    const el = document.querySelector('head link[rel="canonical"]') ||
+        document.createElement('link');
+
+    if (!el.parentNode) {
+        const titleEl = document.querySelector('head title');
+
+        // Insert after title
+        titleEl.parentNode.insertBefore(el, titleEl.nextSibling);
+        el.setAttribute('rel', 'canonical');
+    }
+    el.setAttribute('href', `${host}${path}${slug}`);
+};
+
+$.unsetCanonicalLink = () => {
+    const el = document.querySelector('head link[rel="canonical"]');
+
+    if (el) {
+        el.remove();
+    }
+};
+
 $.htmlToText = (html) => {
     const temp = document.createElement('div');
 
