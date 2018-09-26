@@ -1,3 +1,4 @@
+import $ from '~/helpers/$';
 import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import BookSelector from '~/components/book-selector/book-selector';
@@ -15,7 +16,7 @@ import StudentForm from '~/components/student-form/student-form';
 import TechnologySelector from '~/components/technology-selector/technology-selector';
 import {description as template} from './adoption.html';
 
-export default class InterestForm extends Controller {
+export default class AdoptionForm extends Controller {
 
     init() {
         this.template = template;
@@ -45,6 +46,7 @@ export default class InterestForm extends Controller {
                 this.usingInfo = newValue;
             }
         );
+        this.canonicalLink = $.setCanonicalLink('/adoption');
     }
 
     onLoaded() {
@@ -176,6 +178,10 @@ export default class InterestForm extends Controller {
                 });
             }, 300);
         }
+    }
+
+    onClose() {
+        this.canonicalLink.remove();
     }
 
 }

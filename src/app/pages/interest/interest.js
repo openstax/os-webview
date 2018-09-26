@@ -1,3 +1,4 @@
+import $ from '~/helpers/$';
 import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import BookSelector from '~/components/book-selector/book-selector';
@@ -28,6 +29,7 @@ export default class InterestForm extends Controller {
             header: '[data-region="header"]',
             roleSelector: '[data-region="role-selector"]'
         };
+        this.canonicalLink = $.setCanonicalLink('/interest');
     }
 
     firstPage() {
@@ -166,6 +168,10 @@ export default class InterestForm extends Controller {
             this.roleSelector.isHidden = pageNumber > 0;
             this.roleSelector.update();
         }
+    }
+
+    onClose() {
+        this.canonicalLink.remove();
     }
 
 }

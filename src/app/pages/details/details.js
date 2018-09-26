@@ -51,7 +51,7 @@ export default class Details extends CMSPageController {
         this.titleImage = null;
 
         this.model = () => this.getModel();
-        $.setCanonicalLink('/details/', this.slug);
+        this.canonicalLink = $.setCanonicalLink('/details/', this.slug);
     }
 
     getModel() {
@@ -249,7 +249,7 @@ export default class Details extends CMSPageController {
     }
 
     onClose() {
-        $.unsetCanonicalLink();
+        this.canonicalLink.remove();
     }
 
 }
