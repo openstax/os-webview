@@ -664,6 +664,7 @@ $quote-orange: #f66400;
         @include title-font(1.6rem);
         color: $slightly-lighter-text;
         line-height: 2.5rem;
+        font-weight: normal;
         margin-top: unset;
         text-align: right;
     }
@@ -671,7 +672,6 @@ $quote-orange: #f66400;
     .tdlb-regards-name {
         @include title-font(1.6rem);
         color: $slightly-lighter-text;
-        font-weight: normal; 
         line-height: 2.5rem;
         margin-top: unset;
         text-align: right;
