@@ -66,17 +66,12 @@ export default class Map1 extends Controller {
                             itemIndex: 0
                         };
 
-                        this.el.querySelector('.dropDownList').classList.add('single-item-info');
                         if (filterBtn.value === '1') {
                             glbalObj.filterDivClose(filterBtn);
                         }
                         glbalObj.closeTooltip();
                         glbalObj.markerTooltip(data);
-                        glbalObj.regions.dataList.attach(new SchoolinfoHead(modelObj));
-                        glbalObj.regions.dataList.append(new Schoolinfo(modelObj));
-                        if (data[0].fields.testimonial !== null) {
-                            glbalObj.regions.dataList.append(new Testimonialinfo(modelObj));
-                        }
+                        glbalObj.markerClickMOb(modelObj, data, glbalObj);
                     }
                 } catch (e) {
                     console.log(e);
@@ -182,6 +177,24 @@ export default class Map1 extends Controller {
         document.getElementById('back-detail-div').setAttribute('style', 'display: none;');
         document.getElementById('detail-info-mob').setAttribute('style', 'display: block;');
         document.getElementById('testimonial-body-mob').setAttribute('style', 'display: none;');
+    }
+    @on('click .back-detail-single-btn')
+    backToSingleDetail(event) {
+        document.getElementById('back-search-div').setAttribute('style', 'display: block;');
+        document.getElementById('back-detail-single-div').setAttribute('style', 'display: none;');
+        document.getElementById('detail-info-mob').setAttribute('style', 'display: block;');
+        document.getElementById('testimonial-body-mob').setAttribute('style', 'display: none;');
+    }
+    showDetailMob(mapDropDown) {
+        const detailinfoMOb = mapDropDown.el.querySelector('.detail-info-mob');
+        const searchList = mapDropDown.el.querySelector('.search-list');
+
+        searchList.setAttribute('style', 'display: none');
+        this.el.querySelector('.search').setAttribute('style', 'display: none;');
+        detailinfoMOb.setAttribute('style', 'display: block');
+        document.getElementById('back-search-div').setAttribute('style', 'display: block;');
+        document.getElementById('back-result-div').setAttribute('style', 'display: none;');
+        document.getElementById('back-detail-div').setAttribute('style', 'display: none;');
     }
     markerTooltip(data) {
         const iName = data[0].fields.name;
@@ -289,6 +302,7 @@ export default class Map1 extends Controller {
 
         if (window.innerWidth < 960) {
             searchInput.setAttribute('style', 'border: unset;width: 26.6;margin-right: unset;');
+            this.el.querySelector('.search').setAttribute('style', 'display: flex;');
             this.el.querySelector('.back-search-div').setAttribute('style', 'display: none;');
             this.el.querySelector('.searchimg').setAttribute('style', 'display: initial');
         }
@@ -374,6 +388,31 @@ export default class Map1 extends Controller {
 
             this.el.querySelector('.srch').setAttribute('style', styl);
             this.el.querySelector('.searchimg').setAttribute('style', 'display: none');
+        }
+    }
+    markerClickMOb(modelObj, data, glbalObj) {
+        if (window.innerWidth > 960) {
+            this.el.querySelector('.dropDownList').classList.add('single-item-info');
+            glbalObj.regions.dataList.attach(new SchoolinfoHead(modelObj));
+            glbalObj.regions.dataList.append(new Schoolinfo(modelObj));
+            if (data[0].fields.testimonial !== null) {
+                glbalObj.regions.dataList.append(new Testimonialinfo(modelObj));
+            }
+        } else {
+            const dropDownObj= new Dropdown('single_value');
+            const unqClassDetailMob = '.detail-info-mob';
+            const unqClassTestMob = '.testimonial-body-mob';
+            const Region = dropDownObj.regions.self.constructor;
+            const regionDetailInfoMob = new Region(unqClassDetailMob, dropDownObj);
+            const regionTestimonialMob = new Region(unqClassTestMob, dropDownObj);
+
+            this.showDetailMob(dropDownObj);
+            glbalObj.regions.dataList.attach(dropDownObj);
+            regionDetailInfoMob.attach(new SchoolinfoHead(modelObj));
+            regionDetailInfoMob.append(new Schoolinfo(Object.assign(modelObj, {iObj: 'single_value'})));
+            if (data[0].fields.testimonial !== null) {
+                regionTestimonialMob.attach(new Testimonialinfo(modelObj));
+            }
         }
     }
     searchListHeight(length) {

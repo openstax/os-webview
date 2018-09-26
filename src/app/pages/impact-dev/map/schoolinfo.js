@@ -18,8 +18,14 @@ export default class Schoolinfo extends Controller {
 
     @on('click .testimonial-head')
     tesnimonialClick(event) {
-        document.getElementById('back-result-div').setAttribute('style', 'display: none;');
-        document.getElementById('back-detail-div').setAttribute('style', 'display: block;');
+        if (this.model.iObj==='single_value') {
+            document.getElementById('back-result-div').setAttribute('style', 'display: none;');
+            document.getElementById('back-search-div').setAttribute('style', 'display: none;');
+            document.getElementById('back-detail-single-div').setAttribute('style', 'display: block;');
+        } else {
+            document.getElementById('back-result-div').setAttribute('style', 'display: none;');
+            document.getElementById('back-detail-div').setAttribute('style', 'display: block;');
+        }
         document.getElementById('detail-info-mob').setAttribute('style', 'display: none;');
         document.getElementById('testimonial-body-mob').setAttribute('style', 'display: block;');
     }
