@@ -39,12 +39,18 @@ export default class ImpactDev extends CMSPageController {
 
     onDataLoaded() {
         const tokenn = 'pk.eyJ1Ijoib3BlbnN0YXgiLCJhIjoiY2pnbWtjajZzMDBkczJ6cW1kaDViYW02aCJ9.0w3LCa7lzozzRgXM7xvBfQ';
+        let mapCenter;
 
+        if (window.innerWidth < 960) {
+            mapCenter = [-95.712891, 37.090240];
+        } else {
+            mapCenter = [0, 0];
+        }
         mapboxgl.accessToken = tokenn;
         const map = new mapboxgl.Map({
             container: 'mapdiv',
             style: 'mapbox://styles/openstax/cjhv1z4iq00of2smldg1o0ktw',
-            center: [0, 0],
+            center: mapCenter,
             zoom: 2
         });
 

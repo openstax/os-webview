@@ -29,12 +29,19 @@ export default class SeparateMap extends CMSPageController {
     onDataLoaded() {
         shell.regions.footer.el.setAttribute('hidden', '');
         const tokenn = 'pk.eyJ1Ijoib3BlbnN0YXgiLCJhIjoiY2pnbWtjajZzMDBkczJ6cW1kaDViYW02aCJ9.0w3LCa7lzozzRgXM7xvBfQ';
+        const bounds = [[-90, 90], [-180, 180]];
+        let mapCenter;
 
+        if (window.innerWidth < 960) {
+            mapCenter = [-95.712891, 37.090240];
+        } else {
+            mapCenter = [0, 0];
+        }
         mapboxgl.accessToken = tokenn;
         const mapOb = new mapboxgl.Map({
             container: 'mapd',
             style: 'mapbox://styles/openstax/cjhv1z4iq00of2smldg1o0ktw',
-            center: [0, 0],
+            center: mapCenter,
             zoom: 2
         });
         const mapObject = {
