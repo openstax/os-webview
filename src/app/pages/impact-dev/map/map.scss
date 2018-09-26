@@ -660,10 +660,18 @@ $quote-orange: #f66400;
         }
     }
 
-    .tdlb-regards-desc,
+    .tdlb-regards-desc {
+        @include title-font(1.6rem);
+        color: $slightly-lighter-text;
+        line-height: 2.5rem;
+        margin-top: unset;
+        text-align: right;
+    }
+
     .tdlb-regards-name {
         @include title-font(1.6rem);
         color: $slightly-lighter-text;
+        font-weight: normal; 
         line-height: 2.5rem;
         margin-top: unset;
         text-align: right;
