@@ -38,7 +38,6 @@ export default class Home extends CMSPageController {
     }
 
     onLoaded() {
-        document.title = 'Home - OpenStax';
         shell.header.updateHeaderStyle();
     }
 

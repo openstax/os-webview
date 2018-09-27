@@ -141,6 +141,18 @@ $.hashClick = (event, options = {doHistory: true}) => {
     event.preventDefault();
 };
 
+$.setPageTitleAndDescription = (title, description) => {
+    const descriptionEl = document.querySelector('head meta[name="description"]');
+    const defaultDescription = 'Access our free college textbooks and low-cost learning materials.';
+
+    if (descriptionEl) {
+        descriptionEl.setAttribute('content', description || defaultDescription);
+    } else {
+        console.warn('No description meta entry in page header');
+    }
+    document.title = title ? `${title} - OpenStax` : 'OpenStax';
+};
+
 const invalidEmailPatterns = [
     /@(aol|gmail|hotmail|yahoo).com/i
 ];

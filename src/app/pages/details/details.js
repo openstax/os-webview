@@ -98,7 +98,6 @@ export default class Details extends CMSPageController {
         }
         document.body.classList.remove('page-loading');
         document.body.classList.add('page-loaded');
-        document.title = `${this.pageData.title} - OpenStax`;
         const polish = $.isPolish(this.pageData.title);
         const tabLabels = [polish ? 'Szczegóły książki' : 'Book details'];
         let selectedTab = decodeURIComponent(window.location.search.replace('?', '')) || tabLabels[0];

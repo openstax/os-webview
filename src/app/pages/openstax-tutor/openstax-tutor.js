@@ -57,7 +57,6 @@ export default class Tutor extends CMSPageController {
         /* eslint complexity: 0 */
         const data = this.pageData;
 
-        document.title = `${data.title} - OpenStax`;
         Object.assign(this.model, data);
         this.model.footerHeight = 'collapsed';
         this.update();

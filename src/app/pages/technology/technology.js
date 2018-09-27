@@ -23,10 +23,6 @@ export default class Accessibility extends CMSPageController {
         shell.showLoader();
     }
 
-    onLoaded() {
-        document.title = 'Technology - OpenStax';
-    }
-
     attachBookSelector() {
         const Region = this.regions.self.constructor;
         const target = this.el.querySelector('book-selector');

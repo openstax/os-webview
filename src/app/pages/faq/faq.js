@@ -11,7 +11,6 @@ export default class FAQ extends CMSPageController {
     static description = 'Frequently Asked Questions about OpenStax';
 
     init() {
-        document.title = 'FAQ - OpenStax';
         this.slug = 'pages/faq';
         this.template = template;
         this.css = `/app/pages/faq/faq.css?${VERSION}`;

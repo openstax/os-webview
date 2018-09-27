@@ -56,10 +56,6 @@ export default class Blog extends CMSPageController {
         window.addEventListener('navigate', this.handlePathChange);
     }
 
-    onLoaded() {
-        document.title = 'Blog - OpenStax';
-    }
-
     setTimers() {
         const fireAt = [
             [0, '0-10 seconds', '0-10 seconds'],
