@@ -28,7 +28,7 @@ export default class GetThisTitle extends Controller {
         const arrayOfBookstoreContent = ensureArray(data.bookstore_content);
 
         this.template = polish ? polishTemplate : template;
-        this.css = `/app/components/get-this-title-new/get-this-title.css?${VERSION}`;
+        this.css = `/app/components/get-this-title/get-this-title.css?${VERSION}`;
         this.regions = {
             submenu: '.submenu'
         };
