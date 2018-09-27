@@ -237,12 +237,14 @@ export default class Map1 extends Controller {
         }
     }
     fadOutMovBar() {
+        const styleM = 'height: 0; margin-bottom: 1rem; margin-top: 0;';
+
         this.el.querySelector('.on-map').setAttribute('style', 'display: none;');
         this.el.querySelector('.maptxt').setAttribute('style', 'display: none');
         if (window.innerWidth > 960) {
             this.el.querySelector('.search-container').setAttribute('style', 'margin-top: 3rem;');
         } else {
-            this.el.querySelector('.search-container').setAttribute('style', 'height: 0; margin-bottom: 1rem; margin-top: 0;');
+            this.el.querySelector('.search-container').setAttribute('style', styleM);
         }
     }
     searchRequest(fltrStatus, value) {
