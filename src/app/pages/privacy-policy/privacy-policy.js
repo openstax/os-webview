@@ -21,7 +21,6 @@ export default class PrivacyPolicy extends CMSPageController {
     }
 
     onDataLoaded() {
-        document.title = `${this.pageData.title} - OpenStax`;
         Object.assign(this.model, this.pageData);
         this.update();
         $.insertHtml(this.el, this.model);

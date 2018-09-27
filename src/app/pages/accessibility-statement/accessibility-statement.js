@@ -16,10 +16,6 @@ export default class Accessibility extends CMSPageController {
         shell.showLoader();
     }
 
-    onLoaded() {
-        document.title = 'Accessibility Statement - OpenStax';
-    }
-
     onDataLoaded() {
         $.insertHtml(this.el, this.pageData);
         shell.hideLoader();
