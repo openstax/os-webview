@@ -29,7 +29,7 @@ class Header extends Controller {
 
         this.model = {
             login: `${accounts}/login/openstax/`,
-            logout: `${accounts}/logout/`,
+            logout: `${settings.accountHref}/signout/`,
             user: {
                 username: null,
                 groups: []
@@ -50,8 +50,8 @@ class Header extends Controller {
                         .find((app) => app.name === 'OpenStax Tutor');
 
                     if (foundTutor) {
-                        if (!this.model.user.groups.includes('Tutor')) {
-                            this.model.user.groups.push('Tutor');
+                        if (!this.model.user.groups.includes('OpenStax Tutor')) {
+                            this.model.user.groups.push('OpenStax Tutor');
                         }
                         this.update();
                         this.mainMenu.showTutorTrainingWheel();
@@ -69,13 +69,13 @@ class Header extends Controller {
             this.mainMenu.update();
             if (user.accounts_id) {
                 if (
-                    user.groups.includes('Tutor') &&
+                    user.groups.includes('OpenStax Tutor') &&
                     !localStorage.hasSeenTutorTrainingWheel
                 ) {
                     this.mainMenu.showTutorTrainingWheel();
                     localStorage.setItem('hasSeenTutorTrainingWheel', true);
                 }
-                if (!user.groups.includes('Tutor')) {
+                if (!user.groups.includes('OpenStax Tutor')) {
                     pollAccounts();
                 }
             }

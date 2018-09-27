@@ -2,8 +2,7 @@ import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './banner-carousel.html';
-
-const SCROLL_TICKS = 24;
+import $ from '~/helpers/$';
 
 export default class BannerCarousel extends Controller {
 
@@ -20,12 +19,22 @@ export default class BannerCarousel extends Controller {
     }
 
     getModel() {
-        this.props = this.getProps();
+        const props = this.getProps();
 
+        this.images = $.isMobileDisplay() ? props.smallImages : props.largeImages;
         return {
-            images: this.props,
+            images: this.images,
             frameNumber: this.frameNumber
         };
+    }
+
+    onLoaded() {
+        this.onResize = () => this.update();
+        window.addEventListener('resize', this.onResize);
+    }
+
+    onClose() {
+        window.removeEventListener('resize', this.onResize);
     }
 
     @on('click .dot')
@@ -47,6 +56,7 @@ export default class BannerCarousel extends Controller {
 
     changeFrame(newFrameNumber) {
         const oldFrameNumber = Number(this.frameNumber);
+        const SCROLL_TICKS = $.isMobileDisplay() ? 12 : 24;
         const scrollToFrame = (n) => {
             const divEl = this.el.querySelector('.image-row');
             let posVw = oldFrameNumber * -100;
@@ -68,7 +78,7 @@ export default class BannerCarousel extends Controller {
 
         this.frameNumber = newFrameNumber;
         this.update();
-        if (this.frameNumber >= 0 && this.frameNumber < this.props.length) {
+        if (this.frameNumber >= 0 && this.frameNumber < this.images.length) {
             scrollToFrame(this.frameNumber);
         }
     }

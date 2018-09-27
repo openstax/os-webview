@@ -7,7 +7,7 @@ $.isTouchDevice = () => (
 );
 
 $.isMobileDisplay = () => {
-    return window.innerWidth < 960;
+    return window.innerWidth <= 960;
 };
 
 $.isNode = () => (typeof process !== 'undefined') && (process.release.name === 'node');
@@ -75,6 +75,15 @@ $.isInViewport = (el) => {
         rect.top >= 0 && rect.left >= 0 &&
             rect.bottom <= window.innerHeight &&
             rect.right <= window.innerWidth
+    );
+};
+
+$.overlapsViewport = (el) => {
+    const rect = el.getBoundingClientRect();
+
+    return (
+        (rect.top >= 0 && rect.top <= window.innerHeight) ||
+        (rect.bottom >= 0 && rect.bottom <= window.innerHeight)
     );
 };
 
