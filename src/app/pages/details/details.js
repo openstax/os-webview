@@ -51,6 +51,7 @@ export default class Details extends CMSPageController {
         this.titleImage = null;
 
         this.model = () => this.getModel();
+        this.canonicalLink = $.setCanonicalLink('/details/', this.slug);
     }
 
     getModel() {
@@ -245,6 +246,10 @@ export default class Details extends CMSPageController {
         }));
         this.regions.tabController.attach(tabGroup);
         this.regions.tabContent.attach(contentGroup);
+    }
+
+    onClose() {
+        this.canonicalLink.remove();
     }
 
 }

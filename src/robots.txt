@@ -4,3 +4,5 @@ Disallow: /admin
 Disallow: /l/
 Disallow: /r/
 Disallow: /errata/
+Disallow: /confirmation/
+Disallow: /adoption-confirmation
