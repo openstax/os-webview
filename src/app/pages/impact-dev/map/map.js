@@ -107,11 +107,11 @@ export default class Map1 extends Controller {
         const filterStyle = this.el.querySelector('.filter-style');
         const bachToSearch = this.el.querySelector('.back-search-div');
 
-        if (event.target.value === '0') {
+        if (event.delegateTarget.value === '0') {
             filterStyle.classList.toggle('fa-sliders-h');
             filterStyle.classList.toggle('fa-times');
             this.enableDisableFltr(serchInput.textLength);
-            event.target.value = '1';
+            event.delegateTarget.value = '1';
             dListDiv.innerHTML = '';
             dListDiv.classList.remove('single-item-info');
             filterDiv.setAttribute('style', 'display: block');
@@ -119,7 +119,7 @@ export default class Map1 extends Controller {
                 bachToSearch.setAttribute('style', 'display: block;');
             }
         } else {
-            this.filterDivClose(event.target);
+            this.filterDivClose(event.delegateTarget);
         }
     }
     filterDivClose(event) {
@@ -237,12 +237,14 @@ export default class Map1 extends Controller {
         }
     }
     fadOutMovBar() {
+        const styleM = 'height: 0; margin-bottom: 1rem; margin-top: 0;';
+
         this.el.querySelector('.on-map').setAttribute('style', 'display: none;');
         this.el.querySelector('.maptxt').setAttribute('style', 'display: none');
         if (window.innerWidth > 960) {
             this.el.querySelector('.search-container').setAttribute('style', 'margin-top: 3rem;');
         } else {
-            this.el.querySelector('.search-container').setAttribute('style', 'height: 0; margin-bottom: 1rem;');
+            this.el.querySelector('.search-container').setAttribute('style', styleM);
         }
     }
     searchRequest(fltrStatus, value) {

@@ -52,6 +52,18 @@ $quote-orange: #f66400;
             justify-content: flex-end;
             margin-bottom: 1rem;
             margin-left: unset;
+            margin-top: 2.3rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            width: 100%;
+        }
+
+        @include width-up-to($phone-max) {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            margin-bottom: 1rem;
+            margin-left: unset;
             margin-top: 0;
             padding-left: 1rem;
             padding-right: 1rem;
@@ -663,8 +675,8 @@ $quote-orange: #f66400;
     .tdlb-regards-desc {
         @include title-font(1.6rem);
         color: $slightly-lighter-text;
-        line-height: 2.5rem;
         font-weight: normal;
+        line-height: 2.5rem;
         margin-top: unset;
         text-align: right;
     }
