@@ -42,33 +42,35 @@ class CMSPageController extends Controller {
         if (this.slug) {
             /* eslint arrow-parens: 0 */ // eslint does not like async arrow functions
             (async () => {
+                const setPageDescriptor = () => {
+                    // If this component is the content of main, set page descriptor
+                    if (this.el) {
+                        const mainEl = document.getElementById('main');
+
+                        if (mainEl && this.el.parentNode === mainEl) {
+                            const pageData = this.pageData;
+                            const meta = pageData.meta || {};
+                            const defaultDescription = pageData.description ?
+                                $.htmlToText(pageData.description) : '';
+
+                            $.setPageTitleAndDescription(
+                                meta.seo_title || pageData.title,
+                                meta.search_description || defaultDescription
+                            );
+                        }
+                    }
+                };
+
                 try {
                     const apiUrl = await getUrlFor(this.slug);
                     const data = await fetch(apiUrl, {credentials: 'include'})
                         .then((response) => response.json());
-                    const setTitleAndDescription = () => {
-                        const pageData = this.pageData;
-                        const meta = pageData.meta || {};
-                        const defaultDescription = pageData.description ?
-                            $.htmlToText(pageData.description) : '';
-
-                        $.setPageTitleAndDescription(
-                            meta.seo_title || pageData.title,
-                            meta.search_description || defaultDescription
-                        );
-                    };
 
                     this.pageData = this.preserveWrapping ? data : CMSPageController[TRANSFORM_DATA](data);
                     this.pageData.slug = this.slug;
 
                     await this[LOAD_IMAGES](this.pageData);
-
-                    // If this component is the content of main, set page descriptor
-                    const elParentId = this.el && this.el.parentNode && this.el.parentNode.id;
-
-                    if (elParentId === 'main') {
-                        setTitleAndDescription();
-                    }
+                    setPageDescriptor();
 
                     this.onDataLoaded();
                 } catch (e) {
