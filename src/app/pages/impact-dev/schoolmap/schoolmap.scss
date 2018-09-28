@@ -59,6 +59,12 @@
         }
     }
 
+    .linkarrow {
+        color: #027eb5;
+        font-size: 1.18rem;
+        margin-left: 0.3rem;
+    }
+
     .map-img {
         @include width-up-to($tablet-max) {
             width: 60rem;
