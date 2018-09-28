@@ -42,7 +42,7 @@ class CMSPageController extends Controller {
         if (this.slug) {
             /* eslint arrow-parens: 0 */ // eslint does not like async arrow functions
             (async () => {
-                function setPageDescriptor() {
+                const setPageDescriptor = () => {
                     const setTitleAndDescription = () => {
                         const pageData = this.pageData;
                         const meta = pageData.meta || {};
@@ -56,14 +56,14 @@ class CMSPageController extends Controller {
                     };
 
                     // If this component is the content of main, set page descriptor
-                    if (this.el) {
+                    if (this.el && this.el.parentNode) {
                         const mainEl = document.getElementById('main');
 
                         if (mainEl && this.el.parentNode === mainEl) {
                             setTitleAndDescription();
                         }
                     }
-                }
+                };
 
                 try {
                     const apiUrl = await getUrlFor(this.slug);
