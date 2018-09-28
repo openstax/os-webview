@@ -64,7 +64,7 @@ class CMSPageController extends Controller {
                     await this[LOAD_IMAGES](this.pageData);
 
                     // If this component is the content of main, set page descriptor
-                    const elParentId = this.el && this.el.parentNode.id;
+                    const elParentId = this.el && this.el.parentNode && this.el.parentNode.id;
 
                     if (elParentId === 'main') {
                         setTitleAndDescription();
