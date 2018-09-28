@@ -110,7 +110,7 @@ export default class Map1 extends Controller {
         if (event.delegateTarget.value === '0') {
             filterStyle.classList.toggle('fa-sliders-h');
             filterStyle.classList.toggle('fa-times');
-            this.enableDisableFltr(serchInput.textLength);
+            this.enableDisableFltr(serchInput.value.length);
             event.delegateTarget.value = '1';
             dListDiv.innerHTML = '';
             dListDiv.classList.remove('single-item-info');
