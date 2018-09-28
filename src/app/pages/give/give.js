@@ -32,7 +32,6 @@ export default class Give extends CMSPageController {
     'free and low-cost educational materials. Your gift changes lives.';
 
     init() {
-        document.title = 'Give - OpenStax';
         this.template = template;
         this.model = {
             headline: '',

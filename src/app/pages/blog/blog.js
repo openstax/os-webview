@@ -56,10 +56,6 @@ export default class Blog extends CMSPageController {
         window.addEventListener('navigate', this.handlePathChange);
     }
 
-    onLoaded() {
-        document.title = 'Blog - OpenStax';
-    }
-
     setTimers() {
         const fireAt = [
             [0, '0-10 seconds', '0-10 seconds'],
@@ -146,9 +142,11 @@ export default class Blog extends CMSPageController {
 
     otherArticles(exceptThisSlug) {
         this.regions.articles.empty();
-        for (const slug of this.articleSlugs.filter((s) => s !== exceptThisSlug)) {
-            this.regions.articles.append(new Article(this.articles[slug]));
-        }
+        this.articleSlugs
+            .filter((s) => s !== exceptThisSlug)
+            .forEach((slug) => {
+                this.regions.articles.append(new Article(this.articles[slug]));
+            });
     }
 
     @on('click a[href^="/blog"]')

@@ -10,7 +10,6 @@ export default class Foundation extends CMSPageController {
         'Hewlett Foundation, and more.';
 
     init() {
-        document.title = 'Sponsors - OpenStax';
         this.template = template;
         this.css = `/app/pages/foundation/foundation.css?${VERSION}`;
         this.view = {

@@ -51,6 +51,7 @@ export default class Details extends CMSPageController {
         this.titleImage = null;
 
         this.model = () => this.getModel();
+        this.canonicalLink = $.setCanonicalLink('/details/', this.slug);
     }
 
     getModel() {
@@ -97,7 +98,6 @@ export default class Details extends CMSPageController {
         }
         document.body.classList.remove('page-loading');
         document.body.classList.add('page-loaded');
-        document.title = `${this.pageData.title} - OpenStax`;
         const polish = $.isPolish(this.pageData.title);
         const tabLabels = [polish ? 'Szczegóły książki' : 'Book details'];
         let selectedTab = decodeURIComponent(window.location.search.replace('?', '')) || tabLabels[0];
@@ -245,6 +245,10 @@ export default class Details extends CMSPageController {
         }));
         this.regions.tabController.attach(tabGroup);
         this.regions.tabContent.attach(contentGroup);
+    }
+
+    onClose() {
+        this.canonicalLink.remove();
     }
 
 }

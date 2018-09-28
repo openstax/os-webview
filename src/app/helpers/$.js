@@ -7,7 +7,7 @@ $.isTouchDevice = () => (
 );
 
 $.isMobileDisplay = () => {
-    return window.innerWidth < 960;
+    return window.innerWidth <= 960;
 };
 
 $.isNode = () => (typeof process !== 'undefined') && (process.release.name === 'node');
@@ -78,6 +78,15 @@ $.isInViewport = (el) => {
     );
 };
 
+$.overlapsViewport = (el) => {
+    const rect = el.getBoundingClientRect();
+
+    return (
+        (rect.top >= 0 && rect.top <= window.innerHeight) ||
+        (rect.bottom >= 0 && rect.bottom <= window.innerHeight)
+    );
+};
+
 $.scrollTo = (el, offset = 0) => {
     const getOffsetTop = () => {
         const rect = el.getBoundingClientRect();
@@ -132,6 +141,18 @@ $.hashClick = (event, options = {doHistory: true}) => {
     event.preventDefault();
 };
 
+$.setPageTitleAndDescription = (title, description) => {
+    const descriptionEl = document.querySelector('head meta[name="description"]');
+    const defaultDescription = 'Access our free college textbooks and low-cost learning materials.';
+
+    if (descriptionEl) {
+        descriptionEl.setAttribute('content', description || defaultDescription);
+    } else {
+        console.warn('No description meta entry in page header');
+    }
+    document.title = title ? `${title} - OpenStax` : 'OpenStax';
+};
+
 const invalidEmailPatterns = [
     /@(aol|gmail|hotmail|yahoo).com/i
 ];
@@ -146,6 +167,18 @@ $.testInstitutionalEmail = (element) => {
     }
 
     return true;
+};
+
+$.setCanonicalLink = (path, slug = '') => {
+    const host = 'http://openstax.org';
+    const el = document.createElement('link');
+    const titleEl = document.querySelector('head title');
+
+    // Insert after title
+    titleEl.parentNode.insertBefore(el, titleEl.nextSibling);
+    el.setAttribute('rel', 'canonical');
+    el.setAttribute('href', `${host}${path}${slug}`);
+    return el;
 };
 
 $.htmlToText = (html) => {

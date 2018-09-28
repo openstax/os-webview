@@ -23,15 +23,16 @@
         top: 0;
     }
 
-    canvas {
-        @include width-up-to($tablet-max) {
-            position: unset !important;
+    @include width-up-to($tablet-max) {
+        .mapboxgl-canvas-container {
+            height: 100%;
+            position: relative;
         }
     }
 
     .mapbox {
         @include width-up-to($tablet-max) {
-            height: 0;
+            height: auto;
             position: absolute;
             width: 100%;
         }

@@ -21,6 +21,7 @@
         display: flex;
         flex-flow: row wrap;
         margin-bottom: 3rem;
+        min-height: 20rem;
 
         > .article {
             margin-bottom: 0;
@@ -155,6 +156,11 @@
 
         h3 {
             @include set-font(h4);
+        }
+
+        // TODO: Remove when fixed in Pattern Library
+        a {
+            display: inline;
         }
 
         .img {

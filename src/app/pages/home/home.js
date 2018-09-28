@@ -38,7 +38,6 @@ export default class Home extends CMSPageController {
     }
 
     onLoaded() {
-        document.title = 'Home - OpenStax';
         shell.header.updateHeaderStyle();
     }
 
@@ -51,7 +50,10 @@ export default class Home extends CMSPageController {
     }
 
     onDataLoaded() {
-        const bannerCarousel = new BannerCarousel(() => this.pageData.banner_images);
+        const bannerCarousel = new BannerCarousel(() => ({
+            largeImages: this.pageData.banner_images,
+            smallImages: this.pageData.mobile_banner_images
+        }));
 
         this.regions.banners.attach(bannerCarousel);
 

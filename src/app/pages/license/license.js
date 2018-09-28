@@ -12,10 +12,6 @@ export default class License extends CMSPageController {
         this.slug = 'pages/license';
     }
 
-    onLoaded() {
-        document.title = 'License - OpenStax';
-    }
-
     onDataLoaded() {
         $.insertHtml(this.el, this.pageData);
     }

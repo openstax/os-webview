@@ -1,4 +1,5 @@
 import settings from 'settings';
+import $ from '~/helpers/$';
 import {Controller} from 'superb.js';
 import {bookPromise} from '~/models/book-titles';
 
@@ -45,11 +46,29 @@ class CMSPageController extends Controller {
                     const apiUrl = await getUrlFor(this.slug);
                     const data = await fetch(apiUrl, {credentials: 'include'})
                         .then((response) => response.json());
+                    const setTitleAndDescription = () => {
+                        const pageData = this.pageData;
+                        const meta = pageData.meta || {};
+                        const defaultDescription = pageData.description ?
+                            $.htmlToText(pageData.description) : '';
+
+                        $.setPageTitleAndDescription(
+                            meta.seo_title || pageData.title,
+                            meta.search_description || defaultDescription
+                        );
+                    };
 
                     this.pageData = this.preserveWrapping ? data : CMSPageController[TRANSFORM_DATA](data);
                     this.pageData.slug = this.slug;
 
                     await this[LOAD_IMAGES](this.pageData);
+
+                    // If this component is the content of main, set page descriptor
+                    const elParentId = this.el && this.el.parentNode.id;
+
+                    if (elParentId === 'main') {
+                        setTitleAndDescription();
+                    }
 
                     this.onDataLoaded();
                 } catch (e) {
