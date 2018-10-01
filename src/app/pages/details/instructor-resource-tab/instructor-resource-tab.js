@@ -32,7 +32,8 @@ export default class InstructorResourceTab extends Controller {
                 const resourceBox = new ResourceBox(
                     Object.assign({
                         heading: resourceData.resource_heading,
-                        description: resourceData.resource_description
+                        description: resourceData.resource_description,
+                        creatorFest: resourceData.creator_fest_resource
                     }, ResourceBox.instructorResourceBoxPermissions(resourceData, userStatus, 'Instructor resources'))
                 );
 

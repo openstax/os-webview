@@ -31,7 +31,8 @@ export default class InstructorResourcePane extends Controller {
                 const resourceBox = new ResourceBox(
                     Object.assign({
                         heading: res.resource_heading,
-                        description: ''
+                        description: '',
+                        creatorFest: res.creator_fest_resource
                     }, ResourceBox.instructorResourceBoxPermissions(res, userStatus, 'Instructor resources'))
                 );
 
