@@ -11,7 +11,7 @@ import settings from 'settings';
 // but probably will do so eventually
 const dqMatch = settings.accountHref.match(/-[^.]+/);
 const domainQualifier = dqMatch ? dqMatch[0] : '';
-const tutorDomain = `https://tutor${domainQualifier}.openstax.org/`;
+const tutorDomain = `https://tutor${domainQualifier}.openstax.org/dashboard`;
 
 export default class MainMenu extends Controller {
 
