@@ -41,7 +41,7 @@ export default class ImpactDev extends CMSPageController {
         const tokenn = 'pk.eyJ1Ijoib3BlbnN0YXgiLCJhIjoiY2pnbWtjajZzMDBkczJ6cW1kaDViYW02aCJ9.0w3LCa7lzozzRgXM7xvBfQ';
         let mapCenter;
 
-        if (window.innerWidth < 960) {
+        if ($.isMobileDisplay()) {
             mapCenter = [-95.712891, 37.090240];
         } else {
             mapCenter = [0, 0];
@@ -54,7 +54,6 @@ export default class ImpactDev extends CMSPageController {
             zoom: 2
         });
 
-        console.log(map);
         map.scrollZoom.disable();
         map.dragPan.disable();
         map.doubleClickZoom.disable();

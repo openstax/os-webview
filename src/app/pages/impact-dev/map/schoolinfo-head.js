@@ -12,11 +12,7 @@ export default class SchoolinfoHead extends Controller {
         this.view = {
             classes: ['list-data', 'detail-info-head']
         };
-        this.model= props;
-    }
-
-    onLoaded() {
-        $.insertHtml(this.el, this.model);
+        this.model= props.dataArray[props.itemIndex].fields;
     }
 
 }

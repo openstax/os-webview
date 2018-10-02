@@ -5,7 +5,7 @@ import {description as template} from './testimonial.html';
 import {on} from '~/helpers/controller/decorators';
 import mapboxgl from 'mapbox-gl';
 
-export default class Schoolinfo extends Controller {
+export default class Testmonialinfo extends Controller {
 
     init(props) {
         this.template = template;
@@ -14,10 +14,6 @@ export default class Schoolinfo extends Controller {
             classes: ['toggle-datalist-body']
         };
         this.model = props;
-    }
-
-    onLoaded() {
-        $.insertHtml(this.el, this.model);
     }
 
 }

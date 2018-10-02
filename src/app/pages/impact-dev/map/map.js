@@ -37,7 +37,7 @@ export default class Map1 extends Controller {
         const glbalObj = this;
         const filterBtn = this.el.querySelector('.filter-btn');
 
-        if (window.innerWidth < 960) {
+        if ($.isMobileDisplay()) {
             const filterStatus = this.el.querySelector('.srch');
 
             filterStatus.setAttribute('placeholder', 'Search location or instituion name');
@@ -107,6 +107,7 @@ export default class Map1 extends Controller {
         const filterStyle = this.el.querySelector('.filter-style');
         const bachToSearch = this.el.querySelector('.back-search-div');
 
+        // TODO: This should be done using model variables in the template
         if (event.delegateTarget.value === '0') {
             filterStyle.classList.toggle('fa-sliders-h');
             filterStyle.classList.toggle('fa-times');
@@ -115,7 +116,7 @@ export default class Map1 extends Controller {
             dListDiv.innerHTML = '';
             dListDiv.classList.remove('single-item-info');
             filterDiv.setAttribute('style', 'display: block');
-            if (window.innerWidth < 960) {
+            if ($.isMobileDisplay()) {
                 bachToSearch.setAttribute('style', 'display: block;');
             }
         } else {
@@ -132,7 +133,7 @@ export default class Map1 extends Controller {
         event.value = '0';
         filterDiv.setAttribute('style', 'display: none');
         this.setFilterValuesOnClose();
-        if (window.innerWidth < 960) {
+        if ($.isMobileDisplay()) {
             bachToSearch.setAttribute('style', 'display: none;');
         }
     }
@@ -197,15 +198,16 @@ export default class Map1 extends Controller {
         document.getElementById('back-detail-div').setAttribute('style', 'display: none;');
     }
     markerTooltip(data) {
-        const iName = data[0].fields.name;
-        const pCity = data[0].fields.physical_city;
-        const pState = data[0].fields.physical_state_province;
+        const dField = data[0].fields;
+        const iName = dField.name;
+        const pCity = dField.physical_city;
+        const pState = dField.physical_state_province;
         const mtooltip = new mapboxgl.Popup({
             closeButton: false,
             closeOnClick: false
         });
 
-        mtooltip.setLngLat([data[0].fields.lat, data[0].fields.long]);
+        mtooltip.setLngLat([dField.lat, dField.long]);
         mtooltip.setHTML(`<b>${iName}</b><br>${pCity}, ${pState}`);
         mtooltip.addTo(this.mapObject);
         this.tooltip = mtooltip;
@@ -223,13 +225,13 @@ export default class Map1 extends Controller {
         this.el.querySelector('.maptxt').setAttribute('style', styleF + styleS);
         setTimeout(() => {
             this.el.querySelector('.on-map').setAttribute('style', 'display: none');
-            if (window.innerWidth > 960) {
+            if (!$.isMobileDisplay()) {
                 this.el.querySelector('.maptxt').setAttribute('style', 'display: none');
             }
         }, 3500);
     }
     movBar() {
-        if (window.innerWidth > 960) {
+        if (!$.isMobileDisplay()) {
             const styleT = 'transition: all 1.5s ease-out;-webkit-transition: all 1.5s ease-out;';
             const styleFr = '-moz-transition: all 1.5s ease-out;-o-transition: all 1.5s ease-out;margin-top: 3rem;';
 
@@ -241,7 +243,7 @@ export default class Map1 extends Controller {
 
         this.el.querySelector('.on-map').setAttribute('style', 'display: none;');
         this.el.querySelector('.maptxt').setAttribute('style', 'display: none');
-        if (window.innerWidth > 960) {
+        if (!$.isMobileDisplay()) {
             this.el.querySelector('.search-container').setAttribute('style', 'margin-top: 3rem;');
         } else {
             this.el.querySelector('.search-container').setAttribute('style', styleM);
@@ -261,7 +263,7 @@ export default class Map1 extends Controller {
                 const data = await response.json();
 
                 if (data.length) {
-                    if (window.innerWidth < 960) {
+                    if ($.isMobileDisplay()) {
                         bachToSearch.setAttribute('style', 'display: block;');
                     }
                     this.model = {
@@ -275,7 +277,7 @@ export default class Map1 extends Controller {
                 } else {
                     const list = new Dropdown('empty_result');
 
-                    if (window.innerWidth < 960) {
+                    if ($.isMobileDisplay()) {
                         bachToSearch.setAttribute('style', 'display: block;');
                     }
                     this.regions.dataList.attach(list);
@@ -302,7 +304,7 @@ export default class Map1 extends Controller {
         this.model = [];
         const list = new Dropdown(this.model);
 
-        if (window.innerWidth < 960) {
+        if ($.isMobileDisplay()) {
             searchInput.setAttribute('style', 'border: unset;width: 26.6;margin-right: unset;');
             this.el.querySelector('.search').setAttribute('style', 'display: flex;');
             this.el.querySelector('.back-search-div').setAttribute('style', 'display: none;');
@@ -385,7 +387,7 @@ export default class Map1 extends Controller {
         }
     }
     validateMob() {
-        if (window.innerWidth < 960) {
+        if ($.isMobileDisplay()) {
             const styl = 'border: 0.1rem solid #d5d5d5; border-radius: 0.2rem; margin-right: 0.7rem;';
 
             this.el.querySelector('.srch').setAttribute('style', styl);
@@ -393,7 +395,7 @@ export default class Map1 extends Controller {
         }
     }
     markerClickMOb(modelObj, data, glbalObj) {
-        if (window.innerWidth > 960) {
+        if (!$.isMobileDisplay()) {
             this.el.querySelector('.dropDownList').classList.add('single-item-info');
             glbalObj.regions.dataList.attach(new SchoolinfoHead(modelObj));
             glbalObj.regions.dataList.append(new Schoolinfo(modelObj));
@@ -415,21 +417,6 @@ export default class Map1 extends Controller {
             if (data[0].fields.testimonial !== null) {
                 regionTestimonialMob.attach(new Testimonialinfo(modelObj));
             }
-        }
-    }
-    searchListHeight(length) {
-        const searchContainer = this.el.querySelector('.search-container');
-
-        switch (length) {
-        case 1:
-            searchContainer.setAttribute('style', 'margin-top: 38.5rem;');
-            break;
-        case 2:
-            searchContainer.setAttribute('style', 'margin-top: 31.5rem;');
-            break;
-        default:
-            searchContainer.setAttribute('style', 'margin-top: 24.5rem;');
-            break;
         }
     }
 

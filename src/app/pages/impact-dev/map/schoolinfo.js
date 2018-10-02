@@ -3,6 +3,7 @@ import {Controller} from 'superb.js';
 import {description as template} from './schoolinfo.html';
 import {on} from '~/helpers/controller/decorators';
 import Dropdown from './mapdropdown';
+import Testimonialinfo from './testimonial';
 
 export default class Schoolinfo extends Controller {
 
@@ -33,7 +34,7 @@ export default class Schoolinfo extends Controller {
     @on('click .nxt-previous-links')
     rightLink(event) {
         const target = event.delegateTarget;
-        const currentIndex = target.dataset.index;
+        const currentIndex = this.model.itemIndex;
         const action = target.dataset.action;
         const dArray = this.model.dataArray;
         const schoolHeader = this.model.shObj;
@@ -49,11 +50,18 @@ export default class Schoolinfo extends Controller {
 
             this.model.itemIndex = validIndex;
             const pObject = dropdownObj.flyToPopUp(objS, offSet, dArray, validIndex);
+            const Region = dropdownObj.regions.self.constructor;
+            const unqClassTestMob = '.testimonial-body-mob';
+            const regionTestimonialMob = new Region(unqClassTestMob, dropdownObj);
+            const validField = this.model.dataArray[validIndex].fields;
 
             this.popObject = pObject;
-            schoolHeader.model = this.model;
+            schoolHeader.model = validField;
             schoolHeader.update();
             this.update();
+            if (validField.testimonial !== null) {
+                regionTestimonialMob.attach(new Testimonialinfo(this.model));
+            }
         }
     }
     chkValidindex(act, arr, currentIndex) {
@@ -65,8 +73,6 @@ export default class Schoolinfo extends Controller {
         } else {
             nextIndex = Number(currentIndex)-1;
         }
-
-        const aaa = arr[nextIndex];
 
         if (nextIndex in arr) {
             rslt = nextIndex;

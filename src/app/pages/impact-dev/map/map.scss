@@ -5,6 +5,7 @@ $slider-active-bg: #498de2;
 $slightly-lighter-text: #4a4a4a;
 $slightly-lighter-bg: #f8f8f8;
 $quote-orange: #f66400;
+$narrow-breakpoint: 60em * $scale-factor;
 
 .mapdiv {
     height: 80rem;
@@ -22,7 +23,7 @@ $quote-orange: #f66400;
 }
 
 .mapbox {
-    @include wider-than(60rem) {
+    @include wider-than($narrow-breakpoint) {
         height: 80rem;
     }
 
@@ -44,7 +45,7 @@ $quote-orange: #f66400;
         margin-top: 13rem;
         position: relative;
         width: 63.4rem;
-        z-index: 99999;
+        z-index: 3;
 
         @include width-up-to($tablet-max) {
             display: flex;
@@ -59,15 +60,7 @@ $quote-orange: #f66400;
         }
 
         @include width-up-to($phone-max) {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            margin-bottom: 1rem;
-            margin-left: unset;
             margin-top: 0;
-            padding-left: 1rem;
-            padding-right: 1rem;
-            width: 100%;
         }
     }
 
@@ -93,7 +86,7 @@ $quote-orange: #f66400;
         padding-top: 4rem;
         position: relative;
         width: 64rem;
-        z-index: 9999;
+        z-index: 2;
 
         @include width-up-to($phone-max) {
             padding-bottom: 3rem;
@@ -111,7 +104,7 @@ $quote-orange: #f66400;
         overflow: hidden;
         position: relative;
         width: 100%;
-        z-index: 999;
+        z-index: 1;
 
         @include width-up-to($phone-max) {
             bottom: 0;
@@ -362,7 +355,6 @@ $quote-orange: #f66400;
         border-radius: 0 0 0.3rem 0.3rem;
         list-style-type: none;
         margin: unset;
-        //max-height: calc(100vh - 23.8rem);
         max-height: 41rem;
         overflow-x: hidden;
         overflow-y: scroll;
@@ -428,7 +420,7 @@ $quote-orange: #f66400;
 
     .detail-info-head {
         @include width-up-to($tablet-max) {
-            padding-left: 1.5rem;
+            padding-left: $normal-margin;
         }
     }
 
@@ -521,7 +513,6 @@ $quote-orange: #f66400;
 
         @include width-up-to($tablet-max) {
             border: 0.1rem solid ui-color(form-border);
-            border-left: 0.1rem solid ui-color(form-border);
             border-radius: 0.3rem;
             display: block;
             margin-bottom: 1rem;
@@ -567,6 +558,9 @@ $quote-orange: #f66400;
     }
 
     .rcolumn-body {
+        @include set-font(helper-label);
+        color: $slightly-lighter-text;
+        line-height: 1.6rem;
         margin-top: 1rem;
 
         @include width-up-to($phone-max) {
@@ -743,10 +737,6 @@ $quote-orange: #f66400;
         padding-right: 0.5rem;
     }
 
-    element {
-        margin-left: 1.5rem;
-    }
-
     .filter-container {
         margin-left: 2rem;
         margin-right: 2rem;
@@ -801,7 +791,7 @@ $quote-orange: #f66400;
     }
 
     .apply-flt-enabled {
-        background-color: #f36b32;
+        background-color: os-color(orange);
         cursor: pointer;
     }
 

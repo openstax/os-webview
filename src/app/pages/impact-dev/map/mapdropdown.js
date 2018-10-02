@@ -1,5 +1,6 @@
 import VERSION from '~/version';
 import {Controller} from 'superb.js';
+import $ from '~/helpers/$';
 import {description as template} from './mapdropdown.html';
 import {on} from '~/helpers/controller/decorators';
 import Schoolinfo from './schoolinfo';
@@ -40,7 +41,7 @@ export default class Mapdropdown extends Controller {
             mapObject: mObj
         };
 
-        if (window.innerWidth < 960) {
+        if ($.isMobileDisplay()) {
             const unqClassDetailMob = '.detail-info-mob';
             const unqClassTestMob = '.testimonial-body-mob';
             const regionDetailInfoMob = new Region(unqClassDetailMob, this);
@@ -79,7 +80,6 @@ export default class Mapdropdown extends Controller {
         const toggleOnoff = target.dataset.toggle;
         const filterStyle = this.el.querySelector(`#icon-${unqId}`);
         const searchList = this.el.querySelector('.search-list');
-        const mObj = this.model.mapObj;
         const showing = this.el.querySelectorAll('[data-toggle=hide]');
 
         filterStyle.classList.toggle('fa-chevron-down');
@@ -117,11 +117,12 @@ export default class Mapdropdown extends Controller {
         document.getElementById('back-result-div').setAttribute('style', 'display: block;');
     }
     flyToPopUp(objectS, offSet, lData, indexItem) {
-        const lat = lData[indexItem].fields.lat;
-        const long = lData[indexItem].fields.long;
-        const iName = lData[indexItem].fields.name;
-        const pCity = lData[indexItem].fields.physical_city;
-        const pState = lData[indexItem].fields.physical_state_province;
+        const fields = lData[indexItem].fields;
+        const lat = fields.lat;
+        const long = fields.long;
+        const iName = fields.name;
+        const pCity = fields.physical_city;
+        const pState = fields.physical_state_province;
 
         if (objectS.pObject !== 'empty') {
             objectS.pObject.remove();

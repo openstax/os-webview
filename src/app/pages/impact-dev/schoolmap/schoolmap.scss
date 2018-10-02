@@ -1,10 +1,13 @@
 @import 'pattern-library/core/pattern-library/headers';
 
+$text-color: #00347c;
+$narrow-breakpoint: 60em * $scale-factor;
+
 .schoolmapdiv {
     background: radial-gradient(circle, rgba(0, 36, 105, 0.15) 0%, rgba(37, 192, 218, 0) 100%);
     background-color: #e1f5f9;
 
-    @include wider-than(60rem) {
+    @include wider-than($narrow-breakpoint) {
         height: 86rem;
         overflow: hidden;
     }
@@ -29,9 +32,9 @@
 }
 
 .schoolmapbox {
-   // background-size: 697px 348px ;
+
     .txthead {
-        color: #00347c;
+        color: $text-color;
         font-size: 3.6rem;
         font-weight: bold;
         letter-spacing: -1.44px;
@@ -45,7 +48,7 @@
     }
 
     .txtbdy {
-        color: #00347c;
+        color: $text-color;
         font-size: 1.8rem;
         padding-bottom: 2rem;
         padding-top: 2rem;
@@ -60,7 +63,7 @@
     }
 
     .linkarrow {
-        color: #027eb5;
+        color: text-color(link);
         font-size: 1.18rem;
         margin-left: 0.3rem;
     }

@@ -32,7 +32,7 @@ export default class SeparateMap extends CMSPageController {
         const bounds = [[-90, 90], [-180, 180]];
         let mapCenter;
 
-        if (window.innerWidth < 960) {
+        if ($.isMobileDisplay()) {
             mapCenter = [-95.712891, 37.090240];
         } else {
             mapCenter = [0, 0];

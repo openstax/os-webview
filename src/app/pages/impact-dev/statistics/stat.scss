@@ -63,8 +63,8 @@
     }
 
     .u-txt1 {
-        color: #424242;
-        font-size: 5.6rem;
+        @include title-font(5.6rem);
+        color: text-color(normal);
         font-weight: bold;
         letter-spacing: -1.2px;
         line-height: 3.4rem;
@@ -77,9 +77,8 @@
     }
 
     .scd-txt {
-        color: #424242;
-        font-size: 1.6rem;
-        line-height: 2.5rem;
+        @include set-font(body-regular);
+        color: text-color(normal);
         padding-left: 14%;
         padding-right: 7%;
         padding-top: 4%;
