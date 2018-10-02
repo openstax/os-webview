@@ -1,0 +1,80 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+$text-color: #00347c;
+$narrow-breakpoint: 60em * $scale-factor;
+
+.schoolmapdiv {
+    background: radial-gradient(circle, rgba(0, 36, 105, 0.15) 0%, rgba(37, 192, 218, 0) 100%);
+    background-color: #e1f5f9;
+
+    @include wider-than($narrow-breakpoint) {
+        height: 86rem;
+        overflow: hidden;
+    }
+
+    @include width-up-to($phone-max) {
+        height: 60rem;
+    }
+}
+
+.content {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 6rem;
+    padding-top: 5rem;
+}
+
+.schoolmapbox {
+
+    .txthead {
+        color: $text-color;
+        font-size: 3.6rem;
+        font-weight: bold;
+        letter-spacing: -1.44px;
+        width: 45rem;
+
+        @include width-up-to($phone-max) {
+            line-height: 4rem;
+            text-align: center;
+            width: 30rem;
+        }
+    }
+
+    .txtbdy {
+        color: $text-color;
+        font-size: 1.8rem;
+        padding-bottom: 2rem;
+        padding-top: 2rem;
+        width: 55rem;
+
+        @include width-up-to($phone-max) {
+            font-size: 1.8rem;
+            line-height: 2.5rem;
+            text-align: center;
+            width: 32rem;
+        }
+    }
+
+    .linkarrow {
+        color: text-color(link);
+        font-size: 1.18rem;
+        margin-left: 0.3rem;
+    }
+
+    .map-img {
+        @include width-up-to($tablet-max) {
+            width: 60rem;
+        }
+
+        @include width-up-to($phone-max) {
+            width: 32rem;
+        }
+    }
+}

@@ -27,6 +27,8 @@ const PAGES = [
     'give/*path',
     'interest',
     'impact',
+    'impact-dev',
+    'separatemap',
     'license',
     'openstax-tutor',
     'partners',

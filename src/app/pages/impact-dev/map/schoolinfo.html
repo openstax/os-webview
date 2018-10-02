@@ -1,0 +1,24 @@
+<template args="model">
+    <div class="left-btn-link nxt-previous-links" data-action="previous"></div>
+    <div class="content-container">
+        <div class="left-column">
+            <div class="left-column-inner">
+                <div class="lcolumn-head">Student savings</div>
+                <div class="lcolumn-body">
+                    <div class="lcol-body-left">This year:
+                        ${model.dataArray[model.itemIndex].fields.current_year_savings}</div>
+                    <div class="lcol-body-right">Cumulative:
+                        ${model.dataArray[model.itemIndex].fields.all_time_savings}</div>
+                </div>
+            </div>
+        </div>
+        <div class="right-column">
+            <div class="right-column-inner">
+                <div class="rcolumn-head">OpenStax Institutional Partner</div>
+                <div class="rcolumn-body">{model.dataArray[model.itemIndex].fields.key_institutional_partner === true ? 'Yes' : 'No'}</div>
+            </div>
+        </div>
+        <div if="model.dataArray[model.itemIndex].fields.testimonial!=null" id="testimonialHead-{model.itemIndex}" class="testimonial-head">Testimonials</div>
+    </div>
+    <div class="right-btn-link nxt-previous-links" data-action="next"></div>
+</template>

@@ -1,0 +1,78 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.separate-map-main {
+    display: flex;
+    height: 80vh;
+}
+
+.mapd {
+    bottom: 0;
+    height: calc(100% - 11rem);
+    left: 0;
+    margin-top: 11rem;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+
+    @include width-up-to($tablet-max) {
+        display: flex;
+        flex-direction: column-reverse;
+        height: calc(100% - 5.2rem);
+        margin-top: 5.2rem;
+        top: 0;
+    }
+
+    @include width-up-to($tablet-max) {
+        .mapboxgl-canvas-container {
+            height: 100%;
+            position: relative;
+        }
+    }
+
+    .mapbox {
+        @include width-up-to($tablet-max) {
+            height: auto;
+            position: absolute;
+            width: 100%;
+        }
+    }
+}
+
+.back-impact-btn {
+    background-color: white;
+    border-radius: 2.8rem;
+    box-shadow: 0 1rem 3rem 0 rgba(0, 0, 0, 0.3);
+    height: 4rem;
+    width: 4rem;
+}
+
+.back-impact-div {
+    bottom: 2rem;
+    position: fixed;
+    right: 2rem;
+    top: auto;
+
+    @include width-up-to($tablet-max) {
+        bottom: auto;
+        right: 2rem;
+        top: 8rem;
+        z-index: 1;
+    }
+}
+
+.left-arrow-bak {
+    color: #4a4a4a;
+}
+
+.mapboxgl-ctrl-bottom-left {
+    display: none;
+}
+
+.mapboxgl-ctrl-bottom-right {
+    display: none;
+}
+
+.mapboxgl-canvas {
+    top: 0;
+}

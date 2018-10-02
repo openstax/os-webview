@@ -1,0 +1,88 @@
+<template args="model">
+    <div class="search-container" id="search-container">
+        <div id="back-search-div" class="back-search-div"><button id="back-search-btn" class="back-search-btn"><i class="fas fa-arrow-left left-arrow-bak"></i></button></div>
+        <div id="back-result-div" class="back-result-div"><button id="back-result-btn" class="back-result-btn"><i class="fas fa-arrow-left left-arrow-bak"></i></button></div>
+        <div id="back-detail-div" class="back-detail-div"><button id="back-detail-btn" class="back-detail-btn"><i class="fas fa-arrow-left left-arrow-bak"></i></button></div>
+        <div id="back-detail-single-div" class="back-detail-single-div"><button id="back-detail-single-btn" class="back-detail-single-btn"><i class="fas fa-arrow-left left-arrow-bak"></i></button></div>
+        <div class="search-div-container">
+            <a if="model=='landing'" href="/separatemap" class="separate-map-link"><div class="search" id="search">
+                <div id="search_input_div" class="search-input-div">
+                    <input id="srch_input" class="srch" type="text" placeholder="Search by country, state, city, or institution name">
+                </div>
+                <div id="search_img_div" class="search-img-div">
+                    <img class="searchimg" src="./images/home/search.png" alt="">
+                </div>
+                <div id="search_filter_div" class="search-filter-div">
+                    <button class="filter-btn" value="0">
+                        <span class="filter-icons">
+                            <span class="fas fa-sliders-h filter-style"></span>
+                        </span>
+                        <span id="filter-by" class="filter-by">Filter By</span>
+                    </button>
+                </div>
+            </div></a>
+            <div if="model=='separate'" class="search" id="search">
+                <div id="search_input_div" class="search-input-div">
+                    <input id="srch_input" class="srch" type="text" placeholder="Search by country, state, city, or institution name">
+                </div>
+                <div id="search_img_div" class="search-img-div">
+                    <img class="searchimg" src="./images/home/search.png" alt="">
+                </div>
+                <div id="search_filter_div" class="search-filter-div">
+                    <button class="filter-btn" value="0">
+                        <span class="filter-icons">
+                            <span class="fas fa-sliders-h filter-style"></span>
+                        </span>
+                        <span id="filter-by" class="filter-by">Filter By</span>
+                    </button>
+                </div>
+            </div>
+            <div class="dropDownList dropdownlist-id"></div>
+
+            <div id="filter_d" class="filter-div">
+                <div class="filter-container">
+                    <div class="institute-prtnr filter-item">
+                        <label class="label-text">OpenStax institutional partners</label>
+                        <label class="switch institute-prtnr-toggle">
+                            <input class='toggleCheck' name="route" type="checkbox" id="prtnrCheckBox" value="false">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="type-institute filter-item">
+                        <label id="type_institute_txt" class="label-text">Type of Insititution</label>
+                        <div class="switch-wrap">
+                            <select class="switch type-institute-toggle">
+                                <option value="">All</option>
+                                <option value="college">College/University</option>
+                                <option value="technical">Technical/Community College</option>
+                                <option value="high school">High School</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="one-million filter-item">
+                        <label id="one_million_txt" class="label-text">Schools that have saved over $1 million</label>
+                        <label class="switch one-million-toggle">
+                            <input class='toggleCheck' name="route" type="checkbox" id="one_millionCheckBox" value="false">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="testimonial filter-item">
+                        <label id="testimonial_txt" class="label-text">Has testimonial(s)</label>
+                        <label class="switch testimonial-toggle">
+                            <input class='toggleCheck' name="route" type="checkbox" id="testimonialCheckBox" value="false">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="apply-filter filter-item">
+                        <button class="applyfltrbtn primary btn-orange apply-flt-disabled" value='0'>Apply filters</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="maptxt" id="maptxt">
+        We're changing the world, one book at a time!
+    </div>
+</div>
+<div id="on-map" class="on-map"></div>
+</template>

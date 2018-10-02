@@ -1,0 +1,14 @@
+<template args="model">
+    <div each="item in model" class="col1">
+        <div class="col-img-div">
+            <img class="col-img" src="{item.imageUrl}" alt="bag logo">
+        </div>
+        <div class="col-txt">
+        <div class="uper-txt">
+            <div class="u-txt1">{item.uText1}</div>
+            <div class="u-txt2">{item.uText2}</div>
+        </div>
+        <div class="lower-txt">{item.lowerText}</div>
+        </div>
+    </div>
+</template>
