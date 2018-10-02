@@ -222,7 +222,8 @@
             grid-row-gap: 1rem;
 
             a {
-                width: fit-content;
+                align-items: center;
+                grid-template-columns: auto 1fr;
             }
         }
 
