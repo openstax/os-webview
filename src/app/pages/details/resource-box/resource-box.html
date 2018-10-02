@@ -1,6 +1,12 @@
 <template args="model">
     <div class="top">
-        <h3>{model.heading}</h3>
+        <div class="top-line">
+            <h3>{model.heading}</h3>
+            <img if="model.creatorFest"
+                title="Resource created at Creator Fest"
+                src="/images/details/cf-badge.png"
+            >
+        </div>
         <div data-html="description"></div>
     </div>
     <div class="bottom">
@@ -12,11 +18,7 @@
             </if>
         </div>
         <div class="right">
-            <if condition="model.link">
-                <i class="fa fa-{model.iconType}"></i>
-            <else>
-                <i class="fa fa-lock"></i>
-            </if>
+            <i class="fa fa-{model.link ? model.iconType : 'lock'}"></i>
         </div>
     </div>
 </template>

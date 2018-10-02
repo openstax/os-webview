@@ -42,10 +42,7 @@ class CMSPageController extends Controller {
         if (this.slug) {
             /* eslint arrow-parens: 0 */ // eslint does not like async arrow functions
             (async () => {
-                try {
-                    const apiUrl = await getUrlFor(this.slug);
-                    const data = await fetch(apiUrl, {credentials: 'include'})
-                        .then((response) => response.json());
+                const setPageDescriptor = () => {
                     const setTitleAndDescription = () => {
                         const pageData = this.pageData;
                         const meta = pageData.meta || {};
@@ -58,17 +55,26 @@ class CMSPageController extends Controller {
                         );
                     };
 
+                    // If this component is the content of main, set page descriptor
+                    if (this.el && this.el.parentNode) {
+                        const mainEl = document.getElementById('main');
+
+                        if (mainEl && this.el.parentNode === mainEl) {
+                            setTitleAndDescription();
+                        }
+                    }
+                };
+
+                try {
+                    const apiUrl = await getUrlFor(this.slug);
+                    const data = await fetch(apiUrl, {credentials: 'include'})
+                        .then((response) => response.json());
+
                     this.pageData = this.preserveWrapping ? data : CMSPageController[TRANSFORM_DATA](data);
                     this.pageData.slug = this.slug;
 
                     await this[LOAD_IMAGES](this.pageData);
-
-                    // If this component is the content of main, set page descriptor
-                    const elParentId = this.el && this.el.parentNode.id;
-
-                    if (elParentId === 'main') {
-                        setTitleAndDescription();
-                    }
+                    setPageDescriptor();
 
                     this.onDataLoaded();
                 } catch (e) {
