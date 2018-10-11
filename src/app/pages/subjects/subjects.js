@@ -17,7 +17,7 @@ export default class Subjects extends CMSPageController {
         'decide if they\'re right for your course.';
 
     init() {
-        this.slug = 'subjects';
+        this.slug = 'books';
         this.template = template;
         this.css = `/app/pages/subjects/subjects.css?${VERSION}`;
         this.view = {
