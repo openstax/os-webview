@@ -12,7 +12,7 @@ export default class Accessibility extends CMSPageController {
         this.view = {
             classes: ['accessibility-page', 'page']
         };
-        this.slug = 'pages/accessibility';
+        this.slug = 'pages/accessibility-statement';
         shell.showLoader();
     }
 

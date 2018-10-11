@@ -12,7 +12,7 @@ export default class AboutNew extends CMSPageController {
             tag: 'main'
         };
         this.css = `/app/pages/about/about.css?${VERSION}`;
-        this.slug = 'pages/about-us';
+        this.slug = 'pages/about';
 
         this.model = () => this.getModel();
     }

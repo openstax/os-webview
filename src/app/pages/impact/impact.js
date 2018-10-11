@@ -18,7 +18,7 @@ export default class Impact extends CMSPageController {
             classes: ['impact-page', 'page']
         };
         this.model = {};
-        this.slug = 'pages/our-impact';
+        this.slug = 'pages/impact';
         shell.showLoader();
     }
 
