@@ -37,6 +37,7 @@
         box-sizing: border-box;
         display: grid;
         grid-gap: 2rem;
+        justify-items: center;
         padding: 2rem;
         width: 100%;
 
@@ -44,7 +45,6 @@
             grid-gap: 4rem;
             margin: auto;
             padding: 4rem;
-            width: fit-content;
 
             &.boxes-1 {
                 grid-template-columns: auto;

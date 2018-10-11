@@ -148,7 +148,6 @@
         button {
             @extend %button;
             max-width: calc(100vw - 3rem);
-            width: fit-content;
 
             &.primary {
                 @extend %primary;
@@ -161,7 +160,6 @@
         @extend %secondary;
 
         justify-self: center;
-        width: fit-content;
 
         &.primary {
             @extend %primary;
