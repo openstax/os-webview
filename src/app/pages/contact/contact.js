@@ -25,7 +25,7 @@ const subjects = [
 class ContactData extends CMSPageController {
 
     init() {
-        this.slug = 'pages/contact-us';
+        this.slug = 'pages/contact';
         this.template = () => null;
     }
 

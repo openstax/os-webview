@@ -43,7 +43,7 @@ export default class Tutor extends CMSPageController {
             faq: {},
             learnMore: {}
         };
-        this.slug = 'pages/tutor-marketing';
+        this.slug = 'pages/openstax-tutor';
         this.regions = {
             floatingTools: '.floating-tools'
         };

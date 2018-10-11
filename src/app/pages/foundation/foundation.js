@@ -16,7 +16,7 @@ export default class Foundation extends CMSPageController {
             classes: ['foundation-page', 'page'],
             tag: 'main'
         };
-        this.slug = '/pages/foundation-support';
+        this.slug = '/pages/foundation';
         this.model = {
             title: '',
             'page_description': ''

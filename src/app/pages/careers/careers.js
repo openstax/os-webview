@@ -12,7 +12,7 @@ export default class Careers extends CMSPageController {
         this.view = {
             classes: ['careers-page', 'page']
         };
-        this.slug = 'pages/openstax-careers';
+        this.slug = 'pages/careers';
         shell.showLoader();
     }
 

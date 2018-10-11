@@ -15,7 +15,7 @@ export default class Team extends CMSPageController {
             tag: 'main'
         };
         this.css = `/app/pages/team/team.css?${VERSION}`;
-        this.slug = 'pages/team-page';
+        this.slug = 'pages/team';
         this.regions = {
             accordion: 'accordion-region',
             tabGroup: 'people-tabs',
