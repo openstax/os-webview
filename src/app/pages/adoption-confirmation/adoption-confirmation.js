@@ -2,10 +2,7 @@ import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import Header1 from './header-1';
-// Temporarily replacing:
-// import SupplementalForm from './supplemental-form';
-// with
-import SurveyRequest from '~/components/survey-request/survey-request';
+import SupplementalForm from './supplemental-form';
 import Header2 from './header-2';
 import Calculator from '~/components/calculator/calculator';
 import {description as template} from './adoption-confirmation.html';
@@ -28,8 +25,7 @@ export default class AdoptionConfirmation extends Controller {
         const email = history.state ? history.state.email : '';
 
         this.regions.header.attach(new Header1());
-        // this.regions.content.attach(new SupplementalForm(email, () => this.loadFinalThankYou()));
-        this.regions.content.attach(new SurveyRequest());
+        this.regions.content.attach(new SupplementalForm(email, () => this.loadFinalThankYou()));
     }
 
     loadFinalThankYou() {
