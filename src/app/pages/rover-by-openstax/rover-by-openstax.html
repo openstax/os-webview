@@ -1,0 +1,72 @@
+<template args="model">
+    <if condition="model.loaded">
+        <section class="orange">
+            <div class="boxed">
+                <picture>
+                    <source media="(max-width: 600px)" srcset="{model.mobileHeaderImage}">
+                    <img src="{model.headerImage}" alt="{model.headerImageAltText}" class="header-image">
+                </picture>
+                <div class="text-group">
+                    <h1 class="image-heading">{model.headline}</h1>
+                    <div data-html="introHtml" skip="true"></div>
+                    <a class="btn blue" href="{model.button1Url}">{model.button1Text}</a>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="text-content left">
+                <h2>{model.headline2}</h2>
+                <div class="text-content">
+                    <div class="tabs" skip="true"></div>
+                    <div class="tab-content" skip="true"></div>
+                </div>
+            </div>
+        </section>
+        <section class="orange">
+            <div class="text-content">
+                <div class="text-group">
+                    <h2>{model.headline3}</h2>
+                    <div>{model.description3}</div>
+                </div>
+                <div class="cards">
+                    <div each="item in model.cards"
+                        class="card"
+                    >
+                        <img src="{item.iconUrl}" role="presentation">
+                        <div>{item.description}</div>
+                        <a class="btn" href="{item.buttonUrl}">{item.buttonText}</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="sign-up-form">
+            <div class="text-content left">
+                <h2>{model.formHeadline}</h2>
+                <form class="boxed">
+                    <div class="form-inputs" skip="true"></div>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </section>
+        <section class="orange">
+            <div class="text-content">
+                <h2>{model.headline4}</h2>
+                <div class="faq-cards">
+                    <div each="item in model.faqCards"
+                        class="faq-card"
+                    >
+                        <div class="top">
+                            <b>{item.question}</b>
+                            <div role="button" class="faq-toggle" data-item="{$item}">
+                                <span
+                                    class="fa fa-chevron-{item.chevronDirection}"
+                                ></span>
+                            </div>
+                        </div>
+                        <div if="item.chevronDirection === 'down'" class="bottom">{item.answer}</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </if>
+</template>

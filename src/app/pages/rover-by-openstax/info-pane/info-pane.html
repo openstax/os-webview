@@ -1,0 +1,10 @@
+<template args="model">
+    <div data-html="descriptionHtml" skip="true"></div>
+    <div class="cards">
+        <div each="item in model.cards" class="card">
+            <img src="{item.image.image}" alt="{item.image.alt_text}">
+            <h4>{item.headline}</h4>
+            <div>{item.description}</div>
+        </div>
+    </div>
+</template>
