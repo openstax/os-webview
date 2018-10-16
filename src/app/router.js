@@ -37,6 +37,7 @@ const PAGES = [
     'press/*path',
     'privacy-policy',
     'research',
+    'rover-by-openstax',
     'subjects',
     'subjects/*path',
     'team',
