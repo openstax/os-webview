@@ -37,32 +37,4 @@
             <div class="blurb" data-html="webinar.blurb" skip="true"></div>
         </div>
     </a>
-    <if condition="model.allies.length">
-        <div id="technology-options" class="ally-blurb">
-            <h2>{model.ally.heading}</h2>
-            <div class="blurb-body" data-html="ally.blurb" skip="true"></div>
-            <div class="ally-logo">
-                <img
-                src="http://staxlogos.openstax.org/OSX-ALLY-Gray-RGB-150dpi.png"
-                alt=""
-                >
-            </div>
-        </div>
-        <div class="ally resources">
-            <a each="ally in model.allies"
-            href="{ally.book_link_url}"
-            class="ally-box resource-box"
-            >
-                <div class="top">
-                    <img src="{ally.ally_color_logo}" alt="{ally.ally_heading}">
-                    <div class="hover-blurb" data-html="allies[{$item}].ally_short_description"></div>
-                </div>
-                <div class="bottom">
-                    {ally.book_link_text}
-                    <i class="fa fa-external-link-alt"></i>
-                </div>
-            </a>
-        </div>
-    </if>
-
 </template>

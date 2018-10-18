@@ -5,6 +5,7 @@ import ContentGroup from '~/components/content-group/content-group';
 import DetailsTab from './details-tab/details-tab';
 import getCompCopyDialogProps from './comp-copy-dialog-props';
 import InstructorResourceTab from './instructor-resource-tab/instructor-resource-tab';
+import PartnersTab from './partners-tab/partners-tab';
 import PhoneView from './phone-view/phone-view';
 import StudentResourceTab from './student-resource-tab/student-resource-tab';
 import TabGroup from '~/components/tab-group/tab-group';
@@ -140,7 +141,6 @@ export default class Details extends CMSPageController {
             },
             this.userStatusPromise
         );
-
         const contents = polish ?
             {
                 'Szczegóły książki': new DetailsTab(detailsTabData())
@@ -148,12 +148,15 @@ export default class Details extends CMSPageController {
             {
                 'Book details': new DetailsTab(detailsTabData())
             };
+        const addTab = (label, tabContents) => {
+            contents[label] = tabContents;
+            tabLabels.push(label);
+        };
 
         if (!polish && this.pageData.free_stuff_instructor.content) {
-            contents['Instructor resources'] = new InstructorResourceTab(
+            addTab('Instructor resources', new InstructorResourceTab(
                 {
                     resources: this.pageData.book_faculty_resources,
-                    allies: shuffle(this.pageData.book_allies),
                     userStatusPromise: this.userStatusPromise,
                     freeStuff: {
                         heading: this.pageData.free_stuff_instructor.content.heading,
@@ -172,27 +175,30 @@ export default class Details extends CMSPageController {
                         blurb: this.pageData.community_resource_blurb,
                         featureUrl: this.pageData.community_resource_feature_link_url,
                         featureText: this.pageData.community_resource_feature_text
-                    },
-                    ally: {
-                        heading: this.pageData.ally_content.content.heading,
-                        blurb: this.pageData.ally_content.content.content
                     }
                 },
                 compCopyDialogProps
-            );
-            tabLabels.push('Instructor resources');
+            ));
+        }
+        if (!polish && this.pageData.book_allies.length) {
+            addTab('Partners', new PartnersTab({
+                allies: shuffle(this.pageData.book_allies),
+                ally: {
+                    heading: this.pageData.ally_content.content.heading,
+                    blurb: this.pageData.ally_content.content.content
+                }
+            }));
         }
 
         if (!polish && this.pageData.free_stuff_student.content) {
-            contents['Student resources'] = new StudentResourceTab({
+            addTab('Student resources', new StudentResourceTab({
                 freeStuff: {
                     heading: this.pageData.free_stuff_student.content.heading,
                     blurb: this.pageData.free_stuff_student.content.content
                 },
                 resources: this.pageData.book_student_resources,
                 userStatusPromise: this.userStatusPromise
-            });
-            tabLabels.push('Student resources');
+            }));
         }
 
         const contentGroup = new ContentGroup(() => ({
