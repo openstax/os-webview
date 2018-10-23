@@ -1,0 +1,166 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+$orange-gradient: linear-gradient(to right, rgb(228, 182, 96), rgb(228, 137, 96));
+// When 1170px wide, example images are this tall:
+$example-max-height: 46.8rem;
+// This is the height allocated for the example in its container
+$example-nominal-height: 20rem;
+$overhang-height: $example-max-height - $example-nominal-height;
+
+.rover.page {
+
+    section {
+        background-color: ui-color(white);
+        min-height: 7rem;
+        padding: 6rem $normal-margin;
+
+        &:first-child {
+            align-items: center;
+            display: grid;
+            min-height: 100vh;
+        }
+
+        > .boxed,
+        > .text-content {
+            display: grid;
+            grid-gap: 6rem;
+            justify-items: center;
+
+            &.left {
+                justify-items: start;
+                text-align: left;
+            }
+        }
+
+        .boxed,
+        .text-content {
+            padding: 0;
+        }
+
+        .text-group {
+            @extend %text-content;
+
+            display: grid;
+            grid-gap: 4rem;
+            padding: 0;
+            text-align: center;
+
+            h1 {
+                @include set-font(hero-h1);
+
+                @include wider-than($tablet-max) {
+                    white-space: nowrap;
+                }
+            }
+        }
+    }
+
+    h2 {
+        @include set-font(h1);
+    }
+
+    h1,
+    h2,
+    h3 {
+        padding-bottom: 0;
+        padding-top: 0;
+    }
+
+    .btn {
+        @extend %button;
+        @extend %secondary;
+
+        background-color: os-color(light-blue);
+        justify-self: center;
+        padding: 1rem 3rem;
+    }
+
+    .orange {
+        background-image: $orange-gradient;
+        color: text-color(white);
+    }
+
+    .header-image {
+        @include wider-than($phone-max) {
+            max-width: 100%;
+            width: 80rem;
+        }
+    }
+
+    .tabs {
+        width: 100%;
+
+        .tab {
+            padding-top: 0;
+
+            &[aria-current] {
+                border-bottom-color: os-color(orange);
+            }
+
+            &:hover:not([aria-current]) {
+                border-bottom-color: rgba(os-color(orange), 0.75);
+            }
+        }
+    }
+
+    .cards {
+        display: grid;
+        grid-gap: 6rem 3rem;
+        justify-items: center;
+        margin-bottom: 9rem;
+        width: 100%;
+
+        @include wider-than($phone-max) {
+            grid-template-columns: repeat(auto-fill, minmax(35rem, 1fr));
+        }
+    }
+
+    .card {
+        @extend %card;
+
+        background-color: ui-color(white);
+        color: text-color(normal);
+        display: grid;
+        grid-gap: 4rem;
+        grid-template-rows: auto 1fr auto;
+        justify-items: center;
+        max-width: 38rem;
+        padding: 4rem 3rem;
+        text-align: center;
+    }
+
+    .faq-cards {
+        display: grid;
+        width: 100%;
+    }
+
+    .faq-card {
+        background-color: ui-color(white);
+        border: thin solid ui-color(form-border);
+        color: text-color(normal);
+        display: grid;
+        grid-row-gap: 4rem;
+        padding: 4rem;
+
+        .top {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+
+    form {
+        align-items: start;
+
+        .form-inputs {
+            max-width: 60rem;
+            width: 100%;
+        }
+
+        [type="submit"] {
+            @extend %button;
+            @extend %primary;
+        }
+    }
+
+}

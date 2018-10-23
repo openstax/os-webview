@@ -1,15 +1,17 @@
 <template args="model">
-    <label if="model.label" class="field-label">{model.label}</label>
-    <label class="field-label" data-html="labelHtml" skip="true"></label>
-    <label if="model.instructions" class="field-label">{' ' + model.instructions}</label>
-    <span class="invalid-message">{model.validationMessage(model.name)}</span>
-    <div class="proxy-select" tabindex="0" skip="true"></div>
-    <select name="{model.name}"
-     multiple="{model.multiple ? '' : null}" required="{model.required ? '' : null}"
-     placeholder="{model.placeholder}"
-     data-require-none="{model.requireNone ? '' : null}"
-     >
-        <option each="opt in model.options" value="{opt.value}"
-         selected="{opt.selected ? '' : null}">{opt.label}</option>
-    </select>
+    <div class="control-group">
+        <label if="model.label" class="field-label">{model.label}</label>
+        <label class="field-label" data-html="labelHtml" skip="true"></label>
+        <label if="model.instructions" class="field-label">{' ' + model.instructions}</label>
+        <span class="invalid-message">{model.validationMessage(model.name)}</span>
+        <div class="proxy-select" tabindex="0" skip="true"></div>
+        <select name="{model.name}"
+         multiple="{model.multiple ? '' : null}" required="{model.required ? '' : null}"
+         placeholder="{model.placeholder}"
+         data-require-none="{model.requireNone ? '' : null}"
+         >
+            <option each="opt in model.options" value="{opt.value}"
+             selected="{opt.selected ? '' : null}">{opt.label}</option>
+        </select>
+    </div>
 </template>
