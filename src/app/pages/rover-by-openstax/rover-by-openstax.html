@@ -40,15 +40,21 @@
             </div>
         </section>
         <section id="sign-up-form">
-            <div class="text-content left">
+            <div class="text-content">
                 <h2>{model.formHeadline}</h2>
-                <form class="boxed">
+                <form
+                    accept-charset="UTF-8"
+                    class="form boxed"
+                    target="form-response"
+                    action="https://{model.salesforce.salesforceHome}/servlet/servlet.WebToLead?encoding=UTF-8"
+                    method="post"
+                >
                     <div class="form-inputs" skip="true"></div>
                     <button type="submit">Submit</button>
                 </form>
             </div>
         </section>
-        <section class="orange">
+        <section if="model.faqCards && model.faqCards.length" class="orange">
             <div class="text-content">
                 <h2>{model.headline4}</h2>
                 <div class="faq-cards">

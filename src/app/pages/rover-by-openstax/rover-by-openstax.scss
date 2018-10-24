@@ -61,7 +61,10 @@ $overhang-height: $example-max-height - $example-nominal-height;
 
     h1,
     h2,
-    h3 {
+    h3,
+    h4 {
+        margin-bottom: 0;
+        margin-top: 0;
         padding-bottom: 0;
         padding-top: 0;
     }
@@ -103,6 +106,10 @@ $overhang-height: $example-max-height - $example-nominal-height;
         }
     }
 
+    .info-pane > div {
+        margin-top: 4rem;
+    }
+
     .cards {
         display: grid;
         grid-gap: 6rem 3rem;
@@ -121,12 +128,20 @@ $overhang-height: $example-max-height - $example-nominal-height;
         background-color: ui-color(white);
         color: text-color(normal);
         display: grid;
-        grid-gap: 4rem;
-        grid-template-rows: auto 1fr auto;
+        grid-gap: $normal-margin;
+        // grid-template-rows: auto 1fr auto;
         justify-items: center;
         max-width: 38rem;
         padding: 4rem 3rem;
         text-align: center;
+
+        > :first-child {
+            margin-bottom: 2rem;
+        }
+
+        > * {
+            max-width: 32rem;
+        }
     }
 
     .faq-cards {
@@ -150,7 +165,7 @@ $overhang-height: $example-max-height - $example-nominal-height;
     }
 
     form {
-        align-items: start;
+        align-items: center;
 
         .form-inputs {
             max-width: 60rem;
