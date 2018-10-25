@@ -33,7 +33,6 @@ export default class Blog extends CMSPageController {
         this.previousSlug = null;
         shell.showLoader();
 
-        // eslint-disable-next-line complexity
         this.handlePathChange = () => {
             if (history && history.state && history.state.model) {
                 Object.assign(this.model, history.state.model);
