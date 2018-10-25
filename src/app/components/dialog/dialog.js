@@ -67,6 +67,7 @@ class Dialog extends Controller {
         this.attachContent();
     }
 
+    /* eslint complexity: 0 */
     @on('click .put-away')
     closeDialog() {
         const contentComponent = this.props.content;

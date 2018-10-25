@@ -13,6 +13,7 @@ const sourceNames = {
 
 export default class Form extends Controller {
 
+    // eslint-disable-next-line complexity
     init(model) {
         this.css = `/app/pages/errata/form/form.css?${VERSION}`;
         this.template = template;
