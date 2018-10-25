@@ -62,12 +62,7 @@ class Header extends Controller {
         };
 
         userModel.load().then((user) => {
-            if (typeof user === 'object') {
-                this.model.user = user;
-            }
-            this.update();
-            this.mainMenu.update();
-            if (user.accounts_id) {
+            const showOrPoll = () => {
                 if (
                     user.groups.includes('OpenStax Tutor') &&
                     !localStorage.hasSeenTutorTrainingWheel
@@ -78,6 +73,15 @@ class Header extends Controller {
                 if (!user.groups.includes('OpenStax Tutor')) {
                     pollAccounts();
                 }
+            };
+
+            if (typeof user === 'object') {
+                this.model.user = user;
+            }
+            this.update();
+            this.mainMenu.update();
+            if (user.accounts_id) {
+                showOrPoll();
             }
         });
 
