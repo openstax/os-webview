@@ -4,17 +4,10 @@ const pi = require('gulp-load-plugins')();
 const path = require('path');
 const webpackStream = require('webpack-stream');
 const webpack2 = require('webpack');
-const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 
 function webpack() {
     const isDevelopment = config.env === 'development'
-    const plugins = isDevelopment ?
-        [] : //[new HardSourceWebpackPlugin()] :
-        [
-            new webpack2.optimize.UglifyJsPlugin({ sourceMap: true }),
-            new webpack2.optimize.MinChunkSizePlugin({minChunkSize: 16000}),
-        ];
     const output = {
         path: path.resolve(config.dest),
         filename: "bundle.js",
@@ -29,37 +22,37 @@ function webpack() {
     return gulp.src([
         `${config.dest}/app/main.js`
     ]).pipe(webpackStream({
-      externals: {
-          settings: 'SETTINGS'
-      },
-      output,
-      plugins,
-      resolve: {
-        alias: {
-          "settings": path.resolve(config.dest, "settings.js"),
-          "~": path.resolve(config.dest, "app/"),
-        }
-      },
-      module: {
-        rules: [
-          {
-            test: /\.js$/,
-            use: ["source-map-loader"],
-            enforce: "pre"
-          },
-          {
-              test: /\.css$/,
-              loader: 'ignore-loader'
-          },
-          {
-              test: /\.map$/,
-              loader: 'ignore-loader'
-          }
-        ]
-      },
-      devtool: "source-map"
-    }))
-    // .pipe(pi.sourcemaps.write('.'))
+        externals: {
+            settings: 'SETTINGS'
+        },
+        mode: isDevelopment ? 'development' : 'production',
+        output,
+        resolve: {
+            alias: {
+                "settings": path.resolve(config.dest, "settings.js"),
+                "~": path.resolve(config.dest, "app/"),
+            }
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.js$/,
+                    use: ["source-map-loader"],
+                    exclude: /node_modules/,
+                    enforce: "pre"
+                },
+                {
+                    test: /\.css$/,
+                    loader: 'ignore-loader'
+                },
+                {
+                    test: /\.map$/,
+                    loader: 'ignore-loader'
+                }
+            ]
+        },
+        devtool: "source-map"
+    }, webpack2))
     .pipe(gulp.dest(config.dest));
 }
 

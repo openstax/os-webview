@@ -50,6 +50,10 @@ export default class BookViewer extends Controller {
             );
     }
 
+    update() {
+        // No updating!
+    }
+
     onLoaded() {
         for (const controller of this.categorySections) {
             this.regions.self.append(controller);

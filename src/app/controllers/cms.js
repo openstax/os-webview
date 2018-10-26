@@ -88,6 +88,7 @@ class CMSPageController extends Controller {
         }
     }
 
+    /* eslint complexity: 0 */
     [LOAD_IMAGES](data) {
         const promises = [];
 
