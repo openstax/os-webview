@@ -5,6 +5,7 @@ import ContentGroup from '~/components/content-group/content-group';
 import FormInput from '~/components/form-input/form-input';
 import FormSelect from '~/components/form-select/form-select';
 import InfoPane from './info-pane/info-pane';
+import salesforce from '~/models/salesforce';
 import TabGroup from '~/components/tab-group/tab-group';
 import {description as template} from './rover-by-openstax.html';
 import {on} from '~/helpers/controller/decorators';
@@ -38,6 +39,19 @@ export default class Rover extends CMSPageController {
         return result;
     }
 
+    toSection3Cards(cardData) {
+        return cardData.map((d) => {
+            const v = d.value;
+
+            return {
+                iconUrl: v.image.link,
+                description: v.description,
+                buttonUrl: v.button_url,
+                buttonText: v.headline
+            };
+        });
+    }
+
     getModel() {
         if (!this.pageData) {
             return {};
@@ -58,10 +72,11 @@ export default class Rover extends CMSPageController {
             headline2: data.section_2_headline,
             headline3: data.section_3_headline,
             description3: data.section_3_description,
-            cards: data.rover_cards_section_3,
+            cards: this.toSection3Cards(data.rover_cards_section_3[0].cards),
             formHeadline: data.form_headline,
             headline4: data.section_4_headline,
-            faqCards: this.section_4_faqs
+            faqCards: this.faqItems, // calculated in onDataLoaded
+            salesforce
         };
     }
 
@@ -166,7 +181,7 @@ export default class Rover extends CMSPageController {
     }
 
     onDataLoaded() {
-        this.faqItems = this.toFaqCards(this.pageData.section_4_faqs);
+        this.faqItems = this.toFaqCards(this.pageData.section_4_faqs[0]);
         this.update();
         $.insertHtml(this.el, this.model);
         this.populateTabs();
