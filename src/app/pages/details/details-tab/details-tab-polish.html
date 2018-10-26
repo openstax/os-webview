@@ -8,7 +8,7 @@
     </div>
 
     <div class="main">
-        <div>
+        <div class="loc-summary-text">
             <h3>Podsumowanie</h3>
             <div data-html="description" skip="true"></div>
         </div>
@@ -16,7 +16,7 @@
             <if condition="model.allSenior.length">
                 <div>
                     <h3>Główni autorzy</h3>
-                    <div each="author in model.allSenior">
+                    <div class="loc-senior-author" each="author in model.allSenior">
                         {author.name}<if condition="author.university">, {author.university}</if>
                     </div>
                 </div>
@@ -24,14 +24,14 @@
             <if condition="model.allNonsenior.length">
                 <div>
                     <h3>Autorzy współpracujący</h3>
-                    <div each="author in model.allNonsenior">
+                    <div class="loc-nonsenior-author" each="author in model.allNonsenior">
                         {author.name}<if condition="author.university">, {author.university}</if>
                     </div>
                 </div>
             </if>
         </if>
         <if condition="!model.comingSoon">
-            <div>
+            <div class="loc-errata">
                 <h3>Errata</h3>
                 <p data-html="errataBlurb"></p>
                 <div class="button-group">
@@ -41,34 +41,31 @@
             </div>
         </if>
         <div class="publication-info">
-            <div if="model.formattedPublishDate">
+            <div class="loc-pub-date" if="model.formattedPublishDate">
                 <h4>Data publikacji:</h4>
                 {model.formattedPublishDate}
             </div>
-            <div if="model.print_isbn_10 || model.print_isbn_13">
+            <div class="loc-print-isbn" if="model.print_isbn_10 || model.print_isbn_13">
                 <h4>Wydrukowane:</h4>
                 <div if="model.print_isbn_10">ISBN-10: {model.print_isbn_10}</div>
                 <div if="model.print_isbn_13">ISBN-13: {model.print_isbn_13}</div>
             </div>
-            <div if="model.digital_isbn_10 || model.digital_isbn_13">
+            <div class="loc-digital-isbn" if="model.digital_isbn_10 || model.digital_isbn_13">
                 <h4>Wersja cyfrowa:</h4>
                 <div if="model.digital_isbn_10">ISBN-10: {model.digital_isbn_10}</div>
                 <div if="model.digital_isbn_13">ISBN-13: {model.digital_isbn_13}</div>
             </div>
-            <div if="model.ibook_isbn_10 || model.ibook_isbn_10">
-                <h4>iBooks<span if="model.ibook_volume_2_isbn_10 || model.ibook_volume_2_isbn_13">
-                        Part 1
-                    </span>:
-                </h4>
+            <div class="loc-ibook-isbn" if="model.ibook_isbn_10 || model.ibook_isbn_10">
+                <h4>iBooks<span if="model.ibook_volume_2_isbn_10 || model.ibook_volume_2_isbn_13">&nbsp;Part 1</span>:</h4>
                 <div if="model.ibook_isbn_10">ISBN-10: {model.ibook_isbn_10}</div>
                 <div if="model.ibook_isbn_13">ISBN-13: {model.ibook_isbn_13}</div>
             </div>
-            <div if="model.ibook_volume_2_isbn_10 || model.ibook_volume_2_isbn_13">
+            <div class="loc-ibook-isbn" if="model.ibook_volume_2_isbn_10 || model.ibook_volume_2_isbn_13">
                 <h4>iBooks Part 2:</h4>
                 <div if="model.ibook_isbn_10">ISBN-10: {model.ibook_volume_2_isbn_10}</div>
                 <div if="model.ibook_isbn_13">ISBN-13: {model.ibook_volume_2_isbn_13}</div>
             </div>
-            <div if="model.license_name">
+            <div class="loc-license" if="model.license_name">
                 <h4>Licencja:</h4>
                 <img src="{model.licenseIcon}" alt="">
                 <div>
