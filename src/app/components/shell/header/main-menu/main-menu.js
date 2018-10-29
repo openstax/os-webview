@@ -59,6 +59,7 @@ export default class MainMenu extends Controller {
                 items: [
                     {url: '/technology', label: 'Technology Options'},
                     {url: '/openstax-tutor', label: 'About OpenStax Tutor'},
+                    {url: '/rover-by-openstax', label: 'Rover by OpenStax'},
                     {url: '/partners', label: 'OpenStax Partners'}
                 ]
             })
