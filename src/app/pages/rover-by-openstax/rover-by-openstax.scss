@@ -17,7 +17,7 @@ $overhang-height: $example-max-height - $example-nominal-height;
         &:first-child {
             align-items: center;
             display: grid;
-            min-height: 100vh;
+            min-height: calc(100vh - 4rem);
         }
 
         > .boxed,
@@ -84,8 +84,12 @@ $overhang-height: $example-max-height - $example-nominal-height;
     }
 
     .header-image {
+        // Margins compensate for big whitespace in the images
+        margin-bottom: -12rem;
+        margin-top: -6rem;
+        max-width: 100%;
+
         @include wider-than($phone-max) {
-            max-width: 100%;
             width: 80rem;
         }
     }
@@ -167,7 +171,7 @@ $overhang-height: $example-max-height - $example-nominal-height;
     form {
         align-items: center;
 
-        .form-inputs {
+        .signup-form {
             max-width: 60rem;
             width: 100%;
         }

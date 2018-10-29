@@ -2,10 +2,9 @@ import VERSION from '~/version';
 import $ from '~/helpers/$';
 import CMSPageController from '~/controllers/cms';
 import ContentGroup from '~/components/content-group/content-group';
-import FormInput from '~/components/form-input/form-input';
-import FormSelect from '~/components/form-select/form-select';
 import InfoPane from './info-pane/info-pane';
 import salesforce from '~/models/salesforce';
+import SignupForm from './signup-form/signup-form';
 import TabGroup from '~/components/tab-group/tab-group';
 import {description as template} from './rover-by-openstax.html';
 import {on} from '~/helpers/controller/decorators';
@@ -62,8 +61,8 @@ export default class Rover extends CMSPageController {
         /* eslint camelcase: 0 */
         return {
             loaded: true,
-            headerImage: data.header_image,
-            mobileHeaderImage: data.mobile_header_image,
+            headerImage: data.header_image || '/images/rover-by-openstax/logo-desktop.png',
+            mobileHeaderImage: data.mobile_header_image || '/images/rover-by-openstax/logo-mobile.png',
             headerImageAltText: data.header_image_alt,
             headline: data.section_1_headline,
             introHtml: data.section_1_description,
@@ -73,7 +72,7 @@ export default class Rover extends CMSPageController {
             headline3: data.section_3_headline,
             description3: data.section_3_description,
             cards: this.toSection3Cards(data.rover_cards_section_3[0].cards),
-            formHeadline: data.form_headline,
+            formHeadline: this.formHeadlineReplacement || data.form_headline,
             headline4: data.section_4_headline,
             faqCards: this.faqItems, // calculated in onDataLoaded
             salesforce
@@ -122,62 +121,16 @@ export default class Rover extends CMSPageController {
 
     populateForm() {
         const Region = this.regions.self.constructor;
-        const region = new Region(this.el.querySelector('.form-inputs'));
-        const validationMessage = function (name) {
-            return this.validated ? this.el.querySelector(`[name="${name}"]`).validationMessage : '';
-        };
-        const roleOptions = this.roles
-            .map((opt) => ({label: opt.display_name, value: opt.salesforce_name}));
-        const roleSelector = new FormSelect({
-            instructions: 'I am a',
-            validationMessage: () => '',
-            placeholder: 'Please select one',
-            roleOptions
-        }, (newValue) => {
-            this.selectedRole = newValue;
-            this.update();
-            $.scrollTo(this.el);
-        });
-        const inputs = [
-            new FormInput({
-                name: 'first_name',
-                type: 'text',
-                label: 'First name',
-                required: true,
-                autocomplete: 'given-name',
-                validationMessage
-            }),
-            new FormInput({
-                name: 'last_name',
-                type: 'text',
-                label: 'Last name',
-                required: true,
-                autocomplete: 'family-name',
-                validationMessage
-            }),
-            new FormInput({
-                name: 'email',
-                type: 'email',
-                label: 'Email address',
-                required: true,
-                autocomplete: 'email',
-                validationMessage
-            }),
-            new FormInput({
-                name: 'company',
-                type: 'text',
-                label: 'School name',
-                required: true,
-                autocomplete: 'organization',
-                validationMessage,
-                suggestions: []
-            })
-        ];
+        const signupFormRegion = new Region(this.el.querySelector('.signup-form'));
+        const iframe = document.createElement('iframe');
 
-        region.attach(roleSelector);
-        inputs.forEach((i) => {
-            region.append(i);
-        });
+        this.signupForm = new SignupForm(this.roles);
+        signupFormRegion.attach(this.signupForm);
+        iframe.name = iframe.id = 'rover-form-response';
+        iframe.width = iframe.height = '0';
+        iframe.tabindex = '-1';
+        iframe.classList.add('hidden');
+        document.getElementById('form-response-region').appendChild(iframe);
     }
 
     onDataLoaded() {
@@ -199,6 +152,24 @@ export default class Rover extends CMSPageController {
 
         item.chevronDirection = item.chevronDirection === 'left' ? 'down' : 'left';
         this.update();
+    }
+
+    @on('submit form')
+    handleSubmit(event) {
+        const afterSubmit = () => {
+            this.listeningForResponse = false;
+            this.formHeadlineReplacement = 'Thank you for signing up';
+            if (this.signupForm) {
+                this.signupForm.detach();
+            }
+            this.update();
+            document.getElementById('rover-form-response').removeEventListener('load', afterSubmit);
+        };
+
+        if (!this.listeningForResponse) {
+            this.listeningForResponse = true;
+            document.getElementById('rover-form-response').addEventListener('load', afterSubmit);
+        }
     }
 
 }

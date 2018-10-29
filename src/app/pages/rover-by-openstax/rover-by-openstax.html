@@ -45,13 +45,16 @@
                 <form
                     accept-charset="UTF-8"
                     class="form boxed"
-                    target="form-response"
+                    target="rover-form-response"
                     action="https://{model.salesforce.salesforceHome}/servlet/servlet.WebToLead?encoding=UTF-8"
                     method="post"
                 >
-                    <div class="form-inputs" skip="true"></div>
+                    <input type="hidden" name="lead_source" value="Interest Form">
+                    <input type="hidden" name="Interested_in_Rover__c" value="true">
+                    <div class="signup-form" skip="true"></div>
                     <button type="submit">Submit</button>
                 </form>
+                <div id="form-response-region" skip="true"></div>
             </div>
         </section>
         <section if="model.faqCards && model.faqCards.length" class="orange">
