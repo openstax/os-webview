@@ -134,7 +134,7 @@ export default class Rover extends CMSPageController {
     }
 
     onDataLoaded() {
-        this.faqItems = this.toFaqCards(this.pageData.section_4_faqs[0]);
+        this.faqItems = this.toFaqCards(this.pageData.section_4_faqs[0] || []);
         this.update();
         $.insertHtml(this.el, this.model);
         this.populateTabs();
