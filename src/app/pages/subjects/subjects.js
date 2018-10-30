@@ -37,13 +37,6 @@ export default class Subjects extends CMSPageController {
             filter: this.categoryFromPath(),
             path: pagePath
         });
-        this.filterSubjectsEvent = () => {
-            const category = history.state.filter;
-
-            this.categorySelector.updateSelected(category);
-            this.bookViewer.filterSubjects(category);
-        };
-        window.addEventListener('popstate', this.filterSubjectsEvent);
     }
 
     categoryFromPath() {
@@ -70,6 +63,13 @@ export default class Subjects extends CMSPageController {
         $.insertHtml(this.el, this.model);
         this.bookViewer = new BookViewer(this.model.books);
         this.regions.bookViewer.attach(this.bookViewer);
+        this.filterSubjectsEvent = () => {
+            const category = history.state.filter;
+
+            this.categorySelector.updateSelected(category);
+            this.bookViewer.filterSubjects(category);
+        };
+        window.addEventListener('popstate', this.filterSubjectsEvent);
         this.regions.filter.attach(this.categorySelector);
         const category = this.categoryFromPath();
 

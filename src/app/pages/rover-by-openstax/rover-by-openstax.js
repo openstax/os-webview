@@ -101,7 +101,7 @@ export default class Rover extends CMSPageController {
         const tabContentRegion = new Region(this.el.querySelector('.tab-content'), this);
         const contents = this.contentsFromPageData();
         const tabLabels = this.pageData.rover_cards_section_2.map((t) => t.heading);
-        let selectedTab = tabLabels[1];
+        let selectedTab = tabLabels[0];
         const contentGroup = new ContentGroup(() => ({
             selectedTab,
             contents
