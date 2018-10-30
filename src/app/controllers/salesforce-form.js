@@ -17,7 +17,9 @@ class SalesforceForm extends CMSPageController {
                 const abbrev = book.salesforce_abbreviation;
                 const seen = abbrev in seenTitles;
 
-                seenTitles[abbrev] = true;
+                if (book.book_state === 'live') {
+                    seenTitles[abbrev] = true;
+                }
                 return abbrev && !seen && book.book_state === 'live';
             })
             .map((book) => ({
