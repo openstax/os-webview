@@ -48,6 +48,7 @@
                     target="rover-form-response"
                     action="https://{model.salesforce.salesforceHome}/servlet/servlet.WebToLead?encoding=UTF-8"
                     method="post"
+                    if="!model.hideForm"
                 >
                     <input type="hidden" name="lead_source" value="Interest Form">
                     <input type="hidden" name="Interested_in_Rover__c" value="true">

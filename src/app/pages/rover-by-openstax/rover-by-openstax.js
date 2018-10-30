@@ -73,6 +73,7 @@ export default class Rover extends CMSPageController {
             description3: data.section_3_description,
             cards: this.toSection3Cards(data.rover_cards_section_3[0].cards),
             formHeadline: this.formHeadlineReplacement || data.form_headline,
+            hideForm: this.hideForm,
             headline4: data.section_4_headline,
             faqCards: this.faqItems, // calculated in onDataLoaded
             salesforce
@@ -159,9 +160,7 @@ export default class Rover extends CMSPageController {
         const afterSubmit = () => {
             this.listeningForResponse = false;
             this.formHeadlineReplacement = 'Thank you for signing up';
-            if (this.signupForm) {
-                this.signupForm.detach();
-            }
+            this.hideForm = true;
             this.update();
             document.getElementById('rover-form-response').removeEventListener('load', afterSubmit);
         };

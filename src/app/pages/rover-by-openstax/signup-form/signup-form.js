@@ -36,7 +36,6 @@ export default class SignupForm extends SalesforceForm {
         }, (newValue) => {
             this.selectedRole = newValue;
             this.update();
-            $.scrollTo(this.el);
         });
         const inputs = [
             new FormInput({
