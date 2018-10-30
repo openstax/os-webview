@@ -43,7 +43,7 @@ export default class Rover extends CMSPageController {
             const v = d.value;
 
             return {
-                iconUrl: v.image.link,
+                iconUrl: v.image.image,
                 description: v.description,
                 buttonUrl: v.button_url,
                 buttonText: v.headline
@@ -73,6 +73,7 @@ export default class Rover extends CMSPageController {
             description3: data.section_3_description,
             cards: this.toSection3Cards(data.rover_cards_section_3[0].cards),
             formHeadline: this.formHeadlineReplacement || data.form_headline,
+            hideForm: this.hideForm,
             headline4: data.section_4_headline,
             faqCards: this.faqItems, // calculated in onDataLoaded
             salesforce
@@ -100,7 +101,7 @@ export default class Rover extends CMSPageController {
         const tabContentRegion = new Region(this.el.querySelector('.tab-content'), this);
         const contents = this.contentsFromPageData();
         const tabLabels = this.pageData.rover_cards_section_2.map((t) => t.heading);
-        let selectedTab = tabLabels[1];
+        let selectedTab = tabLabels[0];
         const contentGroup = new ContentGroup(() => ({
             selectedTab,
             contents
@@ -159,9 +160,7 @@ export default class Rover extends CMSPageController {
         const afterSubmit = () => {
             this.listeningForResponse = false;
             this.formHeadlineReplacement = 'Thank you for signing up';
-            if (this.signupForm) {
-                this.signupForm.detach();
-            }
+            this.hideForm = true;
             this.update();
             document.getElementById('rover-form-response').removeEventListener('load', afterSubmit);
         };
