@@ -43,7 +43,7 @@ export default class Rover extends CMSPageController {
             const v = d.value;
 
             return {
-                iconUrl: v.image.link,
+                iconUrl: v.image.image,
                 description: v.description,
                 buttonUrl: v.button_url,
                 buttonText: v.headline
