@@ -46,7 +46,7 @@ export default class Rover extends CMSPageController {
                 iconUrl: v.image.link,
                 description: v.description,
                 buttonUrl: v.button_url,
-                buttonText: v.headline
+                buttonText: v.button_text
             };
         });
     }
