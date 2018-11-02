@@ -50,6 +50,8 @@
                     method="post"
                     if="!model.hideForm"
                 >
+                    <input name="utf8" type="hidden" value="✓">
+                    <input type="hidden" name="oid" value="{model.salesforce.oid}">
                     <input type="hidden" name="lead_source" value="Interest Form">
                     <input type="hidden" name="Interested_in_Rover__c" value="true">
                     <div class="signup-form" skip="true"></div>
