@@ -1,8 +1,6 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-$icon-size: 6rem;
-
-.instructor-resources {
+.partners-tab {
     display: grid;
     grid-gap: 4rem;
     margin-bottom: 3.5rem;
@@ -12,48 +10,10 @@ $icon-size: 6rem;
         margin: 0;
     }
 
-    .free-stuff-blurb {
-        display: grid;
-        grid-gap: $normal-margin;
-        grid-template-columns: auto;
-        margin-bottom: 4rem;
-
-        @include wider-than($tablet-max) {
-            margin-bottom: 5rem;
-        }
-    }
-
     .blurb-body {
         @include set-font(body-large);
 
         max-width: $text-content-max;
-    }
-
-    .webinars {
-        align-items: center;
-        display: grid;
-        grid-gap: 1rem;
-        grid-template-columns: $icon-size 1fr;
-        max-width: 100%;
-        text-decoration: none;
-
-        .icon-cell {
-            align-items: center;
-            border-radius: 50%;
-            display: flex;
-            font-size: 0.55 * $icon-size;
-            height: $icon-size;
-            justify-content: center;
-            width: $icon-size;
-        }
-
-        .blurb {
-            max-width: $text-content-max;
-        }
-
-        h2 {
-            @include set-font(h4);
-        }
     }
 
     .ally-blurb {
@@ -132,13 +92,5 @@ $icon-size: 6rem;
             justify-content: space-between;
             padding: $normal-margin 2rem;
         }
-    }
-}
-
-// Optimizely selector
-.bigger-view:not(.hide-tab) .instructor-resources {
-    .ally-blurb,
-    .ally.resources {
-        display: none;
     }
 }
