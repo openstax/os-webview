@@ -3,8 +3,8 @@
         <section class="orange">
             <div class="boxed">
                 <picture>
-                    <source media="(max-width: 600px)" srcset="{model.mobileHeaderImage}">
-                    <img src="{model.headerImage}" alt="{model.headerImageAltText}" class="header-image">
+                    <source media="(min-width: 37.5em)" srcset="{`${model.mobileHeaderImage} 500w, ${model.headerImage} 800w`}">
+                    <img src="{model.mobileHeaderImage}" alt="{model.headerImageAltText}" class="header-image">
                 </picture>
                 <div class="text-group">
                     <h1 class="image-heading">{model.headline}</h1>
@@ -53,7 +53,7 @@
                     <input name="utf8" type="hidden" value="✓">
                     <input type="hidden" name="oid" value="{model.salesforce.oid}">
                     <input type="hidden" name="lead_source" value="Interest Form">
-                    <input type="hidden" name="Interested_in_Rover__c" value="true">
+                    <input type="hidden" name="Interested_in_Rover__c" value="1">
                     <div class="signup-form" skip="true"></div>
                     <button type="submit">Submit</button>
                 </form>
