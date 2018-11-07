@@ -99,7 +99,7 @@ export default class MainMenu extends Controller {
                 {url: this.model.facultyAccessLink, label: 'Request instructor access'},
                 {
                     url: this.model.logout,
-                    label: 'Logout',
+                    label: 'Log out',
                     isLocal: true
                 }
             ];
