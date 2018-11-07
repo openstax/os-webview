@@ -67,9 +67,9 @@ export default class Team extends CMSPageController {
 
         this.regions.tabGroup.attach(tabGroup);
         this.regions.tabContent.attach(contentGroup);
-        this.regions.accordion.attach(new AccordionGroup(() => ({
+        this.regions.accordion.attach(new AccordionGroup({
             items: accordionItems
-        })));
+        }));
     }
 
 }

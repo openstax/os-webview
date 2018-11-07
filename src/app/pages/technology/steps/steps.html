@@ -1,0 +1,18 @@
+<template args="model">
+    <div class="text-content">
+        <h2>{model.headline}</h2>
+    </div>
+    <div class="boxed-row">
+        <div each="step in model.items" class="step">
+            <h3>{1 + $item}.</h3>
+            <book-selector if="step.selector" skip="true"></book-selector>
+            <div if="step.description" class="outlined btn {step.url ? '' : 'dimmed'}">
+                <if condition="step.url">
+                    <a href="{`${step.url}${step.hash}`}" target="_blank">{step.description}</a>
+                <else>
+                    {step.description}
+                </if>
+            </div>
+        </div>
+    </div>
+</template>

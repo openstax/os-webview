@@ -1,0 +1,18 @@
+<template args="model">
+    <div class="boxed">
+        <div class="header">
+            <h1>{model.headline}</h1>
+            <img src="/images/openstax-tutor/tutor-logo.svg">
+        </div>
+    </div>
+    <div class="boxed tall-relative">
+        <div class="description-block">
+            <h2>{model.subhead}</h2>
+            <div data-html="description" skip="true"></div>
+            <div class="buttons">
+                <a each="b in model.buttons" href="{b.url}" class="btn">{b.text}</a>
+            </div>
+        </div>
+    </div>
+    <img class="border-image" src="/images/technology/technology-bearscape.svg">
+</template>
