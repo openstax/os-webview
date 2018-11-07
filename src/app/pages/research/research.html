@@ -20,10 +20,19 @@
             <h1>{model.projectsHeader}</h1>
             <div class="project-cards">
                 <div each="project in model.projects" class="card {project.borderColor}">
-                    <div class="card-content">
-                        <h2>{project.title}</h2>
-                        <div>{project.body}</div>
-                    </div>
+                    <if condition="project.url">
+                        <a href="{project.url}">
+                            <div class="card-content">
+                                <h2>{project.title}</h2>
+                                <div>{project.body}</div>
+                            </div>
+                        </a>
+                    <else>
+                        <div class="card-content">
+                            <h2>{project.title}</h2>
+                            <div>{project.body}</div>
+                        </div>
+                    </if>
                 </div>
             </div>
         </div>
