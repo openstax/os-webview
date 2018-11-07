@@ -18,7 +18,6 @@ export default class AccordionGroup extends Controller {
     }
 
     // Never updates, so just set up the children
-    // Future work: use ComponentArray
     onLoaded() {
         let selectedLabel;
         const handlers = {

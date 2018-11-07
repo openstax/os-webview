@@ -134,6 +134,13 @@
         @include wider-than($phone-max) {
             display: block;
         }
+
+        // Optimizely selector
+        &.hide-tab {
+            .tab:nth-child(3) {
+                display: none;
+            }
+        }
     }
 
     .tab-controller {
