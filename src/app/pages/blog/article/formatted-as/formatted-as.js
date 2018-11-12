@@ -62,14 +62,12 @@ export default class FormattedAs extends Controller {
             });
         };
         const startWithFirstP = () => {
-            const body = this.model.body.slice(0, 1);
-            const text = body[0].value;
-            const firstP = text.match(/<p>/);
+            const asEl = document.createElement('div');
+            const firstChunk = this.model.body[0];
 
-            if (firstP && firstP.index > 0) {
-                body[0].value = text.substr(firstP.index);
-            }
-            this.model.body = body;
+            asEl.innerHTML = firstChunk.value;
+            firstChunk.value = asEl.querySelector('p:not(:empty)').outerHTML;
+            this.model.body = [firstChunk];
         };
 
         if (this.format === 'synopsis') {
