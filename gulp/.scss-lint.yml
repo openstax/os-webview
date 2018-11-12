@@ -23,6 +23,7 @@ linters:
 
     PropertySpelling:
         extra_properties:
+            - align-items
             - grid-gap
             - grid-row-gap
             - grid-column-gap
@@ -33,7 +34,6 @@ linters:
             - grid-column-start
             - grid-row-start
             - justify-items
-            - place-items
             - place-self
 
     PropertyUnits:

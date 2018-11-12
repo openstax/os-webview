@@ -20,9 +20,10 @@
         padding: 4rem;
 
         .content {
+            align-items: center;
             display: grid;
             grid-gap: 1rem;
-            place-items: center;
+            justify-items: center;
             text-align: center;
         }
 
