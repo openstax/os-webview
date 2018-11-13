@@ -1,6 +1,6 @@
 import VERSION from '~/version';
 import componentType from '~/helpers/controller/init-mixin';
-// Several utility functions, including scrollTo and insertHtml
+// Several utility functions, including scrollTo
 // import $ from '~/helpers/$';
 import {description as template} from './a-component-template.html';
 
@@ -20,7 +20,7 @@ const spec = {
 
         return {
             message: this.props.message
-        }
+        };
     }
 };
 
