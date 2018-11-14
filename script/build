@@ -4,7 +4,7 @@ source ./script/bootstrap || exit 111
 
 try npm run-script build
 do_progress "Removing temporary build files" \
-  /bin/rm -r ./dist/app ./dist/settings*.js*
+  /bin/rm -r ./dist/settings-example*
 
 try "$(npm bin)/node-sass" --source-map true --source-map-contents true \
 --output dist/styles/ \
