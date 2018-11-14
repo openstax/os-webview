@@ -1,25 +1,17 @@
-import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import {description as template} from './item.html';
+import componentType from '~/helpers/controller/init-mixin';
 
-export default class AccordionItem extends Controller {
-
-    init(tag, getProps, handlers) {
-        this.getProps = getProps;
-        this.handlers = handlers;
-        this.template = template;
-        this.view = {
-            // tag,
-            classes: ['accordion-item']
-        };
-        this.regions = {
-            contentPane: '.content-pane'
-        };
-        this.model = () => this.getModel();
-    }
-
-    getModel() {
+const spec = {
+    template,
+    view: {
+        classes: ['accordion-item']
+    },
+    regions: {
+        contentPane: '.content-pane'
+    },
+    model() {
         this.props = this.getProps();
         const isOpen = this.props.selectedLabel === this.props.label;
 
@@ -29,6 +21,9 @@ export default class AccordionItem extends Controller {
             hiddenAttribute: isOpen ? null : ''
         };
     }
+};
+
+export default class AccordionItem extends componentType(spec) {
 
     onLoaded() {
         if (this.props.contentComponent) {

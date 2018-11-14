@@ -1,21 +1,15 @@
 import VERSION from '~/version';
-import {Controller} from 'superb.js';
+import componentType from '~/helpers/controller/init-mixin';
 import AccordionItem from './item/item';
 
-export default class AccordionGroup extends Controller {
+const spec = {
+    view: {
+        classes: ['accordion-group']
+    },
+    css: `/app/components/accordion-group/accordion-group.css?${VERSION}`
+};
 
-    init(getProps) {
-        this.getProps = getProps;
-        this.view = {
-            classes: ['accordion-group']
-        };
-        this.css = `/app/components/accordion-group/accordion-group.css?${VERSION}`;
-
-        this.items = [];
-    }
-
-    template() {
-    }
+export default class AccordionGroup extends componentType(spec) {
 
     // Never updates, so just set up the children
     onLoaded() {
@@ -26,30 +20,28 @@ export default class AccordionGroup extends Controller {
                 this.updateItems();
             }
         };
-        const props = this.getProps();
 
-        this.items = props.items.map((item) => {
-            return new AccordionItem(
-                props.tag,
-                () => ({
+        this.itemComponents = this.items.map((item) => {
+            return new AccordionItem({
+                getProps: () => ({
                     label: item.title,
                     openLabel: item.openTitle || item.title,
                     contentComponent: item.contentComponent,
                     selectedLabel
                 }),
                 handlers
-            );
+            });
         });
 
-        for (const item of this.items) {
-            this.regions.self.append(item);
-        }
+        this.itemComponents.forEach((i) => {
+            this.regions.self.append(i);
+        });
     }
 
     updateItems() {
-        for (const item of this.items) {
-            item.update();
-        }
+        this.itemComponents.forEach((i) => {
+            i.update();
+        });
     }
 
 }

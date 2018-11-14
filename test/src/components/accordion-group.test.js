@@ -4,7 +4,7 @@ import {clickElement} from '../../test-utils';
 
 describe('AccordionGroup', () => {
 
-    const accordionGroup = new AccordionGroup(() => ({
+    const accordionGroup = new AccordionGroup({
         items: [{
             title: 'First item',
             contentComponent: new ResourceBox({})
@@ -13,7 +13,7 @@ describe('AccordionGroup', () => {
             title: 'Second item',
             contentComponent: new ResourceBox({})
         }]
-    }));
+    });
 
     const itemEls = accordionGroup.el.children;
     const firstPane = itemEls[0].querySelector('.content-pane');

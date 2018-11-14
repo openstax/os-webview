@@ -1,8 +1,5 @@
 import VERSION from '~/version';
-// If pulling data from the CMS
-import CMSPageController from '~/controllers/cms';
-// If not:
-// import {Controller} from 'superb.js';
+import componentType from '~/helpers/controller/init-mixin';
 
 // For handling events
 import {on} from '~/helpers/controller/decorators';
@@ -14,32 +11,27 @@ import {description as template} from './a-page-template.html';
 // Global-replace a-page-template with the file name of your component
 // Replace APageTemplate with the object name of your component
 
-export default class APageTemplate extends CMSPageController {
-
-    init() {
-        this.template = template;
-        this.view = {
-            classes: ['a-page-template', 'page'],
-            tag: 'main' // if the HTML doesn't contain a main tag
-        };
-        this.css = `/app/pages/a-page-template/a-page-template.css?${VERSION}`;
-
-        // What will it initially try to pull from the CMS
-        this.slug = 'pages/accessibility';
-
-        // Any other state setup
-        this.heading = '';
-
-        // model is an arg for the template and needs its context bound
-        this.model = () => this.getModel();
-    }
-
-    // model will be executed on every update, which ensures
-    // its values are up to date.
-    getModel() {
+const spec = {
+    template,
+    view: {
+        classes: ['a-page-template', 'page'],
+        tag: 'main' // if the HTML doesn't contain a main tag
+    },
+    css: `/app/pages/a-page-template/a-page-template.css?${VERSION}`,
+    slug: 'pages/accessibility',
+    model() {
         return {
             heading: this.heading
         };
+    }
+};
+
+export default class APageTemplate extends componentType(spec) {
+
+    init() {
+        super.init();
+        // Any other state setup
+        this.heading = '';
     }
 
     // Fires when the slug has been loaded (data returned in this.pageData)

@@ -23,6 +23,7 @@ const PAGES = [
     'errata/*path',
     'faq',
     'foundation',
+    'general/*path',
     'give',
     'give/*path',
     'interest',
