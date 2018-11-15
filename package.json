@@ -1,6 +1,6 @@
 {
   "name": "@openstax/os-webview",
-  "version": "2.23.0",
+  "version": "2.24.0",
   "description": "OpenStax webview",
   "scripts": {
     "start": "gulp dev",
@@ -83,6 +83,7 @@
   },
   "jest": {
     "moduleNameMapper": {
+      "\\.css$": "<rootDir>/__mocks__/styleMock.js",
       "^~/(.*)": "<rootDir>/dist/app/$1",
       "recordo": "<rootDir>/node_modules/recordo/dist/recordo.js",
       "settings": "<rootDir>/src/settings-example.js"
