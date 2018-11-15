@@ -3,7 +3,8 @@
         <section class="orange">
             <div class="boxed">
                 <picture>
-                    <source media="(min-width: 37.5em)" srcset="{`${model.mobileHeaderImage} 500w, ${model.headerImage} 800w`}">
+                    <source media="(max-width: 37.5em)" srcset="{model.mobileHeaderImage}">
+                    <source media="(min-width: 601px)" srcset="{model.headerImage}">
                     <img src="{model.mobileHeaderImage}" alt="{model.headerImageAltText}" class="header-image">
                 </picture>
                 <div class="text-group">
