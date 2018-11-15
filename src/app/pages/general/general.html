@@ -4,7 +4,7 @@
         <div each="item in model.body">
             <h2 if="item.type === 'heading'">{item.value}</h2>
             <img if="item.type === 'image' && item.file" src="{item.file}">
-            <div if="item.type === 'paragraph'" data-html="body[{$item}].value" skip="true"></div>
+            <div if="['paragraph', 'html'].includes(item.type)" data-html="body[{$item}].value" skip="true"></div>
             <div data-region-for="{$item}" skip="true"></div>
         </div>
     </div>
