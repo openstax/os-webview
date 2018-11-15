@@ -12,11 +12,12 @@
     }
 
     .fixed-overlay {
+        align-items: center;
         background-color: rgba(ui-color(black), 0.5);
         display: grid;
         height: 100vh;
+        justify-items: center;
         left: 0;
-        place-items: center;
         position: fixed;
         top: 0;
         width: 100vw;
