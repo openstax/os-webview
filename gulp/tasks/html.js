@@ -6,9 +6,6 @@ function html() {
     return gulp.src(`${config.dest}/*.html`, {
         since: gulp.lastRun('html')
     })
-    .pipe(pi.if(config.env === 'production', pi.htmlmin({
-        collapseWhitespace: true
-    })))
     .pipe(pi.replace(/@VERSION@/g, config.version))
     .pipe(gulp.dest(config.dest));
 }

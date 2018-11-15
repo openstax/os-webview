@@ -13,8 +13,7 @@ require('require-dir')('.', {recurse: true});
 const taskNames = Object.keys(gulp.registry().tasks());
 const watchTasks = [];
 
-for (let i = 0, l = taskNames.length; i < l; i++) {
-    const taskName = taskNames[i];
+taskNames.forEach((taskName) => {
     const taskParts = taskName.split(':');
 
     // Check length is greater one to avoid selecting this task &
@@ -23,7 +22,7 @@ for (let i = 0, l = taskNames.length; i < l; i++) {
         taskParts[taskParts.length - 1] === 'watch') {
         watchTasks.push(taskName);
     }
-}
+});
 
 gulp.task('watch', gulp.series(
     'browser-sync',
