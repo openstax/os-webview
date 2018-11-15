@@ -1,4 +1,3 @@
-import VERSION from '~/version';
 import router from '~/router';
 import CMSPageController from '~/controllers/cms';
 import {on} from '~/helpers/controller/decorators';
@@ -7,6 +6,7 @@ import shell from '~/components/shell/shell';
 import BookViewer from './book-viewer/book-viewer';
 import CategorySelector from '~/components/category-selector/category-selector';
 import {description as template} from './subjects.html';
+import css from './subjects.css';
 
 const pagePath = '/subjects';
 
@@ -19,7 +19,7 @@ export default class Subjects extends CMSPageController {
     init() {
         this.slug = 'books';
         this.template = template;
-        this.css = `/app/pages/subjects/subjects.css?${VERSION}`;
+        this.css = css;
         this.view = {
             classes: ['subjects-page', 'hide-until-loaded'],
             tag: 'main'

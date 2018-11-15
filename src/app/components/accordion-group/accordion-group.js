@@ -1,12 +1,12 @@
-import VERSION from '~/version';
 import componentType from '~/helpers/controller/init-mixin';
 import AccordionItem from './item/item';
+import css from './accordion-group.css';
 
 const spec = {
     view: {
         classes: ['accordion-group']
     },
-    css: `/app/components/accordion-group/accordion-group.css?${VERSION}`
+    css
 };
 
 export default class AccordionGroup extends componentType(spec) {

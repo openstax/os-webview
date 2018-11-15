@@ -1,9 +1,9 @@
-import VERSION from '~/version';
 import $ from '~/helpers/$';
 import CMSPageController from '~/controllers/cms';
 import router from '~/router';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './sticky-note.html';
+import css from './sticky-note.css';
 
 const isExpired = (str) => Boolean(str && (new Date(str) < Date.now()));
 
@@ -11,7 +11,7 @@ class StickyNote extends CMSPageController {
 
     init() {
         this.template = template;
-        this.css = `/app/components/shell/sticky-note/sticky-note.css?${VERSION}`;
+        this.css = css;
         this.view = {
             classes: ['sticky-note']
         };

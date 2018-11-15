@@ -1,8 +1,8 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import settings from 'settings';
 import $ from '~/helpers/$';
 import {description as template} from './resource-box.html';
+import css from './resource-box.css';
 
 export default class ResourceBox extends Controller {
 
@@ -92,7 +92,7 @@ export default class ResourceBox extends Controller {
                 href: model.link.url
             };
         }
-        this.css = `/app/pages/details/resource-box/resource-box.css?${VERSION}`;
+        this.css = css;
     }
 
     onUpdate() {

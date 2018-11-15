@@ -1,5 +1,4 @@
 import $ from '~/helpers/$';
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import BookSelector from '~/components/book-selector/book-selector';
 import ContactInfo from '~/components/contact-info/contact-info';
@@ -15,12 +14,13 @@ import SeriesOfComponents from '~/components/series-of-components/series-of-comp
 import StudentForm from '~/components/student-form/student-form';
 import TechnologySelector from '~/components/technology-selector/technology-selector';
 import {description as template} from './adoption.html';
+import css from './adoption.css';
 
 export default class AdoptionForm extends Controller {
 
     init() {
         this.template = template;
-        this.css = `/app/pages/adoption/adoption.css?${VERSION}`;
+        this.css = css;
         this.view = {
             classes: ['adoption-form-v2'],
             tag: 'main'

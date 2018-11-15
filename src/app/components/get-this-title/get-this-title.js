@@ -1,4 +1,3 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
@@ -9,6 +8,7 @@ import OrderPrintCopy from './order-print-copy/order-print-copy';
 import {highSchoolSlugs} from '~/models/book-titles';
 import {description as template} from './get-this-title.html';
 import {description as polishTemplate} from './get-this-title-polish.html';
+import css from './get-this-title.css';
 
 export default class GetThisTitle extends Controller {
 
@@ -28,7 +28,7 @@ export default class GetThisTitle extends Controller {
         const arrayOfBookstoreContent = ensureArray(data.bookstore_content);
 
         this.template = polish ? polishTemplate : template;
-        this.css = `/app/components/get-this-title/get-this-title.css?${VERSION}`;
+        this.css = css;
         this.regions = {
             submenu: '.submenu'
         };

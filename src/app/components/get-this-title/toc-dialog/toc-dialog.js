@@ -1,7 +1,7 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import Contents from '~/pages/details/contents/contents';
 import {description as template} from './toc-dialog.html';
+import css from './toc-dialog.css';
 
 export default class TocDialog extends Controller {
 
@@ -11,7 +11,7 @@ export default class TocDialog extends Controller {
         this.view = {
             tag: 'toc-dialog'
         };
-        this.css = `/app/components/get-this-title/toc-dialog/toc-dialog.css?${VERSION}`;
+        this.css = css;
         this.regions = {
             toc: '.toc-region'
         };

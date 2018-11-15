@@ -1,4 +1,3 @@
-import VERSION from '~/version';
 import componentType from '~/helpers/controller/init-mixin';
 
 // For handling events
@@ -7,17 +6,18 @@ import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 
 import {description as template} from './a-page-template.html';
+import css from './a-page-template.css';
 
 // Global-replace a-page-template with the file name of your component
 // Replace APageTemplate with the object name of your component
 
 const spec = {
     template,
+    css,
     view: {
         classes: ['a-page-template', 'page'],
         tag: 'main' // if the HTML doesn't contain a main tag
     },
-    css: `/app/pages/a-page-template/a-page-template.css?${VERSION}`,
     slug: 'pages/accessibility',
     model() {
         return {

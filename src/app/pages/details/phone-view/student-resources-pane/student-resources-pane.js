@@ -1,7 +1,7 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import settings from 'settings';
 import ResourceBox from '../../resource-box/resource-box';
+import css from './student-resources-pane.css';
 
 export default class StudentResourcePane extends Controller {
 
@@ -11,7 +11,7 @@ export default class StudentResourcePane extends Controller {
         this.view = {
             classes: ['student-resources-pane']
         };
-        this.css = `/app/pages/details/phone-view/student-resources-pane/student-resources-pane.css?${VERSION}`;
+        this.css = css;
     }
 
     onLoaded() {

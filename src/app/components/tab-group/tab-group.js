@@ -1,7 +1,7 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import Tab from './tab/tab';
 import {description as template} from './tab-group.html';
+import css from './tab-group.css';
 
 export default class TabGroup extends Controller {
 
@@ -14,7 +14,7 @@ export default class TabGroup extends Controller {
         this.regions = {
             tabs: '.tab-group'
         };
-        this.css = `/app/components/tab-group/tab-group.css?${VERSION}`;
+        this.css = css;
     }
 
     // Never updates, so just set up the children

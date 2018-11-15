@@ -1,4 +1,3 @@
-import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
 import SectionNavigator from './section-navigator/section-navigator';
@@ -6,6 +5,7 @@ import PulsingDot from './pulsing-dot/pulsing-dot';
 import {on} from '~/helpers/controller/decorators';
 import analytics from '~/helpers/analytics';
 import {description as template} from './openstax-tutor.html';
+import css from './openstax-tutor.css';
 import 'particles.js/particles';
 import particleConfig from './particlesjs-config';
 import {debounce} from 'lodash';
@@ -26,7 +26,7 @@ export default class Tutor extends CMSPageController {
             classes: ['openstax-tutor-page', 'page'],
             tag: 'main'
         };
-        this.css = `/app/pages/openstax-tutor/openstax-tutor.css?${VERSION}`;
+        this.css = css;
         this.model = {
             frontier: false,
             howItWorks: {},

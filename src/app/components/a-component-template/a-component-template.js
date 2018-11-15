@@ -1,9 +1,8 @@
-import VERSION from '~/version';
 import componentType from '~/helpers/controller/init-mixin';
 // Several utility functions, including scrollTo
 // import $ from '~/helpers/$';
 import {description as template} from './a-component-template.html';
-
+import css from './a-component-template.css';
 // Global-replace a-component-template with the file name of your component
 // Replace AComponentTemplate with the object name of your component
 
@@ -14,7 +13,7 @@ const spec = {
         classes: ['a-component-template']
     },
     // Check this path
-    css: `/app/components/a-component-template/a-component-template.css?${VERSION}`,
+    css,
     model() {
         this.props = this.getProps();
 

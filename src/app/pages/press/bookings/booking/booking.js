@@ -1,7 +1,7 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import {description as template} from './booking.html';
+import css from './booking.css';
 
 export default class Booking extends Controller {
 
@@ -10,7 +10,7 @@ export default class Booking extends Controller {
         this.view = {
             classes: ['booking']
         };
-        this.css = `/app/pages/press/bookings/booking/booking.css?${VERSION}`;
+        this.css = css;
         this.model = model;
     }
 

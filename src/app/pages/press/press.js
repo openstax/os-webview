@@ -1,4 +1,3 @@
-import VERSION from '~/version';
 import Article from './article/article';
 import Bookings from './bookings/bookings';
 import CMSPageController from '~/controllers/cms';
@@ -12,6 +11,7 @@ import router from '~/router';
 import $ from '~/helpers/$';
 import {description as template} from './press.html';
 import {description as articleTemplate} from './press-article.html';
+import css from './press.css';
 
 export default class Press extends CMSPageController {
 
@@ -20,7 +20,7 @@ export default class Press extends CMSPageController {
         this.view = {
             classes: ['press', 'page']
         };
-        this.css = `/app/pages/press/press.css?${VERSION}`;
+        this.css = css;
         this.regions = {
             article: '.article',
             mobileSelector: '[data-region="mobile-selector"]',

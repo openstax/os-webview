@@ -1,4 +1,3 @@
-import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 import {on} from '~/helpers/controller/decorators';
 import router from '~/router';
@@ -9,6 +8,7 @@ import settings from 'settings';
 import salesforce from '~/models/salesforce';
 import Share from '~/components/share/share';
 import {description as template} from './give.html';
+import css from './give.css';
 
 const studentModel = {
     headline: 'Help Us Make More Free Books!',
@@ -57,7 +57,7 @@ export default class Give extends CMSPageController {
             'share': '.share-buttons'
         };
 
-        this.css = `/app/pages/give/give.css?${VERSION}`;
+        this.css = css;
         this.view = {
             classes: ['give-page']
         };

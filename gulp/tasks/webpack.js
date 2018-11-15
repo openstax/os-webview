@@ -42,7 +42,7 @@ function webpack() {
                     enforce: "pre"
                 },
                 {
-                    test: /\.(map|css)$/,
+                    test: /\.(css|map)$/,
                     loader: 'ignore-loader'
                 }
             ]

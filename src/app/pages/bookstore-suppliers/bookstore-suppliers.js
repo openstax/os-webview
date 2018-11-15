@@ -1,7 +1,7 @@
-import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
 import {description as template} from './bookstore-suppliers.html';
+import css from './bookstore-suppliers.css';
 
 export default class BookstoreSuppliers extends CMSPageController {
 
@@ -11,7 +11,7 @@ export default class BookstoreSuppliers extends CMSPageController {
             classes: ['bookstore-suppliers', 'page'],
             tag: 'main'
         };
-        this.css = `/app/pages/bookstore-suppliers/bookstore-suppliers.css?${VERSION}`;
+        this.css = css;
         this.slug = 'pages/print-order';
         this.model = {};
     }

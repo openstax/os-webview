@@ -16,6 +16,9 @@ function templates() {
     .pipe(pi.rename((uri) => {
         uri.extname = '.html.js';
     }))
+    .pipe(pi.htmlmin({
+        collapseWhitespace: true
+    }))
     .pipe(pi.superviewsjs({
         mode: 'es6'
     }))

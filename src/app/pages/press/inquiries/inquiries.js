@@ -1,6 +1,6 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {description as template} from './inquiries.html';
+import css from './inquiries.css';
 
 export default class Inquiries extends Controller {
 
@@ -10,7 +10,7 @@ export default class Inquiries extends Controller {
         this.view = {
             classes: ['inquiries']
         };
-        this.css = `/app/pages/press/inquiries/inquiries.css?${VERSION}`;
+        this.css = css;
     }
 
 }

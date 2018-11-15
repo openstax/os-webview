@@ -1,13 +1,13 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './spinner.html';
+import css from './spinner.css';
 
 export default class Spinner extends Controller {
 
     init(model) {
         this.template = template;
-        this.css = `/app/components/spinner/spinner.css?${VERSION}`;
+        this.css = css;
         this.view = {
             classes: ['spinner']
         };

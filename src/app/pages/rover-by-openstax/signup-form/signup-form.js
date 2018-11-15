@@ -1,5 +1,4 @@
 import $ from '~/helpers/$';
-import VERSION from '~/version';
 import FormInput from '~/components/form-input/form-input';
 import FormSelect from '~/components/form-select/form-select';
 import SalesforceForm from '~/controllers/salesforce-form';

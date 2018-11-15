@@ -1,7 +1,7 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './collapsing-pane.html';
+import css from './collapsing-pane.css';
 
 export default class CollapsingPane extends Controller {
 
@@ -11,7 +11,7 @@ export default class CollapsingPane extends Controller {
         this.view = {
             classes: ['collapsing-pane']
         };
-        this.css = `/app/components/collapsing-pane/collapsing-pane.css?${VERSION}`;
+        this.css = css;
         this.regions = {
             content: '.content-region'
         };

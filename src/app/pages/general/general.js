@@ -1,11 +1,11 @@
-import VERSION from '~/version';
 import componentType from '~/helpers/controller/init-mixin';
 import {description as template} from './general.html';
+import css from './general.css';
 import Multicolumn from './multicolumn/multicolumn';
 
 const spec = {
     template,
-    css: `/app/pages/general/general.css?${VERSION}`,
+    css,
     view: {
         classes: ['general', 'page'],
         tag: 'main'

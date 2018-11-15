@@ -1,6 +1,6 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {description as template} from './toc-pane.html';
+import css from './toc-pane.css';
 
 export default class TocPane extends Controller {
 
@@ -13,7 +13,7 @@ export default class TocPane extends Controller {
         this.regions = {
             toc: '.toc-region'
         };
-        this.css = `/app/pages/details/phone-view/toc-pane/toc-pane.css?${VERSION}`;
+        this.css = css;
         this.model = () => this.getModel();
     }
 

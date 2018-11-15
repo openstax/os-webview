@@ -1,8 +1,8 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import salesforce from '~/models/salesforce';
 import {description as template} from './how-using.html';
+import css from './how-using.css';
 
 export default class HowUsing extends Controller {
 
@@ -13,7 +13,7 @@ export default class HowUsing extends Controller {
         this.view = {
             classes: ['how-using']
         };
-        this.css = `/app/pages/adoption/how-using/how-using.css?${VERSION}`;
+        this.css = css;
         this.model = () => this.getModel();
         this.checked = {};
         this.howMany = {};

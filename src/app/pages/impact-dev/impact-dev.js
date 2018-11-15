@@ -1,10 +1,10 @@
-import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
 import { utils } from 'superb.js';
 import { on } from '~/helpers/controller/decorators';
 import shell from '~/components/shell/shell';
 import { description as template } from './impact-dev.html';
+import css from './impact-dev.css';
 import { shuffle } from '~/helpers/data';
 import Map1 from './map/map';
 import State from './statistics/stat';
@@ -21,7 +21,7 @@ export default class ImpactDev extends CMSPageController {
     init() {
         this.slug = 'pages/our-impact';
         this.template = template;
-        this.css = `/app/pages/impact-dev/impact-dev.css?${VERSION}`;
+        this.css = css;
         this.regions = {
             map: '.mapdiv',
             stat: '.statdiv',

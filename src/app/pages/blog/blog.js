@@ -1,4 +1,3 @@
-import VERSION from '~/version';
 import settings from 'settings';
 import {on} from '~/helpers/controller/decorators';
 import router from '~/router';
@@ -7,6 +6,7 @@ import analytics from '~/helpers/analytics';
 import CMSPageController from '~/controllers/cms';
 import Article from './article/article';
 import {description as template} from './blog.html';
+import css from './blog.css';
 
 export default class Blog extends CMSPageController {
 
@@ -15,7 +15,7 @@ export default class Blog extends CMSPageController {
 
     init() {
         this.template = template;
-        this.css = `/app/pages/blog/blog.css?${VERSION}`;
+        this.css = css;
         this.view = {
             classes: ['blog', 'page'],
             tag: 'main'

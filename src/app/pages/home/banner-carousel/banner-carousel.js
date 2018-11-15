@@ -1,7 +1,7 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './banner-carousel.html';
+import css from './banner-carousel.css';
 import $ from '~/helpers/$';
 
 export default class BannerCarousel extends Controller {
@@ -12,7 +12,7 @@ export default class BannerCarousel extends Controller {
         this.view = {
             classes: ['banner-carousel']
         };
-        this.css = `/app/pages/home/banner-carousel/banner-carousel.css?${VERSION}`;
+        this.css = css;
         this.model = () => this.getModel();
         this.frameNumber = 0;
         this.rowOffset = 0;

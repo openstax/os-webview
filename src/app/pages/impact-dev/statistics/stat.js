@@ -1,12 +1,12 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {description as template} from './stat.html';
+import css from './stat.css';
 
 export default class State extends Controller {
 
     init() {
         this.template = template;
-        this.css = `/app/pages/impact-dev/statistics/stat.css?${VERSION}`;
+        this.css = css;
         this.view = {
             classes: ['statbox']
         };

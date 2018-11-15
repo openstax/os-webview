@@ -1,7 +1,7 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './book-checkbox.html';
+import css from './book-checkbox.css';
 
 export default class BookCheckbox extends Controller {
 
@@ -13,7 +13,7 @@ export default class BookCheckbox extends Controller {
             classes: ['book-checkbox']
         };
         // Check this path
-        this.css = `/app/components/book-checkbox/book-checkbox.css?${VERSION}`;
+        this.css = css;
         this.checked = false;
         this.model = () => this.getModel();
     }

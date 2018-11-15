@@ -1,8 +1,8 @@
-import VERSION from '~/version';
 import $ from '~/helpers/$';
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './mobile-selector.html';
+import css from './mobile-selector.css';
 
 export default class MobileSelector extends Controller {
 
@@ -13,7 +13,7 @@ export default class MobileSelector extends Controller {
         this.view = {
             classes: ['mobile-selector']
         };
-        this.css = `/app/pages/press/mobile-selector/mobile-selector.css?${VERSION}`;
+        this.css = css;
         this.model = () => this.getModel();
         this.showingMenu = false;
     }

@@ -1,8 +1,8 @@
-import VERSION from '~/version';
 import $ from '~/helpers/$';
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './more-fewer.html';
+import css from './more-fewer.css';
 
 export default class MoreFewer extends Controller {
 
@@ -16,7 +16,7 @@ export default class MoreFewer extends Controller {
             fewer: '.fewer',
             more: '.more'
         };
-        this.css = `/app/components/more-fewer/more-fewer.css?${VERSION}`;
+        this.css = css;
         this.model = () => this.getModel();
         this.showing = 'fewer';
     }

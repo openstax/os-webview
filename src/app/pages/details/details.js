@@ -1,5 +1,4 @@
 import $ from '~/helpers/$';
-import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 import ContentGroup from '~/components/content-group/content-group';
 import DetailsTab from './details-tab/details-tab';
@@ -12,6 +11,7 @@ import TabGroup from '~/components/tab-group/tab-group';
 import userModel from '~/models/usermodel';
 import {formatDateForBlog as formatDate, shuffle} from '~/helpers/data';
 import {description as template} from './details.html';
+import css from './details.css';
 
 function getSlugFromTitle(bookTitle) {
     let slug;
@@ -33,7 +33,7 @@ export default class Details extends CMSPageController {
 
     init(bookTitle) {
         this.template = template;
-        this.css = `/app/pages/details/details.css?${VERSION}`;
+        this.css = css;
         this.regions = {
             phoneView: '.phone-view',
             tabController: '.tab-controller',

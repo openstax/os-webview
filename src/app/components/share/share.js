@@ -1,7 +1,7 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import {description as template} from './share.html';
+import css from './share.css';
 
 /* eslint-disable */
 (function(d, s, id) {
@@ -17,7 +17,7 @@ export default class Share extends Controller {
 
     init(pageUrl, message) {
         this.template = template;
-        this.css = `/app/components/share/share.css?${VERSION}`;
+        this.css = css;
         this.view = {
             classes: ['share-buttons']
         };

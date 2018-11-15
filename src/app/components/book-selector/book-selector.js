@@ -1,9 +1,9 @@
-import VERSION from '~/version';
 import SalesforceForm from '~/controllers/salesforce-form';
 import salesforce from '~/models/salesforce';
 import BookCheckbox from '~/components/book-checkbox/book-checkbox';
 import $ from '~/helpers/$';
 import {description as template} from './book-selector.html';
+import css from './book-selector.css';
 
 export default class BookSelector extends SalesforceForm {
 
@@ -15,7 +15,7 @@ export default class BookSelector extends SalesforceForm {
         this.view = {
             classes: ['book-selector']
         };
-        this.css = `/app/components/book-selector/book-selector.css?${VERSION}`;
+        this.css = css;
         this.model = () => this.getModel();
         this.subjects = [];
         this.salesforceTitles = [];

@@ -1,4 +1,3 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
@@ -11,6 +10,7 @@ import Form from './form/form';
 import Detail from './detail/detail';
 import RadioPanel from '~/components/radio-panel/radio-panel';
 import {description as template} from './errata.html';
+import css from './errata.css';
 
 function setDisplayStatus(detail) {
     const result = {
@@ -50,7 +50,7 @@ export default class Errata extends Controller {
 
     init() {
         this.template = template;
-        this.css = `/app/pages/errata/errata.css?${VERSION}`;
+        this.css = css;
         this.view = {
             classes: ['errata-page', 'page'],
             tag: 'main'

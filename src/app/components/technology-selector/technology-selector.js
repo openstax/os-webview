@@ -1,8 +1,8 @@
-import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 import BookCheckbox from '~/components/book-checkbox/book-checkbox';
 import FormInput from '~/components/form-input/form-input';
 import {description as template} from './technology-selector.html';
+import css from './technology-selector.css';
 
 export default class TechnologySelector extends CMSPageController {
 
@@ -11,7 +11,7 @@ export default class TechnologySelector extends CMSPageController {
         this.view = {
             classes: ['technology-selector']
         };
-        this.css = `/app/components/technology-selector/technology-selector.css?${VERSION}`;
+        this.css = css;
         this.regions = {
             checkboxes: '[data-region="checkboxes"]'
         };

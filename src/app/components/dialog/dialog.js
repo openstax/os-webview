@@ -1,10 +1,10 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import Contents from '~/pages/details/contents/contents';
 import ModalContent from '../modal-content/modal-content';
 import {description as template} from './dialog.html';
+import css from './dialog.css';
 
 class Dialog extends Controller {
 
@@ -12,7 +12,7 @@ class Dialog extends Controller {
         this.template = template;
         this.getProps = getProps;
         this.handlers = handlers;
-        this.css = `/app/components/dialog/dialog.css?${VERSION}`;
+        this.css = css;
         this.regions = {
             main: '.main-region'
         };

@@ -1,4 +1,3 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {description as template} from './releases.html';
 import HeadlinePaginator from '~/components/headline-paginator/headline-paginator';

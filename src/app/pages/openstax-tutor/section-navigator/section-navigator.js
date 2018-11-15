@@ -1,8 +1,8 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import {description as template} from './section-navigator.html';
+import css from './section-navigator.css';
 import {debounce} from 'lodash';
 
 export default class SectionNavigator extends Controller {
@@ -16,7 +16,7 @@ export default class SectionNavigator extends Controller {
         this.view = {
             classes: ['section-navigator']
         };
-        this.css = `/app/pages/openstax-tutor/section-navigator/section-navigator.css?${VERSION}`;
+        this.css = css;
         this.boundScrollFn = debounce(this.setSelectedIdToNearest.bind(this), 40);
     }
 

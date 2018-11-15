@@ -1,7 +1,7 @@
-import VERSION from '~/version';
 import $ from '~/helpers/$';
 import {Controller} from 'superb.js';
 import {description as template} from './people-tab.html';
+import css from './people-tab.css';
 import {on} from '~/helpers/controller/decorators';
 
 export default class PeopleTab extends Controller {
@@ -12,7 +12,7 @@ export default class PeopleTab extends Controller {
         this.view = {
             classes: ['people-tab']
         };
-        this.css = `/app/pages/team/people-tab/people-tab.css?${VERSION}`;
+        this.css = css;
         this.model = () => this.getModel();
 
         this.selectedCard = null;

@@ -1,8 +1,8 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import salesforce from '~/models/salesforce';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './request-form.html';
+import css from './request-form.css';
 
 export default class RequestForm extends Controller {
 
@@ -13,7 +13,7 @@ export default class RequestForm extends Controller {
         this.view = {
             classes: ['comp-copy-request-form']
         };
-        this.css = `/app/pages/details/request-form/request-form.css?${VERSION}`;
+        this.css = css;
         this.model = () => this.getModel();
         this.beforeSubmit = true;
     }

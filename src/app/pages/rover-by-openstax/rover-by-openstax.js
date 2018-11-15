@@ -1,4 +1,3 @@
-import VERSION from '~/version';
 import $ from '~/helpers/$';
 import CMSPageController from '~/controllers/cms';
 import ContentGroup from '~/components/content-group/content-group';
@@ -8,6 +7,7 @@ import SignupForm from './signup-form/signup-form';
 import TabGroup from '~/components/tab-group/tab-group';
 import {description as template} from './rover-by-openstax.html';
 import {on} from '~/helpers/controller/decorators';
+import css from './rover-by-openstax.css';
 
 const rolesPromise = fetch(`${settings.apiOrigin}/api/snippets/roles`)
     .then((r) => r.json());
@@ -20,7 +20,7 @@ export default class Rover extends CMSPageController {
             classes: ['rover', 'page'],
             tag: 'main' // if the HTML doesn't contain a main tag
         };
-        this.css = `/app/pages/rover-by-openstax/rover-by-openstax.css?${VERSION}`;
+        this.css = css;
         this.slug = 'pages/rover-by-openstax';
         this.model = () => this.getModel();
 
