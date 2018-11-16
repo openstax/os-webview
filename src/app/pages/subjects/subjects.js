@@ -1,7 +1,5 @@
 import router from '~/router';
-import CMSPageController from '~/controllers/cms';
-import {on} from '~/helpers/controller/decorators';
-import $ from '~/helpers/$';
+import componentType from '~/helpers/controller/init-mixin';
 import shell from '~/components/shell/shell';
 import BookViewer from './book-viewer/book-viewer';
 import CategorySelector from '~/components/category-selector/category-selector';
@@ -9,30 +7,31 @@ import {description as template} from './subjects.html';
 import css from './subjects.css';
 
 const pagePath = '/subjects';
+const spec = {
+    template,
+    css,
+    slug: 'books',
+    view: {
+        classes: ['subjects-page', 'hide-until-loaded'],
+        tag: 'main'
+    },
+    regions: {
+        filter: '.filter',
+        bookViewer: '.books .container'
+    },
+    model: {}
+};
 
-export default class Subjects extends CMSPageController {
+export default class Subjects extends componentType(spec) {
 
     static description = 'Our textbooks are openly licensed, peer-reviewed,' +
         'free, and backed by learning resources. Check out our books and' +
         'decide if they\'re right for your course.';
 
     init() {
-        this.slug = 'books';
-        this.template = template;
-        this.css = css;
-        this.view = {
-            classes: ['subjects-page', 'hide-until-loaded'],
-            tag: 'main'
-        };
-        this.regions = {
-            filter: '.filter',
-            bookViewer: '.books .container'
-        };
-        this.model = {};
+        super.init();
         this.categorySelector = new CategorySelector((category) => this.filterSubjects(category));
-
         shell.showLoader();
-
         router.replaceState({
             filter: this.categoryFromPath(),
             path: pagePath
@@ -60,7 +59,7 @@ export default class Subjects extends CMSPageController {
     onDataLoaded() {
         Object.assign(this.model, this.pageData);
         this.update();
-        $.insertHtml(this.el, this.model);
+        this.insertHtml();
         this.bookViewer = new BookViewer(this.model.books);
         this.regions.bookViewer.attach(this.bookViewer);
         this.filterSubjectsEvent = () => {
