@@ -31,15 +31,9 @@ export default class DetailsTab extends Controller {
             );
         }
 
-        if ($.isPolish(this.model.title)) {
-            this.regions.letUsKnow.append(new LetUsKnow(() => ({
-                title: this.model.title
-            })));
-        } else if (this.model.salesforceAbbreviation) {
-            this.regions.letUsKnow.append(new LetUsKnow(() => ({
-                title: this.model.salesforceAbbreviation
-            })));
-        }
+        this.regions.letUsKnow.append(new LetUsKnow(() => ({
+            title: this.model[this.model.polish ? 'title' : 'salesforceAbbreviation']
+        })));
     }
 
 }
