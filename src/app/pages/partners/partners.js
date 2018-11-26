@@ -1,4 +1,3 @@
-import VERSION from '~/version';
 import settings from 'settings';
 import router from '~/router';
 import CMSPageController from '~/controllers/cms';
@@ -8,6 +7,7 @@ import CategorySelector from '~/components/category-selector/category-selector';
 import PartnerViewer from './partner-viewer/partner-viewer';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './partners.html';
+import css from './partners.css';
 
 const pagePath = '/partners';
 
@@ -16,7 +16,7 @@ export default class Partners extends CMSPageController {
     init() {
         this.slug = 'pages/partners';
         this.template = template;
-        this.css = `/app/pages/partners/partners.css?${VERSION}`;
+        this.css = css;
         this.view = {
             classes: ['partners-page', 'page'],
             tag: 'main'

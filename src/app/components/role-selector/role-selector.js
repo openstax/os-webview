@@ -1,9 +1,9 @@
-import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 import FormSelect from '~/components/form-select/form-select';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import {description as template} from './role-selector.html';
+import css from './role-selector.css';
 
 export default class RoleSelector extends CMSPageController {
 
@@ -13,7 +13,7 @@ export default class RoleSelector extends CMSPageController {
         this.view = {
             classes: ['role-selector']
         };
-        this.css = `/app/components/role-selector/role-selector.css?${VERSION}`;
+        this.css = css;
         this.regions = {
             selector: '[data-region="selector"]',
             studentForm: '[data-region="student-form"]',

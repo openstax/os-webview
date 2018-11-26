@@ -1,7 +1,7 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import settings from 'settings';
 import {description as template} from './upper-menu.html';
+import css from './upper-menu.css';
 
 export default class UpperMenu extends Controller {
 
@@ -10,7 +10,7 @@ export default class UpperMenu extends Controller {
         this.view = {
             classes: ['container']
         };
-        this.css = `/app/components/shell/header/upper-menu/upper-menu.css?${VERSION}`;
+        this.css = css;
         this.model = {};
 
         /* eslint arrow-parens: 0 */

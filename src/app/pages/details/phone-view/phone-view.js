@@ -1,4 +1,3 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
@@ -11,13 +10,14 @@ import InstructorResourcePane from './instructor-resources-pane/instructor-resou
 import StudentResourcePane from './student-resources-pane/student-resources-pane';
 import ErrataPane from './errata-pane/errata-pane';
 import {description as template} from './phone-view.html';
+import css from './phone-view.css';
 
 export default class PhoneView extends Controller {
 
     init(props) {
         this.template = template;
         this.props = props;
-        this.css = `/app/pages/details/phone-view/phone-view.css?${VERSION}`;
+        this.css = css;
         this.regions = {
             getTheBook: '.get-the-book',
             accordion: '.accordion-region',

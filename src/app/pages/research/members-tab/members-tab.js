@@ -1,6 +1,6 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {description as template} from './members-tab.html';
+import css from './members-tab.css';
 
 export default class MembersTab extends Controller {
 
@@ -10,7 +10,7 @@ export default class MembersTab extends Controller {
         this.view = {
             classes: ['members-tab']
         };
-        this.css = `/app/pages/research/members-tab/members-tab.css?${VERSION}`;
+        this.css = css;
         this.model = () => this.getModel();
     }
 

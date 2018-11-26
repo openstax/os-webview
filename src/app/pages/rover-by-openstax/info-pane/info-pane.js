@@ -1,21 +1,26 @@
-import VERSION from '~/version';
 import $ from '~/helpers/$';
-import {Controller} from 'superb.js';
+import componentType from '~/helpers/controller/init-mixin';
 import {description as template} from './info-pane.html';
+import css from './info-pane.css';
 
-export default class InfoPane extends Controller {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['info-pane']
+    }
+};
+
+export default class InfoPane extends componentType(spec) {
 
     init(model) {
-        this.template = template;
-        this.view = {
-            classes: ['info-pane']
-        };
-        this.css = `/app/pages/rover/info-pane/info-pane.css?${VERSION}`;
-        this.model = model;
+        super.init({
+            model
+        });
     }
 
     onUpdate() {
-        $.insertHtml(this.el, this.model);
+        this.insertHtml();
     }
 
 }

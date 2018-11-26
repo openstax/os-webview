@@ -5,7 +5,6 @@ import shell from './components/shell/shell';
 
 const PAGES = [
     'about',
-    'accessibility-statement',
     'adopters',
     'adoption',
     'adoption-confirmation',
@@ -15,7 +14,6 @@ const PAGES = [
     'books',
     'bookstore-suppliers',
     'bulk-order',
-    'careers',
     'confirmation',
     'confirmation/*path',
     'contact',
@@ -30,13 +28,11 @@ const PAGES = [
     'impact',
     'impact-dev',
     'separatemap',
-    'license',
     'openstax-tutor',
     'partners',
     'partners/*path',
     'press',
     'press/*path',
-    'privacy-policy',
     'research',
     'rover-by-openstax',
     'subjects',
@@ -77,11 +73,14 @@ class AppRouter extends Router {
         this.default('404');
         this.root('home');
         this.route(/^(\d+)/, 'cms');
-        this.route(/^to[us]$/, 'tos');
         this.route('give-confirmation', 'give');
         this.route('interest-confirmation', 'confirmation');
         this.route('higher-ed', 'home');
         this.route('institutional-partnership-application', 'institutional-partnership');
+        ['license', 'tos', 'privacy-policy', 'accessibility-statement', 'careers']
+            .forEach((pathname) => {
+                this.route(pathname, 'footer-page');
+            });
 
         PAGES.forEach((page) => {
             const isSplat = page.match(/\/\*/);

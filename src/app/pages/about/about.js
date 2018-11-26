@@ -1,7 +1,7 @@
-import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
 import {description as template} from './about.html';
+import css from './about.css';
 
 export default class AboutNew extends CMSPageController {
 
@@ -11,7 +11,7 @@ export default class AboutNew extends CMSPageController {
             classes: ['about', 'page'],
             tag: 'main'
         };
-        this.css = `/app/pages/about/about.css?${VERSION}`;
+        this.css = css;
         this.slug = 'pages/about';
 
         this.model = () => this.getModel();

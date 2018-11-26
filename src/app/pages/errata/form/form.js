@@ -1,4 +1,3 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import settings from 'settings';
 import $ from '~/helpers/$';
@@ -6,6 +5,7 @@ import selectHandler from '~/handlers/select';
 import router from '~/router';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './form.html';
+import css from './form.css';
 
 const sourceNames = {
     tutor: 'OpenStax Tutor'
@@ -15,7 +15,7 @@ export default class Form extends Controller {
 
     // eslint-disable-next-line complexity
     init(model) {
-        this.css = `/app/pages/errata/form/form.css?${VERSION}`;
+        this.css = css;
         this.template = template;
         this.model = Object.assign(model, {
             postEndpoint: `${settings.apiOrigin}/api/errata/`,

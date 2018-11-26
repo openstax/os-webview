@@ -1,7 +1,7 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './student-form.html';
+import css from './student-form.css';
 
 export default class StudentForm extends Controller {
 
@@ -10,7 +10,7 @@ export default class StudentForm extends Controller {
         this.view = {
             classes: ['student-form']
         };
-        this.css = `/app/components/student-form/student-form.css?${VERSION}`;
+        this.css = css;
     }
 
     @on('click button')

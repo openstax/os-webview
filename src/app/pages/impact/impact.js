@@ -1,9 +1,9 @@
-import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 import shell from '~/components/shell/shell';
 import $ from '~/helpers/$';
 import {makeDocModel} from '~/models/usermodel';
 import {description as template} from './impact.html';
+import css from './impact.css';
 
 export default class Impact extends CMSPageController {
 
@@ -13,7 +13,7 @@ export default class Impact extends CMSPageController {
 
     init() {
         this.template = template;
-        this.css = `/app/pages/impact/impact.css?${VERSION}`;
+        this.css = css;
         this.view = {
             classes: ['impact-page', 'page']
         };

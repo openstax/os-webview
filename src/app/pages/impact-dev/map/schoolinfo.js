@@ -1,15 +1,15 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {description as template} from './schoolinfo.html';
 import {on} from '~/helpers/controller/decorators';
 import Dropdown from './mapdropdown';
 import Testimonialinfo from './testimonial';
+import css from './map.css';
 
 export default class Schoolinfo extends Controller {
 
     init(props) {
         this.template = template;
-        this.css = `/app/pages/impact-dev/map/map.css?${VERSION}`;
+        this.css = css;
         this.view = {
             classes: ['toggle-datalist-head']
         };

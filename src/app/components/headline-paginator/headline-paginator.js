@@ -1,8 +1,8 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import {description as template} from './headline-paginator.html';
+import css from './headline-paginator.css';
 
 export default class HeadlinePaginator extends Controller {
 
@@ -12,7 +12,7 @@ export default class HeadlinePaginator extends Controller {
         this.view = {
             classes: ['headline-paginator']
         };
-        this.css = `/app/components/headline-paginator/headline-paginator.css?${VERSION}`;
+        this.css = css;
         this.model = () => this.getModel();
         this.perPage = 10;
         this.pageNumber = 0;

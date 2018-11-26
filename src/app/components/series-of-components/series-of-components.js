@@ -1,4 +1,3 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 
 export default class SeriesOfComponents extends Controller {

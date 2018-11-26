@@ -43,7 +43,10 @@ function webpack() {
                 },
                 {
                     test: /\.css$/,
-                    loader: 'ignore-loader'
+                    use: [
+                        { loader: 'style-loader' },
+                        { loader: 'css-loader' }
+                    ]
                 },
                 {
                     test: /\.map$/,

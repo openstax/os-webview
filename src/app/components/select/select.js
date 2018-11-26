@@ -1,8 +1,8 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './select.html';
+import css from './select.css';
 
 const CONVERT_OPTIONS = Symbol();
 
@@ -10,7 +10,7 @@ export default class Select extends Controller {
 
     init(config, handler, parent) {
         this.template = template;
-        this.css = `/app/components/select/select.css?${VERSION}`;
+        this.css = css;
         this.setup(config);
         this.handler = handler;
         this.view = {

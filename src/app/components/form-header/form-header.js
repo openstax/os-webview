@@ -1,8 +1,8 @@
-import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 // Several utility functions, including scrollTo and insertHtml
 import $ from '~/helpers/$';
 import {description as template} from './form-header.html';
+import css from './form-header.css';
 
 export default class Header extends CMSPageController {
 
@@ -12,8 +12,7 @@ export default class Header extends CMSPageController {
         this.view = {
             classes: ['form-header']
         };
-        // Check this path
-        this.css = `/app/components/form-header/form-header.css?${VERSION}`;
+        this.css = css;
         this.model = () => this.getModel();
     }
 

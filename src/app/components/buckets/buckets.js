@@ -1,6 +1,7 @@
 import {Controller} from 'superb.js';
 import Bucket from './bucket/bucket';
-import VERSION from '~/version';
+import css from './buckets.css';
+
 const bucketClasses = ['our-impact', 'partners'];
 const buttonClasses = ['btn-cyan', 'btn-gold'];
 
@@ -8,7 +9,7 @@ export default class Buckets extends Controller {
 
     init(props) {
         this.template = () => '';
-        this.css = `/app/components/buckets/buckets.css?${VERSION}`;
+        this.css = css;
         this.view = {
             classes: ['buckets-section']
         };

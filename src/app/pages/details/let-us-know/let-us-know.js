@@ -1,8 +1,8 @@
-import VERSION from '~/version';
 import $ from '~/helpers/$';
 import {Controller} from 'superb.js';
 import {description as template} from './let-us-know.html';
 import {description as templatePolish} from './let-us-know-polish.html';
+import css from './let-us-know.css';
 
 export default class LetUsKnow extends Controller {
 
@@ -12,7 +12,7 @@ export default class LetUsKnow extends Controller {
         this.view = {
             classes: ['let-us-know']
         };
-        this.css = `/app/pages/details/let-us-know/let-us-know.css?${VERSION}`;
+        this.css = css;
     }
 
 }

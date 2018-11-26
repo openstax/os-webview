@@ -1,14 +1,14 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './form-input.html';
+import css from './form-input.css';
 
 export default class FormInput extends Controller {
 
     init(props) {
         this.template = template;
-        this.css = `/app/components/form-input/form-input.css?${VERSION}`;
+        this.css = css;
         this.model = Object.assign({value: ''}, props);
         this.view = {
             tag: 'label',

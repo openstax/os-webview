@@ -1,4 +1,3 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {description as template} from './main-menu.html';
 import {on} from '~/helpers/controller/decorators';
@@ -6,6 +5,7 @@ import $ from '~/helpers/$';
 import categoryPromise from '~/models/subjectCategories';
 import Dropdown from './dropdown/dropdown';
 import settings from 'settings';
+import css from './main-menu.css';
 
 // Slightly hacky; avoiding adding a new item to settings,
 // but probably will do so eventually
@@ -25,7 +25,7 @@ export default class MainMenu extends Controller {
             technologyDropdown: '.technology-dropdown',
             whatWeDoDropdown: '.what-we-do-dropdown'
         };
-        this.css = `/app/components/shell/header/main-menu/main-menu.css?${VERSION}`;
+        this.css = css;
         this.model = model;
 
         this.loginUrl = this.model.login;

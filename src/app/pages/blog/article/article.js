@@ -1,9 +1,9 @@
-import VERSION from '~/version';
 import $ from '~/helpers/$';
 import CMSPageController from '~/controllers/cms';
 import FormattedAs from './formatted-as/formatted-as';
 import {Controller} from 'superb.js';
 import {debounce} from 'lodash';
+import css from './article.css';
 
 function slugWithNewsPrefix(slug) {
     if (!(/^news\//).test(slug)) {
@@ -31,7 +31,7 @@ export default class Article extends Controller {
 
     init(article, mode) {
         this.template = () => '';
-        this.css = `/app/pages/blog/article/article.css?${VERSION}`;
+        this.css = css;
         this.view = {
             classes: ['article']
         };

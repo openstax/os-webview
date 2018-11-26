@@ -1,8 +1,8 @@
-import VERSION from '~/version';
 import bodyUnitView from '~/components/body-units/body-units';
 import CMSPageController from '~/controllers/cms';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
 import {description as template} from './article.html';
+import css from '~/pages/blog/article/article.css';
 
 export default class Article extends CMSPageController {
 
@@ -15,7 +15,7 @@ export default class Article extends CMSPageController {
             body: '.body'
         };
         this.slug = slug;
-        this.css = `/app/pages/blog/article/article.css?${VERSION}`;
+        this.css = css;
         this.model = {};
         this.preserveWrapping = true;
     }

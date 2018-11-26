@@ -1,7 +1,7 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import {description as template} from './bookings.html';
+import css from './bookings.css';
 import Booking from './booking/booking';
 
 export default class bookingsRegion extends Controller {
@@ -12,7 +12,7 @@ export default class bookingsRegion extends Controller {
         this.view = {
             classes: ['bookings']
         };
-        this.css = `/app/pages/press/bookings/bookings.css?${VERSION}`;
+        this.css = css;
         this.regions = {
             'bookings': '[data-region="bookings"]'
         };

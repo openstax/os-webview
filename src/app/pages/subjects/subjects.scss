@@ -8,6 +8,10 @@
 
 .subjects-page {
 
+    .hero > h1 {
+        @include set-font(h1);
+    }
+
     .subject {
         margin-bottom: 0;
         margin-top: 2rem;

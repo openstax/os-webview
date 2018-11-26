@@ -1,6 +1,6 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {description as template} from './press-excerpt.html';
+import css from './press-excerpt.css';
 
 export default class PressExcerpt extends Controller {
 
@@ -10,7 +10,7 @@ export default class PressExcerpt extends Controller {
         this.view = {
             classes: ['press-excerpt']
         };
-        this.css = `/app/pages/press/press-excerpt/press-excerpt.css?${VERSION}`;
+        this.css = css;
         this.model = () => this.getModel();
     }
 

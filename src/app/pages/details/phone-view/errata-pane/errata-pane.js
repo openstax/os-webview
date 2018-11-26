@@ -1,8 +1,8 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import {description as template} from './errata-pane.html';
 import {description as templatePolish} from './errata-pane-polish.html';
+import css from './errata-pane.css';
 
 export default class ErrataPane extends Controller {
 
@@ -12,7 +12,7 @@ export default class ErrataPane extends Controller {
         this.view = {
             classes: ['errata-pane']
         };
-        this.css = `/app/pages/details/phone-view/errata-pane/errata-pane.css?${VERSION}`;
+        this.css = css;
     }
 
     onLoaded() {

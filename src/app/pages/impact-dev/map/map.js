@@ -1,7 +1,7 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import {description as template} from './map.html';
+import css from './map.css';
 import {on} from '~/helpers/controller/decorators';
 import Dropdown from './mapdropdown';
 import Schoolinfo from './schoolinfo';
@@ -14,7 +14,7 @@ export default class Map1 extends Controller {
 
     init(props) {
         this.template = template;
-        this.css = `/app/pages/impact-dev/map/map.css?${VERSION}`;
+        this.css = css;
 
         this.view = {
             classes: ['mapbox']

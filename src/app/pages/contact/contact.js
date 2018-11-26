@@ -1,4 +1,3 @@
-import VERSION from '~/version';
 import SalesforceForm from '~/controllers/salesforce-form';
 import CMSPageController from '~/controllers/cms';
 import salesforce from '~/models/salesforce';
@@ -7,6 +6,7 @@ import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 import selectHandler from '~/handlers/select';
 import {description as template} from './contact.html';
+import css from './contact.css';
 
 const subjects = [
     'General',
@@ -44,7 +44,7 @@ export default class Contact extends SalesforceForm {
             this.onDataLoaded();
         };
         this.template = template;
-        this.css = `/app/pages/contact/contact.css?${VERSION}`;
+        this.css = css;
         this.view = {
             classes: ['contact-page', 'page']
         };

@@ -1,8 +1,8 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import {description as template} from './multi-page-form.html';
+import css from './multi-page-form.css';
 
 export default class MultiPageForm extends Controller {
 
@@ -13,7 +13,7 @@ export default class MultiPageForm extends Controller {
         this.view = {
             classes: ['multi-page-form']
         };
-        this.css = `/app/components/multi-page-form/multi-page-form.css?${VERSION}`;
+        this.css = css;
         this.model = () => this.getModel();
         this.currentPage = 0;
         if (this.onPageChange) {

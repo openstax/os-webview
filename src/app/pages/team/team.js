@@ -1,10 +1,10 @@
-import VERSION from '~/version';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import CMSPageController from '~/controllers/cms';
 import ContentGroup from '~/components/content-group/content-group';
 import PeopleTab from './people-tab/people-tab';
 import TabGroup from '~/components/tab-group/tab-group';
 import {description as template} from './team.html';
+import css from './team.css';
 
 export default class Team extends CMSPageController {
 
@@ -14,7 +14,7 @@ export default class Team extends CMSPageController {
             classes: ['team', 'page'],
             tag: 'main'
         };
-        this.css = `/app/pages/team/team.css?${VERSION}`;
+        this.css = css;
         this.slug = 'pages/team';
         this.regions = {
             accordion: 'accordion-region',

@@ -1,12 +1,12 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import ProductBox from './product-box/product-box';
+import css from './product-boxes.css';
 
 export default class ProductsBoxes extends Controller {
 
     init(productData) {
         this.template = () => null;
-        this.css = `/app/components/products-boxes/products-boxes.css?${VERSION}`;
+        this.css = css;
         this.view = {
             classes: ['products-boxes', 'boxed-row']
         };

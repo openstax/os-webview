@@ -1,17 +1,17 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import ResourceBox from '../resource-box/resource-box';
 import shell from '~/components/shell/shell';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './instructor-resource-tab.html';
+import css from './instructor-resource-tab.css';
 
 export default class InstructorResourceTab extends Controller {
 
     init(model, compCopyDialogProps) {
         this.template = template;
         this.model = model;
-        this.css = `/app/pages/details/instructor-resource-tab/instructor-resource-tab.css?${VERSION}`;
+        this.css = css;
         this.view = {
             classes: ['instructor-resources']
         };

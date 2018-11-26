@@ -1,4 +1,3 @@
-import VERSION from '~/version';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import CMSPageController from '~/controllers/cms';
 import ContentGroup from '~/components/content-group/content-group';
@@ -7,6 +6,7 @@ import $ from '~/helpers/$';
 import AlumniTab from './alumni-tab/alumni-tab';
 import MembersTab from './members-tab/members-tab';
 import {description as template} from './research.html';
+import css from './research.css';
 
 export default class Research extends CMSPageController {
 
@@ -16,7 +16,7 @@ export default class Research extends CMSPageController {
             classes: ['research', 'page'],
             tag: 'main'
         };
-        this.css = `/app/pages/research/research.css?${VERSION}`;
+        this.css = css;
         this.slug = 'pages/research';
         this.model = () => this.getModel();
         this.regions = {

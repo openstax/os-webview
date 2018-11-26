@@ -1,4 +1,3 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import Releases from './releases/releases';
@@ -6,6 +5,7 @@ import Mentions from './mentions/mentions';
 import Inquiries from '../inquiries/inquiries';
 import Bookings from '../bookings/bookings';
 import {description as template} from './press-mobile.html';
+import css from './press-mobile.css';
 
 export default class PressMobile extends Controller {
 
@@ -21,7 +21,7 @@ export default class PressMobile extends Controller {
             'inquiries': '[data-region="inquiries"]',
             'booking': '[data-region="booking"]'
         };
-        this.css = `/app/pages/press/press-mobile/press-mobile.css?${VERSION}`;
+        this.css = css;
         this.model = () => this.getModel();
     }
 

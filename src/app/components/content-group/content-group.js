@@ -1,5 +1,5 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
+import css from './content-group.css';
 
 export default class ContentGroup extends Controller {
 
@@ -8,7 +8,7 @@ export default class ContentGroup extends Controller {
         this.view = {
             classes: ['content-group']
         };
-        this.css = `/app/components/content-group/content-group.css?${VERSION}`;
+        this.css = css;
     }
 
     template() {

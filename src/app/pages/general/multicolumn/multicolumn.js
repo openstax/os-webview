@@ -1,4 +1,3 @@
-import VERSION from '~/version';
 import componentType from '~/helpers/controller/init-mixin';
 import {description as template} from './multicolumn.html';
 

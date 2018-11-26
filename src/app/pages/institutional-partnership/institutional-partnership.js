@@ -1,16 +1,16 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import TabGroup from '~/components/tab-group/tab-group';
 import ContentGroup from '~/components/content-group/content-group';
 import ProgramDetails from './program-details';
 import Application from './application';
 import {description as template} from './institutional-partnership.html';
+import css from './institutional-partnership.css';
 
 export default class Institutional extends Controller {
 
     init() {
         this.template = template;
-        this.css = `/app/pages/institutional-partnership/institutional-partnership.css?${VERSION}`;
+        this.css = css;
         this.view = {
             tag: 'main',
             classes: ['institutional-page', 'page']

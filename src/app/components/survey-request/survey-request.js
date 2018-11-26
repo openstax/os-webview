@@ -1,6 +1,6 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {description as template} from './survey-request.html';
+import css from './survey-request.css';
 
 const expireDate = new Date('2018-09-11T05:00:00Z');
 const dayMS = 24 * 60 * 60 * 1000;
@@ -20,7 +20,7 @@ export default class SurveyRequest extends Controller {
         this.view = {
             classes: ['survey-request']
         };
-        this.css = `/app/components/survey-request/survey-request.css?${VERSION}`;
+        this.css = css;
     }
 
 }

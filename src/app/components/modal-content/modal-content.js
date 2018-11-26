@@ -1,6 +1,6 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
+import css from './modal-content.css';
 
 export default class ModalContent extends Controller {
 
@@ -10,7 +10,7 @@ export default class ModalContent extends Controller {
             tag: 'modal-content',
             classes: ['page-overlay']
         };
-        this.css = `/app/components/modal-content/modal-content.css?${VERSION}`;
+        this.css = css;
     }
 
     template() {

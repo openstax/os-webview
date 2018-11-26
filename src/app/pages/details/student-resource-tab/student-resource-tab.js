@@ -1,9 +1,9 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import settings from 'settings';
 import ResourceBox from '../resource-box/resource-box';
 import {description as template} from './student-resource-tab.html';
+import css from './student-resource-tab.css';
 
 export default class StudentResourceTab extends Controller {
 
@@ -16,7 +16,7 @@ export default class StudentResourceTab extends Controller {
         this.regions = {
             resourceBoxes: '.resources'
         };
-        this.css = `/app/pages/details/student-resource-tab/student-resource-tab.css?${VERSION}`;
+        this.css = css;
     }
 
     onLoaded() {

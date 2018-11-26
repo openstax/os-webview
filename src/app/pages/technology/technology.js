@@ -1,8 +1,8 @@
-import VERSION from '~/version';
 import $ from '~/helpers/$';
 import FormSelect from '~/components/form-select/form-select';
 import shell from '~/components/shell/shell';
 import {description as template} from './technology.html';
+import css from './technology.css';
 import componentType from '~/helpers/controller/init-mixin';
 import Steps from './steps/steps';
 import NewFrontier from './new-frontier/new-frontier';
@@ -10,7 +10,7 @@ import Banner from './banner/banner';
 
 const spec = {
     template,
-    css: `/app/pages/technology/technology.css?${VERSION}`,
+    css,
     view: {
         classes: ['technology-page', 'page']
     },

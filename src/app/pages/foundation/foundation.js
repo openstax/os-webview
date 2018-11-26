@@ -1,7 +1,7 @@
-import VERSION from '~/version';
 import CMSPageController from '~/controllers/cms';
 import shell from '~/components/shell/shell';
 import {description as template} from './foundation.html';
+import css from './foundation.css';
 
 export default class Foundation extends CMSPageController {
 
@@ -11,7 +11,7 @@ export default class Foundation extends CMSPageController {
 
     init() {
         this.template = template;
-        this.css = `/app/pages/foundation/foundation.css?${VERSION}`;
+        this.css = css;
         this.view = {
             classes: ['foundation-page', 'page'],
             tag: 'main'

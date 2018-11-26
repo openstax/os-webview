@@ -5,11 +5,11 @@ import CMSPageController from '~/controllers/cms';
 import Education from './education/education';
 import Quotes from '~/components/quotes/quotes';
 import shell from '~/components/shell/shell';
-import VERSION from '~/version';
 import {description as template} from './home.html';
 import {on} from '~/helpers/controller/decorators';
 import {shuffle} from '~/helpers/data';
 import {utils} from 'superb.js';
+import css from './home.css';
 
 export default class Home extends CMSPageController {
 
@@ -20,7 +20,7 @@ export default class Home extends CMSPageController {
     init() {
         this.slug = 'pages/openstax-homepage';
         this.template = template;
-        this.css = `/app/pages/home/home.css?${VERSION}`;
+        this.css = css;
         this.regions = {
             banners: '.book-banners',
             quotes: '.quote-buckets',

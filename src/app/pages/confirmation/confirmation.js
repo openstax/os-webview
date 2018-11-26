@@ -1,4 +1,3 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import settings from 'settings';
 import $ from '~/helpers/$';
@@ -8,6 +7,7 @@ import Errata from '~/pages/errata/errata';
 import Detail from '~/pages/errata/detail/detail';
 import SurveyRequest from '~/components/survey-request/survey-request';
 import {description as template} from './confirmation.html';
+import css from './confirmation.css';
 
 const applyLink = `${settings.accountHref}/faculty_access/apply?r=${encodeURIComponent(settings.apiOrigin)}`;
 
@@ -47,7 +47,7 @@ export default class Confirmation extends Controller {
     init() {
         document.title = 'Thanks! - OpenStax';
         this.template = template;
-        this.css = `/app/pages/confirmation/confirmation.css?${VERSION}`;
+        this.css = css;
         this.view = {
             classes: ['confirmation-page', 'page']
         };

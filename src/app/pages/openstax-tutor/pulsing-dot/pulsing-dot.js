@@ -1,8 +1,8 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import {description as template} from './pulsing-dot.html';
+import css from './pulsing-dot.css';
 
 export default class PulsingDot extends Controller {
 
@@ -15,7 +15,7 @@ export default class PulsingDot extends Controller {
         this.view = {
             classes: ['pulsing-dot']
         };
-        this.css = `/app/pages/openstax-tutor/pulsing-dot/pulsing-dot.css?${VERSION}`;
+        this.css = css;
     }
 
     onLoaded() {

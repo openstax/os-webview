@@ -1,4 +1,3 @@
-import VERSION from '~/version';
 import {Controller} from 'superb.js';
 import CMSPageController from '~/controllers/cms';
 import {on} from '~/helpers/controller/decorators';
@@ -8,6 +7,7 @@ import selectHandler from '~/handlers/select';
 import {highSchoolSlugs} from '~/models/book-titles';
 import {description as template} from './bulk-order.html';
 import {description as oiTemplate} from './order-items.html';
+import css from './bulk-order.css';
 
 class OrderItems extends CMSPageController {
 
@@ -58,7 +58,7 @@ export default class BulkOrder extends Controller {
             classes: ['bulk-order', 'page'],
             tag: 'main'
         };
-        this.css = `/app/pages/bulk-order/bulk-order.css?${VERSION}`;
+        this.css = css;
         this.model = {
             origin: settings.apiOrigin,
             orgTypeOptions: [
