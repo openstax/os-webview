@@ -20,12 +20,16 @@ export default class InstructorResourceTab extends Controller {
     }
 
     onLoaded() {
-        $.insertHtml(this.el, this.model);
-
         const Region = this.regions.self.constructor;
         const resourceBoxes = this.el.querySelectorAll('resource-box');
 
         this.model.userStatusPromise.then((userStatus) => {
+            const loggedIn = Boolean(userStatus.userInfo && userStatus.userInfo.id);
+
+            if (loggedIn) {
+                this.model.freeStuff.blurb = this.model.freeStuff.loggedInBlurb;
+            }
+            $.insertHtml(this.el, this.model);
             for (const index of this.model.resources.keys()) {
                 const region = new Region(resourceBoxes[index]);
                 const resourceData = this.model.resources[index];

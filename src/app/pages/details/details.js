@@ -160,7 +160,8 @@ export default class Details extends CMSPageController {
                     userStatusPromise: this.userStatusPromise,
                     freeStuff: {
                         heading: this.pageData.free_stuff_instructor.content.heading,
-                        blurb: this.pageData.free_stuff_instructor.content.content
+                        blurb: this.pageData.free_stuff_instructor.content.content,
+                        loggedInBlurb: this.pageData.free_stuff_instructor.content.content_logged_in
                     },
                     webinar: {
                         text: this.pageData.webinar_content.content.heading,
