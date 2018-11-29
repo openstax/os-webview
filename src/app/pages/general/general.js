@@ -31,14 +31,6 @@ export default class General extends componentType(spec) {
         this.update();
         this.insertHtml();
         data.body.forEach((item, index) => {
-            if (item.type === 'image') {
-                fetch(`https://oscms-dev.openstax.org/api/v2/images/${item.value}/`)
-                    .then((r) => r.json())
-                    .then((result) => {
-                        item.file = result.file;
-                        this.update();
-                    });
-            }
             if (item.type === 'multicolumn') {
                 const region = this.regionFrom(`[data-region-for="${index}"]`);
                 const component = new Multicolumn({
