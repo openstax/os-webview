@@ -1,0 +1,18 @@
+<template args="model">
+    <div class="text-block">
+        <h2>{model.heading}</h2>
+        <div data-html="description" skip="true"></div>
+        <h3>{model.factHeading}</h3>
+    </div>
+    <div class="fact-boxes">
+        <div each="fact in model.facts" class="card">
+            <div class="color-header"></div>
+            <div class="card-content">
+                <div class="card-header">
+                    {fact.number}<span class="smaller">{fact.unit}</span>
+                </div>
+                <div>{fact.text}</div>
+            </div>
+        </div>
+    </div>
+</template>

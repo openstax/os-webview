@@ -18,7 +18,7 @@ const spec = {
         classes: ['a-page-template', 'page'],
         tag: 'main' // if the HTML doesn't contain a main tag
     },
-    slug: 'pages/accessibility',
+    slug: 'pages/a-page-template',
     model() {
         return {
             heading: this.heading

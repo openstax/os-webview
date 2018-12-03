@@ -1,0 +1,16 @@
+<template args="model">
+    <div class="text-left-photo-right">
+        <div class="text-block">
+            <h2>{model.heading}</h2>
+            <div data-html="letterBody" class="text-block" skip="true"></div>
+            <div class="signature-section">
+                <img class="mobile-only little-headshot" src="{model.portrait}" alt="{model.portraitAlt}">
+                <div>
+                    <img src="{model.signatureImage}" alt="{model.signatureAlt}">
+                    <div data-html="signatureText" skip="true"></div>
+                </div>
+            </div>
+        </div>
+        <img class="hide-on-mobile" src="{model.portrait}" alt="{model.portraitAlt}">
+    </div>
+</template>

@@ -12,7 +12,6 @@ const spec = {
     view: {
         classes: ['a-component-template']
     },
-    // Check this path
     css,
     model() {
         this.props = this.getProps();

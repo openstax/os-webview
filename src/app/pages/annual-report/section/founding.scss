@@ -1,0 +1,7 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.annual-report.page .founding {
+    @include wider-than($phone-max) {
+        margin-top: -12rem;
+    }
+}

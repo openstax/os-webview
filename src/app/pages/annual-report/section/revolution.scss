@@ -1,0 +1,19 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.annual-report.page .revolution {
+
+    .signature-section {
+        @include width-up-to($phone-max) {
+            display: grid;
+            grid-column-gap: $normal-margin;
+            grid-template-columns: auto 1fr;
+        }
+    }
+
+    .little-headshot {
+        border-radius: 50%;
+        float: left;
+        max-width: 10rem;
+    }
+
+}

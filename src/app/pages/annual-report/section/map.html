@@ -1,0 +1,11 @@
+<template args="model">
+    <img class="floating" src="{model.image1.image}" alt="{model.image1.imageAlt}">
+    <div class="content with-layers">
+        <img src="{model.image2.image}" alt="{model.image2.imageAlt}">
+        <div class="text-block">
+            <h2>{model.heading}</h2>
+            <div>{model.description}</div>
+            <a href="{model.link}">{model.linkText} <span class="fa fa-chevron-right"></span></a>
+        </div>
+    </div>
+</template>

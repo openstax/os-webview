@@ -1,0 +1,9 @@
+<template args="model">
+    <div class="text-content">
+        <h2>{model.heading}</h2>
+        <div>{model.description}</div>
+    </div>
+    <div class="icon-row">
+        <img each="icon in model.partners" src="icon.image" alt="icon.imageAlt">
+    </div>
+</template>
