@@ -5,27 +5,22 @@ const path = require('path');
 const webpackStream = require('webpack-stream');
 const webpack2 = require('webpack');
 
-
 function webpack() {
-    const isDevelopment = config.env === 'development'
+    // Don't move this outside -- env gets set after load-time
+    const isDevelopment = config.env === 'development';
     const output = {
         path: path.resolve(config.dest),
         filename: "bundle.js",
         publicPath: "/", // for where to request chunks when the SinglePageApp changes the URL
         chunkFilename: "chunk-[chunkhash].js"
     };
-
-    if (isDevelopment) {
-        delete output.chunkFilename;
-    }
-
-    return gulp.src([
-        `${config.dest}/app/main.js`
-    ]).pipe(webpackStream({
+    const webpackConfig = {
         externals: {
             settings: 'SETTINGS'
         },
-        mode: isDevelopment ? 'development' : 'production',
+        entry: path.resolve(config.dest, "app/main.js"),
+        mode: config.env,
+        watch: isDevelopment,
         output,
         resolve: {
             alias: {
@@ -37,15 +32,15 @@ function webpack() {
             rules: [
                 {
                     test: /\.js$/,
-                    use: ["source-map-loader"],
+                    loader: 'source-map-loader',
                     exclude: /node_modules/,
-                    enforce: "pre"
+                    enforce: 'pre'
                 },
                 {
                     test: /\.css$/,
                     use: [
-                        { loader: 'style-loader' },
-                        { loader: 'css-loader' }
+                        'style-loader',
+                        'css-loader'
                     ]
                 },
                 {
@@ -54,9 +49,22 @@ function webpack() {
                 }
             ]
         },
-        devtool: "source-map"
-    }, webpack2))
+        devtool: 'source-map'
+    };
+
+    if (isDevelopment) {
+        delete output.chunkFilename;
+    }
+
+    return gulp.src([
+        `${config.dest}/app/main.js`
+    ])
+    .pipe(webpackStream(webpackConfig, webpack2))
     .pipe(gulp.dest(config.dest));
 }
 
 gulp.task(webpack);
+
+gulp.task('webpack:watch', () => {
+    gulp.watch(`${config.dest}/**/*.bundle.js.map`, gulp.series('reload-browser'));
+});

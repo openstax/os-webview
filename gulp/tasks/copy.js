@@ -14,8 +14,5 @@ gulp.task(copy);
 
 gulp.task('copy:watch', () => {
     gulp.watch(glob, config.watchOpts)
-    .on('change', gulp.series(
-        copy,
-        'reload-browser'
-    ));
+    .on('change', copy);
 });

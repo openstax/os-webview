@@ -14,8 +14,5 @@ gulp.task(html);
 
 gulp.task('html:watch', () => {
     gulp.watch(`${config.dest}/*.html`, config.watchOpts)
-    .on('change', gulp.series(
-        html,
-        'reload-browser'
-    ));
+    .on('change', html);
 });

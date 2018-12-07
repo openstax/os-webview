@@ -1,4 +1,4 @@
-var gulp = require('gulp');
+const gulp = require('gulp');
 require('require-dir')('./gulp/tasks', {recurse: true});
 
 gulp.task('before-webpack', gulp.series(
@@ -32,9 +32,13 @@ gulp.task('dist-build', gulp.series(
 ));
 
 gulp.task('dev', gulp.series(
-    'dev-build',
+    'development',
+    'before-webpack',
     'copySettings',
-    'watch'
+    gulp.parallel(
+        'watch',
+        'webpack'
+    )
 ));
 
 gulp.task('dist', gulp.series(
