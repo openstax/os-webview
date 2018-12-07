@@ -103,7 +103,7 @@ export default class Calculator extends Controller {
 
         region.attach(
             new Share(
-                settings.apiOrigin,
+                `${settings.apiOrigin}/`,
                 messages[this.referringPage] + commonMessageTail
             ));
     }

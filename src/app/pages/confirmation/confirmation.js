@@ -9,7 +9,7 @@ import SurveyRequest from '~/components/survey-request/survey-request';
 import {description as template} from './confirmation.html';
 import css from './confirmation.css';
 
-const applyLink = `${settings.accountHref}/faculty_access/apply?r=${encodeURIComponent(settings.apiOrigin)}`;
+const applyLink = `${settings.accountHref}/faculty_access/apply?r=${encodeURIComponent(`${settings.apiOrigin}/`)}`;
 
 const models = {
     'bulk-order': {
