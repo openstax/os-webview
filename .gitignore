@@ -4,6 +4,7 @@ node_modules/
 /dist/
 coverage/
 /local-storage-scratch/
+yarn-error.log
 
 # rbenv directories
 /vendor/
