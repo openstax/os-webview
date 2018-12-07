@@ -98,8 +98,5 @@ gulp.task('favicon', gulp.series(
 
 gulp.task('favicon:watch', () => {
     gulp.watch(`${config.src}/*.html`, config.watchOpts)
-    .on('change', gulp.series(
-        injectFaviconMarkup,
-        'reload-browser'
-    ));
+    .on('change', injectFaviconMarkup);
 });

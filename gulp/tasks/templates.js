@@ -7,8 +7,9 @@ const pi = require('gulp-load-plugins')({
 const webpack = require('./webpack');
 
 function templates() {
-    const configSrcApp = `${config.src}/app`
-    const configDestApp = `${config.dest}/app`
+    const configSrcApp = `${config.src}/app`;
+    const configDestApp = `${config.dest}/app`;
+
     return gulp.src(`${configSrcApp}/**/*.html`, {
         since: gulp.lastRun('templates')
     })
@@ -36,13 +37,8 @@ function templates() {
     .pipe(gulp.dest(`${configDestApp}`));
 }
 
-gulp.task(templates);
+gulp.task('templates', templates);
 
 gulp.task('templates:watch', () => {
-    gulp.watch(`${config.src}/**/*.html`, config.watchOpts)
-    .on('change', gulp.series(
-        templates,
-        'webpack',
-        'reload-browser'
-    ));
+    gulp.watch(`${config.src}/**/*.html`, templates);
 });

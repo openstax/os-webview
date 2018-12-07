@@ -6,6 +6,7 @@ module.exports = {
     get env() {
         var env = process.env.NODE_ENV;
 
+        // Some kind of override?
         if (argv.production) {
             env = 'production';
         } else if (argv.development) {

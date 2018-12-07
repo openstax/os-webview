@@ -26,8 +26,5 @@ gulp.task(images);
 
 gulp.task('images:watch', () => {
     gulp.watch(`${config.src}/**/*.{png,jpg,jpeg,gif,svg,mp4}`, config.watchOpts)
-    .on('change', gulp.series(
-        images,
-        'reload-browser'
-    ));
+    .on('change', images);
 });
