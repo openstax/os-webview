@@ -15,7 +15,6 @@ $dot-4: rgb(148, 221, 228);
 
 $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
 
-// scss-lint:disable IdSelector
 #main.openstax-tutor-main {
     z-index: 1;
 }
@@ -196,7 +195,6 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
         }
     }
 
-    // scss-lint:disable IdSelector
     section {
         overflow: hidden;
         padding: 6rem 8.5rem 6rem 0;

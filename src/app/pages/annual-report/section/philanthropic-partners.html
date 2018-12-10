@@ -1,0 +1,30 @@
+<template args="model">
+    <div class="centered content">
+        <h2>{model.heading}</h2>
+        <div>{model.description}</div>
+    </div>
+    <div class="text-overlapping-photo">
+        <img src="{model.image}" alt="{model.imageAlt}">
+        <div class="text-block">
+            <div class="card">
+                <div class="quote-on-left">
+                    <div class="big-orange-quote">“</div>
+                    <div class="text-block">
+                        <div>{model.quote}</div>
+                        <div class="attribution">
+                            <div class="name">{model.attributionName}</div>
+                            <div class="title">{model.attributionTitle}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <a href="{model.link1.link}">
+                    {model.link1.linkText}
+                </a>
+                <a href="{model.link2.link}">
+                    {model.link2.linkText}
+                </a>
+            </div>
+        </div>
+    </div></template>

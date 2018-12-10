@@ -1,0 +1,14 @@
+<template args="model">
+    <div class="content text-left-photo-right">
+        <div class="text-block">
+            <h2>{model.heading}</h2>
+            <div>{model.description}</div>
+            <a href="{model.link}">{model.linkText}</a>
+        </div>
+        <div class="right-image">
+            <img src="{model.rightImage.image}" alt="{model.rightImage.imageAlt}">
+        </div>
+    </div>
+    <img class="bottom-image"
+        src="{model.bottomImage.image}" alt="{model.bottomImage.imageAlt}">
+</template>

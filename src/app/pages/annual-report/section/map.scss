@@ -1,0 +1,25 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.annual-report.page .map {
+
+    .with-layers {
+        align-items: center;
+        display: grid;
+        grid-gap: 4rem;
+        position: relative;
+
+        @include wider-than($phone-max) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        > :first-child {
+            justify-self: end;
+        }
+
+        > .text-block {
+            justify-self: start;
+            max-width: 35rem;
+        }
+    }
+
+}

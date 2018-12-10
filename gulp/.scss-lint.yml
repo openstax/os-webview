@@ -10,6 +10,9 @@ linters:
     Comment:
         enabled: false
 
+    IdSelector:
+        enabled: false
+
     Indentation:
         width: 4
 

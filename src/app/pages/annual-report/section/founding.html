@@ -1,0 +1,10 @@
+<template args="model">
+    <div class="text-overlapping-photo">
+        <img src="{model.portrait}" alt="{model.portraitAlt}">
+        <div class="text-block card">
+            <h2>{model.heading}</h2>
+            <div>{model.description}</div>
+        </div>
+    </div>
+    <div class="caption hide-on-mobile" data-html="caption" skip="true"></div>
+</template>

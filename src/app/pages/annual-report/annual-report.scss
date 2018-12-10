@@ -1,0 +1,225 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+$light: #f8f8f8;
+
+.annual-report.page {
+    section {
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        min-height: 40rem;
+        padding: 8rem;
+
+        @include width-up-to($phone-max) {
+            padding: 3rem 2rem;
+        }
+
+        &.white {
+            background-color: ui-color(white);
+        }
+
+        &.light {
+            background-color: $light;
+        }
+
+        &.no-padding {
+            min-height: 80rem;
+            overflow: hidden;
+            padding: 0;
+
+            > .content {
+                margin: 8rem;
+
+                @include wider-than($media-content-max) {
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+
+                .text-block {
+                    min-width: 38rem;
+                }
+
+                .right-image {
+                    overflow-x: visible;
+                }
+            }
+
+            .bottom-image {
+                bottom: 0;
+                position: absolute;
+            }
+        }
+    }
+
+    p,
+    h1,
+    h2,
+    h3 {
+        margin: 0;
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    .content {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: $content-max;
+    }
+
+    .text-content {
+        align-items: start;
+        display: grid;
+        grid-gap: 3rem;
+        margin-left: 0;
+    }
+
+    .text-block {
+        align-items: start;
+        display: grid;
+        grid-gap: 3rem;
+        grid-template-rows: auto;
+        height: fit-content;
+        justify-items: start;
+        max-width: 60rem;
+    }
+
+    .caption {
+        @include set-font(helper-label);
+
+        max-width: 40rem;
+    }
+
+    .btn {
+        @extend %button;
+
+        &.primary {
+            @extend %primary;
+        }
+    }
+
+    .text-left-photo-right {
+        display: grid;
+        grid-gap: 4rem;
+
+        @include wider-than($phone-max) {
+            grid-template-columns: 1fr auto;
+        }
+
+        .text-content {
+            height: fit-content;
+            min-width: 38rem;
+        }
+    }
+
+
+    .card {
+        @extend %card;
+
+        background-color: ui-color(white);
+        padding: 4rem;
+    }
+
+    .text-overlapping-photo {
+        align-items: center;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        width: 100%;
+
+        @include width-up-to($phone-max) {
+            grid-template-columns: auto;
+        }
+
+        > :first-child {
+            min-width: 10rem;
+        }
+
+        .text-block {
+            @include wider-than($phone-max) {
+                margin-left: -6rem;
+                padding-left: 8rem;
+            }
+        }
+
+        .card {
+            background-color: ui-color(white);
+            padding: 6rem;
+
+            @include width-up-to($phone-max) {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+                box-shadow: none;
+            }
+        }
+    }
+
+    .fact-boxes,
+    .testimonial-boxes,
+    .icon-row {
+        display: grid;
+        grid-gap: $normal-margin;
+        margin-top: 4rem;
+    }
+
+    .testimonial-boxes {
+        grid-template-columns: repeat(3, 1fr);
+
+        @include width-up-to($phone-max) {
+            grid-template-columns: 1fr;
+        }
+
+        .card {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            padding: 0;
+
+            .text-block {
+                grid-template-rows: 1fr auto;
+                height: 100%;
+                padding: 4rem;
+            }
+        }
+    }
+
+    .icon-row {
+        grid-template-columns: repeat(30, auto);
+        overflow-x: auto;
+    }
+
+    .floating {
+        left: 0;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .centered {
+        display: grid;
+        grid-gap: $normal-margin;
+        justify-items: center;
+        margin-bottom: 4rem;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 40rem;
+        text-align: center;
+    }
+
+    #banner {
+        background-color: os-color(blue);
+        color: text-color(white);
+    }
+
+    .hide-on-mobile {
+        @include width-up-to($phone-max) {
+            display: none;
+        }
+    }
+
+    .mobile-only {
+        @include wider-than($phone-max) {
+            display: none;
+        }
+    }
+
+}
