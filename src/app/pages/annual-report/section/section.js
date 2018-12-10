@@ -54,11 +54,7 @@ function createSection(name, model, content=true) {
         this.insertHtml();
     };
 
-    try {
-        return new Constructor({ model });
-    } catch(e) {
-        console.warn("Could not create section", name, e);
-    }
+    return new Constructor({ model });
 }
 
 export default createSection;

@@ -197,8 +197,7 @@ function compileScriptsBabel() {
         plugins: [
             'transform-async-to-generator',
             'transform-class-properties',
-            'transform-decorators-legacy',
-            'transform-object-assign'
+            'transform-decorators-legacy'
         ]
     }))
     // prefix the sourcemaps with with '../src/' so webpack can find them
