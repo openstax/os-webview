@@ -32,9 +32,7 @@ function webpack() {
             rules: [
                 {
                     test: /\.js$/,
-                    loader: 'source-map-loader',
-                    exclude: /node_modules/,
-                    enforce: 'pre'
+                    loader: 'source-map-loader'
                 },
                 {
                     test: /\.css$/,
