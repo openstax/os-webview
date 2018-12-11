@@ -1,59 +1,40 @@
-const gulp = require('gulp');
-require('require-dir')('./gulp/tasks', {recurse: true});
+const {series, parallel, task} = require('gulp');
+const allTheThings = require('require-dir')('./gulp/tasks');
+const {
+    clean, copy, development, production, favicon, html, scsslint, styles,
+    humans, images, eslint, scripts, copySettings, precache, templates, webpack,
+    watch
+} = Object.assign({}, ...Object.values(allTheThings));
 
-gulp.task('before-webpack', gulp.series(
-    'clean',
-    gulp.parallel(
-        'copy',
-        gulp.series(
-            'favicon',
-            'html'
-        ),
-        'styles',
-        'scripts',
-        'templates',
-        'images'
+const beforeWebpack = series(
+    clean,
+    parallel(
+        copy,
+        series(favicon, html),
+        styles,
+        scripts,
+        templates,
+        images
     )
-));
+);
+const defaultBuild = series(beforeWebpack, webpack);
 
-gulp.task('default', gulp.series(
-    'before-webpack',
-    'webpack'
-));
-
-gulp.task('dev-build', gulp.series(
-    'development',
-    'default'
-));
-
-gulp.task('dist-build', gulp.series(
-    'production',
-    'default'
-));
-
-gulp.task('dev', gulp.series(
-    'development',
-    'before-webpack',
-    'copySettings',
-    gulp.parallel(
-        'watch',
-        'webpack'
+module.exports = {
+    default: defaultBuild,
+    dev: series(
+        development,
+        beforeWebpack,
+        copySettings,
+        parallel(
+            watch,
+            webpack
+        )
+    ),
+    lint: parallel(scsslint, eslint),
+    dist: series(
+        production,
+        defaultBuild,
+        precache,
+        humans
     )
-));
-
-gulp.task('dist', gulp.series(
-    'production',
-    'default',
-    'precache',
-    'humans'
-));
-
-gulp.task('lint', gulp.parallel(
-    'scsslint',
-    'eslint'
-));
-
-gulp.task('test', gulp.series(
-    'development',
-    'before-webpack'
-));
+};

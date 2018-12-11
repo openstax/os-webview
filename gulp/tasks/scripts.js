@@ -1,6 +1,5 @@
 const path = require('path');
 const gulp = require('gulp');
-const webpack = require('webpack-stream');
 const argv = require('yargs').argv;
 const config = require('../config');
 const pi = require('gulp-load-plugins')({
@@ -11,7 +10,7 @@ function eslint() {
     return gulp.src([
         `${config.src}/**/*.js`
     ], {
-        since: gulp.lastRun('eslint')
+        since: gulp.lastRun(eslint)
     })
     .pipe(pi.eslint({
         parser: 'babel-eslint',
@@ -187,7 +186,7 @@ function eslint() {
 
 function compileScriptsBabel() {
     return gulp.src(`${config.src}/**/*.js`, {
-        since: gulp.lastRun('compileScriptsBabel')
+        since: gulp.lastRun(compileScriptsBabel)
     })
     .pipe(pi.sourcemaps.init({loadMaps: true}))
     .pipe(pi.replace(/@VERSION@/g, config.version))
@@ -216,18 +215,17 @@ function copySettings() {
     .pipe(gulp.dest(config.dest));
 }
 
-gulp.task(eslint);
-gulp.task('compileScriptsBabel', compileScriptsBabel);
-gulp.task(copySettings);
-
-gulp.task('scripts', gulp.series(
-    eslint,
-    compileScriptsBabel
-));
-
-gulp.task('scripts:watch', () => {
+function watchScripts() {
     gulp.watch(`${config.src}/**/*.js`, config.watchOpts, gulp.series(
         eslint,
         compileScriptsBabel
     ));
-});
+}
+
+exports.eslint = eslint;
+exports.scripts = gulp.series(
+    eslint,
+    compileScriptsBabel
+);
+exports.scripts.watch = watchScripts;
+exports.copySettings = copySettings;

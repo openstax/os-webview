@@ -1,4 +1,4 @@
-const spawnSync = require('child_process').spawnSync;
+const {spawnSync} = require('child_process');
 const gulp = require('gulp');
 const config = require('../config');
 const pi = require('gulp-load-plugins')({
@@ -29,4 +29,4 @@ function humans() {
     .pipe(gulp.dest(config.dest));
 }
 
-gulp.task(humans);
+exports.humans = humans;

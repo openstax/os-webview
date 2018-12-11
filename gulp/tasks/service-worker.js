@@ -35,4 +35,4 @@ function precache() {
     });
 }
 
-gulp.task(precache);
+exports.precache = precache;

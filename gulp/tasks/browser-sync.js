@@ -1,4 +1,3 @@
-const gulp = require('gulp');
 const config = require('../config');
 const bs = require('browser-sync').create(config.name);
 const historyApiFallback = require('connect-history-api-fallback');
@@ -39,5 +38,5 @@ function reload(done) {
     done();
 }
 
-gulp.task('browser-sync', browserSync);
-gulp.task('reload-browser', reload);
+exports['browser-sync'] = browserSync;
+exports['reload-browser'] = reload;

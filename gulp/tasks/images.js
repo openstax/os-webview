@@ -7,7 +7,7 @@ const pi = require('gulp-load-plugins')({
 
 function images() {
     return gulp.src(`${config.src}/**/*.{png,jpg,jpeg,gif,svg,mp4}`, {
-        since: gulp.lastRun('images')
+        since: gulp.lastRun(images)
     })
     .pipe(pi.if(argv.images === 'min', pi.imagemin([
         pi.imagemin.gifsicle({interlaced: true}),
@@ -22,9 +22,10 @@ function images() {
     .pipe(gulp.dest(config.dest));
 }
 
-gulp.task(images);
-
-gulp.task('images:watch', () => {
+function watchImages() {
     gulp.watch(`${config.src}/**/*.{png,jpg,jpeg,gif,svg,mp4}`, config.watchOpts)
     .on('change', images);
-});
+}
+
+exports.images = images;
+exports.images.watch = watchImages;
