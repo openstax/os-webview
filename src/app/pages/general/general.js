@@ -1,47 +1,28 @@
 import componentType from '~/helpers/controller/init-mixin';
-import {description as template} from './general.html';
+import settings from 'settings';
 import css from './general.css';
-import Multicolumn from './multicolumn/multicolumn';
 
 const spec = {
-    template,
-    css,
     view: {
+        css,
         classes: ['general', 'page'],
         tag: 'main'
-    },
-    slug: 'supplied-in-init',
-    preserveWrapping: true
+    }
 };
 
 export default class General extends componentType(spec) {
 
     init() {
         super.init();
-        this.slug = window.location.pathname.replace('general', 'pages');
+        this.slug = window.location.pathname.replace('general', 'spike');
     }
 
-    onDataLoaded() {
-        const data = this.pageData;
-
-        this.model = () => ({
-            title: data.title,
-            body: data.body
-        });
-        this.update();
-        this.insertHtml();
-        data.body.forEach((item, index) => {
-            if (item.type === 'multicolumn') {
-                const region = this.regionFrom(`[data-region-for="${index}"]`);
-                const component = new Multicolumn({
-                    model: {
-                        columns: item.value
-                    }
-                });
-
-                region.attach(component);
-            }
-        });
+    onLoaded() {
+        fetch(`${settings.apiOrigin}/api/${this.slug}`)
+            .then((r) => r.text())
+            .then((html) => {
+                this.el.innerHTML = html;
+            });
     }
 
 }
