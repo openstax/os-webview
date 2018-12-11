@@ -2,37 +2,24 @@
 
 .general.page {
 
-    .text-content > * {
-        margin: $normal-margin 0;
-        width: 100%;
+    margin: 4rem auto;
+    max-width: $content-max;
+    width: 100%;
 
-        h2 {
-            margin: 0;
-        }
-
-        [data-html] {
-            > p:first-child {
-                margin-top: 0;
-            }
-
-            > p:last-child {
-                margin-bottom: 0;
-            }
-        }
-    }
-
-    img {
+    > *,
+    section > * {
         max-width: 100%;
     }
 
-    .multicolumn {
-        display: grid;
-        grid-column-gap: #{2 * $normal-margin};
-        grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-        width: 100%;
-
-        h2 {
-            margin-bottom: 0.5rem;
-        }
+    .block-heading {
+        @include set-font(h1);
     }
+
+    .block-heading,
+    .block-paragraph,
+    .block-html {
+        max-width: $text-content-max;
+        width: 100%;
+    }
+
 }
