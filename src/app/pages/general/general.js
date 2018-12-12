@@ -14,7 +14,7 @@ export default class General extends componentType(spec) {
 
     init() {
         super.init();
-        this.slug = window.location.pathname.replace('general', 'spike');
+        this.slug = window.location.pathname.substr(1).replace('general', 'spike');
     }
 
     onLoaded() {
