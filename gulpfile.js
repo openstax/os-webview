@@ -3,7 +3,7 @@ const allTheThings = require('require-dir')('./gulp/tasks');
 const {
     clean, copy, development, production, favicon, html, scsslint, styles,
     humans, images, eslint, scripts, copySettings, precache, templates, webpack,
-    watch
+    watch, webpackDll
 } = Object.assign({}, ...Object.values(allTheThings));
 
 const beforeWebpack = series(
@@ -17,7 +17,7 @@ const beforeWebpack = series(
         images
     )
 );
-const defaultBuild = series(beforeWebpack, webpack);
+const defaultBuild = series(beforeWebpack, webpackDll, webpack);
 
 module.exports = {
     default: defaultBuild,
@@ -36,5 +36,6 @@ module.exports = {
         defaultBuild,
         precache,
         humans
-    )
+    ),
+    webpackDll: series(development, webpackDll)
 };

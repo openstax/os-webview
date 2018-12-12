@@ -4,10 +4,12 @@ const pi = require('gulp-load-plugins')();
 const path = require('path');
 const webpackStream = require('piped-webpack');
 const bs = require('./browser-sync');
+const {DllReferencePlugin} = require('webpack');
 
 function webpack() {
     // Don't move this outside -- env gets set after load-time
     const isDevelopment = config.env === 'development';
+    const dllManifest = path.resolve(config.dest, './library.json');
     const output = {
         path: path.resolve(config.dest, '..'),
         filename: "bundle.js",
@@ -31,7 +33,10 @@ function webpack() {
             rules: [
                 {
                     test: /\.js$/,
-                    loader: 'source-map-loader'
+                    loader: 'source-map-loader',
+                    exclude: [
+                        /node_modules/
+                    ]
                 },
                 {
                     test: /\.css$/,
@@ -46,7 +51,13 @@ function webpack() {
                 }
             ]
         },
-        devtool: 'source-map'
+        devtool: 'source-map',
+        plugins: [
+            new DllReferencePlugin({
+                context: process.cwd(),
+                manifest: require(dllManifest)
+            })
+        ]
     };
 
     if (isDevelopment) {
