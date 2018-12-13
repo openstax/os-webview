@@ -4,7 +4,6 @@ import {on} from '~/helpers/controller/decorators';
 import Dropdown from './mapdropdown';
 import Testimonialinfo from './testimonial';
 import css from './map.css';
-
 export default class Schoolinfo extends Controller {
 
     init(props) {

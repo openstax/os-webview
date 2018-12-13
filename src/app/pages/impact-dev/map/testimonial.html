@@ -1,5 +1,5 @@
 <template args="model">
-            <div class="tdlb-container">
+            <div if="model.dataArray[model.itemIndex].fields.testimonial !== null" class="tdlb-container">
                 <div class="tdlb-para">
                     <div id="testimonialHead-{model.itemIndex}" class="testimonial-div-mob">Testimonials</div>
                     <div class="para-quote">

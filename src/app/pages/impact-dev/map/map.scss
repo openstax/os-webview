@@ -1,4 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
+@import url("https://use.fontawesome.com/releases/v5.0.0/css/all.css");
 
 $slider-background: #efefef;
 $slider-active-bg: #498de2;
@@ -75,25 +76,43 @@ $narrow-breakpoint: 60em * $scale-factor;
         }
     }
 
+    .map-txt-link {
+        align-items: flex-start;
+        position: relative;
+        z-index: 2;
+
+        @include width-between($tablet-max, $media-content-max) {
+            margin-left: 3rem;
+        }
+
+        @include width-up-to($tablet-max) {
+            margin-bottom: 6rem;
+            margin-left: 2rem;
+        }
+    }
+
     .separate-map-link {
-        display: unset;
+        border-radius: 0.3rem;
+        font-size: 1.6rem;
+        margin-top: 2rem;
+        width: 28rem;
     }
 
     .maptxt {
         @include set-font(h1);
         color: white;
-        padding-left: 4rem;
-        padding-top: 4rem;
-        position: relative;
-        width: 64rem;
-        z-index: 2;
+        max-width: 60rem;
+        padding-top: 10rem;
 
         @include width-up-to($phone-max) {
+            max-width: 33rem;
             padding-bottom: 3rem;
-            padding-left: 2rem;
             padding-top: 1rem;
-            width: 33rem;
         }
+    }
+
+    btn-orange {
+        background-color: os-color(orange);
     }
 
     .on-map {
@@ -108,7 +127,7 @@ $narrow-breakpoint: 60em * $scale-factor;
 
         @include width-up-to($phone-max) {
             bottom: 0;
-            height: 43rem;
+            height: 100%;
             position: absolute;
         }
     }
@@ -157,6 +176,7 @@ $narrow-breakpoint: 60em * $scale-factor;
         }
 
         @include width-up-to($phone-max) {
+            font-size: 1.6rem;
             height: auto;
         }
 
@@ -232,10 +252,12 @@ $narrow-breakpoint: 60em * $scale-factor;
             background-color: white;
             border-radius: 0 0.2rem 0.2rem 0;
             bottom: 0;
-            content: '';
+            color: gray;
+            content: '\f107';
             display: block;
-            font-family: 'FontAwesome';
-            height: 2.4rem;
+            font-family: 'Font Awesome\ 5 Free';
+            font-weight: 900;
+            height: 2.2rem;
             line-height: 2.4rem;
             padding-left: 0.5rem;
             pointer-events: none;
@@ -489,12 +511,13 @@ $narrow-breakpoint: 60em * $scale-factor;
     .left-column {
         border: 0.1rem solid ui-color(form-border);
         border-radius: 0.3rem 0 0 0.3rem;
-        width: 55%;
+        width: 110%;
 
         @include width-up-to($tablet-max) {
             border: 0.1rem solid ui-color(form-border);
             border-radius: 0.3rem;
             display: block;
+            margin-bottom: 1rem;
             margin-top: 1rem;
             width: 100%;
         }
@@ -509,14 +532,13 @@ $narrow-breakpoint: 60em * $scale-factor;
         border-radius: 0 0.3rem 0.3rem 0;
         border-right: 0.1rem solid ui-color(form-border);
         border-top: 0.1rem solid ui-color(form-border);
-        width: 45%;
+        width: 90%;
 
         @include width-up-to($tablet-max) {
             border: 0.1rem solid ui-color(form-border);
             border-radius: 0.3rem;
             display: block;
             margin-bottom: 1rem;
-            margin-top: 1rem;
             width: 100%;
         }
     }
@@ -790,6 +812,20 @@ $narrow-breakpoint: 60em * $scale-factor;
         }
     }
 
+    .clear-flt-btn {
+        background-color: white;
+        border: 0.1rem solid #d5d5d5;
+        color: gray;
+        height: 5rem;
+        margin-right: 1rem;
+        width: 10rem;
+
+        @include width-up-to($phone-max) {
+            height: 4rem;
+            width: 8rem;
+        }
+    }
+
     .apply-flt-enabled {
         background-color: os-color(orange);
         cursor: pointer;
@@ -833,11 +869,21 @@ $narrow-breakpoint: 60em * $scale-factor;
 
     }
 
+    .search-cross-div {
+        @include width-up-to($tablet-max) {
+            display: none;
+        }
+    }
+
+    .search-cross-img {
+        font-size: 1.4rem;
+    }
+
     .search-img-div {
-        margin-right: 1.7rem;
+        margin: 0 1.7rem;
 
         @include width-up-to($tablet-max) {
-            margin-right: 0;
+            margin: 0;
         }
     }
 

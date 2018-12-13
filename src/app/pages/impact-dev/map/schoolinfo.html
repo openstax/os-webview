@@ -12,13 +12,13 @@
                 </div>
             </div>
         </div>
-        <div class="right-column">
+        <div class="right-column" if="model.dataArray[model.itemIndex].fields.key_institutional_partner === true">
             <div class="right-column-inner">
                 <div class="rcolumn-head">OpenStax Institutional Partner</div>
                 <div class="rcolumn-body">{model.dataArray[model.itemIndex].fields.key_institutional_partner === true ? 'Yes' : 'No'}</div>
             </div>
         </div>
-        <div if="model.dataArray[model.itemIndex].fields.testimonial!=null" id="testimonialHead-{model.itemIndex}" class="testimonial-head">Testimonials</div>
+        <div id="testimonialHead-{model.itemIndex}" class="testimonial-head">Testimonials</div>
     </div>
     <div class="right-btn-link nxt-previous-links" data-action="next"></div>
 </template>

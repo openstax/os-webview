@@ -1,7 +1,6 @@
 import {Controller} from 'superb.js';
 import {description as template} from './stat.html';
 import css from './stat.css';
-
 export default class State extends Controller {
 
     init() {
