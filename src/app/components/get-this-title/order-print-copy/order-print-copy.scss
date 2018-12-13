@@ -39,7 +39,10 @@
         grid-gap: 2rem;
         justify-items: center;
         padding: 2rem;
-        width: 100%;
+
+        @include width-up-to($phone-max) {
+            width: 100%;
+        }
 
         @include wider-than($phone-max) {
             grid-gap: 4rem;
@@ -73,6 +76,11 @@
         padding: 2rem;
         text-align: center;
         text-decoration: none;
+
+        @include width-up-to($phone-max) {
+            max-width: 30rem;
+            width: 100%;
+        }
 
         @include wider-than($phone-max) {
             grid-template-rows: auto 6.2rem auto 1fr;
