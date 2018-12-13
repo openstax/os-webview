@@ -1,17 +1,13 @@
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
-import { utils } from 'superb.js';
-import { on } from '~/helpers/controller/decorators';
 import shell from '~/components/shell/shell';
 import { description as template } from './impact-dev.html';
-import css from './impact-dev.css';
-import { shuffle } from '~/helpers/data';
 import Map1 from './map/map';
 import State from './statistics/stat';
 import Studentinfo from './studentinfo/studentinfo';
 import Schoolmap from './schoolmap/schoolmap';
 import mapboxgl from 'mapbox-gl';
-
+import css from './impact-dev.css';
 
 export default class ImpactDev extends CMSPageController {
 
@@ -19,7 +15,6 @@ export default class ImpactDev extends CMSPageController {
     'through free, peer-reviewed college textbooks. Learn more about our ' +
     'impact on the 3,000+ schools who use our books.';
     init() {
-        this.slug = 'pages/our-impact';
         this.template = template;
         this.css = css;
         this.regions = {
@@ -35,9 +30,10 @@ export default class ImpactDev extends CMSPageController {
         this.model = {
             loaded: ''
         };
+        shell.showLoader();
     }
 
-    onDataLoaded() {
+    onAttached() {
         const tokenn = 'pk.eyJ1Ijoib3BlbnN0YXgiLCJhIjoiY2pnbWtjajZzMDBkczJ6cW1kaDViYW02aCJ9.0w3LCa7lzozzRgXM7xvBfQ';
         let mapCenter;
 
@@ -57,6 +53,15 @@ export default class ImpactDev extends CMSPageController {
         map.scrollZoom.disable();
         map.dragPan.disable();
         map.doubleClickZoom.disable();
+        map.on('load', () => {
+            if (map.loaded()) {
+                map.resize();
+                this.model.loaded = 'loaded';
+                this.update();
+                shell.hideLoader();
+            }
+        });
+
         const mapObject = {
             mapObj: map,
             pageType: 'landing'
@@ -66,11 +71,6 @@ export default class ImpactDev extends CMSPageController {
         this.regions.stat.attach(new State());
         this.regions.studentinfo.attach(new Studentinfo());
         this.regions.schoolmap.attach(new Schoolmap());
-
-        this.model.loaded = 'loaded';
-        this.update();
-
-        shell.hideLoader();
     }
 
 }

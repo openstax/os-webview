@@ -1,12 +1,12 @@
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import {description as template} from './mapdropdown.html';
-import css from '../impact-dev.css';
 import {on} from '~/helpers/controller/decorators';
 import Schoolinfo from './schoolinfo';
 import Testimonialinfo from './testimonial';
 import mapboxgl from 'mapbox-gl';
 import SchoolinfoHead from './schoolinfo-head';
+import css from '../impact-dev.css';
 
 export default class Mapdropdown extends Controller {
 
@@ -54,9 +54,7 @@ export default class Mapdropdown extends Controller {
             this.flyToPopUp(objS, this.offSet, lData, indexItem);
             regionDetailInfoMob.attach(schHeadObj);
             regionDetailInfoMob.append(new Schoolinfo(Object.assign(modelObj, {pObj: this.popUp, shObj: schHeadObj})));
-            if (lData[indexItem].fields.testimonial !== null) {
-                regionTestimonialMob.attach(new Testimonialinfo(modelObj));
-            }
+            regionTestimonialMob.attach(new Testimonialinfo(modelObj));
         } else {
             const unqClassDetail = `.detailinfo-${unqId}`;
             const unqClassTest = `.testimonialBody-${unqId}`;
@@ -66,9 +64,7 @@ export default class Mapdropdown extends Controller {
             this.offSet = [300, 0];
             this.flyToPopUp(objS, this.offSet, lData, indexItem);
             regionDetailInfo.attach(new Schoolinfo(modelObj));
-            if (lData[indexItem].fields.testimonial !== null) {
-                regionTestimonial.attach(new Testimonialinfo(modelObj));
-            }
+            regionTestimonial.attach(new Testimonialinfo(modelObj));
             this.showDetailScreen(event);
         }
     }
@@ -139,7 +135,7 @@ export default class Mapdropdown extends Controller {
         });
 
         tooltip.setLngLat([lat, long]);
-        tooltip.setHTML(`<b>${iName}</b><br>${pCity}, ${pState}`);
+        tooltip.setHTML(`<b>${iName}</b><br>${pCity}${pState === null ? '' : `, ${pState}`}`);
         tooltip.addTo(objectS.mapObject);
         this.popUp = tooltip;
         return tooltip;

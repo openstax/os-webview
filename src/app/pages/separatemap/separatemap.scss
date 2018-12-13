@@ -2,7 +2,6 @@
 
 .separate-map-main {
     display: flex;
-    height: 80vh;
 }
 
 .mapd {
@@ -42,16 +41,18 @@
 .back-impact-btn {
     background-color: white;
     border-radius: 2.8rem;
-    box-shadow: 0 1rem 3rem 0 rgba(0, 0, 0, 0.3);
     height: 4rem;
     width: 4rem;
 }
 
 .back-impact-div {
-    bottom: 2rem;
+    background-color: white;
+    border-radius: 2.8rem;
+    bottom: auto;
+    box-shadow: 0 1rem 3rem 0 rgba(0, 0, 0, 0.3);
     position: fixed;
     right: 2rem;
-    top: auto;
+    top: 15.35rem;
 
     @include width-up-to($tablet-max) {
         bottom: auto;
@@ -59,6 +60,43 @@
         top: 8rem;
         z-index: 1;
     }
+}
+
+.close-map-msg {
+    padding-left: 1rem;
+
+    @include width-up-to($phone-max) {
+        display: none;
+    }
+}
+
+.popup-msg-div {
+    background: white;
+    border-radius: 0.3rem;
+    bottom: 2rem;
+    padding: 0.7rem 1.3rem;
+    position: fixed;
+    right: 2rem;
+    top: auto;
+
+    @include width-up-to($tablet-max) {
+        display: none;
+    }
+}
+
+.popup-msg-cross {
+    align-items: end;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.popup-msg-content {
+    padding: 1rem;
+}
+
+.popup-msg-link {
+    margin-bottom: 1.5rem;
 }
 
 .left-arrow-bak {

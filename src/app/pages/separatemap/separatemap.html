@@ -2,9 +2,20 @@
         <main id="maincontent" class="separate-map-main hide-until-loaded {model.loaded}">
             <div id="mapd"  class="mapd" skip="true"></div>
             <div id="back-impact-div" class="back-impact-div">
+                <span class="close-map-msg">Close map</span>
                 <button id="back-impact-btn" class="back-impact-btn" href="/impact-dev">
                         <i class="fa fa-times left-arrow-bak"></i>
                 </button>
+            </div>
+            <div id="popup-msg-div" class="popup-msg-div">
+                <div class="popup-msg-cross">
+                    <i class="fa fa-times popup-msg-cross-icon"></i>
+                </div>    
+                <div class="popup-msg-content">
+                    <div>Not seeing your school?<br>Numbers aren't right?</div> 
+                    <div class="popup-msg-link"><a href="https://openstax.org/adoption">Let us know.</a></div>
+                    <div>Since our books are free,<br>we rely on instructors to<br>tell us they’re using our<br> books.</div>        
+                </div>
             </div>
         </main>
 </template>
