@@ -10,7 +10,7 @@ function webpackDll() {
         context: process.cwd(),
         mode: 'production',
         entry: {
-            library: [
+            babel: [
                 'babel-polyfill',
                 'babel-runtime/helpers/asyncToGenerator',
                 'babel-runtime/helpers/classCallCheck',
@@ -21,13 +21,17 @@ function webpackDll() {
                 'babel-runtime/regenerator',
                 'babel-runtime/helpers/slicedToArray',
                 'babel-runtime/helpers/toConsumableArray',
-                'babel-runtime/helpers/typeof',
+                'babel-runtime/helpers/typeof'
+            ],
+            library: [
                 'incremental-dom',
                 'lodash',
-                'mapbox-gl',
                 'particles.js/particles',
                 'recordo',
                 'whatwg-fetch'
+            ],
+            mapbox: [
+                'mapbox-gl',
             ]
         },
         output: {

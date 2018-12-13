@@ -2,7 +2,7 @@ const {series, parallel, task} = require('gulp');
 const allTheThings = require('require-dir')('./gulp/tasks');
 const {
     clean, copy, development, production, favicon, html, scsslint, styles,
-    humans, images, eslint, scripts, copySettings, precache, templates, webpack,
+    humans, images, eslint, scripts, settings, precache, templates, webpack,
     watch, webpackDll
 } = Object.assign({}, ...Object.values(allTheThings));
 
@@ -24,7 +24,7 @@ module.exports = {
     dev: series(
         development,
         beforeWebpack,
-        copySettings,
+        settings,
         parallel(
             watch,
             webpack

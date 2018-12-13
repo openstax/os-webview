@@ -216,10 +216,14 @@ function copySettings() {
 }
 
 function watchScripts() {
-    gulp.watch(`${config.src}/**/*.js`, config.watchOpts, gulp.series(
+    gulp.watch([`${config.src}/**/*.js`, `!${config.src}/settings-example.js`], config.watchOpts, gulp.series(
         eslint,
         compileScriptsBabel
     ));
+}
+
+function watchSettings() {
+    gulp.watch(`${config.src}/settings-example.js`, copySettings);
 }
 
 exports.eslint = eslint;
@@ -228,4 +232,5 @@ exports.scripts = gulp.series(
     compileScriptsBabel
 );
 exports.scripts.watch = watchScripts;
-exports.copySettings = copySettings;
+exports.settings = copySettings;
+exports.settings.watch = watchSettings;

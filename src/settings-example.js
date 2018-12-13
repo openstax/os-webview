@@ -2,7 +2,7 @@ const settings = {
     accountHref: 'https://accounts-dev.openstax.org',
     analyticsID: 'UA-73668038-3',
     apiOrigin: 'https://cms-dev.openstax.org',
-    buildVersion: '2.6.0',
+    buildVersion: '2.7.0',
     tagManagerID: 'GTM-W6N7PB',
     testingEnvironment: (/(localhost|oscms-)/).test(window.location.hostname),
     titleSuffix: ' - OpenStax',
