@@ -10,9 +10,10 @@ function copy() {
     .pipe(gulp.dest(config.dest));
 }
 
-gulp.task(copy);
-
-gulp.task('copy:watch', () => {
+function watchCopy() {
     gulp.watch(glob, config.watchOpts)
     .on('change', copy);
-});
+}
+
+exports.copy = copy;
+exports.copy.watch = watchCopy;

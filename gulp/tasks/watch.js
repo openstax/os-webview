@@ -1,17 +1,23 @@
 'use strict';
 
 const gulp = require('gulp');
+const allTheThings = require('require-dir')('.', {recurse: true});
 
-require('require-dir')('.', {recurse: true});
+function findWatchers() {
+    const objs = Object.values(allTheThings);
+    const result = [];
 
-/**
- * Find any gulp tasks ending in ':watch' and automagically
- * run them with the 'watch' task.
- */
-const taskNames = Object.keys(gulp.registry().tasks());
-const watchTasks = taskNames.filter((n) => n.substr(-6) === ':watch');
+    objs.forEach((obj) => {
+        Object.entries(obj).filter(([k, v]) => {
+            if ('watch' in v) {
+                result.push(v.watch);
+            }
+        });
+    });
+    return result;
+}
 
-gulp.task('watch', gulp.series(
-    'browser-sync',
-    gulp.parallel(...watchTasks)
-));
+exports.watch = gulp.series(
+    allTheThings['browser-sync']['browser-sync'],
+    gulp.parallel(...findWatchers())
+);

@@ -7,7 +7,7 @@ const pi = require('gulp-load-plugins')({
 
 function scsslint() {
     return gulp.src([`${config.src}/**/*.scss`], {
-        since: gulp.lastRun('scsslint')
+        since: gulp.lastRun(scsslint)
     })
     .pipe(pi.scssLint({
         'maxBuffer': 30000000000000000000 * 1024,
@@ -76,7 +76,7 @@ function compileAllStyles() {
 
 function compileChangedStyles() {
     const src = gulp.src(`${config.src}/**/*.scss`, {
-        since: gulp.lastRun('compileChangedStyles')
+        since: gulp.lastRun(compileChangedStyles)
     });
 
     return compileStyles(src);
@@ -89,18 +89,7 @@ function compileMainStyle() {
     return compileStyles(src, dest);
 }
 
-gulp.task(scsslint);
-gulp.task(compileStyles);
-gulp.task(compileAllStyles);
-gulp.task(compileChangedStyles);
-gulp.task(compileMainStyle);
-
-gulp.task('styles', gulp.series(
-    scsslint,
-    compileAllStyles
-));
-
-gulp.task('styles:watch', () => {
+function watchStyles() {
     gulp.watch([
         `${config.src}/**/*.scss`,
         `!${config.src}/styles/{components,mixins,variables}/**/*.scss`
@@ -121,4 +110,11 @@ gulp.task('styles:watch', () => {
         scsslint,
         compileAllStyles
     ));
-});
+};
+
+exports.scsslint = scsslint;
+exports.styles = gulp.series(
+    scsslint,
+    compileAllStyles
+);
+exports.styles.watch = watchStyles;

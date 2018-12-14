@@ -1,4 +1,3 @@
-const gulp = require('gulp');
 const pi = require('gulp-load-plugins')();
 
 function nodeEnv(env) {
@@ -19,5 +18,5 @@ function production(done) {
     done();
 }
 
-gulp.task(development);
-gulp.task(production);
+exports.development = development;
+exports.production = production;

@@ -11,7 +11,7 @@ function templates() {
     const configDestApp = `${config.dest}/app`;
 
     return gulp.src(`${configSrcApp}/**/*.html`, {
-        since: gulp.lastRun('templates')
+        since: gulp.lastRun(templates)
     })
     .pipe(pi.sourcemaps.init({loadMaps: true}))
     .pipe(pi.rename((uri) => {
@@ -37,8 +37,9 @@ function templates() {
     .pipe(gulp.dest(`${configDestApp}`));
 }
 
-gulp.task('templates', templates);
-
-gulp.task('templates:watch', () => {
+function watchTemplates() {
     gulp.watch(`${config.src}/**/*.html`, templates);
-});
+}
+
+exports.templates = templates;
+exports.templates.watch = watchTemplates;
