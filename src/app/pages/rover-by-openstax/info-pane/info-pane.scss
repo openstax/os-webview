@@ -12,13 +12,14 @@
     }
 
     .card {
+        align-items: center;
         background-color: transparent;
         border: 0;
         box-shadow: none;
         grid-row-gap: 2rem;
-        grid-template-rows: auto auto 1fr;
-        justify-items: start;
+        grid-template-rows: 5rem auto 1fr;
+        justify-items: center;
         padding: 0;
-        text-align: left;
+        text-align: center;
     }
 }
