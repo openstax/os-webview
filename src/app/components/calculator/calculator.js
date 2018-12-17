@@ -9,7 +9,7 @@ import css from './calculator.css';
 
 export default class Calculator extends Controller {
 
-    init(referringPage) {
+    init() {
         this.template = template;
         this.css = css;
         this.view = {
@@ -24,7 +24,6 @@ export default class Calculator extends Controller {
             product: () => this.model.values.students * this.model.values.dollars,
             calculated: false
         };
-        this.referringPage = referringPage;
 
         if ((/interest/).test(window.location.pathname)) {
             this.model.introText = 'Calculate how much students save each year when you adopt OpenStax';
@@ -100,11 +99,13 @@ export default class Calculator extends Controller {
         };
         const commonMessageTail = ' an OpenStax textbook! They\'re high quality' +
             ' and available free online at';
+        const referredBy = ['adoption', 'interest']
+            .find((name) => window.location.pathname.includes(name)) || 'interest';
 
         region.attach(
             new Share(
                 `${settings.apiOrigin}/`,
-                messages[this.referringPage] + commonMessageTail
+                `${messages[referredBy]}${commonMessageTail}`
             ));
     }
 
