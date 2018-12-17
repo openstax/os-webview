@@ -10,12 +10,13 @@ export default class RadioPanel extends Controller {
         this.view = {
             classes: ['filter-buttons']
         };
+        this.active = false;
+        this.items = items;
+        this.onChange = onChange;
         this.model = () => ({
-            items,
+            items: this.items,
             isSelected: (value) => this.selectedValue === value
         });
-        this.active = false;
-        this.onChange = onChange;
     }
 
     onUpdate() {
