@@ -44,6 +44,7 @@ class Shell extends Controller {
         if (/collect=true/.test(window.location.search)) {
             injectButtons();
         }
+        window.addEventListener('navigate', this.hideDialog.bind(this));
     }
 
     showLoader() {
