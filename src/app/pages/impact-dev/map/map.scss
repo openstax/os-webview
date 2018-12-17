@@ -616,19 +616,23 @@ $narrow-breakpoint: 60em * $scale-factor;
         }
     }
 
+    .testimonial-head-container {
+        display: none;
+
+        @include width-up-to($tablet-max) {
+            display: block;
+        }
+    }
+
     .testimonial-head {
         @include set-font(helper-label);
         border: 0.1rem solid ui-color(form-border);
         border-radius: 0.3rem;
         cursor: pointer;
-        display: none;
         font-weight: bold;
         line-height: 1.7rem;
         padding: 2rem 1rem;
 
-        @include width-up-to($tablet-max) {
-            display: block;
-        }
     }
 
     .testimonial-div-mob {
