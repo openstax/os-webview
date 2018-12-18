@@ -18,7 +18,10 @@ export default class CategorySelector extends RadioPanel {
     }
 
     onLoaded() {
-        CategorySelector.loaded.then(() => this.update());
+        CategorySelector.loaded.then(() => {
+            this.items = CategorySelector.categories;
+            this.update();
+        });
     }
 
 }

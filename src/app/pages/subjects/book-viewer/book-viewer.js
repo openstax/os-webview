@@ -41,13 +41,7 @@ export default class BookViewer extends Controller {
         this.view = {
             classes: ['container']
         };
-        const categorizedBooks = organizeBooksByCategory(books);
-
-        this.categorySections = CategorySelector.categories
-            .filter((c) => c.value !== 'view-all')
-            .map(
-                (category) => new CategorySection(category.value, categorizedBooks[category.cms])
-            );
+        this.books = books;
     }
 
     update() {
@@ -55,12 +49,21 @@ export default class BookViewer extends Controller {
     }
 
     onLoaded() {
-        for (const controller of this.categorySections) {
-            this.regions.self.append(controller);
-        }
-        if (this.filterToCategory) {
-            this.filterCategories(this.filterToCategory);
-        }
+        CategorySelector.loaded.then(() => {
+            const categorizedBooks = organizeBooksByCategory(this.books);
+
+            this.categorySections = CategorySelector.categories
+                .filter((c) => c.value !== 'view-all')
+                .map(
+                    (category) => new CategorySection(category.value, categorizedBooks[category.cms])
+                );
+            for (const controller of this.categorySections) {
+                this.regions.self.append(controller);
+            }
+            if (this.filterToCategory) {
+                this.filterSubjects(this.filterToCategory);
+            }
+        });
     }
 
     filterSubjects(category) {
