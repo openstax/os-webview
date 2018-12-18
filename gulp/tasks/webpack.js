@@ -71,8 +71,16 @@ function webpack() {
     .pipe(gulp.dest(config.dest));
 }
 
+function loadOrReload(done) {
+    if (!loadOrReload.done) {
+        loadOrReload.done = true;
+        bs['browser-sync']();
+    }
+    bs['reload-browser'](done);
+}
+
 function watchWebpack() {
-    gulp.watch(`${config.dest}/**/*.bundle.js.map`, gulp.series(bs['reload-browser']));
+    gulp.watch(`${config.dest}/**/*.bundle.js.map`, loadOrReload);
 }
 
 exports.webpack = webpack;
