@@ -6,9 +6,10 @@ import {description as template} from './signup-form.html';
 
 export default class SignupForm extends SalesforceForm {
 
-    init(roles) {
+    init(roles, onChange) {
         this.template = template;
         this.roles = roles;
+        this.onChange = onChange;
         this.regions = {
             selector: '.selector',
             common: '.common-fields',
@@ -92,6 +93,7 @@ export default class SignupForm extends SalesforceForm {
             options: roleOptions
         }, (newValue) => {
             this.selectedRole = newValue;
+            this.onChange(newValue);
             this.update();
         });
 
