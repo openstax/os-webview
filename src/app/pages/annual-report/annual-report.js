@@ -56,6 +56,7 @@ export default class AnnualReport extends componentType(spec) {
                 values.forEach((v) => {
                     newEntry[camelCase(v.type)] = camelCaseKeys(v.value);
                 });
+
                 result[camelCase(k)] = newEntry;
             });
 
@@ -74,12 +75,16 @@ export default class AnnualReport extends componentType(spec) {
             image: 'https://via.placeholder.com/400x400/027/359?text=image',
             imageAlt: 'image not defined in CMS'
         };
+        const bottomBorderImage = {
+            image: 'https://via.placeholder.com/1400x220/DDF/359?text=border-image',
+            imageAlt: 'image not defined in CMS'
+        };
 
         setIfNotFound(result.improvingAccess, [
             [
                 'backgroundImage',
                 {
-                    file: 'https://via.placeholder.com/1400x600/027/359?text=background'
+                    image: 'https://via.placeholder.com/1400x600/027/359?text=background'
                 }
             ]
         ]);
@@ -88,7 +93,7 @@ export default class AnnualReport extends componentType(spec) {
             [
                 'backgroundImage',
                 {
-                    file: 'https://via.placeholder.com/1400x600/68c/359?text=map%20background'
+                    image: 'https://via.placeholder.com/1400x600/68c/359?text=map%20background'
                 }
             ],
             ['image1', placeholderImage],
@@ -102,7 +107,11 @@ export default class AnnualReport extends componentType(spec) {
         setIfNotFound(result.testimonials, [['testimonials', []]]);
         setIfNotFound(result.tutor, [
             ['rightImage', placeholderImage],
-            ['bottomImage', placeholderImage]
+            ['bottomImage', bottomBorderImage]
+        ]);
+        setIfNotFound(result.revolution, [
+            ['portrait', {image: placeholderImage, altText: 'default alt'}],
+            ['signature', {image: placeholderImage, altText: 'default alt'}]
         ]);
     }
 
