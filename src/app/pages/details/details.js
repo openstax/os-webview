@@ -9,7 +9,8 @@ import PhoneView from './phone-view/phone-view';
 import StudentResourceTab from './student-resource-tab/student-resource-tab';
 import TabGroup from '~/components/tab-group/tab-group';
 import userModel from '~/models/usermodel';
-import {formatDateForBlog as formatDate, shuffle} from '~/helpers/data';
+import {formatDateForBlog as formatDate} from '~/helpers/data';
+import {shuffle} from 'lodash';
 import {description as template} from './details.html';
 import css from './details.css';
 
@@ -151,12 +152,13 @@ export default class Details extends CMSPageController {
             contents[label] = tabContents;
             tabLabels.push(label);
         };
+        const allies = shuffle(this.pageData.book_allies);
 
         if (!polish && this.pageData.free_stuff_instructor.content) {
             addTab('Instructor resources', new InstructorResourceTab(
                 {
                     resources: this.pageData.book_faculty_resources,
-                    allies: shuffle(this.pageData.book_allies),
+                    allies,
                     userStatusPromise: this.userStatusPromise,
                     freeStuff: {
                         heading: this.pageData.free_stuff_instructor.content.heading,
@@ -188,7 +190,7 @@ export default class Details extends CMSPageController {
 
         if (!polish && this.pageData.book_allies.length) {
             addTab('Partners', new PartnersTab({
-                allies: shuffle(this.pageData.book_allies),
+                allies,
                 ally: {
                     heading: this.pageData.ally_content.content.heading,
                     blurb: this.pageData.ally_content.content.content
@@ -245,7 +247,7 @@ export default class Details extends CMSPageController {
             errataContent: this.pageData.errata_content,
             instructorResources: {
                 freeResources: this.pageData.book_faculty_resources,
-                paidResources: this.pageData.book_allies
+                paidResources: allies
             },
             slug: this.slug,
             salesforceAbbreviation: this.pageData.salesforce_abbreviation,

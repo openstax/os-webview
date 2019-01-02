@@ -7,7 +7,6 @@ import Quotes from '~/components/quotes/quotes';
 import shell from '~/components/shell/shell';
 import {description as template} from './home.html';
 import {on} from '~/helpers/controller/decorators';
-import {shuffle} from '~/helpers/data';
 import {utils} from 'superb.js';
 import css from './home.css';
 
