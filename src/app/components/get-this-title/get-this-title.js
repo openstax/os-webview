@@ -1,7 +1,6 @@
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
-import router from '~/router';
 import shell from '~/components/shell/shell';
 import TocDialog from './toc-dialog/toc-dialog';
 import OrderPrintCopy from './order-print-copy/order-print-copy';

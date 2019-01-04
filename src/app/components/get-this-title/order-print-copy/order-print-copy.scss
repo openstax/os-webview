@@ -73,18 +73,14 @@
         grid-gap: $normal-margin;
         grid-template-rows: auto auto;
         line-height: normal;
+        max-width: 30rem;
         padding: 2rem;
         text-align: center;
         text-decoration: none;
-
-        @include width-up-to($phone-max) {
-            max-width: 30rem;
-            width: 100%;
-        }
+        width: 100%;
 
         @include wider-than($phone-max) {
             grid-template-rows: auto 6.2rem auto 1fr;
-            max-width: 30rem;
             padding: 2rem;
         }
 

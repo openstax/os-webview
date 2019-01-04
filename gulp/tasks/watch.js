@@ -18,6 +18,5 @@ function findWatchers() {
 }
 
 exports.watch = gulp.series(
-    allTheThings['browser-sync']['browser-sync'],
     gulp.parallel(...findWatchers())
 );

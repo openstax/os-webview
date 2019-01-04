@@ -90,14 +90,7 @@ class AppRouter extends Router {
                 const basePage = page.substr(0, isSplat.index);
                 const pageRegExp = new RegExp(`${basePage}/(.*)`);
 
-                // TODO: Fix this loader so pages are included explicitly
-                this.route(pageRegExp).load((params) => {
-                    return System.import(`~/pages/${basePage}/${basePage}`).then((m) => {
-                        const Controller = m.default;
-
-                        this.defaultRegion.attach(new Controller(...params));
-                    });
-                });
+                this.route(pageRegExp, basePage);
             } else {
                 this.route(page);
             }
