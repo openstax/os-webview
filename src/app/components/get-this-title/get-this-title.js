@@ -60,7 +60,9 @@ export default class GetThisTitle extends Controller {
             submenu: this.submenu,
             hiRes: data.high_resolution_pdf_url,
             loRes: data.low_resolution_pdf_url,
-            slug: data.slug
+            slug: data.slug,
+            cheggLink: data.chegg_link,
+            cheggLinkText: data.chegg_link_text
         });
         this.printCopyContent = new OrderPrintCopy({
             amazonLink: data.amazon_link,

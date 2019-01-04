@@ -79,6 +79,14 @@
                     </span>
                 </a>
             </div>
+            <div if="model.cheggLink" class="option">
+                <a href="{model.cheggLink}"
+                    tabindex="{model.submenu === '' ? 0 : -1}">
+                <img class="logo-img" src="/images/icons/Chegglogo.svg">
+                <span class="text">
+                    {model.cheggLinkText}
+                </span>
+            </div>
         </div>
     </div>
 </template>
