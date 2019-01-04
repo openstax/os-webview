@@ -26,6 +26,7 @@ export default class Rover extends CMSPageController {
 
         // State
         this.faqItems = [];
+        this.roleIsSelected = false;
     }
 
     toFaqCards(faqs) {
@@ -76,7 +77,8 @@ export default class Rover extends CMSPageController {
             hideForm: this.hideForm,
             headline4: data.section_4_headline,
             faqCards: this.faqItems, // calculated in onDataLoaded
-            salesforce
+            salesforce,
+            roleIsSelected: this.roleIsSelected
         };
     }
 
@@ -125,7 +127,10 @@ export default class Rover extends CMSPageController {
         const signupFormRegion = new Region(this.el.querySelector('.signup-form'));
         const iframe = document.createElement('iframe');
 
-        this.signupForm = new SignupForm(this.roles);
+        this.signupForm = new SignupForm(this.roles, (role) => {
+            this.roleIsSelected = Boolean(role);
+            this.update();
+        });
         signupFormRegion.attach(this.signupForm);
         iframe.name = iframe.id = 'rover-form-response';
         iframe.width = iframe.height = '0';
