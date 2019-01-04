@@ -4,9 +4,10 @@
             <h2>{model.heading}</h2>
             <div data-html="letterBody" class="text-block" skip="true"></div>
             <div class="signature-section">
-                <img class="mobile-only little-headshot" src="{model.portrait}" alt="{model.portraitAlt}">
+                <img class="mobile-only little-headshot"
+                    src="{model.portrait.image}" alt="{model.portrait.altText}">
                 <div>
-                    <img src="{model.signatureImage}" alt="{model.signatureAlt}">
+                    <img src="{model.signature.image}" alt="{model.signature.altText}">
                     <div data-html="signatureText" skip="true"></div>
                 </div>
             </div>
