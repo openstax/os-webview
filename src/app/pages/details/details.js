@@ -32,7 +32,9 @@ function getSlugFromTitle(bookTitle) {
 
 export default class Details extends CMSPageController {
 
-    init(bookTitle) {
+    init() {
+        const bookTitle = window.location.pathname.replace(/.*details\//, '');
+
         this.template = template;
         this.css = css;
         this.regions = {
