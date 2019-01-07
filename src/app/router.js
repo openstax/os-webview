@@ -88,7 +88,7 @@ class AppRouter extends Router {
 
             if (isSplat) {
                 const basePage = page.substr(0, isSplat.index);
-                const pageRegExp = new RegExp(`${basePage}/(.*)`);
+                const pageRegExp = new RegExp(`${basePage}/.*`);
 
                 this.route(pageRegExp, basePage);
             } else {
