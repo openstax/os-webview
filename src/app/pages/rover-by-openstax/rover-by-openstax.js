@@ -1,5 +1,4 @@
-import $ from '~/helpers/$';
-import CMSPageController from '~/controllers/cms';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import ContentGroup from '~/components/content-group/content-group';
 import InfoPane from './info-pane/info-pane';
 import salesforce from '~/models/salesforce';
@@ -11,48 +10,15 @@ import css from './rover-by-openstax.css';
 
 const rolesPromise = fetch(`${settings.apiOrigin}/api/snippets/roles`)
     .then((r) => r.json());
-
-export default class Rover extends CMSPageController {
-
-    init() {
-        this.template = template;
-        this.view = {
-            classes: ['rover', 'page'],
-            tag: 'main' // if the HTML doesn't contain a main tag
-        };
-        this.css = css;
-        this.slug = 'pages/rover-by-openstax';
-        this.model = () => this.getModel();
-
-        // State
-        this.faqItems = [];
-        this.roleIsSelected = false;
-    }
-
-    toFaqCards(faqs) {
-        const result = faqs.map((f) => {
-            return Object.assign({
-                chevronDirection: 'left'
-            }, f);
-        });
-
-        return result;
-    }
-
-    toSection3Cards(cardData) {
-        return cardData.map((d) => {
-            const v = d.value;
-
-            return {
-                iconUrl: v.image.image,
-                description: v.description,
-                buttonUrl: v.button_url,
-                buttonText: v.button_text
-            };
-        });
-    }
-
-    getModel() {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['rover', 'page'],
+        tag: 'main' // if the HTML doesn't contain a main tag
+    },
+    slug: 'pages/rover-by-openstax',
+    model() {
         if (!this.pageData) {
             return {};
         }
@@ -80,6 +46,39 @@ export default class Rover extends CMSPageController {
             salesforce,
             roleIsSelected: this.roleIsSelected
         };
+    }
+};
+const BaseClass = componentType(spec, canonicalLinkMixin);
+
+export default class Rover extends BaseClass {
+
+    init() {
+        super.init();
+        this.faqItems = [];
+        this.roleIsSelected = false;
+    }
+
+    toFaqCards(faqs) {
+        const result = faqs.map((f) => {
+            return Object.assign({
+                chevronDirection: 'left'
+            }, f);
+        });
+
+        return result;
+    }
+
+    toSection3Cards(cardData) {
+        return cardData.map((d) => {
+            const v = d.value;
+
+            return {
+                iconUrl: v.image.image,
+                description: v.description,
+                buttonUrl: v.button_url,
+                buttonText: v.button_text
+            };
+        });
     }
 
     contentsFromPageData() {
@@ -142,7 +141,7 @@ export default class Rover extends CMSPageController {
     onDataLoaded() {
         this.faqItems = this.toFaqCards(this.pageData.section_4_faqs[0] || []);
         this.update();
-        $.insertHtml(this.el, this.model);
+        this.insertHtml();
         this.populateTabs();
         rolesPromise.then((roles) => {
             this.roles = roles;

@@ -1,30 +1,28 @@
-import CMSPageController from '~/controllers/cms';
-import $ from '~/helpers/$';
-import shell from '~/components/shell/shell';
+import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './footer-page.html';
 import css from './footer-page.css';
 
-export default class FooterPage extends CMSPageController {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['footer-page', 'page']
+    },
+    slug: `pages${window.location.pathname}`
+};
+const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 
-    init() {
-        this.template = template;
-        this.css = css;
-        this.view = {
-            classes: ['footer-page', 'page']
-        };
-        this.slug = `pages${window.location.pathname}`;
-        shell.showLoader();
-    }
+export default class FooterPage extends BaseClass {
 
     onDataLoaded() {
         document.title = this.pageData.title;
         const contentFieldName = Reflect.ownKeys(this.pageData).find((k) => k.match(/_content$/));
 
-        $.insertHtml(this.el, {
+        this.insertHtml(this.el, {
             heading: this.pageData.intro_heading,
             content: this.pageData[contentFieldName]
         });
-        shell.hideLoader();
+        this.hideLoader();
     }
 
 }

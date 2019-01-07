@@ -1,4 +1,4 @@
-import {Controller} from 'superb.js';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import TabGroup from '~/components/tab-group/tab-group';
 import ContentGroup from '~/components/content-group/content-group';
 import ProgramDetails from './program-details';
@@ -6,20 +6,27 @@ import Application from './application';
 import {description as template} from './institutional-partnership.html';
 import css from './institutional-partnership.css';
 
-export default class Institutional extends Controller {
+const spec = {
+    template,
+    css,
+    view: {
+        tag: 'main',
+        classes: ['institutional-page', 'page']
+    },
+    regions: {
+        tabController: '.tab-controller',
+        tabContent: '.tab-content'
+    },
+    model() {
+        return this.testimonials[this.selectedTab];
+    }
+};
+const BaseClass = componentType(spec, canonicalLinkMixin);
+
+export default class Institutional extends BaseClass {
 
     init() {
-        this.template = template;
-        this.css = css;
-        this.view = {
-            tag: 'main',
-            classes: ['institutional-page', 'page']
-        };
-        this.regions = {
-            tabController: '.tab-controller',
-            tabContent: '.tab-content'
-        };
-        this.model = () => this.getModel();
+        super.init();
         this.tabLabels = ['Program details', 'Application'];
         this.selectedTab = this.tabLabels[0];
         this.testimonials = {
@@ -48,10 +55,6 @@ export default class Institutional extends Controller {
                 address2: 'Tulsa Community College'
             }
         };
-    }
-
-    getModel() {
-        return this.testimonials[this.selectedTab];
     }
 
     onLoaded() {

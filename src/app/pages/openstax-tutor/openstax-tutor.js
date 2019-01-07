@@ -1,4 +1,5 @@
 import CMSPageController from '~/controllers/cms';
+import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
 import $ from '~/helpers/$';
 import SectionNavigator from './section-navigator/section-navigator';
 import PulsingDot from './pulsing-dot/pulsing-dot';
@@ -15,39 +16,40 @@ const unavailableUrl = '/images/openstax-tutor/unavailable-flag.svg';
 const availableImageData = {url: availableUrl, description: 'available'};
 const unavailableImageData = {url: unavailableUrl, description: 'not available'};
 
-export default class Tutor extends CMSPageController {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['openstax-tutor-page', 'page'],
+        tag: 'main'
+    },
+    model: {
+        frontier: false,
+        howItWorks: {},
+        whatStudentsGet: {
+            currentImage: null,
+            images: [
+            ]
+
+        },
+        featureMatrix: {},
+        comingSoon: {},
+        whereMoneyGoes: {},
+        science: {},
+        faq: {},
+        learnMore: {}
+    },
+    slug: 'pages/openstax-tutor',
+    regions: {
+        floatingTools: '.floating-tools'
+    }
+};
+const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
+
+export default class Tutor extends BaseClass {
 
     static description = 'OpenStax Tutor Beta is a personalized learning tool ' +
         'that improves how students learn with research-based technology, for only $10.';
-
-    init() {
-        this.template = template;
-        this.view = {
-            classes: ['openstax-tutor-page', 'page'],
-            tag: 'main'
-        };
-        this.css = css;
-        this.model = {
-            frontier: false,
-            howItWorks: {},
-            whatStudentsGet: {
-                currentImage: null,
-                images: [
-                ]
-
-            },
-            featureMatrix: {},
-            comingSoon: {},
-            whereMoneyGoes: {},
-            science: {},
-            faq: {},
-            learnMore: {}
-        };
-        this.slug = 'pages/openstax-tutor';
-        this.regions = {
-            floatingTools: '.floating-tools'
-        };
-    }
 
     onDataError(e) {
         console.warn(e);
@@ -57,6 +59,7 @@ export default class Tutor extends CMSPageController {
         /* eslint complexity: 0 */
         const data = this.pageData;
 
+        this.hideLoader();
         Object.assign(this.model, data);
         this.model.footerHeight = 'collapsed';
         this.update();
@@ -165,7 +168,7 @@ export default class Tutor extends CMSPageController {
         this.model.featureMatrix.features = data.resource_availability;
 
         this.update();
-        $.insertHtml(this.el, this.model);
+        this.insertHtml();
         this.onLoaded();
 
         let lastYOffset = 0;
@@ -223,6 +226,7 @@ export default class Tutor extends CMSPageController {
     }
 
     onClose() {
+        super.onClose();
         window.removeEventListener('scroll', this.handleScroll);
         document.querySelector('.page-footer').classList.add('openstax-tutor-footer');
         document.getElementById('main').classList.remove('openstax-tutor-main');

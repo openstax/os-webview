@@ -1,6 +1,6 @@
-import {Controller} from 'superb.js';
 import settings from 'settings';
 import $ from '~/helpers/$';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import userModel from '~/models/usermodel';
 import Popup from '~/components/popup/popup';
 import Errata from '~/pages/errata/errata';
@@ -42,33 +42,35 @@ const models = {
     }
 };
 
-export default class Confirmation extends Controller {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['confirmation-page', 'page']
+    },
+    regions: {
+        popup: 'pop-up',
+        detail: 'detail-block'
+    }
+};
+const BaseClass = componentType(spec, canonicalLinkMixin);
+
+export default class Confirmation extends BaseClass {
 
     init() {
         document.title = 'Thanks! - OpenStax';
-        this.template = template;
-        this.css = css;
-        this.view = {
-            classes: ['confirmation-page', 'page']
-        };
-        this.regions = {
-            popup: 'pop-up',
-            detail: 'detail-block'
-        };
-
         this.referringPage = window.location.pathname.replace('/confirmation/', '');
         if (this.referringPage === window.location.pathname) {
             this.referringPage = window.location.pathname
                 .replace('-confirmation', '')
                 .replace(/^\//, '');
         }
-        if (this.referringPage === 'adoption') {
-            this.view.classes.push('adoption');
-        }
         this.model = models[this.referringPage];
         if (this.referringPage === 'errata') {
             this.userPromise = userModel.load();
         }
+        super.init();
+        this.setCanonicalLink(`/${this.referringPage}-confirmation`);
     }
 
     onLoaded() {

@@ -1,37 +1,40 @@
+import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
 import settings from 'settings';
 import {on} from '~/helpers/controller/decorators';
 import router from '~/router';
-import shell from '~/components/shell/shell';
 import analytics from '~/helpers/analytics';
-import CMSPageController from '~/controllers/cms';
 import Article from './article/article';
 import {description as template} from './blog.html';
 import css from './blog.css';
 
-export default class Blog extends CMSPageController {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['blog', 'page'],
+        tag: 'main'
+    },
+    regions: {
+        articles: '.articles .container',
+        pinned: '.pinned',
+        articlePage: '.article.page'
+    },
+    slug: 'news',
+    model: {
+        rssUrl: `${settings.apiOrigin}/blog-feed/rss/`
+    }
+};
+const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
+
+export default class Blog extends BaseClass {
 
     static description = 'Stay up to date with OpenStax news and hear community '+
     'perspectives on issues in education and access on the OpenStax blog.';
 
     init() {
-        this.template = template;
-        this.css = css;
-        this.view = {
-            classes: ['blog', 'page'],
-            tag: 'main'
-        };
-        this.regions = {
-            articles: '.articles .container',
-            pinned: '.pinned',
-            articlePage: '.article.page'
-        };
-        this.slug = 'news';
-        this.model = {
-            rssUrl: `${settings.apiOrigin}/blog-feed/rss/`
-        };
+        super.init();
         this.timersRunning = [];
         this.previousSlug = null;
-        shell.showLoader();
 
         // eslint-disable-next-line complexity
         this.handlePathChange = () => {
@@ -49,11 +52,14 @@ export default class Blog extends CMSPageController {
                 if (this.previousSlug !== slugMatch[1]) {
                     this.previousSlug = slugMatch[1];
                     this.setTimers();
+                    this.setCanonicalLink(slugMatch[0], this.canonicalLink);
                 }
+            } else {
+                this.model.articleSlug = null;
+                this.setCanonicalLink('/blog', this.canonicalLink);
             }
             this.update();
         };
-        window.addEventListener('popstate', this.handlePathChange);
         window.addEventListener('navigate', this.handlePathChange);
     }
 
@@ -107,7 +113,7 @@ export default class Blog extends CMSPageController {
             }
             this.handlePathChange();
         }
-        shell.hideLoader();
+        this.hideLoader();
         this.setTimers();
     }
 
@@ -137,8 +143,8 @@ export default class Blog extends CMSPageController {
 
     onClose() {
         this.clearTimers();
-        window.removeEventListener('popstate', this.handlePathChange);
         window.removeEventListener('navigate', this.handlePathChange);
+        super.onClose();
     }
 
     otherArticles(exceptThisSlug) {

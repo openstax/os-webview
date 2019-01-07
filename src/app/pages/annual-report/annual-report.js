@@ -1,4 +1,5 @@
-import componentType from '~/helpers/controller/init-mixin';
+import $ from '~/helpers/$';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './annual-report.html';
 import css from './annual-report.css';
 import createSection from './section/section';
@@ -36,8 +37,9 @@ const spec = {
     preserveWrapping: true,
     model: null
 };
+const BaseClass = componentType(spec, canonicalLinkMixin);
 
-export default class AnnualReport extends componentType(spec) {
+export default class AnnualReport extends BaseClass {
 
     onLoaded() {
         document.body.classList.remove('page-loaded');

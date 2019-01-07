@@ -1,41 +1,55 @@
 import Article from './article/article';
 import Bookings from './bookings/bookings';
-import CMSPageController from '~/controllers/cms';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import HeadlinePaginator from '~/components/headline-paginator/headline-paginator';
 import Inquiries from './inquiries/inquiries';
 import MobileSelector from './mobile-selector/mobile-selector';
 import MoreFewer from '~/components/more-fewer/more-fewer';
 import PressExcerpt from './press-excerpt/press-excerpt';
 import PressMobile from './press-mobile/press-mobile';
-import router from '~/router';
-import $ from '~/helpers/$';
 import {description as template} from './press.html';
 import {description as articleTemplate} from './press-article.html';
 import css from './press.css';
 
-export default class Press extends CMSPageController {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['press', 'page']
+    },
+    regions: {
+        article: '.article',
+        mobileSelector: '[data-region="mobile-selector"]',
+        mobileView: '.mobile-view',
+        pressReleases: '.press-releases',
+        newsMentions: '.news-mentions',
+        pressInquiries: '.press-inquiries',
+        bookings: '.book-experts'
+    },
+    slug: 'press',
+    model() {
+        const model = this.pageData ?
+            {
+                headline: this.pageData.title,
+                missionStatements: this.pageData.mission_statements
+                    .map((obj) => obj.statement),
+                showArticle: Boolean(this.articleSlug)
+            } :
+            {};
+
+        return model;
+    }
+};
+const BaseClass = componentType(spec, canonicalLinkMixin);
+
+export default class Press extends BaseClass {
 
     init() {
-        this.template = template;
-        this.view = {
-            classes: ['press', 'page']
-        };
-        this.css = css;
-        this.regions = {
-            article: '.article',
-            mobileSelector: '[data-region="mobile-selector"]',
-            mobileView: '.mobile-view',
-            pressReleases: '.press-releases',
-            newsMentions: '.news-mentions',
-            pressInquiries: '.press-inquiries',
-            bookings: '.book-experts'
-        };
-        this.slug = 'press';
+        super.init();
         this.articleSlug = this.getArticleSlug();
         if (this.articleSlug) {
             this.template = articleTemplate;
         }
-        this.model = () => this.getModel();
         this.heading = '';
         this.mobileSelection = 'Press releases';
     }
@@ -87,7 +101,7 @@ export default class Press extends CMSPageController {
 
     onDataLoaded() {
         this.update();
-        $.insertHtml(this.el, this.model());
+        this.insertHtml();
         const asDate = (dateStr) => {
             const [year, month, day] = dateStr.split('-');
 
@@ -167,19 +181,6 @@ export default class Press extends CMSPageController {
             this.regions.newsMentions.append(this.nmPaginator);
             this.regions.bookings.attach(new Bookings(submodels.experts));
         }
-    }
-
-    getModel() {
-        const model = this.pageData ?
-            {
-                headline: this.pageData.title,
-                missionStatements: this.pageData.mission_statements
-                    .map((obj) => obj.statement),
-                showArticle: Boolean(this.articleSlug)
-            } :
-            {};
-
-        return model;
     }
 
 }

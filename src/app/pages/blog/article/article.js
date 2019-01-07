@@ -49,6 +49,9 @@ export default class Article extends Controller {
 
     setUpScrollHandler() {
         this.handleScroll = debounce(() => {
+            if (!this.el) {
+                return;
+            }
             const r = this.el.getBoundingClientRect();
 
             if (r.height === 0) {

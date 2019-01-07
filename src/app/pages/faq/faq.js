@@ -1,4 +1,4 @@
-import CMSPageController from '~/controllers/cms';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import {makeDocModel} from '~/models/usermodel';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
@@ -6,20 +6,24 @@ import shell from '~/components/shell/shell';
 import {description as template} from './faq.html';
 import css from './faq.css';
 
-export default class FAQ extends CMSPageController {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['faq-page', 'page'],
+        tag: 'main'
+    },
+    model: {},
+    slug: 'pages/faq'
+};
+const BaseClass = componentType(spec, canonicalLinkMixin);
+
+export default class FAQ extends BaseClass {
 
     static description = 'Frequently Asked Questions about OpenStax';
 
     init() {
-        this.slug = 'pages/faq';
-        this.template = template;
-        this.css = css;
-        this.view = {
-            classes: ['faq-page', 'page'],
-            tag: 'main'
-        };
-
-        this.model = {};
+        super.init();
         shell.showLoader();
     }
 
@@ -60,7 +64,7 @@ export default class FAQ extends CMSPageController {
     }
 
     onUpdate() {
-        $.insertHtml(this.el, this.model);
+        this.insertHtml();
     }
 
     @on('click .question')

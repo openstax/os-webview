@@ -1,20 +1,20 @@
-import CMSPageController from '~/controllers/cms';
-import $ from '~/helpers/$';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './bookstore-suppliers.html';
 import css from './bookstore-suppliers.css';
 
-export default class BookstoreSuppliers extends CMSPageController {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['bookstore-suppliers', 'page'],
+        tag: 'main'
+    },
+    slug: 'pages/print-order',
+    model: {}
+};
+const BaseClass = componentType(spec, canonicalLinkMixin);
 
-    init() {
-        this.template = template;
-        this.view = {
-            classes: ['bookstore-suppliers', 'page'],
-            tag: 'main'
-        };
-        this.css = css;
-        this.slug = 'pages/print-order';
-        this.model = {};
-    }
+export default class BookstoreSuppliers extends BaseClass {
 
     onDataLoaded() {
         const providerToModel = (p) => ({
@@ -44,7 +44,7 @@ export default class BookstoreSuppliers extends CMSPageController {
     }
 
     onUpdate() {
-        $.insertHtml(this.el, this.model);
+        this.insertHtml();
     }
 
 }

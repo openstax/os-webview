@@ -1,32 +1,26 @@
 import AccordionGroup from '~/components/accordion-group/accordion-group';
-import CMSPageController from '~/controllers/cms';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import ContentGroup from '~/components/content-group/content-group';
 import TabGroup from '~/components/tab-group/tab-group';
-import $ from '~/helpers/$';
 import AlumniTab from './alumni-tab/alumni-tab';
 import MembersTab from './members-tab/members-tab';
 import {description as template} from './research.html';
 import css from './research.css';
 
-export default class Research extends CMSPageController {
-
-    init() {
-        this.template = template;
-        this.view = {
-            classes: ['research', 'page'],
-            tag: 'main'
-        };
-        this.css = css;
-        this.slug = 'pages/research';
-        this.model = () => this.getModel();
-        this.regions = {
-            accordion: 'accordion-region',
-            tabGroup: 'people-tabs',
-            tabContent: 'tab-content'
-        };
-    }
-
-    getModel() {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['research', 'page'],
+        tag: 'main'
+    },
+    regions: {
+        accordion: 'accordion-region',
+        tabGroup: 'people-tabs',
+        tabContent: 'tab-content'
+    },
+    slug: 'pages/research',
+    model() {
         const data = this.pageData;
         const projectColors = ['blue', 'green', 'yellow', 'red', 'orange'];
 
@@ -53,6 +47,10 @@ export default class Research extends CMSPageController {
                 }))
         };
     }
+};
+const BaseClass = componentType(spec, canonicalLinkMixin);
+
+export default class Research extends BaseClass {
 
     onDataLoaded() {
         Object.assign(this.pageData, this.mockPageData);
@@ -102,7 +100,7 @@ export default class Research extends CMSPageController {
     }
 
     onUpdate() {
-        $.insertHtml(this.el, this.model);
+        this.insertHtml();
     }
 
 }
