@@ -20,7 +20,8 @@ export default class HiddenFields extends Controller {
             salesforce,
             book: this.props.book,
             adoptionStatus: this.props.adoptionStatus,
-            numberOfStudents: this.props.numberOfStudents
+            numberOfStudents: this.props.numberOfStudents,
+            isFirst: this.props.isFirst
         };
     }
 

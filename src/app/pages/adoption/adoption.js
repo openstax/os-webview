@@ -149,12 +149,13 @@ export default class AdoptionForm extends Controller {
         this.howUsing.update();
         const form = event.target;
 
-        this.submitQueue = this.selectedBooks.map((b) => {
+        this.submitQueue = this.selectedBooks.map((b, i) => {
             return () => {
                 this.currentBookInfo = {
                     book: b.value,
                     adoptionStatus: this.usingInfo.checked[b.value],
-                    numberOfStudents: this.usingInfo.howMany[b.value]
+                    numberOfStudents: this.usingInfo.howMany[b.value],
+                    isFirst: i === 0 ? '1' : '0'
                 };
                 this.hiddenFields.update();
                 form.submit();
