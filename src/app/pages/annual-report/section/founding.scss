@@ -3,5 +3,11 @@
 .annual-report.page .founding {
     @include wider-than($phone-max) {
         margin-top: -12rem;
+        overflow: visible;
+    }
+
+    .text-overlapping-photo > img {
+        margin-bottom: 1rem;
+        margin-top: 1rem;
     }
 }

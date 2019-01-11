@@ -4,7 +4,6 @@
 
     .fact-boxes {
         grid-template-columns: repeat(4, 1fr);
-        overflow-x: auto;
 
         .card {
             min-width: 28rem;

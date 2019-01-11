@@ -5,7 +5,7 @@
     </div>
     <div class="testimonial-boxes">
         <div each="info in model.testimonials" class="card testimonial">
-            <img src="{info.image}" alt="{info.altText}">
+            <img src="{info.image.image}" alt="{info.imageAltText || info.image.altText}">
             <div class="text-block">
                 <div>{info.quote}</div>
                 <a href="{info.link}">{info.linkText} <span class="fa fa-chevron-right"></span></a>

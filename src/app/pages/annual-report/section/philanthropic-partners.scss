@@ -2,6 +2,30 @@
 
 .annual-report.page .philanthropic-partners {
 
+    .text-overlapping-photo > .text-block {
+        padding: 0;
+    }
+
+    .card {
+        @include width-up-to($phone-max) {
+            padding: $normal-margin 0;
+        }
+
+        .text-block {
+            @include width-up-to($tablet-max) {
+                margin-left: 1rem;
+            }
+        }
+
+        .name {
+            font-weight: bold;
+
+            &::before {
+                content: '– ';
+            }
+        }
+    }
+
     .quote-on-left {
         display: grid;
         grid-template-columns: auto auto;
@@ -10,10 +34,6 @@
             @include title-font(6rem);
             color: os-color(orange);
             margin-top: -1rem;
-        }
-
-        :nth-child(2) {
-            padding-left: 0;
         }
     }
 

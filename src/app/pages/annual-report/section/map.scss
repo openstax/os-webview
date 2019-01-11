@@ -2,6 +2,25 @@
 
 .annual-report.page .map {
 
+    @include width-between($phone-max, $tablet-max) {
+        padding-bottom: 16rem;
+        padding-top: 16rem;
+    }
+
+    @include wider-than($tablet-max) {
+        padding-bottom: 32rem;
+        padding-top: 32rem;
+    }
+
+    .floating {
+        left: 0;
+        max-height: 100%;
+        max-width: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
     .with-layers {
         align-items: center;
         display: grid;

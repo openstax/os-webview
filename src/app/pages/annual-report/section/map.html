@@ -1,7 +1,9 @@
 <template args="model">
-    <img class="floating" src="{model.image1.image}" alt="{model.image1.imageAlt}">
+    <img class="floating hide-on-mobile" src="{model.image_1.image}" alt="{model.image_1.imageAlt}">
     <div class="content with-layers">
-        <img src="{model.image2.image}" alt="{model.image2.imageAlt}">
+        <div>
+            <img if="model.image_2" src="{model.image_2.image}" alt="{model.image_2.imageAlt}">
+        </div>
         <div class="text-block">
             <h2>{model.heading}</h2>
             <div>{model.description}</div>

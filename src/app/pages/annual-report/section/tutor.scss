@@ -1,0 +1,37 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.annual-report.page .no-padding .tutor {
+    padding: 0;
+
+    @include wider-than($tablet-max) {
+        min-height: 80rem;
+    }
+
+    > .content {
+        margin: 8rem 0;
+
+        @include wider-than($media-content-max) {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    .right-image {
+        float: right;
+        margin-left: $normal-margin;
+        margin-right: -8rem;
+        max-width: 80rem;
+        width: 50%;
+
+        @include width-up-to($phone-max) {
+            display: none;
+        }
+    }
+
+    .bottom-image {
+        bottom: 0;
+        margin-left: -8rem;
+        position: absolute;
+        width: calc(100% + 16rem);
+    }
+}
