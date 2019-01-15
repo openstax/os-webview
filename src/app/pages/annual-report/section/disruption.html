@@ -3,13 +3,7 @@
         <h2>{model.heading}</h2>
         <div>{model.description}</div>
     </div>
-    <div>
-        <div class="caption">
-            {model.graph.topCaption}
-        </div>
-        <img src="{model.graph.image}" alt="{model.graph.imageAlt}">
-        <div class="caption">
-            {model.graph.bottomCaption}
-        </div>
+    <div class="scroll-on-mobile">
+        <img src="{model.graph.image.image}" alt="{model.graph.imageAltText || model.graph.image.altText}">
     </div>
 </template>

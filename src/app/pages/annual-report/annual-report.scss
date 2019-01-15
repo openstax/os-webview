@@ -8,7 +8,8 @@ $light: #f8f8f8;
         background-repeat: no-repeat;
         background-size: cover;
         min-height: 40rem;
-        padding: 8rem;
+        overflow-y: visible;
+        padding: 12rem 6rem;
 
         @include width-up-to($phone-max) {
             padding: 3rem 2rem;
@@ -22,33 +23,9 @@ $light: #f8f8f8;
             background-color: $light;
         }
 
-        &.no-padding {
-            min-height: 80rem;
-            overflow: hidden;
-            padding: 0;
-
-            > .content {
-                margin: 8rem;
-
-                @include wider-than($media-content-max) {
-                    margin-left: auto;
-                    margin-right: auto;
-                }
-
-                .text-block {
-                    min-width: 38rem;
-                }
-
-                .right-image {
-                    overflow-x: visible;
-                }
-            }
-
-            .bottom-image {
-                bottom: 0;
-                position: absolute;
-                width: 100%;
-            }
+        > .content {
+            padding-left: $normal-margin;
+            padding-right: $normal-margin;
         }
     }
 
@@ -67,12 +44,18 @@ $light: #f8f8f8;
         margin-left: auto;
         margin-right: auto;
         max-width: $content-max;
+
+        > .text-content {
+            padding-left: 0;
+            padding-right: 0;
+        }
     }
 
     .text-content {
         align-items: start;
         display: grid;
         grid-gap: 3rem;
+        margin-bottom: 3rem;
         margin-left: 0;
     }
 
@@ -104,13 +87,8 @@ $light: #f8f8f8;
         display: grid;
         grid-gap: 4rem;
 
-        @include wider-than($phone-max) {
-            grid-template-columns: 1fr auto;
-        }
-
-        .text-content {
-            height: fit-content;
-            min-width: 38rem;
+        @include wider-than($tablet-max) {
+            grid-template-columns: auto minmax(auto, 36rem);
         }
     }
 
@@ -125,7 +103,7 @@ $light: #f8f8f8;
     .text-overlapping-photo {
         align-items: center;
         display: grid;
-        grid-template-columns: auto 1fr;
+        grid-template-columns: minmax(24rem, 60rem) auto;
         width: 100%;
 
         @include width-up-to($phone-max) {
@@ -137,7 +115,12 @@ $light: #f8f8f8;
         }
 
         .text-block {
-            @include wider-than($phone-max) {
+
+            @include width-between($phone-max, $tablet-max) {
+                margin-left: -4rem;
+            }
+
+            @include wider-than($tablet-max) {
                 margin-left: -6rem;
                 padding-left: 8rem;
             }
@@ -145,12 +128,16 @@ $light: #f8f8f8;
 
         .card {
             background-color: ui-color(white);
-            padding: 6rem;
+            padding: 4rem;
 
             @include width-up-to($phone-max) {
                 border-top-left-radius: 0;
                 border-top-right-radius: 0;
                 box-shadow: none;
+            }
+
+            @include wider-than($tablet-max) {
+                padding: 6rem;
             }
         }
     }
@@ -161,6 +148,17 @@ $light: #f8f8f8;
         display: grid;
         grid-gap: $normal-margin;
         margin-top: 4rem;
+    }
+
+    .icon-row {
+        grid-template-columns: repeat(auto-fit, minmax(4rem, auto));
+        height: 4rem;
+        margin-top: 0;
+        min-width: 90rem;
+
+        > img {
+            max-height: 100%;
+        }
     }
 
     .testimonial-boxes {
@@ -181,18 +179,6 @@ $light: #f8f8f8;
                 padding: 4rem;
             }
         }
-    }
-
-    .icon-row {
-        grid-template-columns: repeat(30, auto);
-        overflow-x: auto;
-    }
-
-    .floating {
-        left: 0;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
     }
 
     .centered {
@@ -220,6 +206,19 @@ $light: #f8f8f8;
     .mobile-only {
         @include wider-than($phone-max) {
             display: none;
+        }
+    }
+
+    .scroll-on-mobile {
+        max-width: 100%;
+        overflow-x: auto;
+
+        > img {
+            max-height: 65rem;
+
+            @include width-up-to($tablet-max) {
+                max-width: none;
+            }
         }
     }
 

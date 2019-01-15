@@ -3,7 +3,9 @@
         <h2>{model.heading}</h2>
         <div>{model.description}</div>
     </div>
-    <div class="icon-row">
-        <img each="icon in model.partners" src="icon.image" alt="icon.altText">
+    <div class="scroll-on-mobile">
+        <div class="icon-row">
+            <img each="icon in model.partners" src="{icon.image.image}" alt="{icon.imageAltText || icon.image.altText}">
+        </div>
     </div>
 </template>

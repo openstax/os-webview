@@ -63,58 +63,6 @@ export default class AnnualReport extends BaseClass {
             });
 
         this.model = result;
-        // Some things that might not exist and need to or the page breaks
-        const setIfNotFound = function (parent, kvPairs) {
-            kvPairs.forEach((pair) => {
-                const [key, value] = pair;
-
-                if (!(key in parent)) {
-                    parent[key] = value;
-                }
-            });
-        };
-        const placeholderImage = {
-            image: 'https://via.placeholder.com/400x400/027/359?text=image',
-            imageAlt: 'image not defined in CMS'
-        };
-        const bottomBorderImage = {
-            image: 'https://via.placeholder.com/1400x220/DDF/359?text=border-image',
-            imageAlt: 'image not defined in CMS'
-        };
-
-        setIfNotFound(result.improvingAccess, [
-            [
-                'backgroundImage',
-                {
-                    image: 'https://via.placeholder.com/1400x600/027/359?text=background'
-                }
-            ]
-        ]);
-        setIfNotFound(result.disruption, [['graph', placeholderImage]]);
-        setIfNotFound(result.map, [
-            [
-                'backgroundImage',
-                {
-                    image: 'https://via.placeholder.com/1400x600/68c/359?text=map%20background'
-                }
-            ],
-            ['image1', placeholderImage],
-            ['image2', placeholderImage]
-        ]);
-        setIfNotFound(result.philanthropicPartners, [
-            ['link1', {}],
-            ['link2', {}]
-        ]);
-        setIfNotFound(result.reach, [['facts', []]]);
-        setIfNotFound(result.testimonials, [['testimonials', []]]);
-        setIfNotFound(result.tutor, [
-            ['rightImage', placeholderImage],
-            ['bottomImage', bottomBorderImage]
-        ]);
-        setIfNotFound(result.revolution, [
-            ['portrait', {image: placeholderImage, altText: 'default alt'}],
-            ['signature', {image: placeholderImage, altText: 'default alt'}]
-        ]);
     }
 
     onDataLoaded() {
@@ -123,7 +71,6 @@ export default class AnnualReport extends BaseClass {
         this.setModel();
         this.update();
         this.insertHtml();
-
         const insertComponent = (id, modelKey = id, content=true) => {
             this.regionFrom(`#${id}`).attach(createSection(id, this.model[modelKey], content));
         };

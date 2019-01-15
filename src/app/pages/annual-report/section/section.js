@@ -3,6 +3,7 @@ import {css as mapCss} from './map.css';
 import {css as philanthropicPartnersCss} from './philanthropic-partners.css';
 import {css as reachCss} from './reach.css';
 import {css as revolutionCss} from './revolution.css';
+import {css as tutorCss} from './tutor.css';
 import {description as bannerTemplate} from './banner.html';
 import {description as disruptionTemplate} from './disruption.html';
 import {description as foundingTemplate} from './founding.html';
@@ -37,7 +38,8 @@ const css = {
     map: mapCss,
     'philanthropic-partners': philanthropicPartnersCss,
     revolution: revolutionCss,
-    reach: reachCss
+    reach: reachCss,
+    tutor: tutorCss
 };
 
 function createSection(name, model, content=true) {
