@@ -1,7 +1,8 @@
 import {Controller} from 'superb.js';
+import {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
+import mix from '~/helpers/controller/mixins';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
-import shell from '~/components/shell/shell';
 import settings from 'settings';
 import {bookPromise} from '~/models/book-titles';
 import router from '~/router';
@@ -43,12 +44,15 @@ const statusSortOrder = {
     'No': 2,
     'In': 3
 };
+const BaseClass = mix(Controller).with(canonicalLinkMixin, loaderMixin);
 
-export default class Errata extends Controller {
+export default class Errata extends BaseClass {
 
     static setDisplayStatus = setDisplayStatus;
 
     init() {
+        super.init();
+        $.setCanonicalLink(`${window.location.pathname}${window.location.search}`, this.canonicalLink);
         this.template = template;
         this.css = css;
         this.view = {
@@ -183,7 +187,6 @@ export default class Errata extends Controller {
                 (item) => item.book === this.model.summaryBook && this.matchesFilter(item)
             )
         };
-        shell.showLoader();
     }
 
     onLoaded() {
@@ -230,7 +233,7 @@ export default class Errata extends Controller {
 
                     this.regions.form.attach(form);
                     this.update();
-                    shell.hideLoader();
+                    this.hideLoader();
 
                     if (entry) {
                         const slug = entry.meta.slug;
@@ -276,7 +279,7 @@ export default class Errata extends Controller {
             if (detail.created) {
                 this.model.bookTitle = detail.bookTitle;
                 setModelDetail(detail);
-                shell.hideLoader();
+                this.hideLoader();
                 detail.showDatesInBar = detail.barStatus === '' || detail.reviewed_date;
                 detail.createdDate = new Date(detail.created).toLocaleDateString();
                 detail.reviewedDate = detail.reviewed_date ? new Date(detail.reviewed_date).toLocaleDateString() : '';
@@ -351,7 +354,7 @@ export default class Errata extends Controller {
                 this.model.summaryData = summary;
                 this.sortData('sortDate', 'date');
                 this.update();
-                shell.hideLoader();
+                this.hideLoader();
                 if (this.savedScrollPosition) {
                     window.scroll(0, this.savedScrollPosition);
                 }

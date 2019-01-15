@@ -6,17 +6,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
         <meta name="description" content="">
 
-        <link rel="stylesheet" href="/styles/main.css?v2.25.0">
-        <link rel="preload" href="/styles/fonts/3dac71eb-afa7-4c80-97f0-599202772905.woff2" as="font">
-        <link rel="preload" href="/styles/fonts/531c5a28-5575-4f58-96d4-a80f7b702d7b.woff2" as="font">
-        <link rel="preload" href="/styles/fonts/5b1fbd62-45dc-4433-a7df-a2b24a146411.woff2" as="font">
-        <link rel="preload" href="/styles/fonts/21c44514-f4d6-4cff-a5de-e4cac5e61aff.woff2" as="font">
-        <link rel="preload" href="/api/books?format=json" as="fetch">
-        <link rel="preload" href="/api/footer?format=json" as="fetch">
-        <link rel="preload" href="/api/pages/openstax-homepage?format=json" as="fetch">
-
-        <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css' rel='stylesheet'>
-
         <script>
             /* Set meta description for initial page load */
             const descriptions = {
@@ -82,6 +71,16 @@
                 else { window.addEventListener('load', async_load, false); }
             })();
         </script>
+
+        <link rel="stylesheet" href="/styles/main.css?v2.25.0">
+        <link rel="stylesheet" href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css'>
+        <link rel="prefetch" href="/styles/fonts/3dac71eb-afa7-4c80-97f0-599202772905.woff2">
+        <link rel="prefetch" href="/styles/fonts/531c5a28-5575-4f58-96d4-a80f7b702d7b.woff2">
+        <link rel="prefetch" href="/styles/fonts/5b1fbd62-45dc-4433-a7df-a2b24a146411.woff2">
+        <link rel="prefetch" href="/styles/fonts/21c44514-f4d6-4cff-a5de-e4cac5e61aff.woff2">
+        <link rel="prefetch" href="/api/books?format=json">
+        <link rel="prefetch" href="/api/footer?format=json">
+        <link rel="prefetch" href="/api/pages/openstax-homepage?format=json">
     </head>
     <body>
         <noscript>

@@ -1,23 +1,17 @@
-import CMSPageController from '~/controllers/cms';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import $ from '~/helpers/$';
 import {description as template} from './about.html';
 import css from './about.css';
 
-export default class AboutNew extends CMSPageController {
-
-    init() {
-        this.template = template;
-        this.view = {
-            classes: ['about', 'page'],
-            tag: 'main'
-        };
-        this.css = css;
-        this.slug = 'pages/about';
-
-        this.model = () => this.getModel();
-    }
-
-    getModel() {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['about', 'page'],
+        tag: 'main'
+    },
+    slug: 'pages/about',
+    model() {
         const data = this.pageData;
         const translateCard = (c) => {
             const imgEntry = c.find((v) => v.type === 'image');
@@ -42,10 +36,14 @@ export default class AboutNew extends CMSPageController {
             map: data.where_map_url
         };
     }
+};
+const BaseClass = componentType(spec, canonicalLinkMixin);
+
+export default class AboutNew extends BaseClass {
 
     onDataLoaded() {
         this.update();
-        $.insertHtml(this.el, this.model);
+        this.insertHtml();
     }
 
 }

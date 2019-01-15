@@ -1,7 +1,6 @@
-import $ from '~/helpers/$';
+import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
 import BannerCarousel from './banner-carousel/banner-carousel';
 import Buckets from '~/components/buckets/buckets';
-import CMSPageController from '~/controllers/cms';
 import Education from './education/education';
 import Quotes from '~/components/quotes/quotes';
 import shell from '~/components/shell/shell';
@@ -10,30 +9,33 @@ import {on} from '~/helpers/controller/decorators';
 import {utils} from 'superb.js';
 import css from './home.css';
 
-export default class Home extends CMSPageController {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['home-page']
+    },
+    regions: {
+        banners: '.book-banners',
+        quotes: '.quote-buckets',
+        education: '.education',
+        buckets: '.buckets'
+    },
+    slug: 'pages/openstax-homepage',
+    model: {
+        loaded: ''
+    }
+};
+const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
+
+export default class Home extends BaseClass {
 
     static description = 'OpenStax\'s goal is to increase student access ' +
         'to high-quality learning materials at little to no cost. See what ' +
         'we have to offer for college and AP courses.';
 
     init() {
-        this.slug = 'pages/openstax-homepage';
-        this.template = template;
-        this.css = css;
-        this.regions = {
-            banners: '.book-banners',
-            quotes: '.quote-buckets',
-            education: '.education',
-            buckets: '.buckets'
-        };
-        this.view = {
-            classes: ['home-page']
-        };
-        this.model = {
-            loaded: ''
-        };
-
-        shell.showLoader();
+        super.init();
     }
 
     onLoaded() {
@@ -87,13 +89,14 @@ export default class Home extends CMSPageController {
         this.model.loaded = 'loaded';
         this.update();
 
-        shell.hideLoader();
+        this.hideLoader();
     }
 
     onClose() {
         clearInterval(this.modelInterval);
         window.removeEventListener('scroll', this.parallaxOnScroll);
         shell.header.updateHeaderStyle();
+        super.onClose();
     }
 
 }

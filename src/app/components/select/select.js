@@ -21,7 +21,7 @@ export default class Select extends Controller {
             this.view.classes.push('select-multi');
         }
 
-        const onClose = parent.onClose;
+        const onClose = parent.onClose.bind(parent);
         const onAttached = parent.onAttached;
 
         parent.onClose = () => {

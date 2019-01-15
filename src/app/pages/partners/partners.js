@@ -1,39 +1,40 @@
-import settings from 'settings';
-import router from '~/router';
-import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
-import shell from '~/components/shell/shell';
+import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
+import css from './partners.css';
 import CategorySelector from '~/components/category-selector/category-selector';
 import PartnerViewer from './partner-viewer/partner-viewer';
-import {on} from '~/helpers/controller/decorators';
+import router from '~/router';
+import settings from 'settings';
 import {description as template} from './partners.html';
-import css from './partners.css';
+import {on} from '~/helpers/controller/decorators';
 
 const pagePath = '/partners';
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['partners-page', 'page'],
+        tag: 'main'
+    },
+    regions: {
+        filter: '.filter',
+        iconViewer: 'icon-viewer',
+        blurbViewer: 'blurb-viewer'
+    },
+    slug: 'pages/partners',
+    model: {
+        title: '',
+        'page_description': '',
+        partners: []
+    }
+};
+const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 
-export default class Partners extends CMSPageController {
+export default class Partners extends BaseClass {
 
     init() {
-        this.slug = 'pages/partners';
-        this.template = template;
-        this.css = css;
-        this.view = {
-            classes: ['partners-page', 'page'],
-            tag: 'main'
-        };
-        this.regions = {
-            filter: '.filter',
-            iconViewer: 'icon-viewer',
-            blurbViewer: 'blurb-viewer'
-        };
-        this.model = {
-            title: '',
-            'page_description': '',
-            partners: []
-        };
+        super.init();
         this.categorySelector = new CategorySelector((category) => this.filterPartners(category));
-        shell.showLoader();
-
         router.replaceState({
             filter: this.categoryFromPath(),
             path: pagePath
@@ -81,7 +82,7 @@ export default class Partners extends CMSPageController {
         this.categorySelector.updateSelected(category);
         this.filterPartners(category);
         this.changeAllyLogoColor();
-        shell.hideLoader();
+        this.hideLoader();
     }
 
     filterPartners(category) {

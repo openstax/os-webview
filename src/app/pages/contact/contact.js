@@ -1,5 +1,7 @@
 import SalesforceForm from '~/controllers/salesforce-form';
 import CMSPageController from '~/controllers/cms';
+import {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
+import mix from '~/helpers/controller/mixins';
 import salesforce from '~/models/salesforce';
 import router from '~/router';
 import $ from '~/helpers/$';
@@ -31,7 +33,9 @@ class ContactData extends CMSPageController {
 
 }
 
-export default class Contact extends SalesforceForm {
+const BaseClass = mix(SalesforceForm).with(canonicalLinkMixin);
+
+export default class Contact extends BaseClass {
 
     static description = 'If you have a question or feedback about our books, ' +
         'OpenStax Tutor, partnerships, or any other topic, ' +
@@ -62,6 +66,7 @@ export default class Contact extends SalesforceForm {
                 return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
             }
         };
+        super.init();
     }
 
     onLoaded() {

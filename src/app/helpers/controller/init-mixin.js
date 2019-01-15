@@ -1,35 +1,35 @@
-import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
+import {Controller} from 'superb.js';
 import CMSPageController from '~/controllers/cms';
+import mix from './mixins';
+import shell from '~/components/shell/shell';
 
-const componentMixin = {
+const componentMixin = (superclass) => class extends superclass {
+
     init(options) {
         Object.assign(this, options);
         if (typeof this.model === 'function') {
             this.model = this.model.bind(this);
         }
-    },
-    template() {},
+    }
+
+    template() {}
+
     regionFrom(source) {
         const Region = this.regions.self.constructor;
         const el = typeof source === 'string' ? this.el.querySelector(source) : source;
 
         return new Region(el, this);
-    },
+    }
+
     insertHtml() {
         $.insertHtml(this.el, this.model);
     }
+
 };
 
-class CMSComponent extends CMSPageController {}
-class PlainComponent extends Controller {}
-Object.assign(CMSComponent.prototype, componentMixin);
-Object.assign(PlainComponent.prototype, componentMixin);
-
-export default function componentType(spec) {
-    const BaseClass = 'slug' in spec ? CMSComponent : PlainComponent;
-
-    class NewClass extends BaseClass {
+function mixinFromSpec(spec) {
+    const specMixin = (superclass) => class extends superclass {
 
         init(options) {
             Object.assign(this, spec);
@@ -37,5 +37,57 @@ export default function componentType(spec) {
         }
 
     };
-    return NewClass;
+
+    return specMixin;
+}
+
+export function canonicalLinkMixin(superclass) {
+    return class extends superclass {
+
+        init(...args) {
+            if (super.init) {
+                super.init(...args);
+            }
+            this.canonicalLink = $.setCanonicalLink();
+        }
+
+        setCanonicalLink(newPath) {
+            $.setCanonicalLink(newPath, this.canonicalLink);
+        }
+
+        onClose() {
+            if (super.onClose) {
+                super.onClose();
+            }
+            this.canonicalLink.remove();
+        }
+
+    };
+}
+
+export function loaderMixin(superclass) {
+    return class extends superclass {
+
+        init(...args) {
+            if (super.init) {
+                super.init(...args);
+            }
+            shell.showLoader();
+        }
+
+        hideLoader() {
+            shell.hideLoader();
+        }
+
+    };
+}
+
+const CMSComponent = mix(CMSPageController).with(componentMixin);
+const PlainComponent = mix(Controller).with(componentMixin);
+
+export default function componentType(spec, ...mixins) {
+    const BaseClass = 'slug' in spec ? CMSComponent : PlainComponent;
+    const mixin = mixinFromSpec(spec);
+
+    return mix(BaseClass).with(mixin, ...mixins);
 }

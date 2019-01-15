@@ -1,6 +1,5 @@
 import router from '~/router';
-import componentType from '~/helpers/controller/init-mixin';
-import shell from '~/components/shell/shell';
+import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
 import BookViewer from './book-viewer/book-viewer';
 import CategorySelector from '~/components/category-selector/category-selector';
 import {description as template} from './subjects.html';
@@ -21,8 +20,9 @@ const spec = {
     },
     model: {}
 };
+const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 
-export default class Subjects extends componentType(spec) {
+export default class Subjects extends BaseClass {
 
     static description = 'Our textbooks are openly licensed, peer-reviewed,' +
         'free, and backed by learning resources. Check out our books and' +
@@ -31,7 +31,6 @@ export default class Subjects extends componentType(spec) {
     init() {
         super.init();
         this.categorySelector = new CategorySelector((category) => this.filterSubjects(category));
-        shell.showLoader();
         router.replaceState({
             filter: this.categoryFromPath(),
             path: pagePath
@@ -54,6 +53,7 @@ export default class Subjects extends componentType(spec) {
             path: pagePath
         });
         window.scrollTo(0, yTarget);
+        this.setCanonicalLink();
     }
 
     onDataLoaded() {
@@ -75,7 +75,7 @@ export default class Subjects extends componentType(spec) {
         this.categorySelector.updateSelected(category);
         this.filterSubjects(category);
         this.el.classList.add('loaded');
-        shell.hideLoader();
+        this.hideLoader();
     }
 
     onLoaded() {
@@ -94,6 +94,7 @@ export default class Subjects extends componentType(spec) {
     }
 
     onClose() {
+        super.onClose();
         window.removeEventListener('popstate', this.filterSubjectsEvent);
         window.removeEventListener('scroll', this.setFilterClass, false);
         document.getElementById('main').classList.remove('subjects-main');

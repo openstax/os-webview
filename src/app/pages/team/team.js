@@ -1,30 +1,25 @@
 import AccordionGroup from '~/components/accordion-group/accordion-group';
-import CMSPageController from '~/controllers/cms';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import ContentGroup from '~/components/content-group/content-group';
 import PeopleTab from './people-tab/people-tab';
 import TabGroup from '~/components/tab-group/tab-group';
 import {description as template} from './team.html';
 import css from './team.css';
 
-export default class Team extends CMSPageController {
-
-    init() {
-        this.template = template;
-        this.view = {
-            classes: ['team', 'page'],
-            tag: 'main'
-        };
-        this.css = css;
-        this.slug = 'pages/team';
-        this.regions = {
-            accordion: 'accordion-region',
-            tabGroup: 'people-tabs',
-            tabContent: 'tab-content'
-        };
-        this.model = () => this.getModel();
-    }
-
-    getModel() {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['team', 'page'],
+        tag: 'main'
+    },
+    slug: 'pages/team',
+    regions: {
+        accordion: 'accordion-region',
+        tabGroup: 'people-tabs',
+        tabContent: 'tab-content'
+    },
+    model() {
         return this.pageData ? {
             heroHeadline: this.pageData.header,
             heroParagraph: this.pageData.subheader,
@@ -32,6 +27,10 @@ export default class Team extends CMSPageController {
             headline: this.pageData.team_header
         } : null;
     }
+};
+const BaseClass = componentType(spec, canonicalLinkMixin);
+
+export default class Team extends BaseClass {
 
     onDataLoaded() {
         this.update();

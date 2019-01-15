@@ -1,5 +1,5 @@
 import $ from '~/helpers/$';
-import CMSPageController from '~/controllers/cms';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import ContentGroup from '~/components/content-group/content-group';
 import DetailsTab from './details-tab/details-tab';
 import getCompCopyDialogProps from './comp-copy-dialog-props';
@@ -30,42 +30,42 @@ function getSlugFromTitle(bookTitle) {
     return slug;
 }
 
-export default class Details extends CMSPageController {
-
-    init() {
-        const bookTitle = window.location.pathname.replace(/.*details\//, '');
-
-        this.template = template;
-        this.css = css;
-        this.regions = {
-            phoneView: '.phone-view',
-            tabController: '.tab-controller',
-            tabContent: '.tab-content'
-        };
-        this.view = {
-            classes: ['details-page-v2'],
-            tag: 'main'
-        };
-
-        this.bookTitle = 'Loading';
-        this.slug = getSlugFromTitle(bookTitle.toLowerCase());
-        this.userStatusPromise = this.getUserStatusPromise();
-        this.reverseGradient = false;
-        this.titleImage = null;
-
-        this.model = () => this.getModel();
-        this.canonicalLink = $.setCanonicalLink('/details/', this.slug);
-    }
-
-    getModel() {
-        const model = {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['details-page-v2'],
+        tag: 'main'
+    },
+    regions: {
+        phoneView: '.phone-view',
+        tabController: '.tab-controller',
+        tabContent: '.tab-content'
+    },
+    slug: '',
+    model() {
+        return {
             slug: this.slug,
             bookTitle: this.bookTitle,
             titleImage: this.titleImage,
             reverseGradient: this.reverseGradient
         };
+    }
+};
+const BaseClass = componentType(spec, canonicalLinkMixin);
 
-        return model;
+export default class Details extends BaseClass {
+
+    init() {
+        const bookTitle = window.location.pathname.replace(/.*details\//, '');
+
+        super.init();
+        this.bookTitle = 'Loading';
+        this.slug = getSlugFromTitle(bookTitle.toLowerCase());
+        this.userStatusPromise = this.getUserStatusPromise();
+        this.reverseGradient = false;
+        this.titleImage = null;
+        this.setCanonicalLink(`/details/${this.slug}`, this.canonicalLink);
     }
 
     getUserStatusPromise() {
@@ -261,10 +261,6 @@ export default class Details extends CMSPageController {
         }));
         this.regions.tabController.attach(tabGroup);
         this.regions.tabContent.attach(contentGroup);
-    }
-
-    onClose() {
-        this.canonicalLink.remove();
     }
 
 }

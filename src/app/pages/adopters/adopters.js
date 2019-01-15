@@ -1,29 +1,31 @@
-import settings from 'settings';
-import shell from '~/components/shell/shell';
-import CMSPageController from '~/controllers/cms';
-import {description as template} from './adopters.html';
+import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
 import css from './adopters.css';
+import {description as template} from './adopters.html';
 
-export default class Adopters extends CMSPageController {
-
-    init() {
-        this.template = template;
-        this.css = css;
-        this.view = {
-            classes: ['adopters-page', 'text-content'],
-            tag: 'main'
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['adopters-page', 'text-content'],
+        tag: 'main'
+    },
+    model() {
+        return {
+            adopters: this.adopters
         };
-        this.model = {};
-        this.slug = 'adopters';
-        shell.showLoader();
-    }
+    },
+    slug: 'adopters'
+};
+const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
+
+export default class Adopters extends BaseClass {
 
     onDataLoaded() {
         const results = this.pageData.results || this.pageData;
 
-        this.model.adopters = results.sort((a, b) => a.name.localeCompare(b.name));
+        this.adopters = results.sort((a, b) => a.name.localeCompare(b.name));
         this.update();
-        shell.hideLoader();
+        this.hideLoader();
     }
 
 }

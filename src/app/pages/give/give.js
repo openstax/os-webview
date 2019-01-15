@@ -1,9 +1,8 @@
-import CMSPageController from '~/controllers/cms';
+import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
 import {on} from '~/helpers/controller/decorators';
 import router from '~/router';
 import selectHandler from '~/handlers/select';
 import $ from '~/helpers/$';
-import shell from '~/components/shell/shell';
 import settings from 'settings';
 import salesforce from '~/models/salesforce';
 import Share from '~/components/share/share';
@@ -24,6 +23,37 @@ const thankYouModel = {
     resources!`,
     amounts: null
 };
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['give-page']
+    },
+    model: {
+        headline: '',
+        salesforce,
+        subhead: '',
+        paymentMethods: [],
+        thankYouUrl: `${settings.apiOrigin}/give-confirmation`,
+        amounts: [10, 25, 50, 100, 500, 1000],
+        page2: history.state && (history.state.page === 2),
+        validationMessage: (name) => {
+            const el = this.el.querySelector(`[name="${name}"]`);
+
+            return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
+        },
+        recurring: history.state && history.state.recurring || '',
+        billingFields: ['NAME', 'EMAIL_ADDRESS', 'STREET1', 'STREET2', 'CITY',
+            'STATE', 'POSTAL_CODE', 'COUNTRY'],
+        touchnet: () => this.model.useTestingSite ? settings.touchnet.test : settings.touchnet.prod,
+        useTestingSite: settings.testingEnvironment
+    },
+    regions: {
+        'share': '.share-buttons'
+    },
+    slug: 'pages/give'
+};
+const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 
 export default class Give extends CMSPageController {
 
@@ -32,38 +62,7 @@ export default class Give extends CMSPageController {
     'free and low-cost educational materials. Your gift changes lives.';
 
     init() {
-        this.template = template;
-        this.model = {
-            headline: '',
-            salesforce,
-            subhead: '',
-            paymentMethods: [],
-            thankYouUrl: `${settings.apiOrigin}/give-confirmation`,
-            amounts: [10, 25, 50, 100, 500, 1000],
-            page2: history.state && (history.state.page === 2),
-            validationMessage: (name) => {
-                const el = this.el.querySelector(`[name="${name}"]`);
-
-                return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
-            },
-            recurring: history.state && history.state.recurring || '',
-            billingFields: ['NAME', 'EMAIL_ADDRESS', 'STREET1', 'STREET2', 'CITY',
-                'STATE', 'POSTAL_CODE', 'COUNTRY'],
-            touchnet: () => this.model.useTestingSite ? settings.touchnet.test : settings.touchnet.prod,
-            useTestingSite: settings.testingEnvironment
-        };
-        this.slug = 'pages/give';
-        this.regions = {
-            'share': '.share-buttons'
-        };
-
-        this.css = css;
-        this.view = {
-            classes: ['give-page']
-        };
-
-        shell.showLoader();
-
+        super.init();
         window.addEventListener('popstate', this.togglePage);
     }
 
@@ -152,8 +151,8 @@ export default class Give extends CMSPageController {
 
         populatePaymentMethods();
         this.update();
-        $.insertHtml(this.el, this.model);
-        shell.hideLoader();
+        this.insertHtml();
+        this.hideLoader();
     }
 
     onLoaded() {

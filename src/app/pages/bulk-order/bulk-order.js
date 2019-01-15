@@ -1,13 +1,13 @@
-import {Controller} from 'superb.js';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import CMSPageController from '~/controllers/cms';
 import {on} from '~/helpers/controller/decorators';
 import settings from 'settings';
-import $ from '~/helpers/$';
 import selectHandler from '~/handlers/select';
 import {highSchoolSlugs} from '~/models/book-titles';
 import {description as template} from './bulk-order.html';
 import {description as oiTemplate} from './order-items.html';
 import css from './bulk-order.css';
+
 
 class OrderItems extends CMSPageController {
 
@@ -34,7 +34,7 @@ class OrderItems extends CMSPageController {
             }
         }));
         this.update();
-        $.insertHtml(this.el, this.model);
+        this.insertHtml();
     }
 
     @on('change')
@@ -50,16 +50,15 @@ class OrderItems extends CMSPageController {
 
 }
 
-export default class BulkOrder extends Controller {
-
-    init() {
-        this.template = template;
-        this.view = {
-            classes: ['bulk-order', 'page'],
-            tag: 'main'
-        };
-        this.css = css;
-        this.model = {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['bulk-order', 'page'],
+        tag: 'main'
+    },
+    model() {
+        return {
             origin: settings.apiOrigin,
             orgTypeOptions: [
                 'Retail/For profit',
@@ -73,10 +72,14 @@ export default class BulkOrder extends Controller {
                 return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
             }
         };
-        this.regions = {
-            orderItems: 'insert-component[data-name="orderItems"]'
-        };
+    },
+    regions: {
+        orderItems: 'insert-component[data-name="orderItems"]'
     }
+};
+const BaseClass = componentType(spec, canonicalLinkMixin);
+
+export default class BulkOrder extends BaseClass {
 
     onLoaded() {
         document.title = 'Bulk Order Form - OpenStax';

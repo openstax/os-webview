@@ -1,9 +1,8 @@
 import $ from '~/helpers/$';
 import FormSelect from '~/components/form-select/form-select';
-import shell from '~/components/shell/shell';
 import {description as template} from './technology.html';
 import css from './technology.css';
-import componentType from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
 import Steps from './steps/steps';
 import NewFrontier from './new-frontier/new-frontier';
 import Banner from './banner/banner';
@@ -16,17 +15,13 @@ const spec = {
     },
     slug: 'pages/technology'
 };
+const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 
-export default class Technology extends componentType(spec) {
+export default class Technology extends BaseClass {
 
     static description = 'OpenStax has teamed up with our partners to offer a ' +
         'variety of low-cost, innovative learning tools and courseware that ' +
         'integrate with OpenStax textbooks.';
-
-    init() {
-        super.init();
-        shell.showLoader();
-    }
 
     onDataError(e) {
         console.warn(e);
@@ -86,7 +81,7 @@ export default class Technology extends componentType(spec) {
                 ]
             }
         }));
-        shell.hideLoader();
+        this.hideLoader();
         $.scrollToHash();
     }
 

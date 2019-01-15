@@ -169,16 +169,28 @@ $.testInstitutionalEmail = (element) => {
     return true;
 };
 
-$.setCanonicalLink = (path, slug = '') => {
-    const host = 'http://openstax.org';
-    const el = document.createElement('link');
-    const titleEl = document.querySelector('head title');
+const canonicalLinkHelpers = {
+    get el() {
+        const el = document.createElement('link');
+        const titleEl = document.querySelector('head title');
 
-    // Insert after title
-    titleEl.parentNode.insertBefore(el, titleEl.nextSibling);
-    el.setAttribute('rel', 'canonical');
-    el.setAttribute('href', `${host}${path}${slug}`);
-    return el;
+        if (titleEl) {
+            el.setAttribute('rel', 'canonical');
+            titleEl.parentNode.insertBefore(el, titleEl.nextSibling);
+        }
+        return el;
+    },
+    setPath(newPath = window.location.pathname, myEl) {
+        const el = myEl || canonicalLinkHelpers.el;
+        const host = 'https://openstax.org';
+
+        el.href = `${host}${newPath}`;
+        return el;
+    }
+};
+
+$.setCanonicalLink = (path, el) => {
+    return canonicalLinkHelpers.setPath(path, el);
 };
 
 $.htmlToText = (html) => {

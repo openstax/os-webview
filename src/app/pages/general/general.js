@@ -1,16 +1,18 @@
-import componentType from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import settings from 'settings';
 import css from './general.css';
 
 const spec = {
+    css,
     view: {
-        css,
         classes: ['general', 'page'],
         tag: 'main'
-    }
+    },
+    slug: ''
 };
+const BaseClass = componentType(spec, canonicalLinkMixin);
 
-export default class General extends componentType(spec) {
+export default class General extends BaseClass {
 
     init() {
         super.init();
