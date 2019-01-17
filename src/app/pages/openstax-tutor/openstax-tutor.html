@@ -1,17 +1,7 @@
 <template args="model">
-    <div class="floating-tools" skip="true">
-    </div>
+    <div class="floating-tools" skip="true"></div>
+    <div class="sticky-footer-region" skip="true"></div>
     <if condition="model.frontier">
-        <div class="sticky-footer {model.footerHeight}">
-            <div class="button-group">
-                <a href="{model.footerStarted.link}" class="btn medium">{model.footerStarted.text}</a>
-                <div class="description">{model.footerStarted.description}</div>
-            </div>
-            <div if="model.footerSignUp" class="button-group">
-                <div class="description">{model.footerSignUp.description}</div>
-                <a href="{model.footerSignUp.link}" class="btn medium">{model.footerSignUp.text}</a>
-            </div>
-        </div>
         <section id="new-frontier">
             <div class="background-imagery">
                 <div class="top-image"></div>

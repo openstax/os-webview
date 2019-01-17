@@ -1,7 +1,8 @@
 import CMSPageController from '~/controllers/cms';
 import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
 import $ from '~/helpers/$';
-import SectionNavigator from './section-navigator/section-navigator';
+import SectionNavigator from '~/components/section-navigator/section-navigator';
+import StickyFooter from '~/components/sticky-footer/sticky-footer';
 import PulsingDot from './pulsing-dot/pulsing-dot';
 import {on} from '~/helpers/controller/decorators';
 import analytics from '~/helpers/analytics';
@@ -41,7 +42,8 @@ const spec = {
     },
     slug: 'pages/openstax-tutor',
     regions: {
-        floatingTools: '.floating-tools'
+        floatingTools: '.floating-tools',
+        stickyFooter: '.sticky-footer-region'
     }
 };
 const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
@@ -154,22 +156,24 @@ export default class Tutor extends BaseClass {
             ].filter((obj) => obj.text) // only keep the ones with text values
         });
 
-        this.model.footerStarted = {
-            text: data.floating_footer_button_1_cta,
-            description: data.floating_footer_button_1_caption,
-            link: data.floating_footer_button_1_link
-        };
-        this.model.footerSignUp = {
-            text: data.floating_footer_button_2_cta,
-            description: data.floating_footer_button_2_caption,
-            link: data.floating_footer_button_2_link
-        };
-
         this.model.featureMatrix.features = data.resource_availability;
 
         this.update();
         this.insertHtml();
         this.onLoaded();
+
+        this.regions.stickyFooter.attach(new StickyFooter({
+            leftButton: {
+                link: data.floating_footer_button_1_link,
+                text: data.floating_footer_button_1_cta,
+                description: data.floating_footer_button_1_caption
+            },
+            rightButton: {
+                link: data.floating_footer_button_2_link,
+                text: data.floating_footer_button_2_cta,
+                description: data.floating_footer_button_2_caption
+            }
+        }));
 
         let lastYOffset = 0;
 

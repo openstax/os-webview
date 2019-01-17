@@ -1,0 +1,16 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.rover-redesign #stepwise {
+    .card {
+        display: grid;
+        grid-gap: $normal-margin;
+        grid-template-columns: minmax(30%, auto) auto;
+        padding: 1.5rem;
+    }
+
+    .top-border {
+        background-image: url('/images/rover-redesign/bg-4.svg');
+        height: calc(6rem + 11vw);
+        margin-top: calc(-15.9rem - 11vw);
+    }
+}

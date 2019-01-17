@@ -1,0 +1,61 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.rover-redesign #meet-rover {
+    background-color: ui-color(black);
+    color: text-color(white);
+    padding-bottom: 20vw;
+    padding-top: 20vw;
+    position: relative;
+
+    .boxed {
+        display: grid;
+        grid-row-gap: 4rem;
+
+        @include wider-than($phone-max) {
+            padding-left: 17rem;
+        }
+
+        > .text-block {
+            width: 100%;
+
+            @include wider-than($phone-max) {
+                text-align: right;
+            }
+        }
+    }
+
+    .left-logo {
+        max-width: calc(33vw - 7rem);
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+
+        @include width-up-to($phone-max) {
+            display: none;
+        }
+    }
+
+    .cards {
+        display: grid;
+        grid-gap: $normal-margin;
+        grid-template-columns: repeat(auto-fit, minmax(24rem, auto));
+        width: 100%;
+    }
+
+    .card {
+        background-color: ui-color(footer-bg);
+        display: grid;
+        grid-template-rows: 12rem auto;
+        padding: 4rem;
+
+        > :first-child {
+            justify-self: center;
+            max-height: 8rem;
+            max-width: 12rem;
+        }
+    }
+
+    .btn.blue {
+        justify-self: left;
+    }
+}

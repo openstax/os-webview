@@ -1,0 +1,49 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.rover-redesign #getting-started {
+    background-image: linear-gradient(to right, os-color(gold), os-color(orange));
+    color: text-color(white);
+    padding: 10vw 0;
+    position: relative;
+
+    .cards {
+        display: grid;
+        grid-gap: $normal-margin;
+        margin-right: calc(30rem - 5vw);
+        margin-top: 4rem;
+        padding: 0.5rem 0;
+        width: 100%;
+
+        @include width-up-to($phone-max) {
+            grid-template-columns: 100%;
+        }
+    }
+
+    .video-left-text-right {
+        background-color: ui-color(white);
+        color: text-color(normal);
+        display: grid;
+        grid-gap: $normal-margin;
+        justify-content: left;
+        padding: $normal-margin;
+
+        @include width-up-to($phone-max) {
+            grid-template-columns: 100%;
+        }
+
+        @include wider-than($phone-max) {
+            grid-template-columns: repeat(auto-fit, minmax(28rem, auto));
+        }
+
+        > div > * {
+            max-width: 100%;
+        }
+    }
+
+    .right-bottom {
+        bottom: 0;
+        max-width: 30vw;
+        position: absolute;
+        right: 0;
+    }
+}

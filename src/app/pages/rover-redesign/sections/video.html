@@ -1,0 +1,15 @@
+<template args="model">
+    <div class="top-border"></div>
+    <div class="boxed text-left-video-right">
+        <div class="text-block">
+            <h2>{model.heading}</h2>
+            <h3 class="tagline">{model.subhead}</h3>
+            <div data-html="description"></div>
+            <a if="model.ctaLink" href="{model.ctaLink}" class="btn blue">
+                {model.ctaText}
+            </a>
+        </div>
+        <div data-html="video" skip="true"></div>
+    </div>
+    <div class="bottom-border"></div>
+</template>

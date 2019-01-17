@@ -1,0 +1,32 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.rover-redesign #video {
+    .text-left-video-right {
+        display: grid;
+
+        @include wider-than($phone-max) {
+            grid-gap: 8rem;
+            grid-template-columns: auto auto;
+            justify-content: center;
+        }
+
+        * {
+            max-width: 100%;
+        }
+    }
+
+    .top-border,
+    .bottom-border {
+        background-image: url('/images/rover-redesign/bg-2.svg');
+    }
+
+    .top-border {
+        height: calc(12rem + 11vw);
+        margin-top: calc(-15.9rem - 11vw);
+    }
+
+    .bottom-border {
+        height: calc(12rem + 8vw);
+        margin-bottom: calc(-15.9rem - 10vw);
+    }
+}

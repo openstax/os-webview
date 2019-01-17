@@ -22,6 +22,9 @@ function webpack() {
         },
         mode: config.env,
         watch: isDevelopment,
+        watchOptions: {
+            aggregateTimeout: 8000
+        },
         output,
         resolve: {
             alias: {
