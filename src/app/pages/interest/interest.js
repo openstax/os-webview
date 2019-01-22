@@ -23,6 +23,7 @@ const BaseClass = mix(Controller).with(canonicalLinkMixin);
 export default class InterestForm extends BaseClass {
 
     init() {
+        super.init();
         this.template = template;
         this.css = css;
         this.view = {

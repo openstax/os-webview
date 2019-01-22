@@ -59,7 +59,11 @@ export function canonicalLinkMixin(superclass) {
             if (super.onClose) {
                 super.onClose();
             }
-            this.canonicalLink.remove();
+            if (this.canonicalLink) {
+                this.canonicalLink.remove();
+            } else {
+                throw new Error('Canonical link was not set (probably forgot to call super in init)');
+            }
         }
 
     };
