@@ -18,10 +18,11 @@ export default class FooterPage extends BaseClass {
         document.title = this.pageData.title;
         const contentFieldName = Reflect.ownKeys(this.pageData).find((k) => k.match(/_content$/));
 
-        this.insertHtml(this.el, {
+        this.model = {
             heading: this.pageData.intro_heading,
             content: this.pageData[contentFieldName]
-        });
+        };
+        this.insertHtml();
         this.hideLoader();
     }
 
