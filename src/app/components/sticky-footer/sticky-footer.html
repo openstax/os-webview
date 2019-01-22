@@ -1,0 +1,10 @@
+<template args="model">
+    <div class="button-group">
+        <a href="{model.leftButton.link}" class="btn medium">{model.leftButton.text}</a>
+        <div class="description">{model.leftButton.description}</div>
+    </div>
+    <div if="model.rightButton" class="button-group">
+        <div class="description">{model.rightButton.description}</div>
+        <a href="{model.rightButton.link}" class="btn medium">{model.rightButton.text}</a>
+    </div>
+</template>

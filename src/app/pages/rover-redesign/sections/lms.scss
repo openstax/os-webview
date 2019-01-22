@@ -1,0 +1,11 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.rover-redesign #lms {
+    padding-top: 0;
+
+    .bottom-border {
+        background-image: url('/images/rover-redesign/bg-4.svg');
+        height: calc(6rem + 11vw);
+        margin-bottom: calc(-15rem - 11vw);
+    }
+}

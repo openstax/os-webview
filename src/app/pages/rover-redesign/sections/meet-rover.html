@@ -1,0 +1,16 @@
+<template args="model">
+    <img class="left-logo" src="/images/rover-redesign/rover-badge-goggles.svg">
+    <div class="boxed">
+        <div class="text-block">
+            <h2>{model.heading}</h2>
+            <div class="tagline">{model.description}</div>
+        </div>
+        <div class="cards">
+            <div class="card" each="card in model.cards">
+                <img src="{card.image}" alt="{card.imageAltText}">
+                <div class="text-block" data-html="cards[{$item}].description"></div>
+            </div>
+        </div>
+        <a class="btn blue" href="{model.webinarLink}">{model.webinarLinkText}</a>
+    </div>
+</template>

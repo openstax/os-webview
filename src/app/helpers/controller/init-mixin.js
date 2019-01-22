@@ -82,6 +82,55 @@ export function loaderMixin(superclass) {
     };
 }
 
+// utilities for flattenPageDataMixin
+function camelCase(underscored) {
+    return underscored.replace(/_([a-z])/g, (_, chr) => chr ? chr.toUpperCase() : '');
+}
+
+function camelCaseKeys(obj) {
+    if (!(obj instanceof Object)) {
+        return obj;
+    }
+
+    if (obj instanceof Array) {
+        return obj.map((v) => camelCaseKeys(v));
+    }
+
+    const result = {};
+
+    Reflect.ownKeys(obj).forEach((k) => {
+        result[camelCase(k)] = camelCaseKeys(obj[k]);
+    });
+
+    return result;
+}
+
+
+export function flattenPageDataMixin(superclass) {
+    return class extends superclass {
+
+        flattenPageData() {
+            const result = {};
+
+            Reflect.ownKeys(this.pageData)
+                .filter((k) => this.pageData[k] instanceof Array)
+                .forEach((k) => {
+                    const values = this.pageData[k];
+                    const newEntry = {};
+
+                    values.forEach((v) => {
+                        newEntry[camelCase(v.type)] = camelCaseKeys(v.value);
+                    });
+
+                    result[camelCase(k)] = newEntry;
+                });
+
+            return result;
+        }
+
+    };
+}
+
 const CMSComponent = mix(CMSPageController).with(componentMixin);
 const PlainComponent = mix(Controller).with(componentMixin);
 

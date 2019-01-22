@@ -1,0 +1,14 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.rover-redesign #banner {
+    picture,
+    picture img {
+        max-width: 100%;
+    }
+
+    .top-right {
+        position: absolute;
+        right: 4rem;
+        top: 4rem;
+    }
+}
