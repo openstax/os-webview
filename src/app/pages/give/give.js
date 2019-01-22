@@ -55,7 +55,7 @@ const spec = {
 };
 const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 
-export default class Give extends CMSPageController {
+export default class Give extends BaseClass {
 
     static description =
     'Your donation helps us create opportunities for students to have access to quality ' +
