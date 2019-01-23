@@ -37,15 +37,9 @@ const spec = {
         thankYouUrl: `${settings.apiOrigin}/give-confirmation`,
         amounts: [10, 25, 50, 100, 500, 1000],
         page2: history.state && (history.state.page === 2),
-        validationMessage: (name) => {
-            const el = this.el.querySelector(`[name="${name}"]`);
-
-            return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
-        },
         recurring: history.state && history.state.recurring || '',
         billingFields: ['NAME', 'EMAIL_ADDRESS', 'STREET1', 'STREET2', 'CITY',
             'STATE', 'POSTAL_CODE', 'COUNTRY'],
-        touchnet: () => this.model.useTestingSite ? settings.touchnet.test : settings.touchnet.prod,
         useTestingSite: settings.testingEnvironment
     },
     regions: {
@@ -63,7 +57,17 @@ export default class Give extends BaseClass {
 
     init() {
         super.init();
-        window.addEventListener('popstate', this.togglePage);
+        // bound functions have to be done here
+        Object.assign(this.model, {
+            touchnet: () => this.model.useTestingSite ? settings.touchnet.test : settings.touchnet.prod,
+            validationMessage: (name) => {
+                const el = this.el.querySelector(`[name="${name}"]`);
+
+                return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
+            }
+        });
+        this.boundTogglePage = this.togglePage.bind(this);
+        window.addEventListener('popstate', this.boundTogglePage);
     }
 
     handleQueryString() {
@@ -181,9 +185,9 @@ export default class Give extends BaseClass {
         }
     }
 
-    detach() {
-        super.detach();
-        window.removeEventListener('popstate', this.togglePage);
+    onClose() {
+        window.removeEventListener('popstate', this.boundTogglePage);
+        super.onClose();
     }
 
     @on('click .amount')
