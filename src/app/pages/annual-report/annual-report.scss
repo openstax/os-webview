@@ -7,6 +7,7 @@ $light: #f8f8f8;
         background-position: center center;
         background-repeat: no-repeat;
         background-size: cover;
+        max-width: 100vw;
         min-height: 40rem;
         overflow-y: visible;
         padding: 12rem 6rem;
@@ -88,7 +89,7 @@ $light: #f8f8f8;
         grid-gap: 4rem;
 
         @include wider-than($tablet-max) {
-            grid-template-columns: auto minmax(auto, 36rem);
+            grid-template-columns: minmax(auto, 60rem) auto;
         }
     }
 
@@ -195,6 +196,10 @@ $light: #f8f8f8;
     #banner {
         background-color: os-color(blue);
         color: text-color(white);
+    }
+
+    #founding {
+        padding-bottom: 4rem;
     }
 
     .hide-on-mobile {
