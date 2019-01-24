@@ -1,14 +1,14 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.annual-report.page .no-padding .tutor {
+.annual-report.page .tutor {
     padding: 0;
 
     @include wider-than($tablet-max) {
-        min-height: 80rem;
+        padding-bottom: calc(30vw - 5rem);
     }
 
     > .content {
-        margin: 8rem 0;
+        margin: 0 0 calc(8rem + 3vw);
 
         @include wider-than($media-content-max) {
             margin-left: auto;
@@ -19,7 +19,7 @@
     .right-image {
         float: right;
         margin-left: $normal-margin;
-        margin-right: -8rem;
+        margin-right: -6rem;
         max-width: 80rem;
         width: 50%;
 
@@ -31,7 +31,8 @@
     .bottom-image {
         bottom: 0;
         margin-left: -8rem;
+        max-width: none;
         position: absolute;
-        width: calc(100% + 16rem);
+        width: calc(100% + 2rem);
     }
 }
