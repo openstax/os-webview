@@ -1,4 +1,4 @@
-import Buckets from '~/components/buckets/buckets';
+import Buckets from '~/pages/home/buckets/buckets';
 import higherEd from '../data/buckets';
 
 describe('Buckets', () => {

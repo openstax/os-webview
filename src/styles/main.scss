@@ -291,21 +291,6 @@ sup {
     width: 100%;
 }
 
-.quote-buckets {
-    .quotes {
-        padding: 6rem 0;
-
-        @include width-up-to($tablet-max) {
-            padding: 3rem 0 4rem;
-        }
-    }
-
-    .attribution {
-        margin-left: 2rem;
-        text-align: right;
-    }
-}
-
 [href=""],  // for testing empty links
 [href="#"] {
     border: 0.3rem solid ui-color(error-border);

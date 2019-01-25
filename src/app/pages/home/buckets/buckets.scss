@@ -3,6 +3,9 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .buckets-section {
+    display: grid;
+    grid-gap: 2rem;
+    padding: 0 $normal-margin;
 
     .bucket {
         color: text-color(white);
@@ -10,10 +13,6 @@
 
         @include collapsed {
             flex-direction: column;
-        }
-
-        &:last-child {
-            margin-bottom: 0;
         }
 
         &.our-impact {
@@ -60,30 +59,14 @@
         }
 
         .quote {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-
-            @include collapsed {
-                min-height: 30rem;
-            }
+            display: grid;
+            grid-gap: 4rem;
+            grid-template-rows: 1fr auto;
+            justify-items: left;
 
             > div {
                 max-width: 100%;
             }
         }
-
-        &.left .quote {
-            align-items: flex-start;
-        }
-
-        &.full .quote {
-            align-items: center;
-
-            @include collapsed {
-                align-items: flex-start;
-            }
-        }
-
     }
 }

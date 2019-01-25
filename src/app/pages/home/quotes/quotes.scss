@@ -1,43 +1,20 @@
 @import 'mixins/triangle';
 @import 'pattern-library/core/pattern-library/headers';
 
-
 .quotes {
-    align-items: stretch;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin: 0 auto;
-    padding: 1.5rem 0;
-    position: relative;
+    display: grid;
+    grid-gap: #{2 * $normal-margin};
+    padding: 0 $normal-margin;
     width: 100%;
 
     @include wider-than($tablet-max) {
-        flex-flow: row nowrap;
-        padding: 8rem 0;
+        grid-template-columns: repeat(auto-fit, minmax(30%, auto));
     }
 
     .quote-bucket {
         background-color: ui-color(white);
-        display: flex;
-        flex: 0 1 100%;
-        flex-flow: column nowrap;
-        margin: 0.75rem 1.5rem;
-        min-height: 20rem;
-
-        @include wider-than($tablet-max) {
-            margin: 0.75rem 1.5rem;
-            min-width: 31rem;
-        }
-
-        @include wider-than($phone-max) {
-            flex-flow: row wrap;
-
-            div:first-child:nth-last-child(2),
-            div:first-child:nth-last-child(2) ~ div {
-                max-width: 50%; // IE fix
-            }
-        }
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(50%, auto));
 
         &:last-child {
             margin-bottom: 0;
@@ -77,7 +54,6 @@
         }
 
         &.left {
-
             .image {
                 background-position: 62%;
                 order: 1;
@@ -123,23 +99,6 @@
                     padding: 0 4rem 2rem 1rem;
                     text-indent: -1rem;
                 }
-            }
-        }
-    }
-
-    &.boxes-2 {
-        > .quote-bucket {
-            @include wider-than($tablet-max) {
-                flex-basis: calc(50% - 1.5rem);
-            }
-        }
-    }
-
-    &.boxes-3 {
-        > .quote-bucket {
-            @include wider-than($tablet-max) {
-                flex-basis: 33.33%;
-                margin: 0 1.5rem;
             }
         }
     }
@@ -195,4 +154,39 @@
             }
         }
     }
+}
+
+.old-quotes {
+    align-items: stretch;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding: 1.5rem 0;
+    position: relative;
+    width: 100%;
+
+    @include wider-than($tablet-max) {
+        flex-flow: row nowrap;
+        padding: 8rem 0;
+    }
+
+
+    &.boxes-2 {
+        > .quote-bucket {
+            @include wider-than($tablet-max) {
+                flex-basis: calc(50% - 1.5rem);
+            }
+        }
+    }
+
+    &.boxes-3 {
+        > .quote-bucket {
+            @include wider-than($tablet-max) {
+                flex-basis: 33.33%;
+                margin: 0 1.5rem;
+            }
+        }
+    }
+
 }
