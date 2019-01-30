@@ -41,6 +41,13 @@ $light: #f8f8f8;
         max-width: 100%;
     }
 
+    a {
+        svg {
+            align-self: end;
+            height: 2.5rem;
+        }
+    }
+
     .content {
         margin-left: auto;
         margin-right: auto;
@@ -53,7 +60,7 @@ $light: #f8f8f8;
     }
 
     .text-content {
-        align-items: start;
+        align-content: start;
         display: grid;
         grid-gap: 3rem;
         margin-bottom: 3rem;
@@ -61,11 +68,9 @@ $light: #f8f8f8;
     }
 
     .text-block {
-        align-items: start;
         display: grid;
+        grid-auto-rows: min-content;
         grid-gap: 3rem;
-        grid-template-rows: auto;
-        height: fit-content;
         justify-items: start;
         max-width: 60rem;
     }

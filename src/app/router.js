@@ -147,7 +147,7 @@ class AppRouter extends Router {
         if (linkHelper.isExternal(href) || el.target) {
             handleExternalLink(href);
         } else {
-            this.navigate(href);
+            this.navigate(href || '/');
         }
     }
 
