@@ -17,7 +17,7 @@ export default class Schoolinfo extends Controller {
     }
 
     @on('click .testimonial-head')
-    tesnimonialClick(event) {
+    testimonialClick(event) {
         if (this.model.iObj==='single_value') {
             document.getElementById('back-result-div').setAttribute('style', 'display: none;');
             document.getElementById('back-search-div').setAttribute('style', 'display: none;');

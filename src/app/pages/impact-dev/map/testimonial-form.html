@@ -1,0 +1,16 @@
+<template args="model">
+    <iframe name="form-response" id="form-response" class="hidden"
+        src="" width="0" height="0" tabindex="-1"></iframe>
+    <form accept-charset="UTF-8" class="form" target="form-response"
+     action="{model.submitTo}" method="post">
+        <input type="hidden" name="id" value="{model.id}">
+        <input type="hidden" name="name" value="{model.name}">
+        <input type="hidden" name="role" value="{model.role}">
+        <div class="book-selector" skip="true"></div>
+        <div class="control-group">
+            <label class="field-label">Your testimonial</label>
+            <textarea name="testimonial" rows="8" cols="80" required></textarea>
+        </div>
+        <input type="submit" disabled="{model.book ? null : ''}">
+    </form>
+</template>

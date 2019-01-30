@@ -24,7 +24,7 @@ const spec = {
         loaded: ''
     }
 };
-const BaseClass = componentType(spec, canonicalLinkMixin);
+const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 
 export default class ImpactDev extends BaseClass {
 
