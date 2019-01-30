@@ -2,6 +2,9 @@
 
 .rover-redesign #meet-rover {
     background-color: ui-color(black);
+    background-image: url('/images/rover-redesign/bg-3-tile.jpg');
+    background-repeat: repeat;
+    background-size: auto;
     color: text-color(white);
     padding-bottom: 20vw;
     padding-top: 20vw;
@@ -12,7 +15,11 @@
         grid-row-gap: 4rem;
 
         @include wider-than($phone-max) {
-            padding-left: 17rem;
+            padding-left: calc(8.33vw + 12rem);
+        }
+
+        @include wider-than($wide-screen-min) {
+            padding-left: calc(68rem - 40vw);
         }
 
         > .text-block {
@@ -25,10 +32,10 @@
     }
 
     .left-logo {
-        max-width: calc(33vw - 7rem);
+        bottom: 0;
+        max-width: calc(20vw + 4rem);
         position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
+        transform: translateY(-20%);
 
         @include width-up-to($phone-max) {
             display: none;
@@ -37,8 +44,9 @@
 
     .cards {
         display: grid;
+        grid-auto-rows: 1fr;
         grid-gap: $normal-margin;
-        grid-template-columns: repeat(auto-fit, minmax(24rem, auto));
+        grid-template-columns: repeat(auto-fit, minmax(25rem, auto));
         width: 100%;
     }
 

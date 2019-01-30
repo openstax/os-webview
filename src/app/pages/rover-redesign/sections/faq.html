@@ -1,4 +1,5 @@
 <template args="model">
+    <div class="top-border"></div>
     <div class="boxed">
         <h2>{model.heading}</h2>
         <div class="faq-box">
@@ -7,7 +8,7 @@
                     {qa.question}
                     <span class="indicator fa fa-chevron-{model.isOpen($item) ? 'down' : 'right'}"></span>
                 </div>
-                <div class="answer {model.isOpen($item) ? '' : 'closed'}">{qa.answer}</div>
+                <div class="answer {model.isOpen($item) ? '' : 'closed'}" data-html="questions[{$item}].answer"></div>
             </div>
         </div>
     </div>

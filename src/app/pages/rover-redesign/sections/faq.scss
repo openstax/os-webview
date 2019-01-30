@@ -1,6 +1,12 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .rover-redesign #faq {
+    .top-border {
+        background-image: url('/images/rover-redesign/bg-7.svg');
+        height: calc(6rem + 11vw);
+        margin-top: calc(-15.9rem - 11vw);
+    }
+
     .faq-box {
         background-color: ui-color(white);
         color: text-color(normal);
@@ -26,6 +32,7 @@
 
     .answer {
         max-height: 25rem;
+        max-width: $text-content-max;
         transition: all 0.3s;
 
         &.closed {

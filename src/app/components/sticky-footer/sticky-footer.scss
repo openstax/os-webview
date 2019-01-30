@@ -1,5 +1,9 @@
 @import 'pattern-library/core/pattern-library/headers';
 
+#main.with-sticky-footer {
+    z-index: 1;
+}
+
 .sticky-footer {
     bottom: 0;
     display: flex;

@@ -1,9 +1,7 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .rover-redesign #getting-started {
-    background-image: linear-gradient(to right, os-color(gold), os-color(orange));
-    color: text-color(white);
-    padding: 10vw 0;
+    padding: calc(4rem + 10vw) 0;
     position: relative;
 
     .cards {
@@ -27,21 +25,33 @@
         justify-content: left;
         padding: $normal-margin;
 
-        @include width-up-to($phone-max) {
+        @include width-up-to($tablet-max) {
             grid-template-columns: 100%;
         }
 
-        @include wider-than($phone-max) {
-            grid-template-columns: repeat(auto-fit, minmax(28rem, auto));
+        @include wider-than($tablet-max) {
+            grid-template-columns: auto auto;
         }
 
         > div > * {
             max-width: 100%;
         }
+
+        > :first-child {
+            > :first-child {
+                @include width-up-to($tablet-max) {
+                    width: 100%;
+                }
+
+                @include wider-than($tablet-max) {
+                    min-width: 50rem;
+                }
+            }
+        }
     }
 
     .right-bottom {
-        bottom: 0;
+        bottom: 5vw;
         max-width: 30vw;
         position: absolute;
         right: 0;
