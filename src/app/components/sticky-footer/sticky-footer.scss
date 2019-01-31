@@ -4,7 +4,37 @@
     z-index: 1;
 }
 
+// Adapted from https://raw.githubusercontent.com/daneden/animate.css/master/animate.css
+@keyframes slideInUp {
+    from {
+        transform: translate3d(0, 100%, 0);
+        visibility: visible;
+    }
+
+    to {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes slideOutDown {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+
+    to {
+        transform: translate3d(0, 100%, 0);
+        visibility: hidden;
+    }
+}
+
+%animated {
+    animation-duration: 0.2s;
+    animation-fill-mode: both;
+}
+
 .sticky-footer {
+    @extend %animated;
+
     bottom: 0;
     display: flex;
     font-weight: inherit;
@@ -12,9 +42,6 @@
     max-height: 9rem;
     padding: 0.5rem 1rem;
     position: fixed;
-    /* property  duration  delay */
-    transition: padding  0.1s,
-                height   0.3s  0.2s;
     width: 100%;
     z-index: 4;
 
@@ -22,16 +49,12 @@
         padding: $normal-margin 3rem;
     }
 
-    &.collapsed {
-        max-height: 0;
-        padding: 0;
-        transition: padding  0.3s,
-                    height   0.1s;
+    &:not(.collapsed) {
+        animation-name: slideInUp;
+    }
 
-        .button-group {
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
+    &.collapsed {
+        animation-name: slideOutDown;
     }
 
     .button-group {
