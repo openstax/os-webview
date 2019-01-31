@@ -1,9 +1,12 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-$space-for-navigator: 9rem;
+$space-for-navigator: 7rem;
 $card-box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.5);
+$orange-gradient: linear-gradient(to right, rgb(228, 182, 96), rgb(228, 137, 96));
 
 .rover-redesign {
+    @extend %tutor;
+
     section {
         padding: 16rem 0;
         position: relative;
@@ -24,19 +27,27 @@ $card-box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.5);
             padding-right: $space-for-navigator;
         }
 
+        @include wider-than($media-content-max) {
+            padding-right: $normal-margin;
+        }
+
         > * {
             max-width: 100%;
         }
     }
 
     .orange {
-        background-image: linear-gradient(to right, os-color(gold), os-color(orange));
+        background-image: $orange-gradient;
         color: text-color(white);
     }
 
     .charcoal {
         background-color: ui-color(footer-bg);
         color: text-color(white);
+
+        a {
+            color: inherit;
+        }
     }
 
     .near-white {
@@ -44,7 +55,11 @@ $card-box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.5);
     }
 
     .btn {
-        min-width: 20rem;
+        @extend %button;
+
+        color: text-color(white);
+        height: auto;
+        padding: 1em 2em;
 
         &.blue {
             background-color: os-color(light-blue);
@@ -111,6 +126,10 @@ $card-box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.5);
     }
 
     .sticky-footer {
+        @include set-font(body-regular);
+
+        background-color: ui-color(footer-bg);
+
         @include width-up-to($phone-max) {
             display: none;
         }

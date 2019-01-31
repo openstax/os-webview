@@ -3,15 +3,27 @@
 .rover-redesign #video {
     .text-left-video-right {
         display: grid;
+        min-height: 40rem;
 
-        @include wider-than($phone-max) {
+        @include wider-than($tablet-max) {
             grid-gap: 8rem;
             grid-template-columns: auto auto;
             justify-content: center;
         }
 
-        * {
-            max-width: 100%;
+        > * {
+            display: grid;
+            grid-gap: $normal-margin;
+
+            > * {
+                margin: 0;
+                max-width: 100%;
+            }
+        }
+
+        [data-html="video"] > * {
+            min-height: 35rem;
+            min-width: 50rem;
         }
     }
 

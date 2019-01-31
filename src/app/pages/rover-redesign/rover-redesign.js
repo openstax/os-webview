@@ -52,7 +52,7 @@ export default class RoverRedesign extends BaseClass {
             videoSection({
                 model: {
                     heading: data.section_2.heading,
-                    subhead: 'need subhead',
+                    subhead: data.section_2.subheading,
                     description: data.section_2.blurb,
                     video: data.section_2.video
                 }
@@ -89,8 +89,8 @@ export default class RoverRedesign extends BaseClass {
                     heading: data.section_6.heading,
                     description: data.section_6.blurb,
                     image: {
-                        image: 'http://via.placeholder.com/945x627',
-                        altText: 'still need this'
+                        image: data.section_6.image.file,
+                        altText: data.section_6.imageAltText
                     },
                     caption: data.section_6.caption
                 }

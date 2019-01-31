@@ -1,11 +1,21 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .rover-redesign #stepwise {
+    .cards {
+        display: grid;
+        grid-auto-rows: 1fr;
+        grid-gap: $normal-margin;
+    }
+
     .card {
+        background-color: ui-color(white);
         display: grid;
         grid-gap: $normal-margin;
-        grid-template-columns: minmax(30%, auto) auto;
         padding: 1.5rem;
+
+        @include wider-than($phone-max) {
+            grid-template-columns: 1fr 1fr;
+        }
     }
 
     .top-border {
