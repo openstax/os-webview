@@ -1,81 +1,39 @@
 @import 'pattern-library/core/pattern-library/headers';
 
+$space-for-navigator: 7rem;
+$card-box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.5);
 $orange-gradient: linear-gradient(to right, rgb(228, 182, 96), rgb(228, 137, 96));
-// When 1170px wide, example images are this tall:
-$example-max-height: 46.8rem;
-// This is the height allocated for the example in its container
-$example-nominal-height: 20rem;
-$overhang-height: $example-max-height - $example-nominal-height;
 
-.rover.page {
+.rover-by-openstax {
+    @extend %tutor;
 
     section {
-        background-color: ui-color(white);
-        min-height: 7rem;
-        padding: 6rem $normal-margin;
-
-        &:first-child {
-            align-items: center;
-            display: grid;
-            min-height: calc(100vh - 4rem);
-        }
-
-        > .boxed,
-        > .text-content {
-            display: grid;
-            grid-gap: 6rem;
-            justify-items: center;
-
-            &.left {
-                justify-items: start;
-                text-align: left;
-            }
-        }
-
-        .boxed,
-        .text-content {
-            padding: 0;
-        }
-
-        .text-group {
-            @extend %text-content;
-
-            display: grid;
-            grid-gap: 4rem;
-            padding: 0;
-            text-align: center;
-
-            h1 {
-                @include set-font(hero-h1);
-
-                @include wider-than($tablet-max) {
-                    white-space: nowrap;
-                }
-            }
-        }
+        padding: 16rem 0;
+        position: relative;
     }
 
-    h2 {
-        @include set-font(h1);
+    img {
+        max-width: 100%;
     }
 
-    h1,
-    h2,
-    h3,
-    h4 {
-        margin-bottom: 0;
-        margin-top: 0;
-        padding-bottom: 0;
-        padding-top: 0;
-    }
+    .boxed {
+        display: grid;
+        grid-gap: 4rem;
+        grid-template-columns: 100%;
+        justify-items: left;
 
-    .btn {
-        @extend %button;
-        @extend %secondary;
+        @include wider-than($phone-max) {
+            max-width: #{97.5rem + $space-for-navigator};
+            padding-right: $space-for-navigator;
+        }
 
-        background-color: os-color(light-blue);
-        justify-self: center;
-        padding: 1rem 3rem;
+        @include wider-than($media-content-max) {
+            padding-right: $normal-margin;
+        }
+
+        > * {
+            max-width: 100%;
+        }
     }
 
     .orange {
@@ -83,103 +41,127 @@ $overhang-height: $example-max-height - $example-nominal-height;
         color: text-color(white);
     }
 
-    .header-image {
-        // Margins compensate for big whitespace in the images
-        margin-bottom: -12rem;
-        margin-top: -6rem;
-        max-width: 100%;
+    .charcoal {
+        background-color: ui-color(footer-bg);
+        color: text-color(white);
 
-        @include wider-than($phone-max) {
-            width: 80rem;
+        a {
+            color: inherit;
         }
     }
 
-    .tabs {
-        width: 100%;
+    .near-white {
+        background-color: #fafafa;
+    }
 
-        .tab {
-            padding-top: 0;
+    .btn {
+        @extend %button;
 
-            &[aria-current] {
-                border-bottom-color: os-color(orange);
-            }
+        color: text-color(white);
+        height: auto;
+        padding: 1em 2em;
 
-            &:hover:not([aria-current]) {
-                border-bottom-color: rgba(os-color(orange), 0.75);
+        &.blue {
+            background-color: os-color(light-blue);
+
+            &:hover,
+            &:active {
+                background-color: darken(os-color(light-blue), 10%);
+                color: text-color(white);
             }
         }
     }
 
-    .info-pane > div {
-        margin-top: 4rem;
+    h2 {
+        @include title-font(6.4rem);
+
+        line-height: 0.85;
+
+        @include width-up-to($phone-max) {
+            @include title-font(5.3rem);
+
+            line-height: 0.85;
+        }
     }
 
-    .cards {
+    .tagline {
+        @include body-font(2.4rem);
+
+        line-height: 1.25;
+        margin-top: $normal-margin;
+
+        @include width-up-to($phone-max) {
+            @include body-font(2rem);
+
+            line-height: 1.25;
+        }
+    }
+
+    .floating-tools {
+        align-items: center;
         display: grid;
-        grid-gap: 6rem 3rem;
-        justify-items: center;
-        margin-bottom: 9rem;
-        width: 100%;
+        position: fixed;
+        right: 3.5rem;
+        top: 50%;
+        transform: translateY(-60%);
+        z-index: 5;
 
-        @include wider-than($phone-max) {
-            grid-template-columns: repeat(auto-fill, minmax(35rem, 1fr));
+        @include width-up-to($phone-max) {
+            display: none;
+        }
+
+        @media (max-height: $phone-max * 1.25) {
+            top: 12rem;
+            transform: none;
+        }
+
+        @media (max-height: $phone-max) {
+            top: 10rem;
+            transform: scale(0.9);
+        }
+
+        > * {
+            margin-bottom: 2rem;
+        }
+    }
+
+    .sticky-footer {
+        @include set-font(body-regular);
+
+        background-color: ui-color(footer-bg);
+
+        @include width-up-to($phone-max) {
+            display: none;
+        }
+
+        .btn {
+            background-color: os-color(light-blue);
         }
     }
 
     .card {
         @extend %card;
 
-        background-color: ui-color(white);
-        color: text-color(normal);
-        display: grid;
-        grid-gap: $normal-margin;
-        // grid-template-rows: auto 1fr auto;
-        justify-items: center;
-        max-width: 38rem;
-        padding: 4rem 3rem;
-        text-align: center;
+        box-shadow: $card-box-shadow;
 
-        > :first-child {
-            margin-bottom: 2rem;
-        }
-
-        > * {
-            max-width: 32rem;
+        &:hover {
+            box-shadow: $card-box-shadow;
         }
     }
 
-    .faq-cards {
-        display: grid;
+    .top-border,
+    .bottom-border {
+        background-size: 100%;
+        position: relative;
         width: 100%;
     }
 
-    .faq-card {
-        background-color: ui-color(white);
-        border: thin solid ui-color(form-border);
-        color: text-color(normal);
-        display: grid;
-        grid-row-gap: 4rem;
-        padding: 4rem;
-
-        .top {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-        }
+    .top-border {
+        background-position: center top;
     }
 
-    form {
-        align-items: center;
-
-        .signup-form {
-            max-width: 60rem;
-            width: 100%;
-        }
-
-        [type="submit"] {
-            @extend %button;
-            @extend %primary;
-        }
+    .bottom-border {
+        background-position: center bottom;
+        z-index: 1;
     }
-
 }

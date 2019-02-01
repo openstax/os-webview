@@ -1,178 +1,140 @@
-import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
-import ContentGroup from '~/components/content-group/content-group';
-import InfoPane from './info-pane/info-pane';
-import salesforce from '~/models/salesforce';
-import SignupForm from './signup-form/signup-form';
-import TabGroup from '~/components/tab-group/tab-group';
-import {description as template} from './rover-by-openstax.html';
-import {on} from '~/helpers/controller/decorators';
+import componentType, {canonicalLinkMixin, flattenPageDataMixin} from '~/helpers/controller/init-mixin';
 import css from './rover-by-openstax.css';
+import bannerSection from './sections/banner';
+import videoSection from './sections/video';
+import meetRoverSection from './sections/meet-rover';
+import stepwiseSection from './sections/stepwise';
+import gettingStartedSection from './sections/getting-started';
+import lmsSection from './sections/lms';
+import faqSection from './sections/faq';
+import StickyFooter from '~/components/sticky-footer/sticky-footer';
+import SectionNavigator from '~/components/section-navigator/section-navigator';
 
-const rolesPromise = fetch(`${settings.apiOrigin}/api/snippets/roles`)
-    .then((r) => r.json());
 const spec = {
-    template,
     css,
     view: {
-        classes: ['rover', 'page'],
-        tag: 'main' // if the HTML doesn't contain a main tag
+        classes: ['rover-by-openstax', 'page'],
+        tag: 'main'
     },
-    slug: 'pages/rover-by-openstax',
+    slug: 'pages/rover-2',
     model() {
-        if (!this.pageData) {
-            return {};
-        }
-
-        const data = this.pageData;
-
-        /* eslint camelcase: 0 */
         return {
-            loaded: true,
-            headerImage: data.header_image || '/images/rover-by-openstax/logo-desktop.png',
-            mobileHeaderImage: data.mobile_header_image || '/images/rover-by-openstax/logo-mobile.png',
-            headerImageAltText: data.header_image_alt,
-            headline: data.section_1_headline,
-            introHtml: data.section_1_description,
-            button1Text: data.section_1_button_text,
-            button1Url: data.section_1_button_url,
-            headline2: data.section_2_headline,
-            headline3: data.section_3_headline,
-            description3: data.section_3_description,
-            cards: this.toSection3Cards(data.rover_cards_section_3[0].cards),
-            formHeadline: this.formHeadlineReplacement || data.form_headline,
-            hideForm: this.hideForm,
-            headline4: data.section_4_headline,
-            faqCards: this.faqItems, // calculated in onDataLoaded
-            salesforce,
-            roleIsSelected: this.roleIsSelected
         };
-    }
+    },
+    preserveWrapping: true
 };
-const BaseClass = componentType(spec, canonicalLinkMixin);
+const BaseClass = componentType(spec, canonicalLinkMixin, flattenPageDataMixin);
 
-export default class Rover extends BaseClass {
-
-    init() {
-        super.init();
-        this.faqItems = [];
-        this.roleIsSelected = false;
-    }
-
-    toFaqCards(faqs) {
-        const result = faqs.map((f) => {
-            return Object.assign({
-                chevronDirection: 'left'
-            }, f);
-        });
-
-        return result;
-    }
-
-    toSection3Cards(cardData) {
-        return cardData.map((d) => {
-            const v = d.value;
-
-            return {
-                iconUrl: v.image.image,
-                description: v.description,
-                buttonUrl: v.button_url,
-                buttonText: v.button_text
-            };
-        });
-    }
-
-    contentsFromPageData() {
-        const result = {};
-
-        this.pageData.rover_cards_section_2.forEach((t) => {
-            const cards = t.cards.map((c) => c.value);
-
-            result[t.heading] = new InfoPane({
-                descriptionHtml: t.description,
-                cards
-            });
-        });
-
-        return result;
-    }
-
-    populateTabs() {
-        const Region = this.regions.self.constructor;
-        const tabRegion = new Region(this.el.querySelector('.tabs'), this);
-        const tabContentRegion = new Region(this.el.querySelector('.tab-content'), this);
-        const contents = this.contentsFromPageData();
-        const tabLabels = this.pageData.rover_cards_section_2.map((t) => t.heading);
-        let selectedTab = tabLabels[0];
-        const contentGroup = new ContentGroup(() => ({
-            selectedTab,
-            contents
-        }));
-        const tabGroup = new TabGroup(() => ({
-            tag: 'h3',
-            tabLabels,
-            selectedTab,
-            setSelected(newValue) {
-                selectedTab = newValue;
-                contentGroup.update();
-            }
-        }));
-
-        tabRegion.attach(tabGroup);
-        tabContentRegion.attach(contentGroup);
-    }
-
-    populateForm() {
-        const Region = this.regions.self.constructor;
-        const signupFormRegion = new Region(this.el.querySelector('.signup-form'));
-        const iframe = document.createElement('iframe');
-
-        this.signupForm = new SignupForm(this.roles, (role) => {
-            this.roleIsSelected = Boolean(role);
-            this.update();
-        });
-        signupFormRegion.attach(this.signupForm);
-        iframe.name = iframe.id = 'rover-form-response';
-        iframe.width = iframe.height = '0';
-        iframe.tabindex = '-1';
-        iframe.classList.add('hidden');
-        document.getElementById('form-response-region').appendChild(iframe);
-    }
+export default class RoverRedesign extends BaseClass {
 
     onDataLoaded() {
-        this.faqItems = this.toFaqCards(this.pageData.section_4_faqs[0] || []);
-        this.update();
-        this.insertHtml();
-        this.populateTabs();
-        rolesPromise.then((roles) => {
-            this.roles = roles;
-            this.populateForm();
+        const data = this.flattenPageData();
+        const floatingTools = new (componentType({
+            view: {
+                classes: ['floating-tools']
+            }
+        }))();
+
+        const sections = [
+            bannerSection({
+                model: {
+                    headerImage: data.header_image || '/images/rover-by-openstax/rover-logo.png',
+                    mobileHeaderImage: data.mobile_header_image || '/images/rover-by-openstax/rover-logo.png',
+                    headerImageAltText: 'Rover logo',
+                    accessLink: data.section_1.accessButtonLink,
+                    accessText: data.section_1.accessButtonCta,
+                    headline: 'Rover by OpenStax',
+                    introHtml: data.section_1.blurb,
+                    button1Url: data.section_1.buttonLink,
+                    button1Text: data.section_1.buttonCta
+                }
+            }),
+            videoSection({
+                model: {
+                    heading: data.section_2.heading,
+                    subhead: data.section_2.subheading,
+                    description: data.section_2.blurb,
+                    video: data.section_2.video
+                }
+            }),
+            meetRoverSection({
+                model: {
+                    heading: data.section_3.heading,
+                    description: data.section_3.subheading,
+                    cards: data.section_3.cards.map((c) => ({
+                        image: c.icon.file,
+                        imageAltText: 'need some alt text',
+                        description: c.blurb
+                    })),
+                    webinarLink: '/need-a-link',
+                    webinarLinkText: data.section_3.buttonCta
+                }
+            }),
+            stepwiseSection({
+                model: {
+                    heading: data.section_4.heading,
+                    description: data.section_4.blurb,
+                    cards: data.section_4.cards.map((c) => ({
+                        heading: c.heading,
+                        description: c.blurb,
+                        image: {
+                            image: c.image.file,
+                            imageAltText: 'need alt text'
+                        }
+                    }))
+                }
+            }),
+            lmsSection({
+                model: {
+                    heading: data.section_6.heading,
+                    description: data.section_6.blurb,
+                    image: {
+                        image: data.section_6.image.file,
+                        altText: data.section_6.imageAltText
+                    },
+                    caption: data.section_6.caption
+                }
+            }),
+            gettingStartedSection({
+                model: {
+                    heading: data.section_5.heading,
+                    description: data.section_5.blurb,
+                    cards: data.section_5.cards.map((c) => ({
+                        heading: c.heading,
+                        description: c.blurb,
+                        video: c.video
+                    }))
+                }
+            }),
+            faqSection({
+                model: {
+                    heading: 'Frequently Asked Questions',
+                    questions: data.section_7.faqs
+                }
+            }),
+            new StickyFooter({
+                leftButton: {
+                    link: data.section_7.webinarButtonUrl,
+                    text: data.section_7.webinarButtonCta,
+                    description: ''
+                },
+                rightButton: {
+                    link: data.section_7.signupButtonUrl,
+                    text: data.section_7.signupButtonCta,
+                    description: ''
+                }
+            }),
+            floatingTools
+        ];
+
+        sections.forEach((section) => {
+            this.regions.self.append(section);
         });
-    }
+        const sectionIds = Array.from(this.el.querySelectorAll('section[id]'))
+            .map((el) => el.id);
+        const sectionNavigator = new SectionNavigator(sectionIds);
 
-    @on('click .faq-toggle')
-    toggleFaqItem(event) {
-        const itemIndex = event.delegateTarget.getAttribute('data-item');
-        const model = this.getModel();
-        const item = model.faqCards[itemIndex];
-
-        item.chevronDirection = item.chevronDirection === 'left' ? 'down' : 'left';
-        this.update();
-    }
-
-    @on('submit form')
-    handleSubmit(event) {
-        const afterSubmit = () => {
-            this.listeningForResponse = false;
-            this.formHeadlineReplacement = 'Thank you for signing up';
-            this.hideForm = true;
-            this.update();
-            document.getElementById('rover-form-response').removeEventListener('load', afterSubmit);
-        };
-
-        if (!this.listeningForResponse) {
-            this.listeningForResponse = true;
-            document.getElementById('rover-form-response').addEventListener('load', afterSubmit);
-        }
+        floatingTools.regions.self.attach(sectionNavigator);
     }
 
 }

@@ -1,6 +1,6 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.rover-redesign #stepwise {
+.rover-by-openstax #stepwise {
     .cards {
         display: grid;
         grid-auto-rows: 1fr;
@@ -19,7 +19,7 @@
     }
 
     .top-border {
-        background-image: url('/images/rover-redesign/bg-4.svg');
+        background-image: url('/images/rover-by-openstax/bg-4.svg');
         height: calc(6rem + 11vw);
         margin-top: calc(-15.9rem - 11vw);
     }
