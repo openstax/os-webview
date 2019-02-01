@@ -51,10 +51,6 @@ const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 
 export default class Give extends BaseClass {
 
-    static description =
-    'Your donation helps us create opportunities for students to have access to quality ' +
-    'free and low-cost educational materials. Your gift changes lives.';
-
     init() {
         super.init();
         // bound functions have to be done here

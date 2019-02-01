@@ -16,10 +16,6 @@ const BaseClass = componentType(spec, canonicalLinkMixin);
 
 export default class InstitutionalPartners extends BaseClass {
 
-    static description = 'Since 2012, OpenStax has saved students millions ' +
-        'through free, peer-reviewed college textbooks. Learn more about our ' +
-        'impact on the 3,000+ schools who use our books.';
-
     onDataLoaded() {
         this.model = this.pageData;
         this.update();

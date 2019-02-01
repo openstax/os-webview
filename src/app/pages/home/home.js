@@ -19,10 +19,6 @@ const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 
 export default class Home extends BaseClass {
 
-    static description = 'OpenStax\'s goal is to increase student access ' +
-        'to high-quality learning materials at little to no cost. See what ' +
-        'we have to offer for college and AP courses.';
-
     onLoaded() {
         shell.header.updateHeaderStyle();
     }

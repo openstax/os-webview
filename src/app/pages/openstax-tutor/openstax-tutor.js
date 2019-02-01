@@ -50,9 +50,6 @@ const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 
 export default class Tutor extends BaseClass {
 
-    static description = 'OpenStax Tutor Beta is a personalized learning tool ' +
-        'that improves how students learn with research-based technology, for only $10.';
-
     onDataError(e) {
         console.warn(e);
     }
