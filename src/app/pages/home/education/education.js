@@ -1,25 +1,29 @@
-import {Controller} from 'superb.js';
-import $ from '~/helpers/$';
+import componentType from '~/helpers/controller/init-mixin';
 import {description as template} from './education.html';
 import css from './education.css';
 
-export default class Education extends Controller {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['education-banner']
+    }
+};
+const BaseClass = componentType(spec);
+
+export default class Education extends BaseClass {
 
     init(model) {
-        this.template = template;
-        this.css = css;
+        super.init();
         this.model = {
             main: model[0],
             block1: model[1],
             block2: model[2]
         };
-        this.view = {
-            classes: ['education-banner']
-        };
     }
 
     onLoaded() {
-        $.insertHtml(this.el, this.model);
+        this.insertHtml();
     }
 
 }

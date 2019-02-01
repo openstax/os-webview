@@ -1,14 +1,12 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 $girl-breakpoint: 60em * $scale-factor;
-$button-breakpoint: 100rem;
+$button-breakpoint: 100em * $scale-factor;
 
 .education {
     @include wider-than($girl-breakpoint) {
-        height: 74rem;
-        overflow: hidden;
+        height: 71rem;
         position: relative;
-        top: -3rem;
         width: 100%;
     }
 }
@@ -20,25 +18,16 @@ $button-breakpoint: 100rem;
     background-size: cover;
 
     @include wider-than($girl-breakpoint) {
-        bottom: 0;
         height: 71rem;
-        left: 0;
-        position: absolute;
-        right: 0;
+        width: 100%;
     }
 
     .container {
-        display: flex;
-        flex-flow: column nowrap;
         height: 100%;
         margin: 0 auto;
         max-width: $content-max;
         padding: 3rem 1.5rem;
         position: relative;
-
-        @include wider-than($phone-max) {
-            flex-flow: row wrap;
-        }
     }
 
     .quote {
@@ -215,9 +204,9 @@ $button-breakpoint: 100rem;
 
     .square-2 {
         height: 50rem;
-        right: -5rem;
+        right: 0;
         top: 1.5rem;
-        width: 64rem;
+        width: 59rem;
      }
 
     .student {

@@ -1,34 +1,14 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-// Just for math book
-$tablet-book-size: 16.5rem;
-
-@mixin desktop-plus {
-    @media (min-width: 1025px) {
-        @content;
-    }
-}
-
 .home-page {
-    flex: 1 0 auto;
+    display: grid;
+    padding-bottom: 6rem;
 
-    .book-banners {
-        height: calc(50vw + 4rem);
-        position: relative;
+    @include width-up-to($tablet-max) {
+        grid-gap: 4rem;
     }
 
-    .buckets {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .buckets-section {
-        padding: 1rem 1.5rem 6rem;
-
-        .bucket {
-            flex-basis: 30rem;
-            margin: 2rem 0;
-            width: 100%;
-        }
+    @include wider-than($tablet-max) {
+        grid-gap: 6rem;
     }
 }

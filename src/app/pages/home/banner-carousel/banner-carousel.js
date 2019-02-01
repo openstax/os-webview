@@ -1,24 +1,16 @@
-import {Controller} from 'superb.js';
+import componentType from '~/helpers/controller/init-mixin';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './banner-carousel.html';
 import css from './banner-carousel.css';
 import $ from '~/helpers/$';
 
-export default class BannerCarousel extends Controller {
-
-    init(getProps) {
-        this.template = template;
-        this.getProps = getProps;
-        this.view = {
-            classes: ['banner-carousel']
-        };
-        this.css = css;
-        this.model = () => this.getModel();
-        this.frameNumber = 0;
-        this.rowOffset = 0;
-    }
-
-    getModel() {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['banner-carousel']
+    },
+    model() {
         const props = this.getProps();
 
         this.images = $.isMobileDisplay() ? props.smallImages : props.largeImages;
@@ -27,6 +19,17 @@ export default class BannerCarousel extends Controller {
             frameNumber: this.frameNumber
         };
     }
+};
+const BaseClass = componentType(spec);
+
+export default class BannerCarousel extends BaseClass {
+
+    init(getProps) {
+        super.init();
+        this.getProps = getProps;
+        this.frameNumber = 0;
+        this.rowOffset = 0;
+    }
 
     onLoaded() {
         this.onResize = () => this.update();
@@ -34,6 +37,9 @@ export default class BannerCarousel extends Controller {
     }
 
     onClose() {
+        if (super.onClose) {
+            super.onClose();
+        }
         window.removeEventListener('resize', this.onResize);
     }
 

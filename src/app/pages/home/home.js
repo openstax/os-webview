@@ -1,30 +1,19 @@
 import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
 import BannerCarousel from './banner-carousel/banner-carousel';
-import Buckets from '~/components/buckets/buckets';
+import Buckets from './buckets/buckets';
 import Education from './education/education';
-import Quotes from '~/components/quotes/quotes';
+import Quotes from './quotes/quotes';
 import shell from '~/components/shell/shell';
-import {description as template} from './home.html';
-import {on} from '~/helpers/controller/decorators';
-import {utils} from 'superb.js';
 import css from './home.css';
 
 const spec = {
-    template,
     css,
     view: {
-        classes: ['home-page']
+        classes: ['home-page'],
+        tag: 'main',
+        id: 'maincontent'
     },
-    regions: {
-        banners: '.book-banners',
-        quotes: '.quote-buckets',
-        education: '.education',
-        buckets: '.buckets'
-    },
-    slug: 'pages/openstax-homepage',
-    model: {
-        loaded: ''
-    }
+    slug: 'pages/openstax-homepage'
 };
 const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 
@@ -34,20 +23,8 @@ export default class Home extends BaseClass {
         'to high-quality learning materials at little to no cost. See what ' +
         'we have to offer for college and AP courses.';
 
-    init() {
-        super.init();
-    }
-
     onLoaded() {
         shell.header.updateHeaderStyle();
-    }
-
-    pos(range, relY, offset) {
-        return this.limit(0, 1, relY - offset) * range;
-    }
-
-    limit(min, max, value) {
-        return Math.max(min, Math.min(max, value));
     }
 
     onDataLoaded() {
@@ -55,9 +32,6 @@ export default class Home extends BaseClass {
             largeImages: this.pageData.banner_images,
             smallImages: this.pageData.mobile_banner_images
         }));
-
-        this.regions.banners.attach(bannerCarousel);
-
         const quotesData = this.pageData.row_1.map((columnData) => {
             const result = Object.assign({}, columnData);
             const imageData = columnData.image;
@@ -66,35 +40,26 @@ export default class Home extends BaseClass {
             return result;
         });
         const quotesView = new Quotes(quotesData);
-
-        this.regions.quotes.attach(quotesView);
-
         const educationData = this.pageData.row_2;
-
-        this.regions.education.attach(new Education(educationData));
-
         const bucketData = [4, 5].map((rowNum, index) => {
             const cmsData = this.pageData[`row_${rowNum}`][0];
-            const result = Object.assign({}, cmsData);
-
-            // FIX: color schemes should be configured in the CMS
-            result.bucketClass = index ? 'partners' : 'our-impact';
-            result.btnClass = index ? 'btn-gold' : 'btn-cyan';
-            result.hasImage = Boolean(result.bucketClass === 'our-impact');
+            const result = Object.assign({
+                bucketClass: index ? 'partners' : 'our-impact',
+                btnClass: index ? 'btn-gold' : 'btn-cyan',
+                hasImage: index === 0
+            }, cmsData);
 
             return result;
         });
 
-        this.regions.buckets.attach(new Buckets(bucketData));
-        this.model.loaded = 'loaded';
-        this.update();
-
+        this.regions.self.attach(bannerCarousel);
+        this.regions.self.append(quotesView);
+        this.regions.self.append(new Education(educationData));
+        this.regions.self.append(new Buckets(bucketData));
         this.hideLoader();
     }
 
     onClose() {
-        clearInterval(this.modelInterval);
-        window.removeEventListener('scroll', this.parallaxOnScroll);
         shell.header.updateHeaderStyle();
         super.onClose();
     }

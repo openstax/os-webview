@@ -1,18 +1,20 @@
-import {Controller} from 'superb.js';
+import componentType from '~/helpers/controller/init-mixin';
 import $ from '~/helpers/$';
 import {description as alignedImageTemplate} from './aligned-image.html';
-import Quote from '~/components/quotes/quote/quote';
+import Quote from '~/components/quote/quote';
 
-const template = () => '';
+function bodyUnitMixin(superclass) {
+    return class extends superclass {
 
-class BodyUnit extends Controller {
+        init(data) {
+            super.init();
+            this.data = data;
+        }
 
-    init(data) {
-        this.data = data;
-        this.template = template;
-    }
-
+    };
 }
+
+const BodyUnit = componentType({}, bodyUnitMixin);
 
 class Paragraph extends BodyUnit {
 
@@ -33,7 +35,7 @@ class AlignedImage extends BodyUnit {
     }
 
     onLoaded() {
-        $.insertHtml(this.el, this.model);
+        this.insertHtml();
     }
 
 }
