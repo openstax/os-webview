@@ -1,6 +1,6 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.rover-redesign #video {
+.rover-by-openstax #video {
     .text-left-video-right {
         display: grid;
         min-height: 40rem;
@@ -23,13 +23,16 @@
 
         [data-html="video"] > * {
             min-height: 35rem;
-            min-width: 50rem;
+
+            @include wider-than($phone-max) {
+                min-width: 50rem;
+            }
         }
     }
 
     .top-border,
     .bottom-border {
-        background-image: url('/images/rover-redesign/bg-2.svg');
+        background-image: url('/images/rover-by-openstax/bg-2.svg');
     }
 
     .top-border {

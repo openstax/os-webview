@@ -28,10 +28,6 @@ const BaseClass = componentType(spec, canonicalLinkMixin);
 
 export default class ImpactDev extends BaseClass {
 
-    static description = 'Since 2012, OpenStax has saved students millions ' +
-    'through free, peer-reviewed college textbooks. Learn more about our ' +
-    'impact on the 3,000+ schools who use our books.';
-
     onAttached() {
         const tokenn = 'pk.eyJ1Ijoib3BlbnN0YXgiLCJhIjoiY2pnbWtjajZzMDBkczJ6cW1kaDViYW02aCJ9.0w3LCa7lzozzRgXM7xvBfQ';
         let mapCenter;

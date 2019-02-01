@@ -28,9 +28,6 @@ const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 
 export default class Blog extends BaseClass {
 
-    static description = 'Stay up to date with OpenStax news and hear community '+
-    'perspectives on issues in education and access on the OpenStax blog.';
-
     init() {
         super.init();
         this.timersRunning = [];

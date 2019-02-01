@@ -24,10 +24,6 @@ const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 
 export default class Subjects extends BaseClass {
 
-    static description = 'Our textbooks are openly licensed, peer-reviewed,' +
-        'free, and backed by learning resources. Check out our books and' +
-        'decide if they\'re right for your course.';
-
     init() {
         super.init();
         this.categorySelector = new CategorySelector((category) => this.filterSubjects(category));

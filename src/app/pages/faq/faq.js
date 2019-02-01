@@ -20,8 +20,6 @@ const BaseClass = componentType(spec, canonicalLinkMixin);
 
 export default class FAQ extends BaseClass {
 
-    static description = 'Frequently Asked Questions about OpenStax';
-
     init() {
         super.init();
         shell.showLoader();

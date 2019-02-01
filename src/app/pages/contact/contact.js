@@ -37,10 +37,6 @@ const BaseClass = mix(SalesforceForm).with(canonicalLinkMixin);
 
 export default class Contact extends BaseClass {
 
-    static description = 'If you have a question or feedback about our books, ' +
-        'OpenStax Tutor, partnerships, or any other topic, ' +
-        'contact us here. We\'d love to hear from you!';
-
     init() {
         this.dataController = new ContactData();
         this.dataController.onDataLoaded = () => {

@@ -1,6 +1,8 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.rover-redesign #banner {
+.rover-by-openstax #banner {
+    padding: calc(11vw + 5.4rem) 0;
+
     picture,
     picture img {
         max-width: 100%;

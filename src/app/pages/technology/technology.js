@@ -19,10 +19,6 @@ const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 
 export default class Technology extends BaseClass {
 
-    static description = 'OpenStax has teamed up with our partners to offer a ' +
-        'variety of low-cost, innovative learning tools and courseware that ' +
-        'integrate with OpenStax textbooks.';
-
     onDataError(e) {
         console.warn(e);
     }

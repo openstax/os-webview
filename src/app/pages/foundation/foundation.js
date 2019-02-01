@@ -19,10 +19,6 @@ const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 
 export default class Foundation extends BaseClass {
 
-    static description = 'OpenStax is supported by our philanthropic ' +
-        'sponsors like the Bill & Melinda Gates Foundation, the William and Flora ' +
-        'Hewlett Foundation, and more.';
-
     onDataLoaded() {
         Object.assign(this.model, this.pageData);
         this.update();

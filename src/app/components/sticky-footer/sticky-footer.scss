@@ -36,6 +36,7 @@
     @extend %animated;
 
     bottom: 0;
+    box-shadow: 0 -0.2rem 0.6rem 0 rgba(ui-color(black), 0.25);
     display: flex;
     font-weight: inherit;
     justify-content: space-around;
