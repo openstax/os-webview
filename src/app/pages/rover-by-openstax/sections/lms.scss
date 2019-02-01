@@ -3,6 +3,11 @@
 .rover-by-openstax #lms {
     padding-top: 0;
 
+    .boxed {
+        border-top: thin solid ui-color(form-border);
+        padding-top: 6rem;
+    }
+
     .bottom-border {
         background-image: url('/images/rover-by-openstax/bg-4.svg');
         height: calc(6rem + 11vw);

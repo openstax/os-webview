@@ -1,6 +1,8 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .rover-by-openstax #stepwise {
+    padding-bottom: 12rem;
+
     .cards {
         display: grid;
         grid-auto-rows: 1fr;
