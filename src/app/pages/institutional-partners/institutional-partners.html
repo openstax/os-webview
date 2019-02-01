@@ -1,0 +1,43 @@
+<template args="model">
+    <main id="maincontent">
+        <div class="hero w-cards">
+            <div class="square-1"></div>
+            <div class="square-2"></div>
+            <div class="row container-wrap">
+                <div class="student"></div>
+                <div class="overlay" if="model.intro_heading">
+                    <div class="text-block">
+                        <h1 class="header">{model.intro_heading}</h1>
+                        <p class="blurb">{model.intro_description}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
+        <span class="scrolldown-chevron"><a href="#affiliates"><i class="fa fa-chevron-down"></i></a></span>
+
+        <div id="affiliates" class="affiliates">
+            <div class="text-content" each="item in model.row_1">
+                <h2>{item.heading}</h2>
+                <html-block data-html="row_1[{$item}].content" skip="true"></html-block>
+                <div class="cta">
+                    <a class="btn"
+                    href='{item.link}'>{item.cta}</a>
+                </div>
+            </div>
+
+            <ul class="partners no-bullets">
+                <li each="partner in model.institutions">
+                    <img src="{partner.institution_logo}" alt="{partner.title}">
+                </li>
+                <li class="spacer" each="spacer in [1,2,3,4]"></li>
+            </ul>
+
+            <div class="adopters">
+                <a href="/adopters" class="with-arrow">
+                    See a full list of institutions that have adopted OpenStax
+                </a>
+            </div>
+        </div>
+    </main>
+</template>

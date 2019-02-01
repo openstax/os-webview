@@ -1,0 +1,219 @@
+@import 'mixins/responsive';
+@import 'pattern-library/core/pattern-library/headers';
+
+$breakpoint-1: 90.8em * $scale-factor;
+$breakpoint-2: 76em * $scale-factor;
+$hero-break-width: 88em * $scale-factor;
+
+.impact-page {
+
+    &.hidden {
+        display: none;
+    }
+
+    .hero {
+        align-items: center;
+        background-color: os-color(green);
+        background-image: url('/images/institutional-partners/banner-bg.jpg');
+        background-size: cover;
+        display: flex;
+        height: 60rem;
+        justify-content: center;
+        overflow: hidden;
+        position: relative;
+        text-align: left;
+        width: 100%;
+
+        @include collapsed {
+            align-items: stretch;
+            background: none;
+            max-height: 53rem;
+        }
+
+        .container-wrap {
+            display: flex;
+            flex-flow: column wrap;
+            margin: 0 auto;
+            max-width: $content-max;
+            width: 100%;
+            z-index: 1;
+
+            @include collapsed {
+                align-items: stretch;
+                flex-flow: row wrap;
+            }
+
+        }
+
+        .student {
+            background-image: url('/images/institutional-partners/banner.png');
+            background-position: 0 bottom;
+            background-repeat: no-repeat;
+            background-size: 100% auto;
+            bottom: 0;
+            height: 100%;
+            left: -16rem;
+            overflow: hidden;
+            position: absolute;
+            transition: All ease 0.2s;
+            width: calc(50rem + 30%);
+
+            @include wider-than($media-content-max) {
+                left: 0;
+                width: 86rem;
+            }
+
+            @include collapsed {
+                background-position: left 1.8rem;
+                background-size: contain;
+                bottom: 0;
+                height: calc(30% + 34vw);
+                left: calc(10rem - 34%);
+                z-index: 1;
+            }
+        }
+
+        .overlay {
+            color: text-color(white);
+            display: flex;
+            justify-content: flex-end;
+            padding: 4rem;
+            z-index: 2;
+
+            @include wider-than($media-content-max) {
+                padding-left: calc(-61rem + 55%);
+            }
+
+            @include collapsed {
+                background-color: os-color(green);
+                width: 100%;
+                z-index: 0;
+            }
+
+            .text-block {
+                background-color: rgba(os-color(green), 0.85);
+                flex-basis: 50%;
+                min-width: 40.5rem;
+                padding: 4rem;
+
+                @include width-between($breakpoint-2, $hero-break-width) {
+                    flex-basis: 60%;
+                }
+
+                @include collapsed {
+                    background: none;
+                    flex-basis: 100%;
+                    min-width: unset;
+                    padding: 0;
+                }
+            }
+
+            h1 {
+                color: inherit;
+                line-height: 1;
+
+                @include width-up-to($phone-max) {
+                    @include set-font(h1);
+                }
+            }
+
+            .blurb {
+                @include set-font(body-large);
+
+                padding: 1em 0;
+
+                @include collapsed {
+                    display: none;
+                }
+            }
+        }
+
+        .square-1,
+        .square-2 {
+            background-color: os-color(green);
+            opacity: 0.3;
+            position: absolute;
+
+            @include width-up-to($breakpoint-1) {
+                display: none;
+            }
+        }
+
+        .square-1 {
+            height: 16.8rem;
+            left: 46%;
+            top: 3.5rem;
+            width: 17.8rem;
+        }
+
+        .square-2 {
+            height: 39rem;
+            left: 7.71%;
+            top: 15.6rem;
+            width: 72rem;
+        }
+
+    }
+
+    .cta .btn {
+        @extend %primary;
+        @include button();
+    }
+
+    .affiliates {
+        @include set-font(body-large);
+
+        color: os-color(gray);
+        text-align: center;
+
+        .text-content {
+            padding-bottom: 5rem;
+            padding-top: 5rem;
+        }
+
+        .partners {
+            align-items: center;
+            border-bottom: 0.4rem solid ui-color(form-border);
+            border-top: 0.4rem solid ui-color(form-border);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: auto;
+            max-width: $content-max;
+            padding: 1.5rem 0 0;
+
+            @include width-up-to($breakpoint-1) {
+                justify-content: space-around;
+            }
+
+            > li {
+                padding: 4rem;
+
+                img {
+                    width: 12rem;
+                }
+
+                &.spacer {
+                    height: 0.1rem;
+                    margin: 0 4rem;
+                    padding: 0;
+                    width: 12rem;
+                }
+            }
+        }
+
+        .adopters {
+            padding: 4rem 1.5rem 5rem;
+
+            a {
+                @include set-font(helper-label);
+                font-weight: 500;
+                text-transform: uppercase;
+            }
+        }
+    }
+
+    .strips {
+        margin-bottom: 0;
+    }
+}

@@ -15,7 +15,6 @@
     }
 
     .indicator {
-        float: right;
         font-size: 1.4rem;
         margin-right: 2rem;
         margin-top: 0.5rem;
@@ -27,10 +26,13 @@
     }
 
     .question {
+        display: grid;
         font-weight: bold;
+        grid-template-columns: 1fr auto;
     }
 
     .answer {
+        margin-right: 4rem;
         max-height: 25rem;
         max-width: $text-content-max;
         transition: all 0.3s;

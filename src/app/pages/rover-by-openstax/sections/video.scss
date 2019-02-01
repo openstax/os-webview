@@ -23,7 +23,10 @@
 
         [data-html="video"] > * {
             min-height: 35rem;
-            min-width: 50rem;
+
+            @include wider-than($phone-max) {
+                min-width: 50rem;
+            }
         }
     }
 

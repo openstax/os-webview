@@ -28,6 +28,7 @@ const PAGES = [
     'interest',
     'impact',
     'impact-dev',
+    'institutional-partners',
     'separatemap',
     'openstax-tutor',
     'partners',

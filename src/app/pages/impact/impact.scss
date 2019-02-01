@@ -1,219 +1,235 @@
-@import 'mixins/responsive';
 @import 'pattern-library/core/pattern-library/headers';
 
-$breakpoint-1: 90.8em * $scale-factor;
-$breakpoint-2: 76em * $scale-factor;
-$hero-break-width: 88em * $scale-factor;
+$light: #f8f8f8;
 
-.impact-page {
+.annual-report.page {
+    section {
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        max-width: 100vw;
+        min-height: 40rem;
+        overflow-y: visible;
+        padding: 12rem 6rem;
 
-    &.hidden {
-        display: none;
+        @include width-up-to($phone-max) {
+            padding: 3rem 2rem;
+        }
+
+        &.white {
+            background-color: ui-color(white);
+        }
+
+        &.light {
+            background-color: $light;
+        }
+
+        > .content {
+            padding-left: $normal-margin;
+            padding-right: $normal-margin;
+        }
     }
 
-    .hero {
+    p,
+    h1,
+    h2,
+    h3 {
+        margin: 0;
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    a {
+        svg {
+            align-self: end;
+            height: 2.5rem;
+        }
+    }
+
+    .content {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: $content-max;
+
+        > .text-content {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    .text-content {
+        align-content: start;
+        display: grid;
+        grid-gap: 3rem;
+        margin-bottom: 3rem;
+        margin-left: 0;
+    }
+
+    .text-block {
+        display: grid;
+        grid-auto-rows: min-content;
+        grid-gap: 3rem;
+        justify-items: start;
+        max-width: 60rem;
+    }
+
+    .caption {
+        @include set-font(helper-label);
+
+        max-width: 40rem;
+    }
+
+    .btn {
+        @extend %button;
+
+        &.primary {
+            @extend %primary;
+        }
+    }
+
+    .text-left-photo-right {
+        display: grid;
+        grid-gap: 4rem;
+
+        @include wider-than($tablet-max) {
+            grid-template-columns: minmax(auto, 60rem) auto;
+        }
+    }
+
+
+    .card {
+        @extend %card;
+
+        background-color: ui-color(white);
+        padding: 4rem;
+    }
+
+    .text-overlapping-photo {
         align-items: center;
-        background-color: os-color(green);
-        background-image: url('/images/impact/banner-bg.jpg');
-        background-size: cover;
-        display: flex;
-        height: 60rem;
-        justify-content: center;
-        overflow: hidden;
-        position: relative;
-        text-align: left;
+        display: grid;
+        grid-template-columns: minmax(24rem, 60rem) auto;
         width: 100%;
 
-        @include collapsed {
-            align-items: stretch;
-            background: none;
-            max-height: 53rem;
+        @include width-up-to($phone-max) {
+            grid-template-columns: auto;
         }
 
-        .container-wrap {
-            display: flex;
-            flex-flow: column wrap;
-            margin: 0 auto;
-            max-width: $content-max;
-            width: 100%;
-            z-index: 1;
-
-            @include collapsed {
-                align-items: stretch;
-                flex-flow: row wrap;
-            }
-
+        > :first-child {
+            min-width: 10rem;
         }
 
-        .student {
-            background-image: url('/images/impact/banner.png');
-            background-position: 0 bottom;
-            background-repeat: no-repeat;
-            background-size: 100% auto;
-            bottom: 0;
-            height: 100%;
-            left: -16rem;
-            overflow: hidden;
-            position: absolute;
-            transition: All ease 0.2s;
-            width: calc(50rem + 30%);
+        .text-block {
 
-            @include wider-than($media-content-max) {
-                left: 0;
-                width: 86rem;
+            @include width-between($phone-max, $tablet-max) {
+                margin-left: -4rem;
             }
 
-            @include collapsed {
-                background-position: left 1.8rem;
-                background-size: contain;
-                bottom: 0;
-                height: calc(30% + 34vw);
-                left: calc(10rem - 34%);
-                z-index: 1;
+            @include wider-than($tablet-max) {
+                margin-left: -6rem;
+                padding-left: 8rem;
             }
         }
 
-        .overlay {
-            color: text-color(white);
-            display: flex;
-            justify-content: flex-end;
+        .card {
+            background-color: ui-color(white);
             padding: 4rem;
-            z-index: 2;
 
-            @include wider-than($media-content-max) {
-                padding-left: calc(-61rem + 55%);
+            @include width-up-to($phone-max) {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+                box-shadow: none;
             }
 
-            @include collapsed {
-                background-color: os-color(green);
-                width: 100%;
-                z-index: 0;
+            @include wider-than($tablet-max) {
+                padding: 6rem;
             }
+        }
+    }
+
+    .fact-boxes,
+    .testimonial-boxes,
+    .icon-row {
+        display: grid;
+        grid-gap: $normal-margin;
+        margin-top: 4rem;
+    }
+
+    .icon-row {
+        grid-template-columns: repeat(auto-fit, minmax(4rem, auto));
+        height: 4rem;
+        margin-top: 0;
+        min-width: 90rem;
+
+        > img {
+            max-height: 100%;
+        }
+    }
+
+    .testimonial-boxes {
+        grid-template-columns: repeat(3, 1fr);
+
+        @include width-up-to($phone-max) {
+            grid-template-columns: 1fr;
+        }
+
+        .card {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            padding: 0;
 
             .text-block {
-                background-color: rgba(os-color(green), 0.85);
-                flex-basis: 50%;
-                min-width: 40.5rem;
+                grid-template-rows: 1fr auto;
+                height: 100%;
                 padding: 4rem;
-
-                @include width-between($breakpoint-2, $hero-break-width) {
-                    flex-basis: 60%;
-                }
-
-                @include collapsed {
-                    background: none;
-                    flex-basis: 100%;
-                    min-width: unset;
-                    padding: 0;
-                }
-            }
-
-            h1 {
-                color: inherit;
-                line-height: 1;
-
-                @include width-up-to($phone-max) {
-                    @include set-font(h1);
-                }
-            }
-
-            .blurb {
-                @include set-font(body-large);
-
-                padding: 1em 0;
-
-                @include collapsed {
-                    display: none;
-                }
             }
         }
-
-        .square-1,
-        .square-2 {
-            background-color: os-color(green);
-            opacity: 0.3;
-            position: absolute;
-
-            @include width-up-to($breakpoint-1) {
-                display: none;
-            }
-        }
-
-        .square-1 {
-            height: 16.8rem;
-            left: 46%;
-            top: 3.5rem;
-            width: 17.8rem;
-        }
-
-        .square-2 {
-            height: 39rem;
-            left: 7.71%;
-            top: 15.6rem;
-            width: 72rem;
-        }
-
     }
 
-    .cta .btn {
-        @extend %primary;
-        @include button();
-    }
-
-    .affiliates {
-        @include set-font(body-large);
-
-        color: os-color(gray);
+    .centered {
+        display: grid;
+        grid-gap: $normal-margin;
+        justify-items: center;
+        margin-bottom: 4rem;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 40rem;
         text-align: center;
+    }
 
-        .text-content {
-            padding-bottom: 5rem;
-            padding-top: 5rem;
+    #banner {
+        background-color: os-color(blue);
+        color: text-color(white);
+    }
+
+    #founding {
+        padding-bottom: 4rem;
+    }
+
+    .hide-on-mobile {
+        @include width-up-to($phone-max) {
+            display: none;
         }
+    }
 
-        .partners {
-            align-items: center;
-            border-bottom: 0.4rem solid ui-color(form-border);
-            border-top: 0.4rem solid ui-color(form-border);
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin: auto;
-            max-width: $content-max;
-            padding: 1.5rem 0 0;
-
-            @include width-up-to($breakpoint-1) {
-                justify-content: space-around;
-            }
-
-            > li {
-                padding: 4rem;
-
-                img {
-                    width: 12rem;
-                }
-
-                &.spacer {
-                    height: 0.1rem;
-                    margin: 0 4rem;
-                    padding: 0;
-                    width: 12rem;
-                }
-            }
+    .mobile-only {
+        @include wider-than($phone-max) {
+            display: none;
         }
+    }
 
-        .adopters {
-            padding: 4rem 1.5rem 5rem;
+    .scroll-on-mobile {
+        max-width: 100%;
+        overflow-x: auto;
 
-            a {
-                @include set-font(helper-label);
-                font-weight: 500;
-                text-transform: uppercase;
+        > img {
+            max-height: 65rem;
+
+            @include width-up-to($tablet-max) {
+                max-width: none;
             }
         }
     }
 
-    .strips {
-        margin-bottom: 0;
-    }
 }

@@ -34,12 +34,13 @@ export default class RoverRedesign extends BaseClass {
                 classes: ['floating-tools']
             }
         }))();
+        const headerImage = (data.section_1.image || {}).file;
 
         const sections = [
             bannerSection({
                 model: {
-                    headerImage: data.header_image || '/images/rover-by-openstax/rover-logo.png',
-                    mobileHeaderImage: data.mobile_header_image || '/images/rover-by-openstax/rover-logo.png',
+                    headerImage: headerImage || 'http://via.placeholder.com/900x280?text=Rover%20Logo',
+                    mobileHeaderImage: headerImage || 'http://via.placeholder.com/900x280?text=Rover%20Logo',
                     headerImageAltText: 'Rover logo',
                     accessLink: data.section_1.accessButtonLink,
                     accessText: data.section_1.accessButtonCta,
