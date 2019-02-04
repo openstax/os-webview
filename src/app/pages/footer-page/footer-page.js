@@ -8,11 +8,16 @@ const spec = {
     view: {
         classes: ['footer-page', 'page']
     },
-    slug: `pages${window.location.pathname}`
+    slug: 'set in init'
 };
 const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 
 export default class FooterPage extends BaseClass {
+
+    init(...args) {
+        super.init(...args);
+        this.slug = `pages${window.location.pathname}`;
+    }
 
     onDataLoaded() {
         document.title = this.pageData.title;
