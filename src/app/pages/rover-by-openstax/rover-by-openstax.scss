@@ -130,10 +130,6 @@ $orange-gradient: linear-gradient(to right, rgb(228, 182, 96), rgb(228, 137, 96)
 
         background-color: ui-color(footer-bg);
 
-        @include width-up-to($phone-max) {
-            display: none;
-        }
-
         .btn {
             background-color: os-color(light-blue);
         }
