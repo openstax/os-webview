@@ -13,10 +13,11 @@ const spec = {
             introHeading: this.pageData.intro_heading,
             introDescription: this.pageData.intro_description
         } : {};
-    }
+    },
+    slug: 'set in init'
 };
 
-export default class Header extends CMSPageController {
+export default class Header extends componentType(spec) {
 
     init(slug) {
         super.init();
