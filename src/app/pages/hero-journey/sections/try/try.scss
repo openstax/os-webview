@@ -1,0 +1,28 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.hero-journey .try {
+    .button-and-image {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        width: 100%;
+
+        @include width-up-to($phone-max) {
+            .btn {
+                align-self: start;
+                height: auto;
+                line-height: normal;
+                margin-right: $normal-margin;
+                padding: 1rem 2rem;
+                white-space: normal;
+            }
+        }
+
+        img {
+            width: calc(50vw - 2rem);
+        }
+    }
+
+    .blurb {
+        @include set-font(h3);
+    }
+}

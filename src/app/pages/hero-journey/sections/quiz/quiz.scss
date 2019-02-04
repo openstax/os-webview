@@ -1,0 +1,127 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+@mixin normal-padding() {
+    @include width-up-to($phone-max) {
+        padding: 2rem;
+    }
+
+    @include width-between($phone-max, $tablet-max) {
+        padding: 3rem;
+    }
+
+    @include wider-than($tablet-max) {
+        padding: 5rem;
+    }
+}
+
+.hero-journey .quiz {
+    background-image: linear-gradient(to bottom, os-color(gold) 30%, transparent 30%);
+    padding: 5rem 0;
+
+    .headline-group {
+        display: grid;
+        grid-gap: 1rem;
+
+        > * {
+            margin: 0;
+        }
+
+        h2 {
+            @include set-font(h1);
+        }
+    }
+
+    .skip-link {
+        @include set-font(h3);
+
+        a {
+            display: inline;
+        }
+    }
+
+    .question-number,
+    .question {
+        @include width-up-to($phone-max) {
+            @include set-font(h3);
+
+            line-height: 1.5;
+        }
+
+        @include wider-than($phone-max) {
+            @include set-font(h2);
+
+            line-height: 1.5;
+        }
+    }
+
+    .question-number {
+        justify-self: right;
+    }
+
+    .quiz-card {
+        overflow: hidden;
+        padding: 0;
+
+        .card-content {
+            @include normal-padding();
+
+            display: grid;
+            grid-gap: 5rem;
+        }
+
+        .bottom-border {
+            width: 100.5%;
+        }
+    }
+
+    .answers {
+        display: grid;
+        grid-auto-rows: 1fr;
+        grid-gap: 2rem;
+
+        @include wider-than($phone-max) {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    .answer {
+        overflow: hidden;
+        padding: 0;
+
+        .card-content {
+            @include normal-padding();
+
+            align-items: center;
+            border: 0;
+            border-image: linear-gradient(to bottom, os-color(green), os-color(light-blue)) 1 stretch;
+            border-left: 0.6rem solid transparent;
+            display: grid;
+            justify-items: center;
+            text-align: center;
+
+            @include width-up-to($phone-max) {
+                @include set-font(body-large);
+
+                line-height: 1.5;
+            }
+
+            @include width-between($phone-max, $tablet-max) {
+                @include body-font(2rem);
+
+                line-height: 1.5;
+            }
+
+            @include wider-than($tablet-max) {
+                @include body-font(2.4rem);
+
+                line-height: 1.5;
+            }
+        }
+    }
+
+    .lower-left {
+        bottom: 0;
+        position: absolute;
+        width: calc(6.29vw + 9.2rem);
+    }
+}

@@ -1,0 +1,12 @@
+<template args="model">
+    <div if="model" each="node in model.steps" class="node-and-bar {model.nodeStatus($item)}">
+        <div class="node">
+            <if condition="model.nodeStatus($item) === 'done'">
+                <span class="fa fa-check"></span>
+            <else>
+                {$item + 1}
+            </if>
+        </div>
+        <div if="$item < model.steps.length - 1" class="between-bar"></div>
+    </div>
+</template>

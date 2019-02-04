@@ -1,0 +1,13 @@
+<template args="model">
+    <div class="boxed">
+        <h1>{model.heading}, {model.firstName}</h1>
+        <div class="tagline">{model.subheading}</div>
+        <div class="description">{model.description}</div>
+        <div class="card">
+            <h2>{model.bookHeading}</h2>
+            <div>{model.bookDescription}</div>
+            <a class="btn primary" href="{model.booksLink}">{model.booksLinkText}</a>
+            <div data-html="skipHtml"></div>
+        </div>
+    </div>
+</template>

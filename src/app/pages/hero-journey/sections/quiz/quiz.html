@@ -1,0 +1,25 @@
+<template args="model">
+    <div class="boxed">
+        <div class="headline-group">
+            <h2>{model.heading}</h2>
+            <div class="skip-link">
+                Or, <a href="{model.skipLink.link}">{model.skipLink.text}</a>.
+            </div>
+        </div>
+        <div class="quiz-card card">
+            <div class="card-content">
+                <div class="question-number">{1 + model.currentQuestion}/{model.questions.length}</div>
+                <div class="question">{model.questions[model.currentQuestion].question}</div>
+                <div class="answers">
+                    <div each="answer in model.questions[model.currentQuestion].answers" class="answer card">
+                        <div class="card-content">
+                            {answer}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <img class="bottom-border" src="/images/hero-journey/card-accent.svg">
+        </div>
+    </div>
+    <img class="lower-left" src="{model.image.image}" alt="{model.image.altText}" role="decoration">
+</template>

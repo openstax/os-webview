@@ -1,0 +1,12 @@
+<template args="model">
+    <div class="boxed">
+        <div class="headline-group">
+            <h2>{model.heading}</h2>
+            <div class="blurb">{model.description}</div>
+        </div>
+        <div class="button-and-image">
+            <a class="btn primary" href="{model.linkUrl}">{model.linkText}</a>
+            <img src="{model.image.image}" alt="{model.image.altText}">
+        </div>
+    </div>
+</template>

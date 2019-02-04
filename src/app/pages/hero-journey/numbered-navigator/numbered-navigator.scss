@@ -1,0 +1,105 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+$node-size: 3.2rem;
+
+.numbered-navigator {
+    background-color: ui-color(white);
+    border-radius: 5rem;
+    box-shadow: 0 0.1rem 0.3rem 0 rgba(0, 0, 0, 0.2), 0 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.12), 0 0 0.2rem 0 rgba(0, 0, 0, 0.14);
+    display: grid;
+    padding: 0.9rem;
+    position: fixed;
+    z-index: 1;
+
+    @include width-up-to($phone-max) {
+        grid-auto-flow: column;
+        left: 0;
+        top: 5.5rem;
+        width: 100%;
+    }
+
+    @include wider-than($phone-max) {
+        top: 12.5rem;
+        width: 5rem;
+    }
+
+    @include width-between($phone-max, $media-content-max) {
+        right: 1rem;
+    }
+
+    @include wider-than($media-content-max) {
+        right: calc(50vw - #{$media-content-max / 2});
+    }
+
+    .node-and-bar {
+        display: grid;
+
+        @include width-up-to($phone-max) {
+            align-items: center;
+            grid-template-columns: auto 1fr;
+        }
+
+        @include wider-than($phone-max) {
+            grid-template-rows: auto 1fr;
+            justify-items: center;
+        }
+
+        &:not(.done):not(.on) {
+            .node {
+                border-color: ui-color(form-border);
+                color: ui-color(form-border);
+            }
+
+            .between-bar {
+                background-color: ui-color(form-border);
+            }
+        }
+
+        &.done {
+            .node {
+                background-color: os-color(green);
+                border-color: os-color(green);
+                color: text-color(white);
+            }
+
+            .between-bar {
+                background-color: os-color(green);
+            }
+        }
+
+        &.on {
+            .node {
+                border-color: os-color(green);
+                color: os-color(green);
+            }
+
+            .between-bar {
+                background-color: os-color(green);
+            }
+        }
+    }
+
+    .node {
+        align-content: center;
+        border-radius: 50%;
+        border-style: solid;
+        border-width: 0.15rem;
+        display: grid;
+        height: $node-size;
+        justify-content: center;
+        width: $node-size;
+    }
+
+    .between-bar {
+        @include width-up-to($phone-max) {
+            height: 0.2rem;
+            width: calc(25vw - 4.5rem); // Correct for 5 nodes
+        }
+
+        @include wider-than($phone-max) {
+            height: 5rem;
+            width: 0.2rem;
+        }
+    }
+
+}
