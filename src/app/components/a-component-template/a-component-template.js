@@ -8,11 +8,11 @@ import css from './a-component-template.css';
 
 const spec = {
     template,
+    css,
     // For specifying the tag (default div) and classes of the container element
     view: {
         classes: ['a-component-template']
     },
-    css,
     model() {
         this.props = this.getProps();
 
