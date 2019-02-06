@@ -3,7 +3,6 @@
 .hero-journey .thanks {
     align-items: center;
     background-color: os-color(gold);
-    display: grid;
     grid-column-gap: $normal-margin;
     grid-row-gap: 5rem;
     padding: 4rem $normal-margin 0;
@@ -11,6 +10,10 @@
     @include wider-than($phone-max) {
         grid-template-columns: 1fr 1fr;
         padding-right: 0;
+    }
+
+    &:not(.hidden) {
+        display: grid;
     }
 
     h2 {

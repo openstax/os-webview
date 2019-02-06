@@ -1,12 +1,17 @@
 <template args="model">
-    <div if="model" each="node in model.steps" class="node-and-bar {model.nodeStatus($item)}">
-        <div class="node">
-            <if condition="model.nodeStatus($item) === 'done'">
-                <span class="fa fa-check"></span>
-            <else>
-                {$item + 1}
-            </if>
+    <if condition="model">
+        <div class="right-tooltip {model.hiddenClass}">{model.tooltipMessage}</div>
+        <div class="left-tooltip {model.hiddenClass}">{model.tooltipMessage}</div>
+        <div class="phone-tooltip {model.hiddenClass}">{model.tooltipMessage}</div>
+        <div each="node in model.steps" class="node-and-bar {model.nodeStatus($item)}">
+            <div if="$item > 0" class="between-bar"></div>
+            <div class="node">
+                <if condition="model.nodeStatus($item) === 'done'">
+                    <span class="fa fa-check"></span>
+                <else>
+                    {$item + 1}
+                </if>
+            </div>
         </div>
-        <div if="$item < model.steps.length - 1" class="between-bar"></div>
-    </div>
+    </if>
 </template>

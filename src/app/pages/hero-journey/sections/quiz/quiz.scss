@@ -61,12 +61,36 @@
     .quiz-card {
         overflow: hidden;
         padding: 0;
+        position: relative;
+
+        .content-row {
+            display: grid;
+            grid-auto-columns: 100%;
+            grid-auto-flow: column;
+            min-height: 72rem;
+            overflow: hidden;
+        }
 
         .card-content {
             @include normal-padding();
 
-            display: grid;
-            grid-gap: 5rem;
+            &:not(.hidden) {
+                display: grid;
+                grid-gap: 5rem;
+            }
+
+            &.final {
+                @include title-font(9rem);
+
+                align-items: center;
+                justify-items: center;
+            }
+        }
+
+        .big-checkmark {
+            bottom: 0;
+            position: absolute;
+            right: 0;
         }
 
         .bottom-border {
@@ -82,11 +106,25 @@
         @include wider-than($phone-max) {
             grid-template-columns: 1fr 1fr;
         }
+
+        @include width-up-to($phone-max) {
+            margin-bottom: 10rem;
+        }
+
+        @include width-between($phone-max, $tablet-max) {
+            margin-bottom: calc(13.8rem - 10.2vw);
+        }
     }
 
     .answer {
+        cursor: pointer;
         overflow: hidden;
         padding: 0;
+
+        &.guessed {
+            background-color: ui-color(secondary);
+            pointer-events: none;
+        }
 
         .card-content {
             @include normal-padding();

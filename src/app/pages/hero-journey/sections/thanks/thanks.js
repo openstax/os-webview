@@ -5,7 +5,7 @@ import css from './thanks.css';
 const spec = {
     template,
     view: {
-        classes: ['thanks'],
+        classes: ['thanks', 'hidden'],
         tag: 'section'
     },
     css

@@ -5,7 +5,7 @@ import css from './try.css';
 const spec = {
     template,
     view: {
-        classes: ['try'],
+        classes: ['try', 'hidden'],
         tag: 'section'
     },
     css

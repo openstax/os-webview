@@ -1,6 +1,7 @@
 import componentType from '~/helpers/controller/init-mixin';
 import {description as template} from './books.html';
 import css from './books.css';
+import {on} from '~/helpers/controller/decorators';
 
 const spec = {
     template,
@@ -20,6 +21,12 @@ export default class extends componentType(spec) {
 
     onUpdate() {
         this.insertHtml();
+    }
+
+    @on('click [data-html="skipHtml"] a')
+    complete(event) {
+        this.model.onComplete();
+        event.preventDefault();
     }
 
 }

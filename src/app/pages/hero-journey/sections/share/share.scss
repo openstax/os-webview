@@ -2,9 +2,15 @@
 
 .hero-journey .share {
     background-image: url('/images/hero-journey/cloud-bg.svg');
-    background-position: center center;
-    background-size: cover;
+    background-position: left bottom;
+    background-repeat: no-repeat;
+    background-size: contain;
     padding-bottom: 0;
+
+    @include width-up-to($phone-max) {
+        background-position: center bottom;
+        background-size: cover;
+    }
 
     .headline-group {
         display: grid;
@@ -38,6 +44,7 @@
     }
 
     .lower-left {
+        display: block;
         margin-top: calc(-3.2vw - 3.7rem);
         width: calc(15.87vw + 18.55rem);
     }

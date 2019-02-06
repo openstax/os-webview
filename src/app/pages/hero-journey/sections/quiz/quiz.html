@@ -7,17 +7,25 @@
             </div>
         </div>
         <div class="quiz-card card">
-            <div class="card-content">
-                <div class="question-number">{1 + model.currentQuestion}/{model.questions.length}</div>
-                <div class="question">{model.questions[model.currentQuestion].question}</div>
-                <div class="answers">
-                    <div each="answer in model.questions[model.currentQuestion].answers" class="answer card">
-                        <div class="card-content">
-                            {answer}
+            <div class="content-row">
+                <div class="card-content" each="qa in model.questions">
+                    <div class="question-number">{1 + $item}/{model.questions.length}</div>
+                    <div class="question">{qa.question}</div>
+                    <div class="answers">
+                        <div each="answer in qa.answers" class="answer card">
+                            <div class="card-content">
+                                {answer}
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="final card-content">
+                    {model.completeMessage}
+                </div>
             </div>
+            <img if="model.currentQuestion >= model.questions.length"
+                class="big-checkmark" src="/images/hero-journey/2-quizb.svg"
+                alt="big green checkmark">
             <img class="bottom-border" src="/images/hero-journey/card-accent.svg">
         </div>
     </div>

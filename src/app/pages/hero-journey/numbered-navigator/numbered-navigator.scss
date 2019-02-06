@@ -1,11 +1,14 @@
 @import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/triangle';
 
 $node-size: 3.2rem;
+$shadow: 0 0.1rem 0.3rem 0 rgba(0, 0, 0, 0.2), 0 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.12), 0 0 0.2rem 0 rgba(0, 0, 0, 0.14);
+$tooltip-breakpoint: #{$media-content-max + 10em};
 
 .numbered-navigator {
     background-color: ui-color(white);
     border-radius: 5rem;
-    box-shadow: 0 0.1rem 0.3rem 0 rgba(0, 0, 0, 0.2), 0 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.12), 0 0 0.2rem 0 rgba(0, 0, 0, 0.14);
+    box-shadow: $shadow;
     display: grid;
     padding: 0.9rem;
     position: fixed;
@@ -31,6 +34,77 @@ $node-size: 3.2rem;
         right: calc(50vw - #{$media-content-max / 2});
     }
 
+    .left-tooltip,
+    .right-tooltip,
+    .phone-tooltip {
+        background-color: ui-color(white);
+        border-radius: 0.2rem;
+        filter: drop-shadow(rgba(0, 0, 0, 0.2) 0 0.2rem 0.2rem);
+        height: 6.5rem;
+        line-height: normal;
+        padding: 1rem;
+        position: absolute;
+        transition: top 1s, left 1s, opacity 1s;
+        width: 11rem;
+
+        &.invisible {
+            opacity: 0;
+        }
+    }
+
+    .right-tooltip {
+        left: calc(100% + 1rem);
+
+        @include width-up-to($tooltip-breakpoint) {
+            display: none;
+        }
+
+        &::before {
+            @include triangle(
+                $direction: left,
+                $position: top calc(50% - 0.7rem) left -0.7rem,
+                $color: ui-color(white),
+                $size: 0.7rem
+            );
+        }
+    }
+
+    .left-tooltip {
+        display: none;
+        right: calc(100% + 1rem);
+
+        @include width-between($phone-max, $tooltip-breakpoint) {
+            display: inherit;
+        }
+
+        &::after {
+            @include triangle(
+                $direction: right,
+                $position: top calc(50% - 0.7rem) right -0.7rem,
+                $color: ui-color(white),
+                $size: 0.7rem
+            );
+        }
+    }
+
+    .phone-tooltip {
+        display: none;
+        top: calc(100% + 1rem);
+
+        @include width-up-to($phone-max) {
+            display: inherit;
+        }
+
+        &::before {
+            @include triangle(
+                $direction: top,
+                $position: left calc(50% - 0.7rem) top -0.3rem,
+                $color: ui-color(white),
+                $size: 0.7rem
+            );
+        }
+    }
+
     .node-and-bar {
         display: grid;
 
@@ -46,6 +120,7 @@ $node-size: 3.2rem;
 
         &:not(.done):not(.on) {
             .node {
+                background-position: right bottom;
                 border-color: ui-color(form-border);
                 color: ui-color(form-border);
             }
@@ -57,9 +132,17 @@ $node-size: 3.2rem;
 
         &.done {
             .node {
-                background-color: os-color(green);
+                //background-color: os-color(green);
                 border-color: os-color(green);
                 color: text-color(white);
+
+                @include width-up-to($phone-max) {
+                    background-position: left bottom;
+                }
+
+                @include wider-than($phone-max) {
+                    background-position: right top;
+                }
             }
 
             .between-bar {
@@ -69,6 +152,7 @@ $node-size: 3.2rem;
 
         &.on {
             .node {
+                background-position: right bottom;
                 border-color: os-color(green);
                 color: os-color(green);
             }
@@ -87,10 +171,23 @@ $node-size: 3.2rem;
         display: grid;
         height: $node-size;
         justify-content: center;
+        transition: color 0.5s linear, background-color 1s linear, border-color 1s linear, background-position 0.7s linear;
         width: $node-size;
+
+        @include width-up-to($phone-max) {
+            background-image: linear-gradient(to right, os-color(green) 50%, transparent 50%);
+            background-size: 205% 100%;
+        }
+
+        @include wider-than($phone-max) {
+            background-image: linear-gradient(to bottom, os-color(green) 50%, transparent 50%);
+            background-size: 100% 205%;
+        }
     }
 
     .between-bar {
+        transition: background-color 1s linear;
+
         @include width-up-to($phone-max) {
             height: 0.2rem;
             width: calc(25vw - 4.5rem); // Correct for 5 nodes

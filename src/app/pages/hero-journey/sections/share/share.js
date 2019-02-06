@@ -5,7 +5,7 @@ import css from './share.css';
 const spec = {
     template,
     view: {
-        classes: ['share'],
+        classes: ['share', 'hidden'],
         tag: 'section'
     },
     css
