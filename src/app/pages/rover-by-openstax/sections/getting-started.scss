@@ -30,7 +30,7 @@
         }
 
         @include wider-than($tablet-max) {
-            grid-template-columns: auto auto;
+            grid-template-columns: minmax(auto, 67%) auto;
         }
 
         > div > * {
