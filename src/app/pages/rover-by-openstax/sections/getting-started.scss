@@ -4,6 +4,10 @@
     padding: calc(4rem + 10vw) 0;
     position: relative;
 
+    @include width-up-to($phone-max) {
+        padding-bottom: 39vw;
+    }
+
     .cards {
         display: grid;
         grid-gap: $normal-margin;
