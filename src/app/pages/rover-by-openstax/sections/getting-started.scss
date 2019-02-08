@@ -33,6 +33,7 @@
             grid-template-columns: minmax(auto, 67%) auto;
         }
 
+        > div,
         > div > * {
             max-width: 100%;
         }
