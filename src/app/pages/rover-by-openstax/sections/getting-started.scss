@@ -30,24 +30,12 @@
         }
 
         @include wider-than($tablet-max) {
-            grid-template-columns: minmax(auto, 67%) auto;
+            grid-template-columns: minmax(auto, 60%) auto;
         }
 
         > div,
         > div > * {
             max-width: 100%;
-        }
-
-        > :first-child {
-            > :first-child {
-                @include width-up-to($tablet-max) {
-                    width: 100%;
-                }
-
-                @include wider-than($tablet-max) {
-                    min-width: 50rem;
-                }
-            }
         }
     }
 

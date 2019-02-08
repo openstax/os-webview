@@ -7,7 +7,7 @@
 
         @include wider-than($tablet-max) {
             grid-gap: 8rem;
-            grid-template-columns: auto minmax(auto, 67%);
+            grid-template-columns: auto minmax(auto, 60%);
             justify-content: center;
         }
 
