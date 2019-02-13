@@ -4,14 +4,15 @@ import {description as template} from './hidden-fields.html';
 
 export default class HiddenFields extends Controller {
 
-    init() {
+    init(getRole) {
         this.template = template;
         this.view = {
             classes: ['hidden-fields']
         };
-        this.model = {
+        this.model = () => ({
+            role: getRole(),
             salesforce
-        };
+        });
     }
 
 }

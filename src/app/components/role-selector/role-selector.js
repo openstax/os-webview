@@ -7,9 +7,10 @@ import css from './role-selector.css';
 
 export default class RoleSelector extends CMSPageController {
 
-    init(getProps) {
+    init(getProps, onChange) {
         this.template = template;
         this.getProps = getProps;
+        this.onChange = onChange;
         this.view = {
             classes: ['role-selector']
         };
@@ -56,6 +57,9 @@ export default class RoleSelector extends CMSPageController {
             this.selectedRole = newValue;
             this.update();
             $.scrollTo(this.el);
+            if (this.onChange) {
+                this.onChange(newValue);
+            }
         }));
     }
 
