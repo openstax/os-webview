@@ -4,7 +4,6 @@ import css from './numbered-navigator.css';
 import {on} from '~/helpers/controller/decorators';
 
 const nodeStatuses = ['future', 'on', 'done'];
-const ttMessages = ['first message', 'second message', 'third message', 'fourth message', 'last message'];
 const spec = {
     template,
     view: {
@@ -18,7 +17,7 @@ const spec = {
             return nodeStatuses[1 + Math.sign(result.lastCompleted - nodeIndex)];
         };
         result.hiddenClass = this.hiddenClass;
-        result.tooltipMessage = ttMessages[result.lastCompleted];
+        result.tooltipMessage = result.steps.map((s) => s.task)[result.lastCompleted];
         return result;
     },
     lastLastCompleted: null,

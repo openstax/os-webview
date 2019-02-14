@@ -7,6 +7,8 @@ import Try from './sections/try/try';
 import Share from './sections/share/share';
 import Thanks from './sections/thanks/thanks';
 import $ from '~/helpers/$';
+import settings from 'settings';
+import {accountsModel} from '~/models/usermodel';
 
 const spec = {
     css,
@@ -18,6 +20,12 @@ const spec = {
 };
 
 export default class extends componentType(spec) {
+
+    init(...args) {
+        super.init(...args);
+        this.firstName = 'squire';
+        this.accountsModelPromise = accountsModel.load();
+    }
 
     onLoaded() {
         this.pageData = {
@@ -63,6 +71,13 @@ export default class extends componentType(spec) {
                     });
             });
         };
+        const updateLastCompleted = (newValue) => {
+            if (lastCompleted < newValue) {
+                lastCompleted = newValue;
+                this.update();
+                scrollPastCompleted();
+            }
+        };
         const navigator = new NumberedNavigator({
             getProps: () => {
                 return {
@@ -71,11 +86,26 @@ export default class extends componentType(spec) {
                 };
             }
         });
+        const parent = this;
 
+        this.accountsModelPromise.then((accountResponse) => {
+            fetch(`${settings.apiOrigin}/api/salesforce/adoption-status/?id=${accountResponse.id}`)
+                .then((r) => r.json())
+                .then((adoptionResponse) => {
+                    if (adoptionResponse.records.length > 0) {
+                        updateLastCompleted(3);
+                    }
+                });
+
+            this.firstName = accountResponse.first_name;
+            this.update();
+        });
+
+        document.getElementById('main').classList.add('with-sticky');
         this.regions.self.append(navigator);
         this.regions.self.append(new Books({
             heading: 'Get your Hero Badge',
-            firstName: 'Sonya',
+            get firstName() {return parent.firstName;},
             subheading: 'You\'re only a few steps away from becoming an official OpenStax Hero....',
             description: `Thanks to open alternatives like OpenStax, textbook prices have
             started to fall for the irst time in 50 years. Instructors who choose affordable,
@@ -89,11 +119,7 @@ export default class extends componentType(spec) {
             booksLinkText: 'Look at the books',
             skipHtml: 'Already reviewed the books? <a href="#skip">Click here.</a>',
             onComplete: () => {
-                if (lastCompleted < 2) {
-                    lastCompleted = 2;
-                }
-                this.update();
-                scrollPastCompleted();
+                updateLastCompleted(2);
             }
         }));
         this.regions.self.append(new Quiz({
@@ -136,11 +162,10 @@ export default class extends componentType(spec) {
                 altText: 'man'
             },
             onComplete: () => {
-                if (lastCompleted < 3) {
-                    lastCompleted = 3;
-                }
-                this.update();
-                scrollPastCompleted();
+                updateLastCompleted(3);
+                // TESTING ONLY!
+                setTimeout(() => updateLastCompleted(4), 3000);
+                setTimeout(() => updateLastCompleted(5), 6000);
             }
         }));
         this.regions.self.append(new Try({
@@ -158,7 +183,7 @@ export default class extends componentType(spec) {
         }));
         this.regions.self.append(new Share({
             heading: 'Congratulations',
-            firstName: 'Sonya',
+            get firstName() {return parent.firstName;},
             description: `You're a true hero, and we can't thank you enough for the
             work you do. There's just one more step before you get your official
             OpenStax Hero Badge: share your story with us.`,
@@ -170,8 +195,7 @@ export default class extends componentType(spec) {
                 altText: 'Trophy with excited people'
             },
             onComplete: () => {
-                this.lastCompleted = 5;
-                this.update();
+                updateLastCompleted(5);
             }
         }));
         this.regions.self.append(new Thanks({
@@ -183,6 +207,13 @@ export default class extends componentType(spec) {
             }
         }));
         navigator.update();
+    }
+
+    onClose() {
+        if (super.onClose) {
+            super.onClose();
+        }
+        document.getElementById('main').classList.remove('with-sticky');
     }
 
 }
