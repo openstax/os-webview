@@ -1,0 +1,51 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.hero-journey .share {
+    background-image: url('/images/hero-journey/cloud-bg.svg');
+    background-position: left bottom;
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding-bottom: 0;
+
+    @include width-up-to($phone-max) {
+        background-position: center bottom;
+        background-size: cover;
+    }
+
+    .headline-group {
+        display: grid;
+        grid-gap: 1rem;
+
+        > * {
+            margin: 0;
+        }
+    }
+
+    .blurb {
+        @include set-font(h3);
+
+        line-height: 1.25;
+    }
+
+    .form.card {
+        padding: 5rem;
+    }
+
+    textarea {
+        border: thin solid ui-color(form-border);
+        height: 33rem;
+        padding: $normal-margin;
+
+        &::placeholder {
+            @include set-font(body-regular);
+
+            color: text-color(footer);
+        }
+    }
+
+    .lower-left {
+        display: block;
+        margin-top: calc(-3.2vw - 3.7rem);
+        width: calc(15.87vw + 18.55rem);
+    }
+}

@@ -49,7 +49,7 @@ export default class StickyFooter extends componentType(spec) {
 
         window.addEventListener('scroll', this.handleScroll);
         this.handleScroll();
-        document.getElementById('main').classList.add('with-sticky-footer');
+        document.getElementById('main').classList.add('with-sticky');
     }
 
     onClose() {
@@ -57,7 +57,7 @@ export default class StickyFooter extends componentType(spec) {
             super.onClose();
         }
         window.removeEventListener('scroll', this.handleScroll);
-        document.getElementById('main').classList.remove('with-sticky-footer');
+        document.getElementById('main').classList.remove('with-sticky');
     }
 
 }

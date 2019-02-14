@@ -1,0 +1,15 @@
+<template args="model">
+    <div class="boxed">
+        <div class="headline-group">
+            <h2>{model.heading}, {model.firstName}!</h2>
+            <div class="blurb">{model.description}</div>
+            <br>
+            <div class="instructions">{model.instructions}</div>
+        </div>
+        <div class="form card">
+            <textarea placeholder="Please type your message here."></textarea>
+            <input class="btn primary" type="submit">
+        </div>
+    </div>
+    <img class="lower-left" src="{model.image.image}" alt="{model.image.altText}">
+</template>

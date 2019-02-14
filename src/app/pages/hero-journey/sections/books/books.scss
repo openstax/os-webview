@@ -1,0 +1,43 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.hero-journey .books {
+    background-image: linear-gradient(to bottom, #004c66, os-color(light-blue));
+    color: text-color(white);
+    min-height: 80rem;
+
+    .tagline {
+        @include set-font(h2);
+
+        font-weight: 500;
+    }
+
+    .card {
+        @include wider-than($phone-max) {
+            grid-template: // scss-lint:disable SpaceAfterPropertyColon
+            'hd hd hd'
+            'desc desc desc'
+            'button alt .' / auto minmax(10rem, 20rem);
+        }
+
+        @include width-up-to($phone-max) {
+            grid-template: 'hd' 'desc' 'button' 'alt';
+        }
+
+        h2 {
+            grid-area: hd;
+            margin: 0;
+        }
+
+        > div:nth-child(2) {
+            grid-area: desc;
+        }
+
+        .btn {
+            grid-area: button;
+        }
+
+        > div:nth-child(4) {
+            grid-area: alt;
+        }
+    }
+}

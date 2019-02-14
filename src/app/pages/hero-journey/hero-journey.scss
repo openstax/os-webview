@@ -1,0 +1,44 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+$near-white: #fafafa;
+
+.hero-journey {
+    background-color: $near-white;
+
+    section {
+        overflow: hidden;
+        padding: 5rem 0;
+        position: relative;
+    }
+
+    .boxed {
+        display: grid;
+        grid-gap: 4rem;
+        text-align: left;
+
+        @include wider-than($phone-max) {
+            padding-right: 7.5rem; // navigator gutter
+        }
+
+        > * {
+            margin: 0;
+        }
+    }
+
+    .card {
+        @extend %card;
+
+        background-color: ui-color(white);
+        color: text-color(normal);
+        display: grid;
+        grid-gap: 2rem;
+        padding: 2rem;
+    }
+
+    .btn.primary {
+        @extend %button;
+        @extend %primary;
+
+        justify-self: left;
+    }
+}

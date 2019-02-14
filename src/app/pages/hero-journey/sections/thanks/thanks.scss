@@ -1,0 +1,31 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.hero-journey .thanks {
+    align-items: center;
+    background-color: os-color(gold);
+    grid-column-gap: $normal-margin;
+    grid-row-gap: 5rem;
+    padding: 4rem $normal-margin 0;
+
+    @include wider-than($phone-max) {
+        grid-template-columns: 1fr 1fr;
+        padding-right: 0;
+    }
+
+    &:not(.hidden) {
+        display: grid;
+        min-height: calc(100vh - 5.5rem);
+    }
+
+    h2 {
+        @include set-font(h1);
+        @include wider-than($media-content-max) {
+            margin-left: calc(50vw - #{$content-max / 2});
+        }
+    }
+
+    img {
+        align-self: end;
+        max-width: 100%;
+    }
+}
