@@ -137,7 +137,7 @@
 
         // Optimizely selector
         &.hide-tab {
-            .tab:nth-child(3) {
+            .tab:nth-child(3):nth-last-child(2) {
                 display: none;
             }
         }

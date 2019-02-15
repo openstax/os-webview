@@ -35,15 +35,15 @@ export default class extends componentType(spec) {
             title: 'Hero\'s Journey',
             steps: [
                 {
-                    task: 'Get an account'
+                    task: 'Make an account'
                 }, {
                     task: 'Look at the books'
                 }, {
-                    task: 'Pop quiz!'
+                    task: '?'
                 }, {
-                    task: 'Try a book in your course'
+                    task: 'Try OpenStax in your course'
                 }, {
-                    task: 'Write a testimonial'
+                    task: 'Share your story'
                 }
             ]
         };
@@ -139,11 +139,11 @@ export default class extends componentType(spec) {
         this.regions.self.append(new Books({
             heading: 'Get your Hero Badge',
             get firstName() {return parent.firstName;},
-            subheading: 'You\'re only a few steps away from becoming an official OpenStax Hero....',
             description: `Thanks to open alternatives like OpenStax, textbook prices have
-            started to fall for the irst time in 50 years. Instructors who choose affordable,
-            open materials aren't just champions in their classroom -- they are causing a
+            started to fall for the first time in 50 years. Instructors who choose affordable,
+            open materials aren't just champions in their classroom – they are causing a
             market-wide shift that's making school more affordable for all learners.`,
+            subheading: 'You\'re already a hero in our eyes. Now it\'s time to make it official!',
             bookHeading: 'Look at the books',
             bookDescription: `You already completed step one when you made an account.
             The next step is to review the book to see if it could be useful in your course.
@@ -177,16 +177,25 @@ export default class extends componentType(spec) {
                     correctIndex: 1
                 },
                 {
-                    question: `
-                    We have another question
-                    OpenStax is a(n) ___________`,
+                    question: 'What formats are OpenStax books available in?',
                     answers: [
-                        'Something wrong',
-                        'Another silly answer',
-                        'What you should select',
-                        'You have gone too far'
+                        'Print',
+                        'PDF and web view',
+                        'Kindle and iBooks',
+                        'All of the above!'
                     ],
-                    correctIndex: 2
+                    correctIndex: 3
+                },
+                {
+                    question: 'What additional resource are available with OpenStax books?',
+                    answers: [
+                        `Online homework, customization help, and other technology from our
+                         ecosystem of partners`,
+                        'PowerPoint slides',
+                        'Getting started guides for instructors and students',
+                        'All of the above and more!'
+                    ],
+                    correctIndex: 3
                 }
 
             ],
@@ -220,9 +229,9 @@ export default class extends componentType(spec) {
             description: `You're a true hero, and we can't thank you enough for the
             work you do. There's just one more step before you get your official
             OpenStax Hero Badge: share your story with us.`,
-            instructions: `Tell us what you've learned, what you're most excited about
-            for the future with your new text, or why you think it's important to share
-            the power of an open textbook.`,
+            instructions: `Tell us what you've learned about OpenStax, what you're most
+            excited about for the future with your new text, or why you think it's
+            important to share the power of an open textbook.`,
             image: {
                 image: '/images/hero-journey/4-trophy-illustration.svg',
                 altText: 'Trophy with excited people'
@@ -232,8 +241,12 @@ export default class extends componentType(spec) {
             }
         }));
         this.regions.self.append(new Thanks({
-            heading: `Thank you, and welcome to the OpenStax family. Check your inbox
-            for your Hero Badge!`,
+            heading: `Thank you, and welcome to the OpenStax family!
+            We'll mail you your Hero Badge – you can use it as your email signature
+            to show off your Hero status and help spread the word about OpenStax.`,
+            description: `We’d love to send you a sticker as well! If you’d like to
+            get a Hero Badge sticker in the mail, click
+            <a href="http://www2.openstax.org/l/218812/2019-02-15/69zff">here</a>.`,
             image: {
                 image: '/images/hero-journey/5-thanks-illustration.svg',
                 altText: 'People with floating hearts'
