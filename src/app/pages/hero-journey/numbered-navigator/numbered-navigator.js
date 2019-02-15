@@ -66,18 +66,32 @@ export default class extends componentType(spec) {
         }
     }
 
-    @on('mouseenter')
+    @on('mouseenter .numbered-navigator')
     showToolTip() {
         this.hiddenClass = '';
         this.showing = true;
         this.update();
     }
 
-    @on('mouseleave')
+    @on('mouseleave .numbered-navigator')
     hideToolTip() {
         this.hiddenClass = 'invisible';
         this.showing = false;
         this.update();
+    }
+
+    @on('mouseover .node')
+    showToolTipForNode(event) {
+        const node = event.delegateTarget;
+        const {steps} = this.getProps();
+        const nodeAndBars = Array.from(this.el.querySelectorAll('.node-and-bar'));
+        const index = nodeAndBars.indexOf(node.parentNode);
+        const tooltips = this.el.querySelectorAll('.left-tooltip,.right-tooltip,.phone-tooltip');
+
+        tooltips.forEach((t) => {
+            t.textContent = steps[index].task;
+        });
+        this.positionToolTips(node);
     }
 
 }

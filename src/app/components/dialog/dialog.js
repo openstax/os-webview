@@ -1,7 +1,6 @@
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
-import Contents from '~/pages/details/contents/contents';
 import ModalContent from '../modal-content/modal-content';
 import {description as template} from './dialog.html';
 import css from './dialog.css';
