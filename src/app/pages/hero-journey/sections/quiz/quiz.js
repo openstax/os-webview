@@ -66,4 +66,9 @@ export default class extends componentType(spec) {
         }
     }
 
+    @on('click .skip-link a')
+    saveProgressBeforeLeaving(event) {
+        this.model.onComplete();
+    }
+
 }

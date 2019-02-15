@@ -6,10 +6,16 @@
             <br>
             <div class="instructions">{model.instructions}</div>
         </div>
-        <div class="form card">
-            <textarea placeholder="Please type your message here."></textarea>
+        <iframe name="form-response" id="form-response" class="hidden"
+            src="" width="0" height="0" tabindex="-1"></iframe>
+        <form accept-charset="UTF-8" class="form card" target="form-response"
+         action="{model.action}" method="post">
+            <input type="hidden" name="Books__c" value="{model.book}">
+            <input type="hidden" name="Contact__c" value="{model.contact}">
+            <input type="hidden" name="School__c" value="{model.school}">
+            <textarea name="Testimonial__c" placeholder="Please type your message here." required></textarea>
             <input class="btn primary" type="submit">
-        </div>
+        </form>
     </div>
     <img class="lower-left" src="{model.image.image}" alt="{model.image.altText}">
 </template>

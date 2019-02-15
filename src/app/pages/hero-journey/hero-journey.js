@@ -15,8 +15,8 @@ const spec = {
     view: {
         classes: ['hero-journey', 'page'],
         tag: 'main'
-    },
-    slug: 'pages/hero-journey'
+    }
+    // slug: 'pages/hero-journey'
 };
 
 export default class extends componentType(spec) {
@@ -24,6 +24,9 @@ export default class extends componentType(spec) {
     init(...args) {
         super.init(...args);
         this.firstName = 'squire';
+        this.accountId = '';
+        this.contactId = '';
+        this.school = '';
         this.accountsModelPromise = accountsModel.load();
     }
 
@@ -71,11 +74,27 @@ export default class extends componentType(spec) {
                     });
             });
         };
-        const updateLastCompleted = (newValue) => {
+        const updateLastCompleted = (newValue, save=true) => {
             if (lastCompleted < newValue) {
                 lastCompleted = newValue;
                 this.update();
                 scrollPastCompleted();
+                if (save) {
+                    fetch(
+                        `${settings.apiOrigin}/api/progress/?account_id=${this.accountId}`,
+                        {
+                            method: 'POST',
+                            mode: 'cors',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                account_id: this.accountId, // eslint-disable-line camelcase
+                                progress: newValue
+                            })
+                        }
+                    );
+                }
             }
         };
         const navigator = new NumberedNavigator({
@@ -89,16 +108,30 @@ export default class extends componentType(spec) {
         const parent = this;
 
         this.accountsModelPromise.then((accountResponse) => {
-            fetch(`${settings.apiOrigin}/api/salesforce/adoption-status/?id=${accountResponse.id}`)
+            this.accountId = accountResponse.id;
+            this.contactId = accountResponse.contact_infos
+                .filter((i) => i.is_verified)
+                .reduce((a, b) => (a.is_guessed_preferred ? a : b), {})
+                .id;
+            this.school = accountResponse.self_reported_school;
+            fetch(`${settings.apiOrigin}/api/salesforce/adoption-status/?id=${this.accountId}`)
                 .then((r) => r.json())
                 .then((adoptionResponse) => {
                     if (adoptionResponse.records.length > 0) {
-                        updateLastCompleted(3);
+                        updateLastCompleted(4);
                     }
                 });
 
             this.firstName = accountResponse.first_name;
             this.update();
+
+            fetch(`${settings.apiOrigin}/api/progress/?account_id=${this.accountId}`)
+                .then((r) => r.json())
+                .then((progress) => {
+                    if (progress.length > 0) {
+                        updateLastCompleted(progress.slice(-1)[0].progress, false);
+                    }
+                });
         });
 
         document.getElementById('main').classList.add('with-sticky');
@@ -163,9 +196,6 @@ export default class extends componentType(spec) {
             },
             onComplete: () => {
                 updateLastCompleted(3);
-                // TESTING ONLY!
-                setTimeout(() => updateLastCompleted(4), 3000);
-                setTimeout(() => updateLastCompleted(5), 6000);
             }
         }));
         this.regions.self.append(new Try({
@@ -184,6 +214,9 @@ export default class extends componentType(spec) {
         this.regions.self.append(new Share({
             heading: 'Congratulations',
             get firstName() {return parent.firstName;},
+            book: 'Other',
+            get contact() {return parent.contactId;},
+            get school() {return parent.school || 'none?';},
             description: `You're a true hero, and we can't thank you enough for the
             work you do. There's just one more step before you get your official
             OpenStax Hero Badge: share your story with us.`,

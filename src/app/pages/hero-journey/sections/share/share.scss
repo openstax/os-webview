@@ -46,6 +46,7 @@
     .lower-left {
         display: block;
         margin-top: calc(-3.2vw - 3.7rem);
+        pointer-events: none;
         width: calc(15.87vw + 18.55rem);
     }
 }

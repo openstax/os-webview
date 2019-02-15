@@ -200,8 +200,8 @@ $tooltip-breakpoint: #{$media-content-max + 10em};
     }
 
     .badge {
-        max-width: 8rem;
         position: absolute;
+        width: 8rem;
 
         @include width-up-to($phone-max) {
             right: 0;
@@ -212,7 +212,7 @@ $tooltip-breakpoint: #{$media-content-max + 10em};
         @include wider-than($phone-max) {
             bottom: 0;
             right: 50%;
-            transform: translate(50%, 100%);
+            transform: translate(52%, 100%);
         }
 
         &.not-yet {

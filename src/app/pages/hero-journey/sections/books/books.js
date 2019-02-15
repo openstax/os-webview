@@ -29,4 +29,9 @@ export default class extends componentType(spec) {
         event.preventDefault();
     }
 
+    @on('click .btn.primary')
+    saveProgressBeforeLeaving(event) {
+        this.model.onComplete();
+    }
+
 }
