@@ -1,19 +1,13 @@
 import salesforce from '~/models/salesforce';
-import {Controller} from 'superb.js';
+import componentType from '~/helpers/controller/init-mixin';
 import {description as template} from './hidden-fields.html';
 
-export default class HiddenFields extends Controller {
-
-    init(getProps) {
-        this.template = template;
-        this.getProps = getProps;
-        this.view = {
-            classes: ['hidden-fields']
-        };
-        this.model = () => this.getModel();
-    }
-
-    getModel() {
+const spec = {
+    template,
+    view: {
+        classes: ['hidden-fields']
+    },
+    model() {
         this.props = this.getProps();
 
         return {
@@ -21,8 +15,17 @@ export default class HiddenFields extends Controller {
             book: this.props.book,
             adoptionStatus: this.props.adoptionStatus,
             numberOfStudents: this.props.numberOfStudents,
-            isFirst: this.props.isFirst
+            isFirst: this.props.isFirst,
+            role: this.props.role
         };
+    }
+};
+
+export default class HiddenFields extends componentType(spec) {
+
+    init(getProps) {
+        super.init();
+        this.getProps = getProps;
     }
 
 }

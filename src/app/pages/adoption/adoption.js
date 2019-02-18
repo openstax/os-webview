@@ -36,7 +36,11 @@ export default class AdoptionForm extends Controller {
         this.usingInfo = {};
         this.disableHowUsing = false;
         this.currentBookInfo = {};
-        this.hiddenFields = new HiddenFields(() => this.currentBookInfo);
+        this.hiddenFields = new HiddenFields(
+            () => Object.assign({
+                role: this.roleSelector ? this.roleSelector.selectedRole : 'none selected'
+            }, this.currentBookInfo)
+        );
         this.howUsing = new HowUsing(
             () => ({
                 selectedBooks: this.selectedBooks,
@@ -124,16 +128,21 @@ export default class AdoptionForm extends Controller {
             }
         );
 
-        this.roleSelector = new RoleSelector(() => [
-            {
-                contents: studentForm,
-                hideWhen: (role) => role !== 'Student'
-            },
-            {
-                contents: facultyForm,
-                hideWhen: (role) => ['', 'Student'].includes(role)
+        this.roleSelector = new RoleSelector(
+            () => [
+                {
+                    contents: studentForm,
+                    hideWhen: (role) => role !== 'Student'
+                },
+                {
+                    contents: facultyForm,
+                    hideWhen: (role) => ['', 'Student'].includes(role)
+                }
+            ],
+            () => {
+                this.hiddenFields.update();
             }
-        ]);
+        );
         this.regions.roleSelector.attach(this.roleSelector);
     }
 

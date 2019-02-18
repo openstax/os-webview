@@ -34,6 +34,8 @@ export default class InterestForm extends BaseClass {
             header: '[data-region="header"]',
             roleSelector: '[data-region="role-selector"]'
         };
+        this.selectedRole = 'none selected';
+        this.hiddenFields = new HiddenFields(() => this.selectedRole);
     }
 
     firstPage() {
@@ -45,7 +47,7 @@ export default class InterestForm extends BaseClass {
         const result = new SeriesOfComponents({
             className: 'page-1',
             contents: [
-                new HiddenFields(),
+                this.hiddenFields,
                 contactForm
             ]
         });
@@ -154,16 +156,22 @@ export default class InterestForm extends BaseClass {
             }
         );
 
-        this.roleSelector = new RoleSelector(() => [
-            {
-                contents: studentForm,
-                hideWhen: (role) => role !== 'Student'
-            },
-            {
-                contents: facultyForm,
-                hideWhen: (role) => ['', 'Student'].includes(role)
+        this.roleSelector = new RoleSelector(
+            () => [
+                {
+                    contents: studentForm,
+                    hideWhen: (role) => role !== 'Student'
+                },
+                {
+                    contents: facultyForm,
+                    hideWhen: (role) => ['', 'Student'].includes(role)
+                }
+            ],
+            (newValue) => {
+                this.selectedRole = newValue;
+                this.hiddenFields.update();
             }
-        ]);
+        );
         this.regions.roleSelector.attach(this.roleSelector);
     }
 
