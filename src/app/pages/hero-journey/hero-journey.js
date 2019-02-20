@@ -62,7 +62,7 @@ export default class extends componentType(spec) {
 
     onDataLoaded() {
         const data = this.pageData;
-        let lastCompleted = 1; // It's not really last completed, but currently active
+        let lastCompleted = 0; // It's not really last completed, but currently active
         // Important: navigator and sections are the first (only) children
         const scrollPastCompleted = () => {
             const completedChild = this.regions.self.controllers[lastCompleted];
@@ -126,6 +126,7 @@ export default class extends componentType(spec) {
 
             this.firstName = accountResponse.first_name;
             this.lastName = accountResponse.last_name;
+            updateLastCompleted(1);
             this.update();
 
             fetch(`${settings.apiOrigin}/api/progress/?account_id=${this.accountId}`)
@@ -140,6 +141,7 @@ export default class extends componentType(spec) {
         document.getElementById('main').classList.add('with-sticky');
         this.regions.self.append(navigator);
         this.regions.self.append(new Books({
+            get email() {return parent.email;},
             heading: 'Get your Hero Badge',
             get firstName() {return parent.firstName;},
             description: `Thanks to open alternatives like OpenStax, textbook prices have
