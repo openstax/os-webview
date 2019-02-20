@@ -17,11 +17,14 @@
         min-height: calc(100vh - 5.5rem);
     }
 
-    h2 {
-        @include set-font(h1);
+    .text-block {
         @include wider-than($media-content-max) {
             margin-left: calc(50vw - #{$content-max / 2});
         }
+    }
+
+    h2 {
+        @include set-font(h1);
     }
 
     img {

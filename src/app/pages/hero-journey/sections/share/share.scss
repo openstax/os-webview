@@ -28,7 +28,12 @@
     }
 
     .form.card {
-        padding: 5rem;
+        grid-gap: 4rem;
+        padding: 4rem;
+
+        .btn.primary {
+            justify-self: right;
+        }
     }
 
     textarea {

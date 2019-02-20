@@ -25,7 +25,9 @@ export default class extends componentType(spec) {
         super.init(...args);
         this.firstName = 'squire';
         this.accountId = '';
-        this.contactId = '';
+        this.firstName = '';
+        this.lastName = '';
+        this.email = '';
         this.school = '';
         this.accountsModelPromise = accountsModel.load();
     }
@@ -60,7 +62,7 @@ export default class extends componentType(spec) {
 
     onDataLoaded() {
         const data = this.pageData;
-        let lastCompleted = 1; // It's not really last completed, but currently active
+        let lastCompleted = 0; // It's not really last completed, but currently active
         // Important: navigator and sections are the first (only) children
         const scrollPastCompleted = () => {
             const completedChild = this.regions.self.controllers[lastCompleted];
@@ -109,10 +111,10 @@ export default class extends componentType(spec) {
 
         this.accountsModelPromise.then((accountResponse) => {
             this.accountId = accountResponse.id;
-            this.contactId = accountResponse.contact_infos
+            this.email = accountResponse.contact_infos
                 .filter((i) => i.is_verified)
                 .reduce((a, b) => (a.is_guessed_preferred ? a : b), {})
-                .id;
+                .value;
             this.school = accountResponse.self_reported_school;
             fetch(`${settings.apiOrigin}/api/salesforce/adoption-status/?id=${this.accountId}`)
                 .then((r) => r.json())
@@ -123,6 +125,8 @@ export default class extends componentType(spec) {
                 });
 
             this.firstName = accountResponse.first_name;
+            this.lastName = accountResponse.last_name;
+            updateLastCompleted(1);
             this.update();
 
             fetch(`${settings.apiOrigin}/api/progress/?account_id=${this.accountId}`)
@@ -137,6 +141,7 @@ export default class extends componentType(spec) {
         document.getElementById('main').classList.add('with-sticky');
         this.regions.self.append(navigator);
         this.regions.self.append(new Books({
+            get email() {return parent.email;},
             heading: 'Get your Hero Badge',
             get firstName() {return parent.firstName;},
             description: `Thanks to open alternatives like OpenStax, textbook prices have
@@ -223,8 +228,9 @@ export default class extends componentType(spec) {
         this.regions.self.append(new Share({
             heading: 'Congratulations',
             get firstName() {return parent.firstName;},
+            get lastName() {return parent.lastName;},
             book: 'Other',
-            get contact() {return parent.contactId;},
+            get email() {return parent.email;},
             get school() {return parent.school || 'none?';},
             description: `You're a true hero, and we can't thank you enough for the
             work you do. There's just one more step before you get your official
