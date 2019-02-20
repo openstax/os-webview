@@ -126,14 +126,14 @@ export default class extends componentType(spec) {
 
             this.firstName = accountResponse.first_name;
             this.lastName = accountResponse.last_name;
-            updateLastCompleted(1);
-            this.update();
 
             fetch(`${settings.apiOrigin}/api/progress/?account_id=${this.accountId}`)
                 .then((r) => r.json())
                 .then((progress) => {
                     if (progress.length > 0) {
                         updateLastCompleted(progress.slice(-1)[0].progress, false);
+                    } else {
+                        updateLastCompleted(1);
                     }
                 });
         });
