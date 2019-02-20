@@ -18,4 +18,8 @@ export default class extends componentType(spec) {
         this.model = model;
     }
 
+    onUpdate() {
+        this.insertHtml();
+    }
+
 }

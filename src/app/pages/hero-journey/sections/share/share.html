@@ -7,13 +7,17 @@
             <div class="instructions">{model.instructions}</div>
         </div>
         <iframe name="form-response" id="form-response" class="hidden"
-            src="" width="0" height="0" tabindex="-1"></iframe>
+        src="" width="0" height="0" tabindex="-1"></iframe>
         <form accept-charset="UTF-8" class="form card" target="form-response"
-         action="{model.action}" method="post">
-            <input type="hidden" name="Books__c" value="{model.book}">
-            <input type="hidden" name="Contact__c" value="{model.contact}">
-            <input type="hidden" name="School__c" value="{model.school}">
-            <textarea name="Testimonial__c" placeholder="Please type your message here." required></textarea>
+            action="{model.action}" method="post">
+            <input type="hidden" name="oid" value="{model.salesforce.oid}">
+            <input type="hidden" name="lead_source" value="Testimonial">
+            <input type="hidden" name="00NU00000053nzR" value="{model.book}">
+            <input type="hidden" name="first_name" value="{model.firstName}">
+            <input type="hidden" name="last_name" value="{model.lastName}">
+            <input type="hidden" name="email" value="{model.email}">
+            <input type="hidden" name="company" value="{model.school}">
+            <textarea name="00N21000001IpUW" placeholder="Please type your message here." required></textarea>
             <input class="btn primary" type="submit">
         </form>
     </div>

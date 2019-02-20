@@ -56,7 +56,7 @@ export default class extends componentType(spec) {
     onUpdate() {
         const {lastCompleted} = this.getProps();
 
-        if (this.el && lastCompleted !== this.lastLastCompleted) {
+        if (this.el && this.showing) {
             const nodeEl = this.el.querySelector('.node-and-bar.on .node');
 
             if (nodeEl) {
@@ -80,7 +80,7 @@ export default class extends componentType(spec) {
         this.update();
     }
 
-    @on('mouseover .node')
+    @on('click .node')
     showToolTipForNode(event) {
         const node = event.delegateTarget;
         const {steps} = this.getProps();

@@ -18,6 +18,7 @@ export default class extends componentType(spec) {
     init(model) {
         super.init();
         this.model = model;
+        this.model.salesforce = salesforce;
         this.model.action = `https://${salesforce.salesforceHome}/servlet/servlet.WebToLead?encoding=UTF-8`;
     }
 

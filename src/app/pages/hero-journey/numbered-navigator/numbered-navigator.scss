@@ -37,10 +37,14 @@ $tooltip-breakpoint: #{$media-content-max + 10em};
     .left-tooltip,
     .right-tooltip,
     .phone-tooltip {
+        align-items: center;
         background-color: ui-color(white);
         border-radius: 0.2rem;
+        display: grid;
         filter: drop-shadow(rgba(0, 0, 0, 0.2) 0 0.2rem 0.2rem);
+        font-weight: bold;
         line-height: normal;
+        min-height: 10rem;
         padding: 1rem;
         position: absolute;
         transition: top 1s, left 1s, opacity 1s;
