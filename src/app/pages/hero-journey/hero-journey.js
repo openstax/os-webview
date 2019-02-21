@@ -41,7 +41,7 @@ export default class extends componentType(spec) {
                 }, {
                     task: 'Look at the books'
                 }, {
-                    task: '?'
+                    task: 'Learn more about us'
                 }, {
                     task: 'Try OpenStax in your course'
                 }, {
@@ -74,6 +74,7 @@ export default class extends componentType(spec) {
                     .forEach((prevChild) => {
                         prevChild.el.classList.add('hidden');
                     });
+                window.scrollTo(0, 0);
             });
         };
         const updateLastCompleted = (newValue, save=true) => {
@@ -119,7 +120,7 @@ export default class extends componentType(spec) {
             fetch(`${settings.apiOrigin}/api/salesforce/adoption-status/?id=${this.accountId}`)
                 .then((r) => r.json())
                 .then((adoptionResponse) => {
-                    if (adoptionResponse.records.length > 0) {
+                    if (adoptionResponse.records.some((r) => r.Adoption_Status__c === 'Current Adopter')) {
                         updateLastCompleted(4);
                     }
                 });
@@ -144,6 +145,7 @@ export default class extends componentType(spec) {
             get email() {return parent.email;},
             heading: 'Get your Hero Badge',
             get firstName() {return parent.firstName;},
+            login: `${settings.apiOrigin}/accounts/login/openstax/?next=${encodeURIComponent(window.location.href)}`,
             description: `Thanks to open alternatives like OpenStax, textbook prices have
             started to fall for the first time in 50 years. Instructors who choose affordable,
             open materials aren't just champions in their classroom – they are causing a

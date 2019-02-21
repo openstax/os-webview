@@ -5,6 +5,10 @@
     color: text-color(white);
     min-height: 80rem;
 
+    h1 a {
+        color: inherit;
+    }
+
     .tagline {
         @include set-font(h2);
 
