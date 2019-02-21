@@ -4,8 +4,21 @@ import linkHelper from '~/helpers/link';
 import {accountsModel} from '~/models/usermodel';
 
 const RELATIVE_TO_ROOT = /^\//;
-
 const SETUP_GA = Symbol();
+const waitForAnalytics = new Promise((resolve, reject) => {
+    let triesLeft = 10;
+    const tryInterval = setInterval(() => {
+        if (typeof window.ga === 'function') {
+            clearInterval(tryInterval);
+            resolve(true);
+        } else if (triesLeft > 0) {
+            --triesLeft;
+        } else {
+            clearInterval(tryInterval);
+            reject('Failed to load Google Analytics');
+        }
+    }, 500);
+});
 
 class Analytics {
 
@@ -18,14 +31,17 @@ class Analytics {
     }
 
     send(fields) {
-        if (typeof window.ga === 'function') {
-            window.ga('send', fields);
-            if (settings.analyticsID2) {
-                window.ga('ga2.send', fields);
+        waitForAnalytics.then(
+            () => {
+                window.ga('send', fields);
+                if (settings.analyticsID2) {
+                    window.ga('ga2.send', fields);
+                }
+            },
+            (problem) => {
+                console.warn(problem);
             }
-        } else {
-            console.warn('Google Analytics not loaded; did not send', fields);
-        }
+        );
     }
 
     sendPageview(page) {
