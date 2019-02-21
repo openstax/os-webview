@@ -250,7 +250,7 @@ export default class extends componentType(spec) {
         }));
         this.regions.self.append(new Thanks({
             heading: `Thank you, and welcome to the OpenStax family!
-            We'll mail you your Hero Badge – you can use it as your email signature
+            We'll email you your Hero Badge – you can use it as your email signature
             to show off your Hero status and help spread the word about OpenStax.`,
             description: `We’d love to send you a sticker as well! If you’d like to
             get a Hero Badge sticker in the mail, click
