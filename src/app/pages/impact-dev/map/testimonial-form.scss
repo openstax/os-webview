@@ -15,11 +15,11 @@
     [type="submit"] {
         @extend %button;
 
+        float: none;
+        justify-self: right;
+
         &:not(:disabled) {
             @extend %primary;
         }
-
-        float: none;
-        justify-self: right;
     }
 }

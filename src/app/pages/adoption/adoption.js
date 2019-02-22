@@ -118,7 +118,7 @@ export default class AdoptionForm extends Controller {
         ];
         const facultyForm = new MultiPageForm(
             () => ({
-                action: `https://${salesforce.salesforceHome}/servlet/servlet.WebToLead?encoding=UTF-8`,
+                action: salesforce.webtoleadUrl,
                 contents: facultyPages
             }),
             {

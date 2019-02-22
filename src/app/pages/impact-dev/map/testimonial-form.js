@@ -2,10 +2,10 @@ import componentType from '~/helpers/controller/init-mixin';
 import {description as template} from './testimonial-form.html';
 import css from './testimonial-form.css';
 import shell from '~/components/shell/shell';
-import userModel, {accountsModel} from '~/models/usermodel';
 import booksPromise from '~/models/books';
 import FormSelect from '~/components/form-select/form-select';
 import salesforce from '~/models/salesforce';
+import {on} from '~/helpers/controller/decorators';
 
 const spec = {
     template,
@@ -18,25 +18,22 @@ const spec = {
     },
     model() {
         return {
-            id: this.id,
-            name: this.name,
             role: this.role,
             book: this.book,
-            submitTo: `${salesforce.salesforceHome}/servlet/servlet.WebToLead?encoding=UTF-8`
+            email: this.email,
+            school: this.school,
+            firstName: this.firstName,
+            lastName: this.lastName,
+            salesforce,
+            submitTo: salesforce.webtoleadUrl
         };
     }
 };
+const hideDialog = shell.hideDialog.bind(shell);
 
 export default class TestimonialForm extends componentType(spec) {
 
     onLoaded() {
-        accountsModel.load().then((info) => {
-            this.id = info.id;
-            this.name = info.full_name;
-            this.role = info.self_reported_role;
-            this.book = null;
-            this.update();
-        });
         booksPromise.then((items) => {
             const options = items.map((i) => ({
                 label: i.title,
@@ -47,7 +44,7 @@ export default class TestimonialForm extends componentType(spec) {
                 instructions: 'Book title',
                 validationMessage: () => '',
                 placeholder: 'Please select one',
-                name: 'book_title',
+                name: '00NU00000053nzR',
                 options
             }, (newValue) => {
                 this.book = newValue;
@@ -62,5 +59,18 @@ export default class TestimonialForm extends componentType(spec) {
             content: this
         }));
     }
+
+    @on('submit form')
+    watchForResponse() {
+        if (!this.listeningForResponse) {
+            this.listeningForResponse = true;
+            this.el.querySelector('#form-response').addEventListener('load', hideDialog);
+        }
+    }
+
+    onClose() {
+        this.el.querySelector('#form-response').removeEventListener('load', hideDialog);
+    }
+
 
 }

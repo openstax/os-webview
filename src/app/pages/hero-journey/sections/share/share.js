@@ -19,7 +19,7 @@ export default class extends componentType(spec) {
         super.init();
         this.model = model;
         this.model.salesforce = salesforce;
-        this.model.action = `https://${salesforce.salesforceHome}/servlet/servlet.WebToLead?encoding=UTF-8`;
+        this.model.action = salesforce.webtoleadUrl;
     }
 
     @on('submit form')
