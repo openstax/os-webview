@@ -1,0 +1,19 @@
+<template args="model">
+    <iframe name="form-response" id="form-response" class="hidden"
+        src="" width="0" height="0" tabindex="-1"></iframe>
+    <form accept-charset="UTF-8" class="form" target="form-response"
+        action="{model.submitTo}" method="post">
+        <input type="hidden" name="oid" value="{model.salesforce.oid}">
+        <input type="hidden" name="lead_source" value="Testimonial">
+        <input type="hidden" name="first_name" value="{model.firstName}">
+        <input type="hidden" name="last_name" value="{model.lastName}">
+        <input type="hidden" name="email" value="{model.email}">
+        <input type="hidden" name="company" value="{model.school}">
+        <div class="book-selector" skip="true"></div>
+        <div class="control-group">
+            <label class="field-label">Your testimonial</label>
+            <textarea name="00N21000001IpUW" rows="8" cols="80" required></textarea>
+        </div>
+        <input type="submit" disabled="{model.book ? null : ''}">
+    </form>
+</template>

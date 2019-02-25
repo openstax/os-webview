@@ -1,19 +1,24 @@
 <template args="model">
-            <div if="model.dataArray[model.itemIndex].fields.testimonial !== null" class="tdlb-container">
-                <div class="tdlb-para">
-                    <div id="testimonialHead-{model.itemIndex}" class="testimonial-div-mob">Testimonials</div>
-                    <div class="para-quote">
-                        <i class="fas fa-quote-left"></i>
-                    </div>
-                    <div class="tdl-body-desc">{model.dataArray[model.itemIndex].fields.testimonial.length > 375 ? model.dataArray[model.itemIndex].fields.testimonial.substr(0, 375-1) + '...' : model.dataArray[model.itemIndex].fields.testimonial}</div>
-                </div>
-                <div class="tdl-body-regards">
-                    <div class="tdlb-regards-name">– {model.dataArray[model.itemIndex].fields.testimonial_name}</div>
-                    <div class="tdlb-regards-desc">{model.dataArray[model.itemIndex].fields.testimonial_position}</div>
-                </div>
+    <div if="model.dataArray[model.itemIndex].fields.testimonial !== null" class="tdlb-container">
+        <div class="tdlb-para">
+            <div id="testimonialHead-{model.itemIndex}" class="testimonial-div-mob">Testimonials</div>
+            <div class="para-quote">
+                <i class="fas fa-quote-left"></i>
             </div>
-        <div class="toggle-datalist-footer">
-            <span class="sub-testimonial">Submit your testimonial</span>
-            <span class="sub-testimonial-icon"><i class="fa fa-chevron-right right-angle"></i></span>
+            <div class="tdl-body-desc">{model.dataArray[model.itemIndex].fields.testimonial.length > 375 ? model.dataArray[model.itemIndex].fields.testimonial.substr(0, 375-1) + '...' : model.dataArray[model.itemIndex].fields.testimonial}</div>
         </div>
+        <div class="tdl-body-regards">
+            <div class="tdlb-regards-name">– {model.dataArray[model.itemIndex].fields.testimonial_name}</div>
+            <div class="tdlb-regards-desc">{model.dataArray[model.itemIndex].fields.testimonial_position}</div>
+        </div>
+    </div>
+    <div class="toggle-datalist-footer">
+        <if condition="model.loggedIn">
+            <a href="/" class="sub-testimonial">Submit your testimonial</a>
+            <span class="sub-testimonial-icon"><i class="fa fa-chevron-right right-angle"></i></span>
+        <else>
+            <a href="{model.login}" class="login-link">Login to submit your testimonial</a>
+            <span class="sub-testimonial-icon"><i class="fa fa-chevron-right right-angle"></i></span>
+        </if>
+    </div>
 </template>

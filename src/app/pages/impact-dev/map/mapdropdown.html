@@ -1,7 +1,7 @@
 <template args="model">
-        <div if="model=='empty_result'" class="search-empty-result">
-            No results found
-        </div>
+    <div if="model=='empty_result'" class="search-empty-result">
+        No results found
+    </div>
     <ul if="model.length!=0 && model!='empty_result'" class="search-list">
         <li each="element in model.lData" class="search-list-element">
             <div class="toggle-on-off" id="show-{element.pk}" data-toggle="show">

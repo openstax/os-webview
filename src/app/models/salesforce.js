@@ -37,4 +37,6 @@ const salesforce = {
     oid: settings.testingEnvironment ? '00D210000000oKt' : '00DU0000000Kwch'
 };
 
+salesforce.webtoleadUrl = `https://${salesforce.salesforceHome}/servlet/servlet.WebToLead?encoding=UTF-8`;
+
 export default salesforce;
