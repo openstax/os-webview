@@ -18,15 +18,16 @@ function organizeBooksByCategory(books) {
     result[apId] = [];
 
     for (const book of books) {
-        const cmsCategory = book.subject;
-
-        if (!(cmsCategory in result)) {
-            result[cmsCategory] = [];
-        }
-        result[cmsCategory].push(book);
-        if (book.is_ap) {
-            result[apId].push(book);
-        }
+        book.subjects
+            .forEach((cmsCategory) => {
+                if (!(cmsCategory in result)) {
+                    result[cmsCategory] = [];
+                }
+                result[cmsCategory].push(book);
+                if (book.is_ap) {
+                    result[apId].push(book);
+                }
+            });
     }
 
     addLabels();
