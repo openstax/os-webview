@@ -1,13 +1,11 @@
-import {Controller} from 'superb.js';
+import componentType from '~/helpers/controller/init-mixin';
 import {description as template} from './application.html';
 
-export default class Application extends Controller {
-
-    init() {
-        this.template = template;
-        this.view = {
-            classes: ['application']
-        };
+const spec = {
+    template,
+    view: {
+        classes: ['application']
     }
+};
 
-}
+export default componentType(spec);

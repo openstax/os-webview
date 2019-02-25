@@ -9,34 +9,38 @@
         background-position: center center;
         background-repeat: no-repeat;
         background-size: cover;
-        display: flex;
+        display: grid;
         height: 50rem;
+        justify-items: right;
         width: 100%;
 
-        .container-wrap {
-            align-items: flex-end;
-            display: flex;
-            flex-flow: column wrap;
-            margin: 0 auto;
-            max-width: $content-max;
-            width: 100%;
-            z-index: 1;
+        @include width-up-to($phone-max) {
+            grid-template-columns: calc(40vw - 15rem) auto;
+        }
+
+        @include width-between($phone-max, $tablet-max) {
+            grid-template-columns: calc(81.6vw - 40rem) auto;
+        }
+
+        @include wider-than($tablet-max) {
+            grid-template-columns: 40% minmax(auto, $text-content-max);
         }
 
         .text-block {
+            color: os-color(blue);
+            grid-column-start: 2;
             text-align: left;
 
             p {
-                color: os-color(blue);
                 font-size: 2.4rem;
                 letter-spacing: -0.15rem;
+                margin: 0;
             }
 
             h1 {
-                color: os-color(blue);
-                font-size: 4.8rem;
-                letter-spacing: -0.25rem;
-                line-height: 4.8rem;
+                @include title-font(4.8rem);
+
+                line-height: 1;
             }
         }
     }

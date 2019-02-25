@@ -1,63 +1,6 @@
-<h2>Program</h2>
-<p>OpenStax at Rice University is excited to announce the next round of applications for our Open Educational Resource Institutional Partnership Program, designed to provide you with advice and guidance to greatly increase the use of OER on your campus and create a networking community for support and advice.</p>
-
-<p>This program is for institutions ready to make an impact on campus by dedicating the necessary time and resources in an effort to motivate faculty and effort to utilize OER to drive student success, retention, and completion.
-</p>
-
-<p>Each year, 10-12 institutions are selected for this program based on a competitive application process.</p>
-
-<h2>Cost</h2>
-<p><span class="strike">$20,000</span> Provided for free thanks to a generous grant funded by the William & Flora Hewlett Foundation.</p>
-
-<h2>Timeline</h2>
-<p>Applications due April 24, 2018<br>
-Selected partners will be notified by May 15, 2018<br>
-Program begins June 14, 2018<br>
-</p>
-
-<h2>What you’ll get</h2>
-<h3>First 12 months in program:</h3>
-<ul>
-    <li>Individualized consulting on your OER effort and strategies.</li>
-    <li>For the 2017-2018 academic year, the institutional partner schools in the 2016-2017 program saw a 150% increase in students impacted by OER. This increase impacted an additional 50,000 students for an additional savings of $4.9 million. </li>
-    <li>Development of a customized strategic plan to increase use of OER at your institution.</li>
-    <li>A community of support through a “cohort” of other institutions who also join the program during the period.</li>
-    <li>Monthly calls with all other institutions in the program and Rice University’s OpenStax to celebrate wins, discuss challenges, ask questions, and provide support and guidance</li>
-    <li>Immediate access to other partner institutions via a Listserv</li>
-    <li>Up to 10 hours of dedicated tech support for utilizing, editing, adding content to, etc. OpenStax books or contents in and from the OpenStax CNX repository.</li>
-    <li>Monthly reports from OpenStax about new use and new interest by faculty at your institution who have contacted OpenStax expressing interest.</li>
-    <li>At least one campus visit by an OpenStax representative.*</li>
-    <li>Up to three webinars on OpenStax, OER, and or Rice University’s role in OER for your institution per year.</li>
-    <li>Press release template for you to send out to generate publicity for your institution.</li>
-    <li>Inclusion on the OpenStax website, presentations, etc. as a partner school.</li>
-</ul>
-<h3>After first 12 months in program:</h3>
-<ul>
-    <li>Individualized consulting on your OER effort and strategies.</li>
-    <li>Continual participation in Listserv discussions</li>
-    <li>Campus visits as requested.*</li>
-    <li>Up to three webinars on OpenStax, OER, and or Rice University’s role in OER for your institution per year.</li>
-    <li>Monthly reports from OpenStax about new use and new interest by faculty at your institution who have contacted OpenStax expressing interest.</li>
-    <li>Inclusion on the OpenStax website, presentations, etc. as a partner school.</li>
-</ul>
-    <span>*Optional. Travel fees paid for by institution</span>
-
-<h2>Current Institutional Partners:</h2>
-<p><a href="/impact" title="list of current Institutional Partners" target="_blank">Click here</a> for a list of current Institutional Partners.</p>
-
-<h2>Requirements</h2>
-<ul>
-    <li>A minimum of one professor using an OpenStax book at your campus.</li>
-    <li>A minimum of 10 hours per week of institutional faculty and staff time to dedicate toward completing tasks and objectives of the program.</li>
-    <li>At least one institutional representative attend the online kick-off meeting on June 14, 2018.</li>
-    <li>Commit to the activities listed as part of the first year of the partnership program</li>
-    <li>Have one institutional representative participate in at least 75% of the monthly calls (same person each month with one alternate), held usually on the second Thursday of each month at 11 am CT.</li>
-    <li>Meet all program deadlines and reporting requirements</li>
-    <li>Work with a OpenStax representative to develop a strategic plan to increase use of OER at your institution.</li>
-    <li>Willing and able to disseminate information about OpenStax and other OER at your institution.</li>
-    <li>Regularly update OpenStax on the number of faculty and students using OpenStax resources as well as general OER feedback and progress.</li>
-    <li>Give permission to Rice University’s OpenStax to feature your logo as a partner or affiliate during public presentations, in news releases and the OpenStax website.</li>
-    <li>Yearly increases in the number of OER and/or students using OER materials at your campus.</li>
-</ul>
-
-<p>Participants will be selected based on potential number of students impacted and demonstrated readiness to make an impact at their school.</p>
+<template args="model">
+    <div each="section in model.sections">
+        <h2>{section.heading}</h2>
+        <div data-html="sections[{$item}].description" skip="true"></div>
+    </div>
+</template>

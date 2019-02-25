@@ -1,28 +1,28 @@
 <template args="model">
-	<div class="hero">
-		<div class="row container-wrap">
+	<if condition="model">
+		<div class="hero">
 			<div class="text-block">
-				<p>2018-2019</p>
-				<h1>OpenStax OER <br> Institutional Partnership <br> Program & Application </h1>
+				<p>{model.headingYear}</p>
+				<h1 data-html="heading" skip="true"></h1>
 			</div>
 		</div>
-	</div>
 
-	<div class="boxed">
-		<div class="tab-controller" skip="true"></div>
-		<div class="tab-content" skip="true"></div>
-	</div>
-
-	<div class="testimonial">
 		<div class="boxed">
-			<div class="testimonial-box">
-				<p class="text-block">{model.block}</p>
-				<div class="writer-info">
-					<p><strong>-{model.name}</strong> <br/>
-					{model.address1}<br/>
-					{model.address2}</p>
+			<div class="tab-controller" skip="true"></div>
+			<div class="tab-content" skip="true"></div>
+		</div>
+
+		<div class="testimonial">
+			<div class="boxed">
+				<div class="testimonial-box">
+					<p class="text-block">{model.testimonial.block}</p>
+					<div class="writer-info">
+						<p><strong>-{model.testimonial.name}</strong> <br/>
+						{model.testimonial.address1}<br/>
+						{model.testimonial.address2}</p>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</if>
 </template>

@@ -23,7 +23,7 @@ function webpack() {
         mode: config.env,
         watch: isDevelopment,
         watchOptions: {
-            aggregateTimeout: 8000
+            aggregateTimeout: 4000
         },
         output,
         resolve: {
