@@ -22,8 +22,8 @@ export default class Map1 extends Controller {
         this.regions = {
             dataList: '.dropDownList'
         };
-        this.model = props.pageType;
-        this.pageTyp = props.pageType;
+        this.model = props.model;
+        this.isSeparate = this.model.pageType === 'separate';
         this.mapObject = props.mapObj;
         this.tooltip = 'close';
         this.filterStatus = 'false';
@@ -38,12 +38,12 @@ export default class Map1 extends Controller {
         const glbalObj = this;
         const filterBtn = this.el.querySelector('.filter-btn');
 
-        if ($.isMobileDisplay() && this.pageTyp === 'separate') {
+        if ($.isMobileDisplay() && this.isSeparate) {
             const filterStatus = this.el.querySelector('.srch');
 
             filterStatus.setAttribute('placeholder', 'Search location or instituion name');
         }
-        if (this.pageTyp === 'separate') {
+        if (this.isSeparate) {
             this.fadOutMovBar();
             this.el.querySelector('.search-cross-div').setAttribute('hidden', '');
         }

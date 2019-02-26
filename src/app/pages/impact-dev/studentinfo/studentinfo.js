@@ -1,15 +1,13 @@
-import {Controller} from 'superb.js';
+import componentType from '~/helpers/controller/init-mixin';
 import {description as template} from './studentinfo.html';
 import css from './studentinfo.css';
 
-export default class Studentinfo extends Controller {
-
-    init() {
-        this.template = template;
-        this.css = css;
-        this.view = {
-            classes: ['studentinfobox']
-        };
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['studentinfobox']
     }
+};
 
-}
+export default componentType(spec);

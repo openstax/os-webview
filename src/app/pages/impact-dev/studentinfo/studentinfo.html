@@ -1,31 +1,19 @@
-<div class="first-photo">
-    <div class="girl-txtdiv">
-        <div class="girl-txt-head">Ready to join the OpenStax movement?</div>
-        <p class="girl-txt-body">
-            We’re proud of how far we’ve come, but we need YOU to continue
-            our mission of increasing student access to education. Let us
-            know you're using OpenStax and put your school on the map!
-        </p>
-        <div><button class="sbox">I'm using OpenStax</button></div>
-    </div>
-    <div class="girl-imgdiv">
-        <img class="girl-img" src="/images/home/girl-join-the-movement.png" alt="Student">
-    </div>
-</div>
-
-<div class="second-photo">
-    <div class="stds-imgdiv">
-        <img class="stds-img" src="/images/home/students-want-to-help.png" alt="Student">
+<template args="model">
+    <div class="photo-and-text">
+        <div>
+            <div class="girl-txt-head">{model.header1}</div>
+            <p>{model.description1}</p>
+            <a href="{model.linkUrl1}" class="sbox">{model.linkText1}</a>
+        </div>
+        <img class="girl-img" src="{model.image1}" alt="Student">
     </div>
 
-    <div class="std-txtdiv">
-        <div class="std-txt-head">Want to help?</div>
-        <p class="std-txt-body">
-            OpenStax is Rice University’s nonprofit education initiative,
-            which means that we rely on our supporters to grow and expand
-            our library. With your help, we can bring open education
-            resources to even more students across the world.
-        </p>
-        <div><button class="sbox">I'm using OpenStax</button></div>
+    <div class="photo-and-text">
+        <img class="stick-up" src="{model.image2}" alt="Student">
+        <div class="first-in-mobile">
+            <div class="std-txt-head">{model.header2}</div>
+            <p>{model.description2}</p>
+            <a href="{model.linkUrl2}" class="sbox">{model.linkText2}</a>
+        </div>
     </div>
-</div>
+</template>

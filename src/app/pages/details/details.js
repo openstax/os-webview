@@ -263,4 +263,8 @@ export default class Details extends BaseClass {
         this.regions.tabContent.attach(contentGroup);
     }
 
+    onDataError() {
+        window.location = '/_404';
+    }
+
 }
