@@ -24,10 +24,10 @@ function organizeBooksByCategory(books) {
                     result[cmsCategory] = [];
                 }
                 result[cmsCategory].push(book);
-                if (book.is_ap) {
-                    result[apId].push(book);
-                }
             });
+        if (book.is_ap) {
+            result[apId].push(book);
+        }
     }
 
     addLabels();
