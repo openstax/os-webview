@@ -13,13 +13,14 @@ const spec = {
         tag: 'main',
         classes: ['institutional-page', 'page']
     },
-    regions: {
-        tabController: '.tab-controller',
-        tabContent: '.tab-content'
-    },
     model() {
-        return this.testimonials[this.selectedTab];
-    }
+        return this.pageData && {
+            heading: this.pageData.heading,
+            headingYear: this.pageData.heading_year,
+            testimonial: this.testimonials[this.selectedTab]
+        };
+    },
+    slug: 'pages/institutional-partnership'
 };
 const BaseClass = componentType(spec, canonicalLinkMixin);
 
@@ -29,38 +30,18 @@ export default class Institutional extends BaseClass {
         super.init();
         this.tabLabels = ['Program details', 'Application'];
         this.selectedTab = this.tabLabels[0];
-        this.testimonials = {
-            'Program details': {
-                block: 'Teaming up with the other OpenStax Institutional Partner' +
-                ' schools provided a sense of community as we navigated launching' +
-                ' OER initiatives at our own campuses. Learning about other schools’' +
-                ' successes and frustrations each month was inspiring. I learned so' +
-                ' many new techniques and innovative ideas that I could then apply at' +
-                ' my own campus. I loved the structure of this program. It’s inspiring' +
-                ' to see how many students are impacted by OER adoption – the numbers' +
-                ' really add up quickly.',
-                name: 'Erin Davis',
-                address1: 'Distance Education Library Services Coordinator',
-                address2: 'Utah State University'
-            },
-            'Application': {
-                block: 'With guidance we received through the Institutional Partner' +
-                ' program, we were able to strategically plan events and presentations' +
-                ' to increase faculty awareness of Open Educational Resources, resulting' +
-                ' in more than a dozen new OER adoptions.  We anticipate that number' +
-                ' will significantly increase again as we enter the second year of the' +
-                ' program.',
-                name: 'Jennifer Kneafsey',
-                address1: 'Associate Professor of Biology',
-                address2: 'Tulsa Community College'
-            }
-        };
+        this.applicationTabContent = new Application();
     }
 
-    onLoaded() {
+    onDataLoaded() {
+        const data = this.pageData;
         const contents = {
-            'Program details': new ProgramDetails(),
-            'Application': new Application()
+            'Program details': new ProgramDetails({
+                model: {
+                    sections: data.program_tab_content[0]
+                }
+            }),
+            'Application': this.applicationTabContent
         };
         const contentGroup = new ContentGroup(() => ({
             selectedTab: this.selectedTab,
@@ -77,8 +58,25 @@ export default class Institutional extends BaseClass {
             }
         }));
 
-        this.regions.tabController.attach(tabGroup);
-        this.regions.tabContent.attach(contentGroup);
+        this.testimonials = {
+            'Program details': {
+                block: data.quote,
+                name: data.quote_author,
+                address1: data.quote_title,
+                address2: data.quote_school
+            },
+            'Application': {
+                block: data.application_quote,
+                name: data.application_quote_author,
+                address1: data.application_quote_title,
+                address2: data.application_quote_school
+            }
+        };
+        this.update();
+        this.insertHtml();
+
+        this.regionFrom('.tab-controller').attach(tabGroup);
+        this.regionFrom('.tab-content').attach(contentGroup);
     }
 
 }

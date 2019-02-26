@@ -1,14 +1,17 @@
-import {Controller} from 'superb.js';
+import componentType from '~/helpers/controller/init-mixin';
 import {description as template} from './program-details.html';
 
-export default class ProgramDetails extends Controller {
+const spec = {
+    template,
+    view: {
+        classes: ['program-details']
+    }
+};
 
-    init() {
-        this.template = template;
-        // For specifying the tag (default div) and classes of the container element
-        this.view = {
-            classes: ['program-details']
-        };
+export default class ProgramDetails extends componentType(spec) {
+
+    onLoaded() {
+        this.insertHtml();
     }
 
 }
