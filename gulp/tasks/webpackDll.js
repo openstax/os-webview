@@ -27,8 +27,7 @@ function webpackDll() {
                 'incremental-dom',
                 'lodash',
                 'particles.js/particles',
-                'recordo',
-                'whatwg-fetch'
+                'recordo'
             ],
             mapbox: [
                 'mapbox-gl',
