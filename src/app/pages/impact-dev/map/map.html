@@ -1,11 +1,11 @@
 <template args="model">
-    <div if="model=='separate'" class="search-container" id="search-container">
+    <div if="model.pageType === 'separate'" class="search-container" id="search-container">
         <div id="back-search-div" class="back-search-div"><button id="back-search-btn" class="back-search-btn"><i class="fas fa-arrow-left left-arrow-bak"></i></button></div>
         <div id="back-result-div" class="back-result-div"><button id="back-result-btn" class="back-result-btn"><i class="fas fa-arrow-left left-arrow-bak"></i></button></div>
         <div id="back-detail-div" class="back-detail-div"><button id="back-detail-btn" class="back-detail-btn"><i class="fas fa-arrow-left left-arrow-bak"></i></button></div>
         <div id="back-detail-single-div" class="back-detail-single-div"><button id="back-detail-single-btn" class="back-detail-single-btn"><i class="fas fa-arrow-left left-arrow-bak"></i></button></div>
         <div class="search-div-container">
-            <div if="model=='separate'" class="search" id="search">
+            <div if="model.pageType === 'separate'" class="search" id="search">
                 <div id="search_input_div" class="search-input-div">
                     <input id="srch_input" class="srch" type="text" placeholder="Search by country, state, city, or institution name">
                 </div>
@@ -70,9 +70,9 @@
     </div>
     <div class="map-txt-link boxed container">
         <div class="maptxt" id="maptxt">
-            We're changing the world, one book at a time!
+            {model.heading}
         </div>
-        <a if="model=='landing'" href="/separatemap" class="btn btn-orange separate-map-link">Checkout our interactive map
+        <a if="model.pageType === 'landing'" href="/separatemap" class="btn btn-orange separate-map-link">{model.buttonText}
         </a>
     </div>
     <div id="on-map" class="on-map"></div>

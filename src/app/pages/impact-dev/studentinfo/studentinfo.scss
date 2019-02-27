@@ -1,91 +1,71 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .studentinfobox {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    @extend %content;
+
+    display: grid;
+    grid-gap: 4rem;
+    width: 100vw;
+
+    @include width-up-to($media-content-max) {
+        @include body-font(1.4rem);
+
+        line-height: 1.5;
+    }
+
+    @include wider-than($media-content-max) {
+        @include body-font(1.6rem);
+
+        line-height: 1.5;
+    }
 
     @include width-up-to($phone-max) {
-        justify-content: normal;
-        margin-top: 2.5rem;
+        padding: 4rem $normal-margin;
     }
 
-    @include width-between ($phone-max, $media-content-max) {
-        height: 75rem;
+    @include width-between($phone-max, $tablet-max) {
+        padding: 6rem $normal-margin;
     }
 
-    .first-photo {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        margin-top: unset;
-
-        @include width-up-to($phone-max) {
-            align-items: center;
-            flex-direction: column;
-        }
-
-        @include wider-than($media-content-max) {
-            margin-top: 12rem;
-        }
+    @include wider-than($tablet-max) {
+        padding: 12rem $normal-margin;
     }
 
-    .second-photo {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-
-        @include width-up-to($phone-max) {
-            align-items: center;
-            flex-direction: column-reverse;
-        }
+    .photo-and-text {
+        display: grid;
+        grid-gap: 4rem;
+        max-width: 100%;
 
         @include wider-than($phone-max) {
-            margin-top: 2rem;
+            grid-auto-flow: column;
         }
-    }
 
-    .girl-imgdiv {
-        bottom: 18%;
-        position: relative;
+        img {
+            @include width-up-to($phone-max) {
+                max-width: 100%;
+            }
 
-        @include width-up-to($phone-max) {
-            bottom: unset;
-            position: unset;
+            @include width-between($phone-max, $tablet-max) {
+                max-width: 50vw;
+            }
+
+            @include wider-than($tablet-max) {
+                max-width: 48rem;
+            }
         }
-    }
 
-    .girl-txtdiv {
-        margin-right: 4%;
-
-        @include width-up-to($phone-max) {
-            margin-right: unset;
+        .first-in-mobile {
+            grid-row-start: 1;
         }
-    }
 
-    .stds-imgdiv {
-        @include width-up-to($phone-max) {
-            margin-right: unset;
-            margin-top: 3rem;
-        }
-    }
+        .stick-up {
+            @include width-between($phone-max, $tablet-max) {
+                margin-top: calc(13.2rem - 22vw);
+            }
 
-    .stds-img {
-        bottom: 25%;
-        position: relative;
-
-        @include width-up-to($media-content-max) {
-            bottom: unset;
-            height: 30rem;
-            position: unset;
-        }
-    }
-
-    .std-txtdiv {
-        margin-left: 7%;
-
-        @include width-up-to($phone-max) {
-            margin-top: 5%;
+            @include wider-than($tablet-max) {
+                margin-top: -8rem;
+            }
         }
     }
 
@@ -94,34 +74,14 @@
 
         @include width-up-to($media-content-max) {
             @include title-font(2.9rem);
-            width: 21.2rem;
-        }
-    }
-
-    .std-txt-body,
-    .girl-txt-body {
-        @include body-font(1.6rem);
-
-        line-height: 1.5;
-        width: 40.2rem;
-
-        @include width-up-to($media-content-max) {
-            @include body-font(1.4rem);
-
-            line-height: 1.5;
-            width: 26rem;
         }
     }
 
     .girl-txt-head {
         @include set-font(h2);
 
-        width: 44rem;
-
         @include width-up-to($media-content-max) {
             @include title-font(3.3rem);
-
-            width: 25.2rem;
         }
     }
 
@@ -130,12 +90,5 @@
         @extend %secondary;
 
         margin-top: $normal-margin;
-    }
-
-    .girl-img {
-        @include width-up-to($media-content-max) {
-            height: 30rem;
-            margin-top: 10%;
-        }
     }
 }

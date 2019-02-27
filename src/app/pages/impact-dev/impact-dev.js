@@ -12,7 +12,7 @@ const spec = {
     template,
     css,
     view: {
-        classes: ['home-page']
+        classes: ['map-page']
     },
     regions: {
         map: '.mapdiv',
@@ -22,21 +22,17 @@ const spec = {
     },
     model: {
         loaded: ''
-    }
+    },
+    slug: 'pages/were-changing-world-one-book-time'
 };
 const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 
 export default class ImpactDev extends BaseClass {
 
-    onAttached() {
+    createMap(model) {
         const tokenn = 'pk.eyJ1Ijoib3BlbnN0YXgiLCJhIjoiY2pnbWtjajZzMDBkczJ6cW1kaDViYW02aCJ9.0w3LCa7lzozzRgXM7xvBfQ';
-        let mapCenter;
+        const mapCenter = $.isMobileDisplay() ? [-95.712891, 37.090240] : [0, 0];
 
-        if ($.isMobileDisplay()) {
-            mapCenter = [-95.712891, 37.090240];
-        } else {
-            mapCenter = [0, 0];
-        }
         mapboxgl.accessToken = tokenn;
         const map = new mapboxgl.Map({
             container: 'mapdiv',
@@ -59,13 +55,53 @@ export default class ImpactDev extends BaseClass {
 
         const mapObject = {
             mapObj: map,
-            pageType: 'landing'
+            model
         };
 
-        this.regions.map.append(new Map1(mapObject));
-        this.regions.stat.attach(new State());
-        this.regions.studentinfo.attach(new Studentinfo());
-        this.regions.schoolmap.attach(new Schoolmap());
+        return new Map1(mapObject);
+    }
+
+    onDataLoaded() {
+        const data = this.pageData;
+        const map = this.createMap({
+            pageType: 'landing',
+            heading: data.title,
+            buttonText: data.header_text
+        });
+
+        this.regions.map.append(map);
+        this.regions.stat.attach(new State({
+            model: data.section_1_cards.map((obj) => (
+                {
+                    imageUrl: obj.image.image,
+                    uText1: obj.number,
+                    uText2: obj.unit,
+                    lowerText: obj.description
+                }
+            ))
+        }));
+        this.regions.studentinfo.attach(new Studentinfo({
+            model: {
+                header1: data.section_2_header_1,
+                description1: data.section_2_blurb_1,
+                linkUrl1: data.section_2_link_1,
+                linkText1: data.section_2_cta_1,
+                image1: data.section_2_image_1_url,
+                header2: data.section_2_header_2,
+                description2: data.section_2_blurb_2,
+                linkUrl2: data.section_2_link_2,
+                linkText2: data.section_2_cta_2,
+                image2: data.section_2_image_2_url
+            }
+        }));
+        this.regions.schoolmap.attach(new Schoolmap({
+            model: {
+                heading: data.section_3_heading,
+                description: data.section_3_blurb,
+                linkText: data.section_3_cta,
+                linkUrl: data.section_3_link
+            }
+        }));
     }
 
 }
