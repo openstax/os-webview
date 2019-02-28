@@ -39,6 +39,16 @@ export default class extends componentType(spec) {
         }
         ['.right-tooltip', '.left-tooltip', '.phone-tooltip'].forEach((selector) => {
             const ttEl = this.el.querySelector(selector);
+
+            if (selector === '.phone-tooltip') {
+                if (nodeEl.textContent === '1') {
+                    ttEl.style.paddingLeft = '65px';
+                    ttEl.style.width = '15rem';
+                } else {
+                    ttEl.style.removeProperty('padding-left');
+                    ttEl.style.removeProperty('width');
+                }
+            }
             const ttRect = ttEl.getBoundingClientRect();
 
             if (ttRect.width > 0) {

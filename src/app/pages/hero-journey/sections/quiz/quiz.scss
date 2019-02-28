@@ -1,5 +1,7 @@
 @import 'pattern-library/core/pattern-library/headers';
 
+$guessed-color: #c1c1c1;
+
 @mixin normal-padding() {
     @include width-up-to($phone-max) {
         padding: 2rem;
@@ -89,6 +91,7 @@
 
         .big-checkmark {
             bottom: 0;
+            max-width: calc(95% - 10rem);
             position: absolute;
             right: 0;
         }
@@ -122,8 +125,9 @@
         padding: 0;
 
         &.guessed {
-            background-color: ui-color(secondary);
+            color: $guessed-color;
             pointer-events: none;
+            text-decoration: line-through;
         }
 
         .card-content {
