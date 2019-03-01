@@ -7,7 +7,6 @@ $tooltip-breakpoint: #{$media-content-max + 10em};
 
 .numbered-navigator {
     background-color: ui-color(white);
-    border-radius: 2.5rem;
     box-shadow: $shadow;
     display: grid;
     padding: 0.9rem;
@@ -17,11 +16,13 @@ $tooltip-breakpoint: #{$media-content-max + 10em};
     @include width-up-to($phone-max) {
         grid-auto-flow: column;
         left: 0;
+        padding-right: 7rem;
         top: 5.5rem;
-        width: calc(100% - 8rem);
+        width: 100%;
     }
 
     @include wider-than($phone-max) {
+        border-radius: 2.5rem;
         top: 12.5rem;
         width: 5rem;
     }
@@ -44,7 +45,7 @@ $tooltip-breakpoint: #{$media-content-max + 10em};
         filter: drop-shadow(rgba(0, 0, 0, 0.2) 0 0.2rem 0.2rem);
         font-weight: bold;
         line-height: normal;
-        min-height: 10rem;
+        min-height: 7rem;
         padding: 1rem;
         position: absolute;
         transition: top 1s, left 1s, opacity 1s;
@@ -193,7 +194,7 @@ $tooltip-breakpoint: #{$media-content-max + 10em};
 
         @include width-up-to($phone-max) {
             height: 0.2rem;
-            width: calc(25vw - 6.43rem); // Correct for 5 nodes
+            width: calc(25vw - 6rem); // Correct for 5 nodes
         }
 
         @include wider-than($phone-max) {
@@ -209,7 +210,8 @@ $tooltip-breakpoint: #{$media-content-max + 10em};
         @include width-up-to($phone-max) {
             right: 0;
             top: 50%;
-            transform: translate(100%, calc(0.25rem - 50%));
+            transform: translateY(-50%);
+            width: 6.5rem;
         }
 
         @include wider-than($phone-max) {

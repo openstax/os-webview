@@ -43,7 +43,7 @@ export default class extends componentType(spec) {
                 }, {
                     task: 'Learn more about us'
                 }, {
-                    task: 'Try OpenStax in your course'
+                    task: 'Try OpenStax'
                 }, {
                     task: 'Share your story'
                 }
@@ -157,7 +157,7 @@ export default class extends componentType(spec) {
             Take a look, then come back here to continue your quest for the Hero Badge!`,
             booksLink: '/subjects',
             booksLinkText: 'Look at the books',
-            skipHtml: 'Already reviewed the books? <a href="#skip">Click here.</a>',
+            skipHtml: 'Already reviewed the books? <b><a href="#skip">Click here</a></b>.',
             onComplete: () => {
                 updateLastCompleted(2);
             }
