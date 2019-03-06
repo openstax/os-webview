@@ -1,0 +1,63 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.big-quote {
+    background: linear-gradient(rgba(text-color(normal), 0.8)), url('//via.placeholder.com/1400x500/424242');
+    background-color: text-color(normal);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: text-color(white);
+    padding: 16rem 0;
+
+    @include width-up-to($phone-max) {
+        padding: 4rem 2rem;
+    }
+
+    .content {
+        @extend %content;
+
+        display: grid;
+        grid-auto-flow: column;
+    }
+
+    .big-quote-mark {
+        @include title-font(12rem);
+
+        margin-top: -2.2rem;
+        width: 8rem;
+
+        @include width-up-to($phone-max) {
+            @include title-font(8rem);
+
+            margin-top: -1.5rem;
+            width: 5rem;
+        }
+    }
+
+    .quote {
+        @include set-font(h1);
+
+        margin-bottom: 4rem;
+
+        @include width-up-to($phone-max) {
+            @include title-font(2.8rem);
+        }
+    }
+
+    .name {
+        @include set-font(h2);
+
+        @include width-up-to($phone-max) {
+            @include title-font(2.8rem);
+        }
+    }
+
+    .title,
+    .school {
+        @include body-font(3.6rem);
+
+        @include width-up-to($phone-max) {
+            @include body-font(2.6rem);
+        }
+    }
+}

@@ -1,0 +1,10 @@
+<template args="model">
+    <div class="content">
+        <h1>{model.heading}</h1>
+        <form action="{model.submitUrl}">
+            <input placeholder="{model.formPrompt}">
+            <button type="submit" class="primary">{model.buttonText}</button>
+        </form>
+        <div class="contact" data-html="contactHtml"></div>
+    </div>
+</template>

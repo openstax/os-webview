@@ -86,6 +86,19 @@ export function loaderMixin(superclass) {
     };
 }
 
+export function insertHtmlMixin(superclass) {
+    return class extends superclass {
+
+        onUpdate() {
+            if (super.onUpdate) {
+                super.onUpdate();
+            }
+            this.insertHtml();
+        }
+
+    };
+}
+
 // utilities for flattenPageDataMixin
 function camelCase(underscored) {
     return underscored.replace(/_([a-z])/g, (_, chr) => chr ? chr.toUpperCase() : '');

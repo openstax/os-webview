@@ -1,0 +1,19 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.institutional-partner-program .banner {
+    background: linear-gradient(
+            to right, os-color(blue), os-color(blue) 33%, rgba(os-color(blue), 0)
+        ),
+        url('//via.placeholder.com/1400x500');
+    background-color: os-color(blue);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: text-color(white);
+    padding: 16rem 0 24rem;
+    position: relative;
+
+    @include width-up-to($phone-max) {
+        padding: 4rem 0 6rem;
+    }
+}

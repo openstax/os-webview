@@ -1,0 +1,52 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.sign-up {
+    padding: 24rem 0;
+
+    @include width-up-to($tablet-max) {
+        padding: 4rem 2rem;
+    }
+
+    .content {
+        @extend %content;
+
+        display: grid;
+        grid-gap: 3rem;
+        justify-items: center;
+        text-align: center;
+    }
+
+    form {
+        display: grid;
+        grid-gap: $normal-margin;
+        grid-template-columns: 1fr auto;
+        max-width: $phone-max;
+        width: 100%;
+
+        input {
+            padding: 0 $normal-margin;
+        }
+
+        ::placeholder {
+            @include set-font(body-regular);
+        }
+    }
+
+    button {
+        @extend %button;
+
+        padding: 0 2rem;
+    }
+
+    .contact {
+        @include set-font(body-large);
+
+        a {
+            color: inherit;
+        }
+    }
+
+    .primary {
+        @extend %primary;
+    }
+}

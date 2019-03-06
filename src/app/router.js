@@ -41,7 +41,8 @@ const PAGES = [
     'subjects/*path',
     'team',
     'technology',
-    'institutional-partnership'
+    'institutional-partnership',
+    'institutional-partner-program'
 ];
 
 if (window.location.hostname === 'localhost') {

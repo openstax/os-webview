@@ -1,0 +1,65 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.institutional-partner-program.page .overlapping-quote {
+
+    overflow: visible;
+    position: relative;
+
+    @include width-up-to($phone-max) {
+        padding-bottom: 0.5rem;
+    }
+
+    @include wider-than($phone-max) {
+        height: 0;
+    }
+
+    .overlapping {
+        @extend %content;
+
+        z-index: 1;
+
+        @include width-up-to($phone-max) {
+            margin-top: -2rem;
+        }
+
+        @include wider-than($phone-max) {
+            left: 50%;
+            position: absolute;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    .quote-box {
+        @extend %card;
+        @include set-font(body-large);
+
+        background-color: white;
+        color: text-color(normal);
+        display: grid;
+        grid-gap: 1rem;
+        grid-template-columns: auto auto;
+        min-height: 16rem;
+        padding: 4rem;
+        pointer-events: none;
+
+        @include width-up-to($phone-max) {
+            padding: 3.5rem;
+        }
+
+        .quote {
+            margin-bottom: 4rem;
+        }
+
+        .name {
+            font-weight: bold;
+        }
+    }
+
+    .big-orange-quote {
+        @include set-font(hero-h1);
+
+        color: os-color(orange);
+        margin-top: -1rem;
+    }
+
+}

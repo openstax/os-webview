@@ -1,0 +1,23 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.institutional-partner-program .about {
+    padding: 24rem 0 4rem;
+    position: relative;
+
+    @include width-up-to($phone-max) {
+        padding: 4rem 2rem;
+    }
+
+    .content-block {
+        align-items: center;
+
+        @include wider-than($phone-max) {
+            grid-template-columns: repeat(auto-fit, minmax(42rem, auto));
+        }
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+}

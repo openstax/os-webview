@@ -1,0 +1,10 @@
+<template args="model">
+    <div class="content-block">
+        <h2>{model.heading}</h2>
+        <h3>{model.subheading}</h3>
+        <div class="icons">
+            <img each="icon in model.icons" src="{icon.image}" alt="{icon.altText}">
+        </div>
+        <a href="{model.linkTarget}">{model.linkText} <span class="fa fa-chevron-right"></span></a>
+    </div>
+</template>

@@ -1,0 +1,44 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+$near-white: #f8f8f8;
+
+.institutional-partner-program.page {
+
+    section {
+        max-width: 100%;
+        overflow: auto;
+    }
+
+    .content-block {
+        @extend %content;
+
+        display: grid;
+        grid-gap: 4rem;
+        // max-width: 100%;
+
+        > * {
+            margin: 0;
+        }
+    }
+
+    .btn.primary {
+        @extend %button;
+        @extend %primary;
+
+        justify-self: left;
+    }
+
+    .near-white {
+        background-color: $near-white;
+    }
+
+    .white {
+        background-color: ui-color(white);
+    }
+
+    .green {
+        background-color: os-color(deep-green);
+        color: text-color(white);
+    }
+
+}

@@ -1,0 +1,60 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.institutional-partner-program .promoting {
+    padding: 16rem 0;
+    position: relative;
+
+    @include width-up-to($phone-max) {
+        padding: 6rem 2rem 2rem;
+    }
+
+    .cards {
+        display: grid;
+        grid-gap: $normal-margin;
+
+        @include wider-than($tablet-max) {
+            grid-template-columns: repeat(4, minmax(auto, 28rem));
+        }
+    }
+
+    .card {
+        @extend %card;
+
+        display: grid;
+        line-height: 1.2;
+
+        &:hover {
+            box-shadow: $card-shadow;
+        }
+
+        &.wide {
+            display: grid;
+            grid-column-start: 1;
+            padding: 0 3rem;
+
+            @include wider-than($phone-max) {
+                grid-column-end: 3;
+            }
+
+            .wide-card-entry {
+                align-items: center;
+                display: grid;
+                grid-template-columns: 8rem auto;
+                padding: 3rem 0;
+
+                &:not(:last-child) {
+                    border-bottom: thin solid ui-color(form-border);
+                }
+            }
+        }
+
+        &.tall {
+            grid-template-rows: 1fr auto;
+            padding: 4rem;
+
+            .btn {
+                justify-self: center;
+            }
+        }
+    }
+}

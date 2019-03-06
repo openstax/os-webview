@@ -1,0 +1,32 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.institutional-partner-program .participants {
+    padding: 16rem 0 24rem;
+
+    @include width-up-to($tablet-max) {
+        padding: 4rem 3rem;
+    }
+
+    .icons {
+        align-items: center;
+        display: grid;
+        grid-column-gap: 8rem;
+        grid-row-gap: 4rem;
+        grid-template-columns: repeat(auto-fit, 12rem);
+        justify-content: center;
+
+        > * {
+            max-width: 100%;
+        }
+    }
+
+    a {
+        display: block;
+        justify-self: center;
+        text-decoration: none;
+
+        .fa-chevron-right {
+            font-size: 50%;
+        }
+    }
+}
