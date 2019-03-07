@@ -38,7 +38,7 @@ class UserModel {
     loginLink(returnTo) {
         const encodedLocation = encodeURIComponent(returnTo || window.location.href);
 
-        return `${settings.apiOrigin}/accounts/login/openstax/?next=${encodedLocation}`;
+        return `${settings.apiOrigin}/oxauth/login/?next=${encodedLocation}`;
     }
 
 }

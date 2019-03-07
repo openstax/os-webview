@@ -13,7 +13,7 @@ export default class extends Controller {
             classes: ['toggle-datalist-body']
         };
         this.model = props;
-        this.model.login = `${settings.apiOrigin}/accounts/login/openstax/?next=` +
+        this.model.login = `${settings.apiOrigin}/oxauth/login/?next=` +
             `${encodeURIComponent(window.location.href)}`;
 
         accountsModel.load().then((info) => {
