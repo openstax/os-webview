@@ -23,7 +23,7 @@ export default class ResourceBox extends Controller {
         };
         const loginUrl = userStatus.userInfo && userStatus.userInfo.id ?
             `${settings.accountHref}/faculty_access/apply?r=${encodedLocation}` :
-            `${settings.apiOrigin}/accounts/login/openstax/?next=${encodedLocation}`;
+            `${settings.apiOrigin}/oxauth/login/?next=${encodedLocation}`;
         const status = resourceStatus();
         const statusToPermissions = {
             unlocked: {

@@ -145,7 +145,7 @@ export default class extends componentType(spec) {
             get email() {return parent.email;},
             heading: 'Get your Hero Badge',
             get firstName() {return parent.firstName;},
-            login: `${settings.apiOrigin}/accounts/login/openstax/?next=${encodeURIComponent(window.location.href)}`,
+            login: `${settings.apiOrigin}/oxauth/login/?next=${encodeURIComponent(window.location.href)}`,
             description: `Thanks to open alternatives like OpenStax, textbook prices have
             started to fall for the first time in 50 years. Instructors who choose affordable,
             open materials aren't just champions in their classroom – they are causing a
