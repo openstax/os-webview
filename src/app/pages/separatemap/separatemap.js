@@ -3,7 +3,7 @@ import $ from '~/helpers/$';
 import { on } from '~/helpers/controller/decorators';
 import shell from '~/components/shell/shell';
 import { description as template } from './separatemap.html';
-import Map1 from '../impact-dev/map/map';
+import Map1 from '../global-reach/map/map';
 import mapboxgl from 'mapbox-gl';
 import css from './separatemap.css';
 

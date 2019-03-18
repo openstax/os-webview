@@ -6,7 +6,7 @@ import Schoolinfo from './schoolinfo';
 import Testimonialinfo from './testimonial';
 import mapboxgl from 'mapbox-gl';
 import SchoolinfoHead from './schoolinfo-head';
-import css from '../impact-dev.css';
+import css from '../global-reach.css';
 
 export default class Mapdropdown extends Controller {
 
