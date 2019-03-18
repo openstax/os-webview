@@ -6,9 +6,9 @@
                 <div class="lcolumn-head">Student savings</div>
                 <div class="lcolumn-body">
                     <div class="lcol-body-left">This year:
-                        ${model.dataArray[model.itemIndex].fields.current_year_savings}</div>
+                        ${Number(model.dataArray[model.itemIndex].fields.current_year_savings).toLocaleString()}</div>
                     <div class="lcol-body-right">Cumulative:
-                        ${model.dataArray[model.itemIndex].fields.all_time_savings}</div>
+                        ${Number(model.dataArray[model.itemIndex].fields.all_time_savings).toLocaleString()}</div>
                 </div>
             </div>
         </div>

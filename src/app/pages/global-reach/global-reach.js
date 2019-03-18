@@ -1,12 +1,12 @@
 import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
 import $ from '~/helpers/$';
-import { description as template } from './impact-dev.html';
+import { description as template } from './global-reach.html';
 import Map1 from './map/map';
 import State from './statistics/stat';
 import Studentinfo from './studentinfo/studentinfo';
 import Schoolmap from './schoolmap/schoolmap';
 import mapboxgl from 'mapbox-gl';
-import css from './impact-dev.css';
+import css from './global-reach.css';
 
 const spec = {
     template,
@@ -23,7 +23,7 @@ const spec = {
     model: {
         loaded: ''
     },
-    slug: 'pages/were-changing-world-one-book-time'
+    slug: 'pages/global-reach'
 };
 const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 

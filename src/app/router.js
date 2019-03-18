@@ -27,7 +27,7 @@ const PAGES = [
     'hero-journey',
     'interest',
     'impact',
-    'impact-dev',
+    'global-reach',
     'institutional-partners',
     'separatemap',
     'openstax-tutor',
