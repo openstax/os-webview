@@ -5,7 +5,7 @@ import css from './student-form.css';
 
 export default class StudentForm extends Controller {
 
-    init(postUrl) {
+    init() {
         this.template = template;
         this.view = {
             classes: ['student-form']

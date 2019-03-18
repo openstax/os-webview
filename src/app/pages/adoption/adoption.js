@@ -61,7 +61,7 @@ export default class AdoptionForm extends Controller {
         }
         this.regions.header.attach(new FormHeader('pages/adoption-form'));
 
-        const studentForm = new StudentForm('http://go.pardot.com/l/218812/2017-04-11/ld9g');
+        const studentForm = new StudentForm();
         const firstPage = () => {
             const contactForm = new ContactInfo({
                 validationMessage(name) {

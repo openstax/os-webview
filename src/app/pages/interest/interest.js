@@ -135,7 +135,7 @@ export default class InterestForm extends BaseClass {
         }
         this.regions.header.attach(new FormHeader('pages/interest-form'));
 
-        const studentForm = new StudentForm('http://go.pardot.com/l/218812/2017-04-11/ld9g');
+        const studentForm = new StudentForm();
         const facultyPages = [
             this.firstPage(),
             this.secondPage(),
