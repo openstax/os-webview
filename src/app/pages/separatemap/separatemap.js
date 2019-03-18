@@ -64,7 +64,9 @@ export default class SeparateMap extends CMSPageController {
 
         const mapObject = {
             mapObj: mapOb,
-            pageType: 'separate'
+            model: {
+                pageType: 'separate'
+            }
         };
 
         this.regions.map.append(new Map1(mapObject));

@@ -4,8 +4,6 @@ const pi = require('gulp-load-plugins')();
 const path = require('path');
 const webpackStream = require('piped-webpack');
 const bs = require('./browser-sync');
-const dlls = ['babel', 'library', 'mapbox'];
-const {DllReferencePlugin} = require('webpack');
 
 function webpack() {
     // Don't move this outside -- env gets set after load-time
@@ -54,13 +52,7 @@ function webpack() {
                 }
             ]
         },
-        devtool: 'source-map',
-        plugins: [
-            ...dlls.map((name) => new DllReferencePlugin({
-                context: process.cwd(),
-                manifest: path.resolve(config.dest, `./${name}.json`)
-            }))
-        ]
+        devtool: 'source-map'
     };
 
     if (isDevelopment) {
