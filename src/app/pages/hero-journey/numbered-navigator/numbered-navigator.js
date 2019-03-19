@@ -58,6 +58,14 @@ export default class extends componentType(spec) {
                     left: nRect.left + nRect.width / 2 - ttRect.width / 2 - thisRect.left
                 };
 
+                if (selector === '.phone-tooltip') {
+                    if (values.left < 0) {
+                        // Magic numbers because I don't know how this should be figured.
+                        ttEl.style.paddingLeft = '3.7rem';
+                        ttEl.style.width = '11.3rem';
+                    }
+                }
+
                 ttEl.style[direction] = `${values[direction]}px`;
             }
         });
