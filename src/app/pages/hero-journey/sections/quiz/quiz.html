@@ -14,7 +14,8 @@
                     <div class="answers">
                         <div each="answer in qa.answers" class="answer card">
                             <div class="card-content">
-                                {answer}
+                                <span class="longest-answer">{model.longestAnswer}</span>
+                                <span class="displayed-answer">{answer}</span>
                             </div>
                         </div>
                     </div>

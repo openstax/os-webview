@@ -162,6 +162,46 @@ export default class extends componentType(spec) {
                 updateLastCompleted(2);
             }
         }));
+
+        const questions = [
+            {
+                question: `
+                All our work is devoted to helping students succeed because
+                OpenStax is a(n) ___________`,
+                answers: [
+                    'Urban legend',
+                    'Non profit organization dedicated to breaking down barriers to education',
+                    'Friendly woodland creature',
+                    'Natural sprinter'
+                ],
+                correctIndex: 1
+            },
+            {
+                question: 'What formats are OpenStax books available in?',
+                answers: [
+                    'Print',
+                    'PDF and web view',
+                    'Kindle and iBooks',
+                    'All of the above!'
+                ],
+                correctIndex: 3
+            },
+            {
+                question: 'What additional resource are available with OpenStax books?',
+                answers: [
+                    `Online homework, customization help, and other technology from our
+                     ecosystem of partners`,
+                    'PowerPoint slides',
+                    'Getting started guides for instructors and students',
+                    'All of the above and more!'
+                ],
+                correctIndex: 3
+            }
+
+        ];
+        const longestAnswer = questions.map((qa) => qa.answers.reduce((a,b) => b.length > a.length ? b : a, ''))
+            .reduce((a, b) => b.length > a.length ? b : a, '');
+
         this.regions.self.append(new Quiz({
             heading: 'Pop Quiz!',
             skipLink: {
@@ -170,42 +210,8 @@ export default class extends componentType(spec) {
             },
             currentQuestion: 0,
             completeMessage: 'You aced it!',
-            questions: [
-                {
-                    question: `
-                    All our work is devoted to helping students succeed because
-                    OpenStax is a(n) ___________`,
-                    answers: [
-                        'Urban legend',
-                        'Non profit organization dedicated to breaking down barriers to education',
-                        'Friendly woodland creature',
-                        'Natural sprinter'
-                    ],
-                    correctIndex: 1
-                },
-                {
-                    question: 'What formats are OpenStax books available in?',
-                    answers: [
-                        'Print',
-                        'PDF and web view',
-                        'Kindle and iBooks',
-                        'All of the above!'
-                    ],
-                    correctIndex: 3
-                },
-                {
-                    question: 'What additional resource are available with OpenStax books?',
-                    answers: [
-                        `Online homework, customization help, and other technology from our
-                         ecosystem of partners`,
-                        'PowerPoint slides',
-                        'Getting started guides for instructors and students',
-                        'All of the above and more!'
-                    ],
-                    correctIndex: 3
-                }
-
-            ],
+            questions,
+            longestAnswer,
             image: {
                 image: '/images/hero-journey/2-quiz-illustration.svg',
                 altText: 'man'

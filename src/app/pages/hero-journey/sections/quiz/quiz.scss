@@ -159,6 +159,16 @@ $guessed-color: #c1c1c1;
                 line-height: 1.5;
             }
         }
+
+        .longest-answer {
+            opacity: 0;
+        }
+
+        .longest-answer,
+        .displayed-answer {
+            grid-row-start: 1;
+            grid-column-start: 1;
+        }
     }
 
     .lower-left {
