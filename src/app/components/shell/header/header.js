@@ -25,11 +25,9 @@ class Header extends Controller {
             mainMenu: 'nav.nav'
         };
 
-        const accounts = `${settings.apiOrigin}/accounts`;
-
         this.model = {
-            login: `${accounts}/login/openstax/`,
-            logout: `${settings.accountHref}/signout/`,
+            login: `${settings.apiOrigin}/oxauth/login/`,
+            logout: `${settings.apiOrigin}/oxauth/logout/`,
             user: {
                 username: null,
                 groups: []
