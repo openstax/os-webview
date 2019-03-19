@@ -98,6 +98,21 @@ export default class extends componentType(spec) {
                         }
                     );
                 }
+
+                if (lastCompleted === 5) {
+                    const badgeEl = this.el.querySelector('.badge');
+
+                    badgeEl.style.transition = "right 0.5s, transform 0.3s";
+
+                    window.requestAnimationFrame(() => {
+                        badgeEl.style.right = "10rem";
+                        badgeEl.style.transform = "translate(50%, 50%) scale(3)";
+                        setTimeout(() => {
+                            badgeEl.style.removeProperty('right');
+                            badgeEl.style.removeProperty('transform');
+                        }, 3000);
+                    });
+                }
             }
         };
         const navigator = new NumberedNavigator({

@@ -50,6 +50,15 @@ export default class extends componentType(spec) {
                 }
             }
             const ttRect = ttEl.getBoundingClientRect();
+            const keepPhoneTipOnscreen = (lefValue) => {
+                if (selector === '.phone-tooltip') {
+                    if (leftValue < 0) {
+                        // Magic numbers because I don't know how this should be figured.
+                        ttEl.style.paddingLeft = '3.7rem';
+                        ttEl.style.width = '11.3rem';
+                    }
+                }
+            };
 
             if (ttRect.width > 0) {
                 const direction = selector === '.phone-tooltip' ? 'left' : 'top';
@@ -58,14 +67,7 @@ export default class extends componentType(spec) {
                     left: nRect.left + nRect.width / 2 - ttRect.width / 2 - thisRect.left
                 };
 
-                if (selector === '.phone-tooltip') {
-                    if (values.left < 0) {
-                        // Magic numbers because I don't know how this should be figured.
-                        ttEl.style.paddingLeft = '3.7rem';
-                        ttEl.style.width = '11.3rem';
-                    }
-                }
-
+                keepPhoneTipOnscreen(values.left);
                 ttEl.style[direction] = `${values[direction]}px`;
             }
         });
