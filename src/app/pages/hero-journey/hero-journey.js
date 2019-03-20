@@ -15,7 +15,12 @@ const spec = {
     view: {
         classes: ['hero-journey', 'page'],
         tag: 'main'
-    }
+    },
+    firstName: '',
+    lastName: '',
+    email: '',
+    school: '',
+    accountId: ''
     // slug: 'pages/hero-journey'
 };
 
@@ -23,12 +28,6 @@ export default class extends componentType(spec) {
 
     init(...args) {
         super.init(...args);
-        this.firstName = 'squire';
-        this.accountId = '';
-        this.firstName = '';
-        this.lastName = '';
-        this.email = '';
-        this.school = '';
         this.accountsModelPromise = accountsModel.load();
     }
 
@@ -37,15 +36,20 @@ export default class extends componentType(spec) {
             title: 'Hero\'s Journey',
             steps: [
                 {
-                    task: 'Make an account'
+                    task: 'Make an account',
+                    hash: 'make-account'
                 }, {
-                    task: 'Look at the books'
+                    task: 'Look at the books',
+                    hash: 'view-books'
                 }, {
-                    task: 'Learn more about us'
+                    task: 'Learn more about us',
+                    hash: 'quiz'
                 }, {
-                    task: 'Try OpenStax'
+                    task: 'Try OpenStax',
+                    hash: 'try'
                 }, {
-                    task: 'Share your story'
+                    task: 'Share your story',
+                    hash: 'share'
                 }
             ]
         };
@@ -64,24 +68,31 @@ export default class extends componentType(spec) {
         const data = this.pageData;
         let lastCompleted = 0; // It's not really last completed, but currently active
         // Important: navigator and sections are the first (only) children
-        const scrollPastCompleted = () => {
-            const completedChild = this.regions.self.controllers[lastCompleted];
+        const setHash = (hash) => {
+            const state = history.state;
+            const pathWithoutHash = `${window.location.origin}${window.location.pathname}`;
+
+            history.replaceState(state, '', `${pathWithoutHash}#${hash}`);
+        };
+        const displaySection = (index) => {
+            const completedChild = this.regions.self.controllers[index];
 
             completedChild.el.classList.remove('hidden');
             $.scrollTo(completedChild.el).then(() => {
                 // Might have skipped some by getting saved progress
-                this.regions.self.controllers.slice(1, lastCompleted)
+                this.regions.self.controllers.slice(1, index)
                     .forEach((prevChild) => {
                         prevChild.el.classList.add('hidden');
                     });
                 window.scrollTo(0, 0);
             });
+            setHash(this.pageData.steps[index].hash);
         };
         const updateLastCompleted = (newValue, save=true) => {
             if (lastCompleted < newValue) {
                 lastCompleted = newValue;
                 this.update();
-                scrollPastCompleted();
+                displaySection(lastCompleted);
                 if (save) {
                     fetch(
                         `${settings.apiOrigin}/api/progress/?account_id=${this.accountId}`,
@@ -102,11 +113,11 @@ export default class extends componentType(spec) {
                 if (lastCompleted === 5) {
                     const badgeEl = this.el.querySelector('.badge');
 
-                    badgeEl.style.transition = "right 0.5s, transform 0.3s";
+                    badgeEl.style.transition = 'right 0.5s, transform 0.3s';
 
                     window.requestAnimationFrame(() => {
-                        badgeEl.style.right = "10rem";
-                        badgeEl.style.transform = "translate(50%, 50%) scale(3)";
+                        badgeEl.style.right = '10rem';
+                        badgeEl.style.transform = 'translate(50%, 50%) scale(3)';
                         setTimeout(() => {
                             badgeEl.style.removeProperty('right');
                             badgeEl.style.removeProperty('transform');
@@ -119,7 +130,8 @@ export default class extends componentType(spec) {
             getProps: () => {
                 return {
                     steps: data.steps,
-                    lastCompleted
+                    lastCompleted,
+                    visitNode: displaySection
                 };
             }
         });
@@ -147,7 +159,10 @@ export default class extends componentType(spec) {
                 .then((r) => r.json())
                 .then((progress) => {
                     if (progress.length > 0) {
-                        updateLastCompleted(progress.slice(-1)[0].progress, false);
+                        const value = progress.slice(-1)[0].progress;
+                        const safeValue = value > 0 ? value : 1;
+
+                        updateLastCompleted(safeValue, false);
                     } else {
                         updateLastCompleted(1);
                     }
@@ -214,7 +229,7 @@ export default class extends componentType(spec) {
             }
 
         ];
-        const longestAnswer = questions.map((qa) => qa.answers.reduce((a,b) => b.length > a.length ? b : a, ''))
+        const longestAnswer = questions.map((qa) => qa.answers.reduce((a, b) => b.length > a.length ? b : a, ''))
             .reduce((a, b) => b.length > a.length ? b : a, '');
 
         this.regions.self.append(new Quiz({

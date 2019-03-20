@@ -21,7 +21,8 @@ const spec = {
         return result;
     },
     lastLastCompleted: null,
-    hiddenClass: 'invisible'
+    hiddenClass: 'invisible',
+    showing: true
 };
 
 export default class extends componentType(spec) {
@@ -86,32 +87,58 @@ export default class extends componentType(spec) {
         }
     }
 
-    @on('mouseenter .numbered-navigator')
     showToolTip() {
         this.hiddenClass = '';
         this.showing = true;
         this.update();
     }
 
-    @on('mouseleave .numbered-navigator')
     hideToolTip() {
         this.hiddenClass = 'invisible';
         this.showing = false;
         this.update();
     }
 
-    @on('click .node')
+    @on('mouseout .numbered-navigator')
+    hideToolTipForNode(event) {
+        const node = event.target;
+        const newNode = event.relatedTarget;
+
+        if (!node.contains(newNode)) {
+            this.hideToolTip();
+        }
+    }
+
+
+    nodeToIndex(node) {
+        const nodeAndBars = Array.from(this.el.querySelectorAll('.node-and-bar'));
+
+        return nodeAndBars.indexOf(node.parentNode);
+    }
+
+    @on('mouseover .node')
     showToolTipForNode(event) {
         const node = event.delegateTarget;
-        const {steps} = this.getProps();
-        const nodeAndBars = Array.from(this.el.querySelectorAll('.node-and-bar'));
-        const index = nodeAndBars.indexOf(node.parentNode);
-        const tooltips = this.el.querySelectorAll('.left-tooltip,.right-tooltip,.phone-tooltip');
 
-        tooltips.forEach((t) => {
-            t.textContent = steps[index].task;
-        });
-        this.positionToolTips(node);
+        if (node === event.target) {
+            this.showToolTip();
+            const {steps} = this.getProps();
+            const index = this.nodeToIndex(node);
+            const tooltips = this.el.querySelectorAll('.left-tooltip,.right-tooltip,.phone-tooltip');
+
+            tooltips.forEach((t) => {
+                t.textContent = steps[index].task;
+            });
+            this.positionToolTips(node);
+        }
+    }
+
+    @on('click .node')
+    visitNode(event) {
+        const index = this.nodeToIndex(event.delegateTarget);
+        const {visitNode, lastCompleted} = this.getProps();
+
+        visitNode(Math.min(index, lastCompleted));
     }
 
 }
