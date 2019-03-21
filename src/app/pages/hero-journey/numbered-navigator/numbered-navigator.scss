@@ -172,6 +172,7 @@ $tooltip-breakpoint: #{$media-content-max + 10em};
         border-radius: 50%;
         border-style: solid;
         border-width: 0.15rem;
+        cursor: pointer;
         display: grid;
         height: $node-size;
         justify-content: center;

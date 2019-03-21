@@ -18,7 +18,10 @@
             <input type="hidden" name="email" value="{model.email}">
             <input type="hidden" name="company" value="{model.school}">
             <textarea name="00N21000001IpUW" placeholder="Please type your message here." required autofocus></textarea>
-            <input class="btn primary" type="submit">
+            <div class="pulsing">
+                <div class="{model.pulseClass}"></div>
+                <input class="btn primary" type="submit">
+            </div>
         </form>
     </div>
     <img class="lower-left" src="{model.image.image}" alt="{model.image.altText}">

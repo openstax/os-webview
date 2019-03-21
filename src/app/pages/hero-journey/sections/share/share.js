@@ -12,6 +12,7 @@ const spec = {
     },
     css
 };
+const LONG_ENOUGH = 30;
 
 export default class extends componentType(spec) {
 
@@ -20,6 +21,7 @@ export default class extends componentType(spec) {
         this.model = model;
         this.model.salesforce = salesforce;
         this.model.action = salesforce.webtoleadUrl;
+        this.model.pulseClass = '';
     }
 
     @on('submit form')
@@ -28,6 +30,12 @@ export default class extends componentType(spec) {
             this.listeningForResponse = true;
             this.el.querySelector('#form-response').addEventListener('load', this.model.onComplete);
         }
+    }
+
+    @on('input textarea')
+    pulseButtonWhenInputLongEnough(event) {
+        this.model.pulseClass = event.target.value.length >= LONG_ENOUGH ? 'pulse' : '';
+        this.update();
     }
 
     onClose() {

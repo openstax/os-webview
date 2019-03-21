@@ -128,6 +128,14 @@ $guessed-color: #c1c1c1;
             color: $guessed-color;
             pointer-events: none;
             text-decoration: line-through;
+
+            .card-content {
+                border-color: $guessed-color;
+            }
+        }
+
+        &:not(.guessed) .card-content {
+            border-image: linear-gradient(to bottom, os-color(green), os-color(light-blue)) 1 stretch;
         }
 
         .card-content {
@@ -135,7 +143,6 @@ $guessed-color: #c1c1c1;
 
             align-items: center;
             border: 0;
-            border-image: linear-gradient(to bottom, os-color(green), os-color(light-blue)) 1 stretch;
             border-left: 0.6rem solid transparent;
             display: grid;
             justify-items: center;
@@ -158,6 +165,16 @@ $guessed-color: #c1c1c1;
 
                 line-height: 1.5;
             }
+        }
+
+        .longest-answer {
+            opacity: 0;
+        }
+
+        .longest-answer,
+        .displayed-answer {
+            grid-column-start: 1;
+            grid-row-start: 1;
         }
     }
 
