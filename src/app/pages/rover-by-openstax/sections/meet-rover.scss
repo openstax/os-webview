@@ -46,8 +46,12 @@
         display: grid;
         grid-auto-rows: 1fr;
         grid-gap: $normal-margin;
-        grid-template-columns: repeat(auto-fit, minmax(25rem, auto));
+        grid-template-columns: 1fr 1fr;
         width: 100%;
+
+        &.row-of-three {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
     }
 
     .card {

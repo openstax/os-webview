@@ -5,7 +5,7 @@
             <h2>{model.heading}</h2>
             <div class="tagline">{model.description}</div>
         </div>
-        <div class="cards">
+        <div class="cards {model.cards.length > 4 ? 'row-of-three' : ''}">
             <div class="card" each="card in model.cards">
                 <img src="{card.image}" alt="{card.imageAltText}">
                 <div class="text-block" data-html="cards[{$item}].description"></div>
