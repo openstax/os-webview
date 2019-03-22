@@ -2,7 +2,7 @@ const books = {
     "id": 30,
     "meta": {
         "type": "books.BookIndex",
-        "detail_url": "https://oscms-dev.openstax.org/api/v2/pages/30/",
+        "detail_url": "https://oscms-dev.openstax.org/apps/cms/api/v2/pages/30/",
         "html_url": "http://oscms-dev.openstax.org/subjects/",
         "slug": "subjects",
         "show_in_menus": false,
@@ -13,7 +13,7 @@ const books = {
             "id": 29,
             "meta": {
                 "type": "pages.HomePage",
-                "detail_url": "https://oscms-dev.openstax.org/api/v2/pages/29/",
+                "detail_url": "https://oscms-dev.openstax.org/apps/cms/api/v2/pages/29/",
                 "html_url": "http://oscms-dev.openstax.org/"
             },
             "title": "Openstax Homepage"

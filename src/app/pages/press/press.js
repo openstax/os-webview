@@ -121,7 +121,7 @@ export default class Press extends BaseClass {
                     const release = this.pageData.releases[k];
                     const url = `/${k}`;
 
-                    this.articleSlugs[url] = release.detail_url.replace('/api', '');
+                    this.articleSlugs[url] = release.detail_url.replace(/.*\/api\//, '/');
                     return {
                         author: release.author,
                         date: convertedDate(release.date),

@@ -6,7 +6,7 @@ import {bookPromise} from '~/models/book-titles';
 const TRANSFORM_DATA = Symbol();
 const LOAD_IMAGES = Symbol();
 
-const newsPromise = fetch(`${settings.apiOrigin}/api/v2/pages/?slug=openstax-news`)
+const newsPromise = fetch(`${settings.apiOrigin}/apps/cms/api/v2/pages/?slug=openstax-news`)
     .then((r) => r.json())
     .then((r) => r.items[0].meta.detail_url);
 
@@ -15,7 +15,7 @@ class CMSPageController extends Controller {
     constructor(...args) {
         super(...args);
         async function getUrlFor(slug) {
-            let apiUrl = `${settings.apiOrigin}/api/${slug}`;
+            let apiUrl = `${settings.apiOrigin}/apps/cms/api/${slug}`;
 
             // A little magic to handle book titles
             const strippedSlug = slug.replace(/^books\/(.*)/, '$1');
@@ -93,7 +93,7 @@ class CMSPageController extends Controller {
         const promises = [];
 
         if (typeof data.image === 'number') {
-            promises.push(fetch(`${settings.apiOrigin}/api/images/${data.image}`)
+            promises.push(fetch(`${settings.apiOrigin}/apps/cms/api/images/${data.image}`)
                 .then((response) => response.json())
                 .then((json) => {
                     data.image = json.file;

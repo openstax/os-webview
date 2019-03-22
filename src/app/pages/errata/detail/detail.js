@@ -9,7 +9,7 @@ export default class Detail extends Controller {
 
     static detailPromise(id) {
         return new Promise((resolve, reject) => {
-            fetch(`${settings.apiOrigin}/api/errata/${id}`)
+            fetch(`${settings.apiOrigin}/apps/cms/api/errata/${id}`)
                 .then((r) => r.json())
                 .then((detail) =>
                     bookPromise.then((bookList) => {
