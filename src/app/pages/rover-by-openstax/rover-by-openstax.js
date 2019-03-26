@@ -35,7 +35,6 @@ export default class RoverRedesign extends BaseClass {
             }
         }))();
         const headerImage = (data.section_1.image || {}).file;
-
         const sections = [
             bannerSection({
                 model: {
@@ -136,6 +135,10 @@ export default class RoverRedesign extends BaseClass {
         const sectionNavigator = new SectionNavigator(sectionIds);
 
         floatingTools.regions.self.attach(sectionNavigator);
+        // Pardot tracking
+        if ('piTracker' in window) {
+            piTracker(window.location.href.split('#')[0]);
+        }
     }
 
 }
