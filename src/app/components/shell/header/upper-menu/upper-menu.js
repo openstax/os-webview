@@ -16,7 +16,7 @@ export default class UpperMenu extends Controller {
         /* eslint arrow-parens: 0 */
         (async () => {
             try {
-                const newsUrl = await fetch(`${settings.apiOrigin}/api/v2/pages/?slug=openstax-news`)
+                const newsUrl = await fetch(`${settings.apiOrigin}/apps/cms/api/v2/pages/?slug=openstax-news`)
                     .then((response) => response.json())
                     .then((response) => response.items[0].meta.detail_url);
                 const data = await fetch(newsUrl).then((response) => response.json());

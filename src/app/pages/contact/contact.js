@@ -99,7 +99,7 @@ export default class Contact extends BaseClass {
     @on('change [name="subject"]')
     setFormTarget(event) {
         if (event.target.value === 'OpenStax Polska') {
-            this.model.formTarget = '/api/mail/send_mail';
+            this.model.formTarget = '/apps/cms/api/mail/send_mail';
         } else {
             this.model.formTarget = `https://${this.model.salesforce.salesforceHome}/servlet/servlet.WebToCase?encoding=UTF-8`;
         }

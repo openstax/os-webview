@@ -18,7 +18,7 @@ class Footer extends CMSPageController {
         /* eslint arrow-parens: 0 */
         (async () => {
             try {
-                const response = await fetch(`${settings.apiOrigin}/api/documents?search=press%20kit`);
+                const response = await fetch(`${settings.apiOrigin}/apps/cms/api/documents?search=press%20kit`);
                 const data = await response.json();
 
                 if (data.length) {

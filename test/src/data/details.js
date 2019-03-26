@@ -15,7 +15,7 @@ const details = {
             "id": 30,
             "meta": {
                 "type": "books.BookIndex",
-                "detail_url": "https://oscms-dev.openstax.org/api/v2/pages/30/",
+                "detail_url": "https://oscms-dev.openstax.org/apps/cms/api/v2/pages/30/",
                 "html_url": "http://oscms-dev.openstax.org/subjects/"
             },
             "title": "Subjects"

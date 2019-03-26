@@ -85,7 +85,7 @@ export default class BulkOrder extends BaseClass {
         document.title = 'Bulk Order Form - OpenStax';
         selectHandler.setup(this);
         this.regions.orderItems.attach(new OrderItems(this.model));
-        fetch(`${this.model.origin}/api/mail/send_mail/`, {credentials: 'include'})
+        fetch(`${this.model.origin}/apps/cms/api/mail/send_mail/`, {credentials: 'include'})
             .then((data) => data.json())
             .then((data) => {
                 this.model.csrfToken = data.csrf_token;
