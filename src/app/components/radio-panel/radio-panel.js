@@ -1,26 +1,26 @@
-import {Controller} from 'superb.js';
+import componentType from '~/helpers/controller/init-mixin';
+import busMixin from '~/helpers/controller/bus-mixin';
 import {on} from '~/helpers/controller/decorators';
-import $ from '~/helpers/$';
 import {description as template} from './radio-panel.html';
 
-export default class RadioPanel extends Controller {
-
-    init(items, onChange) {
-        this.template = template;
-        this.view = {
-            classes: ['filter-buttons']
-        };
-        this.active = false;
-        this.items = items;
-        this.onChange = onChange;
-        this.model = () => ({
+const spec = {
+    template,
+    view: {
+        classes: ['filter-buttons']
+    },
+    model() {
+        return {
             items: this.items,
             isSelected: (value) => this.selectedValue === value
-        });
+        };
     }
+};
 
-    onUpdate() {
-        $.insertHtml(this.el, this.model);
+export default class extends componentType(spec, busMixin) {
+
+    init(items) {
+        super.init();
+        this.items = items;
     }
 
     updateSelected(value) {
@@ -28,10 +28,11 @@ export default class RadioPanel extends Controller {
         this.update();
     }
 
-    @on('click')
-    toggleActive() {
-        this.active = !this.active;
-        this.el.classList.toggle('active', this.active);
+    onUpdate() {
+        if (super.onUpdate) {
+            super.onUpdate();
+        }
+        this.insertHtml();
     }
 
     @on('click .filter-button')
@@ -39,12 +40,8 @@ export default class RadioPanel extends Controller {
         const target = event.delegateTarget;
         const newValue = target.dataset ? target.dataset.value : target.getAttribute('data-value');
 
-        if (newValue !== this.selectedValue) {
-            this.active = false;
-            this.el.classList.remove('active');
-        }
         this.updateSelected(newValue);
-        this.onChange(newValue);
+        this.emit('change', newValue);
     }
 
     @on('keydown .filter-button')

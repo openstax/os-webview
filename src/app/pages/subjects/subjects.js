@@ -26,7 +26,10 @@ export default class Subjects extends BaseClass {
 
     init() {
         super.init();
-        this.categorySelector = new CategorySelector((category) => this.filterSubjects(category));
+        this.categorySelector = new CategorySelector();
+        this.categorySelector.on('change', (category) => {
+            this.filterSubjects(category);
+        });
         router.replaceState({
             filter: this.categoryFromPath(),
             path: pagePath

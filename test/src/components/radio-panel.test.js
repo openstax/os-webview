@@ -7,10 +7,11 @@ describe('RadioPanel', () => {
         {value: 'in-review', html: 'In Review'},
         {value: 'reviewed', html: 'Reviewed'},
         {value: 'corrected', html: 'Corrected'}
-    ], () => {
+    ]);
+
+    p.on('change', () => {
         changed = true;
     });
-
     it('creates', () => {
         expect(p).toBeTruthy();
     });

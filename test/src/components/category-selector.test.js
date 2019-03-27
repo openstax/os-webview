@@ -3,8 +3,8 @@ import {clickElement} from '../../test-utils';
 import $ from '~/helpers/$';
 
 describe('CategorySelector', () => {
-    const p = new CategorySelector(() => {});
     const categories = CategorySelector.categories;
+    const p = new CategorySelector();
 
     ['Math', 'Science', 'Social Sciences', 'Humanities', 'Business']
         .forEach((name) => {

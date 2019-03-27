@@ -69,7 +69,8 @@ export default class Errata extends BaseClass {
             {value: 'in-review', html: 'In Review'},
             {value: 'reviewed', html: 'Reviewed'},
             {value: 'corrected', html: 'Corrected'}
-        ], (selectedItem) => {
+        ]);
+        this.radioPanel.on('change', (selectedItem) => {
             this.selectedFilter = selectedItem;
             history.replaceState('', '',
                 selectedItem ? `#${selectedItem}` :

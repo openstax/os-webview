@@ -13,8 +13,8 @@ export default class CategorySelector extends RadioPanel {
         Object.assign(CategorySelector.byValue, categories.byValue);
     });
 
-    init(setState) {
-        super.init(CategorySelector.categories, setState);
+    init() {
+        super.init(CategorySelector.categories);
     }
 
     onLoaded() {
