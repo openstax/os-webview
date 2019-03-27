@@ -4,7 +4,7 @@ import CMSPageController from '~/controllers/cms';
 import mix from './mixins';
 import shell from '~/components/shell/shell';
 
-const componentMixin = (superclass) => class extends superclass {
+export const componentMixin = (superclass) => class extends superclass {
 
     init(options) {
         Object.assign(this, options);

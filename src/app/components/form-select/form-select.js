@@ -1,25 +1,28 @@
-import {Controller} from 'superb.js';
+import componentType from '~/helpers/controller/init-mixin';
+import busMixin from '~/helpers/controller/bus-mixin';
 import Select from '~/components/select/select';
 import selectHandler from '~/handlers/select';
-import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './form-select.html';
 
-export default class FormSelect extends Controller {
+const spec = {
+    template,
+    view: {
+        tag: 'label',
+        classes: ['form-select']
+    }
+};
+
+export default class FormSelect extends componentType(spec, busMixin) {
 
     static YES_NO_OPTIONS = [
         {label: 'Yes', value: '1'},
         {label: 'No', value: '0'}
     ];
 
-    init(props, onChange) {
-        this.template = template;
+    init(props) {
+        super.init();
         this.model = props;
-        this.onChange = onChange;
-        this.view = {
-            tag: 'label',
-            classes: ['form-select']
-        };
     }
 
     onLoaded() {
@@ -29,7 +32,7 @@ export default class FormSelect extends Controller {
         };
 
         this.proxyWidget = new Select(config, selectHandler, this);
-        $.insertHtml(this.el, this.model);
+        this.insertHtml();
         selectHandler.controllers.push(this.proxyWidget);
     }
 
@@ -41,9 +44,7 @@ export default class FormSelect extends Controller {
 
     @on('change select')
     handleChange(event) {
-        if (this.onChange) {
-            this.onChange(event.target.value);
-        }
+        this.emit('change', event.target.value);
     }
 
 }

@@ -2,6 +2,7 @@ import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import {description as template} from './item.html';
 import componentType from '~/helpers/controller/init-mixin';
+import busMixin from '~/helpers/controller/bus-mixin';
 
 const spec = {
     template,
@@ -12,7 +13,6 @@ const spec = {
         contentPane: '.content-pane'
     },
     model() {
-        this.props = this.getProps();
         const isOpen = this.props.selectedLabel === this.props.label;
 
         return {
@@ -23,9 +23,10 @@ const spec = {
     }
 };
 
-export default class AccordionItem extends componentType(spec) {
+export default class AccordionItem extends componentType(spec, busMixin) {
 
     onLoaded() {
+        this.on('update', () => this.update());
         if (this.props.contentComponent) {
             this.regions.contentPane.attach(this.props.contentComponent);
         }
@@ -36,7 +37,7 @@ export default class AccordionItem extends componentType(spec) {
         if (event.delegateTarget.parentNode === this.el) {
             const isOpen = this.props.selectedLabel === this.props.label;
 
-            this.handlers.setSelected(isOpen ? null : this.props.label);
+            this.emit('change', isOpen);
             if (!isOpen) {
                 $.scrollTo(this.el);
             }

@@ -47,20 +47,22 @@ export default class RoleSelector extends CMSPageController {
 
     onDataLoaded() {
         const options = this.pageData.map((opt) => ({label: opt.display_name, value: opt.salesforce_name}));
-
-        this.regions.selector.attach(new FormSelect({
+        const selector = new FormSelect({
             instructions: 'I am a',
             validationMessage: () => '',
             placeholder: 'Please select one',
             options
-        }, (newValue) => {
+        });
+
+        selector.on('change', (newValue) => {
             this.selectedRole = newValue;
             this.update();
             $.scrollTo(this.el);
             if (this.onChange) {
                 this.onChange(newValue);
             }
-        }));
+        });
+        this.regions.selector.attach(selector);
     }
 
 }
