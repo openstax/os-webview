@@ -1,38 +1,40 @@
-import CMSPageController from '~/controllers/cms';
+import componentType from '~/helpers/controller/init-mixin';
+import cmsMixin from '~/helpers/controller/cms-mixin';
+import busMixin from '~/helpers/controller/bus-mixin';
 import FormSelect from '~/components/form-select/form-select';
-import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import {description as template} from './role-selector.html';
 import css from './role-selector.css';
 
-export default class RoleSelector extends CMSPageController {
-
-    init(getProps, onChange) {
-        this.template = template;
-        this.getProps = getProps;
-        this.onChange = onChange;
-        this.view = {
-            classes: ['role-selector']
-        };
-        this.css = css;
-        this.regions = {
-            selector: '[data-region="selector"]',
-            studentForm: '[data-region="student-form"]',
-            facultyForm: '[data-region="faculty-form"]'
-        };
-        this.slug = 'snippets/roles';
-        this.selectedRole = '';
-        this.isHidden = false;
-        this.model = () => this.getModel();
-    }
-
-    getModel() {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['role-selector']
+    },
+    slug: 'snippets/roles',
+    model() {
         // props are an array of {contents, hideWhen}
         this.props = this.getProps();
         const result = this.props.map((p) => $.booleanAttribute(p.hideWhen(this.selectedRole)));
 
         result.hiddenAttribute = $.booleanAttribute(this.isHidden);
         return result;
+    }
+};
+
+export default class RoleSelector extends componentType(spec, cmsMixin, busMixin) {
+
+    init(getProps) {
+        super.init();
+        this.getProps = getProps;
+        this.regions = {
+            selector: '[data-region="selector"]',
+            studentForm: '[data-region="student-form"]',
+            facultyForm: '[data-region="faculty-form"]'
+        };
+        this.selectedRole = '';
+        this.isHidden = false;
     }
 
     onLoaded() {
@@ -58,9 +60,7 @@ export default class RoleSelector extends CMSPageController {
             this.selectedRole = newValue;
             this.update();
             $.scrollTo(this.el);
-            if (this.onChange) {
-                this.onChange(newValue);
-            }
+            this.emit('change', newValue);
         });
         this.regions.selector.attach(selector);
     }

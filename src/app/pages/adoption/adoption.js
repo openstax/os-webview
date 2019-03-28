@@ -138,11 +138,11 @@ export default class AdoptionForm extends Controller {
                     contents: facultyForm,
                     hideWhen: (role) => ['', 'Student'].includes(role)
                 }
-            ],
-            () => {
-                this.hiddenFields.update();
-            }
+            ]
         );
+        this.roleSelector.on('change', () => {
+            this.hiddenFields.update();
+        })
         this.regions.roleSelector.attach(this.roleSelector);
     }
 

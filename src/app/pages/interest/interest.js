@@ -166,12 +166,12 @@ export default class InterestForm extends BaseClass {
                     contents: facultyForm,
                     hideWhen: (role) => ['', 'Student'].includes(role)
                 }
-            ],
-            (newValue) => {
-                this.selectedRole = newValue;
-                this.hiddenFields.update();
-            }
+            ]
         );
+        this.roleSelector.on('change', (newValue) => {
+            this.selectedRole = newValue;
+            this.hiddenFields.update();
+        });
         this.regions.roleSelector.attach(this.roleSelector);
     }
 
