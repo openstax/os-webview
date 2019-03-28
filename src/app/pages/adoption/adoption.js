@@ -82,17 +82,11 @@ export default class AdoptionForm extends Controller {
             return result;
         };
         const secondPage = () => {
-            const bookSelector = new BookSelector(
-                () => ({
-                    prompt: 'Which textbook(s) are you currently using?',
-                    required: true,
-                    preselectedTitle: decodeURIComponent(window.location.search.substr(1))
-                }),
-                (selectedBooks) => {
-                    this.selectedBooks = selectedBooks;
-                    this.howUsing.update();
-                }
-            );
+            const bookSelector = new BookSelector({
+                prompt: 'Which textbook(s) are you currently using?',
+                required: true,
+                preselectedTitle: decodeURIComponent(window.location.search.substr(1))
+            });
             const result = new SeriesOfComponents({
                 className: 'page-2',
                 contents: [
@@ -101,6 +95,10 @@ export default class AdoptionForm extends Controller {
                 ]
             });
 
+            bookSelector.on('change', (selectedBooks) => {
+                this.selectedBooks = selectedBooks;
+                this.howUsing.update();
+            });
             result.validate = () => {
                 const bsv = bookSelector.validate();
                 const huv = this.howUsing.validate();
@@ -142,7 +140,7 @@ export default class AdoptionForm extends Controller {
         );
         this.roleSelector.on('change', () => {
             this.hiddenFields.update();
-        })
+        });
         this.regions.roleSelector.attach(this.roleSelector);
     }
 

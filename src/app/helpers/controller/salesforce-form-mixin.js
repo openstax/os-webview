@@ -4,6 +4,9 @@ import {on} from '~/helpers/controller/decorators';
 export default (superclass) => class extends superclass {
 
     init() {
+        if (super.init) {
+            super.init();
+        }
         this.slug = 'books';
     }
 
@@ -25,7 +28,7 @@ export default (superclass) => class extends superclass {
                 text: book.salesforce_name,
                 value: book.salesforce_abbreviation,
                 comingSoon: book.book_state === 'coming_soon',
-                subject: book.subject,
+                subjects: Reflect.ownKeys(book.subjects),
                 coverUrl: book.cover_url
             }))
             .sort((a, b) => a.text < b.text ? -1 : 1);
