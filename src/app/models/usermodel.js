@@ -1,7 +1,7 @@
 import settings from 'settings';
 
 const docUrlBase = `${settings.apiOrigin}/apps/cms/api/documents`;
-const accountsUrl = `${settings.accountHref}/apps/cms/api/user`;
+const accountsUrl = `${settings.accountHref}/api/user`;
 
 const LOADED = Symbol();
 const LOADED_TIME = Symbol();
