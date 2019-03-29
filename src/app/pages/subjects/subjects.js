@@ -4,6 +4,7 @@ import BookViewer from './book-viewer/book-viewer';
 import CategorySelector from '~/components/category-selector/category-selector';
 import {description as template} from './subjects.html';
 import css from './subjects.css';
+import $ from '~/helpers/$';
 
 const pagePath = '/subjects';
 const spec = {
@@ -26,7 +27,10 @@ export default class Subjects extends BaseClass {
 
     init() {
         super.init();
-        this.categorySelector = new CategorySelector((category) => this.filterSubjects(category));
+        this.categorySelector = new CategorySelector();
+        this.categorySelector.on('change', (category) => {
+            this.filterSubjects(category);
+        });
         router.replaceState({
             filter: this.categoryFromPath(),
             path: pagePath
@@ -50,6 +54,14 @@ export default class Subjects extends BaseClass {
         });
         window.scrollTo(0, yTarget);
         this.setCanonicalLink();
+        this.setTitle(category);
+    }
+
+    setTitle(category) {
+        const categoryEntry = CategorySelector.categories.find((e) => e.value === category);
+        const title = (categoryEntry && 'title' in categoryEntry) ? categoryEntry.title : this.pageData.title;
+
+        $.setPageTitleAndDescription(title, this.pageData.page_description);
     }
 
     onDataLoaded() {

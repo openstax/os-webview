@@ -14,23 +14,25 @@ export default class AccordionGroup extends componentType(spec) {
     // Never updates, so just set up the children
     onLoaded() {
         let selectedLabel;
-        const handlers = {
-            setSelected: (newValue) => {
-                selectedLabel = newValue;
-                this.updateItems();
-            }
-        };
 
         this.itemComponents = this.items.map((item) => {
-            return new AccordionItem({
-                getProps: () => ({
+            const itemComponent = new AccordionItem({
+                props: {
                     label: item.title,
                     openLabel: item.openTitle || item.title,
                     contentComponent: item.contentComponent,
-                    selectedLabel
-                }),
-                handlers
+                    get selectedLabel() {
+                        return selectedLabel;
+                    }
+                }
             });
+
+            itemComponent.on('change', (isOpen) => {
+                selectedLabel = isOpen ? null : item.title;
+                this.updateItems();
+            });
+
+            return itemComponent;
         });
 
         this.itemComponents.forEach((i) => {
@@ -40,7 +42,7 @@ export default class AccordionGroup extends componentType(spec) {
 
     updateItems() {
         this.itemComponents.forEach((i) => {
-            i.update();
+            i.emit('update');
         });
     }
 

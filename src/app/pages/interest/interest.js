@@ -63,12 +63,12 @@ export default class InterestForm extends BaseClass {
         const validationMessage = function (name) {
             return this && validated ? this.el.querySelector(`[name="${name}"]`).validationMessage : '';
         };
-        const bookSelector = new BookSelector(() => ({
+        const bookSelector = new BookSelector({
             prompt: 'Which textbook(s) are you interested in adopting?',
             required: true,
             name: 'Subject__c',
             preselectedTitle: decodeURIComponent(window.location.search.substr(1))
-        }));
+        });
         const howManyStudents = new FormInput({
             name: 'Number_of_Students__c',
             longLabel: 'How many students do you teach each semester?',
@@ -166,12 +166,12 @@ export default class InterestForm extends BaseClass {
                     contents: facultyForm,
                     hideWhen: (role) => ['', 'Student'].includes(role)
                 }
-            ],
-            (newValue) => {
-                this.selectedRole = newValue;
-                this.hiddenFields.update();
-            }
+            ]
         );
+        this.roleSelector.on('change', (newValue) => {
+            this.selectedRole = newValue;
+            this.hiddenFields.update();
+        });
         this.regions.roleSelector.attach(this.roleSelector);
     }
 

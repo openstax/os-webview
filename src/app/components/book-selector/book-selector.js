@@ -1,27 +1,38 @@
-import SalesforceForm from '~/controllers/salesforce-form';
+import componentType from '~/helpers/controller/init-mixin';
+import busMixin from '~/helpers/controller/bus-mixin';
+import cmsMixin from '~/helpers/controller/cms-mixin';
+import salesforceFormMixin from '~/helpers/controller/salesforce-form-mixin';
 import salesforce from '~/models/salesforce';
 import BookCheckbox from '~/components/book-checkbox/book-checkbox';
-import $ from '~/helpers/$';
 import {description as template} from './book-selector.html';
 import css from './book-selector.css';
 
-export default class BookSelector extends SalesforceForm {
-
-    init(getProps, onChange) {
-        super.init();
-        this.template = template;
-        this.getProps = getProps;
-        this.onChange = onChange;
-        this.view = {
-            classes: ['book-selector']
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['book-selector']
+    },
+    model() {
+        return {
+            prompt: this.props.prompt,
+            subjects: this.subjects,
+            booksBySubject: this.booksBySubject,
+            validationMessage: this.validationMessage
         };
-        this.css = css;
-        this.model = () => this.getModel();
+    }
+};
+
+export default class BookSelector extends componentType(spec, cmsMixin, salesforceFormMixin, busMixin) {
+
+    init(props) {
+        super.init();
+        this.props = props;
         this.subjects = [];
         this.salesforceTitles = [];
         this.booksBySubject = (subject) =>
             this.salesforceTitles
-                .filter((b) => b.subject === subject)
+                .filter((b) => b.subjects.includes(subject))
         ;
         this.booksSorted = () =>
             this.salesforceTitles.slice().sort((a, b) => {
@@ -45,17 +56,6 @@ export default class BookSelector extends SalesforceForm {
         this.validated = false;
     }
 
-    getModel() {
-        this.props = this.getProps();
-
-        return {
-            prompt: this.props.prompt,
-            subjects: this.subjects,
-            booksBySubject: this.booksBySubject,
-            validationMessage: this.validationMessage
-        };
-    }
-
     get selectedBooks() {
         return this.booksSorted()
             .filter((b) => Boolean(this.bookIsSelected[b.value]));
@@ -63,7 +63,7 @@ export default class BookSelector extends SalesforceForm {
 
     onDataLoaded() {
         super.onDataLoaded();
-        const subjects = this.salesforceTitles.map((book) => book.subject);
+        const subjects = this.salesforceTitles.reduce((a, b) => a.concat(b.subjects), []);
 
         this.subjects = subjects.reduce((a, b) => a.includes(b) ? a : a.concat(b), []);
         this.update();
@@ -81,9 +81,7 @@ export default class BookSelector extends SalesforceForm {
                 const book = books[i];
                 const onChange = (checked) => {
                     this.bookIsSelected[book.value] = checked;
-                    if (this.onChange) {
-                        this.onChange(this.selectedBooks);
-                    }
+                    this.emit('change', this.selectedBooks);
                     this.update();
                 };
                 const checkboxComponent = new BookCheckbox(() => ({

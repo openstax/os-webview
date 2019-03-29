@@ -11,9 +11,10 @@ export default Promise.all([booksPromise, categoriesPromise]).then(([books, cate
     ];
 
     result.byValue = {};
-    books.forEach((b) => {
-        usedCategories[b.subject] = true;
-    });
+    books.forEach((b) => b.subjects.forEach((s) => {
+        usedCategories[s] = true;
+    }));
+
     categories.filter((c) => usedCategories[c.name])
         .forEach((c) => {
             const name = c.name;
@@ -22,7 +23,8 @@ export default Promise.all([booksPromise, categoriesPromise]).then(([books, cate
             result.push({
                 value,
                 cms: name,
-                html: name
+                html: name,
+                title: c.seo_title
             });
         });
     result.push({value: 'ap', cms: 'AP', html: 'AP<sup>&reg;</sup>'});
