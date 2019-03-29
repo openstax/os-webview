@@ -28,7 +28,7 @@ export default (superclass) => class extends superclass {
                 text: book.salesforce_name,
                 value: book.salesforce_abbreviation,
                 comingSoon: book.book_state === 'coming_soon',
-                subjects: Reflect.ownKeys(book.subjects),
+                subjects: book.subjects,
                 coverUrl: book.cover_url
             }))
             .sort((a, b) => a.text < b.text ? -1 : 1);
