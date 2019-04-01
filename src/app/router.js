@@ -136,20 +136,21 @@ class AppRouter extends Router {
                 }
             }
         };
+        const handleAsExternal = linkHelper.isExternal(href) || el.target;
+        const navigateTo = (href) => {
+            if (handleAsExternal) {
+                handleExternalLink(href);
+            } else {
+                this.navigate(href || '/');
+            }
+        };
 
-        if (!el) {
+        if (el && e.button === 0) {
             return;
         }
 
-        const href = linkHelper.stripOpenStaxDomain(el.getAttribute('href'));
-
         e.preventDefault();
-
-        if (linkHelper.isExternal(href) || el.target) {
-            handleExternalLink(href);
-        } else {
-            this.navigate(href || '/');
-        }
+        navigateTo(linkHelper.stripOpenStaxDomain(el.getAttribute('href')));
     }
 
 }
