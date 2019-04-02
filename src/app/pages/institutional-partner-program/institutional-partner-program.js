@@ -69,7 +69,8 @@ export default class extends componentType(spec) {
                 quote: data.section_4_quote_text,
                 name: data.section_4_quote_name,
                 title: data.section_4_quote_title,
-                school: data.section_4_quote_school
+                school: data.section_4_quote_school,
+                backgroundImage: data.section_4_background_image.meta.download_url
             }
         }));
         this.regions.self.append(new Speaking({
