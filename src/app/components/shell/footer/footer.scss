@@ -1,99 +1,133 @@
 @import 'pattern-library/core/pattern-library/headers';
 
+$lower-footer: #3b3b3b;
+
 .page-footer {
-    @include set-font(helper-label);
-
-    background-color: ui-color(footer-bg);
     color: text-color(footer);
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
+    display: grid;
 
-    @include wider-than($tablet-max) {
-        text-align: center;
+    a {
+        color: inherit;
     }
 
-    @include width-up-to($phone-max) {
-        text-align: left;
-    }
+    .top {
+        background-color: ui-color(footer-bg);
 
-    .boxed {
-        margin: 0 auto;
-        opacity: 0.85;
+        @include width-up-to($phone-max) {
+            padding: 2rem 0;
+        }
+
+        @include width-between($phone-max, $tablet-max) {
+            padding: 4rem 0;
+        }
 
         @include wider-than($tablet-max) {
-            padding: 0;
-            width: 86rem; // A little extra-wide to allow list of links to fit
-        }
-    }
-
-    .hero-quote {
-        @include set-font(h1);
-
-        color: text-color(footer-header);
-        padding: 3rem 0;
-
-        .narrow-block {
-            display: inline-block;
-        }
-    }
-
-    [role="contentinfo"] {
-        flex-wrap: wrap;
-
-        @include wider-than($tablet-max) {
-            padding: 0 0 1rem;
+            padding: 7rem 0;
         }
 
-        ul {
-            display: flex;
-            flex-flow: row wrap;
-            margin: 0 0 2rem;
-            padding: 0;
+        .boxed {
+            display: grid;
+            grid-row-gap: 2rem;
+
+            @include width-up-to($phone-max) {
+                grid-template: 'headline'
+                    'mission'
+                    'col1'
+                    'col2'
+                    'col3';
+            }
+
+            @include wider-than($phone-max) {
+                align-items: start;
+                grid-column-gap: 4rem;
+                grid-template: 'headline col1 col2 col3'
+                    'mission col1 col2 col3' / minmax(auto, 50rem) auto auto auto;
+            }
 
             @include wider-than($tablet-max) {
-                justify-content: center;
+                grid-column-gap: 8rem;
             }
         }
 
-        li > a {
-            color: inherit;
-            padding-right: 2rem;
-            text-decoration: underline;
+        .column {
+            display: grid;
+            grid-gap: 0.5rem;
+
+            a {
+                text-decoration: none;
+            }
+
+            &.col1 {
+                grid-area: col1;
+            }
+
+            &.col2 {
+                grid-area: col2;
+            }
+
+            &.col3 {
+                grid-area: col3;
+            }
         }
 
-        p {
-            margin: 2rem auto;
+        [role="heading"] {
+            grid-area: headline;
+
+            @include width-up-to($phone-max) {
+                @include title-font(2rem);
+            }
+
+            @include wider-than($phone-max) {
+                @include title-font(2.4rem);
+            }
+        }
+
+        .column-heading {
+            @include title-font(1.8rem);
+        }
+
+        .mission {
+            grid-area: mission;
+
+            @include wider-than($phone-max) {
+                @include set-font(body-large);
+            }
+
+            a {
+                font-weight: bold;
+            }
         }
     }
 
-    .social {
-        display: grid;
-        grid-gap: 2rem;
-        grid-template-columns: repeat(auto-fit, 5rem);
-        justify-content: center;
-        margin: 2rem 0;
-        width: 100%;
+    .bottom {
+        @include body-font(1.2rem);
 
-        a {
-            background-color: ui-color(secondary);
-            background-size: 130%;
-            height: 5rem;
-            width: 100%;
+        background-color: $lower-footer;
 
-            // Not done with an image like the others
-            &.instagram {
-                color: ui-color(default-active);
-                font-size: 3.6rem;
+        @include width-up-to($phone-max) {
+            padding: $normal-margin;
+        }
 
-                > * {
-                    transform: translate(-2%, -8%);
-                }
-            }
+        @include wider-than($phone-max) {
+            padding: 2.5rem 0;
+        }
 
-            &:hover {
-                background-color: ui-color(secondary-hover);
+        .boxed {
+            display: grid;
+            grid-column-gap: 4rem;
+            grid-row-gap: $normal-margin;
+
+            @include wider-than($phone-max) {
+                grid-auto-flow: column;
             }
         }
+
+        .social {
+            display: grid;
+            grid-auto-flow: column;
+            grid-gap: 1rem;
+            justify-content: center;
+        }
     }
+
 }

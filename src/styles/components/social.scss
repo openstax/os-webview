@@ -1,14 +1,17 @@
 .btn-social {
+    align-content: center;
     background-position: center center;
     background-repeat: no-repeat;
-    background-size: 70%;
+    background-size: 100%;
     border-radius: 50%;
-    display: inline-block;
-    font-size: 0;
+    display: grid;
     height: 2.8rem;
-    line-height: 2.4rem;
     overflow: hidden;
     width: 2.8rem;
+
+    &:not(.instagram) {
+        font-size: 0;
+    }
 }
 
 .facebook {
