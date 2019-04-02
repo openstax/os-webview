@@ -9,6 +9,10 @@
     }
 
     .content-block {
+        @include width-up-to($phone-max) {
+            grid-template-columns: 100%;
+        }
+
         @include wider-than($phone-max) {
             grid-template-columns: 1fr auto;
         }

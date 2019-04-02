@@ -20,7 +20,7 @@
 
     .cards {
         display: grid;
-        grid-auto-columns: minmax(100%, 28rem);
+        grid-auto-columns: 28rem;
         grid-auto-flow: column;
         grid-gap: 2rem;
         max-width: 100%;
