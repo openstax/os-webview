@@ -3,6 +3,7 @@
 .big-quote {
     color: text-color(white);
     padding: 16rem 0;
+    position: relative;
 
     @include width-up-to($phone-max) {
         padding: 4rem 2rem;
