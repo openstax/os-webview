@@ -1,0 +1,22 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.page-overlay .established-partners {
+    align-items: center;
+    background-color: transparent;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 12rem);
+    justify-content: center;
+    padding: 2rem;
+
+    @include width-up-to($phone-max) {
+        grid-gap: 3rem;
+    }
+
+    @include wider-than($phone-max) {
+        grid-gap: 6rem;
+    }
+
+    img {
+        max-width: 100%;
+    }
+}

@@ -30,6 +30,7 @@ linters:
             - grid-gap
             - grid-row-gap
             - grid-column-gap
+            - grid-row-end
             - grid-row-start
             - grid-template-columns
             - grid-template-rows

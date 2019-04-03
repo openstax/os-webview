@@ -1,0 +1,32 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.small-quote {
+    @include set-font(body-large);
+
+    padding: 7rem 0;
+
+    @include width-up-to($tablet-max) {
+        padding: 4rem 2rem;
+    }
+
+    .content {
+        @extend %content;
+
+        display: grid;
+        grid-auto-flow: column;
+        grid-column-gap: $normal-margin;
+        max-width: 103rem;
+    }
+
+    .big-quote-mark {
+        @include title-font(6rem);
+
+        color: os-color(orange);
+        margin-top: -1rem;
+    }
+
+    .name {
+        font-weight: bold;
+        margin-top: 3rem;
+    }
+}

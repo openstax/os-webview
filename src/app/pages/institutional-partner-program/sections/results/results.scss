@@ -1,0 +1,71 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.institutional-partner-program .results {
+    padding: 16rem 0 24rem;
+    position: relative;
+
+    @include width-up-to($tablet-max) {
+        padding: 4rem 2rem;
+    }
+
+    .content-block {
+        @include width-up-to($phone-max) {
+            grid-template-columns: 100%;
+        }
+    }
+
+    .text-block > * {
+        margin: 0;
+    }
+
+    .cards {
+        display: grid;
+        grid-auto-columns: 28rem;
+        grid-auto-flow: column;
+        grid-gap: 2rem;
+        max-width: 100%;
+        overflow: auto;
+        padding: 0.5rem 0;
+    }
+
+    .card {
+        @extend %card;
+
+        border: 0;
+        border-left: 1rem solid transparent;
+        padding: 3rem;
+        position: relative;
+
+        &:first-child {
+            border-color: os-color(yellow);
+        }
+
+        &:nth-child(2) {
+            border-color: os-color(light-blue);
+        }
+
+        &:nth-child(3) {
+            border-color: os-color(deep-green);
+        }
+
+        &:last-child {
+            border-color: os-color(red);
+        }
+
+        .heading {
+            @include title-font(3rem);
+        }
+
+        .big-text {
+            @include title-font(6rem);
+        }
+
+        .corner-icon {
+            height: 2.4rem;
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            width: 2.4rem;
+        }
+    }
+}

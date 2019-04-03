@@ -1,0 +1,38 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.institutional-partner-program .banner {
+    color: text-color(white);
+    padding: 16rem 0 24rem;
+    position: relative;
+
+    @include width-up-to($phone-max) {
+        padding: 4rem 0 6rem;
+    }
+
+    .background-image,
+    .gradient-overlay {
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: -1;
+    }
+
+    .gradient-overlay {
+        @include width-up-to($phone-max) {
+            background: linear-gradient(
+                to right, os-color(blue), rgba(os-color(blue), 0)
+            );
+        }
+
+        @include wider-than($phone-max) {
+            background: linear-gradient(
+                to right, os-color(blue), os-color(blue) 33%, rgba(os-color(blue), 0)
+            );
+        }
+    }
+}
