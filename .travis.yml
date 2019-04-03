@@ -25,7 +25,7 @@ addons:
       - g++-4.8
 script:
   - ./script/setup
-  - ./script/test
+  - travis_wait ./script/test
 after_script:
   # Report coverage to codecov
   - bash <(curl -s https://codecov.io/bash)
