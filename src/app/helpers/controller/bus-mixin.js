@@ -33,13 +33,13 @@ export class Bus {
         };
     }
 
-    emit(event, payload) {
+    emit(event, ...payload) {
         const handlers = this[HANDLERS];
 
         if (event in handlers) {
             handlers[event].forEach((wrappedHandler) => {
                 if (!wrappedHandler.inactive) {
-                    wrappedHandler.handler(payload);
+                    wrappedHandler.handler(...payload);
                     if (wrappedHandler.once) {
                         wrappedHandler.inactive = true;
                     }

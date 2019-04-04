@@ -1,4 +1,4 @@
-import router from '~/router';
+import routerBus from '~/helpers/router-bus';
 import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
 import BookViewer from './book-viewer/book-viewer';
 import CategorySelector from '~/components/category-selector/category-selector';
@@ -31,7 +31,7 @@ export default class Subjects extends BaseClass {
         this.categorySelector.on('change', (category) => {
             this.filterSubjects(category);
         });
-        router.replaceState({
+        routerBus.emit('replaceState', {
             filter: this.categoryFromPath(),
             path: pagePath
         });
@@ -48,7 +48,7 @@ export default class Subjects extends BaseClass {
 
         const yTarget = history.state.y;
 
-        router.navigate(path, {
+        routerBus.emit('navigate', path, {
             filter: category,
             path: pagePath
         });

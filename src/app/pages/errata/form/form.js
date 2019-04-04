@@ -2,7 +2,7 @@ import {Controller} from 'superb.js';
 import settings from 'settings';
 import $ from '~/helpers/$';
 import selectHandler from '~/handlers/select';
-import router from '~/router';
+import routerBus from '~/helpers/router-bus';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './form.html';
 import css from './form.css';
@@ -127,7 +127,7 @@ export default class Form extends Controller {
             body: form
         }).then((r) => r.json()).then((json) => {
             if (json.id) {
-                router.navigate(`/confirmation/errata?id=${json.id}`);
+                routerBus.emit('navigate', `/confirmation/errata?id=${json.id}`);
             }
         }).catch((fetchError) => {
             this.model.submitFailed = `Submit failed: ${fetchError}.`;

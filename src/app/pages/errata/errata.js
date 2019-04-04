@@ -5,7 +5,7 @@ import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import settings from 'settings';
 import {bookPromise} from '~/models/book-titles';
-import router from '~/router';
+import routerBus from '~/helpers/router-bus';
 import userModel from '~/models/usermodel';
 import Form from './form/form';
 import Detail from './detail/detail';
@@ -340,7 +340,7 @@ export default class Errata extends BaseClass {
                 this.model.summaryBook = entry.id;
                 this.model.title = () => `${entry.title} Errata`;
             } else {
-                router.navigate('/404');
+                routerBus.emit('navigate', '/404');
             }
             this.model.mode = 'summary';
             summaryPromise.then((summary) => {

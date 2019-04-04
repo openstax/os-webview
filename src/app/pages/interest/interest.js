@@ -10,7 +10,7 @@ import FormInput from '~/components/form-input/form-input';
 import HiddenFields from './hidden-fields/hidden-fields';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
 import RoleSelector from '~/components/role-selector/role-selector';
-import router from '~/router';
+import routerBus from '~/helpers/router-bus';
 import salesforce from '~/models/salesforce';
 import SeriesOfComponents from '~/components/series-of-components/series-of-components';
 import StudentForm from '~/components/student-form/student-form';
@@ -151,7 +151,7 @@ export default class InterestForm extends BaseClass {
             {
                 onPageChange: this.onPageChange.bind(this),
                 afterSubmit: () => {
-                    router.navigate('/interest-confirmation');
+                    routerBus.emit('navigate', '/interest-confirmation');
                 }
             }
         );

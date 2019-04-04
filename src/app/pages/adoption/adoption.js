@@ -8,7 +8,7 @@ import HiddenFields from './hidden-fields/hidden-fields';
 import HowUsing from './how-using/how-using';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
 import RoleSelector from '~/components/role-selector/role-selector';
-import router from '~/router';
+import routerBus from '~/helpers/router-bus';
 import salesforce from '~/models/salesforce';
 import SeriesOfComponents from '~/components/series-of-components/series-of-components';
 import StudentForm from '~/components/student-form/student-form';
@@ -181,7 +181,7 @@ export default class AdoptionForm extends Controller {
             const emailEl = document.querySelector('[name="email"]');
 
             setTimeout(() => {
-                router.navigate('/adoption-confirmation', {
+                routerBus.emit('navigate', '/adoption-confirmation', {
                     email: emailEl.value
                 });
             }, 300);
