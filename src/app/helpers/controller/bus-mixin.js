@@ -10,7 +10,7 @@
 const HANDLERS = Symbol();
 const BUS = Symbol();
 
-class Bus {
+export class Bus {
 
     constructor() {
         this[HANDLERS] = {};
