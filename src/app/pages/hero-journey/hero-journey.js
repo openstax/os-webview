@@ -86,7 +86,9 @@ export default class extends componentType(spec) {
                     });
                 window.scrollTo(0, 0);
             });
-            setHash(this.pageData.steps[index].hash);
+            if (this.pageData.steps[index]) {
+                setHash(this.pageData.steps[index].hash);
+            }
         };
         const updateLastCompleted = (newValue, save=true) => {
             if (lastCompleted < newValue) {
