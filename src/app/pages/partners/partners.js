@@ -34,7 +34,8 @@ export default class Partners extends BaseClass {
 
     init() {
         super.init();
-        this.categorySelector = new CategorySelector((category) => this.filterPartners(category));
+        this.categorySelector = new CategorySelector();
+        this.categorySelector.on('change', (category) => this.filterPartners(category));
         router.replaceState({
             filter: this.categoryFromPath(),
             path: pagePath

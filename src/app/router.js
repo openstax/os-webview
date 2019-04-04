@@ -124,6 +124,10 @@ class AppRouter extends Router {
 
     static linkHandler(e) {
         const el = linkHelper.validUrlClick(e);
+
+        if (!el || e.button !== 0) {
+            return;
+        }
         const handleExternalLink = (href) => {
             if (el.dataset.local === 'true') {
                 document.location.href = href;
@@ -136,18 +140,15 @@ class AppRouter extends Router {
                 }
             }
         };
-        const handleAsExternal = linkHelper.isExternal(href) || el.target;
         const navigateTo = (href) => {
+            const handleAsExternal = linkHelper.isExternal(href) || el.target;
+
             if (handleAsExternal) {
                 handleExternalLink(href);
             } else {
                 this.navigate(href || '/');
             }
         };
-
-        if (el && e.button === 0) {
-            return;
-        }
 
         e.preventDefault();
         navigateTo(linkHelper.stripOpenStaxDomain(el.getAttribute('href')));
