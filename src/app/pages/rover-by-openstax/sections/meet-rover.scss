@@ -46,11 +46,16 @@
         display: grid;
         grid-auto-rows: 1fr;
         grid-gap: $normal-margin;
-        grid-template-columns: 1fr 1fr;
         width: 100%;
 
-        &.row-of-three {
-            grid-template-columns: 1fr 1fr 1fr;
+        @include wider-than($phone-max) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @include wider-than($tablet-max) {
+            &.row-of-three {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
         }
     }
 
