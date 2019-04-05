@@ -51,8 +51,8 @@
         }
 
         .container {
-            display: flex;
-            flex-flow: row wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
             justify-content: center;
             padding-top: 6rem;
         }

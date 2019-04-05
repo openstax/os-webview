@@ -4,6 +4,7 @@ import footer from './footer/footer';
 import ModalDialog from '../dialog/dialog';
 import {initialize, injectButtons} from 'recordo';
 import {description as template} from './shell.html';
+import bus from './shell-bus';
 
 class Shell extends Controller {
 
@@ -85,5 +86,13 @@ class Shell extends Controller {
 }
 
 const shell = new Shell();
+
+bus.on('showLoader', () => {
+    shell.showLoader();
+});
+
+bus.on('hideLoader', () => {
+    shell.hideLoader();
+});
 
 export default shell;

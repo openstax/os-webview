@@ -1,4 +1,4 @@
-import {Controller} from 'superb.js';
+import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import $ from '~/helpers/$';
 import {description as iconTemplate} from './icons.html';
 import {description as blurbTemplate} from './blurbs.html';
@@ -6,40 +6,26 @@ import {description as blurbTemplate} from './blurbs.html';
 // The PartnerViewer is an ordinary class that has two CMSPageController members,
 // Icons and Blurbs
 
-class Icons extends Controller {
-
-    init(model) {
-        this.template = iconTemplate;
-        this.view = {
-            classes: ['container', 'boxed']
-        };
-        this.model = model;
+const Icons = componentType({
+    template: iconTemplate,
+    view: {
+        classes: ['container', 'boxed']
     }
+});
 
-}
-
-class Blurbs extends Controller {
-
-    init(model) {
-        this.template = blurbTemplate;
-        this.view = {
-            classes: ['blurbs', 'text-content']
-        };
-        this.model = model;
+const Blurbs = componentType({
+    template: blurbTemplate,
+    view: {
+        classes: ['blurbs', 'text-content']
     }
-
-    onUpdate() {
-        $.insertHtml(this.el, this.model);
-    }
-
-}
+}, insertHtmlMixin);
 
 export default class PartnerViewer {
 
     constructor(model) {
         this.model = model;
-        this.iconViewer = new Icons(model);
-        this.blurbViewer = new Blurbs(model);
+        this.iconViewer = new Icons({model});
+        this.blurbViewer = new Blurbs({model});
     }
 
     filterPartners(category) {
