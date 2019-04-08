@@ -1,32 +1,7 @@
-import _nothing from '../../helpers/fetch-mocker';
+import '../../helpers/fetch-mocker';
 import Partners from '~/pages/partners/partners';
 import CategorySelector from '~/components/category-selector/category-selector';
 import {clickElement} from '../../test-utils';
-
-class TestPartners extends Partners {
-    init(...args) {
-        super.init(...args);
-
-        this._testPromises = {
-            dataLoaded: new Promise((resolve) => {
-                this._dataResolver = resolve;
-            }),
-            pageLoaded: new Promise((resolve) => {
-                this._pageResolver = resolve;
-            })
-        };
-    }
-
-    onDataLoaded() {
-        super.onDataLoaded();
-        this._dataResolver(this.pageData);
-    }
-
-    onLoaded() {
-        super.onLoaded();
-        this._pageResolver();
-    }
-}
 
 describe('Partners Page', () => {
     beforeEach(function () {
@@ -42,21 +17,19 @@ describe('Partners Page', () => {
         }, 'MOCK');
     });
 
-    const p = new TestPartners();
+    const p = new Partners();
 
     it('creates', () => {
         expect(p).toBeTruthy();
 
-        return Promise.all([p._testPromises.dataLoaded, p._testPromises.pageLoaded]).then(() => {
-            const iconViewer = p.partnerViewer.iconViewer;
-            const categories = CategorySelector.categories;
-            const currentCategory = p.categoryFromPath();
-            const logoCount = iconViewer.el.querySelectorAll('.logo').length;
+        const iconViewer = p.partnerViewer.iconViewer;
+        const categories = CategorySelector.categories;
+        const currentCategory = p.categoryFromPath();
+        const logoCount = iconViewer.el.querySelectorAll('.logo').length;
 
-            expect(iconViewer).toBeTruthy();
-            expect(p.categoryFromPath()).toBe('view-all');
-            expect(logoCount).toBe(39);
-        });
+        expect(iconViewer).toBeTruthy();
+        expect(p.categoryFromPath()).toBe('view-all');
+        expect(logoCount).toBe(39);
     });
     const expectedNumbers = {
             'view-all': 39,

@@ -9,6 +9,7 @@ import Thanks from './sections/thanks/thanks';
 import $ from '~/helpers/$';
 import settings from 'settings';
 import {accountsModel} from '~/models/usermodel';
+import shellBus from '~/components/shell/shell-bus';
 
 const spec = {
     css,
@@ -173,7 +174,7 @@ export default class extends componentType(spec) {
                 });
         });
 
-        document.getElementById('main').classList.add('with-sticky');
+        shellBus.emit('with-sticky');
         this.regions.self.append(navigator);
         this.regions.self.append(new Books({
             get email() {return parent.email;},
@@ -307,7 +308,7 @@ export default class extends componentType(spec) {
         if (super.onClose) {
             super.onClose();
         }
-        document.getElementById('main').classList.remove('with-sticky');
+        shellBus.emit('no-sticky');
     }
 
 }

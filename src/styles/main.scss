@@ -199,7 +199,6 @@ sup {
     flex: 1 0 auto;
     z-index: 0;
 
-    &.with-overlay,
     &.with-sticky {
         z-index: 1;
     }

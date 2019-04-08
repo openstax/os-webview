@@ -4,6 +4,7 @@ import footerData from '../src/data/footer';
 import booksData from '../src/data/books';
 import bookTitleData from '../src/data/book-titles';
 import osNewsData from '../src/data/openstax-news';
+import teamData from '../src/data/team';
 
 global.fetch = jest.fn().mockImplementation((...args) => {
     const isPartner = (/pages\/partners/).test(args[0]);
@@ -12,8 +13,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isBooks = (/api\/books/).test(args[0]);
     const isBookTitles = (/fields=title,id/).test(args[0]);
     const isOsNews = (/slug=openstax-news/).test(args[0]);
+    const isTeam = (/pages\/team/).test(args[0]);
 
-    console.info('Fetch', args[0]);
     return new Promise(
         function (resolve, reject) {
             let payload = {};
@@ -30,6 +31,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = bookTitleData;
             } else if (isOsNews) {
                 payload = osNewsData;
+            } else if (isTeam) {
+                payload = teamData;
             } else {
                 console.warn("rejecting", args);
             }

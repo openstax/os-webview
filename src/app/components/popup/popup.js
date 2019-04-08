@@ -3,6 +3,7 @@ import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './popup.html';
 import css from './popup.css';
+import shellBus from '~/components/shell/shell-bus';
 
 export default class Popup extends Controller {
 
@@ -19,11 +20,11 @@ export default class Popup extends Controller {
     }
 
     onLoaded() {
-        document.getElementById('main').classList.add('with-overlay');
+        shellBus.emit('with-sticky');
     }
 
     onClose() {
-        document.getElementById('main').classList.remove('with-overlay');
+        shellBus.emit('no-sticky');
     }
 
     @on('click .dismiss')

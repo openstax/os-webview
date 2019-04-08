@@ -2,29 +2,6 @@ import 'babel-polyfill';
 import 'isomorphic-fetch';
 import {LocalStorage} from 'node-localstorage';
 
-// jest.mock('~/components/shell/sticky-note/sticky-note', () => {
-//   class MockedStickyNote {
-//
-//       constructor() {
-//         this.el = global.document.createElement('div')
-//         this.el.appendChild(global.document.createTextNode('STUB_FOR_STICKY_NOTE'))
-//       }
-//
-//       // init() { }
-//       // onDataLoaded() { }
-//       // onLoaded() { }
-//
-//       forceHide(whether) {
-//       }
-//
-//       // From CMSPageController:
-//       onAttached() {
-//       }
-//
-//   }
-//   return new MockedStickyNote();
-// })
-
 global.localStorage = new LocalStorage('./local-storage-scratch');
 
 window.MutationObserver = function () {};
