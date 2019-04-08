@@ -1,66 +1,54 @@
 <template args="model">
-    <div class="boxed">
-        <div class="hero-quote">
-            Access.
-            <span class="narrow-block">The future of education.</span>
-        </div>
-
-        <div role="contentinfo">
-            <ul class="no-bullets" role="directory">
-                <li>
-                    <a href="/license">Licensing</a>
-                </li>
-                <li>
-                    <a href="/tos">Terms of Use</a>
-                </li>
-                <li>
-                    <a href="/privacy-policy">Privacy Policy</a>
-                </li>
-                <li>
-                    <a href="/accessibility-statement">Accessibility Statement</a>
-                </li>
-                <li>
-                    <a href="/careers">Careers</a>
-                </li>
-                <li>
-                    <a href="https://github.com/openstax">Open Source Code</a>
-                </li>
-                <li>
-                    <a href="/contact">Contact Us</a>
-                </li>
-                <li>
-                    <a href="/press">Press</a>
-                </li>
-                <li>
-                    <a href="http://www2.openstax.org/l/218812/2016-10-04/lvk">Newsletter</a>
-                </li>
-            </ul>
-
-            <p>
-                {model.supporters}
-            </p>
-
-            <p>{model.copyright}</p>
-
-            <p>
-                <!-- ap is not rich text, but will contain HTML markup. -->
-                <ap-html data-html="apStatement" skip="true"></ap-html>
-            </p>
-        </div>
-
-        <div class="social" role="directory">
-            <a class="btn btn-social facebook" href="{model.facebookLink}" title="facebook">
-                Facebook
-            </a>
-            <a class="btn btn-social twitter" href="{model.twitterLink}" title="twitter">
-                Twitter
-            </a>
-            <a class="btn btn-social linkedin" href="{model.linkedinLink}" title="linkedin">
-                LinkedIn
-            </a>
-            <a class="btn btn-social instagram" href="https://www.instagram.com/openstax/" title="instagram">
-                <span class="fab fa-instagram"></span>
-            </a>
+    <div class="top">
+        <div class="boxed">
+            <div role="heading">{model.supporters}</div>
+            <div class="mission">
+                It's our mission to give every student the tools they need to
+                be successful in the classroom. Help our cause by
+                <a href="/give">donating</a> today.
+            </div>
+            <div class="column col1">
+                <div class="column-heading">Help</div>
+                <a href="/contact">Contact Us</a>
+                <a href="https://openstax.secure.force.com/help">Support Center</a>
+                <a href="/faq">FAQ</a>
+            </div>
+            <div class="column col2">
+                <div class="column-heading">OpenStax</div>
+                <a href="/press">Press</a>
+                <a href="http://www2.openstax.org/l/218812/2016-10-04/lvk">Newsletter</a>
+                <a href="/careers">Careers</a>
+            </div>
+            <div class="column col3">
+                <div class="column-heading">Policies</div>
+                <a href="/accessibility-statement">Accessibility Statement</a>
+                <a href="/tos">Terms of Use</a>
+                <a href="/license">Licensing</a>
+                <a href="/privacy-policy">Privacy Policy</a>
+            </div>
         </div>
     </div>
-</div>
+    <div class="bottom">
+        <div class="boxed">
+            <div class="copyrights">
+                <p>{model.copyright}</p>
+                <ap-html data-html="apStatement" skip="true"></ap-html>
+            </div>
+
+            <div class="social" role="directory">
+                <a class="btn btn-social facebook" href="{model.facebookLink}" title="facebook">
+                    Facebook
+                </a>
+                <a class="btn btn-social twitter" href="{model.twitterLink}" title="twitter">
+                    Twitter
+                </a>
+                <a class="btn btn-social linkedin" href="{model.linkedinLink}" title="linkedin">
+                    LinkedIn
+                </a>
+                <a class="btn btn-social instagram" href="https://www.instagram.com/openstax/" title="instagram">
+                    <span class="fab fa-instagram"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</template>
