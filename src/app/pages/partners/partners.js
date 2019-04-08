@@ -70,7 +70,9 @@ export default class Partners extends BaseClass {
         this.model = Object.assign(this.model, this.pageData);
         this.model.allPartners = Object.keys(this.pageData.allies)
             .sort((a, b) => a < b ? -1 : 1)
-            .map((slug) => this.pageData.allies[slug])
+            .map((slug) => Object.assign({
+                id: slug
+            }, this.pageData.allies[slug]))
             .filter((info) => !info.do_not_display);
 
         this.partnerViewer = new PartnerViewer(this.model);

@@ -1,6 +1,6 @@
 <template args="model">
     <div each="partner in model.partners" class="logo">
-        <a class="logo-text" href="#{partner.title}-blurb">
+        <a class="logo-text" href="#{partner.id}-blurb">
             <if condition="partner.ally_bw_logo">
                 <img src="{partner.ally_bw_logo}" alt="{partner.title}">
             <else>
