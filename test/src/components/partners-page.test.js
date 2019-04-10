@@ -1,7 +1,9 @@
 import '../../helpers/fetch-mocker';
+import scrollPromise from '../../helpers/scrollTo-mock';
 import Partners from '~/pages/partners/partners';
 import CategorySelector from '~/components/category-selector/category-selector';
 import {clickElement} from '../../test-utils';
+import instanceReady from '../../helpers/instance-ready';
 
 describe('Partners Page', () => {
     beforeEach(function () {
@@ -17,20 +19,25 @@ describe('Partners Page', () => {
         }, 'MOCK');
     });
 
-    const p = new Partners();
+    const {instance:p, ready} = instanceReady(Partners);
+    const allReady = Promise.all([ready, CategorySelector.loaded]);
 
-    it('creates', () => {
-        expect(p).toBeTruthy();
+    it('creates', () =>
+        allReady.then(() => {
+            expect(p).toBeTruthy();
 
-        const iconViewer = p.partnerViewer.iconViewer;
-        const categories = CategorySelector.categories;
-        const currentCategory = p.categoryFromPath();
-        const logoCount = iconViewer.el.querySelectorAll('.logo').length;
+            const iconViewer = p.partnerViewer.iconViewer;
+            const categories = CategorySelector.categories;
+            const currentCategory = p.categoryFromPath();
+            const logoCount = iconViewer.el.querySelectorAll('.logo').length;
+            const blurbsCount = Array.from(p.partnerViewer.blurbViewer.el.querySelectorAll('.text')).length;
 
-        expect(iconViewer).toBeTruthy();
-        expect(p.categoryFromPath()).toBe('view-all');
-        expect(logoCount).toBe(39);
-    });
+            expect(iconViewer).toBeTruthy();
+            expect(p.categoryFromPath()).toBe('view-all');
+            expect(logoCount).toBe(39);
+            expect(blurbsCount).toBe(logoCount);
+        })
+    );
     const expectedNumbers = {
             'view-all': 39,
             math: 18,
@@ -40,29 +47,63 @@ describe('Partners Page', () => {
             business: 0,
             ap: 6
     };
-    it('selects each category', () => {
-        const buttons = Array.from(p.el.querySelectorAll('.filter-button'));
-        const iconViewer = p.partnerViewer.iconViewer;
-        const blurbViewer = p.partnerViewer.blurbViewer;
-        const promises = buttons.map((b) => {
-            new Promise((resolve) => {
+    it('selects each category', () =>
+        allReady.then(() => {
+            const buttons = Array.from(p.el.querySelectorAll('.filter-button'));
+            const iconViewer = p.partnerViewer.iconViewer;
+            const blurbViewer = p.partnerViewer.blurbViewer;
+            const testButtonClick = (b) =>
+                new Promise((resolve) => {
+                    p.categorySelector.on('change', resolve, 'once');
+                    history.state.filter = b.getAttribute('data-value');
+                    clickElement(b);
+                }).then((b) => {
+                    const logoCount = Array.from(iconViewer.el.querySelectorAll('.logo')).length;
+                    const pressedButtonValue = p.el.querySelector('.filter-button[aria-pressed="true"]')
+                        .getAttribute('data-value');
+
+                    expect(pressedButtonValue).toBe(b);
+                    expect(logoCount).toBe(expectedNumbers[b]);
+                });
+            const promiseSequence = buttons.reduce(
+                (p, button) => p.then(() => testButtonClick(button)),
+                Promise.resolve()
+            );
+
+            expect(buttons.length).toBe(7);
+            return promiseSequence;
+        })
+    );
+    it('has corresponding logos and paragraphs', () =>
+        allReady.then(() => {
+            const humanitiesButton = p.el.querySelector('.filter-button[data-value="humanities"]');
+
+            return new Promise((resolve) => {
                 p.categorySelector.on('change', resolve, 'once');
-                clickElement(b);
+                clickElement(humanitiesButton);
             }).then((b) => {
-                const logoCount = Array.from(iconViewer.el.querySelectorAll('.logo')).length;
+                const logos = Array.from(p.el.querySelectorAll('a.logo-text'));
 
-                expect(logoCount).toBe(expectedNumbers[b]);
+                expect(humanitiesButton).toBeTruthy();
+                expect(logos.length).toBe(11);
+                logos.forEach((t) => {
+                    const href = t.getAttribute('href');
+                    const targetParagraph = p.el.querySelector(href);
+
+                    expect(targetParagraph).toBeTruthy();
+                });
             });
-        });
+        })
+    );
+    it('scrolls to paragraph', () =>
+        allReady.then(() => {
+            const logo = p.el.querySelector('a.logo-text');
+            const blurbs = Array.from(p.partnerViewer.blurbViewer.el.querySelectorAll('.text'));
 
-        return Promise.all(promises);
-    });
-    it('has corresponding logos and paragraphs', () => {
-        Array.from(p.el.querySelectorAll('a.logo-text')).forEach((t) => {
-            const href = t.getAttribute('href');
-            const targetParagraph = p.el.querySelector(href);
-
-            expect(targetParagraph).toBeTruthy();
-        });
-    });
+            clickElement(logo);
+            return scrollPromise.then((el) => {
+                expect(el.id).toBe(logo.getAttribute('href').substr(1));
+            });
+        })
+    );
 });

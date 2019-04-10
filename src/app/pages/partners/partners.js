@@ -109,13 +109,12 @@ export default class Partners extends BaseClass {
         e.preventDefault();
         this.cameFrom = e.delegateTarget;
         const href = this.cameFrom.getAttribute('href');
-        const el = document.getElementById(href.substr(1));
+        const el = this.el.querySelector(href);
         const state = {
             filter: history.state.filter,
             path: pagePath,
             target: href
         };
-
         const pushOrReplaceState = history.state.target ? 'replaceState' : 'pushState';
 
         $.scrollTo(el).then(() => {

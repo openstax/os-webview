@@ -2,5 +2,5 @@
 source ./script/bootstrap || exit 111
 cd "$(dirname "$0")/.." || exit 111
 
-npm test || exit 5
+$(npm bin)/jest `find ./test/src -name '*.test.js'` || exit 5
 shellcheck ./script/*
