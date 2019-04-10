@@ -25,8 +25,8 @@ addons:
       - g++-4.8
 script:
   - ./script/setup
-  - ./script/build
-  - travis_wait ./script/test
+  - travis_wait ./script/build
+  - ./script/test
   - rm -rf ./dist/app
 after_script:
   # Report coverage to codecov

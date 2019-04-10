@@ -152,20 +152,20 @@ class Analytics {
             'book_faculty_resources': 'Faculty'
         };
 
-        for (const item of resourceItems) {
-            for (const resourceBranch of Object.keys(resourceMarker)) {
+        resourceItems.forEach((item) => {
+            Object.keys(resourceMarker).forEach((resourceBranch) => {
                 const marker = resourceMarker[resourceBranch];
 
-                for (const resource of item[resourceBranch]) {
+                item[resourceBranch].forEach((resource) => {
                     this.sourceByUrl[resource.link_document_url] = `${item.title} ${marker}`;
-                }
-            }
-            for (const ally of item.book_allies) {
+                });
+            });
+            item.book_allies.forEach((ally) => {
                 const url = ally.book_link_url;
 
                 this.sourceByUrl[url] = ally.ally_heading;
-            }
-        }
+            });
+        });
     }
 
     lookupUrl(selectedUrl) {
