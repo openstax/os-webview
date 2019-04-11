@@ -1,7 +1,3 @@
-import shell from '~/components/shell/shell';
-
-const Region = shell.regions.self.constructor;
-
 export default class ManagedComponent {
 
     constructor(component, id, parent) {
@@ -12,6 +8,7 @@ export default class ManagedComponent {
 
     findRegion() {
         const el = this.parent.el.querySelector(`plug-in[data-id=${this.id}]`);
+        const Region = this.parent.regions.self.constructor;
 
         return el ? new Region(el, this.parent) : null;
     }

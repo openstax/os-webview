@@ -3,7 +3,7 @@ cd "$(dirname "$0")/.." || exit 111
 source ./script/bootstrap || exit 111
 
 rm -rf dist
-try $(npm bin)/gulp
+try "$(npm bin)/gulp"
 do_progress "Removing temporary build files" \
   /bin/rm -r ./dist/settings-example*
 

@@ -63,9 +63,9 @@ export default class ContactInfo extends Controller {
             new ManagedComponent(inputs[k], k, this)
         );
         this.componentsById = {};
-        for (const c of this.components) {
+        this.components.forEach((c) => {
             this.componentsById[c.id] = c.component;
-        }
+        });
         schoolPromise.then((schools) => {
             const schoolComponent = this.componentsById.school;
 
@@ -78,9 +78,9 @@ export default class ContactInfo extends Controller {
     }
 
     onLoaded() {
-        for (const c of this.components) {
+        this.components.forEach((c) => {
             c.attach();
-        }
+        });
     }
 
     schoolMatchesSuggestion() {
@@ -90,9 +90,9 @@ export default class ContactInfo extends Controller {
     }
 
     onUpdate() {
-        for (const c of this.components) {
+        this.components.forEach((c) => {
             c.update();
-        }
+        });
     }
 
     validate() {

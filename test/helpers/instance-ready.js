@@ -9,14 +9,6 @@ export default function (BaseClass) {
         })
     ]);
 
-    let updateResolver;
-
-    function waitForUpdate() {
-        return new Promise((resolve) => {
-            updateResolver = resolve;
-        });
-    }
-
     class TestClass extends BaseClass {
         onLoaded() {
             super.onLoaded();
@@ -27,20 +19,10 @@ export default function (BaseClass) {
             super.onDataLoaded();
             dataResolver();
         }
-
-        onUpdate() {
-            if (super.onUpdate) {
-                super.onUpdate();
-            }
-            if (updateResolver) {
-                updateResolver();
-            }
-        }
     }
 
     return {
         instance: new TestClass(),
-        ready,
-        waitForUpdate
+        ready
     }
 }

@@ -1,3 +1,4 @@
+import '../../helpers/fetch-mocker';
 import Research from '~/pages/research/research';
 
 describe('Research Alumni Tab', () => {

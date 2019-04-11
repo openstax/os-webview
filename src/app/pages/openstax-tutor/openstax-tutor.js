@@ -1,4 +1,3 @@
-import CMSPageController from '~/controllers/cms';
 import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
 import $ from '~/helpers/$';
 import SectionNavigator from '~/components/section-navigator/section-navigator';

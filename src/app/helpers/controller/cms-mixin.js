@@ -99,28 +99,26 @@ export default (superclass) => class CMSPageController extends superclass {
                 }));
         }
 
-        for (const prop in data) {
-            if (data.hasOwnProperty(prop)) {
-                if (typeof data[prop] === 'object' && data[prop] !== null) {
-                    promises.push(this[LOAD_IMAGES](data[prop]));
-                }
+        Reflect.ownKeys(data).forEach((prop) => {
+            if (typeof data[prop] === 'object' && data[prop] !== null) {
+                promises.push(this[LOAD_IMAGES](data[prop]));
             }
-        }
+        });
 
         return Promise.all(promises);
     }
 
     static [TRANSFORM_DATA](data) {
-        for (const prop in data) {
-            if (data.hasOwnProperty(prop) && Array.isArray(data[prop])) {
+        Reflect.ownKeys(data).forEach((prop) => {
+            if (Array.isArray(data[prop])) {
                 const arr = data[prop];
                 const contentItem = arr.filter((e) => e.type === 'content').length === 1;
 
                 if (contentItem) {
                     data[prop] = {};
-                    for (const v of arr) {
+                    arr.forEach((v) => {
                         data[prop][v.type] = v.value;
-                    }
+                    });
                 } else {
                     data[prop] = arr.map((item) => {
                         if (item.value) {
@@ -131,7 +129,7 @@ export default (superclass) => class CMSPageController extends superclass {
                     });
                 }
             }
-        }
+        });
 
         return data;
     }
