@@ -83,12 +83,6 @@ export default class ContactInfo extends Controller {
         });
     }
 
-    schoolMatchesSuggestion() {
-        const value = this.componentsById.school.el.querySelector('input').value;
-
-        return this.knownSchools && this.knownSchools.includes(value);
-    }
-
     onUpdate() {
         this.components.forEach((c) => {
             c.update();

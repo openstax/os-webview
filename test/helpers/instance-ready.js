@@ -1,4 +1,4 @@
-export default function (BaseClass) {
+export default function (BaseClass, ...args) {
     let dataResolver, pageResolver;
     const ready = Promise.all([
         new Promise((resolve) => {
@@ -13,6 +13,9 @@ export default function (BaseClass) {
         onLoaded() {
             super.onLoaded();
             pageResolver();
+            if (!this.slug) {
+                dataResolver();
+            }
         }
 
         onDataLoaded() {
@@ -22,7 +25,7 @@ export default function (BaseClass) {
     }
 
     return {
-        instance: new TestClass(),
+        instance: new TestClass(...args),
         ready
     }
 }

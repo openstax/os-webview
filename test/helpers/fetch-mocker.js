@@ -12,6 +12,7 @@ import researchData from '../src/data/research';
 import stickyData from '../src/data/sticky';
 import technologyData from '../src/data/technology';
 import userData from '../src/data/user';
+import schoolsData from '../src/data/schools';
 
 global.fetch = jest.fn().mockImplementation((...args) => {
     const isPartner = (/pages\/partners/).test(args[0]);
@@ -26,6 +27,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isBooksForAnalytics = (/book_student_resources/).test(args[0]);
     const isResearch = (/pages\/research/).test(args[0]);
     const isSticky = (/api\/sticky/).test(args[0]);
+    const isSchools = (/salesforce\/schools/).test(args[0]);
     const isTechnology = (/pages\/technology/).test(args[0]);
     const isUser = (/accounts.*\/api\/user/).test(args[0]);
 
@@ -55,6 +57,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = booksForAnalyticsData;
             } else if (isResearch) {
                 payload = researchData;
+            } else if (isSchools) {
+                payload = schoolsData;
             } else if (isSticky) {
                 payload = stickyData;
             } else if (isTechnology) {

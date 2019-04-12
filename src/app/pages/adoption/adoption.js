@@ -77,7 +77,7 @@ export default class AdoptionForm extends Controller {
             });
 
             result.validate = function () {
-                return contactForm.validate();
+                return contactForm.checkSchoolName() || contactForm.validate();
             };
             return result;
         };
