@@ -46,35 +46,41 @@ export default class MainMenu extends Controller {
                 label: obj.html.replace('View ', '')
             }));
 
-            this.regions.subjectsDropdown.attach(new Dropdown(
-                () => ({
-                    dropdownLabel: 'Subjects',
-                    items
-                })
-            ));
+            this.regions.subjectsDropdown.attach(new Dropdown({
+                getProps() {
+                    return {
+                        dropdownLabel: 'Subjects',
+                        items
+                    };
+                }
+            }));
         });
-        this.regions.technologyDropdown.attach(new Dropdown(
-            () => ({
-                dropdownLabel: 'Technology',
-                items: [
-                    {url: '/technology', label: 'Technology Options'},
-                    {url: '/openstax-tutor', label: 'About OpenStax Tutor'},
-                    {url: '/rover-by-openstax', label: 'Rover by OpenStax'},
-                    {url: '/partners', label: 'OpenStax Partners'}
-                ]
-            })
-        ));
-        this.regions.whatWeDoDropdown.attach(new Dropdown(
-            () => ({
-                dropdownLabel: 'What we do',
-                items: [
-                    {url: '/about', label: 'About Us'},
-                    {url: '/team', label: 'Team'},
-                    {url: '/research', label: 'Research'},
-                    {url: '/institutional-partners', label: 'Institutional Partnerships'}
-                ]
-            })
-        ));
+        this.regions.technologyDropdown.attach(new Dropdown({
+            getProps() {
+                return {
+                    dropdownLabel: 'Technology',
+                    items: [
+                        {url: '/technology', label: 'Technology Options'},
+                        {url: '/openstax-tutor', label: 'About OpenStax Tutor'},
+                        {url: '/rover-by-openstax', label: 'Rover by OpenStax'},
+                        {url: '/partners', label: 'OpenStax Partners'}
+                    ]
+                };
+            }
+        }));
+        this.regions.whatWeDoDropdown.attach(new Dropdown({
+            getProps() {
+                return {
+                    dropdownLabel: 'What we do',
+                    items: [
+                        {url: '/about', label: 'About Us'},
+                        {url: '/team', label: 'Team'},
+                        {url: '/research', label: 'Research'},
+                        {url: '/institutional-partners', label: 'Institutional Partnerships'}
+                    ]
+                };
+            }
+        }));
 
         window.addEventListener('navigate', () => this.updateLoginUrl());
         this.updateLoginUrl();
@@ -115,13 +121,13 @@ export default class MainMenu extends Controller {
                 tutorItem.trainingWheel = true;
             }
 
-            this.loginMenuComponent = new Dropdown(
-                () => ({
+            this.loginMenuComponent = new Dropdown({
+                getProps: () => ({
                     dropdownUrl: this.model.accountLink,
                     dropdownLabel: `Hi ${this.model.user.first_name || this.model.user.username}`,
                     items: loginItems
                 })
-            );
+            });
             loginRegion.attach(this.loginMenuComponent);
 
             if (this.model.trainingWheelActive) {

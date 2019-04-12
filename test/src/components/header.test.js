@@ -47,6 +47,7 @@ describe('Header', () => {
     it('mainMenu shows training wheel', () => {
         mainMenu.model.user.username = 'Jest';
         mainMenu.model.user.groups.push('Tutor');
+        mainMenu.model.user.first_name = 'Jestin';
         mainMenu.update();
 
         const link = mainMenu.el.querySelector('[href*="tutor.openstax"]');
