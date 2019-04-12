@@ -35,10 +35,21 @@ export default class extends componentType(spec, busMixin) {
         this.insertHtml();
     }
 
+    @on('click')
+    toggleActive() {
+        this.active = !this.active;
+        this.el.classList.toggle('active', this.active);
+    }
+
     @on('click .filter-button')
     setCategory(event) {
         const target = event.delegateTarget;
         const newValue = target.dataset ? target.dataset.value : target.getAttribute('data-value');
+
+        if (newValue !== this.selectedValue) {
+            this.active = false;
+            this.el.classList.remove('active');
+        }
 
         this.updateSelected(newValue);
         this.emit('change', newValue);
