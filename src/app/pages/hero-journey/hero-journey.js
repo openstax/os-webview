@@ -149,7 +149,9 @@ export default class extends componentType(spec) {
             fetch(`${settings.apiOrigin}/apps/cms/api/salesforce/adoption-status/?id=${this.accountId}`)
                 .then((r) => r.json())
                 .then((adoptionResponse) => {
-                    if (adoptionResponse.records.some((r) => r.Adoption_Status__c === 'Current Adopter')) {
+                    if (adoptionResponse.records.some((r) =>
+                        ['Current Adopter', 'Future Adopter'].includes(r.Adoption_Status__c)
+                    )) {
                         updateLastCompleted(4);
                     }
                 });
