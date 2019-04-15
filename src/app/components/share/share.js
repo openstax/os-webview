@@ -1,5 +1,4 @@
 import {Controller} from 'superb.js';
-import $ from '~/helpers/$';
 import {description as template} from './share.html';
 import css from './share.css';
 

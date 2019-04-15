@@ -1,25 +1,25 @@
-import {Controller} from 'superb.js';
+import componentType from '~/helpers/controller/init-mixin';
 import Bucket from './bucket/bucket';
 import css from './buckets.css';
 
-const bucketClasses = ['our-impact', 'partners'];
-const buttonClasses = ['btn-cyan', 'btn-gold'];
+const spec = {
+    css,
+    view: {
+        classes: ['buckets-section']
+    }
+};
 
-export default class Buckets extends Controller {
+export default class Buckets extends componentType(spec) {
 
     init(props) {
-        this.template = () => '';
-        this.css = css;
-        this.view = {
-            classes: ['buckets-section']
-        };
+        super.init();
         this.props = props;
     }
 
     onLoaded() {
-        for (const bucketData of this.props) {
+        this.props.forEach((bucketData) => {
             this.regions.self.append(new Bucket(bucketData));
-        }
+        });
     }
 
 }
