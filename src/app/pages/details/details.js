@@ -89,6 +89,41 @@ export default class Details extends BaseClass {
         });
     }
 
+    insertJsonLd() {
+        const el = document.createElement('script');
+        const data = this.pageData;
+        const authorData = data.authors.map((obj) => ({
+            '@type': 'Person',
+            'name': obj.name,
+            'affiliation': obj.university
+        }));
+        const polish = $.isPolish(data.title);
+        const ldData = {
+            '@content': 'https://schema.org',
+            '@type': 'WebPage',
+            'datePublished': data.created,
+            'dateModified': data.updated,
+            'mainEntity': {
+                'type': 'Book',
+                'name': data.title,
+                'author': authorData,
+                'publisher': {
+                    'type': 'Organization',
+                    'name': 'OpenStax'
+                },
+                'image': data.cover_url,
+                'inLanguage': polish ? 'Polish' : 'English',
+                'isbn': data.digital_isbn_13,
+                'url': data.webview_link
+            }
+        };
+        const descriptionEl = document.querySelector('head meta[name="description"]');
+
+        el.type = 'application/ld+json';
+        el.textContent = JSON.stringify(ldData, null, 2);
+        descriptionEl.parentNode.insertBefore(el, descriptionEl.nextSibling);
+    }
+
     onLoaded() {
         document.body.classList.remove('page-loaded');
         document.body.classList.add('page-loading');
@@ -261,6 +296,7 @@ export default class Details extends BaseClass {
         }));
         this.regions.tabController.attach(tabGroup);
         this.regions.tabContent.attach(contentGroup);
+        this.insertJsonLd();
     }
 
     onDataError() {
