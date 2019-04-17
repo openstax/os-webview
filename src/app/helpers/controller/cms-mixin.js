@@ -9,6 +9,32 @@ const newsPromise = fetch(`${settings.apiOrigin}/api/v2/pages/?slug=openstax-new
     .then((r) => r.json())
     .then((r) => r.items[0].meta.detail_url);
 
+export function transformData(data) {
+    Reflect.ownKeys(data).forEach((prop) => {
+        if (Array.isArray(data[prop])) {
+            const arr = data[prop];
+            const contentItem = arr.filter((e) => e.type === 'content').length === 1;
+
+            if (contentItem) {
+                data[prop] = {};
+                arr.forEach((v) => {
+                    data[prop][v.type] = v.value;
+                });
+            } else {
+                data[prop] = arr.map((item) => {
+                    if (item.value) {
+                        return item.value;
+                    }
+
+                    return item;
+                });
+            }
+        }
+    });
+
+    return data;
+}
+
 export default (superclass) => class CMSPageController extends superclass {
 
     constructor(...args) {
@@ -108,30 +134,6 @@ export default (superclass) => class CMSPageController extends superclass {
         return Promise.all(promises);
     }
 
-    static [TRANSFORM_DATA](data) {
-        Reflect.ownKeys(data).forEach((prop) => {
-            if (Array.isArray(data[prop])) {
-                const arr = data[prop];
-                const contentItem = arr.filter((e) => e.type === 'content').length === 1;
-
-                if (contentItem) {
-                    data[prop] = {};
-                    arr.forEach((v) => {
-                        data[prop][v.type] = v.value;
-                    });
-                } else {
-                    data[prop] = arr.map((item) => {
-                        if (item.value) {
-                            return item.value;
-                        }
-
-                        return item;
-                    });
-                }
-            }
-        });
-
-        return data;
-    }
+    static [TRANSFORM_DATA] = transformData;
 
 };

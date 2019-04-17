@@ -1,5 +1,4 @@
-import {Controller} from 'superb.js';
-import $ from '~/helpers/$';
+import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import LetUsKnow from '../let-us-know/let-us-know';
@@ -12,27 +11,31 @@ import ErrataPane from './errata-pane/errata-pane';
 import {description as template} from './phone-view.html';
 import css from './phone-view.css';
 
-export default class PhoneView extends Controller {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['detail-phone-view']
+    },
+    regions: {
+        getTheBook: '.get-the-book',
+        accordion: '.accordion-region',
+        letUsKnow: '.let-us-know-region'
+    }
+};
+
+export default class PhoneView extends componentType(spec, insertHtmlMixin) {
 
     init(props) {
-        this.template = template;
+        super.init();
         this.props = props;
-        this.css = css;
-        this.regions = {
-            getTheBook: '.get-the-book',
-            accordion: '.accordion-region',
-            letUsKnow: '.let-us-know-region'
-        };
-        this.view = {
-            classes: ['detail-phone-view']
-        };
     }
 
     onLoaded() {
         /* eslint complexity: 0 */
-        $.insertHtml(this.el, this.props);
+        super.onLoaded();
         this.regions.getTheBook.append(new GetThisTitle(this.props.bookInfo));
-        const polish = $.isPolish(this.props.bookTitle);
+        const polish = this.props.polish;
         const accordionItems = [
             {
                 title: polish ? 'Szczegóły książki' : 'Book details',
@@ -78,6 +81,7 @@ export default class PhoneView extends Controller {
             accordionItems.push({
                 title: polish ? 'Zgłoś erratę' : 'Report errata',
                 contentComponent: new ErrataPane({
+                    polish,
                     title: this.props.bookTitle,
                     errataBlurb: this.props.errataContent.content && this.props.errataContent.content.content
                 })
@@ -87,9 +91,9 @@ export default class PhoneView extends Controller {
         this.regions.accordion.append(new AccordionGroup({
             items: accordionItems
         }));
-        this.regions.letUsKnow.append(new LetUsKnow(() => ({
-            title: polish ? this.props.bookTitle : this.props.salesforceAbbreviation
-        })));
+        this.regions.letUsKnow.append(new LetUsKnow(
+            polish ? this.props.bookTitle : this.props.salesforceAbbreviation
+        ));
     }
 
 }

@@ -1,5 +1,5 @@
 import booksPromise from '~/models/books';
-import shell from '~/components/shell/shell';
+import shellBus from '~/components/shell/shell-bus';
 import settings from 'settings';
 import RequestForm from './request-form/request-form';
 
@@ -13,10 +13,10 @@ function getCompCopyDialogProps(props, userStatusPromise) {
     const setAltTitle = () => {
         dialogProps.htmlTitle = '<span class="fa fa-check"></span>';
         dialogProps.customClass = 'request-comp-copy-dialog';
-        shell.dialog.update();
+        shellBus.emit('updateDialog');
     };
     const formHandlers = {
-        done: () => shell.hideDialog(),
+        done: () => shell.emit('hideDialog'),
         showConfirmation: setAltTitle
     };
     const userInfo = {};
