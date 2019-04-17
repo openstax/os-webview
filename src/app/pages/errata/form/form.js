@@ -49,7 +49,7 @@ export default class Form extends Controller {
     @on('keypress .file-button label')
     returnToAttachFile(event) {
         if (event.key === 'Enter') {
-            event.delegateTarget.dispatchEvent($.newEvent('click'));
+            event.delegateTarget.dispatchEvent(new Event('click', {bubbles: true}));
         }
     }
 

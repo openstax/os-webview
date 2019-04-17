@@ -229,19 +229,6 @@ $.parseSearchString = (searchString) => {
     return result;
 };
 
-$.newEvent = (eventType) => {
-    let event;
-
-    if (typeof window.Event === 'function') {
-        event = new Event(eventType, {bubbles: true});
-    } else {
-        event = document.createEvent('Event');
-        event.initEvent(eventType, true, true);
-    }
-
-    return event;
-};
-
 $.fade = (element, {fromOpacity, toOpacity, steps=10}) => {
     return new Promise((resolve) => {
         let opacity = fromOpacity;

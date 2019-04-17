@@ -1,16 +1,26 @@
-import {Controller} from 'superb.js';
+import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import settings from 'settings';
-import $ from '~/helpers/$';
 import {description as template} from './resource-box.html';
 import css from './resource-box.css';
 
-export default class ResourceBox extends Controller {
+function pathWithoutSearch() {
+    return `${window.location.origin}${window.location.pathname}`;
+}
+
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['resource-box']
+    }
+};
+
+export default class extends componentType(spec, insertHtmlMixin) {
 
     // Utility function to set the values associated with whether the resource
     // is available to the user (instructor version)
     static instructorResourceBoxPermissions(resourceData, userStatus, search) {
-        const pathWithoutSearch = `${window.location.origin}${window.location.pathname}`;
-        const encodedLocation = encodeURIComponent(`${pathWithoutSearch}?${search}`);
+        const encodedLocation = encodeURIComponent(`${pathWithoutSearch()}?${search}`);
         const isExternal = Boolean(resourceData.link_external);
         const resourceStatus = () => {
             if (resourceData.resource_unlocked || userStatus.isInstructor) {
@@ -50,8 +60,7 @@ export default class ResourceBox extends Controller {
 
     // Utility function for student resources
     static studentResourceBoxPermissions(resourceData, userStatus, search) {
-        const pathWithoutSearch = `${window.location.origin}${window.location.pathname}`;
-        const encodedLocation = encodeURIComponent(`${pathWithoutSearch}?${search}`);
+        const encodedLocation = encodeURIComponent(`${pathWithoutSearch()}?${search}`);
         const isExternal = Boolean(resourceData.link_external);
         const resourceStatus = () => {
             if (resourceData.resource_unlocked || userStatus.isStudent) {
@@ -79,24 +88,17 @@ export default class ResourceBox extends Controller {
         return statusToPermissions[resourceStatus()];
     };
 
-
     init(model) {
+        super.init();
         this.model = model;
-        this.template = template;
-        this.view = {
-            classes: ['resource-box']
-        };
         if (model.link) {
-            this.view.tag = 'a';
-            this.view.attributes= {
-                href: model.link.url
-            };
+            Object.assign(this.view, {
+                tag: 'a',
+                attributes: {
+                    href: model.link.url
+                }
+            });
         }
-        this.css = css;
-    }
-
-    onUpdate() {
-        $.insertHtml(this.el, this.model);
     }
 
 }

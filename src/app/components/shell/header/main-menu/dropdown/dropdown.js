@@ -138,7 +138,7 @@ export default class Dropdown extends componentType(spec, insertHtmlMixin) {
             break;
         case $.key.enter:
         case $.key.space:
-            document.activeElement.dispatchEvent($.newEvent('click'));
+            document.activeElement.dispatchEvent(new Event('click', {bubbles: true}));
             // Falls through to close
         case $.key.esc:
             document.activeElement.blur();

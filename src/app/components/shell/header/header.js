@@ -129,7 +129,7 @@ class Header extends Controller {
         if (!this.el.classList.contains('fixed')) {
             this.el.classList.add('fixed');
             setTimeout(() => {
-                window.dispatchEvent($.newEvent('resize'));
+                window.dispatchEvent(new Event('resize', {bubbles: true}));
             }, 800);
         }
         return this;
@@ -143,7 +143,7 @@ class Header extends Controller {
     reset() {
         if (this.el.classList.contains('fixed')) {
             this.el.classList.remove('fixed');
-            window.dispatchEvent($.newEvent('resize'));
+            window.dispatchEvent(new Event('resize', {bubbles: true}));
         }
         this.el.classList.remove('transparent');
         return this;

@@ -127,7 +127,7 @@ export default class Select extends Controller {
             this.select.required = this.isRequired && this.model.selected.size === 0;
             this.update();
         }
-        this.select.dispatchEvent($.newEvent('change'));
+        this.select.dispatchEvent(new Event('change', {bubbles: true}));
     }
 
     setActiveItem() {
