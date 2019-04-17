@@ -86,10 +86,14 @@ export default class extends componentType(spec) {
             model: {
                 heading: data.section_6_heading,
                 description: data.section_6_description,
-                cards: data.section_6_cards[0].map((c) => ({
+                cards: data.section_6_cards[0].map((c, i) => ({
                     headingNumber: c.heading_number,
                     headingUnit: c.heading_unit,
-                    description: c.description
+                    description: c.description,
+                    icon: {
+                        image: i % 2 ? '/images/institutional-partner-program/second-result-icon.svg' :
+                            '/images/institutional-partner-program/first-result-icon.svg'
+                    }
                 }))
             }
         }));

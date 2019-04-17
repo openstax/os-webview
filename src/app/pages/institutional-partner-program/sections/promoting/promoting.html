@@ -7,13 +7,13 @@
         <div class="cards">
             <div class="wide card">
                 <div class="wide-card-entry" each="item in model.wideCards">
-                    <img src="{item.icon}">
+                    <img src="{item.icon.image}" alt="{item.icon.alt_text}">
                     <div data-html="wideCards[{$item}].html"></div>
                 </div>
             </div>
             <div class="card tall" each="item in model.tallCards">
                 <div data-html=tallCards[{$item}].html></div>
-                <a href="item.link" class="btn primary">{item.linkText}</a>
+                <a href="{item.link}" class="btn primary" _target="blank">{item.linkText}</a>
             </div>
         </div>
     </div>

@@ -20,12 +20,13 @@
 
     .cards {
         display: grid;
-        grid-auto-columns: 28rem;
+        // grid-auto-columns: 28rem;
         grid-auto-flow: column;
         grid-gap: 2rem;
         max-width: 100%;
         overflow: auto;
         padding: 0.5rem 0;
+        padding-right: $normal-margin;
     }
 
     .card {
@@ -40,16 +41,8 @@
             border-color: os-color(yellow);
         }
 
-        &:nth-child(2) {
-            border-color: os-color(light-blue);
-        }
-
-        &:nth-child(3) {
-            border-color: os-color(deep-green);
-        }
-
         &:last-child {
-            border-color: os-color(red);
+            border-color: os-color(light-blue);
         }
 
         .heading {
