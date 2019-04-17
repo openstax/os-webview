@@ -78,6 +78,22 @@
         <link rel="prefetch" href="/apps/cms/api/books?format=json">
         <link rel="prefetch" href="/apps/cms/api/footer?format=json">
         <link rel="prefetch" href="/apps/cms/api/pages/openstax-homepage?format=json">
+        <script>
+        (function() {
+            var w = window, d = document;
+            w['pi']=function() {
+                w['pi'].commands = w['pi'].commands || [];
+                w['pi'].commands.push(arguments);
+            };
+            var s = d.createElement('script'); s.async = 1;
+            s.src = '//js.pulseinsights.com/surveys.js';
+            var f = d.getElementsByTagName('script')[0];
+            f.parentNode.insertBefore(s, f);
+
+            pi('identify', 'PI-16384954');
+            pi('get', 'surveys');
+        })();
+        </script>
     </head>
     <body>
         <noscript>
