@@ -6,7 +6,7 @@
         </div>
         <div class="cards">
             <div each="card in model.cards" class="card">
-                <img class="corner-icon" src={card.icon}>
+                <img class="corner-icon" src="{card.icon.image}">
                 <div class="heading"><span class="big-text">{card.headingNumber}</span>{card.headingUnit}</div>
                 <div class="description-block">{card.description}</div>
             </div>

@@ -1,27 +1,10 @@
 .btn-social {
     align-content: center;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: 100%;
     border-radius: 50%;
     display: grid;
-    height: 2.8rem;
+    font-size: 1.6rem;
+    height: 3rem;
+    justify-content: center;
     overflow: hidden;
-    width: 2.8rem;
-
-    &:not(.instagram) {
-        font-size: 0;
-    }
-}
-
-.facebook {
-    background-image: url('/images/social/icon-fb.svg');
-}
-
-.twitter {
-    background-image: url('/images/social/icon-tw.svg');
-}
-
-.linkedin {
-    background-image: url('/images/social/icon-li.svg');
+    width: 3rem;
 }

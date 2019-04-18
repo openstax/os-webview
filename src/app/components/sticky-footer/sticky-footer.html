@@ -1,7 +1,8 @@
 <template args="model">
     <div class="button-group">
         <a href="{model.leftButton.link}" class="btn medium">{model.leftButton.text}</a>
-        <div class="description">{model.leftButton.description}</div>
+        <div if="model.leftButton.description" class="description">{model.leftButton.description}</div>
+        <div if="model.leftButton.descriptionHtml" class="description" data-html="leftButton.descriptionHtml"></div>
     </div>
     <div if="model.rightButton" class="button-group">
         <div class="description">{model.rightButton.description}</div>

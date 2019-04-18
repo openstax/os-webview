@@ -1,4 +1,4 @@
-import componentType from '~/helpers/controller/init-mixin';
+import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './sticky-footer.html';
 import css from './sticky-footer.css';
 import {debounce} from 'lodash';
@@ -12,7 +12,7 @@ const spec = {
     footerHeight: ''
 };
 
-export default class StickyFooter extends componentType(spec) {
+export default class StickyFooter extends componentType(spec, insertHtmlMixin) {
 
     init(model) {
         super.init();

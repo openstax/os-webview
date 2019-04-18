@@ -1,12 +1,10 @@
 <template args="model">
     <div class="content-block">
-        <div class="text-block">
-            <h2>{model.heading}</h2>
-            <div class="description-block" data-html="description"></div>
+        <div class="left-group">
+            <h2 class="ul">{model.heading}</h2>
+            <div class="ll description-block" data-html="description"></div>
         </div>
-        <div class="img-block">
-            <img src="{model.image}" alt="{model.altText}">
-            <div class="caption" data-html="caption"></div>
-        </div>
+        <img class="ur" src="{model.image}" alt="{model.altText}">
+        <div class="lr caption" data-html="caption"></div>
     </div>
 </template>

@@ -5,7 +5,7 @@
             <div class="mission">
                 It's our mission to give every student the tools they need to
                 be successful in the classroom. Help our cause by
-                <a href="/give">donating</a> today.
+                <a href="/give" target="_blank">donating</a> today.
             </div>
             <div class="column col1">
                 <div class="column-heading">Help</div>
@@ -31,19 +31,19 @@
     <div class="bottom">
         <div class="boxed">
             <div class="copyrights">
-                <p>{model.copyright}</p>
+                <div data-html="copyright"></div>
                 <ap-html data-html="apStatement" skip="true"></ap-html>
             </div>
 
             <div class="social" role="directory">
                 <a class="btn btn-social facebook" href="{model.facebookLink}" title="facebook">
-                    Facebook
+                    <span class="fab fa-facebook-f"></span>
                 </a>
                 <a class="btn btn-social twitter" href="{model.twitterLink}" title="twitter">
-                    Twitter
+                    <span class="fab fa-twitter"></span>
                 </a>
                 <a class="btn btn-social linkedin" href="{model.linkedinLink}" title="linkedin">
-                    LinkedIn
+                    <span class="fab fa-linkedin-in"></span>
                 </a>
                 <a class="btn btn-social instagram" href="https://www.instagram.com/openstax/" title="instagram">
                     <span class="fab fa-instagram"></span>

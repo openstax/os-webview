@@ -14,12 +14,27 @@
         }
 
         @include wider-than($phone-max) {
-            grid-template-columns: 1fr auto;
+            grid-row-gap: 1rem;
+            grid-template: 'l ur'
+                'l lr';
+
+            .left-group {
+                grid-area: l;
+            }
+
+            .ur {
+                grid-area: ur;
+            }
+
+            .lr {
+                grid-area: lr;
+            }
         }
 
         img {
             max-width: 100%;
         }
+
     }
 
 }
