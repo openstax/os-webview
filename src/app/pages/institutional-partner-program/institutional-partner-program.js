@@ -10,6 +10,7 @@ import Results from './sections/results/results';
 import Participants from './sections/participants/participants';
 import SmallQuote from './sections/small-quote/small-quote';
 import SignUp from './sections/sign-up/sign-up';
+import StickyFooter from '~/components/sticky-footer/sticky-footer';
 
 const spec = {
     css,
@@ -124,6 +125,13 @@ export default class extends componentType(spec) {
                 formPrompt: data.section_9_form_prompt,
                 buttonText: data.section_9_button_text,
                 contactHtml: data.section_9_contact_html
+            }
+        }));
+        this.regions.self.append(new StickyFooter({
+            leftButton: {
+                descriptionHtml: data.section_1_description,
+                text: data.section_1_link_text,
+                link: data.section_1_link
             }
         }));
     }
