@@ -44,14 +44,7 @@ $near-white: #f8f8f8;
     .sticky-footer {
         background-color: $near-white;
         max-height: none;
-
-        @include width-up-to($phone-max) {
-            padding: 3.5rem;
-        }
-
-        @include wider-than($phone-max) {
-            padding: 5rem;
-        }
+        padding: 1.5rem 3rem;
 
         .button-group {
             @extend %content;

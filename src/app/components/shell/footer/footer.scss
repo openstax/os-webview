@@ -126,6 +126,10 @@ $lower-footer: #3b3b3b;
             grid-column-gap: 4rem;
             grid-row-gap: $normal-margin;
 
+            @include width-up-to($phone-max) {
+                padding: 0;
+            }
+
             @include wider-than($phone-max) {
                 grid-auto-flow: column;
             }
@@ -136,6 +140,10 @@ $lower-footer: #3b3b3b;
             grid-auto-flow: column;
             grid-gap: 1rem;
             justify-content: left;
+
+            > .btn {
+                background-color: os-color(light-gray);
+            }
         }
     }
 
