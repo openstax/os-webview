@@ -14,7 +14,9 @@
         "url": "https://github.com/openstax/os-webview.git"
     },
     "license": "AGPL-3.0",
-    "dependencies": {},
+    "dependencies": {
+        "gulp-rev": "^9.0.0"
+    },
     "devDependencies": {
         "babel-eslint": "7.2.3",
         "babel-jest": "*",
