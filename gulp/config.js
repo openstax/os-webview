@@ -23,6 +23,7 @@ module.exports = {
         'last 3 versions',
         'not ie < 11'
     ],
+    distUrlPrefix: '/cms/assets',
     name: project.name,
     version: project.version,
     license: project.license,
