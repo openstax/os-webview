@@ -1,5 +1,4 @@
-import $ from '~/helpers/$';
-import {Controller} from 'superb.js';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import BookSelector from '~/components/book-selector/book-selector';
 import ContactInfo from '~/components/contact-info/contact-info';
 import FormCheckboxGroup from '~/components/form-checkboxgroup/form-checkboxgroup';
@@ -16,22 +15,26 @@ import TechnologySelector from '~/components/technology-selector/technology-sele
 import {description as template} from './adoption.html';
 import css from './adoption.css';
 
-export default class AdoptionForm extends Controller {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['adoption-form-v2'],
+        tag: 'main'
+    },
+    regions: {
+        header: '[data-region="header"]',
+        roleSelector: '[data-region="role-selector"]',
+        form: 'plug-in[data-id="form"]'
+    }
+};
+
+export default class AdoptionForm extends componentType(spec, canonicalLinkMixin) {
 
     init() {
-        this.template = template;
-        this.css = css;
-        this.view = {
-            classes: ['adoption-form-v2'],
-            tag: 'main'
-        };
+        super.init();
         const defaultTitle = decodeURIComponent(window.location.search.substr(1));
 
-        this.regions = {
-            header: '[data-region="header"]',
-            roleSelector: '[data-region="role-selector"]',
-            form: 'plug-in[data-id="form"]'
-        };
         this.selectedBooks = [];
         this.usingInfo = {};
         this.disableHowUsing = false;
@@ -50,7 +53,7 @@ export default class AdoptionForm extends Controller {
                 this.usingInfo = newValue;
             }
         );
-        this.canonicalLink = $.setCanonicalLink('/adoption');
+        this.setCanonicalLink('/adoption');
     }
 
     onLoaded() {
@@ -186,10 +189,6 @@ export default class AdoptionForm extends Controller {
                 });
             }, 300);
         }
-    }
-
-    onClose() {
-        this.canonicalLink.remove();
     }
 
 }

@@ -81,7 +81,7 @@ export default (superclass) => class CMSPageController extends superclass {
                     };
 
                     // If this component is the content of main, set page descriptor
-                    if (this.el && this.el.parentNode) {
+                    if (document && this.el && this.el.parentNode) {
                         const mainEl = document.getElementById('main');
 
                         if (mainEl && this.el.parentNode === mainEl) {

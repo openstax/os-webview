@@ -65,7 +65,7 @@ export default class Details extends BaseClass {
         this.userStatusPromise = this.getUserStatusPromise();
         this.reverseGradient = false;
         this.titleImage = null;
-        this.setCanonicalLink(`/details/${this.slug}`, this.canonicalLink);
+        this.setCanonicalLink(`/details/${this.slug}`);
     }
 
     getUserStatusPromise() {

@@ -1,3 +1,4 @@
+import adoptionFormData from '../src/data/adoption-form';
 import pageData from '../src/data/partners';
 import subjectData from '../src/data/subject-categories';
 import footerData from '../src/data/footer';
@@ -15,8 +16,10 @@ import stickyData from '../src/data/sticky';
 import technologyData from '../src/data/technology';
 import userData from '../src/data/user';
 import schoolsData from '../src/data/schools';
+import rolesData from '../src/data/roles';
 
 global.fetch = jest.fn().mockImplementation((...args) => {
+    const isAdoption = (/pages\/adoption-form/).test(args[0]);
     const isPartner = (/pages\/partners/).test(args[0]);
     const isFooter = (/api\/footer/).test(args[0]);
     const isSubjects = (/snippets\/subjects/).test(args[0]);
@@ -30,6 +33,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isOsTutor = (/pages\/openstax-tutor/).test(args[0]);
     const isBooksForAnalytics = (/book_student_resources/).test(args[0]);
     const isResearch = (/pages\/research/).test(args[0]);
+    const isRoles = (/snippets\/roles/).test(args[0]);
     const isSticky = (/api\/sticky/).test(args[0]);
     const isSchools = (/salesforce\/schools/).test(args[0]);
     const isTechnology = (/pages\/technology/).test(args[0]);
@@ -39,7 +43,9 @@ global.fetch = jest.fn().mockImplementation((...args) => {
         function (resolve, reject) {
             let payload = {};
 
-            if (isPartner) {
+            if (isAdoption) {
+                payload = adoptionFormData;
+            } else if (isPartner) {
                 payload = pageData;
             } else if (isFooter) {
                 payload = footerData;
@@ -65,6 +71,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = booksForAnalyticsData;
             } else if (isResearch) {
                 payload = researchData;
+            } else if (isRoles) {
+                payload = rolesData;
             } else if (isSchools) {
                 payload = schoolsData;
             } else if (isSticky) {
