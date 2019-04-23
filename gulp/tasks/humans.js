@@ -11,7 +11,7 @@ function humans() {
         stdio: [0, 'pipe', 'ignore']
     }).stdout.trim().split('\n');
 
-    return gulp.src(`${config.src}/index.html`)
+    return gulp.src(`${config.dest}/index.html`)
     .pipe(pi.humans({
         thanks: committers,
         site: [
