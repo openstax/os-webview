@@ -229,7 +229,7 @@ export default class Tutor extends BaseClass {
     onClose() {
         super.onClose();
         window.removeEventListener('scroll', this.handleScroll);
-        document.querySelector('.page-footer').classList.add('openstax-tutor-footer');
+        document.querySelector('.page-footer').classList.remove('openstax-tutor-footer');
         document.getElementById('main').classList.remove('openstax-tutor-main');
     }
 
