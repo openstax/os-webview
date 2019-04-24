@@ -1,6 +1,6 @@
-import '../../helpers/fetch-mocker';
+import '../../../helpers/fetch-mocker';
 import AdoptionForm from '~/pages/adoption/adoption';
-import instanceReady from '../../helpers/instance-ready';
+import instanceReady from '../../../helpers/instance-ready';
 
 describe('AdoptionForm', () => {
     const {instance:p, ready} = instanceReady(AdoptionForm);

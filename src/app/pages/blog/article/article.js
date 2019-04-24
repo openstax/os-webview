@@ -1,5 +1,5 @@
 import $ from '~/helpers/$';
-import CMSPageController from '~/controllers/cms';
+import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
 import FormattedAs from './formatted-as/formatted-as';
 import {Controller} from 'superb.js';
 import {debounce} from 'lodash';
@@ -12,21 +12,6 @@ function slugWithNewsPrefix(slug) {
     return slug;
 }
 
-class ArticleContent extends CMSPageController {
-
-    init(slug, dataLoadedCallback) {
-        this.template = () => '';
-        this.slug = slug;
-        this.preserveWrapping = true;
-        this.dataLoadedCallback = dataLoadedCallback;
-    }
-
-    onDataLoaded() {
-        this.dataLoadedCallback(this.pageData);
-    }
-
-}
-
 export default class Article extends Controller {
 
     init(article, mode) {
@@ -35,7 +20,7 @@ export default class Article extends Controller {
         this.view = {
             classes: ['article']
         };
-        this.slug = slugWithNewsPrefix(article.slug);
+        this.articleSlug = slugWithNewsPrefix(article.slug);
         this.mode = mode;
         this.pinned = article.pin_to_top;
         this.formattedContent = null;
@@ -45,6 +30,13 @@ export default class Article extends Controller {
         this.mode = mode;
         this.formattedContent = null;
         this.update();
+    }
+
+    populateArticleData() {
+        return fetchFromCMS(this.articleSlug, true).then((data) => {
+            this.pageData = data;
+            this.update();
+        });
     }
 
     setUpScrollHandler() {
@@ -59,14 +51,8 @@ export default class Article extends Controller {
                 return;
             }
             if ($.overlapsViewport(this.el)) {
-                /* eslint no-new: 0 */
-                new ArticleContent(this.slug, (pageData) => {
-                    this.pageData = pageData;
-                    if (this.el) {
-                        this.update();
-                    }
-                });
                 window.removeEventListener('scroll', this.handleScroll);
+                this.populateArticleData();
             }
         }, 200);
 
