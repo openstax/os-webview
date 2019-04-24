@@ -20,7 +20,7 @@ function hashFile(directory, name) {
     return () =>
         gulp.src(`${config.dest}/${directory}/${name}`)
             .pipe(rev())
-            .pipe(gulp.dest(config.dest))
+            .pipe(gulp.dest(`${config.dest}/${directory}`))
             .pipe(rev.manifest({
                 path: `${config.dest}/rev-manifest.json`,
                 base: `${config.dest}/${directory}`,
