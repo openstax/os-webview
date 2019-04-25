@@ -16,23 +16,23 @@ const replaceURLs = (mapping) => {
     return transform.pipe(gulp.dest(config.dest));
 }
 
-function hashFile(name) {
+function hashFile(directory, name) {
     return () =>
-        gulp.src(`${config.dest}/${name}`)
+        gulp.src(`${config.dest}/${directory}/${name}`)
             .pipe(rev())
-            .pipe(gulp.dest(config.dest))
+            .pipe(gulp.dest(`${config.dest}/${directory}`))
             .pipe(rev.manifest({
                 path: `${config.dest}/rev-manifest.json`,
-                base: config.dest,
+                base: `${config.dest}/${directory}`,
                 merge: true,
             }))
-            .pipe(gulp.dest(config.dest))
+            .pipe(gulp.dest(`${config.dest}/${directory}`))
 }
 
 // Don't need to do anything fancy in development, just replace the filename
 function devHTML() {
     return replaceURLs({
-        BUNDLE:   '/bundle.js',
+        BUNDLE:   '/scripts/bundle.js',
         STYLES:   '/styles/main.css',
         SETTINGS: '/settings.js',
     })
@@ -48,15 +48,14 @@ exports.devHTML.watch = watchHtml
 // include the file's SHA in the filenamnes
 function distHTML(distDone) {
     return gulp.series(
-        hashFile('bundle.js'),   // while it might seem like this could be "parallel", that causes the
-        hashFile('settings.js'), // rev-manifest.json file to become mangled when both write to it
-        hashFile('styles/main.css'),
+        hashFile('scripts', 'bundle.js'),     // while it might seem like this could be "parallel",
+        hashFile('styles', 'main.css'),  // mangled when multiple writers access it
         () => {
             const revManifest = require(`../../${config.dest}/rev-manifest.json`);
             return replaceURLs({
-                STYLES:   `${config.distUrlPrefix}/styles/${revManifest['main.css']}`,
-                BUNDLE:   `${config.distUrlPrefix}/${revManifest['bundle.js']}`,
-                SETTINGS: `${config.distUrlPrefix}/${revManifest['settings.js']}`,
+                STYLES:   `${config.urlPrefix}/styles/${revManifest['main.css']}`,
+                BUNDLE:   `${config.urlPrefix}/scripts/${revManifest['bundle.js']}`,
+                SETTINGS: `${config.urlPrefix}/settings.js?${config.version}`,
             })
         }
     )(distDone)

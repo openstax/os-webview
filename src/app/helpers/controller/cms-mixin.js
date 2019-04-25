@@ -25,7 +25,6 @@ export function transformData(data) {
                     if (item.value) {
                         return item.value;
                     }
-
                     return item;
                 });
             }

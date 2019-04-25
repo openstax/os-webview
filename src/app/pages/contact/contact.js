@@ -1,7 +1,5 @@
-import SalesforceForm from '~/controllers/salesforce-form';
-import CMSPageController from '~/controllers/cms';
-import {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
-import mix from '~/helpers/controller/mixins';
+import componentType, {canonicalLinkMixin, insertHtmlMixin} from '~/helpers/controller/init-mixin';
+import {salesforceFormFunctions} from '~/helpers/controller/salesforce-form-mixin';
 import salesforce from '~/models/salesforce';
 import routerBus from '~/helpers/router-bus';
 import $ from '~/helpers/$';
@@ -23,49 +21,34 @@ const subjects = [
     'Website',
     'OpenStax Polska'
 ];
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['contact-page', 'page']
+    },
+    model: {
+        salesforce,
+        subjects
+    },
+    slug: 'pages/contact'
+};
 
-class ContactData extends CMSPageController {
+export default class Contact extends componentType(
+    spec, salesforceFormFunctions, canonicalLinkMixin, insertHtmlMixin
+) {
 
     init() {
-        this.slug = 'pages/contact';
-        this.template = () => null;
-    }
-
-}
-
-const BaseClass = mix(SalesforceForm).with(canonicalLinkMixin);
-
-export default class Contact extends BaseClass {
-
-    init() {
-        this.dataController = new ContactData();
-        this.dataController.onDataLoaded = () => {
-            this.pageData = this.dataController.pageData;
-            this.onDataLoaded();
-        };
-        this.template = template;
-        this.css = css;
-        this.view = {
-            classes: ['contact-page', 'page']
-        };
-        this.model = {
-            salesforce,
-            subjects,
-            tagline: '',
-            title: '',
-            'mailing_header': '',
-            'mailing_address': '',
-            'phone_number': '',
-            validationMessage: (name) => {
-                const el = this.el.querySelector(`[name="${name}"]`);
-
-                return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
-            }
-        };
         super.init();
+        this.model.validationMessage = (name) => {
+            const el = this.el.querySelector(`[name="${name}"]`);
+
+            return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
+        };
     }
 
     onLoaded() {
+        super.onLoaded();
         document.title = 'Contact Us - OpenStax';
 
         // NOTE: Cannot set this in the template due to `each` restriction
@@ -91,9 +74,8 @@ export default class Contact extends BaseClass {
     }
 
     onDataLoaded() {
-        this.model = Object.assign(this.model, this.pageData);
+        Object.assign(this.model, this.pageData);
         this.update();
-        $.insertHtml(this.el, this.model);
     }
 
     @on('change [name="subject"]')
