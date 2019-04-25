@@ -3,7 +3,7 @@ import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controll
 import css from './partners.css';
 import CategorySelector from '~/components/category-selector/category-selector';
 import PartnerViewer from './partner-viewer/partner-viewer';
-import router from '~/router';
+import routerBus from '~/helpers/router-bus';
 import settings from 'settings';
 import {description as template} from './partners.html';
 import {on} from '~/helpers/controller/decorators';
@@ -36,7 +36,7 @@ export default class Partners extends BaseClass {
         super.init();
         this.categorySelector = new CategorySelector();
         this.categorySelector.on('change', (category) => this.filterPartners(category));
-        router.replaceState({
+        routerBus.emit('replaceState', {
             filter: this.categoryFromPath(),
             path: pagePath
         });
@@ -70,7 +70,9 @@ export default class Partners extends BaseClass {
         this.model = Object.assign(this.model, this.pageData);
         this.model.allPartners = Object.keys(this.pageData.allies)
             .sort((a, b) => a < b ? -1 : 1)
-            .map((slug) => this.pageData.allies[slug])
+            .map((slug) => Object.assign({
+                id: slug
+            }, this.pageData.allies[slug]))
             .filter((info) => !info.do_not_display);
 
         this.partnerViewer = new PartnerViewer(this.model);
@@ -89,7 +91,7 @@ export default class Partners extends BaseClass {
     filterPartners(category) {
         const path = category === 'view-all' ? pagePath : `${pagePath}/${category}`;
 
-        router.navigate(path, {
+        routerBus.emit('navigate', path, {
             filter: category,
             path: pagePath,
             x: history.state.x,
@@ -107,13 +109,12 @@ export default class Partners extends BaseClass {
         e.preventDefault();
         this.cameFrom = e.delegateTarget;
         const href = this.cameFrom.getAttribute('href');
-        const el = document.getElementById(href.substr(1));
+        const el = this.el.querySelector(href);
         const state = {
             filter: history.state.filter,
             path: pagePath,
             target: href
         };
-
         const pushOrReplaceState = history.state.target ? 'replaceState' : 'pushState';
 
         $.scrollTo(el).then(() => {

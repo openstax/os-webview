@@ -1,6 +1,6 @@
 import $ from '~/helpers/$';
 import CMSPageController from '~/controllers/cms';
-import router from '~/router';
+import routerBus from '~/helpers/router-bus';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './sticky-note.html';
 import css from './sticky-note.css';
@@ -78,7 +78,7 @@ class StickyNote extends CMSPageController {
         const amount = e.target.dataset.amount;
 
         e.preventDefault();
-        router.navigate('/give/form', {
+        routerBus.emit('navigate', '/give/form', {
             path: '/give',
             page: 2,
             amount

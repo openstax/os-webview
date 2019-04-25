@@ -4,6 +4,7 @@ import footer from './footer/footer';
 import ModalDialog from '../dialog/dialog';
 import {initialize, injectButtons} from 'recordo';
 import {description as template} from './shell.html';
+import bus from './shell-bus';
 
 class Shell extends Controller {
 
@@ -85,5 +86,20 @@ class Shell extends Controller {
 }
 
 const shell = new Shell();
+
+bus.on('showLoader', shell.showLoader.bind(shell));
+bus.on('hideLoader', shell.hideLoader.bind(shell));
+
+bus.on('with-sticky', () => {
+    shell.regions.main.el.classList.add('with-sticky');
+});
+
+bus.on('no-sticky', () => {
+    shell.regions.main.el.classList.remove('with-sticky');
+});
+
+bus.on('updateDialog', shell.dialog.update.bind(shell.dialog));
+bus.on('showDialog', shell.showDialog.bind(shell));
+bus.on('hideDialog', shell.hideDialog.bind(shell));
 
 export default shell;

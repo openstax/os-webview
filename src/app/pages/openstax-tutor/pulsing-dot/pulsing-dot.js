@@ -1,26 +1,20 @@
-import {Controller} from 'superb.js';
+import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import {on} from '~/helpers/controller/decorators';
-import $ from '~/helpers/$';
 import {description as template} from './pulsing-dot.html';
 import css from './pulsing-dot.css';
 
-export default class PulsingDot extends Controller {
-
-    init(modelData) {
-        this.template = template;
-        this.model = {
-            stopPulsing: false
-        };
-        Object.assign(this.model, modelData);
-        this.view = {
-            classes: ['pulsing-dot']
-        };
-        this.css = css;
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['pulsing-dot']
+    },
+    model: {
+        stopPulsing: false
     }
+};
 
-    onLoaded() {
-        $.insertHtml(this.el, this.model);
-    }
+export default class extends componentType(spec, insertHtmlMixin) {
 
     @on('click')
     stopPulsing() {

@@ -1,6 +1,7 @@
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import css from './modal-content.css';
+import shellBus from '~/components/shell/shell-bus';
 
 export default class ModalContent extends Controller {
 
@@ -17,12 +18,12 @@ export default class ModalContent extends Controller {
     }
 
     onLoaded() {
-        document.getElementById('main').classList.add('with-overlay');
+        shellBus.emit('with-sticky');
         this.regions.self.append(this.content);
     }
 
     onClose() {
-        document.getElementById('main').classList.remove('with-overlay');
+        shellBus.emit('no-sticky');
     }
 
 }

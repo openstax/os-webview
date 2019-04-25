@@ -2,6 +2,7 @@ import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './sticky-footer.html';
 import css from './sticky-footer.css';
 import {debounce} from 'lodash';
+import shellBus from '~/components/shell/shell-bus';
 
 const spec = {
     template,
@@ -49,7 +50,7 @@ export default class StickyFooter extends componentType(spec, insertHtmlMixin) {
 
         window.addEventListener('scroll', this.handleScroll);
         this.handleScroll();
-        document.getElementById('main').classList.add('with-sticky');
+        shellBus.emit('with-sticky');
     }
 
     onClose() {
@@ -57,7 +58,7 @@ export default class StickyFooter extends componentType(spec, insertHtmlMixin) {
             super.onClose();
         }
         window.removeEventListener('scroll', this.handleScroll);
-        document.getElementById('main').classList.remove('with-sticky');
+        shellBus.emit('no-sticky');
     }
 
 }

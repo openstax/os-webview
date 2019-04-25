@@ -1,28 +1,34 @@
-import {Controller} from 'superb.js';
-import $ from '~/helpers/$';
+import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
 import LetUsKnow from '../let-us-know/let-us-know';
 import {description as template} from './details-tab.html';
 import {description as templatePolish} from './details-tab-polish.html';
 import css from './details-tab.css';
 
-export default class DetailsTab extends Controller {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['details-tab']
+    },
+    regions: {
+        getTheBook: '.get-the-book',
+        letUsKnow: '.let-us-know-region'
+    }
+};
+
+export default class DetailsTab extends componentType(spec, insertHtmlMixin) {
 
     init(model) {
-        this.template = model.polish ? templatePolish : template;
+        super.init();
+        if (model.polish) {
+            this.template = templatePolish;
+        }
         this.model = model;
-        this.view = {
-            classes: ['details-tab']
-        };
-        this.css = css;
-        this.regions = {
-            getTheBook: '.get-the-book',
-            letUsKnow: '.let-us-know-region'
-        };
     }
 
     onLoaded() {
-        $.insertHtml(this.el, this.model);
+        super.onLoaded();
         if (!this.model.comingSoon) {
             this.regions.getTheBook.append(
                 new GetThisTitle(
@@ -31,9 +37,9 @@ export default class DetailsTab extends Controller {
             );
         }
 
-        this.regions.letUsKnow.append(new LetUsKnow(() => ({
-            title: this.model[this.model.polish ? 'title' : 'salesforceAbbreviation']
-        })));
+        this.regions.letUsKnow.append(new LetUsKnow(
+            this.model[this.model.polish ? 'title' : 'salesforceAbbreviation']
+        ));
     }
 
 }

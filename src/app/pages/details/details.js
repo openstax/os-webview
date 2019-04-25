@@ -1,5 +1,5 @@
 import $ from '~/helpers/$';
-import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
 import ContentGroup from '~/components/content-group/content-group';
 import DetailsTab from './details-tab/details-tab';
 import getCompCopyDialogProps from './comp-copy-dialog-props';
@@ -52,7 +52,7 @@ const spec = {
         };
     }
 };
-const BaseClass = componentType(spec, canonicalLinkMixin);
+const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 
 export default class Details extends BaseClass {
 
@@ -65,7 +65,7 @@ export default class Details extends BaseClass {
         this.userStatusPromise = this.getUserStatusPromise();
         this.reverseGradient = false;
         this.titleImage = null;
-        this.setCanonicalLink(`/details/${this.slug}`, this.canonicalLink);
+        this.setCanonicalLink(`/details/${this.slug}`);
     }
 
     getUserStatusPromise() {
@@ -119,23 +119,19 @@ export default class Details extends BaseClass {
         };
         const descriptionEl = document.querySelector('head meta[name="description"]');
 
-        el.type = 'application/ld+json';
-        el.textContent = JSON.stringify(ldData, null, 2);
-        descriptionEl.parentNode.insertBefore(el, descriptionEl.nextSibling);
-    }
-
-    onLoaded() {
-        document.body.classList.remove('page-loaded');
-        document.body.classList.add('page-loading');
+        if (descriptionEl) {
+            el.type = 'application/ld+json';
+            el.textContent = JSON.stringify(ldData, null, 2);
+            descriptionEl.parentNode.insertBefore(el, descriptionEl.nextSibling);
+        }
     }
 
     onDataLoaded() {
         if (this.pageData.meta.type !== 'books.Book') {
-            window.location = '/_404';
+            window.location.assign('/_404');
             return;
         }
-        document.body.classList.remove('page-loading');
-        document.body.classList.add('page-loaded');
+        this.hideLoader();
         const polish = $.isPolish(this.pageData.title);
         const tabLabels = [polish ? 'Szczegóły książki' : 'Book details'];
         let selectedTab = decodeURIComponent(window.location.search.replace('?', '')) || tabLabels[0];
@@ -277,6 +273,7 @@ export default class Details extends BaseClass {
         this.update();
 
         this.regions.phoneView.attach(new PhoneView({
+            polish,
             bookInfo: this.pageData,
             bookTitle: this.bookTitle,
             bookState: this.pageData.book_state,

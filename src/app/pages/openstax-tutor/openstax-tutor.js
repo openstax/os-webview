@@ -1,4 +1,3 @@
-import CMSPageController from '~/controllers/cms';
 import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
 import $ from '~/helpers/$';
 import SectionNavigator from '~/components/section-navigator/section-navigator';
@@ -197,7 +196,7 @@ export default class Tutor extends BaseClass {
             mainSection.classList.add('openstax-tutor-main');
         }
 
-        const pulsingDot = new PulsingDot({html: data.pop_up_text});
+        const pulsingDot = new PulsingDot();
 
         this.regions.floatingTools.append(pulsingDot);
         if (window.location.hash) {

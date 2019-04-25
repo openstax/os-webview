@@ -1,5 +1,3 @@
-import CMSPageController from '~/controllers/cms';
-
 const details = {
     "id": 33,
     "meta": {

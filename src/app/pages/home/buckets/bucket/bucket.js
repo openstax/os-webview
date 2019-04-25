@@ -1,11 +1,14 @@
-import {Controller} from 'superb.js';
-import $ from '~/helpers/$';
+import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './bucket.html';
 
-export default class Bucket extends Controller {
+const spec = {
+    template
+};
+
+export default class extends componentType(spec, insertHtmlMixin) {
 
     init(props) {
-        this.template = template;
+        super.init();
         this.view = {
             classes: [
                 'bucket',
@@ -14,10 +17,6 @@ export default class Bucket extends Controller {
             ]
         };
         this.model = props;
-    }
-
-    onLoaded() {
-        $.insertHtml(this.el, this.model);
     }
 
 }

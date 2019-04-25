@@ -1,7 +1,7 @@
 import componentType, {canonicalLinkMixin, insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import {salesforceFormFunctions} from '~/helpers/controller/salesforce-form-mixin';
 import salesforce from '~/models/salesforce';
-import router from '~/router';
+import routerBus from '~/helpers/router-bus';
 import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 import selectHandler from '~/handlers/select';
@@ -67,7 +67,7 @@ export default class Contact extends componentType(
         this.goToConfirmation = () => {
             if (this.submitted) {
                 this.submitted = false;
-                router.navigate('/confirmation/contact');
+                routerBus.emit('navigate', '/confirmation/contact');
             }
         };
         this.formResponseEl.addEventListener('load', this.goToConfirmation);

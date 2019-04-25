@@ -1,26 +1,26 @@
-const books = {
+export default {
     "id": 30,
     "meta": {
-        "type": "books.BookIndex",
-        "detail_url": "https://oscms-dev.openstax.org/apps/cms/api/v2/pages/30/",
-        "html_url": "http://oscms-dev.openstax.org/subjects/",
-        "slug": "subjects",
-        "show_in_menus": false,
         "seo_title": "",
         "search_description": "",
+        "type": "books.BookIndex",
+        "detail_url": "https://cms-dev.openstax.org/api/v2/pages/30/",
+        "html_url": "http://openstax.org/subjects/",
+        "slug": "subjects",
+        "show_in_menus": false,
         "first_published_at": "2016-03-08T19:15:49.026884-06:00",
         "parent": {
             "id": 29,
             "meta": {
                 "type": "pages.HomePage",
-                "detail_url": "https://oscms-dev.openstax.org/apps/cms/api/v2/pages/29/",
-                "html_url": "http://oscms-dev.openstax.org/"
+                "detail_url": "https://cms-dev.openstax.org/api/v2/pages/29/",
+                "html_url": "http://openstax.org/"
             },
             "title": "Openstax Homepage"
         }
     },
     "title": "Subjects",
-    "page_description": "<h1>Open source. Peer-reviewed. 100% free.</h1><p>And backed by additional learning resources. Review our OpenStax textbooks and decide if they are right for your course. Simple to adopt, free to use. We make it easy to improve student access to higher education.<br/></p>",
+    "page_description": "<h2>Peer-reviewed. Openly licensed. 100% free.</h2><p>And backed by additional learning resources. Review our OpenStax textbooks and decide if they are right for your course. Simple to adopt, free to use. We make it easy to improve student access to higher education.<br/></p>",
     "dev_standards_heading": "Development Standards",
     "dev_standard_1_heading": "Expert Authors",
     "dev_standard_1_description": "<p>Our open source textbooks are written by professional content developers who are experts in their fields.<br/></p>",
@@ -32,2027 +32,1486 @@ const books = {
     "books": [
         {
             "title": "Prealgebra",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/prealgebra_1.svg",
-            "comp_copy_available": true,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/prealgebra_1.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_Prealgebra_d7xCaKd.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Prealgebra-OP.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Prealgebra-LR.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/oer-commons-logo_pe3nA43.jpg"
-                ],
-                [
-                    "https://www.oercommons.org/groups/openstax-prealgebra/1077/?__hub_id=27"
-                ],
-                [
-                    "https://cnx.org/contents/caa57dab-41c7-455e-bd6f-f443cda5519c"
-                ],
-                [
-                    "https://www.amazon.com/s/ref=sr_pg_1?me=A1540JPBBI3F06&rh=i%3Amerchant-items&ie=UTF8&qid=1532975248"
-                ]
-            ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "",
-            "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/caa57dab-41c7-455e-bd6f-f443cda5519c",
-            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Prealgebra-OP.pdf",
-            "ibook_link": "",
-            "kindle_link": "",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Prealgebra-LR.pdf",
-            "amazon_link": "https://www.amazon.com/s/ref=sr_pg_1?me=A1540JPBBI3F06&rh=i%3Amerchant-items&ie=UTF8&qid=1532975248",
             "salesforce_abbreviation": "Prealgebra",
+            "slug": "books/prealgebra",
+            "subjects": [
+                "Math"
+            ],
+            "ibook_link": "",
+            "bookshare_link": "",
+            "kindle_link": "https://www.amazon.com/Prealgebra-Lynn-Marecek-ebook/dp/B075FFXLNT/ref=tmm_kin_title_0?_encoding=UTF8&qid=1506696008&sr=8-2-fkmr0&dpID=41o5wIKFoGL&preST=_SX342_QL70_&dpSrc=detail",
+            "salesforce_name": "Prealgebra",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
             "bookstore_content": [
                 {
                     "type": "content",
-                    "id": "cf7d85d6-443e-4354-8b17-585cb20de5a4",
+                    "id": "cab5e5be-3091-48a2-81f4-619acd3084c6",
                     "value": 9
                 },
                 {
                     "type": "content",
-                    "id": "b1abd9de-df4c-44ef-a41e-842901b37f26",
-                    "value": 8
+                    "id": "309eac72-ef42-4251-b187-4ba2d6e09d6f",
+                    "value": 10
                 }
             ],
-            "subject": "Math",
-            "id": 46,
-            "amazon_price": 48.5,
             "coming_soon": false,
-            "slug": "books/prealgebra",
-            "salesforce_name": "Prealgebra"
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/prealgebra_1.svg",
+            "id": 46,
+            "amazon_link": "https://www.amazon.com/s/ref=sr_pg_1?me=A1540JPBBI3F06&rh=i%3Amerchant-items&ie=UTF8&qid=1532975248",
+            "webview_link": "https://cnx.org/contents/caa57dab-41c7-455e-bd6f-f443cda5519c",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Prealgebra-LR_iAcQKVM.pdf",
+            "comp_copy_available": false,
+            "amazon_price": 48.5,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Prealgebra-OP_WZDNAZH.pdf",
+            "urls": []
         },
         {
             "title": "Elementary Algebra",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/elementary-algebra.svg",
-            "comp_copy_available": true,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/elementary-algebra.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_ElementaryAlgebra_Eeiz5h9.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/oer-commons-logo_pe3nA43.jpg"
-                ],
-                [
-                    "https://www.oercommons.org/groups/openstax-elementary-algebra/1443/?__hub_id=27"
-                ],
-                [
-                    "https://cnx.org/contents/"
-                ],
-                [
-                    "https://www.amazon.com/s/ref=sr_pg_1?me=A1540JPBBI3F06&rh=i%3Amerchant-items&ie=UTF8&qid=1532975248"
-                ]
-            ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "",
-            "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/",
-            "high_resolution_pdf_url": null,
-            "ibook_link": "",
-            "kindle_link": "",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": null,
-            "amazon_link": "https://www.amazon.com/s/ref=sr_pg_1?me=A1540JPBBI3F06&rh=i%3Amerchant-items&ie=UTF8&qid=1532975248",
             "salesforce_abbreviation": "Elementary Algebra",
+            "slug": "books/elementary-algebra",
+            "subjects": [
+                "Math"
+            ],
+            "ibook_link": "",
+            "bookshare_link": "",
+            "kindle_link": "https://www.amazon.com/Elementary-Algebra-Lynn-Marecek-ebook/dp/B075FDSDH5/ref=sr_1_22_twi_kin_2?ie=UTF8&qid=1508860540&sr=8-22&keywords=Openstax",
+            "salesforce_name": "Elementary Algebra",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
             "bookstore_content": [
                 {
                     "type": "content",
-                    "id": "e3443556-15a0-4f14-a099-6ff0d44e2147",
+                    "id": "73ecffe2-ee56-4921-b55b-9ea3e776843f",
                     "value": 9
                 },
                 {
                     "type": "content",
-                    "id": "e08a7317-2ec0-4d25-a49c-27219375ff80",
-                    "value": 8
+                    "id": "c52ddddc-8de9-4fb3-9ba1-83e0b8568430",
+                    "value": 10
                 }
             ],
-            "subject": "Math",
-            "id": 126,
-            "amazon_price": 48.5,
             "coming_soon": false,
-            "slug": "books/elementary-algebra",
-            "salesforce_name": "Elementary Algebra"
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/elementary-algebra.svg",
+            "id": 130,
+            "amazon_link": "https://www.amazon.com/s/ref=sr_pg_1?me=A1540JPBBI3F06&rh=i%3Amerchant-items&ie=UTF8&qid=1532975248",
+            "webview_link": "https://cnx.org/contents/0889907c-f0ef-496a-bcb8-2a5bb121717f",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/ElementaryAlgebra-LR_C08YrPA.pdf",
+            "comp_copy_available": false,
+            "amazon_price": 48.5,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/ElementaryAlgebra-OP_IFF1yXF.pdf",
+            "urls": []
         },
         {
             "title": "Intermediate Algebra",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/intermediate-algebra.svg",
-            "comp_copy_available": true,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/intermediate-algebra.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_IntermediateAlgebra.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/IntermediateAlgebra-Draft.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/oer-commons-logo_pe3nA43.jpg"
-                ],
-                [
-                    "https://www.oercommons.org/groups/openstax-intermediate-algebra/1444/?from_hub=27"
-                ],
-                [
-                    "https://cnx.org/contents/02776133-d49d-49cb-bfaa-67c7f61b25a1"
-                ],
-                [
-                    "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719"
-                ]
-            ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "",
-            "bookstore_coming_soon": true,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/02776133-d49d-49cb-bfaa-67c7f61b25a1",
-            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/IntermediateAlgebra-Draft.pdf",
-            "ibook_link": "",
-            "kindle_link": "",
-            "amazon_coming_soon": true,
-            "low_resolution_pdf_url": null,
-            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
             "salesforce_abbreviation": "Intermediate Algebra",
+            "slug": "books/intermediate-algebra",
+            "subjects": [
+                "Math"
+            ],
+            "ibook_link": "",
+            "bookshare_link": "",
+            "kindle_link": "https://www.amazon.com/Intermediate-Algebra-Lynn-Marecek-ebook/dp/B075FC6MLP",
+            "salesforce_name": "Intermediate Algebra",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
             "bookstore_content": [
                 {
                     "type": "content",
-                    "id": "ce3b0eb0-e5f8-4185-a861-75a88e8d594c",
+                    "id": "10764048-0cb6-49bf-a96a-495c432a05e8",
                     "value": 9
                 },
                 {
                     "type": "content",
-                    "id": "d5e11631-f6fd-4f60-8a7d-f86e9855b101",
-                    "value": 8
+                    "id": "67b041e7-fe19-4dc9-872a-b712ee117dc0",
+                    "value": 10
                 }
             ],
-            "subject": "Math",
-            "id": 127,
-            "amazon_price": 48.5,
             "coming_soon": false,
-            "slug": "books/intermediate-algebra",
-            "salesforce_name": "Intermediate Algebra"
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/intermediate-algebra.svg",
+            "id": 131,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/02776133-d49d-49cb-bfaa-67c7f61b25a1",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/IntermediateAlgebra-LR_p4rq5Z2.pdf",
+            "comp_copy_available": false,
+            "amazon_price": 48.5,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/IntermediateAlgebra-OP_qWOwM33.pdf",
+            "urls": []
         },
         {
             "title": "College Algebra",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/college_algebra.svg",
-            "comp_copy_available": true,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/college_algebra.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_CollegeAlgebra_3AS9cTc.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/CollegeAlgebra-OP.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/CollegeAlgebra-LR.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/oer-commons-logo_pe3nA43.jpg"
-                ],
-                [
-                    "https://www.oercommons.org/groups/openstax-college-algebra/1046/?__hub_id=27"
-                ],
-                [
-                    "https://cnx.org/contents/9b08c294-057f-4201-9f48-5d6ad992740d"
-                ],
-                [
-                    "http://www.amazon.com/dp/1938168380?m=A1540JPBBI3F06&ref_=v_sp_detail_page"
-                ]
-            ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "",
-            "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/9b08c294-057f-4201-9f48-5d6ad992740d",
-            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/CollegeAlgebra-OP.pdf",
-            "ibook_link": "",
-            "kindle_link": "",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/CollegeAlgebra-LR.pdf",
-            "amazon_link": "http://www.amazon.com/dp/1938168380?m=A1540JPBBI3F06&ref_=v_sp_detail_page",
             "salesforce_abbreviation": "College Algebra",
+            "slug": "books/college-algebra",
+            "subjects": [
+                "Math"
+            ],
+            "ibook_link": "",
+            "bookshare_link": "",
+            "kindle_link": "https://www.amazon.com/College-Algebra-Jay-Abramson-ebook/dp/B075FDZVBF/ref=sr_1_17_twi_kin_1?s=books&ie=UTF8&qid=1508962837&sr=1-17&keywords=OpenStax",
+            "salesforce_name": "College Algebra",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
             "bookstore_content": [
                 {
                     "type": "content",
-                    "id": "98552260-c724-435c-b212-71f70aee6e92",
+                    "id": "7e6cb60f-0809-499b-af00-490d4bde633a",
                     "value": 9
                 },
                 {
                     "type": "content",
-                    "id": "5a2eacab-d80f-4c06-b38a-78c35177a18b",
-                    "value": 8
+                    "id": "fa12ab1a-049c-4c10-a70f-68020a7d3909",
+                    "value": 10
                 }
             ],
-            "subject": "Math",
-            "id": 39,
-            "amazon_price": 48.5,
             "coming_soon": false,
-            "slug": "books/college-algebra",
-            "salesforce_name": "College Algebra"
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/college_algebra.svg",
+            "id": 39,
+            "amazon_link": "https://www.amazon.com/s/ref=sr_pg_1?me=A1540JPBBI3F06&rh=i%3Amerchant-items&ie=UTF8&qid=1532975248",
+            "webview_link": "https://cnx.org/contents/9b08c294-057f-4201-9f48-5d6ad992740d",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/CollegeAlgebra-LR_GoAf7S5.pdf",
+            "comp_copy_available": false,
+            "amazon_price": 52.0,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/CollegeAlgebra-OP_s3hAxEt.pdf",
+            "urls": []
         },
         {
             "title": "Algebra and Trigonometry",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/algebra_trigonometry.svg",
-            "comp_copy_available": true,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/algebra_trigonometry.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_AlgebraandTrig.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/AlgebraAndTrigonometry-OP.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/AlgebraAndTrigonometry-LR.pdf"
-                ],
-                [
-                    "https://www.oercommons.org/groups/openstax-algebra-and-trigonometry/1045/?__hub_id=27"
-                ],
-                [
-                    "https://cnx.org/contents/13ac107a-f15f-49d2-97e8-60ab2e3b519c"
-                ],
-                [
-                    "http://www.amazon.com/dp/1938168372?m=A1540JPBBI3F06&ref_=v_sp_detail_page"
-                ]
-            ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "",
-            "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/13ac107a-f15f-49d2-97e8-60ab2e3b519c",
-            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/AlgebraAndTrigonometry-OP.pdf",
-            "ibook_link": "",
-            "kindle_link": "",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/AlgebraAndTrigonometry-LR.pdf",
-            "amazon_link": "http://www.amazon.com/dp/1938168372?m=A1540JPBBI3F06&ref_=v_sp_detail_page",
             "salesforce_abbreviation": "Algebra and Trigonometry",
+            "slug": "books/algebra-and-trigonometry",
+            "subjects": [
+                "Math"
+            ],
+            "ibook_link": "",
+            "bookshare_link": "",
+            "kindle_link": "https://www.amazon.com/Algebra-Trigonometry-Jay-Abramson-ebook/dp/B075FFGZVH/ref=sr_1_19?s=digital-text&ie=UTF8&qid=1509044794&sr=1-19&keywords=Openstax",
+            "salesforce_name": "Algebra and Trigonometry",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
             "bookstore_content": [
                 {
                     "type": "content",
-                    "id": "6de185f5-8341-4c45-8d70-7f024605d49f",
+                    "id": "6e3b62cb-81c5-460b-86e9-36dbb29f69d6",
                     "value": 9
                 },
                 {
                     "type": "content",
-                    "id": "fccb0975-7a1e-4383-9a25-1c9929ece099",
-                    "value": 8
+                    "id": "88514590-d904-487d-9cc4-16471c695205",
+                    "value": 10
                 }
             ],
-            "subject": "Math",
-            "id": 38,
-            "amazon_price": 58.0,
             "coming_soon": false,
-            "slug": "books/algebra-and-trigonometry",
-            "salesforce_name": "Algebra and Trigonometry"
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/algebra_trigonometry.svg",
+            "id": 38,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/13ac107a-f15f-49d2-97e8-60ab2e3b519c",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/AlgebraAndTrigonometry-LR_jIiGwpf.pdf",
+            "comp_copy_available": false,
+            "amazon_price": 58.0,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/AlgebraAndTrigonometry-OP_hyusk2X.pdf",
+            "urls": []
         },
         {
             "title": "Precalculus",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/precalculus.svg",
-            "comp_copy_available": true,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/precalculus.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_Precalculus.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Precalculus-OP.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Precalculus-LR.pdf"
-                ],
-                [
-                    "https://www.oercommons.org/groups/precalculus/1044/information/"
-                ],
-                [
-                    "https://cnx.org/contents/fd53eae1-fa23-47c7-bb1b-972349835c3c"
-                ],
-                [
-                    "http://www.amazon.com/dp/1938168348?m=A1540JPBBI3F06&ref_=v_sp_detail_page"
-                ]
+            "salesforce_abbreviation": "Precalc",
+            "slug": "books/precalculus",
+            "subjects": [
+                "Math"
             ],
-            "ibook_link_volume_2": "",
+            "ibook_link": "https://itunes.apple.com/us/book/precalculus/id1318396231?ls=1&mt=13",
             "bookshare_link": "",
+            "kindle_link": "https://www.amazon.com/Precalculus-Jay-Abramson-ebook/dp/B075FC37CD/ref=sr_1_8?s=digital-text&ie=UTF8&qid=1508861386&sr=1-8",
+            "salesforce_name": "Precalculus",
             "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/fd53eae1-fa23-47c7-bb1b-972349835c3c",
-            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Precalculus-OP.pdf",
-            "ibook_link": "",
-            "kindle_link": "",
             "amazon_coming_soon": false,
-            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Precalculus-LR.pdf",
-            "amazon_link": "http://www.amazon.com/dp/1938168348?m=A1540JPBBI3F06&ref_=v_sp_detail_page",
-            "salesforce_abbreviation": "Precalculus",
+            "ibook_link_volume_2": "",
+            "is_ap": false,
             "bookstore_content": [
                 {
                     "type": "content",
-                    "id": "12e40d7b-6ff0-459d-b84b-8592be7eef28",
+                    "id": "ba13c462-c8ac-456e-b616-8c38208f56d2",
                     "value": 9
                 },
                 {
                     "type": "content",
-                    "id": "eee89c03-c3a9-4450-b02c-8f08f51eefae",
-                    "value": 8
+                    "id": "c33ab46c-da62-4d6c-a662-396e8dc41873",
+                    "value": 10
                 }
             ],
-            "subject": "Math",
-            "id": 37,
-            "amazon_price": 58.0,
             "coming_soon": false,
-            "slug": "books/precalculus",
-            "salesforce_name": "Precalculus"
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/precalculus.svg",
+            "id": 37,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/fd53eae1-fa23-47c7-bb1b-972349835c3c",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Precalculus-LR_uFyyhtK.pdf",
+            "comp_copy_available": true,
+            "amazon_price": 58.0,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Precalculus-OP_88kwxYo.pdf",
+            "urls": []
         },
         {
             "title": "Calculus Volume 1",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/calculus-v1.svg",
-            "comp_copy_available": true,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/calculus-v1.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_CalculusV1.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by-nc-sa/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/oer-commons-logo_pe3nA43.jpg"
-                ],
-                [
-                    "https://www.oercommons.org/groups/openstax-calculus/1048/?__hub_id=27"
-                ],
-                [
-                    "https://cnx.org/contents/8b89d172-2927-466f-8661-01abc7ccdba4"
-                ],
-                [
-                    "https://www.amazon.com/s/ref=sr_pg_1?me=A1540JPBBI3F06&rh=i%3Amerchant-items&ie=UTF8&qid=1532976058"
-                ]
-            ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "",
-            "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/8b89d172-2927-466f-8661-01abc7ccdba4",
-            "high_resolution_pdf_url": null,
-            "ibook_link": "",
-            "kindle_link": "",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": null,
-            "amazon_link": "https://www.amazon.com/s/ref=sr_pg_1?me=A1540JPBBI3F06&rh=i%3Amerchant-items&ie=UTF8&qid=1532976058",
             "salesforce_abbreviation": "Calculus",
+            "slug": "books/calculus-volume-1",
+            "subjects": [
+                "Math"
+            ],
+            "ibook_link": "",
+            "bookshare_link": "",
+            "kindle_link": "https://www.amazon.com/Calculus-1-Gilbert-Strang-ebook/dp/B075FG7Z2P/ref=sr_1_15?s=digital-text&ie=UTF8&qid=1509044376&sr=1-15&keywords=Openstax",
+            "salesforce_name": "Calculus",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
             "bookstore_content": [
                 {
                     "type": "content",
-                    "id": "ba9e37d2-48e2-4b04-9bcc-fac5ee761421",
+                    "id": "251724d0-20a1-45a2-9ce4-c9d0c94785d9",
                     "value": 9
                 },
                 {
                     "type": "content",
-                    "id": "069a2c00-1f90-4770-a985-1ce00730723c",
-                    "value": 8
+                    "id": "0de2d1e4-4215-47b4-aa82-2c4499726254",
+                    "value": 10
                 }
             ],
-            "subject": "Math",
-            "id": 74,
-            "amazon_price": 33.5,
             "coming_soon": false,
-            "slug": "books/calculus-volume-1",
-            "salesforce_name": "Calculus"
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/calculus-v1.svg",
+            "id": 74,
+            "amazon_link": "https://www.amazon.com/s/ref=sr_pg_1?me=A1540JPBBI3F06&rh=i%3Amerchant-items&ie=UTF8&qid=1532976058",
+            "webview_link": "https://cnx.org/contents/8b89d172-2927-466f-8661-01abc7ccdba4",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/CalculusVolume1-LR.pdf",
+            "comp_copy_available": false,
+            "amazon_price": 33.5,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/CalculusVolume1-OP.pdf",
+            "urls": []
         },
         {
             "title": "Calculus Volume 2",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/calculus-v2.svg",
-            "comp_copy_available": true,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/calculus-v2.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_CalculusV2_oOiZozS.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by-nc-sa/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/oer-commons-logo_pe3nA43.jpg"
-                ],
-                [
-                    "https://www.oercommons.org/groups/openstax-calculus/1048/?__hub_id=27"
-                ],
-                [
-                    "https://cnx.org/contents/1d39a348-071f-4537-85b6-c98912458c3c"
-                ],
-                [
-                    "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719"
-                ]
-            ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "",
-            "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/1d39a348-071f-4537-85b6-c98912458c3c",
-            "high_resolution_pdf_url": null,
-            "ibook_link": "",
-            "kindle_link": "",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": null,
-            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
             "salesforce_abbreviation": "Calculus",
+            "slug": "books/calculus-volume-2",
+            "subjects": [
+                "Math"
+            ],
+            "ibook_link": "",
+            "bookshare_link": "",
+            "kindle_link": "https://www.amazon.com/Calculus-2-Gilbert-Strang-ebook/dp/B075FD7MZK/ref=sr_1_20?s=digital-text&ie=UTF8&qid=1509044794&sr=1-20&keywords=Openstax",
+            "salesforce_name": "Calculus",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
             "bookstore_content": [
                 {
                     "type": "content",
-                    "id": "e0d51ca4-66f4-46a2-9ec4-ad81577a5675",
+                    "id": "34e7da92-dffa-4d93-b424-8fa9e2bae158",
                     "value": 9
                 },
                 {
                     "type": "content",
-                    "id": "69e5387c-9e97-4d31-81c6-88dbf40c007a",
-                    "value": 8
+                    "id": "1c17c2ac-c8b0-4c82-9237-44c94966fbbf",
+                    "value": 10
                 }
             ],
-            "subject": "Math",
-            "id": 75,
-            "amazon_price": 33.5,
             "coming_soon": false,
-            "slug": "books/calculus-volume-2",
-            "salesforce_name": "Calculus"
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/calculus-v2.svg",
+            "id": 75,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/1d39a348-071f-4537-85b6-c98912458c3c",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/CalculusVolume2-LR_GLQOG8D.pdf",
+            "comp_copy_available": false,
+            "amazon_price": 33.5,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/CalculusVolume2-OP_7nNwGJD.pdf",
+            "urls": []
         },
         {
             "title": "Calculus Volume 3",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/calculus-v3.svg",
-            "comp_copy_available": true,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/calculus-v3.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_CalculusV3_tKRsMDH.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by-nc-sa/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/oer-commons-logo_pe3nA43.jpg"
-                ],
-                [
-                    "https://www.oercommons.org/groups/openstax-calculus/1048/?__hub_id=27"
-                ],
-                [
-                    "https://cnx.org/contents/a31cd793-2162-4e9e-acb5-6e6bbd76a5fa"
-                ],
-                [
-                    "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719"
-                ]
-            ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "",
-            "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/a31cd793-2162-4e9e-acb5-6e6bbd76a5fa",
-            "high_resolution_pdf_url": null,
-            "ibook_link": "",
-            "kindle_link": "",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": null,
-            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
             "salesforce_abbreviation": "Calculus",
+            "slug": "books/calculus-volume-3",
+            "subjects": [
+                "Math"
+            ],
+            "ibook_link": "",
+            "bookshare_link": "",
+            "kindle_link": "https://www.amazon.com/Calculus-3-Gilbert-Strang-ebook/dp/B075FGYTQT/ref=sr_1_22_twi_kin_1?s=books&ie=UTF8&qid=1508964001&sr=1-22&keywords=OpenStax",
+            "salesforce_name": "Calculus",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
             "bookstore_content": [
                 {
                     "type": "content",
-                    "id": "1f324b12-bed0-402a-a198-0b01bc51ee5a",
+                    "id": "3c3c64ba-977e-410b-9c58-d4b67349571f",
                     "value": 9
                 },
                 {
                     "type": "content",
-                    "id": "b35e8f1e-0ece-4198-a58d-770b4dfea169",
-                    "value": 8
+                    "id": "3c2869c4-52c3-4dc3-8b39-311becc1abf1",
+                    "value": 10
                 }
             ],
-            "subject": "Math",
-            "id": 76,
-            "amazon_price": 33.5,
             "coming_soon": false,
-            "slug": "books/calculus-volume-3",
-            "salesforce_name": "Calculus"
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/calculus-v3.svg",
+            "id": 76,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/a31cd793-2162-4e9e-acb5-6e6bbd76a5fa",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/CalculusVolume3-LR.pdf",
+            "comp_copy_available": false,
+            "amazon_price": 33.5,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/CalculusVolume3-OP.pdf",
+            "urls": []
         },
         {
             "title": "Introductory Statistics",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/statistics.svg",
-            "comp_copy_available": true,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/statistics.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_IntroductoryBusinessStatistics.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/IntroductoryStatistics-OP.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/IntroductoryStatistics-LR.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/oer-commons-logo_pe3nA43.jpg"
-                ],
-                [
-                    "https://www.oercommons.org/groups/introductory-statistics/1039/information/"
-                ],
-                [
-                    "https://itunes.apple.com/us/book/anatomy-and-physiology/id899593383"
-                ],
-                [
-                    "https://cnx.org/contents/30189442-6998-4686-ac05-ed152b91b9de"
-                ],
-                [
-                    "http://www.bookshare.org/browse/book/751376"
-                ],
-                [
-                    "http://www.amazon.com/Introductory-Statistics-OpenStax-College/dp/1938168208/ref=sr_1_5?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1444401859&sr=1-5"
-                ]
-            ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "http://www.bookshare.org/browse/book/751376",
-            "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/30189442-6998-4686-ac05-ed152b91b9de",
-            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/IntroductoryStatistics-OP.pdf",
-            "ibook_link": "https://itunes.apple.com/us/book/anatomy-and-physiology/id899593383",
-            "kindle_link": "",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/IntroductoryStatistics-LR.pdf",
-            "amazon_link": "http://www.amazon.com/Introductory-Statistics-OpenStax-College/dp/1938168208/ref=sr_1_5?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1444401859&sr=1-5",
             "salesforce_abbreviation": "Introductory Statistics",
+            "slug": "books/introductory-statistics",
+            "subjects": [
+                "Math"
+            ],
+            "ibook_link": "https://itunes.apple.com/us/book/introductory-statistics/id898910154?mt=13",
+            "bookshare_link": "http://www.bookshare.org/browse/book/751376",
+            "kindle_link": "https://www.amazon.com/Introductory-Statistics-Barbara-Illowsk-ebook/dp/B075FF48ST/ref=tmm_kin_swatch_0?_encoding=UTF8&qid=1508964581&sr=1-1",
+            "salesforce_name": "Introductory Statistics",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
             "bookstore_content": [
                 {
                     "type": "content",
-                    "id": "ac383667-93f6-49a3-bfa9-ea788eae9e38",
+                    "id": "0af66caf-3101-4aeb-b642-50bb3c3ff0e7",
                     "value": 9
                 },
                 {
                     "type": "content",
-                    "id": "c95b30a4-18d1-4f02-985c-cf81247419f7",
-                    "value": 8
+                    "id": "6cee393f-8231-48e6-85c6-e8a1fcfb9324",
+                    "value": 10
                 }
             ],
-            "subject": "Math",
-            "id": 36,
-            "amazon_price": 33.5,
             "coming_soon": false,
-            "slug": "books/introductory-statistics",
-            "salesforce_name": "Introductory Statistics"
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/statistics.svg",
+            "id": 36,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/30189442-6998-4686-ac05-ed152b91b9de",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/IntroductoryStatistics-LR_WLztjsS.pdf",
+            "comp_copy_available": true,
+            "amazon_price": 33.5,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/IntroductoryStatistics-OP_bGvVITN.pdf",
+            "urls": []
+        },
+        {
+            "title": "Introductory Business Statistics",
+            "salesforce_abbreviation": "Business Statistics",
+            "slug": "books/introductory-business-statistics",
+            "subjects": [
+                "Math",
+                "Business"
+            ],
+            "ibook_link": "",
+            "bookshare_link": "",
+            "kindle_link": "http://a.co/d/0it1288",
+            "salesforce_name": "Introductory Business Statistics",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
+            "bookstore_content": [
+                {
+                    "type": "content",
+                    "id": "02a63761-a1bb-480c-8794-580cd7a76ea4",
+                    "value": 9
+                },
+                {
+                    "type": "content",
+                    "id": "2e6c83ff-606a-4c3a-b9c4-63ccec4a50a3",
+                    "value": 10
+                }
+            ],
+            "coming_soon": false,
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/IntroductoryBusinessStatistics-bookcard.svg",
+            "id": 189,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/b56bb9e9-5eb8-48ef-9939-88b1b12ce22f",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/IntroductoryBusinessStatistics-LR.pdf",
+            "comp_copy_available": false,
+            "amazon_price": 33.5,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/IntroductoryBusinessStatistics-OP.pdf",
+            "urls": []
         },
         {
             "title": "Anatomy and Physiology",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/anatomy_physiology.svg",
-            "comp_copy_available": true,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/anatomy_physiology.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_Anatomyandphysiology_ceq29ZV.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/AnatomyAndPhysiology-OP.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/AnatomyAndPhysiology-LR.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/oer-commons-logo_pe3nA43.jpg"
-                ],
-                [
-                    "https://www.oercommons.org/groups/openstax-anatomy-and-physiology/1054/?__hub_id=27"
-                ],
-                [
-                    "https://itunes.apple.com/us/book/anatomy-and-physiology/id899593383"
-                ],
-                [
-                    "https://cnx.org/contents/14fb4ad7-39a1-4eee-ab6e-3ef2482e3e22"
-                ],
-                [
-                    "http://www.bookshare.org/browse/book/679045"
-                ],
-                [
-                    "http://www.amazon.com/Anatomy-Physiology-OpenStax-College/dp/1938168135/ref=sr_1_2?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1444401859&sr=1-2"
-                ]
-            ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "http://www.bookshare.org/browse/book/679045",
-            "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/14fb4ad7-39a1-4eee-ab6e-3ef2482e3e22",
-            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/AnatomyAndPhysiology-OP.pdf",
-            "ibook_link": "https://itunes.apple.com/us/book/anatomy-and-physiology/id899593383",
-            "kindle_link": "",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/AnatomyAndPhysiology-LR.pdf",
-            "amazon_link": "http://www.amazon.com/Anatomy-Physiology-OpenStax-College/dp/1938168135/ref=sr_1_2?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1444401859&sr=1-2",
             "salesforce_abbreviation": "Anatomy & Physiology",
+            "slug": "books/anatomy-and-physiology",
+            "subjects": [
+                "Science"
+            ],
+            "ibook_link": "https://itunes.apple.com/us/book/anatomy-and-physiology/id899593383",
+            "bookshare_link": "http://www.bookshare.org/browse/book/679045",
+            "kindle_link": "https://www.amazon.com/Anatomy-Physiology-J-Gordon-Betts-ebook/dp/B075FFXDX4/ref=tmm_kin_swatch_0?_encoding=UTF8&qid=1508859022&sr=8-2",
+            "salesforce_name": "Anatomy & Physiology",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
             "bookstore_content": [
                 {
                     "type": "content",
-                    "id": "443eef58-611b-4a4b-9557-c32d0ba4cddb",
+                    "id": "4afea256-42bd-4bc3-a3c3-6bd2638616ef",
                     "value": 9
                 },
                 {
                     "type": "content",
-                    "id": "cee71f3c-02a1-44ca-a241-8ba68cbbf4bb",
-                    "value": 8
+                    "id": "a924f8a5-0b7b-477c-a10e-e5ed8a689754",
+                    "value": 10
                 }
             ],
-            "subject": "Science",
-            "id": 35,
-            "amazon_price": 52.0,
             "coming_soon": false,
-            "slug": "books/anatomy-and-physiology",
-            "salesforce_name": "Anatomy & Physiology"
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/anatomy_physiology.svg",
+            "id": 35,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/14fb4ad7-39a1-4eee-ab6e-3ef2482e3e22",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/AnatomyandPhysiology-LR_fm0O1Im.pdf",
+            "comp_copy_available": true,
+            "amazon_price": 52.0,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/AnatomyandPhysiology-OP_3dxKNqG.pdf",
+            "urls": []
         },
         {
             "title": "Astronomy",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/astronomy.svg",
-            "comp_copy_available": false,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/astronomy.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_Astronomy.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Astronomy-OP.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Astronomy-LR.pdf"
-                ],
-                [
-                    "https://www.oercommons.org/groups/openstax-astronomy/1283/?utm_source=hub27"
-                ],
-                [
-                    "https://cnx.org/contents/2e737be8-ea65-48c3-aa0a-9f35b4c6a966"
-                ],
-                [
-                    "https://www.amazon.com/Astronomy-OpenStax/dp/B01N4MBO3A/ref=sr_1_18?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1487971266&sr=1-18"
-                ]
-            ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "",
-            "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/2e737be8-ea65-48c3-aa0a-9f35b4c6a966",
-            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Astronomy-OP.pdf",
-            "ibook_link": "",
-            "kindle_link": "",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Astronomy-LR.pdf",
-            "amazon_link": "https://www.amazon.com/Astronomy-OpenStax/dp/B01N4MBO3A/ref=sr_1_18?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1487971266&sr=1-18",
             "salesforce_abbreviation": "Astronomy",
+            "slug": "books/astronomy",
+            "subjects": [
+                "Science"
+            ],
+            "ibook_link": "https://itunes.apple.com/us/book/id1208733375",
+            "bookshare_link": "",
+            "kindle_link": "https://www.amazon.com/Astronomy-Andrew-Fraknoi-ebook/dp/B075FG4KTK/ref=sr_1_1_twi_kin_2?s=books&ie=UTF8&qid=1508860925&sr=1-1&keywords=Astronomy+openstax",
+            "salesforce_name": "Astronomy",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
             "bookstore_content": [
                 {
                     "type": "content",
-                    "id": "433eebe2-8f17-4f8d-ad5a-c18489d375c5",
+                    "id": "797107e2-1bbf-448d-b560-e6259fb60d6c",
                     "value": 9
                 },
                 {
                     "type": "content",
-                    "id": "3058410b-adda-4ac8-bf3f-ee0179a11929",
-                    "value": 8
+                    "id": "78b723c5-8b21-4826-9037-9cabc3b90335",
+                    "value": 10
                 }
             ],
-            "subject": "Science",
-            "id": 81,
-            "amazon_price": 58.0,
             "coming_soon": false,
-            "slug": "books/astronomy",
-            "salesforce_name": "Astronomy"
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/astronomy.svg",
+            "id": 81,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/2e737be8-ea65-48c3-aa0a-9f35b4c6a966",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Astronomy-LR_pbconRH.pdf",
+            "comp_copy_available": true,
+            "amazon_price": 58.0,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Astronomy-OP_RoX1Ths.pdf",
+            "urls": []
         },
         {
             "title": "Biology",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/biology.svg",
-            "comp_copy_available": true,
-            "book_state": "deprecated",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/biology.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_Biology_ik6RfJ3.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Biology-OP.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Biology-LR.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/oer-commons-logo_pe3nA43.jpg"
-                ],
-                [
-                    "http://oercommons.org"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/OpenStax_College_Biology_PowerPoints_2015_2.zip"
-                ],
-                [
-                    "https://itunes.apple.com/us/book/biology/id738245107"
-                ],
-                [
-                    "https://cnx.org/contents/185cbf87-c72e-48f5-b51e-f14f21b5eabd"
-                ],
-                [
-                    "http://www.amazon.com/Biology-OpenStax-College/dp/1938168097/ref=sr_1_9?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1444401859&sr=1-9"
-                ],
-                [
-                    "https://smile.amazon.com/Biology-Yael-Avissar/dp/1938168097/ref=sr_1_1"
-                ]
-            ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "",
-            "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/185cbf87-c72e-48f5-b51e-f14f21b5eabd",
-            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Biology-OP.pdf",
-            "ibook_link": "https://itunes.apple.com/us/book/biology/id738245107",
-            "kindle_link": "https://smile.amazon.com/Biology-Yael-Avissar/dp/1938168097/ref=sr_1_1",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Biology-LR.pdf",
-            "amazon_link": "http://www.amazon.com/Biology-OpenStax-College/dp/1938168097/ref=sr_1_9?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1444401859&sr=1-9",
             "salesforce_abbreviation": "Biology",
+            "slug": "books/biology",
+            "subjects": [
+                "Science"
+            ],
+            "ibook_link": "https://itunes.apple.com/us/book/biology/id738245107",
+            "bookshare_link": "https://www.bookshare.org/browse/book/1044445?returnPath=L3NlYXJjaD9tb2R1bGVOYW1lPXB1YmxpYyZrZXl3b3JkPW9wZW5zdGF4",
+            "kindle_link": "https://www.amazon.com/Biology-Yael-Avissar-ebook/dp/B075FC6F79/ref=sr_1_19_twi_kin_1?s=books&ie=UTF8&qid=1508964001&sr=1-19&keywords=OpenStax",
+            "salesforce_name": "Biology",
+            "bookstore_coming_soon": true,
+            "amazon_coming_soon": true,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
             "bookstore_content": [
                 {
                     "type": "content",
-                    "id": "9c99c414-9337-4146-bf42-cfc04dd606a2",
+                    "id": "5d6e889a-857f-494d-824b-4b0229306a70",
+                    "value": 5
+                }
+            ],
+            "coming_soon": false,
+            "book_state": "deprecated",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/biology.svg",
+            "id": 121,
+            "amazon_link": "",
+            "webview_link": "https://cnx.org/contents/185cbf87-c72e-48f5-b51e-f14f21b5eabd",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Biology-LR_2ufca7k.pdf",
+            "comp_copy_available": true,
+            "amazon_price": 52.0,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Biology-OP_xQoZM8Z.pdf",
+            "urls": []
+        },
+        {
+            "title": "Biology 2e",
+            "salesforce_abbreviation": "Biology",
+            "slug": "books/biology-2e",
+            "subjects": [
+                "Science"
+            ],
+            "ibook_link": "https://itunes.apple.com/us/book/biology-2e/id1413413708?ls=1&mt=13",
+            "bookshare_link": "",
+            "kindle_link": "http://a.co/d/3VWcPtN",
+            "salesforce_name": "Biology",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
+            "bookstore_content": [
+                {
+                    "type": "content",
+                    "id": "3ed1c6f6-9bda-4399-a06d-8685255657d9",
                     "value": 9
                 },
                 {
                     "type": "content",
-                    "id": "57af3ffe-6177-493e-8a7c-5ddd2a26ff4d",
-                    "value": 8
-                },
-                {
-                    "type": "link_text",
-                    "id": "ec4c0c8e-1b5e-414f-89e1-484f201512b6",
-                    "value": "Click Here"
+                    "id": "1903a17a-a7bf-4f59-ab67-aab707d4ef6c",
+                    "value": 10
                 }
             ],
-            "subject": "Science",
-            "id": 33,
-            "amazon_price": 52.0,
             "coming_soon": false,
-            "slug": "books/biology",
-            "salesforce_name": "Biology"
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/biology_book_card_2e.svg",
+            "id": 207,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/8d50a0af-948b-4204-a71d-4826cba765b8",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Biology2e-LR_mY0EJOt.pdf",
+            "comp_copy_available": true,
+            "amazon_price": 52.0,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Biology2e-OP_aHSFm3Y.pdf",
+            "urls": []
         },
         {
             "title": "Concepts of Biology",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/concpets_biology_eZrc8yQ.svg",
-            "comp_copy_available": true,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/concpets_biology_eZrc8yQ.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_ConceptsofBiology_glIZtQs.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/ConceptsOfBiology-LR.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/oer-commons-logo_pe3nA43.jpg"
-                ],
-                [
-                    "https://www.oercommons.org/groups/openstax-concepts-of-biology/1053/?__hub_id=27"
-                ],
-                [
-                    "https://itunes.apple.com/us/book/concepts-of-biology/id746742790"
-                ],
-                [
-                    "https://cnx.org/contents/b3c1e1d2-839c-42b0-a314-e119a8aafbdd"
-                ],
-                [
-                    "http://www.bookshare.org/browse/book/751423"
-                ],
-                [
-                    "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719"
-                ]
+            "salesforce_abbreviation": "Concepts of Bio (non-majors)",
+            "slug": "books/concepts-biology",
+            "subjects": [
+                "Science"
             ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "http://www.bookshare.org/browse/book/751423",
-            "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/b3c1e1d2-839c-42b0-a314-e119a8aafbdd",
-            "high_resolution_pdf_url": null,
             "ibook_link": "https://itunes.apple.com/us/book/concepts-of-biology/id746742790",
-            "kindle_link": "",
-            "amazon_coming_soon": true,
-            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/ConceptsOfBiology-LR.pdf",
-            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
-            "salesforce_abbreviation": "Concepts of Biology",
+            "bookshare_link": "http://www.bookshare.org/browse/book/751423",
+            "kindle_link": "https://www.amazon.com/Concepts-Biology-Samantha-Fowler-ebook/dp/B075FFG2ZF/ref=tmm_kin_swatch_0?_encoding=UTF8&qid=1508859022&sr=8-5",
+            "salesforce_name": "Concepts of Biology",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
             "bookstore_content": [
                 {
                     "type": "content",
-                    "id": "21fa1f22-4251-4de8-88a7-98266f28e9c8",
+                    "id": "f34c98a9-0334-4143-91fe-541c575c5fec",
                     "value": 9
                 },
                 {
                     "type": "content",
-                    "id": "6430d5eb-787b-4b1e-b3ae-0ea42742deef",
-                    "value": 8
+                    "id": "5587581e-5c80-4691-8c81-339836c6cb4d",
+                    "value": 10
                 }
             ],
-            "subject": "Science",
-            "id": 34,
-            "amazon_price": 29.0,
             "coming_soon": false,
-            "slug": "books/concepts-biology",
-            "salesforce_name": "Concepts of Biology"
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/concpets_biology_eZrc8yQ.svg",
+            "id": 34,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/b3c1e1d2-839c-42b0-a314-e119a8aafbdd",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/ConceptsBiology-LR.pdf",
+            "comp_copy_available": true,
+            "amazon_price": 29.0,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/ConceptsBiology-OP.pdf",
+            "urls": []
         },
         {
             "title": "Microbiology",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/microbiology.svg",
-            "comp_copy_available": true,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/microbiology.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_Microbiology.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/oer-commons-logo_pe3nA43.jpg"
-                ],
-                [
-                    "https://www.oercommons.org/groups/openstax-microbiology/1140/?__hub_id=27"
-                ],
-                [
-                    "https://cnx.org/contents/e42bd376-624b-4c0f-972f-e0c57998e765"
-                ],
-                [
-                    "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719"
-                ]
-            ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "",
-            "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/e42bd376-624b-4c0f-972f-e0c57998e765",
-            "high_resolution_pdf_url": null,
-            "ibook_link": "",
-            "kindle_link": "",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": null,
-            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
             "salesforce_abbreviation": "Microbiology",
+            "slug": "books/microbiology",
+            "subjects": [
+                "Science"
+            ],
+            "ibook_link": "https://itunes.apple.com/us/book/id1195961754",
+            "bookshare_link": "",
+            "kindle_link": "https://www.amazon.com/Microbiology-Nina-Parker-ebook/dp/B075FF3CTJ/ref=sr_1_14_twi_kin_2?ie=UTF8&qid=1508859022&sr=8-14&keywords=Openstax",
+            "salesforce_name": "Microbiology",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
             "bookstore_content": [
                 {
                     "type": "content",
-                    "id": "a270560a-40ba-4a68-b778-5e0f2ff88b38",
+                    "id": "f424e2c3-2033-4c86-8996-9abd2d003ca3",
                     "value": 9
                 },
                 {
                     "type": "content",
-                    "id": "7de90615-5a1c-4e30-a9bf-3889107e9e29",
-                    "value": 8
+                    "id": "b4c11f5a-5f3b-4a9e-b613-d36f7099e3cf",
+                    "value": 10
                 }
             ],
-            "subject": "Science",
+            "coming_soon": false,
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/microbiology.svg",
             "id": 83,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/e42bd376-624b-4c0f-972f-e0c57998e765",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Microbiology-LR.pdf",
+            "comp_copy_available": true,
             "amazon_price": 55.0,
-            "coming_soon": true,
-            "slug": "books/microbiology",
-            "salesforce_name": "Microbiology"
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Microbiology-OP_A6aAwX6.pdf",
+            "urls": []
         },
         {
             "title": "Chemistry",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/chemistry.svg",
-            "comp_copy_available": true,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/chemistry.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_Chemistry_rlolNPA.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Chemistry-LR.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/oer-commons-logo_pe3nA43.jpg"
-                ],
-                [
-                    "https://www.oercommons.org/groups/chemistry/1064/information/"
-                ],
-                [
-                    "https://itunes.apple.com/us/book/id1066382571"
-                ],
-                [
-                    "https://cnx.org/contents/85abf193-2bd2-4908-8563-90b8a7ac8df6"
-                ],
-                [
-                    "http://www.amazon.com/Chemistry-OpenStax/dp/1938168399/ref=sr_1_3?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1444401859&sr=1-3"
-                ]
-            ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "",
-            "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/85abf193-2bd2-4908-8563-90b8a7ac8df6",
-            "high_resolution_pdf_url": null,
-            "ibook_link": "https://itunes.apple.com/us/book/id1066382571",
-            "kindle_link": "",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Chemistry-LR.pdf",
-            "amazon_link": "http://www.amazon.com/Chemistry-OpenStax/dp/1938168399/ref=sr_1_3?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1444401859&sr=1-3",
             "salesforce_abbreviation": "Chemistry",
+            "slug": "books/chemistry",
+            "subjects": [
+                "Science"
+            ],
+            "ibook_link": "",
+            "bookshare_link": "",
+            "kindle_link": "https://www.amazon.com/Chemistry-Paul-Flowers-ebook/dp/B075FC37LZ/ref=tmm_kin_swatch_0?_encoding=UTF8&qid=1508859022&sr=8-4",
+            "salesforce_name": "Chemistry",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
             "bookstore_content": [
                 {
                     "type": "content",
-                    "id": "f6820c8e-fda7-4ce5-ba90-1ee2747db747",
+                    "id": "f051a9bc-273c-4e6f-a10c-647261c094b8",
                     "value": 9
                 },
                 {
                     "type": "content",
-                    "id": "fbfab9b1-0477-4c45-b4d4-8fd8d3b98ea0",
-                    "value": 8
+                    "id": "fb264a55-ed8f-4d5e-a045-c6fd4c84b4df",
+                    "value": 10
                 }
             ],
-            "subject": "Science",
-            "id": 43,
-            "amazon_price": 52.0,
             "coming_soon": false,
-            "slug": "books/chemistry",
-            "salesforce_name": "Chemistry"
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/chemistry.svg",
+            "id": 43,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/85abf193-2bd2-4908-8563-90b8a7ac8df6",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Chemistry-LR_urLff6c.pdf",
+            "comp_copy_available": false,
+            "amazon_price": 55.0,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Chemistry-OP_XdqVZpQ.pdf",
+            "urls": []
         },
         {
             "title": "Chemistry: Atoms First",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Chmistry-Atoms-First.svg",
-            "comp_copy_available": true,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Chmistry-Atoms-First.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_ChemistryAtomsfirst_pCGgLE7.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/oer-commons-logo_pe3nA43.jpg"
-                ],
-                [
-                    "https://www.oercommons.org/groups/openstax-chemistry-atoms-first/1097/?__hub_id=27"
-                ],
-                [
-                    "https://cnx.org/contents/4539ae23-1ccc-421e-9b25-843acbb6c4b0"
-                ],
-                [
-                    "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719"
-                ]
+            "salesforce_abbreviation": "Chem: Atoms First",
+            "slug": "books/chemistry-atoms-first",
+            "subjects": [
+                "Science"
             ],
-            "ibook_link_volume_2": "",
+            "ibook_link": "https://itunes.apple.com/us/book/id1212940075",
             "bookshare_link": "",
+            "kindle_link": "https://www.amazon.com/Chemistry-Atoms-Edward-J-Neth-ebook/dp/B075FFCKLY/ref=sr_1_19_twi_kin_2?ie=UTF8&qid=1508860540&sr=8-19&keywords=Openstax",
+            "salesforce_name": "Chemistry: Atoms First",
             "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/4539ae23-1ccc-421e-9b25-843acbb6c4b0",
-            "high_resolution_pdf_url": null,
-            "ibook_link": "",
-            "kindle_link": "",
             "amazon_coming_soon": false,
-            "low_resolution_pdf_url": null,
-            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
-            "salesforce_abbreviation": "Chemistry: Atoms First",
+            "ibook_link_volume_2": "",
+            "is_ap": false,
             "bookstore_content": [
                 {
                     "type": "content",
-                    "id": "fc8af408-0fc6-4033-a24b-518dc99cc6ac",
+                    "id": "2ebade61-1a83-4d0b-85ba-86ab961c4da0",
                     "value": 9
                 },
                 {
                     "type": "content",
-                    "id": "cfacba14-a4ad-418d-b421-a0fa78782125",
-                    "value": 8
+                    "id": "5d74a540-694b-4446-a6f1-7eb5ff2f220c",
+                    "value": 10
                 }
             ],
-            "subject": "Science",
-            "id": 135,
-            "amazon_price": 34.99,
             "coming_soon": false,
-            "slug": "books/chemistry-atoms-first",
-            "salesforce_name": "Chemistry: Atoms First"
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Chmistry-Atoms-First.svg",
+            "id": 93,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/4539ae23-1ccc-421e-9b25-843acbb6c4b0",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/ChemistryAtomsFirst-LR_IMzYB3r.pdf",
+            "comp_copy_available": true,
+            "amazon_price": 65.0,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/ChemistryAtomsFirst-OP_1D7uBNB.pdf",
+            "urls": []
         },
         {
             "title": "College Physics",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/physics.svg",
-            "comp_copy_available": true,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/physics.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_CollegePhysics_boq9Trn.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/CollegePhysics-OP.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/CollegePhysics-LR.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/oer-commons-logo_pe3nA43.jpg"
-                ],
-                [
-                    "https://www.oercommons.org/groups/openstax-college-physics/1051/?__hub_id=27"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Chp_1_Physics_Units_Significant_Fig_Fermi_Problems_OpenStax.doc"
-                ],
-                [
-                    "https://itunes.apple.com/us/book/id1138877479"
-                ],
-                [
-                    "https://itunes.apple.com/us/book/id575613955"
-                ],
-                [
-                    "https://cnx.org/contents/031da8d3-b525-429c-80cf-6c8ed997733a"
-                ],
-                [
-                    "http://www.bookshare.org/browse/book/516490"
-                ],
-                [
-                    "http://www.amazon.com/College-Physics-OpenStax/dp/1938168003/ref=sr_1_1?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1444401859&sr=1-1"
-                ]
-            ],
-            "ibook_link_volume_2": "https://itunes.apple.com/us/book/id575613955",
-            "bookshare_link": "http://www.bookshare.org/browse/book/516490",
-            "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/031da8d3-b525-429c-80cf-6c8ed997733a",
-            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/CollegePhysics-OP.pdf",
-            "ibook_link": "https://itunes.apple.com/us/book/id1138877479",
-            "kindle_link": "",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/CollegePhysics-LR.pdf",
-            "amazon_link": "http://www.amazon.com/College-Physics-OpenStax/dp/1938168003/ref=sr_1_1?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1444401859&sr=1-1",
             "salesforce_abbreviation": "College Physics (Algebra)",
+            "slug": "books/college-physics",
+            "subjects": [
+                "Science"
+            ],
+            "ibook_link": "https://itunes.apple.com/us/book/id1138877479",
+            "bookshare_link": "http://www.bookshare.org/browse/book/516490",
+            "kindle_link": "https://www.amazon.com/College-Physics-Paul-Peter-Urone-ebook/dp/B075FFWPW7/ref=tmm_kin_swatch_0?_encoding=UTF8&qid=1522080652&sr=8-8",
+            "salesforce_name": "College Physics",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "https://itunes.apple.com/us/book/id575613955",
+            "is_ap": false,
             "bookstore_content": [
                 {
                     "type": "content",
-                    "id": "4611555a-37e0-47ea-95ec-2d55da4bcabb",
+                    "id": "27a513a2-c605-455a-aa5d-76f2ae314cbd",
                     "value": 9
                 },
                 {
                     "type": "content",
-                    "id": "0f6469e0-b08e-41fd-b986-6915f653604b",
-                    "value": 8
-                },
-                {
-                    "type": "link",
-                    "id": "6d667274-bab0-479a-95de-799d81a33733",
-                    "value": "http://www.goindico.com/programs"
+                    "id": "6ded6566-5866-42f8-94b0-85ffbcc00b5b",
+                    "value": 10
                 }
             ],
-            "subject": "Science",
-            "id": 31,
-            "amazon_price": 48.5,
             "coming_soon": false,
-            "slug": "books/college-physics",
-            "salesforce_name": "College Physics"
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/physics.svg",
+            "id": 31,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/031da8d3-b525-429c-80cf-6c8ed997733a",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/CollegePhysics-LR_ZHVTqGv.pdf",
+            "comp_copy_available": true,
+            "amazon_price": 48.5,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/CollegePhysics-OP_uZAa6O0.pdf",
+            "urls": []
         },
         {
             "title": "University Physics Volume 1",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/university_physics-v1.png",
-            "comp_copy_available": false,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/university_physics-v1.png"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_UniversityPhysicsV1-padded.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Sample_University_Physics_Chapters_20160419.pdf"
-                ],
-                [
-                    "https://cnx.org/contents/d50f6e32-0fda-46ef-a362-9bd36ca7c97d"
-                ],
-                [
-                    "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719"
-                ]
+            "salesforce_abbreviation": "University Physics (Calc)",
+            "slug": "books/university-physics-volume-1",
+            "subjects": [
+                "Science"
             ],
-            "ibook_link_volume_2": "",
+            "ibook_link": "https://itunes.apple.com/us/book/id1229720131",
             "bookshare_link": "",
+            "kindle_link": "https://www.amazon.com/University-Physics-Samuel-J-Ling-ebook/dp/B075FFNXCK/ref=sr_1_23_twi_kin_1?s=books&ie=UTF8&qid=1508964001&sr=1-23&keywords=OpenStax",
+            "salesforce_name": "University Physics",
             "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
             "is_ap": false,
-            "webview_link": "https://cnx.org/contents/d50f6e32-0fda-46ef-a362-9bd36ca7c97d",
-            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Sample_University_Physics_Chapters_20160419.pdf",
-            "ibook_link": "",
-            "kindle_link": "",
-            "amazon_coming_soon": true,
-            "low_resolution_pdf_url": null,
-            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
-            "salesforce_abbreviation": "University Phys (Calc)",
             "bookstore_content": [
                 {
                     "type": "content",
-                    "id": "d6ff7836-d878-4518-90b9-8eeb5acf1701",
+                    "id": "224c8bac-133c-4377-9928-f6841ec59d6c",
                     "value": 9
                 },
                 {
                     "type": "content",
-                    "id": "04578e8c-0538-4d25-a629-4fe7c11adc26",
-                    "value": 8
+                    "id": "b5533c6e-e346-4389-994b-d7a10365d03c",
+                    "value": 10
                 }
             ],
-            "subject": "Science",
-            "id": 82,
-            "amazon_price": 48.5,
             "coming_soon": false,
-            "slug": "books/university-physics-volume-1",
-            "salesforce_name": "University Physics"
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/university_physics-v1.png",
+            "id": 82,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/d50f6e32-0fda-46ef-a362-9bd36ca7c97d",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/UniversityPhysicsVolume1-LR.pdf",
+            "comp_copy_available": true,
+            "amazon_price": 48.5,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/UniversityPhysicsVolume1-OP.pdf",
+            "urls": []
         },
         {
             "title": "University Physics Volume 2",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/university_physics-v2.png",
-            "comp_copy_available": true,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/university_physics-v2.png"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_UniversityPhysicsV2.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://cnx.org/contents/7a0f9770-1c44-4acd-9920-1cd9a99f2a1e"
-                ],
-                [
-                    "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719"
-                ]
-            ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "",
-            "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/7a0f9770-1c44-4acd-9920-1cd9a99f2a1e",
-            "high_resolution_pdf_url": null,
-            "ibook_link": "",
-            "kindle_link": "",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": null,
-            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
             "salesforce_abbreviation": "University Physics (Calc)",
+            "slug": "books/university-physics-volume-2",
+            "subjects": [
+                "Science"
+            ],
+            "ibook_link": "http://itunes.apple.com/us/book/id1247647986",
+            "bookshare_link": "",
+            "kindle_link": "https://www.amazon.com/University-Physics-Samuel-J-Ling-ebook/dp/B075FC6RFK/ref=sr_1_7?s=digital-text&ie=UTF8&qid=1509124996&sr=1-7&keywords=Openstax",
+            "salesforce_name": "University Physics",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
             "bookstore_content": [
                 {
                     "type": "content",
-                    "id": "49685ab3-cd74-4dea-9606-ccac86cb0d44",
+                    "id": "93491b14-1e74-4963-9c06-47fc116f829e",
                     "value": 9
                 },
                 {
                     "type": "content",
-                    "id": "89bb2a12-9a60-4c39-9439-f17803dc89c7",
-                    "value": 8
+                    "id": "0d174970-a034-4170-9b16-83c4d7cc499f",
+                    "value": 10
                 }
             ],
-            "subject": "Science",
-            "id": 121,
-            "amazon_price": 33.5,
             "coming_soon": false,
-            "slug": "books/university-physics-volume-2",
-            "salesforce_name": "University Physics"
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/university_physics-v2.png",
+            "id": 94,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/7a0f9770-1c44-4acd-9920-1cd9a99f2a1e",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/UniversityPhysicsVolume2-LR.pdf",
+            "comp_copy_available": true,
+            "amazon_price": 33.5,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/UniversityPhysicsVolume2-OP.pdf",
+            "urls": []
         },
         {
             "title": "University Physics Volume 3",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/university_physics-v3.png",
-            "comp_copy_available": true,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/university_physics-v3.png"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_UniversityPhysicsV3.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://cnx.org/contents/af275420-6050-4707-995c-57b9cc13c358"
-                ],
-                [
-                    "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719"
-                ]
-            ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "",
-            "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/af275420-6050-4707-995c-57b9cc13c358",
-            "high_resolution_pdf_url": null,
-            "ibook_link": "",
-            "kindle_link": "",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": null,
-            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
             "salesforce_abbreviation": "University Physics (Calc)",
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "id": "960a9ec8-2b0c-4e0d-91c4-97958084c7be",
-                    "value": 9
-                },
-                {
-                    "type": "content",
-                    "id": "84d70ab6-37c0-46a1-af7e-9ce74fdd6680",
-                    "value": 8
-                }
-            ],
-            "subject": "Science",
-            "id": 122,
-            "amazon_price": 33.5,
-            "coming_soon": false,
             "slug": "books/university-physics-volume-3",
-            "salesforce_name": "University Physics"
-        },
-        {
-            "title": "American Government",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/american_government.svg",
-            "comp_copy_available": true,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/american_government.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_AmericanGovernment_1.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/American_Government-OP.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/American_Government-LR.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/oer-commons-logo_pe3nA43.jpg"
-                ],
-                [
-                    "https://www.oercommons.org/groups/openstax-american-government/1093/?__hub_id=27"
-                ],
-                [
-                    "https://cnx.org/contents/5bcc0e59-7345-421d-8507-a1e4608685e8"
-                ],
-                [
-                    "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719"
-                ]
+            "subjects": [
+                "Science"
             ],
-            "ibook_link_volume_2": "",
+            "ibook_link": "https://itunes.apple.com/us/book/id1262490437",
             "bookshare_link": "",
+            "kindle_link": "https://www.amazon.com/University-Physics-Samuel-J-Ling-ebook/dp/B075FGLM2C/ref=sr_1_9?s=digital-text&ie=UTF8&qid=1509125195&sr=1-9&keywords=Openstax",
+            "salesforce_name": "University Physics",
             "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/5bcc0e59-7345-421d-8507-a1e4608685e8",
-            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/American_Government-OP.pdf",
-            "ibook_link": "",
-            "kindle_link": "",
             "amazon_coming_soon": false,
-            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/American_Government-LR.pdf",
-            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
-            "salesforce_abbreviation": "American Government",
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "id": "ce5ae5e1-d376-4ce5-9830-eda949f890cb",
-                    "value": 9
-                },
-                {
-                    "type": "content",
-                    "id": "b587012f-4695-4978-9e01-de1fa94e9f3b",
-                    "value": 8
-                }
-            ],
-            "subject": "Social Sciences",
-            "id": 100,
-            "amazon_price": 48.44,
-            "coming_soon": false,
-            "slug": "books/american-government",
-            "salesforce_name": "American Government"
-        },
-        {
-            "title": "Principles of Economics",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/economics_8mNeBU3.svg",
-            "comp_copy_available": false,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/economics_8mNeBU3.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_PrinciplesofEconomics.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/PrinciplesOfMicroeconomics-OP.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/PrinciplesOfMicroeconomics-LR.pdf"
-                ],
-                [
-                    "https://itunes.apple.com/us/book/principles-of-economics/id931515744"
-                ],
-                [
-                    "https://cnx.org/contents/69619d2b-68f0-44b0-b074-a9b2bf90b2c6"
-                ],
-                [
-                    "https://www.bookshare.org/browse/book/891513"
-                ],
-                [
-                    "http://www.amazon.com/Principles-Economics-OpenStax-College/dp/1938168232/ref=sr_1_6?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1444401859&sr=1-6"
-                ]
-            ],
             "ibook_link_volume_2": "",
-            "bookshare_link": "https://www.bookshare.org/browse/book/891513",
-            "bookstore_coming_soon": false,
             "is_ap": false,
-            "webview_link": "https://cnx.org/contents/69619d2b-68f0-44b0-b074-a9b2bf90b2c6",
-            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/PrinciplesOfMicroeconomics-OP.pdf",
-            "ibook_link": "https://itunes.apple.com/us/book/principles-of-economics/id931515744",
-            "kindle_link": "",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/PrinciplesOfMicroeconomics-LR.pdf",
-            "amazon_link": "http://www.amazon.com/Principles-Economics-OpenStax-College/dp/1938168232/ref=sr_1_6?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1444401859&sr=1-6",
-            "salesforce_abbreviation": null,
             "bookstore_content": [
                 {
                     "type": "content",
-                    "id": "16ea375b-43ab-49cd-ac83-72dfdde558fb",
-                    "value": 8
-                },
-                {
-                    "type": "content",
-                    "id": "6c49e12a-cffd-4e6b-85e0-fb2d162558d5",
-                    "value": 9
-                }
-            ],
-            "subject": "Social Sciences",
-            "id": 40,
-            "amazon_price": 38.5,
-            "coming_soon": false,
-            "slug": "books/principles-economics",
-            "salesforce_name": null
-        },
-        {
-            "title": "Principles of Macroeconomics",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/macro_economics.svg",
-            "comp_copy_available": false,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/macro_economics.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_PrinciplesMacroeconomics_7iYLQKJ.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/PrinciplesOfMacroeconomics-OP.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/PrinciplesOfMacroeconomics-LR.pdf"
-                ],
-                [
-                    "https://itunes.apple.com/us/book/principles-macroeconomics/id922082109"
-                ],
-                [
-                    "https://cnx.org/contents/4061c832-098e-4b3c-a1d9-7eb593a2cb31"
-                ],
-                [
-                    "https://www.bookshare.org/browse/book/891514"
-                ],
-                [
-                    "http://www.amazon.com/Principles-Macroeconomics-OpenStax-College/dp/1938168259/ref=sr_1_11?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1444401859&sr=1-11"
-                ]
-            ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "https://www.bookshare.org/browse/book/891514",
-            "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/4061c832-098e-4b3c-a1d9-7eb593a2cb31",
-            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/PrinciplesOfMacroeconomics-OP.pdf",
-            "ibook_link": "https://itunes.apple.com/us/book/principles-macroeconomics/id922082109",
-            "kindle_link": "",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/PrinciplesOfMacroeconomics-LR.pdf",
-            "amazon_link": "http://www.amazon.com/Principles-Macroeconomics-OpenStax-College/dp/1938168259/ref=sr_1_11?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1444401859&sr=1-11",
-            "salesforce_abbreviation": null,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "id": "75ab3376-22dd-40dc-b4b5-a386b2a9ff11",
+                    "id": "db951f83-ae55-45ce-91fe-8e0e3cf3ac46",
                     "value": 9
                 },
                 {
                     "type": "content",
-                    "id": "a3fed737-6c6d-435a-a9a4-044dc4c5608d",
-                    "value": 8
-                }
-            ],
-            "subject": "Social Sciences",
-            "id": 41,
-            "amazon_price": 33.5,
-            "coming_soon": false,
-            "slug": "books/principles-macroeconomics",
-            "salesforce_name": null
-        },
-        {
-            "title": "Principles of Microeconomics",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/micro_economics.svg",
-            "comp_copy_available": false,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/micro_economics.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_PrinciplesMicroeconomics_apFqCfY.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/PrinciplesOfMicroeconomics-OP.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/PrinciplesOfMicroeconomics-LR.pdf"
-                ],
-                [
-                    "https://itunes.apple.com/us/book/principles-microeconomics/id910271752"
-                ],
-                [
-                    "https://cnx.org/contents/ea2f225e-6063-41ca-bcd8-36482e15ef65"
-                ],
-                [
-                    "https://www.bookshare.org/browse/book/891515"
-                ],
-                [
-                    "http://www.amazon.com/Principles-Microeconomics-OpenStax-College/dp/1938168240/ref=sr_1_10?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1444401859&sr=1-10"
-                ]
-            ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "https://www.bookshare.org/browse/book/891515",
-            "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/ea2f225e-6063-41ca-bcd8-36482e15ef65",
-            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/PrinciplesOfMicroeconomics-OP.pdf",
-            "ibook_link": "https://itunes.apple.com/us/book/principles-microeconomics/id910271752",
-            "kindle_link": "",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/PrinciplesOfMicroeconomics-LR.pdf",
-            "amazon_link": "http://www.amazon.com/Principles-Microeconomics-OpenStax-College/dp/1938168240/ref=sr_1_10?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1444401859&sr=1-10",
-            "salesforce_abbreviation": null,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "id": "134fb17e-6f98-4b4c-baeb-bd6cd6bd772a",
-                    "value": 9
-                },
-                {
-                    "type": "content",
-                    "id": "0657bdd9-4eec-4721-b4c2-7fd049f3daa0",
-                    "value": 8
-                }
-            ],
-            "subject": "Social Sciences",
-            "id": 42,
-            "amazon_price": 33.5,
-            "coming_soon": false,
-            "slug": "books/principles-microeconomics",
-            "salesforce_name": null
-        },
-        {
-            "title": "Psychology",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/psychology.svg",
-            "comp_copy_available": true,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/psychology.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_Psychology_0zkbWXw.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Psychology-OP.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Psychology-LR.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/oer-commons-logo_pe3nA43.jpg"
-                ],
-                [
-                    "https://www.oercommons.org/groups/openstax-psychology/1060/?__hub_id=27"
-                ],
-                [
-                    "https://itunes.apple.com/us/book/id1049034194"
-                ],
-                [
-                    "https://cnx.org/contents/4abf04bf-93a0-45c3-9cbc-2cefd46e68cc"
-                ],
-                [
-                    "http://www.amazon.com/Psychology-OpenStax-College/dp/1938168356/ref=sr_1_4?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1444401859&sr=1-4"
-                ]
-            ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "",
-            "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/4abf04bf-93a0-45c3-9cbc-2cefd46e68cc",
-            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Psychology-OP.pdf",
-            "ibook_link": "https://itunes.apple.com/us/book/id1049034194",
-            "kindle_link": "",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Psychology-LR.pdf",
-            "amazon_link": "http://www.amazon.com/Psychology-OpenStax-College/dp/1938168356/ref=sr_1_4?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1444401859&sr=1-4",
-            "salesforce_abbreviation": "psychology",
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "id": "a19bcede-4a4e-4996-8182-3175a37e5467",
-                    "value": 9
-                },
-                {
-                    "type": "content",
-                    "id": "1b781fd4-dfe6-4f5e-ac6f-9a0b9c8b930b",
-                    "value": 8
-                }
-            ],
-            "subject": "Social Sciences",
-            "id": 45,
-            "amazon_price": 38.5,
-            "coming_soon": false,
-            "slug": "books/psychology",
-            "salesforce_name": "psychology"
-        },
-        {
-            "title": "Introduction to Sociology 2e",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/sociology_2e.svg",
-            "comp_copy_available": true,
-            "book_state": "live",
-            "urls": [
-                [
-                    "http://cnx.org/contents/afe4332a-c97f-4fc4-be27-4e4d384a32d8/Introduction-to-Sociology",
-                    "https://itunes.apple.com/us/book/introduction-to-sociology/id685630700?mt=13"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/sociology_2e.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_IntroSociology2e_z4rYJyw.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/IntroductionToSociology2e-OP_uwfEX0i.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/IntroductionToSociology2e-LR.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/oer-commons-logo_pe3nA43.jpg"
-                ],
-                [
-                    "https://www.oercommons.org/groups/openstax-introduction-to-sociology-2e/1056/?__hub_id=27"
-                ],
-                [
-                    "https://itunes.apple.com/us/book/id1036259585"
-                ],
-                [
-                    "https://cnx.org/contents/02040312-72c8-441e-a685-20e9333f3e1d"
-                ],
-                [
-                    "http://www.amazon.com/Introduction-Sociology-2e-OpenStax-College/dp/1938168410/ref=sr_1_7?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1444401859&sr=1-7"
-                ]
-            ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "",
-            "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/02040312-72c8-441e-a685-20e9333f3e1d",
-            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/IntroductionToSociology2e-OP_uwfEX0i.pdf",
-            "ibook_link": "https://itunes.apple.com/us/book/id1036259585",
-            "kindle_link": "",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/IntroductionToSociology2e-LR.pdf",
-            "amazon_link": "http://www.amazon.com/Introduction-Sociology-2e-OpenStax-College/dp/1938168410/ref=sr_1_7?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1444401859&sr=1-7",
-            "salesforce_abbreviation": "Introduction to Sociology",
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "id": "b26cb684-b4b5-4c2c-ace6-b8e385a88c27",
-                    "value": 9
-                },
-                {
-                    "type": "content",
-                    "id": "8e66c823-81bd-4077-ac4a-9bf2b7401947",
-                    "value": 8
-                }
-            ],
-            "subject": "Social Sciences",
-            "id": 32,
-            "amazon_price": 29.0,
-            "coming_soon": false,
-            "slug": "books/introduction-sociology-2e",
-            "salesforce_name": "Introduction to Sociology"
-        },
-        {
-            "title": "U.S. History",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/US_history.svg",
-            "comp_copy_available": true,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/US_history.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_USHistory_qruv0F5.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/USHistory-OP_oDKKn5G.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/USHistory-LR.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/oer-commons-logo_pe3nA43.jpg"
-                ],
-                [
-                    "https://www.oercommons.org/groups/openstax-u-s-history/1063/?__hub_id=27"
-                ],
-                [
-                    "https://itunes.apple.com/us/book/u.s.-history/id1043205233"
-                ],
-                [
-                    "https://cnx.org/contents/a7ba2fb8-8925-4987-b182-5f4429d48daa"
-                ],
-                [
-                    "http://www.amazon.com/US-History-OpenStax-College/dp/1938168364/ref=sr_1_12?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1444401859&sr=1-12"
-                ]
-            ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "",
-            "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/a7ba2fb8-8925-4987-b182-5f4429d48daa",
-            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/USHistory-OP_oDKKn5G.pdf",
-            "ibook_link": "https://itunes.apple.com/us/book/u.s.-history/id1043205233",
-            "kindle_link": "",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/USHistory-LR.pdf",
-            "amazon_link": "http://www.amazon.com/US-History-OpenStax-College/dp/1938168364/ref=sr_1_12?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1444401859&sr=1-12",
-            "salesforce_abbreviation": "U.S. History",
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "id": "f895fdc8-89b6-4f0e-a617-ed50c51104ef",
-                    "value": 9
-                },
-                {
-                    "type": "content",
-                    "id": "cd87284a-04f0-43e9-b796-8b1c823240ad",
-                    "value": 8
-                }
-            ],
-            "subject": "Humanities",
-            "id": 44,
-            "amazon_price": 52.0,
-            "coming_soon": false,
-            "slug": "books/us-history",
-            "salesforce_name": "U.S. History"
-        },
-        {
-            "title": "APÂ® Physics Collection",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/physics_AP_0PLfSfA.svg",
-            "comp_copy_available": false,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/physics_AP_0PLfSfA.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_CollegePhysicsAP_RjjJvYf.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/CollegePhysicsForAPCourses-OP.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/CollegePhysicsForAPCourses-LR.pdf"
-                ],
-                [
-                    "https://itunes.apple.com/us/book/college-physics-for-ap-courses/id1101270869"
-                ],
-                [
-                    "https://itunes.apple.com/us/book/college-physics-for-ap-courses/id1101311472"
-                ],
-                [
-                    "https://cnx.org/contents/8d04a686-d5e8-4798-a27d-c608e4d0e187"
-                ],
-                [
-                    "https://www.amazon.com/College-Physics-AP-Courses-OpenStax/dp/1938168933/ref=sr_1_16?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1487971341&sr=1-16"
-                ]
-            ],
-            "ibook_link_volume_2": "https://itunes.apple.com/us/book/college-physics-for-ap-courses/id1101311472",
-            "bookshare_link": "",
-            "bookstore_coming_soon": false,
-            "is_ap": true,
-            "webview_link": "https://cnx.org/contents/8d04a686-d5e8-4798-a27d-c608e4d0e187",
-            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/CollegePhysicsForAPCourses-OP.pdf",
-            "ibook_link": "https://itunes.apple.com/us/book/college-physics-for-ap-courses/id1101270869",
-            "kindle_link": "",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/CollegePhysicsForAPCourses-LR.pdf",
-            "amazon_link": "https://www.amazon.com/College-Physics-AP-Courses-OpenStax/dp/1938168933/ref=sr_1_16?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1487971341&sr=1-16",
-            "salesforce_abbreviation": "AP Physics",
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "id": "c7c7b7dd-74b2-43d7-ae9c-23b43ea3b4d6",
+                    "id": "5e5e004a-09dc-48b6-8364-00b002535666",
                     "value": 10
-                },
+                }
+            ],
+            "coming_soon": false,
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/university_physics-v3.png",
+            "id": 95,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/af275420-6050-4707-995c-57b9cc13c358",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/UniversityPhysicsVolume3-LR.pdf",
+            "comp_copy_available": true,
+            "amazon_price": 33.5,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/UniversityPhysicsVolume3-OP.pdf",
+            "urls": []
+        },
+        {
+            "title": "Biology for AP® Courses",
+            "salesforce_abbreviation": "AP Bio",
+            "slug": "books/biology-ap-courses",
+            "subjects": [
+                "Science"
+            ],
+            "ibook_link": "",
+            "bookshare_link": "",
+            "kindle_link": "http://a.co/d/6RxNJfQ",
+            "salesforce_name": "AP Biology",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": true,
+            "bookstore_content": [
                 {
                     "type": "content",
-                    "id": "c2417c26-343c-4890-864b-8684c3f8fd41",
-                    "value": 9
-                },
-                {
-                    "type": "content",
-                    "id": "2283dcc4-4b8b-4e5d-9c1a-6107136ffa26",
-                    "value": 8
+                    "id": "f215a7f2-717d-46dc-bb15-825f13c4b313",
+                    "value": 5
                 },
                 {
                     "type": "link",
-                    "id": "41fa459e-bc84-44c3-8ba5-72f90f236a98",
-                    "value": "http://www.goindico.com/programs"
+                    "id": "6553f4a7-9e5b-45f9-a4d5-aa0661ec58a7",
+                    "value": "https://openstax.org/bookstore-suppliers"
                 }
             ],
-            "subject": "Science",
-            "id": 47,
-            "amazon_price": 60.0,
             "coming_soon": false,
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/biology-AP.png",
+            "id": 162,
+            "amazon_link": "",
+            "webview_link": "https://cnx.org/contents/6c322e32-9fb0-4c4d-a1d7-20c95c5c7af2",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/APBiology-LR.pdf",
+            "comp_copy_available": false,
+            "amazon_price": 0.09,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/APBiology-OP.pdf",
+            "urls": []
+        },
+        {
+            "title": "The AP Physics Collection",
+            "salesforce_abbreviation": "AP Physics",
             "slug": "books/college-physics-ap-courses",
-            "salesforce_name": "College Physics for APÂ® Courses"
-        },
-        {
-            "title": "Principles of Macroeconomics for APÂ® Courses",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/macro_economics_AP_SrkXq5z.svg",
-            "comp_copy_available": false,
-            "book_state": "live",
-            "urls": [
-                [
-                    "http://www.collegeboard.com/html/apcourseaudit/courses/macroeconomics_textbook_list.html"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/macro_economics_AP_SrkXq5z.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_PrinciplesMacroeconomicsAP.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/PrinciplesOfMacroeconomicsForAPCourses-OP.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/PrinciplesOfMacroeconomicsForAPCourses-LR.pdf"
-                ],
-                [
-                    "https://cnx.org/contents/33076054-ec1d-4417-8824-ce354efe42d0"
-                ]
+            "subjects": [
+                "Science"
             ],
-            "ibook_link_volume_2": "",
+            "ibook_link": "https://itunes.apple.com/us/book/college-physics-for-ap-courses/id1101270869",
             "bookshare_link": "",
+            "kindle_link": "https://www.amazon.com/College-Physics-Courses-Irina-Lyublinskaya-ebook/dp/B075FC384Y/ref=sr_1_14?s=digital-text&ie=UTF8&qid=1522080816&sr=1-14&keywords=openstax",
+            "salesforce_name": "AP Physics",
             "bookstore_coming_soon": false,
-            "is_ap": true,
-            "webview_link": "https://cnx.org/contents/33076054-ec1d-4417-8824-ce354efe42d0",
-            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/PrinciplesOfMacroeconomicsForAPCourses-OP.pdf",
-            "ibook_link": "",
-            "kindle_link": "",
             "amazon_coming_soon": false,
-            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/PrinciplesOfMacroeconomicsForAPCourses-LR.pdf",
-            "amazon_link": "",
-            "salesforce_abbreviation": null,
-            "bookstore_content": [],
-            "subject": "Social Sciences",
-            "id": 48,
-            "amazon_price": 0.0,
+            "ibook_link_volume_2": "https://itunes.apple.com/us/book/college-physics-for-ap-courses/id1101311472",
+            "is_ap": true,
+            "bookstore_content": [
+                {
+                    "type": "content",
+                    "id": "d98f1f7e-ba88-415b-9e68-dc741114c6f0",
+                    "value": 9
+                },
+                {
+                    "type": "content",
+                    "id": "13a4dd7d-812d-49df-8f92-5f54f9743b5b",
+                    "value": 10
+                }
+            ],
             "coming_soon": false,
-            "slug": "books/principles-macroeconomics-ap-courses",
-            "salesforce_name": null
-        },
-        {
-            "title": "Principles of Microeconomics for APÂ® Courses",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/micro_economics_AP_2vxFCOM.svg",
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/college_physics_for_ap_course_book_card.svg",
+            "id": 47,
+            "amazon_link": "https://www.amazon.com/College-Physics-AP-Courses-OpenStax/dp/1938168933/ref=sr_1_16?m=A1540JPBBI3F06&s=merchant-items&ie=UTF8&qid=1487971341&sr=1-16",
+            "webview_link": "https://cnx.org/contents/8d04a686-d5e8-4798-a27d-c608e4d0e187",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/APCollegePhysics-LR.pdf",
             "comp_copy_available": true,
-            "book_state": "live",
-            "urls": [
-                [
-                    "http://www.collegeboard.com/html/apcourseaudit/courses/microeconomics_textbook_list.html",
-                    "http://www.collegeboard.com/html/apcourseaudit/courses/macroeconomics_textbook_list.html",
-                    "http://www.collegeboard.com/html/apcourseaudit/courses/microeconomics_textbook_list.html"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/micro_economics_AP_2vxFCOM.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_PrinciplesMicroeconomicsAP_8yaEngX.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/PrinciplesOfMicroeconomicsForAPCourses-OP.pdf"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/PrinciplesOfMicroeconomicsForAPCourses-LR.pdf"
-                ],
-                [
-                    "https://cnx.org/contents/ca344e2d-6731-43cd-b851-a7b3aa0b37aa"
-                ]
-            ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "",
-            "bookstore_coming_soon": false,
-            "is_ap": true,
-            "webview_link": "https://cnx.org/contents/ca344e2d-6731-43cd-b851-a7b3aa0b37aa",
-            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/PrinciplesOfMicroeconomicsForAPCourses-OP.pdf",
-            "ibook_link": "",
-            "kindle_link": "",
-            "amazon_coming_soon": false,
-            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/PrinciplesOfMicroeconomicsForAPCourses-LR.pdf",
-            "amazon_link": "",
-            "salesforce_abbreviation": null,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "id": "ddcf2aae-e28a-4619-84eb-4f043a997136",
-                    "value": 6
-                }
-            ],
-            "subject": "Social Sciences",
-            "id": 49,
-            "amazon_price": 0.0,
-            "coming_soon": false,
-            "slug": "books/principles-microeconomics-ap-courses",
-            "salesforce_name": null
+            "amazon_price": 60.0,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/APCollegePhysics-OP.pdf",
+            "urls": []
         },
         {
-            "title": "Fizyka dla szkÃ³Å‚ wyÅ¼szych",
-            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/university_physics_polska_book_card_square.svg",
-            "comp_copy_available": false,
-            "book_state": "live",
-            "urls": [
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/university_physics_polska_book_card_square.svg"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Head_FizykaTom1.svg"
-                ],
-                [
-                    "http://creativecommons.org/licenses/by/4.0/"
-                ],
-                [
-                    "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Sample_University_Physics_Chapters_20160419.pdf"
-                ],
-                [
-                    "https://cnx.org/contents/4eaa8f03-88a8-485a-a777-dd3602f6c13e"
-                ]
+            "title": "Fizyka dla szkół wyższych. Tom 1",
+            "salesforce_abbreviation": null,
+            "slug": "books/fizyka-dla-szkół-wyższych-tom-1",
+            "subjects": [
+                "Science"
             ],
-            "ibook_link_volume_2": "",
-            "bookshare_link": "",
-            "bookstore_coming_soon": false,
-            "is_ap": false,
-            "webview_link": "https://cnx.org/contents/4eaa8f03-88a8-485a-a777-dd3602f6c13e",
-            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Sample_University_Physics_Chapters_20160419.pdf",
             "ibook_link": "",
+            "bookshare_link": "",
             "kindle_link": "",
+            "salesforce_name": null,
+            "bookstore_coming_soon": false,
             "amazon_coming_soon": false,
-            "low_resolution_pdf_url": null,
-            "amazon_link": "",
-            "salesforce_abbreviation": "Polska University Physics",
+            "ibook_link_volume_2": "",
+            "is_ap": false,
             "bookstore_content": [
                 {
                     "type": "content",
-                    "id": "c903d16b-cbb2-4bca-af8c-9dcca4da00e2",
-                    "value": 6
+                    "id": "df21ea8c-c21b-4ab8-9d89-9625aefee2af",
+                    "value": 5
                 }
             ],
-            "subject": "Science",
-            "id": 142,
-            "amazon_price": 0.0,
             "coming_soon": false,
-            "slug": "books/fizyka-uniwersytecka",
-            "salesforce_name": "Polska University Physics"
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/university_physics_book_card_outlined.svg",
+            "id": 190,
+            "amazon_link": "",
+            "webview_link": "https://cnx.org/contents/4eaa8f03-88a8-485a-a777-dd3602f6c13e",
+            "low_resolution_pdf_url": null,
+            "comp_copy_available": true,
+            "amazon_price": 0.0,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Fizyka_dla_szkol_wyzszych_Tom_1_v.1.92.pdf",
+            "urls": []
+        },
+        {
+            "title": "Fizyka dla szkół wyższych. Tom 2",
+            "salesforce_abbreviation": null,
+            "slug": "books/fizyka-dla-szkół-wyższych-tom-2",
+            "subjects": [
+                "Science"
+            ],
+            "ibook_link": "",
+            "bookshare_link": "",
+            "kindle_link": "",
+            "salesforce_name": "Polska University Physics",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
+            "bookstore_content": [
+                {
+                    "type": "content",
+                    "id": "02d3dac8-4ca6-4d00-b10f-d4f2044ff7ba",
+                    "value": 5
+                }
+            ],
+            "coming_soon": false,
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/university_physics_book_card_volume_2_1.svg",
+            "id": 219,
+            "amazon_link": "",
+            "webview_link": "https://cnx.org/contents/16ab5b96-4598-45f9-993c-b8d78d82b0c6",
+            "low_resolution_pdf_url": null,
+            "comp_copy_available": false,
+            "amazon_price": 0.0,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Fizyka_dla_szkol_wyzszych_Tom_2_v.2.158.pdf",
+            "urls": []
+        },
+        {
+            "title": "Fizyka dla szkół wyższych. Tom 3",
+            "salesforce_abbreviation": null,
+            "slug": "books/fizyka-dla-szkół-wyższych-tom-3",
+            "subjects": [
+                "Science"
+            ],
+            "ibook_link": "",
+            "bookshare_link": "",
+            "kindle_link": "",
+            "salesforce_name": "Polska University Physics",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
+            "bookstore_content": [
+                {
+                    "type": "content",
+                    "id": "02d3dac8-4ca6-4d00-b10f-d4f2044ff7ba",
+                    "value": 5
+                }
+            ],
+            "coming_soon": false,
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/university_physics_book_card_volume_3_TdcUIkT.svg",
+            "id": 245,
+            "amazon_link": "",
+            "webview_link": "https://cnx.org/contents/bb62933e-f20a-4ffc-90aa-97b36c296c3e",
+            "low_resolution_pdf_url": null,
+            "comp_copy_available": false,
+            "amazon_price": 0.0,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Fizyka_dla_szkol_wyzszych_Tom_3_v.3.25.pdf",
+            "urls": []
+        },
+        {
+            "title": "American Government",
+            "salesforce_abbreviation": "American Government",
+            "slug": "books/american-government",
+            "subjects": [
+                "Social Sciences"
+            ],
+            "ibook_link": "https://itunes.apple.com/us/book/american-government/id1161875541?mt=13",
+            "bookshare_link": "",
+            "kindle_link": "https://www.amazon.com/American-Government-Glen-Krutz-ebook/dp/B075FC3H1K/ref=tmm_kin_swatch_0?_encoding=UTF8&qid=1487972159&sr=1-26",
+            "salesforce_name": "American Government",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
+            "bookstore_content": [
+                {
+                    "type": "content",
+                    "id": "2564ca78-58ee-41d3-aeda-c2b4bf46d300",
+                    "value": 9
+                },
+                {
+                    "type": "content",
+                    "id": "2162a622-c2b2-479f-8f1f-c310420c3f4c",
+                    "value": 10
+                }
+            ],
+            "coming_soon": false,
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/american_government.svg",
+            "id": 84,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/5bcc0e59-7345-421d-8507-a1e4608685e8",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/AmericanGovernment-LR.pdf",
+            "comp_copy_available": true,
+            "amazon_price": 48.5,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/AmericanGovernment-OP.pdf",
+            "urls": []
+        },
+        {
+            "title": "Principles of Economics 2e",
+            "salesforce_abbreviation": "Economics",
+            "slug": "books/principles-economics-2e",
+            "subjects": [
+                "Social Sciences"
+            ],
+            "ibook_link": "https://itunes.apple.com/us/book/principles-of-economics-2e/id1344945679?ls=1&mt=13",
+            "bookshare_link": "",
+            "kindle_link": "http://a.co/d/6uyfFgV",
+            "salesforce_name": "Principles of Economics",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
+            "bookstore_content": [
+                {
+                    "type": "content",
+                    "id": "3042058f-89f5-4583-bd66-bf30e43760db",
+                    "value": 9
+                },
+                {
+                    "type": "content",
+                    "id": "5bd9b02a-ef54-40f8-9735-e6c92c96c381",
+                    "value": 10
+                }
+            ],
+            "coming_soon": false,
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Economics2e-BookCard.png",
+            "id": 177,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/bc498e1f-efe9-43a0-8dea-d3569ad09a82",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Economics2e-LR.pdf",
+            "comp_copy_available": true,
+            "amazon_price": 33.5,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Economics2e-OP_3MfrPLF.pdf",
+            "urls": []
+        },
+        {
+            "title": "Principles of Macroeconomics 2e",
+            "salesforce_abbreviation": "Macro Econ",
+            "slug": "books/principles-macroeconomics-2e",
+            "subjects": [
+                "Social Sciences"
+            ],
+            "ibook_link": "https://itunes.apple.com/us/book/principles-of-macroeconomics-2e/id1344973975?ls=1&mt=13",
+            "bookshare_link": "",
+            "kindle_link": "http://a.co/d/gXUs68R",
+            "salesforce_name": "Principles of Macroeconomics",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
+            "bookstore_content": [
+                {
+                    "type": "content",
+                    "id": "584446c9-c5f7-4213-bc7f-03b4592fbd4a",
+                    "value": 9
+                },
+                {
+                    "type": "content",
+                    "id": "dcf8f855-dde7-4864-803e-de36c2be00a7",
+                    "value": 10
+                }
+            ],
+            "coming_soon": false,
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Macroeconomics2e-BookCard.png",
+            "id": 178,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/27f59064-990e-48f1-b604-5188b9086c29",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Macroeconomics2e-LR_7ZoreSb.pdf",
+            "comp_copy_available": true,
+            "amazon_price": 33.5,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Macroeconomics2e-OP_08uAIKN.pdf",
+            "urls": []
+        },
+        {
+            "title": "Principles of Microeconomics 2e",
+            "salesforce_abbreviation": "Micro Econ",
+            "slug": "books/principles-microeconomics-2e",
+            "subjects": [
+                "Social Sciences"
+            ],
+            "ibook_link": "https://itunes.apple.com/us/book/principles-of-microeconomics-2e/id1344964192?ls=1&mt=13",
+            "bookshare_link": "",
+            "kindle_link": "http://a.co/d/0NMT067",
+            "salesforce_name": "Principles of Microeconomics",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
+            "bookstore_content": [
+                {
+                    "type": "content",
+                    "id": "3e7bcf1c-f237-481a-9dca-0d2ff8aae16a",
+                    "value": 9
+                },
+                {
+                    "type": "content",
+                    "id": "623cb664-deeb-43eb-8de4-f2bd7d118d06",
+                    "value": 10
+                }
+            ],
+            "coming_soon": false,
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/micro_economics_2e.svg",
+            "id": 155,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/5c09762c-b540-47d3-9541-dda1f44f16e5",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Microeconomics2e-LR_pdeGZdr.pdf",
+            "comp_copy_available": false,
+            "amazon_price": 33.5,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Microeconomics2e-OP_TYV1xIr.pdf",
+            "urls": []
+        },
+        {
+            "title": "Psychology",
+            "salesforce_abbreviation": "Psychology",
+            "slug": "books/psychology",
+            "subjects": [
+                "Social Sciences"
+            ],
+            "ibook_link": "https://itunes.apple.com/us/book/id1049034194",
+            "bookshare_link": "",
+            "kindle_link": "https://www.amazon.com/Psychology-Rose-M-Spielman-ebook/dp/B075FG7X5K/ref=sr_1_2?s=digital-text&ie=UTF8&qid=1508861386&sr=1-2",
+            "salesforce_name": "Psychology",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
+            "bookstore_content": [
+                {
+                    "type": "content",
+                    "id": "a3153328-44fd-46db-8dd2-a768dbf06242",
+                    "value": 9
+                },
+                {
+                    "type": "content",
+                    "id": "88b8d67f-e7bb-42b2-b4f0-6cfe6fb21629",
+                    "value": 10
+                }
+            ],
+            "coming_soon": false,
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/psychology.svg",
+            "id": 45,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/4abf04bf-93a0-45c3-9cbc-2cefd46e68cc",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Psychology-LR_tlstu4Y.pdf",
+            "comp_copy_available": true,
+            "amazon_price": 38.5,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Psychology-OP_cNrqlqM.pdf",
+            "urls": []
+        },
+        {
+            "title": "Introduction to Sociology 2e",
+            "salesforce_abbreviation": "Introduction to Sociology",
+            "slug": "books/introduction-sociology-2e",
+            "subjects": [
+                "Social Sciences"
+            ],
+            "ibook_link": "https://itunes.apple.com/us/book/id1036259585",
+            "bookshare_link": "",
+            "kindle_link": "https://www.amazon.com/Introduction-Sociology-2e-Heather-Griffiths-ebook/dp/B075FFSNSH/ref=tmm_kin_swatch_0?_encoding=UTF8&qid=&sr=",
+            "salesforce_name": "Introduction to Sociology 2e",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
+            "bookstore_content": [
+                {
+                    "type": "content",
+                    "id": "e06f8a28-c7a3-4c6d-b796-083b34f73bcd",
+                    "value": 9
+                },
+                {
+                    "type": "content",
+                    "id": "79548a43-9bdd-437a-86ab-2390aa9aee4b",
+                    "value": 10
+                }
+            ],
+            "coming_soon": false,
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/sociology_2e.svg",
+            "id": 32,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/02040312-72c8-441e-a685-20e9333f3e1d",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/IntroductionToSociology2e-LR_t4lH53m.pdf",
+            "comp_copy_available": true,
+            "amazon_price": 29.0,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/IntroductionToSociology2e-OP_oAii5Yb.pdf",
+            "urls": []
+        },
+        {
+            "title": "Principles of Macroeconomics for AP® Courses 2e",
+            "salesforce_abbreviation": "AP Macro Econ",
+            "slug": "books/principles-macroeconomics-ap-courses-2e",
+            "subjects": [
+                "Social Sciences"
+            ],
+            "ibook_link": "",
+            "bookshare_link": "",
+            "kindle_link": "http://a.co/d/8l9MkBz",
+            "salesforce_name": "AP Macro Econ",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": true,
+            "bookstore_content": [
+                {
+                    "type": "link",
+                    "id": "8c69506c-b5bc-4e6b-88ef-f5fd1d25b491",
+                    "value": ""
+                }
+            ],
+            "coming_soon": false,
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/APMacroeconomics2e-bookcard.svg",
+            "id": 186,
+            "amazon_link": "",
+            "webview_link": "https://cnx.org/contents/9117cf8c-a8a3-4875-8361-9cb0f1fc9362",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/APMacroeconomics2e-LR.pdf",
+            "comp_copy_available": false,
+            "amazon_price": 0.0,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/APMacroeconomics2e-OP.pdf",
+            "urls": []
+        },
+        {
+            "title": "Principles of Microeconomics for AP® Courses 2e",
+            "salesforce_abbreviation": "AP Micro Econ",
+            "slug": "books/principles-microeconomics-ap-courses-2e",
+            "subjects": [
+                "Social Sciences"
+            ],
+            "ibook_link": "",
+            "bookshare_link": "",
+            "kindle_link": "http://a.co/d/80GzXAl",
+            "salesforce_name": "AP Micro Econ",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": true,
+            "bookstore_content": [
+                {
+                    "type": "link",
+                    "id": "61473da0-3613-4183-abdf-89c902cca461",
+                    "value": ""
+                }
+            ],
+            "coming_soon": false,
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/APMicroeconomics2e-bookcard.svg",
+            "id": 188,
+            "amazon_link": "",
+            "webview_link": "https://cnx.org/contents/636cbfd9-4e37-4575-83ab-9dec9029ca4e",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/APMicroeconomics2e-LR_TPBeQ4u.pdf",
+            "comp_copy_available": false,
+            "amazon_price": 0.0,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/APMicroeconomics2e-OP_7gZ8CAs.pdf",
+            "urls": []
+        },
+        {
+            "title": "U.S. History",
+            "salesforce_abbreviation": "US History",
+            "slug": "books/us-history",
+            "subjects": [
+                "Humanities"
+            ],
+            "ibook_link": "https://itunes.apple.com/us/book/u.s.-history/id1043205233",
+            "bookshare_link": "https://www.bookshare.org/browse/book/1487059?returnPath=L2Jyb3dzZS9hdXRob3I%2FbW9kdWxlTmFtZT1wdWJsaWMma2V5PU9wZW5TdGF4IENvbGxlZ2U%3D",
+            "kindle_link": "https://www.amazon.com/U-S-History-P-Scott-Corbett-ebook/dp/B075FC6L74/ref=sr_1_10_twi_kin_2?ie=UTF8&qid=1508859022&sr=8-10&keywords=Openstax",
+            "salesforce_name": "U.S. History",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
+            "bookstore_content": [
+                {
+                    "type": "content",
+                    "id": "1903a1b1-c422-4bc1-8c24-30dd11f73192",
+                    "value": 9
+                },
+                {
+                    "type": "content",
+                    "id": "a337c6e3-2ef8-4ae4-a6d1-47e432595956",
+                    "value": 10
+                }
+            ],
+            "coming_soon": false,
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/US_history.svg",
+            "id": 44,
+            "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
+            "webview_link": "https://cnx.org/contents/a7ba2fb8-8925-4987-b182-5f4429d48daa",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/USHistory-LR_sOGAySW.pdf",
+            "comp_copy_available": true,
+            "amazon_price": 52.0,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/USHistory-OP_tkj0lZo.pdf",
+            "urls": []
+        },
+        {
+            "title": "Introduction to Business",
+            "salesforce_abbreviation": "Intro to Business",
+            "slug": "books/introduction-business",
+            "subjects": [
+                "Business"
+            ],
+            "ibook_link": "",
+            "bookshare_link": "",
+            "kindle_link": "",
+            "salesforce_name": "Introduction to Business",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
+            "bookstore_content": [
+                {
+                    "type": "content",
+                    "id": "89f02d19-657b-4cbc-aa3c-9cf88b9be06f",
+                    "value": 5
+                }
+            ],
+            "coming_soon": false,
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/introduction_to_business.svg",
+            "id": 259,
+            "amazon_link": "",
+            "webview_link": "https://cnx.org/contents/4e09771f-a8aa-40ce-9063-aa58cc24e77f",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/IntroductionToBusiness-LR.pdf",
+            "comp_copy_available": false,
+            "amazon_price": 0.0,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/IntroductionToBusiness-OP.pdf",
+            "urls": []
+        },
+        {
+            "title": "Business Ethics",
+            "salesforce_abbreviation": "Business Ethics",
+            "slug": "books/business-ethics",
+            "subjects": [
+                "Business"
+            ],
+            "ibook_link": "",
+            "bookshare_link": "",
+            "kindle_link": "",
+            "salesforce_name": "Business Ethics",
+            "bookstore_coming_soon": false,
+            "amazon_coming_soon": false,
+            "ibook_link_volume_2": "",
+            "is_ap": false,
+            "bookstore_content": [
+                {
+                    "type": "content",
+                    "id": "3f8bfe85-9732-4971-8bf2-4850b357fcdb",
+                    "value": 5
+                }
+            ],
+            "coming_soon": false,
+            "book_state": "live",
+            "cover_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/business_ethics_card.svg",
+            "id": 261,
+            "amazon_link": "",
+            "webview_link": "https://cnx.org/contents/914ac66e-e1ec-486d-8a9c-97b0f7a99774",
+            "low_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/BusinessEthics-LR.pdf",
+            "comp_copy_available": true,
+            "amazon_price": 0.0,
+            "high_resolution_pdf_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/BusinessEthics-OP.pdf",
+            "urls": []
         }
-    ]
+    ],
+    "promote_image": null
 };
-
-export default books;

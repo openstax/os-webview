@@ -9,6 +9,7 @@ import linkHelper from '~/helpers/link';
 import userModel, {accountsModel} from '~/models/usermodel';
 import {description as template} from './header.html';
 import css from './header.css';
+import bus from './bus';
 
 class Header extends Controller {
 
@@ -128,7 +129,7 @@ class Header extends Controller {
         if (!this.el.classList.contains('fixed')) {
             this.el.classList.add('fixed');
             setTimeout(() => {
-                window.dispatchEvent($.newEvent('resize'));
+                window.dispatchEvent(new Event('resize', {bubbles: true}));
             }, 800);
         }
         return this;
@@ -142,7 +143,7 @@ class Header extends Controller {
     reset() {
         if (this.el.classList.contains('fixed')) {
             this.el.classList.remove('fixed');
-            window.dispatchEvent($.newEvent('resize'));
+            window.dispatchEvent(new Event('resize', {bubbles: true}));
         }
         this.el.classList.remove('transparent');
         return this;
@@ -294,5 +295,7 @@ class Header extends Controller {
 }
 
 const header = new Header();
+
+bus.on('recognizeDropdownOpen', header.recognizeDropdownOpen.bind(header));
 
 export default header;

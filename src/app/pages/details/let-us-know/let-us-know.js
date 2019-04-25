@@ -1,18 +1,25 @@
+import componentType from '~/helpers/controller/init-mixin';
 import $ from '~/helpers/$';
-import {Controller} from 'superb.js';
 import {description as template} from './let-us-know.html';
 import {description as templatePolish} from './let-us-know-polish.html';
 import css from './let-us-know.css';
 
-export default class LetUsKnow extends Controller {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['let-us-know']
+    }
+};
 
-    init(getProps) {
-        this.model = getProps();
-        this.template = $.isPolish(this.model.title) ? templatePolish : template;
-        this.view = {
-            classes: ['let-us-know']
-        };
-        this.css = css;
+export default class LetUsKnow extends componentType(spec) {
+
+    init(title) {
+        super.init();
+        this.model = {title};
+        if ($.isPolish(title)) {
+            this.template = templatePolish;
+        }
     }
 
 }

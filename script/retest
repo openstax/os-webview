@@ -1,9 +1,0 @@
-#!/bin/bash
-echo "Skipping build phase; just running tests"
-
-# Bash is a nightmare
-array=()
-while IFS=  read -r -d $'\0'; do
-    array+=("$REPLY")
-done < <(find ./test/src -name '*.test.js' -print0)
-"$(npm bin)/jest" "${array[@]}"

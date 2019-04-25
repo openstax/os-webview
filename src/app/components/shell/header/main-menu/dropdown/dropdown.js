@@ -1,27 +1,17 @@
-import {Controller} from 'superb.js';
+import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
-import header from '../../header';
+import headerBus from '../../bus';
 import {description as template} from './dropdown.html';
 import css from './dropdown.css';
 
-export default class Dropdown extends Controller {
-
-    init(getProps) {
-        this.template = template;
-        this.getProps = getProps;
-        this.css = css;
-        this.view = {
-            classes: ['nav-menu-item', 'dropdown']
-        };
-        this.frozen = false;
-        this.isOpen = false;
-        this.selectedIndex = -1;
-
-        this.model = () => this.getModel();
-    }
-
-    getModel() {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['nav-menu-item', 'dropdown']
+    },
+    model() {
         this.props = this.getProps();
 
         return {
@@ -30,6 +20,16 @@ export default class Dropdown extends Controller {
             dropdownLabel: this.props.dropdownLabel,
             items: this.props.items
         };
+    }
+};
+
+export default class Dropdown extends componentType(spec, insertHtmlMixin) {
+
+    init(options) {
+        super.init(options);
+        this.frozen = false;
+        this.isOpen = false;
+        this.selectedIndex = -1;
     }
 
     onLoaded() {
@@ -47,10 +47,6 @@ export default class Dropdown extends Controller {
 
     onClose() {
         this.el.removeEventListener('mouseleave', this.closeMenuBound);
-    }
-
-    onUpdate() {
-        $.insertHtml(this.el, this.model());
     }
 
     setFocus() {
@@ -75,7 +71,7 @@ export default class Dropdown extends Controller {
         if (!this.isOpen) {
             this.isOpen = true;
             if ($.isMobileDisplay()) {
-                header.recognizeDropdownOpen({
+                headerBus.emit('recognizeDropdownOpen', {
                     el: this.el,
                     label: this.props.dropdownLabel,
                     close: this.closeMenu.bind(this)
@@ -88,7 +84,7 @@ export default class Dropdown extends Controller {
     closeMenu() {
         if (this.isOpen) {
             this.isOpen = false;
-            header.recognizeDropdownOpen(null);
+            headerBus.emit('recognizeDropdownOpen', null);
             this.update();
         }
     }
@@ -142,7 +138,7 @@ export default class Dropdown extends Controller {
             break;
         case $.key.enter:
         case $.key.space:
-            document.activeElement.dispatchEvent($.newEvent('click'));
+            document.activeElement.dispatchEvent(new Event('click', {bubbles: true}));
             // Falls through to close
         case $.key.esc:
             document.activeElement.blur();

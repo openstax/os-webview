@@ -1,7 +1,7 @@
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import ResourceBox from '../resource-box/resource-box';
-import shell from '~/components/shell/shell';
+import shellBus from '~/components/shell/shell-bus';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './instructor-resource-tab.html';
 import css from './instructor-resource-tab.css';
@@ -51,7 +51,7 @@ export default class InstructorResourceTab extends Controller {
     @on('click a[href$="/comp-copy"]')
     handleCompCopy(event) {
         event.preventDefault();
-        shell.showDialog(() => this.dialogProps);
+        shellBus.emit('showDialog', () => this.dialogProps);
     }
 
 }

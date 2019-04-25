@@ -2,6 +2,7 @@ import {Router} from 'superb.js';
 import analytics from './helpers/analytics';
 import linkHelper from './helpers/link';
 import shell from './components/shell/shell';
+import routerBus from '~/helpers/router-bus';
 
 const PAGES = [
     'about',
@@ -157,5 +158,13 @@ class AppRouter extends Router {
 }
 
 const router = new AppRouter();
+
+routerBus.on('navigate', (...args) => {
+    router.navigate(...args);
+});
+
+routerBus.on('replaceState', (...args) => {
+    router.replaceState(...args);
+});
 
 export default router;

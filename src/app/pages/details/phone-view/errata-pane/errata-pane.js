@@ -1,22 +1,24 @@
-import {Controller} from 'superb.js';
-import $ from '~/helpers/$';
+import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './errata-pane.html';
 import {description as templatePolish} from './errata-pane-polish.html';
 import css from './errata-pane.css';
 
-export default class ErrataPane extends Controller {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['errata-pane']
+    }
+};
+
+export default class ErrataPane extends componentType(spec, insertHtmlMixin) {
 
     init(model) {
+        super.init();
         this.model = model;
-        this.template = $.isPolish(model.title) ? templatePolish : template;
-        this.view = {
-            classes: ['errata-pane']
-        };
-        this.css = css;
-    }
-
-    onLoaded() {
-        $.insertHtml(this.el, this.model);
+        if (this.model.polish) {
+            this.template = templatePolish;
+        }
     }
 
 }

@@ -1,7 +1,7 @@
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
-import shell from '~/components/shell/shell';
+import shellBus from '~/components/shell/shell-bus';
 import TocDialog from './toc-dialog/toc-dialog';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
 import {highSchoolSlugs} from '~/models/book-titles';
@@ -70,7 +70,7 @@ export default class GetThisTitle extends Controller {
             bulkLink: isHighSchool ? `/bulk-order?${data.slug}` : null,
             bookstoreContent: arrayOfBookstoreContent
         }, () => {
-            shell.hideDialog();
+            shellBus.emit('hideDialog');
         });
     }
 
@@ -98,7 +98,7 @@ export default class GetThisTitle extends Controller {
     @on('click .show-print-submenu')
     showPrintSubment(event) {
         event.preventDefault();
-        shell.showDialog(() => ({
+        shellBus.emit('showDialog', () => ({
             title: 'Order a print copy',
             content: this.printCopyContent
         }));
@@ -121,7 +121,7 @@ export default class GetThisTitle extends Controller {
     @on('click .show-toc')
     showToc(event) {
         event.preventDefault();
-        shell.showDialog(() => ({
+        shellBus.emit('showDialog', () => ({
             title: 'Table of contents',
             content: this.tocContent
         }));

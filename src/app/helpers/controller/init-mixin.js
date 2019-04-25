@@ -2,7 +2,7 @@ import $ from '~/helpers/$';
 import {Controller} from 'superb.js';
 import CMSPageController from '~/controllers/cms';
 import mix from './mixins';
-import shell from '~/components/shell/shell';
+import shellBus from '~/components/shell/shell-bus';
 
 export const componentMixin = (superclass) => class extends superclass {
 
@@ -76,11 +76,11 @@ export function loaderMixin(superclass) {
             if (super.init) {
                 super.init(...args);
             }
-            shell.showLoader();
+            shellBus.emit('showLoader');
         }
 
         hideLoader() {
-            shell.hideLoader();
+            shellBus.emit('hideLoader');
         }
 
     };

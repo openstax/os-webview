@@ -12,23 +12,21 @@
             <h3>Summary</h3>
             <div data-html="description" skip="true"></div>
         </div>
-        <if condition="model.allSenior.length || model.allNonsenior.length">
-            <if condition="model.allSenior.length">
-                <div>
-                    <h3>Senior Contributing Authors</h3>
-                    <div class="loc-senior-author" each="author in model.allSenior">
-                        {author.name}<if condition="author.university">, {author.university}</if>
-                    </div>
+        <if condition="model.allSenior.length">
+            <div>
+                <h3>Senior Contributing Authors</h3>
+                <div class="loc-senior-author" each="author in model.allSenior">
+                    {author.name}<if condition="author.university">, {author.university}</if>
                 </div>
-            </if>
-            <if condition="model.allNonsenior.length">
-                <div>
-                    <h3>Contributing Authors</h3>
-                    <div class="loc-nonsenior-author" each="author in model.allNonsenior">
-                        {author.name}<if condition="author.university">, {author.university}</if>
-                    </div>
+            </div>
+        </if>
+        <if condition="model.allNonsenior.length">
+            <div>
+                <h3>Contributing Authors</h3>
+                <div class="loc-nonsenior-author" each="author in model.allNonsenior">
+                    {author.name}<if condition="author.university">, {author.university}</if>
                 </div>
-            </if>
+            </div>
         </if>
         <if condition="model.bookState === 'live'">
             <div class="loc-errata">

@@ -1,3 +1,4 @@
+import '../../helpers/fetch-mocker';
 import header from '~/components/shell/header/header';
 import {clickElement} from '../../test-utils';
 
@@ -46,6 +47,7 @@ describe('Header', () => {
     it('mainMenu shows training wheel', () => {
         mainMenu.model.user.username = 'Jest';
         mainMenu.model.user.groups.push('Tutor');
+        mainMenu.model.user.first_name = 'Jestin';
         mainMenu.update();
 
         const link = mainMenu.el.querySelector('[href*="tutor.openstax"]');
@@ -54,7 +56,7 @@ describe('Header', () => {
 
         mainMenu.showTutorTrainingWheel();
         if (link) { link.dispatchEvent(event); }
-        else { console.log('No tutor menu item', mainMenu.el.innerHTML); }
+        else { console.info('No tutor menu item'); }
     });
 
     it('mainMenu hides training wheel', () => {

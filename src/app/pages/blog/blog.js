@@ -1,7 +1,7 @@
 import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
 import settings from 'settings';
 import {on} from '~/helpers/controller/decorators';
-import router from '~/router';
+import routerBus from '~/helpers/router-bus';
 import analytics from '~/helpers/analytics';
 import Article from './article/article';
 import {description as template} from './blog.html';
@@ -43,7 +43,7 @@ export default class Blog extends BaseClass {
             if (slugMatch) {
                 this.model.articleSlug = slugMatch[1];
                 if (!this.articles[this.model.articleSlug]) {
-                    router.navigate('/404', {path: '/blog'}, true);
+                    routerBus.emit('navigate', '/404', {path: '/blog'}, true);
                     return;
                 }
                 if (this.previousSlug !== slugMatch[1]) {
@@ -158,7 +158,7 @@ export default class Blog extends BaseClass {
         event.preventDefault();
         const href = event.delegateTarget.href;
 
-        router.navigate(href, {
+        routerBus.emit('navigate', href, {
             model: this.model,
             path: '/blog',
             x: 0,

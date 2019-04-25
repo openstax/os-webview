@@ -3,9 +3,9 @@ cd "$(dirname "$0")/.." || exit 111
 source ./script/bootstrap || exit 111
 
 rm -rf dist
-try npm run-script build
+try "$(npm bin)/gulp"
 do_progress "Removing temporary build files" \
-  /bin/rm -r ./dist/settings-example* ./dist/app
+  /bin/rm -r ./dist/settings-example*
 
 try "$(npm bin)/node-sass" --source-map true --source-map-contents true \
 --output dist/styles/ \

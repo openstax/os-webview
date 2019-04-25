@@ -1,21 +1,20 @@
-import {Controller} from 'superb.js';
-import $ from '~/helpers/$';
+import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './partners-tab.html';
 import css from './partners-tab.css';
 
-export default class PartnersTab extends Controller {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['partners-tab']
+    }
+};
+
+export default class extends componentType(spec, insertHtmlMixin) {
 
     init(model) {
-        this.template = template;
+        super.init();
         this.model = model;
-        this.css = css;
-        this.view = {
-            classes: ['partners-tab']
-        };
-    }
-
-    onLoaded() {
-        $.insertHtml(this.el, this.model);
     }
 
 }

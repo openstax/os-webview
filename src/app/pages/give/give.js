@@ -1,6 +1,6 @@
 import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
 import {on} from '~/helpers/controller/decorators';
-import router from '~/router';
+import routerBus from '~/helpers/router-bus';
 import selectHandler from '~/handlers/select';
 import $ from '~/helpers/$';
 import settings from 'settings';
@@ -69,7 +69,7 @@ export default class Give extends BaseClass {
     handleQueryString() {
         const queryDict = $.parseSearchString(window.location.search);
         const handleAmount = (amount) => {
-            router.replaceState({
+            routerBus.emit('replaceState', {
                 // A string goes to Other
                 amount: amount || '?',
                 page: amount ? 2 : 1,
@@ -207,7 +207,7 @@ export default class Give extends BaseClass {
     @on('submit .preform')
     loadPage2(event) {
         event.preventDefault();
-        router.navigate('/give/form', {
+        routerBus.emit('navigate', '/give/form', {
             path: '/give',
             page: 2,
             amount: this.model.selectedAmount,
