@@ -29,7 +29,6 @@ const PAGES = [
     'interest',
     'impact',
     'global-reach',
-    'institutional-partners',
     'separatemap',
     'openstax-tutor',
     'partners',
@@ -42,8 +41,8 @@ const PAGES = [
     'subjects/*path',
     'team',
     'technology',
-    'institutional-partnership',
-    'institutional-partner-program'
+    'institutional-partnership-application',
+    'institutional-partnership'
 ];
 
 if (window.location.hostname === 'localhost') {
@@ -80,7 +79,6 @@ class AppRouter extends Router {
         this.route('give-confirmation', 'give');
         this.route('interest-confirmation', 'confirmation');
         this.route('higher-ed', 'home');
-        this.route('institutional-partnership-application', 'institutional-partnership');
         ['license', 'tos', 'privacy-policy', 'accessibility-statement', 'careers']
             .forEach((pathname) => {
                 this.route(pathname, 'footer-page');

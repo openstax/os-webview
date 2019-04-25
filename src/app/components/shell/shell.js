@@ -98,7 +98,7 @@ bus.on('no-sticky', () => {
     shell.regions.main.el.classList.remove('with-sticky');
 });
 
-bus.on('updateDialog', shell.dialog.update.bind(shell.dialog));
+bus.on('updateDialog', () => shell.dialog.update());
 bus.on('showDialog', shell.showDialog.bind(shell));
 bus.on('hideDialog', shell.hideDialog.bind(shell));
 
