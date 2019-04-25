@@ -11,7 +11,7 @@ function webpack() {
     const output = {
         path: path.resolve(config.dest, '..'),
         filename: "bundle.js",
-        publicPath: `${config.urlPrefix}/scripts`, // for where to request chunks when the SinglePageApp changes the URL
+        publicPath: `${config.urlPrefix}/scripts/`, // for where to request chunks when the SinglePageApp changes the URL
         chunkFilename: "chunk-[chunkhash].js"
     };
     const webpackConfig = {
@@ -62,8 +62,8 @@ function webpack() {
     return gulp.src([
         `${config.dest}/app/main.js`
     ])
-    .pipe(webpackStream(webpackConfig))
-    .pipe(gulp.dest(`${config.dest}/scripts`));
+        .pipe(webpackStream(webpackConfig))
+        .pipe(gulp.dest(`${config.dest}${config.urlPrefix}/scripts`));
 }
 
 function loadOrReload(done) {
