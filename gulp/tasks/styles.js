@@ -83,8 +83,9 @@ function compileChangedStyles() {
 }
 
 function compileMainStyle() {
+
     const src = gulp.src(`${config.src}/styles/main.scss`);
-    const dest = `${config.dest}/styles`;
+    const dest = `${config.dest}${config.urlPrefix}/styles`;
 
     return compileStyles(src, dest);
 }
@@ -115,6 +116,7 @@ function watchStyles() {
 exports.scsslint = scsslint;
 exports.styles = gulp.series(
     scsslint,
-    compileAllStyles
+    compileAllStyles,
+    compileMainStyle,
 );
 exports.styles.watch = watchStyles;
