@@ -1,155 +1,81 @@
-@import 'mixins/responsive';
 @import 'pattern-library/core/pattern-library/headers';
 
-.institutional-page {
-    .hero {
-        align-items: center;
-        background-color: os-color(light-blue);
-        background-image: url('/images/institutional/banner-institutional.jpg');
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: cover;
+$near-white: #f8f8f8;
+
+.institutional-partnership.page {
+
+    section {
+        max-width: 100%;
+        overflow: auto;
+    }
+
+    .content-block {
+        @extend %content;
+
         display: grid;
-        height: 50rem;
-        justify-items: right;
-        width: 100%;
+        grid-gap: 4rem;
+        // max-width: 100%;
 
-        @include width-up-to($phone-max) {
-            grid-template-columns: calc(40vw - 15rem) auto;
-        }
-
-        @include width-between($phone-max, $tablet-max) {
-            grid-template-columns: calc(81.6vw - 40rem) auto;
-        }
-
-        @include wider-than($tablet-max) {
-            grid-template-columns: 40% minmax(auto, $text-content-max);
-        }
-
-        .text-block {
-            color: os-color(blue);
-            grid-column-start: 2;
-            text-align: left;
-
-            p {
-                font-size: 2.4rem;
-                letter-spacing: -0.15rem;
-                margin: 0;
-            }
-
-            h1 {
-                @include title-font(4.8rem);
-
-                line-height: 1;
-            }
+        > * {
+            margin: 0;
         }
     }
 
-    .tab-controller,
-    .tab-content {
-        width: 100%;
+    .btn.primary {
+        @extend %button;
+        @extend %primary;
+
+        justify-self: left;
     }
 
-    .boxed {
-        align-items: left;
-
-        .details {
-            width: 100%;
-        }
+    .near-white {
+        background-color: $near-white;
     }
 
-    .panel {
-        border-top: thin solid ui-color(form-border);
-        display: none;
-        order: 99;
-        padding: 0 0 6rem;
-        width: 100%;
+    .white {
+        background-color: ui-color(white);
     }
 
-    .tab-content {
-        max-width: $text-content-max;
+    .green {
+        background-color: os-color(deep-green);
+        color: text-color(white);
+    }
 
-        h3 {
-            @include body-font(1.4rem);
+    .sticky-footer {
+        background-color: $near-white;
+        max-height: none;
+        padding: 1.5rem 3rem;
 
-            color: text-color(normal);
-            font-weight: bold;
-            margin: 1rem 0;
-        }
+        .button-group {
+            @extend %content;
+            display: grid;
+            justify-content: center;
 
-        p {
-            margin-top: 1rem;
-        }
+            @include wider-than($phone-max) {
+                grid-template: 'desc btn';
+                justify-content: space-between;
 
-        ul {
-            margin-bottom: 3rem;
-
-            li {
-                span {
-                    color: #4b4b4b;
-                    display: block;
-                    font-size: 1.4rem;
+                .btn {
+                    grid-area: btn;
                 }
-            }
-        }
 
-        .strike {
-            text-decoration: line-through;
-        }
-    }
-
-    .testimonial {
-        background: os-color(light-blue);
-        margin-top: 4.3rem;
-        padding-bottom: 3em;
-
-        .testimonial-box {
-            background: ui-color(white);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            margin-top: -4.3rem;
-            padding: 3rem 4rem;
-            width: 80rem;
-
-            .testimonial-program,
-            .testimonial-application {
-                display: none;
-
-                &.is-show {
-                    display: block;
+                .description {
+                    grid-area: desc;
                 }
             }
 
-            .text-block {
-                padding-left: 4rem;
-                position: relative;
+            .btn.medium {
+                @extend %button;
+                @extend %primary;
 
-                &::before {
-                    content: url('/images/institutional/icon-quote.svg');
-                    left: 0;
-                    position: absolute;
-                }
-
-                p {
-                    margin: 0;
-                }
+                height: 5rem;
+                min-width: 17rem;
             }
 
-            .writer-info {
-                margin-top: 3rem;
-                text-align: right;
-
-                p {
-                    margin: 0;
-                }
+            .description {
+                @include set-font(body-large);
             }
         }
     }
 
-    .form-iframe {
-        height: 112rem;
-        width: 100%;
-    }
 }

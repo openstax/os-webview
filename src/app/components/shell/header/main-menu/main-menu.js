@@ -76,7 +76,7 @@ export default class MainMenu extends Controller {
                         {url: '/about', label: 'About Us'},
                         {url: '/team', label: 'Team'},
                         {url: '/research', label: 'Research'},
-                        {url: '/institutional-partners', label: 'Institutional Partnerships'}
+                        {url: '/institutional-partnership', label: 'Institutional Partnerships'}
                     ]
                 };
             }
