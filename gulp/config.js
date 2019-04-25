@@ -23,7 +23,9 @@ module.exports = {
         'last 3 versions',
         'not ie < 11'
     ],
-    urlPrefix: this.env === 'development' ? '' : '/cms/assets',
+    // for cloudfront, urlPrefix could be set to:
+    // urlPrefix: this.env === 'development' ? '' : '/cms/assets',
+    urlPrefix: '',
     name: project.name,
     version: project.version,
     license: project.license,
