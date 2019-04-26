@@ -33,7 +33,6 @@
         "gulp-babel": "7.0.0",
         "gulp-cli": "^2.0.1",
         "gulp-clip-empty-files": "0.1.2",
-        "gulp-cssnano": "2.1.2",
         "gulp-env": "0.4.0",
         "gulp-eslint": "4.0.0",
         "gulp-htmlmin": "^5.0.1",
