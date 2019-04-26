@@ -3,7 +3,7 @@ import {description as template} from './participants.html';
 import css from './participants.css';
 import {on} from '~/helpers/controller/decorators';
 import EstablishedPartners from './established-partners/established-partners';
-import shell from '~/components/shell/shell';
+import shellBus from '~/components/shell/shell-bus';
 
 const spec = {
     template,
@@ -23,9 +23,9 @@ export default class extends componentType(spec) {
     }
 
     @on('click .show-established-partners')
-    showPrintSubment(event) {
+    showPrintSubmenu(event) {
         event.preventDefault();
-        shell.showDialog(() => ({
+        shellBus.emit('showDialog', () => ({
             title: 'Established Partners',
             content: this.establishedPartners
         }));

@@ -96,7 +96,7 @@ export default class GetThisTitle extends Controller {
     }
 
     @on('click .show-print-submenu')
-    showPrintSubment(event) {
+    showPrintSubmenu(event) {
         event.preventDefault();
         shellBus.emit('showDialog', () => ({
             title: 'Order a print copy',
