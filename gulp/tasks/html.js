@@ -55,6 +55,7 @@ function distHTML(distDone) {
     return gulp.series(
         hashFile('scripts', 'bundle.js'), // while it might seem like this could be "parallel",
         hashFile('styles', 'main.css'),   // mangled when multiple writers access it
+        hashFile('styles', 'fonts.css'),
         () => {
             const revManifest = require(`../../${config.dest}${config.urlPrefix}/rev-manifest.json`);
             return replaceURLs({

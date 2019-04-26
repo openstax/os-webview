@@ -74,12 +74,17 @@ function compileChangedStyles() {
     return compileStyles(src);
 }
 
-function compileMainStyle() {
-
-    const src = gulp.src(`${config.src}/styles/main.scss`);
-    const dest = `${config.dest}${config.urlPrefix}/styles`;
-
-    return compileStyles(src, dest);
+function compileMainStyle(mainDone) {
+    return gulp.parallel(
+        () => compileStyles(
+            gulp.src(`${config.src}/styles/main.scss`),
+            `${config.dest}${config.urlPrefix}/styles`
+        ),
+        () => compileStyles(
+            gulp.src(`${config.src}/styles/fonts.scss`),
+            `${config.dest}${config.urlPrefix}/styles`
+        ),
+    )(mainDone)
 }
 
 function watchStyles() {
