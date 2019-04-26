@@ -5,5 +5,5 @@ export const highSchoolSlugs = [
 ];
 
 export const bookPromise = fetch(
-    `${settings.apiOrigin}/apps/cms/api/v2/pages/?type=books.Book&fields=title,id&limit=250`
+    `${settings.apiOrigin}${settings.apiPrefix}/v2/pages/?type=books.Book&fields=title,id&limit=250`
 ).then((r) => r.json()).then((r) => r.items);

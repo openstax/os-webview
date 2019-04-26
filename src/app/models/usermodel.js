@@ -1,6 +1,6 @@
 import settings from 'settings';
 
-const docUrlBase = `${settings.apiOrigin}/apps/cms/api/documents`;
+const docUrlBase = `${settings.apiOrigin}${settings.apiPrefix}/documents`;
 const accountsUrl = `${settings.accountHref}/api/user`;
 
 const LOADED = Symbol();

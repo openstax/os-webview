@@ -81,7 +81,7 @@ export default class extends componentType(spec, insertHtmlMixin) {
                 iconType: 'lock',
                 link: {
                     text: 'Click here to unlock',
-                    url: `${settings.apiOrigin}/accounts/login/openstax/?next=${encodedLocation}`
+                    url: `${settings.apiOrigin}/oxauth/login/?next=${encodedLocation}`
                 }
             }
         };

@@ -20,7 +20,7 @@ export default class General extends BaseClass {
     }
 
     onLoaded() {
-        fetch(`${settings.apiOrigin}/apps/cms/api/${this.slug}`)
+        fetch(`${settings.apiOrigin}${settings.apiPrefix}/${this.slug}`)
             .then((r) => r.text())
             .then((html) => {
                 this.el.innerHTML = html;

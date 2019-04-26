@@ -194,8 +194,10 @@ class Analytics {
         /* eslint arrow-parens: 0 */
         (async () => {
             try {
-                const response = await fetch(`${settings.apiOrigin}/apps/cms/api/v2/pages/?type=books.Book&fields`+
-                  '=title,book_student_resources,book_faculty_resources,book_allies&limit=250');
+                const response = await fetch(
+                    `${settings.apiOrigin}${settings.apiPrefix}/v2/pages/?type=books.Book&fields`+
+                    '=title,book_student_resources,book_faculty_resources,book_allies&limit=250'
+                );
                 const bookFields = await response.json();
 
                 this.addResourcesToLookupTable(bookFields.items);
