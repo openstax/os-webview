@@ -1,13 +1,20 @@
 const gulp = require('gulp');
 const config = require('../config');
+const rename = require('gulp-rename');
 
-const glob = `${config.src}/**/*.{json,txt,ico,eot,ttf,woff,woff2,xml}`;
+const fileGlob = `${config.src}/**/*.{json,txt,ico,xml}`;
+const fontGlob = `${config.src}/**/*.{eot,ttf,woff,woff2}`;
 
-function copy() {
-    return gulp.src(glob, {
-        since: gulp.lastRun(copy)
-    })
-    .pipe(gulp.dest(config.dest));
+function copy(copyDone) {
+    return gulp.parallel(
+        () => gulp
+            .src(fileGlob, { since: gulp.lastRun(copy) })
+            .pipe(gulp.dest(config.dest)),
+        () => gulp
+            .src(fontGlob, { since: gulp.lastRun(copy) })
+            .pipe(rename({dirname: ''}))
+            .pipe(gulp.dest(`${config.dest}/${config.urlPrefix}/fonts`))
+    )(copyDone)
 }
 
 function watchCopy() {

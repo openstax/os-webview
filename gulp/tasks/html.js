@@ -39,6 +39,7 @@ function devHTML() {
         BUNDLE:   '/scripts/bundle.js',
         STYLES:   '/styles/main.css',
         SETTINGS: '/settings.js',
+        FONTS:    '/fonts',
     })
 }
 function watchHtml() {
@@ -52,14 +53,15 @@ exports.devHTML.watch = watchHtml
 // include the file's SHA in the filenamnes
 function distHTML(distDone) {
     return gulp.series(
-        hashFile('scripts', 'bundle.js'),     // while it might seem like this could be "parallel",
-        hashFile('styles', 'main.css'),  // mangled when multiple writers access it
+        hashFile('scripts', 'bundle.js'), // while it might seem like this could be "parallel",
+        hashFile('styles', 'main.css'),   // mangled when multiple writers access it
         () => {
             const revManifest = require(`../../${config.dest}${config.urlPrefix}/rev-manifest.json`);
             return replaceURLs({
                 STYLES:   `${config.urlPrefix}/styles/${revManifest['main.css']}`,
                 BUNDLE:   `${config.urlPrefix}/scripts/${revManifest['bundle.js']}`,
                 SETTINGS: `/settings.js?${config.version}`,
+                FONTS:    `${config.urlPrefix}/fonts`,
             })
         }
     )(distDone)
