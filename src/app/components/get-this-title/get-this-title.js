@@ -4,7 +4,6 @@ import $ from '~/helpers/$';
 import shellBus from '~/components/shell/shell-bus';
 import TocDialog from './toc-dialog/toc-dialog';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
-import {highSchoolSlugs} from '~/models/book-titles';
 import {description as template} from './get-this-title.html';
 import {description as polishTemplate} from './get-this-title-polish.html';
 import css from './get-this-title.css';
@@ -13,7 +12,6 @@ export default class GetThisTitle extends Controller {
 
     init(data) {
         const polish = $.isPolish(data.title);
-        const isHighSchool = highSchoolSlugs.includes(data.slug);
         // It may or may not come in as an array
         const ensureArray = (content) => {
             if (content) {
@@ -37,8 +35,7 @@ export default class GetThisTitle extends Controller {
 
         const printLink = [
             data.amazon_link,
-            arrayOfBookstoreContent.some((obj) => obj.button_url),
-            isHighSchool
+            arrayOfBookstoreContent.some((obj) => obj.button_url)
         ].some((x) => x);
 
         this.submenu = '';
@@ -67,7 +64,6 @@ export default class GetThisTitle extends Controller {
         this.printCopyContent = new OrderPrintCopy({
             amazonLink: data.amazon_link,
             amazonPrice: data.amazon_price,
-            bulkLink: isHighSchool ? `/bulk-order?${data.slug}` : null,
             bookstoreContent: arrayOfBookstoreContent
         }, () => {
             shellBus.emit('hideDialog');
