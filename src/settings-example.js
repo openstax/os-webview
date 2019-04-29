@@ -2,6 +2,7 @@ const settings = {
     accountHref: 'https://accounts-qa.openstax.org',
     analyticsID: 'UA-73668038-3',
     apiOrigin: 'https://cms-dev.openstax.org',
+    apiPrefix: '/apps/cms/api',
     buildVersion: '2.7.0',
     tagManagerID: 'GTM-W6N7PB',
     testingEnvironment: (/(localhost|oscms-)/).test(window.location.hostname),

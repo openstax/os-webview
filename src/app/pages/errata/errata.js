@@ -301,7 +301,7 @@ export default class Errata extends BaseClass {
     }
 
     fetchReleaseNotes(slug) {
-        const url = `${settings.apiOrigin}/apps/cms/api/books/${slug}`;
+        const url = `${settings.apiOrigin}${settings.apiPrefix}/books/${slug}`;
 
         return fetch(url).then((r) => r.json()).then((bookInfo) => {
             const notes = bookInfo.book_faculty_resources
@@ -322,9 +322,10 @@ export default class Errata extends BaseClass {
     summary(book) {
         // Fetch the summary data once
         const summaryPromise = fetch(
-            `${settings.apiOrigin}/apps/cms/api/errata/?book_title=${book}&is_assessment_errata__not=Yes&archived=False`
+            `${settings.apiOrigin}${settings.apiPrefix}/errata/?book_title=` +
+            `${book}&is_assessment_errata__not=Yes&archived=False`
         ).then((r) => r.json());
-        const hoverPromise = fetch(`${settings.apiOrigin}/apps/cms/api/pages/errata/`)
+        const hoverPromise = fetch(`${settings.apiOrigin}${settings.apiPrefix}/pages/errata/`)
             .then((r) => r.json());
 
         hoverPromise.then((response) => {
