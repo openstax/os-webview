@@ -1,22 +1,27 @@
+import componentType from '~/helpers/controller/init-mixin';
 import bodyUnitView from '~/components/body-units/body-units';
-import CMSPageController from '~/controllers/cms';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
 import {description as template} from './article.html';
 import css from '~/pages/blog/article/article.css';
 
-export default class Article extends CMSPageController {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['article']
+    },
+    regions: {
+        body: '.body'
+    },
+    slug: 'setInInit',
+    model: {}
+};
+
+export default class Article extends componentType(spec) {
 
     init(slug) {
-        this.template = template;
-        this.view = {
-            classes: ['article']
-        };
-        this.regions = {
-            body: '.body'
-        };
+        super.init();
         this.slug = slug;
-        this.css = css;
-        this.model = {};
         this.preserveWrapping = true;
     }
 

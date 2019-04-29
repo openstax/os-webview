@@ -1,6 +1,6 @@
 import Article from './article/article';
 import Bookings from './bookings/bookings';
-import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
 import HeadlinePaginator from '~/components/headline-paginator/headline-paginator';
 import Inquiries from './inquiries/inquiries';
 import MobileSelector from './mobile-selector/mobile-selector';
@@ -40,7 +40,7 @@ const spec = {
         return model;
     }
 };
-const BaseClass = componentType(spec, canonicalLinkMixin);
+const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 
 export default class Press extends BaseClass {
 
@@ -61,12 +61,12 @@ export default class Press extends BaseClass {
     }
 
     buildComponents(submodels) {
-        const twoExcerpts = submodels.pressReleases.slice(0, 2).map((r) => new PressExcerpt(() => r));
+        const twoExcerpts = submodels.pressReleases.slice(0, 2).map((r) => new PressExcerpt(r));
         const noExcerpts = submodels.pressReleases.map((r) => {
             const result = Object.assign({}, r);
 
             delete result.excerpt;
-            return new PressExcerpt(() => result);
+            return new PressExcerpt(result);
         });
         const prPaginator = new HeadlinePaginator(() => ({contents: noExcerpts}));
 
@@ -95,7 +95,7 @@ export default class Press extends BaseClass {
             items: 'press releases'
         }));
         this.nmPaginator = new HeadlinePaginator(() => ({
-            contents: submodels.newsMentions.map((m) => new PressExcerpt(() => m))
+            contents: submodels.newsMentions.map((m) => new PressExcerpt(m))
         }));
     }
 
@@ -181,6 +181,7 @@ export default class Press extends BaseClass {
             this.regions.newsMentions.append(this.nmPaginator);
             this.regions.bookings.attach(new Bookings(submodels.experts));
         }
+        this.hideLoader();
     }
 
 }

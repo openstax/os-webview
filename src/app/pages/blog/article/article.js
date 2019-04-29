@@ -2,7 +2,7 @@ import $ from '~/helpers/$';
 import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
 import FormattedAs from './formatted-as/formatted-as';
 import {Controller} from 'superb.js';
-import {debounce} from 'lodash';
+import debounce from 'lodash/debounce';
 import css from './article.css';
 
 function slugWithNewsPrefix(slug) {

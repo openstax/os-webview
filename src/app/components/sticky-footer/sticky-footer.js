@@ -1,7 +1,7 @@
 import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './sticky-footer.html';
 import css from './sticky-footer.css';
-import {debounce} from 'lodash';
+import debounce from 'lodash/debounce';
 import shellBus from '~/components/shell/shell-bus';
 
 const spec = {
