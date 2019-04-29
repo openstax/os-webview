@@ -36,4 +36,14 @@ function clickElement(el) {
     el.dispatchEvent(clickEvent());
 }
 
-export {clickElement, doKeyDown, doKeyPress};
+function doInput(el, value) {
+    el.value = value;
+    el.dispatchEvent(
+        new Event('input', {
+            bubbles: true,
+            cancelable: true
+        })
+    );
+}
+
+export {clickElement, doKeyDown, doKeyPress, doInput};

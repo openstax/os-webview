@@ -41,8 +41,11 @@ export default class TechnologySelector extends CMSPageController {
                 name: 'Partner_Interest__c',
                 value,
                 label
-            }), onChange);
+            }));
 
+            if (onChange) {
+                cb.on('change', onChange);
+            }
             this.regions.checkboxes.append(cb);
         });
     }

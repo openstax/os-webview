@@ -1,26 +1,16 @@
-import {Controller} from 'superb.js';
+import componentType from '~/helpers/controller/init-mixin';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './book-checkbox.html';
 import css from './book-checkbox.css';
+import busMixin from '~/helpers/controller/bus-mixin';
 
-export default class BookCheckbox extends Controller {
-
-    init(getProps, onChange) {
-        this.template = template;
-        this.getProps = getProps;
-        this.onChange = onChange;
-        this.view = {
-            classes: ['book-checkbox']
-        };
-        // Check this path
-        this.css = css;
-        this.checked = false;
-        this.model = () => this.getModel();
-    }
-
-    // Returns a dictionary of values to be used in the template
-    // Refreshes props, to ensure they're up to date
-    getModel() {
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['book-checkbox']
+    },
+    model() {
         const props = this.getProps();
 
         this.el.classList.toggle('has-image', Boolean(props.imageUrl));
@@ -35,14 +25,22 @@ export default class BookCheckbox extends Controller {
         };
     }
 
+};
+
+export default class BookCheckbox extends componentType(spec, busMixin) {
+
+    init(getProps) {
+        super.init();
+        this.getProps = getProps;
+        this.checked = false;
+    }
+
     @on('click')
     toggleChecked() {
         this.checked = !this.checked;
         this.el.classList.toggle('checked', this.checked);
         this.update();
-        if (this.onChange) {
-            this.onChange(this.checked);
-        }
+        this.emit('change', this.checked);
     }
 
     @on('keydown .indicator')

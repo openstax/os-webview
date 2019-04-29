@@ -38,9 +38,8 @@ export default class RoleSelector extends componentType(spec, cmsMixin, busMixin
     }
 
     onLoaded() {
-        const Region = this.regions.self.constructor;
         const regions = Array.from(this.el.querySelectorAll('[data-content]'))
-            .map((r) => new Region(r, this));
+            .map((r) => this.regionFrom(r));
 
         for (let i = 0; i < this.props.length; ++i) {
             regions[i].attach(this.props[i].contents);

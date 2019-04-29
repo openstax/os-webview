@@ -25,7 +25,6 @@ export function transformData(data) {
                     if (item.value) {
                         return item.value;
                     }
-
                     return item;
                 });
             }
@@ -35,34 +34,44 @@ export function transformData(data) {
     return data;
 }
 
-export default (superclass) => class CMSPageController extends superclass {
+async function getUrlFor(slug) {
+    let apiUrl = `${settings.apiOrigin}/api/${slug}`;
+
+    // A little magic to handle book titles
+    const strippedSlug = slug.replace(/^books\/(.*)/, '$1');
+
+    if (strippedSlug) {
+        const bookList = await bookPromise;
+        const bookEntry = bookList.find((e) => e.meta.slug === strippedSlug);
+
+        if (bookEntry) {
+            apiUrl = bookEntry.meta.detail_url;
+        }
+    }
+
+    // A little magic to handle the news slug
+    if (slug === 'news') {
+        apiUrl = await newsPromise;
+    }
+
+    const qsChar = (/\?/.test(apiUrl)) ? '&' : '?';
+
+    return `${apiUrl}${qsChar}format=json`;
+}
+
+export async function fetchFromCMS(slug, preserveWrapping) {
+    const apiUrl = await getUrlFor(slug);
+    const data = await fetch(apiUrl, {credentials: 'include'})
+        .then((response) => response.json());
+
+    data.slug = slug;
+    return preserveWrapping ? data : transformData(data);
+}
+
+export default (superclass) => class extends superclass {
 
     constructor(...args) {
         super(...args);
-        async function getUrlFor(slug) {
-            let apiUrl = `${settings.apiOrigin}${settings.apiPrefix}/${slug}`;
-
-            // A little magic to handle book titles
-            const strippedSlug = slug.replace(/^books\/(.*)/, '$1');
-
-            if (strippedSlug) {
-                const bookList = await bookPromise;
-                const bookEntry = bookList.find((e) => e.meta.slug === strippedSlug);
-
-                if (bookEntry) {
-                    apiUrl = bookEntry.meta.detail_url;
-                }
-            }
-
-            // A little magic to handle the news slug
-            if (slug === 'news') {
-                apiUrl = await newsPromise;
-            }
-
-            const qsChar = (/\?/.test(apiUrl)) ? '&' : '?';
-
-            return `${apiUrl}${qsChar}format=json`;
-        }
 
         if (this.slug) {
             /* eslint arrow-parens: 0 */ // eslint does not like async arrow functions
@@ -91,13 +100,7 @@ export default (superclass) => class CMSPageController extends superclass {
                 };
 
                 try {
-                    const apiUrl = await getUrlFor(this.slug);
-                    const data = await fetch(apiUrl, {credentials: 'include'})
-                        .then((response) => response.json());
-
-                    this.pageData = this.preserveWrapping ? data : CMSPageController[TRANSFORM_DATA](data);
-                    this.pageData.slug = this.slug;
-
+                    this.pageData = await fetchFromCMS(this.slug, this.preserveWrapping);
                     await this[LOAD_IMAGES](this.pageData);
                     setPageDescriptor();
 
@@ -133,7 +136,5 @@ export default (superclass) => class CMSPageController extends superclass {
 
         return Promise.all(promises);
     }
-
-    static [TRANSFORM_DATA] = transformData;
 
 };

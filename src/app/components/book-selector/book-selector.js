@@ -68,7 +68,6 @@ export default class BookSelector extends componentType(spec, cmsMixin, salesfor
         this.subjects = subjects.reduce((a, b) => a.includes(b) ? a : a.concat(b), []);
         this.update();
 
-        const Region = this.regions.self.constructor;
         const checkboxSubjectSections = this.el.querySelectorAll('[data-subject]');
 
         for (const subjectEl of checkboxSubjectSections) {
@@ -89,10 +88,10 @@ export default class BookSelector extends componentType(spec, cmsMixin, salesfor
                     value: book.value,
                     imageUrl: book.coverUrl,
                     label: book.text
-                }), onChange);
-                const region = new Region(cEl, this);
+                }));
 
-                region.attach(checkboxComponent);
+                checkboxComponent.on('change', onChange);
+                this.regionFrom(cEl).attach(checkboxComponent);
                 if (book.value === this.props.preselectedTitle) {
                     checkboxComponent.toggleChecked();
                 }
