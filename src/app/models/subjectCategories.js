@@ -1,7 +1,7 @@
 import booksPromise from './books';
 import settings from 'settings';
 
-const categoriesPromise = fetch(`${settings.apiOrigin}/apps/cms/api/snippets/subjects?format=json`)
+const categoriesPromise = fetch(`${settings.apiOrigin}${settings.apiPrefix}/snippets/subjects?format=json`)
     .then((r) => r.json());
 
 export default Promise.all([booksPromise, categoriesPromise]).then(([books, categories]) => {

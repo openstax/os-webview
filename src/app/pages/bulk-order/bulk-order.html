@@ -3,7 +3,7 @@
         If you are ordering fewer than 25 books, place your order via our
         <a href="{model.amazonUrl}">Amazon.com storefront</a>.
     </div>
-    <form action="{`${model.origin}/apps/cms/api/mail/send_mail/`}" method="post">
+    <form action="{`${model.origin}${model.prefix}/mail/send_mail/`}" method="post">
         <input type="hidden" name="csrfmiddlewaretoken" value="{model.csrfToken}" />
         <input name="message_body" type="hidden" value="{model.messageBody}" />
         <input name="subject" type="hidden" value="Bulk Order" />

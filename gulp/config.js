@@ -18,14 +18,12 @@ module.exports = {
     get dest() {
         return (this.env === 'development' ? 'dev' : 'dist');
     },
+    get urlPrefix() { return this.env === 'development' ? '' : '/cms/assets' },
     src: 'src',
     browsers: [
         'last 3 versions',
         'not ie < 11'
     ],
-    // for cloudfront, urlPrefix could be set to:
-    // urlPrefix: this.env === 'development' ? '' : '/cms/assets',
-    urlPrefix: '',
     name: project.name,
     version: project.version,
     license: project.license,

@@ -1,7 +1,8 @@
 const gulp = require('gulp');
 const config = require('../config');
 const pi = require('gulp-load-plugins')();
-const rev = require('gulp-rev')
+const rev = require('gulp-rev');
+const path = require('path');
 
 const replaceURLs = (mapping) => {
     let transform = gulp.src(`${config.src}/*.html`)
@@ -16,17 +17,20 @@ const replaceURLs = (mapping) => {
     return transform.pipe(gulp.dest(config.dest));
 }
 
-function hashFile(directory, name) {
+function hashFile(targetDirectory, name) {
+    const baseDirectory = `${config.dest}${config.urlPrefix}`
+    const directory = `${baseDirectory}/${targetDirectory}`
+
     return () =>
-        gulp.src(`${config.dest}/${directory}/${name}`)
+        gulp.src(`${directory}/${name}`)
             .pipe(rev())
-            .pipe(gulp.dest(`${config.dest}/${directory}`))
+            .pipe(gulp.dest(directory))
             .pipe(rev.manifest({
-                path: `${config.dest}/rev-manifest.json`,
-                base: `${config.dest}/${directory}`,
+                path: path.resolve(baseDirectory, 'rev-manifest.json'),
+                base: baseDirectory,
                 merge: true,
             }))
-            .pipe(gulp.dest(`${config.dest}/${directory}`))
+            .pipe(gulp.dest(baseDirectory))
 }
 
 // Don't need to do anything fancy in development, just replace the filename
@@ -35,6 +39,7 @@ function devHTML() {
         BUNDLE:   '/scripts/bundle.js',
         STYLES:   '/styles/main.css',
         SETTINGS: '/settings.js',
+        FONTS:    '/fonts',
     })
 }
 function watchHtml() {
@@ -48,14 +53,16 @@ exports.devHTML.watch = watchHtml
 // include the file's SHA in the filenamnes
 function distHTML(distDone) {
     return gulp.series(
-        hashFile('scripts', 'bundle.js'),     // while it might seem like this could be "parallel",
-        hashFile('styles', 'main.css'),  // mangled when multiple writers access it
+        hashFile('scripts', 'bundle.js'), // while it might seem like this could be "parallel",
+        hashFile('styles', 'main.css'),   // mangled when multiple writers access it
+        hashFile('styles', 'fonts.css'),
         () => {
-            const revManifest = require(`../../${config.dest}/rev-manifest.json`);
+            const revManifest = require(`../../${config.dest}${config.urlPrefix}/rev-manifest.json`);
             return replaceURLs({
                 STYLES:   `${config.urlPrefix}/styles/${revManifest['main.css']}`,
                 BUNDLE:   `${config.urlPrefix}/scripts/${revManifest['bundle.js']}`,
-                SETTINGS: `${config.urlPrefix}/settings.js?${config.version}`,
+                SETTINGS: `/settings.js?${config.version}`,
+                FONTS:    `${config.urlPrefix}/fonts`,
             })
         }
     )(distDone)

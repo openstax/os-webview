@@ -52,7 +52,7 @@ export default class Map1 extends Controller {
             (async () => {
                 try {
                     const value = el.features[0].properties.id;
-                    const response = await fetch(`${settings.apiOrigin}/apps/cms/api/schools/?id=${value}`);
+                    const response = await fetch(`${settings.apiOrigin}${settings.apiPrefix}/schools/?id=${value}`);
                     const data = await response.json();
 
                     if (data.length) {
@@ -287,9 +287,9 @@ export default class Map1 extends Controller {
         let callName;
 
         if (fltStatus !== 'true') {
-            callName = `${settings.apiOrigin}/apps/cms/api/schools/?q=${value}`;
+            callName = `${settings.apiOrigin}${settings.apiPrefix}/schools/?q=${value}`;
         } else {
-            callName = `${settings.apiOrigin}/apps/cms/api/schools/?name=${value+fltString}`;
+            callName = `${settings.apiOrigin}${settings.apiPrefix}/schools/?name=${value+fltString}`;
         }
         return callName;
     }

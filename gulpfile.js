@@ -22,6 +22,7 @@ const defaultBuild = series(beforeWebpack, webpack);
 
 module.exports = {
     default: series(
+        production,
         defaultBuild,
         distHTML,
     ),

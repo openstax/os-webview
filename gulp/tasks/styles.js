@@ -52,14 +52,6 @@ function compileStyles(src, dest) {
             ]
         }))
         .pipe(pi.autoprefixer(config.browsers))
-        .pipe(pi.if(config.env === 'production', pi.cssnano({
-            reduceIdents: {
-                keyframes: false
-            },
-            discardUnused: {
-                keyframes: false
-            }
-        })))
         .pipe(pi.sourcemaps.write('.', {
             includeContent: false,
             sourceRoot: './'
@@ -82,11 +74,17 @@ function compileChangedStyles() {
     return compileStyles(src);
 }
 
-function compileMainStyle() {
-    const src = gulp.src(`${config.src}/styles/main.scss`);
-    const dest = `${config.dest}/styles`;
-
-    return compileStyles(src, dest);
+function compileMainStyle(mainDone) {
+    return gulp.parallel(
+        () => compileStyles(
+            gulp.src(`${config.src}/styles/main.scss`),
+            `${config.dest}${config.urlPrefix}/styles`
+        ),
+        () => compileStyles(
+            gulp.src(`${config.src}/styles/fonts.scss`),
+            `${config.dest}${config.urlPrefix}/styles`
+        ),
+    )(mainDone)
 }
 
 function watchStyles() {
@@ -115,6 +113,7 @@ function watchStyles() {
 exports.scsslint = scsslint;
 exports.styles = gulp.series(
     scsslint,
-    compileAllStyles
+    compileAllStyles,
+    compileMainStyle,
 );
 exports.styles.watch = watchStyles;
