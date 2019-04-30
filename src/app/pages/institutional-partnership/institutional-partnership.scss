@@ -43,6 +43,7 @@ $near-white: #f8f8f8;
 
     .sticky-footer {
         background-color: $near-white;
+        grid-template-columns: auto;
         max-height: none;
         padding: 1.5rem 3rem;
 

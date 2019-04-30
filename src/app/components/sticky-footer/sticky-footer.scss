@@ -33,9 +33,10 @@
 
     bottom: 0;
     box-shadow: 0 -0.2rem 0.6rem 0 rgba(ui-color(black), 0.25);
-    display: flex;
+    display: grid;
     font-weight: inherit;
-    justify-content: space-around;
+    grid-template-columns: 1fr 1fr;
+    justify-content: stretch;
     max-height: 9rem;
     padding: 0.5rem 1rem;
     position: fixed;
@@ -56,28 +57,14 @@
 
     .button-group {
         align-items: center;
-        display: flex;
-        flex: 1 1 40%;
-        justify-content: center;
-        padding-left: 2rem;
-        text-align: right;
+        display: grid;
+        grid-auto-flow: column;
+        grid-gap: $normal-margin;
+        justify-content: right;
         transition: opacity 0.2s 0.1s;
 
-        @include wider-than($tablet-max) {
-            padding-left: 6rem;
-        }
-
-        @include width-up-to($phone-max) {
-            padding: 0;
-        }
-
         &:first-child {
-            padding-left: 0;
-            text-align: left;
-        }
-
-        :first-child {
-            margin-right: $normal-margin;
+            justify-content: left;
         }
     }
 
