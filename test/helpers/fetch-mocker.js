@@ -4,6 +4,9 @@ import blogArticleData from '../src/data/blog-article';
 import booksData from '../src/data/books';
 import booksForAnalyticsData from '../src/data/books-for-analytics';
 import bookTitleData from '../src/data/book-titles';
+import errataData from '../src/data/errata';
+import errataBookData from '../src/data/errata-book';
+import errata7199 from '../src/data/errata-7199';
 import footerData from '../src/data/footer';
 import institutionalPartnershipData from '../src/data/institutional-partnership';
 import osNewsData from '../src/data/openstax-news';
@@ -13,6 +16,7 @@ import pageData from '../src/data/partners';
 import polishData from '../src/data/details-polish';
 import pressData from '../src/data/press';
 import pressArticleData from '../src/data/press-article';
+import printOrderData from '../src/data/print-order';
 import researchData from '../src/data/research';
 import rolesData from '../src/data/roles';
 import schoolsData from '../src/data/schools';
@@ -29,6 +33,9 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isBooks = (/api\/books/).test(args[0]);
     const isBooksForAnalytics = (/book_student_resources/).test(args[0]);
     const isBookTitles = (/fields=title,id/).test(args[0]);
+    const isErrata = (/pages\/errata\/$/).test(args[0]);
+    const isErrataBook = (/errata\/\?book_title/).test(args[0]);
+    const isErrata7199 = (/errata[?/]7199/).test(args[0]);
     const isFooter = (/api\/footer/).test(args[0]);
     const isInstitutionalPartnership = (/pages\/institutional-partner-program/).test(args[0]);
     const isOsNews = (/slug=openstax-news/).test(args[0]);
@@ -38,6 +45,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isPolishPhysics = (/v2\/pages\/190/).test(args[0]);
     const isPress = (/api\/press\?/).test(args[0]);
     const isPressArticle = (/api\/press\//).test(args[0]);
+    const isPrintOrder = (/pages\/print-order/).test(args[0]);
     const isResearch = (/pages\/research/).test(args[0]);
     const isRoles = (/snippets\/roles/).test(args[0]);
     const isSchools = (/salesforce\/schools/).test(args[0]);
@@ -55,6 +63,12 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = adoptionFormData;
             } else if (isPartner) {
                 payload = pageData;
+            } else if (isErrata) {
+                payload = errataData;
+            } else if (isErrataBook) {
+                payload = errataBookData;
+            } else if (isErrata7199) {
+                payload = errata7199;
             } else if (isFooter) {
                 payload = footerData;
             } else if (isInstitutionalPartnership) {
@@ -69,6 +83,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = pressData;
             } else if (isPressArticle) {
                 payload = pressArticleData;
+            } else if (isPrintOrder) {
+                payload = printOrderData;
             } else if (isBooks) {
                 payload = booksData;
             } else if (isBookTitles) {
