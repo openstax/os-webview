@@ -37,9 +37,11 @@ export default class DetailsTab extends componentType(spec, insertHtmlMixin) {
             );
         }
 
-        this.regions.letUsKnow.append(new LetUsKnow(
-            this.model[this.model.polish ? 'title' : 'salesforceAbbreviation']
-        ));
+        const titleArg = this.model[this.model.polish ? 'title' : 'salesforceAbbreviation'];
+
+        if (titleArg) {
+            this.regions.letUsKnow.append(new LetUsKnow(titleArg));
+        }
     }
 
 }

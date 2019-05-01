@@ -18,7 +18,7 @@ function copy(copyDone) {
 }
 
 function watchCopy() {
-    gulp.watch(glob, config.watchOpts)
+    gulp.watch(fileGlob, config.watchOpts)
     .on('change', copy);
 }
 
