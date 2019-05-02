@@ -1,7 +1,11 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .page-header > .meta-nav {
+    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr;
     height: 0;
+    justify-items: center;
     overflow: hidden;
     width: 0;
 
@@ -23,13 +27,24 @@
 
     .container {
         align-items: center;
-        display: flex;
-        flex-direction: row;
+        display: grid;
+
+        @include width-up-to($tablet-max) {
+            margin-left: auto;
+            margin-right: auto;
+        }
 
         @include wider-than($tablet-max) {
-            justify-content: flex-end;
-            margin: 0 auto;
+            color: os-color(gray);
+            grid-auto-flow: column;
+            grid-gap: 3rem;
+            justify-content: right;
             max-width: $content-max;
+            width: 100%;
+
+            a {
+                color: inherit;
+            }
         }
     }
 
@@ -47,41 +62,11 @@
             padding-left: 0;
         }
 
-        .dropdown > a {
-            margin-bottom: 1.1rem;
-        }
-
         .nav-menu-item {
             padding: 0 2rem;
 
             @at-root .active#{&} {
                 padding-left: 0;
-            }
-        }
-    }
-
-    .nav-menu-item a {
-
-        @include wider-than($tablet-max) {
-            color: os-color(gray);
-
-            &:hover {
-                .chevron {
-                    fill: os-color(light-blue);
-                }
-            }
-        }
-
-        .chevron {
-            fill: os-color(light-blue);
-            height: 1rem;
-            margin-left: 0.5em;
-            width: 0.6rem;
-
-            @include wider-than($tablet-max) {
-                fill: os-color(gray);
-                transform: rotate(90deg);
-                transform-origin: center;
             }
         }
     }
@@ -120,13 +105,11 @@
             width: auto;
         }
 
-        &::after {
-            color: os-color(gray);
-            content: '\00a9  Rice University';
-            order: 2;
-
-            @include wider-than($tablet-max) {
-                display: none;
+        @include width-up-to($tablet-max) {
+            &::after {
+                color: os-color(gray);
+                content: '\00a9  Rice University';
+                order: 2;
             }
         }
     }
