@@ -25,11 +25,9 @@
         width: 100%;
 
         input {
-            padding: 0 $normal-margin;
-        }
-
-        ::placeholder {
             @include set-font(body-regular);
+
+            text-indent: $normal-margin;
         }
     }
 
