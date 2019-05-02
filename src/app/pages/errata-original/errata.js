@@ -52,7 +52,7 @@ export default class Errata extends BaseClass {
 
     init() {
         super.init();
-        $.setCanonicalLink(`${window.location.pathname}${window.location.search}`, this.canonicalLink);
+        this.setCanonicalLink(`${window.location.pathname}${window.location.search}`);
         this.template = template;
         this.css = css;
         this.view = {
@@ -191,7 +191,6 @@ export default class Errata extends BaseClass {
     }
 
     onLoaded() {
-        document.title = 'Errata - OpenStax';
         this.savedScrollPosition = history.state && history.state.y;
         const queryDict = $.parseSearchString(window.location.search);
         const afterTheSlash = location.pathname.replace('/errata/', '');

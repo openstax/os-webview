@@ -22,8 +22,8 @@ export const componentMixin = (superclass) => class extends superclass {
         return new Region(el, this);
     }
 
-    insertHtml() {
-        $.insertHtml(this.el, this.model);
+    insertHtml(el=this.el, model=this.model) {
+        $.insertHtml(el, model);
     }
 
 };
