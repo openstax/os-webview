@@ -91,9 +91,12 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
         this.regions.accordion.append(new AccordionGroup({
             items: accordionItems
         }));
-        this.regions.letUsKnow.append(new LetUsKnow(
-            polish ? this.props.bookTitle : this.props.salesforceAbbreviation
-        ));
+
+        const titleArg = polish ? this.props.bookTitle : this.props.salesforceAbbreviation;
+
+        if (titleArg) {
+            this.regions.letUsKnow.append(new LetUsKnow(titleArg));
+        }
     }
 
 }
