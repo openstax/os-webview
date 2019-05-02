@@ -12,10 +12,6 @@ import css from './confirmation.css';
 const applyLink = `${settings.accountHref}/faculty_access/apply?r=${encodeURIComponent(`${settings.apiOrigin}/`)}`;
 
 const models = {
-    'bulk-order': {
-        headline: 'Thanks for contacting us',
-        simpleMessage: 'We\'ve received your order form.'
-    },
     contact: {
         headline: 'Thanks for contacting us',
         adoptionQuestion: 'Have you looked at our books lately?',

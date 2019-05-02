@@ -3,7 +3,7 @@ import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import {description as template} from './section-navigator.html';
 import css from './section-navigator.css';
-import {debounce} from 'lodash';
+import debounce from 'lodash/debounce';
 
 export default class SectionNavigator extends Controller {
 

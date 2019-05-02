@@ -14,7 +14,6 @@ const PAGES = [
     'blog',
     'blog/*path',
     'bookstore-suppliers',
-    'bulk-order',
     'confirmation',
     'confirmation/*path',
     'contact',

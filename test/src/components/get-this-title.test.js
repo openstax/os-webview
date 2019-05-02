@@ -11,12 +11,6 @@ describe('GetThisTitle', () => {
         expect(p).toBeTruthy();
     });
 
-    it('hides bulk orders', () => {
-        const boLink = p.el.querySelector('a[href^="/bulk-order"]');
-
-        expect(boLink).toBeNull();
-    });
-
     it('shows links', () => {
         for (const url of [details.webview_link, details.ibook_link]) {
             const link = p.el.querySelector(`[href="${url}"]`);

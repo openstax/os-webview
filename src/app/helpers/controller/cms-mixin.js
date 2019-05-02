@@ -2,7 +2,6 @@ import settings from 'settings';
 import $ from '~/helpers/$';
 import {bookPromise} from '~/models/book-titles';
 
-const TRANSFORM_DATA = Symbol();
 const LOAD_IMAGES = Symbol();
 
 const newsPromise = fetch(`${settings.apiOrigin}${settings.apiPrefix}/v2/pages/?slug=openstax-news`)

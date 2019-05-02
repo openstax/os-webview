@@ -1,22 +1,14 @@
-import {Controller} from 'superb.js';
+import componentType from '~/helpers/controller/init-mixin';
 import {description as template} from './press-excerpt.html';
 import css from './press-excerpt.css';
 
-export default class PressExcerpt extends Controller {
-
-    init(getProps) {
-        this.template = template;
-        this.getProps = getProps;
-        this.view = {
-            classes: ['press-excerpt']
-        };
-        this.css = css;
-        this.model = () => this.getModel();
-    }
-
-    getModel() {
-        this.props = this.getProps();
-
+const spec = {
+    template,
+    css,
+    view: {
+        classes: ['press-excerpt']
+    },
+    model() {
         return {
             iconUrl: this.props.iconUrl,
             author: this.props.author,
@@ -27,6 +19,14 @@ export default class PressExcerpt extends Controller {
             excerpt: this.props.excerpt,
             url: this.props.url
         };
+    }
+};
+
+export default class PressExcerpt extends componentType(spec) {
+
+    init(props) {
+        super.init();
+        this.props = props;
     }
 
     onLoaded() {

@@ -19,7 +19,7 @@ export default class Releases extends Controller {
             const result = Object.assign({}, r);
 
             delete result.excerpt;
-            return new PressExcerpt(() => result);
+            return new PressExcerpt(result);
         });
         const prPaginator = new HeadlinePaginator(() => ({contents: noExcerpts}));
 

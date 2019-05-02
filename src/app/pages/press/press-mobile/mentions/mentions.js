@@ -17,7 +17,7 @@ export default class Mentions extends Controller {
         const props = this.getProps();
 
         this.regions.self.append(new HeadlinePaginator(() => ({
-            contents: props.newsMentions.map((m) => new PressExcerpt(() => m))
+            contents: props.newsMentions.map((m) => new PressExcerpt(m))
         })));
     }
 
