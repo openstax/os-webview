@@ -7,7 +7,7 @@ import settings from 'settings';
 import {bookPromise} from '~/models/book-titles';
 import routerBus from '~/helpers/router-bus';
 import userModel from '~/models/usermodel';
-import Form from './form/form';
+import Form from '../errata-form/form/form';
 import Detail from './detail/detail';
 import RadioPanel from '~/components/radio-panel/radio-panel';
 import {description as template} from './errata.html';

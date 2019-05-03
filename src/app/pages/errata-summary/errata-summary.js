@@ -9,7 +9,7 @@ import Table from './table/table';
 
 const spec = {
     view: {
-        classes: ['errata-page', 'page'],
+        classes: ['errata-summary', 'page'],
         tag: 'main'
     },
     slug: 'set in init'

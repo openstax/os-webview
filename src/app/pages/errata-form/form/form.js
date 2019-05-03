@@ -1,14 +1,30 @@
 import {Controller} from 'superb.js';
-import settings from 'settings';
-import $ from '~/helpers/$';
-import selectHandler from '~/handlers/select';
-import routerBus from '~/helpers/router-bus';
-import {on} from '~/helpers/controller/decorators';
 import {description as template} from './form.html';
+import {on} from '~/helpers/controller/decorators';
+import $ from '~/helpers/$';
 import css from './form.css';
+import routerBus from '~/helpers/router-bus';
+import selectHandler from '~/handlers/select';
+import settings from 'settings';
 
 const sourceNames = {
     tutor: 'OpenStax Tutor'
+};
+const modelConstants = {
+    postEndpoint: `${settings.apiOrigin}${settings.apiPrefix}/errata/`,
+    errorTypes: [
+        'Broken link',
+        'Incorrect answer, calculation, or solution',
+        'General/pedagogical suggestion or question',
+        'Other factual inaccuracy in content',
+        'Typo',
+        'Other'
+    ],
+    sourceTypes: [
+        'OpenStax Tutor', 'Textbook', 'iBooks version', 'Kindle', 'Instructor solution manual',
+        'Student solution manual', 'Other'
+    ],
+    subnotes: {'Textbook': 'includes print, PDF, and web view'}
 };
 
 export default class Form extends Controller {
@@ -17,17 +33,21 @@ export default class Form extends Controller {
     init(model) {
         this.css = css;
         this.template = template;
-        this.model = Object.assign(model, {
-            postEndpoint: `${settings.apiOrigin}${settings.apiPrefix}/errata/`,
-            validationMessage: (name) => {
-                const el = this.el.querySelector(`[name="${name}"]`);
+        this.model = Object.assign(
+            model,
+            {
+                validationMessage: (name) => {
+                    const el = this.el.querySelector(`[name="${name}"]`);
 
-                return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
+                    return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
+                },
+                helpBoxVisible: () => this.model.selectedError === 'Other' ? 'visible' : 'not-visible',
+                selectedSource: model.source && sourceNames[model.source.toLowerCase()],
+                sourceProvided: model.location && model.source ? '' : null
             },
-            helpBoxVisible: () => this.model.selectedError === 'Other' ? 'visible' : 'not-visible',
-            selectedSource: model.source && sourceNames[model.source.toLowerCase()],
-            sourceProvided: model.location && model.source ? '' : null
-        });
+            modelConstants
+        );
+        this.model.filterSources = (t) => t !== 'OpenStax Tutor' || this.model.isTutor;
         for (const book of this.model.books) {
             book.titleText = $.htmlToText(book.title);
         }

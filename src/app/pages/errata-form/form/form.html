@@ -32,7 +32,7 @@
         <div class="question">In which source did you find this error?</div>
         <div class="radio-columns">
             <span class="invalid-message">{model.validationMessage('resource')}</span>
-            <label each="sType in model.sourceTypes">
+            <label each="sType in model.sourceTypes.filter(model.filterSources)">
                 <input type="radio" name="resource" value="{sType}"
                  checked="{model.selectedSource === sType ? '' : null}"
                  required/>

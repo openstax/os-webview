@@ -2,8 +2,7 @@
 
 .errata-page .hero {
     background-color: os-color(light-blue);
-    display: flex;
-    flex-direction: column;
+    display: grid;
     justify-content: center;
     min-height: 22rem;
     padding: 3rem;

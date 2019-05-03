@@ -1,0 +1,25 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.errata-form .hero {
+    background-color: os-color(light-blue);
+    display: grid;
+    justify-content: center;
+    min-height: 22rem;
+    padding: 3rem;
+
+    @include wider-than($tablet-max) {
+        padding: 0;
+    }
+
+    &.padded {
+        margin-bottom: 2rem;
+    }
+
+    h1 {
+        color: os-color(blue);
+
+        @include width-up-to($phone-max) {
+            @include set-font(h1);
+        }
+    }
+}
