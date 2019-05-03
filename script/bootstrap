@@ -128,27 +128,6 @@ if [[ ! ${BOOTSTRAP_ALREADY_RAN} ]]; then
     fi
   fi
 
-  # Note: Skip rbenv for Travis because it already has ruby
-  if [[ ! "${CI}" = "true" ]] && [[ -f ".ruby-version" ]]; then
-    if [[ -n $(command -v rbenv) ]]; then
-      if [[ -z "$(rbenv version-name 2>/dev/null)" ]]; then
-        do_progress_quiet "Installing Ruby (see ./.ruby-version)" \
-          rbenv install --skip-existing
-      fi
-      do_progress_quiet "Setting correct ruby version (see ./.ruby-version)" \
-        eval "$(rbenv init -)"
-    else
-      _say "WARNING: Skipping rbenv. Using local ruby"
-    fi
-
-    gem list -i bundler >/dev/null 2>&1  || {
-      do_progress_quiet "Installing Ruby Bundler gem"
-        gem install bundler
-
-      [[ -n $(command -v rbenv) ]] && rbenv rehash
-    }
-  fi
-
   # Trust that subshells will maintain the python/node/ruby version
   declare -x BOOTSTRAP_ALREADY_RAN="true"
 fi

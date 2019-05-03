@@ -4,12 +4,13 @@ const bs = require('browser-sync').get(config.name);
 const pi = require('gulp-load-plugins')({
     pattern: ['gulp-*', 'gulp.*', 'del']
 });
+const sassLint = require('gulp-sass-lint');
 
 function scsslint() {
     return gulp.src([`${config.src}/**/*.scss`], {
-        since: gulp.lastRun(scsslint)
+        since: gulp.lastRun(sassLint)
     })
-    .pipe(pi.scssLint({
+    .pipe(sassLint({
         'maxBuffer': 30000000000000000000 * 1024,
         config: 'gulp/.scss-lint.yml',
         customReport: (file) => {

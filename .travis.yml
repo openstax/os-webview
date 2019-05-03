@@ -1,7 +1,4 @@
 language: node_js
-before_install:
-  - rvm install 2.3.1
-  - gem install scss_lint
 sudo: false
 
 # Cache the 3rd-party packages. From https://blog.travis-ci.com/2016-11-21-travis-ci-now-supports-yarn
