@@ -38,8 +38,8 @@ export default class RoverRedesign extends BaseClass {
         const sections = [
             bannerSection({
                 model: {
-                    headerImage: headerImage || 'http://via.placeholder.com/900x280?text=Rover%20Logo',
-                    mobileHeaderImage: headerImage || 'http://via.placeholder.com/900x280?text=Rover%20Logo',
+                    headerImage,
+                    mobileHeaderImage: headerImage,
                     headerImageAltText: 'Rover logo',
                     accessLink: data.section_1.accessButtonLink,
                     accessText: data.section_1.accessButtonCta,
@@ -66,7 +66,7 @@ export default class RoverRedesign extends BaseClass {
                         imageAltText: 'need some alt text',
                         description: c.blurb
                     })),
-                    webinarLink: '/need-a-link',
+                    webinarLink: data.section_3.button_link,
                     webinarLinkText: data.section_3.buttonCta
                 }
             }),
@@ -79,7 +79,7 @@ export default class RoverRedesign extends BaseClass {
                         description: c.blurb,
                         image: {
                             image: c.image.file,
-                            imageAltText: 'need alt text'
+                            imageAltText: c.image_alt_text
                         }
                     }))
                 }
