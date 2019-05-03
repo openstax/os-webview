@@ -1,14 +1,11 @@
 <template args="model">
-    <ul class="nav-menu meta-menu no-bullets" role="menu" aria-label="Meta navigation menu">
-        <li class="nav-menu-item"><a href="/impact" role="menuitem">Our Impact</a></li>
-        <li class="nav-menu-item"><a href="/foundation" role="menuitem">Supporters</a></li>
-        <li if="model.showBlog" class="nav-menu-item"><a href="/blog" role="menuitem">Blog</a></li>
-        <li class="nav-menu-item"><a href="/give" role="menuitem">Give</a></li>
-        <li class="nav-menu-item"><a href="https://openstax.secure.force.com/help" role="menuitem">Help</a></li>
-    </ul>
-    <span class="logo-wrapper">
-        <a class="logo rice-logo" href="http://www.rice.edu" role="menuitem">
-            <img src="/images/rice.png" alt="Rice University logo" height="30">
-        </a>
-    </span>
+    <a class="nav-menu" href="/bookstore-suppliers">Bookstores</a>
+    <a class="nav-menu" href="/impact">Our Impact</a>
+    <a class="nav-menu" href="/foundation">Supporters</a>
+    <a if="model.showBlog" class="nav-menu" href="/blog">Blog</a>
+    <a class="nav-menu" href="/give">Give</a>
+    <a class="nav-menu" href="https://openstax.secure.force.com/help">Help</a>
+    <a class="logo rice-logo logo-wrapper" href="http://www.rice.edu">
+        <img src="/images/rice.png" alt="Rice University logo" height="30">
+    </a>
 </template>
