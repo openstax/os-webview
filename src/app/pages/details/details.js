@@ -4,6 +4,7 @@ import ContentGroup from '~/components/content-group/content-group';
 import DetailsTab from './details-tab/details-tab';
 import getCompCopyDialogProps from './comp-copy-dialog-props';
 import InstructorResourceTab from './instructor-resource-tab/instructor-resource-tab';
+import Contents from './contents/contents';
 import PartnersTab from './partners-tab/partners-tab';
 import PhoneView from './phone-view/phone-view';
 import StudentResourceTab from './student-resource-tab/student-resource-tab';
@@ -186,6 +187,17 @@ export default class Details extends BaseClass {
             tabLabels.push(label);
         };
         const allies = shuffle(this.pageData.book_allies);
+        const contentsModel = Object.assign(
+            {
+                webviewLink: this.pageData.webview_link
+            },
+            this.pageData.table_of_contents
+        );
+
+        addTab('Table of Contents', new Contents(
+            contentsModel,
+            {tag: 'ol', classes: ['table-of-contents']}
+        ));
 
         if (!polish && this.pageData.free_stuff_instructor.content) {
             addTab('Instructor resources', new InstructorResourceTab(
