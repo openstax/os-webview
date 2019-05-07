@@ -48,6 +48,8 @@ $tooltip-breakpoint: #{$media-content-max + 10em};
         min-height: 7rem;
         padding: 1rem;
         position: absolute;
+        // Engage 3d optimizations to eliminate artifacts in Safari
+        transform: translate3d(0, 0, 0);
         transition: top 1s, left 1s, opacity 1s;
         width: 11rem;
 

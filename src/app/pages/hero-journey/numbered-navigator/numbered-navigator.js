@@ -12,17 +12,20 @@ const spec = {
     css,
     model() {
         const result = this.getProps();
+        const currentNode = typeof this.visitingNode === 'number' ?
+            Math.min(this.visitingNode, result.lastCompleted) : result.lastCompleted;
 
         result.nodeStatus = (nodeIndex) => {
             return nodeStatuses[1 + Math.sign(result.lastCompleted - nodeIndex)];
         };
         result.hiddenClass = this.hiddenClass;
-        result.tooltipMessage = result.steps.map((s) => s.task)[result.lastCompleted];
+        result.tooltipMessage = result.steps[currentNode].task || '';
         return result;
     },
     lastLastCompleted: null,
     hiddenClass: 'invisible',
-    showing: true
+    showing: true,
+    visitingNode: null
 };
 
 export default class extends componentType(spec) {
@@ -134,11 +137,12 @@ export default class extends componentType(spec) {
     }
 
     @on('click .node')
-    visitNode(event) {
+    moveToNode(event) {
         const index = this.nodeToIndex(event.delegateTarget);
         const {visitNode, lastCompleted} = this.getProps();
 
-        visitNode(Math.min(index, lastCompleted));
+        this.visitingNode = Math.min(index, lastCompleted);
+        visitNode(this.visitingNode);
     }
 
 }
