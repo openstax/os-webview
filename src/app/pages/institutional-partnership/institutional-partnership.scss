@@ -24,8 +24,6 @@ $near-white: #f8f8f8;
     .btn.primary {
         @extend %button;
         @extend %primary;
-
-        justify-self: left;
     }
 
     .near-white {
@@ -76,6 +74,16 @@ $near-white: #f8f8f8;
             .description {
                 @include set-font(body-large);
             }
+        }
+    }
+
+    [data-html] > p {
+        &:first-child {
+            margin-top: 0;
+        }
+
+        &:last-child {
+            margin-bottom: 0;
         }
     }
 
