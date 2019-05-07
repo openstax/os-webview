@@ -14,7 +14,7 @@ export default class Contents extends Controller {
     init(data, view) {
         this.template = () => '';
         this.view = view;
-        this.model = data.contents;
+        this.data = data;
         this.parentNumber = data.number ? `${data.number}.` : '';
         this.startFrom = data.startFrom || 1;
     }
@@ -31,7 +31,7 @@ export default class Contents extends Controller {
             hasContents(entry) ||
             (index > 0 && this.parentNumber);
 
-        this.model.forEach((entry, index) => {
+        this.data.contents.forEach((entry, index) => {
             let chapterNumber = '';
 
             // If any entry is a Unit, all are Units (even if some don't look have contents)
@@ -46,7 +46,12 @@ export default class Contents extends Controller {
                 ++i;
             }
             this.regions.self.append(new ContentItem({
-                model: entry,
+                model: Object.assign(
+                    {
+                        webviewLink: this.data.webviewLink
+                    },
+                    entry
+                ),
                 number: isUnitLevel ? '' : chapterNumber,
                 tag: 'li',
                 startFrom: this.startFrom

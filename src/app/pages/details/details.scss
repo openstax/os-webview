@@ -145,7 +145,7 @@
             font-weight: normal;
 
             @include wider-than($tablet-max) {
-                font-size: 150%;
+                font-size: 130%;
                 padding-bottom: $normal-margin;
             }
         }

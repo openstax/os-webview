@@ -64,13 +64,20 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
         }
 
         if (this.props.tableOfContents) {
+            const contentsModel = Object.assign(
+                {
+                    webviewLink: this.props.webviewLink
+                },
+                this.props.tableOfContents
+            );
+
             accordionItems.splice(1, 0, {
                 title: polish ? 'Spis treści' : 'Table of contents',
                 contentComponent: new TocPane({
                     polish,
                     webviewLink: this.props.webviewLink,
                     contentPane: new Contents(
-                        this.props.tableOfContents,
+                        contentsModel,
                         {tag: 'ol', classes: ['table-of-contents']}
                     )
                 })
