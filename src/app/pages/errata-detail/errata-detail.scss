@@ -1,0 +1,65 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.errata-detail {
+    .hero {
+       background-color: os-color(light-blue);
+       display: grid;
+       justify-content: center;
+       min-height: 22rem;
+       padding: 3rem;
+
+       @include wider-than($tablet-max) {
+           padding: 0;
+       }
+
+       &.padded {
+           margin-bottom: 2rem;
+       }
+
+       h1 {
+           color: os-color(blue);
+
+           @include width-up-to($phone-max) {
+               @include set-font(h1);
+           }
+       }
+   }
+
+   .info {
+       color: text-color(helper);
+       padding: 3rem 4rem;
+
+       @include width-up-to($phone-max) {
+           padding: 2rem 1rem;
+       }
+   }
+
+   .body-block {
+       background-color: ui-color(white);
+       display: grid;
+       grid-row-gap: $normal-margin;
+       width: 100%;
+   }
+
+  .label {
+      color: text-color(helper);
+      font-weight: bold;
+      text-align: left;
+      width: 20rem;
+
+      @include width-up-to($phone-max) {
+          width: auto;
+      }
+  }
+
+  .value {
+      @include width-up-to($tablet-max) {
+          max-width: 100%;
+          overflow-x: auto;
+      }
+
+      @include wider-than($tablet-max) {
+          max-width: $text-content-max;
+      }
+  }
+}

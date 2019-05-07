@@ -41,8 +41,6 @@ export default class extends componentType(spec, loaderMixin) {
                 selectedTitle: title
             };
 
-            // REMOVE THIS! TESTING!!
-            userInfo.accounts_id = 'temp';
             if (userInfo.accounts_id) {
                 formModel.title = () => `Suggest a Correction for ${formModel.selectedTitle}`;
                 const entry = books.find((info) => info.title === title);

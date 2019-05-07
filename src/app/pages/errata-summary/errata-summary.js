@@ -15,6 +15,7 @@ const spec = {
     slug: 'set in init'
 };
 
+// eslint-disable-next-line complexity
 function setDisplayStatus(detail) {
     const result = {
         status: 'Reviewed',
