@@ -221,16 +221,6 @@ export default class Details extends BaseClass {
             ));
         }
 
-        if (!polish && this.pageData.book_allies.length) {
-            addTab('Partners', new PartnersTab({
-                allies,
-                ally: {
-                    heading: this.pageData.ally_content.content.heading,
-                    blurb: this.pageData.ally_content.content.content
-                }
-            }));
-        }
-
         if (!polish && this.pageData.free_stuff_student.content) {
             addTab('Student resources', new StudentResourceTab({
                 freeStuff: {
@@ -239,6 +229,16 @@ export default class Details extends BaseClass {
                 },
                 resources: this.pageData.book_student_resources,
                 userStatusPromise: this.userStatusPromise
+            }));
+        }
+
+        if (!polish && this.pageData.book_allies.length) {
+            addTab('Partner Resources', new PartnersTab({
+                allies,
+                ally: {
+                    heading: this.pageData.ally_content.content.heading,
+                    blurb: this.pageData.ally_content.content.content
+                }
             }));
         }
 

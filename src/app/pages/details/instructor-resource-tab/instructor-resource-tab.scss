@@ -134,11 +134,3 @@ $icon-size: 6rem;
         }
     }
 }
-
-// Optimizely selector
-.bigger-view:not(.hide-tab) .instructor-resources {
-    .ally-blurb,
-    .ally.resources {
-        display: none;
-    }
-}
