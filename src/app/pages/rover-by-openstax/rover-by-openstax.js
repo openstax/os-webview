@@ -66,7 +66,7 @@ export default class RoverRedesign extends BaseClass {
                         imageAltText: 'need some alt text',
                         description: c.blurb
                     })),
-                    webinarLink: data.section_3.button_link,
+                    webinarLink: data.section_3.buttonLink,
                     webinarLinkText: data.section_3.buttonCta
                 }
             }),
@@ -79,7 +79,7 @@ export default class RoverRedesign extends BaseClass {
                         description: c.blurb,
                         image: {
                             image: c.image.file,
-                            imageAltText: c.image_alt_text
+                            imageAltText: c.imageAltText
                         }
                     }))
                 }
