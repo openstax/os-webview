@@ -1,3 +1,4 @@
+import analytics from '~/helpers/analytics';
 import componentType from '~/helpers/controller/init-mixin';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './banner-carousel.html';
@@ -28,7 +29,6 @@ export default class BannerCarousel extends BaseClass {
         super.init();
         this.getProps = getProps;
         this.frameNumber = 0;
-        this.rowOffset = 0;
     }
 
     onLoaded() {
@@ -41,6 +41,18 @@ export default class BannerCarousel extends BaseClass {
             super.onClose();
         }
         window.removeEventListener('resize', this.onResize);
+    }
+
+    @on('click .image-row a')
+    reportImageClick() {
+        const imageData = this.images[this.frameNumber];
+        const identifier = imageData.identifier || imageData.image.replace(/.*\//, '');
+
+        analytics.sendPageEvent(
+            'Homepage banner',
+            'click',
+            identifier
+        );
     }
 
     @on('click .dot')
