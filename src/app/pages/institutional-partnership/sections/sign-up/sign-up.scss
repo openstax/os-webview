@@ -14,7 +14,16 @@
         grid-gap: 3rem;
         grid-template-columns: 100%;
         justify-items: center;
+        max-width: 64rem;
         text-align: center;
+    }
+
+    .envelope-icon {
+        font-size: 6rem;
+    }
+
+    h1 {
+        margin: 0;
     }
 
     form {
