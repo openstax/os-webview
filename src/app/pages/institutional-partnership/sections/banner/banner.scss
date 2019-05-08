@@ -9,8 +9,7 @@
         padding: 4rem 0 6rem;
     }
 
-    .background-image,
-    .gradient-overlay {
+    .background-image {
         background-position: center center;
         background-repeat: no-repeat;
         background-size: cover;
@@ -22,17 +21,7 @@
         z-index: -1;
     }
 
-    .gradient-overlay {
-        @include width-up-to($phone-max) {
-            background: linear-gradient(
-                to right, os-color(blue), rgba(os-color(blue), 0)
-            );
-        }
-
-        @include wider-than($phone-max) {
-            background: linear-gradient(
-                to right, os-color(blue), os-color(blue) 33%, rgba(os-color(blue), 0)
-            );
-        }
+    .btn {
+        justify-self: left;
     }
 }
