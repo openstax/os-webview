@@ -9,6 +9,7 @@ import errataBookData from '../src/data/errata-book';
 import errata7199 from '../src/data/errata-7199';
 import footerData from '../src/data/footer';
 import institutionalPartnershipData from '../src/data/institutional-partnership';
+import openstaxHomepageData from '../src/data/openstax-homepage';
 import osNewsData from '../src/data/openstax-news';
 import osNewsDetailData from '../src/data/openstax-news-detail';
 import osTutorData from '../src/data/openstax-tutor';
@@ -38,6 +39,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isErrata7199 = (/errata[?/]7199/).test(args[0]);
     const isFooter = (/api\/footer/).test(args[0]);
     const isInstitutionalPartnership = (/pages\/institutional-partner-program/).test(args[0]);
+    const isHomepage = (/openstax-homepage/).test(args[0]);
     const isOsNews = (/slug=openstax-news/).test(args[0]);
     const isOsNewsDetail = (/v2\/pages\/90/).test(args[0]);
     const isOsTutor = (/pages\/openstax-tutor/).test(args[0]);
@@ -71,6 +73,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = errata7199;
             } else if (isFooter) {
                 payload = footerData;
+            } else if (isHomepage) {
+                payload = openstaxHomepageData;
             } else if (isInstitutionalPartnership) {
                 payload = institutionalPartnershipData;
             } else if (isSubjects) {
