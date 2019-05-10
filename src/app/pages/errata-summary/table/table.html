@@ -3,7 +3,7 @@
         <thead>
             <tr>
                 <th each="md in model.columnSpecs" class="{md.cssClass || ''}"
-                 data-sort-fn="{md.sortFn}" data-sort-key="{md.sortFn ? md.key : ''}"
+                 data-sort-fn="{md.sortFn}" data-sort-key="{md.sortFn && md.key}"
                  role="{md.sortFn ? 'button' : ''}" tabindex="{md.sortFn ? 0 : null}" >
                  {md.label || ''}
                 <if condition="model.sortKey === md.key">

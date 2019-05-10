@@ -5,6 +5,7 @@ import userModel from '~/models/usermodel';
 import $ from '~/helpers/$';
 import Form from './form/form';
 import css from './errata-form.css';
+import settings from 'settings';
 
 const spec = {
     template,

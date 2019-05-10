@@ -95,7 +95,6 @@ export default class extends componentType(spec, loaderMixin) {
 
     tableProps() {
         const errataEntries = this.pageData || [];
-        const bookId = this.bookInfo.id;
         const matchesFilter = (item) => {
             switch (this.selectedFilter) {
             case '':
@@ -114,9 +113,7 @@ export default class extends componentType(spec, loaderMixin) {
 
         return {
             get filteredErrataEntries() {
-                return errataEntries.filter(
-                    (item) => item.book === bookId && matchesFilter(item)
-                );
+                return errataEntries.filter(matchesFilter);
             }
         };
     }

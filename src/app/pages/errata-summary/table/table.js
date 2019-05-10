@@ -2,6 +2,7 @@ import componentType from '~/helpers/controller/init-mixin';
 import {description as template} from './table.html';
 import {on} from '~/helpers/controller/decorators';
 import busMixin from '~/helpers/controller/bus-mixin';
+import $ from '~/helpers/$';
 
 const columnSpecs = [
     {
@@ -45,7 +46,12 @@ const columnSpecs = [
         cssClass: 'mid'
     }
 ];
-
+const statusSortOrder = {
+    'Co': 0,
+    'Wi': 1,
+    'No': 2,
+    'In': 3
+};
 const sortFunctions = {
     sortDate: (a, b) => new Date(a) - new Date(b),
     sort: (a, b) => {
