@@ -19,15 +19,8 @@ export default class TocDialog extends Controller {
 
     onLoaded() {
         if (this.model.tableOfContents) {
-            const contentsModel = Object.assign(
-                {
-                    webviewLink: this.model.webviewLink
-                },
-                this.model.tableOfContents
-            );
-
             this.regions.toc.attach(
-                new Contents(contentsModel, {tag: 'ol', classes: ['table-of-contents']})
+                new Contents(this.model.tableOfContents, {tag: 'ol', classes: ['table-of-contents']})
             );
         }
     }
