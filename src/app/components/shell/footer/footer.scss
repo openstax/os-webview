@@ -136,6 +136,7 @@ $lower-footer: #3b3b3b;
         }
 
         .social {
+            align-items: center;
             display: grid;
             grid-auto-flow: column;
             grid-gap: 1rem;
@@ -143,6 +144,11 @@ $lower-footer: #3b3b3b;
 
             > .btn {
                 background-color: os-color(light-gray);
+            }
+
+            > .rice-logo > img {
+                height: 4rem;
+                transform: translateY(0.2rem); //better centering
             }
         }
     }
