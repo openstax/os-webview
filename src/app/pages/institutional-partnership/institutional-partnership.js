@@ -18,7 +18,7 @@ const spec = {
         classes: ['institutional-partnership', 'page'],
         tag: 'main'
     },
-    slug: 'pages/institutional-partner-program'
+    slug: 'pages/institutional-partners'
 };
 
 export default class extends componentType(spec) {
@@ -102,10 +102,18 @@ export default class extends componentType(spec) {
             model: {
                 heading: data.section_7_heading,
                 subheading: data.section_7_subheading,
-                icons: data.section_7_icons[0].map((i) => ({
-                    image: i.image.image,
-                    altText: i.image_alt_text
-                })),
+                established: data.section_7_icons[0]
+                    .filter((i) => !i.current_cohort)
+                    .map((i) => ({
+                        image: i.image.image,
+                        altText: i.image_alt_text
+                    })),
+                current: data.section_7_icons[0]
+                    .filter((i) => i.current_cohort)
+                    .map((i) => ({
+                        image: i.image.image,
+                        altText: i.image_alt_text
+                    })),
                 linkText: data.section_7_link_text,
                 linkTarget: data.section_7_link_target
             }
