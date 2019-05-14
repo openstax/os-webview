@@ -54,6 +54,7 @@
         }
 
         &.tall {
+            grid-row-gap: 4rem;
             grid-template-rows: 1fr auto;
             padding: 4rem;
 
