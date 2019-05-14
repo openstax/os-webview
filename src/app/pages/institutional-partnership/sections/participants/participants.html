@@ -3,7 +3,7 @@
         <h2>{model.heading}</h2>
         <h3>{model.subheading}</h3>
         <div class="icons">
-            <img each="icon in model.icons" src="{icon.image}" alt="{icon.altText}">
+            <img each="icon in model.current" src="{icon.image}" alt="{icon.altText}">
         </div>
         <a class="show-established-partners" href="{model.linkTarget}">{model.linkText} <span class="fa fa-chevron-right"></span></a>
     </div>

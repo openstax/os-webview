@@ -38,7 +38,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isErrataBook = (/errata\/\?book_title/).test(args[0]);
     const isErrata7199 = (/errata[?/]7199/).test(args[0]);
     const isFooter = (/api\/footer/).test(args[0]);
-    const isInstitutionalPartnership = (/pages\/institutional-partner-program/).test(args[0]);
+    const isInstitutionalPartnership = (/pages\/institutional-partners/).test(args[0]);
     const isHomepage = (/openstax-homepage/).test(args[0]);
     const isOsNews = (/slug=openstax-news/).test(args[0]);
     const isOsNewsDetail = (/v2\/pages\/90/).test(args[0]);

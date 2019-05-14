@@ -18,7 +18,7 @@ export default class extends componentType(spec) {
 
     onLoaded() {
         this.establishedPartners = new EstablishedPartners({
-            model: this.model.icons
+            model: this.model.established
         });
     }
 
