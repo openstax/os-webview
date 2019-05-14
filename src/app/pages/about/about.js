@@ -33,7 +33,8 @@ const spec = {
             cards: (data.what_cards || []).map(translateCard),
             whereHeadline: data.where_heading,
             whereBlurb: data.where_paragraph,
-            map: data.where_map_url
+            map: data.where_map_url,
+            mapAlt: data.where_map_alt || 'animated map suggesting where our books are being adopted'
         };
     }
 };

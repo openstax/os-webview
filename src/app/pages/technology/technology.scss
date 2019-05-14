@@ -284,7 +284,12 @@
         }
 
         .border-image {
+            background-image: url('/images/technology/technology-bearscape.svg');
+            background-position: bottom;
+            background-repeat: no-repeat;
+            background-size: contain;
             bottom: 0;
+            height: 46vw;
             left: -5.6%;
             position: absolute;
             transform: translateY(5%);

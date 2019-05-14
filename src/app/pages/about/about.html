@@ -6,7 +6,7 @@
                 <div data-html="whoBlurb" skip="true"></div>
             </div>
         </div>
-        <img src="{model.whoImage}">
+        <img src="{model.whoImage}" role="presentation">
     </section>
     <section if="model" class="what">
         <div class="content">
@@ -17,7 +17,7 @@
                     class="card"
                     href="{card.link}"
                 >
-                    <img src="{card.image}" alt="">
+                    <img src="{card.image}" role="presentation">
                     <div class="content">
                         {card.text}
                     </div>
@@ -33,7 +33,7 @@
     </section>
     <div if="model" class="map">
         <div class="content">
-            <img src="{model.map}">
+            <img src="{model.map}" alt="{model.mapAlt}">
         </div>
     </div>
 </template>

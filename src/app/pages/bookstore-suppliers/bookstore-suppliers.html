@@ -13,12 +13,12 @@
                 <img class="phone-bg" srcset="
                     /images/bookstore-suppliers/Hero-isometric-book-bg-mobile.png 1x,
                     /images/bookstore-suppliers/Hero-isometric-book-bg-mobile@2x.png 2x
-                ">
+                " alt="four books">
             </div>
             <img class="phone-fg" srcset="
                 /images/bookstore-suppliers/Hero-books-mobile.png 1x,
                 /images/bookstore-suppliers/Hero-books-mobile@2x.png 2x
-            " alt="">
+            " alt="two books">
         </div>
     </div>
     <div if="model.suppliers" class="main-content">
@@ -28,7 +28,7 @@
         <div class="featured cards {model.cardsClass}">
             <div each="supplier in model.featuredSuppliers" class="card">
                 <div class="logo-dot">
-                    <img src="{supplier.logoUrl}">
+                    <img src="{supplier.logoUrl}" alt="company logo">
                 </div>
                 <h2>{supplier.name}</h2>
                 <div class="blurb" data-html="featuredSuppliers[{$item}].description" skip="true"></div>
@@ -39,7 +39,7 @@
         <div class="cards {model.cardsClass}">
             <div each="supplier in model.suppliers" class="card">
                 <div class="logo-dot">
-                    <img src="{supplier.logoUrl}">
+                    <img src="{supplier.logoUrl}" alt="company logo">
                 </div>
                 <h2>{supplier.name}</h2>
                 <div class="blurb" data-html="suppliers[{$item}].description" skip="true"></div>
