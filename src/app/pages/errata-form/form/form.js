@@ -1,14 +1,30 @@
 import {Controller} from 'superb.js';
-import settings from 'settings';
-import $ from '~/helpers/$';
-import selectHandler from '~/handlers/select';
-import routerBus from '~/helpers/router-bus';
-import {on} from '~/helpers/controller/decorators';
 import {description as template} from './form.html';
+import {on} from '~/helpers/controller/decorators';
+import $ from '~/helpers/$';
 import css from './form.css';
+import routerBus from '~/helpers/router-bus';
+import selectHandler from '~/handlers/select';
+import settings from 'settings';
 
 const sourceNames = {
     tutor: 'OpenStax Tutor'
+};
+const modelConstants = {
+    postEndpoint: `${settings.apiOrigin}${settings.apiPrefix}/errata/`,
+    errorTypes: [
+        'Broken link',
+        'Incorrect answer, calculation, or solution',
+        'General/pedagogical suggestion or question',
+        'Other factual inaccuracy in content',
+        'Typo',
+        'Other'
+    ],
+    sourceTypes: [
+        'OpenStax Tutor', 'Textbook', 'iBooks version', 'Kindle', 'Instructor solution manual',
+        'Student solution manual', 'Other'
+    ],
+    subnotes: {'Textbook': 'includes print, PDF, and web view'}
 };
 
 export default class Form extends Controller {
@@ -17,17 +33,21 @@ export default class Form extends Controller {
     init(model) {
         this.css = css;
         this.template = template;
-        this.model = Object.assign(model, {
-            postEndpoint: `${settings.apiOrigin}${settings.apiPrefix}/errata/`,
-            validationMessage: (name) => {
-                const el = this.el.querySelector(`[name="${name}"]`);
+        this.model = Object.assign(
+            model,
+            {
+                validationMessage: (name) => {
+                    const el = this.el.querySelector(`[name="${name}"]`);
 
-                return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
+                    return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
+                },
+                helpBoxVisible: () => this.model.selectedError === 'Other' ? 'visible' : 'not-visible',
+                selectedSource: model.source && sourceNames[model.source.toLowerCase()],
+                sourceProvided: model.location && model.source ? '' : null
             },
-            helpBoxVisible: () => this.model.selectedError === 'Other' ? 'visible' : 'not-visible',
-            selectedSource: model.source && sourceNames[model.source.toLowerCase()],
-            sourceProvided: model.location && model.source ? '' : null
-        });
+            modelConstants
+        );
+        this.model.filterSources = (t) => t !== 'OpenStax Tutor' || this.model.isTutor;
         for (const book of this.model.books) {
             book.titleText = $.htmlToText(book.title);
         }
@@ -40,9 +60,20 @@ export default class Form extends Controller {
         selectHandler.setup(this);
     }
 
+    onUpdate() {
+        if (super.onUpdate) {
+            super.onUpdate();
+        }
+        const fileInputs = Array.from(this.el.querySelectorAll('input[type="file"]'));
+
+        fileInputs.forEach((el, i) => {
+            el.setAttribute('name', `file_${i + 1}`);
+        });
+    }
+
     @on('change [name="error_type"]')
-    showOrHideSupportBox() {
-        this.model.selectedError = this.el.querySelector('[name="error_type"]:checked').value;
+    showOrHideSupportBox(event) {
+        this.model.selectedError = event.delegateTarget.value;
         this.update();
     }
 
@@ -56,19 +87,6 @@ export default class Form extends Controller {
     @on('change [name="resource"]')
     updateSelectedSource(e) {
         this.model.selectedSource = e.target.value;
-        this.update();
-    }
-
-    @on('change [type="file"]')
-    updateFiles(e) {
-        const varName = e.target.name.replace('_', '');
-        const stripPath = (fullPath) => fullPath.replace(/.*\\/, '');
-
-        this.model[varName] = stripPath(e.target.value);
-        if (this.model.file2 && !this.model.file1) {
-            this.model.file1 = this.model.file2;
-            this.model.file2 = '';
-        }
         this.update();
     }
 
@@ -137,16 +155,53 @@ export default class Form extends Controller {
         e.preventDefault();
     }
 
+    setVisibleFileNameFromFileInput(el) {
+        const name = el.name.replace('_', '');
+        const path = el.value.replace(/.*\\/, '');
+
+        this.model[name] = path;
+    }
+
+    @on('change [type="file"]')
+    updateFiles(e) {
+        this.setVisibleFileNameFromFileInput(e.target);
+
+        if (this.model.file2 && !this.model.file1) {
+            this.clearFile1();
+        } else {
+            this.update();
+        }
+    }
+
     @on('click .clear-file1')
     clearFile1() {
-        this.model.file1 = this.model.file2;
-        this.model.file2 = '';
+        const el1 = this.el.querySelector('[name="file_1"]');
+
+        el1.value = null;
+        this.setVisibleFileNameFromFileInput(el1);
+
+        // Values are not settable in file input items; you have to move the input
+        if (this.model.file2) {
+            const el2 = this.el.querySelector('[name="file_2"]');
+            const el3 = el2.cloneNode(true);
+
+            el2.parentNode.insertBefore(el3, el2);
+            el1.parentNode.insertBefore(el2, el1);
+            el1.remove();
+            el2.setAttribute('name', 'file_1');
+            el2.name = 'file_1';
+            this.setVisibleFileNameFromFileInput(el2);
+            this.model.file2 = '';
+        }
         this.update();
     }
 
     @on('click .clear-file2')
     clearFile2() {
-        this.model.file2 = '';
+        const el2 = this.el.querySelector('[name="file_2"]');
+
+        el2.value = null;
+        this.setVisibleFileNameFromFileInput(el2);
         this.update();
     }
 

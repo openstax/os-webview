@@ -1,0 +1,91 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+$node-size: 2.5rem;
+$bar-size: 0.2rem;
+
+.errata-detail .progress-bar-container {
+    justify-items: center;
+    margin-bottom: 2rem;
+    padding: 3rem 4rem 0;
+
+    .progress-bar-labels,
+    .progress-bar {
+        max-width: 70rem;
+        width: 100%;
+    }
+
+    .progress-bar-labels {
+        @include set-font(helper-label);
+
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+
+        .label {
+            width: auto;
+
+            &:nth-child(2) {
+                justify-self: center;
+                width: auto;
+            }
+
+            &:nth-child(3) {
+                justify-self: right;
+                width: auto;
+            }
+        }
+
+    }
+
+    .progress-bar {
+        background-color: text-color(white);
+        height: 5rem;
+        margin-top: 1rem;
+        position: relative;
+
+        .progress-bar-layer {
+            display: grid;
+            grid-auto-flow: column;
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
+
+        .node,
+        .bar {
+            background-color: ui-color(page-bg);
+            box-shadow: inset 0 1px 3px rgba(ui-color(footer-bg), 0.4);
+
+            &.filled {
+                background-color: os-color(green);
+                box-shadow: none;
+            }
+
+            &.filled-no {
+                background-color: os-color(gray);
+                box-shadow: none;
+            }
+        }
+
+        .node {
+            align-items: center;
+            border-radius: 50%;
+            height: $node-size;
+            width: $node-size;
+
+            &:nth-child(2) {
+                justify-self: center;
+            }
+
+            &:nth-child(3) {
+                justify-self: right;
+            }
+        }
+
+        .bar {
+            flex: 50% 1 1;
+            height: $bar-size;
+            margin: $node-size / 2 - $bar-size / 2 0.3rem 0;
+        }
+    }
+}
