@@ -20,13 +20,12 @@
 
     .cards {
         display: grid;
-        // grid-auto-columns: 28rem;
+        grid-auto-columns: minmax(28rem, auto);
         grid-auto-flow: column;
         grid-gap: 2rem;
         max-width: 100%;
-        overflow: auto;
-        padding: 0.5rem 0;
-        padding-right: $normal-margin;
+        overflow-x: auto;
+        padding: 0.5rem $normal-margin 0.5rem 0;
     }
 
     .card {
