@@ -1,0 +1,56 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+$gray-border: #f4f4f4;
+$gray-start: #fcfcfc;
+
+.errata-detail-block {
+    width: 100%;
+
+   .info {
+       color: text-color(helper);
+       padding: 3rem 4rem;
+
+       @include width-up-to($phone-max) {
+           padding: 2rem 1rem;
+       }
+    }
+
+    .body-block {
+        background-color: ui-color(white);
+        display: grid;
+        grid-row-gap: $normal-margin;
+        width: 100%;
+    }
+
+    .graybottom {
+        background-image: linear-gradient(to bottom, $gray-start, rgba(ui-color(white), 0) 40%);
+        border-bottom: thin solid $gray-border;
+    }
+
+   .label-value-pair {
+       display: grid;
+
+       @include width-up-to($phone-max) {
+           grid-template-columns: 100%;
+       }
+
+       @include wider-than($phone-max) {
+           grid-row-gap: 1rem;
+           grid-template-columns: 20rem auto;
+       }
+   }
+
+    .note {
+          @include set-font(helper-label);
+
+          background-color: transparent;
+          color: text-color(helper);
+          margin: 1rem 0 4rem 4rem;
+          width: 100%;
+
+          @include width-up-to($phone-max) {
+              margin-bottom: 6rem;
+              padding-left: 1rem;
+          }
+      }
+}

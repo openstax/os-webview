@@ -1,0 +1,53 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.errata-page .hero {
+    background-color: os-color(light-blue);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 22rem;
+    padding: 3rem;
+
+    @include wider-than($tablet-max) {
+        padding: 0;
+    }
+
+    &.padded {
+        margin-bottom: 2rem;
+    }
+
+    h1 {
+        color: os-color(blue);
+
+        @include width-up-to($phone-max) {
+            @include set-font(h1);
+        }
+    }
+
+    .instructions {
+        color: text-color(white);
+        margin-top: 1rem;
+    }
+
+    .with-tooltip {
+        color: os-color(blue);
+        margin-bottom: 3rem;
+        margin-top: 0.5rem;
+
+        &:hover {
+            margin-bottom: 0;
+            padding-bottom: 3rem;
+
+            .tooltip {
+                padding: 3rem;
+            }
+        }
+
+        .tooltip {
+            > p:first-child {
+                margin-top: 0;
+            }
+        }
+
+    }
+}

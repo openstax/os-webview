@@ -2,9 +2,10 @@ import settings from 'settings';
 import $ from '~/helpers/$';
 import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import userModel from '~/models/usermodel';
+import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
 import Popup from '~/components/popup/popup';
-import Errata from '~/pages/errata/errata';
-import Detail from '~/pages/errata/detail/detail';
+import {detailModelPromise} from '~/pages/errata-detail/errata-detail';
+import Detail from '~/pages/errata-detail/detail/detail';
 import SurveyRequest from '~/components/survey-request/survey-request';
 import {description as template} from './confirmation.html';
 import css from './confirmation.css';
@@ -74,20 +75,22 @@ export default class Confirmation extends BaseClass {
             this.regions.popup.attach(new Popup(this.model.popupText));
         }
         if (this.referringPage === 'errata') {
-            const queryDict = $.parseSearchString(window.location.search);
+            const {id} = $.parseSearchString(window.location.search);
+            const slug = `errata/${id}`;
 
-            Detail.detailPromise(queryDict.id).then((detail) => {
-                this.model.belowHeader.buttons = [{
-                    text: `submit ${detail.bookTitle} errata`,
-                    colorScheme: 'white-on-blue',
-                    url: `/errata/form?book=${encodeURIComponent(detail.bookTitle)}`
-                }];
-                this.update();
-                Errata.setDisplayStatus(detail);
-                this.regions.detail.attach(new Detail(detail));
+            fetchFromCMS(slug).then((detail) => {
+                detailModelPromise(detail).then((detailModel) => {
+                    this.model.belowHeader.buttons = [{
+                        text: `submit ${detailModel.detail.bookTitle} errata`,
+                        colorScheme: 'white-on-blue',
+                        url: `/errata/form?book=${encodeURIComponent(detailModel.detail.bookTitle)}`
+                    }];
+                    this.update();
+                    this.regions.detail.attach(new Detail(detailModel));
+                });
             });
 
-            this.model.errataId = queryDict.id;
+            this.model.errataId = id;
             this.userPromise.then((response) => {
                 this.model.defaultEmail = response.email;
                 this.update();

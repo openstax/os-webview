@@ -18,7 +18,6 @@ const PAGES = [
     'confirmation/*path',
     'contact',
     'details/*path',
-    'errata/*path',
     'faq',
     'foundation',
     'general/*path',
@@ -75,6 +74,9 @@ class AppRouter extends Router {
         this.default('404');
         this.root('home');
         this.route(/^(\d+)/, 'cms');
+        this.route('errata/form', 'errata-form');
+        this.route('errata/', 'errata-summary');
+        this.route(/errata\/\d+/, 'errata-detail');
         this.route('give-confirmation', 'give');
         this.route('interest-confirmation', 'confirmation');
         this.route('higher-ed', 'home');
