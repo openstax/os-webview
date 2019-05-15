@@ -18,6 +18,7 @@ class UserModel {
         const proxyPromise = new Promise((resolve) => {
             const handleError = (err) => {
                 console.warn('Error fetching', this.url, err);
+                resolve({});
             };
 
             if (Date.now() > this[LOADED_TIME] + CACHE_FOR_MS) {
