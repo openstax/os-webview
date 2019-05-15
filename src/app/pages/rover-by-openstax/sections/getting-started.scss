@@ -19,6 +19,16 @@
         @include width-up-to($phone-max) {
             grid-template-columns: 100%;
         }
+
+        .text-block {
+            @include wider-than($phone-max) {
+                padding-right: calc(30vw - 7rem);
+            }
+            @include wider-than($media-content-max) {
+                padding-right: calc(#{$media-content-max / 2} - 27vw);
+            }
+        }
+
     }
 
     .video-left-text-right {
