@@ -27,8 +27,8 @@ class Header extends Controller {
         };
 
         this.model = {
-            login: `${settings.apiOrigin}/oxauth/login/`,
-            logout: `${settings.apiOrigin}/oxauth/logout/`,
+            login: `${window.location.origin}/oxauth/login/`,
+            logout: `${window.location.origin}/oxauth/logout/`,
             user: {
                 username: null,
                 groups: []
