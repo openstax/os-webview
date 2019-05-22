@@ -1,6 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-$space-for-navigator: 7rem;
 $card-box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.5);
 $orange-gradient: linear-gradient(to right, rgb(228, 182, 96), rgb(228, 137, 96));
 
@@ -21,15 +20,6 @@ $orange-gradient: linear-gradient(to right, rgb(228, 182, 96), rgb(228, 137, 96)
         grid-gap: 4rem;
         grid-template-columns: 100%;
         justify-items: left;
-
-        @include wider-than($phone-max) {
-            max-width: #{97.5rem + $space-for-navigator};
-            padding-right: $space-for-navigator;
-        }
-
-        @include wider-than($media-content-max) {
-            padding-right: $normal-margin;
-        }
 
         > * {
             max-width: 100%;

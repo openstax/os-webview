@@ -8,7 +8,7 @@ import gettingStartedSection from './sections/getting-started';
 import lmsSection from './sections/lms';
 import faqSection from './sections/faq';
 import StickyFooter from '~/components/sticky-footer/sticky-footer';
-import SectionNavigator from '~/components/section-navigator/section-navigator';
+import Navigator from './sections/navigator/navigator';
 
 const spec = {
     css,
@@ -52,6 +52,7 @@ export default class RoverRedesign extends BaseClass {
             videoSection({
                 model: {
                     heading: data.section_2.heading,
+                    linkText: 'Video',
                     subhead: data.section_2.subheading,
                     description: data.section_2.blurb,
                     video: data.section_2.video
@@ -73,6 +74,7 @@ export default class RoverRedesign extends BaseClass {
             stepwiseSection({
                 model: {
                     heading: data.section_4.heading,
+                    linkText: 'StepWise®',
                     description: data.section_4.blurb,
                     cards: data.section_4.cards.map((c) => ({
                         heading: c.heading,
@@ -109,6 +111,7 @@ export default class RoverRedesign extends BaseClass {
             faqSection({
                 model: {
                     heading: 'Frequently Asked Questions',
+                    linkText: 'FAQ',
                     questions: data.section_7.faqs
                 }
             }),
@@ -130,11 +133,18 @@ export default class RoverRedesign extends BaseClass {
         sections.forEach((section) => {
             this.regions.self.append(section);
         });
-        const sectionIds = Array.from(this.el.querySelectorAll('section[id]'))
-            .map((el) => el.id);
-        const sectionNavigator = new SectionNavigator(sectionIds);
 
-        floatingTools.regions.self.attach(sectionNavigator);
+        const navModel = sections.filter((s) => s.model && s.model.linkText)
+            .map((s) => ({
+                id: s.el.id,
+                heading: s.model.linkText
+            }));
+        const navigator = new Navigator({
+            model: navModel
+        });
+
+        // This is kind of rude
+        sections[0].regions.self.append(navigator);
         // Pardot tracking
         if ('piTracker' in window) {
             piTracker(window.location.href.split('#')[0]);

@@ -1,0 +1,9 @@
+<template args="model">
+    <div class="top-bar">On this page</div>
+    <div class="bottom-bar">
+        <div each="sec in model" class="navigation-item" data-target-id="{sec.id}">
+            <div>{sec.heading}</div>
+            <div class="{`indicator ${model.currentId === sec.id ? 'active' : ''}`}"></div>
+        </div>
+    </div>
+</template>
