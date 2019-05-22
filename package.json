@@ -95,7 +95,8 @@
         ],
         "modulePathIgnorePatterns": [
             "package.json"
-        ]
+        ],
+        "testURL": "https://cms-dev.openstax.org/"
     },
     "engines": {
         "node": ">=6.2"
