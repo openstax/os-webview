@@ -74,8 +74,9 @@ $lower-footer: #3b3b3b;
             }
         }
 
-        [role="heading"] {
+        h2 {
             grid-area: headline;
+            margin: 0;
 
             @include width-up-to($phone-max) {
                 @include title-font(2rem);
@@ -86,8 +87,9 @@ $lower-footer: #3b3b3b;
             }
         }
 
-        .column-heading {
+        h3 {
             @include title-font(1.8rem);
+            margin: 0;
         }
 
         .mission {
