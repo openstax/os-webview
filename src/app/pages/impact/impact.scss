@@ -16,6 +16,10 @@ $light: #f8f8f8;
             padding: 3rem 2rem;
         }
 
+        &#banner {
+            background-position-x: 84%;
+        }
+
         &.white {
             background-color: ui-color(white);
         }
