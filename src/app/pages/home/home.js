@@ -29,10 +29,13 @@ export default class Home extends BaseClass {
             smallImages: this.pageData.mobile_banner_images
         }));
         const quotesData = this.pageData.row_1.map((columnData) => {
-            const result = Object.assign({}, columnData);
-            const imageData = columnData.image;
+            const result = Object.assign(
+                {
+                    hasImage: !!columnData.image.image
+                },
+                columnData
+            );
 
-            result.hasImage = !!imageData.image;
             return result;
         });
         const quotesView = new Quotes(quotesData);

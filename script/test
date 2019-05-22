@@ -2,5 +2,5 @@
 source ./script/bootstrap || exit 111
 cd "$(dirname "$0")/.." || exit 111
 
-"$(npm bin)/jest" || exit 5
+npm test || exit 5
 shellcheck ./script/*

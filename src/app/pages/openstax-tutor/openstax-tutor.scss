@@ -580,6 +580,10 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
                 }
 
                 .bottom-edge {
+                    background-image: url('/images/openstax-tutor/cs-background.svg');
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    height: 4rem;
                     margin: 0 (-2 * $normal-margin) -3.6rem;
                     width: calc(100% + (2 * $normal-margin));
                 }
@@ -593,6 +597,10 @@ $hover-shadow: 0.8rem 0.8rem 2rem 0 rgba(0, 0, 0, 0.12);
                 }
 
                 .stamp {
+                    background-image: url('/images/openstax-tutor/icon-megaphone.svg');
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    height: 6rem;
                     position: absolute;
                     right: $normal-margin;
                     top: $normal-margin;

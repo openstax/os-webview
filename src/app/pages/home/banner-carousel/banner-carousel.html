@@ -4,7 +4,7 @@
             each="image in model.images"
             href="{image.link}"
             style="background-image: url({image.image})"
-            alt="{image.alt_text}"
+            aria-label="{image.alt_text}"
             tabindex="{$item == model.frameNumber ? 0 : -1}"
         ></a>
     </div>

@@ -10,7 +10,9 @@
         <if condition="entry.title">
             <div class="content">
                 <div class="image-holder">
-                    <img src="{entry.photo ? entry.photo.file : ''}">
+                    <img src="{entry.photo ? entry.photo.file : ''}"
+                        alt="{entry.name}"
+                    >
                 </div>
                 <div class="name">{entry.name}</div>
                 <div>{entry.title}</div>
