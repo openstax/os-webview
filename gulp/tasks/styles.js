@@ -11,35 +11,10 @@ function scsslint() {
         since: gulp.lastRun(sassLint)
     })
     .pipe(sassLint({
-        'maxBuffer': 30000000000000000000 * 1024,
-        config: 'gulp/.scss-lint.yml',
-        customReport: (file) => {
-            /* eslint prefer-template:0 */
-            const colors = pi.util.colors;
-
-            if (!file.scsslint.success) {
-                process.exitCode = 1;
-
-                pi.util.log(
-                    colors.cyan(file.scsslint.issues.length) +
-                    ' issues found in ' +
-                    colors.magenta(file.path)
-                );
-
-                file.scsslint.issues.forEach((issue) => {
-                    const severity = issue.severity === 'warning' ? colors.yellow(' [W] ') : colors.red(' [E] ');
-                    const linter = issue.linter ? (`${issue.linter}: `) : '';
-                    const logMsg = `${colors.cyan(file.relative)}:` +
-                        colors.magenta(issue.line) +
-                        severity +
-                        colors.green(linter) +
-                        issue.reason;
-
-                    pi.util.log(logMsg);
-                });
-            }
-        }
-    }));
+        configFile: 'gulp/.sass-lint.yml'
+    }))
+    .pipe(sassLint.format())
+    .pipe(sassLint.failOnError());
 }
 
 function compileStyles(src, dest) {

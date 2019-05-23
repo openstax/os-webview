@@ -19,7 +19,7 @@
 
     .col1 {
         border-radius: 0.3rem; // background: linear-gradient(224.64deg, rgba(250,188,77,0) 0%, #FABC4D 100%), linear-gradient(0deg, #F4D019 0%, #F4D019 100%);
-        box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.2);
+        box-shadow: 0 1.5rem 4rem 0 rgba(0, 0, 0, 0.2);
         height: 36rem;
         width: 100%;
     }
@@ -59,8 +59,6 @@
     .u-txt1 {
         @include title-font(5.6rem);
         color: text-color(normal);
-        font-weight: bold;
-        letter-spacing: -1.2px;
         line-height: 3.4rem;
     }
 

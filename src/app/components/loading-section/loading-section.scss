@@ -31,7 +31,7 @@
         width: 100vw;
 
         @keyframes loaderBubble {
-            0 {
+            0% {
                 background-position: 0;
             }
 
@@ -72,7 +72,7 @@
 
             to {
                 background-color: white;
-                box-shadow: 0 1px 0 rgba(os-color(gray), 0.6);
+                box-shadow: 0 0.1rem 0 rgba(os-color(gray), 0.6);
                 transform: rotateY(180deg);
             }
         }

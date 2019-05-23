@@ -65,7 +65,7 @@ $narrow-breakpoint: 60em * $scale-factor;
     }
 
     .search-div-container {
-        box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.3);
+        box-shadow: 0 1rem 3rem 0 rgba(0, 0, 0, 0.3);
         width: 63.4rem;
 
         @include width-up-to($tablet-max) {

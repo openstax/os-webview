@@ -1,7 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-$enough-for-two-columns: 640px;
-
 form {
 
     label {
@@ -152,7 +150,7 @@ form {
         // These come from pattern-library, but it has no placeholders or macros for them
         &:focus {
             border: thin solid os-color(light-blue);
-            box-shadow: 0 0 4px 0 rgba(os-color(light-blue), 0.5);
+            box-shadow: 0 0 0.4rem 0 rgba(os-color(light-blue), 0.5);
             outline: 0;
         }
 
