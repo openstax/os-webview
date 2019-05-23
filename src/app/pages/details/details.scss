@@ -47,6 +47,12 @@
         color: text-color(white);
     }
 
+    .loc-summary-text {
+        p {
+            padding-bottom: 8px;
+        }
+    }
+
     .hero {
         @include set-color-items(gold);
         @include set-color-items(green);
