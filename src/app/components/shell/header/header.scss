@@ -107,16 +107,6 @@ $button-size: 2.8rem;
         }
     }
 
-    &.transparent {
-        @include wider-than($tablet-max) {
-            background: transparent;
-
-            .nav {
-                background-color: rgba(black, 0.2);
-            }
-        }
-    }
-
     .nav-menu {
         @at-root .active#{&} {
             transform: scale3d(1, 1, 1) translate3d(0, 0, 0);

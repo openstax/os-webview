@@ -135,17 +135,11 @@ class Header extends Controller {
         return this;
     }
 
-    transparent() {
-        this.el.classList.add('transparent');
-        return this;
-    }
-
     reset() {
         if (this.el.classList.contains('fixed')) {
             this.el.classList.remove('fixed');
             window.dispatchEvent(new Event('resize', {bubbles: true}));
         }
-        this.el.classList.remove('transparent');
         return this;
     }
 
@@ -280,9 +274,6 @@ class Header extends Controller {
 
         if (windowTop <= height - blinkThreshold) {
             this.reset();
-            if (window.location.pathname === '/') {
-                this.transparent();
-            }
         } else if (windowTop > height + blinkThreshold && !this.isPinned()) {
             const oldHeight = document.body.scrollHeight; // next line changes body height
 

@@ -5,6 +5,16 @@ import {description as template} from './banner-carousel.html';
 import css from './banner-carousel.css';
 import $ from '~/helpers/$';
 
+function whenLoaded(imgUrl, callback) {
+    let img = document.createElement('img');
+
+    img.src = imgUrl;
+    img.addEventListener('load', () => {
+        callback();
+        img = null;
+    });
+}
+
 const spec = {
     template,
     css,
@@ -14,7 +24,23 @@ const spec = {
     model() {
         const props = this.getProps();
 
-        this.images = $.isMobileDisplay() ? props.smallImages : props.largeImages;
+        this.images = ($.isMobileDisplay() ? props.smallImages : props.largeImages);
+        if (!this.watchingLoad) {
+            whenLoaded(this.images[0].image, () => {
+                this.allLoaded = true;
+                // Give the browser a break to feel like it is done loading
+                setTimeout(() => this.update(), 300);
+            });
+            this.watchingLoad = true;
+        }
+        if (!this.allLoaded) {
+            this.images = this.images.map((obj, index) => {
+                if (index > 0) {
+                    return Object.assign({}, obj, {image: ''});
+                }
+                return obj;
+            });
+        }
         return {
             images: this.images,
             frameNumber: this.frameNumber
