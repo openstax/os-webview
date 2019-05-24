@@ -1,4 +1,4 @@
-import componentType, {canonicalLinkMixin, flattenPageDataMixin} from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin, flattenPageDataMixin, loaderMixin} from '~/helpers/controller/init-mixin';
 import css from './rover-by-openstax.css';
 import bannerSection from './sections/banner';
 import videoSection from './sections/video';
@@ -23,7 +23,7 @@ const spec = {
     },
     preserveWrapping: true
 };
-const BaseClass = componentType(spec, canonicalLinkMixin, flattenPageDataMixin);
+const BaseClass = componentType(spec, canonicalLinkMixin, flattenPageDataMixin, loaderMixin);
 
 export default class RoverRedesign extends BaseClass {
 
@@ -52,7 +52,7 @@ export default class RoverRedesign extends BaseClass {
             videoSection({
                 model: {
                     heading: data.section_2.heading,
-                    linkText: 'Video',
+                    linkText: data.section_2.navText,
                     subhead: data.section_2.subheading,
                     description: data.section_2.blurb,
                     video: data.section_2.video
@@ -61,10 +61,10 @@ export default class RoverRedesign extends BaseClass {
             meetRoverSection({
                 model: {
                     heading: data.section_3.heading,
+                    linkText: data.section_3.navText,
                     description: data.section_3.subheading,
                     cards: data.section_3.cards.map((c) => ({
                         image: c.icon.file,
-                        imageAltText: 'need some alt text',
                         description: c.blurb
                     })),
                     webinarLink: data.section_3.buttonLink,
@@ -74,7 +74,7 @@ export default class RoverRedesign extends BaseClass {
             stepwiseSection({
                 model: {
                     heading: data.section_4.heading,
-                    linkText: 'StepWise®',
+                    linkText: data.section_4.navText,
                     description: data.section_4.blurb,
                     cards: data.section_4.cards.map((c) => ({
                         heading: c.heading,
@@ -89,6 +89,7 @@ export default class RoverRedesign extends BaseClass {
             lmsSection({
                 model: {
                     heading: data.section_6.heading,
+                    linkText: data.section_6.navText,
                     description: data.section_6.blurb,
                     image: {
                         image: data.section_6.image.file,
@@ -100,6 +101,7 @@ export default class RoverRedesign extends BaseClass {
             gettingStartedSection({
                 model: {
                     heading: data.section_5.heading,
+                    linkText: data.section_5.navText,
                     description: data.section_5.blurb,
                     cards: data.section_5.cards.map((c) => ({
                         heading: c.heading,
@@ -111,7 +113,7 @@ export default class RoverRedesign extends BaseClass {
             faqSection({
                 model: {
                     heading: 'Frequently Asked Questions',
-                    linkText: 'FAQ',
+                    linkText: data.section_7.navText,
                     questions: data.section_7.faqs
                 }
             }),
@@ -130,6 +132,7 @@ export default class RoverRedesign extends BaseClass {
             floatingTools
         ];
 
+        this.hideLoader();
         sections.forEach((section) => {
             this.regions.self.append(section);
         });
@@ -139,6 +142,8 @@ export default class RoverRedesign extends BaseClass {
                 id: s.el.id,
                 heading: s.model.linkText
             }));
+
+        navModel.heading = this.pageData.nav_title;
         const navigator = new Navigator({
             model: navModel
         });
