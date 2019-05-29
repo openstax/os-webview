@@ -7,7 +7,7 @@
         </div>
         <div class="cards {model.cards.length > 4 ? 'row-of-three' : ''}">
             <div class="card" each="card in model.cards">
-                <img src="{card.image}" alt="{card.imageAltText}">
+                <img src="{card.image}" alt="">
                 <div class="text-block" data-html="cards[{$item}].description"></div>
             </div>
         </div>

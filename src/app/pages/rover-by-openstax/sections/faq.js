@@ -1,4 +1,4 @@
-import sectionCreator, {insertHtmlMixin} from './section';
+import sectionCreator from './section';
 import {description as template} from './faq.html';
 import css from './faq.css';
 import {on} from '~/helpers/controller/decorators';
@@ -33,4 +33,4 @@ function faqEventMixin(superclass) {
     };
 }
 
-export default sectionCreator(spec, insertHtmlMixin, faqEventMixin);
+export default sectionCreator(spec, faqEventMixin);

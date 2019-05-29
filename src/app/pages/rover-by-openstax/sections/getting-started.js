@@ -1,4 +1,4 @@
-import sectionCreator, {insertHtmlMixin} from './section';
+import sectionCreator from './section';
 import {description as template} from './getting-started.html';
 import css from './getting-started.css';
 
@@ -12,4 +12,4 @@ const spec = {
     }
 };
 
-export default sectionCreator(spec, insertHtmlMixin);
+export default sectionCreator(spec);
