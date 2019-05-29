@@ -34,10 +34,9 @@ $narrow-breakpoint: 60em * $scale-factor;
 .schoolmapbox {
 
     .txthead {
+        @include title-font(3.6rem);
+
         color: $text-color;
-        font-size: 3.6rem;
-        font-weight: bold;
-        letter-spacing: -1.44px;
         width: 45rem;
 
         @include width-up-to($phone-max) {

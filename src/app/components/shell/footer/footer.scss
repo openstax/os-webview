@@ -31,17 +31,17 @@ $lower-footer: #3b3b3b;
 
             @include width-up-to($phone-max) {
                 grid-template: 'headline'
-                    'mission'
-                    'col1'
-                    'col2'
-                    'col3';
+                'mission'
+                'col1'
+                'col2'
+                'col3';
             }
 
             @include wider-than($phone-max) {
                 align-items: start;
                 grid-column-gap: 4rem;
                 grid-template: 'headline col1 col2 col3'
-                    'mission col1 col2 col3' / minmax(auto, 50rem) auto auto auto;
+                'mission col1 col2 col3' / minmax(auto, 50rem) auto auto auto;
             }
 
             @include wider-than($tablet-max) {

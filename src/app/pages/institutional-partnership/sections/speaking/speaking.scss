@@ -16,7 +16,7 @@
         @include wider-than($phone-max) {
             grid-row-gap: 1rem;
             grid-template: 'l ur'
-                'l lr';
+            'l lr';
 
             .left-group {
                 grid-area: l;

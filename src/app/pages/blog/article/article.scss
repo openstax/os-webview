@@ -28,8 +28,6 @@
         }
 
         &.page {
-            $boxed-width: 730px;
-
             @mixin tablet {
                 @media (min-width: #{breakpoints(phone) + 1}) {
                     @content;
