@@ -42,7 +42,10 @@ export default class SeparateMap extends CMSPageController {
             style: 'mapbox://styles/openstax/cjhv1z4iq00of2smldg1o0ktw',
             center: [-95.712891, 37.090240],
             maxBounds: bounds,
-            zoom: mapZoom
+            zoom: mapZoom,
+            pitchWithRotate: false,
+            dragRotate: false,
+            touchZoomRotate: false
         });
 
         mapOb.on('load', () => {
