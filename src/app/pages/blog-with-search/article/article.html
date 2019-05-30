@@ -1,0 +1,23 @@
+<template args="model">
+    <if condition="model">
+        <div class="hero" style="{backgroundImage: `url(${model.image})`}"
+            role="img" aria-label="{model.imageAlt}"
+        >
+            <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
+        </div>
+        <div class="text-content">
+            <h1>{model.title}</h1>
+            <h2 if="model.subheading">{model.subheading}</h2>
+            <div class="meta">
+                <p>
+                    <span class="author">{model.author}</span>
+                    <span class="date">{model.date}</span>
+                </p>
+            </div>
+            <div class="body"></div>
+            <div class="tags" if="model.tags.length">
+                <div class="tag" each="tag in model.tags">{tag}</div>
+            </div>
+        </div>
+    </if>
+</template>

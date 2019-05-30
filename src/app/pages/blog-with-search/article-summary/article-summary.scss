@@ -1,0 +1,38 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+%article-summary {
+    display: grid;
+
+    .go-to {
+        @include set-font(helper-label);
+
+        display: block;
+        text-decoration: none;
+        text-transform: uppercase;
+    }
+
+    .meta {
+        .author{
+            font-style: italic;
+
+            &::after {
+                content: ' | ';
+            }
+        }
+    }
+
+    .link-image {
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .article-headline {
+        margin: 0;
+    }
+
+    .article-blurb {
+        column-width: $text-content-max;
+        overflow: hidden;
+    }
+}

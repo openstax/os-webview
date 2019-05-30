@@ -3,8 +3,14 @@ import settings from 'settings';
 import {on} from '~/helpers/controller/decorators';
 import routerBus from '~/helpers/router-bus';
 import analytics from '~/helpers/analytics';
-import Article from './article/article';
 import css from './blog.css';
+import SearchBar from './search-bar/search-bar';
+import SearchResults from './search-results/search-results';
+import FeaturedArticle from './pinned-article/pinned-article';
+import MoreStories from './more-stories/more-stories';
+import {blurbModel} from './article-summary/article-summary';
+import Article from './article/article';
+import DisqusForm from './disqus-form/disqus-form';
 
 function slugsSortedByArticleDate(articles) {
     return Object.keys(articles)
@@ -16,6 +22,7 @@ function slugsSortedByArticleDate(articles) {
         });
 }
 
+const path = '/blog-with-search';
 const spec = {
     css,
     view: {
@@ -36,25 +43,98 @@ export default class Blog extends BaseClass {
         window.addEventListener('navigate', this.hpcListener);
     }
 
+    get featuredArticleOptions() {
+        if (!this.pageData) {
+            return {};
+        }
+        const articleSlug = Reflect.ownKeys(this.pageData.articles)
+            .find((k) => this.pageData.articles[k].pin_to_top);
+        const pinnedData = this.pageData.articles[articleSlug];
+
+        return {
+            model: blurbModel(articleSlug, pinnedData)
+        };
+    }
+
+    moreStoriesOptions(test) {
+        if (!this.pageData) {
+            return {};
+        }
+        const articles = this.pageData.articles;
+        const slugs = Reflect.ownKeys(articles)
+            .filter((k) => test(k, articles[k]))
+            .sort((a, b) => articles[a].date < articles[b].date ? 1 : -1);
+
+        return slugs.map((s) => blurbModel(s, this.pageData.articles[s]));
+    }
+
+    buildDefaultPage() {
+        const fa = new FeaturedArticle(this.featuredArticleOptions);
+        const sb = new SearchBar({
+            model: {
+                title: 'Read more great stories'
+            }
+        });
+        const ms = new MoreStories({
+            articles: this.moreStoriesOptions((_, articleEntry) => !articleEntry.pin_to_top)
+        });
+
+        sb.on('value', (searchParam) => {
+            history.pushState({}, '', `${path}/?${searchParam}`);
+            this.handlePathChange();
+        });
+        this.regions.self.attach(fa);
+        this.regions.self.append(sb);
+        this.regions.self.append(ms);
+    }
+
+    buildSearchResultsPage() {
+        const sb = new SearchBar({
+            model: {
+                title: 'Read more great stories'
+            }
+        });
+        const sr = new SearchResults();
+
+        sb.on('value', (searchParam) => {
+            history.pushState({}, '', `${path}/?${searchParam}`);
+            this.handlePathChange();
+        });
+        this.regions.self.attach(sb);
+        this.regions.self.append(sr);
+    }
+
+    buildArticlePage() {
+        const a = new Article({
+            slug: `news/${this.articleSlug}`
+        });
+        const ms = new MoreStories({
+            articles: this.moreStoriesOptions((slug, _) => slug !== this.articleSlug)
+        });
+
+        this.regions.self.attach(a);
+        this.regions.self.append(new DisqusForm());
+        this.regions.self.append(ms);
+    }
+
     // eslint-disable-next-line complexity
     handlePathChange() {
         const slugMatch = window.location.pathname.match(/\/blog-with-search\/(.+)/);
 
-        console.info('Tried to match', window.location.pathname);
         if (!slugMatch) {
             this.articleSlug = null;
             this.setCanonicalLink('/blog', this.canonicalLink);
+
+            if (window.location.search) {
+                this.buildSearchResultsPage();
+            } else {
+                this.buildDefaultPage();
+            }
             return;
         }
 
         const articleSlug = slugMatch[1];
 
-        console.info('So...articleSlug', articleSlug);
-        if ((/^search/).test(articleSlug)) {
-            console.info('Search results');
-            this.setCanonicalLink('/blog/search', this.canonicalLink);
-            return;
-        }
         if (!this.articles[articleSlug]) {
             routerBus.emit('navigate', '/404', {path: '/blog'}, true);
             return;
@@ -63,6 +143,7 @@ export default class Blog extends BaseClass {
             this.articleSlug = articleSlug;
             this.setTimers();
             this.setCanonicalLink(slugMatch[0], this.canonicalLink);
+            this.buildArticlePage();
         }
     }
 

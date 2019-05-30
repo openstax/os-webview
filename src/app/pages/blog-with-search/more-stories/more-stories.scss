@@ -1,0 +1,44 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import '../article-summary/article-summary';
+
+$image-height: 24rem;
+
+.blog.page .more-stories {
+    display: grid;
+    grid-gap: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(36rem, 1fr));
+
+    .card {
+        @extend %card;
+        @extend %article-summary;
+
+        background-color: ui-color(white);
+        height: 100%;
+
+        .link-image {
+            height: $image-height;
+            width: 100%;
+        }
+
+        .text-block {
+            display: grid;
+            grid-row-gap: $normal-margin;
+            grid-template-rows: auto 1fr auto auto;
+            height: calc(100% - #{$image-height});
+            padding: $normal-margin;
+
+            > *,
+            .article-blurb > * {
+                margin: 0;
+            }
+
+            .article-blurb {
+                height: 12rem;
+            }
+        }
+    }
+
+    h2 {
+        @include title-font(2.4rem);
+    }
+}

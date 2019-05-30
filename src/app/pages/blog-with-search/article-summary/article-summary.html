@@ -1,0 +1,14 @@
+<template args="model">
+    <a class="link-image" href="/blog/{model.articleSlug}" aria-label="{model.altText}"
+        style="{backgroundImage: `url(${model.image})`}"></a>
+    <div class="text-block">
+        <h2 class="article-headline">{model.headline}</h2>
+        <h3 if="model.subheading">{model.subheading}</h3>
+        <div class="article-blurb" data-html="body"></div>
+        <a class="go-to" href="/blog-with-search/{model.articleSlug}">read more</a>
+        <div class="meta">
+            <span class="author">{model.author}</span>
+            <span class="date">{model.date}</span>
+        </div>
+    </div>
+</template>

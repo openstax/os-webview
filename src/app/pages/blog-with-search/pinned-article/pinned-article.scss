@@ -1,0 +1,33 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import '../article-summary/article-summary';
+
+.blog.page .pinned-article {
+    @extend %article-summary;
+
+    grid-column-gap: 3rem;
+
+    @include width-up-to($tablet-max) {
+        .link-image {
+            height: 32rem;
+        }
+
+        .text-block {
+            padding: 0 $normal-margin;
+        }
+    }
+
+    @include wider-than($tablet-max) {
+        grid-template-columns: minmax(40%, auto) minmax(auto, $text-content-max);
+        padding: 5rem $normal-margin;
+
+        .link-image {
+            height: 100%;
+        }
+    }
+
+    .article-blurb {
+        @include set-font(body-large);
+
+        height: 20rem;
+    }
+}
