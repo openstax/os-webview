@@ -4,7 +4,7 @@
     display: grid;
     grid-column-gap: 2rem;
     grid-template: 'topline topline'
-        'input button' /1fr auto;
+    'input button' /1fr auto;
     justify-items: center;
     max-width: $text-content-max;
     padding: 0 $normal-margin;
