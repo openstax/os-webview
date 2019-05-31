@@ -12,7 +12,7 @@ export default class FormattedAs extends Controller {
         this.format = format;
         this.model = Object.assign({
             coverUrl: article.article_image || 'https://placehold.it/370x240',
-            coverAltText: article.featured_image_alt_text,
+            coverAltText: article.featured_image_alt_text || '',
             articleSlug: article.slug.replace('news/', ''),
             isVisible: false
         }, article);
