@@ -52,7 +52,8 @@ export default class Map1 extends Controller {
             (async () => {
                 try {
                     const value = el.features[0].properties.id;
-                    const response = await fetch(`${settings.apiOrigin}${settings.apiPrefix}/schools/?id=${value}`);
+                    const value_name = el.features[0].properties.name;
+                    const response = await fetch(`${settings.apiOrigin}${settings.apiPrefix}/schools/?name=${value_name}`);
                     const data = await response.json();
 
                     if (data.length) {
