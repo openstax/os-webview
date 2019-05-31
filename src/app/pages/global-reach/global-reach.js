@@ -7,7 +7,7 @@ import Studentinfo from './studentinfo/studentinfo';
 import Schoolmap from './schoolmap/schoolmap';
 import mapboxgl from 'mapbox-gl';
 import css from './global-reach.css';
-import settings from '../../../settings-example';
+import settings from 'settings';
 
 const spec = {
     template,
