@@ -7,6 +7,7 @@ import Testimonialinfo from './testimonial';
 import mapboxgl from 'mapbox-gl';
 import SchoolinfoHead from './schoolinfo-head';
 import css from '../global-reach.css';
+import { type } from 'os';
 
 export default class Mapdropdown extends Controller {
 
@@ -112,13 +113,29 @@ export default class Mapdropdown extends Controller {
         document.getElementById('back-search-div').setAttribute('style', 'display: none;');
         document.getElementById('back-result-div').setAttribute('style', 'display: block;');
     }
+    generateCityState(city, state) {
+        let locstring = '';
+
+        if (city !== null) {
+            locstring += city;
+        }
+        if (city !== null && state !== null) {
+            locstring += ', ';
+        }
+        if (state !== null) {
+            locstring += state;
+        }
+
+        return locstring;
+    }
     flyToPopUp(objectS, offSet, lData, indexItem) {
         const fields = lData[indexItem].fields;
-        const lat = fields.lat;
-        const long = fields.long;
+        const lat = Number(fields.lat);
+        const long = Number(fields.long);
         const iName = fields.name;
         const pCity = fields.physical_city;
         const pState = fields.physical_state_province;
+        const citystate = this.generateCityState(pCity, pState);
 
         if (objectS.pObject !== 'empty') {
             objectS.pObject.remove();
@@ -140,7 +157,7 @@ export default class Mapdropdown extends Controller {
         });
 
         tooltip.setLngLat([long, lat]);
-        tooltip.setHTML(`<b>${iName}</b><br>${pCity === null ? '': pCity}${pCity !== null && pState !== null ? ', ': ''}${pState === null ? '' : pState}`);
+        tooltip.setHTML(`<b>${iName}</b><br>${citystate}`);
         tooltip.addTo(objectS.mapObject);
         this.popUp = tooltip;
         return tooltip;

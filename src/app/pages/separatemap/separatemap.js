@@ -6,7 +6,7 @@ import { description as template } from './separatemap.html';
 import Map1 from '../global-reach/map/map';
 import mapboxgl from 'mapbox-gl';
 import css from './separatemap.css';
-import settings from '../../../settings-example';
+import settings from 'settings';
 
 export default class SeparateMap extends CMSPageController {
 

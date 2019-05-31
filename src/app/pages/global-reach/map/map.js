@@ -212,6 +212,21 @@ export default class Map1 extends Controller {
         document.getElementById('back-result-div').setAttribute('style', 'display: none;');
         document.getElementById('back-detail-div').setAttribute('style', 'display: none;');
     }
+    generateCityState(city, state) {
+        let locstring = '';
+
+        if (city !== null) {
+            locstring += city;
+        }
+        if (city !== null && state !== null) {
+            locstring += ', ';
+        }
+        if (state !== null) {
+            locstring += state;
+        }
+
+        return locstring;
+    }
     markerTooltip(data) {
         const dField = data[0].fields;
         const iName = dField.name;
@@ -221,9 +236,10 @@ export default class Map1 extends Controller {
             closeButton: false,
             closeOnClick: false
         });
+        const citystate = this.generateCityState(pCity, pState);
 
         mtooltip.setLngLat([dField.long, dField.lat]);
-        mtooltip.setHTML(`<b>${iName}</b><br>${pCity === null ? '': pCity}${pCity !== null && pState !== null ? ', ': ''}${pState === null ? '' : pState}`);
+        mtooltip.setHTML(`<b>${iName}</b><br>${citystate}`);
         mtooltip.addTo(this.mapObject);
         this.tooltip = mtooltip;
     }
