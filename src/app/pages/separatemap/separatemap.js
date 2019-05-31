@@ -28,7 +28,6 @@ export default class SeparateMap extends CMSPageController {
         shell.regions.footer.el.setAttribute('hidden', '');
         this.el.querySelector('.close-map-msg').setAttribute('hidden', '');
         const tokenn = 'pk.eyJ1Ijoib3BlbnN0YXgiLCJhIjoiY2pnbWtjajZzMDBkczJ6cW1kaDViYW02aCJ9.0w3LCa7lzozzRgXM7xvBfQ';
-        const bounds = [[-180, -85], [180, 85]];
         let mapZoom;
 
         if ($.isMobileDisplay()) {
@@ -41,7 +40,6 @@ export default class SeparateMap extends CMSPageController {
             container: 'mapd',
             style: 'mapbox://styles/openstax/cjhv1z4iq00of2smldg1o0ktw',
             center: [-95.712891, 37.090240],
-            maxBounds: bounds,
             zoom: mapZoom,
             pitchWithRotate: false,
             dragRotate: false,

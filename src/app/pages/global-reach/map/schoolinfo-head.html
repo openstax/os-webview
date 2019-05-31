@@ -1,4 +1,6 @@
 <template args="model"></template>
     <div class="list-heading">{model.name}</div>
-    <div class="list-address">{model.physical_city}{model.physical_state_province === null ? '' : ', '+model.physical_state_province}</div>
+    <div class="list-address">
+            {model.physical_city === null ? '' : model.physical_city}{model.physical_city !== null && model.physical_state_province !== null ? ',' : ''}
+            {model.physical_state_province === null ? '' : model.physical_state_province}</div>
 </template>

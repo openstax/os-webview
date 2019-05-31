@@ -371,6 +371,22 @@ $narrow-breakpoint: 60em * $scale-factor;
         width: 100%;
     }
 
+    .loading-impact-div {
+        background-color: white;
+        border-radius: 2.8rem;
+        box-shadow: 0 1rem 3rem 0 rgba(0, 0, 0, 0.3);
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 4rem;
+        width: 4rem;
+        margin: auto;
+        padding-left: 1.25rem;
+        padding-top: 1rem;
+    }
+
     .search-list {
         background-color: white;
         border-radius: 0 0 0.3rem 0.3rem;

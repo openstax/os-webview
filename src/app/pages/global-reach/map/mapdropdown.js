@@ -123,8 +123,13 @@ export default class Mapdropdown extends Controller {
         if (objectS.pObject !== 'empty') {
             objectS.pObject.remove();
         }
+
+        if (long == 0  && lat == 0) {
+            return null
+        }
+
         objectS.mapObject.flyTo({
-            center: [lat, long],
+            center: [long, lat],
             offset: offSet,
             zoom: 14
         });
@@ -134,8 +139,8 @@ export default class Mapdropdown extends Controller {
             closeOnClick: false
         });
 
-        tooltip.setLngLat([lat, long]);
-        tooltip.setHTML(`<b>${iName}</b><br>${pCity}${pState === null ? '' : `, ${pState}`}`);
+        tooltip.setLngLat([long, lat]);
+        tooltip.setHTML(`<b>${iName}</b><br>${pCity === null ? '': pCity}${pCity !== null && pState !== null ? ', ': ''}${pState === null ? '' : pState}`);
         tooltip.addTo(objectS.mapObject);
         this.popUp = tooltip;
         return tooltip;
