@@ -29,9 +29,11 @@ export default class DetailsTab extends componentType(spec, insertHtmlMixin) {
 
     onLoaded() {
         super.onLoaded();
-        if (!this.model.comingSoon && 'bookInfo' in this.model) {
+        if (!this.model.comingSoon) {
             this.regions.getTheBook.append(
-                new GetThisTitle(this.model.bookInfo)
+                new GetThisTitle(
+                    Object.assign({includeTOC: true}, this.model.bookInfo)
+                )
             );
         }
 
