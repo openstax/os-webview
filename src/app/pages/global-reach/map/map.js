@@ -221,6 +221,7 @@ export default class Map1 extends Controller {
             closeButton: false,
             closeOnClick: false
         });
+
         mtooltip.setLngLat([dField.long, dField.lat]);
         mtooltip.setHTML(`<b>${iName}</b><br>${pCity === null ? '': pCity}${pCity !== null && pState !== null ? ', ': ''}${pState === null ? '' : pState}`);
         mtooltip.addTo(this.mapObject);
@@ -433,21 +434,21 @@ export default class Map1 extends Controller {
         }
     }
     makeFitBoundsArray(dataArray) {
-        var latlngArray = dataArray.map((e) => {
+        let latlngArray = dataArray.map((e) => {
             return [Number.parseFloat(e.fields.long), Number.parseFloat(e.fields.lat)];
         });
 
-        latlngArray = latlngArray.filter(i => i[0] !== 0 && i[1] !== 0);
+        latlngArray = latlngArray.filter((i) => (i[0] !== 0 && i[1] !== 0));
 
         const bounds = latlngArray.reduce((bound, coord) => {
             return bound.extend(coord);
         }, new mapboxgl.LngLatBounds(latlngArray[0], latlngArray[0]));
 
-        
-        if('_sw' in bounds && '_ne' in bounds) {
+
+        if ('_sw' in bounds && '_ne' in bounds) {
             const setBound = [[bounds._sw.lng, bounds._sw.lat], [bounds._ne.lng, bounds._ne.lat]];
 
-            if(latlngArray.length > 1){
+            if (latlngArray.length > 1) {
                 this.mapObject.fitBounds(setBound, {
                     padding: 100
                 });

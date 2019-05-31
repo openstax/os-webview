@@ -124,8 +124,8 @@ export default class Mapdropdown extends Controller {
             objectS.pObject.remove();
         }
 
-        if (long == 0  && lat == 0) {
-            return null
+        if (long === 0 && lat === 0) {
+            return null;
         }
 
         objectS.mapObject.flyTo({

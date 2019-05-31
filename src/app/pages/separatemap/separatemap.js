@@ -6,6 +6,7 @@ import { description as template } from './separatemap.html';
 import Map1 from '../global-reach/map/map';
 import mapboxgl from 'mapbox-gl';
 import css from './separatemap.css';
+import settings from '../../../settings-example';
 
 export default class SeparateMap extends CMSPageController {
 
@@ -27,7 +28,7 @@ export default class SeparateMap extends CMSPageController {
     onAttached() {
         shell.regions.footer.el.setAttribute('hidden', '');
         this.el.querySelector('.close-map-msg').setAttribute('hidden', '');
-        const tokenn = 'pk.eyJ1Ijoib3BlbnN0YXgiLCJhIjoiY2pnbWtjajZzMDBkczJ6cW1kaDViYW02aCJ9.0w3LCa7lzozzRgXM7xvBfQ';
+        const tokenn = settings.mapboxPK;
         let mapZoom;
 
         if ($.isMobileDisplay()) {
@@ -38,7 +39,7 @@ export default class SeparateMap extends CMSPageController {
         mapboxgl.accessToken = tokenn;
         const mapOb = new mapboxgl.Map({
             container: 'mapd',
-            style: 'mapbox://styles/openstax/cjhv1z4iq00of2smldg1o0ktw',
+            style: settings.mapboxStyle,
             center: [-95.712891, 37.090240],
             zoom: mapZoom,
             pitchWithRotate: false,

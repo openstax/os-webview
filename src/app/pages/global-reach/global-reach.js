@@ -7,6 +7,7 @@ import Studentinfo from './studentinfo/studentinfo';
 import Schoolmap from './schoolmap/schoolmap';
 import mapboxgl from 'mapbox-gl';
 import css from './global-reach.css';
+import settings from '../../../settings-example';
 
 const spec = {
     template,
@@ -30,13 +31,13 @@ const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 export default class ImpactDev extends BaseClass {
 
     createMap(model) {
-        const tokenn = 'pk.eyJ1Ijoib3BlbnN0YXgiLCJhIjoiY2pnbWtjajZzMDBkczJ6cW1kaDViYW02aCJ9.0w3LCa7lzozzRgXM7xvBfQ';
+        const tokenn = settings.mapboxPK;
         const mapCenter = $.isMobileDisplay() ? [-95.712891, 37.090240] : [0, 0];
 
         mapboxgl.accessToken = tokenn;
         const map = new mapboxgl.Map({
             container: 'mapdiv',
-            style: 'mapbox://styles/openstax/cjhv1z4iq00of2smldg1o0ktw',
+            style: settings.mapboxStyle,
             center: mapCenter,
             zoom: 2
         });
