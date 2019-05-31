@@ -15,11 +15,11 @@
         grid-row-gap: 4rem;
 
         @include wider-than($phone-max) {
-            padding-left: calc(8.33vw + 12rem);
+            padding-left: calc(20vw + 1rem);
         }
 
-        @include wider-than($wide-screen-min) {
-            padding-left: calc(68rem - 40vw);
+        @include wider-than($media-content-max) {
+            padding-left: 25rem;
         }
 
         > .text-block {
