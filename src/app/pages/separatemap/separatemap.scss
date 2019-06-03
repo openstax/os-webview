@@ -1,116 +1,169 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.separate-map-main {
-    display: flex;
-}
+$big-shadow: 0 1rem 3rem 0 rgba(0, 0, 0, 0.3);
+$small-shadow: 0 0.2rem 0.5rem 0 rgba(0, 0, 0, 0.15);
 
-.mapd {
-    bottom: 0;
-    height: calc(100% - 11rem);
-    left: 0;
-    margin-top: 11rem;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 100%;
+.separatemap.page {
+    .mapd {
+        bottom: 0;
+        height: calc(100% - 11rem);
+        left: 0;
+        margin-top: 11rem;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 100%;
 
-    @include width-up-to($tablet-max) {
-        display: flex;
-        flex-direction: column-reverse;
-        height: calc(100% - 5.2rem);
-        margin-top: 5.2rem;
+        @include width-up-to($tablet-max) {
+            display: flex;
+            flex-direction: column-reverse;
+            height: calc(100% - 5.2rem);
+            margin-top: 5.2rem;
+            top: 0;
+        }
+
+        @include width-up-to($tablet-max) {
+            .mapboxgl-canvas-container {
+                height: 100%;
+                position: relative;
+            }
+        }
+
+        .mapbox {
+            @include width-up-to($tablet-max) {
+                height: auto;
+                position: absolute;
+                width: 100%;
+            }
+        }
+    }
+
+    .filter-settings-region {
+        box-shadow: $small-shadow;
+    }
+
+    .search-box-region {
+        background-color: ui-color(white);
+        border-radius: 0.3rem;
+        box-shadow: $big-shadow;
+        overflow: hidden;
+
+        @include wider-than($phone-max) {
+            align-self: flex-start;
+            left: 5rem;
+            position: relative;
+            top: 3rem;
+        }
+
+        @include width-up-to($phone-max) {
+            bottom: 0;
+            margin: 1rem;
+            position: absolute;
+        }
+
+        &.minimized {
+            border-radius: 50%;
+        }
+    }
+
+    .back-impact-btn {
+        align-items: center;
+        background-color: white;
+        border-radius: 2.8rem;
+        display: grid;
+        height: 4rem;
+        justify-items: center;
+        width: 4rem;
+    }
+
+    .back-impact-div {
+        align-items: center;
+        background-color: white;
+        border-radius: 2.8rem;
+        bottom: auto;
+        box-shadow: $big-shadow;
+        color: text-color(normal);
+        display: grid;
+        grid-gap: 0;
+        position: fixed;
+        right: 2rem;
+        text-decoration: inherit;
+        top: 15.35rem;
+
+        @include width-up-to($tablet-max) {
+            bottom: auto;
+            right: 2rem;
+            top: 8rem;
+            z-index: 1;
+        }
+
+        @media (hover: hover) {
+            &:hover {
+                color: inherit;
+            }
+        }
+
+        &:not(:hover) {
+            .close-map-msg {
+                display: none;
+            }
+        }
+    }
+
+    .close-map-msg {
+        padding-left: $normal-margin;
+
+        @include width-up-to($phone-max) {
+            display: none;
+        }
+    }
+
+    .popup-msg-div {
+        background: white;
+        border-radius: 0.3rem;
+        bottom: 2rem;
+        max-width: 22rem;
+        padding: 1rem 1.5rem;
+        position: fixed;
+        right: 2rem;
+        top: auto;
+
+        @include width-up-to($tablet-max) {
+            display: none;
+        }
+    }
+
+    .popup-msg-cross-icon {
+        cursor: pointer;
+        margin: -0.5rem -0.5rem 0.5rem;
+    }
+
+    .mapboxgl-popup-content {
+        padding: 1rem 1.5rem;
+    }
+
+    .mapboxgl-popup-anchor-bottom {
+        pointer-events: none;
+    }
+
+    .popup-msg-link {
+        margin-bottom: 1.5rem;
+    }
+
+    .left-arrow-bak {
+        color: text-color(normal);
+    }
+
+    .mapboxgl-control-container {
+        display: none;
+    }
+
+    .mapboxgl-canvas {
         top: 0;
     }
 
-    @include width-up-to($tablet-max) {
-        .mapboxgl-canvas-container {
-            height: 100%;
-            position: relative;
-        }
+    .mapboxgl-popup {
+        pointer-events: none;
     }
 
-    .mapbox {
-        @include width-up-to($tablet-max) {
-            height: auto;
-            position: absolute;
-            width: 100%;
-        }
-    }
-}
-
-.back-impact-btn {
-    background-color: white;
-    border-radius: 2.8rem;
-    height: 4rem;
-    width: 4rem;
-}
-
-.back-impact-div {
-    background-color: white;
-    border-radius: 2.8rem;
-    bottom: auto;
-    box-shadow: 0 1rem 3rem 0 rgba(0, 0, 0, 0.3);
-    position: fixed;
-    right: 2rem;
-    top: 15.35rem;
-
-    @include width-up-to($tablet-max) {
-        bottom: auto;
-        right: 2rem;
-        top: 8rem;
-        z-index: 1;
-    }
-}
-
-.close-map-msg {
-    padding-left: 1rem;
-
-    @include width-up-to($phone-max) {
-        display: none;
-    }
-}
-
-.popup-msg-div {
-    background: white;
-    border-radius: 0.3rem;
-    bottom: 2rem;
-    padding: 0.7rem 1.3rem;
-    position: fixed;
-    right: 2rem;
-    top: auto;
-
-    @include width-up-to($tablet-max) {
-        display: none;
-    }
-}
-
-.popup-msg-cross {
-    align-items: end;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-}
-
-.popup-msg-content {
-    padding: 1rem;
-}
-
-.popup-msg-link {
-    margin-bottom: 1.5rem;
-}
-
-.left-arrow-bak {
-    color: #4a4a4a;
-}
-
-.mapboxgl-ctrl-bottom-left {
-    display: none;
-}
-
-.mapboxgl-ctrl-bottom-right {
-    display: none;
-}
-
-.mapboxgl-canvas {
-    top: 0;
 }

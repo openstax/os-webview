@@ -55,9 +55,32 @@ export class Bus {
 */
 export default (superclass) => class extends superclass {
 
+    constructor(...args) {
+        super(...args);
+        if (!this[BUS]) {
+            this.init();
+        }
+    }
+
     init(...args) {
-        super.init(...args);
+        if (super.init) {
+            super.init(...args);
+        }
         this[BUS] = new Bus();
+        this.on('update-props', (obj) => {
+            Object.assign(this, obj);
+        });
+    }
+
+    onLoaded() {
+        if (super.onLoaded) {
+            super.onLoaded();
+        }
+        if (this.whenPropsUpdated) {
+            this.on('update-props', (obj) => {
+                this.whenPropsUpdated(obj);
+            });
+        }
     }
 
     on(...args) {

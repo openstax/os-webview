@@ -1,7 +1,7 @@
 import componentType from '~/helpers/controller/init-mixin';
+import busMixin from '~/helpers/controller/bus-mixin';
 import {description as template} from './testimonial-form.html';
 import css from './testimonial-form.css';
-import shell from '~/components/shell/shell';
 import booksPromise from '~/models/books';
 import FormSelect from '~/components/form-select/form-select';
 import salesforce from '~/models/salesforce';
@@ -29,9 +29,12 @@ const spec = {
         };
     }
 };
-const hideDialog = shell.hideDialog.bind(shell);
 
-export default class TestimonialForm extends componentType(spec) {
+function hideDialog() {
+    this.emit('close-form');
+}
+
+export default class TestimonialForm extends componentType(spec, busMixin) {
 
     onLoaded() {
         booksPromise.then((items) => {
@@ -53,13 +56,6 @@ export default class TestimonialForm extends componentType(spec) {
         });
     }
 
-    show() {
-        shell.showDialog(() => ({
-            title: 'Enter your testimonial',
-            content: this
-        }));
-    }
-
     @on('submit form')
     watchForResponse() {
         if (!this.listeningForResponse) {
@@ -71,6 +67,5 @@ export default class TestimonialForm extends componentType(spec) {
     onClose() {
         this.el.querySelector('#form-response').removeEventListener('load', hideDialog);
     }
-
 
 }

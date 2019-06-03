@@ -1,0 +1,24 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.separatemap.page .search-box {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 22rem);
+
+    .filter-settings,
+    .search-results-region {
+        grid-column: 1 / 4;
+        overflow-y: auto;
+    }
+
+    .top-box.minimized {
+        align-items: center;
+        display: grid;
+        height: 4rem;
+        width: 4rem;
+    }
+
+    .search-message {
+        padding: 0 $normal-margin;
+    }
+}

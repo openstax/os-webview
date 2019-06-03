@@ -1,0 +1,35 @@
+<template args="model">
+    <div class="desktop-view {model.minimizedClass}">
+        <div class="search-icon" role="button" aria-pressed="{model.minimized}" tabindex="0">
+            <i class="{model.searchToggleIconClass}"></i>
+        </div>
+        <div class="search-and-clear">
+            <input type="text" class="search-input" placeholder="Search by country, state, city, or institution name">
+            <span class="search-clear fa fa-times" role="button" tabindex="0" hidden="{model.clearIconHiddenFlag}"></span>
+        </div>
+        <button class="filter-toggle" aria-pressed="{!model.filtersHidden}">
+            <if condition="model.filtersHidden">
+                <i class="filter-icon fas fa-sliders-h"></i>
+            <else>
+                <i class="close-filters fa fa-times"></i>
+            </if>
+            <span class="filter-label">Filter by</span>
+        </button>
+    </div>
+    <div class="phone-view {model.minimizedClass}">
+        <div class="search-icon" role="button" aria-pressed="{model.minimized}" tabindex="0">
+            <i class="{model.searchToggleIconClass}"></i>
+        </div>
+        <div class="search-and-clear">
+            <input type="text" class="search-input" placeholder="Institution name or location">
+            <span class="search-clear fa fa-times" role="button" tabindex="0" hidden="{model.clearIconHiddenFlag}"></span>
+        </div>
+        <button class="filter-toggle" aria-pressed="{!model.filtersHidden}">
+            <if condition="model.filtersHidden">
+                <i class="filter-icon fas fa-sliders-h"></i>
+            <else>
+                <i class="close-filters fa fa-times"></i>
+            </if>
+        </button>
+    </div>
+</template>

@@ -1,0 +1,127 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.separatemap .search-inputs {
+    .phone-view.minimized,
+    .desktop-view.minimized {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+
+        .search-and-clear,
+        .filter-toggle {
+            display: none;
+        }
+    }
+
+    .phone-view:not(.minimized),
+    .desktop-view:not(.minimized) {
+        .search-icon {
+            background-color: ui-color(default);
+            height: 3.2rem;
+            width: 3.2rem;
+        }
+    }
+
+
+    .phone-view {
+        @include wider-than($phone-max) {
+            display: none;
+        }
+
+        &:not(.minimized) {
+            @include width-up-to($phone-max) {
+                align-items: center;
+                display: grid;
+                grid-gap: 0.6rem;
+                grid-template-columns: auto 1fr auto;
+                padding: 1rem;
+                width: calc(100vw - 2rem);
+            }
+        }
+
+        .search-input {
+            padding: 0 0.6rem;
+        }
+
+        button {
+            padding: 0 0.6rem;
+        }
+    }
+
+    .desktop-view {
+        @include width-up-to($phone-max) {
+            display: none;
+        }
+
+        &:not(.minimized) {
+            @include wider-than($phone-max) {
+                align-items: center;
+                border-bottom: thin solid ui-color(form-border);
+                display: grid;
+                grid-gap: 1rem;
+                grid-template-columns: 4rem 1fr auto;
+                padding: 1rem;
+            }
+        }
+    }
+
+    .search-and-clear {
+        align-items: center;
+        display: grid;
+        grid-gap: 0.5rem;
+        grid-template-columns: 1fr auto;
+    }
+
+    button {
+        @extend %button;
+
+        align-items: center;
+        background-color: transparent;
+        height: 4rem;
+        padding: 0 $normal-margin;
+
+        * ~ * {
+            margin-left: 0.5rem;
+        }
+    }
+
+    .filter-toggle {
+        border: thin solid ui-color(form-border);
+        color: text-color(normal);
+    }
+
+    .search-icon {
+        align-items: center;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        font-size: 1.4rem;
+        justify-content: center;
+
+        &:focus {
+            height: 3.8rem;
+            outline: none;
+            width: 3.8rem;
+        }
+    }
+
+    .search-input {
+        @extend %non-button-input;
+
+        @include wider-than($phone-max) {
+            min-width: 40rem;
+        }
+
+        &:not(:focus) {
+            border: 0;
+        }
+    }
+
+    .search-clear {
+        cursor: pointer;
+
+        &[hidden] {
+            display: none;
+        }
+    }
+}

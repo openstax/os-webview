@@ -1,110 +1,120 @@
-import CMSPageController from '~/controllers/cms';
+import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
 import $ from '~/helpers/$';
 import { on } from '~/helpers/controller/decorators';
-import shell from '~/components/shell/shell';
+import shellBus from '~/components/shell/shell-bus';
 import { description as template } from './separatemap.html';
-import Map1 from '../global-reach/map/map';
-import mapboxgl from 'mapbox-gl';
 import css from './separatemap.css';
-import settings from 'settings';
-import mapboxPromise from '~/models/mapbox';
+import SearchBox from './search-box/search-box';
+import Map from '~/helpers/map-api';
+import {queryById} from '~/models/querySchools';
+import TestimonialForm from './testimonial-form/testimonial-form';
+import {accountsModel} from '~/models/usermodel';
 
-export default class SeparateMap extends CMSPageController {
+const spec = {
+    template,
+    css,
+    regions: {
+        searchBox: '.search-box-region'
+    },
+    view: {
+        classes: ['separatemap', 'page'],
+        tag: 'main',
+        id: 'maincontent'
+    },
+    model() {
+        return {
+            popupVisible: this.popupVisible,
+            searchBoxMinimized: this.searchBoxMinimized
+        };
+    },
+    searchBoxMinimized: false,
+    popupVisible: true
+};
+const accountPromise = accountsModel.load();
 
-    init() {
-        this.template = template;
-        this.css = css;
-        this.regions = {
-            map: '.mapd'
-        };
-        this.view = {
-            classes: ['separatemap-page']
-        };
-        this.model = {
-            loaded: ''
-        };
-        shell.showLoader();
-    }
-    async getMapboxStyle() {
-        const mapbox = await mapboxPromise;
+export default class SeparateMap extends componentType(spec, canonicalLinkMixin, loaderMixin) {
 
-        return mapbox.style;
-    }
     onAttached() {
-        shell.regions.footer.el.setAttribute('hidden', '');
-        this.el.querySelector('.close-map-msg').setAttribute('hidden', '');
-        const tokenn = settings.mapboxPK;
-        let mapZoom;
+        shellBus.emit('with-sticky');
+        const mapZoom = $.isMobileDisplay() ? 2 : 3;
+        const map = new Map({
+            container: 'mapd',
+            center: [-95.712891, 37.090240],
+            zoom: mapZoom,
+            pitchWithRotate: false,
+            dragRotate: false,
+            touchZoomRotate: false,
+            interactive: true
+        });
+        const sb = new SearchBox({
+            minimized: this.searchBoxMinimized
+        });
 
-        if ($.isMobileDisplay()) {
-            mapZoom = 2;
-        } else {
-            mapZoom = 3;
-        }
-
-        const mapboxstylePromise = this.getMapboxStyle();
-
-        mapboxstylePromise.then((mapboxstyle) => {
-            mapboxgl.accessToken = tokenn;
-            const mapOb = new mapboxgl.Map({
-                container: 'mapd',
-                style: mapboxstyle,
-                center: [-95.712891, 37.090240],
-                zoom: mapZoom,
-                pitchWithRotate: false,
-                dragRotate: false,
-                touchZoomRotate: false
+        this.regions.searchBox.append(sb);
+        sb.on('results', (results) => {
+            map.showPoints(results);
+        });
+        sb.on('reset', () => map.reset());
+        sb.on('show-details', (info) => {
+            map.showTooltip(info, true);
+        });
+        sb.on('toggle-minimized', () => {
+            this.searchBoxMinimized = !this.searchBoxMinimized;
+            sb.emit('update-props', {
+                minimized: this.searchBoxMinimized
             });
-
-            mapOb.on('load', () => {
-                if (mapOb.loaded()) {
-                    mapOb.resize();
-                    this.model.loaded = 'loaded';
-                    this.update();
-                    shell.hideLoader();
-                }
-            });
-            mapOb.on('mouseenter', 'os-schools', () => {
-                mapOb.getCanvas().style.cursor = 'pointer';
-            });
-            mapOb.on('mouseleave', 'os-schools', () => {
-                mapOb.getCanvas().style.cursor = '';
-            });
-
-            const mapObject = {
-                mapObj: mapOb,
-                model: {
-                    pageType: 'separate'
-                }
+            this.update();
+        });
+        accountPromise.then((info) => {
+            if (!('id' in info)) {
+                return;
+            }
+            const formParameters = {
+                role: info.self_reported_role,
+                email: (info.contact_infos || [])
+                    .filter((i) => i.is_verified)
+                    .reduce((a, b) => (a.is_guessed_preferred ? a : b), {})
+                    .value,
+                school: info.self_reported_school,
+                firstName: info.first_name,
+                lastName: info.last_name
             };
+            const tf = new TestimonialForm(formParameters);
 
-            this.regions.map.append(new Map1(mapObject));
+            sb.emit('update-props', {
+                loggedIn: true
+            });
+            sb.on('submit-testimonial', () => {
+                shellBus.emit('showDialog', () => ({
+                    title: 'Submit your testimonial',
+                    content: tf
+                }));
+            });
+            tf.on('close-form', () => {
+                shellBus.emit('hideDialog');
+            });
+        });
+        map.loaded.then(() => {
+            this.hideLoader();
+        });
+        map.on('select-school', (id) => {
+            queryById(id).then((schoolInfo) => {
+                map.showTooltip(schoolInfo);
+                sb.emit('show-one-school', schoolInfo);
+            });
         });
     }
 
     @on('click .popup-msg-cross-icon')
     popupClose() {
         if (!$.isMobileDisplay()) {
-            this.el.querySelector('.popup-msg-div').setAttribute('hidden', '');
-        }
-    }
-
-    @on('mouseover .back-impact-div')
-    mapClose() {
-        if (!$.isMobileDisplay()) {
-            this.el.querySelector('.close-map-msg').removeAttribute('hidden');
-        }
-    }
-
-    @on('mouseout .back-impact-div')
-    mapCloseOut() {
-        if (!$.isMobileDisplay()) {
-            this.el.querySelector('.close-map-msg').setAttribute('hidden', '');
+            this.popupVisible = false;
+            this.update();
         }
     }
 
     onClose() {
-        shell.regions.footer.el.removeAttribute('hidden');
+        shellBus.emit('no-sticky');
     }
 
 

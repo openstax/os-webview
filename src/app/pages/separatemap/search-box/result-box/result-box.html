@@ -1,0 +1,31 @@
+<template args="model">
+    <div class="toggle-details" role="button" aria-pressed="{model.isOpen}">
+        <div class="school-info">
+            <h2>{model.name}</h2>
+            <div>{model.location}</div>
+        </div>
+        <div class="toggle-indicator">
+            <i class="{`fa fa-chevron-${model.isOpen ? 'up' : 'down'}`}"></i>
+        </div>
+    </div>
+    <div class="school-details" if="model.isOpen">
+        <div class="savings-box">
+            <div class="savings-header">Student savings</div>
+            <div class="this-year">This year: {model.savingsThisYear}</div>
+            <div class="cumulative">Cumulative: {model.savingsTotal}</div>
+        </div>
+        <div if="model.testimonial" class="testimonial-box">
+            <div class="quote">
+                <i class="quotation-mark fa fa-quote-left"></i>
+                {model.testimonial.text}
+            </div>
+            <div class="attribution">
+                <div class="name">{model.testimonial.name}</div>
+                <div if="model.testimonial.position" class="position">{model.testimonial.position}</div>
+            </div>
+        </div>
+        <a if="model.loggedIn" href="/" class="submit-testimonial go-to">
+            Submit your testimonial
+        </a>
+    </div>
+</template>
