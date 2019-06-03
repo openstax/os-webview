@@ -7,7 +7,7 @@
             <div class="toggle-on-off" id="show-{element.pk}" data-toggle="show">
                 <div class="list-data">
                     <div class="list-heading">{element.fields.name}</div>
-                    <div class="list-address">{element.citystate}</div>
+                    <div class="list-address">{model.generateCityState(element.fields.physical_city, element.fields.physical_state_province)}</div>
                 </div>
                 <div class="list-show-more">
                     <i id="icon-{element.pk}" class="fa fa-chevron-down angle-circle" aria-hidden="true"></i>

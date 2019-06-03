@@ -23,6 +23,7 @@ export default class Mapdropdown extends Controller {
         this.offSet = [];
         this.popUp = 'empty';
         this.citystate = '';
+        this.model.generateCityState = generateCityState;
     }
 
     @on('click .toggle-on-off')
