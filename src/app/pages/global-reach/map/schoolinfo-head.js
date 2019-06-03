@@ -1,6 +1,7 @@
 import {Controller} from 'superb.js';
 import {description as template} from './schoolinfo-head.html';
 import css from './map.css';
+import {generateCityState} from './map.js';
 
 export default class SchoolinfoHead extends Controller {
 
@@ -11,6 +12,7 @@ export default class SchoolinfoHead extends Controller {
             classes: ['list-data', 'detail-info-head']
         };
         this.model= props.dataArray[props.itemIndex].fields;
+        this.model.citystate = generateCityState(this.model.physical_city, this.model.physical_state_province);
     }
 
 }

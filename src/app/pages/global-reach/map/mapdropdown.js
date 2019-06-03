@@ -7,6 +7,9 @@ import Testimonialinfo from './testimonial';
 import mapboxgl from 'mapbox-gl';
 import SchoolinfoHead from './schoolinfo-head';
 import css from '../global-reach.css';
+import { type } from 'os';
+import {generateCityState} from './map.js';
+
 
 export default class Mapdropdown extends Controller {
 
@@ -19,6 +22,8 @@ export default class Mapdropdown extends Controller {
         this.model = props;
         this.offSet = [];
         this.popUp = 'empty';
+        this.citystate = '';
+        this.model.generateCityState = generateCityState;
     }
 
     @on('click .toggle-on-off')
@@ -40,6 +45,11 @@ export default class Mapdropdown extends Controller {
             pObject: this.popUp,
             mapObject: mObj
         };
+        const fields = lData[indexItem].fields;
+        const pCity = fields.physical_city;
+        const pState = fields.physical_state_province;
+
+        this.citystate = generateCityState(pCity, pState);
 
         if ($.isMobileDisplay()) {
             const unqClassDetailMob = '.detail-info-mob';
@@ -114,17 +124,23 @@ export default class Mapdropdown extends Controller {
     }
     flyToPopUp(objectS, offSet, lData, indexItem) {
         const fields = lData[indexItem].fields;
-        const lat = fields.lat;
-        const long = fields.long;
+        const lat = Number(fields.lat);
+        const long = Number(fields.long);
         const iName = fields.name;
         const pCity = fields.physical_city;
         const pState = fields.physical_state_province;
+        const citystate = generateCityState(pCity, pState);
 
         if (objectS.pObject !== 'empty') {
             objectS.pObject.remove();
         }
+
+        if (long === 0 && lat === 0) {
+            return null;
+        }
+
         objectS.mapObject.flyTo({
-            center: [lat, long],
+            center: [long, lat],
             offset: offSet,
             zoom: 14
         });
@@ -134,8 +150,8 @@ export default class Mapdropdown extends Controller {
             closeOnClick: false
         });
 
-        tooltip.setLngLat([lat, long]);
-        tooltip.setHTML(`<b>${iName}</b><br>${pCity}${pState === null ? '' : `, ${pState}`}`);
+        tooltip.setLngLat([long, lat]);
+        tooltip.setHTML(`<b>${iName}</b><br>${citystate}`);
         tooltip.addTo(objectS.mapObject);
         this.popUp = tooltip;
         return tooltip;

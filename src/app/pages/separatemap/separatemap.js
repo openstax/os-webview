@@ -6,6 +6,8 @@ import { description as template } from './separatemap.html';
 import Map1 from '../global-reach/map/map';
 import mapboxgl from 'mapbox-gl';
 import css from './separatemap.css';
+import settings from 'settings';
+import mapboxPromise from '~/models/mapbox';
 
 export default class SeparateMap extends CMSPageController {
 
@@ -23,12 +25,15 @@ export default class SeparateMap extends CMSPageController {
         };
         shell.showLoader();
     }
+    async getMapboxStyle() {
+        const mapbox = await mapboxPromise;
 
+        return mapbox.style;
+    }
     onAttached() {
         shell.regions.footer.el.setAttribute('hidden', '');
         this.el.querySelector('.close-map-msg').setAttribute('hidden', '');
-        const tokenn = 'pk.eyJ1Ijoib3BlbnN0YXgiLCJhIjoiY2pnbWtjajZzMDBkczJ6cW1kaDViYW02aCJ9.0w3LCa7lzozzRgXM7xvBfQ';
-        const bounds = [[-180, -85], [180, 85]];
+        const tokenn = settings.mapboxPK;
         let mapZoom;
 
         if ($.isMobileDisplay()) {
@@ -36,40 +41,45 @@ export default class SeparateMap extends CMSPageController {
         } else {
             mapZoom = 3;
         }
-        mapboxgl.accessToken = tokenn;
-        const mapOb = new mapboxgl.Map({
-            container: 'mapd',
-            style: 'mapbox://styles/openstax/cjhv1z4iq00of2smldg1o0ktw',
-            center: [-95.712891, 37.090240],
-            maxBounds: bounds,
-            zoom: mapZoom
+
+        const mapboxstylePromise = this.getMapboxStyle();
+
+        mapboxstylePromise.then((mapboxstyle) => {
+            mapboxgl.accessToken = tokenn;
+            const mapOb = new mapboxgl.Map({
+                container: 'mapd',
+                style: mapboxstyle,
+                center: [-95.712891, 37.090240],
+                zoom: mapZoom,
+                pitchWithRotate: false,
+                dragRotate: false,
+                touchZoomRotate: false
+            });
+
+            mapOb.on('load', () => {
+                if (mapOb.loaded()) {
+                    mapOb.resize();
+                    this.model.loaded = 'loaded';
+                    this.update();
+                    shell.hideLoader();
+                }
+            });
+            mapOb.on('mouseenter', 'os-schools', () => {
+                mapOb.getCanvas().style.cursor = 'pointer';
+            });
+            mapOb.on('mouseleave', 'os-schools', () => {
+                mapOb.getCanvas().style.cursor = '';
+            });
+
+            const mapObject = {
+                mapObj: mapOb,
+                model: {
+                    pageType: 'separate'
+                }
+            };
+
+            this.regions.map.append(new Map1(mapObject));
         });
-
-        mapOb.on('load', () => {
-            if (mapOb.loaded()) {
-                mapOb.resize();
-                this.model.loaded = 'loaded';
-                this.update();
-                shell.hideLoader();
-            }
-        });
-
-        mapOb.on('mouseenter', 'os-schools', () => {
-            mapOb.getCanvas().style.cursor = 'pointer';
-        });
-
-        mapOb.on('mouseleave', 'os-schools', () => {
-            mapOb.getCanvas().style.cursor = '';
-        });
-
-        const mapObject = {
-            mapObj: mapOb,
-            model: {
-                pageType: 'separate'
-            }
-        };
-
-        this.regions.map.append(new Map1(mapObject));
     }
 
     @on('click .popup-msg-cross-icon')

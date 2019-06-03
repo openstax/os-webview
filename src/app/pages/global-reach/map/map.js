@@ -10,6 +10,10 @@ import mapboxgl from 'mapbox-gl';
 import {debounce} from 'lodash';
 import css from './map.css';
 
+export function generateCityState(...args) {
+    return args.filter((a) => a).join(', ');
+}
+
 export default class Map1 extends Controller {
 
     init(props) {
@@ -64,6 +68,7 @@ export default class Map1 extends Controller {
                         if (filterBtn.value === '1') {
                             glbalObj.filterDivClose(filterBtn);
                         }
+
                         glbalObj.closeTooltip();
                         glbalObj.markerTooltip(data);
                         glbalObj.markerClickMOb(modelObj, data, glbalObj);
@@ -220,9 +225,10 @@ export default class Map1 extends Controller {
             closeButton: false,
             closeOnClick: false
         });
+        const citystate = generateCityState(pCity, pState);
 
-        mtooltip.setLngLat([dField.lat, dField.long]);
-        mtooltip.setHTML(`<b>${iName}</b><br>${pCity}${pState === null ? '' : `, ${pState}`}`);
+        mtooltip.setLngLat([dField.long, dField.lat]);
+        mtooltip.setHTML(`<b>${iName}</b><br>${citystate}`);
         mtooltip.addTo(this.mapObject);
         this.tooltip = mtooltip;
     }
@@ -246,6 +252,8 @@ export default class Map1 extends Controller {
     searchRequest(fltrStatus, value) {
         const bachToSearch = this.el.querySelector('.back-search-div');
         let fltString = '';
+
+        this.el.querySelector('.loading-impact-div').removeAttribute('hidden');
 
         if (fltrStatus === 'true') {
             fltString = this.getFilterValues();
@@ -278,8 +286,11 @@ export default class Map1 extends Controller {
                     }
                     this.regions.dataList.attach(list);
                 }
+
+                this.el.querySelector('.loading-impact-div').setAttribute('hidden', '');
             } catch (e) {
                 console.log(e);
+                this.el.querySelector('.loading-impact-div').setAttribute('hidden', '');
             }
         })();
     }
@@ -366,7 +377,7 @@ export default class Map1 extends Controller {
             fltString += `&type=${this.el.querySelector('.type-institute-toggle').value}`;
         }
         if (this.oneMillionCheckBox === 'true') {
-            fltString += '&achieving_the_dream_school=TRUE';
+            fltString += '&saved_one_million=TRUE';
         }
         if (this.testmonalCheckBox === 'true') {
             fltString += '&testimonial=TRUE';
@@ -429,18 +440,28 @@ export default class Map1 extends Controller {
     }
     makeFitBoundsArray(dataArray) {
         const latlngArray = dataArray.map((e) => {
-            return [Number.parseFloat(e.fields.lat), Number.parseFloat(e.fields.long)];
-        });
+            return [Number.parseFloat(e.fields.long), Number.parseFloat(e.fields.lat)];
+        }).filter((i) => (i[0] !== 0 && i[1] !== 0));
 
         const bounds = latlngArray.reduce((bound, coord) => {
             return bound.extend(coord);
         }, new mapboxgl.LngLatBounds(latlngArray[0], latlngArray[0]));
 
-        const setBound = [[bounds._sw.lng, bounds._sw.lat], [bounds._ne.lng, bounds._ne.lat]];
 
-        this.mapObject.fitBounds(setBound, {
-            padding: 20
-        });
+        if ('_sw' in bounds && '_ne' in bounds) {
+            const setBound = [[bounds._sw.lng, bounds._sw.lat], [bounds._ne.lng, bounds._ne.lat]];
+
+            if (latlngArray.length > 1) {
+                this.mapObject.fitBounds(setBound, {
+                    padding: 100
+                });
+            } else {
+                this.mapObject.flyTo({
+                    center: [bounds._sw.lng, bounds._sw.lat],
+                    zoom: 14
+                });
+            }
+        }
     }
 
 }

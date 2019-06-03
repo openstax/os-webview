@@ -15,23 +15,25 @@ export default class extends Controller {
         this.model = props;
         this.model.login = `${settings.apiOrigin}/oxauth/login/?next=` +
             `${encodeURIComponent(window.location.href)}`;
-
         accountsModel.load().then((info) => {
-            this.accountInfo = {
-                role: info.self_reported_role,
-                email: info.contact_infos
-                    .filter((i) => i.is_verified)
-                    .reduce((a, b) => (a.is_guessed_preferred ? a : b), {})
-                    .value,
-                school: info.self_reported_school,
-                firstName: info.first_name,
-                lastName: info.last_name
-            };
-            this.model.loggedIn = true;
-            this.update();
+            try {
+                this.accountInfo = {
+                    role: info.self_reported_role,
+                    email: (info.contact_infos || [])
+                        .filter((i) => i.is_verified)
+                        .reduce((a, b) => (a.is_guessed_preferred ? a : b), {})
+                        .value,
+                    school: info.self_reported_school,
+                    firstName: info.first_name,
+                    lastName: info.last_name
+                };
+                this.model.loggedIn = true;
+                this.update();
+            } catch (e) {
+                console.log(e);
+            }
         });
     }
-
     @on('click .sub-testimonial')
     showTestimonialForm(event) {
         const form = new TestimonialForm(this.accountInfo);
