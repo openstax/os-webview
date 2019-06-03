@@ -10,6 +10,10 @@ import mapboxgl from 'mapbox-gl';
 import {debounce} from 'lodash';
 import css from './map.css';
 
+export function generateCityState(...args) {
+    return args.filter((a) => a).join(', ');
+}
+
 export default class Map1 extends Controller {
 
     init(props) {
@@ -212,21 +216,6 @@ export default class Map1 extends Controller {
         document.getElementById('back-result-div').setAttribute('style', 'display: none;');
         document.getElementById('back-detail-div').setAttribute('style', 'display: none;');
     }
-    generateCityState(city, state) {
-        let locstring = '';
-
-        if (city !== null) {
-            locstring += city;
-        }
-        if (city !== null && state !== null) {
-            locstring += ', ';
-        }
-        if (state !== null) {
-            locstring += state;
-        }
-
-        return locstring;
-    }
     markerTooltip(data) {
         const dField = data[0].fields;
         const iName = dField.name;
@@ -236,7 +225,7 @@ export default class Map1 extends Controller {
             closeButton: false,
             closeOnClick: false
         });
-        const citystate = this.generateCityState(pCity, pState);
+        const citystate = generateCityState(pCity, pState);
 
         mtooltip.setLngLat([dField.long, dField.lat]);
         mtooltip.setHTML(`<b>${iName}</b><br>${citystate}`);
@@ -450,11 +439,9 @@ export default class Map1 extends Controller {
         }
     }
     makeFitBoundsArray(dataArray) {
-        let latlngArray = dataArray.map((e) => {
+        const latlngArray = dataArray.map((e) => {
             return [Number.parseFloat(e.fields.long), Number.parseFloat(e.fields.lat)];
-        });
-
-        latlngArray = latlngArray.filter((i) => (i[0] !== 0 && i[1] !== 0));
+        }).filter((i) => (i[0] !== 0 && i[1] !== 0));
 
         const bounds = latlngArray.reduce((bound, coord) => {
             return bound.extend(coord);

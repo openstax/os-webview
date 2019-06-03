@@ -8,6 +8,8 @@ import mapboxgl from 'mapbox-gl';
 import SchoolinfoHead from './schoolinfo-head';
 import css from '../global-reach.css';
 import { type } from 'os';
+import {generateCityState} from './map.js';
+
 
 export default class Mapdropdown extends Controller {
 
@@ -20,6 +22,7 @@ export default class Mapdropdown extends Controller {
         this.model = props;
         this.offSet = [];
         this.popUp = 'empty';
+        this.citystate = '';
     }
 
     @on('click .toggle-on-off')
@@ -41,6 +44,11 @@ export default class Mapdropdown extends Controller {
             pObject: this.popUp,
             mapObject: mObj
         };
+        const fields = lData[indexItem].fields;
+        const pCity = fields.physical_city;
+        const pState = fields.physical_state_province;
+
+        this.citystate = generateCityState(pCity, pState);
 
         if ($.isMobileDisplay()) {
             const unqClassDetailMob = '.detail-info-mob';
@@ -113,21 +121,6 @@ export default class Mapdropdown extends Controller {
         document.getElementById('back-search-div').setAttribute('style', 'display: none;');
         document.getElementById('back-result-div').setAttribute('style', 'display: block;');
     }
-    generateCityState(city, state) {
-        let locstring = '';
-
-        if (city !== null) {
-            locstring += city;
-        }
-        if (city !== null && state !== null) {
-            locstring += ', ';
-        }
-        if (state !== null) {
-            locstring += state;
-        }
-
-        return locstring;
-    }
     flyToPopUp(objectS, offSet, lData, indexItem) {
         const fields = lData[indexItem].fields;
         const lat = Number(fields.lat);
@@ -135,7 +128,7 @@ export default class Mapdropdown extends Controller {
         const iName = fields.name;
         const pCity = fields.physical_city;
         const pState = fields.physical_state_province;
-        const citystate = this.generateCityState(pCity, pState);
+        const citystate = generateCityState(pCity, pState);
 
         if (objectS.pObject !== 'empty') {
             objectS.pObject.remove();
