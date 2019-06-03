@@ -18,14 +18,15 @@
 
         @include width-up-to($phone-max) {
             grid-template-columns: 100%;
+            margin-bottom: 2rem;
         }
 
         .text-block {
             @include wider-than($phone-max) {
-                padding-right: calc(30vw - 7rem);
+                padding-right: calc(30vw - 3rem);
             }
             @include wider-than($media-content-max) {
-                padding-right: calc(#{$media-content-max / 2} - 27vw);
+                padding-right: calc(#{$media-content-max / 2} - 22vw);
             }
         }
 

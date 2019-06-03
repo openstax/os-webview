@@ -38,4 +38,13 @@ export default class extends componentType(spec, insertHtmlMixin) {
         }, 200);
     }
 
+    @on('keydown .navigation-item')
+    navigateIfEnterOrSpace(event) {
+        if ([' ', 'Enter'].includes(event.key)) {
+            event.preventDefault();
+            event.delegateTarget.blur();
+            this.navigate(event);
+        }
+    }
+
 };
