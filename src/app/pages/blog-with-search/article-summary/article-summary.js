@@ -8,15 +8,6 @@ const spec = {
     template
 };
 
-function firstParagraph(html) {
-    const asEl = document.createElement('div');
-
-    asEl.innerHTML = html;
-    const p = asEl.querySelector('p:not(:empty)');
-
-    return p ? p.outerHTML : '';
-}
-
 export function blurbModel(articleSlug, data) {
     if (!data) {
         return {};
@@ -25,8 +16,8 @@ export function blurbModel(articleSlug, data) {
         headline: data.heading,
         subheading: data.subheading,
         image: data.article_image,
-        altText: firstParagraph(data.article_image_alt),
-        body: firstParagraph(data.body_blurb),
+        altText: data.article_image_alt,
+        body: data.body_blurb,
         author: data.author,
         date: data.date,
         articleSlug
