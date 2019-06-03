@@ -6,7 +6,6 @@ const settings = {
     buildVersion: '2.7.0',
     tagManagerID: 'GTM-W6N7PB',
     mapboxPK: 'pk.eyJ1Ijoib3BlbnN0YXgiLCJhIjoiY2pnbWtjajZzMDBkczJ6cW1kaDViYW02aCJ9.0w3LCa7lzozzRgXM7xvBfQ',
-    mapboxStyle: 'mapbox://styles/openstax/cjhv1z4iq00of2smldg1o0ktw',
     testingEnvironment: (/(localhost|oscms-)/).test(window.location.hostname),
     titleSuffix: ' - OpenStax',
     webmaster: 'webmaster@openstax.org',
