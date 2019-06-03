@@ -16,18 +16,15 @@ $indicator-size: 1rem;
         @include title-font(1.6rem);
     }
 
-    @include width-between($phone-max, $tablet-max) {
+    @include wider-than($phone-max) {
         @include title-font(2rem);
-    }
-
-    @include wider-than($tablet-max) {
-        @include title-font(2.4rem);
     }
 
     .top-bar {
         background-color: ui-color(default);
         border-top-left-radius: 0.4rem;
         border-top-right-radius: 0.4rem;
+        font-size: 112%;
         display: grid;
         justify-content: center;
         padding: $normal-margin;
@@ -66,10 +63,13 @@ $indicator-size: 1rem;
         }
     }
 
-    .indicator.active {
-        background-color: os-color(light-blue);
+    .indicator {
         border-radius: #{$indicator-size / 2};
         height: $indicator-size;
         width: $indicator-size;
+
+        &.active {
+            background-color: os-color(light-blue);
+        }
     }
 }
