@@ -69,115 +69,125 @@ $bar-size: 0.2rem;
         width: 100%;
     }
 
-    .progress-bar-container {
-        background-color: text-color(white);
-        margin-bottom: 2rem;
-        padding: 3rem 4rem 0;
-
-        @include width-up-to($phone-max) {
-            margin: 0 1rem;
-            padding: 1rem;
-            padding-bottom: 0;
-            width: calc(100% - 2rem);
-        }
-    }
-
-    .progress-bar-labels,
-    .progress-bar {
-        margin: 0 auto;
-        max-width: 70rem;
-    }
-
-    .progress-bar-labels {
+    .summary-table,
+    .summary-table-mobile {
         @include set-font(helper-label);
 
-        display: flex;
-        justify-content: space-between;
-        margin-top: 0;
 
-        .event {
-            color: text-color(helper);
-            font-weight: bold;
-        }
-
-        .when {
-            color: ui-color(secondary-hover);
-        }
-
-        .label {
-            flex-basis: 33%;
-
-            &:nth-child(2) {
-                text-align: center;
-            }
-
-            &:nth-child(3) {
-                text-align: right;
-            }
-        }
-    }
-
-    .progress-bar {
         background-color: text-color(white);
-        display: flex;
-        flex-flow: column;
-        height: 5rem;
-        justify-content: center;
-        margin-top: 1rem;
-        position: relative;
+        border: thin solid ui-color(form-border);
+        border-collapse: collapse;
+        margin-bottom: 13rem;
+        max-width: 100%;
 
-        .progress-bar-layer {
-            align-content: center;
-            display: flex;
-            justify-content: space-between;
-            left: 0;
+        tr {
+            max-width: 100%;
+        }
+
+        th {
+            display: table-cell;
+            position: relative;
+
+            .will-sort {
+                display: none;
+            }
+
+            &:hover .will-sort,
+            &:focus .will-sort {
+                color: ui-color(secondary-hover);
+                display: inline-block;
+            }
+        }
+
+        [data-sort-fn] {
+            cursor: pointer;
+        }
+
+        .sortdir1,
+        .sortdir-1 {
             position: absolute;
-            top: 0;
-            width: 100%;
+            right: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
-        .node,
-        .bar {
-            background-color: ui-color(page-bg);
-            box-shadow: inset 0 0.1rem 0.3rem rgba(ui-color(footer-bg), 0.4);
-
-            &.filled {
-                background-color: os-color(green);
-                box-shadow: none;
-            }
-
-            &.filled-no {
-                background-color: os-color(gray);
-                box-shadow: none;
-            }
+        .sortdir1::after,
+        .sortdir-1::after {
+            content: '▸';
+            display: inline-block;
+            font-size: 140%;
+            margin-bottom: 0.3rem;
+            text-align: center;
+            transform-origin: 50% 50%;
+            transition: all 0.2s ease-in-out;
         }
 
-        .node {
-            align-items: center;
-            border-radius: 50%;
-            display: flex;
-            height: $node-size;
-            justify-content: center;
-            width: $node-size;
+        .sortdir1::after {
+            transform: rotate(-90deg);
         }
 
-        .bar {
-            flex: 50% 1 1;
-            height: $bar-size;
-            margin: $node-size / 2 - $bar-size / 2 0.3rem 0;
+        .sortdir-1::after {
+            transform: rotate(90deg);
+        }
+
+        th,
+        td {
+            border: thin solid ui-color(form-border);
+        }
+
+        th,
+        td > div {
+            line-height: 1.4;
+            padding: 2rem;
+            text-align: left;
+            vertical-align: top;
+            word-wrap: break-word;
+        }
+
+        .narrow {
+            width: 8rem;
+        }
+
+        .mid {
+            overflow-x: auto;
+            width: 12rem;
+        }
+
+        .mid-wide {
+            width: 15rem;
         }
     }
 
-    .info {
-        color: text-color(helper);
-        display: table;
-        padding: 2rem 2rem 4rem 4rem;
+    .summary-table {
+        display: none;
+        table-layout: fixed;
+        width: 100%;
 
-        @include width-up-to($phone-max) {
-            display: block;
-            padding-bottom: 2rem;
-            padding-left: 1rem;
+        @include wider-than($tablet-max) {
+            display: table;
         }
 
+        th {
+            border-bottom: 0.2rem solid os-color(blue);
+            color: os-color(blue);
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: ui-color(form-bg);
+        }
+    }
+
+    .summary-table-mobile {
+        margin-bottom: 1.5rem;
+        table-layout: fixed;
+        width: 100%;
+
+        @include wider-than($tablet-max) {
+            display: none;
+        }
+
+        th:first-child {
+            width: 15rem;
+        }
     }
 }
