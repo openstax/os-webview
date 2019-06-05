@@ -140,7 +140,7 @@ export default class Details extends BaseClass {
             const model = {
                 bookInfo: this.pageData,
                 bookState: this.pageData.book_state,
-                description: this.pageData.description,
+                description: this.pageData.description.replace(/[<]br[^>]*[>]/gi, '').replace('<p></p>', ''),
                 errataBlurb: this.pageData.errata_content.content && this.pageData.errata_content.content.content,
                 formattedPublishDate: this.pageData.publish_date && formatDate(this.pageData.publish_date),
                 polish,
