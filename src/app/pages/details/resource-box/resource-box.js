@@ -50,7 +50,8 @@ export default class extends componentType(spec, insertHtmlMixin) {
                 iconType: 'lock',
                 link: {
                     text: 'Click here to unlock',
-                    url: loginUrl
+                    url: loginUrl,
+                    local: true
                 }
             }
         };
@@ -98,6 +99,9 @@ export default class extends componentType(spec, insertHtmlMixin) {
                     href: model.link.url
                 }
             });
+            if (model.link.local) {
+                this.view.attributes['data-local'] = 'true';
+            }
         }
     }
 
