@@ -153,7 +153,10 @@ class AppRouter extends Router {
         };
 
         e.preventDefault();
-        navigateTo(linkHelper.stripOpenStaxDomain(el.getAttribute('href')));
+        // This was el.getAttribute('href'), but with a relative path, the login
+        // url will not be recognized as external. This gets the fully-qualified
+        // url.
+        navigateTo(linkHelper.stripOpenStaxDomain(el.href));
     }
 
 }
