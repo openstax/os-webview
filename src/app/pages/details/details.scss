@@ -51,6 +51,11 @@
         p {
             padding-bottom: 2.4rem;
         }
+        
+        p:empty,
+        br {
+            display: none;
+        }
     }
 
     .hero {
