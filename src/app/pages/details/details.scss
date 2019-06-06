@@ -51,6 +51,9 @@
         p {
             padding-bottom: 2.4rem;
         }
+        p:last-child {
+            padding-bottom: 0;
+        }
         
         p:empty,
         br {
