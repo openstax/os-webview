@@ -1,6 +1,7 @@
 import settings from 'settings';
 import $ from '~/helpers/$';
 import {bookPromise} from '~/models/book-titles';
+import userModel from '~/models/usermodel';
 
 const LOAD_IMAGES = Symbol();
 
@@ -60,6 +61,8 @@ async function getUrlFor(slug) {
 
 export async function fetchFromCMS(slug, preserveWrapping) {
     const apiUrl = await getUrlFor(slug);
+    // Ensure userModel is loaded before fetching a slug.
+    const userInfo = await userModel.load();
     const data = await fetch(apiUrl, {credentials: 'include'})
         .then((response) => response.json());
 
