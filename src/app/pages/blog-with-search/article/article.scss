@@ -1,0 +1,42 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.blog.page .article {
+    .hero {
+        background-position: 60% 40%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 60rem;
+        overflow: hidden;
+        padding: 0;
+        position: relative;
+        width: 100vw;
+
+        @include wider-than($media-content-max) {
+            height: calc(4rem + 40vw);
+            max-height: 80vh;
+        }
+    }
+
+    .text-content {
+        @extend %text-content;
+
+        align-items: flex-start;
+    }
+
+    .body {
+        img {
+            margin-top: $normal-margin;
+            width: 100%;
+        }
+
+        figcaption {
+            @include set-font(helper-label);
+
+            color: text-color(helper);
+
+            :first-child {
+                margin-top: 0;
+            }
+        }
+    }
+}

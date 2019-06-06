@@ -1,0 +1,41 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.blog.page .search-bar {
+    display: grid;
+    grid-column-gap: 2rem;
+    grid-template: 'topline topline'
+    'input button' /1fr auto;
+    justify-items: center;
+    max-width: $text-content-max;
+    padding: 0 $normal-margin;
+    width: 100%;
+
+    h2 {
+        @include set-font(h3);
+
+        grid-area: topline;
+    }
+
+    input {
+        @extend %non-button-input;
+
+        grid-area: input;
+
+        &::placeholder {
+            font-style: italic;
+        }
+    }
+
+    button {
+        @extend %button;
+
+        font-size: 2.4rem;
+        grid-area: button;
+        padding: 0;
+        width: 5rem;
+
+        &.primary {
+            @extend %primary;
+        }
+    }
+}

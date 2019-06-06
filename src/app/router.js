@@ -13,6 +13,8 @@ const PAGES = [
     'article',
     'blog',
     'blog/*path',
+    'blog-with-search',
+    'blog-with-search/*path',
     'bookstore-suppliers',
     'confirmation',
     'confirmation/*path',
