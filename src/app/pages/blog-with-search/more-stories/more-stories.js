@@ -1,7 +1,6 @@
 import componentType from '~/helpers/controller/init-mixin';
 import ArticleSummary from '../article-summary/article-summary';
 import css from './more-stories.css';
-import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
 
 const cardSpec = {
     view: {
