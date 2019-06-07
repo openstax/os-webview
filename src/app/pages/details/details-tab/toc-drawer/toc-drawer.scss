@@ -1,0 +1,11 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.details-page .toc-drawer {
+    display: grid;
+
+    .close-toc {
+        cursor: pointer;
+        justify-self: right;
+    }
+
+}
