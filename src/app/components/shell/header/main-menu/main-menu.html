@@ -15,13 +15,15 @@
         <li class="subjects-dropdown" skip="true"></li>
         <li class="technology-dropdown" skip="true"></li>
         <li class="what-we-do-dropdown" skip="true"></li>
-        <li class="nav-menu-item login{model.user.username ? ' dropdown' : ''}">
-            <if condition="!model.user.username">
+        <if condition="!model.user.username">
+            <li class="nav-menu-item login">
                 <a href="{model.login}" class="pardotTrackClick" data-local="true" role="menuitem">Login</a>
-            <else>
+            </li>
+        <else>
+            <li class="login dropdown">
                 <div class="login-dropdown rightmost" skip="true"></div>
-            </if>
-        </li>
+            </li>
+        </if>
     </ul>
     <button class="expand" aria-haspopup="true" aria-label="Toggle Meta Navigation Menu" tabindex="0">
       <span></span>
