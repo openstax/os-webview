@@ -196,7 +196,11 @@ export default class Tutor extends BaseClass {
             mainSection.classList.add('openstax-tutor-main');
         }
 
-        const pulsingDot = new PulsingDot();
+        const pulsingDot = new PulsingDot({
+            model: {
+                html: data.pop_up_text
+            }
+        });
 
         this.regions.floatingTools.append(pulsingDot);
         if (window.location.hash) {
