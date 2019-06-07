@@ -1,16 +1,30 @@
-import {Controller} from 'superb.js';
+import componentType from '~/helpers/controller/init-mixin';
+import busMixin from '~/helpers/controller/bus-mixin';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import shellBus from '~/components/shell/shell-bus';
-import TocDialog from './toc-dialog/toc-dialog';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
 import {description as template} from './get-this-title.html';
 import {description as polishTemplate} from './get-this-title-polish.html';
 import css from './get-this-title.css';
 
-export default class GetThisTitle extends Controller {
+const spec = {
+    template,
+    css,
+    regions: {
+        submenu: '.submenu'
+    },
+    view: {
+        classes: ['get-this-title']
+    },
+    submenu: '',
+    tocActive: false
+};
+
+export default class GetThisTitle extends componentType(spec, busMixin) {
 
     init(data) {
+        super.init();
         const polish = $.isPolish(data.title);
         // It may or may not come in as an array
         const ensureArray = (content) => {
@@ -25,24 +39,15 @@ export default class GetThisTitle extends Controller {
         const arrayOfBookstoreContent = ensureArray(data.bookstore_content);
 
         this.template = polish ? polishTemplate : template;
-        this.css = css;
-        this.regions = {
-            submenu: '.submenu'
-        };
-        this.view = {
-            classes: ['get-this-title']
-        };
 
         const printLink = [
             data.amazon_link,
             arrayOfBookstoreContent.some((obj) => obj.button_url)
         ].some((x) => x);
 
-        this.submenu = '';
         this.model = () => ({
-            includeTOC: data.includeTOC,
-            tocHiddenAttribute: '',
-            tableOfContents: data.table_of_contents,
+            includeTOC: Boolean(data.table_of_contents),
+            tocActive: this.tocActive,
             modalHiddenAttribute: '',
             ibookLink: data.ibook_link,
             ibookLink2: data.ibook_link_volume_2,
@@ -71,14 +76,18 @@ export default class GetThisTitle extends Controller {
     }
 
     onLoaded() {
-        const model = this.model();
-
-        if (model.tableOfContents) {
-            this.tocContent = new TocDialog({
-                tableOfContents: model.tableOfContents,
-                webviewLink: model.webviewLink
-            });
+        if (super.onLoaded) {
+            super.onLoaded();
         }
+        this.on('set-toc', (value) => {
+            this.setToc(value);
+        });
+    }
+
+    setToc(value) {
+        this.tocActive = value;
+        this.update();
+        this.emit('toc', this.tocActive);
     }
 
     onClose() {
@@ -117,10 +126,7 @@ export default class GetThisTitle extends Controller {
     @on('click .show-toc')
     showToc(event) {
         event.preventDefault();
-        shellBus.emit('showDialog', () => ({
-            title: 'Table of contents',
-            content: this.tocContent
-        }));
+        this.setToc(!this.tocActive);
     }
 
 }

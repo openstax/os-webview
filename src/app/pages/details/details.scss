@@ -25,7 +25,7 @@
     }
 }
 
-.details-page-v2 {
+.details-page {
 
     @include wider-than($phone-max) {
         background-color: ui-color(white);
@@ -37,7 +37,28 @@
                 @include wider-than($tablet-max) {
                     background-image: linear-gradient(to bottom, ui-color(white), ui-color(white) 15rem, ui-color(default) 30rem);
                 }
+
             }
+        }
+
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            max-width: calc(50vw + 60rem);
+
+            > .toc-slideout {
+                border-right: thin solid ui-color(form-border);
+                max-height: calc(100vh + 20rem);
+                overflow-y: auto;
+                padding: 3rem;
+                transition: width 0.3s;
+                width: 30vw;
+            }
+        }
+
+        .content-wrapper:not(.drawer-open) > .toc-slideout {
+            padding: 0;
+            width: 0;
         }
     }
 
@@ -54,7 +75,7 @@
         p:last-child {
             padding-bottom: 0;
         }
-        
+
         p:empty,
         br {
             display: none;

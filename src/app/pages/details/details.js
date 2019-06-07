@@ -34,7 +34,7 @@ const spec = {
     template,
     css,
     view: {
-        classes: ['details-page-v2'],
+        classes: ['details-page'],
         tag: 'main'
     },
     regions: {
@@ -48,7 +48,8 @@ const spec = {
             slug: this.slug,
             bookTitle: this.bookTitle,
             titleImage: this.titleImage,
-            reverseGradient: this.reverseGradient
+            reverseGradient: this.reverseGradient,
+            tocActive: this.tocActive
         };
     }
 };
@@ -128,6 +129,7 @@ export default class Details extends BaseClass {
 
     onDataLoaded() {
         if (this.pageData.meta.type !== 'books.Book') {
+            console.error('Pagedata is not of type books.Books');
             window.location.assign('/_404');
             return;
         }
@@ -174,12 +176,13 @@ export default class Details extends BaseClass {
             },
             this.userStatusPromise
         );
+        const detailsTab = new DetailsTab(detailsTabData());
         const contents = polish ?
             {
-                'Szczegóły książki': new DetailsTab(detailsTabData())
+                'Szczegóły książki': detailsTab
             } :
             {
-                'Book details': new DetailsTab(detailsTabData())
+                'Book details': detailsTab
             };
         const addTab = (label, tabContents) => {
             contents[label] = tabContents;
@@ -193,6 +196,11 @@ export default class Details extends BaseClass {
             this.pageData.table_of_contents
         );
 
+        detailsTab.on('toc', (whether) => {
+            this.tocActive = whether;
+            this.update();
+        });
+        detailsTab.emit('put-toc-in', this.regionFrom(this.el.querySelector('.toc-slideout')));
         if (!polish && this.pageData.free_stuff_instructor.content) {
             addTab('Instructor resources', new InstructorResourceTab(
                 {
@@ -302,7 +310,8 @@ export default class Details extends BaseClass {
         this.insertJsonLd();
     }
 
-    onDataError() {
+    onDataError(e) {
+        console.error('Data error:', e);
         window.location = '/_404';
     }
 

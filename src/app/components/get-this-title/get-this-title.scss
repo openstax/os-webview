@@ -122,8 +122,22 @@
             }
         }
 
-        a:hover {
-            color: text-color(link-hover);
+        a {
+            border-radius: 0.4rem;
+
+            &:hover {
+                color: text-color(link-hover);
+            }
+            &[aria-pressed="true"] {
+                background-color: text-color(link);
+                color: text-color(white);
+
+                &:hover {
+                    background-color: text-color(link-hover);
+                    color: text-color(white);
+                }
+            }
         }
+
     }
 }

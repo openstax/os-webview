@@ -8,7 +8,8 @@
             </if>
         </div>
     </div>
-    <div class="content-wrapper">
+    <div class="content-wrapper {model.tocActive ? 'drawer-open' : ''}">
+        <div class="toc-slideout" skip="true" class="{model.startOpen ? 'start-open'}"></div>
         <div class="content">
             <div class="phone-view" skip="true"></div>
             <div class="bigger-view">
