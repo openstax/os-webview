@@ -2,7 +2,6 @@
 
 $custom-radio-size:                 2rem;
 $custom-radio-border-width:         0.1rem;
-$custom-radio-transition-speed:     100ms;
 $custom-radio-inset-shadow:         inset 0 0.1em 0.1rem -0.1em ui-color(default);
 
 $custom-radio-pip-color:            os-color(light-blue);
@@ -46,9 +45,6 @@ $custom-radio-disabled-pip-color:   transparentize(os-color(light-blue), 0.40);
         content: '';
         display: block;
         height: $custom-radio-size;
-        left: -$custom-radio-border-width;
-        position: relative;
-        top: -$custom-radio-border-width;
         width: $custom-radio-size;
     }
 
@@ -72,28 +68,15 @@ $custom-radio-disabled-pip-color:   transparentize(os-color(light-blue), 0.40);
         content: '';
         display: block;
         height: 0;
-        left: ($custom-radio-size / 2) - $custom-radio-border-width;
+        left: $custom-radio-border-width;
         position: relative;
-        top: -($custom-radio-size / 2) - $custom-radio-border-width;
+        top: #{- $custom-radio-border-width - $custom-radio-size};
         width: 0;
     }
 
     &:checked::after {
         // sass-lint:disable-block indentation
         height: $custom-radio-pip-size;
-        left: floor(
-            + ($custom-radio-size / 2)
-            - ($custom-radio-pip-size / 2)
-            - $custom-radio-border-width
-            + 1
-        );
-        top: floor(
-            - ($custom-radio-size / 2)
-            - ($custom-radio-pip-size / 2)
-            - $custom-radio-border-width
-            - 0.5
-        );
-        transition: all ease-in-out $custom-radio-transition-speed 0;
         width: $custom-radio-pip-size;
     }
 
