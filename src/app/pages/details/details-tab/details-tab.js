@@ -36,6 +36,8 @@ export default class DetailsTab extends componentType(spec, insertHtmlMixin, bus
             const gtt = new GetThisTitle(
                 Object.assign({includeTOC: true}, this.model.bookInfo)
             );
+            const webviewLink = this.model.bookInfo.webview_link
+                .replace(/[^/]*$/, this.model.bookInfo.table_of_contents.shortId);
 
             this.regions.getTheBook.append(gtt);
             gtt.on('toc', (whether) => {
@@ -45,7 +47,7 @@ export default class DetailsTab extends componentType(spec, insertHtmlMixin, bus
                 const tocComponent = new TocDrawer({
                     data: Object.assign(
                         {
-                            webviewLink: this.model.bookInfo.webview_link
+                            webviewLink
                         },
                         this.model.bookInfo.table_of_contents
                     )
