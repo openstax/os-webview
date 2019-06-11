@@ -13,6 +13,7 @@ import {formatDateForBlog as formatDate} from '~/helpers/data';
 import {shuffle} from 'lodash';
 import {description as template} from './details.html';
 import css from './details.css';
+import {on} from '~/helpers/controller/decorators';
 
 function getSlugFromTitle(bookTitle) {
     let slug;
@@ -127,6 +128,40 @@ export default class Details extends BaseClass {
         }
     }
 
+    fixSlideoutToViewport() {
+        const wh = window.innerHeight;
+        const el = this.el.querySelector('.toc-slideout');
+        const {top: normalTop, bottom: normalBottom} = el.parentNode.getBoundingClientRect();
+        const headerBottom = document.querySelector('#header > .page-header').getBoundingClientRect().bottom;
+        const newTop = normalTop > headerBottom ? 0 : headerBottom - normalTop;
+        const newHeight = Math.min(wh, normalBottom) - Math.max(normalTop, headerBottom);
+
+        if (newTop > 0) {
+            el.style.top = `${newTop}px`;
+        } else {
+            el.style.removeProperty('top');
+        }
+
+        el.style.height = `${newHeight}px`;
+    }
+
+    onAttached() {
+        if (super.onAttached) {
+            super.onAttached();
+        }
+        this.boundFixSlideout = this.fixSlideoutToViewport.bind(this);
+        window.addEventListener('scroll', this.boundFixSlideout);
+        window.addEventListener('resize', this.boundFixSlideout);
+    }
+
+    onClose() {
+        if (super.onClose) {
+            super.onClose();
+        }
+        window.removeEventListener('scroll', this.boundFixSlideout);
+        window.removeEventListener('resize', this.boundFixSlideout);
+    }
+
     onDataLoaded() {
         if (this.pageData.meta.type !== 'books.Book') {
             console.error('Pagedata is not of type books.Books');
@@ -196,11 +231,9 @@ export default class Details extends BaseClass {
             this.pageData.table_of_contents
         );
 
-        detailsTab.on('toc', (whether) => {
-            this.tocActive = whether;
-            this.update();
-        });
-        detailsTab.emit('put-toc-in', this.regionFrom(this.el.querySelector('.toc-slideout')));
+        this.detailsTab = detailsTab;
+        detailsTab.on('toc', (whether) => this.setTocOpen(whether));
+        detailsTab.emit('put-toc-in', this.regionFrom(this.el.querySelector('.toc-slideout-contents')));
         if (!polish && this.pageData.free_stuff_instructor.content) {
             addTab('Instructor resources', new InstructorResourceTab(
                 {
@@ -313,6 +346,28 @@ export default class Details extends BaseClass {
     onDataError(e) {
         console.error('Data error:', e);
         window.location = '/_404';
+    }
+
+    setTocOpen(whether) {
+        this.tocActive = whether;
+        if (whether) {
+            $.scrollTo(this.el.querySelector('.content-wrapper'));
+        }
+        this.update();
+    }
+
+    @on('click .close-toc')
+    closeToc() {
+        if (this.detailsTab) {
+            this.detailsTab.emit('set-toc', false);
+        }
+    }
+
+    @on('keypress .close-toc')
+    handleKeypress(event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+            this.closeToc();
+        }
     }
 
 }

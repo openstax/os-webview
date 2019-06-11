@@ -51,10 +51,10 @@ export default class DetailsTab extends componentType(spec, insertHtmlMixin, bus
                     )
                 });
 
-                tocComponent.on('close-toc', () => {
-                    gtt.emit('set-toc', false);
-                });
                 region.attach(tocComponent);
+            });
+            this.on('set-toc', (...args) => {
+                gtt.emit('set-toc', ...args);
             });
         }
 
