@@ -2,5 +2,9 @@
     <if condition="model.number">
         {model.number}.{' '}
     </if>
-    <a href="{`${model.webviewLink}:${model.shortId}`}">{model.title}</a>
+    <if condition="model.contents">
+        {model.title}
+    <else>
+        <a href="{`${model.webviewLink}:${model.shortId}`}">{model.title}</a>
+    </if>
 </template>
