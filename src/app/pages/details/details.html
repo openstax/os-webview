@@ -9,7 +9,12 @@
         </div>
     </div>
     <div class="content-wrapper {model.tocActive ? 'drawer-open' : ''}">
-        <div class="toc-slideout" skip="true" class="{model.startOpen ? 'start-open'}"></div>
+        <div class="toc-slideout" class="{model.startOpen ? 'start-open'}">
+            <span class="close-toc" role="button" tabindex="0">
+                <i class="fa fa-times"></i>
+            </span>
+            <div class="toc-slideout-contents" skip="true"></div>
+        </div>
         <div class="content">
             <div class="phone-view" skip="true"></div>
             <div class="bigger-view">

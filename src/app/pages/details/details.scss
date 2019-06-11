@@ -27,6 +27,12 @@
 
 .details-page {
 
+    @include width-up-to($phone-max) {
+        .content-wrapper > .toc-slideout {
+            display: none;
+        }
+    }
+
     @include wider-than($phone-max) {
         background-color: ui-color(white);
 
@@ -48,11 +54,24 @@
 
             > .toc-slideout {
                 border-right: thin solid ui-color(form-border);
-                max-height: calc(100vh + 20rem);
                 overflow-y: auto;
                 padding: 3rem;
                 transition: width 0.3s;
                 width: 30vw;
+            }
+
+            .close-toc {
+                align-items: center;
+                background-color: rgba(ui-color(white), 0.5);
+                border-radius: 50%;
+                cursor: pointer;
+                display: flex;
+                height: 3.2rem;
+                justify-content: center;
+                position: sticky;
+                float: right;
+                top: 0;
+                width: 3.2rem;
             }
         }
 
