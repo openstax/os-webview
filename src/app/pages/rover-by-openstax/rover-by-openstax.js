@@ -9,6 +9,9 @@ import lmsSection from './sections/lms';
 import faqSection from './sections/faq';
 import StickyFooter from '~/components/sticky-footer/sticky-footer';
 import Navigator from './sections/navigator/navigator';
+import PopupContent from './popup/popup';
+import ModalContent from '~/components/modal-content/modal-content';
+import {on} from '~/helpers/controller/decorators';
 
 const spec = {
     css,
@@ -41,7 +44,7 @@ export default class RoverRedesign extends BaseClass {
                     headerImage,
                     mobileHeaderImage: headerImage,
                     headerImageAltText: 'Rover logo',
-                    accessLink: data.section_1.accessButtonLink,
+                    accessLink: 'transition-popup',
                     accessText: data.section_1.accessButtonCta,
                     headline: 'Rover by OpenStax',
                     introHtml: data.section_1.blurb,
@@ -124,7 +127,7 @@ export default class RoverRedesign extends BaseClass {
                     description: ''
                 },
                 rightButton: {
-                    link: data.section_7.signupButtonUrl,
+                    link: 'transition-popup',
                     text: data.section_7.signupButtonCta,
                     description: ''
                 }
@@ -154,6 +157,24 @@ export default class RoverRedesign extends BaseClass {
         if ('piTracker' in window) {
             piTracker(window.location.href.split('#')[0]);
         }
+
+        this.popupContent = new PopupContent({
+            model: {
+                headline: `You're one step closer to using affordable, step-by-step
+                math homework in your classroom!`,
+                instructions: 'Sign in to your OpenStax account or create an account to explore Rover',
+                loginUrl: data.section_1.accessButtonLink,
+                signInText: 'Sign in or create an account',
+                cancelText: 'Maybe later'
+            }
+        });
+    }
+
+    @on('click a[href="transition-popup"]')
+    showPopup(event) {
+        console.info('Intercepted!');
+        event.preventDefault();
+        this.regions.self.append(new ModalContent(this.popupContent));
     }
 
 }
