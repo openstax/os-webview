@@ -1,5 +1,45 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .transition-popup {
+    background-color: ui-color(white);
+    border-radius: 0.4rem;
+    color: text-color(normal);
+    display: grid;
+    grid-template-columns: 1fr minmax(auto, 70%);
+    max-width: 140rem;
+    overflow: hidden;
+    width: 100%;
 
+    .rover-image {
+        background-position: right center;
+        background-size: cover;
+    }
+
+    h2 {
+        @include set-font(h2);
+    }
+
+    .text-content {
+        text-align: center;
+        padding: 6rem 0;
+
+        > * {
+            margin: 0;
+        }
+
+        > * ~ * {
+            margin-top: 3rem;
+        }
+    }
+
+    .button-row {
+        align-items: center;
+        display: grid;
+        grid-column-gap: 5rem;
+        grid-row-gap: 3rem;
+
+        @include wider-than($phone-max) {
+            grid-auto-flow: column;
+        }
+    }
 }

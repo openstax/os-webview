@@ -1,8 +1,11 @@
 <template args="model">
-    <h1>{model.headline}</h1>
-    <div>{model.instructions}</div>
-    <div class="button-row">
-        <a href="{model.loginUrl}" class="btn blue">{model.signInText}</a>
-        <a href="cancel">{model.cancelText}</a>
+    <div class="rover-image" style="{backgroundImage: `url(${model.image})`}"></div>
+    <div class="text-content">
+        <h2>{model.headline}</h2>
+        <div>{model.instructions}</div>
+        <div class="button-row">
+            <a href="{model.loginUrl}" class="btn blue">{model.signInText}</a>
+            <a href="cancel">{model.cancelText}</a>
+        </div>
     </div>
 </template>

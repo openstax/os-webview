@@ -165,16 +165,27 @@ export default class RoverRedesign extends BaseClass {
                 instructions: 'Sign in to your OpenStax account or create an account to explore Rover',
                 loginUrl: data.section_1.accessButtonLink,
                 signInText: 'Sign in or create an account',
-                cancelText: 'Maybe later'
+                cancelText: 'Maybe later',
+                image: 'https://via.placeholder.com/640x480?text=Rover+Image'
             }
         });
     }
 
     @on('click a[href="transition-popup"]')
     showPopup(event) {
-        console.info('Intercepted!');
         event.preventDefault();
-        this.regions.self.append(new ModalContent(this.popupContent));
+        const modalContent = new ModalContent(this.popupContent);
+
+        this.regions.self.append(modalContent);
+        this.popupContent.on('cancel', () => {
+            const mcEl = modalContent.el;
+            const mcIdx = this.regions.self.controllers.indexOf(modalContent);
+
+            modalContent.detach();
+            // Necessary due to a bug in superb
+            mcEl.parentNode.removeChild(mcEl);
+            this.regions.self.controllers.splice(mcIdx, 1);
+        });
     }
 
 }

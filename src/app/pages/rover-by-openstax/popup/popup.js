@@ -1,7 +1,8 @@
 import componentType from '~/helpers/controller/init-mixin';
+import busMixin from '~/helpers/controller/bus-mixin';
 import {description as template} from './popup.html';
 import css from './popup.css';
-
+import {on} from '~/helpers/controller/decorators';
 
 const spec = {
     template,
@@ -11,4 +12,16 @@ const spec = {
     }
 };
 
-export default componentType(spec);
+export default class extends componentType(spec, busMixin) {
+
+    onClose() {
+        console.info('Closing');
+    }
+
+    @on('click [href="cancel"]')
+    closeSelf(event) {
+        event.preventDefault();
+        this.emit('cancel');
+    }
+
+};
