@@ -16,7 +16,13 @@ const polishData = {
     ],
     license_name: 'cc by',
     license_text: 'Polish license text',
-    title: 'fizyka'
+    title: 'fizyka',
+    bookInfo: {
+        webview_link: 'https://cnx.org/contents/185cbf87-c72e-48f5-b51e-f14f21b5eabd;',
+        table_of_contents: {
+                'shortId': 'jVCgr5SL@15.3'
+        }
+    }
 };
 
 const isbns = {};
@@ -42,7 +48,13 @@ const englishData = {
     formattedPublishDate: 'Dec 05, 2017',
     license_name: 'cc by',
     ibook_volume_2_isbn_13: '000-000-000-0000',
-    title: 'Text Title'
+    title: 'Text Title',
+    bookInfo: {
+        webview_link: 'https://cnx.org/contents/185cbf87-c72e-48f5-b51e-f14f21b5eabd;',
+        table_of_contents: {
+                'shortId': 'jVCgr5SL@15.3'
+        }
+    }
 };
 
 describe('details/details-tab for Polish', () => {

@@ -139,5 +139,11 @@
             }
         }
 
+        @include width-up-to($phone-max) {
+            &.toc-option {
+                display: none;
+            }
+        }
+
     }
 }
