@@ -50,7 +50,10 @@
         .content-wrapper {
             display: grid;
             grid-template-columns: auto 1fr;
-            max-width: calc(50vw + 60rem);
+
+            &.drawer-open {
+                max-width: calc(50vw + 60rem);
+            }
 
             > .toc-slideout {
                 border-right: thin solid ui-color(form-border);
