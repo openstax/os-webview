@@ -3,26 +3,36 @@ import settings from 'settings';
 import {on} from '~/helpers/controller/decorators';
 import routerBus from '~/helpers/router-bus';
 import analytics from '~/helpers/analytics';
-import Article from './article/article';
-import {description as template} from './blog.html';
 import css from './blog.css';
+import SearchBar from './search-bar/search-bar';
+import SearchResults from './search-results/search-results';
+import UpdateBox from './update-box/update-box';
+import FeaturedArticle from './pinned-article/pinned-article';
+import MoreStories from './more-stories/more-stories';
+import {blurbModel} from './article-summary/article-summary';
+import Article from './article/article';
+import DisqusForm from './disqus-form/disqus-form';
 
+function slugsSortedByArticleDate(articles) {
+    return Object.keys(articles)
+        .sort((a, b) => {
+            const articleA = articles[a];
+            const articleB = articles[b];
+
+            return articleA.date < articleB.date ? 1 : -1;
+        });
+}
+
+const path = '/blog';
 const spec = {
-    template,
     css,
     view: {
         classes: ['blog', 'page'],
         tag: 'main'
     },
-    regions: {
-        articles: '.articles .container',
-        pinned: '.pinned',
-        articlePage: '.article.page'
-    },
     slug: 'news',
-    model: {
-        rssUrl: `${settings.apiOrigin}/blog-feed/rss/`
-    }
+    timersRunning: [],
+    articleSlug: null
 };
 const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 
@@ -30,34 +40,124 @@ export default class Blog extends BaseClass {
 
     init() {
         super.init();
-        this.timersRunning = [];
-        this.previousSlug = null;
+        this.hpcListener = this.handlePathChange.bind(this);
+        window.addEventListener('navigate', this.hpcListener);
+    }
 
-        // eslint-disable-next-line complexity
-        this.handlePathChange = () => {
-            if (history && history.state && history.state.model) {
-                Object.assign(this.model, history.state.model);
-            }
-            const slugMatch = window.location.pathname.match(/\/blog\/(.+)/);
+    get featuredArticleOptions() {
+        if (!this.pageData) {
+            return {};
+        }
+        const articleSlug = Reflect.ownKeys(this.pageData.articles)
+            .find((k) => this.pageData.articles[k].pin_to_top);
+        const pinnedData = this.pageData.articles[articleSlug];
 
-            if (slugMatch) {
-                this.model.articleSlug = slugMatch[1];
-                if (!this.articles[this.model.articleSlug]) {
-                    routerBus.emit('navigate', '/404', {path: '/blog'}, true);
-                    return;
-                }
-                if (this.previousSlug !== slugMatch[1]) {
-                    this.previousSlug = slugMatch[1];
-                    this.setTimers();
-                    this.setCanonicalLink(slugMatch[0], this.canonicalLink);
-                }
-            } else {
-                this.model.articleSlug = null;
-                this.setCanonicalLink('/blog', this.canonicalLink);
-            }
-            this.update();
+        return {
+            model: blurbModel(articleSlug, pinnedData)
         };
-        window.addEventListener('navigate', this.handlePathChange);
+    }
+
+    moreStoriesOptions(test) {
+        if (!this.pageData) {
+            return {};
+        }
+        const articles = this.pageData.articles;
+        const slugs = Reflect.ownKeys(articles)
+            .filter((k) => test(k, articles[k]))
+            .sort((a, b) => articles[a].date < articles[b].date ? 1 : -1);
+
+        return slugs.map((s) => blurbModel(s, this.pageData.articles[s]));
+    }
+
+    buildDefaultPage() {
+        const fa = new FeaturedArticle(this.featuredArticleOptions);
+        // const sb = new SearchBar({
+        //     model: {
+        //         title: 'Read more great stories'
+        //     }
+        // });
+        const ub = new UpdateBox({
+            model: {
+                rssUrl: `${settings.apiOrigin}/blog-feed/rss/`
+            }
+        });
+        const ms = new MoreStories({
+            articles: this.moreStoriesOptions((_, articleEntry) => !articleEntry.pin_to_top)
+        });
+
+        // sb.on('value', (searchParam) => {
+        //     history.pushState({}, '', `${path}/?${searchParam}`);
+        //     this.handlePathChange();
+        // });
+        this.regions.self.attach(fa);
+        // this.regions.self.append(sb);
+        this.regions.self.append(ub);
+        this.regions.self.append(ms);
+    }
+
+    buildSearchResultsPage() {
+        const sb = new SearchBar({
+            model: {
+                title: 'Read more great stories'
+            }
+        });
+        const sr = new SearchResults();
+
+        sb.on('value', (searchParam) => {
+            history.pushState({}, '', `${path}/?${searchParam}`);
+            this.handlePathChange();
+        });
+        this.regions.self.attach(sb);
+        this.regions.self.append(sr);
+    }
+
+    buildArticlePage() {
+        const a = new Article({
+            slug: `news/${this.articleSlug}`
+        });
+        const ub = new UpdateBox({
+            model: {
+                rssUrl: `${settings.apiOrigin}/blog-feed/rss/`
+            }
+        });
+        const ms = new MoreStories({
+            articles: this.moreStoriesOptions((slug, _) => slug !== this.articleSlug)
+        });
+
+        this.regions.self.attach(a);
+        this.regions.self.append(new DisqusForm());
+        this.regions.self.append(ub);
+        this.regions.self.append(ms);
+    }
+
+    // eslint-disable-next-line complexity
+    handlePathChange() {
+        const slugMatch = window.location.pathname.match(/\/blog\/(.+)/);
+
+        if (!slugMatch) {
+            this.articleSlug = null;
+            this.setCanonicalLink('/blog', this.canonicalLink);
+
+            if (window.location.search) {
+                this.buildSearchResultsPage();
+            } else {
+                this.buildDefaultPage();
+            }
+            return;
+        }
+
+        const articleSlug = slugMatch[1];
+
+        if (!this.articles[articleSlug]) {
+            routerBus.emit('navigate', '/404', {path: '/blog'}, true);
+            return;
+        }
+        if (this.articleSlug !== articleSlug) {
+            this.articleSlug = articleSlug;
+            this.setTimers();
+            this.setCanonicalLink(slugMatch[0], this.canonicalLink);
+            this.buildArticlePage();
+        }
     }
 
     setTimers() {
@@ -91,66 +191,24 @@ export default class Blog extends BaseClass {
 
     onDataLoaded() {
         if (!this.articles) {
-            this.articleSlugs = Object.keys(this.pageData.articles)
-                .sort((a, b) => {
-                    const articleA = this.pageData.articles[a];
-                    const articleB = this.pageData.articles[b];
-
-                    return articleA.date < articleB.date ? 1 : -1;
-                });
-
-            this.articles = {};
-            for (const slug of this.articleSlugs) {
-                const article = Object.assign({slug}, this.pageData.articles[slug]);
-
-                if (article.pin_to_top) {
-                    this.model.pinnedArticleSlug = slug;
-                }
-                this.articles[slug] = article;
-            }
+            this.articleSlugs = slugsSortedByArticleDate(this.pageData.articles);
+            this.articles = this.articleSlugs.reduce(
+                (dict, slug) => {
+                    dict[slug] = Object.assign({slug}, this.pageData.articles[slug]);
+                    return dict;
+                },
+                {}
+            );
             this.handlePathChange();
         }
         this.hideLoader();
         this.setTimers();
     }
 
-    onUpdate() {
-        if (this.articles) {
-            this.regions.articlePage.empty();
-            this.regions.pinned.empty();
-            if (this.model.articleSlug) {
-                const articleData = this.articles[this.model.articleSlug];
-                const articleController = new Article(articleData);
-
-                articleController.setMode('page');
-                this.regions.articlePage.attach(articleController);
-                this.otherArticles(this.model.articleSlug);
-            } else if (this.model.pinnedArticleSlug) {
-                const articleData = this.articles[this.model.pinnedArticleSlug];
-                const articleController = new Article(articleData);
-
-                articleController.setMode('pinned');
-                this.regions.pinned.append(articleController);
-                this.otherArticles(this.model.pinnedArticleSlug);
-            } else {
-                this.otherArticles();
-            }
-        }
-    }
-
     onClose() {
         this.clearTimers();
-        window.removeEventListener('navigate', this.handlePathChange);
+        window.removeEventListener('navigate', this.hpcListener);
         super.onClose();
-    }
-
-    otherArticles(exceptThisSlug) {
-        this.regions.articles.empty();
-        this.articleSlugs
-            .filter((s) => s !== exceptThisSlug)
-            .forEach((slug) => {
-                this.regions.articles.append(new Article(this.articles[slug]));
-            });
     }
 
     @on('click a[href^="/blog"]')

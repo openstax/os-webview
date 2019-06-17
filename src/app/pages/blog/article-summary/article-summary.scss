@@ -29,6 +29,11 @@
 
     .article-headline {
         margin: 0;
+
+        a:not(:hover) {
+            color: inherit;
+            text-decoration: none;
+        }
     }
 
     .article-blurb {

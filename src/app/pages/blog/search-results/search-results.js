@@ -16,15 +16,6 @@ const resultSpec = {
     }
 };
 
-class Result extends ArticleSummary {
-
-    init(...args) {
-        super.init(...args);
-        Object.assign(this, resultSpec);
-    }
-
-}
-
 export default class extends componentType(spec) {
 
     refreshResults() {
@@ -36,7 +27,9 @@ export default class extends componentType(spec) {
                 this.regions.self.empty();
                 results.forEach((data) => {
                     data.heading = data.title;
-                    this.regions.self.append(new Result({model: blurbModel(data.slug, data)}));
+                    this.regions.self.append(new ArticleSummary(
+                        Object.assign({model: blurbModel(data.slug, data)}, resultSpec)
+                    ));
                 });
             },
             (err) => {

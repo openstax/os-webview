@@ -17,8 +17,9 @@
     }
 
     @include wider-than($tablet-max) {
-        grid-template-columns: minmax(40%, auto) minmax(auto, $text-content-max);
-        padding: 5rem $normal-margin;
+        border-bottom: thin solid ui-color(form-border);
+        grid-template-columns: minmax(47%, auto) minmax(auto, $text-content-max);
+        padding: 5rem $normal-margin $normal-margin;
 
         .link-image {
             height: 100%;
