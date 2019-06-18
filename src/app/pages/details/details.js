@@ -132,7 +132,9 @@ export default class Details extends BaseClass {
         const wh = window.innerHeight;
         const el = this.el.querySelector('.toc-slideout');
         const {top: normalTop, bottom: normalBottom} = el.parentNode.getBoundingClientRect();
-        const headerBottom = document.querySelector('#header > .page-header').getBoundingClientRect().bottom;
+        const headerClearance = 10; // fudge factor
+        const headerBottom = document.querySelector('#header > .page-header')
+            .getBoundingClientRect().bottom + headerClearance;
         const newTop = normalTop > headerBottom ? 0 : headerBottom - normalTop;
         const newHeight = Math.min(wh, normalBottom) - Math.max(normalTop, headerBottom);
 
