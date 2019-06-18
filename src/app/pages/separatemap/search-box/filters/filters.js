@@ -13,15 +13,11 @@ const spec = {
     },
     regions: {
         institution: '.institution-region'
-    }
+    },
+    filters: {}
 };
 
 export default class extends componentType(spec, busMixin) {
-
-    init() {
-        super.init();
-        this.filters = {};
-    }
 
     onLoaded() {
         if (super.onLoaded) {

@@ -105,7 +105,7 @@ export default class SeparateMap extends componentType(spec, canonicalLinkMixin,
         });
     }
 
-    @on('click .popup-msg-cross-icon')
+    @on('click .popup-msg-cross')
     popupClose() {
         if (!$.isMobileDisplay()) {
             this.popupVisible = false;
