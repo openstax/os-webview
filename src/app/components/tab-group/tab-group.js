@@ -25,6 +25,7 @@ export default class TabGroup extends Controller {
             setSelected: (newValue) => {
                 props.setSelected(newValue);
                 this.updateTabs();
+                window.dispatchEvent(new Event('resize'));
             }
         };
 

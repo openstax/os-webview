@@ -246,24 +246,11 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
     .resources {
         display: grid;
         grid-gap: 2 * $normal-margin  2 * $normal-margin;
+        grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
         margin: 2rem 0 0;
 
-        @include wider-than($phone-max) {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        @include wider-than($tablet-max) {
-            grid-template-columns: 1fr 1fr 1fr;
-        }
-
         &.ally {
-            @include wider-than($phone-max) {
-                grid-template-columns: 1fr 1fr 1fr;
-            }
-
-            @include wider-than($tablet-max) {
-                grid-template-columns: 1fr 1fr 1fr 1fr;
-            }
+            grid-template-columns: repeat(auto-fit, minmax(26rem, 1fr));
         }
     }
 
