@@ -5,6 +5,14 @@
     color: text-color(white);
     min-height: 80rem;
 
+    .turned-off-notice {
+        @include set-font(body-large);
+
+        a {
+            color: inherit;
+        }
+    }
+
     h1 a {
         color: inherit;
     }

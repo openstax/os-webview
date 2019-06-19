@@ -1,20 +1,32 @@
 <template args="model">
     <div class="boxed">
-        <if condition="model.email">
-            <h1>{model.heading}, {model.firstName}</h1>
-            <div class="tagline">{model.subheading}</div>
-            <div class="description">{model.description}</div>
-            <div class="card">
-                <h2>{model.bookHeading}</h2>
-                <div>{model.bookDescription}</div>
-                <div class="pulsing">
-                    <div class="pulse"></div>
-                    <a class="btn primary" href="{model.booksLink}" target="_blank">{model.booksLinkText}</a>
-                </div>
-                <div data-html="skipHtml"></div>
+        <if condition="model.turnedOff">
+            <div class="text-content turned-off-notice">
+                <p>
+                    This page is turned off for now, but you can still become a
+                    OpenStax hero! Head to our <a href="/subjects">subject
+                    page</a> to explore our books. Then, when you're ready, fill
+                    out our <a href="/adoption">adoption form</a> to let us know
+                    that you've decided to try our book in your class!
+                </p>
             </div>
         <else>
-            <h1>Get your Hero Badge! Please <a href="{model.login}">log in here</a> to start your journey.</h1>
+            <if condition="model.email">
+                <h1>{model.heading}, {model.firstName}</h1>
+                <div class="tagline">{model.subheading}</div>
+                <div class="description">{model.description}</div>
+                <div class="card">
+                    <h2>{model.bookHeading}</h2>
+                    <div>{model.bookDescription}</div>
+                    <div class="pulsing">
+                        <div class="pulse"></div>
+                        <a class="btn primary" href="{model.booksLink}" target="_blank">{model.booksLinkText}</a>
+                    </div>
+                    <div data-html="skipHtml"></div>
+                </div>
+            <else>
+                <h1>Get your Hero Badge! Please <a href="{model.login}">log in here</a> to start your journey.</h1>
+            </if>
         </if>
     </div>
 </template>
