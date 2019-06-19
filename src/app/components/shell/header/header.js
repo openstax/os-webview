@@ -76,6 +76,7 @@ class Header extends Controller {
 
             if (typeof user === 'object') {
                 this.model.user = user;
+                pi('identify_client', user.id);
             }
             this.update();
             this.mainMenu.update();
