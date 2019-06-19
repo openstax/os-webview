@@ -141,6 +141,9 @@ export default class extends componentType(spec) {
         const parent = this;
 
         this.accountsModelPromise.then((accountResponse) => {
+            if (!accountResponse.hasOwnProperty('id')) {
+                return;
+            }
             this.accountId = accountResponse.id;
             this.email = accountResponse.contact_infos
                 .filter((i) => i.is_verified)
@@ -177,6 +180,7 @@ export default class extends componentType(spec) {
         shellBus.emit('with-sticky');
         this.regions.self.append(navigator);
         this.regions.self.append(new Books({
+            turnedOff: true,
             get email() {return parent.email;},
             heading: 'Get your Hero Badge',
             get firstName() {return parent.firstName;},
