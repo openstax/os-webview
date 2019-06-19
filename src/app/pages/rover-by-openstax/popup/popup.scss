@@ -5,10 +5,19 @@
     border-radius: 0.4rem;
     color: text-color(normal);
     display: grid;
-    grid-template-columns: 1fr minmax(auto, 70%);
     max-width: 140rem;
     overflow: hidden;
     width: 100%;
+
+    @include width-up-to($phone-max) {
+        .rover-image {
+            display: none;
+        }
+    }
+
+    @include wider-than($phone-max) {
+        grid-template-columns: 1fr minmax(auto, 70%);
+    }
 
     .rover-image {
         background-position: right center;
@@ -23,6 +32,10 @@
         text-align: center;
         padding: 6rem 0;
 
+        @include width-up-to($phone-max) {
+            padding: 4rem 1rem;
+        }
+
         > * {
             margin: 0;
         }
@@ -32,14 +45,20 @@
         }
     }
 
-    .button-row {
+    .close-button-row {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+
+        .close-popup {
+            padding: $normal-margin;
+        }
+    }
+
+    .button-area {
         align-items: center;
         display: grid;
-        grid-column-gap: 5rem;
-        grid-row-gap: 3rem;
-
-        @include wider-than($phone-max) {
-            grid-auto-flow: column;
-        }
+        grid-auto-flow: row;
+        grid-row-gap: 2rem;
     }
 }

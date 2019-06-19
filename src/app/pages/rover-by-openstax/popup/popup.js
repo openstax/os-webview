@@ -14,14 +14,33 @@ const spec = {
 
 export default class extends componentType(spec, busMixin) {
 
-    onClose() {
-        console.info('Closing');
+    onLoaded() {
+        const defaultButton = this.el.querySelector('.btn.blue');
+
+        setTimeout(() => {
+            defaultButton.focus();
+        }, 100);
     }
 
-    @on('click [href="cancel"]')
+    @on('click .close-popup')
     closeSelf(event) {
         event.preventDefault();
         this.emit('cancel');
+    }
+
+    @on('keydown .close-popup')
+    handleKeyClose(event) {
+        if (['Enter', ' '].includes(event.key)) {
+            this.closeSelf(event);
+        }
+    }
+
+    @on('focusout')
+    restrictTabbing(event) {
+        event.stopPropagation();
+        if (!this.el.contains(event.relatedTarget)) {
+            this.el.querySelector('[tabindex]').focus();
+        }
     }
 
 };

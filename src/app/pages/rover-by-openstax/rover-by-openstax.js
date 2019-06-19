@@ -157,27 +157,27 @@ export default class RoverRedesign extends BaseClass {
         if ('piTracker' in window) {
             piTracker(window.location.href.split('#')[0]);
         }
+        const cmsPopupData = data.popup.content[0];
 
-        this.popupContent = new PopupContent({
-            model: {
-                headline: `You're one step closer to using affordable, step-by-step
-                math homework in your classroom!`,
-                instructions: 'Sign in to your OpenStax account or create an account to explore Rover',
+        this.popupData = Object.assign(
+            {
                 loginUrl: data.section_1.accessButtonLink,
-                signInText: 'Sign in or create an account',
-                cancelText: 'Maybe later',
-                image: 'https://via.placeholder.com/640x480?text=Rover+Image'
-            }
-        });
+                image: cmsPopupData.backgroundImage.file
+            },
+            cmsPopupData
+        );
     }
 
     @on('click a[href="transition-popup"]')
     showPopup(event) {
         event.preventDefault();
-        const modalContent = new ModalContent(this.popupContent);
+        const popupContent = new PopupContent({
+            model: this.popupData
+        });
+        const modalContent = new ModalContent(popupContent);
 
         this.regions.self.append(modalContent);
-        this.popupContent.on('cancel', () => {
+        popupContent.on('cancel', () => {
             const mcEl = modalContent.el;
             const mcIdx = this.regions.self.controllers.indexOf(modalContent);
 
