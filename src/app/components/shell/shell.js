@@ -86,16 +86,21 @@ class Shell extends Controller {
 }
 
 const shell = new Shell();
+let stickyCount = 0;
 
 bus.on('showLoader', shell.showLoader.bind(shell));
 bus.on('hideLoader', shell.hideLoader.bind(shell));
 
 bus.on('with-sticky', () => {
+    ++stickyCount;
     shell.regions.main.el.classList.add('with-sticky');
 });
 
 bus.on('no-sticky', () => {
-    shell.regions.main.el.classList.remove('with-sticky');
+    --stickyCount;
+    if (stickyCount <= 0) {
+        shell.regions.main.el.classList.remove('with-sticky');
+    }
 });
 
 bus.on('updateDialog', () => shell.dialog.update());

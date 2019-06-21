@@ -9,6 +9,9 @@ import lmsSection from './sections/lms';
 import faqSection from './sections/faq';
 import StickyFooter from '~/components/sticky-footer/sticky-footer';
 import Navigator from './sections/navigator/navigator';
+import PopupContent from './popup/popup';
+import ModalContent from '~/components/modal-content/modal-content';
+import {on} from '~/helpers/controller/decorators';
 
 const spec = {
     css,
@@ -41,7 +44,7 @@ export default class RoverRedesign extends BaseClass {
                     headerImage,
                     mobileHeaderImage: headerImage,
                     headerImageAltText: 'Rover logo',
-                    accessLink: data.section_1.accessButtonLink,
+                    accessLink: 'transition-popup',
                     accessText: data.section_1.accessButtonCta,
                     headline: 'Rover by OpenStax',
                     introHtml: data.section_1.blurb,
@@ -124,7 +127,7 @@ export default class RoverRedesign extends BaseClass {
                     description: ''
                 },
                 rightButton: {
-                    link: data.section_7.signupButtonUrl,
+                    link: 'transition-popup',
                     text: data.section_7.signupButtonCta,
                     description: ''
                 }
@@ -154,6 +157,35 @@ export default class RoverRedesign extends BaseClass {
         if ('piTracker' in window) {
             piTracker(window.location.href.split('#')[0]);
         }
+        const cmsPopupData = data.popup.content[0];
+
+        this.popupData = Object.assign(
+            {
+                loginUrl: data.section_1.accessButtonLink,
+                image: cmsPopupData.backgroundImage.file
+            },
+            cmsPopupData
+        );
+    }
+
+    @on('click a[href="transition-popup"]')
+    showPopup(event) {
+        event.preventDefault();
+        const popupContent = new PopupContent({
+            model: this.popupData
+        });
+        const modalContent = new ModalContent(popupContent);
+
+        this.regions.self.append(modalContent);
+        popupContent.on('cancel', () => {
+            const mcEl = modalContent.el;
+            const mcIdx = this.regions.self.controllers.indexOf(modalContent);
+
+            modalContent.detach();
+            // Necessary due to a bug in superb
+            mcEl.parentNode.removeChild(mcEl);
+            this.regions.self.controllers.splice(mcIdx, 1);
+        });
     }
 
 }

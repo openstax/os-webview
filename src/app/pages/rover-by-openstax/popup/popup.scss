@@ -1,0 +1,64 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.transition-popup {
+    background-color: ui-color(white);
+    border-radius: 0.4rem;
+    color: text-color(normal);
+    display: grid;
+    max-width: 140rem;
+    overflow: hidden;
+    width: 100%;
+
+    @include width-up-to($phone-max) {
+        .rover-image {
+            display: none;
+        }
+    }
+
+    @include wider-than($phone-max) {
+        grid-template-columns: 1fr minmax(auto, 70%);
+    }
+
+    .rover-image {
+        background-position: right center;
+        background-size: cover;
+    }
+
+    h2 {
+        @include set-font(h2);
+    }
+
+    .text-content {
+        text-align: center;
+        padding: 6rem 0;
+
+        @include width-up-to($phone-max) {
+            padding: 4rem 1rem;
+        }
+
+        > * {
+            margin: 0;
+        }
+
+        > * ~ * {
+            margin-top: 3rem;
+        }
+    }
+
+    .close-button-row {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+
+        .close-popup {
+            padding: $normal-margin;
+        }
+    }
+
+    .button-area {
+        align-items: center;
+        display: grid;
+        grid-auto-flow: row;
+        grid-row-gap: 2rem;
+    }
+}
