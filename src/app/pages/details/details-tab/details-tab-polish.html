@@ -30,7 +30,7 @@
                 </div>
             </if>
         </if>
-        <if condition="!model.comingSoon">
+        <if condition="model.bookState === 'live'">
             <div class="loc-errata">
                 <h3>Errata</h3>
                 <p data-html="errataBlurb"></p>

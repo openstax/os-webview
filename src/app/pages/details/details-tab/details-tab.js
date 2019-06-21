@@ -31,18 +31,20 @@ export default class DetailsTab extends componentType(spec, insertHtmlMixin, bus
 
     onLoaded() {
         super.onLoaded();
+        const includeTOC = Boolean(this.model.bookInfo.table_of_contents);
+        const gtt = new GetThisTitle(
+            Object.assign({includeTOC}, this.model.bookInfo)
+        );
 
-        if (!this.model.comingSoon) {
-            const gtt = new GetThisTitle(
-                Object.assign({includeTOC: true}, this.model.bookInfo)
-            );
-            const webviewLink = this.model.bookInfo.webview_link
-                .replace(/[^/]*$/, this.model.bookInfo.table_of_contents.shortId);
+        this.regions.getTheBook.append(gtt);
 
-            this.regions.getTheBook.append(gtt);
+        if (includeTOC) {
             gtt.on('toc', (whether) => {
                 this.emit('toc', whether);
             });
+            const webviewLink = this.model.bookInfo.webview_link
+                .replace(/[^/]*$/, this.model.bookInfo.table_of_contents.shortId);
+
             this.on('put-toc-in', (region) => {
                 const tocComponent = new TocDrawer({
                     data: Object.assign(
