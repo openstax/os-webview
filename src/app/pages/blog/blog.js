@@ -15,12 +15,7 @@ import DisqusForm from './disqus-form/disqus-form';
 
 function slugsSortedByArticleDate(articles) {
     return Object.keys(articles)
-        .sort((a, b) => {
-            const articleA = articles[a];
-            const articleB = articles[b];
-
-            return articleA.date < articleB.date ? 1 : -1;
-        });
+        .sort((a, b) => articles[a].date < articles[b].date ? 1 : -1);
 }
 
 const path = '/blog';
@@ -71,6 +66,7 @@ export default class Blog extends BaseClass {
 
     buildDefaultPage() {
         const fa = new FeaturedArticle(this.featuredArticleOptions);
+        // -- Future feature
         // const sb = new SearchBar({
         //     model: {
         //         title: 'Read more great stories'
@@ -85,6 +81,7 @@ export default class Blog extends BaseClass {
             articles: this.moreStoriesOptions((_, articleEntry) => !articleEntry.pin_to_top)
         });
 
+        // -- Future feature, cont'd
         // sb.on('value', (searchParam) => {
         //     history.pushState({}, '', `${path}/?${searchParam}`);
         //     this.handlePathChange();
@@ -112,22 +109,20 @@ export default class Blog extends BaseClass {
     }
 
     buildArticlePage() {
-        const a = new Article({
+        const region = this.regions.self;
+
+        region.attach(new Article({
             slug: `news/${this.articleSlug}`
-        });
-        const ub = new UpdateBox({
+        }));
+        region.append(new DisqusForm());
+        region.append(new UpdateBox({
             model: {
                 rssUrl: `${settings.apiOrigin}/blog-feed/rss/`
             }
-        });
-        const ms = new MoreStories({
+        }));
+        region.append(new MoreStories({
             articles: this.moreStoriesOptions((slug, _) => slug !== this.articleSlug)
-        });
-
-        this.regions.self.attach(a);
-        this.regions.self.append(new DisqusForm());
-        this.regions.self.append(ub);
-        this.regions.self.append(ms);
+        }));
     }
 
     // eslint-disable-next-line complexity
