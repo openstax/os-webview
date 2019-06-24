@@ -1,0 +1,66 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.rover-by-openstax #faq {
+    padding-bottom: 11rem;
+
+    .boxed {
+        align-items: start;
+    }
+
+    h2 {
+        margin-bottom: 4rem;
+    }
+
+    .top-border {
+        background-image: url('/images/rover-by-openstax/bg-7.svg');
+        height: calc(6rem + 11vw);
+        margin-top: calc(-15.9rem - 11vw);
+    }
+
+    .faq-box {
+        background-color: ui-color(white);
+        border: thin solid ui-color(form-border);
+        border-radius: 0.4rem;
+        color: text-color(normal);
+        padding: 0.5rem #{2 * $normal-margin};
+        width: 100%;
+    }
+
+    .indicator {
+        font-size: 1.4rem;
+        margin-right: 2rem;
+        margin-top: 0.5rem;
+    }
+
+    .qa {
+        border-bottom: thin solid ui-color(form-border);
+    }
+
+    .qa:last-child {
+        border-bottom: 0;
+    }
+
+    .question {
+        cursor: pointer;
+        display: grid;
+        font-weight: bold;
+        grid-template-columns: 1fr auto;
+        padding: 1rem 0;
+    }
+
+    .answer {
+        margin-bottom: $normal-margin;
+        margin-left: 0.7rem;
+        margin-right: 4rem;
+        max-height: 25rem;
+        max-width: $text-content-max;
+        transition: all 0.3s;
+
+        &.closed {
+            margin: 0;
+            max-height: 0;
+            opacity: 0;
+            pointer-events: none;
+        }
+    }
+}

@@ -51,10 +51,8 @@
         display: block;
     }
 
-    // scss-lint:disable SelectorDepth
     a:focus,
     a:hover {
         color: text-color(link-hover);
     }
-    // scss-lint:enable SelectorDepth
 }

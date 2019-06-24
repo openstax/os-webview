@@ -1,0 +1,30 @@
+<template args="model">
+    <img class="corner-logo" src="/images/rover-3/rover-angled-corner.svg" alt="">
+    <div class="boxed">
+        <div class="feature-grid">
+            <div>
+                <i class="icon pink fas fa-tasks"></i>
+                <div class="text-block" data-html="cards[0].description"></div>
+            </div>
+            <img class="vertical-chalk-line" src="/images/rover-3/fill-2857.svg">
+            <div>
+                <i class="icon yellow fas fa-chart-bar"></i>
+                <div class="text-block" data-html="cards[1].description"></div>
+            </div>
+            <img class="horizontal-chalk-line" src="/images/rover-3/fill-5720.svg">
+            <div>
+                <i class="icon green fas fa-award"></i>
+                <div class="text-block" data-html="cards[2].description"></div>
+            </div>
+            <div>
+                <i class="icon blue fas fa-hand-holding-usd"></i>
+                <div class="text-block" data-html="cards[3].description"></div>
+            </div>
+        </div>
+        <div class="text-block">
+            <h2>{model.heading}</h2>
+            <div class="tagline">{model.description}</div>
+            <a class="btn blue" href="{model.webinarLink}">{model.webinarLinkText}</a>
+        </div>
+    </div>
+</template>

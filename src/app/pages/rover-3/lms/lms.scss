@@ -1,0 +1,22 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.rover-by-openstax #lms {
+    padding-bottom: 20rem;
+    padding-top: 0;
+
+    .boxed {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding-top: 6rem;
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    .bottom-border {
+        background-image: url('/images/rover-by-openstax/bg-4.svg');
+        height: calc(6rem + 11vw);
+        margin-bottom: calc(-15rem - 11vw);
+    }
+}

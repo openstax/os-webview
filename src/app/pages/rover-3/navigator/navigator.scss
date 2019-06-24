@@ -1,0 +1,41 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+$indicator-size: 1rem;
+
+.rover-by-openstax .navigator {
+    @include set-font(body-large);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 6rem;
+
+    .label {
+        font-weight: bold;
+        text-transform: uppercase;
+
+        &::after {
+            content: ':';
+            margin-right: 1rem;
+        }
+
+    }
+
+    .navigation-item {
+        &.selected {
+            color: os-color(light-blue);
+            font-weight: bold;
+        }
+
+        &[role="button"]:focus {
+            border: 0;
+            box-shadow: none;
+            outline: none;
+        }
+
+        ~ .navigation-item::before {
+            content: '-';
+            margin: 1rem;
+        }
+    }
+}

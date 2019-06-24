@@ -1,0 +1,29 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.rover-by-openstax #stepwise {
+    padding-bottom: 4rem;
+    padding-top: 9rem;
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(33rem, auto));
+        grid-gap: #{2 * $normal-margin};
+        margin-top: 4rem;
+        width: 100%;
+    }
+
+    .card {
+        background-color: ui-color(white);
+        display: grid;
+        grid-gap: $normal-margin;
+        padding: 1.5rem;
+
+        > * {
+            max-width: 100%;
+        }
+    }
+
+    .bottom-border-container {
+        width: 100%;
+    }
+}

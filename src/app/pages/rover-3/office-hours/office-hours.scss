@@ -1,0 +1,40 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.rover-by-openstax #office-hours {
+    padding: 9.4rem 0 12rem;
+
+    .boxed {
+        display: grid;
+        grid-column-gap: 3rem;
+        grid-template-columns: 1fr 1fr;
+        padding-top: 6rem;
+    }
+
+    .text-block {
+        display: grid;
+        grid-row-gap: 2rem;
+        justify-items: start;
+
+        > *,
+        > * > p:first-child {
+            margin: 0;
+        }
+
+        br,
+        p:empty {
+            display: none;
+        }
+    }
+
+    .fine-print {
+        @include set-font(helper-label);
+    }
+
+    .btn {
+        margin-top: 2rem;
+    }
+
+    .bottom-border-container {
+        grid-column: 1 / 3;
+    }
+}

@@ -1,0 +1,17 @@
+<template args="model">
+    <div class="boxed">
+        <div class="text-block">
+            <h2>{model.heading}</h2>
+            <div class="tagline">{model.description}</div>
+        </div>
+        <div class="cards">
+            <div each="card in model.cards" class="card text-left-image-right">
+                <div class="text-block">
+                    <h3>{card.heading}</h3>
+                    <div>{card.description}</div>
+                </div>
+                <div data-html="cards[{$item}].video"></div>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,69 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+$card-box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.5);
+
+.rover-by-openstax {
+    background-color: ui-color(white);
+
+    h2 {
+        @include set-font(hero-h1);
+    }
+
+    .btn {
+        @extend %button;
+
+        color: text-color(white);
+        height: auto;
+        padding: 1em 2em;
+
+        &.blue {
+            background-color: os-color(light-blue);
+
+            &:hover,
+            &:active {
+                background-color: darken(os-color(light-blue), 10%);
+                color: text-color(white);
+            }
+        }
+    }
+
+    .tagline {
+        @include body-font(2.4rem);
+
+        line-height: 3rem;
+    }
+
+    .card {
+        @extend %card;
+
+        box-shadow: $card-box-shadow;
+
+        &:hover {
+            box-shadow: $card-box-shadow;
+        }
+    }
+
+    @include width-up-to($phone-max) {
+        .for-desktop {
+            display: none;
+        }
+    }
+
+    @include wider-than($phone-max) {
+        .for-mobile {
+            display: none;
+        }
+    }
+
+    .bottom-border-container {
+        background-color: ui-color(form-border);
+        overflow: hidden;
+        margin-top: 10rem;
+
+        .bottom-border {
+            border-bottom: 0.2rem dashed ui-color(white);
+            height: 0.1rem;
+            transform: scaleX(2);
+        }
+    }
+}

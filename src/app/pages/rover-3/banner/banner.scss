@@ -1,0 +1,88 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.rover-by-openstax #banner {
+    padding: 8rem 0 5rem;
+    position: relative;
+
+    .accent {
+        @include width-up-to($phone-max) {
+            display: none;
+        }
+
+        @include wider-than($phone-max) {
+            background-image: linear-gradient(to bottom, lighten(os-color(orange), 20%), os-color(orange));
+            height: 33%;
+            left: 0;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4rem;
+        }
+    }
+
+    .top-right {
+        position: absolute;
+        right: 2rem;
+        top: 2rem;
+    }
+
+    .two-columns {
+        @include set-font(body-large);
+
+        display: grid;
+        grid-row-gap: 3rem;
+        width: 100%;
+
+        @include wider-than($tablet-max) {
+            grid-column-gap: 4rem;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @include width-between($phone-max, $media-content-max) {
+            padding-left: 5rem;
+        }
+
+        @include wider-than($media-content-max) {
+            padding-left: calc(65rem - 50vw);
+        }
+
+        .left-column {
+            align-content: start;
+            display: grid;
+            grid-row-gap: 3rem;
+
+
+            img {
+                max-width: 100%;
+            }
+        }
+
+        .tagline {
+            line-height: 4rem;
+        }
+
+        .video iframe {
+            max-width: 100%;
+
+            @include width-up-to($phone-max) {
+                width: 100%;
+                height: calc(75vw - #{1.5 * $normal-margin});
+            }
+
+            @include width-between($phone-max, $tablet-max) {
+                height: 48rem;
+                width: 64rem;
+            }
+
+            @include width-between($tablet-max, $media-content-max) {
+                height: calc(0.4 * 100vw);
+                width: calc(0.53 * 100vw)
+            }
+
+            @include wider-than($media-content-max) {
+                height: 48rem;
+                width: 64rem;
+            }
+        }
+    }
+}
