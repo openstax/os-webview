@@ -1,381 +1,44 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.blog.page,
-.press.page {
-    article {
-        margin: auto;
-        max-width: $text-content-max;
-        padding: 0 $normal-margin;
+.blog.page .article {
+    background-color: ui-color(white);
 
-        @include width-up-to($phone-max) {
-            max-width: 100%;
-        }
-    }
-
-    .strips {
-        bottom: 0;
-    }
-
-    .article {
-        align-content: flex-start;
-        display: flex;
-        flex-flow: row wrap;
-        margin-bottom: 3rem;
-        min-height: 20rem;
-
-        > .article {
-            margin-bottom: 0;
-        }
-
-        &.page {
-            @mixin tablet {
-                @media (min-width: #{breakpoints(phone) + 1}) {
-                    @content;
-                }
-            }
-
-            &.hidden {
-                display: none;
-            }
-
-            .article {
-                background-color: ui-color(white);
-                width: 100%;
-
-                .quote {
-                    background-color: ui-color(form-bg);
-                    padding: 1rem 3rem;
-                }
-
-                figcaption {
-                    @include set-font(helper-label);
-
-                    color: text-color(helper);
-
-                    :first-child {
-                        margin-top: 0;
-                    }
-                }
-
-                .tags {
-                    display: flex;
-
-                    .tag {
-                        background-color: ui-color(form-bg);
-                        color: text-color(helper);
-                        margin-right: 1.5rem;
-                        padding: 0.35em 1.1em;
-                    }
-                }
-            }
-
-            .hero {
-                background-position: 60% 40%;
-                background-repeat: no-repeat;
-                background-size: cover;
-                height: 60rem;
-                overflow: hidden;
-                padding: 0;
-                position: relative;
-                width: 100%;
-
-                @include wider-than($media-content-max) {
-                    background-size: calc(28rem + 80vw);
-                    height: calc(4rem + 40vw);
-                    max-height: 80vh;
-                }
-            }
-
-            > .boxed {
-                max-width: $content-max;
-                padding: 2rem 1.5rem 8rem;
-            }
-
-            .meta {
-                color: text-color(helper);
-            }
-
-            .author {
-                font-style: italic;
-
-                &::after {
-                    content: ' | ';
-                }
-            }
-
-            .body {
-                line-height: 1.667;
-
-                img {
-                    margin: 1.5rem 0 0;
-                    width: 100%;
-                }
-
-                .image {
-                    margin-top: 2.5rem;
-                }
-            }
-
-            .tags span {
-                @include set-font(helper-label);
-
-                color: text-color(helper);
-                display: inline-block;
-                margin-right: 1rem;
-                padding: 1rem;
-            }
-
-            .disqus {
-                padding: 4rem 0 0;
-                width: 100%;
-            }
-
-            .articles .boxed {
-                padding: 0 1.5rem;
-
-                @include wider-than($tablet-max) {
-                    padding: 0;
-                }
-            }
-        }
-
-        h2 {
-            @include set-font(h3);
-
-            @include wider-than($tablet-max) {
-                margin-top: 0;
-            }
-
-            a:not(:hover) {
-                color: inherit;
-                text-decoration: inherit;
-            }
-        }
-
-        h3 {
-            @include set-font(h4);
-        }
-
-        // TODO: Remove when fixed in Pattern Library
-        a {
-            display: inline;
-        }
-
-        .img {
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            flex-basis: 100%;
-            height: 24rem;
-        }
-
-        .content {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 24rem;
-
-            @include wider-than($tablet-max) {
-                min-height: 30rem;
-            }
-        }
-
-        .viewport {
-            display: flex;
-            flex: 1 1 15rem;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .meta {
-            width: 100%;
-
-            p {
-                margin: 0;
-                position: relative;
-            }
-        }
-    }
-
-    .boxed {
-        @include width-up-to($tablet-max) {
-            padding: 0;
-        }
-    }
-
-    .excerpt {
-        display: flex;
-        flex-direction: column;
-        flex-shrink: 1;
-        height: calc(100% - 2.5rem); // Firefox needs this
-        max-width: 100%; // Edge needs this
+    .hero {
+        background-position: 60% 40%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 60rem;
+        overflow: hidden;
         padding: 0;
+        position: relative;
+        width: 100vw;
 
-        .body {
-            flex-basis: 100%;
-            flex-shrink: 1;
-
-            > :first-child {
-                height: 12rem;
-                overflow: hidden;
-                width: auto;
-
-                > * {
-                    column-width: 57em;
-                    height: 100%;
-                }
-            }
-
-            div :first-child {
-                margin-bottom: 0;
-                margin-top: 0;
-            }
+        @include wider-than($media-content-max) {
+            height: calc(4rem + 40vw);
+            max-height: 80vh;
         }
     }
 
-    .pinned {
-        width: 100%;
+    .text-content {
+        @extend %text-content;
 
-        .article {
-            width: 100%;
-
-            @include wider-than($tablet-max) {
-                flex-flow: row nowrap;
-                height: 38.5rem;
-                margin-bottom: 0;
-                padding: 2.5rem 0;
-            }
-
-            h2 {
-                @include wider-than($tablet-max) {
-                    @include set-font(h2);
-
-                    margin: -0.5rem 0 1rem;
-                }
-            }
-
-            .body {
-                @include set-font(body-large);
-
-                margin-bottom: 1rem;
-                overflow: hidden;
-
-                > :first-child {
-                    max-height: 100%; // IE needs this
-                }
-
-            }
-
-            .go-to {
-                @include set-font(helper-label);
-            }
-
-            .img {
-                background-size: cover;
-                flex-basis: 100%;
-                height: 32rem;
-
-                @include wider-than($tablet-max) {
-                    flex-basis: 50%;
-                    margin-right: 3rem;
-                }
-            }
-
-            img {
-                width: 100%;
-            }
-
-            .content {
-                flex-basis: 100%;
-                max-height: 100%;
-                max-width: 100%;
-                padding: 0 $normal-margin;
-
-                @include wider-than($tablet-max) {
-                    flex-basis: 50%;
-                    height: 32rem;
-                    justify-content: space-between;
-                    max-width: 50%;
-                    padding: 0;
-                }
-            }
-        }
-    }
-
-
-
-    .articles .container {
-
-        padding: 0;
-
-        > .article {
-            background-color: ui-color(white);
-            display: block;
-            flex-basis: 100%;
-            max-width: 100%;
-            width: 100%;
-
-            @include wider-than($tablet-max) {
-                flex-basis: 50%;
-                margin: 1.5rem;
-                max-width: calc(50% - 3rem);
-            }
-
-            @include wider-than($media-content-max) {
-                flex-basis: 33%;
-                max-width: calc(33% - 2.61rem);
-            }
-
-            /* one article */
-            &:first-child:nth-last-child(1) {
-                flex-basis: 100%;
-            }
-
-            /* two articles */
-            &:first-child:nth-last-child(2),
-            &:first-child:nth-last-child(2) ~ div {
-                @include wider-than($tablet-max) {
-                    flex-basis: calc(50% - 3rem);
-                }
-            }
-
-            .content {
-                flex-basis: 100%;
-                max-width: 100%;
-                padding: 0 $normal-margin $normal-margin;
-
-                @include wider-than($tablet-max) {
-                    padding: $normal-margin;
-                }
-            }
-        }
-    }
-
-    .go-to {
-        @include set-font(helper-label);
-
-        text-transform: uppercase;
+        align-items: flex-start;
     }
 
     .body {
-        column-width: 100%;
-    }
-
-    .pinned .article,
-    .articles .article {
-        a:hover {
-            color: os-color(light-blue);
+        img {
+            margin-top: $normal-margin;
+            width: 100%;
         }
-    }
 
-    .meta .btn {
-        @include set-font(helper-label);
+        figcaption {
+            @include set-font(helper-label);
 
-        color: text-color(helper);
-        padding: 0.3em 1em;
-    }
+            color: text-color(helper);
 
-    .author {
-        font-style: italic;
+            :first-child {
+                margin-top: 0;
+            }
+        }
     }
 }
