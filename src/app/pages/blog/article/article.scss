@@ -2,9 +2,11 @@
 
 .blog.page .article {
     background-color: ui-color(white);
+    max-width: 100vw;
+    width: 100%;
 
     .hero {
-        background-position: 60% 40%;
+        background-position: 33% 20%;
         background-repeat: no-repeat;
         background-size: cover;
         height: 60rem;
@@ -12,6 +14,10 @@
         padding: 0;
         position: relative;
         width: 100vw;
+
+        @include width-up-to($phone-max) {
+            height: 40rem;
+        }
 
         @include wider-than($media-content-max) {
             height: calc(4rem + 40vw);
@@ -23,12 +29,14 @@
         @extend %text-content;
 
         align-items: flex-start;
+        width: 100%;
+        padding: 0 $normal-margin;
     }
 
     .body {
         img {
             margin-top: $normal-margin;
-            width: 100%;
+            max-width: 100%;
         }
 
         figcaption {
@@ -40,5 +48,31 @@
                 margin-top: 0;
             }
         }
+    }
+
+    figure {
+        display: grid;
+        justify-content: center;
+        margin: 0;
+
+        @include wider-than($phone-max) {
+            &.left,
+            &.right {
+                margin-right: $normal-margin;
+                max-width: 50%;
+            }
+
+            &.right {
+                float: right;
+            }
+
+            &.left {
+                float: left;
+            }
+        }
+    }
+
+    br {
+        display: none;
     }
 }
