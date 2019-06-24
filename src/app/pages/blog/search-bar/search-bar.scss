@@ -3,6 +3,7 @@
 .blog.page .search-bar {
     display: grid;
     grid-column-gap: 2rem;
+    grid-row-gap: 1rem;
     grid-template: 'topline topline'
     'input button' /1fr auto;
     justify-items: center;
@@ -14,6 +15,7 @@
         @include set-font(h3);
 
         grid-area: topline;
+        margin: 0;
     }
 
     input {

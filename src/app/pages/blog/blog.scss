@@ -1,72 +1,24 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .blog.page {
+    background-color: ui-color(white);
+    display: grid;
+    grid-row-gap: 3rem;
+    justify-items: center;
+    padding-bottom: 5rem;
+    width: 100%;
+
     .content .meta {
         .author::after {
             content: ' | ';
         }
     }
 
-    .articles {
-        display: flex;
-        flex-flow: column nowrap;
-
-        @include wider-than($tablet-max) {
-            background-color: ui-color(form-bg);
-            border-top: thin solid ui-color(form-border);
-            padding: 2rem 0;
-        }
-
-        .boxed {
-            display: block;
-
-            @include wider-than($tablet-max) {
-                align-items: stretch;
-                display: flex;
-                flex-flow: row wrap;
-                padding: 0;
-            }
-
-            .search {
-                margin: 0 auto;
-            }
-        }
+    .strips {
+        bottom: 0;
     }
 
-    .update-box {
-        align-items: baseline;
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: center;
-        margin: auto;
-        max-width: $content-max;
-        padding-bottom: 2rem;
-
-        @include width-up-to($phone-max) {
-            align-items: center;
-            display: block;
-            padding-left: 1.5rem;
-            text-align: center;
-        }
-
-        .cta {
-            background-color: os-color(orange);
-            color: text-color(white);
-            margin-left: 1rem;
-            margin-right: 1rem;
-            padding: 1.25rem 3rem;
-
-            @include width-up-to($phone-max) {
-                margin: 0;
-            }
-        }
-
-        .rss-link i {
-            background-color: none;
-            color: os-color(orange);
-            margin: 1.5rem;
-            transform: scale(2);
-        }
-
+    .disqus {
+        @extend %text-content;
     }
 }

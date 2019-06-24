@@ -36,7 +36,7 @@ const spec = {
 
 export default class extends componentType(spec) {
 
-    onLoaded() {
+    onAttached() {
         this.el.id = 'disqus_thread';
         const disqusScript = d.querySelector('script[src*="openstax.disqus.com"]');
 
