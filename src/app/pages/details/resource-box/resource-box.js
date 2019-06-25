@@ -95,7 +95,8 @@ export default class extends componentType(spec, insertHtmlMixin) {
             Object.assign(this.view, {
                 tag: 'a',
                 attributes: {
-                    href: model.link.url
+                    href: model.link.url,
+                    'data-local': model.iconType === 'lock' ? 'true' : 'false'
                 }
             });
         }
