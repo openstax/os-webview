@@ -282,7 +282,7 @@ export default class Details extends BaseClass {
         }
 
         if (!polish && this.pageData.book_allies.length) {
-            addTab('Partner Resources', new PartnersTab({
+            addTab('Partner resources', new PartnersTab({
                 allies,
                 ally: {
                     heading: this.pageData.ally_content.content.heading,
