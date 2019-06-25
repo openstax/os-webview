@@ -29,9 +29,14 @@ class AlignedImage extends BodyUnit {
     init(data) {
         super.init(data);
         this.template = alignedImageTemplate;
-        this.model = Object.assign({
-            imageUrl: data.image
-        }, data);
+        const selectedImage = data.image.original;
+
+        this.model = {
+            imageUrl: selectedImage.src,
+            imageAlt: selectedImage.alt,
+            caption: data.caption,
+            alignmentClass: ['left', 'right'].includes(data.alignment) ? data.alignment : ''
+        };
     }
 
     onLoaded() {

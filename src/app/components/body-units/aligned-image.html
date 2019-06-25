@@ -1,6 +1,6 @@
 <template args="model">
-    <figure>
-        <img class="align-{model.alignment}" src="{model.imageUrl}" alt="{model.alt_text}">
+    <figure class="{model.alignmentClass}">
+        <img src="{model.imageUrl}" alt="{model.imageAlt}">
         <figcaption data-html="caption"></figcaption>
     </figure>
 </template>
