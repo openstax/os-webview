@@ -24,6 +24,7 @@ export default class General extends BaseClass {
             .then((html) => {
                 this.el.innerHTML = html;
                 const div = document.createElement('div');
+
                 // Scripts have to be inserted as nodes, not as innerHTML, so swap
                 // each of them out and back in
                 Array.from(this.el.querySelectorAll('script'))
