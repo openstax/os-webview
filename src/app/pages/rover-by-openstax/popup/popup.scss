@@ -2,26 +2,24 @@
 
 .transition-popup {
     background-color: ui-color(white);
+    background-size: 0;
     border-radius: 0.4rem;
     color: text-color(normal);
-    display: grid;
     max-width: 140rem;
     overflow: hidden;
+    padding: 2rem 4rem;
+    position: relative;
     width: 100%;
 
-    @include width-up-to($phone-max) {
-        .rover-image {
-            display: none;
-        }
+    @include wider-than($tablet-max) {
+        background-position: 0;
+        background-repeat: no-repeat;
+        background-size: auto 100%;
+        padding-left: 51rem;
     }
 
-    @include wider-than($phone-max) {
-        grid-template-columns: 1fr minmax(auto, 70%);
-    }
-
-    .rover-image {
-        background-position: right center;
-        background-size: cover;
+    @include width-between($tablet-max, $media-content-max) {
+        background-position: calc(100vw - 120rem);
     }
 
     h2 {
@@ -45,14 +43,13 @@
         }
     }
 
-    .close-button-row {
-        display: flex;
-        justify-content: flex-end;
-        width: 100%;
-
-        .close-popup {
-            padding: $normal-margin;
-        }
+    .close-popup {
+        cursor: pointer;
+        font-size: 2.4rem;
+        padding-right: 0.5rem;
+        position: absolute;
+        right: 2.5rem;
+        top: 2.5rem;
     }
 
     .button-area {

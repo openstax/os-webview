@@ -1,19 +1,14 @@
 <template args="model">
-    <div class="rover-image" style="{backgroundImage: `url(${model.image})`}"></div>
-    <div>
-        <div class="close-button-row">
-            <div class="close-popup" role="button" tabindex="0">
-                <i class="fa fa-times"></i>
-            </div>
-        </div>
-        <div class="text-content">
-            <h2>{model.headline}</h2>
-            <div>{model.instructions}</div>
-            <div class="button-area">
-                <a href="{model.loginUrl}" class="btn blue medium" tabindex="0">{model.signInText}</a>
-                or
-                <a href="{model.otherOptionUrl}" tabindex="0">{model.otherOptionText}</a>
-            </div>
+    <div class="close-popup" role="button" tabindex="0">
+        <i class="fa fa-times"></i>
+    </div>
+    <div class="text-content">
+        <h2>{model.headline}</h2>
+        <div>{model.instructions}</div>
+        <div class="button-area">
+            <a href="{model.loginUrl}" class="btn blue medium" tabindex="0">{model.signInText}</a>
+            or
+            <a href="{model.otherOptionUrl}" tabindex="0">{model.otherOptionText}</a>
         </div>
     </div>
 </template>
