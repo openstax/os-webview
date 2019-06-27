@@ -187,7 +187,7 @@ export default class Details extends BaseClass {
                 title: this.pageData.title,
                 salesforceAbbreviation: this.pageData.salesforce_abbreviation
             };
-            const authors = this.pageData.book_contributing_authors;
+            const authors = this.pageData.authors;
             const senior = (author) => author.senior_author;
             const nonsenior = (author) => !author.senior_author;
 
