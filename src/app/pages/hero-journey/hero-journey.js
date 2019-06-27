@@ -30,6 +30,7 @@ export default class extends componentType(spec) {
     init(...args) {
         super.init(...args);
         this.accountsModelPromise = accountsModel.load();
+        this.turnedOff = true; // Feature flag!
     }
 
     onLoaded() {
@@ -178,9 +179,14 @@ export default class extends componentType(spec) {
         });
 
         shellBus.emit('with-sticky');
+        if (this.turnedOff) {
+            this.regions.self.append(new Books({
+                turnedOff: this.turnedOff
+            }));
+            return;
+        }
         this.regions.self.append(navigator);
         this.regions.self.append(new Books({
-            turnedOff: true,
             get email() {return parent.email;},
             heading: 'Get your Hero Badge',
             get firstName() {return parent.firstName;},
