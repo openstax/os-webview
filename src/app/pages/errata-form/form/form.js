@@ -4,6 +4,8 @@ import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import css from './form.css';
 import routerBus from '~/helpers/router-bus';
+import shellBus from '~/components/shell/shell-bus';
+import BannedNotice from '../banned-notice/banned-notice';
 import selectHandler from '~/handlers/select';
 import settings from 'settings';
 
@@ -146,6 +148,15 @@ export default class Form extends Controller {
         }).then((r) => r.json()).then((json) => {
             if (json.id) {
                 routerBus.emit('navigate', `/confirmation/errata?id=${json.id}`);
+            } else if (json.submitted_by_account_id) {
+                shellBus.emit('showDialog', () => ({
+                    title: 'Errata submission rejected',
+                    content: new BannedNotice({
+                        model: {
+                            text: json.submitted_by_account_id[0]
+                        }
+                    })
+                }));
             }
         }).catch((fetchError) => {
             this.model.submitFailed = `Submit failed: ${fetchError}.`;
