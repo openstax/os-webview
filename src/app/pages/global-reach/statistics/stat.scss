@@ -2,6 +2,8 @@
 
 .statbox {
     align-items: center;
+    background: linear-gradient(90deg, #326ba4 0%, #2e217a 100%);
+    background-color: rgba(1, 35, 102, 0.5);
     display: grid;
     grid-column-gap: $normal-margin;
     grid-template-columns: repeat(4, 26rem);

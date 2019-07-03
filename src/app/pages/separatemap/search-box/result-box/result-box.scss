@@ -1,0 +1,87 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+$lighter: #f8f8f8;
+
+.separatemap.page .result-box {
+    border-bottom: thin solid ui-color(form-border);
+
+    .school-info h2 {
+        @include title-font(1.8rem);
+
+        margin: 0;
+    }
+
+    .school-details {
+        display: grid;
+        grid-column: 1 / 3;
+        grid-row-gap: 1rem;
+    }
+
+    .toggle-details {
+        align-items: center;
+        cursor: pointer;
+        display: grid;
+        grid-row-gap: $normal-margin;
+        grid-template-columns: 1fr auto;
+        padding: 2rem 1rem;
+    }
+
+    .toggle-indicator {
+        align-items: center;
+        background-color: $lighter;
+        border-radius: 50%;
+        display: flex;
+        font-size: 1.2rem;
+        height: 3.2rem;
+        justify-content: center;
+        width: 3.2rem;
+
+        &[aria-pressed="true"] {
+            background-color: ui-color(default-hover);
+        }
+    }
+
+    .savings-box {
+        @include set-font(helper-label);
+
+        border: thin solid ui-color(form-border);
+        display: grid;
+        grid-template-columns: auto auto;
+        padding: 1.5rem 1rem;
+
+        .savings-header {
+            font-weight: bold;
+            grid-column: 1 / 3;
+        }
+
+        .cumulative {
+            justify-self: end;
+        }
+    }
+
+    .submit-testimonial {
+        justify-self: end;
+        padding: 0 1rem 1rem;
+    }
+
+    .testimonial-box {
+        border: thin solid ui-color(form-border);
+        display: grid;
+        padding: 2rem 1rem;
+
+        .quotation-mark {
+            color: os-color(orange);
+            font-size: 1.8rem;
+        }
+
+        .attribution {
+            display: grid;
+            justify-items: end;
+            justify-self: end;
+
+            .name::before {
+                content: '—'
+            }
+        }
+    }
+}

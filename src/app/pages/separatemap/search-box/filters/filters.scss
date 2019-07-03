@@ -1,0 +1,29 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.separatemap.page .filters {
+    border-bottom: thin solid ui-color(form-border);
+    display: grid;
+    grid-row-gap: $normal-margin;
+    padding: 1rem 2rem;
+
+    .sub-list {
+        display: grid;
+
+        label {
+            margin-left: 1rem;
+        }
+    }
+
+    .for-checkbox {
+        align-items: baseline;
+        display: grid;
+        grid-gap: 0.5rem;
+        grid-template-columns: auto 1fr;
+    }
+
+    [type="checkbox"] {
+        height: 2rem;
+        transform: translateY(30%);
+        width: 2rem;
+    }
+}

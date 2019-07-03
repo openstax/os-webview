@@ -34,6 +34,9 @@ export default class FormSelect extends componentType(spec, busMixin) {
         this.proxyWidget = new Select(config, selectHandler, this);
         this.insertHtml();
         selectHandler.controllers.push(this.proxyWidget);
+        this.on('set-value', (...args) => {
+            this.proxyWidget.updateOptions();
+        });
     }
 
     setOptions(options) {
