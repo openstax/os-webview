@@ -39,6 +39,10 @@ export default class ImpactDev extends BaseClass {
                 }
             ))
         }));
+        /*
+         * This section has two subjections, each with a header, description,
+         * image, and link.
+         */
         this.regions.self.append(new Studentinfo({
             model: {
                 header1: data.section_2_header_1,

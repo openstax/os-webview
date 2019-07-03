@@ -48,6 +48,14 @@ function doFetch(searchParameters) {
         );
 }
 
+/**
+ * Constructs a query parameter string to for the schools API and makes
+ * the call to retrieve it
+ *
+ * @param {string} queryString - part of a school name, city, etc.
+ * @param {object} selectedFilters - dictionary of filter settings
+ * @return {Promise}
+ */
 export default function (queryString, selectedFilters) {
     let searchParameters = `q=${queryString}`;
 

@@ -121,8 +121,13 @@ class BaseClass {
         if (!hasLngLat(schoolInfo)) {
             return;
         }
+        let html = `<b>${schoolInfo.fields.name}</b>`;
+
+        if (schoolInfo.cityState) {
+            html += `<br>${schoolInfo.cityState}`;
+        }
         this.tooltip.setLngLat(schoolInfo.lngLat);
-        this.tooltip.setHTML(`<b>${schoolInfo.fields.name}</b><br>${schoolInfo.cityState}`);
+        this.tooltip.setHTML(html);
         this.loaded.then((map) => {
             this.tooltip.addTo(map);
         });
