@@ -11,13 +11,11 @@
         height: 80rem;
     }
 
-    #mapdiv {
+    .map-image {
+        background-position: 25% 0;
+        background-repeat: no-repeat;
+        background-size: auto 120%;
         height: 100%;
-        pointer-events: none;
-    }
-
-    .mapboxgl-control-container {
-        display: none;
     }
 
     .boxed {

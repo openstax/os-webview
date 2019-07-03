@@ -1,5 +1,5 @@
 import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
-import Map1 from './map/map';
+import Map from './map/map';
 import State from './statistics/stat';
 import Studentinfo from './studentinfo/studentinfo';
 import Schoolmap from './schoolmap/schoolmap';
@@ -21,11 +21,12 @@ export default class ImpactDev extends BaseClass {
     onDataLoaded() {
         const data = this.pageData;
 
-        this.regions.self.attach(new Map1({
+        this.regions.self.attach(new Map({
             model: {
                 pageType: 'landing',
                 heading: data.title,
-                buttonText: data.header_text
+                buttonText: data.header_text,
+                imageUrl: data.map_image_url
             }
         }));
         this.regions.self.append(new State({
