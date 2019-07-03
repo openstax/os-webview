@@ -31,8 +31,9 @@ class Dialog extends Controller {
     }
 
     attachContent() {
-        if (this.props.content) {
+        if (this.props.content && !this.attached) {
             this.regions.main.append(this.props.content);
+            this.attached = true;
         }
     }
 
