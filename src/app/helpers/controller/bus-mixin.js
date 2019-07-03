@@ -1,16 +1,17 @@
 /*
-* This is a communication channel intended to mediate messaging between
-* parent and child components. This is the only argument the child can
-* receive for its init. All configuration is done by responding to an event.
-*
-* In general, parent will emit 'new-props' events and 'update-props' events.
-* Child will emit events created as necessary to alert the parent of anything.
-*/
+ * This is a communication channel intended to provide standard messaging between
+ * parent and child components
+ */
 
 const HANDLERS = Symbol();
 const BUS = Symbol();
 
 export class Bus {
+
+    /**
+     * Provides two methods, one to emit events, and the other to perform actions
+     * when an event is emitted.
+     */
 
     constructor() {
         this[HANDLERS] = {};
@@ -50,14 +51,42 @@ export class Bus {
 
 }
 
-/* The bus is created by the child component.
-*  Object-level emit and on methods are created.
-*/
 export default (superclass) => class extends superclass {
 
+    /**
+     * Adds bus methods to a class, along with a private internal bus implementation
+     * Usually, a component will emit events and its parent will listen and
+     * handle the event.
+     * One notable exception: the parent may issue `update-props` events that the
+     * child will handle in its `whenPropsUpdated` method.
+     */
+
+    constructor(...args) {
+        super(...args);
+        if (!this[BUS]) {
+            this.init();
+        }
+    }
+
     init(...args) {
-        super.init(...args);
+        if (super.init) {
+            super.init(...args);
+        }
         this[BUS] = new Bus();
+        this.on('update-props', (obj) => {
+            Object.assign(this, obj);
+        });
+    }
+
+    onLoaded() {
+        if (super.onLoaded) {
+            super.onLoaded();
+        }
+        if (this.whenPropsUpdated) {
+            this.on('update-props', (obj) => {
+                this.whenPropsUpdated(obj);
+            });
+        }
     }
 
     on(...args) {
