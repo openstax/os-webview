@@ -86,6 +86,7 @@ class Dialog extends Controller {
         if (this.props.customClass) {
             this.el.classList.remove(this.props.customClass);
         }
+        this.attached = false;
     }
 
     @on('keydown')
@@ -107,7 +108,8 @@ export default class ModalDialog extends Controller {
     template() {}
 
     onLoaded() {
-        this.regions.self.attach(new ModalContent(this.dialog));
+        this.mc = new ModalContent(this.dialog);
+        this.regions.self.attach(this.mc);
     }
 
     update() {
@@ -116,8 +118,13 @@ export default class ModalDialog extends Controller {
         }
     }
 
+    hide() {
+        this.mc.hide();
+    }
+
     closeDialog() {
         this.dialog.closeDialog();
+        this.hide();
     }
 
 }

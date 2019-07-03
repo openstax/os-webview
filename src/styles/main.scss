@@ -151,6 +151,7 @@ sup {
 
 .no-scroll {
     overflow: hidden;
+    max-height: 100vh;
 }
 
 .mac-scroll {
@@ -199,8 +200,12 @@ sup {
     flex: 1 0 auto;
     z-index: 0;
 
-    &.with-sticky {
+    &.with-sticky:not(.with-modal) {
         z-index: 1;
+    }
+
+    &.with-modal {
+        z-index: 2;
     }
 }
 

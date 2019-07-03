@@ -1,10 +1,13 @@
 import {Controller} from 'superb.js';
-import $ from '~/helpers/$';
 import css from './modal-content.css';
 import shellBus from '~/components/shell/shell-bus';
 
 export default class ModalContent extends Controller {
 
+    /**
+     * Provides a background overlay that covers the page
+     * so that only the content is clearly visible and centered
+     */
     init(content) {
         this.content = content;
         this.view = {
@@ -18,12 +21,16 @@ export default class ModalContent extends Controller {
     }
 
     onLoaded() {
-        shellBus.emit('with-sticky');
         this.regions.self.append(this.content);
+        shellBus.emit('with-modal');
+    }
+
+    hide() {
+        shellBus.emit('no-modal');
     }
 
     onClose() {
-        shellBus.emit('no-sticky');
+        this.hide();
     }
 
 }
