@@ -20,11 +20,11 @@ export default class Popup extends Controller {
     }
 
     onLoaded() {
-        shellBus.emit('with-sticky');
+        shellBus.emit('with-modal');
     }
 
     onClose() {
-        shellBus.emit('no-sticky');
+        shellBus.emit('no-modal');
     }
 
     @on('click .dismiss')

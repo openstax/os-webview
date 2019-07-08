@@ -4,21 +4,12 @@ import shellBus from '~/components/shell/shell-bus';
 
 describe('ModalContent', () => {
 
-    it('sends "with-sticky" and "no-sticky" on attach and detatch', () => {
-
-        const gotWithSticky = new Promise((resolve) => {
-            shellBus.on('with-sticky', resolve, 'once');
-        });
-        const gotNoSticky = new Promise((resolve) => {
-            shellBus.on('with-sticky', resolve, 'once');
-        });
+    it('creates', () => {
 
         const mc = new ModalContent(new ResourceBox({}));
 
+        expect(mc).toBeTruthy();
         mc.detach();
-        return Promise.all([gotWithSticky, gotNoSticky]).then(() => {
-            return true;
-        });
     });
 
 });

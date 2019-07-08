@@ -67,6 +67,7 @@ class Shell extends Controller {
                 closeDialog: () => {
                     region.el.setAttribute('hidden', '');
                     document.body.classList.remove('no-scroll');
+                    this.dialog.hide();
                 }
             });
             region.attach(this.dialog);
@@ -102,7 +103,14 @@ bus.on('no-sticky', () => {
         shell.regions.main.el.classList.remove('with-sticky');
     }
 });
-
+bus.on('with-modal', () => {
+    shell.regions.main.el.classList.add('with-modal');
+    document.body.classList.add('no-scroll');
+});
+bus.on('no-modal', () => {
+    shell.regions.main.el.classList.remove('with-modal');
+    document.body.classList.remove('no-scroll');
+});
 bus.on('updateDialog', () => shell.dialog.update());
 bus.on('showDialog', shell.showDialog.bind(shell));
 bus.on('hideDialog', shell.hideDialog.bind(shell));
