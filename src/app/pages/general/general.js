@@ -30,7 +30,7 @@ export default class General extends BaseClass {
                 Array.from(this.el.querySelectorAll('script'))
                     .forEach((s) => {
                         s.parentNode.replaceChild(div, s);
-                        s.parentNode.replaceChild(s, div);
+                        div.parentNode.replaceChild(s, div);
                     });
             });
     }
