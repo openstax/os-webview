@@ -7,15 +7,18 @@ $orange-bg: rgb(255, 128, 73);
     @extend %light-on-dark;
 
     background-image: url('/images/rover-3/orange-bg.svg');
-    background-position: bottom right;
     background-repeat: no-repeat;
     background-size: cover;
     color: text-color(white);
-    padding: calc(4rem + 10vw) 0;
     position: relative;
 
     @include width-up-to($phone-max) {
-        padding-bottom: 39vw;
+        padding-bottom: 6rem;
+    }
+
+    @include wider-than($phone-max) {
+        background-position: bottom right;
+        padding: calc(4rem + 10vw) 0;
     }
 
     .boxed {
@@ -33,7 +36,7 @@ $orange-bg: rgb(255, 128, 73);
 
         @include width-up-to($phone-max) {
             grid-template-columns: 100%;
-            margin-bottom: 2rem;
+            margin-bottom: $normal-margin;
         }
     }
 

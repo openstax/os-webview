@@ -6,9 +6,23 @@ $indicator-size: 1rem;
     @include set-font(body-large);
 
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-bottom: 6rem;
+
+    @include width-up-to($phone-max) {
+        align-items: flex-start;
+        border: thin solid ui-color(form-border);
+        border-radius: 0.4rem;
+        flex-direction: column;
+        margin: $normal-margin;
+        padding-bottom: $normal-margin;
+        padding-top: $normal-margin;
+        width: calc(100% - #{2 * $normal-margin});
+    }
+
+    @include wider-than($phone-max) {
+        flex-direction: row;
+        justify-content: center;
+        margin-bottom: 6rem;
+    }
 
     .label {
         font-weight: bold;
@@ -33,9 +47,11 @@ $indicator-size: 1rem;
             outline: none;
         }
 
-        ~ .navigation-item::before {
-            content: '-';
-            margin: 1rem;
+        @include wider-than($phone-max) {
+            ~ .navigation-item::before {
+                content: '-';
+                margin: 1rem;
+            }
         }
     }
 }

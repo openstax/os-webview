@@ -4,6 +4,10 @@
     padding: 8rem 0 5rem;
     position: relative;
 
+    @include width-up-to($phone-max) {
+        padding: 9rem 0 0;
+    }
+
     .accent {
         @include width-up-to($phone-max) {
             display: none;
@@ -21,6 +25,7 @@
     }
 
     .top-right {
+        min-width: 24rem;
         position: absolute;
         right: 2rem;
         top: 2rem;
@@ -51,6 +56,9 @@
             display: grid;
             grid-row-gap: 3rem;
 
+            @include width-up-to($phone-max) {
+                grid-row-gap: $normal-margin;
+            }
 
             img {
                 max-width: 100%;
@@ -58,7 +66,15 @@
         }
 
         .tagline {
-            line-height: 4rem;
+            @include width-up-to($phone-max) {
+                @include set-font(body-large);
+
+                line-height: 3.2rem;
+            }
+
+            @include wider-than($phone-max) {
+                line-height: 4rem;
+            }
         }
 
         .video iframe {

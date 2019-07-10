@@ -6,7 +6,13 @@ $card-box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.5);
     background-color: ui-color(white);
 
     h2 {
-        @include set-font(hero-h1);
+        @include width-up-to($phone-max) {
+            @include set-font(h1);
+        }
+
+        @include wider-than($phone-max) {
+            @include set-font(hero-h1);
+        }
     }
 
     .btn {
@@ -23,6 +29,12 @@ $card-box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.5);
             &:active {
                 background-color: darken(os-color(light-blue), 10%);
                 color: text-color(white);
+            }
+        }
+
+        @include width-up-to($phone-max) {
+            &.medium {
+                height: 5rem;
             }
         }
     }
@@ -57,8 +69,12 @@ $card-box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.5);
 
     .bottom-border-container {
         background-color: ui-color(form-border);
+        margin-top: $normal-margin;
         overflow: hidden;
-        margin-top: 10rem;
+
+        @include wider-than($phone-max) {
+            margin-top: 10rem;
+        }
 
         .bottom-border {
             border-bottom: 0.2rem dashed ui-color(white);

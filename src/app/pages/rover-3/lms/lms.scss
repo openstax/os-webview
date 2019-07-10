@@ -1,13 +1,44 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .rover-by-openstax #lms {
-    padding-bottom: 20rem;
+    padding-bottom: 7rem;
     padding-top: 0;
+
+    @include width-between($phone-max, $tablet-max) {
+        padding-bottom: 10vw;
+    }
+
+    @include wider-than($tablet-max) {
+        padding-bottom: 20rem;
+    }
 
     .boxed {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        padding-top: 6rem;
+
+        @include width-up-to($phone-max) {
+            grid-row-gap: 2rem;
+
+            .text-block {
+                grid-row: 1;
+            }
+
+            img {
+                grid-row: 2;
+            }
+
+            .desktop-only {
+                display: none;
+            }
+        }
+
+        @include wider-than($phone-max) {
+            grid-template-columns: 1fr 1fr;
+            padding-top: 6rem;
+
+            .mobile-only {
+                display: none;
+            }
+        }
     }
 
     img {

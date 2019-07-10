@@ -1,10 +1,21 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .rover-by-openstax #faq {
-    padding-bottom: 11rem;
+    @include width-up-to($phone-max) {
+        padding-bottom: 0;
+    }
+
+    @include width-between($phone-max, $tablet-max) {
+        padding-bottom: calc(32.7vw - 19.6rem);
+    }
+
+    @include wider-than($tablet-max) {
+        padding-bottom: 11rem;
+    }
 
     .boxed {
         align-items: start;
+        margin-bottom: 4.5rem;
     }
 
     h2 {
@@ -34,6 +45,7 @@
 
     .qa {
         border-bottom: thin solid ui-color(form-border);
+        padding: 1rem 0;
     }
 
     .qa:last-child {
@@ -44,6 +56,7 @@
         cursor: pointer;
         display: grid;
         font-weight: bold;
+        grid-column-gap: 1rem;
         grid-template-columns: 1fr auto;
         padding: 1rem 0;
     }
@@ -52,7 +65,7 @@
         margin-bottom: $normal-margin;
         margin-left: 0.7rem;
         margin-right: 4rem;
-        max-height: 25rem;
+        max-height: 150rem;
         max-width: $text-content-max;
         transition: all 0.3s;
 
@@ -61,6 +74,29 @@
             max-height: 0;
             opacity: 0;
             pointer-events: none;
+        }
+    }
+
+    .to-top {
+        background-color: ui-color(footer-bg);
+        color: text-color(white);
+        height: 3rem;
+        position: relative;
+        width: 100%;
+
+        [role="button"] {
+            align-items: center;
+            background-color: ui-color(footer-bg);
+            border-radius: 50%;
+            bottom: 0;
+            cursor: pointer;
+            display: flex;
+            height: 6rem;
+            justify-content: center;
+            left: 50%;
+            position: absolute;
+            transform: translateX(-50%);
+            width: 6rem;
         }
     }
 }

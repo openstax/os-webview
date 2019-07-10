@@ -1,15 +1,27 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .rover-by-openstax #stepwise {
-    padding-bottom: 4rem;
-    padding-top: 9rem;
+
+    @include width-up-to($phone-max) {
+
+    }
+
+    @include wider-than($phone-max) {
+        padding-bottom: 4rem;
+        padding-top: 9rem;
+    }
 
     .cards {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(33rem, auto));
-        grid-gap: #{2 * $normal-margin};
-        margin-top: 4rem;
+        grid-column-gap: #{2 * $normal-margin};
+        grid-row-gap: $normal-margin;
+        margin-top: $normal-margin;
         width: 100%;
+
+        @include wider-than($phone-max) {
+            margin-top: 4rem;
+        }
     }
 
     .card {
