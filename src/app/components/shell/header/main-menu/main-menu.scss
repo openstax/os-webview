@@ -231,6 +231,11 @@
             height: 100%;
             margin-top: 0.5rem;
             width: 100%;
+
+            @include width-up-to($phone-max) {
+                margin-left: -1.2rem;
+                max-height: 2.8rem;
+            }
         }
 
         .logo-color {

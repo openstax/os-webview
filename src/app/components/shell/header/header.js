@@ -36,7 +36,8 @@ class Header extends Controller {
             accountLink: `${settings.accountHref}/profile`,
             facultyAccessLink: `${settings.accountHref}/faculty_access/apply`,
             currentDropdown: null,
-            submenuName: 'Name goes here'
+            submenuName: 'Name goes here',
+            headerActive: false
         };
 
         this.upperMenu = new UpperMenu();
@@ -95,6 +96,8 @@ class Header extends Controller {
             stickyNote.forceHide(stickyUpdate);
             this.lastStickyUpdate = stickyUpdate;
         }
+        this.el.classList.toggle('active', this.model.headerActive);
+        this.mainMenu.update();
     }
 
     onLoaded() {
@@ -187,11 +190,11 @@ class Header extends Controller {
     }
 
     toggleFullScreenNav(button) {
-        const wasActive = this.el.classList.contains('active');
+        const wasActive = this.model.headerActive;
         const reconfigure = () => {
-            button.setAttribute('aria-expanded', !wasActive);
             document.body.classList.toggle('no-scroll');
-            this.el.classList.toggle('active');
+            this.model.headerActive = !this.model.headerActive;
+            this.update();
             this.removeAllOpenClasses();
         };
 
@@ -222,11 +225,12 @@ class Header extends Controller {
     closeFullScreenNav() {
         const button = this.el.querySelector('.expand');
 
-        if (this.el.classList.contains('active')) {
+        if (this.model.headerActive) {
             document.body.classList.remove('no-scroll');
         }
 
-        this.el.classList.remove('active');
+        this.model.headerActive = false;
+        this.update();
         this.removeAllOpenClasses();
 
         button.setAttribute('aria-expanded', 'false');
@@ -235,14 +239,16 @@ class Header extends Controller {
     @on('click .expand')
     onClickToggleFullScreenNav(e) {
         e.stopPropagation();
-        this.toggleFullScreenNav(e.target);
+        this.toggleFullScreenNav(e.delegateTarget);
     }
 
     @on('keydown .expand')
     onKeydownToggleFullScreenNav(e) {
-        if (document.activeElement === e.target && [$.key.space, $.key.enter].includes(e.keyCode)) {
+        const target = e.delegateTarget;
+
+        if (document.activeElement === target && [$.key.space, $.key.enter].includes(e.keyCode)) {
             e.preventDefault();
-            this.toggleFullScreenNav(e.target);
+            this.toggleFullScreenNav(target);
         }
     }
 
