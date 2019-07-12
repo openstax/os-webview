@@ -61,6 +61,8 @@ export default class TestimonialForm extends componentType(spec, busMixin) {
         if (!this.listeningForResponse) {
             this.listeningForResponse = true;
             this.el.querySelector('#form-response').addEventListener('load', hideDialog);
+
+            // Some sort of emit comes here?
         }
     }
 
