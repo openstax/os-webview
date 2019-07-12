@@ -57,7 +57,7 @@ describe('StudentResourcesPane (as nonstudent)', () => {
         ready.then(() => {
             const box = pane.el.querySelector('.resource-box .bottom > .left');
 
-            expect(box.textContent).toBe('Click here to unlock');
+            expect(box.textContent).toBe('Login to unlock');
         })
     );
 });

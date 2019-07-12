@@ -39,7 +39,7 @@ describe('ResourceBox', () => {
         );
         const el = resourceBox.el;
 
-        expect(el.querySelector('.bottom .left').textContent).toBe('Click here to unlock');
+        expect(el.querySelector('.bottom .left').textContent).toBe('Login to unlock');
         expect(el.querySelector('.bottom .right .fa-lock')).toBeTruthy();
     });
 
@@ -62,7 +62,7 @@ describe('ResourceBox', () => {
         );
         const el = resourceBox.el;
 
-        expect(el.querySelector('.bottom .left').textContent).toBe('Click here to unlock');
+        expect(el.querySelector('.bottom .left').textContent).toBe('Login to unlock');
         expect(el.querySelector('.bottom .right .fa-lock')).toBeTruthy();
     });
 

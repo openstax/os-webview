@@ -49,7 +49,7 @@ export default class extends componentType(spec, insertHtmlMixin) {
             locked: {
                 iconType: 'lock',
                 link: {
-                    text: 'Click here to unlock',
+                    text: 'Login to unlock',
                     url: loginUrl
                 }
             }
@@ -79,7 +79,7 @@ export default class extends componentType(spec, insertHtmlMixin) {
             locked: {
                 iconType: 'lock',
                 link: {
-                    text: 'Click here to unlock',
+                    text: 'Login to unlock',
                     url: `${settings.apiOrigin}/oxauth/login/?next=${encodedLocation}`
                 }
             }
