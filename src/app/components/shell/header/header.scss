@@ -187,19 +187,23 @@ $button-size: 2.8rem;
     }
 
     .expand {
+        align-items: center;
         appearance: none;
         background: transparent;
-        border: 0;
         border-radius: none;
+        border: 0;
         box-shadow: none;
-        cursor: pointer;
+        color: text-color(button-bar);
+        display: flex;
+        height: 4.8rem;
+        justify-content: center;
         order: 2;
         padding: 0;
         position: absolute;
-        right: 1.5rem;
-        top: 2rem;
-        transition: 0.3s;
+        right: 0;
+        top: 0;
         user-select: none;
+        width: 4.8rem;
 
         @include wider-than($tablet-max) {
             display: none;
@@ -211,63 +215,21 @@ $button-size: 2.8rem;
             }
         }
 
-        &[aria-expanded="true"] {
-            position: absolute;
-            right: 2rem;
-            top: 0;
-        }
-
         &:hover,
         &:focus,
         &:active {
             outline: none;
         }
 
-        span {
-            // create middle line
-            background: os-color(gray);
-            display: inline-block;
-            height: $button-size / 7;
-            position: relative;
-            transition: background 0.3s 0.2s ease;
-            width: $button-size;
-
-            // create the upper and lower lines as pseudo-elements of the middle line
-            &::before,
-            &::after {
-                background: os-color(gray);
-                content: '';
-                display: inline-block;
-                height: $button-size / 7;
-                left: 0;
-                position: absolute;
-                // set transform origin back to center
-                transform-origin: 50% 50%;
-                transition: top 0.3s 0.2s ease, transform 0.3s ease;
-                width: $button-size;
+        &[aria-expanded="false"] {
+            .put-away-icon {
+                display: none;
             }
+        }
 
-            &::before { top: $button-size / 4; }
-            &::after { top: -$button-size / 4; }
-
-            @at-root .active#{&} {
-                background: transparent;
-                transition: background 0.3s 0s ease;
-
-                &::before,
-                &::after {
-                    top: 0;
-                    transition: top 0.3s ease, transform 0.3s 0.2s ease;
-                    width: $button-size;
-                }
-
-                &::before {
-                    transform: rotate3d(0, 0, 1, 45deg);
-                }
-
-                &::after {
-                    transform: rotate3d(0, 0, 1, -45deg);
-                }
+        &[aria-expanded="true"] {
+            .menu-icon {
+                display: none;
             }
         }
     }
