@@ -42,17 +42,19 @@ export default class TestimonialForm extends componentType(spec, busMixin) {
                 label: i.title,
                 value: i.salesforce_abbreviation
             }));
-
-            this.regions.selector.attach(new FormSelect({
+            const fs = new FormSelect({
                 instructions: 'Book title',
                 validationMessage: () => '',
                 placeholder: 'Please select one',
                 name: '00NU00000053nzR',
                 options
-            }, (newValue) => {
+            });
+
+            this.regions.selector.attach(fs);
+            fs.on('change', (newValue) => {
                 this.book = newValue;
                 this.update();
-            }));
+            });
         });
     }
 
@@ -61,8 +63,6 @@ export default class TestimonialForm extends componentType(spec, busMixin) {
         if (!this.listeningForResponse) {
             this.listeningForResponse = true;
             this.el.querySelector('#form-response').addEventListener('load', hideDialog);
-
-            // Some sort of emit comes here?
         }
     }
 
