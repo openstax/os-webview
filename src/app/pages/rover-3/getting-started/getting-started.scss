@@ -1,0 +1,68 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/placeholder-selectors';
+
+$orange-bg: rgb(255, 128, 73);
+
+.rover-by-openstax #getting-started {
+    @extend %light-on-dark;
+
+    background-image: url('/images/rover-3/orange-bg.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: text-color(white);
+    position: relative;
+
+    @include width-up-to($phone-max) {
+        padding-bottom: 6rem;
+    }
+
+    @include wider-than($phone-max) {
+        background-position: bottom right;
+        padding: calc(4rem + 10vw) 0;
+    }
+
+    .boxed {
+        align-items: flex-start;
+    }
+
+    .cards {
+        display: grid;
+        grid-gap: $normal-margin;
+        grid-template-columns: 1fr 1fr;
+        margin-right: calc(30rem - 5vw);
+        margin-top: 4rem;
+        padding: 0.5rem 0;
+        width: 100%;
+
+        @include width-up-to($phone-max) {
+            grid-template-columns: 100%;
+            margin-bottom: $normal-margin;
+        }
+    }
+
+    .text-left-image-right {
+        background-color: ui-color(white);
+        border-radius: 0.4rem;
+        box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.5);
+        color: text-color(normal);
+        display: grid;
+        grid-gap: $normal-margin;
+        justify-content: left;
+        padding: $normal-margin;
+
+        @include width-up-to($tablet-max) {
+            grid-template-columns: 100%;
+        }
+
+        @include wider-than($tablet-max) {
+            grid-template-columns: minmax(auto, 60%) auto;
+        }
+    }
+
+    .right-bottom {
+        bottom: 0;
+        max-width: 30vw;
+        position: absolute;
+        right: 0;
+    }
+}

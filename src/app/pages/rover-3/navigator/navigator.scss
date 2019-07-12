@@ -1,0 +1,57 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+$indicator-size: 1rem;
+
+.rover-by-openstax .navigator {
+    @include set-font(body-large);
+
+    display: flex;
+
+    @include width-up-to($phone-max) {
+        align-items: flex-start;
+        border: thin solid ui-color(form-border);
+        border-radius: 0.4rem;
+        flex-direction: column;
+        margin: $normal-margin;
+        padding-bottom: $normal-margin;
+        padding-top: $normal-margin;
+        width: calc(100% - #{2 * $normal-margin});
+    }
+
+    @include wider-than($phone-max) {
+        flex-direction: row;
+        justify-content: center;
+        margin-bottom: 6rem;
+    }
+
+    .label {
+        font-weight: bold;
+        text-transform: uppercase;
+
+        &::after {
+            content: ':';
+            margin-right: 1rem;
+        }
+
+    }
+
+    .navigation-item {
+        &.selected {
+            color: os-color(light-blue);
+            font-weight: bold;
+        }
+
+        &[role="button"]:focus {
+            border: 0;
+            box-shadow: none;
+            outline: none;
+        }
+
+        @include wider-than($phone-max) {
+            ~ .navigation-item::before {
+                content: '-';
+                margin: 1rem;
+            }
+        }
+    }
+}

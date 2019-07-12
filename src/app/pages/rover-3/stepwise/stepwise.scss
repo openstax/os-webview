@@ -1,0 +1,41 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.rover-by-openstax #stepwise {
+
+    @include width-up-to($phone-max) {
+
+    }
+
+    @include wider-than($phone-max) {
+        padding-bottom: 4rem;
+        padding-top: 9rem;
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(33rem, auto));
+        grid-column-gap: #{2 * $normal-margin};
+        grid-row-gap: $normal-margin;
+        margin-top: $normal-margin;
+        width: 100%;
+
+        @include wider-than($phone-max) {
+            margin-top: 4rem;
+        }
+    }
+
+    .card {
+        background-color: ui-color(white);
+        display: grid;
+        grid-gap: $normal-margin;
+        padding: 1.5rem;
+
+        > * {
+            max-width: 100%;
+        }
+    }
+
+    .bottom-border-container {
+        width: 100%;
+    }
+}

@@ -1,0 +1,20 @@
+<template args="model">
+    <div class="boxed">
+        <div class="text-block">
+            <h2>{model.heading}</h2>
+            <div class="tagline" data-html="description"></div>
+        </div>
+        <div class="cards">
+            <div class="card" each="card in model.cards">
+                <div class="text-block">
+                    <h3>{card.heading}</h3>
+                    <div>{card.description}</div>
+                </div>
+                <img src="{card.image.image}" alt="{card.image.imageAltText}">
+            </div>
+        </div>
+        <div class="bottom-border-container">
+            <div class="bottom-border"></div>
+        </div>
+    </div>
+</template>

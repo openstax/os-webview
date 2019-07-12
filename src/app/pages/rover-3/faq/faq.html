@@ -1,0 +1,17 @@
+<template args="model">
+    <div class="boxed">
+        <h2>{model.heading}</h2>
+        <div class="faq-box">
+            <div class="qa" each="qa in model.questions">
+                <div class="question" data-index="{$item}" role="button" aria-pressed="{model.isOpen($item)}">
+                    {qa.question}
+                    <span class="indicator fa fa-chevron-{model.isOpen($item) ? 'down' : 'right'}"></span>
+                </div>
+                <div class="answer {model.isOpen($item) ? '' : 'closed'}" data-html="questions[{$item}].answer"></div>
+            </div>
+        </div>
+    </div>
+    <div class="for-mobile to-top">
+        <div role="button"><i class="fas fa-arrow-up"></i></div>
+    </div>
+</template>

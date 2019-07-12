@@ -1,0 +1,6 @@
+<template args="model">
+    <span class="label">{model.heading}</span>
+    <span each="sec in model" class="navigation-item {model.currentClass(sec.id)}" data-target-id="{sec.id}" role="button" tabindex="1">
+        {sec.heading}
+    </span>
+</template>
