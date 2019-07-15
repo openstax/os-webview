@@ -1,5 +1,16 @@
 @import 'pattern-library/core/pattern-library/headers';
 
+$gradient-end: (
+    blue: #004aa2,
+    deep-green: #9cd14a,
+    gray: #97999b,
+    green: #9cd14a,
+    light-blue: #004aa2,
+    orange: #faa461,
+    red: #e34361,
+    yellow: #faea36
+);
+
 @mixin set-color-items($color) {
     @at-root .#{$color} {
         .hero,
@@ -9,11 +20,7 @@
         }
 
         .hero {
-            background-image: linear-gradient(to right, darken(os-color($color), 4), lighten(os-color($color), 4));
-
-            &.reverse-gradient {
-                background-image: linear-gradient(to right, lighten(os-color($color), 4), darken(os-color($color), 4));
-            }
+            background-image: linear-gradient(to right, os-color($color), get-color($gradient-end, $color));
         }
 
         @if ($color == yellow) {
@@ -131,7 +138,6 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
     }
 
     .hero {
-        @include set-color-items(gold);
         @include set-color-items(green);
         @include set-color-items(blue);
         @include set-color-items(deep-green);
@@ -145,14 +151,10 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
         background-image: linear-gradient(75deg, #aaa, #777);
         display: flex;
         overflow: hidden;
-        padding: 2.2rem 0 2.2rem $normal-margin;
-
-        @include width-up-to($phone-max) {
-            padding-bottom: 4.5rem;
-        }
+        padding: 0;
 
         .book-title {
-            padding: 0;
+            padding: 0 0 0 $normal-margin;
 
             h1:not(.image-heading) {
                 @include title-font(4rem);
@@ -184,7 +186,17 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
                 text-align: left;
 
                 .title-image {
-                    max-width: 100%;
+                    @include width-up-to($phone-max) {
+                        max-height: 10.4rem;
+                    }
+
+                    @include width-between($phone-max, $tablet-max) {
+                        max-height: 11.7rem;
+                    }
+
+                    @include wider-than($tablet-max) {
+                        max-height: 13rem;
+                    }
                 }
             }
 
