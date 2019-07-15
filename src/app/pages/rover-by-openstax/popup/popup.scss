@@ -24,6 +24,10 @@
 
     h2 {
         @include set-font(h2);
+
+        @include width-up-to($phone-max) {
+            @include title-font(3.2rem);
+        }
     }
 
     .text-content {
