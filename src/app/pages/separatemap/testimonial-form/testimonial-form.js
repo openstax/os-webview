@@ -30,13 +30,11 @@ const spec = {
     }
 };
 
-function hideDialog() {
-    this.emit('close-form');
-}
 
 export default class TestimonialForm extends componentType(spec, busMixin) {
 
     onLoaded() {
+        this.hideDialog = () => this.emit('close-form');
         booksPromise.then((items) => {
             const options = items.map((i) => ({
                 label: i.title,
