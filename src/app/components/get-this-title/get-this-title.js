@@ -53,6 +53,7 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
             ibookLink2: data.ibook_link_volume_2,
             kindleLink: data.kindle_link,
             webviewLink: data.webview_link,
+            rexwebviewLink: data.webview_rex_link,
             comingSoon: data.book_state === 'coming_soon',
             bookshareLink: data.bookshare_link,
             pdfText: polish ? ' Pobierz książkę' : ' Download a PDF',
