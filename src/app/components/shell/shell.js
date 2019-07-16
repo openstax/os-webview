@@ -5,6 +5,7 @@ import ModalDialog from '../dialog/dialog';
 import {initialize, injectButtons} from 'recordo';
 import {description as template} from './shell.html';
 import bus from './shell-bus';
+import showNoticeIfNeeded from './cookie-notice/cookie-notice';
 
 class Shell extends Controller {
 
@@ -46,6 +47,7 @@ class Shell extends Controller {
             injectButtons();
         }
         window.addEventListener('navigate', this.hideDialog.bind(this));
+        showNoticeIfNeeded();
     }
 
     showLoader() {

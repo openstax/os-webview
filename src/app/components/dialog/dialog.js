@@ -1,27 +1,20 @@
-import {Controller} from 'superb.js';
+import componentType from '~/helpers/controller/init-mixin';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import ModalContent from '../modal-content/modal-content';
 import {description as template} from './dialog.html';
 import css from './dialog.css';
 
-class Dialog extends Controller {
-
-    init(getProps, handlers) {
-        this.template = template;
-        this.getProps = getProps;
-        this.handlers = handlers;
-        this.css = css;
-        this.regions = {
-            main: '.main-region'
-        };
-        this.view = {
-            tag: 'dialog'
-        };
-        this.model = () => this.getModel();
-    }
-
-    getModel() {
+const spec = {
+    template,
+    css,
+    view: {
+        tag: 'dialog'
+    },
+    regions: {
+        main: '.main-region'
+    },
+    model() {
         this.props = this.getProps();
 
         return {
@@ -29,6 +22,9 @@ class Dialog extends Controller {
             htmlTitle: this.props.htmlTitle
         };
     }
+};
+
+class Dialog extends componentType(spec) {
 
     attachContent() {
         if (this.props.content && !this.attached) {
@@ -99,16 +95,21 @@ class Dialog extends Controller {
 }
 
 // This just composes the Dialog into ModalContent
-export default class ModalDialog extends Controller {
+export default class ModalDialog extends componentType({}) {
 
     init(getProps, handlers) {
-        this.dialog = new Dialog(getProps, handlers);
+        super.init();
+        this.dialog = new Dialog({
+            getProps, handlers
+        });
     }
 
     template() {}
 
     onLoaded() {
-        this.mc = new ModalContent(this.dialog);
+        this.mc = new ModalContent({
+            content: this.dialog
+        });
         this.regions.self.attach(this.mc);
     }
 

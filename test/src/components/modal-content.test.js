@@ -6,7 +6,9 @@ describe('ModalContent', () => {
 
     it('creates', () => {
 
-        const mc = new ModalContent(new ResourceBox({}));
+        const mc = new ModalContent({
+            content: new ResourceBox({})
+        });
 
         expect(mc).toBeTruthy();
         mc.detach();
