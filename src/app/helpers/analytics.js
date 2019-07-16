@@ -227,11 +227,14 @@ class Analytics {
             }
         }
 
-        accountsModel.load().then((accountResponse) => {
+        accountsModel.load().then((accountResponse2) => {
             const role = accountResponse.self_reported_role;
 
             if (typeof role !== 'undefined') {
                 window.ga('send', 'pageview', {dimension1: role, nonInteraction: true});
+            }
+            if ('id' in accountResponse) {
+                window.ga('set', 'userid', accountResponse.id.toString());
             }
         });
 
