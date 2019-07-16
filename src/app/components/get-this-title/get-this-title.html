@@ -8,8 +8,8 @@
                     <span class="text">Table of contents</span>
                 </a>
             </div>
-            <div if="!model.comingSoon && (model.webviewLink || model.rexwebviewLink)" class="option">
-                <a href="{model.rexwebviewLink ? model.rexwebviewLink : model.webviewLink}"
+            <div if="!model.comingSoon && model.webviewLink" class="option">
+                <a href="{model.webviewLink}"
                     tabindex="{model.submenu === '' ? 0 : -1}" data-submenu="{model.submenu}">
                     <span class="fa fa-laptop"></span>
                     <span class="text">View online</span>
