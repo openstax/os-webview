@@ -30,29 +30,29 @@ const spec = {
     }
 };
 
-function hideDialog() {
-    this.emit('close-form');
-}
 
 export default class TestimonialForm extends componentType(spec, busMixin) {
 
     onLoaded() {
+        this.hideDialog = () => this.emit('close-form');
         booksPromise.then((items) => {
             const options = items.map((i) => ({
                 label: i.title,
                 value: i.salesforce_abbreviation
             }));
-
-            this.regions.selector.attach(new FormSelect({
+            const fs = new FormSelect({
                 instructions: 'Book title',
                 validationMessage: () => '',
                 placeholder: 'Please select one',
                 name: '00NU00000053nzR',
                 options
-            }, (newValue) => {
+            });
+
+            this.regions.selector.attach(fs);
+            fs.on('change', (newValue) => {
                 this.book = newValue;
                 this.update();
-            }));
+            });
         });
     }
 
