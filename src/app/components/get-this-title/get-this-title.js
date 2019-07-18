@@ -45,6 +45,7 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
             arrayOfBookstoreContent.some((obj) => obj.button_url)
         ].some((x) => x);
 
+        // eslint-disable-next-line complexity
         this.model = () => ({
             includeTOC: Boolean(data.table_of_contents),
             tocActive: this.tocActive,
@@ -53,7 +54,7 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
             ibookLink2: data.ibook_link_volume_2,
             kindleLink: data.kindle_link,
             webviewLink: data.webview_rex_link || data.webview_link,
-            isRex: data.webview_rex_link  ? true : false,
+            isRex: data.webview_rex_link ? true : false,
             comingSoon: data.book_state === 'coming_soon',
             bookshareLink: data.bookshare_link,
             pdfText: polish ? ' Pobierz książkę' : ' Download a PDF',
