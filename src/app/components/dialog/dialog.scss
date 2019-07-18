@@ -54,6 +54,14 @@ dialog {
         &:hover {
             color: inherit;
         }
+
+        &.no-title-bar {
+            justify-self: end;
+            padding: 0.5rem 1rem;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
     }
 
     .main-region {
