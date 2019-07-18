@@ -25,12 +25,15 @@ export default class General extends BaseClass {
                 this.el.innerHTML = html;
                 const div = document.createElement('div');
 
-                // Scripts have to be inserted as nodes, not as innerHTML, so swap
-                // each of them out and back in
+                // Making scripts work, per https://stackoverflow.com/a/47614491/392102
                 Array.from(this.el.querySelectorAll('script'))
                     .forEach((s) => {
-                        s.parentNode.replaceChild(div, s);
-                        div.parentNode.replaceChild(s, div);
+                        const newScript = document.createElement('script');
+
+                        Array.from(s.attributes)
+                            .forEach((a) => newScript.setAttribute(a.name, a.value));
+                        newScript.appendChild(document.createTextNode(s.innerHTML));
+                        s.parentNode.replaceChild(newScript, s);
                     });
             });
     }
