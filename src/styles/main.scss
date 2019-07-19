@@ -149,7 +149,8 @@ sup {
     }
 }
 
-.no-scroll {
+.no-scroll,
+.no-scroll-dialog {
     overflow: hidden;
     max-height: 100vh;
 }

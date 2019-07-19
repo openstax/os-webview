@@ -51,7 +51,7 @@ class CookieNotice extends componentType(spec, busMixin) {
 
 export default function showNoticeIfNeeded() {
     accountsModel.load().then((response) => {
-        if ('id' in response && !acknowledged()) {
+        if (typeof response.id !== 'undefined' && !acknowledged()) {
             const cookieNotice = new CookieNotice();
 
             shellBus.emit('showDialog', () => ({
