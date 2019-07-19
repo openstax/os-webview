@@ -4,16 +4,17 @@
     align-self: flex-end;
     border-radius: 0;
     bottom: 0;
+    box-shadow: 0 1rem 2rem 0 rgba(0, 0, 0, 0.2);
+    margin: $normal-margin;
     max-width: none;
     position: fixed;
-    width: 100vw;
+    width: calc(100vw - 3rem);
 }
 
 .cookie-notice {
     display: grid;
-    grid-gap: $normal-margin;
-    max-width: $content-max;
-    padding: 5rem 3rem;
+    grid-row-gap: 3rem;
+    padding: 3rem;
 
     @include width-up-to($phone-max) {
         grid-template-columns: 1fr 1fr;
@@ -25,6 +26,15 @@
 
     @include wider-than($phone-max) {
         grid-auto-flow: column;
+        padding: 5rem;
+    }
+
+    .message {
+        max-width: $text-content-max;
+
+        a {
+            text-decoration: none;
+        }
     }
 
     button,
@@ -34,8 +44,9 @@
         &.primary {
             @extend %primary;
 
-            padding-left: 4rem;
-            padding-right: 4rem;
+            padding-left: 6rem;
+            padding-right: 6rem;
+            justify-self: end;
         }
     }
 }

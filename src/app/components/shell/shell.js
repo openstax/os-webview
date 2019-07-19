@@ -68,7 +68,7 @@ class Shell extends Controller {
             this.dialog = new ModalDialog(() => this.getDialogProps(), {
                 closeDialog: () => {
                     region.el.setAttribute('hidden', '');
-                    document.body.classList.remove('no-scroll');
+                    document.body.classList.remove('no-scroll-dialog');
                     this.dialog.hide();
                 }
             });
@@ -77,7 +77,7 @@ class Shell extends Controller {
             this.dialog.update();
         }
         region.el.removeAttribute('hidden');
-        document.body.classList.add('no-scroll');
+        document.body.classList.add('no-scroll-dialog');
     }
 
     hideDialog() {
