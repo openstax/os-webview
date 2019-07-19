@@ -1,0 +1,41 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.footer-style {
+    align-self: flex-end;
+    border-radius: 0;
+    bottom: 0;
+    max-width: none;
+    position: fixed;
+    width: 100vw;
+}
+
+.cookie-notice {
+    display: grid;
+    grid-gap: $normal-margin;
+    max-width: $content-max;
+    padding: 5rem 3rem;
+
+    @include width-up-to($phone-max) {
+        grid-template-columns: 1fr 1fr;
+
+        .message {
+            grid-column: 1 / -1;
+        }
+    }
+
+    @include wider-than($phone-max) {
+        grid-auto-flow: column;
+    }
+
+    button,
+    .btn {
+        @extend %button;
+
+        &.primary {
+            @extend %primary;
+
+            padding-left: 4rem;
+            padding-right: 4rem;
+        }
+    }
+}
