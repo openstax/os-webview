@@ -5,6 +5,8 @@ import getCompCopyDialogProps from '~/pages/details/comp-copy-dialog-props';
 
 const pageData = transformData(details);
 const userStatusPromise = Promise.resolve({});
+
+pageData.slug = pageData.meta.slug;
 const pvData = {
     bookInfo: pageData,
     bookTitle: pageData.title,

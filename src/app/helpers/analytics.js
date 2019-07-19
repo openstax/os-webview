@@ -227,7 +227,7 @@ class Analytics {
             }
         }
 
-        accountsModel.load().then((accountResponse2) => {
+        accountsModel.load().then((accountResponse) => {
             const role = accountResponse.self_reported_role;
 
             if (typeof role !== 'undefined') {

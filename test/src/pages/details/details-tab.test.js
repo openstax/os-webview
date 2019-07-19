@@ -21,7 +21,8 @@ const polishData = {
         webview_link: 'https://cnx.org/contents/185cbf87-c72e-48f5-b51e-f14f21b5eabd;',
         table_of_contents: {
                 'shortId': 'jVCgr5SL@15.3'
-        }
+        },
+        slug: 'books/fyzyka'
     }
 };
 
@@ -53,7 +54,8 @@ const englishData = {
         webview_link: 'https://cnx.org/contents/185cbf87-c72e-48f5-b51e-f14f21b5eabd;',
         table_of_contents: {
                 'shortId': 'jVCgr5SL@15.3'
-        }
+        },
+        slug: 'books/english-slug'
     }
 };
 
