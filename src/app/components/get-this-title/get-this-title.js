@@ -4,6 +4,7 @@ import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import shellBus from '~/components/shell/shell-bus';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
+import StudyEdge from './study-edge/study-edge';
 import {description as template} from './get-this-title.html';
 import {description as polishTemplate} from './get-this-title-polish.html';
 import css from './get-this-title.css';
@@ -45,6 +46,7 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
             arrayOfBookstoreContent.some((obj) => obj.button_url)
         ].some((x) => x);
 
+        // eslint-disable-next-line complexity
         this.model = () => ({
             includeTOC: Boolean(data.table_of_contents),
             tocActive: this.tocActive,
@@ -53,7 +55,7 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
             ibookLink2: data.ibook_link_volume_2,
             kindleLink: data.kindle_link,
             webviewLink: data.webview_rex_link || data.webview_link,
-            isRex: data.webview_rex_link  ? true : false,
+            isRex: data.webview_rex_link ? true : false,
             comingSoon: data.book_state === 'coming_soon',
             bookshareLink: data.bookshare_link,
             pdfText: polish ? ' Pobierz książkę' : ' Download a PDF',
@@ -73,6 +75,9 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
             bookstoreContent: arrayOfBookstoreContent
         }, () => {
             shellBus.emit('hideDialog');
+        });
+        this.studyEdgeContent = new StudyEdge({
+            bookShortName: data.slug.replace('books/', '')
         });
     }
 
@@ -107,6 +112,16 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
         shellBus.emit('showDialog', () => ({
             title: 'Order a print copy',
             content: this.printCopyContent
+        }));
+    }
+
+    @on('click .show-study-edge')
+    showStudyEdgeDialog(event) {
+        event.preventDefault();
+        shellBus.emit('showDialog', () => ({
+            title: '',
+            content: this.studyEdgeContent,
+            customClass: 'wider-dialog'
         }));
     }
 

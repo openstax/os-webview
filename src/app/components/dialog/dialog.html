@@ -1,10 +1,16 @@
 <template args="model">
-    <div class="title-bar">
-        <span id="dialog-title" class="text-title">{model.title}</span>
-        <span if="model.htmlTitle" class="html-title" skip="true"></span>
-        <button class="put-away">
+    <if condition="model.title === ''">
+        <button class="put-away no-title-bar">
             <span class="fa fa-times"></span>
         </button>
-    </div>
+    <else>
+        <div class="title-bar">
+            <span id="dialog-title" class="text-title">{model.title}</span>
+            <span if="model.htmlTitle" class="html-title" skip="true"></span>
+            <button class="put-away">
+                <span class="fa fa-times"></span>
+            </button>
+        </div>
+    </if>
     <div class="main-region" skip="true"></div>
 </template>
