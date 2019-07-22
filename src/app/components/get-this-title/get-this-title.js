@@ -8,6 +8,7 @@ import StudyEdge from './study-edge/study-edge';
 import {description as template} from './get-this-title.html';
 import {description as polishTemplate} from './get-this-title-polish.html';
 import css from './get-this-title.css';
+import settings from 'settings';
 
 const spec = {
     template,
@@ -21,6 +22,18 @@ const spec = {
     submenu: '',
     tocActive: false
 };
+
+let studyEdgeIsLive = false;
+const studyEdgePromise = fetch(`${settings.apiOrigin}${settings.apiPrefix}/spike/study-edge`)
+    .then(
+        (r) => {
+            studyEdgeIsLive = true;
+        },
+        (err) => {
+            console.info('Study Edge is not live.');
+        }
+    );
+
 
 export default class GetThisTitle extends componentType(spec, busMixin) {
 
@@ -62,6 +75,7 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
             pdfLink: (data.high_resolution_pdf_url || data.low_resolution_pdf_url),
             sampleText: polish ? ' przykład' : ' sample',
             printLink,
+            studyEdge: studyEdgeIsLive,
             submenu: this.submenu,
             hiRes: data.high_resolution_pdf_url,
             loRes: data.low_resolution_pdf_url,
@@ -87,6 +101,9 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
         }
         this.on('set-toc', (value) => {
             this.setToc(value);
+        });
+        studyEdgePromise.then(() => {
+            this.update();
         });
     }
 
