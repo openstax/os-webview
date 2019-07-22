@@ -1,7 +1,7 @@
 import {Controller} from 'superb.js';
 import header from './header/header';
 import footer from './footer/footer';
-import ModalDialog from '../dialog/dialog';
+import ModalDialog, {Dialog} from '../dialog/dialog';
 import {initialize, injectButtons} from 'recordo';
 import {description as template} from './shell.html';
 import bus from './shell-bus';
@@ -62,22 +62,37 @@ class Shell extends Controller {
 
     showDialog(getProps) {
         const region = this.regions.dialog;
+        const {nonModal} = getProps();
 
         this.getDialogProps = getProps;
-        if (!this.dialog) {
-            this.dialog = new ModalDialog(() => this.getDialogProps(), {
-                closeDialog: () => {
-                    region.el.setAttribute('hidden', '');
-                    document.body.classList.remove('no-scroll-dialog');
-                    this.dialog.hide();
+        if (nonModal) {
+            const d = new Dialog({
+                getProps: () => this.getDialogProps(),
+                handlers: {
+                    closeDialog: () => {
+                        d.detach();
+                        region.el.setAttribute('hidden', '');
+                    }
                 }
             });
-            region.attach(this.dialog);
+
+            region.append(d);
         } else {
-            this.dialog.update();
+            if (!this.dialog) {
+                this.dialog = new ModalDialog(() => this.getDialogProps(), {
+                    closeDialog: () => {
+                        region.el.setAttribute('hidden', '');
+                        document.body.classList.remove('no-scroll-dialog');
+                        this.dialog.hide();
+                    }
+                });
+                region.attach(this.dialog);
+            } else {
+                this.dialog.update();
+            }
+            document.body.classList.add('no-scroll-dialog');
         }
         region.el.removeAttribute('hidden');
-        document.body.classList.add('no-scroll-dialog');
     }
 
     hideDialog() {
