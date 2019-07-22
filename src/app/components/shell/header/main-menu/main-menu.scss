@@ -3,8 +3,11 @@
 
 .page-header .nav {
     box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(os-color(gray), 0.1);
-    height: auto;
     width: 100%;
+
+    @at-root .page-header:not(.active) .nav {
+        height: 5.2rem;
+    }
 
     @at-root .active#{&} {
         box-shadow: none;
@@ -14,6 +17,11 @@
         left: 0;
         overflow: visible;
 
+    }
+
+    > .container,
+    > .container > .logo-wrapper {
+        height: 100%;
     }
 
     .training-wheel-overlay {
@@ -42,27 +50,22 @@
 
         align-items: center;
         display: flex;
-        flex: 0 auto;
-        padding: 0.5rem 1.5rem;
+        padding: 1.2rem 1.6rem;
 
         @at-root .active#{&} {
+            align-items: flex-start;
             left: 0;
             position: absolute;
             top: 0;
         }
 
         @include wider-than($tablet-max) {
+            display: grid;
+            grid-auto-flow: column;
             left: auto;
             position: static;
             top: auto;
-        }
-
-        span {
-            vertical-align: middle;
-        }
-
-        > a {
-            display: inline-block;
+            width: 50rem;
         }
     }
 
@@ -210,12 +213,10 @@
     }
 
     .logo {
-        display: inline-block;
-        margin-right: 2rem;
+        height: 2.8rem;
 
         a {
-            display: inline-block;
-            width: 15rem;
+            height:100%;
 
             &:active,
             &:focus,
@@ -229,13 +230,6 @@
 
         img {
             height: 100%;
-            margin-top: 0.5rem;
-            width: 100%;
-
-            @include width-up-to($phone-max) {
-                margin-left: -1.2rem;
-                max-height: 2.8rem;
-            }
         }
 
         .logo-color {
