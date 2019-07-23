@@ -5,12 +5,11 @@ $indicator-size: 1rem;
 .rover-by-openstax .navigator {
     @include set-font(body-large);
 
-    display: flex;
-
     @include width-up-to($phone-max) {
         align-items: flex-start;
         border: thin solid ui-color(form-border);
         border-radius: 0.4rem;
+        display: flex;
         flex-direction: column;
         margin: $normal-margin;
         padding-bottom: $normal-margin;
@@ -19,9 +18,25 @@ $indicator-size: 1rem;
     }
 
     @include wider-than($phone-max) {
-        flex-direction: row;
-        justify-content: center;
+        display: grid;
+        grid-column-gap: 2rem;
+        grid-template-columns: 1fr minmax(calc(100% - 18rem), auto) 1fr;
+        justify-items: center;
         margin-bottom: 6rem;
+    }
+
+    .line {
+        border: thin solid ui-color(form-border);
+        width: 100%;
+
+        @include width-up-to($phone-max) {
+            display: none;
+        }
+    }
+
+    .content {
+        background-color: ui-color(white);
+        z-index: 0;
     }
 
     .label {

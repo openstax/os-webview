@@ -13,30 +13,41 @@ $orange-bg: rgb(255, 128, 73);
     position: relative;
 
     @include width-up-to($phone-max) {
-        padding-bottom: 6rem;
+        padding-top: 6rem;
     }
 
     @include wider-than($phone-max) {
         background-position: bottom right;
-        padding: calc(4rem + 10vw) 0;
+        padding: calc(8rem + 10vw) 0;
     }
 
     .boxed {
         align-items: flex-start;
+
+        >* ~ * {
+            @include width-up-to($phone-max) {
+                margin-top: $normal-margin;
+            }
+
+            @include wider-than($phone-max) {
+                margin-top: 4rem;
+            }
+        }
+
+        h2 {
+            margin: 0;
+        }
     }
 
     .cards {
         display: grid;
         grid-gap: $normal-margin;
-        grid-template-columns: 1fr 1fr;
-        margin-right: calc(30rem - 5vw);
-        margin-top: 4rem;
-        padding: 0.5rem 0;
+        grid-template-columns: repeat(auto-fit, minmax(46rem, 1fr));
+        padding: 0;
         width: 100%;
 
         @include width-up-to($phone-max) {
             grid-template-columns: 100%;
-            margin-bottom: $normal-margin;
         }
     }
 
@@ -57,12 +68,24 @@ $orange-bg: rgb(255, 128, 73);
         @include wider-than($tablet-max) {
             grid-template-columns: minmax(auto, 60%) auto;
         }
+
+        iframe {
+            width: 100%;
+        }
     }
 
     .right-bottom {
-        bottom: 0;
-        max-width: 30vw;
-        position: absolute;
-        right: 0;
+        position: relative;
+        float: right;
+        transform: rotate(-2deg);
+
+        @include width-up-to($phone-max) {
+            bottom: calc(2.5vw + 0.2rem);
+            max-width: 13rem;
+        }
+
+        @include width-between($phone-max, $tablet-max) {
+            bottom: calc(4rem - 10.6vw);
+        }
     }
 }
