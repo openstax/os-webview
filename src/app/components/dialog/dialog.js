@@ -24,7 +24,7 @@ const spec = {
     }
 };
 
-class Dialog extends componentType(spec) {
+export class Dialog extends componentType(spec) {
 
     attachContent() {
         if (this.props.content && !this.attached) {
@@ -60,6 +60,7 @@ class Dialog extends componentType(spec) {
 
     onLoaded() {
         this.el.setAttribute('aria-labelledby', 'dialog-title');
+        this.el.style.zIndex = 10;
         this.attachContent();
     }
 
@@ -76,11 +77,11 @@ class Dialog extends componentType(spec) {
 
         this.regions.main.controllers.splice(controllerIndex, 1);
 
-        if (this.handlers && this.handlers.closeDialog) {
-            this.handlers.closeDialog();
-        }
         if (this.props.customClass) {
             this.el.classList.remove(this.props.customClass);
+        }
+        if (this.handlers && this.handlers.closeDialog) {
+            this.handlers.closeDialog();
         }
         this.attached = false;
     }
@@ -103,8 +104,6 @@ export default class ModalDialog extends componentType({}) {
             getProps, handlers
         });
     }
-
-    template() {}
 
     onLoaded() {
         this.mc = new ModalContent({

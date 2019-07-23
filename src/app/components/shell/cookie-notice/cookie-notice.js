@@ -57,7 +57,8 @@ export default function showNoticeIfNeeded() {
             shellBus.emit('showDialog', () => ({
                 title: 'Privacy and cookies',
                 content: cookieNotice,
-                customClass: 'footer-style'
+                customClass: 'footer-style',
+                nonModal: true
             }));
             cookieNotice.on('close', () => {
                 shellBus.emit('hideDialog');
