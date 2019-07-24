@@ -10,7 +10,9 @@ const spec = {
     },
     model() {
         return {
+            googleBadge: '/images/study-edge/google-store-badge.png',
             googleLink: `https://openstax.studyedge.com/mobile-redirect/android?book=${this.bookShortName}`,
+            appleBadge: '/images/study-edge/apple-store-badge.svg',
             appleLink: `https://openstax.studyedge.com/mobile-redirect/ios?book=${this.bookShortName}`
         };
     }
