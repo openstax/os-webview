@@ -18,7 +18,7 @@ $orange-bg: rgb(255, 128, 73);
 
     @include wider-than($phone-max) {
         background-position: bottom right;
-        padding: calc(8rem + 10vw) 0;
+        padding-top: calc(8rem + 4vw);
     }
 
     .boxed {
@@ -85,7 +85,11 @@ $orange-bg: rgb(255, 128, 73);
         }
 
         @include width-between($phone-max, $tablet-max) {
-            bottom: calc(4rem - 10.6vw);
+            bottom: 9.8rem;
+        }
+
+        @include wider-than($tablet-max) {
+            bottom: 5.8rem;
         }
     }
 }
