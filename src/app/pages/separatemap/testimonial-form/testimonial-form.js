@@ -60,12 +60,12 @@ export default class TestimonialForm extends componentType(spec, busMixin) {
     watchForResponse() {
         if (!this.listeningForResponse) {
             this.listeningForResponse = true;
-            this.el.querySelector('#form-response').addEventListener('load', hideDialog);
+            this.el.querySelector('#form-response').addEventListener('load', this.hideDialog);
         }
     }
 
     onClose() {
-        this.el.querySelector('#form-response').removeEventListener('load', hideDialog);
+        this.el.querySelector('#form-response').removeEventListener('load', this.hideDialog);
     }
 
 }
