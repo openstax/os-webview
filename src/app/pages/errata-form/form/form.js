@@ -23,17 +23,14 @@ const modelConstants = {
         'Typo',
         'Other'
     ],
-    sourceTypes: [
-        'OpenStax Tutor', 'Textbook', 'iBooks version', 'Kindle', 'Instructor solution manual',
-        'Student solution manual', 'Other'
-    ],
+    sourceTypes: [],
     subnotes: {'Textbook': 'includes print, PDF, and web view'}
 };
 
 export default class Form extends Controller {
 
     // eslint-disable-next-line complexity
-    init(model) {
+    async init(model) {
         this.css = css;
         this.template = template;
         this.model = Object.assign(
@@ -51,6 +48,10 @@ export default class Form extends Controller {
             modelConstants
         );
         this.model.filterSources = (t) => t !== 'OpenStax Tutor' || this.model.isTutor;
+        var resources = await getFields('resources');
+        for (var key in resources) {
+            this.model.sourceTypes.push(resources[key].field);
+        }
         for (const book of this.model.books) {
             book.titleText = $.htmlToText(book.title);
         }
