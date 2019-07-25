@@ -7,7 +7,7 @@
     color: text-color(normal);
     max-width: 140rem;
     overflow: hidden;
-    padding: 2rem 4rem;
+    padding: 3rem;
     position: relative;
     width: 100%;
 
@@ -26,7 +26,9 @@
         @include set-font(h2);
 
         @include width-up-to($phone-max) {
-            @include title-font(3.2rem);
+            @include title-font(2.4rem);
+
+            line-height: 3rem;
         }
     }
 
@@ -35,7 +37,7 @@
         padding: 6rem 0;
 
         @include width-up-to($phone-max) {
-            padding: 4rem 1rem;
+            padding: 1rem 0;
         }
 
         > * {
@@ -44,6 +46,10 @@
 
         > * ~ * {
             margin-top: 3rem;
+
+            @include width-up-to($phone-max) {
+                margin-top: 1rem;
+            }
         }
     }
 
