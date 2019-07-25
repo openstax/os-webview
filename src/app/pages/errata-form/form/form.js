@@ -4,6 +4,7 @@ import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import css from './form.css';
 import routerBus from '~/helpers/router-bus';
+import {getFields} from '~/models/errata-fields';
 import shellBus from '~/components/shell/shell-bus';
 import BannedNotice from '../banned-notice/banned-notice';
 import selectHandler from '~/handlers/select';
