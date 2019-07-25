@@ -2,10 +2,10 @@
 
 $gradient-end: (
     blue: #004aa2,
-    deep-green: #9cd14a,
+    deep-green: lighten(os-color(deep-green), 10%),
     gray: #97999b,
     green: #9cd14a,
-    light-blue: #004aa2,
+    light-blue: lighten(os-color(light-blue), 10%),
     orange: #faa461,
     red: #e34361,
     yellow: #faea36
@@ -181,22 +181,24 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
             }
 
             .image-heading {
+                display: flex;
                 line-height: 0;
                 margin: 0;
-                text-align: left;
+
+                @include width-up-to($phone-max) {
+                    height: 10.4rem;
+                }
+
+                @include width-between($phone-max, $tablet-max) {
+                    height: 11.7rem;
+                }
+
+                @include wider-than($tablet-max) {
+                    height: 13rem;
+                }
 
                 .title-image {
-                    @include width-up-to($phone-max) {
-                        max-height: 10.4rem;
-                    }
-
-                    @include width-between($phone-max, $tablet-max) {
-                        max-height: 11.7rem;
-                    }
-
-                    @include wider-than($tablet-max) {
-                        max-height: 13rem;
-                    }
+                    max-height: 100%;
                 }
             }
 
