@@ -174,7 +174,9 @@ export default class RoverRedesign extends BaseClass {
         const popupContent = new PopupContent({
             model: this.popupData
         });
-        const modalContent = new ModalContent(popupContent);
+        const modalContent = new ModalContent({
+            content: popupContent
+        });
 
         this.regions.self.append(modalContent);
         popupContent.on('cancel', () => {
