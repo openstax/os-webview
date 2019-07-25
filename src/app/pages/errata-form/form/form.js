@@ -30,7 +30,7 @@ const modelConstants = {
 export default class Form extends Controller {
 
     // eslint-disable-next-line complexity
-    async init(model) {
+    init(model) {
         this.css = css;
         this.template = template;
         this.model = Object.assign(
@@ -48,20 +48,23 @@ export default class Form extends Controller {
             modelConstants
         );
         this.model.filterSources = (t) => t !== 'OpenStax Tutor' || this.model.isTutor;
-        var resources = await getFields('resources');
-        for (var key in resources) {
-            this.model.sourceTypes.push(resources[key].field);
-        }
-        for (const book of this.model.books) {
-            book.titleText = $.htmlToText(book.title);
-        }
-        if (this.model.sourceProvided === '') {
-            this.model.sourceTypes = [this.model.selectedSource];
-        }
+        this.resourcePromise = getFields('resources');
     }
 
     onLoaded() {
         selectHandler.setup(this);
+        this.resourcePromise.then((resources) => {
+            Reflect.ownKeys(resources).forEach((key) => {
+                this.model.sourceTypes.push(resources[key].field);
+            });
+            this.model.books.forEach((book) => {
+                book.titleText = $.htmlToText(book.title);
+            });
+            if (this.model.sourceProvided === '') {
+                this.model.sourceTypes = [this.model.selectedSource];
+            }
+            this.update();
+        });
     }
 
     onUpdate() {
