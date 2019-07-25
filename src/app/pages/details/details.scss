@@ -1,16 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-$gradient-end: (
-    blue: #004aa2,
-    deep-green: #9cd14a,
-    gray: #97999b,
-    green: #9cd14a,
-    light-blue: #004aa2,
-    orange: #faa461,
-    red: #e34361,
-    yellow: #faea36
-);
-
 @mixin set-color-items($color) {
     @at-root .#{$color} {
         .hero,
@@ -20,7 +9,11 @@ $gradient-end: (
         }
 
         .hero {
-            background-image: linear-gradient(to right, os-color($color), get-color($gradient-end, $color));
+            background-image: linear-gradient(to right, darken(os-color($color), 4), lighten(os-color($color), 4));
+
+            &.reverse-gradient {
+                background-image: linear-gradient(to right, lighten(os-color($color), 4), darken(os-color($color), 4));
+            }
         }
 
         @if ($color == yellow) {
@@ -138,6 +131,7 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
     }
 
     .hero {
+        @include set-color-items(gold);
         @include set-color-items(green);
         @include set-color-items(blue);
         @include set-color-items(deep-green);
@@ -181,22 +175,24 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
             }
 
             .image-heading {
+                display: flex;
                 line-height: 0;
                 margin: 0;
-                text-align: left;
+
+                @include width-up-to($phone-max) {
+                    height: 10.4rem;
+                }
+
+                @include width-between($phone-max, $tablet-max) {
+                    height: 11.7rem;
+                }
+
+                @include wider-than($tablet-max) {
+                    height: 13rem;
+                }
 
                 .title-image {
-                    @include width-up-to($phone-max) {
-                        max-height: 10.4rem;
-                    }
-
-                    @include width-between($phone-max, $tablet-max) {
-                        max-height: 11.7rem;
-                    }
-
-                    @include wider-than($tablet-max) {
-                        max-height: 13rem;
-                    }
+                    max-height: 100%;
                 }
             }
 
