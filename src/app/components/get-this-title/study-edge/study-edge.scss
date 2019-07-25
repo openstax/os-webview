@@ -56,6 +56,8 @@
 
     h1,
     .text-block {
+        @include set-font(body-large);
+
         grid-column: 1 / -1;
         margin: 0;
     }
@@ -71,17 +73,26 @@
 
     .button-group {
         display: grid;
-        grid-gap: 1rem;
-        grid-template-columns: repeat(auto-fit, minmax(25rem, auto));
+        grid-gap: 1.3rem;
+        grid-template-columns: repeat(auto-fit, minmax(15rem, auto));
+        height: 5rem;
         justify-content: center;
         max-width: 100%;
-    }
 
-    .btn {
-        @extend %button;
-        @extend %secondary;
+        .badge {
+            align-items: center;
+            display: grid;
+            height: 100%;
+            width: 13.5rem;
 
-        background-color: rgb(66, 66, 66);
-        border-radius: 0.4rem;
+            > img {
+                height: 100%;
+
+                &.padded {
+                    margin: -6%;
+                    height: 147%;
+                }
+            }
+        }
     }
 }
