@@ -54,8 +54,8 @@ export default class Form extends Controller {
     onLoaded() {
         selectHandler.setup(this);
         this.resourcePromise.then((resources) => {
-            Reflect.ownKeys(resources).forEach((key) => {
-                this.model.sourceTypes.push(resources[key].field);
+            resources.forEach((entry) => {
+                this.model.sourceTypes.push(entry.field);
             });
             this.model.books.forEach((book) => {
                 book.titleText = $.htmlToText(book.title);
