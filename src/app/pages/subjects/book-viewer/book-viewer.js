@@ -22,7 +22,9 @@ function organizeBooksByCategory(books) {
             if (!(cmsCategory in result)) {
                 result[cmsCategory] = [];
             }
-            result[cmsCategory].push(book);
+            if (!result[cmsCategory].includes(book)) {
+                result[cmsCategory].push(book);
+            }
         });
         if (book.is_ap) {
             result[apId].push(book);
