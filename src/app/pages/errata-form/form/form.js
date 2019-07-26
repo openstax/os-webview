@@ -52,7 +52,6 @@ export default class Form extends Controller {
     }
 
     onLoaded() {
-        selectHandler.setup(this);
         this.resourcePromise.then((resources) => {
             resources.forEach((entry) => {
                 this.model.sourceTypes.push(entry.field);
@@ -64,6 +63,7 @@ export default class Form extends Controller {
                 this.model.sourceTypes = [this.model.selectedSource];
             }
             this.update();
+            selectHandler.setup(this);
         });
     }
 
