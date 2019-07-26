@@ -65,31 +65,26 @@ export default class Blog extends BaseClass {
     }
 
     buildDefaultPage() {
-        const fa = new FeaturedArticle(this.featuredArticleOptions);
-        // -- Future feature
-        // const sb = new SearchBar({
-        //     model: {
-        //         title: 'Read more great stories'
-        //     }
-        // });
-        const ub = new UpdateBox({
+        const sb = new SearchBar({
+            model: {
+                title: 'Read more great stories'
+            }
+        });
+
+        sb.on('value', (searchParam) => {
+            history.pushState({}, '', `${path}/?${searchParam}`);
+            this.handlePathChange();
+        });
+        this.regions.self.attach(new FeaturedArticle(this.featuredArticleOptions));
+        this.regions.self.append(new UpdateBox({
             model: {
                 rssUrl: `${settings.apiOrigin}/blog-feed/rss/`
             }
-        });
-        const ms = new MoreStories({
+        }));
+        this.regions.self.append(sb);
+        this.regions.self.append(new MoreStories({
             articles: this.moreStoriesOptions((_, articleEntry) => !articleEntry.pin_to_top)
-        });
-
-        // -- Future feature, cont'd
-        // sb.on('value', (searchParam) => {
-        //     history.pushState({}, '', `${path}/?${searchParam}`);
-        //     this.handlePathChange();
-        // });
-        this.regions.self.attach(fa);
-        // this.regions.self.append(sb);
-        this.regions.self.append(ub);
-        this.regions.self.append(ms);
+        }));
     }
 
     buildSearchResultsPage() {
