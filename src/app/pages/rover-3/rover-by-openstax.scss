@@ -1,4 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/placeholder-selectors';
 
 $card-box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.5);
 
@@ -16,14 +17,14 @@ $card-box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.5);
     }
 
     .btn {
-        @extend %button;
-
-        color: text-color(white);
         height: auto;
         padding: 1em 2em;
 
         &.blue {
+            @extend %light-on-dark;
             background-color: os-color(light-blue);
+            color: text-color(white);
+            font-weight: bold;
 
             &:hover,
             &:active {

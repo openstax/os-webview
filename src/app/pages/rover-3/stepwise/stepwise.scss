@@ -13,14 +13,21 @@
 
     .cards {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(33rem, auto));
-        grid-column-gap: #{2 * $normal-margin};
-        grid-row-gap: $normal-margin;
         margin-top: $normal-margin;
         width: 100%;
 
+        @include width-up-to($tablet-max) {
+            grid-template-columns: 100%;
+            grid-row-gap: $normal-margin;
+        }
+
         @include wider-than($phone-max) {
             margin-top: 4rem;
+        }
+
+        @include wider-than($tablet-max) {
+            grid-column-gap: #{2 * $normal-margin};
+            grid-template-columns: 1fr 1fr;
         }
     }
 
@@ -30,7 +37,18 @@
         grid-gap: $normal-margin;
         padding: 1.5rem;
 
+        @include width-between($tablet-max, $media-content-max) {
+            grid-template-rows: auto 1fr;
+            max-height: calc(#{450vw / 16} - #{3rem / 16});
+        }
+
+        @include wider-than($media-content-max) {
+            grid-template-rows: auto 1fr;
+            max-height: 32rem;
+        }
+
         > * {
+            max-height: 16rem;
             max-width: 100%;
         }
     }

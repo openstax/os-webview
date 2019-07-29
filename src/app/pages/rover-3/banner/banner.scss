@@ -1,7 +1,10 @@
 @import 'pattern-library/core/pattern-library/headers';
 
+$orange-grad-top: #f9b192;
+$orange-grad-bot: #f36b32;
+
 .rover-by-openstax #banner {
-    padding: 8rem 0 5rem;
+    padding: 12rem 0 5rem;
     position: relative;
 
     @include width-up-to($phone-max) {
@@ -14,7 +17,7 @@
         }
 
         @include wider-than($phone-max) {
-            background-image: linear-gradient(to bottom, lighten(os-color(orange), 20%), os-color(orange));
+            background-image: linear-gradient(to bottom, $orange-grad-top, $orange-grad-bot);
             height: 33%;
             left: 0;
             position: absolute;
@@ -38,9 +41,14 @@
         grid-row-gap: 3rem;
         width: 100%;
 
-        @include wider-than($tablet-max) {
+        @include width-between($tablet-max, $media-content-max) {
             grid-column-gap: 4rem;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 11fr 12fr;
+        }
+
+        @include wider-than($media-content-max) {
+            grid-column-gap: 6rem;
+            grid-template-columns: 1fr 60rem;
         }
 
         @include width-between($phone-max, $media-content-max) {
@@ -79,26 +87,24 @@
 
         .video iframe {
             max-width: 100%;
+            width: 100%;
 
             @include width-up-to($phone-max) {
-                width: 100%;
-                height: calc(75vw - #{1.5 * $normal-margin});
+                height: calc(#{900vw / 16} - 1rem);
             }
 
-            @include width-between($phone-max, $tablet-max) {
-                height: 48rem;
-                width: 64rem;
+            @include width-up-to($tablet-max) {
+                height: calc(#{900vw / 16} - 4rem);
             }
 
             @include width-between($tablet-max, $media-content-max) {
-                height: calc(0.4 * 100vw);
-                width: calc(0.53 * 100vw)
+                height: calc(26.6vw);
             }
 
             @include wider-than($media-content-max) {
-                height: 48rem;
-                width: 64rem;
+                height: 33.75rem;
             }
+
         }
     }
 }
