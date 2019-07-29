@@ -8,6 +8,7 @@ import errataData from '../src/data/errata';
 import errataBookData from '../src/data/errata-book';
 import errata7199 from '../src/data/errata-7199';
 import errataSummary from '../src/data/errata-summary';
+import errataResources from '../src/data/errata-resources';
 import footerData from '../src/data/footer';
 import institutionalPartnershipData from '../src/data/institutional-partnership';
 import openstaxHomepageData from '../src/data/openstax-homepage';
@@ -38,6 +39,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isErrata = (/pages\/errata\/$/).test(args[0]);
     const isErrataBook = (/errata\/\?book_title/).test(args[0]);
     const isErrata7199 = (/errata[?/]7199/).test(args[0]);
+    const isErrataResources = (/errata-fields\?field/).test(args[0]);
     const isErrataSummary = args[0] === 'https://cms-dev.openstax.org/apps/cms/api/pages/errata?format=json';
     const isFooter = (/api\/footer/).test(args[0]);
     const isInstitutionalPartnership = (/pages\/institutional-partners/).test(args[0]);
@@ -73,6 +75,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = errataBookData;
             } else if (isErrata7199) {
                 payload = errata7199;
+            } else if (isErrataResources) {
+                payload = errataResources;
             } else if (isErrataSummary) {
                 payload = errataSummary;
             } else if (isFooter) {
