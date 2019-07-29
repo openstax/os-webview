@@ -4,6 +4,7 @@ import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import css from './form.css';
 import routerBus from '~/helpers/router-bus';
+import {getFields} from '~/models/errata-fields';
 import shellBus from '~/components/shell/shell-bus';
 import BannedNotice from '../banned-notice/banned-notice';
 import selectHandler from '~/handlers/select';
@@ -22,10 +23,7 @@ const modelConstants = {
         'Typo',
         'Other'
     ],
-    sourceTypes: [
-        'OpenStax Tutor', 'Textbook', 'iBooks version', 'Kindle', 'Instructor solution manual',
-        'Student solution manual', 'Other'
-    ],
+    sourceTypes: [],
     subnotes: {'Textbook': 'includes print, PDF, and web view'}
 };
 
@@ -50,16 +48,23 @@ export default class Form extends Controller {
             modelConstants
         );
         this.model.filterSources = (t) => t !== 'OpenStax Tutor' || this.model.isTutor;
-        for (const book of this.model.books) {
-            book.titleText = $.htmlToText(book.title);
-        }
-        if (this.model.sourceProvided === '') {
-            this.model.sourceTypes = [this.model.selectedSource];
-        }
+        this.resourcePromise = getFields('resources');
     }
 
     onLoaded() {
-        selectHandler.setup(this);
+        this.resourcePromise.then((resources) => {
+            resources.forEach((entry) => {
+                this.model.sourceTypes.push(entry.field);
+            });
+            this.model.books.forEach((book) => {
+                book.titleText = $.htmlToText(book.title);
+            });
+            if (this.model.sourceProvided === '') {
+                this.model.sourceTypes = [this.model.selectedSource];
+            }
+            this.update();
+            selectHandler.setup(this);
+        });
     }
 
     onUpdate() {

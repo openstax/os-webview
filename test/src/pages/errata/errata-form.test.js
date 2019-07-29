@@ -474,6 +474,7 @@ describe('ErrataForm/Form', () => {
       const sourceRadios = Array.from(p.el.querySelectorAll('[name="resource"]:not(:checked)'));
       const resourceOther = () => p.el.querySelector('[name="resource_other"]');
 
+      expect(sourceRadios).toBeTruthy();
       expect(p.model.selectedSource).toBeFalsy();
       expect(resourceOther()).toBeFalsy();
       sourceRadios.forEach((el) => {
