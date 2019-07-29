@@ -7,9 +7,11 @@
     grid-template: 'topline topline'
     'input button' /1fr auto;
     justify-items: center;
+    margin: auto;
     max-width: $text-content-max;
-    padding: 0 $normal-margin;
+    padding: 2rem $normal-margin;
     width: 100%;
+
 
     h2 {
         @include set-font(h3);

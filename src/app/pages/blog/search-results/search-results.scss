@@ -4,6 +4,8 @@
 .blog.page .search-results {
     display: grid;
     grid-row-gap: 5rem;
+    margin: auto;
+    max-width: $content-max;
     padding: 5rem $normal-margin;
 
     .result {
