@@ -1,7 +1,15 @@
 <template args="model">
     <div class="loc-pub-date" if="model.publish_date">
-        <h4>Data publikacji</h4>
+        <h4>Data publikacji:</h4>
         <div id='publish-date'>{model.formattedPublishDate}</div>
+    </div>
+    <div class="loc-web-update-date" if="model.formattedWebUpdateDate">
+        <h4>Web Version Last Updated:</h4>
+        {model.formattedWebUpdateDate}
+    </div>
+    <div class="loc-pdf-update-date" if="model.formattedPDFUpdateDate">
+        <h4>PDF Version Last Updated:</h4>
+        {model.formattedPDFUpdateDate}
     </div>
     <div class="loc-print-isbn" if="model.print_isbn_10 || model.print_isbn_13">
         <h4>Wydrukowane</h4>

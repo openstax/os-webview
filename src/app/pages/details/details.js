@@ -182,6 +182,8 @@ export default class Details extends BaseClass {
                 description: this.pageData.description,
                 errataBlurb: this.pageData.errata_content.content && this.pageData.errata_content.content.content,
                 formattedPublishDate: this.pageData.publish_date && formatDate(this.pageData.publish_date),
+                formattedWebUpdateDate: this.pageData.last_updated_web && formatDate(this.pageData.last_updated_web),
+                formattedPDFUpdateDate: this.pageData.last_updated_pdf && formatDate(this.pageData.last_updated_pdf),
                 polish,
                 slug: this.slug,
                 title: this.pageData.title,
