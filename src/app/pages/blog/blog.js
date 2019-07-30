@@ -100,6 +100,9 @@ export default class Blog extends BaseClass {
 
     buildArticlePage() {
         const region = this.regions.self;
+        const ms = new MoreStories({
+            articles: this.moreStoriesOptions((slug, _) => slug !== this.articleSlug)
+        });
 
         region.attach(new Article({
             slug: `news/${this.articleSlug}`
@@ -110,9 +113,11 @@ export default class Blog extends BaseClass {
                 rssUrl: `${settings.apiOrigin}/blog-feed/rss/`
             }
         }));
-        region.append(new MoreStories({
-            articles: this.moreStoriesOptions((slug, _) => slug !== this.articleSlug)
-        }));
+        region.append(ms);
+        ms.on('value', (searchParam) => {
+            history.pushState({}, '', `${path}/?${searchParam}`);
+            this.handlePathChange();
+        });
     }
 
     // eslint-disable-next-line complexity
