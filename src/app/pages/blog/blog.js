@@ -4,10 +4,10 @@ import {on} from '~/helpers/controller/decorators';
 import routerBus from '~/helpers/router-bus';
 import analytics from '~/helpers/analytics';
 import css from './blog.css';
-import SearchBar from './search-bar/search-bar';
 import SearchResults from './search-results/search-results';
 import UpdateBox from './update-box/update-box';
 import FeaturedArticle from './pinned-article/pinned-article';
+import SearchBar from './search-bar/search-bar';
 import MoreStories from './more-stories/more-stories';
 import {blurbModel} from './article-summary/article-summary';
 import Article from './article/article';
@@ -65,26 +65,21 @@ export default class Blog extends BaseClass {
     }
 
     buildDefaultPage() {
-        const sb = new SearchBar({
-            model: {
-                title: 'Read more great stories'
-            }
-        });
-
-        sb.on('value', (searchParam) => {
-            history.pushState({}, '', `${path}/?${searchParam}`);
-            this.handlePathChange();
-        });
         this.regions.self.attach(new FeaturedArticle(this.featuredArticleOptions));
         this.regions.self.append(new UpdateBox({
             model: {
                 rssUrl: `${settings.apiOrigin}/blog-feed/rss/`
             }
         }));
-        this.regions.self.append(sb);
-        this.regions.self.append(new MoreStories({
+        const ms = new MoreStories({
             articles: this.moreStoriesOptions((_, articleEntry) => !articleEntry.pin_to_top)
-        }));
+        });
+
+        this.regions.self.append(ms);
+        ms.on('value', (searchParam) => {
+            history.pushState({}, '', `${path}/?${searchParam}`);
+            this.handlePathChange();
+        });
     }
 
     buildSearchResultsPage() {

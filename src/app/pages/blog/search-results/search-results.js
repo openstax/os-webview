@@ -2,6 +2,7 @@ import componentType from '~/helpers/controller/init-mixin';
 import ArticleSummary, {blurbModel} from '../article-summary/article-summary';
 import css from './search-results.css';
 import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
+import uniqBy from 'lodash/uniqBy';
 
 const spec = {
     css,
@@ -25,7 +26,7 @@ export default class extends componentType(spec) {
         fetchFromCMS(slug, true).then(
             (results) => {
                 this.regions.self.empty();
-                results.forEach((data) => {
+                uniqBy(results, 'id').forEach((data) => {
                     data.heading = data.title;
                     this.regions.self.append(new ArticleSummary(
                         Object.assign({model: blurbModel(data.slug, data)}, resultSpec)
