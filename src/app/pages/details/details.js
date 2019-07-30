@@ -176,7 +176,6 @@ export default class Details extends BaseClass {
         let selectedTab = decodeURIComponent(window.location.search.replace('?', '')) || tabLabels[0];
         const detailsTabData = () => {
             /* eslint complexity: 0 */
-            console.log(this.pageData)
             const model = {
                 bookInfo: this.pageData,
                 bookState: this.pageData.book_state,
