@@ -43,59 +43,68 @@
                     </span>
                 </a>
             </div>
-            <div if="model.bookshareLink" class="option">
-                <a href="{model.bookshareLink}"
-                    tabindex="{model.submenu === '' ? 0 : -1}">
-                    <span class="fa fa-volume-up"></span>
-                    <span class="text">
-                        Bookshare
-                    </span>
-                </a>
-            </div>
-            <if condition="model.ibookLink">
-                <div if="model.ibookLink2" class="option">
-                    <span class="option-header">
-                        <span class="fab fa-apple"></span>
+            <if condition="model.optionsExpanded || model.additionalOptions < 1">
+                <div if="model.bookshareLink" class="option">
+                    <a href="{model.bookshareLink}"
+                        tabindex="{model.submenu === '' ? 0 : -1}">
+                        <span class="fa fa-volume-up"></span>
                         <span class="text">
-                            Download on iBooks
+                            Bookshare
                         </span>
-                    </span>
-                    <a href="{model.ibookLink}"
-                        tabindex="{model.submenu === '' ? 0 : -1}">
-                        Part 1
-                    </a>
-                    <a href="{model.ibookLink2}"
-                        tabindex="{model.submenu === '' ? 0 : -1}">
-                        Part 2
                     </a>
                 </div>
-                <div if="!model.ibookLink2" class="option">
-                    <a href="{model.ibookLink}"
-                        tabindex="{model.submenu === '' ? 0 : -1}">
-                        <span class="fab fa-apple"></span>
-                        <span class="text">
-                            Download on iBooks
+                <if condition="model.ibookLink">
+                    <div if="model.ibookLink2" class="option">
+                        <span class="option-header">
+                            <span class="fab fa-apple"></span>
+                            <span class="text">
+                                Download on iBooks
+                            </span>
                         </span>
+                        <a href="{model.ibookLink}"
+                            tabindex="{model.submenu === '' ? 0 : -1}">
+                            Part 1
+                        </a>
+                        <a href="{model.ibookLink2}"
+                            tabindex="{model.submenu === '' ? 0 : -1}">
+                            Part 2
+                        </a>
+                    </div>
+                    <div if="!model.ibookLink2" class="option">
+                        <a href="{model.ibookLink}"
+                            tabindex="{model.submenu === '' ? 0 : -1}">
+                            <span class="fab fa-apple"></span>
+                            <span class="text">
+                                Download on iBooks
+                            </span>
+                        </a>
+                    </div>
+                </if>
+                <div if="model.kindleLink" class="option">
+                    <a href="{model.kindleLink}"
+                        tabindex="{model.submenu === '' ? 0 : -1}">
+                        <span class="fab fa-amazon"></span>
+                        <span class="text">
+                            Download for Kindle
+                        </span>
+                    </a>
+                </div>
+                <div if="model.cheggLink" class="option">
+                    <a href="{model.cheggLink}"
+                        tabindex="{model.submenu === '' ? 0 : -1}">
+                        <img class="logo-img" src="/images/icons/Chegglogo.svg" alt="">
+                        <span class="text">
+                            {model.cheggLinkText}
+                        </span>
+                    </a>
+                </div>
+            <else>
+                <div if="model.additionalOptions" class="option expander">
+                    <a href="." tabindex="{model.submenu === '' ? 0 : -1}">
+                        + {model.additionalOptions} more options
                     </a>
                 </div>
             </if>
-            <div if="model.kindleLink" class="option">
-                <a href="{model.kindleLink}"
-                    tabindex="{model.submenu === '' ? 0 : -1}">
-                    <span class="fab fa-amazon"></span>
-                    <span class="text">
-                        Download for Kindle
-                    </span>
-                </a>
-            </div>
-            <div if="model.cheggLink" class="option">
-                <a href="{model.cheggLink}"
-                    tabindex="{model.submenu === '' ? 0 : -1}">
-                <img class="logo-img" src="/images/icons/Chegglogo.svg" alt="">
-                <span class="text">
-                    {model.cheggLinkText}
-                </span>
-            </div>
         </div>
     </div>
 </template>
