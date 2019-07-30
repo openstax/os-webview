@@ -1,4 +1,6 @@
 import componentType from '~/helpers/controller/init-mixin';
+import busMixin from '~/helpers/controller/bus-mixin';
+import SearchBar from '../search-bar/search-bar';
 import ArticleSummary from '../article-summary/article-summary';
 import css from './more-stories.css';
 import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
@@ -26,13 +28,22 @@ const spec = {
         classes: ['more-stories']
     },
     regions: {
+        searchbar: '.searchbar',
         cards: '.cards'
     }
 };
 
-export default class extends componentType(spec) {
+export default class extends componentType(spec, busMixin) {
 
     onLoaded() {
+        const sb = new SearchBar({
+            model: {
+                title: 'Read more great stories'
+            }
+        });
+
+        sb.on('value', (...args) => this.emit('value', ...args));
+        this.regions.searchbar.attach(sb);
         this.articles.forEach((model) => {
             delete model.subheading;
             this.regions.cards.append(new Card({model}));
