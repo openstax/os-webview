@@ -61,7 +61,8 @@ export default function showNoticeIfNeeded() {
                 nonModal: true
             }));
             cookieNotice.on('close', () => {
-                shellBus.emit('hideDialog');
+                shellBus.emit('hideNonModal');
+                cookieNotice.detach();
             });
         }
     });
