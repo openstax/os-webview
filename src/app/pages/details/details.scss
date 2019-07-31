@@ -175,7 +175,7 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
                     line-height: 1;
                 }
 
-                @include wider-than($text-content-max) {
+                @include wider-than(80em * $scale-factor) {
                     padding-left: $normal-margin;
                 }
             }
