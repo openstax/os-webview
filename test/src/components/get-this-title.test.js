@@ -10,14 +10,6 @@ describe('GetThisTitle', () => {
     it('initializes', () => {
         expect(p).toBeTruthy();
     });
-
-    it('shows links', () => {
-        for (const url of [details.webview_link, details.ibook_link]) {
-            const link = p.el.querySelector(`[href="${url}"]`);
-
-            expect(link).toBeTruthy();
-        }
-    });
     it('handles Print Copy dialog', () => {
         const pcLink = p.el.querySelector('.show-print-submenu');
         const showed = new Promise((resolve) => {
@@ -26,5 +18,14 @@ describe('GetThisTitle', () => {
 
         clickElement(pcLink);
         return showed;
+    });
+    it('handles hiding and expanding non-preferred formats', () => {
+        const expandLink = p.el.querySelector('.option.expander');
+        const linkCount = () => Array.from(p.el.querySelectorAll('.option a')).length;
+
+        expect(expandLink).toBeTruthy();
+        expect(linkCount()).toBe(5);
+        clickElement(expandLink);
+        expect(linkCount()).toBe(6);
     });
 });

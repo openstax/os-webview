@@ -20,7 +20,8 @@ const spec = {
         classes: ['get-this-title']
     },
     submenu: '',
-    tocActive: false
+    tocActive: false,
+    optionsExpanded: false
 };
 
 let studyEdgeIsLive = false;
@@ -58,6 +59,9 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
             data.amazon_link,
             arrayOfBookstoreContent.some((obj) => obj.button_url)
         ].some((x) => x);
+        const additionalOptions = [
+            'bookshare_link', 'ibook_link', 'kindle_link', 'chegg_link'
+        ].filter((key) => data[key]).length;
 
         // eslint-disable-next-line complexity
         this.model = () => ({
@@ -81,7 +85,9 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
             loRes: data.low_resolution_pdf_url,
             slug: data.slug,
             cheggLink: data.chegg_link,
-            cheggLinkText: data.chegg_link_text
+            cheggLinkText: data.chegg_link_text,
+            additionalOptions,
+            optionsExpanded: this.optionsExpanded
         });
         this.printCopyContent = new OrderPrintCopy({
             amazonLink: data.amazon_link,
@@ -160,6 +166,13 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
     showToc(event) {
         event.preventDefault();
         this.setToc(!this.tocActive);
+    }
+
+    @on('click .option.expander')
+    expandOptions(event) {
+        event.preventDefault();
+        this.optionsExpanded = true;
+        this.update();
     }
 
 }
