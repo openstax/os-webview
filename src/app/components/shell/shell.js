@@ -86,7 +86,7 @@ class Shell extends Controller {
                         this.dialog.hide();
                     }
                 });
-                region.attach(this.dialog);
+                region.append(this.dialog);
             } else {
                 this.dialog.update();
             }
