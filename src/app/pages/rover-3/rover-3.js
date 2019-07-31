@@ -149,8 +149,7 @@ export default class RoverRedesign extends BaseClass {
 
         this.popupData = Object.assign(
             {
-                loginUrl: data.section_1.accessButtonLink,
-                image: cmsPopupData.backgroundImage.file
+                loginUrl: data.section_1.accessButtonLink
             },
             cmsPopupData
         );
