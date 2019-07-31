@@ -8383,7 +8383,7 @@ node-rest-client@^1.4.1:
     debug "~2.2.0"
     xml2js ">=0.2.4"
 
-node-sass@^4.2.0, node-sass@^4.7.2:
+node-sass@^4.2.0:
   version "4.12.0"
   resolved "https://registry.yarnpkg.com/node-sass/-/node-sass-4.12.0.tgz#0914f531932380114a30cc5fa4fa63233a25f017"
   integrity sha512-A1Iv4oN+Iel6EPv77/HddXErL2a+gZ4uBeZUy+a8O35CFYTXhgA8MgLCWBtwpGZdCvTvQ9d+bQxX/QC36GDPpQ==
@@ -9081,11 +9081,9 @@ path-type@^3.0.0:
   dependencies:
     pify "^3.0.0"
 
-"pattern-library@github:openstax/pattern-library#v1.1.5":
-  version "1.1.5"
-  resolved "https://codeload.github.com/openstax/pattern-library/tar.gz/1ec7579443c48c679cefface15f4c4274c132a6e"
-  dependencies:
-    node-sass "^4.7.2"
+"pattern-library@github:openstax/pattern-library":
+  version "1.1.6"
+  resolved "https://codeload.github.com/openstax/pattern-library/tar.gz/2a433bc68e8dbf664186971a16f6b996ef0e7cb8"
 
 pbf@^3.0.5:
   version "3.2.0"
