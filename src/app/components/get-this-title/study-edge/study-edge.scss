@@ -74,16 +74,20 @@
     .button-group {
         display: grid;
         grid-gap: 1.3rem;
-        grid-template-columns: repeat(auto-fit, minmax(15rem, auto));
-        height: 5rem;
         justify-content: center;
         max-width: 100%;
 
+        @include width-up-to($phone-max) {
+            grid-template-columns: min-content;
+        }
+
+        @include wider-than($phone-max) {
+            grid-template-columns: repeat(2, min-content);
+            padding-left: 1rem;
+        }
+
         .badge {
-            align-items: center;
-            display: grid;
-            height: 100%;
-            width: 13.5rem;
+            height: 4rem;
 
             > img {
                 height: 100%;
