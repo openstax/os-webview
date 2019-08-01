@@ -77,6 +77,9 @@ class Shell extends Controller {
             });
 
             region.append(d);
+            this.hideNonModal = () => {
+                d.closeDialog();
+            };
         } else {
             if (!this.dialog) {
                 this.dialog = new ModalDialog(() => this.getDialogProps(), {
@@ -86,7 +89,7 @@ class Shell extends Controller {
                         this.dialog.hide();
                     }
                 });
-                region.attach(this.dialog);
+                region.append(this.dialog);
             } else {
                 this.dialog.update();
             }
@@ -131,5 +134,11 @@ bus.on('no-modal', () => {
 bus.on('updateDialog', () => shell.dialog.update());
 bus.on('showDialog', shell.showDialog.bind(shell));
 bus.on('hideDialog', shell.hideDialog.bind(shell));
+bus.on('hideNonModal', () => {
+    if (shell.hideNonModal) {
+        shell.hideNonModal();
+        delete shell.hideNonModal;
+    }
+});
 
 export default shell;
