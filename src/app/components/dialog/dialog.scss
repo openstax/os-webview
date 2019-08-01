@@ -38,6 +38,10 @@ dialog {
         }
     }
 
+    .put-away[hidden] {
+        display: none;
+    }
+
     .put-away {
         @include body-font(1.8rem);
         background-color: transparent;
