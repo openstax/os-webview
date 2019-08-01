@@ -61,7 +61,8 @@
 
         @include wider-than($tablet-max) {
             display: grid;
-            grid-auto-flow: column;
+            grid-column-gap: 1rem;
+            grid-template-columns: min-content auto;
             left: auto;
             position: static;
             top: auto;
