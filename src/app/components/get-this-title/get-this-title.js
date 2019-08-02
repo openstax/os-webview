@@ -27,7 +27,9 @@ let studyEdgeIsLive = false;
 const studyEdgePromise = fetch(`${settings.apiOrigin}${settings.apiPrefix}/spike/study-edge`)
     .then(
         (r) => {
-            studyEdgeIsLive = true;
+            if (r.status === 200) {
+                studyEdgeIsLive = true;
+            }
         },
         (err) => {
             console.info('Study Edge is not live.');
