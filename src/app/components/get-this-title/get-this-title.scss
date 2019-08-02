@@ -148,7 +148,10 @@
     }
 
     .expander {
-        font-weight: bold;
         margin-left: 4.5rem;
+
+        a {
+            font-weight: bold;
+        }
     }
 }

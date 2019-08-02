@@ -11,6 +11,7 @@
         @include width-up-to($tablet-max) {
             background-image: url('/images/study-edge/graphic-1.svg');
             background-size: calc(10vw + 5rem);
+            margin-left: -0.1rem; // because image has a little edge
             padding-bottom: 9rem;
         }
 
