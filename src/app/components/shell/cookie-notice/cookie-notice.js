@@ -51,6 +51,9 @@ class CookieNotice extends componentType(spec, busMixin) {
 
 export default function showNoticeIfNeeded() {
     accountsModel.load().then((response) => {
+        // Uncomment ONLY to test:
+        // response.id = 'testing';
+        // document.cookie = `${ACKNOWLEDGEMENT_KEY}=true; expires=Tue, 19 Jan 2000 03:14:07 GMT`;
         if (typeof response.id !== 'undefined' && !acknowledged()) {
             const cookieNotice = new CookieNotice();
 
@@ -58,7 +61,9 @@ export default function showNoticeIfNeeded() {
                 title: 'Privacy and cookies',
                 content: cookieNotice,
                 customClass: 'footer-style',
-                nonModal: true
+                nonModal: true,
+                noPutAway: true,
+                noAutoFocus: true
             }));
             cookieNotice.on('close', () => {
                 shellBus.emit('hideNonModal');

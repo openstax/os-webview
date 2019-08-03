@@ -8,7 +8,7 @@
     margin: $normal-margin;
     max-width: none;
     position: fixed;
-    width: calc(100vw - 4.5rem); // Leaves room for scrollbar
+    width: 100%;
 }
 
 .cookie-notice {

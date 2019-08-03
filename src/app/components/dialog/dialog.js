@@ -19,7 +19,8 @@ const spec = {
 
         return {
             title: this.props.title,
-            htmlTitle: this.props.htmlTitle
+            htmlTitle: this.props.htmlTitle,
+            putAwayHidden: $.booleanAttribute(this.props.noPutAway)
         };
     }
 };
@@ -43,30 +44,35 @@ export class Dialog extends componentType(spec) {
             this.el.classList.add(this.props.customClass);
         }
         // Wait for region to be instantiated
-        window.requestAnimationFrame(() => {
-            this.attachContent();
+        if (!this.props.noAutoFocus) {
+            window.requestAnimationFrame(() => {
+                this.attachContent();
 
-            // Wait for content to be drawn
-            setTimeout(() => {
-                const focusableItems = Array.from(this.props.content.el.querySelectorAll($.focusable));
-                const first = focusableItems.find((i) => i.offsetParent !== null);
+                // Wait for content to be drawn
+                setTimeout(() => {
+                    const focusableItems = Array.from(this.props.content.el.querySelectorAll($.focusable));
+                    const first = focusableItems.find((i) => i.offsetParent !== null);
 
-                if (first) {
-                    first.focus();
-                }
-            }, 20);
-        });
+                    if (first) {
+                        first.focus();
+                    }
+                }, 20);
+            });
+        }
     }
 
     onLoaded() {
         this.el.setAttribute('aria-labelledby', 'dialog-title');
         this.el.style.zIndex = 10;
         this.attachContent();
+        this.navigateCallback = () => this.closeDialog();
+        window.addEventListener('navigate', this.navigateCallback);
     }
 
     /* eslint complexity: 0 */
     @on('click .put-away')
     closeDialog() {
+        window.removeEventListener('navigate', this.navigateCallback);
         const contentComponent = this.props.content;
 
         if (contentComponent && contentComponent.el && contentComponent.el.parentNode) {
