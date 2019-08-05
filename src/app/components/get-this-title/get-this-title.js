@@ -89,6 +89,7 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
             cheggLink: data.chegg_link,
             cheggLinkText: data.chegg_link_text,
             additionalOptions,
+            s: additionalOptions > 1 ? 's' : '',
             optionsExpanded: this.optionsExpanded
         });
         this.printCopyContent = new OrderPrintCopy({
@@ -173,7 +174,7 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
     @on('click .option.expander')
     expandOptions(event) {
         event.preventDefault();
-        this.optionsExpanded = true;
+        this.optionsExpanded = !this.optionsExpanded;
         this.update();
     }
 
