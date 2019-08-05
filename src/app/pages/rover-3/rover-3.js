@@ -32,7 +32,7 @@ export default class RoverRedesign extends BaseClass {
 
     onDataLoaded() {
         const data = this.flattenPageData();
-        const headerImage = (data.section_1.image || {}).file;
+        const headerImage = '/images/rover-3/rover-logo-orange.svg';
         const sections = [
             new Banner({
                 model: {
