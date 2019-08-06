@@ -49,7 +49,7 @@
         padding: 6rem 0;
 
         @include width-up-to($phone-max) {
-            padding: 1rem 0;
+            padding: 2.5rem 0;
         }
 
         > * {
