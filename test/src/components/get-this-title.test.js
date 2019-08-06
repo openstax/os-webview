@@ -30,4 +30,16 @@ describe('GetThisTitle', () => {
         clickElement(expandLink());
         expect(linkCount()).toBe(5);
     });
+    it('respects enable_study_edge flag', () => {
+        const downloadLink = (component) => component.el.querySelector('.option .show-study-edge');
+        const withLinkP = new GetThisTitle(Object.assign(
+            {
+                enable_study_edge: true
+            },
+            details
+        ));
+
+        expect(downloadLink(p)).toBeFalsy();
+        expect(downloadLink(withLinkP)).toBeTruthy();
+    });
 });
