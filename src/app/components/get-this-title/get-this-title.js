@@ -24,20 +24,6 @@ const spec = {
     optionsExpanded: false
 };
 
-let studyEdgeIsLive = false;
-const studyEdgePromise = fetch(`${settings.apiOrigin}${settings.apiPrefix}/spike/study-edge`)
-    .then(
-        (r) => {
-            if (r.status === 200) {
-                studyEdgeIsLive = true;
-            }
-        },
-        (err) => {
-            console.info('Study Edge is not live.');
-        }
-    );
-
-
 export default class GetThisTitle extends componentType(spec, busMixin) {
 
     init(data) {
@@ -81,7 +67,7 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
             pdfLink: (data.high_resolution_pdf_url || data.low_resolution_pdf_url),
             sampleText: polish ? ' przykład' : ' sample',
             printLink,
-            studyEdge: studyEdgeIsLive,
+            studyEdge: data.enable_study_edge,
             submenu: this.submenu,
             hiRes: data.high_resolution_pdf_url,
             loRes: data.low_resolution_pdf_url,
@@ -98,9 +84,11 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
         }, () => {
             shellBus.emit('hideDialog');
         });
-        this.studyEdgeContent = new StudyEdge({
-            bookShortName: data.slug.replace('books/', '')
-        });
+        if (data.enable_study_edge) {
+            this.studyEdgeContent = new StudyEdge({
+                bookShortName: data.slug.replace('books/', '')
+            });
+        }
     }
 
     onLoaded() {
@@ -109,9 +97,6 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
         }
         this.on('set-toc', (value) => {
             this.setToc(value);
-        });
-        studyEdgePromise.then(() => {
-            this.update();
         });
     }
 
