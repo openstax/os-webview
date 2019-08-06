@@ -20,12 +20,14 @@ describe('GetThisTitle', () => {
         return showed;
     });
     it('handles hiding and expanding non-preferred formats', () => {
-        const expandLink = p.el.querySelector('.option.expander');
+        const expandLink = () => p.el.querySelector('.option.expander');
         const linkCount = () => Array.from(p.el.querySelectorAll('.option a')).length;
 
-        expect(expandLink).toBeTruthy();
+        expect(expandLink()).toBeTruthy();
         expect(linkCount()).toBe(5);
-        clickElement(expandLink);
-        expect(linkCount()).toBe(6);
+        clickElement(expandLink());
+        expect(linkCount()).toBe(7);
+        clickElement(expandLink());
+        expect(linkCount()).toBe(5);
     });
 });
