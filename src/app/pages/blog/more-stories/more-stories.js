@@ -37,9 +37,7 @@ export default class extends componentType(spec, busMixin) {
 
     onLoaded() {
         const sb = new SearchBar({
-            model: {
-                title: 'Read more great stories'
-            }
+            title: 'Read more great stories'
         });
 
         sb.on('value', (...args) => this.emit('value', ...args));

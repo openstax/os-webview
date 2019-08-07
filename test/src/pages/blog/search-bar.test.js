@@ -1,19 +1,18 @@
 import SearchBar from '~/pages/blog/search-bar/search-bar';
-import {clickElement} from '../../../test-utils';
+import {clickElement, doInput, doKeyPress} from '../../../test-utils';
 
 describe('search-bar', () => {
     const p = new SearchBar({
-        model: {
-            title: 'Search Bar title'
-        }
+        title: 'Search Bar title'
     });
+    const inputEl = p.el.querySelector('[name="search-input"]');
 
     it('creates', () => {
         expect(p).toBeTruthy();
         expect(p.el.querySelector('h2').textContent).toBe('Search Bar title');
     });
     it('accepts input', () => {
-        p.el.querySelector('[name="search-input"]').value = 'education';
+        doInput(inputEl, 'education');
         return new Promise((resolve) => {
             p.on('value', (newValue) => {
                 expect(newValue).toBe('education');
@@ -21,5 +20,16 @@ describe('search-bar', () => {
             });
             clickElement(p.el.querySelector('button'));
         });
+    });
+    it('clears input', () => {
+        const clearEl = p.el.querySelector('.clear-search');
+
+        clickElement(clearEl);
+        expect(p.el.querySelector('[name="search-input"]').value).toBe('');
+        doInput(inputEl, 'something');
+        expect(p.el.querySelector('[name="search-input"]').value).toBe('something');
+        doKeyPress(clearEl, ' ');
+        expect(p.el.querySelector('[name="search-input"]').value).toBe('');
+
     });
 });

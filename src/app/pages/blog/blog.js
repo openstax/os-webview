@@ -84,9 +84,7 @@ export default class Blog extends BaseClass {
 
     buildSearchResultsPage() {
         const sb = new SearchBar({
-            model: {
-                title: 'Read more great stories'
-            }
+            title: 'Read more great stories'
         });
         const sr = new SearchResults();
 
