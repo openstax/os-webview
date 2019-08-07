@@ -22,7 +22,7 @@ addons:
       - g++-4.8
 script:
   - ./script/setup
-  - travis_wait ./script/build
+  - travis_wait 25 ./script/build
   - ./script/test
   - rm -rf ./dist/app
 after_script:
