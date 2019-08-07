@@ -20,13 +20,36 @@
         margin: 0;
     }
 
-    input {
-        @extend %non-button-input;
-
+    .input-with-clear-button {
+        align-items: center;
+        display: grid;
         grid-area: input;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        width: 100%;
 
-        &::placeholder {
-            font-style: italic;
+        input {
+            @extend %non-button-input;
+
+            grid-column: 1;
+            grid-row: 1;
+            height: 100%;
+
+            &::placeholder {
+                font-style: italic;
+            }
+        }
+
+        .clear-search {
+            grid-column: 1;
+            grid-row: 1;
+            justify-self: end;
+            margin-right: 1rem;
+            padding: 0 0.5rem;
+
+            &[hidden] {
+                display: none;
+            }
         }
     }
 

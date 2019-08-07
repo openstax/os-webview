@@ -26,6 +26,10 @@ export default class extends componentType(spec) {
         fetchFromCMS(slug, true).then(
             (results) => {
                 this.regions.self.empty();
+                if (results.length === 0) {
+                    this.regions.self.el.textContent = 'No matching results were found.';
+                    return;
+                }
                 uniqBy(results, 'id').forEach((data) => {
                     data.heading = data.title;
                     this.regions.self.append(new ArticleSummary(

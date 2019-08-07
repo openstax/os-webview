@@ -9,13 +9,28 @@ const spec = {
     css,
     view: {
         classes: ['search-bar']
+    },
+    model() {
+        return {
+            title: this.title,
+            searchString: this.inputValue,
+            clearHidden: this.inputValue.length === 0 ? '' : null
+        };
     }
 };
 
 export default class extends componentType(spec, busMixin) {
 
     get inputValue() {
-        return this.el.querySelector('[name="search-input"]').value;
+        const inputEl = this.el.querySelector('[name="search-input"]');
+
+        return inputEl ? inputEl.value : window.location.search.substr(1);
+    }
+    set inputValue(newValue) {
+        const inputEl = this.el.querySelector('[name="search-input"]');
+
+        inputEl.value = newValue;
+        this.update();
     }
 
     @on('click button')
@@ -29,6 +44,24 @@ export default class extends componentType(spec, busMixin) {
     handleEnter(event) {
         if (event.key === 'Enter') {
             this.doSearch();
+        }
+    }
+
+    @on('input [name="search-input"]')
+    updateClearHidden() {
+        this.update();
+    }
+
+    @on('click .clear-search')
+    clearSearch() {
+        this.inputValue = '';
+    }
+
+    @on('keypress .clear-search')
+    handleEnterOrSpace(event) {
+        if (['Enter', ' '].includes(event.key)) {
+            event.preventDefault();
+            this.clearSearch();
         }
     }
 
