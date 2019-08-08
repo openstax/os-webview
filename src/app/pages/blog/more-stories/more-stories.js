@@ -36,14 +36,14 @@ const spec = {
 export default class extends componentType(spec, busMixin) {
 
     onLoaded() {
-        const sb = new SearchBar({
-            model: {
-                title: 'Read more great stories'
-            }
-        });
-
-        sb.on('value', (...args) => this.emit('value', ...args));
-        this.regions.searchbar.attach(sb);
+        // const sb = new SearchBar({
+        //     model: {
+        //         title: 'Read more great stories'
+        //     }
+        // });
+        //
+        // sb.on('value', (...args) => this.emit('value', ...args));
+        // this.regions.searchbar.attach(sb);
         this.articles.forEach((model) => {
             delete model.subheading;
             this.regions.cards.append(new Card({model}));
