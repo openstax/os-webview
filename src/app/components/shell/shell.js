@@ -47,7 +47,8 @@ class Shell extends Controller {
             injectButtons();
         }
         window.addEventListener('navigate', this.hideDialog.bind(this));
-        showNoticeIfNeeded();
+        // For use with Google Analytics user tracking (see comments in analytics.js)
+        // showNoticeIfNeeded();
     }
 
     showLoader() {
