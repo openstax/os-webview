@@ -233,9 +233,11 @@ class Analytics {
             if (typeof role !== 'undefined') {
                 window.ga('send', 'pageview', {dimension1: role, nonInteraction: true});
             }
-            if ('id' in accountResponse) {
-                window.ga('set', 'userid', accountResponse.id.toString());
-            }
+            // Google Analytics user tracking -- not ready for release. Maybe put
+            // behind a feature flag
+            // if ('id' in accountResponse) {
+            //     window.ga('set', 'userid', accountResponse.id.toString());
+            // }
         });
 
         document.addEventListener('submit', (e) => {
