@@ -79,7 +79,8 @@ function oldUserModel(sfUserModel) {
         groups: groupsFor(sfUserModel),
         last_name: sfUserModel.last_name,
         pending_verification: sfUserModel.faculty_status === 'pending_faculty',
-        username: sfUserModel.id
+        username: sfUserModel.id,
+        self_reported_role: sfUserModel.self_reported_role
     };
 }
 

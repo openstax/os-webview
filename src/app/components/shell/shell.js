@@ -6,6 +6,7 @@ import {initialize, injectButtons} from 'recordo';
 import {description as template} from './shell.html';
 import bus from './shell-bus';
 import showNoticeIfNeeded from './cookie-notice/cookie-notice';
+import {default as showAdoptionsIfNeeded} from './adoption-dialog/adoption-dialog';
 
 class Shell extends Controller {
 
@@ -48,6 +49,7 @@ class Shell extends Controller {
         }
         window.addEventListener('navigate', this.hideDialog.bind(this));
         showNoticeIfNeeded();
+        showAdoptionsIfNeeded();
     }
 
     showLoader() {

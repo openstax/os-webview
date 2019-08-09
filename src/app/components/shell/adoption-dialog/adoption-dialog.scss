@@ -1,0 +1,65 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.adoption-dialog {
+    background-color: ui-color(white);
+    padding: 4rem;
+    padding-bottom: 12rem;
+
+    form {
+        display: grid;
+        grid-row-gap: 3rem;
+        grid-template-columns: 100%;
+    }
+
+    table {
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        border: thin solid ui-color(form-border);
+        padding: 0 0.5rem;
+        text-align: left;
+    }
+
+    td.final-row {
+        text-align: right;
+    }
+
+    input:invalid {
+        background-color: ui-color(error-bg);
+        border: thin solid ui-color(error-border);
+        box-shadow: none;
+        color: text-color(error);
+        outline: 0;
+    }
+
+    input:disabled {
+        color: ui-color(form-border);
+    }
+
+    label {
+        align-items: center;
+        display: inline-grid;
+        grid-column-gap: 0.5rem;
+        grid-template-columns: auto auto;
+        justify-content: left;
+        margin-right: $normal-margin;
+    }
+
+    select[name="title"] {
+        font-size: inherit;
+        border: thin solid ui-color(form-border);
+        padding: 0.7rem 1rem;
+    }
+
+    button {
+        @extend %button;
+
+        justify-self: left;
+
+        &.primary {
+            @extend %primary;
+        }
+    }
+}

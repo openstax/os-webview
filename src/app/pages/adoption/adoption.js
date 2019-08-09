@@ -24,8 +24,7 @@ const spec = {
     },
     regions: {
         header: '[data-region="header"]',
-        roleSelector: '[data-region="role-selector"]',
-        form: 'plug-in[data-id="form"]'
+        roleSelector: '[data-region="role-selector"]'
     }
 };
 

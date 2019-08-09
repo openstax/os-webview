@@ -57,9 +57,9 @@ export function salesforceFormFunctions(superclass) {
 
 export default (superclass) => class extends mix(superclass).with(salesforceFormFunctions) {
 
-    init() {
+    init(...args) {
         if (super.init) {
-            super.init();
+            super.init(...args);
         }
         this.slug = 'books';
     }
