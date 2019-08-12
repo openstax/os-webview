@@ -2,6 +2,7 @@ import componentType, {loaderMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './article.html';
 import bodyUnitView from '~/components/body-units/body-units';
 import css from './article.css';
+import Byline from '../byline/byline';
 
 const spec = {
     template,
@@ -18,8 +19,6 @@ const spec = {
             imageAlt: data.featured_image_alt_text,
             title: data.heading,
             subheading: data.subheading,
-            author: data.author,
-            date: data.date,
             tags: data.tags
         };
     }
@@ -30,19 +29,30 @@ export default class extends componentType(spec, loaderMixin) {
     attachUnits() {
         this.update();
         const bodyRegion = this.regionFrom('.body');
+        const bylineRegion = this.regionFrom('.byline');
 
         this.pageData.body.forEach((unit) => {
             bodyRegion.append(bodyUnitView(unit));
         });
+        bylineRegion.attach(new Byline({
+            date: this.pageData.date,
+            author: this.pageData.author
+        }));
     }
 
     onLoaded() {
+        if (super.onLoaded) {
+            super.onLoaded();
+        }
         if (this.pageData) {
             this.attachUnits();
         }
     }
 
     onDataLoaded() {
+        if (super.onDataLoaded) {
+            super.onDataLoaded();
+        }
         this.hideLoader();
         if (this.el) {
             this.attachUnits();

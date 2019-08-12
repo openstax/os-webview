@@ -3,9 +3,13 @@ import {description as template} from './article-summary.html';
 import debounce from 'lodash/debounce';
 import $ from '~/helpers/$';
 import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
+import Byline from '../byline/byline';
 
 const spec = {
-    template
+    template,
+    regions: {
+        byline: '.byline'
+    }
 };
 
 export function blurbModel(articleSlug, data) {
@@ -47,6 +51,10 @@ export default class ArticleSummary extends componentType(spec, insertHtmlMixin)
         if (super.onLoaded) {
             super.onLoaded();
         }
+        this.regions.byline.attach(new Byline({
+            date: this.model.date,
+            author: this.model.author
+        }));
         window.addEventListener('scroll', this.handleScroll);
         this.handleScroll();
     }

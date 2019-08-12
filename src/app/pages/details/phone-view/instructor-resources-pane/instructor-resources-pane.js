@@ -44,7 +44,6 @@ export default class extends componentType(spec) {
     @on('click a[href$="/comp-copy"]')
     handleCompCopy(event) {
         event.preventDefault();
-        console.info('Emitting showDialog');
         shellBus.emit('showDialog', () => this.props.compCopyDialogProps);
     }
 

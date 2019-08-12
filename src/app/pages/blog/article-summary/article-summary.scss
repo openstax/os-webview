@@ -11,16 +11,6 @@
         text-transform: uppercase;
     }
 
-    .meta {
-        .author{
-            font-style: italic;
-
-            &::after {
-                content: ' | ';
-            }
-        }
-    }
-
     .link-image {
         background-position: center center;
         background-repeat: no-repeat;

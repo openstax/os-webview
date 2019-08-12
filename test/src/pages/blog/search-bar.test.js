@@ -2,14 +2,11 @@ import SearchBar from '~/pages/blog/search-bar/search-bar';
 import {clickElement, doInput, doKeyPress} from '../../../test-utils';
 
 describe('search-bar', () => {
-    const p = new SearchBar({
-        title: 'Search Bar title'
-    });
+    const p = new SearchBar();
     const inputEl = p.el.querySelector('[name="search-input"]');
 
     it('creates', () => {
         expect(p).toBeTruthy();
-        expect(p.el.querySelector('h2').textContent).toBe('Search Bar title');
     });
     it('accepts input', () => {
         doInput(inputEl, 'education');
