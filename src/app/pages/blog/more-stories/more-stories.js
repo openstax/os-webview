@@ -36,9 +36,7 @@ const spec = {
 export default class extends componentType(spec, busMixin) {
 
     onLoaded() {
-        const sb = new SearchBar({
-            title: 'Read more great stories'
-        });
+        const sb = new SearchBar();
 
         sb.on('value', (...args) => this.emit('value', ...args));
         this.regions.searchbar.attach(sb);

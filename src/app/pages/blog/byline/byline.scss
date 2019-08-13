@@ -1,0 +1,11 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.blog.page .byline {
+    .author{
+        font-style: italic;
+
+        &::after {
+            content: ' | ';
+        }
+    }
+}

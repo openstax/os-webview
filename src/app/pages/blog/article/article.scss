@@ -33,6 +33,16 @@
         padding: 0 $normal-margin;
     }
 
+    .meta {
+        .author{
+            font-style: italic;
+
+            &::after {
+                content: ' | ';
+            }
+        }
+    }
+
     .body {
         img {
             margin-top: $normal-margin;

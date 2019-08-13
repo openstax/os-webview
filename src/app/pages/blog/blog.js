@@ -83,9 +83,7 @@ export default class Blog extends BaseClass {
     }
 
     buildSearchResultsPage() {
-        const sb = new SearchBar({
-            title: 'Read more great stories'
-        });
+        const sb = new SearchBar();
         const sr = new SearchResults();
 
         sb.on('value', (searchParam) => {

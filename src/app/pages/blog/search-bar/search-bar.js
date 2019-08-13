@@ -12,7 +12,6 @@ const spec = {
     },
     model() {
         return {
-            title: this.title,
             searchString: this.inputValue,
             clearHidden: this.inputValue.length === 0 ? '' : null
         };
@@ -24,7 +23,7 @@ export default class extends componentType(spec, busMixin) {
     get inputValue() {
         const inputEl = this.el.querySelector('[name="search-input"]');
 
-        return inputEl ? inputEl.value : window.location.search.substr(1);
+        return inputEl ? inputEl.value :decodeURIComponent(window.location.search.substr(1));
     }
     set inputValue(newValue) {
         const inputEl = this.el.querySelector('[name="search-input"]');
