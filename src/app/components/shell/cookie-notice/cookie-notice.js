@@ -5,6 +5,7 @@ import css from './cookie-notice.css';
 import {on} from '~/helpers/controller/decorators';
 import accountsModel from '~/models/usermodel';
 import shellBus from '../shell-bus';
+import analytics from '~/helpers/analytics';
 
 const spec = {
     template,
@@ -35,15 +36,12 @@ function acknowledged() {
     return cookie.hash[ACKNOWLEDGEMENT_KEY];
 }
 
-function acknowledge() {
-    cookie.setKey(ACKNOWLEDGEMENT_KEY);
-}
-
 class CookieNotice extends componentType(spec, busMixin) {
 
     @on('click button.primary')
-    dismissPermanently() {
-        acknowledge();
+    acknowledge() {
+        cookie.setKey(ACKNOWLEDGEMENT_KEY);
+        analytics.setUser(this.userid);
         this.emit('close');
     }
 
@@ -51,24 +49,34 @@ class CookieNotice extends componentType(spec, busMixin) {
 
 export default function showNoticeIfNeeded() {
     accountsModel.load().then((response) => {
-        // Uncomment ONLY to test:
+        // Uncomment these three lines ONLY to test locally:
         // response.id = 'testing';
+        // response.is_gdpr_location = false;
         // document.cookie = `${ACKNOWLEDGEMENT_KEY}=true; expires=Tue, 19 Jan 2000 03:14:07 GMT`;
-        if (typeof response.id !== 'undefined' && !acknowledged()) {
-            const cookieNotice = new CookieNotice();
 
-            shellBus.emit('showDialog', () => ({
-                title: 'Privacy and cookies',
-                content: cookieNotice,
-                customClass: 'footer-style',
-                nonModal: true,
-                noPutAway: true,
-                noAutoFocus: true
-            }));
-            cookieNotice.on('close', () => {
-                shellBus.emit('hideNonModal');
-                cookieNotice.detach();
-            });
+        if (typeof response.id !== 'undefined') {
+            const userid = response.id.toString();
+
+            if (acknowledged()) {
+                analytics.setUser(userid);
+            } else if (response.is_gdpr_location === false) {
+                const cookieNotice = new CookieNotice({
+                    userid
+                });
+
+                shellBus.emit('showDialog', () => ({
+                    title: 'Privacy and cookies',
+                    content: cookieNotice,
+                    customClass: 'footer-style',
+                    nonModal: true,
+                    noPutAway: true,
+                    noAutoFocus: true
+                }));
+                cookieNotice.on('close', () => {
+                    shellBus.emit('hideNonModal');
+                    cookieNotice.detach();
+                });
+            }
         }
     });
 }
