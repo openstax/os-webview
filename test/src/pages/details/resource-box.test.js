@@ -57,6 +57,7 @@ describe('ResourceBox', () => {
 
     it('handles locked student resources', () => {
         userStatus.isStudent = false;
+        userStatus.isInstructor = false;
         const resourceBox = new ResourceBox(
             Object.assign(payload, ResourceBox.studentResourceBoxPermissions(resourceData, userStatus, 'Student resource'))
         );
@@ -68,6 +69,19 @@ describe('ResourceBox', () => {
 
     it('allows students access to locked resources', () => {
         userStatus.isStudent = true;
+        userStatus.isInstructor = false;
+        const resourceBox = new ResourceBox(
+            Object.assign(payload, ResourceBox.studentResourceBoxPermissions(resourceData, userStatus, 'Student resource'))
+        );
+        const el = resourceBox.el;
+
+        expect(el.querySelector('.bottom .left').textContent).toBe(resourceData.link_text);
+        expect(el.querySelector('.bottom .right .fa-download')).toBeTruthy();
+
+    });
+    it('allows instructors access to locked student resources', () => {
+        userStatus.isStudent = false;
+        userStatus.isInstructor = true;
         const resourceBox = new ResourceBox(
             Object.assign(payload, ResourceBox.studentResourceBoxPermissions(resourceData, userStatus, 'Student resource'))
         );
