@@ -17,8 +17,7 @@ $card-box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.5);
     }
 
     .btn {
-        height: auto;
-        padding: 1em 2em;
+        @extend %button;
 
         &.blue {
             @extend %light-on-dark;
