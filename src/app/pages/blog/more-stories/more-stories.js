@@ -35,15 +35,20 @@ const spec = {
 
 export default class extends componentType(spec, busMixin) {
 
+    loadArticles() {
+        this.regions.cards.empty();
+        this.articles.forEach((model) => {
+            delete model.subheading;
+            this.regions.cards.append(new Card({model}));
+        });
+    }
+
     onLoaded() {
         const sb = new SearchBar();
 
         sb.on('value', (...args) => this.emit('value', ...args));
         this.regions.searchbar.attach(sb);
-        this.articles.forEach((model) => {
-            delete model.subheading;
-            this.regions.cards.append(new Card({model}));
-        });
+        this.loadArticles();
     }
 
 }

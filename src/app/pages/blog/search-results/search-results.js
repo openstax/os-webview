@@ -1,23 +1,9 @@
-import componentType from '~/helpers/controller/init-mixin';
-import ArticleSummary, {blurbModel} from '../article-summary/article-summary';
-import css from './search-results.css';
+import MoreStories from '../more-stories/more-stories';
+import {blurbModel} from '../article-summary/article-summary';
 import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
 import uniqBy from 'lodash/uniqBy';
 
-const spec = {
-    css,
-    view: {
-        classes: ['search-results']
-    }
-};
-
-const resultSpec = {
-    view: {
-        classes: ['result']
-    }
-};
-
-export default class extends componentType(spec) {
+export default class extends MoreStories {
 
     refreshResults() {
         const searchParam = window.location.search.substr(1);
@@ -25,17 +11,16 @@ export default class extends componentType(spec) {
 
         fetchFromCMS(slug, true).then(
             (results) => {
-                this.regions.self.empty();
                 if (results.length === 0) {
-                    this.regions.self.el.textContent = 'No matching results were found.';
+                    this.regions.cards.el.textContent = 'No matching results were found.';
                     return;
                 }
-                uniqBy(results, 'id').forEach((data) => {
-                    data.heading = data.title;
-                    this.regions.self.append(new ArticleSummary(
-                        Object.assign({model: blurbModel(data.slug, data)}, resultSpec)
-                    ));
-                });
+                this.articles = uniqBy(results, 'id')
+                    .map((data) => {
+                        data.heading = data.title;
+                        return blurbModel(data.slug, data);
+                    });
+                this.loadArticles();
             },
             (err) => {
                 console.warn(`Failed ${slug}:`, err);

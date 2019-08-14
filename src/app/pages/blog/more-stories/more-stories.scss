@@ -5,6 +5,7 @@ $image-height: 24rem;
 
 .blog.page .more-stories {
     background-color: ui-color(default);
+    padding-bottom: 2rem;
     padding-top: 2rem;
     width: 100%;
 
@@ -12,6 +13,7 @@ $image-height: 24rem;
         display: grid;
         grid-gap: 3rem;
         grid-template-columns: repeat(auto-fit, minmax(36rem, 1fr));
+        justify-items: center;
     }
 
     .card {
@@ -20,6 +22,7 @@ $image-height: 24rem;
 
         background-color: ui-color(white);
         height: 100%;
+        max-width: 50rem;
 
         .link-image {
             height: $image-height;
@@ -30,7 +33,7 @@ $image-height: 24rem;
             display: grid;
             grid-row-gap: $normal-margin;
             grid-template-rows: auto 1fr auto auto;
-            height: calc(100% - #{$image-height});
+            height: 100%;
             padding: $normal-margin;
 
             > *,
