@@ -63,7 +63,7 @@ export default class extends componentType(spec, insertHtmlMixin) {
         const encodedLocation = encodeURIComponent(`${pathWithoutSearch()}?${search}`);
         const isExternal = Boolean(resourceData.link_external);
         const resourceStatus = () => {
-            if (resourceData.resource_unlocked || userStatus.isStudent) {
+            if (resourceData.resource_unlocked || userStatus.isStudent || userStatus.isInstructor) {
                 return 'unlocked';
             }
             return 'locked';
