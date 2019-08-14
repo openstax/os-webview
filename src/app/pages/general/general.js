@@ -1,6 +1,7 @@
 import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import settings from 'settings';
 import css from './general.css';
+import $ from '~/helpers/$';
 
 const spec = {
     css,
@@ -37,16 +38,7 @@ export default class General extends BaseClass {
                         child.appendChild(strips);
                     }
                 });
-                // Making scripts work, per https://stackoverflow.com/a/47614491/392102
-                Array.from(this.el.querySelectorAll('script'))
-                    .forEach((s) => {
-                        const newScript = document.createElement('script');
-
-                        Array.from(s.attributes)
-                            .forEach((a) => newScript.setAttribute(a.name, a.value));
-                        newScript.appendChild(document.createTextNode(s.innerHTML));
-                        s.parentNode.replaceChild(newScript, s);
-                    });
+                $.activateScripts(this.el);
             });
     }
 
