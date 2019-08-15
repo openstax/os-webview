@@ -39,6 +39,7 @@ $orange-grad-bot: #ffa13a;
 
         display: grid;
         grid-row-gap: 3rem;
+        grid-template-columns: 100%;
         width: 100%;
 
         @include width-between($tablet-max, $media-content-max) {
@@ -85,7 +86,7 @@ $orange-grad-bot: #ffa13a;
             }
         }
 
-        .video iframe {
+        .video > * {
             max-width: 100%;
             width: 100%;
 
@@ -93,7 +94,7 @@ $orange-grad-bot: #ffa13a;
                 height: calc(#{900vw / 16} - 1rem);
             }
 
-            @include width-up-to($tablet-max) {
+            @include width-between($phone-max, $tablet-max) {
                 height: calc(#{900vw / 16} - 4rem);
             }
 
