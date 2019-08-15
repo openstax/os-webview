@@ -200,6 +200,19 @@ $.htmlToText = (html) => {
     return temp.textContent;
 };
 
+// Making scripts work, per https://stackoverflow.com/a/47614491/392102
+$.activateScripts = function (el) {
+    Array.from(el.querySelectorAll('script'))
+        .forEach((s) => {
+            const newScript = document.createElement('script');
+
+            Array.from(s.attributes)
+                .forEach((a) => newScript.setAttribute(a.name, a.value));
+            newScript.appendChild(document.createTextNode(s.innerHTML));
+            s.parentNode.replaceChild(newScript, s);
+        });
+};
+
 $.insertHtml = (containerEl, model) => {
     /* eslint complexity: 0 */
     const containers = containerEl ? containerEl.querySelectorAll('[data-html]') : [];
@@ -212,6 +225,7 @@ $.insertHtml = (containerEl, model) => {
 
         try {
             htmlEl.innerHTML = eval(expr) || '';
+            $.activateScripts(htmlEl);
         } catch (e) {
             console.warn('Eval', expr, e);
         }
