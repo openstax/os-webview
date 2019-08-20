@@ -1,58 +1,29 @@
 @import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/placeholder-selectors';
 
 $card-box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.5);
-$orange-gradient: linear-gradient(to right, rgb(228, 182, 96), rgb(228, 137, 96));
 
 .rover-by-openstax {
-    @extend %tutor;
+    background-color: ui-color(white);
 
-    section {
-        padding: 16rem 0;
-        position: relative;
-    }
-
-    img {
-        max-width: 100%;
-    }
-
-    .boxed {
-        display: grid;
-        grid-gap: 4rem;
-        grid-template-columns: 100%;
-        justify-items: left;
-
-        > * {
-            max-width: 100%;
+    h2 {
+        @include width-up-to($phone-max) {
+            @include set-font(h1);
         }
-    }
 
-    .orange {
-        background-image: $orange-gradient;
-        color: text-color(white);
-    }
-
-    .charcoal {
-        background-color: ui-color(footer-bg);
-        color: text-color(white);
-
-        a {
-            color: inherit;
+        @include wider-than($phone-max) {
+            @include set-font(hero-h1);
         }
-    }
-
-    .near-white {
-        background-color: #fafafa;
     }
 
     .btn {
         @extend %button;
 
-        color: text-color(white);
-        height: auto;
-        padding: 1em 2em;
-
         &.blue {
+            @extend %light-on-dark;
             background-color: os-color(light-blue);
+            color: text-color(white);
+            font-weight: bold;
 
             &:hover,
             &:active {
@@ -60,69 +31,18 @@ $orange-gradient: linear-gradient(to right, rgb(228, 182, 96), rgb(228, 137, 96)
                 color: text-color(white);
             }
         }
-    }
-
-    h2 {
-        @include title-font(6.4rem);
-
-        line-height: 0.85;
 
         @include width-up-to($phone-max) {
-            @include title-font(5.3rem);
-
-            line-height: 0.85;
+            &.medium {
+                height: 5rem;
+            }
         }
     }
 
     .tagline {
         @include body-font(2.4rem);
 
-        line-height: 1.25;
-        margin-top: $normal-margin;
-
-        @include width-up-to($phone-max) {
-            @include body-font(2rem);
-
-            line-height: 1.25;
-        }
-    }
-
-    .floating-tools {
-        align-items: center;
-        display: grid;
-        position: fixed;
-        right: 3.5rem;
-        top: 50%;
-        transform: translateY(-60%);
-        z-index: 5;
-
-        @include width-up-to($phone-max) {
-            display: none;
-        }
-
-        @media (max-height: $phone-max * 1.25) {
-            top: 12rem;
-            transform: none;
-        }
-
-        @media (max-height: $phone-max) {
-            top: 10rem;
-            transform: scale(0.9);
-        }
-
-        > * {
-            margin-bottom: 2rem;
-        }
-    }
-
-    .sticky-footer {
-        @include set-font(body-regular);
-
-        background-color: ui-color(footer-bg);
-
-        .btn {
-            background-color: os-color(light-blue);
-        }
+        line-height: 3rem;
     }
 
     .card {
@@ -135,19 +55,31 @@ $orange-gradient: linear-gradient(to right, rgb(228, 182, 96), rgb(228, 137, 96)
         }
     }
 
-    .top-border,
-    .bottom-border {
-        background-size: 100%;
-        position: relative;
-        width: 100%;
+    @include width-up-to($phone-max) {
+        .for-desktop {
+            display: none;
+        }
     }
 
-    .top-border {
-        background-position: center top;
+    @include wider-than($phone-max) {
+        .for-mobile {
+            display: none;
+        }
     }
 
-    .bottom-border {
-        background-position: center bottom;
-        z-index: 1;
+    .bottom-border-container {
+        background-color: ui-color(form-border);
+        margin-top: $normal-margin;
+        overflow: hidden;
+
+        @include wider-than($phone-max) {
+            margin-top: 10rem;
+        }
+
+        .bottom-border {
+            border-bottom: 0.2rem dashed ui-color(white);
+            height: 0.1rem;
+            transform: scaleX(2);
+        }
     }
 }

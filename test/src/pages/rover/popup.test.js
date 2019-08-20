@@ -1,5 +1,5 @@
 import '../../../helpers/fetch-mocker';
-import PopupContent from '~/pages/rover-3/popup/popup';
+import PopupContent from '~/pages/rover-by-openstax/popup/popup';
 import {doKeyDown} from '../../../test-utils';
 
 const model = {

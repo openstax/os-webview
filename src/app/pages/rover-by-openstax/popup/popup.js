@@ -20,7 +20,6 @@ export default class extends componentType(spec, busMixin) {
         setTimeout(() => {
             defaultButton.focus();
         }, 100);
-        this.el.style.backgroundImage = `url(${this.model.image})`;
     }
 
     @on('click .close-popup')

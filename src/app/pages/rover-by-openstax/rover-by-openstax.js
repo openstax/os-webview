@@ -1,14 +1,13 @@
 import componentType, {canonicalLinkMixin, flattenPageDataMixin, loaderMixin} from '~/helpers/controller/init-mixin';
 import css from './rover-by-openstax.css';
-import bannerSection from './sections/banner';
-import videoSection from './sections/video';
-import meetRoverSection from './sections/meet-rover';
-import stepwiseSection from './sections/stepwise';
-import gettingStartedSection from './sections/getting-started';
-import lmsSection from './sections/lms';
-import faqSection from './sections/faq';
-import StickyFooter from '~/components/sticky-footer/sticky-footer';
-import Navigator from './sections/navigator/navigator';
+import Navigator from './navigator/navigator';
+import Banner from './banner/banner';
+import MeetRover from './meet-rover/meet-rover';
+import Stepwise from './stepwise/stepwise';
+import LMS from './lms/lms';
+import GettingStarted from './getting-started/getting-started';
+import OfficeHours from './office-hours/office-hours';
+import FAQ from './faq/faq';
 import PopupContent from './popup/popup';
 import ModalContent from '~/components/modal-content/modal-content';
 import {on} from '~/helpers/controller/decorators';
@@ -26,20 +25,16 @@ const spec = {
     },
     preserveWrapping: true
 };
+
 const BaseClass = componentType(spec, canonicalLinkMixin, flattenPageDataMixin, loaderMixin);
 
 export default class RoverRedesign extends BaseClass {
 
     onDataLoaded() {
         const data = this.flattenPageData();
-        const floatingTools = new (componentType({
-            view: {
-                classes: ['floating-tools']
-            }
-        }))();
-        const headerImage = (data.section_1.image || {}).file;
+        const headerImage = '/images/rover-by-openstax/rover-logo-orange.svg';
         const sections = [
-            bannerSection({
+            new Banner({
                 model: {
                     headerImage,
                     mobileHeaderImage: headerImage,
@@ -49,19 +44,12 @@ export default class RoverRedesign extends BaseClass {
                     headline: 'Rover by OpenStax',
                     introHtml: data.section_1.blurb,
                     button1Url: data.section_1.buttonLink,
-                    button1Text: data.section_1.buttonCta
-                }
-            }),
-            videoSection({
-                model: {
-                    heading: data.section_2.heading,
-                    linkText: data.section_2.navText,
-                    subhead: data.section_2.subheading,
-                    description: data.section_2.blurb,
+                    button1Text: data.section_1.buttonCta,
                     video: data.section_2.video
+
                 }
             }),
-            meetRoverSection({
+            new MeetRover({
                 model: {
                     heading: data.section_3.heading,
                     linkText: data.section_3.navText,
@@ -74,7 +62,7 @@ export default class RoverRedesign extends BaseClass {
                     webinarLinkText: data.section_3.buttonCta
                 }
             }),
-            stepwiseSection({
+            new Stepwise({
                 model: {
                     heading: data.section_4.heading,
                     linkText: data.section_4.navText,
@@ -89,7 +77,7 @@ export default class RoverRedesign extends BaseClass {
                     }))
                 }
             }),
-            lmsSection({
+            new LMS({
                 model: {
                     heading: data.section_6.heading,
                     linkText: data.section_6.navText,
@@ -101,7 +89,7 @@ export default class RoverRedesign extends BaseClass {
                     caption: data.section_6.caption
                 }
             }),
-            gettingStartedSection({
+            new GettingStarted({
                 model: {
                     heading: data.section_5.heading,
                     linkText: data.section_5.navText,
@@ -113,56 +101,55 @@ export default class RoverRedesign extends BaseClass {
                     }))
                 }
             }),
-            faqSection({
+            new OfficeHours({
+                model: {
+                    heading: 'Office Hours',
+                    description: `Interested in learning more about Rover by OpenStax?
+                    Have questions and want to speak to a real person? Join us for
+                    Rover Office Hours! We host a weekly interactive Q&A session on
+                    Thursdays from 2 - 3 p.m. (CST). We will answer any questions
+                    you have about Rover, including how to set up your course, create
+                    assignments, and more. Click on the link below to sign up.`,
+                    moreInfo: `Can't make it? To schedule a one-on-one meeting, email
+                    us at <a href="mailto:communications@openstax.org">communications@openstax.org</a>`,
+                    image: {
+                        image: '/images/rover-by-openstax/office-hours.svg',
+                        altText: ''
+                    },
+                    linkUrl: '/sign-up',
+                    linkText: 'Sign up for office hours'
+                }
+            }),
+            new FAQ({
                 model: {
                     heading: 'Frequently Asked Questions',
                     linkText: data.section_7.navText,
                     questions: data.section_7.faqs
                 }
-            }),
-            new StickyFooter({
-                leftButton: {
-                    link: data.section_7.webinarButtonUrl,
-                    text: data.section_7.webinarButtonCta,
-                    description: ''
-                },
-                rightButton: {
-                    link: 'transition-popup',
-                    text: data.section_7.signupButtonCta,
-                    description: ''
-                }
-            }),
-            floatingTools
+            })
         ];
-
-        this.hideLoader();
-        sections.forEach((section) => {
-            this.regions.self.append(section);
-        });
-
-        const navModel = sections.filter((s) => s.model && s.model.linkText)
+        const navModel = sections
+            .filter((s) => s.model && s.model.linkText)
             .map((s) => ({
                 id: s.el.id,
                 heading: s.model.linkText
             }));
 
         navModel.heading = this.pageData.nav_title;
-        const navigator = new Navigator({
+        const nav = new Navigator({
             model: navModel
         });
 
-        // This is kind of rude
-        sections[0].regions.self.append(navigator);
-        // Pardot tracking
-        if ('piTracker' in window) {
-            piTracker(window.location.href.split('#')[0]);
-        }
+        sections.splice(1, 0, nav);
+        this.hideLoader();
+        sections.forEach((section) => {
+            this.regions.self.append(section);
+        });
         const cmsPopupData = data.popup.content[0];
 
         this.popupData = Object.assign(
             {
-                loginUrl: data.section_1.accessButtonLink,
-                image: cmsPopupData.backgroundImage.file
+                loginUrl: data.section_1.accessButtonLink
             },
             cmsPopupData
         );
