@@ -44,10 +44,11 @@ export default class extends componentType(spec, busMixin) {
     }
 
     onLoaded() {
-        const sb = new SearchBar();
-
-        sb.on('value', (...args) => this.emit('value', ...args));
-        this.regions.searchbar.attach(sb);
+        // const sb = new SearchBar();
+        //
+        // sb.on('value', (...args) => this.emit('value', ...args));
+        // this.regions.searchbar.attach(sb);
+        this.regions.searchbar.el.innerHTML = '<h2 class="text-content">Read more great stories</h2><br>';
         this.loadArticles();
     }
 
