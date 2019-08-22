@@ -98,7 +98,9 @@ export default class RoverRedesign extends BaseClass {
                         heading: c.heading,
                         description: c.blurb,
                         video: c.video
-                    }))
+                    })),
+                    moreText: 'See more resources',
+                    moreUrl: '/general/rover-onboarding'
                 }
             }),
             new OfficeHours({
