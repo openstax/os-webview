@@ -30,6 +30,10 @@ class Analytics {
         this[SETUP_GA]();
     }
 
+    setUser(userId) {
+        window.ga('set', 'userid', userId);
+    }
+
     send(fields) {
         waitForAnalytics.then(
             () => {
@@ -232,9 +236,6 @@ class Analytics {
 
             if (typeof role !== 'undefined') {
                 window.ga('send', 'pageview', {dimension1: role, nonInteraction: true});
-            }
-            if ('id' in accountResponse) {
-                window.ga('set', 'userid', accountResponse.id.toString());
             }
         });
 
