@@ -2,7 +2,9 @@
 
 .transition-popup {
     background-color: ui-color(white);
-    background-size: 0;
+    background-image: url('/images/rover-by-openstax/popup-mobile-bg.svg');
+    background-position: bottom left;
+    background-repeat: no-repeat;
     border-radius: 0.4rem;
     color: text-color(normal);
     max-width: 140rem;
@@ -11,15 +13,25 @@
     position: relative;
     width: 100%;
 
+    @include width-up-to($phone-max) {
+        background-size: 35vw;
+        padding-bottom: 9rem;
+        padding-top: 4rem;
+    }
+
+    @include width-between($phone-max, $tablet-max) {
+        background-size: 35vw;
+    }
+
     @include wider-than($tablet-max) {
-        background-position: 0;
+        background-position: bottom left;
         background-repeat: no-repeat;
-        background-size: auto 100%;
+        background-size: auto 118%;
         padding-left: 51rem;
     }
 
     @include width-between($tablet-max, $media-content-max) {
-        background-position: calc(100vw - 120rem);
+        background-position: calc(100vw - 120rem) bottom;
     }
 
     h2 {
@@ -37,7 +49,7 @@
         padding: 6rem 0;
 
         @include width-up-to($phone-max) {
-            padding: 1rem 0;
+            padding: 2.5rem 0;
         }
 
         > * {
@@ -68,5 +80,11 @@
         grid-auto-flow: row;
         grid-row-gap: 2rem;
         grid-template-columns: 100%;
+    }
+
+    .btn {
+        @include width-up-to($phone-max) {
+            padding: 1rem;
+        }
     }
 }

@@ -34,7 +34,6 @@ const PAGES = [
     'press',
     'press/*path',
     'research',
-    'rover-3',
     'rover-by-openstax',
     'subjects',
     'subjects/*path',
