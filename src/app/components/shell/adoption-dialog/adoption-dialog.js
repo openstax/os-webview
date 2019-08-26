@@ -52,7 +52,7 @@ const spec = {
     slug: ''
 };
 
-class AdoptionDialog extends componentType(spec, busMixin, salesforceFormMixin) {
+export class AdoptionDialog extends componentType(spec, busMixin, salesforceFormMixin) {
 
     beforeSubmit() {
         this.adoptions = this.adoptions.filter((obj) => !(obj.new && !obj.using));
