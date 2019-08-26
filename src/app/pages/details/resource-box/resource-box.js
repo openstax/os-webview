@@ -92,7 +92,7 @@ export default class extends componentType(spec, insertHtmlMixin) {
         super.init();
         this.model = model;
         if (model.link) {
-            Object.assign(this.view, {
+            this.view = Object.assign({}, this.view, {
                 tag: 'a',
                 attributes: {
                     href: model.link.url,
