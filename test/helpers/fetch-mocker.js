@@ -60,6 +60,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isTeam = (/pages\/team/).test(args[0]);
     const isTechnology = (/pages\/technology/).test(args[0]);
     const isUser = (/accounts.*\/api\/user/).test(args[0]);
+    const isImage = (/api\/images/).test(args[0]);
 
     return new Promise(
         function (resolve, reject) {
@@ -125,6 +126,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = technologyData;
             } else if (isUser) {
                 payload = userData;
+            } else if (isImage) {
+                // ignore
             } else {
                 console.warn("rejecting", args);
             }
