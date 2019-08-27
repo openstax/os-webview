@@ -166,7 +166,7 @@ export default class Details extends BaseClass {
 
     onDataLoaded() {
         if (this.pageData.meta.type !== 'books.Book') {
-            console.error('Pagedata is not of type books.Books');
+            console.error('Pagedata is not of type books.Book: ', this.pageData.meta.type);
             window.location.assign('/_404');
             return;
         }

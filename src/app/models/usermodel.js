@@ -15,6 +15,32 @@ class UserModel {
     }
 
     load() {
+        // Uncomment ONLY to TEST
+        // return Promise.resolve({
+        //     id: 315605,
+        //     name: "Roy2 Johnson",
+        //     first_name: "Roy2",
+        //     last_name: "Johnson",
+        //     full_name: "Roy2 Johnson",
+        //     uuid: "fca73689-fc4d-4369-bc46-ad6e02b9a13b",
+        //     support_identifier: "cs_fce9a9e8",
+        //     is_test: false,
+        //     faculty_status: "pending_faculty",
+        //     self_reported_role: "student",
+        //     self_reported_school: "Rice U",
+        //     school_type: "unknown_school_type",
+        //     contact_infos: [
+        //         {
+        //             id: 312328,
+        //             type: "EmailAddress",
+        //             value: "rej2+2@rice.edu",
+        //             is_verified: true,
+        //             is_guessed_preferred: true
+        //         }
+        //     ],
+        //     applications: [ ]
+        // });
+
         const proxyPromise = new Promise((resolve) => {
             const handleError = (err) => {
                 console.warn('Error fetching', this.url, err);
