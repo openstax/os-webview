@@ -1,4 +1,4 @@
-import componentType, {canonicalLinkMixin, insertHtmlMixin} from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin, insertHtmlMixin, loaderMixin} from '~/helpers/controller/init-mixin';
 import {salesforceFormFunctions} from '~/helpers/controller/salesforce-form-mixin';
 import salesforce from '~/models/salesforce';
 import routerBus from '~/helpers/router-bus';
@@ -27,41 +27,39 @@ const spec = {
     view: {
         classes: ['contact-page', 'page']
     },
-    model: {
-        salesforce,
-        subjects
+    model() {
+        return Object.assign({
+            salesforce,
+            subjects,
+            selected: this.isSelected,
+            validationMessage: this.validationMessage,
+            formTarget: this.selectedSubject === 'OpenStax Polska' ?
+                '/apps/cms/api/mail/send_mail' :
+                `https://${salesforce.salesforceHome}/servlet/servlet.WebToCase?encoding=UTF-8`
+        }, this.pageData);
     },
     slug: 'pages/contact'
 };
 
 export default class Contact extends componentType(
-    spec, salesforceFormFunctions, canonicalLinkMixin, insertHtmlMixin
+    spec, salesforceFormFunctions, canonicalLinkMixin, insertHtmlMixin, loaderMixin
 ) {
 
     init() {
         super.init();
-        this.model.validationMessage = (name) => {
+        const queryDict = $.parseSearchString(window.location.search);
+
+        this.selectedSubject = queryDict.subject ? queryDict.subject[0] : 'General';
+        this.isSelected = (subj) => $.booleanAttribute(subj === this.selectedSubject);
+        this.validationMessage = (name) => {
             const el = this.el.querySelector(`[name="${name}"]`);
 
             return (this.hasBeenSubmitted && el) ? el.validationMessage : '';
         };
+        document.title = 'Contact Us - OpenStax';
     }
 
-    onLoaded() {
-        super.onLoaded();
-        document.title = 'Contact Us - OpenStax';
-
-        // NOTE: Cannot set this in the template due to `each` restriction
-        const queryDict = $.parseSearchString(window.location.search);
-        const defaultSubject = queryDict.subject || 'General';
-        const subjectSelect = this.el.querySelector('[name="subject"]');
-        const optionPattern = `option[value="${defaultSubject}"]`;
-        const defaultSubjectOption = subjectSelect.querySelector(optionPattern);
-
-        if (defaultSubjectOption) {
-            defaultSubjectOption.defaultSelected = true;
-        }
-
+    setUpForm() {
         selectHandler.setup(this);
         this.formResponseEl = this.el.querySelector('#form-response');
         this.goToConfirmation = () => {
@@ -74,17 +72,14 @@ export default class Contact extends componentType(
     }
 
     onDataLoaded() {
-        Object.assign(this.model, this.pageData);
+        this.hideLoader();
         this.update();
+        this.setUpForm();
     }
 
     @on('change [name="subject"]')
     setFormTarget(event) {
-        if (event.target.value === 'OpenStax Polska') {
-            this.model.formTarget = '/apps/cms/api/mail/send_mail';
-        } else {
-            this.model.formTarget = `https://${this.model.salesforce.salesforceHome}/servlet/servlet.WebToCase?encoding=UTF-8`;
-        }
+        this.selectedSubject = event.target.value;
         this.update();
     }
 
