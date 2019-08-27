@@ -51,7 +51,7 @@ export default function showNoticeIfNeeded() {
     accountsModel.load().then((response) => {
         // Uncomment these three lines ONLY to test locally:
         // response.id = 'testing';
-        // response.is_gdpr_location = false;
+        // response.is_not_gdpr_location = true;
         // document.cookie = `${ACKNOWLEDGEMENT_KEY}=true; expires=Tue, 19 Jan 2000 03:14:07 GMT`;
 
         if (typeof response.id !== 'undefined') {
@@ -59,7 +59,7 @@ export default function showNoticeIfNeeded() {
 
             if (acknowledged()) {
                 analytics.setUser(userid);
-            } else if (response.is_gdpr_location === false) {
+            } else if (response.is_not_gdpr_location === true) {
                 const cookieNotice = new CookieNotice({
                     userid
                 });

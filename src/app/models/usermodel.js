@@ -106,7 +106,8 @@ function oldUserModel(sfUserModel) {
         last_name: sfUserModel.last_name,
         pending_verification: sfUserModel.faculty_status === 'pending_faculty',
         username: sfUserModel.id,
-        self_reported_role: sfUserModel.self_reported_role
+        self_reported_role: sfUserModel.self_reported_role,
+        is_not_gdpr_location: sfUserModel.is_not_gdpr_location
     };
 }
 
