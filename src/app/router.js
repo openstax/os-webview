@@ -146,7 +146,7 @@ class AppRouter extends Router {
             if (handleAsExternal) {
                 handleExternalLink(href);
             } else {
-                this.navigate(href || '/');
+                this.navigate(linkHelper.stripOpenStaxDomain(href) || '/');
             }
         };
 
@@ -154,7 +154,7 @@ class AppRouter extends Router {
         // This was el.getAttribute('href'), but with a relative path, the login
         // url will not be recognized as external. This gets the fully-qualified
         // url.
-        navigateTo(linkHelper.stripOpenStaxDomain(el.href));
+        navigateTo(el.href);
     }
 
 }
