@@ -1,5 +1,5 @@
 <template args="model">
-    <main id="maincontent">
+    <main id="maincontent" if="model.title">
         <div class="hero">
             <div class="boxed">
                 <h1>{model.title}</h1>
@@ -18,7 +18,9 @@
                         What is your question about?
                         <div skip="true" tabindex="0"></div>
                         <select name="subject">
-                            <option each="subject in model.subjects" value="{subject}">{subject}</option>
+                            <option each="subject in model.subjects" value="{subject}"
+                                selected="{model.selected(subject)}">{subject}
+                            </option>
                         </select>
                         <span class="invalid-message">{model.validationMessage('subject')}</span>
                     </label>
