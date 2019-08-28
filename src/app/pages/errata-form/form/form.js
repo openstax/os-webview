@@ -53,9 +53,7 @@ export default class Form extends Controller {
 
     onLoaded() {
         this.resourcePromise.then((resources) => {
-            resources.forEach((entry) => {
-                this.model.sourceTypes.push(entry.field);
-            });
+            this.model.sourceTypes = resources.map((entry) => entry.field);
             this.model.books.forEach((book) => {
                 book.titleText = $.htmlToText(book.title);
             });
@@ -152,6 +150,7 @@ export default class Form extends Controller {
             body: form
         }).then((r) => r.json()).then((json) => {
             if (json.id) {
+                this.model.submitted = false;
                 routerBus.emit('navigate', `/confirmation/errata?id=${json.id}`);
             } else if (json.submitted_by_account_id) {
                 shellBus.emit('showDialog', () => ({
