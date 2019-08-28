@@ -38,6 +38,10 @@ $gray-start: #fcfcfc;
             grid-row-gap: 1rem;
             grid-template-columns: 20rem auto;
         }
+
+        [data-html] {
+            white-space: pre-wrap;
+        }
     }
 
     .note {

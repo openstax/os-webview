@@ -27,7 +27,7 @@ const columnSpecs = [
         label: 'Error Type',
         key: 'error_type',
         sortFn: 'sort',
-        cssClass: 'mid'
+        cssClass: 'narrow'
     },
     {
         label: 'Location',
