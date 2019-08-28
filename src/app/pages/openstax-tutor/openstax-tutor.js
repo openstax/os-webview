@@ -9,7 +9,7 @@ import {description as template} from './openstax-tutor.html';
 import css from './openstax-tutor.css';
 import 'particles.js/particles';
 import particleConfig from './particlesjs-config';
-import {debounce} from 'lodash';
+import debounce from 'lodash/debounce';
 
 const availableUrl = '/images/openstax-tutor/available-flag.svg';
 const unavailableUrl = '/images/openstax-tutor/unavailable-flag.svg';
