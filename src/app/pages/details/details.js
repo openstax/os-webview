@@ -10,7 +10,7 @@ import StudentResourceTab from './student-resource-tab/student-resource-tab';
 import TabGroup from '~/components/tab-group/tab-group';
 import userModel from '~/models/usermodel';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
-import {shuffle} from 'lodash';
+import shuffle from 'lodash/shuffle';
 import {description as template} from './details.html';
 import css from './details.css';
 import {on} from '~/helpers/controller/decorators';
