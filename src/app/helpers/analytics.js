@@ -122,6 +122,7 @@ class Analytics {
         }
     }
 
+    /* eslint complexity: 0 */
     handleExternalLink(href) {
         if (linkHelper.isCNX(href) || linkHelper.isREX(href)) {
             this.sendUrlEvent('Webview', href, 'open');
@@ -155,7 +156,7 @@ class Analytics {
 
         bookData.forEach((book) => {
             Reflect.ownKeys(urlMarker)
-                // .filter((url) => url.length > 0)
+                .filter((url) => url.length > 0)
                 .forEach((url) => {
                     const resource = book[url];
 
