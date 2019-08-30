@@ -27,7 +27,7 @@ const cookie = {
             }, {});
     },
     setKey(key) {
-        document.cookie = `${key}=true; expires=Tue, 19 Jan 2038 03:14:07 GMT`;
+        document.cookie = `${key}=true;path=/;expires=Tue, 19 Jan 2038 03:14:07 GMT`;
     }
 };
 const ACKNOWLEDGEMENT_KEY = 'cookie_notice_acknowledged';

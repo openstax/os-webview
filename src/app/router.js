@@ -130,9 +130,17 @@ class AppRouter extends Router {
         }
         const handleExternalLink = (href) => {
             if (el.dataset.local === 'true') {
+                // REX books open in the current window; track them
+                if (linkHelper.isREX(href)) {
+                    analytics.record(href);
+                }
                 document.location.href = href;
             } else {
-                analytics.record(href);
+                if (linkHelper.isTOCLink(el)) {
+                    analytics.sendTOCEvent(href);
+                } else {
+                    analytics.record(href);
+                }
                 const newWindow = window.open(href, '_blank');
 
                 if (newWindow === null) {

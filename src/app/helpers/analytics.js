@@ -90,6 +90,20 @@ class Analytics {
         );
     }
 
+    sendTOCEvent(href) {
+        const slug = document.querySelector('[data-slug]').dataset.slug;
+
+        booksPromise.then((books) => {
+            const book = books.find((b) => b.slug === slug);
+
+            this.sendPageEvent(
+                `Webview ${book.title} TOC`,
+                'open',
+                href
+            );
+        });
+    }
+
     record(href) {
         if (linkHelper.isExternal(href)) {
             this.handleExternalLink(href);
@@ -108,8 +122,9 @@ class Analytics {
         }
     }
 
+    /* eslint complexity: 0 */
     handleExternalLink(href) {
-        if (linkHelper.isCNX(href)) {
+        if (linkHelper.isCNX(href) || linkHelper.isREX(href)) {
             this.sendUrlEvent('Webview', href, 'open');
         } else if (linkHelper.isAmazon(href)) {
             this.sendUrlEvent('External', href, 'open');
@@ -134,20 +149,20 @@ class Analytics {
     addBooksToLookupTable(bookData) {
         const urlMarker = {
             'high_resolution_pdf_url': 'Book HR',
-            'low_resolution_pdf_url': 'Book LR',
             'webview_link': 'CNX',
+            'webview_rex_link': 'REX',
             'amazon_link': 'Amazon'
         };
 
-        for (const slug of Object.keys(bookData)) {
-            const book = bookData[slug];
+        bookData.forEach((book) => {
+            Reflect.ownKeys(urlMarker)
+                .filter((url) => url.length > 0)
+                .forEach((url) => {
+                    const resource = book[url];
 
-            for (const url of Object.keys(urlMarker)) {
-                const resource = book[url];
-
-                this.sourceByUrl[resource] = `${book.title} ${urlMarker[url]}`;
-            }
-        }
+                    this.sourceByUrl[resource] = `${book.title} ${urlMarker[url]}`;
+                });
+        });
     }
 
     addResourcesToLookupTable(resourceItems) {
