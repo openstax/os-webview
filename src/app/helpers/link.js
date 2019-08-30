@@ -9,6 +9,7 @@ const PDF = /.pdf$/;
 const ZIP = /.zip$/;
 const TXT = /.txt$/;
 const CNX = /cnx.org/;
+const REX = /openstax.org\/books/;
 const CLOUDFRONT = /cloudfront.net/;
 const AMAZON = /amazon.com/;
 
@@ -41,6 +42,13 @@ function validUrlClick(e) {
     return el;
 }
 
+function isTOCLink(el) {
+    const isDetailsPage = (/^\/details/).test(window.location.pathname);
+    const tocEl = document.querySelector('.table-of-contents');
+
+    return tocEl && tocEl.contains(el);
+}
+
 function isPDF(url) {
     return PDF.test(url);
 }
@@ -65,6 +73,10 @@ function isCNX(href) {
     return CNX.test(href);
 }
 
+function isREX(href) {
+    return REX.test(href);
+}
+
 function isAmazon(href) {
     return AMAZON.test(href);
 }
@@ -76,10 +88,12 @@ function isCloudFront(href) {
 export default {
     isExternal,
     validUrlClick,
+    isTOCLink,
     isPDF,
     isZIP,
     isTXT,
     isCNX,
+    isREX,
     isCloudFront,
     isAmazon,
     stripOpenStaxDomain
