@@ -37,6 +37,7 @@ class Shell extends Controller {
         // An extra layer of indirection is necessary so we can reuse the Dialog
         // and change the getProps function for it
         this.getDialogProps = () => {};
+        this.dialogQueue = [];
     }
 
     onLoaded() {
@@ -62,10 +63,24 @@ class Shell extends Controller {
         document.body.classList.remove('no-scroll');
     }
 
+    enqueueDialog(getProps) {
+        this.dialogQueue.push(getProps);
+        if (!this.dialogOpen) {
+            this.nextDialog();
+        }
+    }
+
+    nextDialog() {
+        if (this.dialogQueue.length > 0) {
+            this.showDialog(this.dialogQueue.shift());
+        }
+    }
+
     showDialog(getProps) {
         const region = this.regions.dialog;
         const {nonModal} = getProps();
 
+        this.dialogOpen = true;
         this.getDialogProps = getProps;
         if (nonModal) {
             const d = new Dialog({
@@ -74,6 +89,8 @@ class Shell extends Controller {
                     closeDialog: () => {
                         d.detach();
                         region.el.setAttribute('hidden', '');
+                        this.dialogOpen = false;
+                        this.nextDialog();
                     }
                 }
             });
@@ -89,6 +106,8 @@ class Shell extends Controller {
                         region.el.setAttribute('hidden', '');
                         document.body.classList.remove('no-scroll-dialog');
                         this.dialog.hide();
+                        this.dialogOpen = false;
+                        this.nextDialog();
                     }
                 });
                 region.append(this.dialog);
@@ -134,7 +153,7 @@ bus.on('no-modal', () => {
     document.body.classList.remove('no-scroll');
 });
 bus.on('updateDialog', () => shell.dialog.update());
-bus.on('showDialog', shell.showDialog.bind(shell));
+bus.on('showDialog', shell.enqueueDialog.bind(shell));
 bus.on('hideDialog', shell.hideDialog.bind(shell));
 bus.on('hideNonModal', () => {
     if (shell.hideNonModal) {
