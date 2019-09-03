@@ -121,14 +121,16 @@ export default class MainMenu extends Controller {
                 tutorItem.trainingWheel = true;
             }
 
-            this.loginMenuComponent = new Dropdown({
-                getProps: () => ({
-                    dropdownUrl: this.model.accountLink,
-                    dropdownLabel: `Hi ${this.model.user.first_name || this.model.user.username}`,
-                    items: loginItems
-                })
-            });
-            loginRegion.attach(this.loginMenuComponent);
+            if (!this.loginMenuComponent) {
+                this.loginMenuComponent = new Dropdown({
+                    getProps: () => ({
+                        dropdownUrl: this.model.accountLink,
+                        dropdownLabel: `Hi ${this.model.user.first_name || this.model.user.username}`,
+                        items: loginItems
+                    })
+                });
+                loginRegion.attach(this.loginMenuComponent);
+            }
 
             if (this.model.trainingWheelActive) {
                 this.loginMenuComponent.freeze();
