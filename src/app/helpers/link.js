@@ -66,7 +66,7 @@ function stripOpenStaxDomain(href) {
 }
 
 function isExternal(href) {
-    return EXTERNAL.test(href);
+    return EXTERNAL.test(href) && !ABSOLUTE_OPENSTAX.test(href);
 }
 
 function isCNX(href) {
