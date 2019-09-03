@@ -11,6 +11,9 @@ const spec = {
     view: {
         classes: ['nav-menu-item', 'dropdown']
     },
+    frozen: false,
+    isOpen: false,
+    selectedIndex: -1,
     model() {
         this.props = this.getProps();
 
@@ -24,13 +27,6 @@ const spec = {
 };
 
 export default class Dropdown extends componentType(spec, insertHtmlMixin) {
-
-    init(options) {
-        super.init(options);
-        this.frozen = false;
-        this.isOpen = false;
-        this.selectedIndex = -1;
-    }
 
     onLoaded() {
         this.closeMenuBound = (event) => {
