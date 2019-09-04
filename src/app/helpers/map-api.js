@@ -4,6 +4,22 @@ import busMixin from '~/helpers/controller/bus-mixin';
 import settings from 'settings';
 import mapboxPromise from '~/models/mapbox';
 
+// Set up CSS once, when needed
+(() => {
+    const cssEl = Object.assign(
+        document.createElement('link'),
+        {
+            rel: 'stylesheet',
+            href: 'https://api.tiles.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css',
+            type: 'text/css'
+        }
+    );
+    const firstLink = document.querySelector('head link[rel="stylesheet"]') ||
+        document.querySelector('head title');
+
+    firstLink.parentNode.insertBefore(cssEl, firstLink.nextSibling);
+})();
+
 mapboxgl.accessToken = settings.mapboxPK;
 
 function resizeOnLoad(map) {
