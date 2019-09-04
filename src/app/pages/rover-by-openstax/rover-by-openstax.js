@@ -118,7 +118,7 @@ export default class RoverRedesign extends BaseClass {
                         image: '/images/rover-by-openstax/office-hours.svg',
                         altText: ''
                     },
-                    linkUrl: '/sign-up',
+                    linkUrl: 'https://register.gotowebinar.com/rt/6549201828833750273',
                     linkText: 'Sign up for office hours'
                 }
             }),
