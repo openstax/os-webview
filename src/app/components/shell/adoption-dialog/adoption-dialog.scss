@@ -58,8 +58,12 @@
 
         justify-self: left;
 
-        &.primary {
+        &.primary:not([disabled]) {
             @extend %primary;
+        }
+
+        &[disabled] {
+            cursor: not-allowed;
         }
     }
 }
