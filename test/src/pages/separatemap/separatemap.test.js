@@ -1,3 +1,4 @@
+import '../../../helpers/document';
 import '../../../helpers/create-object-url';
 import SeparateMap from '~/pages/separatemap/separatemap';
 import {clickElement} from '../../../test-utils';
