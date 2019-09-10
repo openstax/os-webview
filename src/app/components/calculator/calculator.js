@@ -3,7 +3,6 @@ import $ from '~/helpers/$';
 import settings from 'settings';
 import Share from '~/components/share/share';
 import {on} from '~/helpers/controller/decorators';
-import Spinner from '~/components/spinner/spinner';
 import {description as template} from './calculator.html';
 import css from './calculator.css';
 
@@ -27,32 +26,6 @@ export default class Calculator extends Controller {
 
         if ((/interest/).test(window.location.pathname)) {
             this.model.introText = 'Calculate how much students save each year when you adopt OpenStax';
-        }
-    }
-
-    onLoaded() {
-        const spinners = this.el.querySelectorAll('spinner');
-        const Region = this.regions.self.constructor;
-
-        for (const s of spinners) {
-            const region = new Region(s, this);
-            // Allow dot-notation, arbitrarily deep, with no eval
-            const itemIds = s.dataset.item.split('.');
-            const index = itemIds.pop();
-            const valueContainer = itemIds.reduce((a, b) => a[b], this.model);
-            const parentThis = this;
-
-            const props = {
-                get value() {
-                    return valueContainer[index];
-                },
-                set value(newValue) {
-                    valueContainer[index] = newValue;
-                    parentThis.update();
-                }
-            };
-
-            region.attach(new Spinner(props));
         }
     }
 

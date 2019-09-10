@@ -2,7 +2,8 @@
 @font-face{
     font-family: 'Neue Helvetica W01';
     font-display: swap;
-    src: url('/cms/assets/fonts/3dac71eb-afa7-4c80-97f0-599202772905.woff2') format('woff2'),
+    src: local('Helvetica Neue'),
+    url('/cms/assets/fonts/3dac71eb-afa7-4c80-97f0-599202772905.woff2') format('woff2'),
     url('/cms/assets/fonts/34e0e4c0-c294-49bb-9a8e-1b2cafd54e32.woff') format('woff');
     font-weight: 400;
     font-style: normal;
@@ -10,7 +11,8 @@
 @font-face{
     font-family: 'Neue Helvetica W01';
     font-display: swap;
-    src: url('/cms/assets/fonts/21c44514-f4d6-4cff-a5de-e4cac5e61aff.woff2') format('woff2'),
+    src: local('Helvetica Neue Italic'),
+    url('/cms/assets/fonts/21c44514-f4d6-4cff-a5de-e4cac5e61aff.woff2') format('woff2'),
     url('/cms/assets/fonts/e7c4b231-76ad-47c7-a54b-5d84dcd78d0f.woff') format('woff');
     font-weight: 400;
     font-style: italic;
@@ -18,8 +20,7 @@
 @font-face{
     font-family: 'Neue Helvetica W01';
     font-display: swap;
-    src: local('Helvetica Neue'),
-    url('/cms/assets/fonts/5b1fbd62-45dc-4433-a7df-a2b24a146411.woff2') format('woff2'),
+    src: url('/cms/assets/fonts/5b1fbd62-45dc-4433-a7df-a2b24a146411.woff2') format('woff2'),
     url('/cms/assets/fonts/050b1948-f226-4d20-a65a-15d8ed031222.woff') format('woff');
     font-weight: 500;
     font-style: normal;
@@ -27,8 +28,7 @@
 @font-face{
     font-family: 'Neue Helvetica W01';
     font-display: swap;
-    src: local('Helvetica Neue Italic'),
-    url('/cms/assets/fonts/657c2fa4-585b-4761-9e2e-65ab13159323.woff2') format('woff2'),
+    src: url('/cms/assets/fonts/657c2fa4-585b-4761-9e2e-65ab13159323.woff2') format('woff2'),
     url('/cms/assets/fonts/400869f0-f0d5-49a0-8a11-f4fb4279d125.woff') format('woff');
     font-weight: 500;
     font-style: italic;
