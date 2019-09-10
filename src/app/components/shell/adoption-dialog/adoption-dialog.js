@@ -46,7 +46,8 @@ const spec = {
                 const found = this.adoptions.find((obj) => obj.title === v);
 
                 return $.booleanAttribute(found);
-            }
+            },
+            notReadyToSubmit: $.booleanAttribute(this.notReadyToSubmit())
         };
     },
     slug: ''
@@ -98,6 +99,11 @@ export class AdoptionDialog extends componentType(spec, busMixin, salesforceForm
         this.detach();
     }
 
+    notReadyToSubmit() {
+        console.info(this.adoptions.map((obj) => obj.title));
+        return this.adoptions.find((obj) => obj.title === '');
+    }
+
     @on('change select[name="title"]')
     updateTitle(event) {
         const target = event.delegateTarget;
@@ -122,6 +128,15 @@ export class AdoptionDialog extends componentType(spec, busMixin, salesforceForm
         const index = target.closest('tr').dataset.index;
 
         this.adoptions[index].students = target.value;
+        this.update();
+    }
+
+    @on('click [type="button"]')
+    removeEntry(event) {
+        const target = event.delegateTarget;
+        const index = target.closest('tr').dataset.index;
+
+        this.adoptions.splice(index, 1);
         this.update();
     }
 

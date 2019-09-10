@@ -45,7 +45,7 @@
                     <td><input type="number" name="students" value="{Number(info.students)}"
                         min="1" max="999" step="1"
                         disabled="{info.studentsDisabled}"></td>
-                    <td>
+                    <td if="!info.new">
                         <label>
                             <input type="radio" name="using-{$item}" value="1" checked="{info.using}">
                             Yes
@@ -55,12 +55,15 @@
                             No
                         </label>
                     </td>
+                    <td if="info.new">
+                        <button type="button">Remove</button>
+                    </td>
                 </tr>
                 <tr class="final-row" if="model.allowMore">
                     <td colspan="3"><a href="/" role="button">Add another book</a></td>
                 </tr>
             </tbody>
         </table>
-        <button type="submit" class="btn primary">Submit</button>
+        <button type="submit" class="btn primary" disabled="{model.notReadyToSubmit}">Submit</button>
     </form>
 </template>

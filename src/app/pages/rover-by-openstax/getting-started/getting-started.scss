@@ -58,19 +58,25 @@ $orange-bg: rgb(255, 128, 73);
         color: text-color(normal);
         display: grid;
         grid-gap: $normal-margin;
+        grid-template-columns: 100%;
         justify-content: left;
         padding: $normal-margin;
 
-        @include width-up-to($tablet-max) {
-            grid-template-columns: 100%;
-        }
+        iframe,
+        > div:nth-child(2) > div {
+            width: 100% !important;
 
-        @include wider-than($tablet-max) {
-            grid-template-columns: minmax(auto, 60%) auto;
-        }
+            @include width-up-to($tablet-max) {
+                height: calc(#{900vw/16} - #{2 * $normal-margin}) !important;
+            }
 
-        iframe {
-            width: 100%;
+            @include width-between($tablet-max, $media-content-max) {
+                height: calc(#{450vw/16} - #{2 * $normal-margin}) !important;
+            }
+
+            @include wider-than($media-content-max) {
+                height: 31.5rem !important;
+            }
         }
     }
 

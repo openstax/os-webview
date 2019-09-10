@@ -95,11 +95,18 @@ export default class MainMenu extends Controller {
 
     onUpdate() {
         /* eslint complexity: 0 */
-        if (this.model.user.username) {
+        if (this.model.user.username && !this.loginMenuComponent) {
             const Region = this.regions.self.constructor;
             const regionEl = this.el.querySelector('.login-dropdown');
             const loginRegion = new Region(regionEl, this);
-            const tutorItem = {url: tutorDomain, label: 'OpenStax Tutor'};
+            const model = this.model;
+            const tutorItem = {
+                url: tutorDomain,
+                label: 'OpenStax Tutor',
+                get trainingWheel() {
+                    return model.trainingWheelActive;
+                }
+            };
             const loginItems = [
                 {url: this.model.accountLink, label: 'Account Profile'},
                 tutorItem,
@@ -117,25 +124,19 @@ export default class MainMenu extends Controller {
                 loginItems.splice(2, 1);
             }
 
-            if (this.model.trainingWheelActive) {
-                tutorItem.trainingWheel = true;
-            }
+            this.loginMenuComponent = new Dropdown({
+                getProps: () => ({
+                    dropdownUrl: this.model.accountLink,
+                    dropdownLabel: `Hi ${this.model.user.first_name || this.model.user.username}`,
+                    items: loginItems
+                })
+            });
+            loginRegion.attach(this.loginMenuComponent);
+        }
 
-            if (!this.loginMenuComponent) {
-                this.loginMenuComponent = new Dropdown({
-                    getProps: () => ({
-                        dropdownUrl: this.model.accountLink,
-                        dropdownLabel: `Hi ${this.model.user.first_name || this.model.user.username}`,
-                        items: loginItems
-                    })
-                });
-                loginRegion.attach(this.loginMenuComponent);
-            }
-
-            if (this.model.trainingWheelActive) {
-                this.loginMenuComponent.freeze();
-                this.loginMenuComponent.openMenu();
-            }
+        if (this.model.trainingWheelActive) {
+            this.loginMenuComponent.freeze();
+            this.loginMenuComponent.openMenu();
         }
     }
 
@@ -162,6 +163,8 @@ export default class MainMenu extends Controller {
     putAwayTrainingWheel() {
         this.model.trainingWheelActive = false;
         this.update();
+        this.loginMenuComponent.unfreeze();
+        this.loginMenuComponent.closeMenu();
     }
 
 }
