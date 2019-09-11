@@ -56,10 +56,6 @@ function compileMainStyle(mainDone) {
             gulp.src(`${config.src}/styles/main.scss`),
             `${config.dest}${config.urlPrefix}/styles`
         ),
-        () => compileStyles(
-            gulp.src(`${config.src}/styles/fonts.scss`),
-            `${config.dest}${config.urlPrefix}/styles`
-        ),
     )(mainDone)
 }
 
