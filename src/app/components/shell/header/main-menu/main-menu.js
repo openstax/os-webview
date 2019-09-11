@@ -86,13 +86,6 @@ export default class MainMenu extends Controller {
         this.updateLoginUrl();
     }
 
-    showTutorTrainingWheel() {
-        if (!$.isMobileDisplay()) {
-            this.model.trainingWheelActive = true;
-            this.update();
-        }
-    }
-
     onUpdate() {
         /* eslint complexity: 0 */
         if (this.model.user.username && !this.loginMenuComponent) {
@@ -102,10 +95,7 @@ export default class MainMenu extends Controller {
             const model = this.model;
             const tutorItem = {
                 url: tutorDomain,
-                label: 'OpenStax Tutor',
-                get trainingWheel() {
-                    return model.trainingWheelActive;
-                }
+                label: 'OpenStax Tutor'
             };
             const loginItems = [
                 {url: this.model.accountLink, label: 'Account Profile'},
@@ -133,11 +123,6 @@ export default class MainMenu extends Controller {
             });
             loginRegion.attach(this.loginMenuComponent);
         }
-
-        if (this.model.trainingWheelActive) {
-            this.loginMenuComponent.freeze();
-            this.loginMenuComponent.openMenu();
-        }
     }
 
     closeDropdowns() {
@@ -147,24 +132,13 @@ export default class MainMenu extends Controller {
             }
         };
 
-        if (!this.model.trainingWheelActive) {
-            ['subjectsDropdown', 'technologyDropdown', 'whatWeDoDropdown']
-                .forEach((c) => {
-                    const region = this.regions[c];
+        ['subjectsDropdown', 'technologyDropdown', 'whatWeDoDropdown']
+            .forEach((c) => {
+                const region = this.regions[c];
 
-                    region && callCloseMenu(region.controllers[0]);
-                });
-            callCloseMenu(this.loginMenuComponent);
-        }
-    }
-
-    @on('click .training-wheel .put-away')
-    @on('click .training-wheel button')
-    putAwayTrainingWheel() {
-        this.model.trainingWheelActive = false;
-        this.update();
-        this.loginMenuComponent.unfreeze();
-        this.loginMenuComponent.closeMenu();
+                region && callCloseMenu(region.controllers[0]);
+            });
+        callCloseMenu(this.loginMenuComponent);
     }
 
 }

@@ -54,7 +54,6 @@ class Header extends Controller {
                             this.model.user.groups.push('OpenStax Tutor');
                         }
                         this.update();
-                        this.mainMenu.showTutorTrainingWheel();
                         clearInterval(userPollInterval);
                     }
                 });
@@ -63,13 +62,6 @@ class Header extends Controller {
 
         userModel.load().then((user) => {
             const showOrPoll = () => {
-                if (
-                    user.groups.includes('OpenStax Tutor') &&
-                    !localStorage.hasSeenTutorTrainingWheel
-                ) {
-                    this.mainMenu.showTutorTrainingWheel();
-                    localStorage.setItem('hasSeenTutorTrainingWheel', true);
-                }
                 if (!user.groups.includes('OpenStax Tutor')) {
                     pollAccounts();
                 }
