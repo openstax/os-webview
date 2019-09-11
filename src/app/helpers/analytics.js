@@ -31,7 +31,7 @@ class Analytics {
     }
 
     setUser(userId) {
-        window.ga('set', 'userid', userId);
+        window.ga('set', 'userId', userId);
     }
 
     send(fields) {
