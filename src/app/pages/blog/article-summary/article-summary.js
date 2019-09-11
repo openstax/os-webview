@@ -3,7 +3,7 @@ import {description as template} from './article-summary.html';
 import debounce from 'lodash/debounce';
 import $ from '~/helpers/$';
 import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
-import Byline from '../byline/byline';
+import Byline from '~/components/byline/byline';
 
 const spec = {
     template,

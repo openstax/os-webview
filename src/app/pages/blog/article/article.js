@@ -2,7 +2,7 @@ import componentType, {loaderMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './article.html';
 import bodyUnitView from '~/components/body-units/body-units';
 import css from './article.css';
-import Byline from '../byline/byline';
+import Byline from '~/components/byline/byline';
 
 const spec = {
     template,

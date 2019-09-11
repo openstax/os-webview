@@ -1,13 +1,6 @@
 <template args="model">
     <img if="model.iconUrl" src="{model.iconUrl}" alt="">
-    <div class="byline">
-        <if condition="model.source">
-            <span class="source">{model.source}</span> -
-        <else>
-            {model.author} |
-        </if>
-        {' '}{model.date}
-    </div>
+    <div class="byline" skip="true"></div>
     <div class="headline">
         <a href="{model.url}">{model.headline}
             <span if="model.source" class="fa fa-external-link-alt"></span>
