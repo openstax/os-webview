@@ -24,27 +24,6 @@
         height: 100%;
     }
 
-    .training-wheel-overlay {
-        @include wider-than($tablet-max) {
-            background-color: rgba(ui-color(default-active), 0.5);
-            height: 100vh;
-            left: 0;
-            position: fixed;
-            top: 0;
-            width: 100vw;
-            z-index: 1;
-        }
-    }
-
-    .training-wheel,
-    .training-wheel-overlay {
-        display: none;
-
-        @include wider-than($tablet-max) {
-            display: block;
-        }
-    }
-
     .logo-wrapper {
         @include set-font(helper-label);
 
@@ -136,64 +115,6 @@
             padding: 0 0.45rem;
         }
 
-    }
-
-    .training-wheel {
-        background-color: ui-color(white);
-        overflow: visible;
-        padding: 3rem;
-        position: absolute;
-        transform: translate(-110%, -50%);
-        z-index: 3;
-
-        &::after {
-            @include triangle(
-                $direction: right,
-                $position: top 33% right -2.4rem,
-                $color: ui-color(white),
-                $size: 2.4rem
-            );
-        }
-
-        .put-away-row {
-            @include set-font(h3);
-
-            height: 0;
-            overflow: visible;
-            text-align: right;
-            transform: translate(0.5em, -1em);
-
-            .put-away {
-                background: transparent;
-                color: inherit;
-            }
-        }
-
-        img {
-            max-width: 75%;
-        }
-
-        hr {
-            border-bottom: thin solid os-color(orange);
-        }
-
-        .message {
-            @include set-font(helper-label);
-        }
-
-        .button-row {
-            @include set-font(helper-label);
-
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 2rem;
-
-            button {
-                background-color: os-color(blue);
-                color: text-color(white);
-
-            }
-        }
     }
 
     .chevron {

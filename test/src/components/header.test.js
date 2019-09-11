@@ -41,26 +41,4 @@ describe('Header', () => {
 
         clickElement(link);
     });
-
-    const mainMenu = header.mainMenu;
-
-    it('mainMenu shows training wheel', () => {
-        mainMenu.model.user.username = 'Jest';
-        mainMenu.model.user.groups.push('Tutor');
-        mainMenu.model.user.first_name = 'Jestin';
-        mainMenu.update();
-
-        const link = mainMenu.el.querySelector('[href*="tutor.openstax"]');
-        const event = new Event('focusout');
-        window.requestAnimationFrame = () => null;
-
-        mainMenu.showTutorTrainingWheel();
-        if (link) { link.dispatchEvent(event); }
-        else { console.info('No tutor menu item'); }
-    });
-
-    it('mainMenu hides training wheel', () => {
-        mainMenu.putAwayTrainingWheel();
-    });
-
 });
