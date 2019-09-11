@@ -16,7 +16,7 @@ describe('Press', () => {
         return ready.then(() => {
             expect(instance.articleSlug).toBe(strippedLeadingDash);
             const heroDiv = instance.el.querySelector('.hero');
-            const articleDiv = instance.el.querySelector('.article.page');
+            const articleDiv = instance.el.querySelector('.article.text-content');
 
             expect(heroDiv).toBeFalsy();
             expect(articleDiv).toBeTruthy();
@@ -27,7 +27,7 @@ describe('Press', () => {
 
         return ready.then(() => {
             const heroDiv = instance.el.querySelector('.hero');
-            const articleDiv = instance.el.querySelector('.article.page');
+            const articleDiv = instance.el.querySelector('.article.text-content');
 
             expect(heroDiv).toBeTruthy();
             expect(articleDiv).toBeFalsy();
