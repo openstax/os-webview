@@ -1,5 +1,5 @@
 import 'babel-polyfill';
-import 'isomorphic-fetch';
+import './helpers/fetch-mocker';
 import {LocalStorage} from 'node-localstorage';
 
 global.localStorage = new LocalStorage('./local-storage-scratch');

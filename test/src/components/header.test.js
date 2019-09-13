@@ -1,4 +1,3 @@
-import '../../helpers/fetch-mocker';
 import Header from '~/components/shell/header/header';
 import {clickElement} from '../../test-utils';
 

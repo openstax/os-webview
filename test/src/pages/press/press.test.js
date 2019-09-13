@@ -1,4 +1,3 @@
-import '../../../helpers/fetch-mocker';
 import Press from '~/pages/press/press';
 import instanceReady from '../../../helpers/instance-ready';
 

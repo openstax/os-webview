@@ -1,4 +1,3 @@
-import '../../../helpers/fetch-mocker';
 import ErrataForm from '~/pages/errata-form/errata-form';
 import Form from '~/pages/errata-form/form/form';
 import {clickElement} from '../../../test-utils';
