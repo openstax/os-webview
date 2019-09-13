@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const gulp = require('gulp');
 const config = require('../config');
-const swPrecache = require('sw-precache');
+const workboxBuild = require('workbox-build');
 
 // This is used as the cacheID, worth only reading the file once.
 const packageName = JSON.parse(fs.readFileSync('./package.json', 'utf8')).name;
@@ -27,7 +27,7 @@ const shellFiles = [
 ];
 
 function precache() {
-    return swPrecache.write(path.join(config.dest, 'sw.js'), {
+    return workboxBuild.generateSW(path.join(config.dest, 'sw.js'), {
         staticFileGlobs: shellFiles.map((uri) => `${config.dest}${uri}`),
         stripPrefix: config.dest,
         navigateFallback: '/404',
