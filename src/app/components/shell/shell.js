@@ -1,8 +1,8 @@
 import {Controller} from 'superb.js';
-import header from './header/header';
-import footer from './footer/footer';
+import Header from './header/header';
+import headerBus from './header/bus';
+import Footer from './footer/footer';
 import ModalDialog, {Dialog} from '../dialog/dialog';
-import {initialize, injectButtons} from 'recordo';
 import {description as template} from './shell.html';
 import bus from './shell-bus';
 import showNoticeIfNeeded from './cookie-notice/cookie-notice';
@@ -14,23 +14,20 @@ class Shell extends Controller {
         this.el = 'body';
         this.template = template;
         this.regions = {
-            header: '#header',
             dialog: '#dialog',
-            main: '#main',
-            footer: '#footer'
+            main: '#main'
         };
 
-        this.header = header;
-        this.footer = footer;
         // Wait for main to receive some content before attaching header and footer
         this.mainObserver = new MutationObserver((observations) => {
+            this.header = new Header();
+            this.footer = new Footer();
+            headerBus.on('recognizeDropdownOpen', () => this.header.recognizeDropdownOpen());
             // If the page doesn't use the page loader, prevent the page
             // loader from running later by adding the page-loaded class
             if (!document.body.classList.contains('page-loading')) {
                 document.body.classList.add('page-loaded');
             }
-            this.regions.header.attach(header);
-            this.regions.footer.attach(footer);
             this.mainObserver.disconnect();
         });
 
@@ -42,12 +39,6 @@ class Shell extends Controller {
 
     onLoaded() {
         this.mainObserver.observe(document.getElementById('main'), {childList: true});
-
-        // Start recordo
-        initialize({ignoreAjaxResponse: true});
-        if (/collect=true/.test(window.location.search)) {
-            injectButtons();
-        }
         window.addEventListener('navigate', this.hideDialog.bind(this));
         showNoticeIfNeeded();
         showAdoptionsIfNeeded();

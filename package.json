@@ -1,6 +1,6 @@
 {
     "name": "@openstax/os-webview",
-    "version": "2.42.0",
+    "version": "2.43.0",
     "description": "OpenStax webview",
     "scripts": {
         "test": "jest ./test/src"
@@ -64,7 +64,6 @@
         "particles.js": "^2.0.0",
         "pattern-library": "github:openstax/pattern-library",
         "piped-webpack": "^1.4.1",
-        "recordo": "^0.0.6",
         "regenerator-runtime": "^0.11.0",
         "require-dir": "0.3.2",
         "source-map-loader": "^0.2.4",

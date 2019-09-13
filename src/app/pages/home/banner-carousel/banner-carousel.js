@@ -25,21 +25,10 @@ const spec = {
         const props = this.getProps();
 
         this.images = ($.isMobileDisplay() ? props.smallImages : props.largeImages);
-        if (!this.watchingLoad) {
-            whenLoaded(this.images[0].image, () => {
-                this.allLoaded = true;
-                // Give the browser a break to feel like it is done loading
-                setTimeout(() => this.update(), 300);
-            });
-            this.watchingLoad = true;
-        }
         if (!this.allLoaded) {
-            this.images = this.images.map((obj, index) => {
-                if (index > 0) {
-                    return Object.assign({}, obj, {image: ''});
-                }
-                return obj;
-            });
+            this.images = this.images.map((obj, index) =>
+                (index > 0) ? Object.assign({}, obj, {image: ''}) : obj
+            );
         }
         return {
             images: this.images,
@@ -57,9 +46,15 @@ export default class BannerCarousel extends BaseClass {
         this.frameNumber = 0;
     }
 
-    onLoaded() {
+    onAttached() {
+        if (super.onAttached) {
+            super.onAttached();
+        }
         this.onResize = () => this.update();
-        window.addEventListener('resize', this.onResize);
+        whenLoaded(this.images[0].image, () => {
+            this.allLoaded = true;
+            window.addEventListener('resize', this.onResize);
+        });
     }
 
     onClose() {

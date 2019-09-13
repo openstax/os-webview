@@ -4,9 +4,10 @@ import settings from 'settings';
 import {description as template} from './footer.html';
 import css from './footer.css';
 
-class Footer extends CMSPageController {
+export default class extends CMSPageController {
 
     init() {
+        this.el = document.getElementById('footer');
         this.template = template;
         this.css = css;
         this.view = {
@@ -15,20 +16,6 @@ class Footer extends CMSPageController {
         };
         this.model = {};
         this.slug = 'footer';
-        /* eslint arrow-parens: 0 */
-        (async () => {
-            try {
-                const response = await fetch(`${settings.apiOrigin}${settings.apiPrefix}/documents?search=press%20kit`);
-                const data = await response.json();
-
-                if (data.length) {
-                    this.model.pressKitData = data[0];
-                    this.update();
-                }
-            } catch (e) {
-                console.log(e);
-            }
-        })();
     }
 
     onDataLoaded() {
@@ -51,7 +38,3 @@ class Footer extends CMSPageController {
     }
 
 }
-
-const footer = new Footer();
-
-export default footer;
