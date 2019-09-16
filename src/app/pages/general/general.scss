@@ -1,6 +1,7 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .general.page {
+    padding-bottom: 8rem;
 
     > section {
         width: 100%;
@@ -32,6 +33,16 @@
 
         &.block-paragraph > div {
             max-width: $text-content-max;
+        }
+
+        @include width-up-to($media-content-max) {
+            &:not(.block-paragraph) > div {
+                max-width: 100%;
+            }
+        }
+
+        &:first-child {
+            margin-bottom: 2.5rem;
         }
     }
 }
