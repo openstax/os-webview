@@ -1,8 +1,7 @@
-import '../../../helpers/fetch-mocker';
 import ErrataForm from '~/pages/errata-form/errata-form';
 import Form from '~/pages/errata-form/form/form';
 import {clickElement} from '../../../test-utils';
-import {bookPromise} from '~/models/book-titles';
+import bookPromise from '~/models/book-titles';
 import userModel from '~/models/usermodel';
 
 describe('ErrataForm', () => {

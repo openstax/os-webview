@@ -2,7 +2,7 @@ import {Controller} from 'superb.js';
 import Popup from '~/components/popup/popup';
 import FormInput from '~/components/form-input/form-input';
 import ManagedComponent from '~/helpers/controller/managed-component';
-import {schoolPromise} from '~/models/schools';
+import schoolPromise from '~/models/schools';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './contact-info.html';
 

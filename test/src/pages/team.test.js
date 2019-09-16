@@ -1,4 +1,3 @@
-import '../../helpers/fetch-mocker';
 import Team from '~/pages/team/team';
 import {clickElement} from '../../test-utils';
 

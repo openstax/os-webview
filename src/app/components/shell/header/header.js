@@ -9,11 +9,11 @@ import linkHelper from '~/helpers/link';
 import userModel, {accountsModel} from '~/models/usermodel';
 import {description as template} from './header.html';
 import css from './header.css';
-import bus from './bus';
 
-class Header extends Controller {
+export default class extends Controller {
 
     init() {
+        this.el = document.getElementById('header');
         this.template = template;
         this.css = css;
         this.view = {
@@ -283,9 +283,3 @@ class Header extends Controller {
     }
 
 }
-
-const header = new Header();
-
-bus.on('recognizeDropdownOpen', header.recognizeDropdownOpen.bind(header));
-
-export default header;

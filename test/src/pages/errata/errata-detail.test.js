@@ -1,4 +1,3 @@
-import '../../../helpers/fetch-mocker';
 import ErrataDetail from '~/pages/errata-detail/errata-detail';
 import ProgressBar from '~/pages/errata-detail/progress-bar/progress-bar';
 import instanceReady from '../../../helpers/instance-ready';

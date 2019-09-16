@@ -1,4 +1,3 @@
-import '../../helpers/fetch-mocker';
 import scrollPromise from '../../helpers/scrollTo-mock';
 import Partners from '~/pages/partners/partners';
 import CategorySelector from '~/components/category-selector/category-selector';

@@ -1,4 +1,3 @@
-import '../../helpers/fetch-mocker';
 import BookstoreSuppliers from '~/pages/bookstore-suppliers/bookstore-suppliers';
 import instanceReady from '../../helpers/instance-ready';
 

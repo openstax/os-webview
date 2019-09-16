@@ -1,5 +1,4 @@
 import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
-import $ from '~/helpers/$';
 import {description as template} from './about.html';
 import css from './about.css';
 
@@ -38,9 +37,8 @@ const spec = {
         };
     }
 };
-const BaseClass = componentType(spec, canonicalLinkMixin);
 
-export default class AboutNew extends BaseClass {
+export default class extends componentType(spec, canonicalLinkMixin) {
 
     onDataLoaded() {
         this.update();

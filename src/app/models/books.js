@@ -1,5 +1,4 @@
-import settings from 'settings';
+import cmsFetch from './cmsFetch';
 
-export default fetch(`${settings.apiOrigin}${settings.apiPrefix}/books?format=json`)
-    .then((r) => r.json())
+export default cmsFetch('books?format=json')
     .then((r) => r.books);
