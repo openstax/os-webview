@@ -2,52 +2,36 @@
 
 .general.page {
 
-    width: 100%;
-
-    > *,
-    section > * {
-        max-width: 100%;
-    }
-
-    .block-heading {
-        @include set-font(h1);
-
-        background-color: ui-color(white);
-        padding: 4rem $normal-margin;
-        position: relative;
-
-        @include wider-than($media-content-max) {
-            padding-left: calc(50vw - #{$content-max / 2 - $normal-margin});
-            padding-right: calc(50vw - #{$content-max / 2 - $normal-margin});
-        }
-
-        .strips {
-            bottom: 0;
-        }
-    }
-
-    .block-html {
-        margin: auto;
-        max-width: 100%;
-        padding: 2rem $normal-margin;
-        width: auto;
-
-        @include wider-than($media-content-max) {
-            max-width: $content-max;
-        }
-    }
-
-    .rich-text,
-    .block-paragraph {
-        // padding-left: calc(50vw - #{text-content-max / 2 - $normal-margin});
-        margin: auto;
-        max-width: $text-content-max;
+    > section {
         width: 100%;
-    }
+        margin: auto;
+        padding: 0 $normal-margin;
 
-    .block-paragraph {
-        padding-left: $normal-margin;
-        padding-right: $normal-margin;
-    }
+        &:not(.block-heading) {
+            @include wider-than($media-content-max) {
+                max-width: $content-max;
+            }
+        }
 
+        &.block-heading {
+            @include set-font(h1);
+
+            background-color: ui-color(white);
+            padding: 4rem $normal-margin;
+            position: relative;
+
+            @include wider-than($media-content-max) {
+                padding-left: calc(50vw - #{$content-max / 2 - $normal-margin});
+                padding-right: calc(50vw - #{$content-max / 2 - $normal-margin});
+            }
+
+            .strips {
+                bottom: 0;
+            }
+        }
+
+        &.block-paragraph > div {
+            max-width: $text-content-max;
+        }
+    }
 }
