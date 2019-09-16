@@ -41,7 +41,6 @@ class CookieNotice extends componentType(spec, busMixin) {
     @on('click button.primary')
     acknowledge() {
         cookie.setKey(ACKNOWLEDGEMENT_KEY);
-        analytics.setUser(this.userid);
         this.emit('close');
     }
 
@@ -57,9 +56,11 @@ export default function showNoticeIfNeeded() {
         if (typeof response.id !== 'undefined') {
             const userid = response.id.toString();
 
-            if (acknowledged()) {
-                analytics.setUser(userid);
-            } else if (response.is_not_gdpr_location === true) {
+            if (!response.is_not_gdpr_location) {
+                return;
+            }
+            analytics.setUser(userid);
+            if (!acknowledged()) {
                 const cookieNotice = new CookieNotice({
                     userid
                 });
