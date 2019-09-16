@@ -1,4 +1,5 @@
 import componentType from '~/helpers/controller/init-mixin';
+import Byline from '~/components/byline/byline';
 import {description as template} from './press-excerpt.html';
 import css from './press-excerpt.css';
 
@@ -10,29 +11,32 @@ const spec = {
     },
     model() {
         return {
-            iconUrl: this.props.iconUrl,
-            author: this.props.author,
-            source: this.props.source,
-            org: this.props.org,
-            date: this.props.date,
-            headline: this.props.headline,
-            excerpt: this.props.excerpt,
-            url: this.props.url
+            iconUrl: this.iconUrl,
+            author: this.author,
+            source: this.source,
+            org: this.org,
+            date: this.date,
+            headline: this.headline,
+            excerpt: this.excerpt,
+            url: this.url
         };
     }
 };
 
 export default class PressExcerpt extends componentType(spec) {
 
-    init(props) {
-        super.init();
-        this.props = props;
-    }
-
     onLoaded() {
-        if (this.props.iconUrl) {
+        if (this.iconUrl) {
             this.el.classList.add('with-icon');
         }
+
+        const bylineRegion = this.regionFrom('.byline');
+
+        bylineRegion.attach(new Byline({
+            date: this.date,
+            author: this.author,
+            source: this.source
+        }));
     }
 
 }

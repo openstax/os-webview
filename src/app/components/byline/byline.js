@@ -12,7 +12,8 @@ const spec = {
     model() {
         return {
             date: formatDateForBlog(this.date),
-            author: this.author
+            author: this.author,
+            source: this.source
         };
     }
 };

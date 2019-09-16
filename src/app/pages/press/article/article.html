@@ -5,12 +5,7 @@
     <article>
         <h1>{model.title || 'Loading...'}</h1>
         <h2 if="model.subheading">{model.subheading}</h2>
-        <div if="model.date" class="meta">
-            <p>
-                <span class="author">{model.author}</span>
-                <span class="date">{model.date}</span>
-            </p>
-        </div>
+        <div class="byline" skip="true"></div>
         <div class="body"></div>
     </article>
 </template>
