@@ -5,10 +5,14 @@ import $ from '~/helpers/$';
 import shellBus from '~/components/shell/shell-bus';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
 import StudyEdge from './study-edge/study-edge';
+import addCallout from './recommended-callout/recommended-callout';
+import calloutCounter from './callout-counter';
 import {description as template} from './get-this-title.html';
 import {description as polishTemplate} from './get-this-title-polish.html';
 import css from './get-this-title.css';
 import settings from 'settings';
+
+const MAX_CALLOUTS = 3;
 
 const spec = {
     template,
@@ -51,6 +55,11 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
             'bookshare_link', 'ibook_link', 'kindle_link', 'chegg_link'
         ].filter((key) => data[key]).length;
 
+        this.isRex = data.webview_rex_link ? true : false;
+        this.slug = data.slug;
+        this.calloutTitle = data.rex_callout_title;
+        this.calloutBlurb = data.rex_callout_blurb;
+
         // eslint-disable-next-line complexity
         this.model = () => ({
             includeTOC: Boolean(data.table_of_contents),
@@ -60,7 +69,7 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
             ibookLink2: data.ibook_link_volume_2,
             kindleLink: data.kindle_link,
             webviewLink: data.webview_rex_link || data.webview_link,
-            isRex: data.webview_rex_link ? true : false,
+            isRex: this.isRex,
             comingSoon: data.book_state === 'coming_soon',
             bookshareLink: data.bookshare_link,
             pdfText: polish ? ' Pobierz książkę' : ' Download a PDF',
@@ -92,6 +101,10 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
         }
     }
 
+    needsCallout() {
+        return this.isRex && calloutCounter.count < MAX_CALLOUTS;
+    }
+
     onLoaded() {
         if (super.onLoaded) {
             super.onLoaded();
@@ -99,6 +112,24 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
         this.on('set-toc', (value) => {
             this.setToc(value);
         });
+        calloutCounter.setSlug(this.slug);
+        if (!this.needsCallout()) {
+            return;
+        }
+
+        const callout = addCallout(
+            this.el.querySelector('.callout'),
+            this.calloutTitle,
+            this.calloutBlurb
+        );
+
+        if (!callout) {
+            return;
+        }
+        callout.on('hide-forever', () => {
+            calloutCounter.count = MAX_CALLOUTS + 1;
+        });
+        calloutCounter.increment();
     }
 
     setToc(value) {
@@ -110,6 +141,7 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
     onClose() {
         // If they navigate while a modal is open
         document.body.classList.remove('no-scroll');
+        calloutCounter.setSlug(null);
     }
 
     @on('click .btn')

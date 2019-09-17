@@ -14,10 +14,8 @@ const spec = {
         classes: ['a-component-template']
     },
     model() {
-        this.props = this.getProps();
-
         return {
-            message: this.props.message
+            message: this.message
         };
     }
 };
@@ -25,11 +23,7 @@ const spec = {
 // Default "init" takes an object whose members it will copy to "this"
 // This example expects to be called like
 // new AComponentTemplate({
-//     getProps() {
-//         return {
-//             message: someVariable
-//         }
-//     }
+//     message: someVariable
 // })
 export default class AComponentTemplate extends componentType(spec) {
 }
