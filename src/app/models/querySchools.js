@@ -1,4 +1,4 @@
-import settings from 'settings';
+import cmsFetch from './cmsFetch';
 
 const MAX_SEARCH_RESULTS = 1000;
 
@@ -30,7 +30,7 @@ function augmentInfo(item) {
     return result;
 }
 
-const searchPath = `${settings.apiOrigin}${settings.apiPrefix}/schools/`;
+const searchPath = 'schools/';
 const toSearchParam = {
     partners: 'key_institutional_partner',
     savings: 'saved_one_million',
@@ -39,8 +39,7 @@ const toSearchParam = {
 };
 
 function doFetch(searchParameters) {
-    return fetch(`${searchPath}?${searchParameters}`)
-        .then((response) => response.json())
+    return cmsFetch(`${searchPath}?${searchParameters}`)
         .then((response) =>
             response.length > MAX_SEARCH_RESULTS ? [] :
                 response.map(augmentInfo)
@@ -75,7 +74,6 @@ export default function (queryString, selectedFilters) {
 }
 
 export function queryById(id) {
-    return fetch(`${searchPath}?id=${id}`)
-        .then((response) => response.json())
+    return cmsFetch(`${searchPath}?id=${id}`)
         .then((response) => augmentInfo(response[0]));
 }

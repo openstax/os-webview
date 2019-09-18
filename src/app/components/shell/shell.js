@@ -2,7 +2,6 @@ import {Controller} from 'superb.js';
 import header from './header/header';
 import footer from './footer/footer';
 import ModalDialog, {Dialog} from '../dialog/dialog';
-import {initialize, injectButtons} from 'recordo';
 import {description as template} from './shell.html';
 import bus from './shell-bus';
 import showNoticeIfNeeded from './cookie-notice/cookie-notice';
@@ -43,11 +42,6 @@ class Shell extends Controller {
     onLoaded() {
         this.mainObserver.observe(document.getElementById('main'), {childList: true});
 
-        // Start recordo
-        initialize({ignoreAjaxResponse: true});
-        if (/collect=true/.test(window.location.search)) {
-            injectButtons();
-        }
         window.addEventListener('navigate', this.hideDialog.bind(this));
         showNoticeIfNeeded();
         showAdoptionsIfNeeded();

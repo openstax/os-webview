@@ -1,6 +1,5 @@
-import settings from 'settings';
+import cmsFetch from './cmsFetch';
 
-export function getFields(field) {
-    return fetch(`${settings.apiOrigin}${settings.apiPrefix}/errata-fields?field=${field}`)
-        .then((r) => r.json());
+export default function getFields(field) {
+    return cmsFetch(`errata-fields?field=${field}`);
 }

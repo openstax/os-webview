@@ -1,4 +1,4 @@
-import settings from 'settings';
+import cmsFetch from './cmsFetch';
 
-export const schoolPromise = fetch(`${settings.apiOrigin}${settings.apiPrefix}/salesforce/schools/`)
-    .then((r) => r.json()).then((objList) => objList.map((obj) => obj.name));
+export default cmsFetch('salesforce/schools/')
+    .then((objList) => objList.map((obj) => obj.name));
