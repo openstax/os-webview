@@ -129,11 +129,15 @@ export default class Details extends BaseClass {
     }
 
     fixSlideoutToViewport() {
-        const wh = window.innerHeight;
         const el = this.el.querySelector('.toc-slideout');
+
+        if (!this.tocActive) {
+            return;
+        }
+        const wh = window.innerHeight;
         const {top: normalTop, bottom: normalBottom} = el.parentNode.getBoundingClientRect();
         const headerClearance = 10; // fudge factor
-        const headerBottom = document.querySelector('#header > .page-header')
+        const headerBottom = document.querySelector('#header')
             .getBoundingClientRect().bottom + headerClearance;
         const newTop = normalTop > headerBottom ? 0 : headerBottom - normalTop;
         const newHeight = Math.min(wh, normalBottom) - Math.max(normalTop, headerBottom);
@@ -356,6 +360,10 @@ export default class Details extends BaseClass {
         this.tocActive = whether;
         if (whether) {
             $.scrollTo(this.el.querySelector('.content-wrapper'));
+        } else {
+            const el = this.el.querySelector('.toc-slideout');
+
+            el.removeAttribute('style');
         }
         this.update();
     }
