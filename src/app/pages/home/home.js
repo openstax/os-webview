@@ -3,6 +3,7 @@ import BannerCarousel from './banner-carousel/banner-carousel';
 import Buckets from './buckets/buckets';
 import Education from './education/education';
 import Quotes from './quotes/quotes';
+import shell from '~/components/shell/shell';
 import css from './home.css';
 
 const spec = {
@@ -17,6 +18,10 @@ const spec = {
 const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 
 export default class Home extends BaseClass {
+
+    onLoaded() {
+        shell.header.updateHeaderStyle();
+    }
 
     onDataLoaded() {
         const bannerCarousel = new BannerCarousel(() => ({
@@ -51,6 +56,11 @@ export default class Home extends BaseClass {
         this.regions.self.append(new Education(educationData));
         this.regions.self.append(new Buckets(bucketData));
         this.hideLoader();
+    }
+
+    onClose() {
+        shell.header.updateHeaderStyle();
+        super.onClose();
     }
 
 }

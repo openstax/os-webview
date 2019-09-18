@@ -1,3 +1,4 @@
+import '../../helpers/fetch-mocker';
 import Confirmation from '~/pages/confirmation/confirmation';
 
 const referrers = {

@@ -1,6 +1,6 @@
 {
     "name": "@openstax/os-webview",
-    "version": "2.43.0",
+    "version": "2.42.0",
     "description": "OpenStax webview",
     "scripts": {
         "test": "jest ./test/src"
@@ -11,8 +11,7 @@
     },
     "license": "AGPL-3.0",
     "dependencies": {
-        "gulp-rev": "^9.0.0",
-        "workbox-build": "^4.3.1"
+        "gulp-rev": "^9.0.0"
     },
     "devDependencies": {
         "babel-eslint": "7.2.3",
@@ -43,6 +42,7 @@
         "gulp-humans": "2.0.2",
         "gulp-if": "2.0.2",
         "gulp-imagemin": "3.3.0",
+        "gulp-jest": "^2.0.0",
         "gulp-load-plugins": "1.5.0",
         "gulp-real-favicon": "0.2.2",
         "gulp-rename": "1.2.2",
@@ -55,6 +55,7 @@
         "gulp-wrap": "0.13.0",
         "http-server": "^0.10.0",
         "ignore-loader": "^0.1.2",
+        "isomorphic-fetch": "^2.2.1",
         "jest": "23.6.0",
         "jsdom": "11.2.0",
         "jsdom-global": "3.0.2",
@@ -63,11 +64,13 @@
         "particles.js": "^2.0.0",
         "pattern-library": "github:openstax/pattern-library",
         "piped-webpack": "^1.4.1",
+        "recordo": "^0.0.6",
         "regenerator-runtime": "^0.11.0",
         "require-dir": "0.3.2",
         "source-map-loader": "^0.2.4",
         "style-loader": "^0.23.1",
         "superb.js": "^0.3.0",
+        "sw-precache": "5.2.0",
         "webpack": "^4.23.1",
         "webpack-cli": "^3.1.2",
         "yargs": "8.0.2"

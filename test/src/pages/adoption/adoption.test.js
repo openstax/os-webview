@@ -1,3 +1,4 @@
+import '../../../helpers/fetch-mocker';
 import AdoptionForm from '~/pages/adoption/adoption';
 import instanceReady from '../../../helpers/instance-ready';
 

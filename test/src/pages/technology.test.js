@@ -1,3 +1,4 @@
+import '../../helpers/fetch-mocker';
 import Technology from '~/pages/technology/technology';
 import {clickElement} from '../../test-utils';
 

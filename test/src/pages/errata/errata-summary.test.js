@@ -1,3 +1,4 @@
+import '../../../helpers/fetch-mocker';
 import ErrataSummary from '~/pages/errata-summary/errata-summary';
 import Table from '~/pages/errata-summary/table/table';
 import instanceReady from '../../../helpers/instance-ready';

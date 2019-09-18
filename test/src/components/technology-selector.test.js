@@ -1,3 +1,4 @@
+import '../../helpers/fetch-mocker';
 import TechnologySelector from '~/components/technology-selector/technology-selector';
 import instanceReady from '../../helpers/instance-ready';
 

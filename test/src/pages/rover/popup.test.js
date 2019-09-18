@@ -1,3 +1,4 @@
+import '../../../helpers/fetch-mocker';
 import PopupContent from '~/pages/rover-by-openstax/popup/popup';
 import {doKeyDown} from '../../../test-utils';
 

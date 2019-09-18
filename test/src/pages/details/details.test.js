@@ -1,3 +1,4 @@
+import '../../../helpers/fetch-mocker';
 import Details from '~/pages/details/details';
 import instanceReady from '../../../helpers/instance-ready';
 import {clickElement} from '../../../test-utils';

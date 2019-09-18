@@ -1,6 +1,6 @@
 import componentType, {loaderMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './errata-form.html';
-import bookPromise from '~/models/book-titles';
+import {bookPromise} from '~/models/book-titles';
 import userModel from '~/models/usermodel';
 import $ from '~/helpers/$';
 import Form from './form/form';

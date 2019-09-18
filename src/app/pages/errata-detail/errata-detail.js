@@ -1,7 +1,7 @@
 import componentType, {loaderMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './errata-detail.html';
 import css from './errata-detail.css';
-import bookPromise from '~/models/book-titles';
+import {bookPromise} from '~/models/book-titles';
 import Detail from './detail/detail';
 import ProgressBar from './progress-bar/progress-bar';
 

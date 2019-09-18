@@ -1,6 +1,6 @@
 import componentType from '~/helpers/controller/init-mixin';
 import {description as template} from './steps.html';
-import bookPromise from '~/models/book-titles';
+import {bookPromise} from '~/models/book-titles';
 import {on} from '~/helpers/controller/decorators';
 
 const spec = {

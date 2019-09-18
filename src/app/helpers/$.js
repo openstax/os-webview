@@ -1,8 +1,16 @@
 const $ = {};
 
+$.isTouchDevice = () => (
+    ('ontouchstart' in window) ||
+    (navigator.MaxTouchPoints > 0) ||
+    (navigator.msMaxTouchPoints > 0)
+);
+
 $.isMobileDisplay = () => {
     return window.innerWidth <= 960;
 };
+
+$.isNode = () => (typeof process !== 'undefined') && (process.release.name === 'node');
 
 $.isPolish = (titleOrSlug) => (/fizyka/i).test(titleOrSlug) || (/polska/i).test(titleOrSlug);
 
@@ -10,7 +18,7 @@ $.focusable = 'button, [href], input, select, textarea, [tabindex]:not([tabindex
 
 $.booleanAttribute = (whether) => whether ? '' : null;
 
-const browserId = () => {
+$.browserId = () => {
     const ua = navigator.userAgent;
     let M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
     let tem;
@@ -43,13 +51,17 @@ const browserId = () => {
 };
 
 $.isSupported = () => {
-    const info = browserId();
+    const info = $.browserId();
 
     return ((info.name === 'Safari' && +info.version >= 10.1) ||
      (info.name === 'Edge' && +info.version >= 16) ||
      (info.name === 'Firefox' && +info.version >= 52) ||
      (info.name === 'Chrome' && +info.version >= 57));
 };
+
+$.stringCompare = (a, b) => (a < b) ? -1 : +(a > b);
+
+$.lowerCaseCompare = (a, b) => $.stringCompare(a.toLowerCase(), b.toLowerCase());
 
 const tick = 1000 / 40;
 const spaceForMenu = 59;
@@ -139,6 +151,22 @@ $.setPageTitleAndDescription = (title, description) => {
         console.warn('No description meta entry in page header');
     }
     document.title = title ? `${title} - OpenStax` : 'OpenStax';
+};
+
+const invalidEmailPatterns = [
+    /@(aol|gmail|hotmail|yahoo).com/i
+];
+
+$.testInstitutionalEmail = (element) => {
+    const ieValue = element.value;
+
+    for (const re of invalidEmailPatterns) {
+        if (re.test(ieValue)) {
+            return false;
+        }
+    }
+
+    return true;
 };
 
 const canonicalLinkHelpers = {

@@ -1,4 +1,4 @@
-import bookPromise from '~/models/book-titles';
+import {bookPromise} from '~/models/book-titles';
 import $ from '~/helpers/$';
 import componentType, {loaderMixin} from '~/helpers/controller/init-mixin';
 import css from './errata-summary.css';

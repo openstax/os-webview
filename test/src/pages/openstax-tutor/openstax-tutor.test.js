@@ -1,3 +1,4 @@
+import '../../../helpers/fetch-mocker';
 import Tutor from '~/pages/openstax-tutor/openstax-tutor';
 import {clickElement} from '../../../test-utils';
 import instanceReady from '../../../helpers/instance-ready';

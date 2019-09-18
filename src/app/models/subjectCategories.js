@@ -1,7 +1,8 @@
 import booksPromise from './books';
-import cmsFetch from './cmsFetch';
+import settings from 'settings';
 
-const categoriesPromise = cmsFetch('snippets/subjects?format=json');
+const categoriesPromise = fetch(`${settings.apiOrigin}${settings.apiPrefix}/snippets/subjects?format=json`)
+    .then((r) => r.json());
 
 export default Promise.all([booksPromise, categoriesPromise]).then(([books, categories]) => {
     const usedCategories = {};

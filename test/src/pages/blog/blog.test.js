@@ -1,3 +1,4 @@
+import '../../../helpers/fetch-mocker';
 import Blog from '~/pages/blog/blog';
 import instanceReady from '../../../helpers/instance-ready';
 

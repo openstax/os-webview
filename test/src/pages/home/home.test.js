@@ -1,3 +1,4 @@
+import '../../../helpers/fetch-mocker';
 import Home from '~/pages/home/home';
 import instanceReady from '../../../helpers/instance-ready';
 

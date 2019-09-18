@@ -1,3 +1,4 @@
+import '../../../helpers/fetch-mocker';
 import InstitutionalPartnership from '~/pages/institutional-partnership/institutional-partnership';
 import instanceReady from '../../../helpers/instance-ready';
 

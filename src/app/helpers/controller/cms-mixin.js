@@ -1,6 +1,6 @@
 import settings from 'settings';
 import $ from '~/helpers/$';
-import bookPromise from '~/models/book-titles';
+import {bookPromise} from '~/models/book-titles';
 
 const LOAD_IMAGES = Symbol();
 

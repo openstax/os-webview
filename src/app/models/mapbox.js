@@ -1,3 +1,5 @@
-import cmsFetch from './cmsFetch';
+import settings from 'settings';
 
-export default cmsFetch('mapbox').then((r) => r[0]);
+export default fetch(`${settings.apiOrigin}${settings.apiPrefix}/mapbox`)
+    .then((r) => r.json())
+    .then((r) => r[0]);
