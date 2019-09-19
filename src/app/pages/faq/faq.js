@@ -1,8 +1,7 @@
-import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
 import {makeDocModel} from '~/models/usermodel';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
-import shell from '~/components/shell/shell';
 import {description as template} from './faq.html';
 import css from './faq.css';
 
@@ -16,13 +15,12 @@ const spec = {
     model: {},
     slug: 'pages/faq'
 };
-const BaseClass = componentType(spec, canonicalLinkMixin);
+const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
 
 export default class FAQ extends BaseClass {
 
     init() {
         super.init();
-        shell.showLoader();
     }
 
     onDataLoaded() {
@@ -58,7 +56,7 @@ export default class FAQ extends BaseClass {
                 });
             }
         }
-        shell.hideLoader();
+        this.hideLoader();
     }
 
     onUpdate() {

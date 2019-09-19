@@ -16,7 +16,7 @@ function getCompCopyDialogProps(props, userStatusPromise) {
         shellBus.emit('updateDialog');
     };
     const formHandlers = {
-        done: () => shell.emit('hideDialog'),
+        done: () => shellBus.emit('hideDialog'),
         showConfirmation: setAltTitle
     };
     const userInfo = {};
