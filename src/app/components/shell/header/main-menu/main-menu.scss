@@ -29,7 +29,7 @@
 
         align-items: center;
         display: flex;
-        padding: 0 1.6rem;
+        padding: 1.2rem 1.6rem;
 
         @at-root .active#{&} {
             align-items: flex-start;
@@ -135,15 +135,18 @@
     }
 
     .logo {
-        display: block;
         height: 2.8rem;
 
-        &:active,
-        &:focus,
-        &:hover {
-            &::after {
-                background-color: transparent;
-                box-shadow: none;
+        a {
+            height:100%;
+
+            &:active,
+            &:focus,
+            &:hover {
+                &::after {
+                    background-color: transparent;
+                    box-shadow: none;
+                }
             }
         }
 

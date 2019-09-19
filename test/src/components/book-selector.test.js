@@ -1,3 +1,4 @@
+import '../../helpers/fetch-mocker';
 import BookSelector from '~/components/book-selector/book-selector';
 import instanceReady from '../../helpers/instance-ready';
 

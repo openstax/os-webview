@@ -1,7 +1,7 @@
-import Header from '~/components/shell/header/header';
+import '../../helpers/fetch-mocker';
+import header from '~/components/shell/header/header';
 import {clickElement} from '../../test-utils';
 
-const header = new Header();
 describe('Header', () => {
 
     it('creates', () => {
