@@ -43,8 +43,8 @@ export default class extends componentType(spec, busMixin) {
                 model: {
                     name: info.fields.name,
                     location: info.cityState,
-                    savingsThisYear: formatter.format(info.fields.all_time_savings),
-                    savingsTotal: formatter.format(info.fields.current_year_savings),
+                    savingsTotal: formatter.format(info.fields.all_time_savings),
+                    savingsThisYear: formatter.format(info.fields.current_year_savings),
                     isOpen: schools.length === 1,
                     testimonial: info.testimonial,
                     loggedIn: this.loggedIn
