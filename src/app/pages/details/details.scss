@@ -66,6 +66,10 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
                 padding-right: calc(50vw - #{$content-max / 2});
             }
 
+            &:not(.drawer-open) > .toc-slideout {
+                height: 0;
+            }
+
             > .toc-slideout {
                 background-color: ui-color(white);
                 border-right: thin solid ui-color(form-border);
