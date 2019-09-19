@@ -10,10 +10,12 @@
         <input type="hidden" name="email" value="{model.email}">
         <input type="hidden" name="00NU0000005VkYv" value="{model.school}">
         <div class="book-selector" skip="true"></div>
-        <div class="control-group">
-            <label class="field-label">Your testimonial</label>
-            <textarea name="00N0B000006K1PC" rows="8" cols="80" required></textarea>
-        </div>
-        <input type="submit" disabled="{model.book ? null : ''}">
+        <if condition="model.book">
+            <div class="control-group">
+                <label class="field-label">Your testimonial</label>
+                <textarea name="00N0B000006K1PC" rows="8" cols="80" required></textarea>
+            </div>
+            <input type="submit">
+        </if>
     </form>
 </template>
