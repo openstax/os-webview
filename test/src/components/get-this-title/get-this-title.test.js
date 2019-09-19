@@ -1,8 +1,8 @@
 import GetThisTitle from '~/components/get-this-title/get-this-title';
-import {clickElement} from '../../test-utils';
+import {clickElement} from '../../../test-utils';
 import shellBus from '~/components/shell/shell-bus';
 // Biology book details
-import details from '../data/details';
+import details from '../../data/details';
 
 describe('GetThisTitle', () => {
     const p = new GetThisTitle(details);
@@ -40,4 +40,22 @@ describe('GetThisTitle', () => {
         expect(downloadLink(p)).toBeFalsy();
         expect(downloadLink(withLinkP)).toBeTruthy();
     });
+    it('does the callout for Rex book', () => {
+        const rex_callout_title = 'Custom title'
+        const rexP = new GetThisTitle(Object.assign({}, details, {
+            webview_rex_link: true,
+            rex_callout_title
+        }));
+        const calloutEl = rexP.el.querySelector('.callout');
+
+        expect(calloutEl.textContent).toMatch(rex_callout_title);
+    });
+    it('defaults to "Recommended"', () => {
+        const rexP = new GetThisTitle(Object.assign({}, details, {
+            webview_rex_link: true
+        }));
+        const calloutEl = rexP.el.querySelector('.callout');
+
+        expect(calloutEl.textContent).toMatch('Recommended');
+    })
 });

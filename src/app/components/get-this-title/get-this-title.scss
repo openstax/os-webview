@@ -116,10 +116,6 @@
                 flex-basis: 3rem;
                 margin-right: $normal-margin;
             }
-
-            + * {
-                margin-left: 4.5rem;
-            }
         }
 
         a {
@@ -145,6 +141,14 @@
             }
         }
 
+    }
+
+    .option-with-callout {
+        align-items: center;
+        display: grid;
+        grid-column-gap: 1rem;
+        grid-template-columns: 14rem min-content;
+        width: 0;
     }
 
     .expander {

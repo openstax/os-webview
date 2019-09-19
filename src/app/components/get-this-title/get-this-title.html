@@ -9,11 +9,14 @@
                 </a>
             </div>
             <div if="!model.comingSoon && model.webviewLink" class="option">
-                <a href="{model.webviewLink}" data-local="{model.isRex}"
-                    tabindex="{model.submenu === '' ? 0 : -1}" data-submenu="{model.submenu}">
-                    <span class="fa fa-laptop"></span>
-                    <span class="text">View online</span>
-                </a>
+                <div class="option-with-callout">
+                    <a href="{model.webviewLink}" data-local="{model.isRex}"
+                        tabindex="{model.submenu === '' ? 0 : -1}" data-submenu="{model.submenu}">
+                        <span class="fa fa-laptop"></span>
+                        <span class="text">View online</span>
+                    </a>
+                    <div class="callout" skip="true"></div>
+                </div>
             </div>
             <div if="model.studyEdge" class="option">
                 <a href="/" class="show-study-edge"
