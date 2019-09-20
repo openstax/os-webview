@@ -1,4 +1,3 @@
-import '../../helpers/fetch-mocker';
 import RoleSelector from '~/components/role-selector/role-selector';
 import StudentForm from '~/components/student-form/student-form';
 import instanceReady from '../../helpers/instance-ready';

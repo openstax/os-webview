@@ -2,11 +2,8 @@ import {Controller} from 'superb.js';
 import stickyNote from '../sticky-note/sticky-note';
 import UpperMenu from './upper-menu/upper-menu';
 import MainMenu from './main-menu/main-menu';
-import settings from 'settings';
 import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
-import linkHelper from '~/helpers/link';
-import userModel, {accountsModel} from '~/models/usermodel';
 import {description as template} from './header.html';
 import css from './header.css';
 import bus from './bus';
@@ -27,56 +24,16 @@ class Header extends Controller {
         };
 
         this.model = {
-            login: `${window.location.origin}/oxauth/login/`,
-            logout: `${window.location.origin}/oxauth/logout/`,
             user: {
                 username: null,
                 groups: []
             },
-            accountLink: `${settings.accountHref}/profile`,
-            facultyAccessLink: `${settings.accountHref}/faculty_access/apply`,
-            currentDropdown: null,
             submenuName: 'Name goes here',
             headerActive: false
         };
 
         this.upperMenu = new UpperMenu();
-        this.mainMenu = new MainMenu(this.model);
-
-        const pollAccounts = () => {
-            const userPollInterval = setInterval(() => {
-                accountsModel.load().then((accountResponse) => {
-                    const foundTutor = accountResponse.applications
-                        .find((app) => app.name === 'OpenStax Tutor');
-
-                    if (foundTutor) {
-                        if (!this.model.user.groups.includes('OpenStax Tutor')) {
-                            this.model.user.groups.push('OpenStax Tutor');
-                        }
-                        this.update();
-                        clearInterval(userPollInterval);
-                    }
-                });
-            }, 60000);
-        };
-
-        userModel.load().then((user) => {
-            const showOrPoll = () => {
-                if (!user.groups.includes('OpenStax Tutor')) {
-                    pollAccounts();
-                }
-            };
-
-            if (typeof user === 'object') {
-                this.model.user = user;
-                pi('identify_client', user.id);
-            }
-            this.update();
-            this.mainMenu.update();
-            if (user.accounts_id) {
-                showOrPoll();
-            }
-        });
+        this.mainMenu = new MainMenu();
 
         window.addEventListener('resize', this.closeFullScreenNav.bind(this));
     }
@@ -208,7 +165,7 @@ class Header extends Controller {
     }
 
     removeAllOpenClasses() {
-        this.mainMenu.closeDropdowns();
+        bus.emit('close-menus');
         this.resetDropdownTop();
     }
 

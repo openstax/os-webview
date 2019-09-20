@@ -38,7 +38,9 @@ class UserModel {
         //             is_guessed_preferred: true
         //         }
         //     ],
-        //     applications: [ ]
+        //     applications: [
+        //         // {name: 'OpenStax Tutor'}
+        //     ]
         // });
 
         const proxyPromise = new Promise((resolve) => {
@@ -65,15 +67,12 @@ class UserModel {
         return proxyPromise;
     }
 
-    loginLink(returnTo) {
-        const encodedLocation = encodeURIComponent(returnTo || window.location.href);
-
-        return `${settings.apiOrigin}/oxauth/login/?next=${encodedLocation}`;
-    }
-
 }
 
 function oldUserModel(sfUserModel) {
+    if (!('id' in sfUserModel)) {
+        return {};
+    }
     const findPreferredEmail = (contacts) => (contacts
         .filter((obj) => obj.type === 'EmailAddress')
         .reduce((a, b) => {

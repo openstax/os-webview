@@ -85,6 +85,22 @@ function isCloudFront(href) {
     return CLOUDFRONT.test(href);
 }
 
+
+function loginOrOutLink(loginOrLogout) {
+    const encodedLocation = encodeURIComponent(decodeURIComponent(window.location.href));
+
+    return `${settings.apiOrigin}/oxauth/${loginOrLogout}/?next=${encodedLocation}`;
+}
+
+function loginLink() {
+    return loginOrOutLink('login');
+}
+
+function logoutLink() {
+    return loginOrOutLink('logout');
+}
+
+
 export default {
     isExternal,
     validUrlClick,
@@ -96,5 +112,7 @@ export default {
     isREX,
     isCloudFront,
     isAmazon,
+    loginLink,
+    logoutLink,
     stripOpenStaxDomain
 };
