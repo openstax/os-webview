@@ -79,7 +79,14 @@ export default class SeparateMap extends componentType(spec, canonicalLinkMixin,
                 firstName: info.first_name,
                 lastName: info.last_name
             };
-            const tf = new TestimonialForm(formParameters);
+            const newForm = () => {
+                const tf = new TestimonialForm(formParameters);
+
+                tf.on('close-form', () => {
+                    shellBus.emit('hideDialog');
+                });
+                return tf;
+            };
 
             sb.emit('update-props', {
                 loggedIn: true
@@ -87,11 +94,8 @@ export default class SeparateMap extends componentType(spec, canonicalLinkMixin,
             sb.on('submit-testimonial', () => {
                 shellBus.emit('showDialog', () => ({
                     title: 'Submit your testimonial',
-                    content: tf
+                    content: newForm()
                 }));
-            });
-            tf.on('close-form', () => {
-                shellBus.emit('hideDialog');
             });
         });
         map.loaded.then(() => {
