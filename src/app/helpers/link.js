@@ -100,7 +100,6 @@ function logoutLink() {
     return loginOrOutLink('logout');
 }
 
-
 export default {
     isExternal,
     validUrlClick,

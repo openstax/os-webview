@@ -3,6 +3,7 @@ import './helpers/fetch-mocker';
 import {LocalStorage} from 'node-localstorage';
 
 global.localStorage = new LocalStorage('./local-storage-scratch');
+global.pi = jest.fn();
 
 window.MutationObserver = function () {};
 window.MutationObserver.prototype.observe = function () {};

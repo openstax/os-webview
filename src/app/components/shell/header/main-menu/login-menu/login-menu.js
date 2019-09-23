@@ -2,7 +2,8 @@ import settings from 'settings';
 import componentType from '~/helpers/controller/init-mixin';
 import Dropdown from '../dropdown/dropdown';
 import {description as template} from './login-menu.html';
-import userModel, {accountsModel} from '~/models/usermodel';
+// import userModel, {accountsModel} from '~/models/usermodel';
+import userModelBus from '~/models/usermodel-bus';
 import linkHelper from '~/helpers/link';
 
 const spec = {
@@ -31,25 +32,24 @@ class LoginMenu extends componentType(spec) {
     }
 
     setTutorUser() {
-        const index = this.user.groups.indexOf('OpenStax Tutor');
-
-        if (index < 0) {
+        if (!isTutorUser) {
             this.user.groups.push('OpenStax Tutor');
         }
     }
 
     pollAccounts() {
         const userPollInterval = setInterval(() => {
-            accountsModel.load().then((accountResponse) => {
-                const foundTutor = accountResponse.applications
-                    .find((app) => app.name === 'OpenStax Tutor');
+            userModelBus.get('accountsModel-load')
+                .then((accountResponse) => {
+                    const foundTutor = accountResponse.applications
+                        .find((app) => app.name === 'OpenStax Tutor');
 
-                if (foundTutor) {
-                    this.setTutorUser();
-                    this.updateDropdown();
-                    clearInterval(userPollInterval);
-                }
-            });
+                    if (foundTutor) {
+                        this.setTutorUser();
+                        this.updateDropdown();
+                        clearInterval(userPollInterval);
+                    }
+                });
         }, 60000);
     }
 
@@ -118,17 +118,21 @@ class LoginMenu extends componentType(spec) {
 }
 
 export default function (el) {
-    return userModel.load().then((user) => {
-        const loggedIn = Boolean(typeof user === 'object' && user.id);
+    return new Promise((resolve) => {
+        const promise = userModelBus.get('userModel-load');
 
-        if (loggedIn) {
-            pi('identify_client', user.id);
-        }
+        promise.then((user) => {
+            const loggedIn = Boolean(typeof user === 'object' && user.id);
 
-        return new LoginMenu({
-            el,
-            user,
-            loggedIn
+            if (loggedIn) {
+                pi('identify_client', user.id);
+            }
+
+            resolve(new LoginMenu({
+                el,
+                user,
+                loggedIn
+            }));
         });
     });
 }
