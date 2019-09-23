@@ -34,7 +34,7 @@ export default class MainMenu extends Controller {
 
     updateLoginUrl() {
         this.model.login = `${this.loginUrl}?next=${encodeURIComponent(window.location.href)}`;
-        this.model.logout = `${this.logoutUrl}`;
+        this.model.logout = `${this.logoutUrl}?next=${encodeURIComponent(window.location.href)}`;
         this.update();
     }
 
