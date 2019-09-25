@@ -5,7 +5,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
         <meta name="description" content="">
-
+        <!-- Anti-flicker snippet (recommended)  -->
+        <style>.async-hide { opacity: 0 !important} </style>
+        <script>(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+        h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+        (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+        })(window,document.documentElement,'async-hide','dataLayer',4000,
+        {'GTM-XXXXXX':true});</script>
         <script src="https://www.google-analytics.com/analytics.js"></script>
         <script type="text/javascript" src="//script.crazyegg.com/pages/scripts/0084/9271.js" async="async"></script>
         <script defer src="@SETTINGS_URL@"></script>
