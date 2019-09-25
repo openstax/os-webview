@@ -84,6 +84,7 @@ export default class SeparateMap extends componentType(spec, canonicalLinkMixin,
 
                 tf.on('close-form', () => {
                     shellBus.emit('hideDialog');
+                    this.testimonialForm = null;
                 });
                 return tf;
             };
@@ -92,9 +93,12 @@ export default class SeparateMap extends componentType(spec, canonicalLinkMixin,
                 loggedIn: true
             });
             sb.on('submit-testimonial', () => {
+                if (!this.testimonialForm) {
+                    this.testimonialForm = newForm();
+                }
                 shellBus.emit('showDialog', () => ({
                     title: 'Submit your testimonial',
-                    content: newForm()
+                    content: this.testimonialForm
                 }));
             });
         });
