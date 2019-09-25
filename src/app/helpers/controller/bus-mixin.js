@@ -75,18 +75,10 @@ export default (superclass) => class extends superclass {
         this[BUS] = new Bus();
         this.on('update-props', (obj) => {
             Object.assign(this, obj);
-        });
-    }
-
-    onLoaded() {
-        if (super.onLoaded) {
-            super.onLoaded();
-        }
-        if (this.whenPropsUpdated) {
-            this.on('update-props', (obj) => {
+            if (this.whenPropsUpdated) {
                 this.whenPropsUpdated(obj);
-            });
-        }
+            }
+        });
     }
 
     on(...args) {

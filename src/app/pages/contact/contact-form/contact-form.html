@@ -1,0 +1,29 @@
+<template args="model">
+    <input type="hidden" name="external" value="1">
+    <label>
+        What is your question about?
+        <div skip="true" tabindex="0"></div>
+        <select name="subject">
+            <option each="subject in model.subjects" value="{subject}"
+                selected="{model.selected(subject)}">{subject}
+            </option>
+        </select>
+        <span class="invalid-message">{model.validationMessage('subject')}</span>
+    </label>
+    <label>
+        Your Name
+        <input name="name" type="text" size="20" required>
+        <span class="invalid-message">{model.validationMessage('name')}</span>
+    </label>
+    <label>
+        Your Email Address
+        <input name="email" type="email" required>
+        <span class="invalid-message">{model.validationMessage('email')}</span>
+    </label>
+    <label class="auto-height">
+        Your Message
+        <textarea cols="50" name="description" rows="6" required skip="true"></textarea>
+        <span class="invalid-message">{model.validationMessage('description')}</span>
+    </label>
+    <input type="submit" value="Send" class="btn btn-orange">
+</template>

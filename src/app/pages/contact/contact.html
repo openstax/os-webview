@@ -8,40 +8,7 @@
         </div>
         <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
         <div class="boxed left-justified">
-            <div class="col">
-                <iframe name="form-response" id="form-response" src="" width="0" height="0"></iframe>
-                <form class="form" action="{model.formTarget}"
-                target="form-response" method="post">
-                    <input type="hidden" name="orgid" value="{model.salesforce.oid}">
-                    <input type="hidden" name="external" value="1">
-                    <label>
-                        What is your question about?
-                        <div skip="true" tabindex="0"></div>
-                        <select name="subject">
-                            <option each="subject in model.subjects" value="{subject}"
-                                selected="{model.selected(subject)}">{subject}
-                            </option>
-                        </select>
-                        <span class="invalid-message">{model.validationMessage('subject')}</span>
-                    </label>
-                    <label>
-                        Your Name
-                        <input name="name" type="text" size="20" required>
-                        <span class="invalid-message">{model.validationMessage('name')}</span>
-                    </label>
-                    <label>
-                        Your Email Address
-                        <input name="email" type="email" required>
-                        <span class="invalid-message">{model.validationMessage('email')}</span>
-                    </label>
-                    <label class="auto-height">
-                        Your Message
-                        <textarea cols="50" name="description" rows="6" required skip="true"></textarea>
-                        <span class="invalid-message">{model.validationMessage('description')}</span>
-                    </label>
-                    <input type="submit" value="Send" class="btn btn-orange">
-                </form>
-            </div>
+            <div class="col form-container" skip="true"></div>
             <div class="col">
                 <h2>{model.mailing_header}</h2>
                 <address data-html="mailing_address" skip="true"></address>
