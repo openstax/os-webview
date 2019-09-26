@@ -31,7 +31,11 @@ class Analytics {
     }
 
     setUser(userId) {
-        window.ga('set', 'userId', userId);
+        waitForAnalytics.then(
+            () => {
+                window.ga('set', 'userId', userId);
+            }
+        );
     }
 
     send(fields) {
@@ -239,11 +243,13 @@ class Analytics {
             if (settings.analyticsID2) {
                 window.ga.q.push(['create', settings.analyticsID2, 'auto', {name: 'ga2'}]);
             }
+            window.ga.q.push(['require', 'GTM-KW9STW6']);
         } else {
             window.ga('create', settings.analyticsID, 'auto');
             if (settings.analyticsID2) {
                 window.ga('create', settings.analyticsID2, 'auto', {name: 'ga2'});
             }
+            window.ga('require', 'GTM-KW9STW6');
         }
 
         accountsModel.load().then((accountResponse) => {
