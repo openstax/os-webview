@@ -1,4 +1,5 @@
 import settings from 'settings';
+import bus from './usermodel-bus';
 
 const docUrlBase = `${settings.apiOrigin}${settings.apiPrefix}/documents`;
 const accountsUrl = `${settings.accountHref}/api/user`;
@@ -38,7 +39,9 @@ class UserModel {
         //             is_guessed_preferred: true
         //         }
         //     ],
-        //     applications: [ ]
+        //     applications: [
+        //         // {name: 'OpenStax Tutor'}
+        //     ]
         // });
 
         const proxyPromise = new Promise((resolve) => {
@@ -65,15 +68,12 @@ class UserModel {
         return proxyPromise;
     }
 
-    loginLink(returnTo) {
-        const encodedLocation = encodeURIComponent(returnTo || window.location.href);
-
-        return `${settings.apiOrigin}/oxauth/login/?next=${encodedLocation}`;
-    }
-
 }
 
 function oldUserModel(sfUserModel) {
+    if (!('id' in sfUserModel)) {
+        return {};
+    }
     const findPreferredEmail = (contacts) => (contacts
         .filter((obj) => obj.type === 'EmailAddress')
         .reduce((a, b) => {
@@ -123,6 +123,12 @@ class ConvertedAccountsUserModel extends UserModel {
 
 }
 
-export const accountsModel = new UserModel(accountsUrl);
-export const makeDocModel = (docId) => new UserModel(`${docUrlBase}/${docId}`);
-export default new ConvertedAccountsUserModel();
+const userModel = new ConvertedAccountsUserModel();
+const accountsModel = new UserModel(accountsUrl);
+const makeDocModel = (docId) => new UserModel(`${docUrlBase}/${docId}`);
+
+bus.serve('userModel-load', () => userModel.load());
+bus.serve('accountsModel-load', () => accountsModel.load());
+
+export default userModel;
+export {accountsModel, makeDocModel};

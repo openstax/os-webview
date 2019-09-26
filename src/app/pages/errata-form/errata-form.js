@@ -6,6 +6,7 @@ import $ from '~/helpers/$';
 import Form from './form/form';
 import css from './errata-form.css';
 import settings from 'settings';
+import linkHelper from '~/helpers/link';
 
 const spec = {
     template,
@@ -64,7 +65,7 @@ export default class extends componentType(spec, loaderMixin) {
                     this.hideLoader();
                 });
             } else {
-                window.location = userModel.loginLink();
+                window.location = linkHelper.loginLink();
             }
         });
     }

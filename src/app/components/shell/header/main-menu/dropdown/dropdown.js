@@ -11,17 +11,14 @@ const spec = {
     view: {
         classes: ['nav-menu-item', 'dropdown']
     },
-    frozen: false,
     isOpen: false,
     selectedIndex: -1,
     model() {
-        this.props = this.getProps();
-
         return {
             isOpen: this.isOpen,
             selectedIndex: this.selectedIndex,
-            dropdownLabel: this.props.dropdownLabel,
-            items: this.props.items
+            dropdownLabel: this.dropdownLabel,
+            items: this.items.filter((i) => !i.exclude || !i.exclude())
         };
     }
 };
@@ -34,15 +31,17 @@ export default class Dropdown extends componentType(spec, insertHtmlMixin) {
                 this.openedByTouch = false;
                 return;
             }
-            if (!$.isMobileDisplay() && !this.frozen) {
+            if (!$.isMobileDisplay()) {
                 this.closeMenu();
             }
         };
         this.el.addEventListener('mouseleave', this.closeMenuBound);
+        this.removeCloseMenusHandler = headerBus.on('close-menus', this.closeMenuBound);
     }
 
     onClose() {
         this.el.removeEventListener('mouseleave', this.closeMenuBound);
+        this.removeCloseMenusHandler();
     }
 
     setFocus() {
@@ -55,21 +54,13 @@ export default class Dropdown extends componentType(spec, insertHtmlMixin) {
         this.settingFocus = false;
     }
 
-    freeze() {
-        this.frozen = true;
-    }
-
-    unfreeze() {
-        this.frozen = false;
-    }
-
     openMenu() {
         if (!this.isOpen) {
             this.isOpen = true;
             if ($.isMobileDisplay()) {
                 headerBus.emit('recognizeDropdownOpen', {
                     el: this.el,
-                    label: this.props.dropdownLabel,
+                    label: this.dropdownLabel,
                     close: this.closeMenu.bind(this)
                 });
             }
@@ -114,7 +105,7 @@ export default class Dropdown extends componentType(spec, insertHtmlMixin) {
     @on('keydown')
     moveSelection(event) {
         /* eslint complexity: 0 */
-        const lastIndex = this.props.items.length - 1;
+        const lastIndex = this.items.length - 1;
 
         switch (event.keyCode) {
         case $.key.down:

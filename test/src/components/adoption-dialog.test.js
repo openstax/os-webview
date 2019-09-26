@@ -1,4 +1,3 @@
-import '../../helpers/fetch-mocker';
 import {default as showAdoptionsIfNeeded, AdoptionDialog} from '~/components/shell/adoption-dialog/adoption-dialog';
 import {clickElement} from '../../test-utils';
 
