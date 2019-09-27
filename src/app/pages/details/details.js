@@ -170,9 +170,7 @@ export default class Details extends BaseClass {
 
     onDataLoaded() {
         if (this.pageData.meta.type !== 'books.Book') {
-            console.error('Pagedata is not of type books.Book: ', this.pageData.meta.type);
-            window.location.assign('/_404');
-            return;
+            throw new Error(`Pagedata is not of type books.Book: ${this.pageData.meta.type}`);
         }
         this.hideLoader();
         const polish = $.isPolish(this.pageData.title);
@@ -352,8 +350,7 @@ export default class Details extends BaseClass {
     }
 
     onDataError(e) {
-        console.error('Data error:', e);
-        window.location = '/_404';
+        throw new Error(`Data error: ${e}`);
     }
 
     setTocOpen(whether) {
