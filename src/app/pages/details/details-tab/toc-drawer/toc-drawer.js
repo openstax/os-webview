@@ -1,5 +1,5 @@
 import componentType from '~/helpers/controller/init-mixin';
-import Contents from '~/pages/details/contents/contents';
+import Contents from '~/pages/details/contents2/contents';
 
 const spec = {
     view: {
@@ -10,10 +10,10 @@ const spec = {
 export default class extends componentType(spec) {
 
     onLoaded() {
-        const contentPane = new Contents(
-            this.data,
-            {tag: 'ol', classes: ['table-of-contents']}
-        );
+        const contentPane = new Contents({
+            cnxId: this.data.id,
+            slug: this.data.slug
+        });
 
         this.regions.self.append(contentPane);
     }

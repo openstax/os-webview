@@ -46,6 +46,7 @@ export default class DetailsTab extends componentType(spec, insertHtmlMixin, bus
                 .replace(/[^/]*$/, this.model.bookInfo.table_of_contents.shortId);
 
             this.on('put-toc-in', (region) => {
+                console.info('This is a mess, too.', this.model);
                 const tocComponent = new TocDrawer({
                     data: Object.assign(
                         {
