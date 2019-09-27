@@ -16,12 +16,6 @@ const englishTabs = ['Book details', 'Instructor resources', 'Student resources'
 
 describe('Book Details page', () => {
 
-    it('404s on invalid title', () =>
-        ready.then(() => {
-            expect(window.location.assign).toBeCalledWith('/_404');
-        })
-    );
-
     it('[set biology title]', () => {
         pathname = '/details/biology-2e';
     });
@@ -68,13 +62,11 @@ describe('Book Details page', () => {
         ready.then(() => {
             const tabs = Array.from(p.el.querySelectorAll('.tab-group > .tab'));
 
-            return ready.then(() => {
-                expect(p).toBeTruthy();
-                expect(decodeURIComponent(p.slug)).toBe('books/fizyka-dla-szkół-wyższych-tom-1');
-                ['Book details', 'Instructor resources', 'Student resources'].forEach((label) => {
-                    expect(tabs.find((el) => el.textContent === label)).toBeFalsy();
-                });
-            })
+            expect(p).toBeTruthy();
+            expect(decodeURIComponent(p.slug)).toBe('books/fizyka-dla-szkół-wyższych-tom-1');
+            ['Book details', 'Instructor resources', 'Student resources'].forEach((label) => {
+                expect(tabs.find((el) => el.textContent === label)).toBeFalsy();
+            });
         })
     );
     it ('has no English tabs for Polish book', () =>

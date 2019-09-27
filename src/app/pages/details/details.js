@@ -170,7 +170,7 @@ export default class Details extends BaseClass {
 
     onDataLoaded() {
         if (this.pageData.meta.type !== 'books.Book') {
-            throw new Error(`Pagedata is not of type books.Book: ${this.pageData.meta.type}`);
+            throw new Error(`Pagedata for ${this.slug} is not of type books.Book: ${this.pageData.meta.type}`);
         }
         this.hideLoader();
         const polish = $.isPolish(this.pageData.title);
