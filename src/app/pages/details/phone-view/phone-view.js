@@ -3,8 +3,7 @@ import GetThisTitle from '~/components/get-this-title/get-this-title';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import LetUsKnow from '../let-us-know/let-us-know';
 import DetailsPane from './details-pane/details-pane';
-import TocPane from './toc-pane/toc-pane';
-import Contents from '~/pages/details/contents/contents';
+import TocPane from '../table-of-contents/table-of-contents';
 import InstructorResourcePane from './instructor-resources-pane/instructor-resources-pane';
 import StudentResourcePane from './student-resources-pane/student-resources-pane';
 import ErrataPane from './errata-pane/errata-pane';
@@ -70,16 +69,15 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
                 },
                 this.props.tableOfContents
             );
+            const bi = this.props.bookInfo;
 
             accordionItems.splice(1, 0, {
                 title: polish ? 'Spis treści' : 'Table of contents',
                 contentComponent: new TocPane({
-                    polish,
-                    webviewLink: this.props.webviewLink,
-                    contentPane: new Contents(
-                        contentsModel,
-                        {tag: 'ol', classes: ['table-of-contents']}
-                    )
+                    isRex: Boolean(bi.webview_rex_link),
+                    cnxId: bi.cnx_id,
+                    bookSlug: bi.slug,
+                    webviewLink: this.props.webviewLink
                 })
             });
         }

@@ -28,6 +28,7 @@ import subjectData from '../src/data/subject-categories';
 import teamData from '../src/data/team';
 import technologyData from '../src/data/technology';
 import userData from '../src/data/user';
+import archiveData from '../src/data/archive';
 
 global.fetch = jest.fn().mockImplementation((...args) => {
     const isAdoption = (/pages\/adoption-form/).test(args[0]);
@@ -48,7 +49,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isOsNewsDetail = (/v2\/pages\/90/).test(args[0]);
     const isOsTutor = (/pages\/openstax-tutor/).test(args[0]);
     const isPartner = (/pages\/partners/).test(args[0]);
-    const isPolishPhysics = (/v2\/pages\/190/).test(args[0]);
+    const isPolishPhysics = (/fizyka/).test(args[0]);
     const isPress = (/api\/press\?/).test(args[0]);
     const isPressArticle = (/api\/press\//).test(args[0]);
     const isPrintOrder = (/pages\/print-order/).test(args[0]);
@@ -61,6 +62,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isTechnology = (/pages\/technology/).test(args[0]);
     const isUser = (/accounts.*\/api\/user/).test(args[0]);
     const isImage = (/api\/images/).test(args[0]);
+    const isArchive = (/archive\.cnx/).test(args[0]);
 
     return new Promise(
         function (resolve, reject) {
@@ -98,8 +100,6 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = pressArticleData;
             } else if (isPrintOrder) {
                 payload = printOrderData;
-            } else if (isBooks) {
-                payload = booksData;
             } else if (isBookTitles) {
                 payload = bookTitleData;
             } else if (isOsNews) {
@@ -126,6 +126,10 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = technologyData;
             } else if (isUser) {
                 payload = userData;
+            } else if (isArchive) {
+                payload = archiveData;
+            } else if (isBooks) {
+                payload = booksData;
             } else if (isImage) {
                 // ignore
             } else {

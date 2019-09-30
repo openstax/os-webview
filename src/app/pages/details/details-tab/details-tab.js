@@ -2,7 +2,7 @@ import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import busMixin from '~/helpers/controller/bus-mixin';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
 import LetUsKnow from '../let-us-know/let-us-know';
-import TocDrawer from './toc-drawer/toc-drawer';
+import TocDrawer from '../table-of-contents/table-of-contents';
 import {description as template} from './details-tab.html';
 import {description as templatePolish} from './details-tab-polish.html';
 import css from './details-tab.css';
@@ -46,13 +46,12 @@ export default class DetailsTab extends componentType(spec, insertHtmlMixin, bus
                 .replace(/[^/]*$/, this.model.bookInfo.table_of_contents.shortId);
 
             this.on('put-toc-in', (region) => {
+                const bi = this.model.bookInfo;
                 const tocComponent = new TocDrawer({
-                    data: Object.assign(
-                        {
-                            webviewLink
-                        },
-                        this.model.bookInfo.table_of_contents
-                    )
+                    isRex: Boolean(bi.webview_rex_link),
+                    cnxId: bi.cnx_id,
+                    bookSlug: bi.slug,
+                    webviewLink
                 });
 
                 region.attach(tocComponent);

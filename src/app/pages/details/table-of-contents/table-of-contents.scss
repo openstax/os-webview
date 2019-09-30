@@ -1,0 +1,25 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.toc-drawer > .table-of-contents {
+    > :not(ul) {
+        font-weight: bold;
+    }
+
+    ul {
+        margin-top: 0;
+    }
+
+    a {
+        color: text-color(normal);
+        text-decoration: none;
+    }
+
+    a > .os-text {
+        color: text-color(link);
+        text-decoration-line: underline;
+    }
+
+    .os-divider::before {
+        content: '.';
+    }
+}
