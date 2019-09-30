@@ -1,0 +1,53 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.paginator {
+    display: grid;
+    justify-content: center;
+
+    @include width-up-to($phone-max) {
+        grid-row-gap: 3.7rem;
+    }
+
+    @include wider-than($phone-max) {
+        grid-row-gap: 4.7rem;
+    }
+
+    .button-bar {
+        @extend %button-bar;
+
+        > button {
+            padding: 0;
+
+            &:not(:first-child):not(:last-child) {
+                width: 4.9rem;
+
+                @include width-up-to($phone-max) {
+                    width: 3.1rem;
+                }
+            }
+
+            &:first-child,
+            &:last-child {
+                width: 11.1rem;
+
+                @include width-up-to($phone-max) {
+                    width: 6.7rem;
+
+                    &:last-child {
+                        width: 6.5rem;
+                    }
+                }
+            }
+
+            &[aria-selected="true"] {
+                background-color: text-color(link);
+                color: text-color(white);
+            }
+        }
+
+    }
+
+    .summary {
+        text-align: center;
+    }
+}

@@ -2,23 +2,14 @@
 
 .blog.page .search-bar {
     display: grid;
-    grid-column-gap: 2rem;
+    grid-column-gap: 1rem;
     grid-row-gap: 1rem;
-    grid-template: 'topline topline'
-    'input button' /1fr auto;
-    justify-items: center;
+    grid-template: 'input button' /minmax(max-content, 80rem) auto;
+    justify-items: left;
     margin: auto;
-    max-width: $text-content-max;
-    padding: 2rem $normal-margin;
+    max-width: $content-max;
+    padding: 4rem $normal-margin;
     width: 100%;
-
-
-    h2 {
-        @include set-font(h3);
-
-        grid-area: topline;
-        margin: 0;
-    }
 
     .input-with-clear-button {
         align-items: center;
