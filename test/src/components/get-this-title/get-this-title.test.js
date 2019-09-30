@@ -26,7 +26,9 @@ describe('GetThisTitle', () => {
         expect(expandLink()).toBeTruthy();
         expect(linkCount()).toBe(5);
         clickElement(expandLink());
-        expect(linkCount()).toBe(6);
+        expect(linkCount()).toBe(7);
+        clickElement(expandLink());
+        expect(linkCount()).toBe(5);
     });
     it('respects enable_study_edge flag', () => {
         const downloadLink = (component) => component.el.querySelector('.option .show-study-edge');
