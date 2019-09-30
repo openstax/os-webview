@@ -19,7 +19,7 @@ export default class extends componentType(spec) {
         tableOfContentsHtml({
             isRex: this.isRex,
             cnxId: this.cnxId,
-            bookSlug: this.slug,
+            bookSlug: this.bookSlug,
             webviewLink: this.webviewLink
         }).then(
             (tocHtml) => {
