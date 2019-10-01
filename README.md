@@ -31,7 +31,7 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.1/install.sh | b
 ```bash
 git clone git@github.com:openstax/os-webview.git
 cd os-webview
-./script/setup
+script/setup
 ```
 
 ## Build and Run the Development Server
@@ -39,7 +39,8 @@ cd os-webview
 To build the site for development and load it in your default web browser with [BrowserSync](http://www.browsersync.io), simply run:
 
 ```bash
-./script/server
+. script/bootstrap
+script/dev
 ```
 
 That will create a new `dev` directory from which the site is served.  Changes should be made to files in the `src` directory.  Gulp will automatically watch for changes in `src`, perform any compilation and transpilation necessary, and update the result in `dev`.
@@ -51,7 +52,8 @@ You can also run individual tasks.  Enter `$(npm bin)/gulp --tasks` to see the f
 To run the linters and unit tests locally, enter:
 
 ```bash
-./script/test
+script/build
+script/test
 ```
 
 You can also just run the linters (`$(npm bin)/gulp lint`) individually without rebuilding.
