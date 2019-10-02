@@ -1,6 +1,9 @@
 @import 'pattern-library/core/pattern-library/headers';
 @import 'mixins/triangle';
 
+$darkening-mask: rgba(0, 0, 0, 0.2);
+$extra-dark-mask: rgba(0, 0, 0, 0.4);
+
 .recommended-callout {
     height: 0;
     margin: 0;
@@ -28,7 +31,7 @@
             0 0.1rem 1rem 0 rgba(0, 0, 0, 0.12);
             color: text-color(white);
             display: grid;
-            grid-template-columns: 22.8rem 4rem;
+            grid-template-columns: auto 4rem;
             grid-template-rows: 4rem auto;
             overflow: hidden;
 
@@ -41,18 +44,26 @@
 
         .callout-title {
             background-color: text-color(link);
+            font-weight: bold;
             margin: 0;
             padding: 0 2rem;
         }
 
         .put-away {
-            background-color: rgb(13, 101, 142);
+            background-color: text-color(link);
+            background-blend-mode: multiply;
+            background-image: linear-gradient(to bottom, $darkening-mask, $darkening-mask);
             border: 0;
             border-radius: 0;
             color: unset;
             height: unset;
             justify-content: center;
             width: 4rem;
+
+            &:hover {
+                background-color: text-color(link);
+                background-image: linear-gradient(to bottom, $extra-dark-mask, $extra-dark-mask);
+            }
 
             > * {
                 margin: 0;
@@ -67,12 +78,14 @@
             display: unset;
             grid-column-start: span 2;
             line-height: 1.5;
-            padding: 0.8rem 1.6rem 0.8rem 2.4rem;
+            padding: 0.8rem 1.6rem 0.8rem 2rem;
+            width: 22.8rem;
         }
     }
 
     @include width-up-to($phone-max) {
-        .put-away {
+        .put-away,
+        .callout-blurb {
             display: none;
         }
 
