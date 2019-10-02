@@ -37,8 +37,7 @@ export default class RoverRedesign extends BaseClass {
             new Banner({
                 model: {
                     headerImage,
-                    mobileHeaderImage: headerImage,
-                    headerImageAltText: 'Rover logo',
+                    headerImageAltText: 'Rover by OpenStax',
                     accessLink: 'transition-popup',
                     accessText: data.section_1.accessButtonCta,
                     headline: 'Rover by OpenStax',
