@@ -6,7 +6,7 @@ function cnxFetch(cnxId) {
 export default function ({isRex, cnxId, bookSlug, webviewLink}) {
     function pageLink(entry) {
         return isRex ?
-            `https://openstax.org/books/${bookSlug}/pages/${entry.slug}` :
+            `https://openstax.org/${bookSlug}/pages/${entry.slug}` :
             `${webviewLink}:${entry.shortId}`;
     }
 
