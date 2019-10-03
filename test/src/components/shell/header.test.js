@@ -1,5 +1,6 @@
+import userModel from '~/models/usermodel';
 import header from '~/components/shell/header/header';
-import {clickElement} from '../../test-utils';
+import {clickElement} from '../../../test-utils';
 
 describe('Header', () => {
 

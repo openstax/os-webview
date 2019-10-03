@@ -54,9 +54,7 @@ export default class MainMenu extends Controller {
                 {url: '/institutional-partnership', label: 'Institutional Partnerships'}
             ]
         }));
-        attachLoginMenu(this.regions.loginMenu.el).then((c) => {
-            this.loginMenuComponent = c;
-        });
+        attachLoginMenu(this.regions.loginMenu.el);
     }
 
 }
