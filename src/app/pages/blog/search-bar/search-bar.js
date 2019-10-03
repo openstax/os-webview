@@ -20,15 +20,14 @@ const spec = {
 
 export default class extends componentType(spec, busMixin) {
 
+    get inputEl() {
+        return this.el.querySelector('[name="search-input"]');
+    }
     get inputValue() {
-        const inputEl = this.el.querySelector('[name="search-input"]');
-
-        return inputEl ? inputEl.value :decodeURIComponent(window.location.search.substr(1));
+        return this.inputEl ? this.inputEl.value : decodeURIComponent(window.location.search.substr(1));
     }
     set inputValue(newValue) {
-        const inputEl = this.el.querySelector('[name="search-input"]');
-
-        inputEl.value = newValue;
+        this.inputEl.value = newValue;
         this.update();
     }
 

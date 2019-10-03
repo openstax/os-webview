@@ -21,6 +21,14 @@ class Card extends ArticleSummary {
 
 }
 
+export function loadArticles(region, articles) {
+    region.empty();
+    articles.forEach((model) => {
+        delete model.subheading;
+        region.append(new Card({model}));
+    });
+}
+
 const spec = {
     template,
     css,
@@ -35,20 +43,12 @@ const spec = {
 
 export default class extends componentType(spec, busMixin) {
 
-    loadArticles() {
-        this.regions.cards.empty();
-        this.articles.forEach((model) => {
-            delete model.subheading;
-            this.regions.cards.append(new Card({model}));
-        });
-    }
-
     onLoaded() {
         const sb = new SearchBar();
 
         sb.on('value', (...args) => this.emit('value', ...args));
         this.regions.searchbar.attach(sb);
-        this.loadArticles();
+        loadArticles(this.regions.cards, this.articles);
     }
 
 }

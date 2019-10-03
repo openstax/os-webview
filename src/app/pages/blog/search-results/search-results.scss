@@ -1,0 +1,96 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import '../article-summary/article-summary';
+
+$image-height: 15rem;
+
+.blog.page .search-results {
+    background-color: ui-color(white);
+    padding-bottom: 2rem;
+    width: 100%;
+
+    .cards {
+        display: grid;
+        grid-template-columns: 100%;
+        justify-items: center;
+
+        @include width-up-to($phone-max) {
+            grid-row-gap: $normal-margin;
+        }
+
+        @include wider-than($phone-max) {
+            grid-gap: 3rem;
+        }
+    }
+
+    .card {
+        @extend %article-summary;
+
+        background-color: ui-color(white);
+        width: 100%;
+
+        @include width-up-to($phone-max) {
+            .article-blurb {
+                display: none;
+            }
+        }
+
+        @include wider-than($phone-max) {
+            grid-template-columns: 21rem 1fr;
+            height: $image-height;
+        }
+
+        .link-image {
+            height: $image-height;
+            width: 100%;
+        }
+
+        .author::after {
+            content: ', ';
+        }
+
+        .text-block {
+            display: grid;
+            grid-row-gap: #{$normal-margin / 2};
+            grid-template-rows: auto 1fr auto auto;
+            height: 100%;
+
+            @include width-up-to($phone-max) {
+                padding-top: $normal-margin;
+            }
+
+            @include wider-than($phone-max) {
+                padding: $normal-margin;
+                padding-left: #{2 * $normal-margin};
+            }
+
+            > *,
+            .article-blurb > * {
+                margin: 0;
+            }
+
+            .article-blurb {
+                height: 5rem;
+            }
+
+            .go-to {
+                display: none;
+            }
+        }
+    }
+
+    h2 {
+        @include title-font(2.4rem);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .paginator {
+        @include width-up-to($phone-max) {
+            margin: 3rem 0;
+        }
+        @include wider-than($phone-max) {
+            margin: 12rem 0;
+        }
+    }
+}
