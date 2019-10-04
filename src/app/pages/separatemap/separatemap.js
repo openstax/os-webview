@@ -111,6 +111,7 @@ export default class SeparateMap extends componentType(spec, canonicalLinkMixin,
                 sb.emit('show-one-school', schoolInfo);
             });
         });
+        this.map = map;
     }
 
     @on('click .popup-msg-cross')
@@ -119,6 +120,11 @@ export default class SeparateMap extends componentType(spec, canonicalLinkMixin,
             this.popupVisible = false;
             this.update();
         }
+    }
+
+    @on('click .mapboxgl-popup-content .put-away button')
+    closetooltip() {
+        this.map.tooltip.remove();
     }
 
     onClose() {

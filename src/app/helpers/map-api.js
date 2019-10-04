@@ -137,7 +137,14 @@ class BaseClass {
         if (!hasLngLat(schoolInfo)) {
             return;
         }
-        let html = `<b>${schoolInfo.fields.name}</b>`;
+        let html = `
+        <div class="put-away">
+            <button type="button">
+                <i  class="fa fa-times"></i>
+            </button>
+        </div>
+        <b>${schoolInfo.fields.name}</b>
+        `;
 
         if (schoolInfo.cityState) {
             html += `<br>${schoolInfo.cityState}`;
