@@ -2,7 +2,7 @@ import settings from 'settings';
 
 const EXTERNAL = /^((f|ht)tps?:)?\/\//;
 const ABSOLUTE_OPENSTAX = new RegExp(
-    `(?:https?://openstax.org|${window.location.origin})(?!/(?:books|accounts|oxauth|blog-feed|support))`
+    `(?:https?://openstax.org|${window.location.origin})(?!/(?:books|accounts|oxauth|blog-feed)/)`
 );
 const MAILTO = /^mailto:(.+)/;
 const PDF = /.pdf$/;

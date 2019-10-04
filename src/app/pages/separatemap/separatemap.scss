@@ -84,6 +84,7 @@ $small-shadow: 0 0.2rem 0.5rem 0 rgba(0, 0, 0, 0.15);
         box-shadow: $big-shadow;
         color: text-color(normal);
         display: grid;
+        grid-auto-flow: column;
         grid-gap: 0;
         position: fixed;
         right: 2rem;
@@ -163,7 +164,18 @@ $small-shadow: 0 0.2rem 0.5rem 0 rgba(0, 0, 0, 0.15);
     }
 
     .mapboxgl-popup {
-        pointer-events: none;
+        .put-away {
+            display: grid;
+            justify-content: right;
+
+            > button {
+                background-color: unset;
+                color: unset;
+                cursor: pointer;
+                padding: 0.3rem;
+            }
+        }
     }
+
 
 }
