@@ -100,7 +100,6 @@ export class AdoptionDialog extends componentType(spec, busMixin, salesforceForm
     }
 
     notReadyToSubmit() {
-        console.info(this.adoptions.map((obj) => obj.title));
         return this.adoptions.find((obj) => obj.title === '');
     }
 

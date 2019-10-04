@@ -1,8 +1,8 @@
 import settings from 'settings';
 import componentType from '~/helpers/controller/init-mixin';
+import busMixin from '~/helpers/controller/bus-mixin';
 import Dropdown from '../dropdown/dropdown';
 import {description as template} from './login-menu.html';
-// import userModel, {accountsModel} from '~/models/usermodel';
 import userModelBus from '~/models/usermodel-bus';
 import linkHelper from '~/helpers/link';
 
@@ -25,7 +25,7 @@ const dqMatch = settings.accountHref.match(/-[^.]+/);
 const domainQualifier = dqMatch ? dqMatch[0] : '';
 const tutorDomain = `https://tutor${domainQualifier}.openstax.org/dashboard`;
 
-class LoginMenu extends componentType(spec) {
+class LoginMenu extends componentType(spec, busMixin) {
 
     get isTutorUser() {
         return this.user.groups.includes('OpenStax Tutor');
@@ -91,48 +91,53 @@ class LoginMenu extends componentType(spec) {
         return () => dropdown.update();
     }
 
-    onLoaded() {
-        if (super.onLoaded) {
-            super.onLoaded();
-        }
-        if (this.loggedIn) {
+    whenPropsUpdated() {
+        this.update();
+    }
+
+    onUpdate() {
+        if (this.loggedIn && !this.updateDropdown) {
             this.updateDropdown = this.attachLoginDropdown();
             if (!this.isTutorUser) {
                 this.pollAccounts();
             }
-        } else {
-            this.boundUpdate = () => {
-                this.update();
-                if (this.updateDropdown) {
-                    this.updateDropdown();
-                }
-            };
-            window.addEventListener('navigate', this.boundUpdate);
         }
-    }
-
-    onClose() {
-        window.removeEventListener('navigate', this.boundUpdate);
+        if (this.updateDropdown) {
+            this.updateDropdown();
+        }
     }
 
 }
 
+function menuProps(user) {
+    return {
+        user,
+        loggedIn: Boolean(typeof user === 'object' && user.id)
+    };
+}
+
 export default function (el) {
-    return new Promise((resolve) => {
-        const promise = userModelBus.get('userModel-load');
-
-        promise.then((user) => {
-            const loggedIn = Boolean(typeof user === 'object' && user.id);
-
-            if (loggedIn) {
+    const pulseInsights = {
+        notified: false,
+        notify(user) {
+            if (!this.notified) {
                 pi('identify_client', user.id);
+                this.notified = true;
             }
+        }
+    };
 
-            resolve(new LoginMenu({
-                el,
-                user,
-                loggedIn
-            }));
+    return userModelBus.get('userModel-load').then((user) => {
+        const loginMenu = new LoginMenu(Object.assign(
+            {el},
+            menuProps(user)
+        ));
+
+        pulseInsights.notify(user);
+        userModelBus.on('update-accountsModel', (updatedUser) => {
+            loginMenu.emit('update-props', menuProps(updatedUser));
+            pulseInsights.notify(updatedUser);
         });
+        return loginMenu;
     });
 }

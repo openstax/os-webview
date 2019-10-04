@@ -1,21 +1,29 @@
 import settings from 'settings';
 import bus from './usermodel-bus';
+import isEqual from 'lodash/isEqual';
 
 const docUrlBase = `${settings.apiOrigin}${settings.apiPrefix}/documents`;
 const accountsUrl = `${settings.accountHref}/api/user`;
 
-const LOADED = Symbol();
-const LOADED_TIME = Symbol();
-const CACHE_FOR_MS = 15000;
+function cached(fn) {
+    let valid = false;
+    let cachedResult = null;
+    const cachedFn = function () {
+        if (!valid) {
+            cachedResult = fn();
+            valid = true;
+        }
+        return cachedResult;
+    };
 
-class UserModel {
+    cachedFn.invalidate = () => {
+        valid = false;
+    };
+    return cachedFn;
+}
 
-    constructor(url) {
-        this.url = url;
-        this[LOADED_TIME] = 0;
-    }
-
-    load() {
+const accountsModel = {
+    load: cached(() => {
         // Uncomment ONLY to TEST
         // return Promise.resolve({
         //     id: 315605,
@@ -43,32 +51,18 @@ class UserModel {
         //         // {name: 'OpenStax Tutor'}
         //     ]
         // });
-
-        const proxyPromise = new Promise((resolve) => {
-            const handleError = (err) => {
-                console.warn('Error fetching', this.url, err);
-                resolve({});
-            };
-
-            if (Date.now() > this[LOADED_TIME] + CACHE_FOR_MS) {
-                this[LOADED] = fetch(this.url, {credentials: 'include'})
-                    .then((response) => {
-                        this[LOADED_TIME] = Date.now();
-                        return response.json();
-                    });
-            }
-            this[LOADED].then(
-                (response) => resolve(response),
-                handleError
-            ).catch(
-                handleError
+        return fetch(accountsUrl, {credentials: 'include'})
+            .then(
+                (response) => {
+                    return response.json();
+                },
+                (err) => {
+                    console.warn('"Error fetching user info"');
+                    return {err};
+                }
             );
-        });
-
-        return proxyPromise;
-    }
-
-}
+    })
+};
 
 function oldUserModel(sfUserModel) {
     if (!('id' in sfUserModel)) {
@@ -111,20 +105,23 @@ function oldUserModel(sfUserModel) {
     };
 }
 
-class ConvertedAccountsUserModel extends UserModel {
+window.addEventListener('focus', () => {
+    accountsModel.load().then((oldUser) => {
+        accountsModel.load.invalidate();
+        accountsModel.load().then((newUser) => {
+            if (!isEqual(oldUser, newUser)) {
+                bus.emit('update-userModel', newUser);
+                bus.emit('update-accountsModel', oldUserModel(newUser));
+            }
+        });
+    });
+});
 
-    constructor() {
-        super(accountsUrl);
-    }
-
+const userModel = {
     load() {
-        return super.load().then(oldUserModel);
+        return accountsModel.load().then(oldUserModel);
     }
-
-}
-
-const userModel = new ConvertedAccountsUserModel();
-const accountsModel = new UserModel(accountsUrl);
+};
 const makeDocModel = (docId) => new UserModel(`${docUrlBase}/${docId}`);
 
 bus.serve('userModel-load', () => userModel.load());
