@@ -35,14 +35,6 @@ describe('paginator', () => {
         expect(disabledButton.textContent).toBe('2');
         expect(disabledButton.getAttribute('aria-selected')).toBe('true');
     });
-    it('puts ellipsis buttons in for more than 5 pages', () => {
-        const p = new Paginator(props(80, 4));
-        const buttons = Array.from(p.el.querySelectorAll('button'))
-            .filter((b) => !(/[a-z]/).test(b.textContent));
-        expect(buttons.map(b => b.textContent).join(',')).toBe('1,…,4,…,8');
-        p.emit('update-props', {currentPage: 7});
-        expect(buttons.map(b => b.textContent).join(',')).toBe('1,…,6,7,8');
-    });
     it('emits change events', () => {
         const p = new Paginator(props(80, 4));
         const selectedButton = () => p.el.querySelector('[aria-selected="true"]');
