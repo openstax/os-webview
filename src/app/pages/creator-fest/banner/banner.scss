@@ -1,0 +1,29 @@
+@import '../shared';
+
+.creator-fest .banner {
+    padding: 14rem 0 30rem;
+
+    .background {
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+
+    .text-content {
+        @extend %light-on-dark;
+
+        align-items: flex-start;
+        color: text-color(white);
+        margin: 0;
+        position: relative;
+        text-align: left;
+
+        h2 {
+            @include title-font(3.6rem);
+        }
+    }
+}
