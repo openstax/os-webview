@@ -11,4 +11,13 @@ const spec = {
     }
 };
 
-export default componentType(spec, insertHtmlMixin);
+export default class extends componentType(spec, insertHtmlMixin) {
+
+    onAttached() {
+        const biStyle = window.getComputedStyle(this.el).backgroundImage;
+        const newStyle = `${biStyle},url('${this.model.background}')`;
+
+        this.el.style.backgroundImage = newStyle;
+    }
+
+}

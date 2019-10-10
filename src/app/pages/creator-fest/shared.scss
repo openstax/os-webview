@@ -2,6 +2,7 @@
 @import 'mixins/placeholder-selectors';
 
 $cf-pink: rgb(215, 19, 122);
+$cf-navy: #213469;
 
 %pink-headline {
     @include title-font(1.2rem);

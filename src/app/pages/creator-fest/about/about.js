@@ -51,6 +51,7 @@ export default class extends componentType(spec, insertHtmlMixin) {
         const lastSection = Array.from(document.querySelectorAll('section')).pop();
 
         $.scrollTo(lastSection);
+        event.delegateTarget.blur();
         event.preventDefault();
     }
 

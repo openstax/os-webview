@@ -23,7 +23,8 @@
         font-weight: bold;
 
         &:hover,
-        &:active {
+        &:active,
+        &:focus {
             background-color: darken($cf-pink, 3%);
         }
     }
@@ -50,10 +51,15 @@
     .why:nth-child(3) {
         @extend %light-on-dark;
 
-        background-color: #213469;
+        background-blend-mode: normal, color;
+        background-image:
+        linear-gradient(to right, rgba($cf-navy, 0.75), $cf-navy),
+        linear-gradient(to right, $cf-navy, $cf-navy);
         color: text-color(white);
 
         .stack {
+            display: grid;
+            grid-template-columns: min-content;
             position: relative;
 
             .possibly-decorated {
