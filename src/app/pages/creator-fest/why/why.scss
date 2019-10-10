@@ -4,4 +4,29 @@
     background-repeat: no-repeat;
     background-size: cover;
     padding: 3rem 0 16rem;
+
+    @include width-up-to($phone-max) {
+        padding-bottom: 6rem;
+    }
+
+    [data-html="htmlBlock"] {
+        @include width-up-to($phone-max) {
+            > * {
+                max-width: 100%;
+            }
+        }
+
+        iframe {
+            border: thin solid ui-color(form-border);
+            border-radius: 0.3rem;
+
+            @include width-up-to($phone-max) {
+                min-width: 100%;
+            }
+
+            @include wider-than($phone-max) {
+                min-width: 42.5rem;
+            }
+        }
+    }
 }

@@ -2,8 +2,15 @@
 
 .creator-fest .about {
     background-color: ui-color(white);
-    padding: 16rem 0;
     position: relative;
+
+    @include width-up-to($phone-max) {
+        padding: 6rem 0;
+    }
+
+    @include wider-than($phone-max) {
+        padding: 16rem 0;
+    }
 
     .cards,
     .navigator {
@@ -24,17 +31,48 @@
     }
 
     .cards {
-        grid-template-columns: repeat(3, 1fr);
         justify-items: center;
         padding: 4rem 2rem;
+
+        @include width-up-to($phone-max) {
+            overflow: auto;
+
+            .card {
+                width: 66vw;
+            }
+        }
+
+        @include width-between($phone-max, $tablet-max) {
+            grid-template-rows: repeat(3, 1fr);
+            padding: 2rem;
+
+            > * {
+                border-right: 0;
+                border-bottom: thin solid ui-color(form-border);
+
+                &:last-child {
+                    border-bottom: 0;
+                }
+            }
+        }
+
+
+        @include wider-than($tablet-max) {
+            grid-template-columns: repeat(3, 1fr);
+        }
 
         .card {
             display: grid;
             grid-row-gap: 2rem;
+            grid-template-rows: auto auto 1fr;
             justify-items: center;
             margin-bottom: 1rem;
             padding: 0 1.4rem;
             text-align: center;
+
+            @include width-between($phone-max, $tablet-max) {
+                padding: $normal-margin 0;
+            }
 
             img {
                 max-width: 6rem;
@@ -47,7 +85,18 @@
     }
 
     .navigator {
-        @include set-font(h4);
+        @include width-up-to($phone-max) {
+            @include title-font(1.6rem);
+
+            left: 50%;
+            max-width: calc(100vw - 2rem);
+            overflow: hidden;
+            transform: translateX(-50%);
+        }
+
+        @include wider-than($phone-max) {
+            @include set-font(h4);
+        }
 
         border-top: 0;
         display: inline-grid;
@@ -66,7 +115,8 @@
             text-decoration: none;
 
             &:hover,
-            &:active {
+            &:active,
+            &:focus {
                 color: darken($cf-pink, 3%);
             }
         }
@@ -80,10 +130,18 @@
         grid-row-gap: 2rem;
         justify-items: left;
         padding: #{2 * $normal-margin};
-        position: absolute;
-        right: 0;
-        top: 0;
-        transform: translateY(-50%);
+
+        @include width-up-to($phone-max) {
+            margin: $normal-margin 0;
+            width: 100%;
+        }
+
+        @include wider-than($phone-max) {
+            position: absolute;
+            right: 0;
+            top: 0;
+            transform: translateY(-50%);
+        }
 
         @include wider-than($media-content-max) {
             padding-right: calc(50vw - 57rem);
@@ -97,6 +155,13 @@
     .super-headline {
         color: $cf-pink;
         -webkit-text-stroke-color: $cf-pink;
+    }
+
+    .text-block-left {
+        @include width-between($phone-max, $tablet-max) {
+            grid-column-gap: 8%;
+            grid-template-columns: auto auto;
+        }
     }
 }
 

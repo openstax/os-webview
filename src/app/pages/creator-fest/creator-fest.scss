@@ -1,6 +1,10 @@
 @import './shared';
 
 .creator-fest.page {
+    ::selection {
+        background-color: $text-highlight;
+    }
+
     .super-headline {
         font-size: 14.6rem;
         font-weight: bold;
@@ -15,6 +19,7 @@
 
     .btn {
         @extend %button;
+        @extend %secondary;
         @extend %light-on-dark;
 
         background-color: $cf-pink;
@@ -32,15 +37,23 @@
     .text-block-left {
         align-items: center;
         display: grid;
-        grid-column-gap: 12.5%;
-        grid-template-columns: minmax(13rem, 27.5%) auto;
         margin-top: 3rem;
+
+        @include width-up-to($tablet-max) {
+            grid-row-gap: 3rem;
+            grid-template-columns: 100%;
+        }
+
+        @include wider-than($tablet-max) {
+            grid-column-gap: 12.5%;
+            grid-template-columns: minmax(30rem, 27.5%) auto;
+        }
     }
 
     .blue-line {
         width: 9rem;
-        border: 0.3rem solid os-color(light-blue);
-        border-radius: 0.3rem;
+        border: 0.2rem solid os-color(light-blue);
+        border-radius: 0.2rem;
         margin-top: 2.6rem;
     }
 
@@ -57,16 +70,29 @@
         linear-gradient(to right, $cf-navy, $cf-navy);
         color: text-color(white);
 
+        .text-block-left {
+            @include width-between($phone-max, $tablet-max) {
+                grid-row-gap: 3rem;
+                grid-template-columns: 100%;
+            }
+        }
+
         .stack {
             display: grid;
             grid-template-columns: min-content;
+            justify-self: left;
             position: relative;
+
+            @include width-up-to($phone-max) {
+                grid-template-columns: minmax(100%, min-content);
+            }
 
             .possibly-decorated {
                 background-color: #213469;
                 border: 0.3rem solid os-color(light-blue);
                 border-radius: 0.3rem;
-                box-shadow: 0 0.2rem 0.6rem 0 rgba(ui-color(black), 0.5);
+                box-shadow: 0 0 0 0.3rem $cf-navy;
+                overflow: auto;
                 position: relative;
             }
 
@@ -78,6 +104,14 @@
                 position: absolute;
                 top: 0.7rem;
                 width: 100%;
+            }
+
+            [data-html="htmlBlock"] {
+                @include width-up-to($phone-max) {
+                    > * {
+                        max-height: 54vw;
+                    }
+                }
             }
         }
     }
@@ -91,15 +125,28 @@
     section {
         position: relative;
 
-        &:nth-child(even)::before {
-            border-bottom: 14rem solid transparent;
-            border-left: 8.1rem solid #242424;
-            border-top: 14rem solid transparent;
-            content: '';
-            left: 0;
-            position: absolute;
-            top: 0;
-            transform: translateY(-50%);
+        @include wider-than($tablet-max) {
+            &:nth-child(even)::before {
+                border-bottom: 14rem solid transparent;
+                border-left: 8.1rem solid #242424;
+                border-top: 14rem solid transparent;
+                content: '';
+                left: 0;
+                position: absolute;
+                top: 0;
+                transform: translateY(-50%);
+            }
+
+            &:nth-child(odd):not(:first-child)::before {
+                border-bottom: 14rem solid transparent;
+                border-right: 8.1rem solid #242424;
+                border-top: 14rem solid transparent;
+                content: '';
+                position: absolute;
+                right: 0;
+                top: 0;
+                transform: translateY(-50%);
+            }
         }
     }
 }

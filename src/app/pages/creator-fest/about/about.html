@@ -1,13 +1,13 @@
 <template args="model">
-    <div class="location-box">
-        <h2>{model.registerBox.headline}</h2>
-        <div data-html="registerBox.address"></div>
-        <a class="btn down-page" href="{model.registerBox.url}">{model.registerBox.text}</a>
-    </div>
     <div class="boxed">
         <div class="navigator">
             <div>Home</div>
             <a each="navLink in model.navLinks" href="{navLink.url}">{navLink.text}</a>
+        </div>
+        <div class="location-box">
+            <h2>{model.registerBox.headline}</h2>
+            <div data-html="registerBox.address"></div>
+            <a class="btn down-page" href="{model.registerBox.url}">{model.registerBox.text}</a>
         </div>
         <div class="super-headline">{model.superheadline}</div>
         <div class="text-block-left">
