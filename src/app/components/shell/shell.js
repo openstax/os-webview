@@ -95,6 +95,8 @@ class Shell extends Controller {
             };
         } else {
             if (!this.dialog) {
+                const savedY = window.scrollY;
+
                 this.dialog = new ModalDialog(() => this.getDialogProps(), {
                     closeDialog: () => {
                         region.el.setAttribute('hidden', '');
@@ -102,10 +104,13 @@ class Shell extends Controller {
                         this.dialog.hide();
                         this.dialogOpen = false;
                         this.nextDialog();
+                        window.scrollTo(0, this.dialog.savedY + 102); // ??? Menu fudge?
                     }
                 });
+                this.dialog.savedY = savedY;
                 region.append(this.dialog);
             } else {
+                this.dialog.savedY = window.scrollY;
                 this.dialog.update();
             }
             document.body.classList.add('no-scroll-dialog');

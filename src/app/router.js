@@ -17,6 +17,7 @@ const PAGES = [
     'confirmation',
     'confirmation/*path',
     'contact',
+    'creator-fest',
     'details/*path',
     'faq',
     'foundation',

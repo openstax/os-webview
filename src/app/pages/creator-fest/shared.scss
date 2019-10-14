@@ -1,0 +1,14 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/placeholder-selectors';
+
+$cf-pink: rgb(215, 19, 122);
+$cf-navy: #213469;
+$text-highlight: #f7cce4;
+
+%pink-headline {
+    @include title-font(1.2rem);
+
+    color: $cf-pink;
+    margin: 0;
+    text-transform: uppercase;
+}
