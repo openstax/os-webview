@@ -31,7 +31,7 @@ export default class DetailsTab extends componentType(spec, insertHtmlMixin, bus
 
     onLoaded() {
         super.onLoaded();
-        const includeTOC = Boolean(this.model.bookInfo.table_of_contents);
+        const includeTOC = Boolean(this.model.bookInfo.book_state === 'live');
         const gtt = new GetThisTitle(
             Object.assign({includeTOC}, this.model.bookInfo)
         );
@@ -42,8 +42,7 @@ export default class DetailsTab extends componentType(spec, insertHtmlMixin, bus
             gtt.on('toc', (whether) => {
                 this.emit('toc', whether);
             });
-            const webviewLink = this.model.bookInfo.webview_link
-                .replace(/[^/]*$/, this.model.bookInfo.table_of_contents.shortId);
+            const webviewLink = this.model.bookInfo.webview_link;
 
             this.on('put-toc-in', (region) => {
                 const bi = this.model.bookInfo;

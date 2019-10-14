@@ -62,7 +62,7 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
 
         // eslint-disable-next-line complexity
         this.model = () => ({
-            includeTOC: Boolean(data.table_of_contents),
+            includeTOC: data.includeTOC,
             tocActive: this.tocActive,
             modalHiddenAttribute: '',
             ibookLink: data.ibook_link,

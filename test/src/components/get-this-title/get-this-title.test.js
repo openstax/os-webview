@@ -24,11 +24,11 @@ describe('GetThisTitle', () => {
         const linkCount = () => Array.from(p.el.querySelectorAll('.option a')).length;
 
         expect(expandLink()).toBeTruthy();
-        expect(linkCount()).toBe(5);
+        expect(linkCount()).toBe(4);
         clickElement(expandLink());
-        expect(linkCount()).toBe(7);
+        expect(linkCount()).toBe(6);
         clickElement(expandLink());
-        expect(linkCount()).toBe(5);
+        expect(linkCount()).toBe(4);
     });
     it('respects enable_study_edge flag', () => {
         const downloadLink = (component) => component.el.querySelector('.option .show-study-edge');
