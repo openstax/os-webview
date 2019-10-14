@@ -230,12 +230,6 @@ export default class Details extends BaseClass {
             tabLabels.push(label);
         };
         const allies = shuffle(this.pageData.book_allies);
-        const contentsModel = Object.assign(
-            {
-                webviewLink: this.pageData.webview_link
-            },
-            this.pageData.table_of_contents
-        );
 
         this.detailsTab = detailsTab;
         detailsTab.on('toc', (whether) => this.setTocOpen(whether));
@@ -332,6 +326,7 @@ export default class Details extends BaseClass {
             bookState: this.pageData.book_state,
             detailsTabData: detailsTabData(),
             errataContent: this.pageData.errata_content,
+            includeTOC: Boolean(this.pageData.book_state === 'live'),
             instructorResources: {
                 freeResources: this.pageData.book_faculty_resources,
                 paidResources: allies
@@ -339,7 +334,6 @@ export default class Details extends BaseClass {
             slug: this.slug,
             salesforceAbbreviation: this.pageData.salesforce_abbreviation,
             studentResources: this.pageData.book_student_resources,
-            tableOfContents: this.pageData.table_of_contents,
             userStatusPromise: this.userStatusPromise,
             webviewLink: this.pageData.webview_link,
             compCopyDialogProps

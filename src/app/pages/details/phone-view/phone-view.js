@@ -62,13 +62,7 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
             accordionItems.splice(1, 2);
         }
 
-        if (this.props.tableOfContents) {
-            const contentsModel = Object.assign(
-                {
-                    webviewLink: this.props.webviewLink
-                },
-                this.props.tableOfContents
-            );
+        if (this.props.includeTOC) {
             const bi = this.props.bookInfo;
 
             accordionItems.splice(1, 0, {
