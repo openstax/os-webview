@@ -31,7 +31,9 @@ export default class StudentResourceTab extends Controller {
                 const resourceBox = new ResourceBox(
                     Object.assign({
                         heading: resourceData.resource_heading,
-                        description: resourceData.resource_description
+                        description: resourceData.resource_description,
+                        comingSoon: Boolean(resourceData.coming_soon_text),
+                        comingSoonText: resourceData.coming_soon_text
                     }, ResourceBox.studentResourceBoxPermissions(resourceData, userStatus, 'Student resources'))
                 );
 

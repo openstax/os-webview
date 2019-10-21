@@ -37,7 +37,9 @@ export default class InstructorResourceTab extends Controller {
                     Object.assign({
                         heading: resourceData.resource_heading,
                         description: resourceData.resource_description,
-                        creatorFest: resourceData.creator_fest_resource
+                        creatorFest: resourceData.creator_fest_resource,
+                        comingSoon: Boolean(resourceData.coming_soon_text),
+                        comingSoonText: resourceData.coming_soon_text
                     }, ResourceBox.instructorResourceBoxPermissions(resourceData, userStatus, 'Instructor resources'))
                 );
 

@@ -1,4 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/coming-soon';
 
 .resource-box {
     background-color: ui-color(white);
@@ -10,7 +11,18 @@
     height: 100%;
     justify-content: space-between;
     padding: $normal-margin 1.8rem;
+    position: relative;
     text-decoration: none;
+
+    &.coming-soon::before {
+        @include coming-soon;
+
+        background-color: ui-color(white);
+        border-radius: 2rem 0 0 2rem;
+        box-shadow: $card-shadow;
+        height: 4rem;
+        min-width: 10rem;
+    }
 
     @include wider-than($tablet-max) {
         &:hover {
@@ -36,6 +48,10 @@
     h3 {
         @include set-font(h4);
 
+        margin: 0;
+    }
+
+    p:empty {
         margin: 0;
     }
 

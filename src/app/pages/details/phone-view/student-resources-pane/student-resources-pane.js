@@ -20,7 +20,9 @@ export default class StudentResourcePane extends Controller {
                 const component = new ResourceBox(
                     Object.assign({
                         heading: res.resource_heading,
-                        description: ''
+                        description: '',
+                        comingSoon: Boolean(res.coming_soon_text),
+                        comingSoonText: ''
                     }, ResourceBox.studentResourceBoxPermissions(res, userStatus, 'Student resources'))
                 );
 
