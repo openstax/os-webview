@@ -32,7 +32,9 @@ export default class extends componentType(spec) {
                 const model = Object.assign({
                     heading: res.resource_heading,
                     description: '',
-                    creatorFest: res.creator_fest_resource
+                    creatorFest: res.creator_fest_resource,
+                    comingSoon: Boolean(res.coming_soon_text),
+                    comingSoonText: ''
                 }, ResourceBox.instructorResourceBoxPermissions(res, userStatus, 'Instructor resources'));
                 const resourceBox = new ResourceBox(model);
 

@@ -100,6 +100,11 @@ export default class extends componentType(spec, insertHtmlMixin) {
                 }
             });
         }
+        if (model.comingSoon) {
+            this.view = Object.assign({}, this.view);
+            this.view.classes = [...this.view.classes, 'coming-soon'];
+            model.description = `<p>${model.comingSoonText}</p>`;
+        }
     }
 
 }
