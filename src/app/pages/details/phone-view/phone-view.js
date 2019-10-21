@@ -64,14 +64,15 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
 
         if (this.props.includeTOC) {
             const bi = this.props.bookInfo;
+            const isRex = Boolean(bi.webview_rex_link);
+            const webviewLink = isRex ? bi.webview_rex_link : this.props.webviewLink;
 
             accordionItems.splice(1, 0, {
                 title: polish ? 'Spis treści' : 'Table of contents',
                 contentComponent: new TocPane({
-                    isRex: Boolean(bi.webview_rex_link),
+                    isRex,
                     cnxId: bi.cnx_id,
-                    bookSlug: bi.slug,
-                    webviewLink: this.props.webviewLink
+                    webviewLink
                 })
             });
         }

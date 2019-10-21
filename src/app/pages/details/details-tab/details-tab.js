@@ -42,14 +42,14 @@ export default class DetailsTab extends componentType(spec, insertHtmlMixin, bus
             gtt.on('toc', (whether) => {
                 this.emit('toc', whether);
             });
-            const webviewLink = this.model.bookInfo.webview_link;
+            const bi = this.model.bookInfo;
+            const isRex = Boolean(bi.webview_rex_link);
+            const webviewLink = isRex ? bi.webview_rex_link : bi.webview_link;
 
             this.on('put-toc-in', (region) => {
-                const bi = this.model.bookInfo;
                 const tocComponent = new TocDrawer({
-                    isRex: Boolean(bi.webview_rex_link),
+                    isRex,
                     cnxId: bi.cnx_id,
-                    bookSlug: bi.slug,
                     webviewLink
                 });
 
