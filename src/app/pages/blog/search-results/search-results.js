@@ -52,7 +52,7 @@ export default class extends componentType(spec) {
                         data.heading = data.title;
                         return blurbModel(data.slug, data);
                     });
-                loadArticles(this.regions.cards, this.articles);
+                loadArticles(this.regions.cards, this.articles, false);
                 this.updatePaginator({
                     searchTerm: decodeURIComponent(searchParam),
                     resultRange: `${this.firstIndex + 1}-${this.endBefore}`,
@@ -78,7 +78,7 @@ export default class extends componentType(spec) {
                     currentPage: this.currentPage + 1,
                     resultRange: `${this.firstIndex + 1}-${this.endBefore}`
                 });
-                loadArticles(this.regions.cards, this.articles);
+                loadArticles(this.regions.cards, this.articles, false);
             });
         } else {
             this.paginator.emit('update-props', props);
@@ -87,12 +87,6 @@ export default class extends componentType(spec) {
 
     onLoaded() {
         this.refreshResults();
-        this.boundRR = () => this.refreshResults();
-        window.addEventListener('popstate', this.boundRR);
-    }
-
-    onClose() {
-        window.removeEventListener('popstate', this.boundRR);
     }
 
 }

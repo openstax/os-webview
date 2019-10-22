@@ -28,7 +28,22 @@ export function blurbModel(articleSlug, data) {
     };
 }
 
-export default class ArticleSummary extends componentType(spec, insertHtmlMixin) {
+export class ArticleSummary extends componentType(spec, insertHtmlMixin) {
+
+    onLoaded() {
+        if (super.onLoaded) {
+            super.onLoaded();
+        }
+        this.regions.byline.attach(new Byline({
+            date: this.model.date,
+            author: this.model.author
+        }));
+    }
+
+};
+
+// Adds delayed-loading for thumbnails
+export default class extends ArticleSummary {
 
     init(...args) {
         super.init(...args);
@@ -51,10 +66,6 @@ export default class ArticleSummary extends componentType(spec, insertHtmlMixin)
         if (super.onLoaded) {
             super.onLoaded();
         }
-        this.regions.byline.attach(new Byline({
-            date: this.model.date,
-            author: this.model.author
-        }));
         window.addEventListener('scroll', this.handleScroll);
         this.handleScroll();
     }
