@@ -1,12 +1,16 @@
+import settings from 'settings';
+
 function cnxFetch(cnxId) {
     return fetch(`//archive.cnx.org/contents/${cnxId}.json`)
         .then((r) => r.json());
 }
 
-export default function ({isRex, cnxId, bookSlug, webviewLink}) {
+export default function ({isRex, cnxId, webviewLink}) {
     function pageLink(entry) {
+        const rexRoot = webviewLink.replace(/\/pages\/.*/, '');
+
         return isRex ?
-            `https://openstax.org/${bookSlug}/pages/${entry.slug}` :
+            `${rexRoot}/pages/${entry.slug}` :
             `${webviewLink}:${entry.shortId}`;
     }
 
