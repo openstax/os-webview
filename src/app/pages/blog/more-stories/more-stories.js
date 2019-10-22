@@ -1,7 +1,8 @@
 import componentType from '~/helpers/controller/init-mixin';
+import mix from '~/helpers/controller/mixins';
 import busMixin from '~/helpers/controller/bus-mixin';
 import SearchBar from '../search-bar/search-bar';
-import ArticleSummary from '../article-summary/article-summary';
+import DelayedImagesSummary, {ArticleSummary} from '../article-summary/article-summary';
 import css from './more-stories.css';
 import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
 import {description as template} from './more-stories.html';
@@ -12,16 +13,21 @@ const cardSpec = {
     }
 };
 
-class Card extends ArticleSummary {
+const cardSpecMixin = function (baseClass) {
+    return class extends baseClass {
 
-    init(...args) {
-        super.init(...args);
-        Object.assign(this, cardSpec);
-    }
+        init(...args) {
+            super.init(...args);
+            Object.assign(this, cardSpec);
+        }
 
-}
+    };
+};
 
-export function loadArticles(region, articles) {
+export function loadArticles(region, articles, delayImages=true) {
+    const BaseClass = delayImages ? DelayedImagesSummary : ArticleSummary;
+    const Card = mix(BaseClass).with(cardSpecMixin);
+
     region.empty();
     articles.forEach((model) => {
         delete model.subheading;
