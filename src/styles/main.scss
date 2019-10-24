@@ -99,29 +99,6 @@ sup {
     }
 }
 
-// TODO: Remove when new homepage is official
-.scrolldown-chevron {
-    @include set-font(h2);
-
-    align-items: center;
-    display: flex;
-    height: 0;
-    justify-content: space-around;
-    position: relative;
-    top: -3rem;
-    z-index: 100;
-
-    @include width-up-to($phone-max) {
-        display: none;
-    }
-
-    i {
-        color: text-color(white);
-        padding: 0 2rem 0.4rem;
-        text-shadow: 0 0.2rem 0.2rem rgba(ui-color(footer-bg), 0.25);
-    }
-}
-
 .sr-only {
     border: 0;
     clip: rect(0, 0, 0, 0);

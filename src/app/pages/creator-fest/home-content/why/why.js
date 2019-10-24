@@ -16,9 +16,14 @@ export default class extends componentType(spec, insertHtmlMixin) {
     onAttached() {
         if (this.model.background) {
             const biStyle = window.getComputedStyle(this.el).backgroundImage;
-            const newStyle = `${biStyle},url('${this.model.background}')`;
 
-            this.el.style.backgroundImage = newStyle;
+            if (biStyle) {
+                const newStyle = `${biStyle},url('${this.model.background}')`;
+
+                this.el.style.backgroundImage = newStyle;
+            } else {
+                setTimeout(() => this.onAttached(), 200);
+            }
         }
     }
 

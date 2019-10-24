@@ -1,0 +1,9 @@
+<template args="model">
+    <div class="navigator">
+        <a href="home" class="{model.currentClass('home')}">Home</a>
+        <a each="navLink in model.navLinks"
+            href="{navLink.url}" class="{model.currentClass(navLink.url)}">
+            {navLink.text}
+        </a>
+    </div>
+</template>
