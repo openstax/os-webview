@@ -37,8 +37,10 @@ export default class BookstoreSuppliers extends BaseClass {
             suppliersBlurb: this.pageData.other_providers_intro_blurb,
             suppliers,
             cardsClass: (suppliers.length % 3) ? 'by-twos' : '',
-            buttonUrl: this.pageData.isbn_download_url,
-            buttonText: this.pageData.isbn_cta
+            usButtonUrl: this.pageData.us_isbn_download_url,
+            usButtonText: this.pageData.us_isbn_cta,
+            caButtonUrl: this.pageData.canadian_isbn_download_url,
+            caButtonText: this.pageData.canadian_isbn_cta
         };
         this.update();
     }

@@ -22,7 +22,10 @@
         </div>
     </div>
     <div if="model.suppliers" class="main-content">
-        <a href="{model.buttonUrl}" class="btn primary">{model.buttonText}</a>
+        <div class="button-row">
+            <a href="{model.usButtonUrl}" class="btn primary">{model.usButtonText}</a>
+            <a href="{model.caButtonUrl}" class="btn primary">{model.caButtonText}</a>
+        </div>
         <div class="smaller-screen" data-html="subhead2" skip="true"></div>
         <div class="intro-blurb">{model.featuredSuppliersBlurb}</div>
         <div class="featured cards {model.cardsClass}">

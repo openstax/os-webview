@@ -155,6 +155,13 @@
         }
     }
 
+    .button-row {
+        display: grid;
+        grid-auto-flow: column;
+        grid-column-gap: 3rem;
+        justify-content: center;
+    }
+
     .btn {
         @extend %button;
         @extend %secondary;
