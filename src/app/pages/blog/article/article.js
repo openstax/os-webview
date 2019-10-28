@@ -21,7 +21,8 @@ const spec = {
             subheading: data.subheading,
             tags: data.tags
         };
-    }
+    },
+    setsPageTitleAndDescription: true
 };
 
 export default class extends componentType(spec, loaderMixin) {
@@ -57,6 +58,7 @@ export default class extends componentType(spec, loaderMixin) {
         if (this.el) {
             this.attachUnits();
         }
+        const meta = this.pageData.meta;
     }
 
 }

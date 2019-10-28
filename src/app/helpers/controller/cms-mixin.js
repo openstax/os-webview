@@ -92,7 +92,7 @@ export default (superclass) => class extends superclass {
                     if (document && this.el && this.el.parentNode) {
                         const mainEl = document.getElementById('main');
 
-                        if (mainEl && this.el.parentNode === mainEl) {
+                        if (this.setsPageTitleAndDescription || (mainEl && this.el.parentNode === mainEl)) {
                             setTitleAndDescription();
                         }
                     }
