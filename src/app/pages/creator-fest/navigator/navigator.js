@@ -14,9 +14,11 @@ const spec = {
     model() {
         return {
             navLinks: this.navLinks,
-            currentClass: (url) =>
-                window.location.pathname === `${basePath}/${url}` ?
-                    'current' : ''
+            currentClass: (url) => {
+                const testUrl = url === 'home' ? basePath : `${basePath}/${url}`;
+
+                return window.location.pathname === testUrl ? 'current' : '';
+            }
         };
     }
 };

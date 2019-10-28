@@ -47,7 +47,8 @@
     }
 
     .schedule {
-        $progress-indicator-width: 2.5rem;
+        $progress-indicator-width: 5rem;
+        $dot-size: 1.9rem;
 
         h3 {
             letter-spacing: -0.144rem; // Design error?
@@ -61,12 +62,31 @@
             margin-left: 0;
             padding-left: $progress-indicator-width;
 
-            > li > ul {
-                color: os-color(light-gray);
-                font-weight: normal;
-                height: 4.5rem;
-                padding-top: 0.3rem;
-                padding-left: 0;
+            > li {
+                position: relative;
+
+                &::before {
+                    content: '';
+                    height: $dot-size;
+                    width: $dot-size;
+                    border: thin solid pink;
+                    border-radius: 50%;
+                    left: -3.5rem;
+                    position: absolute;
+                    top: 0.2rem;
+                }
+
+                > ul {
+                    color: os-color(light-gray);
+                    font-weight: normal;
+                    height: 4.5rem;
+                    padding-top: 0.3rem;
+                    padding-left: 0;
+
+                    > li::before {
+                        content: none;
+                    }
+                }
             }
         }
 
@@ -83,6 +103,7 @@
 
         .block-html {
             border: thin solid ui-color(form-border);
+            border-radius: 0.3rem;
             margin-bottom: 1rem;
             margin-top: 0.2rem;
             max-width: $text-content-max;
@@ -92,7 +113,7 @@
 
     .speakers {
         > :first-child {
-            align-items: center;
+            align-items: top;
             display: grid;
             @include width-up-to($tablet-max) {
                 grid-gap: 3rem;

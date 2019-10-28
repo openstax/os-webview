@@ -53,7 +53,7 @@
         &:hover,
         &:active,
         &:focus {
-            color: darken($cf-pink, 3%);
+            color: $cf-pink-darker;
         }
     }
 }
