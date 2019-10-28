@@ -1,9 +1,10 @@
-@import '../shared';
+@import '../../shared';
 
 .why {
     background-repeat: no-repeat;
     background-size: cover;
     padding: 3rem 0 16rem;
+    position: relative;
 
     @include width-up-to($phone-max) {
         padding-bottom: 6rem;

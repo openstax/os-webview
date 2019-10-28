@@ -1,15 +1,24 @@
 import componentType from '~/helpers/controller/init-mixin';
+import {description as template} from './creator-fest.html';
 import css from './creator-fest.css';
+import Navigator from './navigator/navigator';
 import Banner from './banner/banner';
-import About from './about/about';
-import Why from './why/why';
+import HomeContent from './home-content/home-content';
+import FetchedContent from './fetched-content/fetched-content';
+import shellBus from '~/components/shell/shell-bus';
 import settings from 'settings';
 
 const spec = {
+    template,
     css,
     view: {
         classes: ['creator-fest', 'page'],
         tag: 'main' // if the HTML doesn't contain a main tag
+    },
+    regions: {
+        banner: '#banner',
+        navigator: '#navigator',
+        pageContent: '#page-content'
     },
     slug: 'pages/creator-fest'
 };
@@ -17,43 +26,45 @@ const spec = {
 export default class extends componentType(spec) {
 
     onDataLoaded() {
+        shellBus.emit('with-sticky');
         const data = this.pageData;
         const navLinks = data.navigator[0].map((nData) => ({
-            url: `${settings.apiOrigin}${settings.apiPrefix}/${nData.slug.replace('general', 'spike')}`,
-            text: nData.text
+            url: nData.text.toLowerCase(),
+            text: nData.text,
+            fetchUrl: `${settings.apiOrigin}${settings.apiPrefix}/${nData.slug.replace('general', 'spike')}`
         }));
-        const rData = data.register[0][0];
-        const registerBox = {
-            headline: rData.headline,
-            address: rData.address,
-            url: rData.button_url,
-            text: rData.button_text
-        };
-
-        this.regions.self.attach(new Banner({
+        const banner = new Banner({
+            el: this.regions.banner.el,
             model: {
                 headline: data.banner_headline,
                 content: data.banner_content,
                 background: data.banner_image.meta.download_url
             }
-        }));
-        data.page_panels.forEach((pData, i) => {
-            const model = {
-                superheadline: pData.superheading,
-                headline: pData.heading,
-                htmlBlock: pData.embed,
-                cards: pData.cards,
-                description: pData.paragraph,
-                background: pData.background_image.image
-            };
-            let SectionConstructor = Why;
-
-            if (i === 0) {
-                Object.assign(model, {navLinks, registerBox});
-                SectionConstructor = About;
-            }
-            this.regions.self.append(new SectionConstructor({model}));
         });
+        const navigator = new Navigator({
+            el: this.regions.navigator.el,
+            navLinks
+        });
+
+        this.setContentFromLocation = () => {
+            const path = window.location.pathname;
+            const linkEntry = navLinks.find((obj) => `/creator-fest/${obj.url}` === path);
+            const content = linkEntry ?
+                new FetchedContent({pageId: linkEntry.url, url: linkEntry.fetchUrl}) :
+                new HomeContent({data});
+
+            this.regions.pageContent.attach(content);
+        };
+        window.addEventListener('navigate', this.setContentFromLocation);
+        this.setContentFromLocation();
+    }
+
+    onClose() {
+        if (super.onClose) {
+            super.onClose();
+        }
+        window.removeEventListener('navigate', this.setContentFromLocation);
+        shellBus.emit('no-sticky');
     }
 
 }

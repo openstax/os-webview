@@ -2,6 +2,7 @@
 @import 'mixins/placeholder-selectors';
 
 $cf-pink: rgb(215, 19, 122);
+$cf-pink-darker : #c2006d;
 $cf-navy: #213469;
 $text-highlight: #f7cce4;
 
@@ -11,4 +12,22 @@ $text-highlight: #f7cce4;
     color: $cf-pink;
     margin: 0;
     text-transform: uppercase;
+}
+
+%super-headline {
+    color: $cf-pink;
+    font-size: 14.6rem;
+    font-weight: bold;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-color: $cf-pink;
+    -webkit-text-stroke-width: 0.3rem;
+    line-height: 1.3;
+}
+
+%blue-line {
+    border: 0.2rem solid os-color(light-blue);
+    border-radius: 0.2rem;
+    display: block;
+    margin-top: 2.6rem;
+    width: 9rem;
 }

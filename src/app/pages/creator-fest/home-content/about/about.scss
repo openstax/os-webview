@@ -1,4 +1,4 @@
-@import '../shared';
+@import '../../shared';
 
 .creator-fest .about {
     background-color: ui-color(white);
@@ -12,8 +12,7 @@
         padding: 16rem 0;
     }
 
-    .cards,
-    .navigator {
+    .cards {
         background-color: ui-color(white);
         border: thin solid ui-color(form-border);
         border-radius: 0.2rem;
@@ -84,44 +83,6 @@
         }
     }
 
-    .navigator {
-        @include width-up-to($phone-max) {
-            @include title-font(1.6rem);
-
-            left: 50%;
-            max-width: calc(100vw - 2rem);
-            overflow: hidden;
-            transform: translateX(-50%);
-        }
-
-        @include wider-than($phone-max) {
-            @include set-font(h4);
-        }
-
-        border-top: 0;
-        display: inline-grid;
-        grid-template-columns: fit-content(0);
-        line-height: 3rem;
-        padding: 2rem 0;
-        position: absolute;
-        top: 0;
-
-        > :first-child {
-            color: $cf-pink;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-
-            &:hover,
-            &:active,
-            &:focus {
-                color: darken($cf-pink, 3%);
-            }
-        }
-    }
-
     .location-box {
         background-color: ui-color(white);
         border: thin solid ui-color(form-border);
@@ -150,11 +111,6 @@
         h2 {
             @extend %pink-headline;
         }
-    }
-
-    .super-headline {
-        color: $cf-pink;
-        -webkit-text-stroke-color: $cf-pink;
     }
 
     .text-block-left {
