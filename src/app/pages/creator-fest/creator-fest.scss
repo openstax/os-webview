@@ -22,13 +22,14 @@
 
         background-color: $cf-pink;
         border-radius: 0.4rem;
-        color: white;
+        color: text-color(white);
         font-weight: bold;
 
         &:hover,
         &:active,
         &:focus {
-            background-color: darken($cf-pink, 3%);
+            background-color: $cf-pink-darker;
+            color: text-color(white);
         }
     }
 
