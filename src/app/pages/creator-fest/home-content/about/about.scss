@@ -13,9 +13,9 @@
     }
 
     .cards {
+        @extend %bordered-box;
+
         background-color: ui-color(white);
-        border: thin solid ui-color(form-border);
-        border-radius: 0.2rem;
         display: grid;
         grid-auto-flow: column;
 
@@ -84,9 +84,9 @@
     }
 
     .location-box {
+        @extend %bordered-box;
+
         background-color: ui-color(white);
-        border: thin solid ui-color(form-border);
-        border-radius: 0.2rem;
         display: grid;
         grid-row-gap: 2rem;
         justify-items: left;
