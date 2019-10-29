@@ -39,7 +39,6 @@ export default class MainMenu extends Controller {
         this.regions.technologyDropdown.attach(new Dropdown({
             dropdownLabel: 'Technology',
             items: [
-                {url: '/technology', label: 'Technology Options'},
                 {url: '/openstax-tutor', label: 'OpenStax Tutor'},
                 {url: '/rover-by-openstax', label: 'Rover by OpenStax'},
                 {url: '/partners', label: 'OpenStax Partners'}

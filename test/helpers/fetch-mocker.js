@@ -26,7 +26,6 @@ import schoolsData from '../src/data/schools';
 import stickyData from '../src/data/sticky';
 import subjectData from '../src/data/subject-categories';
 import teamData from '../src/data/team';
-import technologyData from '../src/data/technology';
 import userData from '../src/data/user';
 import archiveData from '../src/data/archive';
 
@@ -59,7 +58,6 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isSticky = (/api\/sticky/).test(args[0]);
     const isSubjects = (/snippets\/subjects/).test(args[0]);
     const isTeam = (/pages\/team/).test(args[0]);
-    const isTechnology = (/pages\/technology/).test(args[0]);
     const isUser = (/accounts.*\/api\/user/).test(args[0]);
     const isImage = (/api\/images/).test(args[0]);
     const isArchive = (/archive\.cnx/).test(args[0]);
@@ -122,8 +120,6 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = schoolsData;
             } else if (isSticky) {
                 payload = stickyData;
-            } else if (isTechnology) {
-                payload = technologyData;
             } else if (isUser) {
                 payload = userData;
             } else if (isArchive) {
