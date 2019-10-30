@@ -1,0 +1,28 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.checkboxes-linked-to-store {
+    padding: 1rem;
+    text-align: left;
+
+    .form-control {
+        display: block;
+        margin-bottom: 0.5rem;
+        white-space: nowrap;
+
+        .indicator {
+            border-radius: 0.2rem;
+            border: thin solid ui-color(form-border);
+            height: 2.4rem;
+            margin-right: 0.7rem;
+            width: 2.4rem;
+
+            input[type="checkbox"] {
+                appearance: none;
+
+                &:not(:checked) + .tick {
+                    opacity: 0;
+                }
+            }
+        }
+    }
+}

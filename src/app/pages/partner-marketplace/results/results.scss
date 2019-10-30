@@ -1,0 +1,77 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.partner-marketplace .results {
+    padding: 5rem 0 20rem;
+
+    .boxed {
+        display: grid;
+        grid-gap: 3rem;
+
+        &.list {
+            grid-template-columns: 100%;
+
+            .card {
+                grid-column-gap: 2rem;
+                grid-template: 'image title' auto
+                'image description' 1fr
+                'image tags' auto / auto 1fr;
+                padding: $normal-margin 3rem;
+
+                .logo {
+                    max-width: 9rem;
+                }
+            }
+        }
+
+        &.grid {
+            grid-template-columns: repeat(auto-fill, 20rem);
+
+            .card {
+                grid-row-gap: 1rem;
+                grid-template: 'image'
+                'title'
+                'tags';
+                padding: $normal-margin;
+
+                .logo {
+                    justify-self: center;
+                    max-width: 14rem;
+                }
+
+                .resource-title {
+                    @include set-font(h3);
+                }
+
+                .resource-description {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .card {
+        background-color: ui-color(white);
+        box-shadow: $card-shadow;
+        display: grid;
+
+        .logo {
+            grid-area: image;
+        }
+
+        .resource-title {
+            font-weight: bold;
+            grid-area: title;
+        }
+
+        .resource-description {
+            grid-area: description;
+        }
+
+        .rating-box {
+            background-color: ui-color(default);
+            grid-area: tags;
+            font-variant: small-caps;
+        }
+    }
+
+}

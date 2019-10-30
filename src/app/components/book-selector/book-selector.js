@@ -20,7 +20,11 @@ const spec = {
             booksBySubject: this.booksBySubject,
             validationMessage: this.validationMessage
         };
-    }
+    },
+    subjects: [],
+    salesforceTitles: [],
+    bookIsSelected: {},
+    validated: false
 };
 
 export default class BookSelector extends componentType(spec, cmsMixin, salesforceFormMixin, busMixin) {
@@ -28,8 +32,6 @@ export default class BookSelector extends componentType(spec, cmsMixin, salesfor
     init(props) {
         super.init();
         this.props = props;
-        this.subjects = [];
-        this.salesforceTitles = [];
         this.booksBySubject = (subject) =>
             this.salesforceTitles
                 .filter((b) => b.subjects.includes(subject))
@@ -52,8 +54,6 @@ export default class BookSelector extends componentType(spec, cmsMixin, salesfor
                 }
                 return 1; // They won't be equal
             });
-        this.bookIsSelected = {};
-        this.validated = false;
     }
 
     get selectedBooks() {

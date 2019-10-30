@@ -1,0 +1,8 @@
+<template args="model">
+    <div each="item in model.items"
+        role="option" aria-selected="{model.selected(item.value)}"
+        class="option" data-value="{item.value}"
+    >
+        {item.label}
+    </div>
+</template>

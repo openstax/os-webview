@@ -37,6 +37,15 @@ const componentMixin = (superclass) => class extends superclass {
         updateOptimizely();
     }
 
+    detach(...args) {
+        const el = this.el;
+
+        super.detach(...args);
+        if (el) {
+            el.remove();
+        }
+    }
+
 };
 
 function mixinFromSpec(spec) {

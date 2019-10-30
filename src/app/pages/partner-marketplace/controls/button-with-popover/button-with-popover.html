@@ -1,0 +1,7 @@
+<template args="model">
+    <button type="button" class="popover-control" aria-pressed="{model.open}">
+        <span>{model.label}</span>
+        <i class="fa fa-caret-{model.caretDirection}"></i>
+    </button>
+    <div class="popover" skip="true"></div>
+</template>

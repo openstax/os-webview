@@ -1,0 +1,66 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/triangle';
+
+.button-with-popover {
+    position: relative;
+
+    button {
+        @extend %button;
+
+        background-color: transparent;
+        font-weight: bold;
+
+        > :first-child {
+            margin-right: 2rem;
+        }
+
+        > :last-child {
+            font-size: 2rem;
+        }
+
+        &[aria-pressed="false"] ~ .popover {
+            display: none;
+        }
+    }
+
+    .popover {
+        background-color: ui-color(white);
+        color: text-color(normal);
+        position: absolute;
+        top: 100%;
+        z-index: 1;
+    }
+
+    &.detached .popover {
+        width: 100%;
+        z-index: 2;
+
+        &::after {
+            @include triangle(
+                $direction: top,
+                $position: top calc(100% + 3.9rem) left 50% right auto,
+                $color: white,
+                $size: 1.2rem
+            );
+
+            transform: translateX(-50%);
+        }
+    }
+
+    &.attached {
+        button[aria-pressed="true"] {
+            background-color: ui-color(white);
+            border-bottom: 0;
+            z-index: 2;
+            position: relative;
+        }
+
+        .popover {
+            border: thin solid ui-color(form-border);
+            border-bottom-left-radius: 0.2rem;
+            border-bottom-right-radius: 0.2rem;
+            margin-top: -0.1rem;
+            width: 100%;
+        }
+    }
+}
