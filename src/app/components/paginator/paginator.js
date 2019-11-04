@@ -62,6 +62,9 @@ export default class extends componentType(spec, busMixin) {
         };
 
         this.emit('change', newPage[text] || text);
+        if (!(text in newPage)) {
+            event.target.blur();
+        }
     }
 
 }
