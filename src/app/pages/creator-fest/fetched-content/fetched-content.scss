@@ -51,7 +51,6 @@
         $dot-size: 1.9rem;
 
         h3 {
-            letter-spacing: -0.144rem; // Design error?
             margin-bottom: 2.7rem;
         }
 
@@ -69,7 +68,7 @@
                     content: '';
                     height: $dot-size;
                     width: $dot-size;
-                    border: thin solid pink;
+                    border: thin solid $cf-pink-dim;
                     border-radius: 50%;
                     left: -3.5rem;
                     position: absolute;
@@ -82,10 +81,26 @@
                     height: 4.5rem;
                     padding-top: 0.3rem;
                     padding-left: 0;
+                    position: relative;
+
+                    // Height and top are trial-and-error, not calculated sensibly
+                    &::before {
+                        content: '';
+                        border-left: thin solid $cf-pink-dim;
+                        height: calc(100% + 0.45rem);
+                        left: #{-3.45rem + $dot-size/2};
+                        position: absolute;
+                        top: -0.25rem;
+                        width: 0;
+                    }
 
                     > li::before {
                         content: none;
                     }
+                }
+
+                &:last-child > ul::before {
+                    content: none;
                 }
             }
         }
@@ -102,8 +117,8 @@
         }
 
         .block-html {
-            border: thin solid ui-color(form-border);
-            border-radius: 0.3rem;
+            @extend %bordered-box;
+
             margin-bottom: 1rem;
             margin-top: 0.2rem;
             max-width: $text-content-max;
@@ -233,7 +248,7 @@
             }
 
             li:not(:first-child) {
-                border: thin solid ui-color(form-border);
+                @extend %bordered-box;
                 padding: 1.8rem 3rem;
             }
 
@@ -251,7 +266,8 @@
         }
 
         .block-paragraph {
-            border: thin solid ui-color(form-border);
+            @extend %bordered-box;
+
             max-width: $text-content-max;
             padding: 3rem;
         }
@@ -265,8 +281,9 @@
         }
 
         .directions {
+            @extend %bordered-box;
+
             align-items: center;
-            border: thin solid ui-color(form-border);
             display: grid;
             grid-gap: 3rem;
             padding: 3rem;

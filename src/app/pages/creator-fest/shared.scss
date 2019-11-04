@@ -2,7 +2,8 @@
 @import 'mixins/placeholder-selectors';
 
 $cf-pink: rgb(215, 19, 122);
-$cf-pink-darker : #c2006d;
+$cf-pink-darker: #c2006d;
+$cf-pink-dim: #f7cce4;
 $cf-navy: #213469;
 $text-highlight: #f7cce4;
 
@@ -30,4 +31,9 @@ $text-highlight: #f7cce4;
     display: block;
     margin-top: 2.6rem;
     width: 9rem;
+}
+
+%bordered-box {
+    border: thin solid ui-color(form-border);
+    border-radius: 0.2rem;
 }
