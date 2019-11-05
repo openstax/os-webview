@@ -19,9 +19,11 @@
 
         background-color: ui-color(white);
         border-radius: 2rem 0 0 2rem;
+        bottom: 2rem;
         box-shadow: $card-shadow;
         height: 4rem;
         min-width: 10rem;
+        top: unset;
     }
 
     @include wider-than($tablet-max) {
