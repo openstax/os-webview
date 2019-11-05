@@ -10,7 +10,8 @@ const spec = {
     },
     // eslint-disable-next-line complexity
     model() {
-        const thirdNodeFill = this.barStatus === 'Corrected' ? ' filled' : ' filled-no';
+        const thirdNodeFill = ['Corrected', 'Will correct'].includes(this.barStatus) ?
+            ' filled' : ' filled-no';
         const bars = this.bars;
 
         return {

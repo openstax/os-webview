@@ -2,6 +2,7 @@ import componentType, {loaderMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './errata-detail.html';
 import css from './errata-detail.css';
 import bookPromise from '~/models/book-titles';
+import {getDisplayStatus} from '~/helpers/errata';
 import Detail from './detail/detail';
 import ProgressBar from './progress-bar/progress-bar';
 
@@ -12,33 +13,8 @@ function localizedDate(dateStr) {
     return '';
 }
 
-// eslint-disable-next-line complexity
-function reviewStatus(detail) {
-    const result = {
-        status: 'Reviewed',
-        barStatus: ''
-    };
-
-    if (['New', 'Editorial Review'].includes(detail.status)) {
-        result.status = 'In Review';
-    } else if (detail.resolution === 'Approved') {
-        if (detail.status === 'Completed') {
-            result.status = `Corrected ${localizedDate(detail.modified)} in web view`;
-            result.barStatus = 'Corrected';
-        } else {
-            result.status = 'Will Correct';
-        }
-    } else if (detail.status === 'Completed' && detail.resolution === 'Duplicate') {
-        result.status = result.barStatus = 'Duplicate';
-    } else {
-        result.status = result.barStatus = 'No Correction';
-    }
-
-    return result;
-}
-
 export function detailModelPromise(detail) {
-    const {status, barStatus} = reviewStatus(detail);
+    const {status, barStatus} = getDisplayStatus(detail);
 
     return bookPromise.then((bookList) => {
         const entry = bookList.find((info) => info.id === detail.book);
@@ -82,7 +58,7 @@ export default class extends componentType(spec, loaderMixin) {
         const detail = this.pageData;
 
         if (detail.created) {
-            const {status, barStatus} = reviewStatus(detail);
+            const {status, barStatus} = getDisplayStatus(detail);
             const progressBar = new ProgressBar({
                 status,
                 barStatus,

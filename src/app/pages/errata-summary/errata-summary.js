@@ -3,6 +3,7 @@ import $ from '~/helpers/$';
 import componentType, {loaderMixin} from '~/helpers/controller/init-mixin';
 import css from './errata-summary.css';
 import routerBus from '~/helpers/router-bus';
+import {getDisplayStatus} from '~/helpers/errata';
 import Hero from './hero/hero';
 import StripsAndFilter from './strips-and-filter/strips-and-filter';
 import Table from './table/table';
@@ -14,32 +15,6 @@ const spec = {
     },
     slug: 'set in init'
 };
-
-// eslint-disable-next-line complexity
-function setDisplayStatus(detail) {
-    const result = {
-        status: 'Reviewed',
-        barStatus: ''
-    };
-
-    if (['New', 'Editorial Review'].includes(detail.status)) {
-        result.status = 'In Review';
-    } else if (detail.resolution === 'Approved') {
-        if (detail.status === 'Completed') {
-            result.status = `Corrected ${new Date(detail.modified).toLocaleDateString()} in web view`;
-            result.barStatus = 'Corrected';
-        } else {
-            result.status = 'Will Correct';
-        }
-    } else if (detail.status === 'Completed' && detail.resolution === 'Duplicate') {
-        result.status = result.barStatus = 'Duplicate';
-    } else {
-        result.status = result.barStatus = 'No Correction';
-    }
-
-    detail.displayStatus = result.status;
-    detail.barStatus = result.barStatus;
-}
 
 export default class extends componentType(spec, loaderMixin) {
 
@@ -122,8 +97,11 @@ export default class extends componentType(spec, loaderMixin) {
         const summary = this.pageData;
 
         summary.forEach((detail) => {
+            const displayStatus = getDisplayStatus(detail);
+
             detail.self = detail;
-            setDisplayStatus(detail);
+            detail.displayStatus = displayStatus.status;
+            detail.barStatus = displayStatus.barStatus;
             detail.date = new Date(detail.created).toLocaleDateString();
             detail.source = detail.resource === 'Other' ? detail.resource_other : detail.resource;
             /* eslint camelcase: 0 */
