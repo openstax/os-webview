@@ -33,9 +33,7 @@ export default class extends componentType(spec, busMixin) {
 
     @on('click button')
     doSearch() {
-        const searchParam = encodeURIComponent(this.inputValue);
-
-        this.emit('value', searchParam);
+        this.emit('value', this.inputValue);
     }
 
     @on('keypress [name="search-input"]')
