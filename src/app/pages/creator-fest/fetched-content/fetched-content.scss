@@ -75,6 +75,16 @@
                     top: 0.2rem;
                 }
 
+                &:not(:last-child)::after {
+                    content: '';
+                    border-left: thin solid $cf-pink-dim;
+                    height: calc(100% - #{$dot-size});
+                    left: #{-3.45rem + $dot-size/2};
+                    position: absolute;
+                    top: #{$dot-size + 0.3rem};
+                    width: 0;
+                }
+
                 > ul {
                     color: os-color(light-gray);
                     font-weight: normal;
@@ -83,24 +93,9 @@
                     padding-left: 0;
                     position: relative;
 
-                    // Height and top are trial-and-error, not calculated sensibly
-                    &::before {
-                        content: '';
-                        border-left: thin solid $cf-pink-dim;
-                        height: calc(100% + 0.45rem);
-                        left: #{-3.45rem + $dot-size/2};
-                        position: absolute;
-                        top: -0.25rem;
-                        width: 0;
-                    }
-
                     > li::before {
                         content: none;
                     }
-                }
-
-                &:last-child > ul::before {
-                    content: none;
                 }
             }
         }

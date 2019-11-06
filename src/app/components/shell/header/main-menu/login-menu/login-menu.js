@@ -27,6 +27,13 @@ const tutorDomain = `https://tutor${domainQualifier}.openstax.org/dashboard`;
 
 class LoginMenu extends componentType(spec, busMixin) {
 
+    onLoaded() {
+        if (super.onLoaded) {
+            super.onLoaded();
+        }
+        window.addEventListener('navigate', () => this.update());
+    }
+
     get isTutorUser() {
         return this.user.groups.includes('OpenStax Tutor');
     }
