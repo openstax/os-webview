@@ -1,4 +1,4 @@
-import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './footer-page.html';
 import css from './footer-page.css';
 
@@ -10,7 +10,7 @@ const spec = {
     },
     slug: 'set in init'
 };
-const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
+const BaseClass = componentType(spec, canonicalLinkMixin);
 
 export default class FooterPage extends BaseClass {
 
@@ -28,7 +28,6 @@ export default class FooterPage extends BaseClass {
             content: this.pageData[contentFieldName]
         };
         this.insertHtml();
-        this.hideLoader();
     }
 
 }

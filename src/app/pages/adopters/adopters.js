@@ -1,4 +1,4 @@
-import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import css from './adopters.css';
 import {description as template} from './adopters.html';
 
@@ -16,7 +16,7 @@ const spec = {
     },
     slug: 'adopters'
 };
-const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
+const BaseClass = componentType(spec, canonicalLinkMixin);
 
 export default class Adopters extends BaseClass {
 
@@ -25,7 +25,6 @@ export default class Adopters extends BaseClass {
 
         this.adopters = results.sort((a, b) => a.name.localeCompare(b.name));
         this.update();
-        this.hideLoader();
     }
 
 }

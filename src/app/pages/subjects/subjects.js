@@ -1,5 +1,5 @@
 import routerBus from '~/helpers/router-bus';
-import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import BookViewer from './book-viewer/book-viewer';
 import CategorySelector from '~/components/category-selector/category-selector';
 import {description as template} from './subjects.html';
@@ -21,7 +21,7 @@ const spec = {
     },
     model: {}
 };
-const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
+const BaseClass = componentType(spec, canonicalLinkMixin);
 
 export default class Subjects extends BaseClass {
 
@@ -83,7 +83,6 @@ export default class Subjects extends BaseClass {
         this.categorySelector.updateSelected(category);
         this.filterSubjects(category);
         this.el.classList.add('loaded');
-        this.hideLoader();
     }
 
     onLoaded() {

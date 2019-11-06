@@ -1,4 +1,4 @@
-import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import Map from './map/map';
 import State from './statistics/stat';
 import Studentinfo from './studentinfo/studentinfo';
@@ -14,7 +14,7 @@ const spec = {
     },
     slug: 'pages/global-reach'
 };
-const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
+const BaseClass = componentType(spec, canonicalLinkMixin);
 
 export default class ImpactDev extends BaseClass {
 
@@ -65,7 +65,6 @@ export default class ImpactDev extends BaseClass {
                 linkUrl: data.section_3_link
             }
         }));
-        this.hideLoader();
     }
 
 }

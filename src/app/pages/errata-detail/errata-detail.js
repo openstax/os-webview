@@ -1,4 +1,4 @@
-import componentType, {loaderMixin} from '~/helpers/controller/init-mixin';
+import componentType from '~/helpers/controller/init-mixin';
 import {description as template} from './errata-detail.html';
 import css from './errata-detail.css';
 import bookPromise from '~/models/book-titles';
@@ -47,7 +47,7 @@ const spec = {
     }
 };
 
-export default class extends componentType(spec, loaderMixin) {
+export default class extends componentType(spec) {
 
     init() {
         super.init();
@@ -69,8 +69,6 @@ export default class extends componentType(spec, loaderMixin) {
 
             detailModelPromise(detail).then((detailModel) => {
                 const detailSection = new Detail(detailModel);
-
-                this.hideLoader();
 
                 this.regions.children.attach(progressBar);
                 this.regions.children.append(detailSection);

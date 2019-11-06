@@ -23,11 +23,7 @@ class Shell extends Controller {
         this.footer = footer;
         // Wait for main to receive some content before attaching header and footer
         this.mainObserver = new MutationObserver((observations) => {
-            // If the page doesn't use the page loader, prevent the page
-            // loader from running later by adding the page-loaded class
-            if (!document.body.classList.contains('page-loading')) {
-                document.body.classList.add('page-loaded');
-            }
+            document.body.classList.remove('initial-load');
             this.regions.header.attach(header);
             this.regions.footer.attach(footer);
             this.mainObserver.disconnect();

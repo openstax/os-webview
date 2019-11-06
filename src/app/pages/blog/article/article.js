@@ -1,4 +1,4 @@
-import componentType, {loaderMixin} from '~/helpers/controller/init-mixin';
+import componentType from '~/helpers/controller/init-mixin';
 import {description as template} from './article.html';
 import bodyUnitView from '~/components/body-units/body-units';
 import css from './article.css';
@@ -25,7 +25,7 @@ const spec = {
     setsPageTitleAndDescription: true
 };
 
-export default class extends componentType(spec, loaderMixin) {
+export default class extends componentType(spec) {
 
     attachUnits() {
         this.update();
@@ -54,7 +54,6 @@ export default class extends componentType(spec, loaderMixin) {
         if (super.onDataLoaded) {
             super.onDataLoaded();
         }
-        this.hideLoader();
         if (this.el) {
             this.attachUnits();
         }

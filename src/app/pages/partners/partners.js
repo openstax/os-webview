@@ -1,5 +1,5 @@
 import $ from '~/helpers/$';
-import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import css from './partners.css';
 import CategorySelector from '~/components/category-selector/category-selector';
 import PartnerViewer from './partner-viewer/partner-viewer';
@@ -28,7 +28,7 @@ const spec = {
         partners: []
     }
 };
-const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
+const BaseClass = componentType(spec, canonicalLinkMixin);
 
 export default class Partners extends BaseClass {
 
@@ -85,7 +85,6 @@ export default class Partners extends BaseClass {
         this.categorySelector.updateSelected(category);
         this.filterPartners(category);
         this.changeAllyLogoColor();
-        this.hideLoader();
     }
 
     filterPartners(category) {

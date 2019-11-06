@@ -1,6 +1,6 @@
 import bookPromise from '~/models/book-titles';
 import $ from '~/helpers/$';
-import componentType, {loaderMixin} from '~/helpers/controller/init-mixin';
+import componentType from '~/helpers/controller/init-mixin';
 import css from './errata-summary.css';
 import routerBus from '~/helpers/router-bus';
 import {getDisplayStatus} from '~/helpers/errata';
@@ -16,7 +16,7 @@ const spec = {
     slug: 'set in init'
 };
 
-export default class extends componentType(spec, loaderMixin) {
+export default class extends componentType(spec) {
 
     init() {
         super.init();
@@ -44,7 +44,6 @@ export default class extends componentType(spec, loaderMixin) {
         }
         this.dataLoaded.then(() => {
             this.attachChildren();
-            this.hideLoader();
         });
     }
 

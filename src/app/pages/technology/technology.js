@@ -2,7 +2,7 @@ import $ from '~/helpers/$';
 import FormSelect from '~/components/form-select/form-select';
 import {description as template} from './technology.html';
 import css from './technology.css';
-import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import Steps from './steps/steps';
 import NewFrontier from './new-frontier/new-frontier';
 import Banner from './banner/banner';
@@ -15,7 +15,7 @@ const spec = {
     },
     slug: 'pages/technology'
 };
-const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
+const BaseClass = componentType(spec, canonicalLinkMixin);
 
 export default class Technology extends BaseClass {
 
@@ -77,7 +77,6 @@ export default class Technology extends BaseClass {
                 ]
             }
         }));
-        this.hideLoader();
         $.scrollToHash();
     }
 

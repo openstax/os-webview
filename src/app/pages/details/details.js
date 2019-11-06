@@ -1,5 +1,5 @@
 import $ from '~/helpers/$';
-import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import ContentGroup from '~/components/content-group/content-group';
 import DetailsTab from './details-tab/details-tab';
 import getCompCopyDialogProps from './comp-copy-dialog-props';
@@ -54,7 +54,7 @@ const spec = {
         };
     }
 };
-const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
+const BaseClass = componentType(spec, canonicalLinkMixin);
 
 export default class Details extends BaseClass {
 
@@ -172,7 +172,6 @@ export default class Details extends BaseClass {
         if (this.pageData.meta.type !== 'books.Book') {
             throw new Error(`Pagedata for ${this.slug} is not of type books.Book: ${this.pageData.meta.type}`);
         }
-        this.hideLoader();
         const polish = $.isPolish(this.pageData.title);
         const tabLabels = [polish ? 'Szczegóły książki' : 'Book details'];
         let selectedTab = decodeURIComponent(window.location.search.replace('?', '')) || tabLabels[0];

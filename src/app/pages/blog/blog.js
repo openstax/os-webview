@@ -1,4 +1,4 @@
-import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import settings from 'settings';
 import {on} from '~/helpers/controller/decorators';
 import routerBus from '~/helpers/router-bus';
@@ -29,7 +29,7 @@ const spec = {
     timersRunning: [],
     articleSlug: null
 };
-const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
+const BaseClass = componentType(spec, canonicalLinkMixin);
 
 export default class Blog extends BaseClass {
 
@@ -187,7 +187,6 @@ export default class Blog extends BaseClass {
             );
             this.handlePathChange();
         }
-        this.hideLoader();
         this.setTimers();
     }
 
