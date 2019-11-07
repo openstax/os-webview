@@ -61,6 +61,7 @@
 
     .left-arrow,
     .right-arrow {
+        align-items: center;
         background-color: rgba(ui-color(white), 0.33);
         border-radius: 50%;
         bottom: 50%;
@@ -68,6 +69,7 @@
         display: grid;
         font-size: 5rem;
         height: 6rem;
+        justify-content: center;
         outline: 0;
         padding: 0;
         position: absolute;
