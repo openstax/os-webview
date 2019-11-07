@@ -76,20 +76,19 @@ export default class Blog extends BaseClass {
         });
 
         this.regions.self.append(ms);
-        ms.on('value', (searchParam) => {
-            history.pushState({}, '', `${path}/?${searchParam}`);
-            this.handlePathChange();
-        });
+        ms.on('value', (searchParam) => this.executeSearch(searchParam));
+    }
+
+    executeSearch(searchParam) {
+        history.pushState({}, '', `${path}/?${encodeURIComponent(searchParam)}`);
+        this.handlePathChange();
     }
 
     buildSearchResultsPage() {
         const sb = new SearchBar();
         const sr = new SearchResults();
 
-        sb.on('value', (searchParam) => {
-            history.pushState({}, '', `${path}/?${searchParam}`);
-            this.handlePathChange();
-        });
+        sb.on('value', (searchParam) => this.executeSearch(searchParam));
         this.regions.self.attach(sb);
         this.regions.self.append(sr);
     }
@@ -110,10 +109,7 @@ export default class Blog extends BaseClass {
             }
         }));
         region.append(ms);
-        ms.on('value', (searchParam) => {
-            history.pushState({}, '', `${path}/?${searchParam}`);
-            this.handlePathChange();
-        });
+        ms.on('value', (searchParam) => this.executeSearch(searchParam));
     }
 
     // eslint-disable-next-line complexity

@@ -6,6 +6,7 @@ import Paginator from '~/components/paginator/paginator';
 import {blurbModel} from '../article-summary/article-summary';
 import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
 import uniqBy from 'lodash/uniqBy';
+import analytics from '~/helpers/analytics';
 
 const RESULTS_PER_PAGE = 10;
 const spec = {
@@ -41,6 +42,7 @@ export default class extends componentType(spec) {
         const searchParam = window.location.search.substr(1);
         const slug = `search/?q=${searchParam}`;
 
+        analytics.sendPageEvent('Blog search', decodeURIComponent(searchParam));
         fetchFromCMS(slug, true).then(
             (results) => {
                 if (results.length === 0) {
