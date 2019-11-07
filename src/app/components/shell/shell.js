@@ -2,16 +2,18 @@ import {Controller} from 'superb.js';
 import header from './header/header';
 import footer from './footer/footer';
 import ModalDialog, {Dialog} from '../dialog/dialog';
-import {description as template} from './shell.html';
 import bus from './shell-bus';
 import showNoticeIfNeeded from './cookie-notice/cookie-notice';
 import {default as showAdoptionsIfNeeded} from './adoption-dialog/adoption-dialog';
 
+/*
+ * Special behavior: by assigning this.el and an empty update function, this
+ * controller inherits the (unchanging) html block. It just manages its regions.
+ */
 class Shell extends Controller {
 
     init() {
         this.el = 'body';
-        this.template = template;
         this.regions = {
             header: '#header',
             dialog: '#dialog',
@@ -19,42 +21,32 @@ class Shell extends Controller {
             footer: '#footer'
         };
 
-        this.header = header;
-        this.footer = footer;
-        // Wait for main to receive some content before attaching header and footer
-        this.mainObserver = new MutationObserver((observations) => {
-            // If the page doesn't use the page loader, prevent the page
-            // loader from running later by adding the page-loaded class
-            if (!document.body.classList.contains('page-loading')) {
-                document.body.classList.add('page-loaded');
-            }
-            this.regions.header.attach(header);
-            this.regions.footer.attach(footer);
-            this.mainObserver.disconnect();
-        });
-
         // An extra layer of indirection is necessary so we can reuse the Dialog
         // and change the getProps function for it
         this.getDialogProps = () => {};
         this.dialogQueue = [];
     }
 
-    onLoaded() {
-        this.mainObserver.observe(document.getElementById('main'), {childList: true});
+    update() {}
 
+    onLoaded() {
+        // Wait for main to receive some content before attaching header and footer
+        // The first content is just the container, so wait for the second
+        let observationsReceived = 0;
+        const mainObserver = new MutationObserver((observations) => {
+            ++observationsReceived;
+            if (observationsReceived > 1) {
+                document.body.classList.remove('initial-load');
+                this.regions.header.attach(header);
+                this.regions.footer.attach(footer);
+                mainObserver.disconnect();
+            }
+        });
+
+        mainObserver.observe(document.getElementById('main'), {childList: true, subtree: true});
         window.addEventListener('navigate', this.hideDialog.bind(this));
         showNoticeIfNeeded();
         showAdoptionsIfNeeded();
-    }
-
-    showLoader() {
-        document.body.classList.add('no-scroll');
-        document.body.classList.add('page-loading');
-    }
-
-    hideLoader() {
-        document.body.classList.add('page-loaded');
-        document.body.classList.remove('no-scroll');
     }
 
     enqueueDialog(getProps) {
@@ -128,9 +120,6 @@ class Shell extends Controller {
 
 const shell = new Shell();
 let stickyCount = 0;
-
-bus.on('showLoader', shell.showLoader.bind(shell));
-bus.on('hideLoader', shell.hideLoader.bind(shell));
 
 bus.on('with-sticky', () => {
     ++stickyCount;

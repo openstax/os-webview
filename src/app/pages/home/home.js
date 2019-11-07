@@ -1,4 +1,4 @@
-import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import BannerCarousel from './banner-carousel/banner-carousel';
 import Buckets from './buckets/buckets';
 import Education from './education/education';
@@ -14,7 +14,7 @@ const spec = {
     },
     slug: 'pages/openstax-homepage'
 };
-const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
+const BaseClass = componentType(spec, canonicalLinkMixin);
 
 export default class Home extends BaseClass {
 
@@ -50,7 +50,6 @@ export default class Home extends BaseClass {
         this.regions.self.append(quotesView);
         this.regions.self.append(new Education(educationData));
         this.regions.self.append(new Buckets(bucketData));
-        this.hideLoader();
     }
 
 }

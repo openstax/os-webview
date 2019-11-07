@@ -1,4 +1,4 @@
-import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import $ from '~/helpers/$';
 import { on } from '~/helpers/controller/decorators';
 import shellBus from '~/components/shell/shell-bus';
@@ -32,7 +32,7 @@ const spec = {
 };
 const accountPromise = accountsModel.load();
 
-export default class SeparateMap extends componentType(spec, canonicalLinkMixin, loaderMixin) {
+export default class SeparateMap extends componentType(spec, canonicalLinkMixin) {
 
     onAttached() {
         shellBus.emit('with-sticky');
@@ -101,9 +101,6 @@ export default class SeparateMap extends componentType(spec, canonicalLinkMixin,
                     content: this.testimonialForm
                 }));
             });
-        });
-        map.loaded.then(() => {
-            this.hideLoader();
         });
         map.on('select-school', (id) => {
             queryById(id).then((schoolInfo) => {

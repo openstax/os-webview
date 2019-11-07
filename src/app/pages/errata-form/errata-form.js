@@ -1,4 +1,4 @@
-import componentType, {loaderMixin} from '~/helpers/controller/init-mixin';
+import componentType from '~/helpers/controller/init-mixin';
 import {description as template} from './errata-form.html';
 import bookPromise from '~/models/book-titles';
 import userModel from '~/models/usermodel';
@@ -21,7 +21,7 @@ const spec = {
     }
 };
 
-export default class extends componentType(spec, loaderMixin) {
+export default class extends componentType(spec) {
 
     init() {
         super.init();
@@ -62,7 +62,6 @@ export default class extends componentType(spec, loaderMixin) {
 
                     this.regions.form.attach(form);
                     this.update();
-                    this.hideLoader();
                 });
             } else {
                 window.location = linkHelper.loginLink();

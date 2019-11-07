@@ -1,4 +1,4 @@
-import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import {on} from '~/helpers/controller/decorators';
 import routerBus from '~/helpers/router-bus';
 import selectHandler from '~/handlers/select';
@@ -47,7 +47,7 @@ const spec = {
     },
     slug: 'pages/give'
 };
-const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
+const BaseClass = componentType(spec, canonicalLinkMixin);
 
 export default class Give extends BaseClass {
 
@@ -152,7 +152,6 @@ export default class Give extends BaseClass {
         populatePaymentMethods();
         this.update();
         this.insertHtml();
-        this.hideLoader();
     }
 
     onLoaded() {

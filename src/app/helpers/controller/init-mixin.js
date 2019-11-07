@@ -69,23 +69,6 @@ export function canonicalLinkMixin(superclass) {
     };
 }
 
-export function loaderMixin(superclass) {
-    return class extends superclass {
-
-        init(...args) {
-            if (super.init) {
-                super.init(...args);
-            }
-            shellBus.emit('showLoader');
-        }
-
-        hideLoader() {
-            shellBus.emit('hideLoader');
-        }
-
-    };
-}
-
 export function insertHtmlMixin(superclass) {
     return class extends superclass {
 

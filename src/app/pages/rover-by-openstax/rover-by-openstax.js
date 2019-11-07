@@ -1,4 +1,4 @@
-import componentType, {canonicalLinkMixin, flattenPageDataMixin, loaderMixin} from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin, flattenPageDataMixin} from '~/helpers/controller/init-mixin';
 import css from './rover-by-openstax.css';
 import Navigator from './navigator/navigator';
 import Banner from './banner/banner';
@@ -26,7 +26,7 @@ const spec = {
     preserveWrapping: true
 };
 
-const BaseClass = componentType(spec, canonicalLinkMixin, flattenPageDataMixin, loaderMixin);
+const BaseClass = componentType(spec, canonicalLinkMixin, flattenPageDataMixin);
 
 export default class RoverRedesign extends BaseClass {
 
@@ -142,7 +142,6 @@ export default class RoverRedesign extends BaseClass {
         });
 
         sections.splice(1, 0, nav);
-        this.hideLoader();
         sections.forEach((section) => {
             this.regions.self.append(section);
         });

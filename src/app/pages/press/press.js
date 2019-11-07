@@ -1,6 +1,6 @@
 import Article from './article/article';
 import Bookings from './bookings/bookings';
-import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import HeadlinePaginator from '~/components/headline-paginator/headline-paginator';
 import Inquiries from './inquiries/inquiries';
 import MobileSelector from './mobile-selector/mobile-selector';
@@ -40,7 +40,7 @@ const spec = {
         return model;
     }
 };
-const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
+const BaseClass = componentType(spec, canonicalLinkMixin);
 
 export default class Press extends BaseClass {
 
@@ -181,7 +181,6 @@ export default class Press extends BaseClass {
             this.regions.newsMentions.append(this.nmPaginator);
             this.regions.bookings.attach(new Bookings(submodels.experts));
         }
-        this.hideLoader();
     }
 
 }

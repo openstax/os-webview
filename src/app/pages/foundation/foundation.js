@@ -1,4 +1,4 @@
-import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './foundation.html';
 import css from './foundation.css';
 
@@ -15,14 +15,13 @@ const spec = {
         'page_description': ''
     }
 };
-const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
+const BaseClass = componentType(spec, canonicalLinkMixin);
 
 export default class Foundation extends BaseClass {
 
     onDataLoaded() {
         Object.assign(this.model, this.pageData);
         this.update();
-        this.hideLoader();
     }
 
 }

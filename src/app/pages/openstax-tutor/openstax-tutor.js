@@ -1,4 +1,4 @@
-import componentType, {canonicalLinkMixin, loaderMixin} from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import $ from '~/helpers/$';
 import SectionNavigator from '~/components/section-navigator/section-navigator';
 import StickyFooter from '~/components/sticky-footer/sticky-footer';
@@ -45,7 +45,7 @@ const spec = {
         stickyFooter: '.sticky-footer-region'
     }
 };
-const BaseClass = componentType(spec, canonicalLinkMixin, loaderMixin);
+const BaseClass = componentType(spec, canonicalLinkMixin);
 
 export default class Tutor extends BaseClass {
 
@@ -57,7 +57,6 @@ export default class Tutor extends BaseClass {
         /* eslint complexity: 0 */
         const data = this.pageData;
 
-        this.hideLoader();
         Object.assign(this.model, data);
         this.model.footerHeight = 'collapsed';
         this.update();
