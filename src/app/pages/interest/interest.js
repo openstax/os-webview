@@ -74,6 +74,7 @@ export default class InterestForm extends BaseClass {
             longLabel: 'How many students do you teach each semester?',
             type: 'number',
             min: '1',
+            max: '999',
             required: true,
             validationMessage: (name) => validationMessage.bind(howManyStudents)(name)
         });
