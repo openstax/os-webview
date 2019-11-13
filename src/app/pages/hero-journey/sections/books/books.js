@@ -1,4 +1,4 @@
-import componentType from '~/helpers/controller/init-mixin';
+import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './books.html';
 import css from './books.css';
 import {on} from '~/helpers/controller/decorators';
@@ -12,15 +12,11 @@ const spec = {
     css
 };
 
-export default class extends componentType(spec) {
+export default class extends componentType(spec, insertHtmlMixin) {
 
     init(model) {
         super.init();
         this.model = model;
-    }
-
-    onUpdate() {
-        this.insertHtml();
     }
 
     @on('click [data-html="skipHtml"] a')

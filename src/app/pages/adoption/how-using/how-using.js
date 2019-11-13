@@ -56,7 +56,11 @@ export default class HowUsing extends Controller {
     }
 
     // DOM diffing does not preserve the state of elements
+    /* eslint complexity: 0 */
     onUpdate() {
+        if (super.onUpdate) {
+            super.onUpdate();
+        }
         for (const r of this.el.querySelectorAll('[type="radio"]')) {
             const shouldBeChecked = this.checked[r.name] === r.value;
 

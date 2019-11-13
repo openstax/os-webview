@@ -89,6 +89,9 @@ export default class SupplementalForm extends SalesforceForm {
     }
 
     onUpdate() {
+        if (super.onUpdate) {
+            super.onUpdate();
+        }
         for (const c of this.inputComponents) {
             c.update();
         }
