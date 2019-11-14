@@ -1,4 +1,4 @@
-import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin, insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './bookstore-suppliers.html';
 import css from './bookstore-suppliers.css';
 
@@ -12,7 +12,7 @@ const spec = {
     slug: 'pages/print-order',
     model: {}
 };
-const BaseClass = componentType(spec, canonicalLinkMixin);
+const BaseClass = componentType(spec, canonicalLinkMixin, insertHtmlMixin);
 
 export default class BookstoreSuppliers extends BaseClass {
 
@@ -43,10 +43,6 @@ export default class BookstoreSuppliers extends BaseClass {
             caButtonText: this.pageData.canadian_isbn_cta
         };
         this.update();
-    }
-
-    onUpdate() {
-        this.insertHtml();
     }
 
 }

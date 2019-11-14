@@ -1,4 +1,4 @@
-import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin, insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import {makeDocModel} from '~/models/usermodel';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
@@ -15,7 +15,7 @@ const spec = {
     model: {},
     slug: 'pages/faq'
 };
-const BaseClass = componentType(spec, canonicalLinkMixin);
+const BaseClass = componentType(spec, canonicalLinkMixin, insertHtmlMixin);
 
 export default class FAQ extends BaseClass {
 
@@ -56,10 +56,6 @@ export default class FAQ extends BaseClass {
                 });
             }
         }
-    }
-
-    onUpdate() {
-        this.insertHtml();
     }
 
     @on('click .question')

@@ -3,8 +3,15 @@ import {Controller} from 'superb.js';
 import CMSPageController from '~/controllers/cms';
 import mix from './mixins';
 import shellBus from '~/components/shell/shell-bus';
+import debounce from 'lodash/debounce';
 
-export const componentMixin = (superclass) => class extends superclass {
+const updateOptimizely = debounce(() => {
+    if (dataLayer) {
+        dataLayer.push({event: 'optimize.activate'});
+    }
+}, 80);
+
+const componentMixin = (superclass) => class extends superclass {
 
     init(options) {
         Object.assign(this, options);
@@ -24,6 +31,10 @@ export const componentMixin = (superclass) => class extends superclass {
 
     insertHtml(el=this.el, model=this.model) {
         $.insertHtml(el, model);
+    }
+
+    onLoaded() {
+        updateOptimizely();
     }
 
 };

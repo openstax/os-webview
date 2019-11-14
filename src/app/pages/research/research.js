@@ -1,5 +1,5 @@
 import AccordionGroup from '~/components/accordion-group/accordion-group';
-import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
+import componentType, {canonicalLinkMixin, insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import ContentGroup from '~/components/content-group/content-group';
 import TabGroup from '~/components/tab-group/tab-group';
 import AlumniTab from './alumni-tab/alumni-tab';
@@ -48,7 +48,7 @@ const spec = {
         };
     }
 };
-const BaseClass = componentType(spec, canonicalLinkMixin);
+const BaseClass = componentType(spec, canonicalLinkMixin, insertHtmlMixin);
 
 export default class Research extends BaseClass {
 
@@ -97,10 +97,6 @@ export default class Research extends BaseClass {
         this.regions.accordion.attach(new AccordionGroup({
             items: accordionItems
         }));
-    }
-
-    onUpdate() {
-        this.insertHtml();
     }
 
 }

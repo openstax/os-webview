@@ -79,6 +79,9 @@ export default class PeopleTab extends Controller {
     }
 
     onUpdate() {
+        if (super.onUpdate) {
+            super.onUpdate();
+        }
         if (this.selectedCard) {
             const bioCard = this.el.querySelector('.card.bio');
             const cardToInsertBefore = this.cardBelowOpenCard();

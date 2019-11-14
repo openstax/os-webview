@@ -15,6 +15,9 @@ export default class Booking extends Controller {
     }
 
     onUpdate() {
+        if (super.onUpdate) {
+            super.onUpdate();
+        }
         $.insertHtml(this.el, this.model);
     }
 

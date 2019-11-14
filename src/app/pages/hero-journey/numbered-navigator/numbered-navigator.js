@@ -78,6 +78,9 @@ export default class extends componentType(spec) {
     }
 
     onUpdate() {
+        if (super.onUpdate) {
+            super.onUpdate();
+        }
         const {lastCompleted} = this.getProps();
 
         if (this.el && this.showing) {
