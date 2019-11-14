@@ -2,7 +2,7 @@
     <div class="info body-block graybottom" if="model.showDecisionDetails">
         <div class="label-value-pair" each="pair in model.decisionDataPairs">
             <div class="label">{pair[0]}</div>
-            <div class="value">{model.detail[pair[1]] || ''}</div>
+            <div class="value" data-html="detail['{pair[1]}'] || ''" skip="true"></div>
         </div>
     </div>
     <div class="info body-block">
