@@ -1553,5 +1553,6 @@ export default {
         "title": "Fizyka dla szkół wyższych. Tom 1"
     },
     "tutor_marketing_book": false,
-    "promote_image": null
+    "promote_image": null,
+    "videos": []
 };

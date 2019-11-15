@@ -3679,7 +3679,8 @@ const details = {
             }
         ]
     },
-    "tutor_marketing_book": true
+    "tutor_marketing_book": true,
+    "videos": []
 };
 
 for (const prop in details) {

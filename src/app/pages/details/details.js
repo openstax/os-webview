@@ -7,6 +7,7 @@ import InstructorResourceTab from './instructor-resource-tab/instructor-resource
 import PartnersTab from './partners-tab/partners-tab';
 import PhoneView from './phone-view/phone-view';
 import StudentResourceTab from './student-resource-tab/student-resource-tab';
+import VideosTab from './videos-tab/videos-tab';
 import TabGroup from '~/components/tab-group/tab-group';
 import userModel from '~/models/usermodel';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
@@ -284,6 +285,14 @@ export default class Details extends BaseClass {
                 ally: {
                     heading: this.pageData.ally_content.content.heading,
                     blurb: this.pageData.ally_content.content.content
+                }
+            }));
+        }
+
+        if (this.pageData.videos.length) {
+            addTab('Videos', new VideosTab({
+                model: {
+                    videos: this.pageData.videos[0]
                 }
             }));
         }

@@ -3418,5 +3418,6 @@ export default {
         "id": "8d50a0af-948b-4204-a71d-4826cba765b8@15.3"
     },
     "tutor_marketing_book": true,
-    "promote_image": null
+    "promote_image": null,
+    "videos": []
 };
