@@ -76,19 +76,22 @@ function oldUserModel(sfUserModel) {
             }
             return a;
         }) || {}).value;
-    const groupsFor = (userInfo) => {
-        const result = (userInfo.applications || [])
+    const isStudent = ['student', 'unknown_role'].includes(sfUserModel.self_reported_role);
+    const pending = !isStudent &&
+        ['pending_faculty', 'no_faculty_info'].includes(sfUserModel.faculty_status);
+    const groups = (function () {
+        const result = (sfUserModel.applications || [])
             .map((obj) => obj.name)
             .filter((name) => name === 'OpenStax Tutor');
 
-        if (userInfo.self_reported_role === 'student') {
+        if (isStudent) {
             result.push('Student');
         }
-        if (userInfo.faculty_status === 'confirmed_faculty') {
+        if (sfUserModel.faculty_status === 'confirmed_faculty') {
             result.push('Faculty');
         }
         return result;
-    };
+    })();
 
     /* eslint camelcase: 0 */
     return {
@@ -96,9 +99,9 @@ function oldUserModel(sfUserModel) {
         accounts_id: sfUserModel.id,
         email: (sfUserModel.contact_infos || []).length ? findPreferredEmail(sfUserModel.contact_infos) : null,
         first_name: sfUserModel.first_name,
-        groups: groupsFor(sfUserModel),
+        groups,
         last_name: sfUserModel.last_name,
-        pending_verification: sfUserModel.faculty_status === 'pending_faculty',
+        pending_verification: pending,
         username: sfUserModel.id,
         self_reported_role: sfUserModel.self_reported_role,
         is_not_gdpr_location: sfUserModel.is_not_gdpr_location
