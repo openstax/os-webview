@@ -11,7 +11,7 @@ describe('login-menu', () => {
         );
         return loginMenuPromise(el).then((instance) => {
             expect(instance).toBeTruthy();
-            expect(instance.el.textContent).toBe('Login');
+            expect(instance.el.textContent).toBe('Log in');
         });
     });
 

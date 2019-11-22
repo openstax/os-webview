@@ -3,10 +3,6 @@ import settings from 'settings';
 import {description as template} from './resource-box.html';
 import css from './resource-box.css';
 
-function pathWithoutSearch() {
-    return `${window.location.origin}${window.location.pathname}`;
-}
-
 const spec = {
     template,
     css,
@@ -15,13 +11,45 @@ const spec = {
     }
 };
 
+function encodeLocation(search) {
+    const pathWithoutSearch = `${window.location.origin}${window.location.pathname}`;
+
+    return encodeURIComponent(`${pathWithoutSearch}?${search}`);
+}
+
+function resourceBoxPermissions({
+    resourceData, userStatus, search, resourceStatus, loginUrl
+}) {
+    const isExternal = Boolean(resourceData.link_external);
+    const status = resourceStatus();
+    const statusToPermissions = {
+        unlocked: {
+            iconType: isExternal ? 'external-link-alt' : 'download',
+            link: {
+                text: resourceData.link_text,
+                url: resourceData.link_external || resourceData.link_document_url
+            }
+        },
+        pending: {
+            iconType: 'lock'
+        },
+        locked: {
+            iconType: 'lock',
+            link: {
+                text: 'Log in to unlock',
+                url: loginUrl
+            }
+        }
+    };
+
+    return statusToPermissions[status];
+}
+
 export default class extends componentType(spec, insertHtmlMixin) {
 
     // Utility function to set the values associated with whether the resource
     // is available to the user (instructor version)
     static instructorResourceBoxPermissions(resourceData, userStatus, search) {
-        const encodedLocation = encodeURIComponent(`${pathWithoutSearch()}?${search}`);
-        const isExternal = Boolean(resourceData.link_external);
         const resourceStatus = () => {
             if (resourceData.resource_unlocked || userStatus.isInstructor) {
                 return 'unlocked';
@@ -31,61 +59,37 @@ export default class extends componentType(spec, insertHtmlMixin) {
             }
             return 'locked';
         };
+        const encodedLocation = encodeLocation(search);
         const loginUrl = userStatus.userInfo && userStatus.userInfo.id ?
             `${settings.accountHref}/faculty_access/apply?r=${encodedLocation}` :
             `${settings.apiOrigin}/oxauth/login/?next=${encodedLocation}`;
-        const status = resourceStatus();
-        const statusToPermissions = {
-            unlocked: {
-                iconType: isExternal ? 'external-link-alt' : 'download',
-                link: {
-                    text: resourceData.link_text,
-                    url: resourceData.link_external || resourceData.link_document_url
-                }
-            },
-            pending: {
-                iconType: 'lock'
-            },
-            locked: {
-                iconType: 'lock',
-                link: {
-                    text: 'Login to unlock',
-                    url: loginUrl
-                }
-            }
-        };
 
-        return statusToPermissions[status];
+        return resourceBoxPermissions({
+            resourceData,
+            userStatus,
+            search,
+            resourceStatus,
+            loginUrl
+        });
     };
 
     // Utility function for student resources
     static studentResourceBoxPermissions(resourceData, userStatus, search) {
-        const encodedLocation = encodeURIComponent(`${pathWithoutSearch()}?${search}`);
-        const isExternal = Boolean(resourceData.link_external);
         const resourceStatus = () => {
             if (resourceData.resource_unlocked || userStatus.isStudent || userStatus.isInstructor) {
                 return 'unlocked';
             }
             return 'locked';
         };
-        const statusToPermissions = {
-            unlocked: {
-                iconType: isExternal ? 'external-link-alt' : 'download',
-                link: {
-                    text: resourceData.link_text,
-                    url: resourceData.link_external ||resourceData.link_document_url
-                }
-            },
-            locked: {
-                iconType: 'lock',
-                link: {
-                    text: 'Login to unlock',
-                    url: `${settings.apiOrigin}/oxauth/login/?next=${encodedLocation}`
-                }
-            }
-        };
+        const loginUrl = `${settings.apiOrigin}/oxauth/login/?next=${encodeLocation(search)}`;
 
-        return statusToPermissions[resourceStatus()];
+        return resourceBoxPermissions({
+            resourceData,
+            userStatus,
+            search,
+            resourceStatus,
+            loginUrl
+        });
     };
 
     init(model) {
