@@ -117,6 +117,25 @@ $.scrollToHash = () => {
     }
 };
 
+$.scrollToFrame = ({divEl, newFrameNumber, oldFrameNumber, unit='vw'}) => {
+    const SCROLL_TICKS = $.isMobileDisplay() ? 12 : 24;
+    let posVw = oldFrameNumber * -100;
+    const newPosVw = newFrameNumber * -100;
+    const step = (newPosVw - posVw) / SCROLL_TICKS;
+    const takeStep = () => {
+        if (Math.abs(newPosVw - posVw) <= Math.abs(step)) {
+            posVw = newPosVw;
+            divEl.style.left = `${Math.round(posVw)}${unit}`;
+        } else {
+            posVw += step;
+            divEl.style.left = `${Math.round(posVw)}${unit}`;
+            window.requestAnimationFrame(takeStep);
+        }
+    };
+
+    window.requestAnimationFrame(takeStep);
+};
+
 $.hashClick = (event, options = {doHistory: true}) => {
     const node = event.delegateTarget;
     const destUrl = `${node.pathname}${node.hash}`;

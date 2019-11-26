@@ -89,6 +89,9 @@ export class Dialog extends componentType(spec) {
         if (this.handlers && this.handlers.closeDialog) {
             this.handlers.closeDialog();
         }
+        if (this.props.onClose) {
+            this.props.onClose();
+        }
         this.attached = false;
     }
 

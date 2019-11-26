@@ -95,30 +95,15 @@ export default class BannerCarousel extends BaseClass {
 
     changeFrame(newFrameNumber) {
         const oldFrameNumber = Number(this.frameNumber);
-        const SCROLL_TICKS = $.isMobileDisplay() ? 12 : 24;
-        const scrollToFrame = (n) => {
-            const divEl = this.el.querySelector('.image-row');
-            let posVw = oldFrameNumber * -100;
-            const newPosVw = this.frameNumber * -100;
-            const step = (newPosVw - posVw) / SCROLL_TICKS;
-            const takeStep = () => {
-                if (Math.abs(newPosVw - posVw) <= Math.abs(step)) {
-                    posVw = newPosVw;
-                    divEl.style.left = `${Math.round(posVw)}vw`;
-                } else {
-                    posVw += step;
-                    divEl.style.left = `${Math.round(posVw)}vw`;
-                    window.requestAnimationFrame(takeStep);
-                }
-            };
-
-            window.requestAnimationFrame(takeStep);
-        };
 
         this.frameNumber = newFrameNumber;
         this.update();
         if (this.frameNumber >= 0 && this.frameNumber < this.images.length) {
-            scrollToFrame(this.frameNumber);
+            $.scrollToFrame({
+                divEl: this.el.querySelector('.image-row'),
+                newFrameNumber,
+                oldFrameNumber
+            });
         }
     }
 

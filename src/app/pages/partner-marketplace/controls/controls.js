@@ -9,6 +9,7 @@ import AccordionGroup from '~/components/accordion-group/accordion-group';
 import Checkboxes from './checkboxes-linked-to-store/checkboxes-linked-to-store';
 import {costs, types, advanced} from '../filter-store';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
+import shellBus from '~/components/shell/shell-bus';
 
 const spec = {
     template,
@@ -37,25 +38,6 @@ function setupOptionsList(selected, items) {
 
     return ol;
 }
-
-const costOptions = [
-    {
-        label: 'Free - $10',
-        value: '10'
-    },
-    {
-        label: '$11 - $25',
-        value: '25'
-    },
-    {
-        label: '$26 - $40',
-        value: '40'
-    },
-    {
-        label: '> $40',
-        value: '999'
-    }
-];
 
 const typeOptions = [
     {
@@ -152,11 +134,6 @@ export default class extends componentType(spec, busMixin) {
                 container: this.regions.popoverContainer
             },
             {
-                label: 'Cost',
-                content: setupOptionsList(costs, costOptions),
-                style: 'attached'
-            },
-            {
                 label: 'Type',
                 content: setupOptionsList(types, typeOptions),
                 style: 'attached'
@@ -186,6 +163,7 @@ export default class extends componentType(spec, busMixin) {
                     selectedFilter: this.selectedFilter
                 });
                 this.update();
+                shellBus.emit('with-sticky', isOpen);
             });
             this.on('update', (obj) => {
                 if ('selectedFilter' in obj) {

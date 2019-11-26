@@ -1,0 +1,21 @@
+<template args="model">
+    <section class="synopsis">
+        <img class="icon" src="{model.icon}" alt="">
+        <div class="headline">{model.headline}</div>
+        <div data-html="blurb"></div>
+        <div class="titles">
+            <span class="title" each="title in model.titles">{title}</span>
+        </div>
+        <div class="tags">
+            <span class="tag" each="tag in model.tags">{tag}</span>
+        </div>
+    </section>
+    <div class="scrolling-region">
+        <section class="carousel" skip="true"></section>
+        <section>
+            <a class="btn primary" href="{model.infoUrl}">{model.infoText}</a>
+        </section>
+        <hr>
+        <section class="main-text" data-html="description" skip="true"></section>
+    </div>
+</template>
