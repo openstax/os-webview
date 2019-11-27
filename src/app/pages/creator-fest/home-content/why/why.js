@@ -14,7 +14,7 @@ const spec = {
 export default class extends componentType(spec, insertHtmlMixin) {
 
     onAttached() {
-        if (this.model.background) {
+        if (this.model.background && this.el) {
             const biStyle = window.getComputedStyle(this.el).backgroundImage;
 
             if (biStyle) {
