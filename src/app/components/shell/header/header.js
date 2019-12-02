@@ -34,12 +34,14 @@ class Header extends Controller {
 
         this.upperMenu = new UpperMenu();
         this.mainMenu = new MainMenu();
+        this.stickyDisplayedOnPage = window.location.pathname;
 
         window.addEventListener('resize', this.closeFullScreenNav.bind(this));
     }
 
     onUpdate() {
-        const stickyUpdate = window.location.pathname !== '/';
+        const currentPage = window.location.pathname;
+        const stickyUpdate = currentPage !== this.stickyDisplayedOnPage;
 
         if (stickyUpdate !== this.lastStickyUpdate) {
             stickyNote.forceHide(stickyUpdate);
