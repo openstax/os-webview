@@ -42,7 +42,9 @@ function doFetch(searchParameters) {
     return cmsFetch(`${searchPath}?${searchParameters}`)
         .then((response) =>
             response.length > MAX_SEARCH_RESULTS ? [] :
-                response.map(augmentInfo)
+                response
+                    .filter((info) => info.fields.all_time_savings > 0)
+                    .map(augmentInfo)
                     .sort((a, b) => a.fields.name.toLowerCase() < b.fields.name.toLowerCase() ? -1 : 1)
         );
 }
