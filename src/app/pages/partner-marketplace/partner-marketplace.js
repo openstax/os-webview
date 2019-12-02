@@ -42,6 +42,13 @@ export default class extends componentType(spec) {
         return searchStr;
     }
 
+    get baseHref() {
+        const h = new URL(window.location.href);
+
+        h.search = '';
+        return h.href;
+    }
+
     attachResults() {
         const results = new Results({
             el: this.el.querySelector('.results'),
@@ -54,6 +61,28 @@ export default class extends componentType(spec) {
                 displayMode: this.displayMode
             });
         };
+        results.on('select', (href) => {
+            history.replaceState('', '', href);
+            // Dialog closes on navigation; need to wait for that before opening it.
+            setTimeout(() => {
+                this.showDetailDialog(this.baseHref);
+            }, 0);
+        });
+    }
+
+    showDetailDialog(href) {
+        if (this.searchPartner) {
+            const pd = new PartnerDetails();
+
+            shellBus.emit('showDialog', () => ({
+                title: '',
+                content: pd,
+                onClose() {
+                    pd.detach();
+                    history.replaceState('', '', href);
+                }
+            }));
+        }
     }
 
     onLoaded() {
@@ -84,31 +113,14 @@ export default class extends componentType(spec) {
         this.activeFilters = new ActiveFilters({
             el: this.el.querySelector('.active-filters')
         });
-
-        if (this.searchPartner) {
-            const pd = new PartnerDetails();
-
-            shellBus.emit('showDialog', () => ({
-                title: '',
-                content: pd,
-                onClose() {
-                    pd.detach();
-                    const h = new URL(window.location.href);
-
-                    h.search = '';
-                    routerBus.emit('navigate', h.href);
-                }
-            }));
-        }
+        this.showDetailDialog(this.baseHref);
     }
 
     onDataLoaded() {
         if (super.onDataLoaded) {
             super.onDataLoaded();
         }
-        console.info('Got data:', this.pageData);
         partnerFeaturePromise.then((partnerData) => {
-            console.info('Also got:', partnerData);
             this.resultData = partnerData.map((pd) => {
                 const allies = Reflect.ownKeys(this.pageData.allies).map((k) => this.pageData.allies[k]);
                 const matchingAlly = allies.find((ally) => ally.title === pd.partner_name);

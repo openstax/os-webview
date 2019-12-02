@@ -259,10 +259,7 @@ export default class Details extends BaseClass {
                         featureUrl: this.pageData.community_resource_feature_link_url,
                         featureText: this.pageData.community_resource_feature_text
                     },
-                    ally: {
-                        heading: this.pageData.ally_content.content.heading,
-                        blurb: this.pageData.ally_content.content.content
-                    }
+                    allies
                 },
                 compCopyDialogProps
             ));

@@ -1,0 +1,72 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/placeholder-selectors';
+
+.instructor-resources .partners {
+    .title-bar {
+        @extend %light-on-dark;
+        @include set-font(h4);
+
+        background-color: os-color(deep-green);
+        color: text-color(white);
+        height: 6rem;
+        padding: $normal-margin;
+    }
+
+    .blurbs {
+        max-height: calc(100vh - 8rem);
+        overflow-y: auto;
+    }
+
+    .blurb {
+        background-color: ui-color(white);
+        border-bottom: thin solid ui-color(form-border);
+        color: inherit;
+        display: grid;
+        grid-column-gap: $normal-margin;
+        grid-template: 'logo title'
+        'logo description'
+        'logo info' / 9rem auto;
+        padding: $normal-margin;
+        text-decoration: none;
+
+        img {
+            grid-area: logo;
+            max-width: 100%;
+        }
+
+        .name {
+            @include set-font(h4);
+
+            grid-area: title;
+        }
+
+        .description {
+            grid-area: description;
+
+            > p:first-child {
+                margin: 0;
+            }
+        }
+
+        .info {
+            @include body-font(1.2rem);
+
+            background-color: ui-color(default);
+            display: flex;
+            grid-area: info;
+            justify-self: left;
+            padding: 0.5rem $normal-margin;
+            text-transform: uppercase;
+
+            .label {
+                font-weight: bold;
+                margin-right: 0.3rem;
+
+                &:not(:first-child)::before {
+                    content: '|';
+                    margin: 0 0.7rem;
+                }
+            }
+        }
+    }
+}
