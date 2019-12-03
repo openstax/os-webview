@@ -4,7 +4,7 @@ function approvedStatuses(detail) {
     const y = posted.getFullYear();
     const postedSpring = m > 1 && m < 9;
     const correctionSeason = postedSpring ? `Fall ${y}` : `Spring ${y + 1}`;
-    const correctionDate = new Date(postedSpring ? `${y}-11-1` : `${y + 1}-3-1`);
+    const correctionDate = new Date(postedSpring ? `${y}/11/1` : `${y + 1}/3/1`);
     const done = Date.now() > correctionDate;
     const barStatus = done ? 'Corrected' : 'Will correct';
 
