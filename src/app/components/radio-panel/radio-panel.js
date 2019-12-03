@@ -55,6 +55,7 @@ export default class extends RadioPanel {
     init(items) {
         super.init();
         this.items = items;
+        this.on('change', (newValue) => this.updateSelected(newValue));
     }
 
     updateSelected(value) {
@@ -64,7 +65,6 @@ export default class extends RadioPanel {
 
     setCategory(event) {
         super.setCategory(event);
-        this.updateSelected(event);
     }
 
 }
