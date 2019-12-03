@@ -1,6 +1,7 @@
 import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 import mix from '~/helpers/controller/mixins';
+import {salesforceTitles} from '~/models/books';
 
 export function salesforceFormFunctions(superclass) {
     return class extends superclass {
@@ -65,27 +66,7 @@ export default (superclass) => class extends mix(superclass).with(salesforceForm
     }
 
     onDataLoaded() {
-        const seenTitles = {};
-
-        this.salesforceTitles = Object.keys(this.pageData.books)
-            .map((key) => this.pageData.books[key])
-            .filter((book) => {
-                const abbrev = book.salesforce_abbreviation;
-                const seen = abbrev in seenTitles;
-
-                if (book.book_state === 'live') {
-                    seenTitles[abbrev] = true;
-                }
-                return abbrev && !seen && book.book_state === 'live';
-            })
-            .map((book) => ({
-                text: book.salesforce_name,
-                value: book.salesforce_abbreviation,
-                comingSoon: book.book_state === 'coming_soon',
-                subjects: book.subjects,
-                coverUrl: book.cover_url
-            }))
-            .sort((a, b) => a.text < b.text ? -1 : 1);
+        this.salesforceTitles = salesforceTitles(this.pageData.books);
     }
 
 };

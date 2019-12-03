@@ -1,0 +1,93 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.partner-marketplace .results {
+    padding: 5rem 0 20rem;
+
+    .boxed {
+        display: grid;
+        grid-gap: 3rem;
+
+        &.list {
+            grid-template-columns: 100%;
+
+            .card {
+                align-items: start;
+                color: inherit;
+                grid-column-gap: 2rem;
+                grid-template: 'image title' auto
+                'image description' 1fr
+                'image tags' auto / minmax(8rem, auto) 1fr;
+                height: 12.8rem;
+                padding: $normal-margin 3rem;
+                text-decoration: none;
+
+                .logo {
+                    max-width: 9rem;
+                }
+            }
+        }
+
+        &.grid {
+            grid-template-columns: repeat(auto-fill, 20rem);
+
+            .card {
+                color: inherit;
+                grid-row-gap: 1rem;
+                grid-template: 'image'  minmax(4rem, auto)
+                'title' 1fr
+                'tags';
+                height: 100%;
+                padding: $normal-margin;
+                text-decoration: none;
+
+                .logo {
+                    justify-self: center;
+                    max-width: 14rem;
+                }
+
+                .resource-title {
+                    @include set-font(h3);
+                }
+
+                .resource-description {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .card {
+        background-color: ui-color(white);
+        box-shadow: $card-shadow;
+        display: grid;
+
+        .logo {
+            grid-area: image;
+        }
+
+        .resource-title {
+            font-weight: bold;
+            grid-area: title;
+        }
+
+        .resource-description {
+            grid-area: description;
+        }
+
+        .rating-box {
+            @include body-font(1.2rem);
+
+            background-color: ui-color(default);
+            grid-area: tags;
+            justify-self: start;
+            padding: 0.5rem 1rem;
+            text-transform: uppercase;
+
+            > span:not(:first-child)::before {
+                content: '|';
+                margin: 0 0.7rem;
+            }
+        }
+    }
+
+}

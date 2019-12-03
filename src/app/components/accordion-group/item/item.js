@@ -18,7 +18,8 @@ const spec = {
         return {
             label: isOpen ? this.props.openLabel : this.props.label,
             chevronDirection: isOpen ? 'down' : 'right',
-            hiddenAttribute: isOpen ? null : ''
+            hiddenAttribute: isOpen ? null : '',
+            isOpen
         };
     }
 };
@@ -38,7 +39,7 @@ export default class AccordionItem extends componentType(spec, busMixin) {
             const isOpen = this.props.selectedLabel === this.props.label;
 
             this.emit('change', isOpen);
-            if (!isOpen) {
+            if (!isOpen && !this.noScroll) {
                 $.scrollTo(this.el);
             }
         }

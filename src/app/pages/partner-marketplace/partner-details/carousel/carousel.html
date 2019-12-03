@@ -1,0 +1,13 @@
+<template args="model">
+    <div class="image-row">
+        <div each="image in model.images" class="image-holder">
+            <img src="{image}">
+        </div>
+    </div>
+    <button if="model.frameNumber > 0" type="button" class="navigate previous">
+        <i class="fa fa-chevron-left"></i>
+    </button>
+    <button if="model.frameNumber < model.images.length - 1" type="button" class="navigate next">
+        <i class="fa fa-chevron-right"></i>
+    </button>
+</template>

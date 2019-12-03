@@ -9,7 +9,6 @@ import {description as template} from './a-page-template.html';
 import css from './a-page-template.css';
 
 // Global-replace a-page-template with the file name of your component
-// Replace APageTemplate with the object name of your component
 
 const spec = {
     template,
@@ -26,7 +25,7 @@ const spec = {
     }
 };
 
-export default class APageTemplate extends componentType(spec) {
+export default class extends componentType(spec) {
 
     init() {
         super.init();

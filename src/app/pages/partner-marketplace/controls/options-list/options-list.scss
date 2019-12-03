@@ -1,0 +1,15 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.options-list {
+    color: text-color(normal);
+    text-align: left;
+
+    .option {
+        padding: 0.7rem 2rem;
+        width: 100%;
+
+        &:hover {
+            background-color: ui-color(default);
+        }
+    }
+}

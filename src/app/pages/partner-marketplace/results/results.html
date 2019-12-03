@@ -1,0 +1,13 @@
+<template args="model">
+    <div class="boxed {model.displayMode}">
+        <a each="entry in model.entries" class="card" href="{`?${encodeURIComponent(entry.title)}`}">
+            <img class="logo" src="{entry.logoUrl}" alt="">
+            <div class="resource-title">{entry.title}</div>
+            <div class="resource-description" data-html="entries[{$item}].description" skip="true"></div>
+            <div class="rating-box">
+                <span>cost: $3</span>
+                <span>rating: <i class="fas fa-star"></i>5</span>
+            </div>
+        </a>
+    </div>
+</template>

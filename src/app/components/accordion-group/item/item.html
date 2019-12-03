@@ -1,5 +1,5 @@
 <template args="model">
-    <div class="control-bar">
+    <div class="control-bar" aria-expanded="{model.isOpen}">
         <div class="label">{model.label}</div>
         <div class="chevron"><span class="fa fa-chevron-{model.chevronDirection}"></span></div>
     </div>

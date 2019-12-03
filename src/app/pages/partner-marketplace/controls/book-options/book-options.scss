@@ -1,0 +1,40 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.book-options {
+    color: text-color(normal);
+    padding: 2rem;
+    text-align: left;
+
+    h2 {
+        @include set-font(h4);
+
+        margin: 0;
+        margin-bottom: 0.5rem;
+    }
+
+    .subject {
+        margin-bottom: 2rem;
+    }
+
+    .form-control {
+        display: block;
+        margin-bottom: 0.5rem;
+        white-space: nowrap;
+
+        .indicator {
+            border-radius: 0.2rem;
+            border: thin solid ui-color(form-border);
+            height: 2.4rem;
+            margin-right: 0.7rem;
+            width: 2.4rem;
+
+            input[type="checkbox"] {
+                appearance: none;
+
+                &:not(:checked) + .tick {
+                    opacity: 0;
+                }
+            }
+        }
+    }
+}

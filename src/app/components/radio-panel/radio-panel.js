@@ -1,4 +1,4 @@
-import componentType from '~/helpers/controller/init-mixin';
+import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import busMixin from '~/helpers/controller/bus-mixin';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './radio-panel.html';
@@ -16,29 +16,16 @@ const spec = {
     }
 };
 
-export default class extends componentType(spec, busMixin) {
+export class RadioPanel extends componentType(spec, insertHtmlMixin, busMixin) {
 
-    init(items) {
-        super.init();
-        this.items = items;
-    }
-
-    updateSelected(value) {
-        this.selectedValue = value;
+    whenPropsUpdated() {
         this.update();
     }
 
-    onUpdate() {
-        if (super.onUpdate) {
-            super.onUpdate();
-        }
-        this.insertHtml();
-    }
-
+    // This is for when it is in mobile/dropdown mode
     @on('click')
     toggleActive() {
-        this.active = !this.active;
-        this.el.classList.toggle('active', this.active);
+        this.el.classList.toggle('active');
     }
 
     @on('click .filter-button')
@@ -46,13 +33,10 @@ export default class extends componentType(spec, busMixin) {
         const target = event.delegateTarget;
         const newValue = target.dataset ? target.dataset.value : target.getAttribute('data-value');
 
+        this.emit('change', newValue);
         if (newValue !== this.selectedValue) {
-            this.active = false;
             this.el.classList.remove('active');
         }
-
-        this.updateSelected(newValue);
-        this.emit('change', newValue);
     }
 
     @on('keydown .filter-button')
@@ -61,6 +45,26 @@ export default class extends componentType(spec, busMixin) {
             event.preventDefault();
             this.setCategory(event);
         }
+    }
+
+}
+
+// For compatibility with those that depend on this old, wrong interface
+export default class extends RadioPanel {
+
+    init(items) {
+        super.init();
+        this.items = items;
+        this.on('change', (newValue) => this.updateSelected(newValue));
+    }
+
+    updateSelected(value) {
+        this.selectedValue = value;
+        this.update();
+    }
+
+    setCategory(event) {
+        super.setCategory(event);
     }
 
 }
