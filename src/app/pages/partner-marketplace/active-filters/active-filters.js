@@ -1,7 +1,7 @@
 import componentType from '~/helpers/controller/init-mixin';
 import {description as template} from './active-filters.html';
 import css from './active-filters.css';
-import {books, costs, types, advanced} from '../filter-store';
+import {books, costs, types, advanced} from '../store';
 import FilterRemover from './filter-remover/filter-remover';
 import {on} from '~/helpers/controller/decorators';
 

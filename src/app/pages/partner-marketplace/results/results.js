@@ -12,16 +12,52 @@ const spec = {
     },
     model() {
         return {
-            entries: this.entries,
-            displayMode: this.displayMode
+            entries: this.filteredEntries,
+            displayMode: this.displayMode.value
         };
-    }
+    },
+    cleanup: []
 };
 
 export default class extends componentType(spec, busMixin, insertHtmlMixin) {
 
-    whenPropsUpdated() {
-        this.update();
+    get filteredEntries() {
+        let result = this.entries;
+
+        if (this.books.value.length > 0) {
+            result = result.filter((entry) => {
+                return entry.books.find((title) => this.books.includes(title));
+            });
+        }
+
+        if (this.types.value.length > 0) {
+            result = result.filter((entry) => {
+                return this.types.includes(entry.type);
+            });
+        }
+
+        if (this.advanced.value.length > 0) {
+            result = result.filter((entry) => {
+                return entry.advancedFeatures.find((feature) => this.advanced.includes(feature));
+            });
+        }
+
+        return result;
+    }
+
+    onLoaded() {
+        const handleNotifyFor = (store) => {
+            store.on('notify', () => this.update());
+        };
+
+        handleNotifyFor(this.displayMode);
+        handleNotifyFor(this.books);
+        handleNotifyFor(this.types);
+        handleNotifyFor(this.advanced);
+    }
+
+    onClose() {
+        this.cleanup.forEach((f) => f());
     }
 
     @on('click a.card')

@@ -6,6 +6,7 @@ import Results from './results/results';
 import ActiveFilters from './active-filters/active-filters';
 import PartnerDetails from './partner-details/partner-details';
 import partnerFeaturePromise from '~/models/salesforce-partners';
+import {displayMode, books, costs, types, advanced} from './store';
 import shellBus from '~/components/shell/shell-bus';
 import routerBus from '~/helpers/router-bus';
 
@@ -22,17 +23,38 @@ const spec = {
             headline: this.heading,
             description: this.description
         };
-    },
-    resultData: [
-        {
-            logoUrl: 'https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/images/TopHat_Lockup_FullColor_RGB.original.jpg',
-            title: 'Top Hat',
-            description: `
-            Top Had lorem ipsum <b>dolor</b> sit amet, consectetur adipiscing elit.
-            `
-        }],
-    displayMode: 'grid'
+    }
 };
+
+function advancedFilterKeys(partnerEntry) {
+    return Reflect.ownKeys(partnerEntry).filter((k) => [false, true].includes(partnerEntry[k]));
+}
+
+function getAdvancedFilters(partnerEntry) {
+    const keys = advancedFilterKeys(partnerEntry);
+    const result = [];
+
+    keys.forEach((k) => {
+        const label = k.replace(/_(.)/g, (_, char) => ` ${char.toUpperCase()}`)
+            .replace(/./, (char) => char.toUpperCase());
+        const firstWord = label.split(' ')[0];
+        const thisEntry = {
+            label,
+            value: k
+        };
+        const inResult = result.find((entry) => entry.title === firstWord);
+
+        if (!inResult) {
+            result.push({
+                title: firstWord,
+                options: [thisEntry]
+            });
+        } else {
+            inResult.options.push(thisEntry);
+        }
+    });
+    return result;
+}
 
 export default class extends componentType(spec) {
 
@@ -49,18 +71,16 @@ export default class extends componentType(spec) {
         return h.href;
     }
 
-    attachResults() {
+    attachResults(entries) {
         const results = new Results({
             el: this.el.querySelector('.results'),
-            entries: this.resultData,
-            displayMode: this.displayMode
+            entries,
+            displayMode,
+            books,
+            types,
+            advanced
         });
 
-        this.updateResults = () => {
-            results.emit('update-props', {
-                displayMode: this.displayMode
-            });
-        };
         results.on('select', (href) => {
             history.replaceState('', '', href);
             // Dialog closes on navigation; need to wait for that before opening it.
@@ -95,21 +115,6 @@ export default class extends componentType(spec) {
         }
         this.heading = 'Courseware Concierge';
         this.description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
-        this.controls = new Controls({
-            el: this.el.querySelector('.controls'),
-            displayMode: this.displayMode
-        });
-        this.controls.on('update', (obj) => {
-            if ('displayMode' in obj) {
-                this.displayMode = obj.displayMode;
-                this.controls.emit('update-props', {
-                    displayMode: this.displayMode
-                });
-                if (this.updateResults) {
-                    this.updateResults();
-                }
-            }
-        });
         this.activeFilters = new ActiveFilters({
             el: this.el.querySelector('.active-filters')
         });
@@ -121,18 +126,30 @@ export default class extends componentType(spec) {
             super.onDataLoaded();
         }
         partnerFeaturePromise.then((partnerData) => {
-            this.resultData = partnerData.map((pd) => {
+            const advancedFilterOptions = getAdvancedFilters(partnerData[0]);
+
+            this.controls = new Controls({
+                el: this.el.querySelector('.controls'),
+                displayMode,
+                advancedFilterOptions
+            });
+            const resultData = partnerData.map((pd) => {
                 const allies = Reflect.ownKeys(this.pageData.allies).map((k) => this.pageData.allies[k]);
                 const matchingAlly = allies.find((ally) => ally.title === pd.partner_name);
                 const logoUrl = (matchingAlly||{}).ally_bw_logo;
-
-                return {
+                const result = {
                     title: pd.partner_name,
                     description: pd.partner_description || '[no description]',
-                    logoUrl
+                    logoUrl,
+                    books: (pd.books||'').split(/;/),
+                    type: pd.partner_type,
+                    advancedFeatures: advancedFilterKeys(pd).filter((k) => pd[k] === true)
                 };
+
+                return result;
             });
-            this.attachResults();
+
+            this.attachResults(resultData);
         });
         this.update();
     }
