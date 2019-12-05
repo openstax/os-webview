@@ -23,8 +23,6 @@ const PAGES = [
     'faq',
     'foundation',
     'general/*path',
-    'give',
-    'give/*path',
     'hero-journey',
     'interest',
     'impact',
