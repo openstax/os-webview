@@ -27,4 +27,10 @@ describe('calloutCounter', () => {
         calloutCounter.count = 100;
         expect(calloutCounter.count).toBe(100);
     });
+    it('sets and gets lastReset', () => {
+        const now = Date.now();
+
+        calloutCounter.lastReset = now;
+        expect(Number(calloutCounter.lastReset).toString()).toBe(now.toString());
+    });
 });
