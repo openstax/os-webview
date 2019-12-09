@@ -8,7 +8,6 @@ import {description as template} from './instructor-resource-tab.html';
 import css from './instructor-resource-tab.css';
 
 function allyToPartner(ally) {
-    console.info('Convert', ally);
     return {
         image: ally.ally_color_logo,
         name: ally.ally_heading,
