@@ -1,4 +1,4 @@
-import calloutCounter from '~/components/get-this-title/callout-counter';
+import calloutCounter, {Implementation} from '~/components/get-this-title/callout-counter';
 
 describe('calloutCounter', () => {
     it('throws an error if no slug set', () => {
@@ -27,10 +27,26 @@ describe('calloutCounter', () => {
         calloutCounter.count = 100;
         expect(calloutCounter.count).toBe(100);
     });
-    it('sets and gets lastReset', () => {
-        const now = Date.now();
+});
 
-        calloutCounter.lastReset = now;
-        expect(Number(calloutCounter.lastReset).toString()).toBe(now.toString());
+const now = Date.now();
+
+describe('Counter, before resetDate', () => {
+    const instance = new Implementation(new Date(now + 40000));
+
+    it('does not reset counter and date', () => {
+        instance.setSlug('third-slug');
+        expect(instance.count).toBe(0);
+        expect(Number(instance.lastReset)).toBe(Number(instance.resetDate) - 100);
+    });
+});
+
+describe('Counter, after resetDate', () => {
+    const instance = new Implementation(new Date(now - 40000));
+
+    it('resets counter and date', () => {
+        instance.setSlug('fourth-slug');
+        expect(instance.count).toBe(0);
+        expect(Number(instance.lastReset)).toBeGreaterThan(now);
     });
 });

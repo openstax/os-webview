@@ -7,9 +7,10 @@ import BookOptions from './book-options/book-options';
 import OptionsList from './options-list/options-list';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import Checkboxes from './checkboxes-linked-to-store/checkboxes-linked-to-store';
-import {costs, types, advanced} from '../filter-store';
+import {books, types, advanced} from '../store';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
 import shellBus from '~/components/shell/shell-bus';
+import sortBy from 'lodash/sortBy';
 
 const spec = {
     template,
@@ -27,7 +28,8 @@ const spec = {
             triangleClass: `triangle-${this.triangleColor}`
         };
     },
-    selectedFilter: null
+    selectedFilter: null,
+    cleanup: []
 };
 
 function setupOptionsList(selected, items) {
@@ -62,42 +64,13 @@ const typeOptions = [
     }
 ];
 
-const advancedFilterOptions = [
-    {
-        title: 'Adaptivity',
-        options: [
-            {
-                label: 'Adaptive presentation based on learner goals',
-                value: 'adaptive-goals'
-            },
-            {
-                label: 'Adaptive complexity or presentation of content based on a learner\'s affective state',
-                value: 'adaptive-state'
-            }
-        ]
-    },
-    {
-        title: 'Affordability',
-        options: [
-            {
-                label: 'Affordable for something or other',
-                value: 'affordable-1'
-            },
-            {
-                label: 'Affordable for rich people',
-                value: 'affordable-2'
-            }
-        ]
-    }
-];
-
 export default class extends componentType(spec, busMixin) {
 
     get triangleColor() {
         let color = 'white';
 
         if (this.selectedFilter === 'Advanced Filters') {
-            if (this.openLabel === advancedFilterOptions[0].title) {
+            if (this.openLabel === this.advancedFilterOptions[0].title) {
                 color = 'dark';
             } else {
                 color = 'light';
@@ -109,19 +82,21 @@ export default class extends componentType(spec, busMixin) {
 
     attachButtons() {
         const advancedFilters = new AccordionGroup({
-            items: advancedFilterOptions
-                .map((group) => {
-                    return {
+            items: sortBy(
+                this.advancedFilterOptions
+                    .map((group) => ({
                         title: group.title,
                         contentComponent: new Checkboxes({
                             options: group.options,
                             store: advanced
                         })
-                    };
-                }),
+                    })),
+                'title'
+            ),
             noScroll: true
         });
 
+        advanced.on('notify', () => this.update());
         advancedFilters.on('open', (openLabel) => {
             this.openLabel = openLabel;
             this.update();
@@ -129,7 +104,9 @@ export default class extends componentType(spec, busMixin) {
         [
             {
                 label: 'Books',
-                content: new BookOptions(),
+                content: new BookOptions({
+                    store: books
+                }),
                 style: 'detached',
                 container: this.regions.popoverContainer
             },
@@ -177,19 +154,25 @@ export default class extends componentType(spec, busMixin) {
     }
 
     attachDisplayFormatController() {
-        this.displayControl = new RadioPanel({
+        const displayControl = new RadioPanel({
             items: [
                 {value: 'grid', html: 'Grid'},
                 {value: 'list', html: 'List'}
             ],
-            selectedValue: this.displayMode
+            selectedValue: this.displayMode.value
         });
-        this.regions.otherControls.append(this.displayControl);
-        this.displayControl.on('change', (newValue) => {
-            this.emit('update', {
-                displayMode: newValue
-            });
+
+        this.regions.otherControls.append(displayControl);
+        displayControl.on('change', (newValue) => {
+            this.displayMode.value = newValue;
         });
+        this.cleanup.push(
+            this.displayMode.on('notify', () => {
+                displayControl.emit('update-props', {
+                    selectedValue: this.displayMode.value
+                });
+            })
+        );
     }
 
     onLoaded() {
@@ -200,12 +183,8 @@ export default class extends componentType(spec, busMixin) {
         this.attachDisplayFormatController();
     }
 
-    whenPropsUpdated(obj) {
-        if ('displayMode' in obj) {
-            this.displayControl.emit('update-props', {
-                selectedValue: obj.displayMode
-            });
-        }
+    onClose() {
+        this.cleanup.forEach((fn) => fn());
     }
 
 }

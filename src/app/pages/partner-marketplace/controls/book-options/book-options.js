@@ -2,7 +2,6 @@ import componentType from '~/helpers/controller/init-mixin';
 import {description as template} from './book-options.html';
 import css from './book-options.css';
 import booksPromise, {salesforceTitles, subjects} from '~/models/books';
-import {books as store} from '../../filter-store';
 import Checkboxes from '../checkboxes-linked-to-store/checkboxes-linked-to-store';
 
 const spec = {
@@ -45,7 +44,7 @@ export default class extends componentType(spec) {
                 const region = this.regionFrom(`[data-subject="${subject}"]`);
                 const cb = new Checkboxes({
                     el: region.el,
-                    store,
+                    store: this.store,
                     options
                 });
             });

@@ -23,7 +23,7 @@ export default class extends componentType(spec) {
         if (super.onLoaded) {
             super.onLoaded();
         }
-        this.cleanup = this.store.on('notify', (newValue) => {
+        this.cleanup = this.store.on('notify', () => {
             this.update();
         });
     }
@@ -40,7 +40,6 @@ export default class extends componentType(spec) {
         const cb = event.delegateTarget;
 
         this.store.toggle(cb.value);
-        console.info('Toggling', cb.value, this.store.includes(cb.value));
     }
 
 }

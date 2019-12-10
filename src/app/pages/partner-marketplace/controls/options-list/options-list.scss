@@ -11,5 +11,9 @@
         &:hover {
             background-color: ui-color(default);
         }
+
+        &[aria-selected="true"] {
+            font-weight: bold;
+        }
     }
 }
