@@ -12,6 +12,7 @@ import TabGroup from '~/components/tab-group/tab-group';
 import userModel from '~/models/usermodel';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
 import shuffle from 'lodash/shuffle';
+import analytics from '~/helpers/analytics';
 import {description as template} from './details.html';
 import css from './details.css';
 import {on} from '~/helpers/controller/decorators';
@@ -170,6 +171,7 @@ export default class Details extends BaseClass {
     }
 
     onDataLoaded() {
+        analytics.addResourcesToLookupTable(this.pageData);
         if (this.pageData.meta.type !== 'books.Book') {
             throw new Error(`Pagedata for ${this.slug} is not of type books.Book: ${this.pageData.meta.type}`);
         }

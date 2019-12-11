@@ -169,25 +169,23 @@ class Analytics {
         });
     }
 
-    addResourcesToLookupTable(resourceItems) {
+    addResourcesToLookupTable(item) {
         const resourceMarker = {
             'book_student_resources': 'Student',
             'book_faculty_resources': 'Faculty'
         };
 
-        resourceItems.forEach((item) => {
-            Object.keys(resourceMarker).forEach((resourceBranch) => {
-                const marker = resourceMarker[resourceBranch];
+        Reflect.ownKeys(resourceMarker).forEach((resourceBranch) => {
+            const marker = resourceMarker[resourceBranch];
 
-                item[resourceBranch].forEach((resource) => {
-                    this.sourceByUrl[resource.link_document_url] = `${item.title} ${marker}`;
-                });
+            item[resourceBranch].forEach((resource) => {
+                this.sourceByUrl[resource.link_document_url] = `${item.title} ${marker}`;
             });
-            item.book_allies.forEach((ally) => {
-                const url = ally.book_link_url;
+        });
+        item.book_allies.forEach((ally) => {
+            const url = ally.book_link_url;
 
-                this.sourceByUrl[url] = ally.ally_heading;
-            });
+            this.sourceByUrl[url] = ally.ally_heading;
         });
     }
 
@@ -196,7 +194,7 @@ class Analytics {
             return this.sourceByUrl[selectedUrl];
         }
 
-        const found = Object.keys(this.sourceByUrl)
+        const found = Reflect.ownKeys(this.sourceByUrl)
             .find(url => selectedUrl.localeCompare(url) === 0);
 
         return found ? this.sourceByUrl[found] : '';
@@ -209,21 +207,6 @@ class Analytics {
                 const books = await booksPromise;
 
                 this.addBooksToLookupTable(books);
-            } catch (e) {
-                console.log(e);
-            }
-        })();
-
-        /* eslint arrow-parens: 0 */
-        (async () => {
-            try {
-                const response = await fetch(
-                    `${settings.apiOrigin}${settings.apiPrefix}/v2/pages/?type=books.Book&fields`+
-                    '=title,book_student_resources,book_faculty_resources,book_allies&limit=250'
-                );
-                const bookFields = await response.json();
-
-                this.addResourcesToLookupTable(bookFields.items);
             } catch (e) {
                 console.log(e);
             }
