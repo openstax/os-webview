@@ -1,0 +1,25 @@
+<template args="model">
+    <div class="message">
+        {model.message} min read
+    </div>
+    <svg height="{model.radius * 2}" width="{model.radius * 2}">
+        <circle class="unfinished"
+            cx="{model.radius}"
+            cy="{model.radius}"
+            fill="transparent"
+            r="{model.normalizedRadius}"
+            stroke-dasharray="{`${model.circumference} ${model.circumference}`}"
+            stroke-width="{model.strokeWidth}"
+            style="stroke-dashoffset: 0"
+        >
+        <circle class="finished"
+            cx="{model.radius}"
+            cy="{model.radius}"
+            fill="transparent"
+            r="{model.normalizedRadius}"
+            stroke-dasharray="{`${model.circumference} ${model.circumference}`}"
+            stroke-width="{model.strokeWidth}"
+            style="stroke-dashoffset: {model.strokeDashoffset}"
+        >
+    </svg>
+</template>

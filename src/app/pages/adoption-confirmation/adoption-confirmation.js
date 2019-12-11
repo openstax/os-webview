@@ -23,6 +23,9 @@ const BaseClass = componentType(spec, canonicalLinkMixin);
 export default class AdoptionConfirmation extends BaseClass {
 
     onLoaded() {
+        if (super.onLoaded) {
+            super.onLoaded();
+        }
         const email = history.state ? history.state.email : '';
 
         this.regions.header.attach(new Header1());

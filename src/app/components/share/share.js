@@ -14,7 +14,7 @@ import css from './share.css';
 
 export default class Share extends Controller {
 
-    init(pageUrl, message) {
+    init(pageUrl, message, minimal) {
         this.template = template;
         this.css = css;
         this.view = {
@@ -22,7 +22,8 @@ export default class Share extends Controller {
         };
         this.model = {
             message: encodeURIComponent(message),
-            pageUrl: encodeURIComponent(pageUrl)
+            pageUrl: encodeURIComponent(pageUrl),
+            minimal
         };
     }
 

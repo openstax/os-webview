@@ -9,7 +9,10 @@ $linkedin-blue: #0077b5;
         display: flex;
         justify-content: center;
         margin: 1rem 0;
-        width: 100%;
+
+        &:not(.minimal) {
+            width: 100%;
+        }
 
         @include width-up-to($phone-max) {
             flex-direction: column;
@@ -29,11 +32,6 @@ $linkedin-blue: #0077b5;
             padding-left: 1.5rem;
             text-transform: none;
 
-            @include wider-than($phone-max + 100) {
-                padding-left: 2.2rem;
-                width: 15rem;
-            }
-
             &.facebook {
                 background-color: $facebook-blue;
             }
@@ -50,6 +48,30 @@ $linkedin-blue: #0077b5;
                 color: text-color(white);
                 margin-right: 1rem;
                 transform: scale(1.5);
+            }
+        }
+
+        &.minimal {
+            display: grid;
+            grid-gap: 1rem;
+            justify-content: center;
+            margin: 0;
+
+            $button-size: 3.2rem;
+            .btn {
+                align-items: center;
+                border-radius: 50%;
+                display: grid;
+                height: $button-size;
+                justify-content: center;
+                margin: 0;
+                padding: 0;
+                width: $button-size;
+
+                .social-icon {
+                    margin: 0;
+                    transform: none;
+                }
             }
         }
     }
