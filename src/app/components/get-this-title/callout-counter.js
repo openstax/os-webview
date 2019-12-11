@@ -1,6 +1,6 @@
 let slug = null;
 let incremented;
-const resetDate = new Date('2020/01/15');
+const resetDate = new Date('2020/01/29');
 
 export default {
     setSlug(newSlug) {
