@@ -29,7 +29,7 @@ export default class extends componentType(spec) {
         shellBus.emit('with-sticky');
         const data = this.pageData;
         const navLinks = data.navigator[0].map((nData) => ({
-            url: nData.text.toLowerCase(),
+            url: nData.slug.replace(/creator-fest|general\/|-/g, ''),
             text: nData.text,
             fetchUrl: `${settings.apiOrigin}${settings.apiPrefix}/${nData.slug.replace('general', 'spike')}`
         }));
