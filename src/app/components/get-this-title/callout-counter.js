@@ -56,4 +56,4 @@ export class Implementation {
 
 }
 
-export default new Implementation(new Date('2020/01/15'));
+export default new Implementation(new Date('2020/01/29'));
