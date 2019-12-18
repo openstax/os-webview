@@ -31,16 +31,11 @@ class Shell extends Controller {
 
     onLoaded() {
         // Wait for main to receive some content before attaching header and footer
-        // The first content is just the container, so wait for the second
-        let observationsReceived = 0;
         const mainObserver = new MutationObserver((observations) => {
-            ++observationsReceived;
-            if (observationsReceived > 1) {
-                document.body.classList.remove('initial-load');
-                this.regions.header.attach(header);
-                this.regions.footer.attach(footer);
-                mainObserver.disconnect();
-            }
+            document.body.classList.remove('initial-load');
+            this.regions.header.attach(header);
+            this.regions.footer.attach(footer);
+            mainObserver.disconnect();
         });
 
         mainObserver.observe(document.getElementById('main'), {childList: true, subtree: true});

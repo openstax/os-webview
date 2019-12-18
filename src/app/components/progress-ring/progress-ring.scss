@@ -1,0 +1,30 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.progress-ring {
+    display: grid;
+    position: relative;
+
+    .message {
+        @include title-font(1.6rem);
+
+        left: 50%;
+        position: absolute;
+        text-align: center;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    circle {
+        transition: stroke-dashoffset 0.06s;
+        transform: rotate(-90deg);
+        transform-origin: 50% 50%;
+
+        &.finished {
+            stroke: os-color(orange);
+        }
+
+        &.unfinished {
+            stroke: ui-color(form-border);
+        }
+    }
+}
