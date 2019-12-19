@@ -33,6 +33,7 @@ export default class RoverRedesign extends BaseClass {
     onDataLoaded() {
         const data = this.flattenPageData();
         const headerImage = '/images/rover-by-openstax/rover-logo-orange.svg';
+        const officeHours = data.officeHours.content[0];
         const sections = [
             new Banner({
                 model: {
@@ -104,21 +105,15 @@ export default class RoverRedesign extends BaseClass {
             }),
             new OfficeHours({
                 model: {
-                    heading: 'Office Hours',
-                    description: `Interested in learning more about Rover by OpenStax?
-                    Have questions and want to speak to a real person? Join us for
-                    Rover Office Hours! We host a weekly interactive Q&A session on
-                    Thursdays from 2 - 3 p.m. (CST). We will answer any questions
-                    you have about Rover, including how to set up your course, create
-                    assignments, and more. Click on the link below to sign up.`,
-                    moreInfo: `Can't make it? To schedule a one-on-one meeting, email
-                    us at <a href="mailto:communications@openstax.org">communications@openstax.org</a>`,
+                    heading: officeHours.heading,
+                    description: officeHours.description,
+                    moreInfo: officeHours.moreInfo,
                     image: {
-                        image: '/images/rover-by-openstax/office-hours.svg',
+                        image: officeHours.image.file,
                         altText: ''
                     },
-                    linkUrl: 'https://register.gotowebinar.com/rt/6549201828833750273',
-                    linkText: 'Sign up for office hours'
+                    linkUrl: officeHours.linkUrl,
+                    linkText: officeHours.linkText
                 }
             }),
             new FAQ({
