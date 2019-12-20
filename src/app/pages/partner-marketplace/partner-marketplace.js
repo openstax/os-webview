@@ -1,4 +1,4 @@
-import componentType from '~/helpers/controller/init-mixin';
+import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './partner-marketplace.html';
 import css from './partner-marketplace.css';
 import Controls from './controls/controls';
@@ -17,46 +17,56 @@ const spec = {
         classes: ['partner-marketplace', 'page'],
         tag: 'main'
     },
-    slug: 'pages/partners',
+    slug: 'pages/new-partners-page',
     model() {
         return {
             headline: this.heading,
             description: this.description
         };
-    }
+    },
+    heading: '',
+    description: ''
 };
 
 function advancedFilterKeys(partnerEntry) {
     return Reflect.ownKeys(partnerEntry).filter((k) => [false, true].includes(partnerEntry[k]));
 }
 
-function getAdvancedFilters(partnerEntry) {
-    const keys = advancedFilterKeys(partnerEntry);
-    const result = [];
+function getFilterOptions(data) {
+    const result = Reflect.ownKeys(data.category_mapping)
+        .filter((title) => !['Book', 'Type'].includes(title))
+        .map((title) => ({
+            title,
+            options: []
+        }));
+    const mapToTitle = Object.entries(data.category_mapping)
+        .filter(([text, _]) => !['Book', 'Type'].includes(text))
+        .reduce((obj, [text, prefix]) => {
+            obj[prefix] = text;
+            return obj;
+        }, {});
 
-    keys.forEach((k) => {
-        const label = k.replace(/_(.)/g, (_, char) => ` ${char.toUpperCase()}`)
-            .replace(/./, (char) => char.toUpperCase());
-        const firstWord = label.split(' ')[0];
-        const thisEntry = {
+    Reflect.ownKeys(data.field_name_mapping).forEach((value) => {
+        const label = data.field_name_mapping[value];
+        const entry = {
             label,
-            value: k
+            value
         };
-        const inResult = result.find((entry) => entry.title === firstWord);
+        const categoryPrefix = Reflect.ownKeys(mapToTitle)
+            .find((prefix) => value.substr(0, prefix.length) === prefix);
+        const itemInResult = result.find((obj) => obj.title === mapToTitle[categoryPrefix]);
 
-        if (!inResult) {
-            result.push({
-                title: firstWord,
-                options: [thisEntry]
-            });
+        if (itemInResult) {
+            itemInResult.options.push(entry);
         } else {
-            inResult.options.push(thisEntry);
+            console.warn('No match', categoryPrefix, value);
         }
     });
+
     return result;
 }
 
-export default class extends componentType(spec) {
+export default class extends componentType(spec, insertHtmlMixin) {
 
     get searchPartner() {
         const searchStr = decodeURIComponent(window.location.search.substr(1));
@@ -113,8 +123,6 @@ export default class extends componentType(spec) {
             // already loaded, we came back
             return;
         }
-        this.heading = 'Courseware Concierge';
-        this.description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
         this.activeFilters = new ActiveFilters({
             el: this.el.querySelector('.active-filters')
         });
@@ -125,22 +133,21 @@ export default class extends componentType(spec) {
         if (super.onDataLoaded) {
             super.onDataLoaded();
         }
-        partnerFeaturePromise.then((partnerData) => {
-            const advancedFilterOptions = getAdvancedFilters(partnerData[0]);
+        this.heading = this.pageData.heading;
+        this.description = this.pageData.description;
+        this.update();
+        this.controls = new Controls({
+            el: this.el.querySelector('.controls'),
+            displayMode,
+            advancedFilterOptions: getFilterOptions(this.pageData)
+        });
 
-            this.controls = new Controls({
-                el: this.el.querySelector('.controls'),
-                displayMode,
-                advancedFilterOptions
-            });
+        partnerFeaturePromise.then((partnerData) => {
             const resultData = partnerData.map((pd) => {
-                const allies = Reflect.ownKeys(this.pageData.allies).map((k) => this.pageData.allies[k]);
-                const matchingAlly = allies.find((ally) => ally.title === pd.partner_name);
-                const logoUrl = (matchingAlly||{}).ally_bw_logo;
                 const result = {
                     title: pd.partner_name,
                     description: pd.partner_description || '[no description]',
-                    logoUrl,
+                    logoUrl: pd.partner_logo,
                     books: (pd.books||'').split(/;/),
                     type: pd.partner_type,
                     advancedFeatures: advancedFilterKeys(pd).filter((k) => pd[k] === true)
@@ -151,7 +158,6 @@ export default class extends componentType(spec) {
 
             this.attachResults(resultData);
         });
-        this.update();
     }
 
 }

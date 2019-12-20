@@ -62,7 +62,9 @@
         display: grid;
 
         .logo {
+            display: grid;
             grid-area: image;
+            justify-content: center;
         }
 
         .resource-title {
@@ -78,6 +80,7 @@
             @include body-font(1.2rem);
 
             background-color: ui-color(default);
+            display: none; // TEMPORARY
             grid-area: tags;
             justify-self: start;
             padding: 0.5rem 1rem;

@@ -120,11 +120,11 @@ export default class extends componentType(spec, busMixin) {
                 content: advancedFilters,
                 style: 'detached',
                 container: this.regions.popoverContainer
-            },
-            {
-                label: 'Sort',
-                region: this.regions.otherControls
-            }
+            }// ,
+            // {
+            //     label: 'Sort',
+            //     region: this.regions.otherControls
+            // } // TEMPORARY
         ].forEach(({label, region=this.regions.buttonRow, content, style, container}) => {
             const bwd = new PopoverControlButton({
                 label,
