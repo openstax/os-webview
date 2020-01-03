@@ -33,6 +33,7 @@ export default class InstructorResourceTab extends Controller {
         };
 
         this.dialogProps = compCopyDialogProps;
+        this.model.includePartners = $.isTestingEnvironment() ? 'include-partners' : '';
     }
 
     onLoaded() {
