@@ -32,6 +32,18 @@ export class ScalarStore extends Store {
         this._bus.emit('notify');
     }
 
+    includes(value) {
+        return this._data === value;
+    }
+
+    toggle(value) {
+        this.value = this._data === value ? null : value;
+    }
+
+    clear() {
+        this.value = null;
+    }
+
 }
 
 export class SetStore extends Store {

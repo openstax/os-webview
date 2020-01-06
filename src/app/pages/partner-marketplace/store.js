@@ -1,15 +1,8 @@
 import {SetStore, ScalarStore} from '~/helpers/store';
 
 export const books = new SetStore();
-export const costs = new SetStore();
-export const types = new SetStore();
+export const costs = new ScalarStore();
+export const types = new ScalarStore();
 export const advanced = new SetStore();
 export const displayMode = new ScalarStore('grid');
-
-export default {
-    books,
-    costs,
-    types,
-    advanced,
-    displayMode
-};
+export const sort = new ScalarStore('1');

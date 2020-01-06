@@ -6,7 +6,7 @@ import Results from './results/results';
 import ActiveFilters from './active-filters/active-filters';
 import PartnerDetails from './partner-details/partner-details';
 import partnerFeaturePromise from '~/models/salesforce-partners';
-import {displayMode, books, costs, types, advanced} from './store';
+import {displayMode, books, costs, types, advanced, sort} from './store';
 import shellBus from '~/components/shell/shell-bus';
 import routerBus from '~/helpers/router-bus';
 
@@ -33,35 +33,38 @@ function advancedFilterKeys(partnerEntry) {
 }
 
 function getFilterOptions(data) {
-    const result = Reflect.ownKeys(data.category_mapping)
-        .filter((title) => !['Book', 'Type'].includes(title))
+    const excludeList = ['Book', 'Type'];
+    const categoryKeys = Reflect.ownKeys(data.category_mapping)
+        .filter((title) => !excludeList.includes(title));
+    const result = categoryKeys
         .map((title) => ({
             title,
             options: []
         }));
-    const mapToTitle = Object.entries(data.category_mapping)
-        .filter(([text, _]) => !['Book', 'Type'].includes(text))
+    const mapToTitle = categoryKeys
+        .map((k) => [k, data.category_mapping[k]])
         .reduce((obj, [text, prefix]) => {
             obj[prefix] = text;
             return obj;
         }, {});
 
-    Reflect.ownKeys(data.field_name_mapping).forEach((value) => {
-        const label = data.field_name_mapping[value];
-        const entry = {
-            label,
-            value
-        };
-        const categoryPrefix = Reflect.ownKeys(mapToTitle)
-            .find((prefix) => value.substr(0, prefix.length) === prefix);
-        const itemInResult = result.find((obj) => obj.title === mapToTitle[categoryPrefix]);
+    Object.entries(data.field_name_mapping)
+        .filter(([_, label]) => label !== 'Cost per semester')
+        .forEach(([value, label]) => {
+            const entry = {
+                label,
+                value
+            };
+            const categoryPrefix = Reflect.ownKeys(mapToTitle)
+                .find((prefix) => value.substr(0, prefix.length) === prefix);
+            const itemInResult = result.find((obj) => obj.title === mapToTitle[categoryPrefix]);
 
-        if (itemInResult) {
-            itemInResult.options.push(entry);
-        } else {
-            console.warn('No match', categoryPrefix, value);
-        }
-    });
+            if (itemInResult) {
+                itemInResult.options.push(entry);
+            } else {
+                console.warn('No match', categoryPrefix, value);
+            }
+        });
 
     return result;
 }
@@ -88,7 +91,9 @@ export default class extends componentType(spec, insertHtmlMixin) {
             displayMode,
             books,
             types,
-            advanced
+            advanced,
+            costs,
+            sort
         });
 
         results.on('select', (href) => {
@@ -150,7 +155,8 @@ export default class extends componentType(spec, insertHtmlMixin) {
                     logoUrl: pd.partner_logo,
                     books: (pd.books||'').split(/;/),
                     type: pd.partner_type,
-                    advancedFeatures: advancedFilterKeys(pd).filter((k) => pd[k] === true)
+                    advancedFeatures: advancedFilterKeys(pd).filter((k) => pd[k] === true),
+                    cost: pd.affordability_cost
                 };
 
                 return result;

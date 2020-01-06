@@ -20,7 +20,7 @@ const spec = {
 
 export default class extends componentType(spec) {
 
-    onLoaded(props) {
+    onLoaded() {
         this.selected.on('notify', () => this.update());
     }
 
@@ -28,7 +28,11 @@ export default class extends componentType(spec) {
     toggleSelected(event) {
         const value = event.delegateTarget.dataset.value;
 
-        this.selected.toggle(value);
+        if ('toggle' in this.selected) {
+            this.selected.toggle(value);
+        } else {
+            this.selected.value = value;
+        }
     }
 
 }
