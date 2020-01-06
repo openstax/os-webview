@@ -26,13 +26,16 @@ $icon-size: 6rem;
     .cards {
         display: grid;
         grid-column-gap: 3rem;
-        grid-template-columns: 2fr 1fr;
 
-        .partners {
-            @extend %card;
+        &.include-partners {
+            grid-template-columns: 2fr 1fr;
 
-            max-height: calc(100vh - 8rem);
-            overflow: hidden;
+            .partners {
+                @extend %card;
+
+                max-height: calc(100vh - 8rem);
+                overflow: hidden;
+            }
         }
 
         .resources {
