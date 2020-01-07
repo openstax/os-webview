@@ -26,10 +26,16 @@ const spec = {
 };
 
 function childPropertiesForStore(store) {
-    return store.value.map((value) => ({
-        value,
+    if (store.value instanceof Array) {
+        return store.value.map((value) => ({
+            value,
+            store
+        }));
+    }
+    return store.value ? {
+        value: store.value,
         store
-    }));
+    } : [];
 }
 
 function childProperties() {
