@@ -4,14 +4,6 @@
     background-color: ui-color(white);
     position: relative;
 
-    @include width-up-to($phone-max) {
-        padding: 6rem 0;
-    }
-
-    @include wider-than($phone-max) {
-        padding: 16rem 0;
-    }
-
     .cards {
         @extend %bordered-box;
 

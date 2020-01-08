@@ -84,6 +84,7 @@
     #page-content {
         min-height: 14rem;
         @include wider-than($phone-max) {
+            padding-top: 9rem;
             padding-bottom: 4rem;
         }
     }
