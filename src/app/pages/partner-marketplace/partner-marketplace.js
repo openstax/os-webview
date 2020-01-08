@@ -9,6 +9,7 @@ import partnerFeaturePromise from '~/models/salesforce-partners';
 import {displayMode, books, costs, types, advanced, sort} from './store';
 import shellBus from '~/components/shell/shell-bus';
 import routerBus from '~/helpers/router-bus';
+import analyticsEvents from './analytics-events';
 
 const spec = {
     template,
@@ -96,28 +97,31 @@ export default class extends componentType(spec, insertHtmlMixin) {
             sort
         });
 
-        results.on('select', (href) => {
+        results.on('select', (entry) => {
+            const href = `?${entry.title}`;
+
             history.replaceState('', '', href);
+            analyticsEvents.partnerDetails(entry.title);
             // Dialog closes on navigation; need to wait for that before opening it.
             setTimeout(() => {
-                this.showDetailDialog(this.baseHref);
+                this.showDetailDialog(entry);
             }, 0);
         });
     }
 
-    showDetailDialog(href) {
-        if (this.searchPartner) {
-            const pd = new PartnerDetails();
+    showDetailDialog(detailData) {
+        const pd = new PartnerDetails({
+            title: detailData.title
+        });
 
-            shellBus.emit('showDialog', () => ({
-                title: '',
-                content: pd,
-                onClose() {
-                    pd.detach();
-                    history.replaceState('', '', href);
-                }
-            }));
-        }
+        shellBus.emit('showDialog', () => ({
+            title: '',
+            content: pd,
+            onClose() {
+                pd.detach();
+                history.replaceState('', '', this.baseHref);
+            }
+        }));
     }
 
     onLoaded() {
@@ -131,7 +135,6 @@ export default class extends componentType(spec, insertHtmlMixin) {
         this.activeFilters = new ActiveFilters({
             el: this.el.querySelector('.active-filters')
         });
-        this.showDetailDialog(this.baseHref);
     }
 
     onDataLoaded() {
@@ -163,6 +166,14 @@ export default class extends componentType(spec, insertHtmlMixin) {
             });
 
             this.attachResults(resultData);
+            if (this.searchPartner) {
+                const partnerName = decodeURIComponent(this.searchPartner);
+                const foundEntry = resultData.find((entry) => entry.title === partnerName);
+
+                if (foundEntry) {
+                    this.showDetailDialog(foundEntry);
+                }
+            }
         });
     }
 

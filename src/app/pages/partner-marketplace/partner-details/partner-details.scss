@@ -28,7 +28,9 @@
             grid-area: title;
         }
         .blurb {
+            display: grid;
             grid-area: blurb;
+            grid-template-columns: auto auto;
         }
         .titles {
             grid-area: subjects;

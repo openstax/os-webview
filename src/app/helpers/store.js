@@ -54,12 +54,12 @@ export class SetStore extends Store {
     }
 
     toggle(value) {
-        if (this._data.has(value)) {
-            this._data.delete(value);
-        } else {
-            this._data.add(value);
-        }
-        this._bus.emit('notify');
+        const action = this._data.has(value) ? 'delete' : 'add';
+
+        this._data[action](value);
+        this._bus.emit('notify', {
+            [action]: value
+        });
     }
 
     clear() {

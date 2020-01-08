@@ -1,7 +1,8 @@
-import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
+import componentType from '~/helpers/controller/init-mixin';
 import busMixin from '~/helpers/controller/bus-mixin';
 import {description as template} from './results.html';
 import css from './results.css';
+import Result from './result/result';
 import orderBy from 'lodash/orderBy';
 import {on} from '~/helpers/controller/decorators';
 
@@ -13,14 +14,16 @@ const spec = {
     },
     model() {
         return {
-            entries: this.filteredEntries,
             displayMode: this.displayMode.value
         };
+    },
+    regions: {
+        cards: '.boxed'
     },
     cleanup: []
 };
 
-export default class extends componentType(spec, busMixin, insertHtmlMixin) {
+export default class extends componentType(spec, busMixin) {
 
     // eslint-disable-next-line complexity
     get filteredEntries() {
@@ -57,26 +60,50 @@ export default class extends componentType(spec, busMixin, insertHtmlMixin) {
 
     onLoaded() {
         const handleNotifyFor = (store) => {
-            store.on('notify', () => this.update());
+            this.cleanup.push(
+                store.on('notify', () => this.update())
+            );
         };
 
+        if (super.onLoaded) {
+            super.onLoaded();
+        }
         handleNotifyFor(this.displayMode);
         handleNotifyFor(this.books);
         handleNotifyFor(this.types);
         handleNotifyFor(this.advanced);
         handleNotifyFor(this.costs);
         handleNotifyFor(this.sort);
+        this.attachCards();
+    }
+
+    attachCards() {
+        this.regions.cards.empty();
+        this.filteredEntries.forEach((entry) => {
+            const card = new Result({
+                model: {
+                    title: entry.title,
+                    logoUrl: entry.logoUrl,
+                    description: entry.description
+                }
+            });
+
+            this.regions.cards.append(card);
+            card.on('select', () => this.emit('select', entry));
+        });
+    }
+
+    onUpdate() {
+        if (super.onUpdate) {
+            super.onUpdate();
+        }
+        if (typeof this.regions.cards === 'object') {
+            this.attachCards();
+        }
     }
 
     onClose() {
         this.cleanup.forEach((f) => f());
-    }
-
-    @on('click a.card')
-    replaceState(event) {
-        const href = event.delegateTarget.href;
-
-        this.emit('select', href);
     }
 
 }
