@@ -1,13 +1,18 @@
 <template args="model">
-    <div class="image-row">
+    <div class="image-row" style="grid-template-columns: repeat({model.frameCount}, 1fr); width: {model.frameCount}00%">
         <div each="image in model.images" class="image-holder">
             <img src="{image}">
+        </div>
+        <div each="video in model.videos" class="image-holder">
+            <video controls>
+                <source src="{video}" type="video/mp4">
+            </video>
         </div>
     </div>
     <button if="model.frameNumber > 0" type="button" class="navigate previous">
         <i class="fa fa-chevron-left"></i>
     </button>
-    <button if="model.frameNumber < model.images.length - 1" type="button" class="navigate next">
+    <button if="model.frameNumber < model.frameCount - 1" type="button" class="navigate next">
         <i class="fa fa-chevron-right"></i>
     </button>
 </template>

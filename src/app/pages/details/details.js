@@ -237,12 +237,12 @@ export default class Details extends BaseClass {
         detailsTab.on('toc', (whether) => this.setTocOpen(whether));
         detailsTab.emit('put-toc-in', this.regionFrom(this.el.querySelector('.toc-slideout-contents')));
         if (!polish && this.pageData.free_stuff_instructor.content) {
-            addTab('Instructor resources', new InstructorResourceTab(
-                {
-                    bookAbbreviation: this.pageData.salesforce_abbreviation,
+            addTab('Instructor resources', new InstructorResourceTab({
+                bookAbbreviation: this.pageData.salesforce_abbreviation,
+                userStatusPromise: this.userStatusPromise,
+                model: {
                     resources: this.pageData.book_faculty_resources,
                     allies,
-                    userStatusPromise: this.userStatusPromise,
                     freeStuff: {
                         heading: this.pageData.free_stuff_instructor.content.heading,
                         blurb: this.pageData.free_stuff_instructor.content.content,
@@ -261,11 +261,10 @@ export default class Details extends BaseClass {
                         blurb: this.pageData.community_resource_blurb,
                         featureUrl: this.pageData.community_resource_feature_link_url,
                         featureText: this.pageData.community_resource_feature_text
-                    },
-                    allies
+                    }
                 },
-                compCopyDialogProps
-            ));
+                dialogProps: compCopyDialogProps
+            }));
         }
 
         if (!polish && this.pageData.free_stuff_student.content) {

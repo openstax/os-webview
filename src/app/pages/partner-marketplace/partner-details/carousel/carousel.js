@@ -13,18 +13,19 @@ const spec = {
     model() {
         return {
             frameNumber: this.frameNumber,
-            images: this.images
+            images: this.images,
+            videos: this.videos,
+            frameCount: this.frameCount
         };
     },
-    frameNumber: 0,
-    images: [
-        'https://via.placeholder.com/250x150?text=img-1',
-        'https://via.placeholder.com/250x150?text=2nd',
-        'https://via.placeholder.com/250x150?text=3rd'
-    ]
+    frameNumber: 0
 };
 
 export default class extends componentType(spec) {
+
+    get frameCount() {
+        return this.images.length + this.videos.length
+    }
 
     @on('click .navigate.previous')
     handleLeftClick() {
@@ -41,7 +42,7 @@ export default class extends componentType(spec) {
 
         this.frameNumber = newFrameNumber;
         this.update();
-        if (this.frameNumber >= 0 && this.frameNumber < this.images.length) {
+        if (this.frameNumber >= 0 && this.frameNumber < this.frameCount) {
             $.scrollToFrame({
                 divEl: this.el.querySelector('.image-row'),
                 newFrameNumber,

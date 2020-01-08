@@ -68,19 +68,19 @@ function getFilterOptions(data) {
     return result;
 }
 
+function baseHref() {
+    const h = new URL(window.location.href);
+
+    h.search = '';
+    return h.href;
+}
+
 export default class extends componentType(spec, insertHtmlMixin) {
 
     get searchPartner() {
         const searchStr = decodeURIComponent(window.location.search.substr(1));
 
         return searchStr;
-    }
-
-    get baseHref() {
-        const h = new URL(window.location.href);
-
-        h.search = '';
-        return h.href;
     }
 
     attachResults(entries) {
@@ -108,16 +108,14 @@ export default class extends componentType(spec, insertHtmlMixin) {
     }
 
     showDetailDialog(detailData) {
-        const pd = new PartnerDetails({
-            title: detailData.title
-        });
+        const pd = new PartnerDetails(detailData);
 
         shellBus.emit('showDialog', () => ({
             title: '',
             content: pd,
             onClose() {
                 pd.detach();
-                history.replaceState('', '', this.baseHref);
+                history.replaceState('', '', baseHref());
             }
         }));
     }
@@ -126,7 +124,7 @@ export default class extends componentType(spec, insertHtmlMixin) {
         if (super.onLoaded) {
             super.onLoaded();
         }
-        if (history.state.book) {
+        if (history.state && history.state.book) {
             books.toggle(history.state.book);
         }
         if (this.heading) {
@@ -152,19 +150,34 @@ export default class extends componentType(spec, insertHtmlMixin) {
         });
 
         partnerFeaturePromise.then((partnerData) => {
-            const resultData = partnerData.map((pd) => {
-                const result = {
-                    title: pd.partner_name,
-                    description: pd.partner_description || '[no description]',
-                    logoUrl: pd.partner_logo,
-                    books: (pd.books||'').split(/;/),
-                    type: pd.partner_type,
-                    advancedFeatures: advancedFilterKeys(pd).filter((k) => pd[k] === true),
-                    cost: pd.affordability_cost
-                };
-
-                return result;
-            });
+            const resultData = partnerData.map((pd) => ({
+                title: pd.partner_name,
+                blurb: pd.short_partner_description ||
+                    '[no description]',
+                tags: [
+                    {
+                        label: 'type',
+                        value: pd.partner_type
+                    },
+                    {
+                        label: 'cost',
+                        value: pd.affordability_cost
+                    }
+                ].filter((v) => Boolean(v.value)),
+                richDescription: pd.rich_description ||
+                    pd.partner_description ||
+                    '[no rich description]',
+                logoUrl: pd.partner_logo,
+                books: (pd.books||'').split(/;/),
+                advancedFeatures: advancedFilterKeys(pd).filter((k) => pd[k] === true),
+                website: pd.landing_page,
+                images: [pd.image_1, pd.image_2, pd.image_3, pd.image_4, pd.image_5]
+                    .filter((img) => Boolean(img)),
+                videos: [pd.video_1, pd.video_2]
+                    .filter((vid) => Boolean(vid)),
+                type: pd.partner_type,
+                cost: pd.affordability_cost
+            }));
 
             this.attachResults(resultData);
             if (this.searchPartner) {

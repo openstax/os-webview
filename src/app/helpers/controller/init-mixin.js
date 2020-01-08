@@ -171,6 +171,24 @@ export function flattenPageDataMixin(superclass) {
     };
 }
 
+export function cleanupMixin(superclass) {
+    return class extends superclass {
+
+        init(...args) {
+            super.init(...args);
+            this.cleanup = [];
+        }
+
+        onClose() {
+            if (super.onClose) {
+                super.onClose();
+            }
+            this.cleanup.forEach((f) => f());
+        }
+
+    };
+}
+
 const CMSComponent = mix(CMSPageController).with(componentMixin);
 const PlainComponent = mix(Controller).with(componentMixin);
 

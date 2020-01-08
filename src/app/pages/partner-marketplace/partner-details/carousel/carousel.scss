@@ -21,7 +21,7 @@
     }
 
     .image-row {
-        display: flex;
+        display: grid;
         position: relative;
         width: 500%;
 
@@ -29,7 +29,12 @@
             align-items: center;
             display: flex;
             justify-content: center;
-            width: 20%;
+
+            img,
+            video {
+                max-height: calc(100vh - 28rem);
+                max-width: calc(100% - 6rem); // leave room for nav buttons
+            }
         }
     }
 }

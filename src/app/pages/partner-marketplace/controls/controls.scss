@@ -2,8 +2,8 @@
 @import 'mixins/placeholder-selectors';
 
 // Controls need to wrap at these points
-$breakpt-narrow: 64em * $scale-factor;
-$breakpt-med: 100em * $scale-factor;
+$breakpt-narrow: 76.7em * $scale-factor;
+$breakpt-med: 111.9em * $scale-factor;
 
 .partner-marketplace .controls {
     background-color: ui-color(white);

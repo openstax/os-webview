@@ -83,7 +83,8 @@ export default class extends componentType(spec, busMixin, cleanupMixin) {
                 model: {
                     title: entry.title,
                     logoUrl: entry.logoUrl,
-                    description: entry.description
+                    description: entry.blurb,
+                    tags: entry.tags
                 }
             });
 

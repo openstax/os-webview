@@ -43,23 +43,19 @@ function setupOptionsList(selected, items) {
 const typeOptions = [
     {
         label: 'Content customization',
-        value: 'customization'
+        value: 'Content customization'
     },
     {
         label: 'Online homework',
-        value: 'homework'
+        value: 'Online homework'
     },
     {
         label: 'Clicker / classroom',
-        value: 'clicker'
+        value: 'Clicker/classroom engagement'
     },
     {
         label: 'Adaptive courseware',
-        value: 'adaptive'
-    },
-    {
-        label: 'Reading comprehension',
-        value: 'reading'
+        value: 'Courseware'
     }
 ];
 

@@ -1,4 +1,4 @@
-import componentType from '~/helpers/controller/init-mixin';
+import componentType, {cleanupMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './checkboxes-linked-to-store.html';
 import css from './checkboxes-linked-to-store.css';
 import {on} from '~/helpers/controller/decorators';
@@ -17,22 +17,13 @@ const spec = {
     }
 };
 
-export default class extends componentType(spec) {
+export default class extends componentType(spec, cleanupMixin) {
 
     onLoaded() {
         if (super.onLoaded) {
             super.onLoaded();
         }
-        this.cleanup = this.store.on('notify', () => {
-            this.update();
-        });
-    }
-
-    onClose() {
-        if (super.onClose) {
-            super.onClose();
-        }
-        this.cleanup();
+        this.cleanup.push(this.store.on('notify', () => this.update()));
     }
 
     @on('change [type="checkbox"]')

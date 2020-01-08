@@ -20,11 +20,20 @@
                 height: 12.8rem;
                 padding: $normal-margin 3rem;
                 text-decoration: none;
+
+                .logo {
+                    max-width: 9rem;
+                }
+
+                .tags {
+                    grid-auto-flow: column;
+                }
             }
         }
 
         &.grid {
             grid-template-columns: repeat(auto-fill, 20rem);
+            justify-content: center;
 
             .card {
                 color: inherit;
@@ -57,6 +66,7 @@
         display: grid;
 
         .logo {
+            align-self: center;
             display: grid;
             grid-area: image;
             justify-content: center;
@@ -76,19 +86,20 @@
             grid-area: description;
         }
 
-        .rating-box {
-            @include body-font(1.2rem);
+        .tags {
+            @include body-font(1.1rem);
 
-            background-color: ui-color(default);
-            display: none; // TEMPORARY
+            display: grid;
+            font-weight: bold;
             grid-area: tags;
+            grid-gap: 1rem;
             justify-self: start;
-            padding: 0.5rem 1rem;
             text-transform: uppercase;
 
-            > span:not(:first-child)::before {
-                content: '|';
-                margin: 0 0.7rem;
+            > * {
+                background-color: ui-color(default);
+                border-radius: 0.2rem;
+                padding: 0.5rem 1rem;
             }
         }
     }

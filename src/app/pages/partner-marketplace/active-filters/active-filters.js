@@ -1,4 +1,4 @@
-import componentType from '~/helpers/controller/init-mixin';
+import componentType, {cleanupMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './active-filters.html';
 import css from './active-filters.css';
 import {books, costs, types, advanced} from '../store';
@@ -10,14 +10,6 @@ const spec = {
     css,
     view: {
         classes: ['active-filters']
-    },
-    model() {
-        return {
-            books: books.value,
-            costs: costs.value,
-            types: types.value,
-            advanced: advanced.value
-        };
     },
     filterComponents: [],
     regions: {
@@ -46,20 +38,15 @@ function childProperties() {
     );
 }
 
-export default class extends componentType(spec) {
-
-    init(...args) {
-        super.init(...args);
-        this.created = Date.now().toString().substr(-3);
-    }
+export default class extends componentType(spec, cleanupMixin) {
 
     onLoaded() {
         if (super.onLoaded) {
             super.onLoaded();
         }
         this.filterComponents = [];
-        this.notificationRemovers = [books, costs, types, advanced].map((store) =>
-            store.on('notify', () => this.update())
+        [books, costs, types, advanced].forEach((store) =>
+            this.cleanup.push(store.on('notify', () => this.update()))
         );
         this.updateActiveFilters();
     }
@@ -68,9 +55,7 @@ export default class extends componentType(spec) {
         if (super.onClose) {
             super.onClose();
         }
-        this.notificationRemovers.forEach((r) => r());
         this.filterComponents.forEach((c) => c.detach());
-        this.filterComponents = [];
     }
 
     updateActiveFilters() {
