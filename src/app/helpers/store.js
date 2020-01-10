@@ -28,8 +28,12 @@ export class ScalarStore extends Store {
     }
 
     set value(newValue) {
+        const action = newValue ? 'add' : 'delete';
+
         this._data = newValue;
-        this._bus.emit('notify');
+        this._bus.emit('notify', {
+            [action]: newValue
+        });
     }
 
     includes(value) {
@@ -64,7 +68,7 @@ export class SetStore extends Store {
 
     clear() {
         this._data.clear();
-        this._bus.emit('notify');
+        this._bus.emit('notify', {});
     }
 
     includes(value) {
