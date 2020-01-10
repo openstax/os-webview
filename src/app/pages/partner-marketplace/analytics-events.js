@@ -23,9 +23,7 @@ books.on('notify', (obj) => {
     const addingBook = typeof obj === 'object' && 'add' in obj;
 
     if (addingBook) {
-        types.value.forEach((typeFilter) => {
-            sendFilterEvent(typeFilter);
-        });
+        sendFilterEvent(types.value);
         advanced.value.forEach((advancedFilter) => {
             sendFilterEvent(advancedFilter);
         });
