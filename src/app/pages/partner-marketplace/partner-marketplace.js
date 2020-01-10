@@ -62,8 +62,6 @@ function getFilterOptions(data) {
 
             if (itemInResult) {
                 itemInResult.options.push(entry);
-            } else {
-                console.warn('No match', categoryPrefix, value);
             }
         });
 
@@ -127,6 +125,9 @@ export default class extends componentType(spec, insertHtmlMixin) {
     onLoaded() {
         if (super.onLoaded) {
             super.onLoaded();
+        }
+        if (history.state.book) {
+            books.toggle(history.state.book);
         }
         if (this.heading) {
             // already loaded, we came back

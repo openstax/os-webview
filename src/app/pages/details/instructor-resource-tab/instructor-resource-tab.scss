@@ -33,16 +33,10 @@ $icon-size: 6rem;
 
         &.include-partners {
             grid-template-columns: 2fr 1fr;
-
-            .partners {
-                @extend %card;
-
-                max-height: calc(100vh - 8rem);
-                overflow: hidden;
-            }
         }
 
         .resources {
+            grid-auto-rows: min-content;
             margin-top: 0;
         }
     }
