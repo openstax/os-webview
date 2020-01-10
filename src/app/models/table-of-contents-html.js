@@ -11,7 +11,7 @@ export default function ({isRex, cnxId, webviewLink}) {
                 .then((r) => r.json())
                 .then((r) => fetch(`${rexOrigin}/rex/releases/${r.release_id}/rex/release.json`))
                 .then((r) => r.json())
-                .then((r) => fetch(`//archive.cnx.org/contents/${cnxId}@${r.books[cnxId]}`))
+                .then((r) => fetch(`//archive.cnx.org/contents/${cnxId}@${r.books[cnxId].defaultVersion}`))
                 .then((r) => r.json());
         }
         return fetch(`//archive.cnx.org/contents/${cnxId}.json`)
