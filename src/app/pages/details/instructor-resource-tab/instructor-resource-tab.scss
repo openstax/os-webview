@@ -27,6 +27,10 @@ $icon-size: 6rem;
         display: grid;
         grid-column-gap: 3rem;
 
+        &:not(.include-partners) .partners {
+            display: none;
+        }
+
         &.include-partners {
             grid-template-columns: 2fr 1fr;
 
