@@ -1,4 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/placeholder-selectors';
 
 $gradient-end: (
     blue: #004aa2,
@@ -15,6 +16,7 @@ $gradient-end: (
     @at-root .#{$color} {
         .hero,
         .book-icon,
+        .title-bar,
         .webinars .icon-cell {
             background-color: os-color($color);
         }
@@ -23,10 +25,15 @@ $gradient-end: (
             background-image: linear-gradient(to right, os-color($color), get-color($gradient-end, $color));
         }
 
-        @if ($color == yellow) {
-            .book-icon,
-            .webinars .icon-cell {
+        .book-icon,
+        .title-bar,
+        .webinars .icon-cell {
+            @if ($color == yellow) {
                 color: text-color(normal);
+            } @else {
+                @extend %light-on-dark;
+
+                color: text-color(white);
             }
         }
     }
@@ -119,12 +126,6 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
             padding: 0;
             width: 0;
         }
-    }
-
-    .hero,
-    .book-icon,
-    .webinars .icon-cell {
-        color: text-color(white);
     }
 
     .loc-summary-text {

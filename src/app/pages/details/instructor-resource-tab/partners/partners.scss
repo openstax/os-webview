@@ -2,22 +2,38 @@
 @import 'mixins/placeholder-selectors';
 
 .instructor-resources .partners {
+    @extend %card;
+
+    display: grid;
+    grid-column: 2;
+    grid-template-rows: auto 1fr;
+    max-height: 100%;
+    overflow: hidden;
+
     .title-bar {
-        @extend %light-on-dark;
         @include set-font(h4);
 
-        background-color: os-color(deep-green);
-        color: text-color(white);
-        height: 6rem;
+        display: flex;
+        justify-content: space-between;
         padding: $normal-margin;
+
+        a {
+            @include set-font(body-regular);
+            color: inherit;
+        }
     }
 
-    .blurbs {
-        max-height: calc(100vh - 8rem);
+    .blurb-scroller {
         overflow-y: auto;
     }
 
+    .blurbs {
+        height: 0;
+        overflow-y: visible;
+    }
+
     .blurb {
+        align-items: center;
         background-color: ui-color(white);
         border-bottom: thin solid ui-color(form-border);
         color: inherit;
@@ -27,7 +43,19 @@
         'logo description'
         'logo info' / 9rem auto;
         padding: $normal-margin;
+        position: relative;
         text-decoration: none;
+
+        &:hover::after,
+        &:active::after {
+            background: rgba(ui-color(black), 0.1);
+            content: '\A';
+            height: 100%;
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
 
         img {
             grid-area: logo;
@@ -48,14 +76,23 @@
             }
         }
 
+        .tags {
+            display: grid;
+            grid-area: info;
+            grid-auto-flow: column;
+            grid-column-gap: 0.5rem;
+            justify-self: left;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
         .info {
             @include body-font(1.2rem);
 
             background-color: ui-color(default);
+            border-radius: 0.3rem;
             display: flex;
-            grid-area: info;
-            justify-self: left;
-            padding: 0.5rem $normal-margin;
+            padding: 0.7rem $normal-margin;
             text-transform: uppercase;
 
             .label {

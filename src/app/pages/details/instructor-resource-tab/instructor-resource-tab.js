@@ -6,18 +6,7 @@ import shellBus from '~/components/shell/shell-bus';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './instructor-resource-tab.html';
 import css from './instructor-resource-tab.css';
-
-function allyToPartner(ally) {
-    return {
-        image: ally.ally_color_logo,
-        name: ally.ally_heading,
-        description: ally.ally_short_description,
-        cost: '$3',
-        starHtml: '&#x1f7ca;',
-        rating: '5',
-        url: `/partner-marketplace?${ally.ally_heading}`
-    };
-}
+import partnerFeaturePromise from '~/models/salesforce-partners';
 
 export default class InstructorResourceTab extends Controller {
 
@@ -34,6 +23,7 @@ export default class InstructorResourceTab extends Controller {
 
         this.dialogProps = compCopyDialogProps;
         this.model.includePartners = $.isTestingEnvironment() ? 'include-partners' : '';
+        this.bookAbbreviation = this.model.bookAbbreviation;
     }
 
     onLoaded() {
@@ -64,13 +54,29 @@ export default class InstructorResourceTab extends Controller {
 
                 $.scrollToHash();
             }
-        });
-        const p = new Partners({
-            el: this.regions.partners.el,
-            model: {
-                title: 'Courseware partners',
-                blurbs: this.model.allies.map(allyToPartner)
-            }
+            partnerFeaturePromise.then((pd) => {
+                function allyToPartner(ally) {
+                    const partner = pd.find((pEntry) => pEntry.partner_name === ally.ally_heading) || {};
+
+                    return {
+                        image: ally.ally_color_logo,
+                        name: ally.ally_heading,
+                        description: ally.ally_short_description,
+                        cost: partner.affordability_cost,
+                        type: partner.partner_type,
+                        url: `/partner-marketplace?${ally.ally_heading}`
+                    };
+                }
+
+                const p = new Partners({
+                    el: this.regions.partners.el,
+                    bookAbbreviation: this.bookAbbreviation,
+                    model: {
+                        title: pd.partner_list_label || '[Courseware partners]',
+                        blurbs: this.model.allies.map(allyToPartner)
+                    }
+                });
+            });
         });
     }
 
