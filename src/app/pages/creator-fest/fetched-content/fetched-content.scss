@@ -4,16 +4,8 @@
     padding-bottom: 3rem;
     position: relative;
 
-    .block-heading {
-        @include set-font(h2);
-
-        margin-bottom: 0.9rem;
-    }
-
     .superheadline {
         @extend %super-headline;
-
-        margin-bottom: 2.5rem;
     }
 
     a {
@@ -40,10 +32,14 @@
         }
     }
 
-    .schedule,
-    .speakers,
-    .travel {
-        padding-top: 8rem;
+    .block-heading {
+        display: grid;
+        grid-row-gap: 3rem;
+
+        > * {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
     }
 
     .schedule {
