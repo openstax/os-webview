@@ -1,4 +1,4 @@
-import componentType from '~/helpers/controller/init-mixin';
+import componentType, {cleanupMixin} from '~/helpers/controller/init-mixin';
 import busMixin from '~/helpers/controller/bus-mixin';
 import {description as template} from './results.html';
 import css from './results.css';
@@ -19,11 +19,10 @@ const spec = {
     },
     regions: {
         cards: '.boxed'
-    },
-    cleanup: []
+    }
 };
 
-export default class extends componentType(spec, busMixin) {
+export default class extends componentType(spec, busMixin, cleanupMixin) {
 
     // eslint-disable-next-line complexity
     get filteredEntries() {
@@ -100,10 +99,6 @@ export default class extends componentType(spec, busMixin) {
         if (typeof this.regions.cards === 'object') {
             this.attachCards();
         }
-    }
-
-    onClose() {
-        this.cleanup.forEach((f) => f());
     }
 
 }

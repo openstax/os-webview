@@ -1,4 +1,4 @@
-import componentType from '~/helpers/controller/init-mixin';
+import componentType, {cleanupMixin} from '~/helpers/controller/init-mixin';
 import busMixin from '~/helpers/controller/bus-mixin';
 import {description as template} from './controls.html';
 import css from './controls.css';
@@ -28,8 +28,7 @@ const spec = {
             triangleClass: `triangle-${this.triangleColor}`
         };
     },
-    selectedFilter: null,
-    cleanup: []
+    selectedFilter: null
 };
 
 function setupOptionsList(selected, items) {
@@ -85,7 +84,7 @@ const costOptions = [
     value: label.replace(/ /g, '')
 }));
 
-export default class extends componentType(spec, busMixin) {
+export default class extends componentType(spec, busMixin, cleanupMixin) {
 
     get triangleColor() {
         let color = 'white';
@@ -224,10 +223,6 @@ export default class extends componentType(spec, busMixin) {
         }
         this.attachButtons();
         this.attachDisplayFormatController();
-    }
-
-    onClose() {
-        this.cleanup.forEach((fn) => fn());
     }
 
 }
