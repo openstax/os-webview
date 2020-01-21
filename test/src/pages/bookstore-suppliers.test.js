@@ -7,8 +7,8 @@ describe('BookstoreSuppliers', () => {
 
         return ready.then(() => {
             expect(instance).toBeTruthy();
-            expect(instance.model.usButtonUrl).toBeTruthy();
-            expect(instance.model.caButtonUrl).toBeTruthy();
+            expect(instance.model().usButtonUrl).toBeTruthy();
+            expect(instance.model().caButtonUrl).toBeTruthy();
             const mainEl = instance.el.querySelector('.main-content');
 
             expect(mainEl).toBeTruthy();

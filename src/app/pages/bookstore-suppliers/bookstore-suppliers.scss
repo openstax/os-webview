@@ -1,4 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/placeholder-selectors';
 
 .bookstore-suppliers {
 
@@ -8,28 +9,21 @@
         }
     }
 
-    @include wider-than($phone-max) {
-        .smaller-screen {
-            display: none;
-        }
-    }
-
     .hero {
+        @extend %light-on-dark;
+
         background-image: linear-gradient(to top right, os-color(light-blue), os-color(blue));
         color: text-color(white);
         overflow: visible;
+        padding-left: 0;
+        padding-right: 0;
         z-index: 2;
 
         .content {
             @extend %content;
-
-            padding-left: 0;
-            padding-right: 0;
         }
 
         .text {
-            @include set-font(body-large);
-
             display: grid;
             grid-gap: $normal-margin;
             position: relative;
@@ -37,8 +31,9 @@
             z-index: 1;
 
             @include wider-than($phone-max) {
+                @include set-font(body-large);
+
                 max-width: 55rem;
-                padding: 6rem 0;
                 width: 50%;
             }
 
@@ -48,12 +43,6 @@
 
             a {
                 color: inherit;
-            }
-
-            div {
-                @include width-up-to($phone-max) {
-                    max-width: 50%;
-                }
             }
         }
 
@@ -73,44 +62,6 @@
                     position: absolute;
                     right: -1.5rem;
                 }
-
-                @include wider-than($tablet-max) {
-                    max-height: 48rem;
-                }
-            }
-
-            .clipped,
-            .phone-fg {
-                display: none;
-
-                @include width-up-to($phone-max) {
-                    display: block;
-                    position: absolute;
-                }
-            }
-
-            .clipped {
-                @include width-up-to($phone-max) {
-                    bottom: -6rem;
-                    height: 32rem;
-                    overflow: hidden;
-                    right: -1.5rem;
-                    width: calc(100% + 3rem);
-                }
-            }
-
-            .phone-fg {
-                @include width-up-to($phone-max) {
-                    bottom: -14rem;
-                    right: -1.5rem;
-                }
-            }
-
-            .phone-bg {
-                bottom: -14rem;
-                position: absolute;
-                right: 0;
-                transform: scale(1.3);
             }
         }
     }
@@ -121,15 +72,13 @@
         display: grid;
         grid-gap: 6rem;
         justify-content: center;
-        max-width: 100%;
-        padding-bottom: 8rem;
-        padding-top: 6rem;
         z-index: 2;
 
         @include width-up-to($phone-max) {
             background-color: ui-color(white);
             grid-gap: 4rem;
-            padding-top: 8rem;
+            padding-bottom: $normal-margin;
+            padding-top: 3rem;
             z-index: 1;
 
             [data-html="subhead2"] {
@@ -142,7 +91,23 @@
         }
 
         @include wider-than($tablet-max) {
-            max-width: 110rem;
+            padding-bottom: 8rem;
+            padding-top: 6rem;
+        }
+
+        > * {
+            margin: 0;
+        }
+
+        .text-section {
+            @include set-font(body-large);
+
+            display: grid;
+            grid-gap: 3rem;
+
+            > * {
+                margin: 0;
+            }
         }
 
         button {
@@ -180,69 +145,182 @@
     .cards {
         background-color: ui-color(default);
         display: grid;
-        grid-gap: 2rem;
+        grid-gap: 3rem;
         margin-left: -$normal-margin;
         margin-right: -$normal-margin;
-        max-width: calc(100% + $normal-margin);
         overflow-x: auto;
-        padding: $normal-margin;
+        padding: 0 $normal-margin;
 
-        @include wider-than($phone-max) {
-            grid-template-columns: 1fr 1fr 1fr;
+        $narrow-tablet: 78em * $scale-factor;
 
-            &.by-twos {
-                grid-template-columns: 1fr 1fr;
-            }
+        @include width-up-to($phone-max) {
+            background-color: ui-color(white);
         }
 
-        &.featured {
-            grid-template-columns: 1fr 1fr 1fr;
+        @include width-between($phone-max, $narrow-tablet) {
+            grid-template-columns: repeat(2, 1fr);
         }
 
-        .card {
+        @include width-between($narrow-tablet, $media-content-max) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @include wider-than($media-content-max) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+    .card {
+        @extend %card;
+
+        background-color: ui-color(white);
+        display: grid;
+        grid-gap: 2rem;
+        grid-template-rows: auto auto 1fr auto;
+        justify-items: center;
+        overflow: hidden;
+        padding: 3rem;
+        position: relative;
+        text-align: center;
+
+        &:first-child {
+            margin-top: 0.3rem; // room for shadow
+        }
+
+        $canada-red: #f00;
+        .flag-card {
             @extend %card;
 
-            background-color: ui-color(white);
-            display: grid;
-            grid-gap: 2rem;
-            grid-template-rows: auto auto 1fr auto;
-            justify-items: center;
-            min-width: 30rem;
-            overflow: hidden;
-            padding: 3rem 2rem;
-            text-align: center;
+            border-radius: 0.2rem;
+            padding: 0.9rem 1rem;
+            position: absolute;
+            right: 3rem;
+            top: 0;
 
-            h2 {
-                @include set-font(h4);
+            .canada-flag {
+                background-color: $canada-red;
+                display: grid;
+                justify-content: center;
+                width: 4.2rem;
 
-                line-height: normal;
-                margin: 0;
+                .white-field {
+                    @include set-font(body-large);
+
+                    align-items: center;
+                    background-color: ui-color(white);
+                    color: $canada-red;
+                    display: flex;
+                    height: 2.2rem;
+                    justify-content: center;
+                    width: 2.2rem;
+                }
+            }
+        }
+
+        @include wider-than($phone-max) {
+            &.featured {
+                grid-column-gap: 3rem;
+                grid-template: 'icon headline'
+                'icon blurb'
+                'icon button';
+                justify-items: left;
+                text-align: left;
+
+                > .logo-dot {
+                    grid-area: icon;
+                    height: 30rem;
+                    width: 30rem;
+                }
+
+                > h2 {
+                    grid-area: headline;
+                }
+
+                > .blurb {
+                    @include body-font(2.4rem);
+
+                    grid-area: blurb;
+                }
+
+                > .btn {
+                    grid-area: button;
+                    justify-self: left;
+                }
+            }
+        }
+
+        &:not(.featured) h2 {
+            @include title-font(2.4rem);
+
+            line-height: normal;
+            margin: 0;
+        }
+
+        .logo-dot {
+            align-items: center;
+            background-color: ui-color(default);
+            border-radius: 50%;
+            display: flex;
+            height: 21rem;
+            justify-content: center;
+            margin: 1rem 0;
+            width: 21rem;
+
+            @include width-between($phone-max, $tablet-max) {
+                height: 17rem;
+                width: 17rem;
             }
 
-            .logo-dot {
-                align-items: center;
-                background-color: ui-color(default);
-                border-radius: 50%;
-                display: flex;
-                height: 12rem;
-                justify-content: center;
-                margin: 1rem 0;
-                width: 12rem;
+            > img {
+                max-height: 80%;
+                max-width: 80%;
+            }
+        }
 
-                > img {
-                    max-height: 80%;
-                    max-width: 80%;
-                }
+        .btn {
+            height: 5rem;
+            max-width: 100%;
+            overflow: hidden;
+
+            @include width-between($phone-max, $tablet-max) {
+                padding-left: 0;
+                padding-right: 0;
+                width: 100%;
+            }
+        }
+
+        ~ h2 {
+            @include wider-than($phone-max) {
+                margin-bottom: -3rem;
+                margin-top: 3rem;
+            }
+        }
+    }
+
+    .split-card {
+        @extend %card;
+
+        background-color: ui-color(white);
+        display: grid;
+        max-width: 57rem;
+        padding: 0 3rem;
+
+        > div {
+            align-items: center;
+            display: grid;
+            grid-column-gap: 3rem;
+            grid-template-columns: 1fr auto;
+            padding: 3rem 0;
+            width: 100%;
+
+            &:not(:first-child) {
+                border-top: thin solid ui-color(form-border);
             }
 
             .btn {
-                height: 4rem;
-
-                @include width-between($phone-max, $tablet-max) {
-                    padding-left: 0;
-                    padding-right: 0;
-                    width: 100%;
-                }
+                height: 3rem;
+                padding-left: $normal-margin;
+                padding-right: $normal-margin;
             }
         }
     }

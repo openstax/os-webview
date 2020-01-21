@@ -10,13 +10,10 @@ const spec = {
         tag: 'main'
     },
     slug: 'pages/print-order',
-    model: {}
-};
-const BaseClass = componentType(spec, canonicalLinkMixin, insertHtmlMixin);
-
-export default class BookstoreSuppliers extends BaseClass {
-
-    onDataLoaded() {
+    model() {
+        if (!this.pageData) {
+            return {};
+        }
         const providerToModel = (p) => ({
             name: p.name,
             description: p.blurb || '',
@@ -25,23 +22,31 @@ export default class BookstoreSuppliers extends BaseClass {
             buttonText: p.cta
         });
         const suppliers = this.pageData.providers.map(providerToModel);
-        const featuredSuppliers = this.pageData.featured_providers.map(providerToModel);
+        const featuredSupplier = this.pageData.featured_providers.map(providerToModel); // should only be 1
 
-        this.model = {
+        return {
             headline: this.pageData.title,
             subhead: this.pageData.intro_heading,
             subhead2: this.pageData.intro_description,
+            featuredSupplier,
             featuredSuppliersBlurb: this.pageData.featured_provider_intro_blurb,
-            featuredSuppliers,
-            featuredCardsClass: (featuredSuppliers.length % 3) ? 'by-twos' : '',
             suppliersBlurb: this.pageData.other_providers_intro_blurb,
             suppliers,
-            cardsClass: (suppliers.length % 3) ? 'by-twos' : '',
             usButtonUrl: this.pageData.us_isbn_download_url,
             usButtonText: this.pageData.us_isbn_cta,
             caButtonUrl: this.pageData.canadian_isbn_download_url,
             caButtonText: this.pageData.canadian_isbn_cta
         };
+    }
+};
+const BaseClass = componentType(spec, canonicalLinkMixin, insertHtmlMixin);
+
+export default class BookstoreSuppliers extends BaseClass {
+
+    onDataLoaded() {
+        if (super.onDataLoaded) {
+            super.onDataLoaded();
+        }
         this.update();
     }
 
