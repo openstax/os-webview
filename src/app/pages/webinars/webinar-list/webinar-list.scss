@@ -1,0 +1,98 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+%spread-out-grid {
+    display: grid;
+    grid-gap: 3rem;
+}
+
+%subgrid {
+    align-content: start;
+    display: grid;
+    grid-gap: 1rem;
+}
+
+.webinar-list {
+    @extend %spread-out-grid;
+    padding-top: 3rem;
+
+    @include width-up-to($phone-max) {
+        // grid-template-columns: 100%;
+    }
+
+    @include wider-than($phone-max) {
+        grid-template-columns: repeat(auto-fit, 37rem);
+    }
+
+    .card {
+        @extend %card;
+        @extend %spread-out-grid;
+
+        background-color: ui-color(white);
+        padding: 2rem 3rem;
+
+        h3 {
+            display: -webkit-box;
+            margin: 0;
+
+            &:not(:hover) {
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+        }
+
+        .dated-heading {
+            @extend %spread-out-grid;
+
+            grid-template-columns: auto 1fr;
+
+            .date,
+            .title-and-time {
+                @extend %subgrid;
+            }
+
+            .date {
+                text-align: center;
+            }
+
+            .day-of-month {
+                @include set-font(h2);
+
+                margin: 0;
+            }
+
+            .month {
+                @include title-font(1.6rem);
+
+                text-transform: uppercase;
+            }
+
+            .title-and-time {
+                .day-and-time {
+                    color: os-color(light-gray);
+                }
+            }
+        }
+
+        hr {
+            width: 100%;
+            border-top: thin solid rgba(ui-color(black), 0.25);
+        }
+
+        .description {
+            line-height: 3rem;
+        }
+
+        .speakers-and-spaces {
+            @extend %subgrid;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    }
+}
