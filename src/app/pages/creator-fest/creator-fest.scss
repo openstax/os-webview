@@ -16,21 +16,7 @@
     }
 
     .btn {
-        @extend %button;
-        @extend %secondary;
-        @extend %light-on-dark;
-
-        background-color: $cf-pink;
-        border-radius: 0.4rem;
-        color: text-color(white);
-        font-weight: bold;
-
-        &:hover,
-        &:active,
-        &:focus {
-            background-color: $cf-pink-darker;
-            color: text-color(white);
-        }
+        @extend %cf-button;
     }
 
     .text-block-left {
@@ -77,14 +63,11 @@
         }
     }
 
-    #navigator {
-        height: 0;
-    }
-
     #page-content {
         min-height: 14rem;
+        padding-top: 2rem;
+
         @include wider-than($phone-max) {
-            padding-top: 9rem;
             padding-bottom: 4rem;
         }
     }

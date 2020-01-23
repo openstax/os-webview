@@ -1,0 +1,38 @@
+<template args="model">
+    <hr class="blue-bar">
+    <table>
+        <thead>
+            <tr>
+                <th>Session</th>
+                <th>Date & Location</th>
+                <th>Description</th>
+                <th>Seats Remaining</th>
+                <th>Sign up</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr each="session in model.sessions">
+                <td>{session.title}</td>
+                <td>
+                    {session.date}<br>
+                    {session.time}<br>
+                    {session.location}
+                </td>
+                <td style="min-width: 25rem">
+                    <div class="{`${model.expandable[$item]} ${model.expanded[$item]}`}" data-item="{$item}">
+                        {session.description}
+                        <div class="read-more">...<a>read more</a></div>
+                    </div>
+                </td>
+                <td><b class="phone-only">Seats remaining:</b> {session.seatsRemaining}</td>
+                <td>
+                    <if condition="session.seatsRemaining > 0">
+                        <a class="btn" data-session="{session.title}">Sign up</a>
+                    <else>
+                        <span class="btn disabled">FULL</span>
+                    </if>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</template>

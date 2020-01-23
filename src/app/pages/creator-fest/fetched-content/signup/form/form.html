@@ -1,0 +1,23 @@
+<template args="model">
+    <form action="{`${model.origin}/events/registration/`}" method="post">
+        <h1>Creator Fest Build Session Signup</h1>
+        <div class="help">* All fields are required</div>
+        <h2>General Information</h2>
+        <div class="inputs" skip="true"></div>
+        <div>
+            You can only sign up for one session. Once you’ve submitted this
+            form, the only way to modify your session selection will be to email
+            <a href="mailto:creatorfest@openstax.org">creatorfest@openstax.org</a>.
+        </div>
+        <div each="session in [model.session]" class="session-box">
+            <input type="hidden" name="session" value="{session.id}">
+            <div class="title">{session.title}</div>
+            <div class="date-and-location">{session.date}, {session.time}, {session.location}</div>
+            <div class="seats-left">
+                <span class="label">Seats remaining:</span>
+                {session.seatsRemaining}
+            </div>
+        </div>
+        <input type="submit" disabled="{model.disabled}">
+    </form>
+</template>

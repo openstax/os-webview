@@ -33,6 +33,8 @@
     }
 
     .block-heading {
+        @include set-font(h2);
+
         display: grid;
         grid-row-gap: 3rem;
 
