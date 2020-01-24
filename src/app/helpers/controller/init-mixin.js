@@ -61,26 +61,6 @@ function mixinFromSpec(spec) {
     return specMixin;
 }
 
-export function cleanupMixin(superclass) {
-    return class extends superclass {
-
-        init(...args) {
-            if (super.init) {
-                super.init(...args);
-            }
-            this.cleanup = [];
-        }
-
-        onClose() {
-            if (super.onClose) {
-                super.onClose();
-            }
-            this.cleanup.forEach((f) => f());
-        }
-
-    };
-}
-
 export function canonicalLinkMixin(superclass) {
     return class extends superclass {
 

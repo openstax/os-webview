@@ -1,6 +1,7 @@
 import componentType from '~/helpers/controller/init-mixin';
 import ResourceBox from '../../resource-box/resource-box';
 import shellBus from '~/components/shell/shell-bus';
+import routerBus from '~/helpers/router-bus';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './instructor-resources-pane.html';
 import css from './instructor-resources-pane.css';
@@ -48,5 +49,13 @@ export default class extends componentType(spec) {
         event.preventDefault();
         shellBus.emit('showDialog', () => this.props.compCopyDialogProps);
     }
+
+    @on('click .filter-for-book')
+    saveBookInHistoryState() {
+        routerBus.emit('navigate', '/partner-marketplace', {
+            book: this.props.bookAbbreviation
+        }, true);
+    }
+
 
 }

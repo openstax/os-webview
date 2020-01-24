@@ -12,7 +12,7 @@ const spec = {
     model() {
         return {
             options: this.options,
-            isSelected: (value) => this.store.includes(value) ? '' : null
+            checkedClass: (value) => this.store.includes(value) ? 'checked' : ''
         };
     }
 };

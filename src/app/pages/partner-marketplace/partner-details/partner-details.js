@@ -21,7 +21,7 @@ const spec = {
             blurb: this.blurb,
             titles: this.books, // TODO: lookup proper titles from Salesforce names
             tags: this.tags,
-            infoUrl: 'http://dontgohere.com',
+            infoUrl: this.infoUrl,
             infoText: 'Request info',
             description: this.richDescription,
             partnerUrl: this.website

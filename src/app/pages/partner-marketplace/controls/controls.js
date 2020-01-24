@@ -31,7 +31,7 @@ const spec = {
     selectedFilter: null
 };
 
-function setupOptionsList(selected, items) {
+export function setupOptionsList(selected, items) {
     const ol = new OptionsList({
         items,
         selected
@@ -40,7 +40,7 @@ function setupOptionsList(selected, items) {
     return ol;
 }
 
-const typeOptions = [
+export const typeOptions = [
     {
         label: 'Content customization',
         value: 'Content customization'
@@ -70,7 +70,7 @@ const sortOptions = [
     }
 ];
 
-const costOptions = [
+export const costOptions = [
     'Free - $10',
     '$11 - $25',
     '$26 - $40',

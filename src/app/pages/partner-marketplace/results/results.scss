@@ -1,7 +1,11 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .partner-marketplace .results {
-    padding: 5rem 0 20rem;
+    padding: 0 0 20rem;
+
+    @include wider-than($phone-max) {
+        padding-top: 5rem;
+    }
 
     .boxed {
         display: grid;
@@ -32,8 +36,8 @@
         }
 
         &.grid {
-            grid-template-columns: repeat(auto-fill, 20rem);
-            justify-content: center;
+            grid-template-columns: repeat(auto-fill, 21rem);
+            justify-content: left;
 
             .card {
                 color: inherit;

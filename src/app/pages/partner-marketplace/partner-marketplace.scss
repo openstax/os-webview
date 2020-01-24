@@ -6,6 +6,9 @@
         @extend %light-on-dark;
 
         background-color: os-color(deep-green);
+        background-image: url('/images/partners/partner-heading-bg.png');
+        background-position: left top;
+        background-size: cover;
         color: text-color(white);
         padding-bottom: 8rem;
         position: relative;
@@ -21,5 +24,21 @@
         .strips {
             bottom: 0;
         }
+    }
+
+    @include width-up-to($phone-max) {
+        .desktop {
+            display: none;
+        }
+    }
+
+    @include wider-than($phone-max) {
+        .mobile {
+            display: none;
+        }
+    }
+
+    .padding {
+        padding: 0 $normal-margin;
     }
 }

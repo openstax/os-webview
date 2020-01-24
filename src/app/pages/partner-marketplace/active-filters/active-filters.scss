@@ -3,38 +3,49 @@
 .active-filters {
     @extend %content;
 
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     margin-top: 4rem;
 
-    &[hidden] {
-        display: none;
-    }
+    > div {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 2rem;
 
-    .filters {
-        @include body-font(1.4rem);
-
-        display: grid;
-        grid-auto-flow: column;
-        grid-column-gap: 1rem;
-
-        $baby-blue: rgb(230, 242, 247);
-        $border-blue: rgb(19, 127, 179);
-        .filter-remover {
-            background-color: $baby-blue;
-            border: thin solid $border-blue;
-            border-radius: 0.2rem;
-            padding: 0.5rem 1rem;
+        &[hidden] {
+            display: none;
         }
 
-        button {
-            appearance: none;
-            background-color: transparent;
-            color: text-color(normal);
-            font-size: 1rem;
-            margin-left: 1rem;
-            padding: 0;
+        .filters {
+            @include body-font(1.4rem);
+
+            display: flex;
+            flex-flow: row wrap;
+            margin-bottom: -1rem;
+            margin-right: -1rem;
+
+            $baby-blue: rgb(230, 242, 247);
+            $border-blue: rgb(19, 127, 179);
+            .filter-remover {
+                background-color: $baby-blue;
+                border: thin solid $border-blue;
+                border-radius: 0.2rem;
+                margin-bottom: 1rem;
+                margin-right: 1rem;
+                padding: 0.5rem 1rem;
+            }
+
+            button {
+                appearance: none;
+                background-color: transparent;
+                color: text-color(normal);
+                font-size: 1rem;
+                margin-left: 1rem;
+                padding: 0;
+            }
+        }
+
+        a {
+            white-space: nowrap;
         }
     }
 }

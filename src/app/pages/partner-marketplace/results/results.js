@@ -5,6 +5,7 @@ import css from './results.css';
 import Result from './result/result';
 import orderBy from 'lodash/orderBy';
 import {on} from '~/helpers/controller/decorators';
+import {resultCount} from '../store';
 
 const spec = {
     template,
@@ -49,6 +50,8 @@ export default class extends componentType(spec, busMixin, cleanupMixin) {
         if (this.costs.value) {
             result = result.filter((entry) => entry.cost === this.costs.value);
         }
+
+        resultCount.value = result.length;
 
         return orderBy(
             result,

@@ -14,7 +14,7 @@ const spec = {
         return {
             label: this.label,
             open: this.open,
-            caretDirection: this.open ? 'down' : 'up',
+            caretDirection: this.open ? 'up' : 'down',
             popoverStyle: this.style
         };
     },

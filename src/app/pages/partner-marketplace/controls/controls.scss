@@ -5,7 +5,7 @@
 $breakpt-narrow: 76.7em * $scale-factor;
 $breakpt-med: 111.9em * $scale-factor;
 
-.partner-marketplace .controls {
+.partner-marketplace .desktop.controls {
     background-color: ui-color(white);
     border-bottom: thin solid ui-color(form-border);
     border-radius: 0.4rem;
@@ -14,7 +14,12 @@ $breakpt-med: 111.9em * $scale-factor;
     margin-top: 3rem;
     padding: 3rem;
     position: relative;
-    max-width: 100%;
+    max-width: 120rem;
+    width: 100%;
+
+    @include width-up-to($phone-max) {
+        display: none;
+    }
 
     @include wider-than($breakpt-med) {
         grid-auto-flow: column;

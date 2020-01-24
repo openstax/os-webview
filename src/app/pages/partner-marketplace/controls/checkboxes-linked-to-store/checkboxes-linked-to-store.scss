@@ -1,27 +1,43 @@
 @import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/placeholder-selectors';
 
 .checkboxes-linked-to-store {
     padding: 1rem;
     text-align: left;
 
     .form-control {
-        display: block;
+        display: grid;
+        grid-column-gap: 0.7rem;
+        grid-template-columns: auto 1fr;
         margin-bottom: 0.5rem;
-        white-space: nowrap;
+
+        @include wider-than($phone-max) {
+            white-space: nowrap;
+        }
 
         .indicator {
+            align-items: center;
             border-radius: 0.2rem;
             border: thin solid ui-color(form-border);
+            display: flex;
             height: 2.4rem;
-            margin-right: 0.7rem;
+            justify-content: center;
             width: 2.4rem;
 
             input[type="checkbox"] {
                 appearance: none;
+            }
 
-                &:not(:checked) + .tick {
-                    opacity: 0;
-                }
+            &:not(.checked) .tick {
+                opacity: 0;
+            }
+
+            &.checked {
+                @extend %light-on-dark;
+
+                background-color: text-color(link);
+                border-color: text-color(link);
+                color: text-color(white);
             }
         }
     }

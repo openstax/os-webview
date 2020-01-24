@@ -24,7 +24,7 @@ const spec = {
 export default class extends componentType(spec) {
 
     get frameCount() {
-        return this.images.length + this.videos.length
+        return this.images.length + this.videos.length;
     }
 
     @on('click .navigate.previous')

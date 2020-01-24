@@ -1,33 +1,52 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .instructor-resources-pane {
+    display: grid;
+    grid-row-gap: $normal-margin;
+    grid-template-columns: 100%;
+    overflow: hidden;
     padding: 0 2rem 2.5rem;
+    width: 100%;
+
+    .card {
+        @extend %card;
+        color: inherit;
+        margin-top: 0.3rem;
+        padding: 3rem $normal-margin;
+        text-decoration: none;
+
+        @include title-font(2.4rem);
+    }
 
     .swipe-zone {
-        margin: 0 -0.3rem;
+        margin-left: -0.3rem;
         overflow-x: scroll;
         padding: 0.3rem; // room for the shadow
         width: calc(100vw - #{2 * $normal-margin});
     }
 
-    .free-resources-region,
-    .paid-resources-region {
+    .free-resources-region {
         display: grid;
+        grid-auto-flow: column;
         grid-gap: $normal-margin;
-        grid-template-columns: repeat(50, 20rem);
 
         h3 {
             @include set-font(h4);
 
             margin-bottom: 2rem;
         }
-    }
 
-    .free-resources-region {
+        .resource-box {
+            width: 20rem;
 
-        .resource-box > .top {
-            max-height: 30rem;
-            overflow: hidden;
+            &:last-child {
+                margin-right: 3rem;
+            }
+
+            > .top {
+                max-height: 30rem;
+                overflow: hidden;
+            }
         }
     }
 

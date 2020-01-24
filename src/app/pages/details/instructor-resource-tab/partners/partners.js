@@ -1,4 +1,4 @@
-import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
+import componentType from '~/helpers/controller/init-mixin';
 import {description as template} from './partners.html';
 import css from './partners.css';
 import {on} from '~/helpers/controller/decorators';
@@ -12,7 +12,7 @@ const spec = {
     }
 };
 
-class Partners extends componentType(spec, insertHtmlMixin) {
+class Partners extends componentType(spec) {
 
     @on('click .filter-for-book')
     saveBookInHistoryState(event) {

@@ -33,7 +33,6 @@
             .content-pane {
                 max-width: calc(100vw - #{2 * $normal-margin});
                 overflow-x: auto;
-                padding-right: $normal-margin;
                 padding-top: $normal-margin;
             }
         }

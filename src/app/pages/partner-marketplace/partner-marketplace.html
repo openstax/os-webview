@@ -3,10 +3,13 @@
         <div class="boxed">
             <h1>{model.headline}</h1>
             <div data-html="description" skip="true"></div>
-            <section class="controls" skip="true"></section>
+            <section class="desktop controls" skip="true"></section>
         </div>
         <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
     </section>
-    <div class="active-filters" skip="true"></div>
-    <section class="results" skip="true"></section>
+    <div class="padding">
+        <div class="active-filters desktop" skip="true"></div>
+        <div class="mobile controls" skip="true"></div>
+        <section class="results" skip="true"></section>
+    </div>
 </template>

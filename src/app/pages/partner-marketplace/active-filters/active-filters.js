@@ -1,7 +1,7 @@
 import componentType, {cleanupMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './active-filters.html';
 import css from './active-filters.css';
-import {books, costs, types, advanced} from '../store';
+import {books, costs, types, advanced, resultCount} from '../store';
 import FilterRemover from './filter-remover/filter-remover';
 import {on} from '~/helpers/controller/decorators';
 
@@ -14,6 +14,11 @@ const spec = {
     filterComponents: [],
     regions: {
         filters: '.filters'
+    },
+    model() {
+        return {
+            resultCount: resultCount.value
+        };
     }
 };
 
@@ -45,7 +50,7 @@ export default class extends componentType(spec, cleanupMixin) {
             super.onLoaded();
         }
         this.filterComponents = [];
-        [books, costs, types, advanced].forEach((store) =>
+        [books, costs, types, advanced, resultCount].forEach((store) =>
             this.cleanup.push(store.on('notify', () => this.update()))
         );
         this.updateActiveFilters();

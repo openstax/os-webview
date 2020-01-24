@@ -31,15 +31,6 @@ describe('InstructorResourcesPane (as instructor)', () => {
             expect(freeResourceBoxes.length).toBe(instructorResources.freeResources.length);
         })
     );
-    it('creates a logo box for each paid resource', () =>
-        ready.then(() => {
-            const paidResourceBoxes = Array.from(
-                pane.el.querySelectorAll('.paid-resources-region > .logo-box')
-            );
-
-            expect(paidResourceBoxes.length).toBe(instructorResources.paidResources.length);
-        })
-    );
     it('handles comp copy click', () =>
         ready.then(() => {
             const compCopyEl = pane.el.querySelector('a[href$="/comp-copy"]');

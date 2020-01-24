@@ -2,6 +2,7 @@ import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './partner-marketplace.html';
 import css from './partner-marketplace.css';
 import Controls from './controls/controls';
+import MobileFilters from './mobile-filters/mobile-filters';
 import Results from './results/results';
 import ActiveFilters from './active-filters/active-filters';
 import PartnerDetails from './partner-details/partner-details';
@@ -144,8 +145,12 @@ export default class extends componentType(spec, insertHtmlMixin) {
         this.description = this.pageData.description;
         this.update();
         this.controls = new Controls({
-            el: this.el.querySelector('.controls'),
+            el: this.el.querySelector('.controls.desktop'),
             displayMode,
+            advancedFilterOptions: getFilterOptions(this.pageData)
+        });
+        this.mobileFilters = new MobileFilters({
+            el: this.el.querySelector('.controls.mobile'),
             advancedFilterOptions: getFilterOptions(this.pageData)
         });
 
@@ -176,7 +181,8 @@ export default class extends componentType(spec, insertHtmlMixin) {
                 videos: [pd.video_1, pd.video_2]
                     .filter((vid) => Boolean(vid)),
                 type: pd.partner_type,
-                cost: pd.affordability_cost
+                cost: pd.affordability_cost,
+                infoUrl: pd.formstack_url
             }));
 
             this.attachResults(resultData);

@@ -8,7 +8,6 @@
             <a each="blurb in model.blurbs" class="blurb" href="{blurb.url}">
                 <img src="{blurb.image}" alt="">
                 <div class="name">{blurb.name}</div>
-                <div class="description" data-html="blurbs[{$item}].description"></div>
                 <div class="tags">
                     <div if="blurb.cost" class="info">
                         <span class="label">Cost:</span>{blurb.cost}
