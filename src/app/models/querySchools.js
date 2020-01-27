@@ -37,11 +37,13 @@ const toSearchParam = {
     testimonials: 'testimonial',
     'institution-type': 'type'
 };
+const emptyResult = [];
 
+emptyResult.TOO_MANY = true;
 function doFetch(searchParameters) {
     return cmsFetch(`${searchPath}?${searchParameters}`)
         .then((response) =>
-            response.length > MAX_SEARCH_RESULTS ? [] :
+            response.length > MAX_SEARCH_RESULTS ? emptyResult :
                 response
                     .filter((info) => info.fields.all_time_savings > 0)
                     .map(augmentInfo)
@@ -61,7 +63,7 @@ export default function (queryString, selectedFilters) {
     let searchParameters = `q=${queryString}`;
 
     if (!selectedFilters) {
-        if (queryString.length < 4) {
+        if (queryString.length < 3) {
             return null;
         }
     } else {

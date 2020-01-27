@@ -143,7 +143,10 @@ export default class extends componentType(spec, busMixin) {
                 (schools) => {
                     this.attachResults(schools);
                     this.emit('results', schools);
-                    if (schools.length === 0) {
+                    if (schools.TOO_MANY) {
+                        this.searchMessage = 'Too many matching results';
+                        this.update();
+                    } else if (schools.length === 0) {
                         this.searchMessage = 'No matching results';
                         this.update();
                     }
