@@ -192,7 +192,7 @@ function compileScriptsBabel() {
     .pipe(pi.replace(/@VERSION@/g, config.version))
     .pipe(pi.replace(/@ENV@/g, config.env))
     .pipe(pi.babel({
-        presets: ['es2015'],
+        presets: ['env'],
         plugins: [
             'transform-async-to-generator',
             'transform-class-properties',
