@@ -52,7 +52,7 @@ export default class extends componentType(spec) {
 
     @on('click .filter-for-book')
     saveBookInHistoryState() {
-        routerBus.emit('navigate', '/partner-marketplace', {
+        routerBus.emit('navigate', '/partners', {
             book: this.props.bookAbbreviation
         }, true);
     }

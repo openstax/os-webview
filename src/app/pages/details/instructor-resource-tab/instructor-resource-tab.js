@@ -56,7 +56,6 @@ export default class InstructorResourceTab extends componentType(spec) {
         insertPartners({
             dataPromise: partnerFeaturePromise,
             targetEl: this.regions.partners.el,
-            allies: this.model.allies,
             bookAbbreviation: this.bookAbbreviation
         });
     }

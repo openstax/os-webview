@@ -231,7 +231,6 @@ export default class Details extends BaseClass {
             contents[label] = tabContents;
             tabLabels.push(label);
         };
-        const allies = shuffle(this.pageData.book_allies);
 
         this.detailsTab = detailsTab;
         detailsTab.on('toc', (whether) => this.setTocOpen(whether));
@@ -242,7 +241,6 @@ export default class Details extends BaseClass {
                 userStatusPromise: this.userStatusPromise,
                 model: {
                     resources: this.pageData.book_faculty_resources,
-                    allies,
                     freeStuff: {
                         heading: this.pageData.free_stuff_instructor.content.heading,
                         blurb: this.pageData.free_stuff_instructor.content.content,
@@ -275,16 +273,6 @@ export default class Details extends BaseClass {
                 },
                 resources: this.pageData.book_student_resources,
                 userStatusPromise: this.userStatusPromise
-            }));
-        }
-
-        if (!polish && this.pageData.book_allies.length) {
-            addTab('Partner resources', new PartnersTab({
-                allies,
-                ally: {
-                    heading: this.pageData.ally_content.content.heading,
-                    blurb: this.pageData.ally_content.content.content
-                }
             }));
         }
 
@@ -335,8 +323,7 @@ export default class Details extends BaseClass {
             errataContent: this.pageData.errata_content,
             includeTOC: Boolean(this.pageData.book_state === 'live'),
             instructorResources: {
-                freeResources: this.pageData.book_faculty_resources,
-                paidResources: allies
+                freeResources: this.pageData.book_faculty_resources
             },
             slug: this.slug,
             salesforceAbbreviation: this.pageData.salesforce_abbreviation,

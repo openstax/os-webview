@@ -4,8 +4,7 @@ import instanceReady from '../../../helpers/instance-ready';
 import shellBus from '~/components/shell/shell-bus';
 import {clickElement} from '../../../test-utils';
 const instructorResources = {
-    freeResources: details.book_faculty_resources,
-    paidResources: details.book_allies
+    freeResources: details.book_faculty_resources
 };
 const instructor = {
     isStudent: false,

@@ -29,7 +29,6 @@ const PAGES = [
     'global-reach',
     'separatemap',
     'openstax-tutor',
-    'partner-marketplace',
     'partners',
     'partners/*path',
     'press',

@@ -17,8 +17,7 @@ const pvData = {
     },
     errataContent: pageData.errata_content,
     instructorResources: {
-        freeResources: pageData.book_faculty_resources,
-        paidResources: pageData.book_allies
+        freeResources: pageData.book_faculty_resources
     },
     slug: pageData.slug,
     salesforceAbbreviation: pageData.salesforce_abbreviation,
