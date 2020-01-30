@@ -38,7 +38,6 @@ export default function ({dataPromise, targetEl, bookAbbreviation}) {
             };
         }
 
-        console.info('Find partners for', bookAbbreviation);
         const forBook = pd.filter((p) => {
             const books = p.books.split(';');
 

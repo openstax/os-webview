@@ -32,6 +32,10 @@
                 .tags {
                     grid-auto-flow: column;
                 }
+
+                .resource-description {
+                    display: none;
+                }
             }
         }
 
@@ -66,6 +70,7 @@
 
     .card {
         background-color: ui-color(white);
+        border-radius: 0.3rem;
         box-shadow: $card-shadow;
         display: grid;
 

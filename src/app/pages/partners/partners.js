@@ -132,9 +132,6 @@ export default class extends componentType(spec, insertHtmlMixin) {
             // already loaded, we came back
             return;
         }
-        this.activeFilters = new ActiveFilters({
-            el: this.el.querySelector('.active-filters')
-        });
     }
 
     onDataLoaded() {
@@ -144,14 +141,20 @@ export default class extends componentType(spec, insertHtmlMixin) {
         this.heading = this.pageData.heading;
         this.description = this.pageData.description;
         this.update();
+        const advancedFilterOptions = getFilterOptions(this.pageData);
+
         this.controls = new Controls({
             el: this.el.querySelector('.controls.desktop'),
             displayMode,
-            advancedFilterOptions: getFilterOptions(this.pageData)
+            advancedFilterOptions
         });
         this.mobileFilters = new MobileFilters({
             el: this.el.querySelector('.controls.mobile'),
-            advancedFilterOptions: getFilterOptions(this.pageData)
+            advancedFilterOptions
+        });
+        this.activeFilters = new ActiveFilters({
+            el: this.el.querySelector('.active-filters'),
+            advancedFilterOptions
         });
 
         partnerFeaturePromise.then((partnerData) => {

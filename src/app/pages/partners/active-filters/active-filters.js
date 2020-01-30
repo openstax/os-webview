@@ -22,24 +22,26 @@ const spec = {
     }
 };
 
-function childPropertiesForStore(store) {
+function childPropertiesForStore(store, decoder) {
     if (store.value instanceof Array) {
         return store.value.map((value) => ({
             value,
-            store
+            store,
+            label: decoder ? decoder[value] : value
         }));
     }
     return store.value ? {
         value: store.value,
-        store
+        store,
+        label: decoder ? decoder[value] : store.value
     } : [];
 }
 
-function childProperties() {
+function childProperties(advancedFilterDecoder) {
     return childPropertiesForStore(books).concat(
         childPropertiesForStore(costs),
         childPropertiesForStore(types),
-        childPropertiesForStore(advanced)
+        childPropertiesForStore(advanced, advancedFilterDecoder)
     );
 }
 
@@ -53,6 +55,12 @@ export default class extends componentType(spec, cleanupMixin) {
         [books, costs, types, advanced, resultCount].forEach((store) =>
             this.cleanup.push(store.on('notify', () => this.update()))
         );
+        this.advancedFilterDecoder = this.advancedFilterOptions.reduce((a, b) => {
+            b.options.forEach((opt) => {
+                a[opt.value] = opt.label;
+            });
+            return a;
+        }, {});
         this.updateActiveFilters();
     }
 
@@ -64,7 +72,7 @@ export default class extends componentType(spec, cleanupMixin) {
     }
 
     updateActiveFilters() {
-        const cp = childProperties();
+        const cp = childProperties(this.advancedFilterDecoder);
         const region = this.regions.filters;
 
         if (cp.length > 0) {

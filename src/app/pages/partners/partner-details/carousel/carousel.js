@@ -13,9 +13,9 @@ const spec = {
     model() {
         return {
             frameNumber: this.frameNumber,
-            images: this.images,
+            images: this.frameCount ? this.images : [this.icon],
             videos: this.videos,
-            frameCount: this.frameCount
+            frameCount: this.frameCount || 1
         };
     },
     frameNumber: 0

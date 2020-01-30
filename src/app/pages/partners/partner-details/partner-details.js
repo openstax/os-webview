@@ -36,6 +36,7 @@ export default class extends componentType(spec, insertHtmlMixin) {
             super.onLoaded();
         }
         this.regions.carousel.attach(new Carousel({
+            icon: this.logoUrl,
             images: this.images,
             videos: this.videos
         }));

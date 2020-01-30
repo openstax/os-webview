@@ -11,7 +11,7 @@ const spec = {
     },
     model() {
         return {
-            value: this.value
+            label: this.label
         };
     }
 };
