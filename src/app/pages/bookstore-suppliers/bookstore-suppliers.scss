@@ -9,6 +9,12 @@
         }
     }
 
+    @include wider-than($phone-max) {
+        .small-screen {
+            display: none;
+        }
+    }
+
     .hero {
         @extend %light-on-dark;
 
@@ -142,6 +148,13 @@
         @include set-font(body-large);
     }
 
+    .swipable-row {
+        @include width-up-to($phone-max) {
+            width: 100%;
+            overflow-x: auto;
+        }
+    }
+
     .cards {
         background-color: ui-color(default);
         display: grid;
@@ -155,6 +168,11 @@
 
         @include width-up-to($phone-max) {
             background-color: ui-color(white);
+            grid-auto-flow: column;
+
+            .card {
+                min-width: 28rem;
+            }
         }
 
         @include width-between($phone-max, $narrow-tablet) {
@@ -178,14 +196,12 @@
         grid-gap: 2rem;
         grid-template-rows: auto auto 1fr auto;
         justify-items: center;
+        margin-bottom: 0.3rem;
+        margin-top: 0.3rem;
         overflow: hidden;
         padding: 3rem;
         position: relative;
         text-align: center;
-
-        &:first-child {
-            margin-top: 0.3rem; // room for shadow
-        }
 
         $canada-red: #f00;
         .flag-card {
@@ -321,6 +337,10 @@
                 height: 3rem;
                 padding-left: $normal-margin;
                 padding-right: $normal-margin;
+
+                .fa-external-link-alt {
+                    margin-left: 0.7rem;
+                }
             }
         }
     }

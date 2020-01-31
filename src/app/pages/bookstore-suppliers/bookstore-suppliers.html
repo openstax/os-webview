@@ -3,6 +3,7 @@
         <div class="content">
             <div class="text">
                 <h1>{model.headline}</h1>
+                <div class="small-screen" data-html="subhead" skip="true"></div>
                 <div class="larger-screen" data-html="subhead2" skip="true"></div>
             </div>
         </div>
@@ -24,21 +25,23 @@
             <a class="btn primary" href="{supplier.buttonUrl}">{supplier.buttonText}</a>
         </div>
         <div class="intro-blurb">{model.suppliersBlurb}</div>
-        <div class="cards">
-            <div each="supplier in model.suppliers" class="card">
-                <div if="supplier.isCanadian" class="flag-card">
-                    <div class="canada-flag">
-                        <div class="white-field">
-                            <i class="fab fa-canadian-maple-leaf"></i>
+        <div class="swipable-row">
+            <div class="cards">
+                <div each="supplier in model.suppliers" class="card">
+                    <div if="supplier.isCanadian" class="flag-card">
+                        <div class="canada-flag">
+                            <div class="white-field">
+                                <i class="fab fa-canadian-maple-leaf"></i>
+                            </div>
                         </div>
                     </div>
+                    <div class="logo-dot">
+                        <img src="{supplier.logoUrl}" alt="company logo">
+                    </div>
+                    <h2>{supplier.name}</h2>
+                    <div class="blurb" data-html="suppliers[{$item}].description" skip="true"></div>
+                    <a class="btn primary" href="{supplier.buttonUrl}">{supplier.buttonText}</a>
                 </div>
-                <div class="logo-dot">
-                    <img src="{supplier.logoUrl}" alt="company logo">
-                </div>
-                <h2>{supplier.name}</h2>
-                <div class="blurb" data-html="suppliers[{$item}].description" skip="true"></div>
-                <a class="btn primary" href="{supplier.buttonUrl}">{supplier.buttonText}</a>
             </div>
         </div>
         <h2>Price lists</h2>
@@ -46,13 +49,15 @@
             <div>
                 {model.usButtonText}
                 <a href="{model.usButtonUrl}" class="btn primary">
-                    View{' '}<i class="fas fa-external-link-alt"></i>
+                    View
+                    <i class="fas fa-external-link-alt"></i>
                 </a>
             </div>
             <div>
                 {model.caButtonText}
                 <a href="{model.caButtonUrl}" class="btn primary">
-                    View{' '}<i class="fas fa-external-link-alt"></i>
+                    <span>View</span>
+                    <i class="fas fa-external-link-alt"></i>
                 </a>
             </div>
         </div>
