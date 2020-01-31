@@ -1,6 +1,6 @@
 <template args="model">
     <div class="image-row" style="grid-template-columns: repeat({model.frameCount}, 1fr); width: {model.frameCount}00%">
-        <div each="image in model.images" class="image-holder">
+        <div each="image in model.images" class="{model.onlyLogo ? 'logo-holder' : 'image-holder'}">
             <img src="{image}">
         </div>
         <div each="video in model.videos" class="image-holder">

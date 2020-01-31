@@ -3,7 +3,7 @@
 
 // Controls need to wrap at these points
 $breakpt-narrow: 76.7em * $scale-factor;
-$breakpt-med: 111.9em * $scale-factor;
+$breakpt-med: 93em * $scale-factor;
 
 .partners .desktop.controls {
     background-color: ui-color(white);
@@ -41,6 +41,12 @@ $breakpt-med: 111.9em * $scale-factor;
         @include wider-than($breakpt-narrow) {
             grid-auto-flow: column;
             grid-column-gap: 1rem;
+        }
+    }
+
+    .other-controls {
+        @include wider-than($breakpt-med) {
+            justify-content: right;
         }
     }
 

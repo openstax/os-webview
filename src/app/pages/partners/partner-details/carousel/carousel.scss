@@ -5,13 +5,14 @@
     position: relative;
 
     .navigate {
-        border-radius: 0.3rem;
         height: 7rem;
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
 
         &.previous {
+            border-bottom-right-radius: 0.3rem;
+            border-top-right-radius: 0.3rem;
             left: 0;
         }
 
@@ -25,15 +26,25 @@
         position: relative;
         width: 500%;
 
-        .image-holder {
+        .image-holder,
+        .logo-holder {
             align-items: center;
             display: flex;
             justify-content: center;
+            height: 31rem;
 
             img,
             video {
-                max-height: calc(100vh - 28rem);
                 max-width: calc(100% - 6rem); // leave room for nav buttons
+            }
+        }
+
+        .logo-holder {
+            background-color: ui-color(white);
+
+            > img {
+                max-height: 8rem;
+                max-width: 8rem;
             }
         }
     }

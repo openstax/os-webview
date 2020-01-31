@@ -4,6 +4,7 @@ import {description as template} from './results.html';
 import css from './results.css';
 import Result from './result/result';
 import orderBy from 'lodash/orderBy';
+import shuffle from 'lodash/shuffle';
 import {on} from '~/helpers/controller/decorators';
 import {resultCount} from '../store';
 
@@ -53,11 +54,12 @@ export default class extends componentType(spec, busMixin, cleanupMixin) {
 
         resultCount.value = result.length;
 
-        return orderBy(
-            result,
-            [(entry) => entry.title.toLowerCase()],
-            [(this.sort.value === '-1' ? 'desc' : 'asc')]
-        );
+        return this.sort.value === '0' ? shuffle(result) :
+            orderBy(
+                result,
+                [(entry) => entry.title.toLowerCase()],
+                [(this.sort.value === '-1' ? 'desc' : 'asc')]
+            );
     }
 
     onLoaded() {
