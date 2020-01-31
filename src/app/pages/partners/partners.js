@@ -200,4 +200,11 @@ export default class extends componentType(spec, insertHtmlMixin) {
         });
     }
 
+    onClose() {
+        if (super.onClose) {
+            super.onClose();
+        }
+        [books, costs, types, advanced].forEach((store) => store.clear());
+    }
+
 }

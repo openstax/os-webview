@@ -46,7 +46,7 @@
             .card {
                 color: inherit;
                 grid-row-gap: 1rem;
-                grid-template: 'image'  minmax(4rem, auto)
+                grid-template: 'image'  8rem
                 'title' 1fr
                 'tags';
                 height: 100%;
@@ -58,7 +58,9 @@
                 }
 
                 .resource-title {
-                    @include set-font(h3);
+                    @include set-font(h4);
+
+                    text-align: center;
                 }
 
                 .resource-description {

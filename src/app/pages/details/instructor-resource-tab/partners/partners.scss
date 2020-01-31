@@ -4,10 +4,12 @@
 .instructor-resources .partners {
     @extend %card;
 
+    border-radius: 0.3rem;
     display: grid;
     grid-column: 2;
     grid-template-rows: min-content min-content;
     height: min-content;
+    overflow: hidden;
 
     .title-bar {
         @include set-font(h4);
