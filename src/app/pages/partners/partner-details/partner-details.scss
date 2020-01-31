@@ -1,0 +1,112 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.partner-details {
+    background-color: ui-color(default);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    max-height: calc(100vh - 7rem);
+
+    section {
+        padding: 3rem;
+    }
+    .synopsis {
+        background-color: ui-color(white);
+        display: grid;
+        grid-column-gap: 3rem;
+        padding-right: 4rem;
+
+        @include width-up-to($phone-max) {
+            grid-row-gap: 1rem;
+            grid-template: 'icon'
+            'title'
+            'blurb'
+            'subjects'
+            'tags' / 100%;
+        }
+
+        @include wider-than($phone-max) {
+            grid-row-gap: 0.5rem;
+            grid-template: 'icon title'
+            'icon blurb'
+            'icon subjects'
+            'icon tags' / auto 1fr;
+        }
+
+        .icon {
+            align-self: center;
+            grid-area: icon;
+            justify-self: center;
+            max-height: 12rem;
+            max-width: 12rem;
+        }
+        .headline {
+            @include title-font(1.6rem);
+
+            grid-area: title;
+        }
+        .blurb {
+            grid-area: blurb;
+
+            .partner-website {
+                float: right;
+            }
+        }
+        .titles {
+            @include body-font(1rem);
+
+            color: os-color(gray);
+            grid-area: subjects;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+
+            .title {
+
+                + .title::before {
+                    content: ' • ';
+                }
+            }
+        }
+        .tags {
+            display: grid;
+            grid-area: tags;
+            grid-gap: 0.5rem;
+            margin-bottom: -0.5rem;
+
+            @include wider-than($phone-max) {
+                grid-auto-flow: column;
+                justify-content: start;
+            }
+
+            .tag {
+                @include body-font(1.2rem);
+
+                background-color: ui-color(default);
+                border-radius: 0.3rem;
+                font-weight: bold;
+                padding: 0.2rem 0.4rem;
+                text-transform: uppercase;
+            }
+        }
+    }
+
+    .scrolling-region {
+        height: 100%;
+        overflow: auto;
+    }
+
+    .primary {
+        @extend %button;
+        @extend %primary;
+    }
+
+    hr {
+        border-top: thin solid ui-color(form-border);
+        margin: 0 3rem;
+    }
+
+    .main-text > :first-child {
+        margin-top: 0;
+    }
+
+}

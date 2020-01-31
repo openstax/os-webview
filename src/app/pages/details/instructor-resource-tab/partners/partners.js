@@ -1,4 +1,4 @@
-import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
+import componentType from '~/helpers/controller/init-mixin';
 import {description as template} from './partners.html';
 import css from './partners.css';
 import {on} from '~/helpers/controller/decorators';
@@ -12,7 +12,7 @@ const spec = {
     }
 };
 
-export default class extends componentType(spec, insertHtmlMixin) {
+class Partners extends componentType(spec) {
 
     @on('click .filter-for-book')
     saveBookInHistoryState(event) {
@@ -23,4 +23,33 @@ export default class extends componentType(spec, insertHtmlMixin) {
         }, true);
     }
 
+}
+
+export default function ({dataPromise, targetEl, bookAbbreviation}) {
+    dataPromise.then((pd) => {
+        function toBlurb(partner) {
+            return {
+                image: partner.partner_logo,
+                name: partner.partner_name,
+                description: partner.short_partner_description,
+                cost: partner.affordability_cost,
+                type: partner.partner_type,
+                url: `/partners?${partner.partner_name}`
+            };
+        }
+
+        const forBook = pd.filter((p) => {
+            const books = p.books.split(';');
+
+            return books.includes(bookAbbreviation);
+        });
+        const p = new Partners({
+            el: targetEl,
+            bookAbbreviation,
+            model: {
+                title: pd.partner_list_label || '[Courseware partners]',
+                blurbs: forBook.map(toBlurb)
+            }
+        });
+    });
 }

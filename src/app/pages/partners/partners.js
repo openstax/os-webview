@@ -1,152 +1,210 @@
-import $ from '~/helpers/$';
-import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
-import css from './partners.css';
-import CategorySelector from '~/components/category-selector/category-selector';
-import PartnerViewer from './partner-viewer/partner-viewer';
-import routerBus from '~/helpers/router-bus';
-import settings from 'settings';
+import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './partners.html';
-import {on} from '~/helpers/controller/decorators';
+import css from './partners.css';
+import Controls from './controls/controls';
+import MobileFilters from './mobile-filters/mobile-filters';
+import Results from './results/results';
+import ActiveFilters from './active-filters/active-filters';
+import PartnerDetails from './partner-details/partner-details';
+import partnerFeaturePromise from '~/models/salesforce-partners';
+import {displayMode, books, costs, types, advanced, sort} from './store';
+import shellBus from '~/components/shell/shell-bus';
+import routerBus from '~/helpers/router-bus';
+import analyticsEvents from './analytics-events';
 
-const pagePath = '/partners';
 const spec = {
     template,
     css,
     view: {
-        classes: ['partners-page', 'page'],
+        classes: ['partners', 'page'],
         tag: 'main'
     },
-    regions: {
-        filter: '.filter',
-        iconViewer: 'icon-viewer',
-        blurbViewer: 'blurb-viewer'
-    },
     slug: 'pages/partners',
-    model: {
-        title: '',
-        'page_description': '',
-        partners: []
-    }
+    model() {
+        return {
+            headline: this.heading,
+            description: this.description
+        };
+    },
+    heading: '',
+    description: ''
 };
-const BaseClass = componentType(spec, canonicalLinkMixin);
 
-export default class Partners extends BaseClass {
+function advancedFilterKeys(partnerEntry) {
+    return Reflect.ownKeys(partnerEntry).filter((k) => [false, true].includes(partnerEntry[k]));
+}
 
-    init() {
-        super.init();
-        this.categorySelector = new CategorySelector();
-        this.categorySelector.on('change', (category) => this.filterPartners(category));
-        routerBus.emit('replaceState', {
-            filter: this.categoryFromPath(),
-            path: pagePath
+function getFilterOptions(data) {
+    const excludeList = ['Book', 'Type'];
+    const categoryKeys = Reflect.ownKeys(data.category_mapping)
+        .filter((title) => !excludeList.includes(title));
+    const result = categoryKeys
+        .map((title) => ({
+            title,
+            options: []
+        }));
+    const mapToTitle = categoryKeys
+        .map((k) => [k, data.category_mapping[k]])
+        .reduce((obj, [text, prefix]) => {
+            obj[prefix] = text;
+            return obj;
+        }, {});
+
+    Object.entries(data.field_name_mapping)
+        .filter(([_, label]) => label !== 'Cost per semester')
+        .forEach(([value, label]) => {
+            const entry = {
+                label,
+                value
+            };
+            const categoryPrefix = Reflect.ownKeys(mapToTitle)
+                .find((prefix) => value.substr(0, prefix.length) === prefix);
+            const itemInResult = result.find((obj) => obj.title === mapToTitle[categoryPrefix]);
+
+            if (itemInResult) {
+                itemInResult.options.push(entry);
+            }
         });
 
-        this.filterPartnersEvent = () => {
-            const category = history.state.filter;
+    return result;
+}
 
-            this.categorySelector.updateSelected(category);
-            CategorySelector.loaded.then(() => {
-                const cms = CategorySelector.byValue[category].cms;
+function baseHref() {
+    const h = new URL(window.location.href);
 
-                this.partnerViewer.filterPartners(cms);
-            });
-        };
-        window.addEventListener('popstate', this.filterPartnersEvent);
+    h.search = '';
+    return h.href;
+}
+
+export default class extends componentType(spec, insertHtmlMixin) {
+
+    get searchPartner() {
+        const searchStr = decodeURIComponent(window.location.search.substr(1));
+
+        return searchStr;
     }
 
-    categoryFromPath() {
-        return window.location.pathname.replace(/.*partners/, '').substr(1).toLowerCase() || 'view-all';
+    attachResults(entries) {
+        const results = new Results({
+            el: this.el.querySelector('.results'),
+            entries,
+            displayMode,
+            books,
+            types,
+            advanced,
+            costs,
+            sort
+        });
+
+        results.on('select', (entry) => {
+            const href = `?${entry.title}`;
+
+            history.replaceState('', '', href);
+            analyticsEvents.partnerDetails(entry.title);
+            // Dialog closes on navigation; need to wait for that before opening it.
+            setTimeout(() => {
+                this.showDetailDialog(entry);
+            }, 0);
+        });
     }
 
-    changeAllyLogoColor() {
-        const colors = ['Blue', 'Yellow', 'Gray', 'Green', 'Orange'];
-        const index = Math.floor(Math.random() * colors.length);
+    showDetailDialog(detailData) {
+        const pd = new PartnerDetails(detailData);
 
-        this.model.allyLogoColor = 'Gray';
-        this.update();
+        shellBus.emit('showDialog', () => ({
+            title: '',
+            content: pd,
+            onClose() {
+                pd.detach();
+                history.replaceState('', '', baseHref());
+            }
+        }));
+    }
+
+    onLoaded() {
+        if (super.onLoaded) {
+            super.onLoaded();
+        }
+        if (history.state && history.state.book) {
+            books.toggle(history.state.book);
+        }
+        if (this.heading) {
+            // already loaded, we came back
+            return;
+        }
     }
 
     onDataLoaded() {
-        this.model = Object.assign(this.model, this.pageData);
-        this.model.allPartners = Object.keys(this.pageData.allies)
-            .sort((a, b) => a < b ? -1 : 1)
-            .map((slug) => Object.assign({
-                id: slug
-            }, this.pageData.allies[slug]))
-            .filter((info) => !info.do_not_display);
+        if (super.onDataLoaded) {
+            super.onDataLoaded();
+        }
+        this.heading = this.pageData.heading;
+        this.description = this.pageData.description;
+        this.update();
+        const advancedFilterOptions = getFilterOptions(this.pageData);
 
-        this.partnerViewer = new PartnerViewer(this.model);
-        this.regions.iconViewer.attach(this.partnerViewer.iconViewer);
-        this.regions.blurbViewer.attach(this.partnerViewer.blurbViewer);
-
-        const category = this.categoryFromPath();
-
-        this.regions.filter.attach(this.categorySelector);
-        this.categorySelector.updateSelected(category);
-        this.filterPartners(category);
-        this.changeAllyLogoColor();
-    }
-
-    filterPartners(category) {
-        const path = category === 'view-all' ? pagePath : `${pagePath}/${category}`;
-
-        routerBus.emit('navigate', path, {
-            filter: category,
-            path: pagePath,
-            x: history.state.x,
-            y: history.state.y
+        this.controls = new Controls({
+            el: this.el.querySelector('.controls.desktop'),
+            displayMode,
+            advancedFilterOptions
         });
-        CategorySelector.loaded.then(() => {
-            const cms = CategorySelector.byValue[category].cms;
-
-            this.partnerViewer.filterPartners(cms);
+        this.mobileFilters = new MobileFilters({
+            el: this.el.querySelector('.controls.mobile'),
+            advancedFilterOptions
         });
-    }
-
-    @on('click .logo-text')
-    onLogoClick(e) {
-        e.preventDefault();
-        this.cameFrom = e.delegateTarget;
-        const href = this.cameFrom.getAttribute('href');
-        const el = this.el.querySelector(href);
-        const state = {
-            filter: history.state.filter,
-            path: pagePath,
-            target: href
-        };
-        const pushOrReplaceState = history.state.target ? 'replaceState' : 'pushState';
-
-        $.scrollTo(el).then(() => {
-            el.querySelector('a').focus();
+        this.activeFilters = new ActiveFilters({
+            el: this.el.querySelector('.active-filters'),
+            advancedFilterOptions
         });
-        history[pushOrReplaceState](state, '', href);
-    }
 
-    @on('click .to-top')
-    scrollToFilterButtons(e) {
-        e.preventDefault();
-        e.target.blur();
-        const hasTarget = 'target' in history.state;
-        const state = {
-            filter: history.state.filter,
-            path: pagePath
-        };
+        partnerFeaturePromise.then((partnerData) => {
+            const resultData = partnerData.map((pd) => ({
+                title: pd.partner_name,
+                blurb: pd.short_partner_description ||
+                    '[no description]',
+                tags: [
+                    {
+                        label: 'type',
+                        value: pd.partner_type
+                    },
+                    {
+                        label: 'cost',
+                        value: pd.affordability_cost
+                    }
+                ].filter((v) => Boolean(v.value)),
+                richDescription: pd.rich_description ||
+                    pd.partner_description ||
+                    '[no rich description]',
+                logoUrl: pd.partner_logo,
+                books: (pd.books||'').split(/;/),
+                advancedFeatures: advancedFilterKeys(pd).filter((k) => pd[k] === true),
+                website: pd.landing_page,
+                images: [pd.image_1, pd.image_2, pd.image_3, pd.image_4, pd.image_5]
+                    .filter((img) => Boolean(img)),
+                videos: [pd.video_1, pd.video_2]
+                    .filter((vid) => Boolean(vid)),
+                type: pd.partner_type,
+                cost: pd.affordability_cost,
+                infoUrl: pd.formstack_url
+            }));
 
-        $.scrollTo(this.el.querySelector('.filter'), 20).then(() => {
-            if (hasTarget) {
-                history.back();
-            } else {
-                history.replaceState(state, '', state.target);
+            this.attachResults(resultData);
+            if (this.searchPartner) {
+                const partnerName = decodeURIComponent(this.searchPartner);
+                const foundEntry = resultData.find((entry) => entry.title === partnerName);
+
+                if (foundEntry) {
+                    this.showDetailDialog(foundEntry);
+                }
             }
-            if (this.cameFrom) {
-                this.cameFrom.focus();
-            }
-            this.cameFrom = null;
         });
     }
 
     onClose() {
-        window.removeEventListener('popstate', this.filterPartnersEvent);
+        if (super.onClose) {
+            super.onClose();
+        }
+        [books, costs, types, advanced].forEach((store) => store.clear());
     }
 
 }

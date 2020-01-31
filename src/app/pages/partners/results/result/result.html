@@ -1,0 +1,10 @@
+<template args="model">
+    <div class="logo">
+        <img if="model.logoUrl" src="{model.logoUrl}" alt="">
+    </div>
+    <div class="resource-title">{model.title}</div>
+    <div class="resource-description">{model.description}</div>
+    <div class="tags">
+        <span each="entry in model.tags">{entry.label}: {entry.value}</span>
+    </div>
+</template>

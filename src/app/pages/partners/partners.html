@@ -1,24 +1,15 @@
 <template args="model">
-    <div class="hero">
-        <div class="container text-content">
-            <h1>{model.title}</h1>
-            <p>{model.page_description}</p>
-            <p class="logo-text">OpenStax Partners are identified around the web with the OpenStax Ally logo.</p>
-            <img if="model.allyLogoColor" class="ally-logo"
-             src="http://staxlogos.openstax.org/OSX-ALLY-{model.allyLogoColor}-RGB-150dpi.png"
-             alt="OpenStax Ally logo"
-             >
+    <section class="banner hero">
+        <div class="boxed">
+            <h1>{model.headline}</h1>
+            <div data-html="description" skip="true"></div>
+            <section class="desktop controls" skip="true"></section>
         </div>
-    </div>
-    <div class="strips-and-filter">
         <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation">
-        <div class="filter" skip="true"></div>
+    </section>
+    <div class="padding">
+        <div class="active-filters desktop" skip="true"></div>
+        <div class="mobile controls" skip="true"></div>
+        <section class="results" skip="true"></section>
     </div>
-    <div class="icons">
-        <icon-viewer skip="true"></icon-viewer>
-    </div>
-    <div class="divider boxed">
-        <hr />
-    </div>
-    <blurb-viewer skip="true"></blurb-viewer>
 </template>

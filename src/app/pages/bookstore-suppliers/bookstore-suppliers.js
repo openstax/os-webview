@@ -19,7 +19,8 @@ const spec = {
             description: p.blurb || '',
             logoUrl: p.icon,
             buttonUrl: p.url,
-            buttonText: p.cta
+            buttonText: p.cta,
+            isCanadian: p.canadian
         });
         const suppliers = this.pageData.providers.map(providerToModel);
         const featuredSupplier = this.pageData.featured_providers.map(providerToModel); // should only be 1

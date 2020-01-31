@@ -1,0 +1,125 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/placeholder-selectors';
+
+// Controls need to wrap at these points
+$breakpt-narrow: 76.7em * $scale-factor;
+$breakpt-med: 111.9em * $scale-factor;
+
+.partners .desktop.controls {
+    background-color: ui-color(white);
+    border-bottom: thin solid ui-color(form-border);
+    border-radius: 0.4rem;
+    display: grid;
+    grid-gap: 3rem;
+    margin-top: 3rem;
+    padding: 3rem;
+    position: relative;
+    max-width: 120rem;
+    width: 100%;
+
+    @include width-up-to($phone-max) {
+        display: none;
+    }
+
+    @include wider-than($breakpt-med) {
+        grid-auto-flow: column;
+    }
+
+    .filter-button,
+    .button-with-dropdown {
+        @include title-font(1.8rem);
+
+        color: text-color(normal);
+    }
+
+    .button-row,
+    .other-controls {
+        display: grid;
+        grid-row-gap: 1rem;
+        justify-content: left;
+
+        @include wider-than($breakpt-narrow) {
+            grid-auto-flow: column;
+            grid-column-gap: 1rem;
+        }
+    }
+
+    // Breaking encapsulation slightly
+    .triangle-dark .popover::after,
+    .triangle-light .popover::after {
+        @include width-up-to($breakpt-narrow) {
+            top: 17.9rem
+        }
+
+        @include width-between($breakpt-narrow, $breakpt-med) {
+            top: 11.9rem;
+        }
+    }
+
+    .triangle-white .popover::after {
+        @include width-up-to($breakpt-narrow) {
+            top: 29.9rem;
+        }
+
+        @include width-between($breakpt-narrow, $breakpt-med) {
+            top: 11.9rem;
+        }
+    }
+
+    .triangle-dark .popover::after {
+        border-bottom-color: os-color(gray);
+    }
+
+    .triangle-light .popover::after {
+        border-bottom-color: ui-color(default);
+    }
+
+    .book-options {
+        @include wider-than($breakpt-med) {
+            column-count: 3;
+        }
+
+        @include width-between($breakpt-narrow, $breakpt-med) {
+            column-count: 2;
+        }
+    }
+
+
+    .popover-container {
+        position: absolute;
+        top: 100%;
+        width: 100%;
+        z-index: 1;
+
+        > * {
+            @extend %card;
+
+            background-color: ui-color(white);
+            border-radius: 0.2rem;
+            color: text-color(normal);
+            margin-top: 2rem;
+            overflow: hidden;
+            width: 100%;
+        }
+
+    }
+
+    .accordion-group {
+        grid-row-gap: 0;
+
+        [aria-expanded] {
+            @include set-font(h4);
+        }
+
+        [aria-expanded="true"] {
+            @extend %light-on-dark;
+
+            background-color: os-color(gray);
+            color: text-color(white);
+        }
+
+        [aria-expanded="false"] {
+            background-color: ui-color(default);
+        }
+    }
+}

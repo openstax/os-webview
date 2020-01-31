@@ -1,0 +1,118 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.partners .results {
+    padding: 0 0 20rem;
+
+    @include wider-than($phone-max) {
+        padding-top: 5rem;
+    }
+
+    .boxed {
+        display: grid;
+        grid-gap: 3rem;
+
+        &.list {
+            grid-template-columns: 100%;
+
+            .card {
+                align-items: start;
+                color: inherit;
+                grid-column-gap: 2rem;
+                grid-template: 'image title' auto
+                'image description' 1fr
+                'image tags' auto / minmax(8rem, auto) 1fr;
+                height: 12.8rem;
+                padding: $normal-margin 3rem;
+                text-decoration: none;
+
+                .logo {
+                    max-width: 9rem;
+                }
+
+                .tags {
+                    grid-auto-flow: column;
+                }
+
+                .resource-description {
+                    display: none;
+                }
+            }
+        }
+
+        &.grid {
+            grid-template-columns: repeat(auto-fill, 21rem);
+            justify-content: left;
+
+            .card {
+                color: inherit;
+                grid-row-gap: 1rem;
+                grid-template: 'image'  8rem
+                'title' 1fr
+                'tags';
+                height: 100%;
+                padding: $normal-margin;
+                text-decoration: none;
+
+                .logo {
+                    justify-self: center;
+                }
+
+                .resource-title {
+                    @include set-font(h4);
+
+                    text-align: center;
+                }
+
+                .resource-description {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .card {
+        background-color: ui-color(white);
+        border-radius: 0.3rem;
+        box-shadow: $card-shadow;
+        display: grid;
+
+        .logo {
+            align-self: center;
+            display: grid;
+            grid-area: image;
+            justify-content: center;
+
+            > img {
+                max-height: 8rem;
+                max-width: 100%;
+            }
+        }
+
+        .resource-title {
+            font-weight: bold;
+            grid-area: title;
+        }
+
+        .resource-description {
+            grid-area: description;
+        }
+
+        .tags {
+            @include body-font(1.1rem);
+
+            display: grid;
+            font-weight: bold;
+            grid-area: tags;
+            grid-gap: 1rem;
+            justify-self: start;
+            text-transform: uppercase;
+
+            > * {
+                background-color: ui-color(default);
+                border-radius: 0.2rem;
+                padding: 0.5rem 1rem;
+            }
+        }
+    }
+
+}

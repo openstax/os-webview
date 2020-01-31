@@ -16,34 +16,33 @@ const pageData = transformData(details);
 
 const {instance: pane, ready} = instanceReady(InstructorResourceTab,
     {
-        resources: pageData.book_faculty_resources,
-        allies: pageData.book_allies,
+        bookAbbreviation: 'BIOLOGY',
         userStatusPromise: Promise.resolve(instructor),
-        freeStuff: {
-            heading: pageData.free_stuff_instructor.content.heading,
-            blurb: pageData.free_stuff_instructor.content.content,
-            loggedInBlurb: pageData.free_stuff_instructor.content.content_logged_in
+        model: {
+            resources: pageData.book_faculty_resources,
+            allies: pageData.book_allies,
+            freeStuff: {
+                heading: pageData.free_stuff_instructor.content.heading,
+                blurb: pageData.free_stuff_instructor.content.content,
+                loggedInBlurb: pageData.free_stuff_instructor.content.content_logged_in
+            },
+            webinar: {
+                text: pageData.webinar_content.content.heading,
+                url: pageData.webinar_content.link,
+                blurb: pageData.webinar_content.content.content
+            },
+            communityResource: {
+                heading: pageData.community_resource_heading,
+                logoUrl: pageData.community_resource_logo_url,
+                url: pageData.community_resource_url,
+                cta: pageData.community_resource_cta,
+                blurb: pageData.community_resource_blurb,
+                featureUrl: pageData.community_resource_feature_link_url,
+                featureText: pageData.community_resource_feature_text
+            }
         },
-        webinar: {
-            text: pageData.webinar_content.content.heading,
-            url: pageData.webinar_content.link,
-            blurb: pageData.webinar_content.content.content
-        },
-        communityResource: {
-            heading: pageData.community_resource_heading,
-            logoUrl: pageData.community_resource_logo_url,
-            url: pageData.community_resource_url,
-            cta: pageData.community_resource_cta,
-            blurb: pageData.community_resource_blurb,
-            featureUrl: pageData.community_resource_feature_link_url,
-            featureText: pageData.community_resource_feature_text
-        },
-        ally: {
-            heading: pageData.ally_content.content.heading,
-            blurb: pageData.ally_content.content.content
-        }
-    },
-    {}
+        dialogProps: {}
+    }
 );
 
 

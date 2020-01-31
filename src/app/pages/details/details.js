@@ -231,18 +231,16 @@ export default class Details extends BaseClass {
             contents[label] = tabContents;
             tabLabels.push(label);
         };
-        const allies = shuffle(this.pageData.book_allies);
 
         this.detailsTab = detailsTab;
         detailsTab.on('toc', (whether) => this.setTocOpen(whether));
         detailsTab.emit('put-toc-in', this.regionFrom(this.el.querySelector('.toc-slideout-contents')));
         if (!polish && this.pageData.free_stuff_instructor.content) {
-            addTab('Instructor resources', new InstructorResourceTab(
-                {
-                    bookAbbreviation: this.pageData.salesforce_abbreviation,
+            addTab('Instructor resources', new InstructorResourceTab({
+                bookAbbreviation: this.pageData.salesforce_abbreviation,
+                userStatusPromise: this.userStatusPromise,
+                model: {
                     resources: this.pageData.book_faculty_resources,
-                    allies,
-                    userStatusPromise: this.userStatusPromise,
                     freeStuff: {
                         heading: this.pageData.free_stuff_instructor.content.heading,
                         blurb: this.pageData.free_stuff_instructor.content.content,
@@ -261,11 +259,10 @@ export default class Details extends BaseClass {
                         blurb: this.pageData.community_resource_blurb,
                         featureUrl: this.pageData.community_resource_feature_link_url,
                         featureText: this.pageData.community_resource_feature_text
-                    },
-                    allies
+                    }
                 },
-                compCopyDialogProps
-            ));
+                dialogProps: compCopyDialogProps
+            }));
         }
 
         if (!polish && this.pageData.free_stuff_student.content) {
@@ -276,16 +273,6 @@ export default class Details extends BaseClass {
                 },
                 resources: this.pageData.book_student_resources,
                 userStatusPromise: this.userStatusPromise
-            }));
-        }
-
-        if (!polish && this.pageData.book_allies.length) {
-            addTab('Partner resources', new PartnersTab({
-                allies,
-                ally: {
-                    heading: this.pageData.ally_content.content.heading,
-                    blurb: this.pageData.ally_content.content.content
-                }
             }));
         }
 
@@ -336,8 +323,7 @@ export default class Details extends BaseClass {
             errataContent: this.pageData.errata_content,
             includeTOC: Boolean(this.pageData.book_state === 'live'),
             instructorResources: {
-                freeResources: this.pageData.book_faculty_resources,
-                paidResources: allies
+                freeResources: this.pageData.book_faculty_resources
             },
             slug: this.slug,
             salesforceAbbreviation: this.pageData.salesforce_abbreviation,

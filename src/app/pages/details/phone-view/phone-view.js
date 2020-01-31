@@ -45,7 +45,8 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
                 contentComponent: new InstructorResourcePane({
                     resources: this.props.instructorResources,
                     userStatusPromise: this.props.userStatusPromise,
-                    compCopyDialogProps: this.props.compCopyDialogProps
+                    compCopyDialogProps: this.props.compCopyDialogProps,
+                    bookAbbreviation: this.props.salesforceAbbreviation
                 })
             },
             {

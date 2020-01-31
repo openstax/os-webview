@@ -4,10 +4,11 @@
 .instructor-resources .partners {
     @extend %card;
 
+    border-radius: 0.3rem;
     display: grid;
     grid-column: 2;
-    grid-template-rows: auto 1fr;
-    max-height: 100%;
+    grid-template-rows: min-content min-content;
+    height: min-content;
     overflow: hidden;
 
     .title-bar {
@@ -28,8 +29,7 @@
     }
 
     .blurbs {
-        height: 0;
-        overflow-y: visible;
+        max-height: calc(100vh - 16rem);
     }
 
     .blurb {
@@ -39,10 +39,11 @@
         color: inherit;
         display: grid;
         grid-column-gap: $normal-margin;
+        grid-row-gap: 0.5rem;
         grid-template: 'logo title'
-        'logo description'
-        'logo info' / 9rem auto;
-        padding: $normal-margin;
+        'logo info' / 10rem 1fr;
+        min-height: 13rem;
+        padding: 1.2rem 1rem 1.2rem 1.2rem;
         position: relative;
         text-decoration: none;
 
@@ -63,27 +64,23 @@
         }
 
         .name {
-            @include set-font(h4);
+            @include title-font(1.6rem);
 
             grid-area: title;
         }
 
-        .description {
-            grid-area: description;
-
-            > p:first-child {
-                margin: 0;
-            }
-        }
-
         .tags {
-            display: grid;
+            display: flex;
+            flex-wrap: wrap;
             grid-area: info;
-            grid-auto-flow: column;
-            grid-column-gap: 0.5rem;
-            justify-self: left;
-            max-width: 100%;
-            overflow: hidden;
+            margin-bottom: -1rem;
+            margin-right: -0.5rem;
+            min-height: 2.5rem;
+
+            .info {
+                margin-bottom: 1rem;
+                margin-right: 0.5rem;
+            }
         }
 
         .info {
@@ -92,7 +89,7 @@
             background-color: ui-color(default);
             border-radius: 0.3rem;
             display: flex;
-            padding: 0.7rem $normal-margin;
+            padding: 0.5rem $normal-margin;
             text-transform: uppercase;
 
             .label {

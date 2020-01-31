@@ -4,8 +4,7 @@ import instanceReady from '../../../helpers/instance-ready';
 import shellBus from '~/components/shell/shell-bus';
 import {clickElement} from '../../../test-utils';
 const instructorResources = {
-    freeResources: details.book_faculty_resources,
-    paidResources: details.book_allies
+    freeResources: details.book_faculty_resources
 };
 const instructor = {
     isStudent: false,
@@ -29,15 +28,6 @@ describe('InstructorResourcesPane (as instructor)', () => {
             );
 
             expect(freeResourceBoxes.length).toBe(instructorResources.freeResources.length);
-        })
-    );
-    it('creates a logo box for each paid resource', () =>
-        ready.then(() => {
-            const paidResourceBoxes = Array.from(
-                pane.el.querySelectorAll('.paid-resources-region > .logo-box')
-            );
-
-            expect(paidResourceBoxes.length).toBe(instructorResources.paidResources.length);
         })
     );
     it('handles comp copy click', () =>
