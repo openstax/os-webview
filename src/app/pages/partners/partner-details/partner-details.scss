@@ -8,6 +8,10 @@
 
     section {
         padding: 3rem;
+
+        &.carousel {
+            padding-bottom: 0;
+        }
     }
     .synopsis {
         background-color: ui-color(white);
@@ -49,6 +53,7 @@
 
             .partner-website {
                 float: right;
+                margin-left: 0.7rem;
             }
         }
         .titles {

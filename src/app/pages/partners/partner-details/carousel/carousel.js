@@ -15,7 +15,8 @@ const spec = {
             frameNumber: this.frameNumber,
             images: this.frameCount ? this.images : [this.icon],
             videos: this.videos,
-            frameCount: this.frameCount || 1
+            frameCount: this.frameCount || 1,
+            onlyLogo: this.frameCount === 0
         };
     },
     frameNumber: 0

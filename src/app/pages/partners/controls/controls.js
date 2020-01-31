@@ -65,6 +65,10 @@ const sortOptions = [
         value: '1'
     },
     {
+        label: 'Random',
+        value: '0'
+    },
+    {
         label: 'Z-A',
         value: '-1'
     }
@@ -218,7 +222,8 @@ export default class extends componentType(spec, busMixin, cleanupMixin) {
             super.onLoaded();
         }
         this.attachButtons();
-        this.attachDisplayFormatController();
+        // List format is pointless; leaving code in case we want to revisit
+        // this.attachDisplayFormatController();
     }
 
 }
