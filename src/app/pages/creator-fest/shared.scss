@@ -23,7 +23,6 @@ $text-highlight: #f7cce4;
     -webkit-text-stroke-color: $cf-pink;
     -webkit-text-stroke-width: 0.3rem;
     line-height: 0.9;
-    padding-top: 4rem;
 }
 
 %blue-line {
@@ -37,4 +36,22 @@ $text-highlight: #f7cce4;
 %bordered-box {
     border: thin solid ui-color(form-border);
     border-radius: 0.2rem;
+}
+
+%cf-button {
+    @extend %button;
+    @extend %secondary;
+    @extend %light-on-dark;
+
+    background-color: $cf-pink;
+    border-radius: 0.2rem;
+    color: text-color(white);
+    font-weight: bold;
+
+    &:hover,
+    &:active,
+    &:focus {
+        background-color: $cf-pink-darker;
+        color: text-color(white);
+    }
 }

@@ -1,0 +1,109 @@
+@import '../../../shared';
+
+.cf-signup-form {
+    padding: 7rem 3rem 3rem;
+
+    .btn,
+    [type="submit"] {
+        @extend %cf-button;
+
+        float: none;
+        min-width: 17rem;
+
+        &[disabled] {
+            background-color: ui-color(default);
+        }
+    }
+
+    a {
+        color: $cf-pink;
+
+        &:hover,
+        &:active,
+        &:focus {
+            color: $cf-pink-darker;
+        }
+    }
+
+    h1 {
+        @include title-font(3.6rem);
+
+        margin-top: 0;
+    }
+
+    h1,
+    .help {
+        text-align: center;
+        width: 100%;
+    }
+
+    .help {
+        @include set-font(helper-label);
+    }
+
+    h2 {
+        @include title-font(1.8rem);
+    }
+
+    form {
+        display: grid;
+        grid-row-gap: 3rem;
+        justify-items: start;
+
+        > * {
+            margin: 0;
+        }
+    }
+
+
+    .inputs {
+        margin-bottom: -2rem;
+        margin-top: -2rem;
+
+        @include width-up-to($phone-max) {
+            width: 100%;
+        }
+
+        @include wider-than($phone-max) {
+            width: 40rem;
+        }
+    }
+
+    .session-box {
+        align-items: center;
+        border: thin solid ui-color(form-border);
+        display: grid;
+        padding: 3rem;
+        width: 100%;
+
+        @include width-up-to($phone-max) {
+            grid-template: 'title'
+            'date'
+            'seats';
+        }
+
+        @include wider-than($phone-max) {
+            grid-template: 'title seats'
+            'date seats' / 1fr auto;
+        }
+
+        .title,
+        .label {
+            font-weight: bold;
+        }
+
+        .title {
+            grid-area: title;
+        }
+
+        .seats-left {
+            grid-area: seats;
+        }
+
+        .date-and-location {
+            color: text-color(helper);
+            grid-area: date;
+        }
+    }
+
+}

@@ -1,0 +1,116 @@
+@import '../../shared';
+
+.creator-fest.page .signup {
+
+    @include wider-than($phone-max) {
+        overflow-x: auto;
+    }
+
+    .blue-bar {
+        border: solid 0.2rem os-color(light-blue);
+        border-radius: 0.2rem;
+        height: 0.1rem;
+        margin: 2rem 0 3rem;
+        width: 9rem;
+    }
+
+    .phone-only {
+        @include wider-than($phone-max) {
+            display: none;
+        }
+    }
+
+    table {
+        $table-border: thin solid ui-color(form-border);
+
+        border: $table-border;
+        border-collapse: collapse;
+        border-radius: 0.2rem;
+
+        th {
+            border-bottom: $table-border;
+            height: 5rem;
+            padding: 0 3rem;
+            text-align: left;
+
+            @include width-up-to($phone-max) {
+                display: none;
+                padding: 0 2rem;
+            }
+        }
+
+        td {
+            @include width-up-to($tablet-max) {
+                padding: 2rem;
+            }
+
+            @include wider-than($tablet-max) {
+                padding: 3rem;
+            }
+        }
+
+        td:first-child {
+            font-weight: bold;
+        }
+
+        .read-more {
+            display: none;
+        }
+
+        .expandable:not(.expanded) {
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            position: relative;
+
+            @include width-up-to($phone-max) {
+                -webkit-line-clamp: 3;
+            }
+
+            .read-more {
+                background-image: linear-gradient(to right, rgba(ui-color(white), 0), ui-color(white) 0.5rem);
+                bottom: 0;
+                display: initial;
+                padding-left: 0.5rem;
+                position: absolute;
+                right: 0;
+            }
+        }
+
+        tbody tr {
+            border-bottom: $table-border;
+            justify-content: start;
+            padding: $normal-margin 3rem;
+            vertical-align: top;
+
+            @include width-up-to($phone-max) {
+                border-bottom: 0;
+                border-top: $table-border;
+                display: grid;
+                grid-row-gap: 1rem;
+
+                td {
+                    padding: 0;
+                }
+            }
+        }
+
+        .btn {
+            @extend %cf-button;
+
+            height: 3rem;
+
+            @include wider-than($phone-max) {
+                width: 100%;
+            }
+        }
+
+        .btn.disabled {
+            background-color: ui-color(default);
+            color: #c1c1c1;
+            cursor: not-allowed;
+        }
+    }
+
+}
