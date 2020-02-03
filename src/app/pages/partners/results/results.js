@@ -54,7 +54,7 @@ export default class extends componentType(spec, busMixin, cleanupMixin) {
 
         resultCount.value = result.length;
 
-        return this.sort.value === '0' ? shuffle(result) :
+        return this.sort.value === '' ? shuffle(result) :
             orderBy(
                 result,
                 [(entry) => entry.title.toLowerCase()],

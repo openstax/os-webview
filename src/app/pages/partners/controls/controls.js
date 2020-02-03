@@ -66,7 +66,7 @@ const sortOptions = [
     },
     {
         label: 'Random',
-        value: '0'
+        value: ''
     },
     {
         label: 'Z-A',
