@@ -50,7 +50,7 @@ export default class extends componentType(spec, busMixin, cleanupMixin) {
 
         if (this.types.value) {
             result = result.filter((entry) => {
-                return this.types === entry.type;
+                return this.types.value === entry.type;
             });
         }
 
