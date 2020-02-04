@@ -7,7 +7,7 @@ import BookOptions from './book-options/book-options';
 import OptionsList from './options-list/options-list';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import Checkboxes from './checkboxes-linked-to-store/checkboxes-linked-to-store';
-import {books, types, advanced, costs, sort} from '../store';
+import {books, types, advanced, sort} from '../store';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
 import shellBus from '~/components/shell/shell-bus';
 import sortBy from 'lodash/sortBy';
@@ -74,16 +74,6 @@ const sortOptions = [
     }
 ];
 
-export const costOptions = [
-    'Free - $10',
-    '$11 - $25',
-    '$26 - $40',
-    '> $40'
-].map((label) => ({
-    label,
-    value: label.replace(/ /g, '')
-}));
-
 export default class extends componentType(spec, busMixin, cleanupMixin) {
 
     get triangleColor() {
@@ -140,12 +130,6 @@ export default class extends componentType(spec, busMixin, cleanupMixin) {
                 }),
                 style: 'detached',
                 container: this.regions.popoverContainer
-            },
-            {
-                label: 'Cost',
-                content: setupOptionsList(costs, costOptions),
-                style: 'attached',
-                closeOnSelect: costs
             },
             {
                 label: 'Type',

@@ -8,6 +8,18 @@ import shuffle from 'lodash/shuffle';
 import {on} from '~/helpers/controller/decorators';
 import {resultCount} from '../store';
 
+export const costOptions = [
+    'Free - $10',
+    '$11 - $25',
+    '$26 - $40',
+    '> $40'
+].map((label) => ({
+    label,
+    value: label.replace(/ /g, '')
+}));
+
+const costOptionValues = costOptions.map((entry) => entry.value);
+
 const spec = {
     template,
     css,
@@ -44,12 +56,20 @@ export default class extends componentType(spec, busMixin, cleanupMixin) {
 
         if (this.advanced.value.length > 0) {
             result = result.filter((entry) => {
-                return this.advanced.value.every((requiredFeature) => entry.advancedFeatures.includes(requiredFeature));
+                return this.advanced.value
+                    .filter((feature) => !costOptionValues.includes(feature))
+                    .every((requiredFeature) => {
+                        return entry.advancedFeatures.includes(requiredFeature);
+                    });
             });
-        }
+            const costFeatures = this.advanced.value
+                .filter((feature) => costOptionValues.includes(feature));
 
-        if (this.costs.value) {
-            result = result.filter((entry) => entry.cost === this.costs.value);
+            if (costFeatures.length) {
+                result = result.filter((entry) => {
+                    return costFeatures.some((costPossibility) => entry.cost === costPossibility);
+                });
+            }
         }
 
         resultCount.value = result.length;
@@ -76,7 +96,6 @@ export default class extends componentType(spec, busMixin, cleanupMixin) {
         handleNotifyFor(this.books);
         handleNotifyFor(this.types);
         handleNotifyFor(this.advanced);
-        handleNotifyFor(this.costs);
         handleNotifyFor(this.sort);
         this.attachCards();
     }

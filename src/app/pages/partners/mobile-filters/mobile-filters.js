@@ -3,8 +3,8 @@ import css from './mobile-filters.css';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import BookOptions from '../controls/book-options/book-options';
 import Checkboxes from '../controls/checkboxes-linked-to-store/checkboxes-linked-to-store';
-import {setupOptionsList, costOptions, typeOptions} from '../controls/controls.js';
-import {books, types, advanced, costs, sort} from '../store';
+import {setupOptionsList, typeOptions} from '../controls/controls.js';
+import {books, types, advanced, sort} from '../store';
 import sortBy from 'lodash/sortBy';
 
 const spec = {
@@ -40,10 +40,6 @@ export default class extends componentType(spec) {
                     contentComponent: new BookOptions({
                         store: books
                     })
-                },
-                {
-                    title: 'Cost',
-                    contentComponent: setupOptionsList(costs, costOptions)
                 },
                 {
                     title: 'Type',

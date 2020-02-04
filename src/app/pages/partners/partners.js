@@ -3,11 +3,11 @@ import {description as template} from './partners.html';
 import css from './partners.css';
 import Controls from './controls/controls';
 import MobileFilters from './mobile-filters/mobile-filters';
-import Results from './results/results';
+import Results, {costOptions} from './results/results';
 import ActiveFilters from './active-filters/active-filters';
 import PartnerDetails from './partner-details/partner-details';
 import partnerFeaturePromise from '~/models/salesforce-partners';
-import {displayMode, books, costs, types, advanced, sort} from './store';
+import {displayMode, books, types, advanced, sort} from './store';
 import shellBus from '~/components/shell/shell-bus';
 import routerBus from '~/helpers/router-bus';
 import analyticsEvents from './analytics-events';
@@ -50,8 +50,8 @@ function getFilterOptions(data) {
             return obj;
         }, {});
 
+
     Object.entries(data.field_name_mapping)
-        .filter(([_, label]) => label !== 'Cost per semester')
         .forEach(([value, label]) => {
             const entry = {
                 label,
@@ -62,7 +62,11 @@ function getFilterOptions(data) {
             const itemInResult = result.find((obj) => obj.title === mapToTitle[categoryPrefix]);
 
             if (itemInResult) {
-                itemInResult.options.push(entry);
+                if (label === 'Cost per semester') {
+                    costOptions.forEach((opt) => itemInResult.options.push(opt));
+                } else {
+                    itemInResult.options.push(entry);
+                }
             }
         });
 
@@ -92,7 +96,6 @@ export default class extends componentType(spec, insertHtmlMixin) {
             books,
             types,
             advanced,
-            costs,
             sort
         });
 
@@ -204,7 +207,7 @@ export default class extends componentType(spec, insertHtmlMixin) {
         if (super.onClose) {
             super.onClose();
         }
-        [books, costs, types, advanced].forEach((store) => store.clear());
+        [books, types, advanced].forEach((store) => store.clear());
     }
 
 }
