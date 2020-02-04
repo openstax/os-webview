@@ -39,7 +39,7 @@ export default function ({dataPromise, targetEl, bookAbbreviation}) {
         }
 
         const forBook = pd.filter((p) => {
-            const books = p.books.split(';');
+            const books = (p.books || '').split(';');
 
             return books.includes(bookAbbreviation);
         });
