@@ -74,12 +74,13 @@ export default class extends componentType(spec, busMixin, cleanupMixin) {
 
         resultCount.value = result.length;
 
-        return this.sort.value === '' ? shuffle(result) :
+        return ['1', '-1'].includes(this.sort.value) ?
             orderBy(
                 result,
                 [(entry) => entry.title.toLowerCase()],
                 [(this.sort.value === '-1' ? 'desc' : 'asc')]
-            );
+            ) :
+            shuffle(result);
     }
 
     onLoaded() {
