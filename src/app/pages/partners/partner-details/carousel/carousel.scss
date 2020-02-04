@@ -43,8 +43,10 @@
             background-color: ui-color(white);
 
             > img {
-                max-height: 8rem;
-                max-width: 8rem;
+                height: auto;
+                max-height: 20rem;
+                max-width: 30rem;
+                width: calc(100% - 2rem);
             }
         }
     }

@@ -11,6 +11,8 @@ import {books, types, advanced, sort} from '../store';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
 import shellBus from '~/components/shell/shell-bus';
 import sortBy from 'lodash/sortBy';
+import $ from '~/helpers/$';
+import {on} from '~/helpers/controller/decorators';
 
 const spec = {
     template,
@@ -25,7 +27,8 @@ const spec = {
     },
     model() {
         return {
-            triangleClass: `triangle-${this.triangleColor}`
+            triangleClass: `triangle-${this.triangleColor}`,
+            putAwayHidden: $.booleanAttribute(!['Books', 'Advanced Filters'].includes(this.selectedFilter))
         };
     },
     selectedFilter: null
@@ -204,6 +207,11 @@ export default class extends componentType(spec, busMixin, cleanupMixin) {
         this.attachButtons();
         // List format is pointless; leaving code in case we want to revisit
         // this.attachDisplayFormatController();
+    }
+
+    @on('click .popover-closer')
+    closePopups() {
+        this.updateSelected(null);
     }
 
 }

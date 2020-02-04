@@ -90,12 +90,33 @@ $breakpt-med: 93em * $scale-factor;
         }
     }
 
-
-    .popover-container {
+    .closable-popover {
         position: absolute;
         top: 100%;
         width: 100%;
         z-index: 1;
+    }
+
+    .popover-closer {
+        &:not([hidden]) {
+            background-color: ui-color(black);
+            border-radius: 50%;
+            border: 0.2rem solid ui-color(white);
+            font-size: 2rem;
+            height: 4rem;
+            padding: 0 1rem;
+            position: absolute;
+            right: 0;
+            top: -1rem;
+            width: 4rem;
+        }
+
+        &[hidden] {
+            display: none;
+        }
+    }
+
+    .popover-container {
 
         > * {
             @extend %card;

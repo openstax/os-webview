@@ -1,5 +1,10 @@
 <template args="model">
     <div class="button-row {model.triangleClass}" skip="true"></div>
     <div class="other-controls" skip="true"></div>
-    <div class="popover-container" skip="true"></div>
+    <div class="closable-popover">
+        <button class="popover-closer" hidden="{model.putAwayHidden}" type="button">
+            <i class="fa fa-times"></i>
+        </button>
+        <div class="popover-container" skip="true"></div>
+    </div>
 </template>
