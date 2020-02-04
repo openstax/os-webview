@@ -14,7 +14,7 @@ const spec = {
 
 class Partners extends componentType(spec) {
 
-    @on('click .filter-for-book')
+    @on('click a')
     saveBookInHistoryState(event) {
         const destUrl = event.delegateTarget.getAttribute('href');
 
