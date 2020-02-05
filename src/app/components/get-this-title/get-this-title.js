@@ -89,7 +89,6 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
         });
         this.printCopyContent = new OrderPrintCopy({
             amazonLink: data.amazon_link,
-            amazonPrice: data.amazon_price,
             bookstoreContent: arrayOfBookstoreContent
         }, () => {
             shellBus.emit('hideDialog');
