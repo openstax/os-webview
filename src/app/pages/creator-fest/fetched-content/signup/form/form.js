@@ -15,7 +15,7 @@ const spec = {
     },
     model() {
         return {
-            origin: `${settings.apiOrigin}/${settings.apiPrefix}`,
+            origin: `${settings.apiOrigin}${settings.apiPrefix}`,
             session: this.session,
             disabled: $.booleanAttribute(this.submitDisabled)
         };
