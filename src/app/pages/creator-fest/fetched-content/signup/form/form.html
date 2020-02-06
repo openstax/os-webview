@@ -1,5 +1,7 @@
 <template args="model">
-    <form action="{`${model.origin}/events/registration/`}" method="post">
+    <iframe name="form-response" id="form-response" class="hidden"
+        src="" width="0" height="0" tabindex="-1"></iframe>
+    <form action="{`${model.origin}/events/registration/`}" method="post" target="form-response">
         <h1>Creator Fest Build Session Signup</h1>
         <div class="help">* All fields are required</div>
         <h2>General Information</h2>
