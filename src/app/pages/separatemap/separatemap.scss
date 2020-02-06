@@ -46,6 +46,7 @@ $small-shadow: 0 0.2rem 0.5rem 0 rgba(0, 0, 0, 0.15);
         background-color: ui-color(white);
         border-radius: 0.3rem;
         box-shadow: $big-shadow;
+        max-width: $text-content-max;
         overflow: hidden;
 
         @include wider-than($phone-max) {
@@ -53,6 +54,7 @@ $small-shadow: 0 0.2rem 0.5rem 0 rgba(0, 0, 0, 0.15);
             left: 5rem;
             position: relative;
             top: 3rem;
+            width: calc(100% - 10rem);
         }
 
         @include width-up-to($phone-max) {

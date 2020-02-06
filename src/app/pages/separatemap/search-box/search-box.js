@@ -6,6 +6,7 @@ import querySchools from '~/models/querySchools';
 import Inputs from './inputs/inputs';
 import ResultBox from './result-box/result-box';
 import Filters from './filters/filters';
+import analytics from '~/helpers/analytics';
 
 const spec = {
     template,
@@ -136,9 +137,16 @@ export default class extends componentType(spec, busMixin) {
     runQuery() {
         const value = this.el.querySelector('.search-input').value;
         const schoolsPromise = querySchools(value, this.selectedFilters);
+        const filterList = Object.keys(this.selectedFilters || {}).map((k) => {
+            const filterValue = this.selectedFilters[k];
+
+            return filterValue === true ? k : filterValue;
+        }).join(', ');
 
         this.searchMessage = null;
         if (schoolsPromise) {
+            analytics.sendPageEvent('map', 'search', value);
+            analytics.sendPageEvent('map', 'filters', filterList);
             schoolsPromise.then(
                 (schools) => {
                     this.attachResults(schools);
