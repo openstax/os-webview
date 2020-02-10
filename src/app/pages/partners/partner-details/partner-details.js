@@ -4,6 +4,7 @@ import css from './partner-details.css';
 import Carousel from './carousel/carousel';
 import {on} from '~/helpers/controller/decorators';
 import analyticsEvents from '../analytics-events';
+import shellBus from '~/components/shell/shell-bus';
 
 const spec = {
     template,
@@ -45,6 +46,7 @@ export default class extends componentType(spec, insertHtmlMixin) {
     @on('click .btn.primary')
     sendRequestInfoEvent() {
         analyticsEvents.requestInfo(this.title);
+        shellBus.emit('hideDialog');
     }
 
     @on('click .partner-website')

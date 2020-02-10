@@ -47,7 +47,7 @@ export default function ({dataPromise, targetEl, bookAbbreviation}) {
             el: targetEl,
             bookAbbreviation,
             model: {
-                title: pd.partner_list_label || '[Courseware partners]',
+                title: pd.partner_list_label || 'Technology partners',
                 blurbs: forBook.map(toBlurb)
             }
         });

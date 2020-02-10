@@ -13,6 +13,7 @@
     }
 
     .subject {
+        break-inside: avoid;
         margin-bottom: 2rem;
     }
 
@@ -28,13 +29,19 @@
             margin-right: 0.7rem;
             width: 2.4rem;
 
-            input[type="checkbox"] {
-                appearance: none;
-
-                &:not(:checked) + .tick {
+            &:not(.checked) {
+                .tick {
                     opacity: 0;
                 }
             }
+
+            input[type="checkbox"] {
+                appearance: none;
+            }
         }
+    }
+
+    .label-text {
+        white-space: normal;
     }
 }

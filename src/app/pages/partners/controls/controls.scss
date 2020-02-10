@@ -99,9 +99,8 @@ $breakpt-med: 93em * $scale-factor;
 
     .popover-closer {
         &:not([hidden]) {
-            background-color: ui-color(black);
-            border-radius: 50%;
-            border: 0.2rem solid ui-color(white);
+            background-color: ui-color(default);
+            color: text-color(normal);
             font-size: 2rem;
             height: 4rem;
             padding: 0 1rem;
