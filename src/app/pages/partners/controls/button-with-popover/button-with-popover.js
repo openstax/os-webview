@@ -39,6 +39,12 @@ export default class extends componentType(spec, busMixin) {
         if (this.style) {
             this.el.classList.add(this.style);
         }
+        this.onOutsideClick = (event) => {
+            if (this.el.contains(event.target) || this.content.el.contains(event.target)) {
+                return;
+            }
+            this.emit('toggle', false);
+        };
     }
 
     whenPropsUpdated() {
@@ -49,10 +55,16 @@ export default class extends componentType(spec, busMixin) {
         if (this.container) {
             if (this.open) {
                 this.content.el.style.removeProperty('display');
+                window.addEventListener('click', this.onOutsideClick);
             } else {
                 this.content.el.style.display = 'none';
+                window.removeEventListener('click', this.onOutsideClick);
             }
         }
+    }
+
+    onClose() {
+        window.removeEventListener('click', this.onOutsideClick);
     }
 
     @on('click .popover-control')
