@@ -7,10 +7,12 @@ import BookOptions from './book-options/book-options';
 import OptionsList from './options-list/options-list';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import Checkboxes from './checkboxes-linked-to-store/checkboxes-linked-to-store';
-import {books, types, advanced, costs, sort} from '../store';
+import {books, types, advanced, sort} from '../store';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
 import shellBus from '~/components/shell/shell-bus';
 import sortBy from 'lodash/sortBy';
+import $ from '~/helpers/$';
+import {on} from '~/helpers/controller/decorators';
 
 const spec = {
     template,
@@ -25,7 +27,8 @@ const spec = {
     },
     model() {
         return {
-            triangleClass: `triangle-${this.triangleColor}`
+            triangleClass: `triangle-${this.triangleColor}`,
+            putAwayHidden: $.booleanAttribute(!['Books', 'Advanced Filters'].includes(this.selectedFilter))
         };
     },
     selectedFilter: null
@@ -65,24 +68,10 @@ const sortOptions = [
         value: '1'
     },
     {
-        label: 'Random',
-        value: '0'
-    },
-    {
         label: 'Z-A',
         value: '-1'
     }
 ];
-
-export const costOptions = [
-    'Free - $10',
-    '$11 - $25',
-    '$26 - $40',
-    '> $40'
-].map((label) => ({
-    label,
-    value: label.replace(/ /g, '')
-}));
 
 export default class extends componentType(spec, busMixin, cleanupMixin) {
 
@@ -140,12 +129,6 @@ export default class extends componentType(spec, busMixin, cleanupMixin) {
                 }),
                 style: 'detached',
                 container: this.regions.popoverContainer
-            },
-            {
-                label: 'Cost',
-                content: setupOptionsList(costs, costOptions),
-                style: 'attached',
-                closeOnSelect: costs
             },
             {
                 label: 'Type',
@@ -224,6 +207,11 @@ export default class extends componentType(spec, busMixin, cleanupMixin) {
         this.attachButtons();
         // List format is pointless; leaving code in case we want to revisit
         // this.attachDisplayFormatController();
+    }
+
+    @on('click .popover-closer')
+    closePopups() {
+        this.updateSelected(null);
     }
 
 }

@@ -1,7 +1,7 @@
 import componentType, {cleanupMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './active-filters.html';
 import css from './active-filters.css';
-import {books, costs, types, advanced, resultCount} from '../store';
+import {books, types, advanced, resultCount} from '../store';
 import FilterRemover from './filter-remover/filter-remover';
 import {on} from '~/helpers/controller/decorators';
 
@@ -39,7 +39,6 @@ function childPropertiesForStore(store, decoder) {
 
 function childProperties(advancedFilterDecoder) {
     return childPropertiesForStore(books).concat(
-        childPropertiesForStore(costs),
         childPropertiesForStore(types),
         childPropertiesForStore(advanced, advancedFilterDecoder)
     );
@@ -52,7 +51,7 @@ export default class extends componentType(spec, cleanupMixin) {
             super.onLoaded();
         }
         this.filterComponents = [];
-        [books, costs, types, advanced, resultCount].forEach((store) =>
+        [books, types, advanced, resultCount].forEach((store) =>
             this.cleanup.push(store.on('notify', () => this.update()))
         );
         this.advancedFilterDecoder = this.advancedFilterOptions.reduce((a, b) => {
@@ -110,7 +109,6 @@ export default class extends componentType(spec, cleanupMixin) {
     clearFilters(event) {
         event.preventDefault();
         books.clear();
-        costs.clear();
         types.clear();
         advanced.clear();
     }

@@ -14,7 +14,6 @@ import routerBus from '~/helpers/router-bus';
 import salesforce from '~/models/salesforce';
 import SeriesOfComponents from '~/components/series-of-components/series-of-components';
 import StudentForm from '~/components/student-form/student-form';
-import TechnologySelector from '~/components/technology-selector/technology-selector';
 import {description as template} from './interest.html';
 import css from './interest.css';
 
@@ -139,10 +138,7 @@ export default class InterestForm extends BaseClass {
         const studentForm = new StudentForm();
         const facultyPages = [
             this.firstPage(),
-            this.secondPage(),
-            new TechnologySelector({
-                prompt: 'Tell us about the technology you use.'
-            })
+            this.secondPage()
         ];
         const facultyForm = new MultiPageForm(
             () => ({

@@ -49,6 +49,7 @@ dialog {
         color: text-color(helper);
         margin: 0;
         padding: 0.5rem 1rem;
+        z-index: 1;
 
         @include width-up-to($phone-max) {
             align-self: start;

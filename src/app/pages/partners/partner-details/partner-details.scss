@@ -2,9 +2,6 @@
 
 .partner-details {
     background-color: ui-color(default);
-    display: grid;
-    grid-template-rows: auto 1fr;
-    max-height: calc(100vh - 7rem);
 
     section {
         padding: 3rem;

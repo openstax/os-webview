@@ -23,7 +23,7 @@ export default class InstructorResourceTab extends componentType(spec) {
 
     init(...args) {
         super.init(...args);
-        this.model.includePartners = $.isTestingEnvironment() ? 'include-partners' : '';
+        this.model.includePartners = 'include-partners';
     }
 
     onLoaded() {

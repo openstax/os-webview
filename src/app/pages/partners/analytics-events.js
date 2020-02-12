@@ -17,12 +17,16 @@ function sendAddEvent(actionObj) {
     }
 }
 
+function filterIsSelected() {
+    return types.value || advanced.value.length > 0;
+}
+
 types.on('notify', sendAddEvent);
 advanced.on('notify', sendAddEvent);
 books.on('notify', (obj) => {
     const addingBook = typeof obj === 'object' && 'add' in obj;
 
-    if (addingBook) {
+    if (addingBook && filterIsSelected()) {
         sendFilterEvent(types.value);
         advanced.value.forEach((advancedFilter) => {
             sendFilterEvent(advancedFilter);
@@ -32,7 +36,7 @@ books.on('notify', (obj) => {
 
 function partnerDetails(partner) {
     analytics.sendPageEvent(
-        `Partner tool ${partner}`,
+        `Partner tool ${partner} lightbox`,
         'open',
         toLabel(books)
     );

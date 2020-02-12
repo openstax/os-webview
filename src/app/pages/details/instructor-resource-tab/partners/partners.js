@@ -14,7 +14,7 @@ const spec = {
 
 class Partners extends componentType(spec) {
 
-    @on('click .filter-for-book')
+    @on('click a')
     saveBookInHistoryState(event) {
         const destUrl = event.delegateTarget.getAttribute('href');
 
@@ -39,7 +39,7 @@ export default function ({dataPromise, targetEl, bookAbbreviation}) {
         }
 
         const forBook = pd.filter((p) => {
-            const books = p.books.split(';');
+            const books = (p.books || '').split(';');
 
             return books.includes(bookAbbreviation);
         });
@@ -47,7 +47,7 @@ export default function ({dataPromise, targetEl, bookAbbreviation}) {
             el: targetEl,
             bookAbbreviation,
             model: {
-                title: pd.partner_list_label || '[Courseware partners]',
+                title: pd.partner_list_label || 'Technology partners',
                 blurbs: forBook.map(toBlurb)
             }
         });
