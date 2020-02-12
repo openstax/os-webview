@@ -33,7 +33,7 @@ export default class RoverRedesign extends BaseClass {
     onDataLoaded() {
         const data = this.flattenPageData();
         const headerImage = '/images/rover-by-openstax/rover-logo-orange.svg';
-        const officeHours = data.officeHours.content[0];
+        const officeHours = data.officeHours.content && data.officeHours.content[0];
         const sections = [
             new Banner({
                 model: {
@@ -89,33 +89,35 @@ export default class RoverRedesign extends BaseClass {
                     caption: data.section_6.caption
                 }
             }),
-            new GettingStarted({
-                model: {
-                    heading: data.section_5.heading,
-                    linkText: data.section_5.navText,
-                    description: data.section_5.blurb,
-                    cards: data.section_5.cards.map((c) => ({
-                        heading: c.heading,
-                        description: c.blurb,
-                        video: c.video
-                    })),
-                    moreText: 'See more resources',
-                    moreUrl: '/general/rover-onboarding'
-                }
-            }),
-            new OfficeHours({
-                model: {
-                    heading: officeHours.heading,
-                    description: officeHours.description,
-                    moreInfo: officeHours.moreInfo,
-                    image: {
-                        image: officeHours.image.file,
-                        altText: ''
-                    },
-                    linkUrl: officeHours.linkUrl,
-                    linkText: officeHours.linkText
-                }
-            }),
+            data.section_5.cards ?
+                new GettingStarted({
+                    model: {
+                        heading: data.section_5.heading,
+                        linkText: data.section_5.navText,
+                        description: data.section_5.blurb,
+                        cards: data.section_5.cards.map((c) => ({
+                            heading: c.heading,
+                            description: c.blurb,
+                            video: c.video
+                        })),
+                        moreText: 'See more resources',
+                        moreUrl: '/general/rover-onboarding'
+                    }
+                }) : null,
+            officeHours ?
+                new OfficeHours({
+                    model: {
+                        heading: officeHours.heading,
+                        description: officeHours.description,
+                        moreInfo: officeHours.moreInfo,
+                        image: {
+                            image: officeHours.image.file,
+                            altText: ''
+                        },
+                        linkUrl: officeHours.linkUrl,
+                        linkText: officeHours.linkText
+                    }
+                }) : null,
             new FAQ({
                 model: {
                     heading: 'Frequently Asked Questions',
@@ -123,7 +125,7 @@ export default class RoverRedesign extends BaseClass {
                     questions: data.section_7.faqs
                 }
             })
-        ];
+        ].filter((component) => component);
         const navModel = sections
             .filter((s) => s.model && s.model.linkText)
             .map((s) => ({

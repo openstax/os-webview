@@ -15,7 +15,7 @@ $indicator-size: 1rem;
     @include wider-than($phone-max) {
         display: grid;
         grid-column-gap: 2rem;
-        grid-template-columns: 1fr minmax(calc(100% - 18rem), auto) 1fr;
+        grid-template-columns: 1fr auto 1fr;
         justify-items: center;
         margin-bottom: 6rem;
     }
@@ -31,7 +31,8 @@ $indicator-size: 1rem;
 
     .content {
         background-color: ui-color(white);
-        width: 100%;
+        max-width: calc(100vw - 18rem);
+        text-align: center;
         z-index: 0;
 
         @include width-up-to($phone-max) {
