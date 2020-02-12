@@ -11,7 +11,6 @@ import routerBus from '~/helpers/router-bus';
 import salesforce from '~/models/salesforce';
 import SeriesOfComponents from '~/components/series-of-components/series-of-components';
 import StudentForm from '~/components/student-form/student-form';
-import TechnologySelector from '~/components/technology-selector/technology-selector';
 import {description as template} from './adoption.html';
 import css from './adoption.css';
 
@@ -111,10 +110,7 @@ export default class AdoptionForm extends componentType(spec, canonicalLinkMixin
         };
         const facultyPages = [
             firstPage(),
-            secondPage(),
-            new TechnologySelector({
-                prompt: 'Tell us about the technology you use.'
-            })
+            secondPage()
         ];
         const facultyForm = new MultiPageForm(
             () => ({
