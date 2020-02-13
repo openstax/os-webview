@@ -68,8 +68,9 @@ export default class extends componentType(spec, busMixin) {
     }
 
     @on('click .popover-control')
-    toggleOpen() {
+    toggleOpen(event) {
         this.emit('toggle', !this.open);
+        event.stopPropagation();
     }
 
 }
