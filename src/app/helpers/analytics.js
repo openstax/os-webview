@@ -182,11 +182,6 @@ class Analytics {
                 this.sourceByUrl[resource.link_document_url] = `${item.title} ${marker}`;
             });
         });
-        item.book_allies.forEach((ally) => {
-            const url = ally.book_link_url;
-
-            this.sourceByUrl[url] = ally.ally_heading;
-        });
     }
 
     lookupUrl(selectedUrl) {
