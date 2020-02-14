@@ -6,6 +6,7 @@ import TabGroup from '~/components/tab-group/tab-group';
 import ContentGroup from '~/components/content-group/content-group';
 import WebinarList from './webinar-list/webinar-list';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
+import cmsFetch from '~/models/cmsFetch';
 
 const spec = {
     template,
@@ -24,10 +25,11 @@ const spec = {
         if (!this.pageData) {
             return {};
         }
+
         return {
-            headline: this.pageData.headline,
+            headline: this.pageData.heading,
             description: this.pageData.description,
-            heroImage: this.pageData.heroImage
+            heroImage: this.pageData.hero_image.meta.download_url
         };
     }
 };
@@ -38,16 +40,6 @@ export default class extends componentType(spec) {
         if (super.onLoaded) {
             super.onLoaded();
         }
-        this.pageData = {
-            headline: 'Webinar Lorem Ipsum',
-            description: `Lorem ipsum dolor sit amet, consectetur adipiscing
-            elit. Phasellus ultricies orci in hendrerit suscipit. Ut massa felis,
-            tincidunt nec arcu vel, dapibus pulvinar lectus.`,
-            heroImage: 'https://via.placeholder.com/800x290'
-        };
-        setTimeout(() => {
-            this.onDataLoaded();
-        }, 600);
     }
 
     onDataLoaded() {
@@ -55,43 +47,40 @@ export default class extends componentType(spec) {
             super.onDataLoaded();
         }
         this.update();
-        this.attachChildren();
+        cmsFetch('webinars/?format=json').then((data) => this.attachChildren(data));
     }
 
-    attachChildren() {
+    attachChildren(webinarList) {
         const tabLabels = ['Upcoming webinars', 'Past webinar recordings'];
         let selectedTab = decodeURIComponent(window.location.search.replace('?', '')) || tabLabels[0];
         const contents = {};
         const addTab = (label, tabContents) => {
             contents[label] = tabContents;
         };
-        const sampleData = {
-            dayOfMonth: '10',
-            month: 'Jan',
-            title: 'Pair your OpenStax text with affordable skullduggery and shoes.',
-            dayAndTime: 'Wednesday, 2 - 3 p.m. CTD',
-            description: `
-            A webinar on making textbooks inclusive: Join the conversation
-            now and then continue it at Creator Fest. On campuses everywhere
-            conversations and courses of action around diversity, equity, and
-            inclusion are improving education.`,
-            speakers: 'Anthony Palmiotto, Symphonie Swift',
-            spacesRemaining: '25',
-            url: 'https://www.google.com',
-            linkText: 'Register for this webinar'
+        const toModel = (webinarInfo) => {
+            const start = new Date(webinarInfo.start);
+            const weekday = start.toLocaleString('en-us', {weekday: 'long'});
+            const startHour = start.toLocaleString('en-us', {hour: 'numeric'});
+            const endHour = new Date(webinarInfo.end).toLocaleString('en-us', {hour: 'numeric', timeZoneName: 'short'});
+
+            return {
+                dayOfMonth: start.getDate(),
+                month: start.toLocaleString('en-us', {month: 'short'}),
+                dayAndTime: `${weekday}, ${startHour} - ${endHour}`,
+                title: webinarInfo.title,
+                description: webinarInfo.description,
+                speakers: webinarInfo.speakers,
+                spacesRemaining: webinarInfo.spaces_remaining,
+                url: webinarInfo.registration_url,
+                linkText: webinarInfo.registration_link_text
+            };
         };
-        const upcomingModel = [
-            sampleData,
-            sampleData,
-            sampleData,
-            sampleData,
-            sampleData
-        ];
-        const pastModel = upcomingModel.map((obj) =>
-            Object.assign({}, obj, {
-                linkText: 'Watch this webinar'
-            })
-        );
+        const upcomingModel = webinarList
+            .filter((entry) => new Date(entry.start) > Date.now())
+            .map(toModel);
+        const pastModel = webinarList
+            .filter((entry) => new Date(entry.end) < Date.now())
+            .map(toModel);
 
         upcomingModel.upcoming = true;
         [upcomingModel, pastModel].forEach((model, index) => {

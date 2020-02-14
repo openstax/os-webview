@@ -43,6 +43,10 @@
             background-size: cover;
             background-position: center center;
             height: 100%;
+
+            @include width-up-to($phone-max) {
+                height: 67vw;
+            }
         }
 
     }
