@@ -58,7 +58,7 @@ export const typeOptions = [
     },
     {
         label: 'Adaptive courseware',
-        value: 'Courseware'
+        value: 'Adaptive Courseware'
     }
 ];
 
