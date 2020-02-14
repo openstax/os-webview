@@ -6,7 +6,16 @@
     <div class="blurb-scroller">
         <div class="blurbs">
             <a each="blurb in model.blurbs" class="blurb" href="{blurb.url}">
-                <img src="{blurb.image}" alt="">
+                <div class="logo">
+                    <img src="{blurb.image}" alt="">
+                </div>
+                <div if="blurb.verifiedFeatures" class="badge">
+                    <img class="background" src="{model.badgeImage}" alt="verified">
+                    <i class="checkmark fa fa-check"></i>
+                    <div class="tooltip right">
+                        {blurb.verifiedFeatures}
+                    </div>
+                </div>
                 <div class="name">{blurb.name}</div>
                 <div class="tags">
                     <div if="blurb.cost" class="info">

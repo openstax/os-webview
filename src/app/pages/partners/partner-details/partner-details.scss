@@ -1,4 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/placeholder-selectors';
 
 .partner-details {
     background-color: ui-color(default);
@@ -39,6 +40,15 @@
             justify-self: center;
             max-height: 12rem;
             max-width: 12rem;
+        }
+
+        .badge {
+            @extend %verified-badge;
+
+            align-self: start;
+            grid-area: icon;
+            justify-self: end;
+            margin-top: 0.5rem;
         }
         .headline {
             @include title-font(1.6rem);

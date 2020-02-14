@@ -58,9 +58,24 @@
             width: 100%;
         }
 
-        img {
+        .logo {
+            align-items: center;
+            display: grid;
             grid-area: logo;
             max-width: 100%;
+
+            > img {
+                max-width: 100%;
+            }
+        }
+
+        .badge {
+            @extend %verified-badge;
+
+            align-self: start;
+            grid-area: logo;
+            justify-self: end;
+            margin-top: 0.5rem;
         }
 
         .name {

@@ -2,6 +2,13 @@
     <div class="logo">
         <img if="model.logoUrl" src="{model.logoUrl}" alt="">
     </div>
+    <div if="model.verifiedFeatures" class="badge">
+        <img class="background" src="{model.badgeImage}" alt="verified">
+        <i class="checkmark fa fa-check"></i>
+        <div class="tooltip right">
+            {model.verifiedFeatures}
+        </div>
+    </div>
     <div class="resource-title">{model.title}</div>
     <div class="resource-description">{model.description}</div>
     <div class="tags">

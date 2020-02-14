@@ -25,7 +25,9 @@ const spec = {
             infoUrl: this.infoUrl,
             infoText: 'Request info',
             description: this.richDescription,
-            partnerUrl: this.website
+            partnerUrl: this.website,
+            verifiedFeatures: '[This needs to be set in the CMS]',
+            badgeImage: '/images/partners/verified-badge.svg'
         };
     }
 };

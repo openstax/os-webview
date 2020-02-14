@@ -1,4 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/placeholder-selectors';
 
 .partners .results {
     padding: 0 0 20rem;
@@ -11,37 +12,16 @@
         display: grid;
         grid-gap: 3rem;
 
-        &.list {
-            grid-template-columns: 100%;
-
-            .card {
-                align-items: start;
-                color: inherit;
-                grid-column-gap: 2rem;
-                grid-template: 'image title' auto
-                'image description' 1fr
-                'image tags' auto / minmax(8rem, auto) 1fr;
-                height: 12.8rem;
-                padding: $normal-margin 3rem;
-                text-decoration: none;
-
-                .logo {
-                    max-width: 9rem;
-                }
-
-                .tags {
-                    grid-auto-flow: column;
-                }
-
-                .resource-description {
-                    display: none;
-                }
-            }
-        }
-
         &.grid {
             grid-template-columns: repeat(auto-fill, 21rem);
-            justify-content: left;
+
+            @include width-up-to($phone-max) {
+                justify-content: center;
+            }
+
+            @include wider-than($phone-max) {
+                justify-content: left;
+            }
 
             .card {
                 color: inherit;
@@ -55,6 +35,14 @@
 
                 .logo {
                     justify-self: center;
+                }
+
+                .badge {
+                    @extend %verified-badge;
+
+                    align-self: start;
+                    grid-area: image;
+                    justify-self: end;
                 }
 
                 .resource-title {
@@ -78,9 +66,7 @@
 
         .logo {
             align-self: center;
-            display: grid;
             grid-area: image;
-            justify-content: center;
 
             > img {
                 max-height: 8rem;
