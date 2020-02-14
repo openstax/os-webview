@@ -1,0 +1,96 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/placeholder-selectors';
+
+.webinars.page {
+    .hero {
+        @extend %light-on-dark;
+        @include set-font(body-large);
+
+        background-color: os-color(light-blue);
+        color: text-color(white);
+        padding: 0;
+        text-align: left;
+
+        @include wider-than($phone-max) {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .text-side {
+            padding-left: $normal-margin;
+
+            @include width-up-to($phone-max) {
+                padding: 4rem;
+            }
+
+            @include wider-than($phone-max) {
+                margin-right: 23%;
+                padding-top: 6rem;
+                padding-bottom: 6rem;
+            }
+
+            @include wider-than($media-content-max) {
+                padding-left: calc(50vw - #{$content-max / 2 - $normal-margin});
+            }
+        }
+
+        h1 {
+            @include set-font(h1);
+        }
+
+        .picture-side {
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center center;
+            height: 100%;
+        }
+
+    }
+
+    .content {
+        @extend %content;
+    }
+
+    main {
+        padding: 6rem 0;
+
+        @include width-up-to($phone-max) {
+            padding-top: 4rem;
+        }
+
+        h1 {
+            @include set-font(h2);
+
+            margin: 0;
+        }
+
+        h2 {
+            @include body-font(2.4rem);
+        }
+
+        .tab-group .tab {
+            padding: 2rem $normal-margin 1rem;
+        }
+    }
+
+    .phone-view {
+        @include wider-than($phone-max) {
+            display: none;
+        }
+
+        .accordion-group .content-pane {
+            background-color: transparent;
+            margin-top: 1rem;
+
+            .card {
+                margin-bottom: 2rem;
+            }
+        }
+    }
+
+    .bigger-view {
+        @include width-up-to($phone-max) {
+            display: none;
+        }
+    }
+}

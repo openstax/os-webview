@@ -39,6 +39,7 @@ const PAGES = [
     'subjects/*path',
     'team',
     'technology',
+    'webinars',
     'institutional-partnership-application',
     'institutional-partnership'
 ];
