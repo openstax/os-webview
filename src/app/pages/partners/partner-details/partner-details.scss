@@ -72,6 +72,7 @@
             grid-area: tags;
             grid-gap: 0.5rem;
             margin-bottom: -0.5rem;
+            max-height: 100%;
 
             @include wider-than($phone-max) {
                 grid-auto-flow: column;
