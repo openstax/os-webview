@@ -65,11 +65,11 @@
         h1 {
             @include set-font(h2);
 
-            margin: 0;
+            margin: 0 0 1rem;
         }
 
         h2 {
-            @include body-font(2.4rem);
+            @include set-font(body-large);
         }
 
         .tab-group .tab {
@@ -82,12 +82,16 @@
             display: none;
         }
 
-        .accordion-group .content-pane {
-            background-color: transparent;
-            margin-top: 1rem;
+        .accordion-group {
+            margin-bottom: 1rem;
 
-            .card {
-                margin-bottom: 2rem;
+            .content-pane {
+                background-color: transparent;
+                margin-top: 1rem;
+
+                .card {
+                    margin-bottom: 2rem;
+                }
             }
         }
     }

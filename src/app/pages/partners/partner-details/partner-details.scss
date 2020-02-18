@@ -68,6 +68,7 @@
             }
         }
         .tags {
+            align-items: center;
             display: grid;
             grid-area: tags;
             grid-gap: 0.5rem;

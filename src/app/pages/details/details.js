@@ -10,7 +10,6 @@ import VideosTab from './videos-tab/videos-tab';
 import TabGroup from '~/components/tab-group/tab-group';
 import userModel from '~/models/usermodel';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
-import shuffle from 'lodash/shuffle';
 import analytics from '~/helpers/analytics';
 import {description as template} from './details.html';
 import css from './details.css';

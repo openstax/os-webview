@@ -81,7 +81,7 @@ export default class Confirmation extends BaseClass {
             fetchFromCMS(slug).then((detail) => {
                 detailModelPromise(detail).then((detailModel) => {
                     this.model.belowHeader.buttons = [{
-                        text: `submit ${detailModel.detail.bookTitle} errata`,
+                        text: `Submit ${detailModel.detail.bookTitle} errata`,
                         colorScheme: 'white-on-blue',
                         url: `/errata/form?book=${encodeURIComponent(detailModel.detail.bookTitle)}`
                     }];

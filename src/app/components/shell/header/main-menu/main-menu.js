@@ -41,7 +41,7 @@ export default class MainMenu extends Controller {
             items: [
                 {url: '/openstax-tutor', label: 'OpenStax Tutor'},
                 {url: '/rover-by-openstax', label: 'Rover by OpenStax'},
-                {url: '/partners', label: 'OpenStax Partners'}
+                {url: '/partners', label: 'OpenStax Tech Scout'}
             ]
         }));
         this.regions.whatWeDoDropdown.attach(new Dropdown({
