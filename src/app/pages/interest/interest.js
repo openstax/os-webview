@@ -77,18 +77,6 @@ export default class InterestForm extends BaseClass {
             required: true,
             validationMessage: (name) => validationMessage.bind(howManyStudents)(name)
         });
-        const whichPartners = new FormCheckboxGroup({
-            name: 'Partner_Category_Interest__c',
-            longLabel: 'Which of our partners would you like to give permission' +
-            ' to contact you about additional resources to support our books?',
-            instructions: 'Select all that apply (optional).',
-            options: [
-                {label: 'Online homework partners', value: 'Online homework partners'},
-                {label: 'Adaptive courseware partners', value: 'Adaptive courseware partners'},
-                {label: 'Customization tool partners', value: 'Customization tool partners'}
-            ],
-            validationMessage: (name) => validationMessage.bind(whichPartners)(name)
-        });
         const howDidYouHear = new FormCheckboxGroup({
             name: 'How_did_you_Hear__c',
             longLabel: 'How did you hear about OpenStax?',
@@ -110,7 +98,6 @@ export default class InterestForm extends BaseClass {
             contents: [
                 bookSelector,
                 howManyStudents,
-                whichPartners,
                 howDidYouHear
             ]
         });

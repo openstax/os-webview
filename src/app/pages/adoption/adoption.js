@@ -1,7 +1,6 @@
 import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import BookSelector from '~/components/book-selector/book-selector';
 import ContactInfo from '~/components/contact-info/contact-info';
-import FormCheckboxGroup from '~/components/form-checkboxgroup/form-checkboxgroup';
 import FormHeader from '~/components/form-header/form-header';
 import HiddenFields from './hidden-fields/hidden-fields';
 import HowUsing from './how-using/how-using';
