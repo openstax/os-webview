@@ -2,7 +2,6 @@ import SalesforceForm from '~/controllers/salesforce-form';
 import salesforce from '~/models/salesforce';
 import FormSelect from '~/components/form-select/form-select';
 import FormRadioGroup from '~/components/form-radiogroup/form-radiogroup';
-import FormCheckboxGroup from '~/components/form-checkboxgroup/form-checkboxgroup';
 import ManagedComponent from '~/helpers/controller/managed-component';
 import {description as template} from './supplemental-form.html';
 
@@ -28,21 +27,6 @@ export default class SupplementalForm extends SalesforceForm {
             return '';
         };
         const inputs = {
-            partnerContact: new FormCheckboxGroup({
-                name: '00NU00000055spm',
-                label: 'Which of our partners would you like to give permission' +
-                    ' to contact you about additional resources to support our books?',
-                instructions: 'Select all that apply.',
-                options: [
-                    {label: 'Online homework partners', value: 'Online homework partners'},
-                    {label: 'Adaptive courseware partners', value: 'Adaptive courseware partners'},
-                    {label: 'Customization tool partners', value: 'Customization tool partners'}
-                ],
-                multiple: true,
-                required: true,
-                requireNone: true,
-                validationMessage
-            }),
             featureMe: new FormRadioGroup({
                 name: '00NU00000055sq6',
                 label: 'Are you interested in having your OpenStax experience' +
