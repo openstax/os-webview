@@ -110,7 +110,7 @@ export default class extends componentType(spec, busMixin, cleanupMixin) {
                     logoUrl: entry.logoUrl,
                     description: entry.blurb,
                     tags: entry.tags,
-                    verifiedFeatures: '[This needs to be set in the CMS]',
+                    verifiedFeatures: entry.verifiedFeatures,
                     badgeImage: '/images/partners/verified-badge.svg'
                 }
             });

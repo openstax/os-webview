@@ -204,7 +204,8 @@ export default class extends componentType(spec, insertHtmlMixin) {
                     .filter((vid) => Boolean(vid)),
                 type: pd.partner_type,
                 cost: pd.affordability_cost,
-                infoUrl: pd.formstack_url
+                infoUrl: pd.formstack_url,
+                verifiedFeatures: pd.verified_features
             }));
 
             this.attachResults(resultData);
