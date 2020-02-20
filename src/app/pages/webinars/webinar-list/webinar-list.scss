@@ -1,4 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/placeholder-selectors';
 
 %spread-out-grid {
     display: grid;
@@ -31,13 +32,35 @@
         padding: 2rem 3rem;
 
         h3 {
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
             display: -webkit-box;
             margin: 0;
+            overflow: hidden;
+        }
 
-            &:not(:hover) {
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
+        .with-hovertitle {
+            position: relative;
+
+            &:hover .hovertitle {
+                @extend %light-on-dark;
+                @include set-font(helper-label);
+
+                background-color: os-color(gray);
+                border-radius: 0.3rem;
+                box-shadow: 0 0.1rem 0.1rem 0 rgba(ui-color(black), 0.5);
+                color: text-color(white);
+                content: attr(data-title);
+                left: 50%;
+                padding: 0.5rem;
+                position: absolute;
+                text-align: center;
+                transform: translateX(-50%);
+                width: 28rem;
+            }
+
+            &:not(:hover) .hovertitle {
+                display: none;
             }
         }
 
@@ -76,7 +99,7 @@
 
         hr {
             width: 100%;
-            border-top: thin solid rgba(ui-color(black), 0.25);
+            border: thin solid ui-color(form-border);
         }
 
         .description {

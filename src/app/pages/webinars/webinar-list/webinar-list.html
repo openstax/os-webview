@@ -7,13 +7,19 @@
                     <span class="month">{entry.month}</span>
                 </div>
                 <div class="title-and-time">
-                    <h3>{entry.title}</h3>
+                    <div class="with-hovertitle">
+                        <h3>{entry.title}</h3>
+                        <div class="hovertitle">{entry.title}</div>
+                    </div>
                     <span class="day-and-time">{entry.dayAndTime}</span>
                 </div>
             </div>
             <hr>
         <else>
-            <h3>{entry.title}</h3>
+            <div class="with-hovertitle">
+                <h3>{entry.title}</h3>
+                <div class="hovertitle">{entry.title}</div>
+            </div>
         </if>
         <div class="description">{entry.description}</div>
         <div if="model.upcoming" class="speakers-and-spaces">

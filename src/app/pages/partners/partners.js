@@ -113,11 +113,19 @@ export default class extends componentType(spec, insertHtmlMixin) {
 
     showDetailDialog(detailData) {
         const pd = new PartnerDetails(detailData);
+        const onOutsideClick = (event) => {
+            if (pd.el.contains(event.target)) {
+                return;
+            }
+            shellBus.emit('hideDialog');
+        };
 
+        window.addEventListener('click', onOutsideClick);
         shellBus.emit('showDialog', () => ({
             title: '',
             content: pd,
             onClose() {
+                window.removeEventListener('click', onOutsideClick);
                 pd.detach();
                 history.replaceState('', '', baseHref());
             }

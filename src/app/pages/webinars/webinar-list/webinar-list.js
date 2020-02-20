@@ -7,12 +7,7 @@ const spec = {
     css,
     view: {
         classes: ['webinar-list']
-    },
-    model() {
-        return {
-        };
     }
 };
 
-export default class extends componentType(spec) {
-}
+export default componentType(spec);

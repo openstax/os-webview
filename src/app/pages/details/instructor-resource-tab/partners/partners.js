@@ -3,6 +3,7 @@ import {description as template} from './partners.html';
 import css from './partners.css';
 import {on} from '~/helpers/controller/decorators';
 import routerBus from '~/helpers/router-bus';
+import shuffle from 'lodash/shuffle';
 
 const spec = {
     template,
@@ -47,8 +48,8 @@ export default function ({dataPromise, targetEl, bookAbbreviation}) {
             el: targetEl,
             bookAbbreviation,
             model: {
-                title: pd.partner_list_label || 'Technology partners',
-                blurbs: forBook.map(toBlurb)
+                title: pd[0].partner_list_label || '[Technology partners]',
+                blurbs: shuffle(forBook).map(toBlurb)
             }
         });
     });
