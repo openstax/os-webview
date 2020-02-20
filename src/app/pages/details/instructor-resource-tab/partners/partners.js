@@ -26,7 +26,7 @@ class Partners extends componentType(spec) {
 
 }
 
-export default function ({dataPromise, targetEl, bookAbbreviation}) {
+export default function ({dataPromise, targetEl, bookAbbreviation, title, seeMoreText}) {
     dataPromise.then((pd) => {
         function toBlurb(partner) {
             return {
@@ -48,7 +48,8 @@ export default function ({dataPromise, targetEl, bookAbbreviation}) {
             el: targetEl,
             bookAbbreviation,
             model: {
-                title: pd[0].partner_list_label || '[Technology partners]',
+                title,
+                seeMoreText,
                 blurbs: shuffle(forBook).map(toBlurb)
             }
         });

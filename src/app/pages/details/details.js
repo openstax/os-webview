@@ -259,7 +259,9 @@ export default class Details extends BaseClass {
                         featureText: this.pageData.community_resource_feature_text
                     }
                 },
-                dialogProps: compCopyDialogProps
+                dialogProps: compCopyDialogProps,
+                partnerListLabel: this.pageData.partner_list_label || '[partner_list_label]',
+                seeMoreText: this.pageData.partner_page_link_text || '[partner_page_link_text]'
             }));
         }
 
