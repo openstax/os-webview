@@ -36,8 +36,7 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
         // It may or may not come in as an array
         const ensureArray = (content) => {
             if (content) {
-                return []
-                    .concat(data.bookstore_content)
+                return (content instanceof Array ? content : [content.content])
                     .filter((entry) => entry.heading)
                     .sort((a, b) => a.button_url ? 1 : -1);
             }
