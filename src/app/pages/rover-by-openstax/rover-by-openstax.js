@@ -100,8 +100,8 @@ export default class RoverRedesign extends BaseClass {
                             description: c.blurb,
                             video: c.video
                         })),
-                        moreText: 'See more resources',
-                        moreUrl: '/general/rover-onboarding'
+                        moreText: data.section_5.seeMoreText,
+                        moreUrl: data.section_5.seeMoreUrl
                     }
                 }) : null,
             officeHours ?
