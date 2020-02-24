@@ -35,7 +35,8 @@ export default function ({dataPromise, targetEl, bookAbbreviation, title, seeMor
                 description: partner.short_partner_description,
                 cost: partner.affordability_cost,
                 type: partner.partner_type,
-                url: `/partners?${partner.partner_name}`
+                url: `/partners?${partner.partner_name}`,
+                verifiedFeatures: partner.verified_features
             };
         }
 
@@ -50,7 +51,8 @@ export default function ({dataPromise, targetEl, bookAbbreviation, title, seeMor
             model: {
                 title,
                 seeMoreText,
-                blurbs: shuffle(forBook).map(toBlurb)
+                blurbs: shuffle(forBook).map(toBlurb),
+                badgeImage: '/images/partners/verified-badge.svg'
             }
         });
     });

@@ -25,7 +25,9 @@ const spec = {
             infoUrl: this.infoUrl,
             infoText: 'Request info',
             description: this.richDescription,
-            partnerUrl: this.website
+            partnerUrl: this.website,
+            verifiedFeatures: this.verifiedFeatures,
+            badgeImage: '/images/partners/verified-badge.svg'
         };
     }
 };

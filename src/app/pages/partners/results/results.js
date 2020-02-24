@@ -109,7 +109,9 @@ export default class extends componentType(spec, busMixin, cleanupMixin) {
                     title: entry.title,
                     logoUrl: entry.logoUrl,
                     description: entry.blurb,
-                    tags: entry.tags
+                    tags: entry.tags,
+                    verifiedFeatures: entry.verifiedFeatures,
+                    badgeImage: '/images/partners/verified-badge.svg'
                 }
             });
 

@@ -1,3 +1,64 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/triangle';
+
 %light-on-dark {
     -webkit-font-smoothing: antialiased;
+}
+
+%verified-badge {
+    align-items: center;
+    color: text-color(white);
+    display: grid;
+    grid-template: 'one-area';
+    justify-items: center;
+    position: relative;
+    z-index: 1;
+
+    .background,
+    .checkmark {
+        font-size: 0.8rem;
+        grid-area: one-area;
+    }
+
+    &:not(:hover) .tooltip {
+        display: none;
+    }
+
+    $tooltip-size: 1rem;
+    &:hover .tooltip {
+        background-color: ui-color(black);
+        border-radius: 0.3rem;
+        color: text-color(white);
+        display: block;
+        padding: $normal-margin 1rem;
+        position: absolute;
+        text-align: center;
+        width: 25rem;
+
+        &.right {
+            left: calc(100% + 1rem);
+
+            &::before {
+                @include triangle(
+                    $direction: left,
+                    $position: top calc(50% - #{$tooltip-size}) left #{-$tooltip-size},
+                    $color: ui-color(black),
+                    $size: $tooltip-size
+                );
+            }
+        }
+
+        &.top {
+            bottom: calc(100% + 1rem);
+
+            &::before {
+                @include triangle(
+                    $direction: bottom,
+                    $position: bottom #{-1.5 * $tooltip-size} left calc(50% - #{$tooltip-size}),
+                    $color: ui-color(black),
+                    $size: $tooltip-size
+                );
+            }
+        }
+    }
 }

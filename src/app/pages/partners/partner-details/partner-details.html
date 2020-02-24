@@ -1,6 +1,13 @@
 <template args="model">
     <section class="synopsis">
         <img class="icon" src="{model.icon}" alt="">
+        <div if="model.verifiedFeatures" class="badge">
+            <img class="background" src="{model.badgeImage}" alt="verified">
+            <i class="checkmark fa fa-check"></i>
+            <div class="tooltip right">
+                {model.verifiedFeatures}
+            </div>
+        </div>
         <div class="headline">{model.headline}</div>
         <div class="blurb">
             <div data-html="blurb" skip="true"></div>
