@@ -3,7 +3,7 @@ import css from './mobile-filters.css';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import BookOptions from '../controls/book-options/book-options';
 import Checkboxes from '../controls/checkboxes-linked-to-store/checkboxes-linked-to-store';
-import {setupOptionsList, typeOptions} from '../controls/controls.js';
+import {setupOptionsList} from '../controls/controls.js';
 import {books, types, advanced, sort} from '../store';
 import sortBy from 'lodash/sortBy';
 
@@ -43,7 +43,7 @@ export default class extends componentType(spec) {
                 },
                 {
                     title: 'Type',
-                    contentComponent: setupOptionsList(types, typeOptions)
+                    contentComponent: setupOptionsList(types, this.typeOptions)
                 },
                 {
                     title: 'Advanced Filters',

@@ -43,25 +43,6 @@ export function setupOptionsList(selected, items) {
     return ol;
 }
 
-export const typeOptions = [
-    {
-        label: 'Content customization',
-        value: 'Content customization'
-    },
-    {
-        label: 'Online homework',
-        value: 'Online homework'
-    },
-    {
-        label: 'Clicker / classroom',
-        value: 'Clicker/classroom engagement'
-    },
-    {
-        label: 'Adaptive courseware',
-        value: 'Adaptive Courseware'
-    }
-];
-
 const sortOptions = [
     {
         label: 'A-Z',
@@ -132,7 +113,7 @@ export default class extends componentType(spec, busMixin, cleanupMixin) {
             },
             {
                 label: 'Type',
-                content: setupOptionsList(types, typeOptions),
+                content: setupOptionsList(types, this.typeOptions),
                 style: 'attached',
                 closeOnSelect: types
             },

@@ -52,7 +52,7 @@ function getFilterOptions(data) {
 
 
     Object.entries(data.field_name_mapping)
-        .forEach(([value, label]) => {
+        .forEach(([label, value]) => {
             const entry = {
                 label,
                 value
@@ -153,15 +153,23 @@ export default class extends componentType(spec, insertHtmlMixin) {
         this.description = this.pageData.description;
         this.update();
         const advancedFilterOptions = getFilterOptions(this.pageData);
+        const typeOptions = this.pageData.partner_type_choices
+            .sort()
+            .map((k) => ({
+                label: k,
+                value: k
+            }));
 
         this.controls = new Controls({
             el: this.el.querySelector('.controls.desktop'),
             displayMode,
-            advancedFilterOptions
+            advancedFilterOptions,
+            typeOptions
         });
         this.mobileFilters = new MobileFilters({
             el: this.el.querySelector('.controls.mobile'),
-            advancedFilterOptions
+            advancedFilterOptions,
+            typeOptions
         });
         this.activeFilters = new ActiveFilters({
             el: this.el.querySelector('.active-filters'),

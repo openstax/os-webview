@@ -59,7 +59,7 @@
         padding: 6rem 0;
 
         @include width-up-to($phone-max) {
-            padding-top: 4rem;
+            padding: 4rem 0;
         }
 
         h1 {
@@ -69,11 +69,11 @@
         }
 
         h2 {
-            @include set-font(body-large);
+            @include body-font(1.8rem);
         }
 
         .tab-group .tab {
-            padding: 2rem $normal-margin 1rem;
+            padding: 1rem $normal-margin 1rem;
         }
     }
 

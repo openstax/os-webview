@@ -29,6 +29,7 @@
         @extend %spread-out-grid;
 
         background-color: ui-color(white);
+        grid-auto-rows: min-content;
         padding: 2rem 3rem;
 
         h3 {
