@@ -8,7 +8,11 @@ import ProgressBar from './progress-bar/progress-bar';
 
 function localizedDate(dateStr) {
     if (dateStr) {
-        return new Date(dateStr).toLocaleDateString();
+        const d = new Date(dateStr);
+        const off = d.getTimezoneOffset();
+
+        d.setMinutes(d.getMinutes() + off);
+        return d.toLocaleDateString();
     }
     return '';
 }
