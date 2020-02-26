@@ -1,0 +1,66 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.persona {
+    align-items: start;
+    display: grid;
+    grid-row-gap: 3rem;
+    grid-column-gap: 3rem;
+    padding: 4rem 0;
+
+    > * {
+        margin: 0;
+    }
+
+    @include width-up-to($phone-max) {
+        grid-template-columns: 100%;
+    }
+
+    @include wider-than($phone-max) {
+        grid-template: 'image title'
+        'image description'
+        'image table' 1fr;
+
+        &:nth-child(odd):not(.top-result) {
+            grid-template: 'title image'
+            'description image'
+            'table image' 1fr;
+        }
+
+        > img {
+            grid-area: image;
+        }
+
+        > h2 {
+            grid-area: title;
+        }
+
+        > .description {
+            grid-area: description;
+        }
+
+        > .partner-table {
+            grid-area: table;
+        }
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    .partner-table {
+        border-bottom: thin solid ui-color(form-border);
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+
+        .partner-logo {
+            border-top: thin solid ui-color(form-border);
+            height: 5rem;
+            text-align: center;
+
+            img {
+                max-height: 100%;
+                padding: 1rem;
+            }
+        }
+    }
+}
