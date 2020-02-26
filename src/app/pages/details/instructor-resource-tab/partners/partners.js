@@ -36,7 +36,7 @@ export default function ({dataPromise, targetEl, bookAbbreviation, title, seeMor
                 cost: partner.affordability_cost,
                 type: partner.partner_type,
                 url: `/partners?${partner.partner_name}`,
-                verifiedFeatures: partner.verified_features
+                verifiedFeatures: partner.verified_by_instructor
             };
         }
 

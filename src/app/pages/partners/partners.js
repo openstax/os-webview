@@ -205,7 +205,7 @@ export default class extends componentType(spec, insertHtmlMixin) {
                 type: pd.partner_type,
                 cost: pd.affordability_cost,
                 infoUrl: pd.formstack_url,
-                verifiedFeatures: pd.verified_features
+                verifiedFeatures: pd.verified_by_instructor
             }));
 
             this.attachResults(resultData);
