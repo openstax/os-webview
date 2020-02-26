@@ -4,6 +4,7 @@ import css from './partners.css';
 import {on} from '~/helpers/controller/decorators';
 import routerBus from '~/helpers/router-bus';
 import shuffle from 'lodash/shuffle';
+import {tooltipText} from '~/models/salesforce-partners';
 
 const spec = {
     template,
@@ -36,7 +37,7 @@ export default function ({dataPromise, targetEl, bookAbbreviation, title, seeMor
                 cost: partner.affordability_cost,
                 type: partner.partner_type,
                 url: `/partners?${partner.partner_name}`,
-                verifiedFeatures: partner.verified_by_instructor
+                verifiedFeatures: partner.verified_by_instructor ? tooltipText : false
             };
         }
 
