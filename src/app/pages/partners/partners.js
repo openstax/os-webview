@@ -6,7 +6,7 @@ import MobileFilters from './mobile-filters/mobile-filters';
 import Results, {costOptions} from './results/results';
 import ActiveFilters from './active-filters/active-filters';
 import PartnerDetails from './partner-details/partner-details';
-import partnerFeaturePromise from '~/models/salesforce-partners';
+import partnerFeaturePromise, {tooltipText} from '~/models/salesforce-partners';
 import {displayMode, books, types, advanced, sort} from './store';
 import shellBus from '~/components/shell/shell-bus';
 import routerBus from '~/helpers/router-bus';
@@ -177,6 +177,7 @@ export default class extends componentType(spec, insertHtmlMixin) {
         });
 
         partnerFeaturePromise.then((partnerData) => {
+            // eslint-disable-next-line complexity
             const resultData = partnerData.map((pd) => ({
                 title: pd.partner_name,
                 blurb: pd.short_partner_description ||
@@ -205,7 +206,7 @@ export default class extends componentType(spec, insertHtmlMixin) {
                 type: pd.partner_type,
                 cost: pd.affordability_cost,
                 infoUrl: pd.formstack_url,
-                verifiedFeatures: pd.verified_features
+                verifiedFeatures: pd.verified_by_instructor ? tooltipText : false
             }));
 
             this.attachResults(resultData);

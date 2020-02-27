@@ -24,8 +24,9 @@
     }
 
     $tooltip-size: 1rem;
+    $tooltip-background: ui-color(footer-bg);
     &:hover .tooltip {
-        background-color: ui-color(black);
+        background-color: $tooltip-background;
         border-radius: 0.3rem;
         color: text-color(white);
         display: block;
@@ -41,7 +42,7 @@
                 @include triangle(
                     $direction: left,
                     $position: top calc(50% - #{$tooltip-size}) left #{-$tooltip-size},
-                    $color: ui-color(black),
+                    $color: $tooltip-background,
                     $size: $tooltip-size
                 );
             }
@@ -54,10 +55,24 @@
                 @include triangle(
                     $direction: bottom,
                     $position: bottom #{-1.5 * $tooltip-size} left calc(50% - #{$tooltip-size}),
-                    $color: ui-color(black),
+                    $color: $tooltip-background,
                     $size: $tooltip-size
                 );
             }
         }
+
+        &.bottom {
+            top: calc(100% + 1rem);
+
+            &::before {
+                @include triangle(
+                    $direction: top,
+                    $position: top #{-0.5 * $tooltip-size} left calc(50% - #{$tooltip-size}),
+                    $color: $tooltip-background,
+                    $size: $tooltip-size
+                );
+            }
+        }
+
     }
 }
