@@ -21,16 +21,14 @@
             grid-row-gap: 1rem;
             grid-template: 'icon'
             'title'
-            'blurb'
-            'subjects'
+            'site-link'
             'tags' / 100%;
         }
 
         @include wider-than($phone-max) {
             grid-row-gap: 0.5rem;
             grid-template: 'icon title'
-            'icon blurb'
-            'icon subjects'
+            'icon site-link'
             'icon tags' / auto 1fr;
         }
 
@@ -55,50 +53,8 @@
 
             grid-area: title;
         }
-        .blurb {
-            display: grid;
-            grid-area: blurb;
-            grid-template-columns: 1fr auto;
-            grid-column-gap: 0.7rem;
-        }
-        .titles {
-            @include body-font(1rem);
-
-            color: os-color(gray);
-            grid-area: subjects;
-            line-height: 1;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-
-            .title {
-
-                + .title::before {
-                    content: ' • ';
-                }
-            }
-        }
-        .tags {
-            align-items: center;
-            display: grid;
-            grid-area: tags;
-            grid-gap: 0.5rem;
-            margin-bottom: -0.5rem;
-            max-height: 100%;
-
-            @include wider-than($phone-max) {
-                grid-auto-flow: column;
-                justify-content: start;
-            }
-
-            .tag {
-                @include body-font(1.2rem);
-
-                background-color: ui-color(default);
-                border-radius: 0.3rem;
-                font-weight: bold;
-                padding: 0.2rem 0.4rem;
-                text-transform: uppercase;
-            }
+        .partner-website {
+            grid-area: site-link;
         }
     }
 
@@ -119,6 +75,47 @@
 
     .main-text > :first-child {
         margin-top: 0;
+    }
+
+    h2 {
+        @include set-font(h3);
+    }
+
+    $space: 0.25em;
+    .titles {
+        display: block;
+
+        .title {
+            display: inline;
+
+            &:not(:last-child)::after {
+                content: ', '
+            }
+        }
+    }
+
+    .tags {
+        align-items: center;
+        display: grid;
+        grid-gap: 0.5rem;
+        margin-bottom: -0.5rem;
+        max-height: 100%;
+
+        @include wider-than($phone-max) {
+            grid-auto-flow: column;
+            justify-content: start;
+        }
+
+        .tag {
+            @include body-font(1.2rem);
+
+            background-color: ui-color(default);
+            border: thin solid ui-color(form-border);
+            border-radius: 0.3rem;
+            font-weight: bold;
+            padding: 0.2rem 0.4rem;
+            text-transform: uppercase;
+        }
     }
 
 }
