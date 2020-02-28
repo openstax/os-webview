@@ -19,66 +19,37 @@ const spec = {
         otherResults: '.other-results'
     },
     model() {
+        const data = this.pageData || {};
+
         return {
-            heading: 'What\'s your equation?',
-            introduction: `Lorem ipsum dolor sit amet, consectetuer adipiscing
-            elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
-            aliquam`,
+            heading: data.heading,
+            introduction: data.description,
             expanded: this.expanded
         };
     },
+    slug: 'pages/quiz-results',
     expanded: false
 };
 
-const personas = [
-    {
-        title: 'Director',
-        description: `Highly skilled Directors expertly guide students through
-        new lessons. They introduce concepts to their students in class, and assign
-        homework that helps students practice those concepts. Directors need a homework
-        system that aligns closely with their lectures to reinforce what they’ve
-        taught.`
-    },
-    {
-        title: 'Script-Flipper',
-        description: `Innovative Script-Flippers use the flipped classroom model
-        to help their students own their learning process. Their students start learning
-        new concepts before class, so Script-Flippers need technology that will engage
-        students during class and help them practice the things they’ve been learning on
-        their own.`
-    },
-    {
-        title: 'Ensemblist',
-        description: `Creative Ensemblists bring their students into the teaching
-        process. Their students work together on activities during class, so they need
-        technology that will help organize in-class work. They can also use tools that
-        help their students write their own problems and activities.`
-    },
-    {
-        title: 'Technician',
-        description: `Investigative Technicians use cutting-edge technology to support
-        and inform their teaching. Technicians need tools that guide students through
-        self-paced activities and provide them with powerful analytics to help them see
-        where students need help.`
-    }
-];
-
-partnerFeaturePromise.then((pd) => {
-    const logos = pd.map((entry) => entry.partner_logo);
-
-    personas.forEach((persona) => {
-        persona.logos = shuffle(logos).slice(0, 12);
-    });
-});
-
 export default class extends componentType(spec) {
 
+    get personas() {
+        console.info('Data', this.pageData);
+        return this.pageData ?
+            this.pageData.results.flat().map((d) => ({
+                title: d.headline,
+                description: d.description,
+                imageUrl: d.image.image,
+                partners: d.partners.map((p) => p.partner)
+            })) : [];
+    }
+
     get topResult() {
-        return personas.find((entry) => entry.title.toLowerCase() === this.selectedTitle);
+        return this.personas.find((entry) => entry.title.toLowerCase() === this.selectedTitle);
     }
 
     get otherResults() {
-        return personas.filter((entry) => entry.title.toLowerCase() !== this.selectedTitle);
+        return this.personas.filter((entry) => entry.title.toLowerCase() !== this.selectedTitle);
     }
 
     init(...args) {
@@ -90,9 +61,6 @@ export default class extends componentType(spec) {
         if (super.onLoaded) {
             super.onLoaded();
         }
-        partnerFeaturePromise.then(() => {
-            this.onDataLoaded();
-        });
     }
 
     // Fires when the slug has been loaded (data returned in this.pageData)
@@ -101,13 +69,14 @@ export default class extends componentType(spec) {
         if (super.onDataLoaded) {
             super.onDataLoaded();
         }
+        this.update();
         const topResult = this.topResult;
         const trProps = Object.assign(
             {},
             topResult,
             {
                 el: this.regions.topResult.el,
-                title: `You're the ${topResult.title}`,
+                title: `You're the ${topResult.title}`
             }
         );
 
@@ -115,6 +84,9 @@ export default class extends componentType(spec) {
         }
         const tr = new Persona(trProps);
 
+        partnerFeaturePromise.then(() => {
+
+        });
         this.otherResults.forEach((props) => {
             this.regions.otherResults.append(new Persona(props));
         });

@@ -16,14 +16,18 @@
     }
 
     @include wider-than($phone-max) {
-        grid-template: 'image title'
+        grid-template: 'image space-top'
+        'image title'
         'image description'
-        'image table' 1fr;
+        'image table'
+        'image space-bottom';
 
         &:nth-child(odd):not(.top-result) {
-            grid-template: 'title image'
+            grid-template: 'space-top image'
+            'title image'
             'description image'
-            'table image' 1fr;
+            'table image'
+            'space-bottom image';
         }
 
         > img {
@@ -31,6 +35,7 @@
         }
 
         > h2 {
+            align-self: end;
             grid-area: title;
         }
 
@@ -39,6 +44,7 @@
         }
 
         > .partner-table {
+            align-self: start;
             grid-area: table;
         }
     }
@@ -47,20 +53,29 @@
         max-width: 100%;
     }
 
+    $row-border: thin solid ui-color(form-border);
     .partner-table {
-        border-bottom: thin solid ui-color(form-border);
+        border-top: $row-border;
         display: grid;
+        grid-row-gap: 0.1rem;
         grid-template-columns: repeat(4, 1fr);
 
         .partner-logo {
-            border-top: thin solid ui-color(form-border);
+            align-items: center;
+            border-bottom: $row-border;
+            display: grid;
+            grid-template-columns: 100%;
             height: 5rem;
-            text-align: center;
+            justify-items: center;
 
             img {
                 max-height: 100%;
                 padding: 1rem;
             }
+        }
+
+        .filler {
+            border-bottom: $row-border;
         }
     }
 }

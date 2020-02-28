@@ -1,5 +1,5 @@
 <template args="model">
-    <div class="hero text-content">
+    <div if="model.heading" class="hero text-content">
         <h1>{model.heading}</h1>
         <div class="subhead">{model.introduction}</div>
     </div>

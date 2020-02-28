@@ -12,9 +12,10 @@ const spec = {
         return {
             headline: this.title,
             description: this.description,
-            imageUrl: '//via.placeholder.com/600x480',
+            imageUrl: this.imageUrl,
             imageAlt: '',
-            logos: this.logos
+            partners: this.partners,
+            filler: (new Array(4 - (this.partners.length % 4))).fill('')
         };
     }
 };
