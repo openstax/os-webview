@@ -23,25 +23,26 @@ const PAGES = [
     'faq',
     'foundation',
     'general/*path',
-    'hero-journey',
-    'interest',
-    'impact',
     'global-reach',
-    'separatemap',
+    'hero-journey',
+    'impact',
+    'institutional-partnership-application',
+    'institutional-partnership',
+    'interest',
     'openstax-tutor',
     'partners',
     'partners/*path',
     'press',
     'press/*path',
+    'quiz-results/*path',
     'research',
     'rover-by-openstax',
+    'separatemap',
     'subjects',
     'subjects/*path',
     'team',
     'technology',
-    'webinars',
-    'institutional-partnership-application',
-    'institutional-partnership'
+    'webinars'
 ];
 
 if (window.location.hostname === 'localhost') {
@@ -78,7 +79,6 @@ class AppRouter extends Router {
         this.route('errata/form', 'errata-form');
         this.route('errata/', 'errata-summary');
         this.route(/errata\/\d+/, 'errata-detail');
-        this.route('give-confirmation', 'give');
         this.route('interest-confirmation', 'confirmation');
         this.route('higher-ed', 'home');
         ['license', 'tos', 'privacy-policy', 'accessibility-statement', 'careers']

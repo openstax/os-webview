@@ -1,0 +1,11 @@
+<template args="model">
+    <img src="{model.imageUrl}" alt="{model.imageAlt}">
+    <h2>{model.headline}</h2>
+    <div class="description">{model.description}</div>
+    <div class="partner-table">
+        <div each="partner in model.partners" class="partner-logo">
+            <img src="{partner.logo}" alt="{partner.name}">
+        </div>
+        <div each="_ in model.filler" class="filler"></div>
+    </div>
+</template>
