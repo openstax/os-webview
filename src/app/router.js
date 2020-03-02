@@ -68,12 +68,57 @@ if (window.location.hostname === 'localhost') {
     window.CustomEvent = CustomEvent;
 })();
 
+function handleExternalLink(href, el) {
+    if (el.dataset.local === 'true') {
+        // REX books open in the current window; track them
+        if (linkHelper.isREX(href)) {
+            analytics.record(href);
+        }
+        document.location.href = href;
+    } else {
+        if (linkHelper.isTOCLink(el)) {
+            analytics.sendTOCEvent(href);
+        } else {
+            analytics.record(href);
+        }
+        const newWindow = window.open(href, '_blank');
+
+        if (newWindow === null) {
+            document.location.href = href;
+        }
+    }
+};
+
+function linkHandler(e) {
+    const el = linkHelper.validUrlClick(e);
+
+    if (!el || e.button !== 0) {
+        return;
+    }
+    const navigateTo = (href) => {
+        const internalLink = this.canRoute(href);
+        const handleAsExternal = linkHelper.isExternal(href) || el.target ||
+            !internalLink;
+
+        if (handleAsExternal) {
+            handleExternalLink(href, el);
+        } else {
+            this.navigate(linkHelper.stripOpenStaxDomain(href) || '/');
+        }
+    };
+
+    e.preventDefault();
+    // This was el.getAttribute('href'), but with a relative path, the login
+    // url will not be recognized as external. This gets the fully-qualified
+    // url.
+    navigateTo(el.href);
+}
+
 class AppRouter extends Router {
 
     init() {
         this.defaultRegion = shell.regions.main;
 
-        this.default('404');
         this.root('home');
         this.route(/^(\d+)/, 'cms');
         this.route('errata/form', 'errata-form');
@@ -100,12 +145,33 @@ class AppRouter extends Router {
         });
     }
 
+    canRoute(href) {
+        let path;
+
+        try {
+            path = (new URL(href)).pathname;
+        } catch (_) {
+            path = href;
+        }
+
+        return path === '/' || this.routes.some((r) => {
+            return r.path.test(path.substr(1));
+        });
+    }
+
     start() {
+        const path = window.location.pathname;
+        const path404 = '/books/404/pages/404';
+
+        if (!this.canRoute(path) && !path.startsWith(path404)) {
+            window.location = `${path404}?path=${path}`;
+            return;
+        }
         super.start();
 
         analytics.sendPageview(location.pathname);
 
-        this.linkHandler = AppRouter.linkHandler.bind(this);
+        this.linkHandler = linkHandler.bind(this);
         document.addEventListener('click', this.linkHandler);
     }
 
@@ -121,49 +187,6 @@ class AppRouter extends Router {
         if (args.length === 1) {
             analytics.sendPageview();
         }
-    }
-
-    static linkHandler(e) {
-        const el = linkHelper.validUrlClick(e);
-
-        if (!el || e.button !== 0) {
-            return;
-        }
-        const handleExternalLink = (href) => {
-            if (el.dataset.local === 'true') {
-                // REX books open in the current window; track them
-                if (linkHelper.isREX(href)) {
-                    analytics.record(href);
-                }
-                document.location.href = href;
-            } else {
-                if (linkHelper.isTOCLink(el)) {
-                    analytics.sendTOCEvent(href);
-                } else {
-                    analytics.record(href);
-                }
-                const newWindow = window.open(href, '_blank');
-
-                if (newWindow === null) {
-                    document.location.href = href;
-                }
-            }
-        };
-        const navigateTo = (href) => {
-            const handleAsExternal = linkHelper.isExternal(href) || el.target;
-
-            if (handleAsExternal) {
-                handleExternalLink(href);
-            } else {
-                this.navigate(linkHelper.stripOpenStaxDomain(href) || '/');
-            }
-        };
-
-        e.preventDefault();
-        // This was el.getAttribute('href'), but with a relative path, the login
-        // url will not be recognized as external. This gets the fully-qualified
-        // url.
-        navigateTo(el.href);
     }
 
 }

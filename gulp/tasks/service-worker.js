@@ -21,9 +21,6 @@ const shellFiles = [
     '/app/main.js',
     '/app/router.js',
     '/app/components/shell/**/*.{js,css}',
-
-    // 404 Page
-    '/app/pages/404/**/*.{js,css}'
 ];
 
 function precache() {

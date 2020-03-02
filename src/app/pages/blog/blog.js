@@ -18,6 +18,7 @@ function slugsSortedByArticleDate(articles) {
         .sort((a, b) => articles[a].date < articles[b].date ? 1 : -1);
 }
 
+const rssUrl = `${settings.apiOrigin}/blog-feed/rss/`;
 const path = '/blog';
 const spec = {
     css,
@@ -68,7 +69,7 @@ export default class Blog extends BaseClass {
         this.regions.self.attach(new FeaturedArticle(this.featuredArticleOptions));
         this.regions.self.append(new UpdateBox({
             model: {
-                rssUrl: `${settings.apiOrigin}/blog-feed/rss/`
+                rssUrl
             }
         }));
         const ms = new MoreStories({
@@ -105,7 +106,7 @@ export default class Blog extends BaseClass {
         region.append(new DisqusForm());
         region.append(new UpdateBox({
             model: {
-                rssUrl: `${settings.apiOrigin}/blog-feed/rss/`
+                rssUrl
             }
         }));
         region.append(ms);
