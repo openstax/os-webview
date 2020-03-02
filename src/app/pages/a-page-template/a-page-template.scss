@@ -4,4 +4,8 @@
     h1 {
         color: os-color(red);
     }
+
+    .component-region {
+        @extend %content;
+    }
 }
