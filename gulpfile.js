@@ -2,7 +2,7 @@ const {series, parallel, task} = require('gulp');
 const allTheThings = require('require-dir')('./gulp/tasks');
 const {
   clean, copy, development, production, favicon, scsslint, styles,
-  humans, images, eslint, scripts, settings, precache, templates, webpack,
+  humans, images, eslint, scripts, settings, precache, templates, jsx, webpack,
   watch, devHTML, distHTML
 } = Object.assign({}, ...Object.values(allTheThings));
 
@@ -12,6 +12,7 @@ const beforeWebpack = series(
     parallel(
         copy,
         favicon,
+        jsx,
         styles,
         scripts,
         templates,

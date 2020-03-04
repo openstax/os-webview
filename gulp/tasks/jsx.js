@@ -5,30 +5,24 @@ const pi = require('gulp-load-plugins')({
     pattern: ['gulp-*', 'gulp.*', 'del']
 });
 
-function templates() {
+function jsx() {
     const configSrcApp = `${config.src}/app`;
     const configDestApp = `${config.dest}/app`;
 
-    return gulp.src(`${configSrcApp}/**/*.html`, {
-        since: gulp.lastRun(templates)
+    return gulp.src(`${configSrcApp}/**/*.jsx`, {
+        since: gulp.lastRun(jsx)
     })
     .pipe(pi.sourcemaps.init({loadMaps: true}))
     .pipe(pi.rename((uri) => {
-        uri.extname = '.html.js';
-    }))
-    .pipe(pi.htmlmin({
-        collapseWhitespace: true
-    }))
-    .pipe(pi.superviewsjs({
-        mode: 'es6'
+        uri.extname = '.jsx.js';
     }))
     .pipe(pi.babel({
         compact: false,
-        presets: ['env']
+        presets: ['react']
     }))
     // prefix the sourcemaps with '../src/' so webpack can find them
     .pipe(pi.sourcemaps.mapSources(function(sourcePath, file) {
-      const sourcePathHtml = sourcePath.replace('.html.js', '.html');
+      const sourcePathHtml = sourcePath.replace('.jsx.js', '.jsx');
       const rel = path.relative(path.dirname(`${configDestApp}/${sourcePath}`), `${configSrcApp}/${sourcePathHtml}`)
       return rel;
     }))
@@ -36,9 +30,12 @@ function templates() {
     .pipe(gulp.dest(`${configDestApp}`));
 }
 
-function watchTemplates() {
-    gulp.watch(`${config.src}/**/*.html`, templates);
+
+function watchJsx() {
+    gulp.watch([`${config.src}/**/*.jsx`], config.watchOpts, gulp.series(
+        jsx
+    ));
 }
 
-exports.templates = templates;
-exports.templates.watch = watchTemplates;
+exports.jsx = jsx;
+exports.jsx.watch = watchJsx;
