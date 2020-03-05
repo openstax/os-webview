@@ -1,5 +1,6 @@
 import componentType from '~/helpers/controller/init-mixin';
-import attachChild from './a-thing.jsx';
+import WrappedJsx from '~/controllers/jsx-wrapper';
+import child from './a-thing.jsx';
 
 // For handling events
 import {on} from '~/helpers/controller/decorators';
@@ -41,10 +42,22 @@ export default class extends componentType(spec) {
         if (super.onLoaded) {
             super.onLoaded();
         }
-        attachChild({
-            el: this.regions.child.el,
-            message: 'Hello, world'
-        });
+        const wrappedChild = new WrappedJsx(
+            child,
+            {
+                message: 'Hello, world'
+            }
+        );
+
+        this.regions.child.attach(wrappedChild);
+        setTimeout(() => {
+            wrappedChild.updateProps({
+                message: 'This component will self-remove'
+            });
+            setTimeout(() => {
+                wrappedChild.detach();
+            }, 5000);
+        }, 6000);
     }
 
     // Fires when the slug has been loaded (data returned in this.pageData)
