@@ -6,10 +6,11 @@ function makeStateFor(props, Child) {
     const state = {};
     const setters = {};
     const result = () => {
-        Reflect.ownKeys(props).forEach((k) => {
-            [state[k], setters[k]] = useState(props[k]);
-        });
-
+        if (props instanceof Object) {
+            Reflect.ownKeys(props).forEach((k) => {
+                [state[k], setters[k]] = useState(props[k]);
+            });
+        }
         return React.createElement(Child, state);
     };
 
@@ -21,6 +22,7 @@ export default class extends Controller {
 
     init(jsxComponent, props) {
         this.child = makeStateFor(props, jsxComponent);
+        this.props = props;
     }
 
     onLoaded() {
@@ -34,7 +36,12 @@ export default class extends Controller {
     }
 
     updateProps(newProps) {
-        Reflect.ownKeys(newProps).forEach((k) => this.child.setters[k](newProps[k]));
+        Object.assign(this.props, newProps);
+        Reflect.ownKeys(newProps).forEach((k) => {
+            if (k in this.child.setters) {
+                this.child.setters[k](newProps[k]);
+            }
+        });
     }
 
     update() {
