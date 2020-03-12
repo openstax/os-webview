@@ -28,13 +28,6 @@ export default function ErrorSourceSelector({initialSource}) {
     const [selectedSource, updateSelectedSource] = useState(initialSource);
     const radioRef = React.createRef();
     const [RadioInvalidMessage, updateRadioInvalidMessage] = managedInvalidMessage(radioRef);
-    // TODO: Figure out sourceProvided and sourceTypes
-    // const filterSources = (t) => t !== 'OpenStax Tutor' || isTutor;
-    // sourceTypes={sourceTypes.filter(filterSources)}
-    // const sourceProvided = model.location && model.source ? '' : null;
-    // if (newModel.sourceProvided === '') {
-    //     newModel.sourceTypes = [newModel.selectedSource];
-    // }
 
     resourcePromise.then(updateSourceTypes).then(updateRadioInvalidMessage);
     function onChange(event) {

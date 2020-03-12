@@ -45,12 +45,14 @@ function FileButton({name, parentRef}) {
         inputRef.current.value = null;
     }
 
-    // useEffect(() => {
-    //     console.info('Files:',
-    //         Array.from(parentRef.current.querySelectorAll('[type="file"]'))
-    //         .map((i) => i.value)
-    //     );
-    // });
+    if (settings.testingEnvironment) {
+        useEffect(() => {
+            console.info('Files:',
+                Array.from(parentRef.current.querySelectorAll('[type="file"]'))
+                .map((i) => i.value)
+            );
+        });
+    }
 
     return (
         <div className="file-button">

@@ -18,7 +18,7 @@ function jsx() {
     }))
     .pipe(pi.babel({
         compact: false,
-        presets: ['react']
+        presets: ['@babel/preset-react']
     }))
     // prefix the sourcemaps with '../src/' so webpack can find them
     .pipe(pi.sourcemaps.mapSources(function(sourcePath, file) {

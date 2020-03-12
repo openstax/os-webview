@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import './helpers/fetch-mocker';
 import {LocalStorage} from 'node-localstorage';
 
