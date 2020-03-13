@@ -8,7 +8,6 @@ const PAGES = [
     'about',
     'adopters',
     'adoption',
-    'adoption-confirmation',
     'annual-report',
     'article',
     'blog',

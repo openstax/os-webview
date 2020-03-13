@@ -8,6 +8,7 @@ import MultiPageForm from '~/components/multi-page-form/multi-page-form';
 import RoleSelector from '~/components/role-selector/role-selector';
 import routerBus from '~/helpers/router-bus';
 import salesforce from '~/models/salesforce';
+import books from '~/models/books';
 import SeriesOfComponents from '~/components/series-of-components/series-of-components';
 import StudentForm from '~/components/student-form/student-form';
 import {description as template} from './adoption.html';
@@ -51,6 +52,7 @@ export default class AdoptionForm extends componentType(spec, canonicalLinkMixin
             }
         );
         this.setCanonicalLink('/adoption');
+        this.preselectedTitle = decodeURIComponent(window.location.search.substr(1));
     }
 
     onLoaded() {
@@ -85,7 +87,7 @@ export default class AdoptionForm extends componentType(spec, canonicalLinkMixin
             const bookSelector = new BookSelector({
                 prompt: 'Which textbook(s) are you currently using?',
                 required: true,
-                preselectedTitle: decodeURIComponent(window.location.search.substr(1))
+                preselectedTitle: this.preselectedTitle
             });
             const result = new SeriesOfComponents({
                 className: 'page-2',
@@ -175,13 +177,24 @@ export default class AdoptionForm extends componentType(spec, canonicalLinkMixin
             // Ensure a little break between submissions
             setTimeout(action, 300);
         } else {
-            const emailEl = document.querySelector('[name="email"]');
+            books.then((b) => {
+                const liveBooks = b.filter((entry) => entry.book_state === 'live');
+                const backTo = liveBooks.find((entry) => entry.salesforce_abbreviation === this.preselectedTitle);
 
-            setTimeout(() => {
-                routerBus.emit('navigate', '/adoption-confirmation', {
-                    email: emailEl.value
-                });
-            }, 300);
+                if (backTo) {
+                    routerBus.emit('navigate', `/details/${backTo.slug}?Instructor resources`, {
+                        partnerTooltip: true
+                    });
+                } else {
+                    /* Send to Tech Scout with books pre-selected */
+                    const scoutBooks = this.selectedBooks.map((sfBook) => sfBook.value);
+
+                    routerBus.emit('navigate', '/partners', {
+                        confirmation: 'adoption',
+                        book: scoutBooks
+                    });
+                }
+            });
         }
     }
 

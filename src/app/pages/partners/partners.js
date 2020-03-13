@@ -137,7 +137,9 @@ export default class extends componentType(spec, insertHtmlMixin) {
             super.onLoaded();
         }
         if (history.state && history.state.book) {
-            books.toggle(history.state.book);
+            ([].concat(history.state.book)).forEach((book) => {
+                books.toggle(book);
+            });
         }
         if (this.heading) {
             // already loaded, we came back
