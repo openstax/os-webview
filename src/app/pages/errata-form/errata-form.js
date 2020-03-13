@@ -3,10 +3,11 @@ import {description as template} from './errata-form.html';
 import bookPromise from '~/models/book-titles';
 import userModel from '~/models/usermodel';
 import $ from '~/helpers/$';
-import Form from './form/form';
 import css from './errata-form.css';
 import settings from 'settings';
 import linkHelper from '~/helpers/link';
+import WrappedJsx from '~/controllers/jsx-wrapper';
+import Form from './form/form.jsx';
 
 const spec = {
     template,
@@ -58,7 +59,7 @@ export default class extends componentType(spec) {
                         location: this.queryDict.location && this.queryDict.location[0],
                         source: this.queryDict.source && this.queryDict.source[0]
                     });
-                    const form = new Form(formModel);
+                    const form = new WrappedJsx(Form, {model: formModel});
 
                     this.regions.form.attach(form);
                     this.update();

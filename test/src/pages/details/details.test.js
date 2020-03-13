@@ -8,7 +8,6 @@ let p;
 
 beforeEach(function () {
     window.history.pushState({}, 'details', pathname);
-    window.location.assign = jest.fn();
     ({instance:p, ready} = instanceReady(Details));
 });
 

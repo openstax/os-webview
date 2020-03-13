@@ -192,11 +192,10 @@ function compileScriptsBabel() {
     .pipe(pi.replace(/@VERSION@/g, config.version))
     .pipe(pi.replace(/@ENV@/g, config.env))
     .pipe(pi.babel({
-        presets: ['env'],
+        presets: ['@babel/preset-react'],
         plugins: [
-            'transform-async-to-generator',
-            'transform-class-properties',
-            'transform-decorators-legacy'
+            '@babel/plugin-transform-async-to-generator',
+            '@babel/plugin-proposal-class-properties'
         ]
     }))
     // prefix the sourcemaps with with '../src/' so webpack can find them

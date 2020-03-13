@@ -1,10 +1,13 @@
 {
-    "presets": ["env"],
+    "presets": [
+        '@babel/preset-env',
+        '@babel/preset-react'
+    ],
     "plugins": [
-        ["transform-runtime", {
-            "polyfill": false,
+        ["@babel/plugin-transform-runtime", {
             "regenerator": true
             }
-        ]
+        ],
+        ["@babel/plugin-proposal-decorators", { legacy: true }]
     ]
 }

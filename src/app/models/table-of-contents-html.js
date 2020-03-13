@@ -1,23 +1,23 @@
 import settings from 'settings';
 
-export default function ({isRex, cnxId, webviewLink}) {
+export function cnxFetch({isRex, cnxId, webviewLink}) {
     const rexUrl = new URL(webviewLink);
 
-    function cnxFetch() {
-        const rexOrigin = rexUrl.origin;
+    const rexOrigin = rexUrl.origin;
 
-        if (isRex) {
-            return fetch(`${rexOrigin}/rex/environment.json`)
-                .then((r) => r.json())
-                .then((r) => fetch(`${rexOrigin}/rex/releases/${r.release_id}/rex/release.json`))
-                .then((r) => r.json())
-                .then((r) => fetch(`//archive.cnx.org/contents/${cnxId}@${r.books[cnxId].defaultVersion}`))
-                .then((r) => r.json());
-        }
-        return fetch(`//archive.cnx.org/contents/${cnxId}.json`)
+    if (isRex) {
+        return fetch(`${rexOrigin}/rex/environment.json`)
+            .then((r) => r.json())
+            .then((r) => fetch(`${rexOrigin}/rex/releases/${r.release_id}/rex/release.json`))
+            .then((r) => r.json())
+            .then((r) => fetch(`//archive.cnx.org/contents/${cnxId}@${r.books[cnxId].defaultVersion}`))
             .then((r) => r.json());
     }
+    return fetch(`//archive.cnx.org/contents/${cnxId}.json`)
+        .then((r) => r.json());
+}
 
+export default function ({isRex, cnxId, webviewLink}) {
     function pageLink(entry) {
         const rexRoot = webviewLink.replace(/\/pages\/.*/, '');
 
@@ -46,7 +46,7 @@ export default function ({isRex, cnxId, webviewLink}) {
         return htmlEntities;
     }
 
-    return cnxFetch().then(
+    return cnxFetch({isRex, cnxId, webviewLink}).then(
         (cnxData) => buildTableOfContents(cnxData.tree.contents, 'div').join(''),
         (err) => {
             console.warn(`Error fetching TOC for ${cnxId}: ${err}`);

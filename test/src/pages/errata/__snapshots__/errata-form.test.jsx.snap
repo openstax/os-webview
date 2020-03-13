@@ -1,0 +1,255 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrataForm/Form Creates the React form 1`] = `
+<form
+  action="https://cms-dev.openstax.org/apps/cms/api/errata/"
+  className="body-block hide-errors"
+  encType="multipart/form-data"
+  method="post"
+  onSubmit={[Function]}
+>
+  <input
+    name="submitted_by_account_id"
+    type="hidden"
+    value={23}
+  />
+  <input
+    name="book"
+    type="hidden"
+    value={207}
+  />
+  <div
+    className="question"
+  >
+    Select the type of error below.
+  </div>
+  <div
+    className="radio-columns"
+  >
+    <span
+      className="invalid-message"
+    >
+      
+    </span>
+    <label>
+      <input
+        name="error_type"
+        onChange={[Function]}
+        required={true}
+        type="radio"
+        value="Broken link"
+      />
+      <span
+        className="label-text"
+      >
+        Broken link
+      </span>
+    </label>
+    <label>
+      <input
+        name="error_type"
+        onChange={[Function]}
+        required={true}
+        type="radio"
+        value="Incorrect answer, calculation, or solution"
+      />
+      <span
+        className="label-text"
+      >
+        Incorrect answer, calculation, or solution
+      </span>
+    </label>
+    <label>
+      <input
+        name="error_type"
+        onChange={[Function]}
+        required={true}
+        type="radio"
+        value="General/pedagogical suggestion or question"
+      />
+      <span
+        className="label-text"
+      >
+        General/pedagogical suggestion or question
+      </span>
+    </label>
+    <label>
+      <input
+        name="error_type"
+        onChange={[Function]}
+        required={true}
+        type="radio"
+        value="Other factual inaccuracy in content"
+      />
+      <span
+        className="label-text"
+      >
+        Other factual inaccuracy in content
+      </span>
+    </label>
+    <label>
+      <input
+        name="error_type"
+        onChange={[Function]}
+        required={true}
+        type="radio"
+        value="Typo"
+      />
+      <span
+        className="label-text"
+      >
+        Typo
+      </span>
+    </label>
+    <label>
+      <input
+        name="error_type"
+        onChange={[Function]}
+        required={true}
+        type="radio"
+        value="Other"
+      />
+      <span
+        className="label-text"
+      >
+        Other
+      </span>
+    </label>
+  </div>
+  <div
+    className="helpbox not-visible"
+  >
+    <span>
+      Need help logging in or have general questions? Contact Support at 
+    </span>
+    <a
+      href="mailto:support@openstax.org"
+    >
+      support@openstax.org
+    </a>
+    .
+  </div>
+  <div
+    className="question"
+  >
+    In which source did you find this error?
+  </div>
+  <div
+    className="radio-columns"
+  >
+    <span
+      className="invalid-message"
+    >
+      
+    </span>
+  </div>
+  <div
+    className="question"
+  >
+    Where did you find this error?
+  </div>
+  <label>
+    <input
+      checked={true}
+      onChange={[Function]}
+      type="checkbox"
+    />
+    In the textbook
+  </label>
+  <span
+    className="invalid-message"
+  >
+    
+  </span>
+  <select
+    name="location"
+    onChange={[Function]}
+    required={true}
+    size="10"
+  />
+  <div
+    className="question"
+  >
+    Tell us in detail about the error and your suggestion.
+  </div>
+  <div
+    className="subnote wide"
+  >
+    Please limit to one error per submission and include a suggested resolution if possible. If you have several to report, please contact us at 
+    <a
+      href="mailto:errata@openstax.org"
+    >
+      errata@openstax.org
+    </a>
+    .
+  </div>
+  <span
+    className="invalid-message"
+  >
+    
+  </span>
+  <textarea
+    maxLength="4000"
+    name="detail"
+    onChange={[Function]}
+    required={true}
+    skip="true"
+  />
+  <div
+    className="question"
+  >
+    Please add a screenshot or any other file that helps explain the error.
+  </div>
+  <div
+    className="button-group"
+  >
+    <div
+      className="file-button"
+    >
+      <label
+        className="btn"
+        role="button"
+        tabIndex="0"
+      >
+        Add file
+        <input
+          className="hidden"
+          name="file_1"
+          onChange={[Function]}
+          type="file"
+        />
+      </label>
+      
+      
+    </div>
+    <div
+      className="file-button"
+    >
+      <label
+        className="btn"
+        role="button"
+        tabIndex="0"
+      >
+        Add file
+        <input
+          className="hidden"
+          name="file_2"
+          onChange={[Function]}
+          type="file"
+        />
+      </label>
+      
+      
+    </div>
+    <div>
+      <input
+        className="btn"
+        disabled={false}
+        onClick={[Function]}
+        type="submit"
+        value="Submit"
+      />
+    </div>
+  </div>
+</form>
+`;
