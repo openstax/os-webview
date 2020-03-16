@@ -199,6 +199,7 @@ export default class extends componentType(spec, insertHtmlMixin) {
                 books: (pd.books||'').split(/;/),
                 advancedFeatures: advancedFilterKeys(pd).filter((k) => pd[k] === true),
                 website: pd.landing_page,
+                websiteLinkText: this.pageData.partner_landing_page_link,
                 images: [pd.image_1, pd.image_2, pd.image_3, pd.image_4, pd.image_5]
                     .filter((img) => Boolean(img)),
                 videos: [pd.video_1, pd.video_2]
@@ -206,6 +207,7 @@ export default class extends componentType(spec, insertHtmlMixin) {
                 type: pd.partner_type,
                 cost: pd.affordability_cost,
                 infoUrl: pd.formstack_url,
+                infoLinkText: this.pageData.partner_request_info_link,
                 verifiedFeatures: pd.verified_by_instructor ? tooltipText : false
             }));
 

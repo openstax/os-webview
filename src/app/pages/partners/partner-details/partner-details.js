@@ -23,9 +23,10 @@ const spec = {
             titles: this.books, // TODO: lookup proper titles from Salesforce names
             tags: this.tags,
             infoUrl: this.infoUrl,
-            infoText: 'Request info',
+            infoText: this.infoLinkText,
             description: this.richDescription,
-            partnerUrl: this.website,
+            partnerUrl: this.website || this.partner_website,
+            partnerLinkText: this.websiteLinkText,
             verifiedFeatures: this.verifiedFeatures,
             badgeImage: '/images/partners/verified-badge.svg'
         };
