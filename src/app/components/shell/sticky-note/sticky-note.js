@@ -35,8 +35,10 @@ class StickyNote extends CMSPageController {
         this.expires = this.pageData.expires;
         if (this.pageData.emergency_content && !isExpired(this.pageData.emergency_expires)) {
             this.temporary = true;
+            this.expired = false;
             this.content = this.pageData.emergency_content;
             this.el.classList.add('temporary-banner');
+            this.forceHide(false);
         } else {
             this.content = this.pageData.content;
             this.expired = isExpired(this.pageData.expires);
@@ -68,7 +70,8 @@ class StickyNote extends CMSPageController {
         this.el.classList.toggle('hidden', whether);
         if (!whether) {
             this.incrementVisitedGive();
-            this.expired = this.expired || Number(localStorage.visitedGive || 0) > 5;
+            this.expired = !this.temporary &&
+                (this.expired || Number(localStorage.visitedGive || 0) > 5);
             this.hideOrUpdate();
         }
     }
