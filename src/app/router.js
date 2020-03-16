@@ -123,7 +123,6 @@ class AppRouter extends Router {
         this.route('errata/form', 'errata-form');
         this.route('errata/', 'errata-summary');
         this.route(/errata\/\d+/, 'errata-detail');
-        this.route('interest-confirmation', 'confirmation');
         this.route('higher-ed', 'home');
         ['license', 'tos', 'privacy-policy', 'accessibility-statement', 'careers']
             .forEach((pathname) => {
