@@ -5,6 +5,7 @@ import {on} from '~/helpers/controller/decorators';
 import routerBus from '~/helpers/router-bus';
 import shuffle from 'lodash/shuffle';
 import {tooltipText} from '~/models/salesforce-partners';
+import addCallout from '~/components/get-this-title/recommended-callout/recommended-callout';
 
 const spec = {
     template,
@@ -15,6 +16,19 @@ const spec = {
 };
 
 class Partners extends componentType(spec) {
+
+    onLoaded() {
+        if (super.onLoaded) {
+            super.onLoaded();
+        }
+        if (history.state.partnerTooltip) {
+            const callout = addCallout(
+                this.el.querySelector('.callout'),
+                'Book resources',
+                'See technology resources for this book!'
+            );
+        }
+    }
 
     @on('click a')
     saveBookInHistoryState(event) {

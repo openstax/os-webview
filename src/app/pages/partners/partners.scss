@@ -2,6 +2,42 @@
 @import 'mixins/placeholder-selectors';
 
 .partners.page {
+
+    .above-the-banner {
+        background-color: #d9edf7;
+        color: #31708f;
+
+        .content {
+            @extend %content;
+
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            line-height: normal;
+
+            @include width-up-to($phone-max) {
+                padding-bottom: $normal-margin;
+                padding-top: $normal-margin
+            }
+
+            @include wider-than($phone-max) {
+                padding-bottom: 0.6rem;
+                padding-top: 0.6rem;
+            }
+
+            .put-away {
+                background-color: inherit;
+                color: inherit;
+                margin-left: $normal-margin;
+
+                @include width-up-to($phone-max) {
+                    align-self: start;
+                    padding-top: 0;
+                }
+            }
+        }
+    }
+
     .banner {
         @extend %light-on-dark;
 

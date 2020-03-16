@@ -1,7 +1,10 @@
 import cmsFetch from './cmsFetch';
+import routerBus from '~/helpers/router-bus';
 
-export default cmsFetch('books?format=json')
+const fetchBooks = cmsFetch('books?format=json')
     .then((r) => r.books);
+
+export default fetchBooks;
 
 export function salesforceTitles(books) {
     const seenTitles = {};
@@ -30,4 +33,25 @@ export function salesforceTitles(books) {
 export function subjects(sfTitles) {
     return sfTitles.reduce((a, b) => a.concat(b.subjects), [])
         .reduce((a, b) => a.includes(b) ? a : a.concat(b), []);
+}
+
+export function afterFormSubmit(preselectedTitle, selectedBooks) {
+    fetchBooks.then((b) => {
+        const liveBooks = b.filter((entry) => entry.book_state === 'live');
+        const backTo = liveBooks.find((entry) => entry.salesforce_abbreviation === preselectedTitle);
+
+        if (backTo) {
+            routerBus.emit('navigate', `/details/${backTo.slug}?Instructor resources`, {
+                partnerTooltip: true
+            });
+        } else {
+            /* Send to Tech Scout with books pre-selected */
+            const scoutBooks = selectedBooks.map((sfBook) => sfBook.value);
+
+            routerBus.emit('navigate', '/partners', {
+                confirmation: 'adoption',
+                book: scoutBooks
+            });
+        }
+    });
 }

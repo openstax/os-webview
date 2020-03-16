@@ -10,8 +10,8 @@ import FormInput from '~/components/form-input/form-input';
 import HiddenFields from './hidden-fields/hidden-fields';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
 import RoleSelector from '~/components/role-selector/role-selector';
-import routerBus from '~/helpers/router-bus';
 import salesforce from '~/models/salesforce';
+import {afterFormSubmit} from '~/models/books';
 import SeriesOfComponents from '~/components/series-of-components/series-of-components';
 import StudentForm from '~/components/student-form/student-form';
 import {description as template} from './interest.html';
@@ -35,6 +35,8 @@ export default class InterestForm extends BaseClass {
         };
         this.selectedRole = 'none selected';
         this.hiddenFields = new HiddenFields(() => this.selectedRole);
+        this.preselectedTitle = decodeURIComponent(window.location.search.substr(1));
+        this.selectedBooks = [];
     }
 
     firstPage() {
@@ -66,7 +68,7 @@ export default class InterestForm extends BaseClass {
             prompt: 'Which textbook(s) are you interested in adopting?',
             required: true,
             name: 'Subject__c',
-            preselectedTitle: decodeURIComponent(window.location.search.substr(1))
+            preselectedTitle: this.preselectedTitle
         });
         const howManyStudents = new FormInput({
             name: 'Number_of_Students__c',
@@ -102,6 +104,9 @@ export default class InterestForm extends BaseClass {
             ]
         });
 
+        bookSelector.on('change', (selectedBooks) => {
+            this.selectedBooks = selectedBooks;
+        });
         result.validate = function () {
             validated = true;
             const bsv = bookSelector.validate();
@@ -135,7 +140,7 @@ export default class InterestForm extends BaseClass {
             {
                 onPageChange: this.onPageChange.bind(this),
                 afterSubmit: () => {
-                    routerBus.emit('navigate', '/interest-confirmation');
+                    afterFormSubmit(this.preselectedTitle, this.selectedBooks);
                 }
             }
         );

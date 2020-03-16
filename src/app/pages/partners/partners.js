@@ -11,6 +11,7 @@ import {displayMode, books, types, advanced, sort} from './store';
 import shellBus from '~/components/shell/shell-bus';
 import routerBus from '~/helpers/router-bus';
 import analyticsEvents from './analytics-events';
+import {on} from '~/helpers/controller/decorators';
 
 const spec = {
     template,
@@ -23,7 +24,8 @@ const spec = {
     model() {
         return {
             headline: this.heading,
-            description: this.description
+            description: this.description,
+            confirmation: history.state.confirmation
         };
     },
     heading: '',
@@ -137,7 +139,9 @@ export default class extends componentType(spec, insertHtmlMixin) {
             super.onLoaded();
         }
         if (history.state && history.state.book) {
-            books.toggle(history.state.book);
+            ([].concat(history.state.book)).forEach((book) => {
+                books.toggle(book);
+            });
         }
         if (this.heading) {
             // already loaded, we came back
@@ -228,6 +232,12 @@ export default class extends componentType(spec, insertHtmlMixin) {
             super.onClose();
         }
         [books, types, advanced].forEach((store) => store.clear());
+    }
+
+    @on('click .put-away')
+    closeConfirmation() {
+        delete history.state.confirmation;
+        this.update();
     }
 
 }

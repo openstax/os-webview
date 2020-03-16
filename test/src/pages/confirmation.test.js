@@ -2,8 +2,7 @@ import Confirmation from '~/pages/confirmation/confirmation';
 
 const referrers = {
     contact: 'Thanks for contacting us',
-    'errata?id=7199': 'Thanks for your help!',
-    interest: 'Thank you'
+    'errata?id=7199': 'Thanks for your help!'
 };
 describe('Confirmation', () => {
     Reflect.ownKeys(referrers).forEach((ref) => {

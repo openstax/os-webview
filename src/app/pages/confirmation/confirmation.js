@@ -27,15 +27,6 @@ const models = {
             text: 'Have more errata to submit?',
             buttons: []
         }
-    },
-    interest: {
-        headline: 'Thank you',
-        adoptionQuestion: 'Please add info@openstax.org to your address book. You\'ll' +
-        ' receive an email from us soon.',
-        adoptionUrl: '/subjects',
-        adoptionLinkText: 'Back to the books',
-        studentImage: 'student-chemistry.png',
-        outlineButton: true
     }
 };
 
@@ -95,11 +86,6 @@ export default class Confirmation extends BaseClass {
                 this.model.defaultEmail = response.email;
                 this.update();
             });
-        }
-        if (this.referringPage === 'interest') {
-            const surveyRequest = new SurveyRequest();
-
-            this.regions.detail.attach(surveyRequest);
         }
     }
 

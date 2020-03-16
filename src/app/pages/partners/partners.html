@@ -1,4 +1,11 @@
 <template args="model">
+    <section if="model.confirmation" class="above-the-banner">
+        <div class="content">
+            Thank you! Your form has been submitted. Check out some of the resources
+            available for our books below.
+            <button type="button" class="put-away"><i class="fa fa-times"></i></button>
+        </div>
+    </section>
     <section class="banner hero">
         <div class="boxed">
             <h1>{model.headline}</h1>
