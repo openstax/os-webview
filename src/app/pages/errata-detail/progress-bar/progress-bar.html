@@ -2,15 +2,12 @@
     <div class="progress-bar-labels">
         <div class="label">
             <div class="event">In Review</div>
-            <div if="model.showDatesInBar" class="date">{model.createdDate}</div>
         </div>
         <div class="label">
             <div class="event">Reviewed</div>
-            <div if="model.showDatesInBar" class="date">{model.reviewedDate}</div>
         </div>
         <div class="label">
             <div class="event">{model.barStatus || 'Corrected'}</div>
-            <div if="model.showDatesInBar" class="date">{model.correctedDate}</div>
         </div>
     </div>
     <div class="progress-bar">

@@ -14,30 +14,3 @@ describe('ErrataDetail', () => {
         });
     });
 });
-
-describe('ErrataDetail/ProgressBar', () => {
-    it('shows dates when reviewedDate is set', () => {
-        const instance = new ProgressBar({
-            barStatus: 'bs',
-            bars: 1,
-            createdDate: 'today',
-            reviewedDate: 'tomorrow',
-            correctedDate: 'later'
-        });
-        const dates = Array.from(instance.el.querySelectorAll('.date'));
-
-        expect(dates.length).toBe(3);
-    });
-    it('hides dates when reviewedDate is not set', () => {
-        const instance = new ProgressBar({
-            barStatus: 'bs',
-            bars: 1,
-            createdDate: 'today',
-            reviewedDate: null,
-            correctedDate: null
-        });
-        const dates = Array.from(instance.el.querySelectorAll('.date'));
-
-        expect(dates.length).toBe(0);
-    });
-});
