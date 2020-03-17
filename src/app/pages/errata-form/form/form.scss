@@ -28,6 +28,10 @@
         margin-top: 3rem;
     }
 
+    [name="location"] {
+        width: 100%;
+    }
+
     ::placeholder {
         color: text-color(helper);
     }
@@ -88,6 +92,10 @@
 
     .file-button {
         grid-template-columns: auto auto 1fr;
+
+        &.empty + .file-button.empty {
+            display: none;
+        }
     }
 
     .clear-file {

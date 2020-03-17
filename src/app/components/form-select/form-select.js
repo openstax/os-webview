@@ -15,11 +15,6 @@ const spec = {
 
 export default class FormSelect extends componentType(spec, busMixin) {
 
-    static YES_NO_OPTIONS = [
-        {label: 'Yes', value: '1'},
-        {label: 'No', value: '0'}
-    ];
-
     init(props) {
         super.init();
         this.model = props;
