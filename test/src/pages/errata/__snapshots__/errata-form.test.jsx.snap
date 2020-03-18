@@ -146,16 +146,40 @@ exports[`ErrataForm/Form Creates the React form 1`] = `
   <div
     className="question"
   >
-    Where did you find this error?
+    Did you find this error in the 
+    <i>
+      Biology 2e
+    </i>
+     textbook?
   </div>
-  <label>
-    <input
-      checked={true}
-      onChange={[Function]}
-      type="checkbox"
-    />
-    In the textbook
-  </label>
+  <div
+    className="horizontal-group"
+  >
+    <label>
+      <input
+        checked={true}
+        onChange={[Function]}
+        type="radio"
+      />
+      <div
+        className="label-text"
+      >
+        Yes
+      </div>
+    </label>
+    <label>
+      <input
+        checked={false}
+        onChange={[Function]}
+        type="radio"
+      />
+      <div
+        className="label-text"
+      >
+        No
+      </div>
+    </label>
+  </div>
   <span
     className="invalid-message"
   >
@@ -204,7 +228,7 @@ exports[`ErrataForm/Form Creates the React form 1`] = `
     className="button-group"
   >
     <div
-      className="file-button"
+      className="file-button empty"
     >
       <label
         className="btn"
@@ -223,7 +247,7 @@ exports[`ErrataForm/Form Creates the React form 1`] = `
       
     </div>
     <div
-      className="file-button"
+      className="file-button empty"
     >
       <label
         className="btn"

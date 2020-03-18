@@ -36,11 +36,11 @@ function ChapterOption({entry, chapterFilter, updateChapterFilter}) {
     }
 
     return (
-        <option className={`indent-${entry.indentLevel} chapter`}
+        <option className={`chapter`}
          value={entry.value}
          onClick={onClick}
         >
-            {entry.title}
+            [{chapterFilter===entry.value ? '–' : '+'}] {entry.title}
         </option>
     );
 }
@@ -126,27 +126,39 @@ function DefaultValue({defaultValue}) {
     );
 }
 
-function NotDefaultValue({selectedBook, defaultValue}) {
+function NotDefaultValue({selectedBook, defaultValue, title}) {
     const [isInContent, updateIsInContent] = useState(defaultValue ? false : true);
     const toggle = () => {
         updateIsInContent(!isInContent);
     };
     const Input = isInContent ? TocSelector : OtherLocationInput;
+    const onChange = (event) => {
+        console.info('Event', event);
+        updateIsInContent(!isInContent);
+    };
 
     return [
-        <label key="1">
-            <input type="checkbox" checked={isInContent} onChange={toggle} />
-            In the textbook
-        </label>,
-        <Input selectedBook={selectedBook} defaultValue={defaultValue} key="2" />
+        <div className="question" key="1">
+            Did you find this error in the <i>{title}</i> textbook?
+        </div>,
+        <div className="horizontal-group" key="2">
+            <label>
+                <input type="radio" checked={isInContent} onChange={onChange} />
+                <div className="label-text">Yes</div>
+            </label>
+            <label>
+                <input type="radio" checked={!isInContent} onChange={onChange} />
+                <div className="label-text">No</div>
+            </label>
+        </div>,
+        <Input selectedBook={selectedBook} defaultValue={defaultValue} key="3" />
     ];
 }
 
-export default function ErrorLocationSelector({selectedBook, defaultValue, readOnly}) {
-    const Input = (defaultValue && readOnly) ? DefaultValue : NotDefaultValue;
+export default function ErrorLocationSelector({selectedBook, defaultValue, readOnly, title}) {
+    const Input = (readOnly) ? DefaultValue : NotDefaultValue;
 
-    return [
-        <div className="question" key="1">Where did you find this error?</div>,
-        <Input defaultValue={defaultValue} selectedBook={selectedBook} key="2" />
-    ];
+    return (
+        <Input defaultValue={defaultValue} selectedBook={selectedBook} title={title}/>
+    );
 }
