@@ -1,5 +1,6 @@
 import cmsFetch from './cmsFetch';
 import routerBus from '~/helpers/router-bus';
+import $ from '~/helpers/$';
 
 const fetchBooks = cmsFetch('books?format=json')
     .then((r) => r.books);
@@ -40,7 +41,7 @@ export function afterFormSubmit(preselectedTitle, selectedBooks) {
         const liveBooks = b.filter((entry) => entry.book_state === 'live');
         const backTo = liveBooks.find((entry) => entry.salesforce_abbreviation === preselectedTitle);
 
-        if (backTo) {
+        if (backTo && !$.isPhoneDisplay()) {
             routerBus.emit('navigate', `/details/${backTo.slug}?Instructor resources`, {
                 partnerTooltip: true
             });
@@ -50,7 +51,8 @@ export function afterFormSubmit(preselectedTitle, selectedBooks) {
 
             routerBus.emit('navigate', '/partners', {
                 confirmation: 'adoption',
-                book: scoutBooks
+                book: scoutBooks,
+                slug: backTo && backTo.slug
             });
         }
     });
