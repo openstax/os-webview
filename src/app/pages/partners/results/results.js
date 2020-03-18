@@ -5,7 +5,6 @@ import css from './results.css';
 import Result from './result/result';
 import orderBy from 'lodash/orderBy';
 import shuffle from 'lodash/shuffle';
-import {on} from '~/helpers/controller/decorators';
 import {resultCount} from '../store';
 
 export const costOptions = [
