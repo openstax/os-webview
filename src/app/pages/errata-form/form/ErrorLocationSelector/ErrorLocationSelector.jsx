@@ -76,28 +76,31 @@ function TocSelector({selectedBook}) {
             }
         });
 
-    return ([
-        <InvalidMessage key="1" />,
-        <select size="10" name="location" key="2"
-         ref={inputRef} onChange={updateInvalidMessage}
-         required>
-            {
-                filteredTree().map((entry, index) => (
-                    entry.isChapter && !entry.parent ?
-                    <ChapterOption
-                     entry={entry}
-                     chapterFilter={chapterFilter}
-                     updateChapterFilter={updateChapterFilter}
-                     key={index}
-                    /> :
-                    <PageOption
-                    entry={entry}
-                    key={index}
-                    />
-                ))
-            }
-        </select>
-    ]);
+    return (
+        <React.Fragment>
+            <label>Where in the book did you find the error?</label>
+            <InvalidMessage />
+            <select size="10" name="location"
+             ref={inputRef} onChange={updateInvalidMessage}
+             required>
+                {
+                    filteredTree().map((entry, index) => (
+                        entry.isChapter && !entry.parent ?
+                        <ChapterOption
+                         entry={entry}
+                         chapterFilter={chapterFilter}
+                         updateChapterFilter={updateChapterFilter}
+                         key={index}
+                        /> :
+                        <PageOption
+                        entry={entry}
+                        key={index}
+                        />
+                    ))
+                }
+            </select>
+        </React.Fragment>
+    );
 }
 
 function OtherLocationInput({defaultValue='', readOnly=false}) {
@@ -109,15 +112,18 @@ function OtherLocationInput({defaultValue='', readOnly=false}) {
         updateInvalidMessage();
     }
 
-    return ([
-        <InvalidMessage key="1" />,
-        <input type="text" name="location" key="2"
-            placeholder="Describe where you found the error"
-            value={value} onChange={onChange}
-            ref={inputRef} readOnly={readOnly}
-            required
-        />
-    ]);
+    return (
+        <React.Fragment>
+            <label>Other location (please provide URL if possible)</label>
+            <InvalidMessage />
+            <input type="text" name="location"
+                placeholder="Describe where you found the error"
+                value={value} onChange={onChange}
+                ref={inputRef} readOnly={readOnly}
+                required
+            />
+        </React.Fragment>
+    );
 }
 
 function DefaultValue({defaultValue}) {
@@ -137,22 +143,24 @@ function NotDefaultValue({selectedBook, defaultValue, title}) {
         updateIsInContent(!isInContent);
     };
 
-    return [
-        <div className="question" key="1">
-            Did you find this error in the <i>{title}</i> textbook?
-        </div>,
-        <div className="horizontal-group" key="2">
-            <label>
-                <input type="radio" checked={isInContent} onChange={onChange} />
-                <div className="label-text">Yes</div>
-            </label>
-            <label>
-                <input type="radio" checked={!isInContent} onChange={onChange} />
-                <div className="label-text">No</div>
-            </label>
-        </div>,
-        <Input selectedBook={selectedBook} defaultValue={defaultValue} key="3" />
-    ];
+    return (
+        <React.Fragment>
+            <div className="question">
+                Did you find this error in the <i>{title}</i> textbook?
+            </div>
+            <div className="horizontal-group">
+                <label>
+                    <input type="radio" checked={isInContent} onChange={onChange} />
+                    <div className="label-text">Yes</div>
+                </label>
+                <label>
+                    <input type="radio" checked={!isInContent} onChange={onChange} />
+                    <div className="label-text">No</div>
+                </label>
+            </div>
+            <Input selectedBook={selectedBook} defaultValue={defaultValue} />
+        </React.Fragment>
+    );
 }
 
 export default function ErrorLocationSelector({selectedBook, defaultValue, readOnly, title}) {
