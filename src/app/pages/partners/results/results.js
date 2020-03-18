@@ -1,11 +1,11 @@
 import componentType, {cleanupMixin} from '~/helpers/controller/init-mixin';
 import busMixin from '~/helpers/controller/bus-mixin';
-import {description as template} from './results.html';
 import css from './results.css';
-import Result from './result/result';
 import orderBy from 'lodash/orderBy';
 import shuffle from 'lodash/shuffle';
 import {resultCount} from '../store';
+import WrappedJsx from '~/controllers/jsx-wrapper';
+import ResultGrid from './result-grid.jsx';
 
 export const costOptions = [
     'Free - $10',
@@ -20,18 +20,9 @@ export const costOptions = [
 const costOptionValues = costOptions.map((entry) => entry.value);
 
 const spec = {
-    template,
     css,
     view: {
         classes: ['results']
-    },
-    model() {
-        return {
-            displayMode: this.displayMode.value
-        };
-    },
-    regions: {
-        cards: '.boxed'
     }
 };
 
@@ -92,39 +83,32 @@ export default class extends componentType(spec, busMixin, cleanupMixin) {
         if (super.onLoaded) {
             super.onLoaded();
         }
-        handleNotifyFor(this.displayMode);
         handleNotifyFor(this.books);
         handleNotifyFor(this.types);
         handleNotifyFor(this.advanced);
         handleNotifyFor(this.sort);
-        this.attachCards();
+        this.attachResults();
     }
 
-    attachCards() {
-        this.regions.cards.empty();
-        this.filteredEntries.forEach((entry) => {
-            const card = new Result({
-                model: {
-                    title: entry.title,
-                    logoUrl: entry.logoUrl,
-                    description: entry.blurb,
-                    tags: entry.tags,
-                    verifiedFeatures: entry.verifiedFeatures,
-                    badgeImage: '/images/partners/verified-badge.svg'
-                }
-            });
+    attachResults() {
+        const props = {
+            entries: this.filteredEntries,
+            emitSelect: (entry) => this.emit('select', entry)
+        };
 
-            this.regions.cards.append(card);
-            card.on('select', () => this.emit('select', entry));
+        console.info('Creating with props:', props);
+        this.resultGrid = new WrappedJsx(ResultGrid, props, this.regions.self.el);
+    }
+
+    updateResults() {
+        this.resultGrid.updateProps({
+            entries: this.filteredEntries
         });
     }
 
-    onUpdate() {
-        if (super.onUpdate) {
-            super.onUpdate();
-        }
-        if (typeof this.regions.cards === 'object') {
-            this.attachCards();
+    update() {
+        if (this.resultGrid) {
+            this.updateResults();
         }
     }
 

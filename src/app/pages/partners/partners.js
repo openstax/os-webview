@@ -7,7 +7,7 @@ import Results, {costOptions} from './results/results';
 import ActiveFilters from './active-filters/active-filters';
 import PartnerDetails from './partner-details/partner-details';
 import partnerFeaturePromise, {tooltipText} from '~/models/salesforce-partners';
-import {displayMode, books, types, advanced, sort} from './store';
+import {books, types, advanced, sort} from './store';
 import shellBus from '~/components/shell/shell-bus';
 import routerBus from '~/helpers/router-bus';
 import analyticsEvents from './analytics-events';
@@ -95,7 +95,6 @@ export default class extends componentType(spec, insertHtmlMixin) {
         const results = new Results({
             el: this.el.querySelector('.results'),
             entries,
-            displayMode,
             books,
             types,
             advanced,
@@ -167,7 +166,6 @@ export default class extends componentType(spec, insertHtmlMixin) {
 
         this.controls = new Controls({
             el: this.el.querySelector('.controls.desktop'),
-            displayMode,
             advancedFilterOptions,
             typeOptions
         });
