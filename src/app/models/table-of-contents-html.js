@@ -1,17 +1,9 @@
 import settings from 'settings';
+import fetchRexRelease from '~/models/rex-release';
 
 export function cnxFetch({isRex, cnxId, webviewLink}) {
-    const rexUrl = new URL(webviewLink);
-
-    const rexOrigin = rexUrl.origin;
-
     if (isRex) {
-        return fetch(`${rexOrigin}/rex/environment.json`)
-            .then((r) => r.json())
-            .then((r) => fetch(`${rexOrigin}/rex/releases/${r.release_id}/rex/release.json`))
-            .then((r) => r.json())
-            .then((r) => fetch(`//archive.cnx.org/contents/${cnxId}@${r.books[cnxId].defaultVersion}`))
-            .then((r) => r.json());
+        return fetchRexRelease(webviewLink, cnxId);
     }
     return fetch(`//archive.cnx.org/contents/${cnxId}.json`)
         .then((r) => r.json());
