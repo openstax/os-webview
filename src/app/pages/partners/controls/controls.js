@@ -159,35 +159,11 @@ export default class extends componentType(spec, busMixin, cleanupMixin) {
         });
     }
 
-    attachDisplayFormatController() {
-        const displayControl = new RadioPanel({
-            items: [
-                {value: 'grid', html: 'Grid'},
-                {value: 'list', html: 'List'}
-            ],
-            selectedValue: this.displayMode.value
-        });
-
-        this.regions.otherControls.append(displayControl);
-        displayControl.on('change', (newValue) => {
-            this.displayMode.value = newValue;
-        });
-        this.cleanup.push(
-            this.displayMode.on('notify', () => {
-                displayControl.emit('update-props', {
-                    selectedValue: this.displayMode.value
-                });
-            })
-        );
-    }
-
     onLoaded() {
         if (super.onLoaded) {
             super.onLoaded();
         }
         this.attachButtons();
-        // List format is pointless; leaving code in case we want to revisit
-        // this.attachDisplayFormatController();
     }
 
     @on('click .popover-closer')

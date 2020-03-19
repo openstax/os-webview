@@ -24,7 +24,11 @@
             }
 
             .card {
+                background-color: ui-color(white);
+                border-radius: 0.3rem;
+                box-shadow: $card-shadow;
                 color: inherit;
+                display: grid;
                 grid-row-gap: 1rem;
                 grid-template: 'image'  8rem
                 'title' 1fr
@@ -33,12 +37,15 @@
                 padding: $normal-margin;
                 text-decoration: none;
 
-                &:hover {
-                    z-index: 1;
-                }
-
                 .logo {
+                    align-self: center;
+                    grid-area: image;
                     justify-self: center;
+
+                    > img {
+                        max-height: 8rem;
+                        max-width: 100%;
+                    }
                 }
 
                 .badge {
@@ -52,57 +59,32 @@
                 .resource-title {
                     @include set-font(h4);
 
+                    font-weight: bold;
+                    grid-area: title;
                     text-align: center;
                 }
 
                 .resource-description {
                     display: none;
                 }
+
+                .tags {
+                    @include body-font(1.1rem);
+
+                    display: grid;
+                    font-weight: bold;
+                    grid-area: tags;
+                    grid-gap: 1rem;
+                    justify-self: start;
+                    text-transform: uppercase;
+
+                    > * {
+                        background-color: ui-color(default);
+                        border-radius: 0.2rem;
+                        padding: 0.5rem 1rem;
+                    }
+                }
             }
         }
     }
-
-    .card {
-        background-color: ui-color(white);
-        border-radius: 0.3rem;
-        box-shadow: $card-shadow;
-        display: grid;
-
-        .logo {
-            align-self: center;
-            grid-area: image;
-
-            > img {
-                max-height: 8rem;
-                max-width: 100%;
-            }
-        }
-
-        .resource-title {
-            font-weight: bold;
-            grid-area: title;
-        }
-
-        .resource-description {
-            grid-area: description;
-        }
-
-        .tags {
-            @include body-font(1.1rem);
-
-            display: grid;
-            font-weight: bold;
-            grid-area: tags;
-            grid-gap: 1rem;
-            justify-self: start;
-            text-transform: uppercase;
-
-            > * {
-                background-color: ui-color(default);
-                border-radius: 0.2rem;
-                padding: 0.5rem 1rem;
-            }
-        }
-    }
-
 }

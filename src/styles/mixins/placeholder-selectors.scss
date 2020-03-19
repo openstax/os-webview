@@ -12,6 +12,7 @@
     grid-template: 'one-area';
     justify-items: center;
     position: relative;
+    z-index: 2;
 
     .background,
     .checkmark {
@@ -34,7 +35,6 @@
         position: absolute;
         text-align: center;
         width: 25rem;
-        z-index: 1;
 
         &.right {
             left: calc(100% + 1rem);

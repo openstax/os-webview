@@ -7,8 +7,12 @@ function makeStateFor(props, Child) {
     const setters = {};
     const result = () => {
         if (props instanceof Object) {
-            Reflect.ownKeys(props).forEach((k) => {
-                [state[k], setters[k]] = useState(props[k]);
+            Object.entries(props).forEach(([key, value]) => {
+                [state[key], setters[key]] = useState(value);
+                if (state[key] !== value) {
+                    // force it -- functions need this
+                    state[key] = value;
+                }
             });
         }
         return React.createElement(Child, state);
@@ -20,9 +24,12 @@ function makeStateFor(props, Child) {
 
 export default class extends Controller {
 
-    init(jsxComponent, props) {
+    init(jsxComponent, props, el) {
         this.child = makeStateFor(props, jsxComponent);
         this.props = props;
+        if (el) {
+            this.el = el;
+        }
     }
 
     onLoaded() {
