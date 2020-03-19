@@ -15,7 +15,7 @@ const componentMixin = (superclass) => class extends superclass {
 
     init(options) {
         Object.assign(this, options);
-        if (typeof this.model === 'function') {
+        if (this.model instanceof Function) {
             this.model = this.model.bind(this);
         }
     }
@@ -52,6 +52,9 @@ function mixinFromSpec(spec) {
     const specMixin = (superclass) => class extends superclass {
 
         init(options) {
+            if ((spec || {}).data instanceof Function) {
+                Object.assign(this, spec.data());
+            }
             Object.assign(this, spec);
             super.init(options);
         }
