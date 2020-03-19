@@ -1,6 +1,9 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .errata-form.page {
+    .horizontal-group {
+        display: flex;
+    }
     select {
         @include set-font(body-regular);
         display: initial;

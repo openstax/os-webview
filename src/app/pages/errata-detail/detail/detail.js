@@ -8,29 +8,25 @@ const spec = {
     view: {
         classes: ['errata-detail-block']
     },
-    model: {
-        detailDataPairs: [
-            ['Submission ID', 'id'],
-            ['Title', 'bookTitle'],
-            ['Source', 'source'],
-            ['Status', 'status'],
-            ['Error Type', 'errorType'],
-            ['Location', 'location'],
-            ['Description', 'detail'],
-            ['Date Submitted', 'date']
-        ],
-        decisionDataPairs: [
-            ['Decision', 'status'],
-            ['Decision details', 'resolutionNotes']
-        ]
+    model() {
+        return {
+            detailDataPairs: [
+                ['Submission ID', 'id'],
+                ['Title', 'bookTitle'],
+                ['Source', 'source'],
+                ['Status', 'status'],
+                ['Error Type', 'errorType'],
+                ['Location', 'location'],
+                ['Description', 'detail'],
+                ['Date Submitted', 'date']
+            ],
+            decisionDataPairs: [
+                ['Decision', 'resolutionNotes']
+            ],
+            showDecisionDetails: this.showDecisionDetails,
+            detail: this.detail
+        };
     }
 };
 
-export default class extends componentType(spec, insertHtmlMixin) {
-
-    init(props) {
-        super.init();
-        Object.assign(this.model, props);
-    }
-
-}
+export default componentType(spec, insertHtmlMixin);

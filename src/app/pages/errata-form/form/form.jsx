@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import ErrorTypeSelector from './ErrorTypeSelector.jsx';
 import ErrorSourceSelector from './ErrorSourceSelector.jsx';
 import ErrorLocationSelector from './ErrorLocationSelector/ErrorLocationSelector.jsx';
+import FileUploader from './FileUploader.jsx';
 import managedInvalidMessage from './InvalidMessage.jsx';
 import settings from 'settings';
 import shellBus from '~/components/shell/shell-bus';
@@ -29,60 +30,6 @@ function ErrorExplanationBox() {
          ref={inputRef} onChange={updateInvalidMessage}
          required key="4"></textarea>
     ];
-}
-
-function FileButton({name, parentRef}) {
-
-    const inputRef = React.createRef();
-    const [filePath, updateFilePath] = useState('');
-
-    function setFile(event) {
-        updateFilePath(event.target.value.replace(/.*\\/, ''));
-    }
-
-    function clearFile(event) {
-        updateFilePath('');
-        inputRef.current.value = null;
-    }
-
-    if (settings.testingEnvironment) {
-        useEffect(() => {
-            console.info('Files:',
-                Array.from(parentRef.current.querySelectorAll('[type="file"]'))
-                .map((i) => i.value)
-            );
-        });
-    }
-
-    return (
-        <div className="file-button">
-            <label className="btn" role="button" tabIndex="0">
-                {filePath ? 'Change' : 'Add file'}
-                <input type="file" className="hidden" name={name} onChange={setFile} ref={inputRef} />
-            </label>
-            {
-                filePath && <span className="file-name">{filePath}</span>
-            }
-            {
-                filePath &&
-                <button type="button" className="clear-file" aria-label="Clear file" onClick={clearFile}>
-                    <span className="fa fa-times"></span>
-                </button>
-            }
-        </div>
-    );
-}
-
-function FileUploader({Slot}) {
-    const thisRef = React.createRef();
-
-    return (
-        <div className="button-group" ref={thisRef}>
-            <FileButton name="file_1" parentRef={thisRef} />
-            <FileButton name="file_2" parentRef={thisRef} />
-            <Slot />
-        </div>
-    );
 }
 
 function SubmitButton({
@@ -210,6 +157,7 @@ export default function ({model}) {
                 selectedBook={selectedBook}
                 defaultValue={model.location}
                 readOnly={model.location && model.source}
+                title={model.selectedTitle}
             />
             <ErrorExplanationBox />
             <div className="question">Please add a screenshot or any other file that helps explain the error.</div>

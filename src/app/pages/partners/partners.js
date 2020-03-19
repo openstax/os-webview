@@ -25,7 +25,8 @@ const spec = {
         return {
             headline: this.heading,
             description: this.description,
-            confirmation: (history.state || {}).confirmation
+            confirmation: (history.state || {}).confirmation,
+            bookSlug: (history.state || {}).slug
         };
     },
     heading: '',

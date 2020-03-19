@@ -1,5 +1,9 @@
 const $ = {};
 
+$.isPhoneDisplay = () => {
+    return window.innerWidth <= 600;
+};
+
 $.isMobileDisplay = () => {
     return window.innerWidth <= 960;
 };
