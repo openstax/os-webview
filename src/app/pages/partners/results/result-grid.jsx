@@ -17,14 +17,14 @@ export default function (props) {
 
     return (
         <div className="boxed grid">
-        {
-            entries.map((entry) =>
-                <ResultCard key={entry.title}
-                 model={modelFromEntry(entry)}
-                 emitSelect={() => emitSelect(entry)}
-                />
-            )
-        }
+            {
+                entries.map((entry) =>
+                    <ResultCard key={entry.title}
+                        model={modelFromEntry(entry)}
+                        emitSelect={() => emitSelect(entry)}
+                    />
+                )
+            }
         </div>
-    )
+    );
 };

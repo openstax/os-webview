@@ -7,7 +7,7 @@ import React, {useState, useEffect} from 'react';
  * It is important that the ref item exist when the message item is created
  */
 
-function InvalidMessage ({message}) {
+function InvalidMessage({message}) {
     return (
         <span className="invalid-message">{message}</span>
     );

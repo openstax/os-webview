@@ -33,6 +33,7 @@
         "css-loader": "^1.0.1",
         "del": "3.0.0",
         "eslint": "5.10.0",
+        "eslint-plugin-react": "^7.19.0",
         "find-pkg": "1.0.0",
         "gulp": "gulpjs/gulp#4.0",
         "gulp-autoprefixer": "4.0.0",

@@ -13,9 +13,9 @@ function OtherSourceInput() {
         <div className="other-group">
             <InvalidMessage />
             <input type="text"
-             name="resource_other" maxLength="250"
-             ref={inputRef} onChange={updateInvalidMessage}
-             required
+                name="resource_other" maxLength="250"
+                ref={inputRef} onChange={updateInvalidMessage}
+                required
             />
         </div>
     );
@@ -34,34 +34,42 @@ export default function ErrorSourceSelector({initialSource}) {
         updateSelectedSource(event.target.value);
         updateRadioInvalidMessage();
     }
+    function Subnote({sType}) {
+        return (
+            <div className="label-text">
+                {sType}
+                {
+                    (sType in subnotes) &&
+                    <div className="indented subnote">{subnotes[sType]}</div>
+                }
+            </div>
+        );
+    }
 
-    return [
-        <div className="question" key="1">In which source did you find this error?</div>,
-        <div className="radio-columns" key="2">
-            <RadioInvalidMessage />
-            {
-                sourceTypes.map((sType, index) => (
-                    <label key={sType}>
-                        <input type="radio" name="resource"
-                         value={sType}
-                         defaultChecked={selectedSource === sType ? '' : null}
-                         ref={index === 0 ? radioRef : null}
-                         onChange={onChange}
-                         required />
-                        <div className="label-text">
-                            {sType}
+    return (
+        <React.Fragment>
+            <div className="question">In which source did you find this error?</div>
+            <div className="radio-columns">
+                <RadioInvalidMessage />
+                {
+                    sourceTypes.map((sType, index) => (
+                        <label key={sType}>
+                            <input type="radio" name="resource"
+                                value={sType}
+                                defaultChecked={selectedSource === sType ? '' : null}
+                                ref={index === 0 ? radioRef : null}
+                                onChange={onChange}
+                                required
+                            />
+                            <Subnote sType={sType} />
                             {
-                                (sType in subnotes) &&
-                                <div className="indented subnote">{subnotes[sType]}</div>
+                                (sType === 'Other' && selectedSource === 'Other') &&
+                                <OtherSourceInput />
                             }
-                        </div>
-                        {
-                            (sType === 'Other' && selectedSource === 'Other') &&
-                            <OtherSourceInput />
-                        }
-                    </label>
-                ))
-            }
-        </div>
-    ];
+                        </label>
+                    ))
+                }
+            </div>
+        </React.Fragment>
+    );
 }

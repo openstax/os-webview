@@ -13,18 +13,17 @@ function treeEntry(title, indentLevel, parent, isChapter) {
         parent,
         value,
         isChapter
-    }
+    };
 }
 
 function flattenTree(contents, indentLevel=0, parent='') {
-
     return contents.map((entry) => {
         const title = $.htmlToText(entry.title);
         const isChapter = Boolean(entry.contents);
         const thisEntry = treeEntry(title, indentLevel, parent, isChapter);
 
         return [thisEntry]
-            .concat(entry.contents ? flattenTree(entry.contents, indentLevel+1, thisEntry.value) : [])
+            .concat(entry.contents ? flattenTree(entry.contents, indentLevel+1, thisEntry.value) : []);
     }).flat();
 }
 
@@ -33,12 +32,12 @@ function ChapterOption({entry, chapterFilter, updateChapterFilter}) {
         const value = chapterFilter === event.target.value ? entry.parent : event.target.value;
 
         updateChapterFilter(value);
-    }
+    };
 
     return (
-        <option className={`chapter`}
-         value={entry.value}
-         onClick={onClick}
+        <option className="chapter"
+            value={entry.value}
+            onClick={onClick}
         >
             [{chapterFilter===entry.value ? '–' : '+'}] {entry.title}
         </option>
@@ -48,7 +47,7 @@ function ChapterOption({entry, chapterFilter, updateChapterFilter}) {
 function PageOption({entry}) {
     return (
         <option className={`indent-${entry.indentLevel}`}
-         value={entry.value}
+            value={entry.value}
         >
             {entry.title}
         </option>
@@ -81,21 +80,21 @@ function TocSelector({selectedBook}) {
             <label>Where in the book did you find the error?</label>
             <InvalidMessage />
             <select size="10" name="location"
-             ref={inputRef} onChange={updateInvalidMessage}
-             required>
+                ref={inputRef} onChange={updateInvalidMessage}
+                required>
                 {
                     filteredTree().map((entry, index) => (
                         entry.isChapter && !entry.parent ?
-                        <ChapterOption
-                         entry={entry}
-                         chapterFilter={chapterFilter}
-                         updateChapterFilter={updateChapterFilter}
-                         key={index}
-                        /> :
-                        <PageOption
-                        entry={entry}
-                        key={index}
-                        />
+                            <ChapterOption
+                                entry={entry}
+                                chapterFilter={chapterFilter}
+                                updateChapterFilter={updateChapterFilter}
+                                key={index}
+                            /> :
+                            <PageOption
+                                entry={entry}
+                                key={index}
+                            />
                     ))
                 }
             </select>
@@ -107,6 +106,7 @@ function OtherLocationInput({defaultValue='', readOnly=false}) {
     const inputRef = React.createRef();
     const [InvalidMessage, updateInvalidMessage] = managedInvalidMessage(inputRef);
     const [value, updateValue] = useState(defaultValue);
+
     function onChange(event) {
         updateValue(event.target.value);
         updateInvalidMessage();
