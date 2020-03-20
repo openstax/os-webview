@@ -8,7 +8,7 @@ const pi = require('gulp-load-plugins')({
 
 function eslint() {
     return gulp.src([
-        `${config.src}/**/*.js`
+        `${config.src}/**/*.js{,x}`
     ], {
         since: gulp.lastRun(eslint)
     })
@@ -16,8 +16,14 @@ function eslint() {
         parser: 'babel-eslint',
         parserOptions: {
             ecmaVersion: 6,
-            sourceType: 'module'
+            sourceType: 'module',
+            ecmaFeatures: {
+                jsx: true
+            }
         },
+        plugins: [
+            'react'
+        ],
         extends: 'eslint:recommended',
         globals: [
             'require',
@@ -38,6 +44,7 @@ function eslint() {
             'eqeqeq': 'error',
             'global-require': 'error',
             'guard-for-in': 'error',
+            'react/jsx-uses-react': 'error',
             'no-alert': 'error',
             'no-caller': 'error',
             'no-case-declarations': 'error',

@@ -22,7 +22,7 @@ function makeStateFor(props, Child) {
     return result;
 }
 
-export default class extends Controller {
+export default class WrappedJsx extends Controller {
 
     init(jsxComponent, props, el) {
         this.child = makeStateFor(props, jsxComponent);
@@ -59,4 +59,15 @@ export default class extends Controller {
 
     }
 
+}
+
+export function pageWrapper(jsxComponent, view) {
+    return class extends WrappedJsx {
+
+        init(props) {
+            super.init(jsxComponent, props);
+            this.view = view;
+        }
+
+    };
 }

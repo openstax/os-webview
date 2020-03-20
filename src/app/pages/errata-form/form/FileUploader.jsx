@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import settings from 'settings';
 
 function FileButton({name, parentRef}) {
-
     const inputRef = React.createRef();
     const [filePath, updateFilePath] = useState('');
     const isEmpty = () => filePath === '' ? 'empty' : '';
@@ -20,7 +19,7 @@ function FileButton({name, parentRef}) {
         useEffect(() => {
             console.info('Files:',
                 Array.from(parentRef.current.querySelectorAll('[type="file"]'))
-                .map((i) => i.value)
+                    .map((i) => i.value)
             );
         });
     }

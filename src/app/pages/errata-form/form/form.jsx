@@ -18,18 +18,20 @@ function ErrorExplanationBox() {
     const inputRef = React.createRef();
     const [InvalidMessage, updateInvalidMessage] = managedInvalidMessage(inputRef);
 
-    return [
-        <div className="question" key="1">Tell us in detail about the error and your suggestion.</div>,
-        <div className="subnote wide" key="2">
-            Please limit to one error per submission and include a suggested
-            resolution if possible. If you have several to report, please
-            contact us at <a href="mailto:errata@openstax.org">errata@openstax.org</a>.
-        </div>,
-        <InvalidMessage key="3" />,
-        <textarea maxLength="4000" name="detail" skip="true"
-         ref={inputRef} onChange={updateInvalidMessage}
-         required key="4"></textarea>
-    ];
+    return (
+        <React.Fragment>
+            <div className="question">Tell us in detail about the error and your suggestion.</div>
+            <div className="subnote wide">
+                Please limit to one error per submission and include a suggested
+                resolution if possible. If you have several to report, please
+                contact us at <a href="mailto:errata@openstax.org">errata@openstax.org</a>.
+            </div>
+            <InvalidMessage />
+            <textarea maxLength="4000" name="detail" skip="true"
+                ref={inputRef} onChange={updateInvalidMessage}
+                required></textarea>
+        </React.Fragment>
+    );
 }
 
 function SubmitButton({
@@ -38,7 +40,6 @@ function SubmitButton({
     submitted,
     submitFailed
 }) {
-
     function doCustomValidation(event) {
         const invalid = formRef.current.querySelector('form :invalid');
 
@@ -70,13 +71,6 @@ export default function ({model}) {
     const [submitFailed, updateSubmitFailed] = useState();
     const postEndpoint = `${settings.apiOrigin}${settings.apiPrefix}/errata/`;
     const formRef = React.createRef();
-    const validationMessage = (name) => {
-        if (!formRef.current) {
-            return 'Not yet';
-        }
-        const el = formRef.current.querySelector(`[name="${name}"]`);
-
-    };
     const helpBoxVisible = () => selectedError === 'Other' ? 'visible' : 'not-visible';
     const initialSource = model.source && sourceNames[model.source.toLowerCase()];
 
@@ -137,9 +131,9 @@ export default function ({model}) {
 
     return (
         <form className={`body-block ${hasBeenSubmitted ? '' : 'hide-errors'}`} method="post" action={postEndpoint}
-             encType="multipart/form-data" ref={formRef}
-             onSubmit={onSubmit}
-         >
+            encType="multipart/form-data" ref={formRef}
+            onSubmit={onSubmit}
+        >
             <input type="hidden" name="submitted_by_account_id" value={model.submittedBy} />
             <input type="hidden" name="book" value={selectedBook.id} />
             <ErrorTypeSelector
