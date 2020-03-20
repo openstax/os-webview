@@ -21,10 +21,12 @@ const spec = {
             validationMessage: this.validationMessage
         };
     },
-    subjects: [],
-    salesforceTitles: [],
-    bookIsSelected: {},
-    validated: false
+    data: () => ({
+        subjects: [],
+        salesforceTitles: [],
+        bookIsSelected: {},
+        validated: false
+    })
 };
 
 export default class BookSelector extends componentType(spec, cmsMixin, salesforceFormMixin, busMixin) {
