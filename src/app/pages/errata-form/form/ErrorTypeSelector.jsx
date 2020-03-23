@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import managedInvalidMessage from './InvalidMessage.jsx';
 
 function OtherErrorInput() {
-    const inputRef = React.createRef();
+    const inputRef = useRef();
     const [InvalidMessage, updateInvalidMessage] = managedInvalidMessage(inputRef);
 
     return (
@@ -28,7 +28,7 @@ export default function ErrorTypeSelector({selectedError, updateSelectedError}) 
         'Typo',
         'Other'
     ];
-    const inputRef = React.createRef();
+    const inputRef = useRef();
     const [InvalidMessage, updateInvalidMessage] = managedInvalidMessage(inputRef);
 
     function onChange(event) {

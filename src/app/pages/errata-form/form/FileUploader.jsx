@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import settings from 'settings';
 
 function FileButton({name, parentRef}) {
-    const inputRef = React.createRef();
+    const inputRef = useRef();
     const [filePath, updateFilePath] = useState('');
     const isEmpty = () => filePath === '' ? 'empty' : '';
 
@@ -44,7 +44,7 @@ function FileButton({name, parentRef}) {
 }
 
 export default function FileUploader({Slot}) {
-    const thisRef = React.createRef();
+    const thisRef = useRef();
 
     return (
         <div className="button-group" ref={thisRef}>

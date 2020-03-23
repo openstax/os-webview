@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import ChildComponent from '~/components/a-component-template/a-component-template.jsx';
 import './a-page-template.css';
 import {handleOnce} from '~/models/cmsFetch';
+import $ from '~/helpers/$';
 
 const slug = 'books/biology-2e';
 const handlePageData = handleOnce(slug);
@@ -15,6 +16,13 @@ export default function () {
         console.info('Fetched', data);
         updateHeading(data.title);
         updateMessage(data.meta.seo_title);
+        document.title = data.title;
+    });
+
+    useEffect(() => {
+        const linkController = $.setCanonicalLink();
+
+        return () => linkController.remove();
     });
 
     return (
