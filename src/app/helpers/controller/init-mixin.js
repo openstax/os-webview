@@ -6,8 +6,8 @@ import shellBus from '~/components/shell/shell-bus';
 import debounce from 'lodash/debounce';
 
 const updateOptimizely = debounce(() => {
-    if (dataLayer) {
-        dataLayer.push({event: 'optimize.activate'});
+    if (window.dataLayer) {
+        window.dataLayer.push({event: 'optimize.activate'});
     }
 }, 80);
 

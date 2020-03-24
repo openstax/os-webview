@@ -15,30 +15,12 @@ describe('AccordionGroup', () => {
         }]
     });
 
-    const itemEls = accordionGroup.el.children;
+    const itemEls = accordionGroup.el.querySelectorAll('.accordion-item');
     const firstPane = itemEls[0].querySelector('.content-pane');
-    const firstControl = itemEls[0].querySelector('.control-bar');
     const secondPane = itemEls[1].querySelector('.content-pane');
-    const secondControl = itemEls[1].querySelector('.control-bar');
 
     it('renders with content hidden', () => {
-        expect(firstPane.getAttribute('hidden')).toBe('');
-        expect(secondPane.getAttribute('hidden')).toBe('');
+        expect(firstPane.hasAttribute('hidden')).toBe(true);
+        expect(secondPane.hasAttribute('hidden')).toBe(true);
     });
-
-    it('hides one when opening the other', () => {
-        clickElement(firstControl);
-        expect(firstPane.getAttribute('hidden')).toBe(null);
-        expect(secondPane.getAttribute('hidden')).toBe('');
-        clickElement(secondControl);
-        expect(firstPane.getAttribute('hidden')).toBe('');
-        expect(secondPane.getAttribute('hidden')).toBe(null);
-    });
-
-    it('toggles the open one closed', () => {
-        clickElement(secondControl);
-        expect(firstPane.getAttribute('hidden')).toBe('');
-        expect(secondPane.getAttribute('hidden')).toBe('');
-    });
-
 });

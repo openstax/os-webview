@@ -56,18 +56,27 @@ const sortOptions = [
 
 export default class extends componentType(spec, busMixin, cleanupMixin) {
 
-    get triangleColor() {
-        let color = 'white';
+    init(...args) {
+        super.init(...args);
+        this.advancedFilterItems = sortBy(
+            this.advancedFilterOptions
+                .map((group) => ({
+                    title: group.title,
+                    contentComponent: new Checkboxes({
+                        options: group.options,
+                        store: advanced
+                    })
+                })),
+            'title'
+        );
+    }
 
+    get triangleColor() {
         if (this.selectedFilter === 'Advanced Filters') {
-            if (this.openLabel === this.advancedFilterOptions[0].title) {
-                color = 'dark';
-            } else {
-                color = 'light';
-            }
+            return this.openLabel === this.advancedFilterItems[0].title ? 'dark' : 'light';
         }
 
-        return color;
+        return 'white';
     }
 
     updateSelected(label, isOpen) {
@@ -81,17 +90,7 @@ export default class extends componentType(spec, busMixin, cleanupMixin) {
 
     attachButtons() {
         const advancedFilters = new AccordionGroup({
-            items: sortBy(
-                this.advancedFilterOptions
-                    .map((group) => ({
-                        title: group.title,
-                        contentComponent: new Checkboxes({
-                            options: group.options,
-                            store: advanced
-                        })
-                    })),
-                'title'
-            ),
+            items: this.advancedFilterItems,
             noScroll: true
         });
 
