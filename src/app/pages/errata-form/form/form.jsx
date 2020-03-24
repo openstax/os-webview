@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import ErrorTypeSelector from './ErrorTypeSelector.jsx';
 import ErrorSourceSelector from './ErrorSourceSelector.jsx';
 import ErrorLocationSelector from './ErrorLocationSelector/ErrorLocationSelector.jsx';
@@ -15,7 +15,7 @@ const sourceNames = {
 };
 
 function ErrorExplanationBox() {
-    const inputRef = React.createRef();
+    const inputRef = useRef();
     const [InvalidMessage, updateInvalidMessage] = managedInvalidMessage(inputRef);
 
     return (
@@ -44,11 +44,9 @@ function SubmitButton({
         const invalid = formRef.current.querySelector('form :invalid');
 
         if (invalid) {
-            console.info('Stopping due to invalid fields', invalid);
             event.preventDefault();
             updateHasBeenSubmitted(true);
         }
-        console.info('It should continue on to the actual submit', event);
     }
 
     return (
@@ -70,7 +68,7 @@ export default function ({model}) {
     const [hasBeenSubmitted, updateHasBeenSubmitted] = useState(false);
     const [submitFailed, updateSubmitFailed] = useState();
     const postEndpoint = `${settings.apiOrigin}${settings.apiPrefix}/errata/`;
-    const formRef = React.createRef();
+    const formRef = useRef();
     const helpBoxVisible = () => selectedError === 'Other' ? 'visible' : 'not-visible';
     const initialSource = model.source && sourceNames[model.source.toLowerCase()];
 
@@ -81,17 +79,12 @@ export default function ({model}) {
         const fileInputs = Array.from(formEl.querySelectorAll('[type="file"]'));
         const fiParents = fileInputs.map((el) => el.parentNode);
 
-        console.info('Target?', formEl);
-        console.info('File inputs?', fileInputs);
         fileInputs.forEach((el, index) => {
-            console.info('Checking', el.value);
             if (el.value === '') {
-                console.info('Removing', el);
                 el.parentNode.removeChild(el);
             }
         });
         fileInputs.forEach((el, index) => {
-            console.info('Setting name');
             el.setAttribute('name', `file_${index+1}`);
         });
 

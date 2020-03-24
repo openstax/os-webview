@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import managedInvalidMessage from '../InvalidMessage.jsx';
 import bookToc from '~/models/book-toc';
 import $ from '~/helpers/$';
@@ -55,7 +55,7 @@ function PageOption({entry}) {
 }
 
 function TocSelector({selectedBook}) {
-    const inputRef = React.createRef();
+    const inputRef = useRef();
     const [InvalidMessage, updateInvalidMessage] = managedInvalidMessage(inputRef);
     const [chapterFilter, updateChapterFilter] = useState();
     const [tree, updateTree] = useState([]);
@@ -103,7 +103,7 @@ function TocSelector({selectedBook}) {
 }
 
 function OtherLocationInput({defaultValue='', readOnly=false}) {
-    const inputRef = React.createRef();
+    const inputRef = useRef();
     const [InvalidMessage, updateInvalidMessage] = managedInvalidMessage(inputRef);
     const [value, updateValue] = useState(defaultValue);
 
@@ -139,7 +139,6 @@ function NotDefaultValue({selectedBook, defaultValue, title}) {
     };
     const Input = isInContent ? TocSelector : OtherLocationInput;
     const onChange = (event) => {
-        console.info('Event', event);
         updateIsInContent(!isInContent);
     };
 

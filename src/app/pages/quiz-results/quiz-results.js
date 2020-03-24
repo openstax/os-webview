@@ -34,7 +34,6 @@ const spec = {
 export default class extends componentType(spec) {
 
     get personas() {
-        console.info('Data', this.pageData);
         return this.pageData ?
             this.pageData.results.flat().map((d) => ({
                 title: d.headline,

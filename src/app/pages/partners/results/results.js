@@ -96,7 +96,6 @@ export default class extends componentType(spec, busMixin, cleanupMixin) {
             emitSelect: (entry) => this.emit('select', entry)
         };
 
-        console.info('Creating with props:', props);
         this.resultGrid = new WrappedJsx(ResultGrid, props, this.regions.self.el);
     }
 

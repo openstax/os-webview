@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import managedInvalidMessage from './InvalidMessage.jsx';
 import getFields from '~/models/errata-fields';
 
@@ -6,7 +6,7 @@ const resourcePromise = getFields('resources')
     .then((resources) => resources.map((entry) => entry.field));
 
 function OtherSourceInput() {
-    const inputRef = React.createRef();
+    const inputRef = useRef();
     const [InvalidMessage, updateInvalidMessage] = managedInvalidMessage(inputRef);
 
     return (
@@ -26,7 +26,7 @@ export default function ErrorSourceSelector({initialSource}) {
     const subnotes = {'Textbook': 'includes print, PDF, and web view'};
     const [sourceTypes, updateSourceTypes] = useState([]);
     const [selectedSource, updateSelectedSource] = useState(initialSource);
-    const radioRef = React.createRef();
+    const radioRef = useRef();
     const [RadioInvalidMessage, updateRadioInvalidMessage] = managedInvalidMessage(radioRef);
 
     resourcePromise.then(updateSourceTypes).then(updateRadioInvalidMessage);
