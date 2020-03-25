@@ -39,7 +39,7 @@ function ChapterOption({entry, chapterFilter, updateChapterFilter}) {
             value={entry.value}
             onClick={onClick}
         >
-            [{chapterFilter===entry.value ? '–' : '+'}] {entry.title}
+            {chapterFilter===entry.value ? '–' : '+'} {entry.title}
         </option>
     );
 }
