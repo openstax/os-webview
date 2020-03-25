@@ -4,6 +4,7 @@
 $gradient-end: (
     blue: #004aa2,
     deep-green: #12a28c,
+    gold: #ffd060,
     gray: #97999b,
     green: #9cd14a,
     light-blue: #1ee1f0,
@@ -143,14 +144,15 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
     }
 
     .hero {
-        @include set-color-items(green);
         @include set-color-items(blue);
         @include set-color-items(deep-green);
+        @include set-color-items(gold);
         @include set-color-items(gray);
+        @include set-color-items(green);
         @include set-color-items(light-blue);
         @include set-color-items(orange);
-        @include set-color-items(yellow);
         @include set-color-items(red);
+        @include set-color-items(yellow);
 
         align-items: flex-end;
         background-image: linear-gradient(75deg, #aaa, #777);
