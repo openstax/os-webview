@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import managedInvalidMessage from '../InvalidMessage.jsx';
 import bookToc from '~/models/book-toc';
 import $ from '~/helpers/$';
@@ -6,12 +6,17 @@ import css from './ErrorLocationSelector.css';
 
 function treeEntry(title, indentLevel, parent, isChapter) {
     const value = parent ? `${parent}:${title}` : title;
+    const expandedValue = value
+        .replace(/(?<=^|:)(\d+ )/, (num) => `Chapter ${num}`)
+        .replace(/(?<=:)(\d+\.\d+)/, (num) => `Section ${num}`)
+        .replace(/:(?=\S)/g, ': ');
 
     return {
         title,
         indentLevel,
         parent,
         value,
+        expandedValue,
         isChapter
     };
 }
@@ -36,10 +41,10 @@ function ChapterOption({entry, chapterFilter, updateChapterFilter}) {
 
     return (
         <option className="chapter"
-            value={entry.value}
+            value={entry.expandedValue}
             onClick={onClick}
         >
-            [{chapterFilter===entry.value ? '–' : '+'}] {entry.title}
+            {chapterFilter===entry.value ? '–' : '+'} {entry.title}
         </option>
     );
 }
@@ -47,14 +52,14 @@ function ChapterOption({entry, chapterFilter, updateChapterFilter}) {
 function PageOption({entry}) {
     return (
         <option className={`indent-${entry.indentLevel}`}
-            value={entry.value}
+            value={entry.expandedValue}
         >
             {entry.title}
         </option>
     );
 }
 
-function TocSelector({selectedBook}) {
+function TocSelector({selectedBook, required=true, updateValue}) {
     const inputRef = useRef();
     const [InvalidMessage, updateInvalidMessage] = managedInvalidMessage(inputRef);
     const [chapterFilter, updateChapterFilter] = useState();
@@ -68,6 +73,15 @@ function TocSelector({selectedBook}) {
             entry.value.startsWith(chapterFilter));
     };
 
+    function deselect() {
+        inputRef.current.value = null;
+        updateValue(null);
+    }
+
+    function onChange(event) {
+        updateValue(event.target.value);
+    }
+
     bookToc(selectedBook.meta.slug)
         .then((contents) => {
             if (tree.length === 0) {
@@ -75,13 +89,16 @@ function TocSelector({selectedBook}) {
             }
         });
 
+    useEffect(updateInvalidMessage, [required]);
+
     return (
         <React.Fragment>
-            <label>Where in the book did you find the error?</label>
+            <div className="question">Where in the book did you find the error?</div>
             <InvalidMessage />
             <select size="10" name="location"
-                ref={inputRef} onChange={updateInvalidMessage}
-                required>
+                ref={inputRef} onChange={onChange}
+                required={required}
+            >
                 {
                     filteredTree().map((entry, index) => (
                         entry.isChapter && !entry.parent ?
@@ -98,29 +115,30 @@ function TocSelector({selectedBook}) {
                     ))
                 }
             </select>
+            <button type="button" className="btn small" onClick={deselect}>Deselect</button>
         </React.Fragment>
     );
 }
 
-function OtherLocationInput({defaultValue='', readOnly=false}) {
+function AdditionalLocationInput({defaultValue='', readOnly=false, updateValue, required=true}) {
     const inputRef = useRef();
     const [InvalidMessage, updateInvalidMessage] = managedInvalidMessage(inputRef);
-    const [value, updateValue] = useState(defaultValue);
 
     function onChange(event) {
         updateValue(event.target.value);
-        updateInvalidMessage();
     }
+
+    useEffect(updateInvalidMessage, [required]);
 
     return (
         <React.Fragment>
-            <label>Other location (please provide URL if possible)</label>
+            <div className="question">Additional location information, if applicable</div>
             <InvalidMessage />
-            <input type="text" name="location"
+            <input type="text" name="additional_location_information"
                 placeholder="Describe where you found the error"
-                value={value} onChange={onChange}
+                value={defaultValue} onChange={onChange}
                 ref={inputRef} readOnly={readOnly}
-                required
+                required={required}
             />
         </React.Fragment>
     );
@@ -128,44 +146,27 @@ function OtherLocationInput({defaultValue='', readOnly=false}) {
 
 function DefaultValue({defaultValue}) {
     return (
-        <OtherLocationInput defaultValue={defaultValue} readOnly={true} />
+        <AdditionalLocationInput defaultValue={defaultValue} readOnly={true} />
     );
 }
 
-function NotDefaultValue({selectedBook, defaultValue, title}) {
-    const [isInContent, updateIsInContent] = useState(defaultValue ? false : true);
-    const toggle = () => {
-        updateIsInContent(!isInContent);
-    };
-    const Input = isInContent ? TocSelector : OtherLocationInput;
-    const onChange = (event) => {
-        updateIsInContent(!isInContent);
-    };
+function NotDefaultValue({selectedBook, defaultValue}) {
+    const [tocV, updateTocV] = useState();
+    const [addlV, updateAddlV] = useState(defaultValue);
+    const required = () => !tocV && !addlV;
 
     return (
         <React.Fragment>
-            <div className="question">
-                Did you find this error in the <i>{title}</i> textbook?
-            </div>
-            <div className="horizontal-group">
-                <label>
-                    <input type="radio" checked={isInContent} onChange={onChange} />
-                    <div className="label-text">Yes</div>
-                </label>
-                <label>
-                    <input type="radio" checked={!isInContent} onChange={onChange} />
-                    <div className="label-text">No</div>
-                </label>
-            </div>
-            <Input selectedBook={selectedBook} defaultValue={defaultValue} />
+            <TocSelector selectedBook={selectedBook} required={required()} updateValue={updateTocV} />
+            <AdditionalLocationInput defaultValue={addlV} required={required()} updateValue={updateAddlV}/>
         </React.Fragment>
     );
 }
 
-export default function ErrorLocationSelector({selectedBook, defaultValue, readOnly, title}) {
+export default function ErrorLocationSelector({selectedBook, defaultValue, readOnly}) {
     const Input = (readOnly) ? DefaultValue : NotDefaultValue;
 
     return (
-        <Input defaultValue={defaultValue} selectedBook={selectedBook} title={title}/>
+        <Input defaultValue={defaultValue} selectedBook={selectedBook} />
     );
 }
