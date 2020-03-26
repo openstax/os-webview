@@ -18,9 +18,8 @@
 
     }
 
-    > .container,
-    > .container > .logo-wrapper {
-        height: 100%;
+    > .container {
+        height: 100;
     }
 
     .logo-wrapper {
@@ -41,6 +40,7 @@
             display: grid;
             grid-column-gap: 1rem;
             grid-template-columns: min-content auto;
+            height: 100%;
             left: auto;
             position: static;
             top: auto;
