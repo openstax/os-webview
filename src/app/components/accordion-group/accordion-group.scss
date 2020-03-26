@@ -5,26 +5,23 @@
     grid-gap: 1rem;
     margin-bottom: (2 * $normal-margin);
 
-    .accordion-item {
+    .accordion-button {
+        @include form-border();
 
-        > .control-bar {
-            @include form-border();
+        align-items: center;
+        background-color: ui-color(white);
+        border-radius: 0.2rem;
+        display: flex;
+        height: 5rem;
+        justify-content: space-between;
+        padding: 0 2rem;
 
-            align-items: center;
-            background-color: ui-color(white);
-            border-radius: 0.2rem;
-            display: flex;
-            height: 5rem;
-            justify-content: space-between;
-            padding: 0 2rem;
-
-            .chevron {
-                font-size: 80%;
-            }
+        .chevron {
+            font-size: 80%;
         }
+    }
 
-        .content-pane {
-            background-color: ui-color(white);
-        }
+    .content-pane {
+        background-color: ui-color(white);
     }
 }

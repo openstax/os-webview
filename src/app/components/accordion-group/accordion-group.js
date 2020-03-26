@@ -1,52 +1,23 @@
-import componentType from '~/helpers/controller/init-mixin';
-import AccordionItem from './item/item';
+import WrappedJsx from '~/controllers/jsx-wrapper';
+import mix from '~/helpers/controller/mixins';
+import AccordionGroupJsx from './accordion-group.jsx';
 import css from './accordion-group.css';
 import busMixin from '~/helpers/controller/bus-mixin';
 
-const spec = {
-    view: {
-        classes: ['accordion-group']
-    },
-    css
-};
+export default class extends mix(WrappedJsx).with(busMixin) {
 
-export default class AccordionGroup extends componentType(spec, busMixin) {
+    init(props) {
+        super.init(AccordionGroupJsx, Object.assign({
+            forwardOnChange: (openTabs) => {
+                const selectedTab = openTabs && openTabs[0];
 
-    // Never updates, so just set up the children
-    onLoaded() {
-        let selectedLabel;
-
-        this.itemComponents = this.items.map((item) => {
-            const itemComponent = new AccordionItem({
-                props: {
-                    label: item.title,
-                    openLabel: item.openTitle || item.title,
-                    contentComponent: item.contentComponent,
-                    get selectedLabel() {
-                        return selectedLabel;
-                    }
-                },
-                noScroll: this.noScroll
-            });
-
-            itemComponent.on('change', (isOpen) => {
-                selectedLabel = isOpen ? null : item.title;
-                this.updateItems();
-                this.emit('open', selectedLabel);
-            });
-
-            return itemComponent;
-        });
-
-        this.itemComponents.forEach((i) => {
-            this.regions.self.append(i);
-        });
+                this.emit('open', selectedTab);
+            }
+        }, props));
     }
 
-    updateItems() {
-        this.itemComponents.forEach((i) => {
-            i.emit('update');
-        });
+    onLoaded() {
+        super.onLoaded();
     }
 
 }
