@@ -33,8 +33,8 @@ function flattenTree(contents, indentLevel=0, parent='') {
 }
 
 function ChapterOption({entry, chapterFilter, updateChapterFilter}) {
-    const onClick = (event) => {
-        const value = chapterFilter === event.target.value ? entry.parent : event.target.value;
+    const onClick = () => {
+        const value = chapterFilter === entry.value ? entry.parent : entry.value;
 
         updateChapterFilter(value);
     };
