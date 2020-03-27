@@ -44,20 +44,16 @@ export default class WrappedJsx extends Controller {
 
     updateProps(newProps) {
         Object.assign(this.props, newProps);
-        Reflect.ownKeys(newProps).forEach((k) => {
-            if (k in this.child.setters) {
+        Reflect.ownKeys(newProps)
+            .filter((k) => k in this.child.setters)
+            .forEach((k) => {
                 this.child.setters[k](newProps[k]);
-            }
-        });
+            });
     }
 
-    update() {
+    update() {}
 
-    }
-
-    template() {
-
-    }
+    template() {}
 
 }
 
