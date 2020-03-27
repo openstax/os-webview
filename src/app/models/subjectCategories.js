@@ -26,7 +26,6 @@ export default Promise.all([booksPromise, categoriesPromise]).then(([books, cate
                 title: c.seo_title
             });
         });
-    result.push({value: 'ap', cms: 'AP', html: 'AP<sup>&reg;</sup>'});
     result.forEach((obj) => {
         result.byValue[obj.value] = obj;
     });

@@ -3,8 +3,6 @@ import {on} from '~/helpers/controller/decorators';
 import CategorySelector from '~/components/category-selector/category-selector';
 import CategorySection from './category-section/category-section';
 
-const apId = 'AP';
-
 function organizeBooksByCategory(books) {
     const result = {};
     const addLabels = () => {
@@ -15,8 +13,6 @@ function organizeBooksByCategory(books) {
         }
     };
 
-    result[apId] = [];
-
     for (const book of books) {
         book.subjects.forEach((cmsCategory) => {
             if (!(cmsCategory in result)) {
@@ -26,9 +22,6 @@ function organizeBooksByCategory(books) {
                 result[cmsCategory].push(book);
             }
         });
-        if (book.is_ap) {
-            result[apId].push(book);
-        }
     }
 
     addLabels();
