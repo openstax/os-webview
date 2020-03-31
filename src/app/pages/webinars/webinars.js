@@ -7,6 +7,7 @@ import ContentGroup from '~/components/content-group/content-group';
 import WebinarList from './webinar-list/webinar-list';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import cmsFetch from '~/models/cmsFetch';
+import orderBy from 'lodash/orderBy';
 
 const spec = {
     template,
@@ -75,11 +76,19 @@ export default class extends componentType(spec) {
                 linkText: webinarInfo.registration_link_text
             };
         };
+        const byDate = (a, b) => {
+            const da = new Date(a.start);
+            const db = new Date(b.start);
+
+            return da - db;
+        };
         const upcomingModel = webinarList
             .filter((entry) => new Date(entry.start) > Date.now())
+            .sort(byDate)
             .map(toModel);
         const pastModel = webinarList
             .filter((entry) => new Date(entry.end) < Date.now())
+            .sort(byDate)
             .map(toModel);
 
         upcomingModel.upcoming = true;
