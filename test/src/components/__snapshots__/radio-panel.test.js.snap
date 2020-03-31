@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RadioPanelJsx matches snapshot 1`] = `"<div class=\\"filter-button\\" tabindex=\\"0\\" role=\\"button\\" aria-pressed=\\"false\\"><span>View All</span></div><div class=\\"filter-button\\" tabindex=\\"0\\" role=\\"button\\" aria-pressed=\\"false\\"><span>In Review</span></div><div class=\\"filter-button\\" tabindex=\\"0\\" role=\\"button\\" aria-pressed=\\"false\\"><span>Reviewed</span></div><div class=\\"filter-button\\" tabindex=\\"0\\" role=\\"button\\" aria-pressed=\\"false\\"><span>Corrected</span></div>"`;

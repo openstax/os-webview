@@ -9,7 +9,7 @@ function RadioButton({item, isSelected, updateSelected}) {
         if ([' ', 'Enter'].includes(event.key)) {
             onClick();
         }
-    }
+    };
 
     return (
         <div className="filter-button" tabIndex="0"

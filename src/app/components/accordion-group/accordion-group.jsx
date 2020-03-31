@@ -9,24 +9,7 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import './accordion-group.css';
 import $ from '~/helpers/$';
-
-function SuperbItem({component}) {
-    const root = useRef();
-    const Region = component.regions.self.constructor;
-
-    useEffect(() => {
-        const region = new Region(root.current, component);
-
-        region.attach(component);
-        return () => {
-            region.detach();
-        };
-    }, []);
-
-    return (
-        <div ref={root} />
-    );
-}
+import {SuperbItem} from '~/controllers/jsx-wrapper';
 
 export default function ({
     items,

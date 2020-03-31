@@ -1,5 +1,5 @@
 import {Controller} from 'superb.js';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import ReactDOM from 'react-dom';
 
 function makeStateFor(props, Child) {
@@ -66,4 +66,23 @@ export function pageWrapper(jsxComponent, view) {
         }
 
     };
+}
+
+// Reverse wrapper, when React needs to host a Superb component
+export function SuperbItem({component}) {
+    const root = useRef();
+    const Region = component.regions.self.constructor;
+
+    useEffect(() => {
+        const region = new Region(root.current, component);
+
+        region.attach(component);
+        return () => {
+            region.detach();
+        };
+    }, []);
+
+    return (
+        <div ref={root} />
+    );
 }
