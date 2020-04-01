@@ -7,8 +7,8 @@ import css from './ErrorLocationSelector.css';
 function treeEntry(title, indentLevel, parent, isChapter) {
     const value = parent ? `${parent}:${title}` : title;
     const expandedValue = value
-        .replace(/(?<=^|:)(\d+ )/, (num) => `Chapter ${num}`)
-        .replace(/(?<=:)(\d+\.\d+)/, (num) => `Section ${num}`)
+        .replace(/(^|:)(\d+ )/, (_, before, num) => `${before}Chapter ${num}`)
+        .replace(/(:)(\d+\.\d+)/, (_, before, num) => `${before}Section ${num}`)
         .replace(/:(?=\S)/g, ': ');
 
     return {
