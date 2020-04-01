@@ -75,11 +75,9 @@ class Analytics {
     }
 
     setAdopterStatus() {
-        console.log('*** setAdopterStatus called');
         accountsModel.load().then((accountResponse) => {
             const usingOS = accountResponse.using_openstax;
 
-            console.log(usingOS);
             if (typeof usingOS !== 'undefined') {
                 let adopter = 'Not An Adopter';
 
