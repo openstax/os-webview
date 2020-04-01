@@ -18,7 +18,7 @@ function encodeLocation(search) {
 }
 
 function resourceBoxPermissions({
-    resourceData, userStatus, search, resourceStatus, loginUrl
+    resourceData, resourceStatus, loginUrl
 }) {
     const isExternal = Boolean(resourceData.link_external);
     const status = resourceStatus();
@@ -66,8 +66,6 @@ export default class extends componentType(spec, insertHtmlMixin) {
 
         return resourceBoxPermissions({
             resourceData,
-            userStatus,
-            search,
             resourceStatus,
             loginUrl
         });
@@ -85,8 +83,6 @@ export default class extends componentType(spec, insertHtmlMixin) {
 
         return resourceBoxPermissions({
             resourceData,
-            userStatus,
-            search,
             resourceStatus,
             loginUrl
         });

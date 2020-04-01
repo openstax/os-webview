@@ -4,32 +4,16 @@
             <h2 data-html="freeStuff.heading" skip="true"></h2>
             <div data-html="freeStuff.blurb" class="blurb-body" skip="true"></div>
         </div>
-        <div class="cards {model.includePartners}">
-            <div class="resources">
-                <div class="resource-box double">
-                    <div class="top-line">
-                        <h3>{model.communityResource.heading}</h3>
-                        <img src="{model.communityResource.logoUrl}" alt="">
-                    </div>
-                    <div class="blurb">
-                      <span data-html="communityResource.blurb" skip="true"></span>
-                      <br>
-                      <a href="{model.communityResource.url}">
-                          {model.communityResource.cta}
-                          <i class="fa fa-external-link-alt"></i>
-                      </a>
-                    </div>
-                    <div class="bottom">
-                        <div class="left"></div>
-                        <div class="right">
-                            <a href="{model.communityResource.featureUrl}">
-                              {model.communityResource.featureText}
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <resource-box each="resource in model.resources" skip="true"></resource-box>
+        <div>
+            <div class="featured-resources" skip="true"></div>
+            <div class="divider">
+                <div class="line"></div>
+                see additional resources below
+                <div class="line"></div>
             </div>
+        </div>
+        <div class="cards {model.includePartners}">
+            <div class="resources" skip="true"></div>
             <div class="partners" skip="true"></div>
         </div>
     </div>

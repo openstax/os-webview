@@ -7,6 +7,9 @@ import {on} from '~/helpers/controller/decorators';
 import {description as template} from './instructor-resource-tab.html';
 import css from './instructor-resource-tab.css';
 import partnerFeaturePromise from '~/models/salesforce-partners';
+import WrappedJsx from '~/controllers/jsx-wrapper';
+import FeaturedResource from './featured-resources/featured-resources.jsx';
+import ResourceBoxes from '../resource-box/resource-boxes.jsx';
 
 const spec = {
     template,
@@ -15,9 +18,24 @@ const spec = {
         classes: ['instructor-resources']
     },
     regions: {
-        partners: '.partners'
+        partners: '.partners',
+        resources: '.resources',
+        featured: '.featured-resources'
     }
 };
+
+function resourceBoxModel(resourceData, userStatus, search) {
+    return Object.assign(
+        {
+            heading: resourceData.resource_heading,
+            description: resourceData.resource_description,
+            creatorFest: resourceData.creator_fest_resource,
+            comingSoon: Boolean(resourceData.coming_soon_text),
+            comingSoonText: resourceData.coming_soon_text
+        },
+        ResourceBox.instructorResourceBoxPermissions(resourceData, userStatus, search)
+    );
+}
 
 export default class InstructorResourceTab extends componentType(spec) {
 
@@ -27,8 +45,6 @@ export default class InstructorResourceTab extends componentType(spec) {
     }
 
     onLoaded() {
-        const resourceBoxes = this.el.querySelectorAll('resource-box');
-
         this.userStatusPromise.then((userStatus) => {
             const loggedIn = Boolean(userStatus.userInfo && userStatus.userInfo.id);
 
@@ -36,22 +52,28 @@ export default class InstructorResourceTab extends componentType(spec) {
                 this.model.freeStuff.blurb = this.model.freeStuff.loggedInBlurb;
             }
             this.insertHtml();
-            this.model.resources.forEach((resourceData, index) => {
-                const region = this.regionFrom(resourceBoxes[index]);
-                const resourceBox = new ResourceBox(
-                    Object.assign({
-                        heading: resourceData.resource_heading,
-                        description: resourceData.resource_description,
-                        creatorFest: resourceData.creator_fest_resource,
-                        comingSoon: Boolean(resourceData.coming_soon_text),
-                        comingSoonText: resourceData.coming_soon_text
-                    }, ResourceBox.instructorResourceBoxPermissions(resourceData, userStatus, 'Instructor resources'))
-                );
+            const resourceModels = this.model.resources
+                .map((resourceData, i) => resourceBoxModel(
+                    resourceData, userStatus, 'Instructor resources', i === 0
+                ));
+            const featuredResources = new WrappedJsx(
+                FeaturedResource,
+                {
+                    headline: 'Something about why these are special',
+                    resources: resourceModels.slice(0, 4)
+                },
+                this.regions.featured.el
+            );
 
-                region.append(resourceBox);
+            const models = resourceModels.map((obj, i) =>
+                (i === 0) ? Object.assign({double: true}, obj) : obj
+            );
+            const resourceBoxes = new WrappedJsx(
+                ResourceBoxes, {models},
+                this.regions.resources.el
+            );
 
-                $.scrollToHash();
-            });
+            $.scrollToHash();
         });
         insertPartners({
             dataPromise: partnerFeaturePromise,
