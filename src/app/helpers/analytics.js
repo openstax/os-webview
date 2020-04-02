@@ -39,6 +39,7 @@ class Analytics {
     }
 
     send(fields) {
+        this.setAdopterStatus();
         waitForAnalytics.then(
             () => {
                 window.ga('send', fields);
@@ -71,6 +72,21 @@ class Analytics {
             {hitType: 'event'},
             fields
         ));
+    }
+
+    setAdopterStatus() {
+        accountsModel.load().then((accountResponse) => {
+            const usingOS = accountResponse.using_openstax;
+
+            if (typeof usingOS !== 'undefined') {
+                let adopter = 'Not An Adopter';
+
+                if (usingOS === true) {
+                    adopter = 'Adopter';
+                }
+                ga('set', {'dimension2': adopter});
+            }
+        });
     }
 
     sendPageEvent(category, action, label) {
