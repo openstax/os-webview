@@ -1,5 +1,5 @@
 import {Controller} from 'superb.js';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import ReactDOM from 'react-dom';
 
 function makeStateFor(props, Child) {
@@ -44,20 +44,16 @@ export default class WrappedJsx extends Controller {
 
     updateProps(newProps) {
         Object.assign(this.props, newProps);
-        Reflect.ownKeys(newProps).forEach((k) => {
-            if (k in this.child.setters) {
+        Reflect.ownKeys(newProps)
+            .filter((k) => k in this.child.setters)
+            .forEach((k) => {
                 this.child.setters[k](newProps[k]);
-            }
-        });
+            });
     }
 
-    update() {
+    update() {}
 
-    }
-
-    template() {
-
-    }
+    template() {}
 
 }
 
@@ -70,4 +66,23 @@ export function pageWrapper(jsxComponent, view) {
         }
 
     };
+}
+
+// Reverse wrapper, when React needs to host a Superb component
+export function SuperbItem({component}) {
+    const root = useRef();
+    const Region = component.regions.self.constructor;
+
+    useEffect(() => {
+        const region = new Region(root.current, component);
+
+        region.attach(component);
+        return () => {
+            region.detach();
+        };
+    }, []);
+
+    return (
+        <div ref={root} />
+    );
 }

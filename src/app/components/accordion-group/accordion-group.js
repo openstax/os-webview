@@ -16,8 +16,4 @@ export default class extends mix(WrappedJsx).with(busMixin) {
         }, props));
     }
 
-    onLoaded() {
-        super.onLoaded();
-    }
-
 }
