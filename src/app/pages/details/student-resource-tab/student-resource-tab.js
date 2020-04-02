@@ -1,7 +1,7 @@
 import {Controller} from 'superb.js';
 import $ from '~/helpers/$';
 import settings from 'settings';
-import ResourceBox from '../resource-box/resource-box';
+import {studentResourceBoxPermissions} from '../resource-box/resource-box';
 import WrappedJsx from '~/controllers/jsx-wrapper';
 import ResourceBoxes from '../resource-box/resource-boxes.jsx';
 import {description as template} from './student-resource-tab.html';
@@ -13,7 +13,7 @@ function resourceBoxModel(resourceData, userStatus, search) {
         description: resourceData.resource_description,
         comingSoon: Boolean(resourceData.coming_soon_text),
         comingSoonText: resourceData.coming_soon_text
-    }, ResourceBox.studentResourceBoxPermissions(resourceData, userStatus, 'Student resources'));
+    }, studentResourceBoxPermissions(resourceData, userStatus, 'Student resources'));
 }
 
 export default class StudentResourceTab extends Controller {

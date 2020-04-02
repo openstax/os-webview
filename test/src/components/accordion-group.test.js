@@ -1,17 +1,16 @@
 import AccordionGroup from '~/components/accordion-group/accordion-group';
-import ResourceBox from '~/pages/details/resource-box/resource-box';
-import {clickElement} from '../../test-utils';
+import Child from '~/components/a-component-template/a-component-template';
 
 describe('AccordionGroup', () => {
 
     const accordionGroup = new AccordionGroup({
         items: [{
             title: 'First item',
-            contentComponent: new ResourceBox({})
+            contentComponent: new Child()
         },
         {
             title: 'Second item',
-            contentComponent: new ResourceBox({})
+            contentComponent: new Child()
         }]
     });
 

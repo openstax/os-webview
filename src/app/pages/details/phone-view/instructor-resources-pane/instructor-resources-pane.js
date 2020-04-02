@@ -1,5 +1,5 @@
 import componentType from '~/helpers/controller/init-mixin';
-import ResourceBox from '../../resource-box/resource-box';
+import {instructorResourceBoxPermissions} from '../../resource-box/resource-box';
 import WrappedJsx from '~/controllers/jsx-wrapper';
 import ResourceBoxes from '../../resource-box/resource-boxes.jsx';
 import shellBus from '~/components/shell/shell-bus';
@@ -29,7 +29,7 @@ function resourceBoxModel(resourceData, userStatus) {
         creatorFest: resourceData.creator_fest_resource,
         comingSoon: Boolean(resourceData.coming_soon_text),
         comingSoonText: ''
-    }, ResourceBox.instructorResourceBoxPermissions(resourceData, userStatus, 'Instructor resources'));
+    }, instructorResourceBoxPermissions(resourceData, userStatus, 'Instructor resources'));
 }
 
 export default class extends componentType(spec) {

@@ -1,6 +1,6 @@
 import componentType from '~/helpers/controller/init-mixin';
 import $ from '~/helpers/$';
-import ResourceBox from '../resource-box/resource-box';
+import {instructorResourceBoxPermissions} from '../resource-box/resource-box';
 import insertPartners from './partners/partners';
 import shellBus from '~/components/shell/shell-bus';
 import {on} from '~/helpers/controller/decorators';
@@ -33,7 +33,7 @@ function resourceBoxModel(resourceData, userStatus, search) {
             comingSoon: Boolean(resourceData.coming_soon_text),
             comingSoonText: resourceData.coming_soon_text
         },
-        ResourceBox.instructorResourceBoxPermissions(resourceData, userStatus, search)
+        instructorResourceBoxPermissions(resourceData, userStatus, search)
     );
 }
 

@@ -1,15 +1,4 @@
-import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import settings from 'settings';
-import {description as template} from './resource-box.html';
-import css from './resource-box.css';
-
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['resource-box']
-    }
-};
 
 function encodeLocation(search) {
     const pathWithoutSearch = `${window.location.origin}${window.location.pathname}`;
@@ -45,66 +34,43 @@ function resourceBoxPermissions({
     return statusToPermissions[status];
 }
 
-export default class extends componentType(spec, insertHtmlMixin) {
-
-    // Utility function to set the values associated with whether the resource
-    // is available to the user (instructor version)
-    static instructorResourceBoxPermissions(resourceData, userStatus, search) {
-        const resourceStatus = () => {
-            if (resourceData.resource_unlocked || userStatus.isInstructor) {
-                return 'unlocked';
-            }
-            if (userStatus.pendingVerification) {
-                return 'pending';
-            }
-            return 'locked';
-        };
-        const encodedLocation = encodeLocation(search);
-        const loginUrl = userStatus.userInfo && userStatus.userInfo.id ?
-            `${settings.accountHref}/faculty_access/apply?r=${encodedLocation}` :
-            `${settings.apiOrigin}/oxauth/login/?next=${encodedLocation}`;
-
-        return resourceBoxPermissions({
-            resourceData,
-            resourceStatus,
-            loginUrl
-        });
-    };
-
-    // Utility function for student resources
-    static studentResourceBoxPermissions(resourceData, userStatus, search) {
-        const resourceStatus = () => {
-            if (resourceData.resource_unlocked || userStatus.isStudent || userStatus.isInstructor) {
-                return 'unlocked';
-            }
-            return 'locked';
-        };
-        const loginUrl = `${settings.apiOrigin}/oxauth/login/?next=${encodeLocation(search)}`;
-
-        return resourceBoxPermissions({
-            resourceData,
-            resourceStatus,
-            loginUrl
-        });
-    };
-
-    init(model) {
-        super.init();
-        this.model = model;
-        if (model.link) {
-            this.view = Object.assign({}, this.view, {
-                tag: 'a',
-                attributes: {
-                    href: model.link.url,
-                    'data-local': model.iconType === 'lock' ? 'true' : 'false'
-                }
-            });
+// Utility function to set the values associated with whether the resource
+// is available to the user (instructor version)
+export function instructorResourceBoxPermissions(resourceData, userStatus, search) {
+    const resourceStatus = () => {
+        if (resourceData.resource_unlocked || userStatus.isInstructor) {
+            return 'unlocked';
         }
-        if (model.comingSoon) {
-            this.view = Object.assign({}, this.view);
-            this.view.classes = [...this.view.classes, 'coming-soon'];
-            model.description = `<p>${model.comingSoonText}</p>`;
+        if (userStatus.pendingVerification) {
+            return 'pending';
         }
-    }
+        return 'locked';
+    };
+    const encodedLocation = encodeLocation(search);
+    const loginUrl = userStatus.userInfo && userStatus.userInfo.id ?
+        `${settings.accountHref}/faculty_access/apply?r=${encodedLocation}` :
+        `${settings.apiOrigin}/oxauth/login/?next=${encodedLocation}`;
 
-}
+    return resourceBoxPermissions({
+        resourceData,
+        resourceStatus,
+        loginUrl
+    });
+};
+
+// Utility function for student resources
+export function studentResourceBoxPermissions(resourceData, userStatus, search) {
+    const resourceStatus = () => {
+        if (resourceData.resource_unlocked || userStatus.isStudent || userStatus.isInstructor) {
+            return 'unlocked';
+        }
+        return 'locked';
+    };
+    const loginUrl = `${settings.apiOrigin}/oxauth/login/?next=${encodeLocation(search)}`;
+
+    return resourceBoxPermissions({
+        resourceData,
+        resourceStatus,
+        loginUrl
+    });
+};
