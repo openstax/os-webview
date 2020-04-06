@@ -12,8 +12,7 @@ import errataResources from '../src/data/errata-resources';
 import footerData from '../src/data/footer';
 import institutionalPartnershipData from '../src/data/institutional-partnership';
 import openstaxHomepageData from '../src/data/openstax-homepage';
-import osNewsData from '../src/data/openstax-news';
-import osNewsDetailData from '../src/data/openstax-news-detail';
+import osNewsData from '../src/data/openstax-news-detail';
 import osTutorData from '../src/data/openstax-tutor';
 import pageData from '../src/data/partners';
 import polishData from '../src/data/details-polish';
@@ -44,8 +43,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isFooter = (/api\/footer/).test(args[0]);
     const isInstitutionalPartnership = (/pages\/institutional-partners/).test(args[0]);
     const isHomepage = (/openstax-homepage/).test(args[0]);
-    const isOsNews = (/slug=openstax-news/).test(args[0]);
-    const isOsNewsDetail = (/v2\/pages\/90/).test(args[0]);
+    const isOsNews = (/openstax-news/).test(args[0]);
     const isOsTutor = (/pages\/openstax-tutor/).test(args[0]);
     const isPartner = (/pages\/partners/).test(args[0]);
     const isPolishPhysics = (/fizyka/).test(args[0]);
@@ -102,8 +100,6 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = bookTitleData;
             } else if (isOsNews) {
                 payload = osNewsData;
-            } else if (isOsNewsDetail) {
-                payload = osNewsDetailData;
             } else if (isBlogArticle) {
                 payload = blogArticleData;
             } else if (isTeam) {

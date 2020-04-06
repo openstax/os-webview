@@ -4,10 +4,6 @@ import bookPromise from '~/models/book-titles';
 
 const LOAD_IMAGES = Symbol();
 
-const newsPromise = fetch(`${settings.apiOrigin}${settings.apiPrefix}/v2/pages/?slug=openstax-news`)
-    .then((r) => r.json())
-    .then((r) => r.items[0].meta.detail_url);
-
 export function transformData(data) {
     Reflect.ownKeys(data).forEach((prop) => {
         if (Array.isArray(data[prop])) {
@@ -50,7 +46,7 @@ async function getUrlFor(slug) {
 
     // A little magic to handle the news slug
     if (slug === 'news') {
-        apiUrl = await newsPromise;
+        apiUrl = '/apps/cms/api/pages/openstax-news';
     }
 
     const qsChar = (/\?/.test(apiUrl)) ? '&' : '?';
