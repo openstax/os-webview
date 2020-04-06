@@ -42,6 +42,7 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
             },
             {
                 title: 'Instructor resources',
+                titleTag: 'updated',
                 contentComponent: new InstructorResourcePane({
                     resources: this.props.instructorResources,
                     userStatusPromise: this.props.userStatusPromise,

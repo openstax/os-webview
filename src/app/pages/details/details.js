@@ -64,6 +64,7 @@ export default class Details extends BaseClass {
 
         super.init();
         this.bookTitle = 'Loading';
+        console.info('Getting slug from', bookTitle);
         this.slug = getSlugFromTitle(bookTitle.toLowerCase());
         this.userStatusPromise = this.getUserStatusPromise();
         this.reverseGradient = false;
@@ -247,6 +248,7 @@ export default class Details extends BaseClass {
                 addTab('Instructor resources', new InstructorResourceTab({
                     bookAbbreviation: this.pageData.salesforce_abbreviation,
                     userStatusPromise: this.userStatusPromise,
+                    featuredResourcesHeader: this.pageData.featured_resources_header,
                     model: {
                         resources: this.pageData.book_faculty_resources,
                         freeStuff: {

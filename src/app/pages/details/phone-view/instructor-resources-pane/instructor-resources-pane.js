@@ -1,6 +1,7 @@
 import componentType from '~/helpers/controller/init-mixin';
 import {instructorResourceBoxPermissions} from '../../resource-box/resource-box';
 import WrappedJsx from '~/controllers/jsx-wrapper';
+import attachFeaturedResources from '../../instructor-resource-tab/featured-resources/featured-resources.js';
 import ResourceBoxes from '../../resource-box/resource-boxes.jsx';
 import shellBus from '~/components/shell/shell-bus';
 import routerBus from '~/helpers/router-bus';
@@ -15,6 +16,7 @@ const spec = {
         classes: ['instructor-resources-pane']
     },
     regions: {
+        featuredResources: '.featured-resources',
         freeResources: '.free-resources-region'
     },
     model() {
@@ -42,6 +44,14 @@ export default class extends componentType(spec) {
     onLoaded() {
         this.props.userStatusPromise.then((userStatus) => {
             const models = this.props.resources.freeResources.map((res) => resourceBoxModel(res, userStatus));
+
+            attachFeaturedResources(
+                {
+                    headline: 'Something about why these are special',
+                    resources: models.slice(0, 6)
+                },
+                this.regions.featuredResources.el
+            );
             const resourceBoxes = new WrappedJsx(
                 ResourceBoxes, {models},
                 this.regions.freeResources.el

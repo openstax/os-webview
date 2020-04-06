@@ -21,7 +21,7 @@ class Partners extends componentType(spec) {
         if (super.onLoaded) {
             super.onLoaded();
         }
-        if (history.state.partnerTooltip) {
+        if ((history.state || {}).partnerTooltip) {
             const callout = addCallout(
                 this.el.querySelector('.callout'),
                 'Book resources',

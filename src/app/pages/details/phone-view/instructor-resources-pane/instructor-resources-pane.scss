@@ -18,17 +18,24 @@
         @include title-font(2.4rem);
     }
 
-    .swipe-zone {
+    %swipe-zone {
+        display: grid;
+        grid-auto-flow: column;
+        grid-gap: $normal-margin;
+        grid-template-columns: auto;
         margin-left: -0.3rem;
         overflow-x: scroll;
         padding: 0.3rem; // room for the shadow
         width: calc(100vw - #{2 * $normal-margin});
+
+        &::after {
+            content: '';
+            width: 2rem;
+        }
     }
 
     .free-resources-region {
-        display: grid;
-        grid-auto-flow: column;
-        grid-gap: $normal-margin;
+        @extend %swipe-zone;
 
         h3 {
             @include set-font(h4);
@@ -39,14 +46,47 @@
         .resource-box {
             width: 20rem;
 
-            &:last-child {
-                margin-right: 3rem;
-            }
-
             > .top {
                 max-height: 30rem;
                 overflow: hidden;
             }
+        }
+    }
+
+    .featured-resources {
+        .card {
+            box-shadow: none;
+            padding: 0;
+        }
+
+        .headline {
+            @extend %card;
+        }
+
+        .resources {
+            @extend %swipe-zone;
+
+            .resource-box {
+                width: 20rem;
+            }
+        }
+    }
+
+    .divider {
+        align-items: center;
+        color: text-color(helper);
+        display: grid;
+        font-variant: small-caps;
+        font-weight: bold;
+        grid-column-gap: 2rem;
+        grid-template-columns: 1fr auto 1fr;
+        justify-items: center;
+        margin: 0;
+        text-transform: lowercase;
+
+        .line {
+            border: thin solid ui-color(form-border);
+            width: 100%;
         }
     }
 

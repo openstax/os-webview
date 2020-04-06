@@ -8,7 +8,7 @@ export default class extends mix(WrappedJsx).with(busMixin) {
 
     init(items) {
         super.init(RadioPanelJsx, {
-            items: this.items,
+            items,
             selectedValue: null,
             updateSelected: (value) => this.updateSelected(value)
         });

@@ -9,13 +9,23 @@ function ResourceBox({model}) {
     const classNames = ['resource-box', comingSoonClass, doubleClass]
         .filter((n) => n)
         .join(' ');
+    const [isNew, updateIsNew] = useState(model.isNew);
+    const onClick = (event) => {
+        if (model.onClick) {
+            model.onClick(event);
+        }
+        updateIsNew(model.isNew);
+    };
 
     function RootNode({Slot}) {
         return (
             model.link ?
-                <a className={classNames} href={model.link.url} data-local={
-                    model.iconType === 'lock' ? 'true' : 'false'
-                }>
+                <a className={classNames} href={model.link.url}
+                    data-local={
+                        model.iconType === 'lock' ? 'true' : 'false'
+                    }
+                    onClick={onClick}
+                >
                     <Slot />
                 </a> :
                 <div className={classNames}>
@@ -28,6 +38,12 @@ function ResourceBox({model}) {
         <RootNode Slot={() => (
             <React.Fragment>
                 <div className="top">
+                    {
+                        isNew &&
+                        <div className="new-label-container">
+                            <span className="new-label">NEW</span>
+                        </div>
+                    }
                     <div className="top-line">
                         <h3>{model.heading}</h3>
                         {
@@ -38,7 +54,7 @@ function ResourceBox({model}) {
                                 />
                         }
                     </div>
-                    <div dangerouslySetInnerHTML={{__html: description}} />
+                    <div className="description" dangerouslySetInnerHTML={{__html: description}} />
                 </div>
                 <div className="bottom">
                     <div className="left">

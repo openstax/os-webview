@@ -1,5 +1,4 @@
 import {Controller} from 'superb.js';
-import {on} from '~/helpers/controller/decorators';
 import CategorySelector from '~/components/category-selector/category-selector';
 import CategorySection from './category-section/category-section';
 

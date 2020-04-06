@@ -7,9 +7,9 @@ import {on} from '~/helpers/controller/decorators';
 import {description as template} from './instructor-resource-tab.html';
 import css from './instructor-resource-tab.css';
 import partnerFeaturePromise from '~/models/salesforce-partners';
-import WrappedJsx from '~/controllers/jsx-wrapper';
-import FeaturedResource from './featured-resources/featured-resources.jsx';
+import attachFeaturedResources from './featured-resources/featured-resources.js';
 import ResourceBoxes from '../resource-box/resource-boxes.jsx';
+import WrappedJsx from '~/controllers/jsx-wrapper';
 
 const spec = {
     template,
@@ -31,7 +31,8 @@ function resourceBoxModel(resourceData, userStatus, search) {
             description: resourceData.resource_description,
             creatorFest: resourceData.creator_fest_resource,
             comingSoon: Boolean(resourceData.coming_soon_text),
-            comingSoonText: resourceData.coming_soon_text
+            comingSoonText: resourceData.coming_soon_text,
+            featured: resourceData.featured
         },
         instructorResourceBoxPermissions(resourceData, userStatus, search)
     );
@@ -56,18 +57,25 @@ export default class InstructorResourceTab extends componentType(spec) {
                 .map((resourceData, i) => resourceBoxModel(
                     resourceData, userStatus, 'Instructor resources', i === 0
                 ));
-            const featuredResources = new WrappedJsx(
-                FeaturedResource,
-                {
-                    headline: 'Something about why these are special',
-                    resources: resourceModels.slice(0, 4)
-                },
-                this.regions.featured.el
-            );
+            const featuredResourceModels = resourceModels.filter((r) => r.featured);
 
-            const models = resourceModels.map((obj, i) =>
-                (i === 0) ? Object.assign({double: true}, obj) : obj
-            );
+            if (featuredResourceModels.length > 0) {
+                attachFeaturedResources(
+                    {
+                        headline: this.featuredResourcesHeader,
+                        resources: featuredResourceModels
+                    },
+                    this.regions.featured.el
+                );
+                this.model.showDivider = true;
+                this.update();
+            }
+
+            const models = resourceModels
+                .filter((r) => !r.featured)
+                .map((obj, i) =>
+                    (i === 0) ? Object.assign({double: true}, obj) : obj
+                );
             const resourceBoxes = new WrappedJsx(
                 ResourceBoxes, {models},
                 this.regions.resources.el

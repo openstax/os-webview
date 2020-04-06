@@ -42,6 +42,10 @@ export default class Subjects extends BaseClass {
     }
 
     filterSubjects(category) {
+        if (typeof category === 'undefined') {
+            // Probably navigating elsewhere
+            return;
+        }
         const path = category === 'view-all' ? pagePath : `${pagePath}/${category}`;
 
         this.bookViewer.filterSubjects(category);

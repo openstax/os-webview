@@ -1,5 +1,6 @@
 @import 'pattern-library/core/pattern-library/headers';
 @import 'mixins/coming-soon';
+@import 'mixins/placeholder-selectors';
 
 .resource-box {
     background-color: ui-color(white);
@@ -34,6 +35,24 @@
 
     &.double {
         grid-column: span 2;
+    }
+
+    .new-label-container {
+
+        text-align: right;
+        transform: translate(1rem, -1rem);
+
+        .new-label {
+            @extend %light-on-dark;
+            @include body-font(1rem);
+
+            background-color: text-color(link);
+            border-radius: 0.3rem;
+            color: text-color(white);
+            display: inline;
+            font-weight: bold;
+            padding: 0.5rem;
+        }
     }
 
     .top-line {
