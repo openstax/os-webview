@@ -1,5 +1,8 @@
 import componentType from '~/helpers/controller/init-mixin';
-import ResourceBox from '../../resource-box/resource-box';
+import {instructorResourceBoxPermissions} from '../../resource-box/resource-box';
+import WrappedJsx from '~/controllers/jsx-wrapper';
+import attachFeaturedResources from '../../instructor-resource-tab/featured-resources/featured-resources.js';
+import ResourceBoxes from '../../resource-box/resource-boxes.jsx';
 import shellBus from '~/components/shell/shell-bus';
 import routerBus from '~/helpers/router-bus';
 import {on} from '~/helpers/controller/decorators';
@@ -13,12 +16,23 @@ const spec = {
         classes: ['instructor-resources-pane']
     },
     regions: {
+        featuredResources: '.featured-resources',
         freeResources: '.free-resources-region'
     },
     model() {
         return this.props.resources;
     }
 };
+
+function resourceBoxModel(resourceData, userStatus) {
+    return Object.assign({
+        heading: resourceData.resource_heading,
+        description: '',
+        creatorFest: resourceData.creator_fest_resource,
+        comingSoon: Boolean(resourceData.coming_soon_text),
+        comingSoonText: ''
+    }, instructorResourceBoxPermissions(resourceData, userStatus, 'Instructor resources'));
+}
 
 export default class extends componentType(spec) {
 
@@ -29,18 +43,19 @@ export default class extends componentType(spec) {
 
     onLoaded() {
         this.props.userStatusPromise.then((userStatus) => {
-            this.props.resources.freeResources.forEach((res) => {
-                const model = Object.assign({
-                    heading: res.resource_heading,
-                    description: '',
-                    creatorFest: res.creator_fest_resource,
-                    comingSoon: Boolean(res.coming_soon_text),
-                    comingSoonText: ''
-                }, ResourceBox.instructorResourceBoxPermissions(res, userStatus, 'Instructor resources'));
-                const resourceBox = new ResourceBox(model);
+            const models = this.props.resources.freeResources.map((res) => resourceBoxModel(res, userStatus));
 
-                this.regions.freeResources.append(resourceBox);
-            });
+            attachFeaturedResources(
+                {
+                    headline: 'Something about why these are special',
+                    resources: models.slice(0, 6)
+                },
+                this.regions.featuredResources.el
+            );
+            const resourceBoxes = new WrappedJsx(
+                ResourceBoxes, {models},
+                this.regions.freeResources.el
+            );
         });
     }
 

@@ -2,6 +2,7 @@ import {Controller} from 'superb.js';
 import settings from 'settings';
 import {description as template} from './upper-menu.html';
 import css from './upper-menu.css';
+import cmsFetch from '~/models/cmsFetch';
 
 export default class UpperMenu extends Controller {
 
@@ -16,10 +17,7 @@ export default class UpperMenu extends Controller {
         /* eslint arrow-parens: 0 */
         (async () => {
             try {
-                const newsUrl = await fetch(`${settings.apiOrigin}${settings.apiPrefix}/v2/pages/?slug=openstax-news`)
-                    .then((response) => response.json())
-                    .then((response) => response.items[0].meta.detail_url);
-                const data = await fetch(newsUrl).then((response) => response.json());
+                const data = await cmsFetch('pages/openstax-news');
 
                 if (Reflect.has(data, 'articles') && Object.keys(data.articles).length) {
                     this.model.showBlog = true;

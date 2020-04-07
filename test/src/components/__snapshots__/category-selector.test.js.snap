@@ -1,3 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CategorySelector matches snapshot 1`] = `"<div class=\\"filter-buttons\\"><div class=\\"filter-button\\" tabindex=\\"0\\" role=\\"button\\" aria-pressed=\\"false\\"><span>View All</span></div><div class=\\"filter-button\\" tabindex=\\"0\\" role=\\"button\\" aria-pressed=\\"false\\"><span>Math</span></div><div class=\\"filter-button\\" tabindex=\\"0\\" role=\\"button\\" aria-pressed=\\"false\\"><span>Science</span></div><div class=\\"filter-button\\" tabindex=\\"0\\" role=\\"button\\" aria-pressed=\\"false\\"><span>Humanities</span></div><div class=\\"filter-button\\" tabindex=\\"0\\" role=\\"button\\" aria-pressed=\\"false\\"><span>Social Sciences</span></div><div class=\\"filter-button\\" tabindex=\\"0\\" role=\\"button\\" aria-pressed=\\"false\\"><span>Business</span></div></div>"`;
+exports[`CategorySelector loads the categories 1`] = `
+Array [
+  Object {
+    "cms": "",
+    "html": "View All",
+    "value": "view-all",
+  },
+  Object {
+    "cms": "Math",
+    "html": "Math",
+    "title": "Math SEO Title",
+    "value": "math",
+  },
+  Object {
+    "cms": "Science",
+    "html": "Science",
+    "title": "Science SEO Title",
+    "value": "science",
+  },
+  Object {
+    "cms": "Humanities",
+    "html": "Humanities",
+    "title": "Humanities SEO Title",
+    "value": "humanities",
+  },
+  Object {
+    "cms": "Social Sciences",
+    "html": "Social Sciences",
+    "title": "Social Sciences SEO Title",
+    "value": "social-sciences",
+  },
+  Object {
+    "cms": "Business",
+    "html": "Business",
+    "title": "Business SEO Title",
+    "value": "business",
+  },
+]
+`;

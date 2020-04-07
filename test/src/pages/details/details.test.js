@@ -43,7 +43,7 @@ describe('Book Details page', () => {
             const expectedLabels = [
                 'Book details',
                 'Table of contents',
-                'Instructor resources',
+                'Instructor resourcesupdated', // this got the new callout
                 'Student resources',
                 'Report errata'
             ];

@@ -1,11 +1,11 @@
 import ContentGroup from '~/components/content-group/content-group';
-import ResourceBox from '~/pages/details/resource-box/resource-box';
+import Child from '~/components/a-component-template/a-component-template';
 
 describe('ContentGroup', () => {
     const contents = {
-        'First pane': new ResourceBox({}),
-        'Second pane': new ResourceBox({}),
-        'Third pane': new ResourceBox({})
+        'First pane': new Child(),
+        'Second pane': new Child(),
+        'Third pane': new Child()
     };
     let selectedTab = Object.keys(contents)[0];
 

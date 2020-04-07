@@ -1,12 +1,12 @@
 import CollapsingPane from '~/components/collapsing-pane/collapsing-pane';
-import ResourceBox from '~/pages/details/resource-box/resource-box';
+import Child from '~/components/a-component-template/a-component-template';
 import {clickElement} from '../../test-utils';
 
 describe('CollapsingPane', () => {
 
     const collapsingPane = new CollapsingPane({
         title: 'First item',
-        contentComponent: new ResourceBox({})
+        contentComponent: new Child()
     });
     const control = collapsingPane.el.querySelector('.control-bar');
     const content = collapsingPane.el.querySelector('.content-region');

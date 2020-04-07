@@ -1,4 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/placeholder-selectors';
 
 .accordion-group {
     display: grid;
@@ -18,6 +19,19 @@
 
         .chevron {
             font-size: 80%;
+        }
+
+        .title-tag {
+            @extend %light-on-dark;
+            @include body-font(1rem);
+
+            background-color: text-color(link);
+            border-radius: 0.3rem;
+            color: text-color(white);
+            font-weight: bold;
+            margin-left: 3rem;
+            padding: 0.5rem;
+            text-transform: uppercase;
         }
     }
 

@@ -23,6 +23,25 @@ $icon-size: 6rem;
         }
     }
 
+    .divider {
+        align-items: center;
+        color: text-color(helper);
+        display: grid;
+        font-variant: small-caps;
+        font-weight: bold;
+        grid-column-gap: 2rem;
+        grid-template-columns: 1fr auto 1fr;
+        justify-items: center;
+        margin-bottom: 3rem;
+        margin-top: 3rem;
+        text-transform: lowercase;
+
+        .line {
+            border: thin solid ui-color(form-border);
+            width: 100%;
+        }
+    }
+
     .cards {
         align-content: start;
         display: grid;

@@ -10,3 +10,11 @@ import Child from './a-component-template.jsx';
 // const form = new WrappedJsx(Child, {model: formModel});
 //
 // this.regions.form.attach(form);
+
+export default class extends WrappedJsx {
+
+    init(message) {
+        super.init(Child, {message});
+    }
+
+}

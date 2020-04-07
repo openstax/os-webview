@@ -1,13 +1,11 @@
 import ModalContent from '~/components/modal-content/modal-content';
-import ResourceBox from '~/pages/details/resource-box/resource-box';
-import shellBus from '~/components/shell/shell-bus';
+import Child from '~/components/a-component-template/a-component-template';
 
 describe('ModalContent', () => {
 
     it('creates', () => {
-
         const mc = new ModalContent({
-            content: new ResourceBox({})
+            content: new Child()
         });
 
         expect(mc).toBeTruthy();

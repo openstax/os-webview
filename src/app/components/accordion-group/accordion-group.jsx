@@ -49,7 +49,13 @@ export default function ({
                         <AccordionItem key={item.title} uuid={item.title} className="accordion-item">
                             <AccordionItemHeading aria-level="2">
                                 <AccordionItemButton className="accordion-button">
-                                    <div className="label">{item.title}</div>
+                                    <div className="label">
+                                        {item.title}
+                                        {
+                                            item.titleTag &&
+                                            <span className="title-tag">{item.titleTag}</span>
+                                        }
+                                    </div>
                                     <div className="chevron">
                                         <FontAwesomeIcon icon={`chevron-${chevronDirection(item.title)}`} />
                                     </div>

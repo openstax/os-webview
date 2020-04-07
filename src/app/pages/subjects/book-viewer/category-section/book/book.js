@@ -1,6 +1,5 @@
 import $ from '~/helpers/$';
 import {Controller} from 'superb.js';
-import {on} from '~/helpers/controller/decorators';
 import {description as template} from './book.html';
 
 export default class Book extends Controller {

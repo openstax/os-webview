@@ -247,6 +247,7 @@ export default class Details extends BaseClass {
                 addTab('Instructor resources', new InstructorResourceTab({
                     bookAbbreviation: this.pageData.salesforce_abbreviation,
                     userStatusPromise: this.userStatusPromise,
+                    featuredResourcesHeader: this.pageData.featured_resources_header,
                     model: {
                         resources: this.pageData.book_faculty_resources,
                         freeStuff: {
