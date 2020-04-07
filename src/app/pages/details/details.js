@@ -64,7 +64,6 @@ export default class Details extends BaseClass {
 
         super.init();
         this.bookTitle = 'Loading';
-        console.info('Getting slug from', bookTitle);
         this.slug = getSlugFromTitle(bookTitle.toLowerCase());
         this.userStatusPromise = this.getUserStatusPromise();
         this.reverseGradient = false;

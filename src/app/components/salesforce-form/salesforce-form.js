@@ -15,7 +15,6 @@ const spec = {
         };
     },
     afterSubmit() {
-        console.info('After Submit has fired');
     },
     postTo: null,
     regions: {

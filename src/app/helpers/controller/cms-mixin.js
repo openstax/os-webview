@@ -46,7 +46,7 @@ async function getUrlFor(slug) {
 
     // A little magic to handle the news slug
     if (slug === 'news') {
-        apiUrl = '/apps/cms/api/pages/openstax-news';
+        apiUrl = `${settings.apiOrigin}${settings.apiPrefix}/pages/openstax-news`;
     }
 
     const qsChar = (/\?/.test(apiUrl)) ? '&' : '?';
@@ -102,6 +102,7 @@ export default (superclass) => class extends superclass {
                     this.onDataLoaded();
                 } catch (e) {
                     if (this.onDataError) {
+                        console.warn('Died fetching', this.slug);
                         this.onDataError(e);
                     } else {
                         console.error(e);
