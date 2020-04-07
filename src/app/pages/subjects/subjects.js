@@ -72,7 +72,7 @@ export default class Subjects extends BaseClass {
         Object.assign(this.model, this.pageData);
         this.update();
         this.insertHtml();
-        this.bookViewer = new BookViewer(this.model.books);
+        this.bookViewer = new BookViewer(this.model.books.filter((b) => b.book_state !== 'retired'));
         this.regions.bookViewer.attach(this.bookViewer);
         this.filterSubjectsEvent = () => {
             const category = history.state.filter;

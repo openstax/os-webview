@@ -3,7 +3,7 @@ import routerBus from '~/helpers/router-bus';
 import $ from '~/helpers/$';
 
 const fetchBooks = cmsFetch('books?format=json')
-    .then((r) => r.books);
+    .then((r) => r.books.filter((b) => b.book_state !== 'retired'));
 
 export default fetchBooks;
 
