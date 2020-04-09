@@ -1,4 +1,3 @@
-import settings from 'settings';
 import fetchRexRelease from '~/models/rex-release';
 
 export function cnxFetch({isRex, cnxId, webviewLink}) {
