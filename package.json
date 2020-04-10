@@ -17,10 +17,9 @@
         "@fortawesome/free-solid-svg-icons": "^5.13.0",
         "@fortawesome/react-fontawesome": "^0.1.9",
         "enzyme": "^3.11.0",
+        "enzyme-adapter-preact-pure": "^2.2.0",
         "gulp-rev": "^9.0.0",
-        "react": "^16.13.0",
         "react-accessible-accordion": "^3.0.1",
-        "react-dom": "^16.13.0",
         "react-test-renderer": "^16.13.0",
         "workbox-build": "^4.3.1"
     },
@@ -40,7 +39,6 @@
         "connect-history-api-fallback": "1.3.0",
         "css-loader": "^1.0.1",
         "del": "3.0.0",
-        "enzyme-adapter-react-16": "^1.15.2",
         "eslint": "5.10.0",
         "eslint-plugin-react": "^7.19.0",
         "find-pkg": "1.0.0",
@@ -75,6 +73,9 @@
         "particles.js": "^2.0.0",
         "pattern-library": "github:openstax/pattern-library",
         "piped-webpack": "^1.4.1",
+        "preact": "^10.4.0",
+        "preact-compat": "^3.19.0",
+        "preact-test-utils": "^0.1.4",
         "regenerator-runtime": "^0.11.0",
         "require-dir": "0.3.2",
         "source-map-loader": "^0.2.4",
@@ -89,7 +90,10 @@
             "\\.css$": "<rootDir>/__mocks__/styleMock.js",
             "^~/(.*)": "<rootDir>/dist/app/$1",
             "recordo": "<rootDir>/node_modules/recordo/dist/recordo.js",
-            "settings": "<rootDir>/src/settings-example.js"
+            "settings": "<rootDir>/src/settings-example.js",
+            "^react$": "preact/compat",
+            "^react-dom/test-utils$": "preact/test-utils",
+            "^react-dom$": "preact/compat"
         },
         "collectCoverage": true,
         "coverageReporters": [
