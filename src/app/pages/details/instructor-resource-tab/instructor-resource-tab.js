@@ -40,11 +40,6 @@ function resourceBoxModel(resourceData, userStatus) {
 
 export default class InstructorResourceTab extends componentType(spec) {
 
-    init(...args) {
-        super.init(...args);
-        this.model.includePartners = 'include-partners';
-    }
-
     onLoaded() {
         this.userStatusPromise.then((userStatus) => {
             const loggedIn = Boolean(userStatus.userInfo && userStatus.userInfo.id);
@@ -81,8 +76,21 @@ export default class InstructorResourceTab extends componentType(spec) {
 
             $.scrollToHash();
         });
+        const filteredPartnersPromise = partnerFeaturePromise
+            .then((pd) => pd.filter(
+                (p) => {
+                    const books = (p.books || '').split(';');
+
+                    return books.includes(this.bookAbbreviation);
+                }
+            ));
+
+        filteredPartnersPromise.then((p) => {
+            this.model.includePartners = p.length > 0 ? 'include-partners' : '';
+            this.update();
+        });
         insertPartners({
-            dataPromise: partnerFeaturePromise,
+            dataPromise: filteredPartnersPromise,
             targetEl: this.regions.partners.el,
             bookAbbreviation: this.bookAbbreviation,
             title: this.partnerListLabel,

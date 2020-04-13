@@ -55,18 +55,13 @@ export default function ({dataPromise, targetEl, bookAbbreviation, title, seeMor
             };
         }
 
-        const forBook = pd.filter((p) => {
-            const books = (p.books || '').split(';');
-
-            return books.includes(bookAbbreviation);
-        });
         const p = new Partners({
             el: targetEl,
             bookAbbreviation,
             model: {
                 title,
                 seeMoreText,
-                blurbs: shuffle(forBook).map(toBlurb),
+                blurbs: shuffle(pd).map(toBlurb),
                 badgeImage: '/images/partners/verified-badge.svg'
             }
         });
