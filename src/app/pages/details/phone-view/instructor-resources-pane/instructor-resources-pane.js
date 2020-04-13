@@ -16,11 +16,12 @@ const spec = {
         classes: ['instructor-resources-pane']
     },
     regions: {
-        featuredResources: '.featured-resources',
         freeResources: '.free-resources-region'
     },
     model() {
-        return this.props.resources;
+        return {
+            hasFeaturedResources: Boolean(this.props.featuredResources.length)
+        };
     }
 };
 
@@ -43,17 +44,22 @@ export default class extends componentType(spec) {
 
     onLoaded() {
         this.props.userStatusPromise.then((userStatus) => {
-            const models = this.props.resources.freeResources.map((res) => resourceBoxModel(res, userStatus));
+            const featuredModels = this.props.featuredResources
+                .map((res) => resourceBoxModel(res, userStatus));
+            const otherModels = this.props.otherResources
+                .map((res) => resourceBoxModel(res, userStatus));
 
-            attachFeaturedResources(
-                {
-                    headline: 'Something about why these are special',
-                    resources: models.slice(0, 6)
-                },
-                this.regions.featuredResources.el
-            );
+            if (featuredModels.length > 0) {
+                attachFeaturedResources(
+                    {
+                        headline: this.props.featuredResourcesHeader,
+                        resources: featuredModels
+                    },
+                    this.el.querySelector('.featured-resources')
+                );
+            }
             const resourceBoxes = new WrappedJsx(
-                ResourceBoxes, {models},
+                ResourceBoxes, {models: otherModels},
                 this.regions.freeResources.el
             );
         });

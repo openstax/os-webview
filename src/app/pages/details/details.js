@@ -239,6 +239,8 @@ export default class Details extends BaseClass {
                 contents[label] = tabContents;
                 tabLabels.push(label);
             };
+            const featuredResources = this.pageData.book_faculty_resources.filter((r) => r.featured);
+            const otherResources = this.pageData.book_faculty_resources.filter((r) => !r.featured);
 
             this.detailsTab = detailsTab;
             detailsTab.on('toc', (whether) => this.setTocOpen(whether));
@@ -249,7 +251,8 @@ export default class Details extends BaseClass {
                     userStatusPromise: this.userStatusPromise,
                     featuredResourcesHeader: this.pageData.featured_resources_header,
                     model: {
-                        resources: this.pageData.book_faculty_resources,
+                        featuredResources,
+                        otherResources,
                         freeStuff: {
                             heading: this.pageData.free_stuff_instructor.content.heading,
                             blurb: this.pageData.free_stuff_instructor.content.content,
@@ -333,9 +336,9 @@ export default class Details extends BaseClass {
                 detailsTabData: detailsTabData(),
                 errataContent: this.pageData.errata_content,
                 includeTOC: Boolean(this.pageData.book_state === 'live'),
-                instructorResources: {
-                    freeResources: this.pageData.book_faculty_resources
-                },
+                featuredResourcesHeader: this.pageData.featured_resources_header,
+                featuredResources,
+                otherResources,
                 slug: this.slug,
                 salesforceAbbreviation: this.pageData.salesforce_abbreviation,
                 studentResources: this.pageData.book_student_resources,

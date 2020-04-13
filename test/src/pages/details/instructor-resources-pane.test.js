@@ -3,9 +3,7 @@ import details from '../../data/details.js'
 import instanceReady from '../../../helpers/instance-ready';
 import shellBus from '~/components/shell/shell-bus';
 import {clickElement} from '../../../test-utils';
-const instructorResources = {
-    freeResources: details.book_faculty_resources
-};
+const instructorResources = details.book_faculty_resources;
 const instructor = {
     isStudent: false,
     isInstructor: true,
@@ -17,7 +15,8 @@ const instructor = {
 describe('InstructorResourcesPane (as instructor)', () => {
     const {instance: pane, ready} = instanceReady(InstructorResourcesPane, {
         compCopyDialogProps: {},
-        resources: instructorResources,
+        featuredResources: [],
+        otherResources: instructorResources,
         userStatusPromise: Promise.resolve(instructor)
     });
 
@@ -27,7 +26,7 @@ describe('InstructorResourcesPane (as instructor)', () => {
                 pane.el.querySelectorAll('.free-resources-region > .resource-box')
             );
 
-            expect(freeResourceBoxes.length).toBe(instructorResources.freeResources.length);
+            expect(freeResourceBoxes.length).toBe(instructorResources.length);
         })
     );
     it('handles comp copy click', () =>

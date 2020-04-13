@@ -16,9 +16,8 @@ const pvData = {
         allNonsenior: []
     },
     errataContent: pageData.errata_content,
-    instructorResources: {
-        freeResources: pageData.book_faculty_resources
-    },
+    featuredResources: [],
+    otherResources: pageData.book_faculty_resources,
     slug: pageData.slug,
     salesforceAbbreviation: pageData.salesforce_abbreviation,
     studentResources: pageData.book_student_resources,

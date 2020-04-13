@@ -24,7 +24,7 @@ const spec = {
     }
 };
 
-function resourceBoxModel(resourceData, userStatus, search) {
+function resourceBoxModel(resourceData, userStatus) {
     return Object.assign(
         {
             heading: resourceData.resource_heading,
@@ -34,7 +34,7 @@ function resourceBoxModel(resourceData, userStatus, search) {
             comingSoonText: resourceData.coming_soon_text,
             featured: resourceData.featured
         },
-        instructorResourceBoxPermissions(resourceData, userStatus, search)
+        instructorResourceBoxPermissions(resourceData, userStatus, 'Instructor resources')
     );
 }
 
@@ -53,17 +53,16 @@ export default class InstructorResourceTab extends componentType(spec) {
                 this.model.freeStuff.blurb = this.model.freeStuff.loggedInBlurb;
             }
             this.insertHtml();
-            const resourceModels = this.model.resources
-                .map((resourceData, i) => resourceBoxModel(
-                    resourceData, userStatus, 'Instructor resources', i === 0
-                ));
-            const featuredResourceModels = resourceModels.filter((r) => r.featured);
+            const featuredModels = this.model.featuredResources
+                .map((res) => resourceBoxModel(res, userStatus));
+            const otherModels = this.model.otherResources
+                .map((res) => resourceBoxModel(res, userStatus));
 
-            if (featuredResourceModels.length > 0) {
+            if (featuredModels.length > 0) {
                 attachFeaturedResources(
                     {
                         headline: this.featuredResourcesHeader,
-                        resources: featuredResourceModels
+                        resources: featuredModels
                     },
                     this.regions.featured.el
                 );
@@ -71,8 +70,7 @@ export default class InstructorResourceTab extends componentType(spec) {
                 this.update();
             }
 
-            const models = resourceModels
-                .filter((r) => !r.featured)
+            const models = otherModels
                 .map((obj, i) =>
                     (i === 0) ? Object.assign({double: true}, obj) : obj
                 );

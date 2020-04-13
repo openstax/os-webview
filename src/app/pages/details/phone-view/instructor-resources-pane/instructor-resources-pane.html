@@ -1,10 +1,12 @@
 <template args="model">
-    <div class="featured-resources" skip="true"></div>
-    <div class="divider">
-        <div class="line"></div>
-        see additional resources below
-        <div class="line"></div>
-    </div>
+    <if condition="model.hasFeaturedResources">
+        <div class="featured-resources" skip="true"></div>
+        <div class="divider">
+            <div class="line"></div>
+            see additional resources below
+            <div class="line"></div>
+        </div>
+    </if>
     <a class="card filter-for-book">
         OpenStax Partners <i class="fas fa-sign-out-alt"></i>
     </a>
