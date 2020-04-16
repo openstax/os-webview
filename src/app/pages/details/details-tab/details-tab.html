@@ -48,8 +48,11 @@
                 {model.formattedWebUpdateDate}
             </div>
             <div class="loc-pdf-update-date" if="model.formattedPDFUpdateDate">
-                <h4>PDF Version Last Updated:</h4>
-                {model.formattedPDFUpdateDate}
+                <div class="callout-container">
+                    <h4>PDF Version Last Updated:</h4>
+                    {model.formattedPDFUpdateDate}
+                    <div class="callout" skip="true"></div>
+                </div>
             </div>
             <div class="loc-print-isbn" if="model.print_isbn_10 || model.print_isbn_13">
                 <h4>Print:</h4>

@@ -101,4 +101,26 @@
             margin-top: 0.7rem;
         }
     }
+
+    .loc-pdf-update-date {
+        .callout-container {
+            position: relative;
+            white-space: nowrap;
+            width: min-content;
+        }
+
+        &:not(:hover) .callout {
+            display: none;
+        }
+
+        &:hover .callout {
+            background-color: ui-color(default);
+            border-radius: 0.3rem;
+            left: 100%;
+            margin-left: $normal-margin;
+            padding: 1rem;
+            position: absolute;
+            top: 0;
+        }
+    }
 }

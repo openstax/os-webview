@@ -241,7 +241,12 @@ export default class Details extends BaseClass {
             };
             const featuredResources = this.pageData.book_faculty_resources.filter((r) => r.featured);
             const otherResources = this.pageData.book_faculty_resources.filter((r) => !r.featured);
+            const errataResource = this.pageData.book_faculty_resources
+                .find((r) => r.resource_heading === 'Errata Release Notes');
 
+            if (errataResource) {
+                detailsTab.emit('errata-resource', errataResource.link_document_url);
+            }
             this.detailsTab = detailsTab;
             detailsTab.on('toc', (whether) => this.setTocOpen(whether));
             detailsTab.emit('put-toc-in', this.regionFrom(this.el.querySelector('.toc-slideout-contents')));
