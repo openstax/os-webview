@@ -28,6 +28,9 @@ function webpack() {
             alias: {
                 "settings": path.resolve(config.dest, "settings.js"),
                 "~": path.resolve(config.dest, "app/"),
+                "react": "preact/compat",
+                "react-dom/test-utils": "preact/test-utils",
+                "react-dom": "preact/compat"
             }
         },
         module: {
