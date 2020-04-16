@@ -4,6 +4,7 @@ import linkHelper from './helpers/link';
 import shell from './components/shell/shell';
 import routerBus from '~/helpers/router-bus';
 
+const path404 = '/error/404';
 const PAGES = [
     'about',
     'adopters',
@@ -128,6 +129,7 @@ class AppRouter extends Router {
             .forEach((pathname) => {
                 this.route(pathname, 'footer-page');
             });
+        this.route(path404.substr(1), '404');
 
         PAGES.forEach((page) => {
             const isSplat = page.match(/\/\*/);
@@ -159,11 +161,9 @@ class AppRouter extends Router {
 
     start() {
         const path = window.location.pathname;
-        const path404 = '/books/404/pages/404';
 
         if (!this.canRoute(path) && !path.startsWith(path404)) {
             window.location = `${path404}?path=${path}`;
-            return;
         }
         super.start();
 
