@@ -24,11 +24,11 @@ describe('GetThisTitle', () => {
         const linkCount = () => Array.from(p.el.querySelectorAll('.option a')).length;
 
         expect(expandLink()).toBeTruthy();
-        expect(linkCount()).toBe(4);
+        expect(linkCount()).toBe(3);
         clickElement(expandLink());
-        expect(linkCount()).toBe(6);
+        expect(linkCount()).toBe(5);
         clickElement(expandLink());
-        expect(linkCount()).toBe(4);
+        expect(linkCount()).toBe(3);
     });
     it('respects enable_study_edge flag', () => {
         const downloadLink = (component) => component.el.querySelector('.option .show-study-edge');
@@ -45,8 +45,11 @@ describe('GetThisTitle', () => {
     it('does the callout for Rex book', () => {
         const rex_callout_title = 'Custom title'
         const rexP = new GetThisTitle(Object.assign({}, details, {
-            webview_rex_link: true,
-            rex_callout_title
+            webviewLink: 'some_link',
+            rex_callout_title,
+            includeTOC: true,
+            isRex: true,
+            isTutor: false
         }));
         const calloutEl = rexP.el.querySelector('.callout');
 
@@ -54,7 +57,10 @@ describe('GetThisTitle', () => {
     });
     it('defaults to "Recommended"', () => {
         const rexP = new GetThisTitle(Object.assign({}, details, {
-            webview_rex_link: true
+            webviewLink: 'some_link',
+            includeTOC: true,
+            isRex: true,
+            isTutor: false
         }));
         const calloutEl = rexP.el.querySelector('.callout');
 
