@@ -1,11 +1,10 @@
 <template args="model">
     <div class="hero {model.reverseGradient ? 'reverse-gradient' : ''}" data-slug="{model.slug}">
         <div class="content book-title">
-            <if condition="model.titleImage">
-                <h1 class="image-heading">
-                    <img class="title-image" src="{model.titleImage}" alt={model.bookTitle}>
-                </h1>
-            </if>
+            <h1 if="model.titleImage" class="image-heading">
+                <img class="title-image" src="{model.titleImage}" alt="{model.bookTitle}">
+                <img if="model.titleLogo" class="title-logo" src="{model.titleLogo}" alt="">
+            </h1>
         </div>
     </div>
     <div class="content-wrapper {model.tocActive ? 'drawer-open' : ''}">

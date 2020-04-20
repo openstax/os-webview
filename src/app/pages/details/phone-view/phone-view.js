@@ -31,9 +31,22 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
     }
 
     onLoaded() {
+        const includeTOC = Boolean(this.props.bookInfo.book_state === 'live');
+        const isRex = this.props.isRex;
+        const webviewLink = this.props.webviewLink;
+
         /* eslint complexity: 0 */
         super.onLoaded();
-        this.regions.getTheBook.append(new GetThisTitle(this.props.bookInfo));
+        this.regions.getTheBook.append(new GetThisTitle(
+            Object.assign(
+                {
+                    includeTOC,
+                    isRex,
+                    isTutor: this.props.isTutor,
+                    webviewLink
+                }, this.props.bookInfo
+            )
+        ));
         const polish = this.props.polish;
         const accordionItems = [
             {
@@ -67,15 +80,11 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
         }
 
         if (this.props.includeTOC) {
-            const bi = this.props.bookInfo;
-            const isRex = Boolean(bi.webview_rex_link);
-            const webviewLink = isRex ? bi.webview_rex_link : this.props.webviewLink;
-
             accordionItems.splice(1, 0, {
                 title: polish ? 'Spis treści' : 'Table of contents',
                 contentComponent: new TocPane({
                     isRex,
-                    cnxId: bi.cnx_id,
+                    cnxId: this.props.bookInfo.cnx_id,
                     webviewLink
                 })
             });

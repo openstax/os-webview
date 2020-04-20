@@ -35,7 +35,6 @@ export default class DetailsTab extends componentType(spec, insertHtmlMixin, bus
         const container = this.el.querySelector('.loc-pdf-update-date .callout');
 
         if (container) {
-            console.info('Stick a callout on here', container);
             const messageHtml = `See changes in the <a href="${url}">Revision Notes</a>.`;
             const resourceBoxes = new WrappedJsx(
                 Callout, {
@@ -49,8 +48,17 @@ export default class DetailsTab extends componentType(spec, insertHtmlMixin, bus
     onLoaded() {
         super.onLoaded();
         const includeTOC = Boolean(this.model.bookInfo.book_state === 'live');
+        const isRex = this.model.isRex;
+        const webviewLink = this.model.webviewLink;
         const gtt = new GetThisTitle(
-            Object.assign({includeTOC}, this.model.bookInfo)
+            Object.assign(
+                {
+                    includeTOC,
+                    isRex,
+                    isTutor: this.model.isTutor,
+                    webviewLink
+                }, this.model.bookInfo
+            )
         );
 
         this.regions.getTheBook.append(gtt);
@@ -60,8 +68,6 @@ export default class DetailsTab extends componentType(spec, insertHtmlMixin, bus
                 this.emit('toc', whether);
             });
             const bi = this.model.bookInfo;
-            const isRex = Boolean(bi.webview_rex_link);
-            const webviewLink = isRex ? bi.webview_rex_link : bi.webview_link;
 
             this.on('put-toc-in', (region) => {
                 const tocComponent = new TocDrawer({

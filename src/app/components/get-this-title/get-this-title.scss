@@ -108,14 +108,11 @@
 
             align-items: center;
             color: text-color(link);
-            display: flex;
-            justify-content: flex-start;
+            display: grid;
+            grid-column-gap: 1rem;
+            grid-template-columns: auto 1fr;
+            justify-content: left;
             text-decoration-line: none;
-
-            :first-child {
-                flex-basis: 3rem;
-                margin-right: $normal-margin;
-            }
         }
 
         a {
@@ -146,8 +143,8 @@
     .option-with-callout {
         align-items: center;
         display: grid;
-        grid-column-gap: 1rem;
-        grid-template-columns: 14rem min-content;
+        grid-column-gap: $normal-margin;
+        grid-template-columns: auto min-content;
         width: 0;
     }
 

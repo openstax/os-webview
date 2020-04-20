@@ -189,6 +189,7 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
 
             .image-heading {
                 display: flex;
+                justify-content: space-between;
                 line-height: 0;
                 margin: 0;
 
@@ -206,6 +207,15 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
 
                 .title-image {
                     max-height: 100%;
+                }
+
+                .title-logo {
+                    max-width: 22.2rem;
+                    padding-right: $normal-margin;
+
+                    @include width-up-to($phone-max) {
+                        display: none;
+                    }
                 }
             }
 

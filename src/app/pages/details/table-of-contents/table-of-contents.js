@@ -16,6 +16,9 @@ const spec = {
 export default class extends componentType(spec) {
 
     onLoaded() {
+        if (super.onLoaded) {
+            super.onLoaded();
+        }
         tableOfContentsHtml({
             isRex: this.isRex,
             cnxId: this.cnxId,
