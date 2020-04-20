@@ -5,6 +5,8 @@ import LetUsKnow from '../let-us-know/let-us-know';
 import TocDrawer from '../table-of-contents/table-of-contents';
 import {description as template} from './details-tab.html';
 import {description as templatePolish} from './details-tab-polish.html';
+import WrappedJsx from '~/controllers/jsx-wrapper';
+import Callout from './callout.jsx';
 import css from './details-tab.css';
 
 const spec = {
@@ -27,6 +29,21 @@ export default class DetailsTab extends componentType(spec, insertHtmlMixin, bus
             this.template = templatePolish;
         }
         this.model = model;
+    }
+
+    addPdfUpdatedHoverText(url) {
+        const container = this.el.querySelector('.loc-pdf-update-date .callout');
+
+        if (container) {
+            console.info('Stick a callout on here', container);
+            const messageHtml = `See changes in the <a href="${url}">Revision Notes</a>.`;
+            const resourceBoxes = new WrappedJsx(
+                Callout, {
+                    messageHtml
+                },
+                container
+            );
+        }
     }
 
     onLoaded() {
@@ -58,6 +75,7 @@ export default class DetailsTab extends componentType(spec, insertHtmlMixin, bus
             this.on('set-toc', (...args) => {
                 gtt.emit('set-toc', ...args);
             });
+            this.on('errata-resource', (url) => this.addPdfUpdatedHoverText(url));
         }
 
         const titleArg = this.model[this.model.polish ? 'title' : 'salesforceAbbreviation'];
