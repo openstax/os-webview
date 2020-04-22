@@ -4,8 +4,8 @@ import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin
 import userModel from '~/models/usermodel';
 import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
 import Popup from '~/components/popup/popup';
-import {detailModelPromise} from '~/pages/errata-detail/errata-detail';
-import Detail from '~/pages/errata-detail/detail/detail';
+import {getDetailModel} from '~/helpers/errata';
+import Detail from '~/pages/errata-detail/detail/detail.jsx';
 import SurveyRequest from '~/components/survey-request/survey-request';
 import {description as template} from './confirmation.html';
 import css from './confirmation.css';
