@@ -1,31 +1,25 @@
-import $ from '~/helpers/$';
-import {on} from '~/helpers/controller/decorators';
-import {Controller} from 'superb.js';
-import {description as template} from './order-print-copy.html';
 import css from './order-print-copy.css';
+import WrappedJsx from '~/controllers/jsx-wrapper';
+import OrderPrintCopyJsx from './order-print-copy.jsx';
 
-export default class OrderPrintCopy extends Controller {
+export default class extends WrappedJsx {
 
     init(model, onNavigate) {
-        this.template = template;
-        this.model = model;
+        super.init(OrderPrintCopyJsx, {
+            bookstoreContent: model.bookstoreContent,
+            amazonLink: model.amazonLink,
+            closeAfterDelay(event) {
+                if (event) {
+                    window.requestAnimationFrame(() => {
+                        onNavigate();
+                    });
+                }
+            }
+        });
         this.view = {
             tag: 'nav',
             classes: ['order-print-copy']
         };
-        this.css = css;
-        this.onNavigate = onNavigate;
-    }
-
-    @on('click [href]')
-    closeAfterDelay() {
-        window.requestAnimationFrame(() => {
-            this.onNavigate();
-        });
-    }
-
-    onLoaded() {
-        $.insertHtml(this.el, this.model);
     }
 
 }

@@ -1,16 +1,13 @@
-import ErrataDetail from '~/pages/errata-detail/errata-detail';
-import ProgressBar from '~/pages/errata-detail/progress-bar/progress-bar';
-import instanceReady from '../../../helpers/instance-ready';
+import ErrataDetail from '~/pages/errata-detail/errata-detail.jsx';
+import {makeMountRender, snapshotify} from '../../../helpers/jsx-test-utils.jsx';
+import cmsFetch from '~/models/cmsFetch';
 
 describe('ErrataDetail', () => {
-    it('creates', () => {
-        window.history.pushState('', '', '/errata/7199');
-        const {instance, ready} = instanceReady(ErrataDetail);
-        const children = () => instance.el.querySelector('.boxed');
+    const wrapper = makeMountRender(ErrataDetail, {
+        slug: '/errata/7199'
+    })();
 
-        expect(children().innerHTML).toBe('');
-        return ready.then(() => {
-            expect(children().children.length).toBe(2);
-        });
+    it('matches snapshot', () => {
+        expect(snapshotify(wrapper)).toMatchSnapshot();
     });
 });

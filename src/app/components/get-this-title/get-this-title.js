@@ -54,7 +54,8 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
             'bookshare_link', 'ibook_link', 'kindle_link', 'chegg_link'
         ].filter((key) => data[key]).length;
 
-        this.isRex = data.webview_rex_link ? true : false;
+        this.isRex = data.isRex;
+        this.isTutor = data.isTutor;
         this.slug = data.slug;
         this.calloutTitle = data.rex_callout_title;
         this.calloutBlurb = data.rex_callout_blurb;
@@ -67,8 +68,9 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
             ibookLink: data.ibook_link,
             ibookLink2: data.ibook_link_volume_2,
             kindleLink: data.kindle_link,
-            webviewLink: data.webview_rex_link || data.webview_link,
-            isRex: this.isRex,
+            webviewLink: data.webviewLink,
+            isRex: data.isRex,
+            isTutor: data.isTutor,
             comingSoon: data.book_state === 'coming_soon',
             bookshareLink: data.bookshare_link,
             pdfText: polish ? ' Pobierz książkę' : ' Download a PDF',
@@ -100,7 +102,7 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
     }
 
     needsCallout() {
-        return this.isRex && calloutCounter.count < MAX_CALLOUTS;
+        return (this.isTutor || this.isRex) && calloutCounter.count < MAX_CALLOUTS;
     }
 
     onLoaded() {

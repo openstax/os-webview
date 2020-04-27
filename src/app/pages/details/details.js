@@ -50,6 +50,7 @@ const spec = {
             slug: this.slug,
             bookTitle: this.bookTitle,
             titleImage: this.titleImage,
+            titleLogo: this.isTutor ? '/images/details/blue-tutor-logo.svg' : '',
             reverseGradient: this.reverseGradient,
             tocActive: this.tocActive
         };
@@ -117,7 +118,7 @@ export default class Details extends BaseClass {
                 'image': data.cover_url,
                 'inLanguage': polish ? 'Polish' : 'English',
                 'isbn': data.digital_isbn_13,
-                'url': data.webview_link
+                'url': data.rex_webview_link || data.webview_link
             }
         };
         const descriptionEl = document.querySelector('head meta[name="description"]');
@@ -174,7 +175,9 @@ export default class Details extends BaseClass {
         if (this.pageData.meta.type !== 'books.Book') {
             throw new Error(`Pagedata for ${this.slug} is not of type books.Book: ${this.pageData.meta.type}`);
         }
-        const isRex = Boolean(this.pageData.webview_rex_link);
+        const isTutor = this.pageData.webview_rex_link.includes('tutor');
+        const isRex = !isTutor && Boolean(this.pageData.webview_rex_link);
+        const webviewLink = this.pageData.webview_rex_link || this.pageData.webview_link;
         const polish = $.isPolish(this.pageData.title);
         const fetchUpdateDate = isRex ?
             fetchRexRelease(this.pageData.webview_rex_link, this.pageData.cnx_id)
@@ -192,10 +195,13 @@ export default class Details extends BaseClass {
                     formattedWebUpdateDate: webUpdateDate && formatDate(webUpdateDate),
                     formattedPDFUpdateDate: this.pageData.last_updated_pdf &&
                         formatDate(this.pageData.last_updated_pdf),
+                    isRex,
+                    isTutor,
                     polish,
+                    salesforceAbbreviation: this.pageData.salesforce_abbreviation,
                     slug: this.slug,
                     title: this.pageData.title,
-                    salesforceAbbreviation: this.pageData.salesforce_abbreviation
+                    webviewLink
                 };
                 const authors = this.pageData.authors;
                 const senior = (author) => author.senior_author;
@@ -330,7 +336,7 @@ export default class Details extends BaseClass {
             this.el.classList.add(this.pageData.cover_color.toLowerCase());
             this.reverseGradient = this.pageData.reverse_gradient;
             this.titleImage = this.pageData.title_image_url;
-
+            this.isTutor = isTutor;
             this.update();
 
             this.regions.phoneView.attach(new PhoneView({
@@ -343,12 +349,14 @@ export default class Details extends BaseClass {
                 includeTOC: Boolean(this.pageData.book_state === 'live'),
                 featuredResourcesHeader: this.pageData.featured_resources_header,
                 featuredResources,
+                isRex,
+                isTutor,
                 otherResources,
                 slug: this.slug,
                 salesforceAbbreviation: this.pageData.salesforce_abbreviation,
                 studentResources: this.pageData.book_student_resources,
                 userStatusPromise: this.userStatusPromise,
-                webviewLink: this.pageData.webview_link,
+                webviewLink,
                 compCopyDialogProps
             }));
             this.regions.tabController.attach(tabGroup);

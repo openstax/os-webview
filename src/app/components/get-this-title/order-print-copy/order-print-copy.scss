@@ -4,23 +4,6 @@
 
     background-color: ui-color(default);
 
-    .larger-version {
-        display: none;
-
-        @include wider-than($phone-max) {
-            display: grid;
-            grid-gap: 2rem;
-            max-width: 90rem; // Matches dialog width
-            overflow-x: auto;
-        }
-    }
-
-    .phone-version {
-        @include wider-than($phone-max) {
-            display: none;
-        }
-    }
-
     h1 {
         @include set-font(h4);
 
@@ -34,6 +17,23 @@
     }
 
     .boxes {
+        &.larger-version {
+            display: none;
+
+            @include wider-than($phone-max) {
+                display: grid;
+                grid-gap: 2rem;
+                max-width: 90rem; // Matches dialog width
+                overflow-x: auto;
+            }
+        }
+
+        &.phone-version {
+            @include wider-than($phone-max) {
+                display: none;
+            }
+        }
+
         box-sizing: border-box;
         display: grid;
         grid-gap: 2rem;

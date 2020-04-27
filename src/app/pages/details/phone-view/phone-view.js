@@ -1,7 +1,8 @@
 import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
-import LetUsKnow from '../let-us-know/let-us-know';
+import WrappedJsx from '~/controllers/jsx-wrapper';
+import LetUsKnow from '../let-us-know/let-us-know.jsx';
 import DetailsPane from './details-pane/details-pane';
 import TocPane from '../table-of-contents/table-of-contents';
 import InstructorResourcePane from './instructor-resources-pane/instructor-resources-pane';
@@ -31,9 +32,22 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
     }
 
     onLoaded() {
+        const includeTOC = Boolean(this.props.bookInfo.book_state === 'live');
+        const isRex = this.props.isRex;
+        const webviewLink = this.props.webviewLink;
+
         /* eslint complexity: 0 */
         super.onLoaded();
-        this.regions.getTheBook.append(new GetThisTitle(this.props.bookInfo));
+        this.regions.getTheBook.append(new GetThisTitle(
+            Object.assign(
+                {
+                    includeTOC,
+                    isRex,
+                    isTutor: this.props.isTutor,
+                    webviewLink
+                }, this.props.bookInfo
+            )
+        ));
         const polish = this.props.polish;
         const accordionItems = [
             {
@@ -67,15 +81,11 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
         }
 
         if (this.props.includeTOC) {
-            const bi = this.props.bookInfo;
-            const isRex = Boolean(bi.webview_rex_link);
-            const webviewLink = isRex ? bi.webview_rex_link : this.props.webviewLink;
-
             accordionItems.splice(1, 0, {
                 title: polish ? 'Spis treści' : 'Table of contents',
                 contentComponent: new TocPane({
                     isRex,
-                    cnxId: bi.cnx_id,
+                    cnxId: this.props.bookInfo.cnx_id,
                     webviewLink
                 })
             });
@@ -99,7 +109,11 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
         const titleArg = polish ? this.props.bookTitle : this.props.salesforceAbbreviation;
 
         if (titleArg) {
-            this.regions.letUsKnow.append(new LetUsKnow(titleArg));
+            const letUsKnow = new WrappedJsx(
+                LetUsKnow,
+                {title: titleArg},
+                this.regions.letUsKnow.el
+            );
         }
     }
 

@@ -1,3 +1,5 @@
+import bookPromise from '~/models/book-titles';
+
 // eslint-disable-next-line complexity
 export function approvedStatuses(created) {
     const posted = new Date(created);
@@ -33,4 +35,27 @@ export function getDisplayStatus(detail) {
     }
 
     return result;
+}
+
+export function getDetailModel(detail) {
+    const {status, barStatus} = getDisplayStatus(detail);
+
+    return bookPromise.then((bookList) => {
+        const entry = bookList.find((info) => info.id === detail.book);
+
+        return {
+            showDecisionDetails: barStatus || status === 'Will Correct',
+            detail: {
+                id: detail.id,
+                bookTitle: entry.title,
+                source: detail.resource === 'Other' ? detail.resource_other : detail.resource,
+                status,
+                errorType: detail.error_type,
+                location: detail.location,
+                detail: detail.detail,
+                date: new Date(detail.created).toLocaleDateString(),
+                resolutionNotes: detail.resolution_notes
+            }
+        };
+    });
 }

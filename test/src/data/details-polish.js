@@ -636,6 +636,7 @@ export default {
     "ibook_link": "",
     "ibook_link_volume_2": "",
     "webview_link": "https://cnx.org/contents/4eaa8f03-88a8-485a-a777-dd3602f6c13e",
+    "webview_rex_link": "https://some/rex/address",
     "bookshare_link": "",
     "amazon_coming_soon": false,
     "amazon_link": "",

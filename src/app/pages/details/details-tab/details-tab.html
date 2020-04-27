@@ -38,54 +38,6 @@
                 </div>
             </div>
         </if>
-        <div class="publication-info">
-            <div class="loc-pub-date" if="model.formattedPublishDate">
-                <h4>Publish Date:</h4>
-                {model.formattedPublishDate}
-            </div>
-            <div class="loc-web-update-date" if="model.formattedWebUpdateDate">
-                <h4>Web Version Last Updated:</h4>
-                {model.formattedWebUpdateDate}
-            </div>
-            <div class="loc-pdf-update-date" if="model.formattedPDFUpdateDate">
-                <div class="callout-container">
-                    <h4>PDF Version Last Updated:</h4>
-                    {model.formattedPDFUpdateDate}
-                    <div class="callout" skip="true"></div>
-                </div>
-            </div>
-            <div class="loc-print-isbn" if="model.print_isbn_10 || model.print_isbn_13">
-                <h4>Print:</h4>
-                <div if="model.print_isbn_10">ISBN-10: {model.print_isbn_10}</div>
-                <div if="model.print_isbn_13">ISBN-13: {model.print_isbn_13}</div>
-            </div>
-            <div class="loc-digital-isbn" if="model.digital_isbn_10 || model.digital_isbn_13">
-                <h4>Digital:</h4>
-                <div if="model.digital_isbn_10">ISBN-10: {model.digital_isbn_10}</div>
-                <div if="model.digital_isbn_13">ISBN-13: {model.digital_isbn_13}</div>
-            </div>
-            <div class="loc-ibook-isbn" if="model.ibook_isbn_10 || model.ibook_isbn_10">
-                <h4>iBooks<span if="model.ibook_volume_2_isbn_10 || model.ibook_volume_2_isbn_13"> Part 1</span>:
-                </h4>
-                <div if="model.ibook_isbn_10">ISBN-10: {model.ibook_isbn_10}</div>
-                <div if="model.ibook_isbn_13">ISBN-13: {model.ibook_isbn_13}</div>
-            </div>
-            <div class="loc-ibook-isbn" if="model.ibook_volume_2_isbn_10 || model.ibook_volume_2_isbn_13">
-                <h4>iBooks Part 2:</h4>
-                <div if="model.ibook_isbn_10">ISBN-10: {model.ibook_volume_2_isbn_10}</div>
-                <div if="model.ibook_isbn_13">ISBN-13: {model.ibook_volume_2_isbn_13}</div>
-            </div>
-            <div class="loc-license" if="model.license_name">
-                <h4>License:</h4>
-                <img src="{model.licenseIcon}" alt="">
-                <div>
-                    <div if="!model.license_text">
-                        <span data-html="title" skip="true"></span> by OpenStax is licensed under
-                        <span class="text">{model.license_name} v{model.license_version}</span>
-                    </div>
-                    <div if="model.license_text" data-html="license_text" skip="true"></div>
-                </div>
-            </div>
-        </div>
+        <div class="publication-info" skip="true"></div>
     </div>
 </template>

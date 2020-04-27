@@ -1,12 +1,12 @@
 import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import busMixin from '~/helpers/controller/bus-mixin';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
-import LetUsKnow from '../let-us-know/let-us-know';
+import LetUsKnow from '../let-us-know/let-us-know.jsx';
 import TocDrawer from '../table-of-contents/table-of-contents';
 import {description as template} from './details-tab.html';
 import {description as templatePolish} from './details-tab-polish.html';
 import WrappedJsx from '~/controllers/jsx-wrapper';
-import Callout from './callout.jsx';
+import PublicationInfo from './publication-info.jsx';
 import css from './details-tab.css';
 
 const spec = {
@@ -17,7 +17,8 @@ const spec = {
     },
     regions: {
         getTheBook: '.get-the-book',
-        letUsKnow: '.let-us-know-region'
+        letUsKnow: '.let-us-know-region',
+        publicationInfo: '.publication-info'
     }
 };
 
@@ -31,26 +32,20 @@ export default class DetailsTab extends componentType(spec, insertHtmlMixin, bus
         this.model = model;
     }
 
-    addPdfUpdatedHoverText(url) {
-        const container = this.el.querySelector('.loc-pdf-update-date .callout');
-
-        if (container) {
-            console.info('Stick a callout on here', container);
-            const messageHtml = `See changes in the <a href="${url}">Revision Notes</a>.`;
-            const resourceBoxes = new WrappedJsx(
-                Callout, {
-                    messageHtml
-                },
-                container
-            );
-        }
-    }
-
     onLoaded() {
         super.onLoaded();
         const includeTOC = Boolean(this.model.bookInfo.book_state === 'live');
+        const isRex = this.model.isRex;
+        const webviewLink = this.model.webviewLink;
         const gtt = new GetThisTitle(
-            Object.assign({includeTOC}, this.model.bookInfo)
+            Object.assign(
+                {
+                    includeTOC,
+                    isRex,
+                    isTutor: this.model.isTutor,
+                    webviewLink
+                }, this.model.bookInfo
+            )
         );
 
         this.regions.getTheBook.append(gtt);
@@ -60,8 +55,6 @@ export default class DetailsTab extends componentType(spec, insertHtmlMixin, bus
                 this.emit('toc', whether);
             });
             const bi = this.model.bookInfo;
-            const isRex = Boolean(bi.webview_rex_link);
-            const webviewLink = isRex ? bi.webview_rex_link : bi.webview_link;
 
             this.on('put-toc-in', (region) => {
                 const tocComponent = new TocDrawer({
@@ -75,14 +68,27 @@ export default class DetailsTab extends componentType(spec, insertHtmlMixin, bus
             this.on('set-toc', (...args) => {
                 gtt.emit('set-toc', ...args);
             });
-            this.on('errata-resource', (url) => this.addPdfUpdatedHoverText(url));
         }
 
         const titleArg = this.model[this.model.polish ? 'title' : 'salesforceAbbreviation'];
 
         if (titleArg) {
-            this.regions.letUsKnow.append(new LetUsKnow(titleArg));
+            const letUsKnow = new WrappedJsx(
+                LetUsKnow,
+                {title: titleArg},
+                this.regions.letUsKnow.el
+            );
         }
+
+        const pubInfo = new WrappedJsx(
+            PublicationInfo,
+            {model: this.model, url: null},
+            this.regions.publicationInfo.el
+        );
+
+        this.on('errata-resource', (url) => {
+            pubInfo.updateProps({url});
+        });
     }
 
 }

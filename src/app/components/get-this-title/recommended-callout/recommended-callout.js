@@ -1,41 +1,28 @@
-import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
-import busMixin from '~/helpers/controller/bus-mixin';
+import {Bus} from '~/helpers/controller/bus-mixin';
+import CalloutJsx from './recommended-callout.jsx';
+import WrappedJsx from '~/controllers/jsx-wrapper';
 import {on} from '~/helpers/controller/decorators';
-import {description as template} from './recommended-callout.html';
 import css from './recommended-callout.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['recommended-callout']
-    },
-    model() {
-        return {
-            calloutTitle: this.calloutTitle || 'Recommended',
-            calloutBlurb: this.calloutBlurb
-        };
-    }
-};
-
-class RecommendedCallout extends componentType(spec, busMixin, insertHtmlMixin) {
-
-    @on('click .put-away')
-    hideForever() {
-        this.emit('hide-forever');
-        this.detach();
-    }
-
-};
+const parentClass = 'recommended-callout';
 
 export default function (regionEl, title, blurb) {
     if (!regionEl) {
         return null;
     }
+    const bus = new Bus();
+    const child = new WrappedJsx(CalloutJsx, {
+        title,
+        blurb,
+        onPutAway(event) {
+            if (event) {
+                bus.emit('hide-forever');
+                child.detach();
+                regionEl.classList.remove(parentClass);
+            }
+        }
+    }, regionEl);
 
-    return new RecommendedCallout({
-        el: regionEl,
-        calloutTitle: title,
-        calloutBlurb: blurb
-    });
+    regionEl.classList.add(parentClass);
+    return bus;
 }

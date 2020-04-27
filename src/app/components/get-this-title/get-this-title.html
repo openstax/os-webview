@@ -11,9 +11,14 @@
             <div if="!model.comingSoon && model.webviewLink" class="option">
                 <div class="option-with-callout">
                     <a href="{model.webviewLink}" data-local="{model.isRex}"
+                        _target="{model.isTutor ? '_blank' : ''}"
                         tabindex="{model.submenu === '' ? 0 : -1}" data-submenu="{model.submenu}">
                         <span class="fa fa-laptop"></span>
-                        <span class="text">View online</span>
+                        <if condition="model.isTutor">
+                            <span class="text">Go to OpenStax Tutor</span>
+                        <else>
+                            <span class="text">View online</span>
+                        </if>
                     </a>
                     <div class="callout" skip="true"></div>
                 </div>
