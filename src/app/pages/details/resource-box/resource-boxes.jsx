@@ -2,6 +2,33 @@ import React, {useState} from 'react';
 import './resource-box.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
+function CommonsHubBox({model}) {
+    return (
+        <div className="resource-box double">
+            <div className="top-line">
+                <h3>{model.heading}</h3>
+                <img src={model.logoUrl} alt="" />
+            </div>
+            <div className="blurb">
+                <span dangerouslySetInnerHTML={{__html: model.blurb}} />
+                <br />
+                <a href={model.url}>
+                    {model.cta}
+                    <i className="fa fa-external-link-alt"></i>
+                </a>
+            </div>
+            <div className="bottom">
+                <div className="left" />
+                <div className="right">
+                    <a href={model.featureUrl}>
+                        {model.featureText}
+                    </a>
+                </div>
+            </div>
+        </div>
+    );
+}
+
 function ResourceBox({model}) {
     const comingSoonClass = model.comingSoon ? 'coming-soon' : '';
     const description = model.comingSoon ? `<p>${model.comingSoonText}</p>` : model.description;
@@ -76,7 +103,9 @@ export default function ({models}) {
         <React.Fragment>
             {
                 models.map((model) =>
-                    <ResourceBox model={model} key={model.heading} />
+                    model.communityResource ?
+                        <CommonsHubBox model={model} key={model.heading} /> :
+                        <ResourceBox model={model} key={model.heading} />
                 )
             }
         </React.Fragment>
