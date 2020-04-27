@@ -1,5 +1,6 @@
 @import 'mixins/triangle';
 @import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/placeholder-selectors';
 
 .quotes {
     display: grid;
@@ -7,186 +8,84 @@
     padding: 0 $normal-margin;
     width: 100%;
 
-    @include wider-than($tablet-max) {
-        grid-template-columns: repeat(auto-fit, minmax(30%, auto));
+    @include width-up-to($phone-max) {
+        grid-template-columns: 100%;
     }
 
-    .quote-bucket {
-        background-color: ui-color(white);
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(50%, auto));
-
-        &:last-child {
-            margin-bottom: 0;
-        }
-
-        .cyan {
-            background-color: os-color(light-blue);
-        }
-
-        &.right {
-
-            @media (min-width: 700px) {
-                margin-left: 1.5rem;
-            }
-
-            @media (min-width: 1050px) {
-                margin-left: 1.5rem;
-                margin-right: 1.5rem;
-            }
-
-            > .image {
-                order: 2;
-            }
-
-            > .quote {
-                order: 1;
-
-                &::before {
-                    @include triangle(
-                        $direction: left,
-                        $position: top calc(50% - 2.4rem) left -2.4rem,
-                        $color: ui-color(white),
-                        $size: 2.4rem
-                    );
-                }
-            }
-        }
-
-        &.left {
-            .image {
-                background-position: 62%;
-                order: 1;
-            }
-
-            > .quote {
-                order: 2;
-
-                &::before {
-                    @include triangle(
-                        $direction: top,
-                        $position: left calc(50% - 2.4rem) top -1rem,
-                        $color: ui-color(white),
-                        $size: 2.4rem
-                    );
-
-                    @include wider-than($phone-max) {
-                        @include triangle(
-                            $direction: left,
-                            $position: top 50% left -4.4rem,
-                            $color: ui-color(white),
-                            $size: 2.4rem
-                        );
-                    }
-                }
-            }
-        }
-
-        &.full {
-            background-color: os-color(orange);
-            color: text-color(white);
-            font-weight: 400;
-
-            &:nth-child(odd) {
-                background-color: os-color(light-blue);
-            }
-
-            blockquote {
-                font-size: 130%;
-
-                p {
-                    margin: -0.6rem 0 0;
-                    padding: 0 4rem 2rem 1rem;
-                    text-indent: -1rem;
-                }
-            }
-        }
+    @include wider-than($phone-max) {
+        grid-template-columns: 1fr 1fr 1fr;
     }
 
-    .image {
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        display: block;
-        flex: 1 1 auto;
-        height: 20rem;
-        width: 100%;
-
-        @include wider-than($phone-max) {
-            flex: 1 1 50%;
-            height: auto;
-            width: auto;
-        }
-    }
-
-    .quote {
-        align-items: flex-start;
-        display: flex;
-        flex: 1 1 auto;
-        flex-flow: column nowrap;
-        justify-content: space-between;
+    > * {
+        border-radius: 0.3rem;
         padding: 2rem;
-        position: relative;
 
-        @include wider-than($phone-max) {
-            flex: 1 1 50%;
+        .quote {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        > * {
-            max-width: 100%;
-        }
+        &:first-child {
+            background-image: url('/images/home/quotes/tutor-quote-bg.svg');
+            background-position: bottom right;
+            background-repeat: no-repeat;
+            background-size: cover;
 
-        blockquote {
-            display: block;
-            line-height: 1.7;
-            margin: 1rem 0;
-        }
-
-        .overlay {
-            display: none;
-
-            @include wider-than($phone-max) {
-                bottom: 0;
-                display: block;
-                height: calc(18% + 5rem);
-                position: absolute;
-                right: 5%;
+            .content {
+                @include title-font(2.4rem);
+                color: os-color(blue);
             }
         }
-    }
-}
 
-.old-quotes {
-    align-items: stretch;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin: 0 auto;
-    padding: 1.5rem 0;
-    position: relative;
-    width: 100%;
+        &:nth-child(2) {
+            background-color: ui-color(white);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding: 0;
 
-    @include wider-than($tablet-max) {
-        flex-flow: row nowrap;
-        padding: 8rem 0;
-    }
+            .quote {
+                padding: 2rem;
+                position: relative;
 
+                &::after {
+                    @include triangle(
+                        $direction: right,
+                        $position: top calc(50% - 2.4rem) right -2.4rem,
+                        $color: ui-color(white),
+                        $size: 2.4rem
+                    );
+                }
+            }
 
-    &.boxes-2 {
-        > .quote-bucket {
-            @include wider-than($tablet-max) {
-                flex-basis: calc(50% - 1.5rem);
+            .mail-check {
+                background-color: os-color(deep-green);
+                background-image: url('/images/home/quotes/mail-check.jpg');
+                background-repeat: no-repeat;
+                background-size: cover;
             }
         }
-    }
 
-    &.boxes-3 {
-        > .quote-bucket {
-            @include wider-than($tablet-max) {
-                flex-basis: 33.33%;
-                margin: 0 1.5rem;
+        &:nth-child(3) {
+            @extend %light-on-dark;
+
+            background-color: os-color(light-blue);
+
+            .quote {
+                @include body-font(2rem);
+
+                color: text-color(white);
+                height: 100%;
+                line-height: 1.5;
             }
         }
-    }
 
+        .btn {
+            @extend %button;
+            @extend %primary;
+
+            align-self: flex-start;
+            margin-top: 4rem;
+        }
+    }
 }

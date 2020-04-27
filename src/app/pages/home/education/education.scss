@@ -1,4 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/placeholder-selectors';
 
 $girl-breakpoint: 60em * $scale-factor;
 $button-breakpoint: 100em * $scale-factor;
@@ -26,188 +27,101 @@ $button-breakpoint: 100em * $scale-factor;
         height: 100%;
         margin: 0 auto;
         max-width: $content-max;
-        padding: 3rem 1.5rem;
+        overflow: hidden;
+        padding: 3rem 4.5rem;
         position: relative;
     }
 
     .quote {
+        @extend %light-on-dark;
+
         background-color: rgba(os-color(light-blue), 0.8);
+        border-radius: 0.3rem;
         color: text-color(white);
         margin-bottom: 1.5rem;
         padding: 3rem;
+        position: relative;
         top: 5rem;
         width: 100%;
 
         @include wider-than($girl-breakpoint) {
-            width: calc(100% - 3rem);
-
-            > p {
-                width: calc(46% + 10rem);
-            }
+            width: calc(100% - 9rem);
         }
 
-        @include wider-than($button-breakpoint) {
-            > p,
-            > h3 {
-                width: 50rem;
-            }
+
+        &::before,
+        &::after {
+            background-color: rgba(os-color(light-blue), 0.2);
+            border-radius: 0.3rem;
+            content: '';
+            height: 28.7rem;
+            position: absolute;
+            width: 35.9rem;
         }
 
-        > p:first-child {
-            @include set-font(h3);
-            font-weight: normal;
-            letter-spacing: normal;
-            margin: 0;
+        &::before {
+            bottom: -3rem;
+            left: -3rem;
         }
 
-        h3 {
-            @include set-font(h1);
-            color: os-color(yellow);
-            margin: 1rem 0;
-
-            @include wider-than($tablet-max) {
-                @include set-font(hero-h1);
-                width: 37rem;
-            }
-
+        &::after {
+            top: -3rem;
+            right: -3rem;
         }
 
-        > p:last-child {
-            @include set-font(body-large);
-            margin: 1.5rem 0;
+        > * {
+            position: relative;
+            z-index: 1;
         }
 
-        .btn {
-            background-color: transparent;
-            border: 0.1rem solid ui-color(white);
-            color: text-color(white);
+        > :first-child {
 
-            &:hover {
-                background-color: rgba(ui-color(white), 0.90);
-                color: os-color(light-blue);
-            }
-        }
-    }
-
-    .links {
-        width: 100%;
-        z-index: 3;
-
-        @include wider-than($girl-breakpoint) {
-            bottom: 3rem;
-            margin-top: 1.5rem;
-        }
-
-        @include wider-than($button-breakpoint) {
-            bottom: 13rem;
-        }
-
-        ul {
-            display: flex;
-            flex-flow: column nowrap;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            width: 100%;
-
-            @include wider-than($tablet-max) {
-                flex-flow: row wrap;
-            }
-        }
-
-        li {
-            flex: 0 0 auto;
-
-            @include wider-than($girl-breakpoint) {
-                width: 60%;
+            @include wider-than($phone-max) {
+                max-width: calc(70% - 11rem);
             }
 
-            @include wider-than($tablet-max) {
-                flex: 0 0 40%;
-                max-width: 37rem;
+            @include wider-than($button-breakpoint) {
+                max-width: calc(100% - 32rem);
             }
 
-            &:first-child {
-                margin-bottom: 1.5rem;
+            > p:first-child {
+                @include set-font(h3);
+                font-weight: normal;
+                letter-spacing: normal;
+                margin: 0;
+            }
 
-                @include wider-than($girl-breakpoint) {
-                    margin-bottom: 1.5rem;
-                }
+            h3 {
+                @include set-font(h1);
+                color: os-color(yellow);
+                margin: 1rem 0;
 
                 @include wider-than($tablet-max) {
-                    margin-bottom: 0;
-                    margin-right: 3rem;
+                    width: 37rem;
                 }
+
+            }
+
+            > p:last-child {
+                @include body-font(2rem);
+                margin: 1.5rem 0;
             }
         }
 
         .btn {
-            box-shadow: 0 0 1rem rgba(os-color(gray), 0.4);
-            display: inline-block;
-            text-align: left;
-            text-transform: none;
-            width: 100%;
+            @extend %button;
+            @extend %primary;
 
-            @include wider-than($girl-breakpoint) {
-                padding-left: 1.5rem;
-                padding-right: 1.5rem;
-            }
-
-            @include wider-than($tablet-max) {
-                height: 12.7rem;
-            }
-
-            &.k-12 > .title {
-                color: os-color(orange);
-            }
-        }
-
-        .title {
-            @include set-font(h3);
-            color: os-color(yellow);
-            display: block;
-        }
-
-        .blurb {
-            font-weight: normal;
+            margin-top: 3rem;
         }
     }
 
-    .square-1,
-    .square-2,
     .student,
-    .quote,
-    .links {
+    .quote {
         @include wider-than($girl-breakpoint) {
             position: absolute;
         }
     }
-
-    .square-1,
-    .square-2 {
-        background-color: rgba(os-color(light-blue), 0.2);
-        display: none;
-        position: absolute;
-        z-index: 0;
-
-        @include wider-than($tablet-max) {
-            display: initial;
-        }
-     }
-
-    .square-1 {
-        bottom: 18rem;
-        height: 12rem;
-        left: -1.5rem;
-        width: 56rem;
-     }
-
-    .square-2 {
-        height: 50rem;
-        right: 0;
-        top: 1.5rem;
-        width: 59rem;
-     }
 
     .student {
         @include width-up-to($phone-max) {
