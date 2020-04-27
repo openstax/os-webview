@@ -64,11 +64,15 @@ export default class InstructorResourceTab extends componentType(spec) {
                 this.model.showDivider = true;
                 this.update();
             }
-
-            const models = otherModels
-                .map((obj, i) =>
-                    (i === 0) ? Object.assign({double: true}, obj) : obj
-                );
+            if (this.model.communityResource) {
+                otherModels.unshift(Object.assign(
+                    {
+                        communityResource: true
+                    },
+                    this.model.communityResource
+                ));
+            }
+            const models = otherModels;
             const resourceBoxes = new WrappedJsx(
                 ResourceBoxes, {models},
                 this.regions.resources.el
