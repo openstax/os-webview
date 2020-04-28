@@ -124,7 +124,7 @@ $.scrollToHash = () => {
 };
 
 $.scrollToFrame = ({divEl, newFrameNumber, oldFrameNumber, unit='vw'}) => {
-    const SCROLL_TICKS = $.isMobileDisplay() ? 12 : 24;
+    const SCROLL_TICKS = $.isMobileDisplay() ? 9 : 12;
     let posVw = oldFrameNumber * -100;
     const newPosVw = newFrameNumber * -100;
     const step = (newPosVw - posVw) / SCROLL_TICKS;
