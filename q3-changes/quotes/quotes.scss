@@ -1,0 +1,91 @@
+@import 'mixins/triangle';
+@import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/placeholder-selectors';
+
+.quotes {
+    display: grid;
+    grid-gap: #{2 * $normal-margin};
+    padding: 0 $normal-margin;
+    width: 100%;
+
+    @include width-up-to($phone-max) {
+        grid-template-columns: 100%;
+    }
+
+    @include wider-than($phone-max) {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    > * {
+        border-radius: 0.3rem;
+        padding: 2rem;
+
+        .quote {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        &:first-child {
+            background-image: url('/images/home/quotes/tutor-quote-bg.svg');
+            background-position: bottom right;
+            background-repeat: no-repeat;
+            background-size: cover;
+
+            .content {
+                @include title-font(2.4rem);
+                color: os-color(blue);
+            }
+        }
+
+        &:nth-child(2) {
+            background-color: ui-color(white);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding: 0;
+
+            .quote {
+                padding: 2rem;
+                position: relative;
+
+                &::after {
+                    @include triangle(
+                        $direction: right,
+                        $position: top calc(50% - 2.4rem) right -2.4rem,
+                        $color: ui-color(white),
+                        $size: 2.4rem
+                    );
+                }
+            }
+
+            .mail-check {
+                background-color: os-color(deep-green);
+                background-image: url('/images/home/quotes/mail-check.jpg');
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+        }
+
+        &:nth-child(3) {
+            @extend %light-on-dark;
+
+            background-color: os-color(light-blue);
+
+            .quote {
+                @include body-font(2rem);
+
+                color: text-color(white);
+                height: 100%;
+                line-height: 1.5;
+            }
+        }
+
+        .btn {
+            @extend %button;
+            @extend %primary;
+
+            align-self: flex-start;
+            margin-top: 4rem;
+        }
+    }
+}

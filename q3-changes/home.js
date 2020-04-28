@@ -2,7 +2,7 @@ import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin
 import BannerCarousel from './banner-carousel/banner-carousel';
 import Buckets from './buckets/buckets';
 import Education from './education/education';
-import Quotes from './quotes/quotes';
+import Quotes from './quotes/quotes.jsx';
 import css from './home.css';
 
 const spec = {
@@ -39,7 +39,6 @@ export default class Home extends BaseClass {
             const cmsData = this.pageData[`row_${rowNum}`][0];
             const result = Object.assign({
                 bucketClass: index ? 'partners' : 'our-impact',
-                btnClass: index ? 'btn-gold' : 'btn-cyan',
                 hasImage: index === 0
             }, cmsData);
 

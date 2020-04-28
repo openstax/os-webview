@@ -1,5 +1,4 @@
 import componentType from '~/helpers/controller/init-mixin';
-import Quote from '~/components/quote/quote';
 import css from './quotes.css';
 
 const spec = {
