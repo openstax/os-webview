@@ -50,7 +50,7 @@ const spec = {
             slug: this.slug,
             bookTitle: this.bookTitle,
             titleImage: this.titleImage,
-            titleLogo: '',
+            titleLogo: this.isTutor ? '/images/details/blue-tutor-logo.svg' : '',
             reverseGradient: this.reverseGradient,
             tocActive: this.tocActive
         };
