@@ -13,10 +13,11 @@
                     <a href="{model.webviewLink}" data-local="{model.isRex}"
                         _target="{model.isTutor ? '_blank' : ''}"
                         tabindex="{model.submenu === '' ? 0 : -1}" data-submenu="{model.submenu}">
-                        <span class="fa fa-laptop"></span>
                         <if condition="model.isTutor">
+                            <span class="fa fa-atom"></span>
                             <span class="text">Go to OpenStax Tutor</span>
                         <else>
+                            <span class="fa fa-laptop"></span>
                             <span class="text">View online</span>
                         </if>
                     </a>
