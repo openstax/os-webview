@@ -15,7 +15,7 @@ class StickyNote extends CMSPageController {
         this.view = {
             classes: ['sticky-note']
         };
-        this.slug = 'sticky';
+        this.slug = 'sticky/';
         this.model = () => this.getModel();
         this.temporary = false;
         this.content = '';
