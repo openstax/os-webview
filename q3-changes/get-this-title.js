@@ -102,7 +102,7 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
     }
 
     needsCallout() {
-        return this.isRex && calloutCounter.count < MAX_CALLOUTS;
+        return (this.isTutor || this.isRex) && calloutCounter.count < MAX_CALLOUTS;
     }
 
     onLoaded() {
