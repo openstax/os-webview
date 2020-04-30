@@ -29,13 +29,20 @@ export default class extends componentType(spec) {
     }
 
     @on('click .navigate.previous')
-    handleLeftClick() {
+    handleLeftClick(event) {
         this.changeFrame(Number(this.frameNumber) - 1);
+        event.stopPropagation();
     }
 
     @on('click .navigate.next')
     handleRightClick(event) {
         this.changeFrame(Number(this.frameNumber) + 1);
+        event.stopPropagation();
+    }
+
+    @on('click')
+    preventClosing(event) {
+        event.stopPropagation();
     }
 
     changeFrame(newFrameNumber) {
