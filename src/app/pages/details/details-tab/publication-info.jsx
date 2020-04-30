@@ -91,7 +91,8 @@ export default function ({model, url}) {
                 </div>
             }
             <PdfUpdateInfo updateDate={model.formattedPDFUpdateDate} url={url} />
-            <IsbnInfo model={model} label="Print" tag="print" />
+            <IsbnInfo model={model} label="Hardcover" tag="print" />
+            <IsbnInfo model={model} label="Paperback" tag="print_softcover" />
             <IsbnInfo model={model} label="Digital" tag="digital" />
             <IsbnInfo model={model}
                 label={model.ibook_volume_2_isbn_10 || model.ibook_volume_2_isbn_13 ? 'iBooks Part 1' : 'iBooks'}
