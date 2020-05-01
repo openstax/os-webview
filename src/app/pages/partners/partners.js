@@ -104,10 +104,10 @@ export default class extends componentType(spec, insertHtmlMixin) {
         results.on('select', (entry) => {
             const href = `?${entry.title}`;
 
-            history.replaceState('', '', href);
-            analyticsEvents.partnerDetails(entry.title);
             // Dialog closes on navigation; need to wait for that before opening it.
             setTimeout(() => {
+                history.replaceState('', '', href);
+                analyticsEvents.partnerDetails(entry.title);
                 this.showDetailDialog(entry);
             }, 0);
         });
@@ -128,7 +128,6 @@ export default class extends componentType(spec, insertHtmlMixin) {
             content: pd,
             onClose() {
                 window.removeEventListener('click', onOutsideClick);
-                pd.detach();
                 history.replaceState('', '', baseHref());
             }
         }));
