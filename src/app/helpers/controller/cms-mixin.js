@@ -30,7 +30,7 @@ export function transformData(data) {
 }
 
 async function getUrlFor(slug) {
-    let apiUrl = `${settings.apiOrigin}${settings.apiPrefix}/${slug}`;
+    let apiUrl = `${settings.apiOrigin}${settings.apiPrefix}/${slug}/`;
 
     // A little magic to handle book titles
     const strippedSlug = slug.replace(/^books\/(.*)/, '$1');
