@@ -30,8 +30,6 @@ export default class AdoptionForm extends componentType(spec, canonicalLinkMixin
 
     init() {
         super.init();
-        const defaultTitle = decodeURIComponent(window.location.search.substr(1));
-
         this.selectedBooks = [];
         this.usingInfo = {};
         this.disableHowUsing = false;
@@ -51,7 +49,8 @@ export default class AdoptionForm extends componentType(spec, canonicalLinkMixin
             }
         );
         this.setCanonicalLink('/adoption');
-        this.preselectedTitle = decodeURIComponent(window.location.search.substr(1));
+        this.preselectedTitle = decodeURIComponent(window.location.search.substr(1))
+            .replace(/&.*/, '');
     }
 
     onLoaded() {
