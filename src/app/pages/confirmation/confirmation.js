@@ -70,7 +70,7 @@ export default class Confirmation extends BaseClass {
             const slug = `errata/${id}`;
 
             fetchFromCMS(slug).then((detail) => {
-                detailModelPromise(detail).then((detailModel) => {
+                getDetailModel(detail).then((detailModel) => {
                     this.model.belowHeader.buttons = [{
                         text: `Submit ${detailModel.detail.bookTitle} errata`,
                         colorScheme: 'white-on-blue',
