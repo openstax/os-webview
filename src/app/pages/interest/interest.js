@@ -35,7 +35,8 @@ export default class InterestForm extends BaseClass {
         };
         this.selectedRole = 'none selected';
         this.hiddenFields = new HiddenFields(() => this.selectedRole);
-        this.preselectedTitle = decodeURIComponent(window.location.search.substr(1));
+        this.preselectedTitle = decodeURIComponent(window.location.search.substr(1))
+            .replace(/&.*/, '');
         this.selectedBooks = [];
     }
 
