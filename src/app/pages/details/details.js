@@ -371,7 +371,7 @@ export default class Details extends BaseClass {
                 bookState: this.pageData.book_state,
                 detailsTabData: detailsTabData(),
                 errataContent: this.pageData.errata_content,
-                includeTOC: Boolean(this.pageData.book_state === 'live'),
+                includeTOC: ['live', 'new_edition_available'].includes(this.pageData.book_state),
                 featuredResourcesHeader: this.pageData.featured_resources_header,
                 featuredResources,
                 isRex,

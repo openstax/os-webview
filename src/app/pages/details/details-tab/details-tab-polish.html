@@ -30,7 +30,7 @@
                 </div>
             </if>
         </if>
-        <if condition="model.bookState === 'live'">
+        <if condition="['live', 'new_edition_available', 'deprecated'].includes(model.bookState)">
             <div class="loc-errata">
                 <h3>Errata</h3>
                 <p data-html="errataBlurb"></p>
