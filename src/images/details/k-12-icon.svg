@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="35" height="25" viewBox="0 0 35 25">
+    <g fill="none" fill-rule="evenodd">
+        <rect width="35" height="25" fill="#0DC0DC" rx="3"/>
+        <text fill="#FFF" font-family="HelveticaNeue-Bold, Helvetica Neue" font-size="10" font-weight="bold">
+            <tspan x="8.66" y="10">K12</tspan>
+        </text>
+    </g>
+</svg>

@@ -5,7 +5,7 @@ import WrappedJsx from '~/controllers/jsx-wrapper';
 import LetUsKnow from '../let-us-know/let-us-know.jsx';
 import DetailsPane from './details-pane/details-pane';
 import TocPane from '../table-of-contents/table-of-contents';
-import InstructorResourcePane from './instructor-resources-pane/instructor-resources-pane';
+import InstructorResourcePane from './instructor-resources-pane/instructor-resources-pane.jsx';
 import StudentResourcePane from './student-resources-pane/student-resources-pane';
 import ErrataPane from './errata-pane/errata-pane';
 import {description as template} from './phone-view.html';
