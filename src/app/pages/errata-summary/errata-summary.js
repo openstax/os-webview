@@ -4,9 +4,10 @@ import componentType from '~/helpers/controller/init-mixin';
 import css from './errata-summary.css';
 import routerBus from '~/helpers/router-bus';
 import {getDisplayStatus} from '~/helpers/errata';
-import Hero from './hero/hero';
+import Hero from './hero/hero.jsx';
 import StripsAndFilter from './strips-and-filter/strips-and-filter';
 import Table from './table/table';
+import WrappedJsx from '~/controllers/jsx-wrapper';
 
 const spec = {
     view: {
@@ -50,6 +51,10 @@ export default class extends componentType(spec) {
     attachChildren() {
         const filter = new StripsAndFilter();
         const table = new Table(this.tableProps());
+        const hero = new WrappedJsx(Hero, {
+            slug: `books/${this.bookInfo.meta.slug}`,
+            title: this.bookInfo.title
+        });
 
         filter.on('change', (selectedItem) => {
             this.selectedFilter = selectedItem;
@@ -60,9 +65,7 @@ export default class extends componentType(spec) {
             table.emit('update');
         });
 
-        this.regions.self.attach(new Hero({
-            title: this.bookInfo.title
-        }));
+        this.regions.self.attach(hero);
         this.regions.self.append(filter);
         this.regions.self.append(table);
     }

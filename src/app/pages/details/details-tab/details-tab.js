@@ -34,7 +34,7 @@ export default class DetailsTab extends componentType(spec, insertHtmlMixin, bus
 
     onLoaded() {
         super.onLoaded();
-        const includeTOC = Boolean(this.model.bookInfo.book_state === 'live');
+        const includeTOC = ['live', 'new_edition_available'].includes(this.model.bookInfo.book_state);
         const isRex = this.model.isRex;
         const webviewLink = this.model.webviewLink;
         const gtt = new GetThisTitle(

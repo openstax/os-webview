@@ -32,7 +32,7 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
     }
 
     onLoaded() {
-        const includeTOC = Boolean(this.props.bookInfo.book_state === 'live');
+        const includeTOC = ['live', 'new_edition_available'].includes(this.props.bookInfo.book_state);
         const isRex = this.props.isRex;
         const webviewLink = this.props.webviewLink;
 
@@ -91,7 +91,7 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
             });
         }
 
-        if (this.props.bookState === 'live') {
+        if (['live', 'new_edition_available'].includes(this.props.bookState)) {
             accordionItems.push({
                 title: polish ? 'Zgłoś erratę' : 'Report errata',
                 contentComponent: new ErrataPane({
