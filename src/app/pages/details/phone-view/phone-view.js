@@ -3,11 +3,12 @@ import GetThisTitle from '~/components/get-this-title/get-this-title';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import WrappedJsx from '~/controllers/jsx-wrapper';
 import LetUsKnow from '../let-us-know/let-us-know.jsx';
-import DetailsPane from './details-pane/details-pane';
+import DetailsPane from './details-pane/details-pane.jsx';
 import TocPane from '../table-of-contents/table-of-contents';
 import InstructorResourcePane from './instructor-resources-pane/instructor-resources-pane.jsx';
 import StudentResourcePane from './student-resources-pane/student-resources-pane';
-import ErrataPane from './errata-pane/errata-pane';
+// import ErrataPane from './errata-pane/errata-pane';
+import {ErrataContents} from '../common/common.jsx';
 import {description as template} from './phone-view.html';
 import css from './phone-view.css';
 
@@ -95,11 +96,21 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
         if (['live', 'new_edition_available'].includes(this.props.bookState)) {
             accordionItems.push({
                 title: polish ? 'Zgłoś erratę' : 'Report errata',
-                contentComponent: new ErrataPane({
-                    polish,
-                    title: this.props.bookTitle,
-                    errataBlurb: this.props.errataContent.content && this.props.errataContent.content.content
-                })
+                contentComponent: new WrappedJsx(
+                    ErrataContents,
+                    {
+                        polish,
+                        title: this.props.bookTitle,
+                        blurb: this.props.errataContent.content && this.props.errataContent.content.content
+                    },
+                    null,
+                    {classes: ['errata-pane']}
+                )
+                // contentComponent: new ErrataPane({
+                //     polish,
+                //     title: this.props.bookTitle,
+                //     errataBlurb: this.props.errataContent.content && this.props.errataContent.content.content
+                // })
             });
         }
 

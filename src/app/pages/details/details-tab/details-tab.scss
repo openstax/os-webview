@@ -37,7 +37,8 @@
         grid-gap: 3rem;
         max-width: $text-content-max;
 
-        [data-html="description"] {
+        [data-html="description"],
+        .loc-summary-text {
             @include wider-than($tablet-max) {
                 @include set-font(body-large);
             }
@@ -101,6 +102,13 @@
             margin-top: 0.7rem;
         }
     }
+
+    .author-heading {
+        @include set-font(h3);
+
+        margin: 1rem 0;
+    }
+
 
     .loc-pdf-update-date {
         .callout-container {

@@ -73,23 +73,91 @@ function LicenseInfo({name, icon, text, title, version}) {
     );
 }
 
-export default function ({model, url}) {
+function PolishIsbn({format, header, model}) {
+    const n10 = model[`${format}_isbn_10`];
+    const n13 = model[`${format}_isbn_13`];
+
+    if (!(n10 || n13)) {
+        return null;
+    }
+
+    return (
+        <div className={`loc-${format}-isbn`}>
+            <h4>{header}</h4>
+            {n10 ? <div>ISBN-10: {n10}</div> : null}
+            {n13 ? <div>ISBN-13: {n13}</div> : null}
+        </div>
+    );
+}
+
+function PolishLicense({model}) {
+    if (!model.license_name) {
+        return null;
+    }
+
+    return (
+        <div className="loc-license">
+            <h4>Licencja:</h4>
+            <img src={model.licenseIcon} alt="" />
+            <div>
+                {
+                    model.license_text ?
+                        <div dangerouslySetInnerHTML={{__html: model.license_text}} /> :
+                        <div>
+                            <span dangerouslySetInnerHTML={{__html: model.title}} />
+                            by OpenStax jest licencjonowana na licencji
+                            <span className="text">{model.license_name} v{model.license_version}</span>
+                        </div>
+                }
+            </div>
+        </div>
+    );
+}
+
+function PolishPublicationInfo({model}) {
+    return (
+        <div className="publication-info">
+            {
+                model.formattedPublishDate ?
+                    <div className="loc-pub-date">
+                        <h4>Data publikacji:</h4>
+                        {model.formattedPublishDate}
+                    </div> : null
+            }
+            <PolishIsbn header="Wydrukowane:" model={model} format="print" />
+            <PolishIsbn header="Wersja cyfrowa:" model={model} format="digital" />
+            <PolishLicense model={model} />
+        </div>
+    );
+}
+
+function LabeledDate({label, formattedDate, className}) {
+    if (!formattedDate) {
+        return null;
+    }
+    return (
+        <div className={className}>
+            <h4>{label}</h4>
+            {formattedDate}
+        </div>
+    );
+}
+
+export default function ({model, url, polish}) {
+    if (polish) {
+        return new PolishPublicationInfo({model});
+    }
+
     return (
         <React.Fragment>
-            {
-                model.formattedPublishDate &&
-                <div className="loc-pub-date">
-                    <h4>Publish Date:</h4>
-                    {model.formattedPublishDate}
-                </div>
-            }
-            {
-                model.formattedWebUpdateDate &&
-                <div className="loc-web-update-date">
-                    <h4>Web Version Last Updated:</h4>
-                    {model.formattedWebUpdateDate}
-                </div>
-            }
+            <LabeledDate label="Publish Date:"
+                className="loc-pub-date"
+                formattedDate={model.formattedPublishDate}
+            />
+            <LabeledDate label="Web Version Last Updated:"
+                className="loc-web-update-date"
+                formattedDate={model.formattedWebUpdateDate}
+            />
             <PdfUpdateInfo updateDate={model.formattedPDFUpdateDate} url={url} />
             <IsbnInfo model={model} label="Hardcover" tag="print" />
             <IsbnInfo model={model} label="Paperback" tag="print_softcover" />
