@@ -34,7 +34,12 @@ const salesforce = {
     adoption,
     adoptionName,
     salesforceHome: settings.testingEnvironment ? 'test.salesforce.com' : 'webto.salesforce.com',
-    oid: settings.testingEnvironment ? '00D180000008yuY' : '00DU0000000Kwch'
+    get oid() {
+        if (window.location.hostname.includes('staging')) {
+            return '00D3I0000000Qdx';
+        }
+        return settings.testingEnvironment ? '00D180000008yuY' : '00DU0000000Kwch';
+    }
 };
 
 salesforce.webtoleadUrl = `https://${salesforce.salesforceHome}/servlet/servlet.WebToLead?encoding=UTF-8`;
