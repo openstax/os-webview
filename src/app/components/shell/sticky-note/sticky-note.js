@@ -6,6 +6,7 @@ import {description as template} from './sticky-note.html';
 import css from './sticky-note.css';
 
 const isExpired = (str) => Boolean(str && (new Date(str) < Date.now()));
+const SEEN_ENOUGH = 7;
 
 class StickyNote extends CMSPageController {
 
@@ -71,7 +72,7 @@ class StickyNote extends CMSPageController {
         if (!whether) {
             this.incrementVisitedGive();
             this.expired = !this.temporary &&
-                (this.expired || Number(localStorage.visitedGive || 0) > 5);
+                (this.expired || Number(localStorage.visitedGive || 0) > SEEN_ENOUGH);
             this.hideOrUpdate();
         }
     }
