@@ -1,8 +1,19 @@
 import settings from 'settings';
 import memoize from 'lodash/memoize';
 
+export function urlFromSlug(initialSlug) {
+    const slug = initialSlug === 'news' ? 'pages/openstax-news' : initialSlug;
+    const possibleSlash = slug.endsWith('/') ? '' : '/';
+    const apiPrefix = slug.includes('pages') ? settings.apiPrefix :
+        settings.apiPrefix.replace('/v2', '');
+
+    return `${settings.apiOrigin}${apiPrefix}/${slug}${possibleSlash}`;
+}
+
 export default async function cmsFetch(path) {
-    return await (await fetch(`${settings.apiOrigin}${settings.apiPrefix}/${path}`)).json();
+    const url = path.replace(/[^?]+/, urlFromSlug);
+
+    return await (await fetch(url)).json();
 }
 
 /**
