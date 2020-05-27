@@ -32,7 +32,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isAdoption = (/pages\/adoption-form/).test(args[0]);
     const isBiology = (/v2\/pages\/207/).test(args[0]);
     const isBlogArticle = (/blog-article/).test(args[0]);
-    const isBooks = (/api\/v2\/books/).test(args[0]);
+    const isBooks = (/api\/books/).test(args[0]);
     const isBooksForAnalytics = (/book_student_resources/).test(args[0]);
     const isBookTitles = (/fields=title,id/).test(args[0]);
     const isErrata = (/pages\/errata\/$/).test(args[0]);
@@ -40,24 +40,24 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isErrata7199 = (/errata[?/]7199/).test(args[0]);
     const isErrataResources = (/errata-fields\?field/).test(args[0]);
     const isErrataSummary = args[0] === 'https://cms-dev.openstax.org/apps/cms/api/pages/errata?format=json';
-    const isFooter = (/api\/v2\/footer/).test(args[0]);
+    const isFooter = (/api\/footer/).test(args[0]);
     const isInstitutionalPartnership = (/pages\/institutional-partners/).test(args[0]);
     const isHomepage = (/openstax-homepage/).test(args[0]);
     const isOsNews = (/openstax-news/).test(args[0]);
     const isOsTutor = (/pages\/openstax-tutor/).test(args[0]);
     const isPartner = (/pages\/partners/).test(args[0]);
     const isPolishPhysics = (/fizyka/).test(args[0]);
-    const isPress = (/api\/v2\/press\/\?/).test(args[0]);
-    const isPressArticle = (/api\/v2\/press\//).test(args[0]);
+    const isPress = (/api\/press\/\?/).test(args[0]);
+    const isPressArticle = (/api\/press\//).test(args[0]);
     const isPrintOrder = (/pages\/print-order/).test(args[0]);
     const isResearch = (/pages\/research/).test(args[0]);
     const isRoles = (/snippets\/roles/).test(args[0]);
     const isSchools = (/salesforce\/schools/).test(args[0]);
-    const isSticky = (/api\/v2\/sticky/).test(args[0]);
+    const isSticky = (/api\/sticky/).test(args[0]);
     const isSubjects = (/snippets\/subjects/).test(args[0]);
     const isTeam = (/pages\/team/).test(args[0]);
-    const isUser = (/accounts.*\/api\/v2\/user/).test(args[0]);
-    const isImage = (/api\/v2\/images/).test(args[0]);
+    const isUser = (/accounts.*\/api\/user/).test(args[0]);
+    const isImage = (/api\/images/).test(args[0]);
     const isArchive = (/archive\.cnx/).test(args[0]);
 
     return new Promise(

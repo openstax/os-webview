@@ -1,6 +1,7 @@
 import settings from 'settings';
 import $ from '~/helpers/$';
 import bookPromise from '~/models/book-titles';
+import {urlFromSlug} from '~/models/cmsFetch';
 
 const LOAD_IMAGES = Symbol();
 
@@ -29,25 +30,21 @@ export function transformData(data) {
     return data;
 }
 
-async function getUrlFor(slug) {
-    const possibleSlash = slug.endsWith('/') ? '' : '/';
-    let apiUrl = `${settings.apiOrigin}${settings.apiPrefix}/${slug}${possibleSlash}`;
+async function getUrlFor(initialSlug) {
+    let apiUrl = urlFromSlug(initialSlug);
 
     // A little magic to handle book titles
-    const strippedSlug = slug.replace(/^books\/(.*)/, '$1');
+    if (initialSlug.startsWith('books/')) {
+        const strippedSlug = initialSlug.substr(6);
 
-    if (strippedSlug) {
-        const bookList = await bookPromise;
-        const bookEntry = bookList.find((e) => e.meta.slug === strippedSlug);
+        if (strippedSlug) {
+            const bookList = await bookPromise;
+            const bookEntry = bookList.find((e) => e.meta.slug === strippedSlug);
 
-        if (bookEntry) {
-            apiUrl = bookEntry.meta.detail_url;
+            if (bookEntry) {
+                apiUrl = bookEntry.meta.detail_url;
+            }
         }
-    }
-
-    // A little magic to handle the news slug
-    if (slug === 'news') {
-        apiUrl = `${settings.apiOrigin}${settings.apiPrefix}/pages/openstax-news`;
     }
 
     const qsChar = (/\?/.test(apiUrl)) ? '&' : '?';
