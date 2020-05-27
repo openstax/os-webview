@@ -14,7 +14,7 @@ function resourceBoxModel(resourceData, userStatus, dialogProps) {
         creatorFest: resourceData.creator_fest_resource,
         comingSoon: Boolean(resourceData.coming_soon_text),
         comingSoonText: '',
-        k12: false,
+        k12: resourceData.k12,
         dialogProps
     }, instructorResourceBoxPermissions(resourceData, userStatus, 'Instructor resources'));
 }

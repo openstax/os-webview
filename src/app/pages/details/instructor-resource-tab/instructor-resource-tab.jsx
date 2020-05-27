@@ -56,7 +56,7 @@ function resourceBoxModel(resourceData, userStatus, dialogProps) {
             comingSoon: Boolean(resourceData.coming_soon_text),
             comingSoonText: resourceData.coming_soon_text,
             featured: resourceData.featured,
-            k12: false,
+            k12: resourceData.k12,
             dialogProps
         },
         instructorResourceBoxPermissions(resourceData, userStatus, 'Instructor resources')
