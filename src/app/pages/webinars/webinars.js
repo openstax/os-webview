@@ -61,8 +61,9 @@ export default class extends componentType(spec) {
         const toModel = (webinarInfo) => {
             const start = new Date(webinarInfo.start);
             const weekday = start.toLocaleString('en-us', {weekday: 'long'});
-            const startHour = start.toLocaleString('en-us', {hour: 'numeric'});
-            const endHour = new Date(webinarInfo.end).toLocaleString('en-us', {hour: 'numeric', timeZoneName: 'short'});
+            const startHour = start.toLocaleString('en-us', {hour: 'numeric', minute: 'numeric'});
+            const endHour = new Date(webinarInfo.end)
+                .toLocaleString('en-us', {hour: 'numeric', minute: 'numeric', timeZoneName: 'short'});
 
             return {
                 dayOfMonth: start.getDate(),
