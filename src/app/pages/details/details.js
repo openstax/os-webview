@@ -382,7 +382,14 @@ export default class Details extends BaseClass {
                 studentResources: this.pageData.book_student_resources,
                 userStatusPromise: this.userStatusPromise,
                 webviewLink,
-                compCopyDialogProps
+                compCopyDialogProps,
+                communityResource: {
+                    heading: this.pageData.community_resource_heading,
+                    logoUrl: this.pageData.community_resource_logo_url,
+                    featureUrl: this.pageData.community_resource_url,
+                    featureText: this.pageData.community_resource_cta,
+                    communityResource: true
+                }
             }));
             this.regions.tabController.attach(tabGroup);
             this.regions.tabContent.attach(contentGroup);
