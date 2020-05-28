@@ -121,7 +121,7 @@ export default class InterestForm extends BaseClass {
     }
 
     onLoaded() {
-        document.title = 'Interest Form - OpenStax';
+        $.setPageTitleAndDescription('Interest Form');
         // Pardot tracking
         if ('piTracker' in window) {
             piTracker(window.location.href.split('#')[0]);

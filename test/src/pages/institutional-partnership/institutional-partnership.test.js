@@ -5,8 +5,6 @@ describe('InstitutionalPartnership', () => {
     it('creates', () => {
         const {instance, ready} = instanceReady(InstitutionalPartnership);
 
-        return ready.then(() => {
-            expect(instance).toBeTruthy();
-        });
+        expect(instance).toBeTruthy();
     });
 });

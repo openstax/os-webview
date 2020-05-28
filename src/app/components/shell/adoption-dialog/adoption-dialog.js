@@ -8,9 +8,8 @@ import shellBus from '../shell-bus';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
 import salesforce from '~/models/salesforce';
-import settings from 'settings';
 
-const salesforceEndpointPrefix = `${settings.apiOrigin}${settings.apiPrefix}/salesforce`;
+const salesforceEndpointPrefix = `${$.apiOriginAndOldPrefix}/salesforce`;
 const spec = {
     template,
     css,
