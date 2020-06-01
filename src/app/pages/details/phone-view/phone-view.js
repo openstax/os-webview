@@ -63,7 +63,8 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
                     otherResources: this.props.otherResources,
                     userStatusPromise: this.props.userStatusPromise,
                     compCopyDialogProps: this.props.compCopyDialogProps,
-                    bookAbbreviation: this.props.salesforceAbbreviation
+                    bookAbbreviation: this.props.salesforceAbbreviation,
+                    communityResource: this.props.communityResource
                 })
             },
             {

@@ -46,6 +46,10 @@
         .resource-box {
             width: 20rem;
 
+            &.double {
+                width: 30rem;
+            }
+
             > .top {
                 max-height: 30rem;
                 overflow: hidden;
