@@ -4,7 +4,7 @@ import ErrorSourceSelector from './ErrorSourceSelector.jsx';
 import ErrorLocationSelector from './ErrorLocationSelector/ErrorLocationSelector.jsx';
 import FileUploader from './FileUploader.jsx';
 import managedInvalidMessage from './InvalidMessage.jsx';
-import settings from 'settings';
+import $ from '~/helpers/$';
 import shellBus from '~/components/shell/shell-bus';
 import routerBus from '~/helpers/router-bus';
 import BannedNotice from '../banned-notice/banned-notice';
@@ -67,7 +67,7 @@ export default function ({model}) {
     const [submitted, updateSubmitted] = useState(false);
     const [hasBeenSubmitted, updateHasBeenSubmitted] = useState(false);
     const [submitFailed, updateSubmitFailed] = useState();
-    const postEndpoint = `${settings.apiOrigin}${settings.apiPrefix}/errata/`;
+    const postEndpoint = `${$.apiOriginAndOldPrefix}/errata/`;
     const formRef = useRef();
     const helpBoxVisible = () => selectedError === 'Other' ? 'visible' : 'not-visible';
     const initialSource = model.source && sourceNames[model.source.toLowerCase()];

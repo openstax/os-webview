@@ -1,4 +1,3 @@
-import settings from 'settings';
 import $ from '~/helpers/$';
 import bookPromise from '~/models/book-titles';
 import {urlFromSlug} from '~/models/cmsFetch';
@@ -115,10 +114,10 @@ export default (superclass) => class extends superclass {
         const promises = [];
 
         if (typeof data.image === 'number') {
-            promises.push(fetch(`${settings.apiOrigin}${settings.apiPrefix}/images/${data.image}`)
+            promises.push(fetch(`${$.apiOriginAndPrefix}/images/${data.image}`)
                 .then((response) => response.json())
                 .then((json) => {
-                    data.image = json.file;
+                    data.image = json.file || (json.meta || {}).download_url;
                 }));
         }
 

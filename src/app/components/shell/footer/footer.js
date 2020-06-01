@@ -1,6 +1,5 @@
 import CMSPageController from '~/controllers/cms';
 import $ from '~/helpers/$';
-import settings from 'settings';
 import {description as template} from './footer.html';
 import css from './footer.css';
 
@@ -19,7 +18,7 @@ class Footer extends CMSPageController {
         (async () => {
             try {
                 const response = await fetch(
-                    `${settings.apiOrigin}${settings.apiPrefix}/documents/?search=press%20kit`
+                    `${$.apiOriginAndPrefix}/documents/?search=press%20kit`
                 );
                 const data = await response.json();
 

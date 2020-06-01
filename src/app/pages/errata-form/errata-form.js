@@ -3,8 +3,8 @@ import {description as template} from './errata-form.html';
 import bookPromise from '~/models/book-titles';
 import userModel from '~/models/usermodel';
 import $ from '~/helpers/$';
+import {urlFromSlug} from '~/models/cmsFetch';
 import css from './errata-form.css';
-import settings from 'settings';
 import linkHelper from '~/helpers/link';
 import WrappedJsx from '~/controllers/jsx-wrapper';
 import Form from './form/form.jsx';
@@ -47,8 +47,7 @@ export default class extends componentType(spec) {
             if (userInfo.accounts_id) {
                 formModel.title = () => `Suggest a Correction for ${formModel.selectedTitle}`;
                 const entry = books.find((info) => info.title === title);
-                const slug = entry.meta.slug;
-                const infoUrl = `${settings.apiOrigin}${settings.apiPrefix}/books/${slug}`;
+                const infoUrl = urlFromSlug(`books/${entry.meta.slug}`);
 
                 fetch(infoUrl).then((r) => r.json()).then((bookInfo) => {
                     formModel.isTutor = Boolean(bookInfo.tutor_marketing_book);

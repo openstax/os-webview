@@ -1,3 +1,4 @@
+import $ from '~/helpers/$';
 import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import BookSelector from '~/components/book-selector/book-selector';
 import ContactInfo from '~/components/contact-info/contact-info';
@@ -54,7 +55,7 @@ export default class AdoptionForm extends componentType(spec, canonicalLinkMixin
     }
 
     onLoaded() {
-        document.title = 'Adoption Form - OpenStax';
+        $.setPageTitleAndDescription('Adoption Form');
         // Pardot tracking
         if ('piTracker' in window) {
             piTracker(window.location.href.split('#')[0]);
