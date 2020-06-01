@@ -99,7 +99,7 @@ export default class extends componentType(spec) {
                 displaySection(lastCompleted);
                 if (save) {
                     fetch(
-                        `${settings.apiOrigin}${settings.apiPrefix}/progress/?account_id=${this.accountId}`,
+                        `${$.apiOriginAndOldPrefix}/progress/?account_id=${this.accountId}`,
                         {
                             method: 'POST',
                             mode: 'cors',
@@ -151,7 +151,7 @@ export default class extends componentType(spec) {
                 .reduce((a, b) => (a.is_guessed_preferred ? a : b), {})
                 .value;
             this.school = accountResponse.self_reported_school;
-            fetch(`${settings.apiOrigin}${settings.apiPrefix}/salesforce/adoption-status/?id=${this.accountId}`)
+            fetch(`${$.apiOriginAndOldPrefix}/salesforce/adoption-status/?id=${this.accountId}`)
                 .then((r) => r.json())
                 .then((adoptionResponse) => {
                     if (adoptionResponse.records.some((r) =>
@@ -164,7 +164,7 @@ export default class extends componentType(spec) {
             this.firstName = accountResponse.first_name;
             this.lastName = accountResponse.last_name;
 
-            fetch(`${settings.apiOrigin}${settings.apiPrefix}/progress/?account_id=${this.accountId}`)
+            fetch(`${$.apiOriginAndOldPrefix}/progress/?account_id=${this.accountId}`)
                 .then((r) => r.json())
                 .then((progress) => {
                     if (progress.length > 0) {

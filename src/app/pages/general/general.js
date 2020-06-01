@@ -1,7 +1,7 @@
 import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
-import settings from 'settings';
 import css from './general.css';
 import $ from '~/helpers/$';
+import {urlFromSlug} from '~/models/cmsFetch';
 
 const spec = {
     css,
@@ -20,7 +20,7 @@ export default class General extends BaseClass {
     }
 
     onLoaded() {
-        fetch(`${settings.apiOrigin}${settings.apiPrefix}/${this.slug}`)
+        fetch(urlFromSlug(this.slug))
             .then((r) => r.text())
             .then((html) => {
                 const parser = new DOMParser();

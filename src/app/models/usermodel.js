@@ -1,8 +1,9 @@
 import settings from 'settings';
+import $ from '~/helpers/$';
 import bus from './usermodel-bus';
 import isEqual from 'lodash/isEqual';
 
-const docUrlBase = `${settings.apiOrigin}${settings.apiPrefix}/documents`;
+const docUrlBase = `${$.apiOriginAndPrefix}/documents`;
 const accountsUrl = `${settings.accountHref}/api/user`;
 
 function cached(fn) {

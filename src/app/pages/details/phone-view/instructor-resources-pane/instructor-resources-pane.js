@@ -58,6 +58,9 @@ export default class extends componentType(spec) {
                     this.el.querySelector('.featured-resources')
                 );
             }
+            if (this.props.communityResource) {
+                otherModels.unshift(this.props.communityResource);
+            }
             const resourceBoxes = new WrappedJsx(
                 ResourceBoxes, {models: otherModels},
                 this.regions.freeResources.el

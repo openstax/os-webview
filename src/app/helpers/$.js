@@ -1,3 +1,5 @@
+import settings from 'settings';
+
 const $ = {};
 
 $.isPhoneDisplay = () => {
@@ -15,6 +17,9 @@ $.isPolish = (titleOrSlug) => (/fizyka/i).test(titleOrSlug) || (/polska/i).test(
 $.focusable = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
 $.booleanAttribute = (whether) => whether ? '' : null;
+
+$.apiOriginAndPrefix = `${settings.apiOrigin}/apps/cms/api/v2`;
+$.apiOriginAndOldPrefix = $.apiOriginAndPrefix.replace('/v2', '');
 
 const browserId = () => {
     const ua = navigator.userAgent;

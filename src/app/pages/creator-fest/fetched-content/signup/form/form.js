@@ -4,7 +4,6 @@ import css from './form.css';
 import FormInput from '~/components/form-input/form-input';
 import {on} from '~/helpers/controller/decorators';
 import cmsFetch from '~/models/cmsFetch';
-import settings from 'settings';
 import $ from '~/helpers/$';
 import shellBus from '~/components/shell/shell-bus';
 
@@ -16,7 +15,7 @@ const spec = {
     },
     model() {
         return {
-            origin: `${settings.apiOrigin}${settings.apiPrefix}`,
+            origin: `${$.apiOriginAndPrefix}`,
             session: this.session,
             disabled: $.booleanAttribute(this.submitDisabled)
         };

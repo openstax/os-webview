@@ -57,7 +57,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isSubjects = (/snippets\/subjects/).test(args[0]);
     const isTeam = (/pages\/team/).test(args[0]);
     const isUser = (/accounts.*\/api\/user/).test(args[0]);
-    const isImage = (/api\/images/).test(args[0]);
+    const isImage = (/api\/v2\/images/).test(args[0]);
     const isArchive = (/archive\.cnx/).test(args[0]);
 
     return new Promise(

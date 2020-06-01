@@ -3,6 +3,7 @@ import './resource-box.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 function CommonsHubBox({model}) {
+    console.info('Commons model:', model);
     return (
         <div className="resource-box double">
             <div className="top-line">
@@ -13,7 +14,7 @@ function CommonsHubBox({model}) {
                 <span dangerouslySetInnerHTML={{__html: model.blurb}} />
                 <br />
                 <a href={model.url}>
-                    {model.cta}
+                    {model.cta}{' '}
                     <i className="fa fa-external-link-alt"></i>
                 </a>
             </div>

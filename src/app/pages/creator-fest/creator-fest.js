@@ -6,7 +6,7 @@ import Banner from './banner/banner';
 import HomeContent from './home-content/home-content';
 import FetchedContent from './fetched-content/fetched-content';
 import shellBus from '~/components/shell/shell-bus';
-import settings from 'settings';
+import $ from '~/helpers/$';
 
 const spec = {
     template,
@@ -31,7 +31,7 @@ export default class extends componentType(spec) {
         const navLinks = data.navigator[0].map((nData) => ({
             url: nData.slug.replace(/creator-fest|general\/|-/g, ''),
             text: nData.text,
-            fetchUrl: `${settings.apiOrigin}${settings.apiPrefix}/${nData.slug.replace('general', 'spike')}`
+            fetchUrl: `${$.apiOriginAndPrefix}/${nData.slug.replace('general', 'spike')}`
         }));
         const banner = new Banner({
             el: this.regions.banner.el,

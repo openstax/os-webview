@@ -4,9 +4,8 @@ import instanceReady from '../../../helpers/instance-ready';
 describe('homepage', () => {
     const {instance, ready} = instanceReady(Home);
 
-    it('creates', () =>
-        ready.then(() => {
-            expect(instance).toBeTruthy();
-        })
-    );
+    // Can't use ready because it waits for images
+    it('creates', () => {
+        expect(instance).toBeTruthy();
+    });
 });
