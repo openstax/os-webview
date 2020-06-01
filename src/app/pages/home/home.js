@@ -34,7 +34,7 @@ export default class Home extends BaseClass {
             return result;
         });
         const quotesView = new Quotes(quotesData);
-        const educationData = this.pageData.row_2;
+        const [educationData] = this.pageData.row_2;
         const bucketData = [4, 5].map((rowNum, index) => {
             const cmsData = this.pageData[`row_${rowNum}`][0];
             const result = Object.assign({

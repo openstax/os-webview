@@ -1,29 +1,29 @@
-import componentType from '~/helpers/controller/init-mixin';
-import {description as template} from './education.html';
-import css from './education.css';
+import React from 'react';
+import WrappedJsx from '~/controllers/jsx-wrapper';
+import './education.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['education-banner']
-    }
-};
-const BaseClass = componentType(spec);
+export function Education({content, linkUrl, linkText}) {
+    return (
+        <div className="education-banner">
+            <div className="container">
+                <div className="quote">
+                    <div dangerouslySetInnerHTML={{__html: content}}/>
+                    <a className="btn primary" href={linkUrl}>{linkText}</a>
+                </div>
+                <div className="student" role="img" aria-label="student holding history book"></div>
+            </div>
+        </div>
+    );
+}
 
-export default class Education extends BaseClass {
+export default class extends WrappedJsx {
 
     init(model) {
-        super.init();
-        this.model = {
-            main: model[0],
-            block1: model[1],
-            block2: model[2]
-        };
-    }
-
-    onLoaded() {
-        this.insertHtml();
+        super.init(Education, {
+            content: model.content,
+            linkUrl: model.link,
+            linkText: model.cta
+        });
     }
 
 }
