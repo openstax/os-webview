@@ -1,26 +1,10 @@
-import {Controller} from 'superb.js';
-import $ from '~/helpers/$';
-import {makeDocModel} from '~/models/usermodel';
-import {description as template} from './quote.html';
+import WrappedJsx from '~/controllers/jsx-wrapper';
+import Quote from './quote.jsx';
 
-export default class Quote extends Controller {
+export default class extends WrappedJsx {
 
-    init(model) {
-        this.template = template;
-        this.model = model;
-        this.view = {
-            classes: ['quote-bucket', this.model.image.image && this.model.image.alignment || 'full']
-        };
-        if (model.document) {
-            makeDocModel(model.document).load().then((data) => {
-                model.overlay = data.file;
-                this.update();
-            });
-        }
-    }
-
-    onUpdate() {
-        $.insertHtml(this.el, this.model);
+    init(quotes) {
+        super.init(Quote, {model: quotes});
     }
 
 }

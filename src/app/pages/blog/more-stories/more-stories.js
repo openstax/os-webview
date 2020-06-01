@@ -4,7 +4,6 @@ import busMixin from '~/helpers/controller/bus-mixin';
 import SearchBar from '../search-bar/search-bar';
 import DelayedImagesSummary, {ArticleSummary} from '../article-summary/article-summary';
 import css from './more-stories.css';
-import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
 import {description as template} from './more-stories.html';
 
 const cardSpec = {
