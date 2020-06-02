@@ -2,6 +2,7 @@ import booksPromise from '~/models/books';
 import settings from 'settings';
 import linkHelper from '~/helpers/link';
 import {accountsModel} from '~/models/usermodel';
+import './tag-manager';
 
 const RELATIVE_TO_ROOT = /^\//;
 const SETUP_GA = Symbol();
