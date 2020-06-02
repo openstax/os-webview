@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
-import {fetchPageData} from '~/helpers/controller/cms-mixin';
+import {fetchPageDataJsx} from '~/helpers/controller/cms-mixin';
 import $ from '~/helpers/$';
 import BannerCarousel from './banner-carousel/banner-carousel.jsx';
 import Buckets from './buckets/buckets.jsx';
@@ -16,19 +16,16 @@ const view = {
 const slug = 'pages/openstax-homepage';
 
 function Page() {
-    const [pageData, setPageData] = useState();
+    const [pageData, statusPage] = fetchPageDataJsx({slug});
 
-    useEffect(() => fetchPageData({slug}).then(setPageData), []);
     useEffect(() => {
         const linkController = $.setCanonicalLink();
 
         return () => linkController.remove();
     }, []);
 
-    if (!pageData) {
-        return (
-            <div className="content loading" />
-        );
+    if (statusPage) {
+        return statusPage;
     }
 
     const quotesData = pageData.row_1.map((columnData) => {

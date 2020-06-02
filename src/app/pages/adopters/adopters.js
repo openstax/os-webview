@@ -1,30 +1,33 @@
-import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
-import css from './adopters.css';
-import {description as template} from './adopters.html';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
+import React, {useEffect} from 'react';
+import {fetchPageDataJsx} from '~/helpers/controller/cms-mixin';
+import './adopters.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['adopters-page', 'text-content'],
-        tag: 'main'
-    },
-    model() {
-        return {
-            adopters: this.adopters
-        };
-    },
-    slug: 'adopters'
+const view = {
+    classes: ['adopters-page', 'text-content'],
+    tag: 'main'
 };
-const BaseClass = componentType(spec, canonicalLinkMixin);
+const slug = 'adopters';
 
-export default class Adopters extends BaseClass {
+function Page() {
+    const [pageData, statusPage] = fetchPageDataJsx({slug});
 
-    onDataLoaded() {
-        const results = this.pageData.results || this.pageData;
-
-        this.adopters = results.sort((a, b) => a.name.localeCompare(b.name));
-        this.update();
+    if (statusPage) {
+        return statusPage;
     }
 
+    return (
+        <React.Fragment>
+            <h1>Complete list of institutions that have adopted OpenStax</h1>
+            <ul className="adopters">
+                {
+                    pageData.map((adopter) =>
+                        <li className="adopter">{adopter.name}</li>
+                    )
+                }
+            </ul>
+        </React.Fragment>
+    );
 }
+
+export default pageWrapper(Page, view);
