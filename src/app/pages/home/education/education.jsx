@@ -1,8 +1,7 @@
 import React from 'react';
-import WrappedJsx from '~/controllers/jsx-wrapper';
 import './education.css';
 
-export function Education({content, linkUrl, linkText}) {
+export default function ({content, linkUrl, linkText}) {
     return (
         <div className="education-banner">
             <div className="container">
@@ -14,16 +13,4 @@ export function Education({content, linkUrl, linkText}) {
             </div>
         </div>
     );
-}
-
-export default class extends WrappedJsx {
-
-    init(model) {
-        super.init(Education, {
-            content: model.content,
-            linkUrl: model.link,
-            linkText: model.cta
-        });
-    }
-
 }

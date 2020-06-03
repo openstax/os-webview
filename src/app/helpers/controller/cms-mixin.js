@@ -2,8 +2,6 @@ import $ from '~/helpers/$';
 import bookPromise from '~/models/book-titles';
 import {urlFromSlug} from '~/models/cmsFetch';
 
-const LOAD_IMAGES = Symbol();
-
 export function transformData(data) {
     Reflect.ownKeys(data).forEach((prop) => {
         if (Array.isArray(data[prop])) {
@@ -29,6 +27,26 @@ export function transformData(data) {
     return data;
 }
 
+function loadImages(data) {
+    const promises = [];
+
+    if (typeof data.image === 'number') {
+        promises.push(fetch(`${$.apiOriginAndPrefix}/images/${data.image}`)
+            .then((response) => response.json())
+            .then((json) => {
+                data.image = json.file || (json.meta || {}).download_url;
+            }));
+    }
+
+    Reflect.ownKeys(data).forEach((prop) => {
+        if (typeof data[prop] === 'object' && data[prop] !== null) {
+            promises.push(loadImages(data[prop]));
+        }
+    });
+
+    return Promise.all(promises);
+}
+
 async function getUrlFor(initialSlug) {
     let apiUrl = urlFromSlug(initialSlug);
 
@@ -51,7 +69,7 @@ async function getUrlFor(initialSlug) {
     return `${apiUrl}${qsChar}format=json`;
 }
 
-export async function fetchFromCMS(slug, preserveWrapping) {
+export async function fetchFromCMS(slug, preserveWrapping=false) {
     const apiUrl = await getUrlFor(slug);
     const data = await fetch(apiUrl, {credentials: 'include'})
         .then((response) => response.json());
@@ -60,42 +78,44 @@ export async function fetchFromCMS(slug, preserveWrapping) {
     return preserveWrapping ? data : transformData(data);
 }
 
+function setTitleAndDescription(data) {
+    const meta = data.meta || {};
+    const defaultDescription = data.description ?
+        $.htmlToText(data.description) : '';
+
+    $.setPageTitleAndDescription(
+        meta.seo_title || data.title,
+        meta.search_description || defaultDescription
+    );
+}
+
+export async function fetchPageData({slug, preserveWrapping, setsPageTitleAndDescription=true}) {
+    const data = await fetchFromCMS(slug, preserveWrapping);
+
+    await loadImages(data);
+    if (setsPageTitleAndDescription) {
+        setTitleAndDescription(data);
+    }
+    return data;
+}
+
 export default (superclass) => class extends superclass {
 
     constructor(...args) {
         super(...args);
 
         if (this.slug) {
-            /* eslint arrow-parens: 0 */ // eslint does not like async arrow functions
+            // eslint-disable-next-line complexity
             (async () => {
-                const setPageDescriptor = () => {
-                    const setTitleAndDescription = () => {
-                        const pageData = this.pageData;
-                        const meta = pageData.meta || {};
-                        const defaultDescription = pageData.description ?
-                            $.htmlToText(pageData.description) : '';
-
-                        $.setPageTitleAndDescription(
-                            meta.seo_title || pageData.title,
-                            meta.search_description || defaultDescription
-                        );
-                    };
-
-                    // If this component is the content of main, set page descriptor
-                    if (document && this.el && this.el.parentNode) {
-                        const mainEl = document.getElementById('main');
-
-                        if (this.setsPageTitleAndDescription || (mainEl && this.el.parentNode === mainEl)) {
-                            setTitleAndDescription();
-                        }
-                    }
-                };
-
                 try {
-                    this.pageData = await fetchFromCMS(this.slug, this.preserveWrapping);
-                    await this[LOAD_IMAGES](this.pageData);
-                    setPageDescriptor();
+                    const mainEl = document.getElementById('main');
+                    const parentIsMainEl = mainEl && this.el && this.el.parentNode === mainEl;
 
+                    this.pageData = await fetchPageData({
+                        slug: this.slug,
+                        preserveWrapping: this.preserveWrapping,
+                        setsPageTitleAndDescription: this.setsPageTitleAndDescription || parentIsMainEl
+                    });
                     this.onDataLoaded();
                 } catch (e) {
                     if (this.onDataError) {
@@ -107,27 +127,6 @@ export default (superclass) => class extends superclass {
                 }
             })();
         }
-    }
-
-    /* eslint complexity: 0 */
-    [LOAD_IMAGES](data) {
-        const promises = [];
-
-        if (typeof data.image === 'number') {
-            promises.push(fetch(`${$.apiOriginAndPrefix}/images/${data.image}`)
-                .then((response) => response.json())
-                .then((json) => {
-                    data.image = json.file || (json.meta || {}).download_url;
-                }));
-        }
-
-        Reflect.ownKeys(data).forEach((prop) => {
-            if (typeof data[prop] === 'object' && data[prop] !== null) {
-                promises.push(this[LOAD_IMAGES](data[prop]));
-            }
-        });
-
-        return Promise.all(promises);
     }
 
 };

@@ -1,55 +1,73 @@
-import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
-import BannerCarousel from './banner-carousel/banner-carousel';
-import Buckets from './buckets/buckets';
-import Education from './education/education';
-import Quotes from './quotes/quotes';
-import css from './home.css';
+import React, {useState, useEffect} from 'react';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
+import {fetchPageData} from '~/helpers/controller/cms-mixin';
+import $ from '~/helpers/$';
+import BannerCarousel from './banner-carousel/banner-carousel.jsx';
+import Buckets from './buckets/buckets.jsx';
+import Education from './education/education.jsx';
+import Quotes from './quotes/quotes.jsx';
+import './home.css';
 
-const spec = {
-    css,
-    view: {
-        classes: ['home-page'],
-        tag: 'main',
-        id: 'maincontent'
-    },
-    slug: 'pages/openstax-homepage'
+const view = {
+    classes: ['home-page'],
+    tag: 'main',
+    id: 'maincontent'
 };
-const BaseClass = componentType(spec, canonicalLinkMixin);
+const slug = 'pages/openstax-homepage';
 
-export default class Home extends BaseClass {
+function Page() {
+    const [pageData, setPageData] = useState();
 
-    onDataLoaded() {
-        const bannerCarousel = new BannerCarousel(() => ({
-            largeImages: this.pageData.banner_images,
-            smallImages: this.pageData.mobile_banner_images
-        }));
-        const quotesData = this.pageData.row_1.map((columnData) => {
-            const result = Object.assign(
-                {
-                    hasImage: !!columnData.image.image
-                },
-                columnData
-            );
+    useEffect(() => fetchPageData({slug}).then(setPageData), []);
+    useEffect(() => {
+        const linkController = $.setCanonicalLink();
 
-            return result;
-        });
-        const quotesView = new Quotes(quotesData);
-        const [educationData] = this.pageData.row_2;
-        const bucketData = [4, 5].map((rowNum, index) => {
-            const cmsData = this.pageData[`row_${rowNum}`][0];
-            const result = Object.assign({
-                bucketClass: index ? 'partners' : 'our-impact',
-                btnClass: index ? 'btn-gold' : 'btn-cyan',
-                hasImage: index === 0
-            }, cmsData);
+        return () => linkController.remove();
+    }, []);
 
-            return result;
-        });
-
-        this.regions.self.attach(bannerCarousel);
-        this.regions.self.append(quotesView);
-        this.regions.self.append(new Education(educationData));
-        this.regions.self.append(new Buckets(bucketData));
+    if (!pageData) {
+        return (
+            <div className="content loading" />
+        );
     }
 
+    const quotesData = pageData.row_1.map((columnData) => {
+        const result = Object.assign(
+            {
+                hasImage: !!columnData.image.image
+            },
+            columnData
+        );
+
+        return result;
+    });
+    const [educationData] = pageData.row_2;
+    const bucketData = [4, 5].map((rowNum, index) => {
+        const cmsData = pageData[`row_${rowNum}`][0];
+        const result = Object.assign({
+            bucketClass: index ? 'partners' : 'our-impact',
+            btnClass: index ? 'btn-gold' : 'btn-cyan',
+            hasImage: index === 0
+        }, cmsData);
+
+        return result;
+    });
+
+    return (
+        <React.Fragment>
+            <BannerCarousel
+                largeImages={pageData.banner_images}
+                smallImages={pageData.mobile_banner_images}
+            />
+            <Quotes quotes={quotesData} />
+            <Education
+                content={educationData.content}
+                linkUrl={educationData.link}
+                linkText={educationData.cta}
+            />
+            <Buckets bucketModels={bucketData} />
+        </React.Fragment>
+    );
 }
+
+export default pageWrapper(Page, view);
