@@ -14,7 +14,10 @@ const tagManagerID = 'GTM-W6N7PB';
         j = d.createElement(s),
         dl = l !== 'dataLayer' ? '&l=' + l : '';
 
-    j.async = true;
-    j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl;
-    f.parentNode.insertBefore(j, f);
+    // Breaks in tests because there are no scripts
+    if (f) {
+        j.async = true;
+        j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    }
 })(window, document, 'script', 'dataLayer', tagManagerID);
