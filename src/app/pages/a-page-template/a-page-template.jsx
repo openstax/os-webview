@@ -1,14 +1,14 @@
 import React, {useState, useEffect} from 'react';
+import {fetchPageDataJsx} from '~/helpers/controller/cms-mixin';
 import ChildComponent from '~/components/a-component-template/a-component-template.jsx';
 import './a-page-template.css';
-import {fetchPageData} from '~/helpers/controller/cms-mixin';
 import $ from '~/helpers/$';
 
 const slug = 'books/biology-2e';
 
 // React.Fragment is a parent node when you don't want to have a parent node.
 export default function () {
-    const [pageData, statusPage] = fetchPageData({slug});
+    const [pageData, statusPage] = fetchPageDataJsx({slug});
 
     useEffect(() => {
         const linkController = $.setCanonicalLink();

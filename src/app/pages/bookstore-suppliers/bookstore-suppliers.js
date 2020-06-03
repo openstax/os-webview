@@ -1,54 +1,133 @@
-import componentType, {canonicalLinkMixin, insertHtmlMixin} from '~/helpers/controller/init-mixin';
-import {description as template} from './bookstore-suppliers.html';
-import css from './bookstore-suppliers.css';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
+import React, {useState, useEffect} from 'react';
+import {fetchPageDataJsx} from '~/helpers/controller/cms-mixin';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import './bookstore-suppliers.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['bookstore-suppliers', 'page'],
-        tag: 'main'
-    },
-    slug: 'pages/print-order',
-    model() {
-        if (!this.pageData) {
-            return {};
-        }
-        const providerToModel = (p) => ({
-            name: p.name,
-            description: p.blurb || '',
-            logoUrl: p.icon,
-            buttonUrl: p.url,
-            buttonText: p.cta,
-            isCanadian: p.canadian
-        });
-        const suppliers = this.pageData.providers.map(providerToModel);
-        const featuredSupplier = this.pageData.featured_providers.map(providerToModel); // should only be 1
-
-        return {
-            headline: this.pageData.title,
-            subhead: this.pageData.intro_heading,
-            subhead2: this.pageData.intro_description,
-            featuredSupplier,
-            featuredSuppliersBlurb: this.pageData.featured_provider_intro_blurb,
-            suppliersBlurb: this.pageData.other_providers_intro_blurb,
-            suppliers,
-            usButtonUrl: this.pageData.us_isbn_download_url,
-            usButtonText: this.pageData.us_isbn_cta,
-            caButtonUrl: this.pageData.canadian_isbn_download_url,
-            caButtonText: this.pageData.canadian_isbn_cta
-        };
-    }
+const view = {
+    classes: ['bookstore-suppliers', 'page'],
+    tag: 'main'
 };
-const BaseClass = componentType(spec, canonicalLinkMixin, insertHtmlMixin);
+const slug = 'pages/print-order';
 
-export default class BookstoreSuppliers extends BaseClass {
+function providerToModel(p) {
+    return {
+        name: p.name,
+        description: p.blurb || '',
+        logoUrl: p.icon,
+        buttonUrl: p.url,
+        buttonText: p.cta,
+        isCanadian: p.canadian
+    };
+}
 
-    onDataLoaded() {
-        if (super.onDataLoaded) {
-            super.onDataLoaded();
-        }
-        this.update();
+function CardFeatures({supplier}) {
+    return (
+        <React.Fragment>
+            <div className="logo-dot">
+                <img src={supplier.logoUrl} alt="company logo" />
+            </div>
+            <h2>{supplier.name}</h2>
+            <div className="blurb" dangerouslySetInnerHTML={{__html: supplier.description}} />
+            <a className="btn primary" href={supplier.buttonUrl}>{supplier.buttonText}</a>
+        </React.Fragment>
+    );
+}
+
+function PriceList({buttonText, buttonUrl}) {
+    return (
+        <div>
+            {buttonText}
+            <a href={buttonUrl} className="btn primary">
+                View
+                <FontAwesomeIcon icon="external-link-alt" />
+            </a>
+        </div>
+    );
+}
+
+export function Page() {
+    const [pageData, statusPage] = fetchPageDataJsx({slug});
+
+    if (statusPage) {
+        return statusPage;
     }
 
+    const suppliers = pageData.providers.map(providerToModel);
+    const featuredSupplier = pageData.featured_providers.map(providerToModel); // should only be 1
+    const model = {
+        headline: pageData.title,
+        subhead: pageData.intro_heading,
+        subhead2: pageData.intro_description,
+        featuredSupplier,
+        featuredSuppliersBlurb: pageData.featured_provider_intro_blurb,
+        suppliersBlurb: pageData.other_providers_intro_blurb,
+        suppliers,
+        usButtonUrl: pageData.us_isbn_download_url,
+        usButtonText: pageData.us_isbn_cta,
+        caButtonUrl: pageData.canadian_isbn_download_url,
+        caButtonText: pageData.canadian_isbn_cta
+    };
+
+    return (
+        <React.Fragment>
+            <div className="hero">
+                <div className="content">
+                    <div className="text">
+                        <h1>{model.headline}</h1>
+                        <div className="small-screen" dangerouslySetInnerHTML={{__html: model.subhead}} />
+                        <div className="larger-screen" dangerouslySetInnerHTML={{__html: model.subhead2}} />
+                    </div>
+                </div>
+                <div className="images">
+                    <img
+                        className="desktop-bg"
+                        src="/images/bookstore-suppliers/hero-bookstore-print-desktop.png"
+                    />
+                </div>
+            </div>
+            <div className="main-content">
+                <div className="text-section">
+                    <h2>Providers</h2>
+                    <div className="intro-blurb">{model.featuredSuppliersBlurb}</div>
+                </div>
+                {
+                    featuredSupplier.map((supplier) =>
+                        <div className="card featured">
+                            <CardFeatures supplier={supplier} />
+                        </div>
+                    )
+                }
+                <div className="intro-blurb">{model.suppliersBlurb}</div>
+                <div className="swipable-row">
+                    <div className="cards">
+                        {
+                            model.suppliers.map((supplier) =>
+                                <div className="card">
+                                    {
+                                        Boolean(supplier.isCanadian) &&
+                                            <div className="flag-card">
+                                                <div className="canada-flag">
+                                                    <div className="white-field">
+                                                        <FontAwesomeIcon icon={['fab', 'canadian-maple-leaf']} />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    }
+                                    <CardFeatures supplier={supplier} />
+                                </div>
+                            )
+                        }
+                    </div>
+                </div>
+                <h2>Price lists</h2>
+                <div className="split-card">
+                    <PriceList buttonText={model.usButtonText} buttonUrl={model.usButtonUrl} />
+                    <PriceList buttonText={model.caButtonText} buttonUrl={model.caButtonUrl} />
+                </div>
+            </div>
+        </React.Fragment>
+    );
 }
+
+export default pageWrapper(Page, view);
