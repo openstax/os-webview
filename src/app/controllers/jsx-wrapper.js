@@ -37,8 +37,10 @@ export default class WrappedJsx extends Controller {
 
     onLoaded() {
         const root = React.createElement(this.child);
+        const save = [this.el, this.regions];
 
         ReactDOM.render(root, this.regions.self.el);
+        [this.el, this.regions] = save;
     }
 
     onClose() {

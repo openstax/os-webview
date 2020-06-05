@@ -55,7 +55,7 @@ export default class InterestForm extends BaseClass {
         });
 
         result.validate = function () {
-            return contactForm.validate();
+            return contactForm.checkSchoolName() || contactForm.validate();
         };
         return result;
     }
