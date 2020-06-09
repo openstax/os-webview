@@ -62,7 +62,7 @@ export default class WrappedJsx extends Controller {
 
 }
 
-export function pageWrapper(jsxComponent, view) {
+export function pageWrapper(jsxComponent, view = {}) {
     return class extends WrappedJsx {
 
         init(props) {
