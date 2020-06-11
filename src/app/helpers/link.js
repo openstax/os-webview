@@ -5,9 +5,6 @@ const ABSOLUTE_OPENSTAX = new RegExp(
     `(?:https?://openstax.org|${window.location.origin})(?!/(?:books|accounts|oxauth|blog-feed)/)`
 );
 const MAILTO = /^mailto:(.+)/;
-const PDF = /.pdf$/;
-const ZIP = /.zip$/;
-const TXT = /.txt$/;
 const CNX = /cnx.org/;
 const REX = /openstax.org\/books/;
 const CLOUDFRONT = /cloudfront.net/;
@@ -47,18 +44,6 @@ function isTOCLink(el) {
     const tocEl = document.querySelector('.table-of-contents');
 
     return tocEl && tocEl.contains(el);
-}
-
-function isPDF(url) {
-    return PDF.test(url);
-}
-
-function isZIP(url) {
-    return ZIP.test(url);
-}
-
-function isTXT(url) {
-    return TXT.test(url);
 }
 
 function stripOpenStaxDomain(href) {
@@ -104,9 +89,6 @@ export default {
     isExternal,
     validUrlClick,
     isTOCLink,
-    isPDF,
-    isZIP,
-    isTXT,
     isCNX,
     isREX,
     isCloudFront,

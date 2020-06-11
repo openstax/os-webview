@@ -3,7 +3,6 @@ import './resource-box.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 function CommonsHubBox({model}) {
-    console.info('Commons model:', model);
     return (
         <div className="resource-box double">
             <div className="top-line">
