@@ -16,10 +16,10 @@ export function salesforceTitles(books) {
             const abbrev = book.salesforce_abbreviation;
             const seen = abbrev in seenTitles;
 
-            if (book.book_state === 'live') {
+            if (['live', 'new_edition_available'].includes(book.book_state)) {
                 seenTitles[abbrev] = true;
             }
-            return abbrev && !seen && book.book_state === 'live';
+            return abbrev && !seen && ['live', 'new_edition_available'].includes(book.book_state);
         })
         .map((book) => ({
             text: book.salesforce_name,
@@ -38,7 +38,7 @@ export function subjects(sfTitles) {
 
 export function afterFormSubmit(preselectedTitle, selectedBooks) {
     fetchBooks.then((b) => {
-        const liveBooks = b.filter((entry) => entry.book_state === 'live');
+        const liveBooks = b.filter((entry) => ['live', 'new_edition_available'].includes(entry.book_state));
         const backTo = liveBooks.find((entry) => entry.salesforce_abbreviation === preselectedTitle);
 
         if (backTo && !$.isPhoneDisplay()) {
