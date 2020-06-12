@@ -1,5 +1,6 @@
 import './helpers/fetch-mocker';
 import {LocalStorage} from 'node-localstorage';
+import '~/helpers/font-awesome';
 
 global.localStorage = new LocalStorage('./local-storage-scratch');
 global.pi = jest.fn();

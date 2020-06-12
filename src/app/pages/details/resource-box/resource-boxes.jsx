@@ -5,7 +5,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import shellBus from '~/components/shell/shell-bus';
 
 function CommonsHubBox({model}) {
-    console.info('Commons model:', model);
     return (
         <div className="resource-box double">
             <div className="top-line">
