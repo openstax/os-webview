@@ -1,5 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import WrappedJsx, {SuperbItem} from '~/controllers/jsx-wrapper';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {Bus} from '~/helpers/controller/bus-mixin';
 import {Authors, PublicationInfo, ErrataSection} from '../common/common.jsx';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
@@ -22,7 +23,7 @@ function PolishTab({model, gtt}) {
             <div className="main">
                 <div className="loc-summary-text">
                     <h3>Podsumowanie</h3>
-                    <div dangerouslySetInnerHTML={{__html: model.description}} />
+                    <RawHTML html={model.description} />
                 </div>
                 <Authors model={model} polish={true} />
                 <ErrataSection bookState={model.bookState} blurb={model.errataBlurb} polish={true} />
@@ -47,7 +48,7 @@ function EnglishTab({model, gtt}) {
             <div className="main">
                 <div className="loc-summary-text">
                     <h3>Summary</h3>
-                    <div dangerouslySetInnerHTML={{__html: model.description}} />
+                    <RawHTML html={model.description} />
                 </div>
                 <Authors model={model} />
                 <ErrataSection bookState={model.bookState} blurb={model.errataBlurb} title={model.title} />

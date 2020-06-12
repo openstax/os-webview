@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './a-component-template.css';
 
-export default function ({message}) {
+export default function ComponentTemplate({message}) {
     return (
         <React.Fragment>
             {/*

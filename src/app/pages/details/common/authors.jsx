@@ -19,7 +19,7 @@ function Authors({heading, className, authors, CustomTag='div'}) {
     );
 }
 
-export default function ({model, polish}) {
+export default function AuthorsSection({model, polish}) {
     const headings = polish ? [
         'Główni autorzy', 'Autorzy współpracujący'
     ] : [

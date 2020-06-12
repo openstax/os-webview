@@ -1,5 +1,5 @@
 import React from 'react';
-import Callout from './callout.jsx';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 
 function PdfUpdateInfo({updateDate, url}) {
     if (!(updateDate && url)) {
@@ -13,7 +13,7 @@ function PdfUpdateInfo({updateDate, url}) {
                 <h4>PDF Version Last Updated:</h4>
                 {updateDate}
                 <div className="callout">
-                    <Callout messageHtml={messageHtml} />
+                    <RawHTML html={messageHtml} />
                 </div>
             </div>
         </div>
@@ -61,9 +61,9 @@ function LicenseInfo({name, icon, text, title, version}) {
             <div>
                 {
                     text ?
-                        <div dangerouslySetInnerHTML={{__html: text}} /> :
+                        <RawHTML html={text} /> :
                         <div>
-                            <span dangerouslySetInnerHTML={{__html: title}} />
+                            <RawHTML Tag="span" html={title} />
                             by OpenStax is licensed under
                             <span className="text">{name} v{version}</span>
                         </div>
@@ -84,8 +84,8 @@ function PolishIsbn({format, header, model}) {
     return (
         <div className={`loc-${format}-isbn`}>
             <h4>{header}</h4>
-            {n10 ? <div>ISBN-10: {n10}</div> : null}
-            {n13 ? <div>ISBN-13: {n13}</div> : null}
+            {n10 && <div>ISBN-10: {n10}</div>}
+            {n13 && <div>ISBN-13: {n13}</div>}
         </div>
     );
 }
@@ -102,9 +102,9 @@ function PolishLicense({model}) {
             <div>
                 {
                     model.license_text ?
-                        <div dangerouslySetInnerHTML={{__html: model.license_text}} /> :
+                        <RawHTML html={model.license_text} /> :
                         <div>
-                            <span dangerouslySetInnerHTML={{__html: model.title}} />
+                            <RawHTML Tag="span" html={model.title} />
                             by OpenStax jest licencjonowana na licencji
                             <span className="text">{model.license_name} v{model.license_version}</span>
                         </div>
@@ -143,7 +143,7 @@ function LabeledDate({label, formattedDate, className}) {
     );
 }
 
-export default function ({model, url, polish}) {
+export default function PublicationInfo({model, url, polish}) {
     if (polish) {
         return new PolishPublicationInfo({model});
     }

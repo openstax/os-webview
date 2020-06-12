@@ -1,5 +1,6 @@
 import React from 'react';
 import WrappedJsx from '~/controllers/jsx-wrapper';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './quotes.css';
 
 function QuoteBox({children}) {
@@ -13,7 +14,7 @@ function QuoteBox({children}) {
 function QuoteAndButton({content, link, cta: buttonText}) {
     return (
         <div className="quote">
-            <div className="content" dangerouslySetInnerHTML={{__html: content}} />
+            <RawHTML className="content" html={content} />
             <a className="btn primary" href={link}>{buttonText}</a>
         </div>
     );

@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import cmsFetch from '~/models/cmsFetch';
 
 const instructions = 'Errata submissions are displayed below until a new PDF is published online.';
@@ -9,7 +10,7 @@ const correctionScheduleKeyFromBookState = {
     'new_edition_available': 'new_edition_errata_message'
 };
 
-export default function ({slug, title}) {
+export default function Hero({slug, title}) {
     const [errataHoverHtml, updateErrataHoverHtml] = useState('<p>...loading...</p>');
 
     useEffect(async () => {
@@ -28,7 +29,7 @@ export default function ({slug, title}) {
                     <div className="instructions">{instructions}</div>
                     <div className="with-tooltip">
                         {moreAbout}
-                        <div className="tooltip" dangerouslySetInnerHTML={{__html: errataHoverHtml}}/>
+                        <RawHTML className="tooltip" html={errataHoverHtml}/>
                     </div>
                 </div>
             </div>

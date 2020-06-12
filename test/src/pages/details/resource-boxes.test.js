@@ -52,7 +52,7 @@ describe('ResourceBoxes', () => {
         const wrapper = instructorWrapper({});
 
         expect(wrapper.find('.top h3').text()).toBe(payload.heading);
-        expect(wrapper.find('.top-line + div').html()).toContain(payload.description);
+        expect(wrapper.find('.top-line + .description').html()).toContain(payload.description);
         expect(wrapper.find('.bottom .left').text()).toBe(resourceData.link_text);
     });
 

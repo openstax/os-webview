@@ -7,13 +7,14 @@ import shuffle from 'lodash/shuffle';
 import Partners from './partners/partners.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import WrappedJsx from '~/controllers/jsx-wrapper';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './instructor-resource-tab.css';
 
 function FreeStuff({heading, blurb}) {
     return (
         <div className="free-stuff-blurb">
-            <h2 dangerouslySetInnerHTML={{__html: heading}}/>
-            <div className="blurb-body" dangerouslySetInnerHTML={{__html: blurb}} />
+            <RawHTML Tag="h2" html={heading}/>
+            <RawHTML className="blurb-body" html={blurb} />
         </div>
     );
 }
@@ -26,7 +27,7 @@ function Webinar({url, text, blurb}) {
             </div>
             <div className="blurb">
                 <h2>{text}</h2>
-                <div className="blurb" dangerouslySetInnerHTML={{__html: blurb}}/>
+                <RawHTML className="blurb" html={blurb}/>
             </div>
         </a>
     );

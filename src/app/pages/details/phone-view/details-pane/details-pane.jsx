@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {Authors, PublicationInfo} from '../../common/common.jsx';
 import CollapsingPane from '~/components/collapsing-pane/collapsing-pane.jsx';
 import WrappedJsx from '~/controllers/jsx-wrapper';
@@ -9,7 +10,7 @@ export function DetailsPane({model}) {
 
     return (
         <div className="details-pane">
-            <div dangerouslySetInnerHTML={{__html: model.description}} />
+            <RawHTML html={model.description} />
             <div class="authors-region">
                 <CollapsingPane title={polish ? 'Autorzy' : 'Authors'}>
                     <Authors model={model} polish={polish} />

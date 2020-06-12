@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import ResourceBoxes from '../../resource-box/resource-boxes.jsx';
 import './featured-resources.css';
 
-export default function ({headline, resources}) {
+export default function FeaturedResources({headline, resources}) {
     const modResources = resources.map((res) => {
         const storageKey = `featured-resource-${res.heading}`;
         const seenTimes = 1 + Number(localStorage[storageKey] || 0);

@@ -39,7 +39,7 @@ function Blurb({blurb, badgeImage, onClick}) {
     );
 }
 
-export default function ({bookAbbreviation, model}) {
+export default function Partners({bookAbbreviation, model}) {
     const {title, seeMoreText, blurbs, badgeImage} = model;
 
     function onClick(event) {

@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './resource-box.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import shellBus from '~/components/shell/shell-bus';
@@ -12,7 +13,7 @@ function CommonsHubBox({model}) {
                 <img src={model.logoUrl} alt="" />
             </div>
             <div className="blurb">
-                <span dangerouslySetInnerHTML={{__html: model.blurb}} />
+                <RawHTML Tag="span" html={model.blurb} />
                 <br />
                 <a href={model.url}>
                     {model.cta}{' '}
@@ -107,7 +108,7 @@ function ResourceBox({model}) {
                                 />
                         }
                     </div>
-                    <div className="description" dangerouslySetInnerHTML={{__html: description}} />
+                    <RawHTML className="description" html={description} />
                 </div>
                 <Bottom model={model} />
             </React.Fragment>
@@ -115,7 +116,7 @@ function ResourceBox({model}) {
     );
 }
 
-export default function ({models, communityResource}) {
+export default function ResourceBoxes({models, communityResource}) {
     return (
         <React.Fragment>
             {

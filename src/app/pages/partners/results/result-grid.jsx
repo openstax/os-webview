@@ -12,7 +12,7 @@ function modelFromEntry(entry) {
     };
 }
 
-export default function (props) {
+export default function ResultGrid(props) {
     const {entries, emitSelect} = props;
 
     return (

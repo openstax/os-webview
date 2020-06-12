@@ -1,15 +1,17 @@
 import React from 'react';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 
 export function ErrataContents({blurb, title, polish}) {
-    const PolishButtonGroup = () =>
+    const PolishButtonGroup = () => (
         <div className="button-group">
             <a href="https://openstax.pl/pl/errata"
                 className="btn secondary medium">Zgłoś poprawkę</a>
-        </div>;
+        </div>
+    );
 
     return (
         <React.Fragment>
-            <p dangerouslySetInnerHTML={{__html: blurb}} />
+            <RawHTML Tag="p" html={blurb} />
             {
                 polish ? <PolishButtonGroup /> :
                     <div className="button-group">
@@ -23,7 +25,7 @@ export function ErrataContents({blurb, title, polish}) {
     );
 }
 
-export default function ({bookState, blurb, title, polish}) {
+export default function ErrataSection({bookState, blurb, title, polish}) {
     if (!['live', 'new_edition_available', 'deprecated'].includes(bookState)) {
         return null;
     }

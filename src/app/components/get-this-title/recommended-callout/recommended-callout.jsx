@@ -1,7 +1,8 @@
 import React from 'react';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-export default function ({title='Recommended', blurb, onPutAway}) {
+export default function RecommendedCalloutJsx({title='Recommended', blurb, onPutAway}) {
     return (
         <div className="triangle-attachment">
             <div className="container">
@@ -10,7 +11,7 @@ export default function ({title='Recommended', blurb, onPutAway}) {
                     <FontAwesomeIcon icon="times" />
                 </button>
                 {
-                    blurb && <div className="callout-blurb" dangerouslySetInnerHTML={{__html: blurb}} />
+                    blurb && <RawHTML className="callout-blurb" html={blurb} />
                 }
             </div>
         </div>

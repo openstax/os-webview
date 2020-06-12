@@ -6,7 +6,7 @@ import css from './recommended-callout.css';
 
 const parentClass = 'recommended-callout';
 
-export default function (regionEl, title, blurb) {
+export default function RecommendedCallout(regionEl, title, blurb) {
     if (!regionEl) {
         return null;
     }

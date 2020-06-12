@@ -57,7 +57,7 @@ export function InstructorResourcePane({
 
     useEffect(() => {
         userStatusPromise.then(updateUserStatus);
-    });
+    }, [userStatusPromise]);
 
     return (
         <div className="instructor-resources-pane">

@@ -106,11 +106,6 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
                     null,
                     {classes: ['errata-pane']}
                 )
-                // contentComponent: new ErrataPane({
-                //     polish,
-                //     title: this.props.bookTitle,
-                //     errataBlurb: this.props.errataContent.content && this.props.errataContent.content.content
-                // })
             });
         }
 
