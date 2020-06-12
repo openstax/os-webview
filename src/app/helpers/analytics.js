@@ -129,18 +129,9 @@ class Analytics {
         if (linkHelper.isExternal(href)) {
             this.handleExternalLink(href);
         }
+        const extension = href.split('.').pop();
 
-        if (linkHelper.isPDF(href)) {
-            this.sendUrlEvent('PDF', href);
-        }
-
-        if (linkHelper.isZIP(href)) {
-            this.sendUrlEvent('ZIP', href);
-        }
-
-        if (linkHelper.isTXT(href)) {
-            this.sendUrlEvent('TXT', href);
-        }
+        this.sendUrlEvent(extension.toUpperCase(), href);
     }
 
     /* eslint complexity: 0 */
