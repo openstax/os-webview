@@ -1,4 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 function RadioButton({item, isSelected, updateSelected}) {
@@ -23,7 +24,7 @@ function RadioButton({item, isSelected, updateSelected}) {
                         Filter by:
                     </span>
             }
-            <span dangerouslySetInnerHTML={{__html: item.html}} />
+            <RawHTML Tag="span" html={item.html} />
             {
                 isSelected(item.value) &&
                     <span className="on-mobile">
@@ -34,7 +35,7 @@ function RadioButton({item, isSelected, updateSelected}) {
     );
 }
 
-export default function ({items, selectedValue, updateSelected}) {
+export default function RadioPanel({items, selectedValue, updateSelected}) {
     const isSelected = (val) => {
         return val === selectedValue;
     };

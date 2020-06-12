@@ -24,11 +24,14 @@ function makeStateFor(props, Child) {
 
 export default class WrappedJsx extends Controller {
 
-    init(jsxComponent, props, el) {
+    init(jsxComponent, props, el, view) {
         this.child = makeStateFor(props, jsxComponent);
         this.props = props;
         if (el) {
             this.el = el;
+        }
+        if (view) {
+            this.view = view;
         }
     }
 
@@ -69,7 +72,11 @@ export function pageWrapper(jsxComponent, view) {
 }
 
 // Reverse wrapper, when React needs to host a Superb component
-export function SuperbItem({component}) {
+export function SuperbItem({component, divProps}) {
+    if (!component) {
+        return null;
+    }
+
     const root = useRef();
     const Region = component.regions.self.constructor;
 
@@ -80,9 +87,9 @@ export function SuperbItem({component}) {
         return () => {
             region.detach();
         };
-    }, []);
+    }, [component]);
 
     return (
-        <div ref={root} />
+        <div ref={root} {...divProps} />
     );
 }

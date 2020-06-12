@@ -1,4 +1,5 @@
 import React from 'react';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 function Header({icon, heading, content}) {
@@ -8,7 +9,7 @@ function Header({icon, heading, content}) {
                 <FontAwesomeIcon icon={icon} />
                 {heading}
             </h1>
-            <div dangerouslySetInnerHTML={{__html: content}} />
+            <RawHTML html={content} />
         </React.Fragment>
     );
 }
@@ -21,7 +22,7 @@ function Button({href, text, buttonClass, onClick}) {
     );
 }
 
-export default function ({bookstoreContent, amazonLink, closeAfterDelay}) {
+export default function OrderPrintCopy({bookstoreContent, amazonLink, closeAfterDelay}) {
     return (
         <React.Fragment>
             <div className={`phone-version boxes boxes-${bookstoreContent.length}`}>

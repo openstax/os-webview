@@ -1,4 +1,5 @@
 import React from 'react';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import './let-us-know.css';
@@ -21,7 +22,7 @@ function dataStuffFor(title) {
     };
 }
 
-export default function ({title}) {
+export default function LetUsKnow({title}) {
     const {url1, url2, text1, text2} = dataStuffFor(title);
 
     return (
@@ -30,7 +31,7 @@ export default function ({title}) {
                 <span className="book-icon">
                     <FontAwesomeIcon icon="user-plus" />
                 </span>
-                <span className="text" dangerouslySetInnerHTML={{__html: text1}} />
+                <RawHTML Tag="span" className="text" html={text1} />
             </a>
             <a className="link" href={url2}>{text2}</a>
         </div>

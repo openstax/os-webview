@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-export default function ({model, emitSelect}) {
+export default function ResultCard({model, emitSelect}) {
     return (
         <a href={`#${model.title}`} type="button" className="card" onClick={emitSelect}>
             <div className="logo">

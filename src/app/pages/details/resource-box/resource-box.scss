@@ -65,6 +65,10 @@
         display: flex;
         justify-content: space-between;
 
+        .space-for-badge {
+            margin-right: 3rem;
+        }
+
         img {
             margin-bottom: 0.5rem;
             max-height: 5rem;
@@ -80,6 +84,13 @@
 
     p:empty {
         margin: 0;
+    }
+
+    .badge {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        width: 3.5rem;
     }
 
     .top {

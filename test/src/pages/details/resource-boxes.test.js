@@ -1,6 +1,6 @@
 import ResourceBoxes from '~/pages/details/resource-box/resource-boxes.jsx';
 import {instructorResourceBoxPermissions, studentResourceBoxPermissions} from '~/pages/details/resource-box/resource-box';
-import {makeMountRender, snapshotify} from '../../../helpers/jsx-test-utils.jsx';
+import {makeMountRender} from '../../../helpers/jsx-test-utils.jsx';
 
 // Test all the conditions in here:
 // userStatus: isInstructor: true|false
@@ -52,7 +52,7 @@ describe('ResourceBoxes', () => {
         const wrapper = instructorWrapper({});
 
         expect(wrapper.find('.top h3').text()).toBe(payload.heading);
-        expect(wrapper.find('.top-line + div').html()).toContain(payload.description);
+        expect(wrapper.find('.top-line + .description').html()).toContain(payload.description);
         expect(wrapper.find('.bottom .left').text()).toBe(resourceData.link_text);
     });
 
@@ -61,8 +61,6 @@ describe('ResourceBoxes', () => {
             resource_unlocked: false
         });
 
-        console.log(wrapper.html());
-        console.log('Instructor:', userStatus.isInstructor);
         expect(wrapper.find('.bottom .left').text()).toBe('Log in to unlock');
     });
 

@@ -1,4 +1,4 @@
-import DetailsTab from '~/pages/details/details-tab/details-tab';
+import DetailsTab from '~/pages/details/details-tab/details-tab.jsx';
 
 const polishData = {
     polish: true,

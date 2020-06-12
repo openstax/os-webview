@@ -24,7 +24,7 @@ async function getPageData(slug) {
     return null;
 }
 
-export default function ({slug}) {
+export default function ErrataDetail({slug}) {
     const [pageData, updatePageData] = useState();
 
     useEffect(() => {

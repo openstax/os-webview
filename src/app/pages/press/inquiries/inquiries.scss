@@ -27,10 +27,15 @@
 
         display: grid;
         grid-gap: 1rem;
+        height: auto;
+        justify-items: center;
         justify-self: start;
+        padding-bottom: 0.5rem;
 
         &.primary {
             @extend %primary;
+
+            height: auto;
         }
     }
 

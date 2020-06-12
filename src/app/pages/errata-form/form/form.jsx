@@ -61,7 +61,7 @@ function SubmitButton({
 }
 
 
-export default function ({model}) {
+export default function ErrataForm({model}) {
     const selectedBook = (model.books.find((b) => b.title === model.selectedTitle) || {});
     const [selectedError, updateSelectedError] = useState();
     const [submitted, updateSubmitted] = useState(false);

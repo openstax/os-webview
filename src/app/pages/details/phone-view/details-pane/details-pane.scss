@@ -8,4 +8,10 @@
         margin-top: 0;
     }
 
+    .author-heading {
+        @include set-font(h4);
+
+        margin: 1rem 0;
+    }
+
 }

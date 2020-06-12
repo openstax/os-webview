@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import ChildComponent from '~/components/a-component-template/a-component-template.jsx';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './footer-page.css';
 import {fetchOnce} from '~/models/cmsFetch';
 import $ from '~/helpers/$';
 
-export default function () {
+export default function FooterPage() {
     const slug = `pages${window.location.pathname}`;
     const [heading, updateHeading] = useState();
     const [content, updateContent] = useState();
@@ -29,8 +30,8 @@ export default function () {
         <React.Fragment>
             <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
             <main id="maincontent" className="text-content left-justified">
-                <h1 dangerouslySetInnerHTML={{__html: heading}} />
-                <div dangerouslySetInnerHTML={{__html: content}} />
+                <RawHTML Tag="h1" html={heading} />
+                <RawHTML html={content} />
             </main>
         </React.Fragment>
     );

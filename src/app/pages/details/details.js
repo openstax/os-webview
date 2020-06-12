@@ -1,9 +1,9 @@
 import $ from '~/helpers/$';
 import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import ContentGroup from '~/components/content-group/content-group';
-import DetailsTab from './details-tab/details-tab';
+import DetailsTab from './details-tab/details-tab.jsx';
 import getCompCopyDialogProps from './comp-copy-dialog-props';
-import InstructorResourceTab from './instructor-resource-tab/instructor-resource-tab';
+import InstructorResourceTab from './instructor-resource-tab/instructor-resource-tab.jsx';
 import PhoneView from './phone-view/phone-view';
 import StudentResourceTab from './student-resource-tab/student-resource-tab';
 import VideosTab from './videos-tab/videos-tab';

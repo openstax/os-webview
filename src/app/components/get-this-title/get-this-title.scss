@@ -110,9 +110,13 @@
             color: text-color(link);
             display: grid;
             grid-column-gap: 1rem;
-            grid-template-columns: auto 1fr;
+            grid-template-columns: 1.8rem 1fr;
             justify-content: left;
             text-decoration-line: none;
+
+            >:first-child {
+                justify-self: center;
+            }
         }
 
         a {
@@ -149,9 +153,10 @@
     }
 
     .expander {
-        margin-left: 4.5rem;
+        margin-left: 3rem;
 
         a {
+            display: block;
             font-weight: bold;
         }
     }

@@ -5,6 +5,7 @@ import ModalDialog, {Dialog} from '../dialog/dialog';
 import bus from './shell-bus';
 import showNoticeIfNeeded from './cookie-notice/cookie-notice';
 import {default as showAdoptionsIfNeeded} from './adoption-dialog/adoption-dialog';
+import '~/helpers/font-awesome';
 
 /*
  * Special behavior: by assigning this.el and an empty update function, this

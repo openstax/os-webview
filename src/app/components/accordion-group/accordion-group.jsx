@@ -11,7 +11,7 @@ import './accordion-group.css';
 import $ from '~/helpers/$';
 import {SuperbItem} from '~/controllers/jsx-wrapper';
 
-export default function ({
+export default function AccordionGroup({
     items,
     accordionProps={allowZeroExpanded: true},
     noScroll=false,

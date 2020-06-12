@@ -1,5 +1,6 @@
 import React from 'react';
 import WrappedJsx from '~/controllers/jsx-wrapper';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './detail.css';
 
 const detailDataPairs = [
@@ -23,7 +24,7 @@ function LabelValuePairs({detail, pairs}) {
                 pairs.map((pair) =>
                     <div className="label-value-pair">
                         <div className="label">{pair[0]}</div>
-                        <div className="value" dangerouslySetInnerHTML={{__html: detail[pair[1]] || ''}} />
+                        <RawHTML className="value" html={detail[pair[1]] || ''} />
                     </div>
                 )
             }
@@ -46,7 +47,7 @@ export function Detail({showDecisionDetails, detail}) {
             <div className="note">
                 {'You can check the status of all errata submissions on the '}
                 <a href={`/errata/?book=${encodeURIComponent(detail.bookTitle)}`}>
-                    <span dangerouslySetInnerHTML={{__html: detail.bookTitle}} />
+                    <RawHTML Tag="span" html={detail.bookTitle} />
                     Errata Page
                 </a>.
             </div>
