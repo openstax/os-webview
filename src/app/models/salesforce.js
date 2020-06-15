@@ -1,4 +1,4 @@
-import settings from 'settings';
+import $ from '~/helpers/$';
 
 const adoptionName = '[name="Adoption_Status__c"]';
 const adoptionOptions = [{
@@ -33,12 +33,12 @@ function adoption(options) {
 const salesforce = {
     adoption,
     adoptionName,
-    salesforceHome: settings.testingEnvironment ? 'test.salesforce.com' : 'webto.salesforce.com',
+    salesforceHome: $.isTestingEnvironment() ? 'test.salesforce.com' : 'webto.salesforce.com',
     get oid() {
         if (window.location.hostname.includes('staging')) {
             return '00D3I0000000Qdx';
         }
-        return settings.testingEnvironment ? '00D180000008yuY' : '00DU0000000Kwch';
+        return $.isTestingEnvironment() ? '00D180000008yuY' : '00DU0000000Kwch';
     }
 };
 
