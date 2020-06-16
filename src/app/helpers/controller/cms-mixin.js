@@ -105,12 +105,15 @@ export function usePageData(fpdParams) {
     const [pageDataError, setPageDataError] = useState();
     let statusPage = null;
 
-    useEffect(async () => {
-        try {
-            setPageData(await fetchPageData(fpdParams));
-        } catch (err) {
-            setPageDataError(err);
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                setPageData(await fetchPageData(fpdParams));
+            } catch (err) {
+                setPageDataError(err);
+            }
         }
+        fetchData();
     }, [fpdParams.slug]);
 
     if (pageDataError) {

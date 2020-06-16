@@ -23,7 +23,7 @@ export default function (inputRef) {
         }
     };
 
-    useEffect(updateFromRef, []);
+    useEffect(updateFromRef, [inputRef]);
 
     return [
         () => <InvalidMessage message={message} />,

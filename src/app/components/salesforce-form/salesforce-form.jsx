@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import {salesforceLoadedState, salesforce} from '~/models/salesforce';
+import {useSalesforceLoadedState, salesforce} from '~/models/salesforce';
 
 function SfForm({children, postTo = salesforce.webtoleadUrl, oid, afterSubmit}) {
     const [listening, setListening] = useState(false);
@@ -14,8 +14,6 @@ function SfForm({children, postTo = salesforce.webtoleadUrl, oid, afterSubmit}) 
             afterSubmit();
         }
     }
-
-    console.info('Should have action of', postTo);
 
     return (
         <React.Fragment>
@@ -35,8 +33,7 @@ function SfForm({children, postTo = salesforce.webtoleadUrl, oid, afterSubmit}) 
 }
 
 export default function SalesforceForm({postTo, ...otherProps}) {
-    console.info('Updated postTo', postTo);
-    const sfLoaded = salesforceLoadedState();
+    const sfLoaded = useSalesforceLoadedState();
 
     if (!sfLoaded) {
         return (<div>Loading</div>);

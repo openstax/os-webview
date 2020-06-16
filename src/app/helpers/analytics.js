@@ -211,7 +211,6 @@ class Analytics {
             .forEach((script) => {
                 if (trackerSrcPatterns.some((pattern) => script.src.includes(pattern))) {
                     script.remove();
-                    console.info('Removed', script.src);
                 }
             });
     }

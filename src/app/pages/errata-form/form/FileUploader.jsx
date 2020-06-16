@@ -15,14 +15,13 @@ function FileButton({name, parentRef}) {
         inputRef.current.value = null;
     }
 
-    if ($.isTestingEnvironment()) {
-        useEffect(() => {
-            console.info('Files:',
-                Array.from(parentRef.current.querySelectorAll('[type="file"]'))
-                    .map((i) => i.value)
-            );
-        });
-    }
+    // UNCOMMENT FOR TESTING
+    // useEffect(() => {
+    //     console.info('Files:',
+    //         Array.from(parentRef.current.querySelectorAll('[type="file"]'))
+    //             .map((i) => i.value)
+    //     );
+    // });
 
     return (
         <div className={`file-button ${isEmpty()}`}>

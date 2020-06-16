@@ -49,7 +49,7 @@ const salesforcePromise = cmsFetch('salesforce/forms/').then((sfData) => {
     return salesforce;
 });
 
-export function salesforceLoadedState() {
+export function useSalesforceLoadedState() {
     const [sfLoaded, setSfLoaded] = useState(false);
 
     useEffect(() => {

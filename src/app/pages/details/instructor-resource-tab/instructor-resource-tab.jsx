@@ -90,20 +90,23 @@ export function InstructorResourceTabJsx({
     const [includePartners, updateIncludePartners] = useState('');
     const [blurbs, updateBlurbs] = useState([]);
 
-    useEffect(async () => {
-        userStatusPromise.then(updateUserStatus);
-        const pd = (await partnerFeaturePromise).filter(
-            (p) => {
-                const books = (p.books || '').split(';');
+    useEffect(() => {
+        async function fetchData() {
+            userStatusPromise.then(updateUserStatus);
+            const pd = (await partnerFeaturePromise).filter(
+                (p) => {
+                    const books = (p.books || '').split(';');
 
-                return books.includes(bookAbbreviation);
+                    return books.includes(bookAbbreviation);
+                }
+            );
+
+            if (pd.length > 0) {
+                updateIncludePartners('include-partners');
             }
-        );
-
-        if (pd.length > 0) {
-            updateIncludePartners('include-partners');
+            updateBlurbs(shuffle(pd).map(toBlurb));
         }
-        updateBlurbs(shuffle(pd).map(toBlurb));
+        fetchData();
     }, [userStatusPromise]);
 
     const featuredModels = model.featuredResources
