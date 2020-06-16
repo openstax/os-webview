@@ -1,6 +1,6 @@
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import React, {useEffect} from 'react';
-import {fetchPageDataJsx} from '~/helpers/controller/cms-mixin';
+import {usePageData} from '~/helpers/controller/cms-mixin';
 import './adopters.css';
 
 const view = {
@@ -10,7 +10,7 @@ const view = {
 const slug = 'adopters';
 
 function Page() {
-    const [pageData, statusPage] = fetchPageDataJsx({slug});
+    const [pageData, statusPage] = usePageData({slug});
 
     if (statusPage) {
         return statusPage;

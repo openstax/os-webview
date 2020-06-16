@@ -1,6 +1,6 @@
 import React from 'react';
 import {pageWrapper, SuperbItem} from '~/controllers/jsx-wrapper';
-import {fetchPageDataJsx} from '~/helpers/controller/cms-mixin';
+import {usePageData} from '~/helpers/controller/cms-mixin';
 import Form from './form.jsx';
 import './contact.css';
 
@@ -10,7 +10,7 @@ const view = {
 const slug = 'pages/contact';
 
 function Page() {
-    const [pageData, statusPage] = fetchPageDataJsx({slug});
+    const [pageData, statusPage] = usePageData({slug});
 
     if (statusPage) {
         return statusPage;

@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
-import {fetchPageDataJsx} from '~/helpers/controller/cms-mixin';
+import {usePageData} from '~/helpers/controller/cms-mixin';
 import $ from '~/helpers/$';
 import BannerCarousel from './banner-carousel/banner-carousel.jsx';
 import Buckets from './buckets/buckets.jsx';
@@ -16,7 +16,7 @@ const view = {
 const slug = 'pages/openstax-homepage';
 
 function Page() {
-    const [pageData, statusPage] = fetchPageDataJsx({slug});
+    const [pageData, statusPage] = usePageData({slug});
 
     useEffect(() => {
         const linkController = $.setCanonicalLink();

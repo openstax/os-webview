@@ -39,7 +39,7 @@ function getReferringPage() {
     return referringPage;
 }
 
-function fetchErrataButtonsAndDetail(errataId) {
+function useErrataButtonsAndDetail(errataId) {
     const slug = `errata/${errataId}`;
     const [belowHeaderButtons, setBelowHeaderButtons] = useState([]);
     const [detailComponent, setDetailComponent] = useState();
@@ -59,7 +59,7 @@ function fetchErrataButtonsAndDetail(errataId) {
     return [belowHeaderButtons, detailComponent];
 }
 
-function fetchDefaultEmail(id) {
+function useDefaultEmail(id) {
     const [email, setEmail] = useState();
 
     useEffect(async () => {
@@ -94,7 +94,7 @@ function ErrataStatusNotification({errataId}) {
         return null;
     }
 
-    const email = fetchDefaultEmail(errataId);
+    const email = useDefaultEmail(errataId);
     const notifyByEmail = email && email !== 'none@openstax.org';
 
     return (
@@ -110,7 +110,7 @@ function ErrataStatusNotification({errataId}) {
 }
 
 function ErrataButtonsAndDetail({errataId, text}) {
-    const [buttons, detailComponent] = fetchErrataButtonsAndDetail(errataId);
+    const [buttons, detailComponent] = useErrataButtonsAndDetail(errataId);
 
     return (
         <React.Fragment>

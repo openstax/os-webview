@@ -25,14 +25,10 @@ function Option({optionEl, setValue, active}) {
     );
 }
 
-function SelectProxyFor({selectEl, open, activeIndex}) {
+function SelectProxyFor({selectEl, open, activeIndex, setValue}) {
     const placeholder = selectEl.getAttribute('placeholder');
     const optionsClassList = `options ${open ? ' open' : ''}`;
     const selectionHasBeenMade = selectEl.selectedIndex >= 0;
-
-    function setValue(newValue) {
-        selectEl.value = newValue;
-    }
 
     return (
         <React.Fragment>
@@ -55,14 +51,20 @@ function SelectProxyFor({selectEl, open, activeIndex}) {
     );
 }
 
-export default function ({children}) {
-    const [selectEl, setSelectEl] = useState();
+export default function Select({children, ...selectProps}) {
     const [open, setOpen] = useState(false);
     const [activeIndex, setActiveIndex] = useState(-1);
+    const [selectEl, setSelectEl] = useState();
+    const selectRef = useRef();
+
+    function setValue(newValue) {
+        selectEl.value = newValue;
+        selectEl.dispatchEvent(new Event('change'));
+    }
 
     useEffect(() => {
-        setSelectEl(children.ref.current);
-    }, [children]);
+        setSelectEl(selectRef.current);
+    }, []);
     useEffect(() => {
         if (!open) {
             setActiveIndex(-1);
@@ -83,7 +85,7 @@ export default function ({children}) {
             case 'Enter':
             case ' ':
                 if (activeIndex > -1) {
-                    selectEl.value = selectEl.children[activeIndex].value;
+                    setValue(selectEl.children[activeIndex].value);
                 }
                 // eslint-disable-next-line no-fallthrough
             case 'Escape':
@@ -111,7 +113,6 @@ export default function ({children}) {
                         setActiveIndex(foundIndex);
                     }
                 } else {
-                    console.info('Nope', event.key);
                     handled = false;
                 }
             }
@@ -136,12 +137,15 @@ export default function ({children}) {
             onBlur={onBlur}
             tabIndex="0"
         >
-            {children}
+            <select {...selectProps} ref={selectRef}>
+                {children}
+            </select>
             {
                 Boolean(selectEl) &&
                     <SelectProxyFor selectEl={selectEl}
                         open={open}
                         activeIndex={activeIndex}
+                        setValue={setValue}
                     />
             }
         </div>

@@ -100,7 +100,7 @@ export async function fetchPageData({slug, preserveWrapping, setsPageTitleAndDes
     return data;
 }
 
-export function fetchPageDataJsx(fpdParams) {
+export function usePageData(fpdParams) {
     const [pageData, setPageData] = useState();
     const [pageDataError, setPageDataError] = useState();
     let statusPage = null;

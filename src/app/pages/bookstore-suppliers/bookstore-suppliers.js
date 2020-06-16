@@ -1,6 +1,6 @@
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import React, {useState, useEffect} from 'react';
-import {fetchPageDataJsx} from '~/helpers/controller/cms-mixin';
+import {usePageData} from '~/helpers/controller/cms-mixin';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import './bookstore-suppliers.css';
 
@@ -47,7 +47,7 @@ function PriceList({buttonText, buttonUrl}) {
 }
 
 export function Page() {
-    const [pageData, statusPage] = fetchPageDataJsx({slug});
+    const [pageData, statusPage] = usePageData({slug});
 
     if (statusPage) {
         return statusPage;

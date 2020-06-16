@@ -50,7 +50,6 @@ export default function () {
     const selectRef = useRef();
 
     function onChangeSubject(event) {
-        onChange(event);
         const isPolish = event.target.value === 'OpenStax Polska';
 
         setPostTo(isPolish ? '/apps/cms/api/mail/send_mail' : undefined);
@@ -67,19 +66,17 @@ export default function () {
             <input type="hidden" name="external" value="1" />
             <label>
                 What is your question about?
-                <Select>
-                    <select name="subject" ref={selectRef}>
-                        {
-                            subjects.map((subject) =>
-                                <option
-                                    value={subject}
-                                    selected={selected(subject)}
-                                >
-                                    {subject}
-                                </option>
-                            )
-                        }
-                    </select>
+                <Select name="subject" ref={selectRef} onChange={onChangeSubject}>
+                    {
+                        subjects.map((subject) =>
+                            <option
+                                value={subject}
+                                selected={selected(subject)}
+                            >
+                                {subject}
+                            </option>
+                        )
+                    }
                 </Select>
             </label>
             <LabeledInputWithInvalidMessage showMessage={showInvalidMessages}>
