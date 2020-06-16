@@ -2,13 +2,14 @@ import componentType from '~/helpers/controller/init-mixin';
 import busMixin from '~/helpers/controller/bus-mixin';
 import {salesforceFormFunctions} from '~/helpers/controller/salesforce-form-mixin';
 import {description as template} from './salesforce-form.html';
-import salesforce from '~/models/salesforce';
+import salesforcePromise, {salesforce} from '~/models/salesforce';
 import {on} from '~/helpers/controller/decorators';
 
-const defaultPostTo = `https://${salesforce.salesforceHome}/servlet/servlet.WebToCase?encoding=UTF-8`;
 const spec = {
     template,
     model() {
+        const defaultPostTo = `https://${salesforce.salesforceHome}/servlet/servlet.WebToCase?encoding=UTF-8`;
+
         return {
             oid: salesforce.oid,
             postTo: this.postTo || defaultPostTo
@@ -32,6 +33,13 @@ function selfRemovingListener(target, eventName, callback) {
 }
 
 export default class extends componentType(spec, busMixin, salesforceFormFunctions) {
+
+    onLoaded() {
+        if (super.onLoaded) {
+            super.onLoaded();
+        }
+        salesforcePromise.then(() => this.update());
+    }
 
     @on('submit form')
     watchForResponse(event) {

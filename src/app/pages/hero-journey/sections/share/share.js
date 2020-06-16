@@ -1,7 +1,7 @@
 import componentType from '~/helpers/controller/init-mixin';
 import {description as template} from './share.html';
 import css from './share.css';
-import salesforce from '~/models/salesforce';
+import salesforcePromise, {salesforce} from '~/models/salesforce';
 import {on} from '~/helpers/controller/decorators';
 
 const spec = {
@@ -9,6 +9,14 @@ const spec = {
     view: {
         classes: ['share', 'hidden'],
         tag: 'section'
+    },
+    model() {
+        return {
+            ...baseModel,
+            salesforce,
+            action: salesforce.webtoleadUrl,
+            pulseClass: this.pulseClass
+        };
     },
     css
 };
@@ -18,10 +26,15 @@ export default class extends componentType(spec) {
 
     init(model) {
         super.init();
-        this.model = model;
-        this.model.salesforce = salesforce;
-        this.model.action = salesforce.webtoleadUrl;
-        this.model.pulseClass = '';
+        this.baseModel = model;
+        this.pulseClass = '';
+    }
+
+    onLoaded() {
+        if (super.onLoaded) {
+            super.onLoaded();
+        }
+        salesforcePromise.then(() => this.update());
     }
 
     @on('submit form')
@@ -34,7 +47,7 @@ export default class extends componentType(spec) {
 
     @on('input textarea')
     pulseButtonWhenInputLongEnough(event) {
-        this.model.pulseClass = event.target.value.length >= LONG_ENOUGH ? 'pulse' : '';
+        this.pulseClass = event.target.value.length >= LONG_ENOUGH ? 'pulse' : '';
         this.update();
     }
 

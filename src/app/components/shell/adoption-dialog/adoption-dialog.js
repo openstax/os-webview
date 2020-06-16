@@ -7,7 +7,7 @@ import accountsModel from '~/models/usermodel';
 import shellBus from '../shell-bus';
 import {on} from '~/helpers/controller/decorators';
 import $ from '~/helpers/$';
-import salesforce from '~/models/salesforce';
+import salesforcePromise, {salesforce} from '~/models/salesforce';
 
 const salesforceEndpointPrefix = `${$.apiOriginAndOldPrefix}/salesforce`;
 const spec = {
@@ -86,6 +86,13 @@ export class AdoptionDialog extends componentType(spec, busMixin, salesforceForm
             responseEl.addEventListener('load', afterSubmit);
         }
         realForm.submit();
+    }
+
+    onLoaded() {
+        if (super.onLoaded) {
+            super.onLoaded();
+        }
+        salesforcePromise.then(() => this.update());
     }
 
     onDataLoaded() {

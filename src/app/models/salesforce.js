@@ -1,4 +1,6 @@
 import $ from '~/helpers/$';
+import cmsFetch from './cmsFetch';
+import React, {useState, useEffect} from 'react';
 
 const adoptionName = '[name="Adoption_Status__c"]';
 const adoptionOptions = [{
@@ -30,18 +32,31 @@ function adoption(options) {
     return adoptionOptions.filter((option) => options.includes(option.key));
 }
 
-const salesforce = {
+export const salesforce = {
     adoption,
-    adoptionName,
-    salesforceHome: $.isTestingEnvironment() ? 'test.salesforce.com' : 'webto.salesforce.com',
-    get oid() {
-        if (window.location.hostname.includes('staging')) {
-            return '00D3I0000000Qdx';
-        }
-        return $.isTestingEnvironment() ? '00D180000008yuY' : '00DU0000000Kwch';
-    }
+    adoptionName
 };
 
-salesforce.webtoleadUrl = `https://${salesforce.salesforceHome}/servlet/servlet.WebToLead?encoding=UTF-8`;
+const salesforcePromise = cmsFetch('salesforce/forms/').then((sfData) => {
+    const {oid, debug, posting_url: webtoleadUrl} = sfData[0];
 
-export default salesforce;
+    Object.assign(salesforce, {
+        oid,
+        debug,
+        webtoleadUrl
+    });
+
+    return salesforce;
+});
+
+export function salesforceLoadedState() {
+    const [sfLoaded, setSfLoaded] = useState(false);
+
+    useEffect(() => {
+        salesforcePromise.then(() => setSfLoaded(true));
+    }, []);
+
+    return sfLoaded;
+}
+
+export default salesforcePromise;

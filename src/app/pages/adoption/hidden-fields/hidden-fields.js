@@ -1,4 +1,4 @@
-import salesforce from '~/models/salesforce';
+import salesforcePromise, {salesforce} from '~/models/salesforce';
 import componentType from '~/helpers/controller/init-mixin';
 import {description as template} from './hidden-fields.html';
 
@@ -26,6 +26,13 @@ export default class HiddenFields extends componentType(spec) {
     init(getProps) {
         super.init();
         this.getProps = getProps;
+    }
+
+    onLoaded() {
+        if (super.onLoaded) {
+            super.onLoaded();
+        }
+        salesforcePromise.then(() => this.update());
     }
 
 }

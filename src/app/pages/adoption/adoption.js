@@ -7,7 +7,7 @@ import HiddenFields from './hidden-fields/hidden-fields';
 import HowUsing from './how-using/how-using';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
 import RoleSelector from '~/components/role-selector/role-selector';
-import salesforce from '~/models/salesforce';
+import salesforcePromise, {salesforce} from '~/models/salesforce';
 import {afterFormSubmit} from '~/models/books';
 import SeriesOfComponents from '~/components/series-of-components/series-of-components';
 import StudentForm from '~/components/student-form/student-form';
@@ -112,34 +112,37 @@ export default class AdoptionForm extends componentType(spec, canonicalLinkMixin
             firstPage(),
             secondPage()
         ];
-        const facultyForm = new MultiPageForm(
-            () => ({
-                action: salesforce.webtoleadUrl,
-                contents: facultyPages
-            }),
-            {
-                onPageChange: this.onPageChange.bind(this),
-                onSubmit: this.onSubmit.bind(this),
-                afterSubmit: this.afterSubmit.bind(this)
-            }
-        );
 
-        this.roleSelector = new RoleSelector(
-            () => [
+        salesforcePromise.then(() => {
+            const facultyForm = new MultiPageForm(
+                () => ({
+                    action: salesforce.webtoleadUrl,
+                    contents: facultyPages
+                }),
                 {
-                    contents: studentForm,
-                    hideWhen: (role) => role !== 'Student'
-                },
-                {
-                    contents: facultyForm,
-                    hideWhen: (role) => ['', 'Student'].includes(role)
+                    onPageChange: this.onPageChange.bind(this),
+                    onSubmit: this.onSubmit.bind(this),
+                    afterSubmit: this.afterSubmit.bind(this)
                 }
-            ]
-        );
-        this.roleSelector.on('change', () => {
-            this.hiddenFields.update();
+            );
+
+            this.roleSelector = new RoleSelector(
+                () => [
+                    {
+                        contents: studentForm,
+                        hideWhen: (role) => role !== 'Student'
+                    },
+                    {
+                        contents: facultyForm,
+                        hideWhen: (role) => ['', 'Student'].includes(role)
+                    }
+                ]
+            );
+            this.roleSelector.on('change', () => {
+                this.hiddenFields.update();
+            });
+            this.regions.roleSelector.attach(this.roleSelector);
         });
-        this.regions.roleSelector.attach(this.roleSelector);
     }
 
     onPageChange(pageNumber) {

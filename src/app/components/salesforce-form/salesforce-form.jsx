@@ -1,10 +1,7 @@
 import React, {useState, useRef} from 'react';
-import salesforce from '~/models/salesforce';
+import {salesforceLoadedState, salesforce} from '~/models/salesforce';
 
-const defaultPostTo = `https://${salesforce.salesforceHome}/servlet/servlet.WebToCase?encoding=UTF-8`;
-const oid = salesforce.oid;
-
-export default function ({children, postTo=defaultPostTo, afterSubmit}) {
+function SfForm({children, postTo = salesforce.webtoleadUrl, oid, afterSubmit}) {
     const [listening, setListening] = useState(false);
 
     function onSubmit() {
@@ -18,6 +15,8 @@ export default function ({children, postTo=defaultPostTo, afterSubmit}) {
         }
     }
 
+    console.info('Should have action of', postTo);
+
     return (
         <React.Fragment>
             <iframe name="form-response" id="form-response" className="hidden"
@@ -26,11 +25,22 @@ export default function ({children, postTo=defaultPostTo, afterSubmit}) {
                 action={postTo} method="post"
                 onSubmit={onSubmit}
             >
-                <input type="hidden" name="orgid" value={oid} />
+                <input type="hidden" name="orgid" value={salesforce.oid} />
                 <div className="form-content">
                     {children}
                 </div>
             </form>
         </React.Fragment>
     );
+}
+
+export default function SalesforceForm({postTo, ...otherProps}) {
+    console.info('Updated postTo', postTo);
+    const sfLoaded = salesforceLoadedState();
+
+    if (!sfLoaded) {
+        return (<div>Loading</div>);
+    }
+
+    return <SfForm postTo={postTo} {...otherProps} />;
 }

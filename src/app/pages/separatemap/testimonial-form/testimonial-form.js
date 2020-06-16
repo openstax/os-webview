@@ -4,7 +4,7 @@ import {description as template} from './testimonial-form.html';
 import css from './testimonial-form.css';
 import booksPromise from '~/models/books';
 import FormSelect from '~/components/form-select/form-select';
-import salesforce from '~/models/salesforce';
+import salesforcePromise, {salesforce} from '~/models/salesforce';
 import {on} from '~/helpers/controller/decorators';
 
 const spec = {
@@ -41,6 +41,7 @@ export default class TestimonialForm extends componentType(spec, busMixin) {
             this.detach();
             el.remove();
         };
+        salesforcePromise.then(() => this.update());
         booksPromise.then((items) => {
             const options = items.map((i) => ({
                 label: i.title,
