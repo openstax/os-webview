@@ -56,7 +56,7 @@ export default function showNoticeIfNeeded() {
         if (typeof response.id !== 'undefined') {
             const userid = response.uuid;
 
-            if (!response.is_not_gdpr_location) {
+            if (!response.is_not_gdpr_location || response.opt_out_of_cookies) {
                 return;
             }
             analytics.setUser(userid);
