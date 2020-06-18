@@ -40,7 +40,6 @@ class Analytics {
     }
 
     send(fields) {
-        this.setAdopterStatus();
         waitForAnalytics.then(
             () => {
                 window.ga('send', fields);
@@ -73,21 +72,6 @@ class Analytics {
             {hitType: 'event'},
             fields
         ));
-    }
-
-    setAdopterStatus() {
-        accountsModel.load().then((accountResponse) => {
-            const usingOS = accountResponse.using_openstax;
-
-            if (typeof usingOS !== 'undefined') {
-                let adopter = 'Not An Adopter';
-
-                if (usingOS === true) {
-                    adopter = 'Adopter';
-                }
-                ga('set', {'dimension2': adopter});
-            }
-        });
     }
 
     sendPageEvent(category, action, label) {
@@ -216,6 +200,22 @@ class Analytics {
         })();
     }
 
+    disableAllTracking() {
+        this.send = window.pi = () => null;
+        window.wistiaDisableMux = true;
+        const trackerSrcPatterns = [
+            'analytics', 'facebook', 'pulseinsights', 'tagmanager', 'pardot'
+        ];
+
+        Array.from(document.querySelectorAll('head script'))
+            .forEach((script) => {
+                if (trackerSrcPatterns.some((pattern) => script.src.includes(pattern))) {
+                    script.remove();
+                    console.info('Removed', script.src);
+                }
+            });
+    }
+
     [SETUP_GA]() {
         this.data = {};
         this.sourceByUrl = {};
@@ -239,10 +239,26 @@ class Analytics {
         }
 
         accountsModel.load().then((accountResponse) => {
+            if (accountResponse.opt_out_of_cookies) {
+                this.disableAllTracking();
+                setInterval(() => {
+                    this.disableAllTracking();
+                }, 3000);
+
+                return;
+            }
+
             const role = accountResponse.self_reported_role;
+            const usingOS = accountResponse.using_openstax;
 
             if (typeof role !== 'undefined') {
                 window.ga('send', 'pageview', {dimension1: role, nonInteraction: true});
+            }
+
+            if (typeof usingOS !== 'undefined') {
+                const adopter = usingOS === true ? 'Adopter' : 'Not An Adopter';
+
+                window.ga('set', {'dimension2': adopter});
             }
         });
 
