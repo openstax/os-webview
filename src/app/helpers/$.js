@@ -10,7 +10,7 @@ $.isMobileDisplay = () => {
     return window.innerWidth <= 960;
 };
 
-$.isTestingEnvironment = () => (/(localhost|-)/).test(window.location.hostname);
+$.isTestingEnvironment = () => (/(localhost|staging|dev|qa)/).test(window.location.hostname);
 
 $.isPolish = (titleOrSlug) => (/fizyka/i).test(titleOrSlug) || (/polska/i).test(titleOrSlug);
 
