@@ -1,7 +1,7 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 
-export function ErrataContents({blurb, title, polish}) {
+function ButtonGroup({polish, title}) {
     const PolishButtonGroup = () => (
         <div className="button-group">
             <a href="https://openstax.pl/pl/errata"
@@ -9,23 +9,31 @@ export function ErrataContents({blurb, title, polish}) {
         </div>
     );
 
+    const EnglishButtonGroup = () => (
+        <div className="button-group">
+            <a href={`/errata/form?book=${encodeURIComponent(title)}`}
+                className="btn secondary medium">Suggest a correction</a>
+            <a href={`/errata/?book=${encodeURIComponent(title)}`}
+                className="btn default medium">Errata list</a>
+        </div>
+    );
+
+    return polish ? <PolishButtonGroup /> : <EnglishButtonGroup />;
+}
+
+export function ErrataContents({blurb, title, polish, bookState}) {
     return (
         <React.Fragment>
             <RawHTML Tag="p" html={blurb} />
             {
-                polish ? <PolishButtonGroup /> :
-                    <div className="button-group">
-                        <a href={`/errata/form?book=${encodeURIComponent(title)}`}
-                            className="btn secondary medium">Suggest a correction</a>
-                        <a href={`/errata/?book=${encodeURIComponent(title)}`}
-                            className="btn default medium">Errata list</a>
-                    </div>
+                bookState !== 'deprecated' &&
+                    <ButtonGroup polish={polish} title={title} />
             }
         </React.Fragment>
     );
 }
 
-export default function ErrataSection({bookState, blurb, title, polish}) {
+export default function ErrataSection({bookState, ...otherProps}) {
     if (!['live', 'new_edition_available', 'deprecated'].includes(bookState)) {
         return null;
     }
@@ -33,7 +41,7 @@ export default function ErrataSection({bookState, blurb, title, polish}) {
     return (
         <div className="loc-errata">
             <h3>Errata</h3>
-            <ErrataContents blurb={blurb} title={title} polish={polish} />
+            <ErrataContents bookState={bookState} {...otherProps}/>
         </div>
     );
 }
