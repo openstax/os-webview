@@ -35,7 +35,7 @@ class LoginMenu extends componentType(spec, busMixin) {
     }
 
     get isTutorUser() {
-        return this.user.groups.includes('OpenStax Tutor');
+        return (this.user.groups || []).includes('OpenStax Tutor');
     }
 
     setTutorUser() {
@@ -76,8 +76,8 @@ class LoginMenu extends componentType(spec, busMixin) {
                 label: 'Request instructor access',
                 url: facultyAccessLink,
                 exclude: () => Boolean(
-                    this.user.groups.includes('Faculty') ||
-                    this.user.groups.includes('Student') ||
+                    (this.user.groups || []).includes('Faculty') ||
+                    (this.user.groups || []).includes('Student') ||
                     this.user.pending_verification
                 )
             },
@@ -89,13 +89,23 @@ class LoginMenu extends componentType(spec, busMixin) {
                 isLocal: true
             }
         ];
+        const parentNode = this.el.parentNode;
         const dropdown = new Dropdown({
             el: this.el,
             dropdownLabel: `Hi ${this.user.first_name || this.user.username}`,
             items
         });
 
-        return () => dropdown.update();
+        return () => {
+            if (!this.loggedIn) {
+                dropdown.detach();
+                delete this.updateDropdown;
+                parentNode.appendChild(this.el);
+                this.update();
+            } else {
+                dropdown.update();
+            }
+        };
     }
 
     whenPropsUpdated() {
