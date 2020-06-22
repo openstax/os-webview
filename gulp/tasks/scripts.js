@@ -98,7 +98,6 @@ function eslint() {
             'no-shadow-restricted-names': 'error',
             'no-shadow': 'error',
             'no-undef-init': 'error',
-            'no-undefined': 'error',
             'no-use-before-define': 'error',
 
             // Stylistic

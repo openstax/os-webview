@@ -1,4 +1,4 @@
-import WrappedJsx from '~/controllers/jsx-wrapper';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
 import Child from './a-component-template.jsx';
 
 /**
@@ -11,10 +11,4 @@ import Child from './a-component-template.jsx';
 //
 // this.regions.form.attach(form);
 
-export default class extends WrappedJsx {
-
-    init(message) {
-        super.init(Child, {message});
-    }
-
-}
+export default pageWrapper(Child);

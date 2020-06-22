@@ -1,17 +1,14 @@
-import BookstoreSuppliers from '~/pages/bookstore-suppliers/bookstore-suppliers';
-import instanceReady from '../../helpers/instance-ready';
+import {Page} from '~/pages/bookstore-suppliers/bookstore-suppliers';
+import {makeMountRender, snapshotify} from '../../helpers/jsx-test-utils.jsx';
 
 describe('BookstoreSuppliers', () => {
-    it('creates', () => {
-        const {instance, ready} = instanceReady(BookstoreSuppliers);
+    it('matches snapshot', () => {
+        const wrapper = makeMountRender(Page, {})()
 
-        return ready.then(() => {
-            expect(instance).toBeTruthy();
-            expect(instance.model().usButtonUrl).toBeTruthy();
-            expect(instance.model().caButtonUrl).toBeTruthy();
-            const mainEl = instance.el.querySelector('.main-content');
-
-            expect(mainEl).toBeTruthy();
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(expect(snapshotify(wrapper)).toMatchSnapshot());
+            }, 0);
         });
     });
 });

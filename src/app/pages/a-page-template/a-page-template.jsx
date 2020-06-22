@@ -1,26 +1,23 @@
 import React, {useState, useEffect} from 'react';
+import {usePageData} from '~/helpers/controller/cms-mixin';
 import ChildComponent from '~/components/a-component-template/a-component-template.jsx';
 import './a-page-template.css';
-import {fetchPageData} from '~/helpers/controller/cms-mixin';
 import $ from '~/helpers/$';
 
 const slug = 'books/biology-2e';
 
 // React.Fragment is a parent node when you don't want to have a parent node.
 export default function () {
-    const [pageData, setPageData] = useState();
+    const [pageData, statusPage] = usePageData({slug});
 
     useEffect(() => {
         const linkController = $.setCanonicalLink();
 
         return () => linkController.remove();
     }, []);
-    useEffect(() => fetchPageData({slug}).then(setPageData), []);
 
-    if (!pageData) {
-        return (
-            <div className="content loading" />
-        );
+    if (statusPage) {
+        return statusPage;
     }
 
     const heading = pageData.title;

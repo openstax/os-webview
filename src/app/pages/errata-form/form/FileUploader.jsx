@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import settings from 'settings';
+import $ from '~/helpers/$';
 
 function FileButton({name, parentRef}) {
     const inputRef = useRef();
@@ -15,7 +15,7 @@ function FileButton({name, parentRef}) {
         inputRef.current.value = null;
     }
 
-    if (settings.testingEnvironment) {
+    if ($.isTestingEnvironment()) {
         useEffect(() => {
             console.info('Files:',
                 Array.from(parentRef.current.querySelectorAll('[type="file"]'))

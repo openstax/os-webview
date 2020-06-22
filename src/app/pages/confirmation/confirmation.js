@@ -1,17 +1,18 @@
+import React, {useState, useEffect} from 'react';
+import {pageWrapper, SuperbItem} from '~/controllers/jsx-wrapper';
 import settings from 'settings';
 import $ from '~/helpers/$';
 import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import userModel from '~/models/usermodel';
 import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
-import Popup from '~/components/popup/popup';
 import {getDetailModel} from '~/helpers/errata';
 import Detail from '~/pages/errata-detail/detail/detail.jsx';
-import SurveyRequest from '~/components/survey-request/survey-request';
-import {description as template} from './confirmation.html';
-import css from './confirmation.css';
+import './confirmation.css';
 
 const applyLink = `${settings.accountHref}/faculty_access/apply?r=${encodeURIComponent(`${settings.apiOrigin}/`)}`;
-
+const view = {
+    classes: ['confirmation-page', 'page']
+};
 const models = {
     contact: {
         headline: 'Thanks for contacting us',
@@ -23,70 +24,157 @@ const models = {
         headline: 'Thanks for your help!',
         adoptionQuestion: `Your contribution helps keep OpenStax resources high quality
         and up to date.`,
-        belowHeader: {
-            text: 'Have more errata to submit?',
-            buttons: []
-        }
+        belowHeaderText: 'Have more errata to submit?'
     }
 };
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['confirmation-page', 'page']
-    },
-    regions: {
-        popup: 'pop-up',
-        detail: 'detail-block'
+function getReferringPage() {
+    let referringPage = window.location.pathname.replace('/confirmation/', '');
+
+    if (referringPage === window.location.pathname) {
+        referringPage = window.location.pathname
+            .replace('-confirmation', '')
+            .replace(/^\//, '');
     }
-};
-const BaseClass = componentType(spec, canonicalLinkMixin);
-
-export default class Confirmation extends BaseClass {
-
-    init() {
-        document.title = 'Thanks! - OpenStax';
-        this.referringPage = window.location.pathname.replace('/confirmation/', '');
-        if (this.referringPage === window.location.pathname) {
-            this.referringPage = window.location.pathname
-                .replace('-confirmation', '')
-                .replace(/^\//, '');
-        }
-        this.model = models[this.referringPage];
-        if (this.referringPage === 'errata') {
-            this.userPromise = userModel.load();
-        }
-        super.init();
-        this.setCanonicalLink(`/${this.referringPage}-confirmation`);
-    }
-
-    onLoaded() {
-        if (this.model.popupText) {
-            this.regions.popup.attach(new Popup(this.model.popupText));
-        }
-        if (this.referringPage === 'errata') {
-            const {id} = $.parseSearchString(window.location.search);
-            const slug = `errata/${id}`;
-
-            fetchFromCMS(slug).then((detail) => {
-                getDetailModel(detail).then((detailModel) => {
-                    this.model.belowHeader.buttons = [{
-                        text: `Submit ${detailModel.detail.bookTitle} errata`,
-                        colorScheme: 'white-on-blue',
-                        url: `/errata/form?book=${encodeURIComponent(detailModel.detail.bookTitle)}`
-                    }];
-                    this.update();
-                    this.regions.detail.attach(new Detail(detailModel));
-                });
-            });
-
-            this.model.errataId = id;
-            this.userPromise.then((response) => {
-                this.model.defaultEmail = response.email;
-                this.update();
-            });
-        }
-    }
-
+    return referringPage;
 }
+
+function useErrataButtonsAndDetail(errataId) {
+    const slug = `errata/${errataId}`;
+    const [belowHeaderButtons, setBelowHeaderButtons] = useState([]);
+    const [detailComponent, setDetailComponent] = useState();
+
+    useEffect(async () => {
+        const detail = await fetchFromCMS(slug);
+        const detailModel = await getDetailModel(detail);
+
+        setDetailComponent(new Detail(detailModel));
+        setBelowHeaderButtons([{
+            text: `Submit ${detailModel.detail.bookTitle} errata`,
+            colorScheme: 'white-on-blue',
+            url: `/errata/form?book=${encodeURIComponent(detailModel.detail.bookTitle)}`
+        }]);
+    }, [errataId]);
+
+    return [belowHeaderButtons, detailComponent];
+}
+
+function useDefaultEmail(id) {
+    const [email, setEmail] = useState();
+
+    useEffect(async () => {
+        const response = await userModel.load();
+
+        setEmail(response.email);
+    });
+    return email;
+}
+
+function BelowHeader({text, buttons}) {
+    return (
+        <div className="wrapper">
+            <div className="text-content">
+                <div className="below-header-text">{text}</div>
+                <div className="buttons">
+                    {
+                        buttons.map((b) =>
+                            <a className={`btn ${b.colorScheme}`} href={b.url}>
+                                {b.text}
+                            </a>
+                        )
+                    }
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function ErrataStatusNotification({errataId}) {
+    if (!errataId) {
+        return null;
+    }
+
+    const email = useDefaultEmail(errataId);
+    const notifyByEmail = email && email !== 'none@openstax.org';
+
+    return (
+        notifyByEmail ?
+            `We'll be sending submission updates to ${email}.` :
+            <React.Fragment>
+                <br />
+                <a className="header-link" href={`/errata/${errataId}`}>
+                    Track the status of your submission
+                </a>
+            </React.Fragment>
+    );
+}
+
+function ErrataButtonsAndDetail({errataId, text}) {
+    const [buttons, detailComponent] = useErrataButtonsAndDetail(errataId);
+
+    return (
+        <React.Fragment>
+            {
+                Boolean(text) &&
+                    <BelowHeader text={text} buttons={buttons} />
+            }
+            <div className="wrapper">
+                {
+                    Boolean(detailComponent) &&
+                        <SuperbItem component={detailComponent} className="boxed" />
+                }
+            </div>
+        </React.Fragment>
+    );
+}
+
+function Page() {
+    const referringPage = getReferringPage();
+    const isErrata = referringPage === 'errata';
+    const {id} = $.parseSearchString(window.location.search);
+    const errataId = isErrata ? id[0] : null;
+    const {
+        headline,
+        adoptionQuestion,
+        adoptionUrl,
+        adoptionLinkText,
+        belowHeaderText
+    } = models[referringPage];
+
+    $.setPageTitleAndDescription('Thanks!');
+    $.setCanonicalLink(`/${referringPage}-confirmation`);
+
+    return (
+        <React.Fragment>
+            <div className="page-intro">
+                <div className="subhead">
+                    <div className="text-content centered">
+                        <h1>{headline}</h1>
+                        <p>{adoptionQuestion}
+                            {
+                                isErrata &&
+                                    <ErrataStatusNotification errataId={errataId} />
+                            }
+                        </p>
+                        {
+                            Boolean(adoptionUrl) &&
+                                <a
+                                    href={adoptionUrl}
+                                    title={adoptionLinkText}
+                                    className="btn cta"
+                                >{adoptionLinkText}</a>
+                        }
+                    </div>
+                </div>
+            </div>
+            <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
+            {
+                isErrata ?
+                    <ErrataButtonsAndDetail errataId={errataId} text={belowHeaderText} /> :
+                    <div className="wrapper" />
+            }
+        </React.Fragment>
+    );
+}
+
+export default pageWrapper(Page, view);

@@ -1,53 +1,49 @@
-import componentType, {canonicalLinkMixin, insertHtmlMixin} from '~/helpers/controller/init-mixin';
-import SalesforceForm from '~/components/salesforce-form/salesforce-form';
-import ContactForm from './contact-form/contact-form';
-import routerBus from '~/helpers/router-bus';
-import {description as template} from './contact.html';
-import css from './contact.css';
+import React from 'react';
+import {pageWrapper, SuperbItem} from '~/controllers/jsx-wrapper';
+import {usePageData} from '~/helpers/controller/cms-mixin';
+import Form from './form.jsx';
+import './contact.css';
 
-const spec = {
-    template,
-    model() {
-        return Object.assign({}, this.pageData);
-    },
-    css,
-    view: {
-        classes: ['contact-page', 'page']
-    },
-    slug: 'pages/contact'
+const view = {
+    classes: ['contact-page', 'page']
 };
+const slug = 'pages/contact';
 
-export default class extends componentType(
-    spec, canonicalLinkMixin, insertHtmlMixin
-) {
+function Page() {
+    const [pageData, statusPage] = usePageData({slug});
 
-    onUpdate() {
-        if (super.onUpdate) {
-            super.onUpdate();
-        }
+    if (statusPage) {
+        return statusPage;
     }
+    const {
+        title,
+        tagline,
+        mailing_header: mailingHeader,
+        mailing_address: mailingAddress,
+        customer_service: customerService
+    } = pageData;
 
-    onDataLoaded() {
-        if (super.onDataLoaded) {
-            super.onDataLoaded();
-        }
-        this.update();
-        const formContainer = this.el.querySelector('.form-container');
-        const sfForm = new SalesforceForm({
-            afterSubmit: () => {
-                routerBus.emit('navigate', '/confirmation/contact');
-            }
-        });
-        const formBody = new ContactForm({
-            el: sfForm.regions.formBody.el
-        });
+    return (
+        <main id="maincontent">
+            <div class="hero">
+                <div class="boxed">
+                    <h1>{title}</h1>
+                    <p>{tagline}</p>
+                </div>
+            </div>
+            <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
+            <div class="boxed left-justified">
+                <div class="col form-container">
+                    <Form />
+                </div>
+                <div class="col">
+                    <h2>{mailingHeader}</h2>
+                    <address dangerouslySetInnerHTML={{__html: mailingAddress}} />
+                    <div dangerouslySetInnerHTML={{__html: customerService}} />
+                </div>
+            </div>
+        </main>
+    );
+}
 
-        this.regionFrom(formContainer).attach(sfForm);
-        formBody.on('is-polish', (whether) => {
-            sfForm.emit('update-props', {
-                postTo: whether ? '/apps/cms/api/mail/send_mail' : null
-            });
-        });
-    }
-
-};
+export default pageWrapper(Page, view);

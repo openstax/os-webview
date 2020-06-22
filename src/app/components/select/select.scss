@@ -34,7 +34,7 @@ select {
         position: absolute;
         right: 1.2rem;
         text-align: center;
-        top: 0.8rem;
+        top: calc(50% - 1rem);
         transform: rotate(90deg);
         transform-origin: 63% 55%;
         transition: All 0.2s ease-in-out;

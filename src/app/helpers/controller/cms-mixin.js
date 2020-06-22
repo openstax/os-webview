@@ -1,6 +1,7 @@
 import $ from '~/helpers/$';
 import bookPromise from '~/models/book-titles';
 import {urlFromSlug} from '~/models/cmsFetch';
+import React, {useState, useEffect} from 'react';
 
 export function transformData(data) {
     Reflect.ownKeys(data).forEach((prop) => {
@@ -97,6 +98,35 @@ export async function fetchPageData({slug, preserveWrapping, setsPageTitleAndDes
         setTitleAndDescription(data);
     }
     return data;
+}
+
+export function usePageData(fpdParams) {
+    const [pageData, setPageData] = useState();
+    const [pageDataError, setPageDataError] = useState();
+    let statusPage = null;
+
+    useEffect(async () => {
+        try {
+            setPageData(await fetchPageData(fpdParams));
+        } catch (err) {
+            setPageDataError(err);
+        }
+    }, [fpdParams.slug]);
+
+    if (pageDataError) {
+        statusPage =
+            <div className="page error">
+                Unable to load page: {pageDataError}
+            </div>
+        ;
+    }
+    if (!pageData) {
+        statusPage =
+            <div className="content loading" />
+        ;
+    }
+
+    return [pageData, statusPage];
 }
 
 export default (superclass) => class extends superclass {
