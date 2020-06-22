@@ -117,6 +117,7 @@ export default class AdoptionForm extends componentType(spec, canonicalLinkMixin
             const facultyForm = new MultiPageForm(
                 () => ({
                     action: salesforce.webtoleadUrl,
+                    debug: salesforce.debug,
                     contents: facultyPages
                 }),
                 {

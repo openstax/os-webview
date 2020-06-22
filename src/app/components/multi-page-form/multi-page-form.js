@@ -34,6 +34,7 @@ export default class MultiPageForm extends Controller {
 
         return {
             action: this.props.action,
+            debug: this.props.debug,
             currentPage: this.currentPage,
             lastPage: this.lastPage,
             contents: this.props.contents,
