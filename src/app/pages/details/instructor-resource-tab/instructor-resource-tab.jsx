@@ -49,6 +49,8 @@ function FeaturedResourcesSection({header, models}) {
 }
 
 function resourceBoxModel(resourceData, userStatus, dialogProps) {
+    const isCompCopyLink = (/comp-copy/).test(resourceData.link_document_url);
+
     return Object.assign(
         {
             heading: resourceData.resource_heading,
@@ -58,7 +60,7 @@ function resourceBoxModel(resourceData, userStatus, dialogProps) {
             comingSoonText: resourceData.coming_soon_text,
             featured: resourceData.featured,
             k12: resourceData.k12,
-            dialogProps
+            dialogProps: isCompCopyLink ? dialogProps : null
         },
         instructorResourceBoxPermissions(resourceData, userStatus, 'Instructor resources')
     );
@@ -116,7 +118,6 @@ export function InstructorResourceTabJsx({
         blurbs,
         badgeImage: '/images/partners/verified-badge.svg'
     };
-
 
     return (
         <div className="instructor-resources">

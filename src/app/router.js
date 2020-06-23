@@ -68,6 +68,13 @@ if (window.location.hostname === 'localhost') {
     window.CustomEvent = CustomEvent;
 })();
 
+function isInstructorResourceDownload(el) {
+    const resourcesSections = Array.from(document.querySelectorAll('.instructor-resources .resources'));
+
+    return resourcesSections.some((node) => node.contains(el));
+}
+
+// eslint-disable-next-line complexity
 function handleExternalLink(href, el) {
     if (el.dataset.local === 'true') {
         // REX books open in the current window; track them
@@ -78,6 +85,10 @@ function handleExternalLink(href, el) {
     } else {
         if (linkHelper.isTOCLink(el)) {
             analytics.sendTOCEvent(href);
+        } else if (isInstructorResourceDownload(el)) {
+            const title = el.querySelector('.top-line').textContent;
+
+            analytics.sendInstructorResourceEvent(title, href);
         } else {
             analytics.record(href);
         }
