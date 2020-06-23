@@ -89,7 +89,7 @@ function TocSelector({selectedBook, required=true, updateValue}) {
             }
         });
 
-    useEffect(updateInvalidMessage, [required]);
+    useEffect(updateInvalidMessage, [required, updateInvalidMessage]);
 
     return (
         <React.Fragment>
@@ -128,7 +128,7 @@ function AdditionalLocationInput({defaultValue='', readOnly=false, updateValue, 
         updateValue(event.target.value);
     }
 
-    useEffect(updateInvalidMessage, [required]);
+    useEffect(updateInvalidMessage, [required, updateInvalidMessage]);
 
     return (
         <React.Fragment>

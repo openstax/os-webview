@@ -1,8 +1,9 @@
 <template args="model">
     <iframe name="form-response" id="form-response" class="hidden"
         src="" width="0" height="0" tabindex="-1"></iframe>
-    <form accept-charset="UTF-8" class="form" target="form-response"
-     action="{model.action}" method="post">
+    <form accept-charset="UTF-8" class="form"
+        target="{model.debug ? undefined : 'form-response'}"
+        action="{model.action}" method="post">
         <div
          each="c in model.contents"
          data-page="{$item}"

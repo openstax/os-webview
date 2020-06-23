@@ -13,12 +13,15 @@ const correctionScheduleKeyFromBookState = {
 export default function Hero({slug, title}) {
     const [errataHoverHtml, updateErrataHoverHtml] = useState('<p>...loading...</p>');
 
-    useEffect(async () => {
-        const [bookData, errataPageData] = await Promise.all([cmsFetch(slug), cmsFetch('pages/errata')]);
-        const k = correctionScheduleKeyFromBookState[bookData.book_state];
-        const errataMessage = errataPageData[k] || `Book in unknown state: ${bookData.book_state}`;
+    useEffect(() => {
+        async function fetchData() {
+            const [bookData, errataPageData] = await Promise.all([cmsFetch(slug), cmsFetch('pages/errata')]);
+            const k = correctionScheduleKeyFromBookState[bookData.book_state];
+            const errataMessage = errataPageData[k] || `Book in unknown state: ${bookData.book_state}`;
 
-        updateErrataHoverHtml(errataMessage);
+            updateErrataHoverHtml(errataMessage);
+        }
+        fetchData();
     }, [slug]);
 
     return (

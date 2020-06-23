@@ -75,10 +75,6 @@ export function pageWrapper(jsxComponent, view = {}) {
 
 // Reverse wrapper, when React needs to host a Superb component
 export function SuperbItem({component, divProps}) {
-    if (!component) {
-        return null;
-    }
-
     const root = useRef();
     const Region = component.regions.self.constructor;
 
@@ -89,7 +85,12 @@ export function SuperbItem({component, divProps}) {
         return () => {
             region.detach();
         };
-    }, [component]);
+    }, [Region]);
+
+    if (!component) {
+        return null;
+    }
+
 
     return (
         <div ref={root} {...divProps} />

@@ -1,5 +1,5 @@
 import {Controller} from 'superb.js';
-import salesforce from '~/models/salesforce';
+import salesforcePromise, {salesforce} from '~/models/salesforce';
 import {on} from '~/helpers/controller/decorators';
 import {description as template} from './request-form.html';
 import css from './request-form.css';
@@ -34,6 +34,7 @@ export default class RequestForm extends Controller {
 
     onLoaded() {
         this.formResponseEl = this.el.querySelector('#form-response');
+        salesforcePromise.then(() => this.update());
     }
 
     onClose() {

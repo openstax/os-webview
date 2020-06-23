@@ -21,6 +21,7 @@ import pressArticleData from '../src/data/press-article';
 import printOrderData from '../src/data/print-order';
 import researchData from '../src/data/research';
 import rolesData from '../src/data/roles';
+import salesforceData from '../src/data/salesforce';
 import schoolsData from '../src/data/schools';
 import stickyData from '../src/data/sticky';
 import subjectData from '../src/data/subject-categories';
@@ -59,6 +60,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isUser = (/accounts.*\/api\/user/).test(args[0]);
     const isImage = (/api\/v2\/images/).test(args[0]);
     const isArchive = (/archive\.cnx/).test(args[0]);
+    const isSalesforceForms = (/salesforce\/forms/).test(args[0]);
 
     return new Promise(
         function (resolve, reject) {
@@ -122,6 +124,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = archiveData;
             } else if (isBooks) {
                 payload = booksData;
+            } else if (isSalesforceForms) {
+                payload = salesforceData;
             } else if (isImage) {
                 // ignore
             } else {

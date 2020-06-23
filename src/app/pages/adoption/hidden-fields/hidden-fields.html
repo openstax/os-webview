@@ -2,6 +2,7 @@
     <input name="utf8" type="hidden" value="✓">
     <input type="hidden" name="Application_Source__c" value="OS Web/Accounts">
     <input type="hidden" name="oid" value="{model.salesforce.oid}">
+    <input if="model.salesforce.debug" type="hidden" name="debug" value="1">
     <input type="hidden" name="lead_source" value="Adoption Form">
     <input type="hidden" name="Role__c" value="{model.role}">
     <input type="hidden" name="Subject__c" value="{model.book}">

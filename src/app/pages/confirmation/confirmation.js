@@ -44,29 +44,35 @@ function useErrataButtonsAndDetail(errataId) {
     const [belowHeaderButtons, setBelowHeaderButtons] = useState([]);
     const [detailComponent, setDetailComponent] = useState();
 
-    useEffect(async () => {
-        const detail = await fetchFromCMS(slug);
-        const detailModel = await getDetailModel(detail);
+    useEffect(() => {
+        async function fetchData() {
+            const detail = await fetchFromCMS(slug);
+            const detailModel = await getDetailModel(detail);
 
-        setDetailComponent(new Detail(detailModel));
-        setBelowHeaderButtons([{
-            text: `Submit ${detailModel.detail.bookTitle} errata`,
-            colorScheme: 'white-on-blue',
-            url: `/errata/form?book=${encodeURIComponent(detailModel.detail.bookTitle)}`
-        }]);
-    }, [errataId]);
+            setDetailComponent(new Detail(detailModel));
+            setBelowHeaderButtons([{
+                text: `Submit ${detailModel.detail.bookTitle} errata`,
+                colorScheme: 'white-on-blue',
+                url: `/errata/form?book=${encodeURIComponent(detailModel.detail.bookTitle)}`
+            }]);
+        }
+        fetchData();
+    }, [errataId, slug]);
 
     return [belowHeaderButtons, detailComponent];
 }
 
-function useDefaultEmail(id) {
+function useDefaultEmail() {
     const [email, setEmail] = useState();
 
-    useEffect(async () => {
-        const response = await userModel.load();
+    useEffect(() => {
+        async function fetchData() {
+            const response = await userModel.load();
 
-        setEmail(response.email);
-    });
+            setEmail(response.email);
+        }
+        fetchData();
+    }, []);
     return email;
 }
 
@@ -90,12 +96,12 @@ function BelowHeader({text, buttons}) {
 }
 
 function ErrataStatusNotification({errataId}) {
+    const email = useDefaultEmail();
+    const notifyByEmail = email && email !== 'none@openstax.org';
+
     if (!errataId) {
         return null;
     }
-
-    const email = useDefaultEmail(errataId);
-    const notifyByEmail = email && email !== 'none@openstax.org';
 
     return (
         notifyByEmail ?

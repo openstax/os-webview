@@ -5,5 +5,5 @@
     <input type="hidden" name="lead_source" value="Interest Form">
     <input type="hidden" name="00NU00000055spw" value="High Interest in Adopting">
     <input type="hidden" name="Role__c" value="{model.role}">
-    <!-- <input type="hidden" name="debug" value="1"> [Debug mode] -->
+    <input if="model.salesforce.debug" type="hidden" name="debug" value="1">
 </template>

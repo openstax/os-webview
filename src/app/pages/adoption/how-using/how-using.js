@@ -1,6 +1,6 @@
 import {Controller} from 'superb.js';
 import {on} from '~/helpers/controller/decorators';
-import salesforce from '~/models/salesforce';
+import salesforcePromise, {salesforce} from '~/models/salesforce';
 import {description as template} from './how-using.html';
 import css from './how-using.css';
 
@@ -53,6 +53,13 @@ export default class HowUsing extends Controller {
             radioValidationMessage: this.radioValidationMessage,
             disable: this.props.disable
         };
+    }
+
+    onLoaded() {
+        if (super.onLoaded) {
+            super.onLoaded();
+        }
+        salesforcePromise.then(() => this.update());
     }
 
     // DOM diffing does not preserve the state of elements

@@ -22,7 +22,8 @@ function eslint() {
             }
         },
         plugins: [
-            'react'
+            'react',
+            'react-hooks'
         ],
         extends: 'eslint:recommended',
         globals: [
@@ -171,6 +172,8 @@ function eslint() {
             'prefer-rest-params': 'error',
             'prefer-spread': 'error',
             'prefer-template': 'error',
+            'react-hooks/rules-of-hooks': 'error',
+            'react-hooks/exhaustive-deps': 'error',
             'require-yield': 'error',
             'rest-spread-spacing': ['error', 'never'],
             'template-curly-spacing': ['error', 'never'],

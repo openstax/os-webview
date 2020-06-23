@@ -2,7 +2,6 @@ import componentType from '~/helpers/controller/init-mixin';
 import busMixin from '~/helpers/controller/bus-mixin';
 import cmsMixin from '~/helpers/controller/cms-mixin';
 import salesforceFormMixin from '~/helpers/controller/salesforce-form-mixin';
-import salesforce from '~/models/salesforce';
 import BookCheckbox from '~/components/book-checkbox/book-checkbox';
 import {description as template} from './book-selector.html';
 import css from './book-selector.css';
