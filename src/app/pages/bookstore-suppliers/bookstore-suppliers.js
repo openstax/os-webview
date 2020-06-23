@@ -34,18 +34,6 @@ function CardFeatures({supplier}) {
     );
 }
 
-function PriceList({buttonText, buttonUrl}) {
-    return (
-        <div>
-            {buttonText}
-            <a href={buttonUrl} className="btn primary">
-                View
-                <FontAwesomeIcon icon="external-link-alt" />
-            </a>
-        </div>
-    );
-}
-
 export function Page() {
     const [pageData, statusPage] = usePageData({slug});
 
@@ -62,11 +50,7 @@ export function Page() {
         featuredSupplier,
         featuredSuppliersBlurb: pageData.featured_provider_intro_blurb,
         suppliersBlurb: pageData.other_providers_intro_blurb,
-        suppliers,
-        usButtonUrl: pageData.us_isbn_download_url,
-        usButtonText: pageData.us_isbn_cta,
-        caButtonUrl: pageData.canadian_isbn_download_url,
-        caButtonText: pageData.canadian_isbn_cta
+        suppliers
     };
 
     return (
@@ -119,11 +103,6 @@ export function Page() {
                             )
                         }
                     </div>
-                </div>
-                <h2>Price lists</h2>
-                <div className="split-card">
-                    <PriceList buttonText={model.usButtonText} buttonUrl={model.usButtonUrl} />
-                    <PriceList buttonText={model.caButtonText} buttonUrl={model.caButtonUrl} />
                 </div>
             </div>
         </React.Fragment>
