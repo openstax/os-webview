@@ -95,6 +95,16 @@ class Analytics {
         );
     }
 
+    sendInstructorResourceEvent(resourceTitle, href) {
+        const source = this.lookupUrl(href) || 'unknown';
+
+        this.sendPageEvent(
+            `External ${source}`,
+            'download',
+            resourceTitle
+        );
+    }
+
     sendTOCEvent(href) {
         const slug = document.querySelector('[data-slug]').dataset.slug;
 
