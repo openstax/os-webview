@@ -14,8 +14,11 @@
     .quote-bucket {
         background-color: ui-color(white);
         border-radius: 0.3rem;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(50%, auto));
+
+        @include wider-than($phone-max) {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(50%, auto));
+        }
 
         &:last-child {
             margin-bottom: 0;
