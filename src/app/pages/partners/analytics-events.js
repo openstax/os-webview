@@ -42,6 +42,14 @@ function partnerDetails(partner) {
     );
 }
 
+function lightboxScroll(partner) {
+    analytics.sendPageEvent(
+        `Partner tool ${partner} lightbox scrroll`,
+        'scroll',
+        toLabel(books)
+    );
+}
+
 function requestInfo(partner) {
     analytics.sendPageEvent(
         'Partner tool Request info button',
@@ -60,6 +68,7 @@ function partnerWebsite(url) {
 
 export default {
     partnerDetails,
+    lightboxScroll,
     requestInfo,
     partnerWebsite
 };

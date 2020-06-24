@@ -46,6 +46,27 @@ export default class extends componentType(spec, insertHtmlMixin) {
         }));
     }
 
+    onAttached() {
+        if (super.onAttached) {
+            super.onAttached();
+        }
+        const scrollingRegion = this.el.parentNode;
+        const scrollCallback = (event) => {
+            analyticsEvents.lightboxScroll(this.title);
+            this.removeScrollListener();
+            delete this.removeScrollListener;
+        };
+
+        scrollingRegion.addEventListener('scroll', scrollCallback);
+        this.removeScrollListener = () => scrollingRegion.removeEventListener('scroll', scrollCallback);
+    }
+
+    onClose() {
+        if (this.removeScrollListener) {
+            this.removeScrollListener();
+        }
+    }
+
     @on('click .btn.primary')
     sendRequestInfoEvent() {
         analyticsEvents.requestInfo(this.title);
