@@ -1,27 +1,45 @@
-import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
-import {description as template} from './foundation.html';
-import css from './foundation.css';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
+import React from 'react';
+import {usePageData} from '~/helpers/controller/cms-mixin';
+import './foundation.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['foundation-page', 'page'],
-        tag: 'main'
-    },
-    slug: 'pages/foundation',
-    model: {
-        title: '',
-        'page_description': ''
-    }
+const slug = 'pages/foundation';
+const view = {
+    classes: ['foundation-page', 'page'],
+    tag: 'main'
 };
-const BaseClass = componentType(spec, canonicalLinkMixin);
 
-export default class Foundation extends BaseClass {
+function Page() {
+    const [model, statusPage] = usePageData({slug});
 
-    onDataLoaded() {
-        Object.assign(this.model, this.pageData);
-        this.update();
+    if (statusPage) {
+        return statusPage;
     }
 
+    return (
+        <React.Fragment>
+            <div className="hero">
+                <div className="text-content">
+                    <h1>{model.title}</h1>
+                    <p>{model.page_description}</p>
+                </div>
+            </div>
+            <div className="blurbs">
+                <img className="strips" src="/images/components/strips.svg"
+                    height="10" alt="" role="presentation"
+                />
+                <div className="boxed">
+                    {
+                        model.funders.map((funder) => (
+                            <div className="funder">
+                                <h2>{funder.title}</h2>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </React.Fragment>
+    );
 }
+
+export default pageWrapper(Page, view);
