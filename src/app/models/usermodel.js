@@ -55,6 +55,13 @@ const accountsModel = {
         return fetch(accountsUrl, {credentials: 'include'})
             .then(
                 (response) => {
+                    response.json().then((result) => {
+                        if (window.dataLayer) {
+                            window.dataLayer.push({
+                                faculty_status: result.faculty_status
+                            });
+                        }
+                    });
                     return response.json();
                 },
                 (err) => {
