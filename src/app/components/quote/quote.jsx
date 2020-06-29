@@ -1,7 +1,7 @@
 import React from 'react';
 
 // eslint-disable-next-line complexity
-export default function ({model}) {
+export default function Quote({model}) {
     const classList = ['quote-bucket', model.image.image && model.image.alignment || 'full']
         .join(' ');
     const styleSpecs = [`background-image: url(${model.image.image})`];

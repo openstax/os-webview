@@ -1,21 +1,23 @@
-import componentType from '~/helpers/controller/init-mixin';
-import {description as template} from './byline.html';
-import css from './byline.css';
+import React from 'react';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
+import './byline.css';
 import {formatDateForBlog} from '~/helpers/data';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['byline']
-    },
-    model() {
-        return {
-            date: formatDateForBlog(this.date),
-            author: this.author,
-            source: this.source
-        };
-    }
+const view = {
+    classes: ['byline']
 };
 
-export default componentType(spec);
+export function BylineJsx({date, author, source}) {
+    return (
+        <div className="byline">
+            {
+                Boolean(source) ?
+                    <span className="source">{source}</span> :
+                    <span className="author">{author}</span>
+            }
+            <span className="date">{formatDateForBlog(date)}</span>
+        </div>
+    );
+}
+
+export default pageWrapper(BylineJsx, view);

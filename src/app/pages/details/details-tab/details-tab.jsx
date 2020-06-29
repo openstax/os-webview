@@ -14,7 +14,7 @@ function PolishTab({model, gtt}) {
             <div className="sidebar">
                 <div>
                     <h3>Przejdź do książki</h3>
-                    <SuperbItem component={gtt} divProps={{className: 'get-the-book'}} />
+                    <SuperbItem component={gtt} className="get-the-book" />
                 </div>
                 <div className="let-us-know-region" skip="true">
                     <LetUsKnow title={model.title} />
@@ -39,7 +39,7 @@ function EnglishTab({model, gtt}) {
             <div className="sidebar">
                 <div>
                     <h3>Get the book</h3>
-                    <SuperbItem component={gtt} divProps={{className: 'get-the-book'}} />
+                    <SuperbItem component={gtt} className="get-the-book" />
                 </div>
                 <div className="let-us-know-region">
                     <LetUsKnow title={model.salesforceAbbreviation} />
