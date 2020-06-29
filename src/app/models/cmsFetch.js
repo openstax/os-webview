@@ -3,7 +3,7 @@ import memoize from 'lodash/memoize';
 
 export function urlFromSlug(initialSlug) {
     const slug = initialSlug === 'news' ? 'pages/openstax-news' : initialSlug;
-    const possibleSlash = slug.endsWith('/') ? '' : '/';
+    const possibleSlash = (slug.endsWith('/') || slug.includes('?')) ? '' : '/';
     const apiPrefix = slug.includes('pages') ? $.apiOriginAndPrefix :
         $.apiOriginAndOldPrefix;
 
