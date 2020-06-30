@@ -1,4 +1,4 @@
-import componentType from '~/helpers/controller/init-mixin';
+import React, {useEffect} from 'react';
 const d = document;
 
 /* eslint camelcase: 0 */
@@ -28,16 +28,8 @@ function reloadDisqus() {
     });
 }
 
-const spec = {
-    view: {
-        classes: ['disqus']
-    }
-};
-
-export default class extends componentType(spec) {
-
-    onAttached() {
-        this.el.id = 'disqus_thread';
+export default function DisqusForm() {
+    useEffect(() => {
         const disqusScript = d.querySelector('script[src*="openstax.disqus.com"]');
 
         if (disqusScript) {
@@ -45,6 +37,9 @@ export default class extends componentType(spec) {
         } else {
             loadDisqus();
         }
-    }
+    });
 
+    return (
+        <div id="disqus_thread" class="disqus" />
+    );
 }

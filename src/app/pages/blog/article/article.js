@@ -7,6 +7,7 @@ import {ShareJsx} from '~/components/share/share';
 import React, {useState, useEffect, useRef} from 'react';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {usePageData} from '~/helpers/controller/cms-mixin';
+import routerBus from '~/helpers/router-bus';
 
 const view = {
     classes: ['article']
@@ -140,7 +141,19 @@ function Article({data}) {
 function ArticleLoader({slug}) {
     const [data, statusPage] = usePageData({slug, preserveWrapping: true});
 
+    if (data && data.error) {
+        routerBus.emit('navigate', '/404', {path: '/blog'}, true);
+        return null;
+    }
     return (statusPage ? statusPage : <Article data={data} />);
+}
+
+export function ArticleFromSlug({slug}) {
+    return (
+        <div className="article">
+            <ArticleLoader slug={slug} />
+        </div>
+    );
 }
 
 export default pageWrapper(ArticleLoader, view);

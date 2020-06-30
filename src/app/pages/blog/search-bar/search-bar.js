@@ -1,64 +1,59 @@
-import componentType from '~/helpers/controller/init-mixin';
-import busMixin from '~/helpers/controller/bus-mixin';
-import {description as template} from './search-bar.html';
-import css from './search-bar.css';
-import {on} from '~/helpers/controller/decorators';
+import React, {useState} from 'react';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import './search-bar.css';
+import WrappedJsx from '~/controllers/jsx-wrapper';
+import {Bus} from '~/helpers/controller/bus-mixin';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['search-bar']
-    },
-    model() {
-        return {
-            searchString: this.inputValue,
-            clearHidden: this.inputValue.length === 0 ? '' : null
-        };
-    }
-};
+function SearchBarInterior({setPath}) {
+    const [searchString, setSearchString] = useState(decodeURIComponent(window.location.search.substr(1)));
+    const clearHidden = searchString.length === 0;
 
-export default class extends componentType(spec, busMixin) {
-
-    get inputEl() {
-        return this.el.querySelector('[name="search-input"]');
+    function onChange(event) {
+        setSearchString(event.target.value);
     }
-    get inputValue() {
-        return this.inputEl ? this.inputEl.value : decodeURIComponent(window.location.search.substr(1));
+    function doSearch() {
+        setPath(`/blog/?${searchString}`);
     }
-    set inputValue(newValue) {
-        this.inputEl.value = newValue;
-        this.update();
-    }
-
-    @on('click button')
-    doSearch() {
-        this.emit('value', this.inputValue);
-    }
-
-    @on('keypress [name="search-input"]')
-    handleEnter(event) {
+    function searchOnEnter(event) {
         if (event.key === 'Enter') {
-            this.doSearch();
+            event.preventDefault();
+            doSearch();
         }
     }
-
-    @on('input [name="search-input"]')
-    updateClearHidden() {
-        this.update();
+    function clearSearch() {
+        setSearchString('');
     }
-
-    @on('click .clear-search')
-    clearSearch() {
-        this.inputValue = '';
-    }
-
-    @on('keypress .clear-search')
-    handleEnterOrSpace(event) {
+    function clearByKey(event) {
         if (['Enter', ' '].includes(event.key)) {
             event.preventDefault();
-            this.clearSearch();
+            clearSearch();
         }
     }
 
+    return (
+        <React.Fragment>
+            <div className="input-with-clear-button">
+                <input type="text" placeholder="Search" name="search-input"
+                    value={searchString} onChange={onChange} onKeyPress={searchOnEnter}
+                />
+                <span className="clear-search"
+                    role="button" aria-label="clear search" tabindex="0"
+                    hidden={clearHidden} onClick={clearSearch} onKeyPress={clearByKey}
+                >
+                    <FontAwesomeIcon icon="times" />
+                </span>
+            </div>
+            <button className="btn primary" type="button" onClick={doSearch}>
+                <FontAwesomeIcon icon="search" />
+            </button>
+        </React.Fragment>
+    );
+}
+
+export default function SearchBar(props) {
+    return (
+        <div className="search-bar">
+            <SearchBarInterior {...props} />
+        </div>
+    );
 }

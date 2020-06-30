@@ -11,5 +11,12 @@
 
     .disqus {
         @extend %text-content;
+
+        width: auto;
+
+        > * {
+            max-width: 100%;
+            width: 60rem;
+        }
     }
 }
