@@ -1,30 +1,19 @@
 import React, {useState, useEffect} from 'react';
-import ChildComponent from '~/components/a-component-template/a-component-template.jsx';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {usePageData} from '~/helpers/controller/cms-mixin';
 import './footer-page.css';
-import {fetchOnce} from '~/models/cmsFetch';
-import $ from '~/helpers/$';
 
 export default function FooterPage() {
     const slug = `pages${window.location.pathname}`;
-    const [heading, updateHeading] = useState();
-    const [content, updateContent] = useState();
+    const [data, statusPage] = usePageData({slug});
 
-    if (!heading) {
-        fetchOnce(slug).then((data) => {
-            const contentFieldName = Reflect.ownKeys(data).find((k) => k.match(/_content$/));
-
-            document.title = data.title;
-            updateHeading(data.intro_heading);
-            updateContent(data[contentFieldName]);
-        });
+    if (statusPage) {
+        return statusPage;
     }
 
-    useEffect(() => {
-        const linkController = $.setCanonicalLink();
-
-        return () => linkController.remove();
-    });
+    const contentFieldName = Reflect.ownKeys(data)
+        .find((k) => k.match(/_content$/));
+    const {intro_heading: heading, [contentFieldName]: content} = data;
 
     return (
         <React.Fragment>

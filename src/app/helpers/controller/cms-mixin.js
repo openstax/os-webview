@@ -100,6 +100,14 @@ export async function fetchPageData({slug, preserveWrapping, setsPageTitleAndDes
     return data;
 }
 
+export function useCanonicalLink() {
+    useEffect(() => {
+        const linkController = $.setCanonicalLink();
+
+        return () => linkController.remove();
+    }, []);
+}
+
 export function usePageData(fpdParams) {
     const [pageData, setPageData] = useState();
     const [pageDataError, setPageDataError] = useState();
@@ -115,6 +123,7 @@ export function usePageData(fpdParams) {
         }
         fetchData();
     }, [fpdParams.slug]);
+    useCanonicalLink();
 
     if (pageDataError) {
         statusPage =
