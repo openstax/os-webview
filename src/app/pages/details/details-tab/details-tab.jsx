@@ -80,7 +80,8 @@ export function DetailsTab({polish, ...model}) {
             const tocComponent = new TocDrawer({
                 isRex,
                 cnxId: bookInfo.cnx_id,
-                webviewLink
+                webviewLink,
+                isTutor
             });
 
             region.attach(tocComponent);
