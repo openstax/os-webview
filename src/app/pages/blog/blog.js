@@ -44,7 +44,7 @@ function exceptThisSlug(slug) {
     return (articleSlug, article) => `news/${articleSlug}` !== slug;
 }
 
-function DefaultPage({articles, setPath}) {
+export function DefaultPage({articles, setPath}) {
     return (
         <React.Fragment>
             <PinnedArticle model={{setPath, ...pinnedArticleData(articles)}} />
@@ -57,7 +57,7 @@ function DefaultPage({articles, setPath}) {
     );
 }
 
-function SearchResultsPage({location, setPath}) {
+export function SearchResultsPage({location, setPath}) {
     return (
         <React.Fragment>
             <SearchBar setPath={setPath} />
@@ -66,7 +66,7 @@ function SearchResultsPage({location, setPath}) {
     );
 }
 
-function ArticlePage({slug, articles, setPath}) {
+export function ArticlePage({slug, articles, setPath}) {
     return (
         <React.Fragment>
             <ArticleFromSlug slug={slug} />
@@ -106,7 +106,7 @@ function useLocationSynchronizedToPath() {
     return [location, setPath];
 }
 
-function BlogPage() {
+export function BlogPage() {
     const [pageData, statusPage] = usePageData({slug});
     const [location, setPath] = useLocationSynchronizedToPath();
 
