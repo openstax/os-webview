@@ -1,5 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import SalesforceForm from '~/components/salesforce-form/salesforce-form.jsx';
+import {useSalesforceLoadedState, salesforce} from '~/models/salesforce';
 import Select from '~/components/select/select.jsx';
 import routerBus from '~/helpers/router-bus';
 
@@ -43,16 +44,16 @@ function LabeledInputWithInvalidMessage({
     );
 }
 
-export default function () {
+function ContactForm({defaultPostTo}) {
     const selected = (subj) => subj === this.selectedSubject;
-    const [postTo, setPostTo] = useState();
+    const [postTo, setPostTo] = useState(defaultPostTo);
     const [showInvalidMessages, setShowInvalidMessages] = useState(false);
     const selectRef = useRef();
 
     function onChangeSubject(event) {
         const isPolish = event.target.value === 'OpenStax Polska';
 
-        setPostTo(isPolish ? '/apps/cms/api/mail/send_mail' : undefined);
+        setPostTo(isPolish ? '/apps/cms/api/mail/send_mail' : defaultPostTo);
     }
     function beforeSubmit() {
         setShowInvalidMessages(true);
@@ -93,5 +94,19 @@ export default function () {
             </LabeledInputWithInvalidMessage>
             <input type="submit" value="Send" className="btn btn-orange" onClick={beforeSubmit} />
         </SalesforceForm>
+    );
+}
+
+export default function () {
+    const sfLoaded = useSalesforceLoadedState();
+
+    if (!sfLoaded) {
+        return (<div>Loading</div>);
+    }
+
+    const defaultPostTo = salesforce.webtoleadUrl.replace('ToLead', 'ToCase');
+
+    return (
+        <ContactForm defaultPostTo={defaultPostTo} />
     );
 }

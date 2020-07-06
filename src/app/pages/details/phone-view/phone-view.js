@@ -35,6 +35,7 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
     onLoaded() {
         const includeTOC = ['live', 'new_edition_available'].includes(this.props.bookInfo.book_state);
         const isRex = this.props.isRex;
+        const isTutor = this.props.isTutor;
         const webviewLink = this.props.webviewLink;
 
         /* eslint complexity: 0 */
@@ -44,7 +45,7 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
                 {
                     includeTOC,
                     isRex,
-                    isTutor: this.props.isTutor,
+                    isTutor,
                     webviewLink
                 }, this.props.bookInfo
             )
@@ -88,7 +89,8 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
                 contentComponent: new TocPane({
                     isRex,
                     cnxId: this.props.bookInfo.cnx_id,
-                    webviewLink
+                    webviewLink,
+                    isTutor
                 })
             });
         }

@@ -8,7 +8,7 @@ export function cnxFetch({isRex, cnxId, webviewLink}) {
         .then((r) => r.json());
 }
 
-export default function ({isRex, cnxId, webviewLink}) {
+export default function ({isRex, cnxId, webviewLink, isTutor}) {
     function pageLink(entry) {
         const rexRoot = webviewLink.replace(/\/pages\/.*/, '');
 
@@ -28,6 +28,10 @@ export default function ({isRex, cnxId, webviewLink}) {
                         htmlEntities.push(e);
                     });
                 htmlEntities.push('</ul>');
+            } else if (isTutor) {
+                htmlEntities.push(
+                    `<${tag}>${entry.title}</${tag}>`
+                );
             } else {
                 htmlEntities.push(
                     `<${tag}><a href="${pageLink(entry)}">${entry.title}</a></${tag}>`
