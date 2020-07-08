@@ -44,7 +44,7 @@ function partnerDetails(partner) {
 
 function lightboxScroll(partner) {
     analytics.sendPageEvent(
-        `Partner tool ${partner} lightbox scrroll`,
+        `Partner tool ${partner} lightbox scroll`,
         'scroll',
         toLabel(books)
     );
