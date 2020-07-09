@@ -1,5 +1,5 @@
-import React, {useState, useRef, useEffect} from 'react';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import React, {useState, useRef, useEffect, useContext} from 'react';
+import {RawHTML, WindowContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {BylineJsx} from '~/components/byline/byline';
 import $ from '~/helpers/$';
 import debounce from 'lodash/debounce';
@@ -54,18 +54,13 @@ export function ArticleSummary({
 export default function DelayedImagesSummary({image, ...otherProps}) {
     const [delayedImage, setDelayedImage] = useState('');
     const elRef = useRef();
+    const windowCx = useContext(WindowContext);
 
     useEffect(() => {
-        const handleScroll = debounce(() => {
-            if (elRef.current && $.overlapsViewport(elRef.current)) {
-                window.removeEventListener('scroll', handleScroll);
-                setDelayedImage(image);
-            }
-        }, 200);
-
-        window.addEventListener('scroll', handleScroll);
-        handleScroll();
-    }, [image]);
+        if (delayedImage !== image && elRef.current && $.overlapsViewport(elRef.current)) {
+            setDelayedImage(image);
+        }
+    }, [delayedImage, image, windowCx]);
 
     return (
         <ArticleSummary image={delayedImage} {...otherProps} forwardRef={elRef} />

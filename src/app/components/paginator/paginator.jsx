@@ -37,14 +37,9 @@ function getPageIndicators(pages, currentPage) {
     return result;
 }
 
-export function PaginatorControls({items, currentPage, setCurrentPage}) {
-    const pages = Math.ceil(items / RESULTS_PER_PAGE);
+function PageButtonBar({currentPage, pages, setCurrentPage}) {
     const disablePrevious = currentPage === 1;
     const disableNext = currentPage === pages;
-    const firstIndex = (currentPage - 1) * RESULTS_PER_PAGE;
-    const endBefore = Math.min(firstIndex + RESULTS_PER_PAGE, items);
-    const resultRange = `${firstIndex + 1}-${endBefore}`;
-    const searchTerm = decodeURIComponent(window.location.search.substr(1));
     const pageIndicators = getPageIndicators(pages, currentPage);
 
     function prevPage() {
@@ -55,23 +50,37 @@ export function PaginatorControls({items, currentPage, setCurrentPage}) {
     }
 
     return (
+        <div className="button-bar">
+            <button disabled={disablePrevious} onClick={prevPage}>Previous</button>
+            {
+                pageIndicators.map((indicator) =>
+                    <button
+                        disabled={indicator.disabled}
+                        aria-selected={indicator.selected}
+                        aria-label={indicator.page}
+                        onClick={() => setCurrentPage(indicator.label)}
+                    >{indicator.label}</button>
+                )
+            }
+            <button disabled={disableNext} onClick={nextPage}>Next</button>
+        </div>
+    );
+}
+
+export function PaginatorControls({items, currentPage, setCurrentPage}) {
+    const pages = Math.ceil(items / RESULTS_PER_PAGE);
+    const firstIndex = (currentPage - 1) * RESULTS_PER_PAGE;
+    const endBefore = Math.min(firstIndex + RESULTS_PER_PAGE, items);
+    const resultRange = `${firstIndex + 1}-${endBefore}`;
+    const searchTerm = decodeURIComponent(window.location.search.substr(1));
+
+    return (
         <div className="paginator">
             {
                 pages > 1 &&
-                <div className="button-bar">
-                    <button disabled={disablePrevious} onClick={prevPage}>Previous</button>
-                    {
-                        pageIndicators.map((indicator) =>
-                            <button
-                                disabled={indicator.disabled}
-                                aria-selected={indicator.selected}
-                                aria-label={indicator.page}
-                                onClick={() => setCurrentPage(indicator.label)}
-                            >{indicator.label}</button>
-                        )
-                    }
-                    <button disabled={disableNext} onClick={nextPage}>Next</button>
-                </div>
+                    <PageButtonBar pages={pages}
+                        currentPage={currentPage} setCurrentPage={setCurrentPage}
+                    />
             }
             <div className="summary">{resultRange} of {items} for <b>'{searchTerm}'</b></div>
         </div>

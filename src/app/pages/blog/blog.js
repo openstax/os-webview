@@ -9,6 +9,7 @@ import SearchBar from './search-bar/search-bar';
 import SearchResults from './search-results/search-results';
 import {ArticleFromSlug} from './article/article';
 import {blurbModel} from './article-summary/article-summary.jsx';
+import {WindowContextProvider} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import timers from './timers';
 import './blog.css';
 import $ from '~/helpers/$';
@@ -46,14 +47,14 @@ function exceptThisSlug(slug) {
 
 export function DefaultPage({articles, setPath}) {
     return (
-        <React.Fragment>
+        <WindowContextProvider>
             <PinnedArticle model={{setPath, ...pinnedArticleData(articles)}} />
             <UpdateBox />
             <MoreStories
                 articles={moreStoriesOptions(articles, isNotPinned)}
                 setPath={setPath}
             />
-        </React.Fragment>
+        </WindowContextProvider>
     );
 }
 
@@ -68,7 +69,7 @@ export function SearchResultsPage({location, setPath}) {
 
 export function ArticlePage({slug, articles, setPath}) {
     return (
-        <React.Fragment>
+        <WindowContextProvider>
             <ArticleFromSlug slug={slug} />
             <DisqusForm />
             <UpdateBox />
@@ -76,7 +77,7 @@ export function ArticlePage({slug, articles, setPath}) {
                 articles={moreStoriesOptions(articles, exceptThisSlug(slug))}
                 setPath={setPath}
             />
-        </React.Fragment>
+        </WindowContextProvider>
     );
 }
 

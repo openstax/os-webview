@@ -2,9 +2,9 @@ import BodyUnit from '~/components/body-units/body-units.jsx';
 import css from './article.css';
 import {BylineJsx} from '~/components/byline/byline';
 import ProgressRing from '~/components/progress-ring/progress-ring';
-import throttle from '~/helpers/throttle';
 import {ShareJsx} from '~/components/share/share';
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
+import {WindowContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {usePageData} from '~/helpers/controller/cms-mixin';
 import routerBus from '~/helpers/router-bus';
@@ -29,9 +29,7 @@ function getProgress(el) {
     return Math.round(100 * visibleHeight / totalHeight);
 }
 
-function ArticleBody({bodyData, setReadTime, setBodyRef}) {
-    const bodyRef = useRef();
-
+function ArticleBody({bodyData, setReadTime, bodyRef}) {
     useEffect(() => {
         const div = bodyRef.current;
         const words = div.textContent.split(/\W+/);
@@ -39,7 +37,6 @@ function ArticleBody({bodyData, setReadTime, setBodyRef}) {
 
         setReadTime(Math.round(words.length / WORDS_PER_MINUTE));
     }, [bodyData]);
-    useEffect(() => setBodyRef(bodyRef), []);
 
     return (
         <div className="body" ref={bodyRef}>
@@ -81,35 +78,36 @@ function FloatingSideBar({readTime, progress}) {
 
 function useScrollProgress(ref) {
     const [progress, setProgress] = useState(0);
-    const [bodyRef, setBodyRef] = useState();
+    const bodyRef = useRef();
+    const windowCx = useContext(WindowContext);
 
     useEffect(() => {
         if (typeof bodyRef === 'undefined') {
-            return null;
+            return;
         }
-        const handleScroll = throttle(() => setProgress(getProgress(bodyRef.current)));
 
         Array.from(ref.current.querySelectorAll('img'))
             .forEach((img) => {
-                img.onload = handleScroll;
+                img.onload = () => setProgress(getProgress(bodyRef.current));
             });
-        window.addEventListener('scroll', handleScroll);
-        window.addEventListener('resize', handleScroll);
-        handleScroll();
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('resize', handleScroll);
-        };
     }, [bodyRef]);
 
-    return [progress, setBodyRef];
+    useEffect(() => {
+        if (typeof bodyRef === 'undefined') {
+            return;
+        }
+        const handleScroll = () => setProgress(getProgress(bodyRef.current));
+
+        handleScroll();
+    }, [bodyRef, windowCx]);
+
+    return [progress, bodyRef];
 }
 
 function Article({data}) {
     const [readTime, setReadTime] = useState();
     const ref = useRef();
-    const [progress, setBodyRef] = useScrollProgress(ref);
+    const [progress, bodyRef] = useScrollProgress(ref);
     const {
         article_image: image,
         featured_image_alt_text: imageAlt,
@@ -131,7 +129,7 @@ function Article({data}) {
             <ArticleBody
                 bodyData={data.body}
                 setReadTime={setReadTime}
-                setBodyRef={setBodyRef}
+                bodyRef={bodyRef}
             />
             <Tags tagData={tags} />
         </div>
