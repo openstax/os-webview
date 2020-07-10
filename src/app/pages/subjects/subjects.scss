@@ -115,6 +115,49 @@
                 height: 100%;
                 width: 100%;
             }
+
+            .ur-menu {
+                padding: 0.5rem 1rem;
+                position: absolute;
+                right: 0;
+                text-align: right;
+                top: 0;
+
+                &.dark {
+                    color: text-color(white);
+                }
+
+                .ur-dropdown {
+                    background-color: ui-color(white);
+                    color: text-color(normal);
+                    box-shadow: 0 0.2rem 0.6rem 0 rgba(ui-color(black), 0.25);
+                    padding: 0.5rem;
+                    text-align: left;
+
+                    > a {
+                        color: inherit;
+                        display: grid;
+                        grid-template-columns: 3rem 1fr;
+                        text-decoration: none;
+                        width: 100%;
+
+                        &:hover,
+                        &:active {
+                            color: text-color(link);
+                        }
+
+                        >:first-child {
+                            justify-self: center;
+                        }
+                    }
+                }
+
+                &:not(.active):not(:hover) {
+                    .ur-dropdown {
+                        display: none;
+                    }
+                }
+            }
         }
 
         @mixin get-this-is-visible() {

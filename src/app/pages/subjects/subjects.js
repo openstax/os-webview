@@ -1,114 +1,119 @@
 import routerBus from '~/helpers/router-bus';
-import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
+import React, {useState, useEffect} from 'react';
+import {pageWrapper, SuperbItem} from '~/controllers/jsx-wrapper';
+import {usePageData} from '~/helpers/controller/cms-mixin';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import BookViewer from './book-viewer/book-viewer';
 import CategorySelector from '~/components/category-selector/category-selector';
-import {description as template} from './subjects.html';
-import css from './subjects.css';
+import './subjects.css';
 import $ from '~/helpers/$';
 
 const pagePath = '/subjects';
-const spec = {
-    template,
-    css,
-    slug: 'books',
-    view: {
-        classes: ['subjects-page', 'hide-until-loaded'],
-        tag: 'main'
-    },
-    regions: {
-        filter: '.filter',
-        bookViewer: '.books .container'
-    },
-    model: {}
-};
-const BaseClass = componentType(spec, canonicalLinkMixin);
 
-export default class Subjects extends BaseClass {
+function categoryFromPath() {
+    return window.location.pathname.replace(/.*subjects/, '').substr(1).toLowerCase() || 'view-all';
+}
 
-    init() {
-        super.init();
-        this.categorySelector = new CategorySelector();
-        this.categorySelector.on('change', (category) => {
-            this.filterSubjects(category);
-        });
-        routerBus.emit('replaceState', {
-            filter: this.categoryFromPath(),
-            path: pagePath
-        });
-    }
+function CategorySelectorJsx({setCategory}) {
+    const categorySelector = new CategorySelector();
 
-    categoryFromPath() {
-        return window.location.pathname.replace(/.*subjects/, '').substr(1).toLowerCase() || 'view-all';
-    }
+    categorySelector.on('change', setCategory);
 
-    filterSubjects(category) {
-        if (typeof category === 'undefined') {
-            // Probably navigating elsewhere
-            return;
-        }
+    useEffect(() => {
+        const setIt = () => {
+            categorySelector.updateSelected(categoryFromPath());
+        };
+
+        setIt();
+        window.addEventListener('popstate', setIt);
+        return () => window.removeEventListener('popstate', setIt);
+    }, [categorySelector]);
+
+    return (
+        <SuperbItem component={categorySelector} />
+    );
+}
+
+function Subjects({model}) {
+    const [category, setCategory] = useState(categoryFromPath(categoryFromPath()));
+
+    useEffect(() => {
+        const description = $.htmlToText(model.page_description);
+
+        $.setPageDescription(description);
+    }, [model]);
+
+    useEffect(() => {
+        const categoryEntry = CategorySelector.categories.find((e) => e.value === category);
         const path = category === 'view-all' ? pagePath : `${pagePath}/${category}`;
-
-        this.bookViewer.filterSubjects(category);
-
-        const yTarget = history.state.y;
 
         routerBus.emit('navigate', path, {
             filter: category,
             path: pagePath
         });
-        window.scrollTo(0, yTarget);
-        this.setCanonicalLink();
-        this.setTitle(category);
-    }
+        document.title = (categoryEntry && 'title' in categoryEntry) ? categoryEntry.title : model.title;
+    }, [category]);
 
-    setTitle(category) {
-        const categoryEntry = CategorySelector.categories.find((e) => e.value === category);
-        const title = (categoryEntry && 'title' in categoryEntry) ? categoryEntry.title : this.pageData.title;
+    const {
+        page_description: heroHtml,
+        dev_standard_1_heading: blurbHeading1,
+        dev_standard_1_description: blurbDescription1,
+        dev_standard_2_heading: blurbHeading2,
+        dev_standard_2_description: blurbDescription2,
+        dev_standard_3_heading: blurbHeading3,
+        dev_standard_3_description: blurbDescription3,
+        books
+    } = model;
 
-        $.setPageTitleAndDescription(title, this.pageData.page_description);
-    }
+    return (
+        <React.Fragment>
+            <RawHTML className="hero" html={heroHtml} />
 
-    onDataLoaded() {
-        Object.assign(this.model, this.pageData);
-        this.update();
-        this.insertHtml();
-        this.bookViewer = new BookViewer(this.model.books.filter((b) => b.book_state !== 'retired'));
-        this.regions.bookViewer.attach(this.bookViewer);
-        this.filterSubjectsEvent = () => {
-            const category = history.state.filter;
-
-            this.categorySelector.updateSelected(category);
-            this.bookViewer.filterSubjects(category);
-        };
-        window.addEventListener('popstate', this.filterSubjectsEvent);
-        this.regions.filter.attach(this.categorySelector);
-        const category = this.categoryFromPath();
-
-        this.categorySelector.updateSelected(category);
-        this.filterSubjects(category);
-        this.el.classList.add('loaded');
-    }
-
-    onLoaded() {
-        const threshold = 347;
-
-        this.setFilterClass = () => {
-            const newStickyState = window.pageYOffset > threshold;
-
-            if (newStickyState !== this.model.filterIsSticky) {
-                this.model.filterIsSticky = newStickyState;
-                this.update();
-            }
-        };
-        window.addEventListener('scroll', this.setFilterClass, false);
-        document.getElementById('main').classList.add('subjects-main');
-    }
-
-    onClose() {
-        super.onClose();
-        window.removeEventListener('popstate', this.filterSubjectsEvent);
-        window.removeEventListener('scroll', this.setFilterClass, false);
-        document.getElementById('main').classList.remove('subjects-main');
-    }
-
+            <div className="strips-and-filter">
+                <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
+                <div className={`filter ${model.filterIsSticky ? 'sticky': ''}`}>
+                    <CategorySelectorJsx setCategory={setCategory} />
+                </div>
+            </div>
+            <div className="books">
+                <div className="boxed container">
+                    <BookViewer books={books} category={category} />
+                </div>
+                <div>
+                    <h2 className="text-content">About Our Textbooks</h2>
+                    {
+                        blurbHeading1 &&
+                            <div className="boxed-row feature-block">
+                                <div className="blurb">
+                                    <h3 className="title">{blurbHeading1}</h3>
+                                    <RawHTML Tag="p" className="text" html={blurbDescription1} />
+                                </div>
+                                <div className="blurb">
+                                    <h3 className="title">{model.dev_standard_2_heading}</h3>
+                                    <RawHTML Tag="p" className="text" html={blurbDescription2} />
+                                </div>
+                                <div className="blurb">
+                                    <h3 className="title">{model.dev_standard_2_heading}</h3>
+                                    <RawHTML Tag="p" className="text" html={blurbDescription3} />
+                                </div>
+                            </div>
+                    }
+                </div>
+            </div>
+        </React.Fragment>
+    );
 }
+
+function SubjectsLoader() {
+    const slug = 'books';
+    const [model, statusPage] = usePageData({slug, preserveWrapping: true});
+
+    return statusPage ? statusPage : <Subjects model={model} />;
+}
+
+const view = {
+    classes: ['subjects-page'],
+    tag: 'main'
+};
+
+export default pageWrapper(SubjectsLoader, view);
