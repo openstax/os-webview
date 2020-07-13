@@ -1,18 +1,11 @@
-import ArticleSummary from '../article-summary/article-summary';
-import css from './pinned-article.css';
+import React from 'react';
+import {ArticleSummary} from '../article-summary/article-summary.jsx';
+import './pinned-article.css';
 
-const spec = {
-    css,
-    view: {
-        classes: ['pinned-article', 'boxed']
-    }
-};
-
-export default class extends ArticleSummary {
-
-    init(...args) {
-        super.init(...args);
-        Object.assign(this, spec);
-    }
-
+export default function PinnedArticle({model}) {
+    return (
+        <div className="pinned-article boxed">
+            <ArticleSummary {...model} />
+        </div>
+    );
 }

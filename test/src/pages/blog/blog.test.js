@@ -1,25 +1,86 @@
-import Blog from '~/pages/blog/blog';
-import instanceReady from '../../../helpers/instance-ready';
+import {BlogPage, DefaultPage, SearchResultsPage, ArticlePage} from '~/pages/blog/blog';
+import {fetchPageData} from '~/helpers/controller/cms-mixin';
+import {makeMountRender, snapshotify} from '../../../helpers/jsx-test-utils.jsx';
 
-describe('blog', () => {
-    const {instance: p, ready} = instanceReady(Blog);
+const slug = 'news';
+const pageDataPromise = fetchPageData({slug});
 
-    it('loads articles', () =>
-        ready.then(() => {
-            expect(p).toBeTruthy();
-            expect(Reflect.ownKeys(p.articles).length).toBe(93);
-        })
-    );
-    it('displays summary cards', () => {
-        const card = p.el.querySelector('.card');
+describe('blog Default page', () => {
+    it('matches snapshot', () => {
+        window.location = {
+            "href":"https://cms-dev.openstax.org/blog",
+            "ancestorOrigins":{},
+            "origin":"https://cms-dev.openstax.org",
+            "protocol":"https:",
+            "host":"cms-dev.openstax.org",
+            "hostname":"cms-dev.openstax.org",
+            "port":"",
+            "pathname":"/blog",
+            "search":"",
+            "hash":""
+        };
 
-        expect(card.querySelector('.link-image').href.length).toBeGreaterThan(10);
+        return pageDataPromise.then((response) => {
+            const wrapper = makeMountRender(DefaultPage, {
+                articles: response.articles
+            })();
+
+            expect(snapshotify(wrapper)).toMatchSnapshot();
+        });
     });
-    it('displays the pinned article', () => {
-        const pa = p.el.querySelector('.pinned-article');
+});
 
-        expect(pa).toBeTruthy();
-        expect(pa.querySelector('.article-blurb')).toBeTruthy();
-        expect(pa.querySelector('.no-such-thing')).toBeFalsy();
+describe('blog Search Results page', () => {
+    window.location = {
+        "href":"https://cms-dev.openstax.org/blog/?jimmieka",
+        "ancestorOrigins":{},
+        "origin":"https://cms-dev.openstax.org",
+        "protocol":"https:",
+        "host":"cms-dev.openstax.org",
+        "hostname":"cms-dev.openstax.org",
+        "port":"",
+        "pathname":"/blog/",
+        "search":"?jimmieka",
+        "hash":""
+    };
+
+    it('matches snapshot', () => {
+        const wrapper = makeMountRender(SearchResultsPage, {
+            location: window.location,
+            setPath(newPath) {
+                console.log('setPath called with', newPath);
+            }
+        })();
+
+        expect(snapshotify(wrapper)).toMatchSnapshot();
+    });
+});
+
+describe('blog Article page', () => {
+    window.location = {
+        "href":"https://cms-dev.openstax.org/blog/jimmieka-mills-part-4-experience-best-teacher",
+        "ancestorOrigins":{},
+        "origin":"https://cms-dev.openstax.org",
+        "protocol":"https:",
+        "host":"cms-dev.openstax.org",
+        "hostname":"cms-dev.openstax.org",
+        "port":"",
+        "pathname":"/blog/jimmieka-mills-part-4-experience-best-teacher",
+        "search":"",
+        "hash":""
+    };
+
+    it('matches snapshot', () => {
+        return pageDataPromise.then((response) => {
+            const wrapper = makeMountRender(ArticlePage, {
+                location: window.location,
+                setPath(newPath) {
+                    console.log('setPath called with', newPath);
+                },
+                articles: response.articles
+            })();
+
+            expect(snapshotify(wrapper)).toMatchSnapshot();
+        });
     });
 });

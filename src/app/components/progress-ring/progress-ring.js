@@ -1,35 +1,37 @@
-import componentType from '~/helpers/controller/init-mixin';
-import busMixin from '~/helpers/controller/bus-mixin';
-import {description as template} from './progress-ring.html';
-import css from './progress-ring.css';
+import React, {useState} from 'react';
+import './progress-ring.css';
 
-const spec = {
-    template,
-    css,
-    // For specifying the tag (default div) and classes of the container element
-    view: {
-        classes: ['progress-ring']
-    },
-    model() {
-        const normalizedRadius = this.radius - this.stroke * 2;
-        const circumference = normalizedRadius * 2 * Math.PI;
+export default function ProgressRing({message, radius, progress, stroke}) {
+    const normalizedRadius = radius - stroke * 2;
+    const circumference = normalizedRadius * 2 * Math.PI;
+    const rotation = -90;
+    const strokeDashoffset = circumference - progress / 100 * circumference;
 
-        return {
-            circumference,
-            message: this.message,
-            normalizedRadius,
-            radius: this.radius,
-            rotation: -90,
-            strokeWidth: this.stroke,
-            strokeDashoffset: circumference - this.progress / 100 * circumference
-        };
-    }
-};
-
-export default class extends componentType(spec, busMixin) {
-
-    whenPropsUpdated() {
-        this.update();
-    }
-
+    return (
+        <div className="progress-ring">
+            <div className="message">
+                {message} min read
+            </div>
+            <svg height={radius * 2} width={radius * 2}>
+                <circle className="unfinished"
+                    cx={radius}
+                    cy={radius}
+                    fill="transparent"
+                    r={normalizedRadius}
+                    stroke-dasharray={`${circumference} ${circumference}`}
+                    stroke-width={stroke}
+                    style="stroke-dashoffset: 0"
+                />
+                <circle className="finished"
+                    cx={radius}
+                    cy={radius}
+                    fill="transparent"
+                    r={normalizedRadius}
+                    stroke-dasharray={`${circumference} ${circumference}`}
+                    stroke-width={stroke}
+                    style={`stroke-dashoffset: ${strokeDashoffset}`}
+                />
+            </svg>
+        </div>
+    );
 }

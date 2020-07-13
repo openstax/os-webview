@@ -1,209 +1,164 @@
-import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
-import settings from 'settings';
-import {on} from '~/helpers/controller/decorators';
-import routerBus from '~/helpers/router-bus';
-import analytics from '~/helpers/analytics';
-import css from './blog.css';
-import SearchResults from './search-results/search-results';
+import React, {useState, useEffect} from 'react';
+import {usePageData} from '~/helpers/controller/cms-mixin';
+import WrappedJsx from '~/controllers/jsx-wrapper';
+import PinnedArticle from './pinned-article/pinned-article';
 import UpdateBox from './update-box/update-box';
-import FeaturedArticle from './pinned-article/pinned-article';
-import SearchBar from './search-bar/search-bar';
-import MoreStories from './more-stories/more-stories';
-import {blurbModel} from './article-summary/article-summary';
-import Article from './article/article';
 import DisqusForm from './disqus-form/disqus-form';
+import MoreStories from './more-stories/more-stories';
+import SearchBar from './search-bar/search-bar';
+import SearchResults from './search-results/search-results';
+import {ArticleFromSlug} from './article/article';
+import {blurbModel} from './article-summary/article-summary.jsx';
+import {WindowContextProvider} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import timers from './timers';
+import './blog.css';
+import $ from '~/helpers/$';
 
-function slugsSortedByArticleDate(articles) {
-    return Object.keys(articles)
-        .sort((a, b) => articles[a].date < articles[b].date ? 1 : -1);
+const path = '/blog';
+
+function pinnedArticleData(articles) {
+    const articleSlug = Reflect.ownKeys(articles)
+        .find((k) => articles[k].pin_to_top);
+    const pinnedData = articles[articleSlug];
+
+    return blurbModel(articleSlug, pinnedData);
 }
 
-const rssUrl = `${settings.apiOrigin}/blog-feed/rss/`;
-const path = '/blog';
-const spec = {
-    css,
-    view: {
-        classes: ['blog', 'page'],
-        tag: 'main'
-    },
-    slug: 'news',
-    timersRunning: [],
-    articleSlug: null
-};
-const BaseClass = componentType(spec, canonicalLinkMixin);
+function moreStoriesOptions(articles, test) {
+    const slugs = Reflect.ownKeys(articles)
+        .filter((k) => test(k, articles[k]))
+        .sort((a, b) => articles[a].date < articles[b].date ? 1 : -1);
 
-export default class Blog extends BaseClass {
+    return slugs.map((s) => {
+        const model = blurbModel(s, articles[s]);
+
+        delete model.subheading;
+        return model;
+    });
+}
+
+function isNotPinned(slug, article) {
+    return !article.pin_to_top;
+}
+
+function exceptThisSlug(slug) {
+    return (articleSlug, article) => `news/${articleSlug}` !== slug;
+}
+
+export function DefaultPage({articles, setPath}) {
+    return (
+        <WindowContextProvider>
+            <PinnedArticle model={{setPath, ...pinnedArticleData(articles)}} />
+            <UpdateBox />
+            <MoreStories
+                articles={moreStoriesOptions(articles, isNotPinned)}
+                setPath={setPath}
+            />
+        </WindowContextProvider>
+    );
+}
+
+export function SearchResultsPage({location, setPath}) {
+    return (
+        <React.Fragment>
+            <SearchBar setPath={setPath} />
+            <SearchResults location={location} setPath={setPath} />
+        </React.Fragment>
+    );
+}
+
+export function ArticlePage({slug, articles, setPath}) {
+    return (
+        <WindowContextProvider>
+            <ArticleFromSlug slug={slug} />
+            <DisqusForm />
+            <UpdateBox />
+            <MoreStories
+                articles={moreStoriesOptions(articles, exceptThisSlug(slug))}
+                setPath={setPath}
+            />
+        </WindowContextProvider>
+    );
+}
+
+const slug = 'news';
+
+function useLocationSynchronizedToPath() {
+    const [location, setLocation] = useState(window.location);
+
+    function syncLocation() {
+        setLocation({...window.location});
+    }
+
+    useEffect(() => {
+        // The router refers to history state, to see if it's changing pages
+        history.replaceState({path: '/blog'}, '');
+        window.addEventListener('popstate', syncLocation);
+
+        return () => window.removeEventListener('popstate', syncLocation);
+    }, []);
+
+    function setPath(href) {
+        history.pushState({path: '/blog'}, '', href);
+        syncLocation();
+        window.scrollTo(0, 0);
+    }
+
+    return [location, setPath];
+}
+
+export function BlogPage() {
+    const [pageData, statusPage] = usePageData({slug});
+    const [location, setPath] = useLocationSynchronizedToPath();
+
+    useEffect(() => {
+        const linkController = $.setCanonicalLink();
+
+        return () => linkController.remove();
+    }, []);
+    useEffect(() => {
+        timers.start();
+
+        return () => timers.clear();
+    }, [location]);
+
+    if (statusPage) {
+        return statusPage;
+    }
+
+    const slugMatch = location.pathname.match(/\/blog\/(.+)/);
+    const articles = pageData.articles;
+
+    if (!slugMatch) {
+        return location.search ?
+            <SearchResultsPage
+                location={location}
+                setPath={setPath}
+            /> :
+            <DefaultPage
+                articles={pageData.articles}
+                setPath={setPath}
+            />;
+    }
+
+    return (
+        <React.Fragment>
+            <ArticlePage slug={`news/${slugMatch[1]}`}
+                articles={pageData.articles}
+                setPath={setPath}
+            />
+        </React.Fragment>
+    );
+}
+
+export default class extends WrappedJsx {
 
     init() {
-        super.init();
-        this.hpcListener = this.handlePathChange.bind(this);
-        window.addEventListener('navigate', this.hpcListener);
-    }
-
-    get featuredArticleOptions() {
-        if (!this.pageData) {
-            return {};
-        }
-        const articleSlug = Reflect.ownKeys(this.pageData.articles)
-            .find((k) => this.pageData.articles[k].pin_to_top);
-        const pinnedData = this.pageData.articles[articleSlug];
-
-        return {
-            model: blurbModel(articleSlug, pinnedData)
+        super.init(BlogPage);
+        this.view = {
+            classes: ['blog', 'page'],
+            tag: 'main'
         };
-    }
-
-    moreStoriesOptions(test) {
-        if (!this.pageData) {
-            return {};
-        }
-        const articles = this.pageData.articles;
-        const slugs = Reflect.ownKeys(articles)
-            .filter((k) => test(k, articles[k]))
-            .sort((a, b) => articles[a].date < articles[b].date ? 1 : -1);
-
-        return slugs.map((s) => blurbModel(s, this.pageData.articles[s]));
-    }
-
-    buildDefaultPage() {
-        this.regions.self.attach(new FeaturedArticle(this.featuredArticleOptions));
-        this.regions.self.append(new UpdateBox({
-            model: {
-                rssUrl
-            }
-        }));
-        const ms = new MoreStories({
-            articles: this.moreStoriesOptions((_, articleEntry) => !articleEntry.pin_to_top)
-        });
-
-        this.regions.self.append(ms);
-        ms.on('value', (searchParam) => this.executeSearch(searchParam));
-    }
-
-    executeSearch(searchParam) {
-        history.pushState({}, '', `${path}/?${encodeURIComponent(searchParam)}`);
-        this.handlePathChange();
-    }
-
-    buildSearchResultsPage() {
-        const sb = new SearchBar();
-        const sr = new SearchResults();
-
-        sb.on('value', (searchParam) => this.executeSearch(searchParam));
-        this.regions.self.attach(sb);
-        this.regions.self.append(sr);
-    }
-
-    buildArticlePage() {
-        const region = this.regions.self;
-        const ms = new MoreStories({
-            articles: this.moreStoriesOptions((slug, _) => slug !== this.articleSlug)
-        });
-
-        region.attach(new Article({
-            slug: `news/${this.articleSlug}`
-        }));
-        region.append(new DisqusForm());
-        region.append(new UpdateBox({
-            model: {
-                rssUrl
-            }
-        }));
-        region.append(ms);
-        ms.on('value', (searchParam) => this.executeSearch(searchParam));
-    }
-
-    // eslint-disable-next-line complexity
-    handlePathChange() {
-        const slugMatch = window.location.pathname.match(/\/blog\/(.+)/);
-
-        if (!slugMatch) {
-            this.articleSlug = null;
-            this.setCanonicalLink('/blog', this.canonicalLink);
-
-            if (window.location.search) {
-                this.buildSearchResultsPage();
-            } else {
-                this.buildDefaultPage();
-            }
-            return;
-        }
-
-        const articleSlug = slugMatch[1];
-
-        if (!this.articles[articleSlug]) {
-            routerBus.emit('navigate', '/404', {path: '/blog'}, true);
-            return;
-        }
-        if (this.articleSlug !== articleSlug) {
-            this.articleSlug = articleSlug;
-            this.setTimers();
-            this.setCanonicalLink(slugMatch[0], this.canonicalLink);
-            this.buildArticlePage();
-        }
-    }
-
-    setTimers() {
-        const fireAt = [
-            [0, '0-10 seconds', '0-10 seconds'],
-            [11, '11-30 seconds', '11-30 seconds'],
-            [31, '31 sec - 1 min', '31-60 seconds'],
-            [61, '1-2 minutes', '61-120 seconds'],
-            [121, '2-3 minutes', '121-180 seconds'],
-            [181, '3-4 minutes', '181-240 seconds'],
-            [241, '4-5 minutes', '241-300 seconds'],
-            [301, '5-10 minutes', '301-600 seconds'],
-            [601, '10-30 minutes', '601-1800 seconds'],
-            [1801, 'over 30 min', '1801+ seconds']
-        ];
-        const action = 'time spent';
-
-        this.clearTimers();
-        this.timersRunning = fireAt.map(([sec, category, label], i) => {
-            return setTimeout(() => {
-                analytics.sendPageEvent(`TimeOnPage ${category}`, action, label);
-            }, sec * 1000);
-        });
-    }
-
-    clearTimers() {
-        for (const timer of this.timersRunning) {
-            clearTimeout(timer);
-        }
-    }
-
-    onDataLoaded() {
-        if (!this.articles) {
-            this.articleSlugs = slugsSortedByArticleDate(this.pageData.articles);
-            this.articles = this.articleSlugs.reduce(
-                (dict, slug) => {
-                    dict[slug] = Object.assign({slug}, this.pageData.articles[slug]);
-                    return dict;
-                },
-                {}
-            );
-            this.handlePathChange();
-        }
-        this.setTimers();
-    }
-
-    onClose() {
-        this.clearTimers();
-        window.removeEventListener('navigate', this.hpcListener);
-        super.onClose();
-    }
-
-    @on('click a[href^="/blog"]')
-    saveArticleState(event) {
-        event.preventDefault();
-        const href = event.delegateTarget.href;
-
-        routerBus.emit('navigate', href, {
-            model: this.model,
-            path: '/blog',
-            x: 0,
-            y: 0
-        });
     }
 
 }

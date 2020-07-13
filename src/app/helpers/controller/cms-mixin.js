@@ -72,8 +72,14 @@ async function getUrlFor(initialSlug) {
 
 export async function fetchFromCMS(slug, preserveWrapping=false) {
     const apiUrl = await getUrlFor(slug);
-    const data = await fetch(apiUrl, {credentials: 'include'})
-        .then((response) => response.json());
+    let data;
+
+    try {
+        data = await (await fetch(apiUrl, {credentials: 'include'})).json();
+    } catch (err) {
+        console.warn(`ERROR fetching slug ${slug}: ${err}`);
+        data = {error: err};
+    }
 
     data.slug = slug;
     return preserveWrapping ? data : transformData(data);

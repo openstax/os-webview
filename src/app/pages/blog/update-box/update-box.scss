@@ -16,22 +16,26 @@
         text-align: center;
     }
 
-    .cta {
-        background-color: os-color(orange);
-        color: text-color(white);
-        margin-left: 1rem;
-        margin-right: 1rem;
-        padding: 1.25rem 3rem;
+    h3 {
+        margin: 0;
+    }
 
-        @include width-up-to($phone-max) {
-            margin: 0;
-        }
+    .button-row {
+        align-items: center;
+        display: inline-grid;
+        grid-auto-flow: column;
+        grid-gap: 0.5rem;
+        margin: 0 1.7rem;
+    }
+
+    .cta {
+        @extend %button;
+        @extend %primary;
     }
 
     .rss-link {
         background-color: none;
         color: os-color(orange);
-        margin: 1.5rem;
-        transform: scale(2);
+        font-size: 3rem;
     }
 }
