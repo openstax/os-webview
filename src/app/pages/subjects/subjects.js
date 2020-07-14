@@ -2,9 +2,10 @@ import routerBus from '~/helpers/router-bus';
 import React, {useState, useEffect} from 'react';
 import {pageWrapper, SuperbItem} from '~/controllers/jsx-wrapper';
 import {usePageData} from '~/helpers/controller/cms-mixin';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {RawHTML, useResultOfPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import BookViewer from './book-viewer/book-viewer';
-import CategorySelector from '~/components/category-selector/category-selector';
+import categoryPromise from '~/models/subjectCategories';
+import {RadioPanel} from '~/components/radio-panel/radio-panel';
 import './subjects.css';
 import $ from '~/helpers/$';
 
@@ -14,28 +15,24 @@ function categoryFromPath() {
     return window.location.pathname.replace(/.*subjects/, '').substr(1).toLowerCase() || 'view-all';
 }
 
-function CategorySelectorJsx({setCategory}) {
-    const categorySelector = new CategorySelector();
-
-    categorySelector.on('change', setCategory);
+function useCategoryTiedToPath() {
+    const [category, setCategory] = useState(categoryFromPath());
 
     useEffect(() => {
         const setIt = () => {
-            categorySelector.updateSelected(categoryFromPath());
+            setCategory(categoryFromPath());
         };
 
-        setIt();
         window.addEventListener('popstate', setIt);
         return () => window.removeEventListener('popstate', setIt);
-    }, [categorySelector]);
+    }, []);
 
-    return (
-        <SuperbItem component={categorySelector} />
-    );
+    return category;
 }
 
 function Subjects({model}) {
-    const [category, setCategory] = useState(categoryFromPath(categoryFromPath()));
+    const category = useCategoryTiedToPath();
+    const categories = useResultOfPromise(categoryPromise, []);
 
     useEffect(() => {
         const description = $.htmlToText(model.page_description);
@@ -43,16 +40,16 @@ function Subjects({model}) {
         $.setPageDescription(description);
     }, [model]);
 
-    useEffect(() => {
-        const categoryEntry = CategorySelector.categories.find((e) => e.value === category);
-        const path = category === 'view-all' ? pagePath : `${pagePath}/${category}`;
+    function setCategory(newCategory) {
+        const categoryEntry = categories.find((e) => e.value === newCategory);
+        const path = newCategory === 'view-all' ? pagePath : `${pagePath}/${newCategory}`;
 
         routerBus.emit('navigate', path, {
-            filter: category,
+            filter: newCategory,
             path: pagePath
         });
         document.title = (categoryEntry && 'title' in categoryEntry) ? categoryEntry.title : model.title;
-    }, [category]);
+    }
 
     const {
         page_description: heroHtml,
@@ -72,7 +69,7 @@ function Subjects({model}) {
             <div className="strips-and-filter">
                 <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
                 <div className={`filter ${model.filterIsSticky ? 'sticky': ''}`}>
-                    <CategorySelectorJsx setCategory={setCategory} />
+                    <RadioPanel2 selectedItem={category} items={categories} onChange={setCategory} />
                 </div>
             </div>
             <div className="books">

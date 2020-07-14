@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import CategorySelector from '~/components/category-selector/category-selector';
-import {RawHTML, ActiveElementContextProvider} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {RawHTML, ActiveElementContextProvider, useResultOfPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {BookCover} from './book';
+import categoryPromise from '~/models/subjectCategories';
 
-function organizeBooksByCategory(books) {
+function organizeBooksByCategory(books, categories) {
     const result = {};
     const addLabels = () => {
-        for (const category of CategorySelector.categories) {
+        for (const category of categories) {
             if (result[category.cms]) {
                 result[category.cms].label = category.html;
             }
@@ -51,20 +51,9 @@ function CategorySection({categoryData, categorizedBooks, category}) {
     );
 }
 
-function useCategorySections(books) {
-    const [categorizedBooks, setCategorizedBooks] = useState();
-
-    useEffect(() => {
-        CategorySelector.loaded.then(() => {
-            setCategorizedBooks(organizeBooksByCategory(books));
-        });
-    }, [books]);
-
-    return categorizedBooks;
-}
-
 export default function BookViewer({books, category}) {
-    const categorizedBooks = useCategorySections(books);
+    const categories = useResultOfPromise(categoryPromise, []);
+    const categorizedBooks = setCategorizedBooks(organizeBooksByCategory(books, categories));
 
     if (!categorizedBooks) {
         return (<div>Loading...</div>);
@@ -74,7 +63,7 @@ export default function BookViewer({books, category}) {
         <div className="container">
             <ActiveElementContextProvider>
                 {
-                    CategorySelector.categories
+                    categories
                         .filter((c) => c.cms)
                         .map((c) =>
                             <CategorySection

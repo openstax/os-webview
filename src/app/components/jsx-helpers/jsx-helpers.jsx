@@ -66,3 +66,13 @@ export function RawHTML({Tag='div', html, ...otherProps}) {
         <Tag dangerouslySetInnerHTML={{__html: html}} {...otherProps} />
     );
 }
+
+export function useResultOfPromise(promise, defaultValue) {
+    const [value, setValue] = useState(defaultValue);
+
+    useEffect(() => {
+        promise.then(setValue);
+    }, []);
+
+    return value;
+}
