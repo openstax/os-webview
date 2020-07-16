@@ -78,6 +78,7 @@ export default {
             "updated": null
         }
     ],
+    "book_video_faculty_resources": [],
     "book_faculty_resources": [
         {
             "id": 2080,
@@ -94,8 +95,10 @@ export default {
             "link_document_title": "OpenStax Instructor Getting Started Guide Fall 2018",
             "link_text": "Download",
             "coming_soon_text": null,
+            "video_reference_number": null,
             "updated": null,
-            "featured": false
+            "featured": false,
+            "k12": false
         },
         {
             "id": 2081,
@@ -112,8 +115,10 @@ export default {
             "link_document_title": "Biology 2e transition guide",
             "link_text": "Transition Guide",
             "coming_soon_text": null,
+            "video_reference_number": null,
             "updated": null,
-            "featured": false
+            "featured": false,
+            "k12": false
         },
         {
             "id": 2082,
@@ -130,8 +135,10 @@ export default {
             "link_document_title": "Syllabus Language - Biology 2e",
             "link_text": "Download",
             "coming_soon_text": null,
+            "video_reference_number": null,
             "updated": null,
-            "featured": false
+            "featured": false,
+            "k12": false
         },
         {
             "id": 2083,
@@ -148,8 +155,10 @@ export default {
             "link_document_title": "Biology2e PowerPoints",
             "link_text": "Download",
             "coming_soon_text": null,
+            "video_reference_number": null,
             "updated": null,
-            "featured": false
+            "featured": false,
+            "k12": false
         },
         {
             "id": 2084,
@@ -166,8 +175,10 @@ export default {
             "link_document_title": "Biology2e-IAG",
             "link_text": "Download",
             "coming_soon_text": null,
+            "video_reference_number": null,
             "updated": null,
-            "featured": false
+            "featured": false,
+            "k12": false
         },
         {
             "id": 2085,
@@ -184,8 +195,10 @@ export default {
             "link_document_title": "Biology2e Lecture Slides",
             "link_text": "Download",
             "coming_soon_text": null,
+            "video_reference_number": null,
             "updated": null,
-            "featured": false
+            "featured": false,
+            "k12": false
         },
         {
             "id": 2086,
@@ -200,8 +213,10 @@ export default {
             "link_page": null,
             "link_text": "Request your copy",
             "coming_soon_text": null,
+            "video_reference_number": null,
             "updated": null,
-            "featured": false
+            "featured": false,
+            "k12": false
         },
         {
             "id": 2087,
@@ -218,8 +233,10 @@ export default {
             "link_document_title": "OpenStax Representation and Diversity Development Guidelines",
             "link_text": "Download",
             "coming_soon_text": null,
+            "video_reference_number": null,
             "updated": null,
-            "featured": false
+            "featured": false,
+            "k12": false
         }
     ],
     "publish_date": "2018-03-28",

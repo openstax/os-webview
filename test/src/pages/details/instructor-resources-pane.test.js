@@ -16,6 +16,9 @@ describe('InstructorResourcePane (as instructor)', () => {
         const wrapper = makeMountRender(InstructorResourcePane, {
             compCopyDialogProps: {},
             featuredResources: [],
+            videoResources: [],
+            blogLinkResources: [],
+            referenceResources: [],
             otherResources: instructorResources,
             userStatusPromise: Promise.resolve(instructor)
         })();

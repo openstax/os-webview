@@ -129,8 +129,8 @@
 
                 .ur-dropdown {
                     background-color: ui-color(white);
-                    color: text-color(normal);
                     box-shadow: 0 0.2rem 0.6rem 0 rgba(ui-color(black), 0.25);
+                    color: text-color(normal);
                     padding: 0.5rem;
                     text-align: left;
 
@@ -138,6 +138,7 @@
                         color: inherit;
                         display: grid;
                         grid-template-columns: 3rem 1fr;
+                        padding: 0.4rem 0;
                         text-decoration: none;
                         width: 100%;
 
