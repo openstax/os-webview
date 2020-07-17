@@ -1,39 +1,28 @@
 import MobileSelector from '~/pages/press/mobile-selector/mobile-selector';
-import {clickElement} from '../../../test-utils';
+import {makeMountRender, snapshotify} from '../../../helpers/jsx-test-utils.jsx';
 
 describe('press/MobileSelector', () => {
     it('opens, changes values, and closes', () => {
         let mobileSelection = 'Press releases';
-        const instance = new MobileSelector(
-            () => ({
-                selectedValue: mobileSelection,
-                values: [
-                    'Press releases',
-                    'News mentions',
-                    'Press inquiries',
-                    'Booking'
-                ]
-            }),
-            (newValue) => {
+        const values = [
+            'Press releases',
+            'News mentions',
+            'Press inquiries',
+            'Booking'
+        ];
+        const wrapper = makeMountRender(MobileSelector, {
+            selectedValue: mobileSelection,
+            values,
+            onChange(newValue) {
                 mobileSelection = newValue;
-                instance.update();
             }
-        );
+        })();
 
-        expect(instance).toBeTruthy();
-        expect(instance.showingMenu).toBe(false);
-        const sbEl = instance.el.querySelector('.selector-button');
-        const queryOverlay = () => instance.el.querySelector('.fixed-overlay');
-
-        expect(sbEl).toBeTruthy();
-        expect(queryOverlay()).toBeFalsy();
-        clickElement(sbEl);
-        expect(queryOverlay()).toBeTruthy();
-        expect(mobileSelection).toBe('Press releases');
-        const lastItem = instance.el.querySelectorAll('[role="menuitem"]')[3];
-
-        clickElement(lastItem);
-        expect(mobileSelection).toBe('Booking');
-        expect(queryOverlay()).toBeFalsy();
+        expect(wrapper.find('[role="menuitem"]')).toHaveLength(0);
+        wrapper.find('.selector-button').simulate('click');
+        expect(wrapper.find('[role="menuitem"]')).toHaveLength(values.length);
+        wrapper.find('[role="menuitem"]:not(.selected)').at(0).simulate('click');
+        expect(mobileSelection).toBe(values[1]);
+        expect(wrapper.find('[role="menuitem"]')).toHaveLength(0);
     });
 });
