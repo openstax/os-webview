@@ -3,6 +3,7 @@ import busMixin from '~/helpers/controller/bus-mixin';
 import {description as template} from './inputs.html';
 import css from './inputs.css';
 import {on} from '~/helpers/controller/decorators';
+import $ from '~/helpers/$';
 
 const spec = {
     template,
@@ -70,14 +71,8 @@ export default class extends componentType(spec, busMixin) {
     }
 
     @on('keypress [role="button"]')
-    simulateClick(event) {
-        if (event.key === 'Enter' || event.key === ' ') {
-            event.delegateTarget.dispatch(new MouseEvent('click', {
-                'view': window,
-                'bubbles': true,
-                'cancelable': true
-            }));
-        }
+    simulateClick({delegateTarget: target, key, preventDefault}) {
+        $.treatSpaceOrEnterAsClick({target, key, preventDefault});
     }
 
 }

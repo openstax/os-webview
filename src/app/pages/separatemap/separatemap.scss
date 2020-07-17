@@ -65,6 +65,7 @@ $small-shadow: 0 0.2rem 0.5rem 0 rgba(0, 0, 0, 0.15);
 
         &.minimized {
             border-radius: 50%;
+            max-width: 4rem;
         }
     }
 

@@ -96,6 +96,18 @@ export function ActiveElementContextProvider({children}) {
     );
 }
 
+export function createPageContextProvider({Context, slug}) {
+    return function ({children}) {
+        const [data, statusPage] = usePageData({slug});
+
+        return (
+            <Context.Provider value={data}>
+                {children}
+            </Context.Provider>
+        );
+    };
+}
+
 export function RawHTML({Tag='div', html, ...otherProps}) {
     return (
         <Tag dangerouslySetInnerHTML={{__html: html}} {...otherProps} />

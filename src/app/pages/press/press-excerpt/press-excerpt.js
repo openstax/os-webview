@@ -1,42 +1,41 @@
-import componentType from '~/helpers/controller/init-mixin';
-import Byline from '~/components/byline/byline';
-import {description as template} from './press-excerpt.html';
-import css from './press-excerpt.css';
+import React, {useRef, useEffect} from 'react';
+import {BylineJsx} from '~/components/byline/byline';
+import './press-excerpt.css';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['press-excerpt']
-    },
-    model() {
-        return {
-            iconUrl: this.iconUrl,
-            author: this.author,
-            source: this.source,
-            org: this.org,
-            date: this.date,
-            headline: this.headline,
-            excerpt: this.excerpt,
-            url: this.url
-        };
-    }
-};
+function OptionalExcerpt({excerpt, url}) {
+    return (
+        excerpt &&
+            <div className="excerpt">
+                {excerpt}…{' '}
+                <a href={url}>Continue reading</a>
+            </div>
+    );
+}
 
-export default class PressExcerpt extends componentType(spec) {
+export default function PressExcerpt({iconUrl, author, date, source, url, headline, excerpt}) {
+    const ref = useRef();
 
-    onLoaded() {
-        if (this.iconUrl) {
-            this.el.classList.add('with-icon');
+    useEffect(() => {
+        if (iconUrl) {
+            ref.current.classList.add('with-icon');
         }
+    });
 
-        const bylineRegion = this.regionFrom('.byline');
-
-        bylineRegion.attach(new Byline({
-            date: this.date,
-            author: this.author,
-            source: this.source
-        }));
-    }
-
+    return (
+        <div className="press-excerpt" ref={ref}>
+            {
+                iconUrl && <img src={iconUrl} alt="" />
+            }
+            <BylineJsx author={author} date={date} source={source} />
+            <div className="headline">
+                <a href={url}>{headline}
+                    {
+                        source && <FontAwesomeIcon icon="external-link-alt" />
+                    }
+                </a>
+            </div>
+            <OptionalExcerpt excerpt={excerpt} url={url} />
+        </div>
+    );
 }

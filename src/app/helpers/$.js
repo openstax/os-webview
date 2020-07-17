@@ -21,6 +21,18 @@ $.booleanAttribute = (whether) => whether ? '' : null;
 $.apiOriginAndPrefix = `${settings.apiOrigin}/apps/cms/api/v2`;
 $.apiOriginAndOldPrefix = $.apiOriginAndPrefix.replace('/v2', '');
 
+$.treatSpaceOrEnterAsClick = ({target, key, preventDefault}) => {
+    if (['Enter', ' '].includes(key)) {
+        console.info('Target is', target);
+        target.dispatchEvent(new MouseEvent('click', {
+            'view': window,
+            'bubbles': true,
+            'cancelable': true
+        }));
+        preventDefault();
+    }
+};
+
 const browserId = () => {
     const ua = navigator.userAgent;
     let M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];

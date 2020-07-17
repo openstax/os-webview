@@ -1,52 +1,65 @@
-import componentType from '~/helpers/controller/init-mixin';
-import bodyUnitView from '~/components/body-units/body-units';
-import Byline from '~/components/byline/byline';
+import React from 'react';
+import BodyUnit from '~/components/body-units/body-units.jsx';
+import {BylineJsx} from '~/components/byline/byline';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
-import {description as template} from './article.html';
-import css from '~/pages/blog/article/article.css';
+import '~/pages/blog/article/article.css';
+import {usePageData} from '~/helpers/controller/cms-mixin';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['article']
-    },
-    regions: {
-        body: '.body'
-    },
-    slug: 'setInInit',
-    model: {}
-};
+function Hero({coverUrl}) {
+    return (
+        <div className="hero" style={`background-image: url(${coverUrl})`}>
+            <img className="strips" src="/images/components/strips.svg"
+                height="10" alt="" role="presentation" />
+        </div>
+    );
+}
 
-export default class Article extends componentType(spec) {
+function Article({data}) {
+    const {
+        article_image: coverUrl,
+        subheading,
+        title,
+        author,
+        date: rawDate,
+        body: bodyData
+    } = data;
+    const date = formatDate(rawDate);
 
-    init(slug) {
-        super.init();
-        this.slug = slug;
-        this.preserveWrapping = true;
+    return (
+        <div className="article text-content">
+            {
+                Boolean(coverUrl) && <Hero coverUrl={coverUrl} />
+            }
+            <article>
+                <h1>{title}</h1>
+                {
+                    Boolean(subheading) && <h2>{subheading}</h2>
+                }
+                <BylineJsx author={author} date={date} />
+                <div className="body">
+                    {
+                        bodyData.map((unit) => <BodyUnit unit={unit} />)
+                    }
+                </div>
+            </article>
+        </div>
+    );
+}
+
+export function ArticleLoader({slug}) {
+    const [data, statusPage] = usePageData({slug, preserveWrapping: true});
+
+    if (data && data.error) {
+        routerBus.emit('navigate', '/404', {path: '/blog'}, true);
+        return null;
     }
+    return (statusPage ? statusPage : <Article data={data} />);
+}
 
-    attachByline(author, date) {
-        const bylineRegion = this.regionFrom('.byline');
-
-        bylineRegion.attach(new Byline({
-            date,
-            author
-        }));
-    }
-
-    onDataLoaded() {
-        this.model = {
-            coverUrl: this.pageData.article_image,
-            heading: this.pageData.heading,
-            subheading: this.pageData.subheading,
-            title: this.pageData.title
-        };
-        this.update();
-        this.attachByline(this.pageData.author, formatDate(this.pageData.date));
-        this.pageData.body.forEach((bodyUnit) => {
-            this.regions.body.append(bodyUnitView(bodyUnit));
-        });
-    }
-
+export function ArticleFromSlug({slug}) {
+    return (
+        <div className="article">
+            <ArticleLoader slug={slug} />
+        </div>
+    );
 }
