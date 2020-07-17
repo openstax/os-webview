@@ -70,7 +70,7 @@ export function RawHTML({Tag='div', html, ...otherProps}) {
 export function useResultOfPromise(promise, defaultValue) {
     const [value, setValue] = useState(defaultValue);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         promise.then(setValue);
     }, []);
 

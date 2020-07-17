@@ -69,7 +69,7 @@ function Subjects({model}) {
             <div className="strips-and-filter">
                 <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
                 <div className={`filter ${model.filterIsSticky ? 'sticky': ''}`}>
-                    <RadioPanel2 selectedItem={category} items={categories} onChange={setCategory} />
+                    <RadioPanel selectedItem={category} items={categories} onChange={setCategory} />
                 </div>
             </div>
             <div className="books">

@@ -43,7 +43,7 @@ function CategorySection({categoryData, categorizedBooks, category}) {
             <div class="row">
                 {
                     books.map((book) =>
-                        <BookCover {...book} />
+                        <BookCover {...book} key={book.slug} />
                     )
                 }
             </div>
@@ -53,7 +53,7 @@ function CategorySection({categoryData, categorizedBooks, category}) {
 
 export default function BookViewer({books, category}) {
     const categories = useResultOfPromise(categoryPromise, []);
-    const categorizedBooks = setCategorizedBooks(organizeBooksByCategory(books, categories));
+    const categorizedBooks = organizeBooksByCategory(books, categories);
 
     if (!categorizedBooks) {
         return (<div>Loading...</div>);
