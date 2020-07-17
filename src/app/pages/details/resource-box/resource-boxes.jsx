@@ -16,7 +16,7 @@ function CommonsHubBox({model}) {
                 <br />
                 <a href={model.url}>
                     {model.cta}{' '}
-                    <i className="fa fa-external-link-alt"></i>
+                    <FontAwesomeIcon icon="external-link-alt" />
                 </a>
             </div>
             <div className="bottom">
