@@ -29,13 +29,13 @@ describe('RadioPanel', () => {
 
 describe('RadioPanelJsx', () => {
     let selectedValue = null;
-    const updateSelected = (value) => {
+    const onChange = (value) => {
         selectedValue = value;
     };
     const wrapper = makeMountRender(RadioPanelJsx, {
         items,
         selectedValue,
-        updateSelected
+        onChange
     })();
     const buttons = () => wrapper.find('.filter-button');
 

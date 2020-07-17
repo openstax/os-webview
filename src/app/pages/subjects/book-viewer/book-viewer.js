@@ -1,11 +1,12 @@
-import {Controller} from 'superb.js';
-import CategorySelector from '~/components/category-selector/category-selector';
-import CategorySection from './category-section/category-section';
+import React, {useState, useEffect} from 'react';
+import {RawHTML, ActiveElementContextProvider, useResultOfPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {BookCover} from './book';
+import categoryPromise from '~/models/subjectCategories';
 
-function organizeBooksByCategory(books) {
+function organizeBooksByCategory(books, categories) {
     const result = {};
     const addLabels = () => {
-        for (const category of CategorySelector.categories) {
+        for (const category of categories) {
             if (result[category.cms]) {
                 result[category.cms].label = category.html;
             }
@@ -28,46 +29,52 @@ function organizeBooksByCategory(books) {
     return result;
 }
 
-export default class BookViewer extends Controller {
+function CategorySection({categoryData, categorizedBooks, category}) {
+    const classList = ['book-category'];
+    const subjectHtml = categoryData.html;
+    const books = categorizedBooks[categoryData.cms];
 
-    init(books) {
-        this.template = () => '';
-        this.view = {
-            classes: ['container']
-        };
-        this.books = books;
+    if (!['view-all', categoryData.value].includes(category)) {
+        classList.push('hidden');
+    }
+    return (
+        <div className={classList.join(' ')}>
+            <RawHTML Tag="h2" html={subjectHtml} className="subject" />
+            <div class="row">
+                {
+                    books.map((book) =>
+                        <BookCover {...book} key={book.slug} />
+                    )
+                }
+            </div>
+        </div>
+    );
+}
+
+export default function BookViewer({books, category}) {
+    const categories = useResultOfPromise(categoryPromise, []);
+    const categorizedBooks = organizeBooksByCategory(books, categories);
+
+    if (!categorizedBooks) {
+        return (<div>Loading...</div>);
     }
 
-    update() {
-        // No updating!
-    }
-
-    onLoaded() {
-        CategorySelector.loaded.then(() => {
-            const categorizedBooks = organizeBooksByCategory(this.books);
-
-            this.categorySections = CategorySelector.categories
-                .filter((c) => c.value !== 'view-all')
-                .map(
-                    (category) => new CategorySection(category.value, categorizedBooks[category.cms])
-                );
-            for (const controller of this.categorySections) {
-                this.regions.self.append(controller);
-            }
-            if (this.filterToCategory) {
-                this.filterSubjects(this.filterToCategory);
-            }
-        });
-    }
-
-    filterSubjects(category) {
-        if (!this.categorySections) {
-            this.filterToCategory = category;
-            return;
-        }
-        for (const controller of this.categorySections) {
-            controller.filter(category);
-        }
-    }
-
+    return (
+        <div className="container">
+            <ActiveElementContextProvider>
+                {
+                    categories
+                        .filter((c) => c.cms)
+                        .map((c) =>
+                            <CategorySection
+                                categoryData={c}
+                                categorizedBooks={categorizedBooks}
+                                category={category}
+                                key={c.cms}
+                            />
+                        )
+                }
+            </ActiveElementContextProvider>
+        </div>
+    );
 }

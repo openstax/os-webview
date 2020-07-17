@@ -2,9 +2,9 @@ import React, {useState, useRef, useEffect} from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-function RadioButton({item, isSelected, updateSelected}) {
+function RadioButton({item, isSelected, onChange}) {
     const onClick = () => {
-        updateSelected(item.value);
+        onChange(item.value);
     };
     const onKeyDown = (event) => {
         if ([' ', 'Enter'].includes(event.key)) {
@@ -35,7 +35,7 @@ function RadioButton({item, isSelected, updateSelected}) {
     );
 }
 
-export default function RadioPanel({items, selectedValue, updateSelected}) {
+export default function RadioPanel({items, selectedValue, onChange}) {
     const isSelected = (val) => {
         return val === selectedValue;
     };
@@ -45,7 +45,7 @@ export default function RadioPanel({items, selectedValue, updateSelected}) {
             {
                 items && items.map((item) => (
                     <RadioButton key={item.value}
-                        item={item} isSelected={isSelected} updateSelected={updateSelected} />
+                        item={item} isSelected={isSelected} onChange={onChange} />
                 ))
             }
         </React.Fragment>
