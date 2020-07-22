@@ -3,6 +3,7 @@ import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './resource-box.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import shellBus from '~/components/shell/shell-bus';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
 
 function CommonsHubBox({model}) {
     return (
@@ -31,28 +32,69 @@ function CommonsHubBox({model}) {
     );
 }
 
-function Bottom({model}) {
+function NewLabel() {
     return (
-        <div className="bottom">
-            <div className="left">
+        <div className="new-label-container">
+            <span className="new-label">NEW</span>
+        </div>
+    );
+}
+
+// eslint-disable-next-line complexity
+function Top({isNew, model}) {
+    const description = model.comingSoon ? `<p>${model.comingSoonText}</p>` : model.description;
+
+    return (
+        <div className="top">
+            {isNew && <NewLabel />}
+            {
+                model.k12 &&
+                <img className="badge" src="/images/details/k-12-icon@3x.png" alt="K12 resource" />
+            }
+            <div className="top-line">
+                <h3 className={model.k12 ? 'space-for-badge' : ''}>{model.heading}</h3>
                 {
-                    model.link ? model.link.text : 'Access pending'
+                    model.creatorFest &&
+                        <img
+                            title="This resource was created by instructors at Creator Fest"
+                            src="/images/details/cf-badge.svg"
+                        />
                 }
             </div>
+            <RawHTML className="description" html={description} />
+        </div>
+    );
+}
+
+function BottomBasic({leftContent, icon}) {
+    return (
+        <div className="bottom">
+            <div className="left">{leftContent}</div>
             <div className="right">
-                <FontAwesomeIcon icon={model.link ? model.iconType : 'lock'} />
+                <FontAwesomeIcon icon={icon} />
             </div>
         </div>
     );
 }
 
-function ResourceBox({model}) {
-    const comingSoonClass = model.comingSoon ? 'coming-soon' : '';
-    const description = model.comingSoon ? `<p>${model.comingSoonText}</p>` : model.description;
-    const doubleClass = model.double ? 'double' : '';
-    const classNames = ['resource-box', comingSoonClass, doubleClass]
-        .filter((n) => n)
-        .join(' ');
+function Bottom({model, overrideIcon}) {
+    const leftContent = model.link ? model.link.text : 'Access pending';
+    const icon = model.link ? model.iconType : 'lock';
+
+    return (
+        <BottomBasic leftContent={leftContent} icon={overrideIcon || icon} />
+    );
+}
+
+function ReferenceNumber({referenceNumber}) {
+    return (
+        referenceNumber !== null &&
+            <div className="reference-number">{referenceNumber}</div>
+    );
+}
+
+function ResourceBox({model, icon}) {
+    const classNames = ['resource-box'];
     const [isNew, updateIsNew] = useState(model.isNew);
     const onClick = (event) => {
         if (model.dialogProps) {
@@ -65,53 +107,30 @@ function ResourceBox({model}) {
         }
         updateIsNew(model.isNew);
     };
+    const {Tag, ...props} = model.link ?
+        {
+            Tag: 'a',
+            href: model.link.url,
+            'data-local': model.iconType === 'lock' ? 'true' : 'false',
+            onClick
+        } :
+        {
+            Tag: 'div'
+        };
 
-    function RootNode({Slot}) {
-        return (
-            model.link ?
-                <a className={classNames} href={model.link.url}
-                    data-local={
-                        model.iconType === 'lock' ? 'true' : 'false'
-                    }
-                    onClick={onClick}
-                >
-                    <Slot />
-                </a> :
-                <div className={classNames}>
-                    <Slot />
-                </div>
-        );
+    if (model.double) {
+        classNames.push('double');
+    }
+    if (model.comingSoon) {
+        classNames.push('coming-soon');
     }
 
     return (
-        <RootNode Slot={() => (
-            <React.Fragment>
-                <div className="top">
-                    {
-                        isNew &&
-                        <div className="new-label-container">
-                            <span className="new-label">NEW</span>
-                        </div>
-                    }
-                    {
-                        model.k12 &&
-                        <img className="badge" src="/images/details/k-12-icon@3x.png" alt="K12 resource" />
-                    }
-                    <div className="top-line">
-                        <h3 className={model.k12 ? 'space-for-badge' : ''}>{model.heading}</h3>
-                        {
-                            model.creatorFest &&
-                                <img
-                                    title="This resource was created by instructors at Creator Fest"
-                                    src="/images/details/cf-badge.svg"
-                                />
-                        }
-                    </div>
-                    <RawHTML className="description" html={description} />
-                </div>
-                <Bottom model={model} />
-            </React.Fragment>
-        )} />
+        <Tag className={classNames.join(' ')} {...props}>
+            <ReferenceNumber referenceNumber={model.videoReferenceNumber} />
+            <Top model={model} isNew={isNew} />
+            <Bottom model={model} overrideIcon={icon} />
+        </Tag>
     );
 }
 
@@ -124,6 +143,55 @@ export default function ResourceBoxes({models, communityResource}) {
             }
             {
                 models.map((model) =>
+                    <ResourceBox model={model} key={model.heading} />
+                )
+            }
+        </React.Fragment>
+    );
+}
+
+function VideoViewer({file}) {
+    return (
+        <video controls src={file} />
+    );
+}
+const SuperbVideoViewer = pageWrapper(VideoViewer, {classes: ['instructor-resource-video-viewer']});
+
+export function VideoResourceBoxes({models, blogLinkModels, referenceModels}) {
+    function onClick(event) {
+        const [model] = models;
+        const dialogProps = {
+            title: model.video_title || model.resource_heading,
+            content: new SuperbVideoViewer({file: model.video_file})
+        };
+
+        event.preventDefault();
+        shellBus.emit('showDialog', () => dialogProps);
+    }
+
+    return (
+        <React.Fragment>
+            {
+                models.map((model) =>
+                    <div className="video resource-box" onClick={onClick} >
+                        <div className="top-line">
+                            <h3>{model.resource_heading}</h3>
+                        </div>
+                        <RawHTML className="description" html={model.resource_description} />
+                        <video controls preload="metadata">
+                            <source src={model.video_file} type="video/avi" />
+                        </video>
+                        <BottomBasic leftContent="Watch video" icon="play" />
+                    </div>
+                )
+            }
+            {
+                blogLinkModels && blogLinkModels.map((model) =>
+                    <ResourceBox model={model} icon="link" />
+                )
+            }
+            {
+                referenceModels.map((model) =>
                     <ResourceBox model={model} key={model.heading} />
                 )
             }

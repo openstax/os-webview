@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import FeaturedResources from './featured-resources/featured-resources.jsx';
 import {instructorResourceBoxPermissions} from '../resource-box/resource-box';
-import ResourceBoxes from '../resource-box/resource-boxes.jsx';
+import ResourceBoxes, {VideoResourceBoxes} from '../resource-box/resource-boxes.jsx';
 import partnerFeaturePromise, {tooltipText} from '~/models/salesforce-partners';
 import shuffle from 'lodash/shuffle';
 import Partners from './partners/partners.jsx';
@@ -60,7 +60,8 @@ function resourceBoxModel(resourceData, userStatus, dialogProps) {
             comingSoonText: resourceData.coming_soon_text,
             featured: resourceData.featured,
             k12: resourceData.k12,
-            dialogProps: isCompCopyLink ? dialogProps : null
+            dialogProps: isCompCopyLink ? dialogProps : null,
+            videoReferenceNumber: resourceData.video_reference_number
         },
         instructorResourceBoxPermissions(resourceData, userStatus, 'Instructor resources')
     );
@@ -113,6 +114,10 @@ export function InstructorResourceTabJsx({
 
     const featuredModels = model.featuredResources
         .map((res) => resourceBoxModel(res, userStatus));
+    const blogLinkModels = model.blogLinkResources
+        .map((res) => resourceBoxModel(res, userStatus, dialogProps));
+    const referenceModels = model.referenceResources
+        .map((res) => resourceBoxModel(res, userStatus, dialogProps));
     const otherModels = model.otherResources
         .map((res) => resourceBoxModel(res, userStatus, dialogProps));
     const partnersModel = {
@@ -132,6 +137,10 @@ export function InstructorResourceTabJsx({
                 }
                 <div className={`cards ${includePartners}`}>
                     <div className="resources">
+                        <VideoResourceBoxes models={model.videoResources}
+                            blogLinkModels={blogLinkModels}
+                            referenceModels={referenceModels}
+                        />
                         <ResourceBoxes communityResource={communityResource} models={otherModels} />
                     </div>
                     <Partners
