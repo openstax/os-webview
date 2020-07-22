@@ -1,178 +1,189 @@
+import React, {useState, useRef, useEffect} from 'react';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
+import {useDataFromPromise, useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
-import {Controller} from 'superb.js';
-import {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
-import mix from '~/helpers/controller/mixins';
-import BookSelector from '~/components/book-selector/book-selector';
-import ContactInfo from '~/components/contact-info/contact-info';
-import FormCheckboxGroup from '~/components/form-checkboxgroup/form-checkboxgroup';
 import FormHeader from '~/components/form-header/form-header';
-import FormInput from '~/components/form-input/form-input';
-import HiddenFields from './hidden-fields/hidden-fields';
-import MultiPageForm from '~/components/multi-page-form/multi-page-form';
 import RoleSelector from '~/components/role-selector/role-selector';
-import salesforcePromise, {salesforce} from '~/models/salesforce';
-import {afterFormSubmit} from '~/models/books';
-import SeriesOfComponents from '~/components/series-of-components/series-of-components';
 import StudentForm from '~/components/student-form/student-form';
-import {description as template} from './interest.html';
-import css from './interest.css';
+import MultiPageForm from '~/components/multi-page-form/multi-page-form.jsx';
+import {HiddenFields} from '~/components/salesforce-form/salesforce-form.jsx';
+import ContactInfo from '~/components/contact-info/contact-info';
+import BookSelector, {useSelectedBooks} from '~/components/book-selector/book-selector';
+import FormInput from '~/components/form-input/form-input.jsx';
+import FormCheckboxgroup from '~/components/form-checkboxgroup/form-checkboxgroup';
+import salesforcePromise from '~/models/salesforce';
+import {afterFormSubmit} from '~/models/books';
+import './interest.css';
 
-const BaseClass = mix(Controller).with(canonicalLinkMixin);
+function ContactInfoPage({selectedRole, validatorRef}) {
+    return (
+        <React.Fragment>
+            <HiddenFields leadSource="Interest Form" />
+            <input type="hidden" name="Role__c" value={selectedRole} />
+            <ContactInfo validatorRef={validatorRef} />
+        </React.Fragment>
+    );
+}
 
-export default class InterestForm extends BaseClass {
+function firstSearchArgument() {
+    return decodeURIComponent(window.location.search.substr(1))
+        .replace(/&.*/, '');
+}
 
-    init() {
-        super.init();
-        this.template = template;
-        this.css = css;
-        this.view = {
-            classes: ['interest-form-v2'],
-            tag: 'main'
-        };
-        this.regions = {
-            header: '[data-region="header"]',
-            roleSelector: '[data-region="role-selector"]'
-        };
-        this.selectedRole = 'none selected';
-        this.hiddenFields = new HiddenFields(() => this.selectedRole);
-        this.preselectedTitle = decodeURIComponent(window.location.search.substr(1))
-            .replace(/&.*/, '');
-        this.selectedBooks = [];
-    }
+function HowDidYouHear() {
+    const options = [
+        {value: 'Web search', label: 'Web search'},
+        {value: 'Colleague', label: 'Colleague'},
+        {value: 'Conference', label: 'Conference'},
+        {value: 'Email', label: 'Email'},
+        {value: 'Facebook', label: 'Facebook'},
+        {value: 'Twitter', label: 'Twitter'},
+        {value: 'Webinar', label: 'Webinar'},
+        {value: 'Partner organization', label: 'Partner organization'}
+    ];
 
-    firstPage() {
-        const contactForm = new ContactInfo({
-            validationMessage(name) {
-                return this.validated ? this.el.querySelector(`[name="${name}"]`).validationMessage : '';
+    return (
+        <FormCheckboxgroup name="How_did_you_Hear__c"
+            longLabel="How did you hear about OpenStax?"
+            instructions="Select all that apply (optional)."
+            options={options}
+        />
+    );
+}
+
+function BookSelectorPage({selectedBooksRef, bookBeingSubmitted}) {
+    const preselectedTitle = firstSearchArgument();
+    const [selectedBooks, toggleBook] = useSelectedBooks();
+
+    selectedBooksRef.current = selectedBooks;
+    return (
+        <div className="page-2">
+            <BookSelector prompt="Which textbook(s) are you currently using?"
+                required
+                selectedBooks={selectedBooks}
+                preselectedTitle={preselectedTitle}
+                toggleBook={toggleBook}
+            />
+            <FormInput
+                longLabel="How many students do you teach each semester?"
+                inputProps={{
+                    name: 'Number_of_Students__c',
+                    type: 'number',
+                    min: '1',
+                    max: '999',
+                    required: true
+                }}
+            />
+            <HowDidYouHear />
+            {
+                bookBeingSubmitted &&
+                    <React.Fragment>
+                        <input type="hidden" name="Subject__c" value={bookBeingSubmitted.value} />
+                        <input type="hidden" name="First__c" value={bookBeingSubmitted === selectedBooks[0]} />
+                    </React.Fragment>
             }
-        });
-        const result = new SeriesOfComponents({
-            className: 'page-1',
-            contents: [
-                this.hiddenFields,
-                contactForm
-            ]
-        });
+        </div>
+    );
+}
 
-        result.validate = function () {
-            return contactForm.checkSchoolName() || contactForm.validate();
-        };
-        return result;
+function FacultyForm({selectedRole, onPageChange}) {
+    const salesforce = useDataFromPromise(salesforcePromise, {});
+    const contactValidatorRef = useRef();
+    const selectedBooksRef = useRef();
+    const [currentBook, setCurrentBook] = useState();
+    const formRef = useRef();
+
+    function validatePage(page) {
+        const validateContactInfo = contactValidatorRef.current;
+
+        if (page === 1 && !validateContactInfo()) {
+            return false;
+        }
+        return true;
     }
 
-    secondPage() {
-        let validated = false;
-        const validationMessage = function (name) {
-            return this && validated ? this.el.querySelector(`[name="${name}"]`).validationMessage : '';
-        };
-        const bookSelector = new BookSelector({
-            prompt: 'Which textbook(s) are you interested in adopting?',
-            required: true,
-            name: 'Subject__c',
-            preselectedTitle: this.preselectedTitle
-        });
-        const howManyStudents = new FormInput({
-            name: 'Number_of_Students__c',
-            longLabel: 'How many students do you teach each semester?',
-            type: 'number',
-            min: '1',
-            max: '999',
-            required: true,
-            validationMessage: (name) => validationMessage.bind(howManyStudents)(name)
-        });
-        const howDidYouHear = new FormCheckboxGroup({
-            name: 'How_did_you_Hear__c',
-            longLabel: 'How did you hear about OpenStax?',
-            instructions: 'Select all that apply (optional).',
-            options: [
-                {value: 'Web search', label: 'Web search'},
-                {value: 'Colleague', label: 'Colleague'},
-                {value: 'Conference', label: 'Conference'},
-                {value: 'Email', label: 'Email'},
-                {value: 'Facebook', label: 'Facebook'},
-                {value: 'Twitter', label: 'Twitter'},
-                {value: 'Webinar', label: 'Webinar'},
-                {value: 'Partner organization', label: 'Partner organization'}
-            ],
-            validationMessage: (name) => validationMessage.bind(howDidYouHear)(name)
-        });
-        const result = new SeriesOfComponents({
-            className: 'page-2',
-            contents: [
-                bookSelector,
-                howManyStudents,
-                howDidYouHear
-            ]
-        });
+    useEffect(() => {
+        if (currentBook) {
+            formRef.current.submit();
+        }
+    }, [currentBook]);
 
-        bookSelector.on('change', (selectedBooks) => {
-            this.selectedBooks = selectedBooks;
-        });
-        result.validate = function () {
-            validated = true;
-            const bsv = bookSelector.validate();
+    function onSubmit(form) {
+        const selectedBooks = selectedBooksRef.current;
+        const submitQueue = selectedBooks.slice();
+        const iframe = document.getElementById(form.target);
 
-            bookSelector.update();
-            result.update();
+        // eslint-disable-next-line no-use-before-define
+        const submitAfterDelay = () => setTimeout(submitNextBook, 300);
 
-            return Boolean(bsv || result.el.querySelector(':invalid'));
-        };
-        return result;
+        function submitNextBook() {
+            const preselectedTitle = firstSearchArgument();
+
+            if (submitQueue.length > 0) {
+                setCurrentBook(submitQueue.shift());
+            } else if (iframe) {
+                setCurrentBook(null);
+                iframe.removeEventListener('load', submitAfterDelay);
+                afterFormSubmit(preselectedTitle, selectedBooks);
+            }
+        }
+
+        formRef.current = form;
+        if (iframe) {
+            iframe.addEventListener('load', submitAfterDelay);
+        }
+        submitNextBook();
     }
 
-    onLoaded() {
+    return (
+        <React.Fragment>
+            <MultiPageForm validatePage={validatePage} action={salesforce.webtoleadUrl}
+                onPageChange={onPageChange} onSubmit={onSubmit} debug={salesforce.debug}
+                submitting={currentBook}
+            >
+                <ContactInfoPage selectedRole={selectedRole} validatorRef={contactValidatorRef} />
+                <BookSelectorPage selectedBooksRef={selectedBooksRef} bookBeingSubmitted={currentBook}/>
+            </MultiPageForm>
+        </React.Fragment>
+    );
+}
+
+export function InterestForm() {
+    const [selectedRole, setSelectedRole] = useState('');
+    const [hideRoleSelector, setHideRoleSelector] = useState(false);
+    const ref = useRef();
+
+    function onPageChange(page) {
+        setHideRoleSelector(page > 1);
+        ref.current.scrollIntoView();
+    }
+
+    useEffect(() => {
         $.setPageTitleAndDescription('Interest Form');
         // Pardot tracking
         if ('piTracker' in window) {
             piTracker(window.location.href.split('#')[0]);
         }
-        this.regions.header.attach(new FormHeader('pages/interest-form'));
+    }, []);
+    useCanonicalLink();
 
-        const studentForm = new StudentForm();
-        const facultyPages = [
-            this.firstPage(),
-            this.secondPage()
-        ];
-
-        salesforcePromise.then(() => {
-            const facultyForm = new MultiPageForm(
-                () => ({
-                    action: salesforce.webtoleadUrl,
-                    contents: facultyPages
-                }),
-                {
-                    onPageChange: this.onPageChange.bind(this),
-                    afterSubmit: () => {
-                        afterFormSubmit(this.preselectedTitle, this.selectedBooks);
-                    }
-                }
-            );
-
-            this.roleSelector = new RoleSelector(
-                () => [
-                    {
-                        contents: studentForm,
-                        hideWhen: (role) => role !== 'Student'
-                    },
-                    {
-                        contents: facultyForm,
-                        hideWhen: (role) => ['', 'Student'].includes(role)
-                    }
-                ]
-            );
-            this.roleSelector.on('change', (newValue) => {
-                this.selectedRole = newValue;
-                this.hiddenFields.update();
-            });
-            this.regions.roleSelector.attach(this.roleSelector);
-        });
-    }
-
-    onPageChange(pageNumber) {
-        if (this.roleSelector) {
-            this.roleSelector.isHidden = pageNumber > 0;
-            this.roleSelector.update();
-        }
-    }
-
+    return (
+        <React.Fragment>
+            <FormHeader slug="pages/adoption-form" />
+            <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
+            <div className="text-content" ref={ref}>
+                <RoleSelector value={selectedRole} setValue={setSelectedRole} hidden={hideRoleSelector}>
+                    <StudentForm />
+                    <FacultyForm selectedRole={selectedRole} onPageChange={onPageChange} />
+                </RoleSelector>
+            </div>
+        </React.Fragment>
+    );
 }
+
+const view = {
+    classes: ['interest-form-v2'],
+    tag: 'main'
+};
+
+export default pageWrapper(InterestForm, view);

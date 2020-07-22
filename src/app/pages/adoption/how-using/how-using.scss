@@ -2,7 +2,6 @@
 
 .how-using {
     display: grid;
-    grid-gap: 4rem;
     margin-top: 4rem;
 
     > div {
@@ -12,7 +11,7 @@
         padding: 2rem 0;
     }
 
-    label {
+    label:not(.form-input) {
         align-items: center;
         color: text-color(helper);
         display: grid;

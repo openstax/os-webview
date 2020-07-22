@@ -3,12 +3,7 @@ import WrappedJsx from '~/controllers/jsx-wrapper';
 import './popup.css';
 import shellBus from '~/components/shell/shell-bus';
 
-const view = {
-    tag: 'pop-up',
-    classes: ['page-overlay']
-};
-
-export function PopupJsx({message, onClose}) {
+function PopupJsx({message, onClose}) {
     useEffect(() => {
         shellBus.emit('with-modal');
 
@@ -26,11 +21,26 @@ export function PopupJsx({message, onClose}) {
         <div className="overlay" onKeyDown={maybeGoAway}>
             <div role="dialog" aria-describedby="popupMessage">
                 <p id="popupMessage">{message}</p>
-                <button className="dismiss" tabindex="1" onClick={onClose}>Got it</button>
+                <button type="button" className="dismiss" tabindex="1" onClick={onClose}>
+                    Got it
+                </button>
             </div>
         </div>
     );
 }
+
+export function WrappedPopupJsx(props) {
+    return (
+        <pop-up className="page-overlay">
+            <PopupJsx {...props} />
+        </pop-up>
+    );
+}
+
+const view = {
+    tag: 'pop-up',
+    classes: ['page-overlay']
+};
 
 export default class Popup extends WrappedJsx {
 

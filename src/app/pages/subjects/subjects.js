@@ -2,7 +2,7 @@ import routerBus from '~/helpers/router-bus';
 import React, {useState, useEffect} from 'react';
 import {pageWrapper, SuperbItem} from '~/controllers/jsx-wrapper';
 import {usePageData} from '~/helpers/controller/cms-mixin';
-import {RawHTML, useResultOfPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {RawHTML, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import BookViewer from './book-viewer/book-viewer';
 import categoryPromise from '~/models/subjectCategories';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
@@ -32,7 +32,7 @@ function useCategoryTiedToPath() {
 
 function Subjects({model}) {
     const category = useCategoryTiedToPath();
-    const categories = useResultOfPromise(categoryPromise, []);
+    const categories = useDataFromPromise(categoryPromise, []);
 
     useEffect(() => {
         const description = $.htmlToText(model.page_description);

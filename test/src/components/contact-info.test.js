@@ -1,33 +1,29 @@
+import {makeMountRender} from '../../helpers/jsx-test-utils.jsx';
 import ContactInfo from '~/components/contact-info/contact-info';
-import instanceReady from '../../helpers/instance-ready';
 
 describe('ContactInfo', () => {
-    const {instance:p, ready} = instanceReady(ContactInfo, {
-        validationMessage: () => 'this is the validationMessage'
+    const validatorRef = {};
+    const props = {validatorRef};
+
+    let wrapper;
+
+    beforeEach((done) => {
+        wrapper = makeMountRender(ContactInfo, props)();
+
+        setTimeout(() => {
+            wrapper.update();
+            done();
+        }, 10);
     });
 
-    it('initializes', () => {
-        return ready.then(() => {
-            expect(p).toBeTruthy();
-        });
+    it('creates', () => {
+        expect(validatorRef).toHaveProperty('current');
     });
-    it('catches invalid entries', () => {
-        return ready.then(() => {
-            expect(p.validate()).toBeTruthy();
-            expect(p.validated).toBe(true);
-        });
-    });
-    it('balks once on short school name', () => {
-        return ready.then(() => {
-            const popupMessageEl = () => p.el.querySelector('#popupMessage');
-            const schoolInput = p.el.querySelector('[name="company"]');
+    it('validates schools', () => {
+        const schoolInput = wrapper.find({name: 'company'});
 
-            expect(popupMessageEl()).toBeFalsy();
-            expect(schoolInput).toBeTruthy();
-            schoolInput.value = 'Rice';
-            expect(p.checkSchoolName()).toBe(true);
-            expect(popupMessageEl()).toBeTruthy();
-            expect(p.checkSchoolName()).toBe(false);
-        })
+        expect(validatorRef.current()).toBe(false);
+        schoolInput.simulate('change', { value: 'Rice'});
+        expect(wrapper.find('#popupMessage')).toHaveLength(1);
     });
 });

@@ -1,187 +1,154 @@
+import React, {useState, useEffect, useRef} from 'react';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
+import {useDataFromPromise, useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
-import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
-import BookSelector from '~/components/book-selector/book-selector';
-import ContactInfo from '~/components/contact-info/contact-info';
 import FormHeader from '~/components/form-header/form-header';
-import HiddenFields from './hidden-fields/hidden-fields';
-import HowUsing from './how-using/how-using';
-import MultiPageForm from '~/components/multi-page-form/multi-page-form';
 import RoleSelector from '~/components/role-selector/role-selector';
-import salesforcePromise, {salesforce} from '~/models/salesforce';
-import {afterFormSubmit} from '~/models/books';
-import SeriesOfComponents from '~/components/series-of-components/series-of-components';
 import StudentForm from '~/components/student-form/student-form';
-import {description as template} from './adoption.html';
+import MultiPageForm from '~/components/multi-page-form/multi-page-form.jsx';
+import {HiddenFields, FormSubmitContext} from '~/components/salesforce-form/salesforce-form.jsx';
+import ContactInfo from '~/components/contact-info/contact-info';
+import BookSelector, {useSelectedBooks} from '~/components/book-selector/book-selector';
+import salesforcePromise from '~/models/salesforce';
+import HowUsing from './how-using/how-using';
+import {afterFormSubmit} from '~/models/books';
 import css from './adoption.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['adoption-form-v2'],
-        tag: 'main'
-    },
-    regions: {
-        header: '[data-region="header"]',
-        roleSelector: '[data-region="role-selector"]'
+function ContactInfoPage({selectedRole, validatorRef}) {
+    return (
+        <React.Fragment>
+            <HiddenFields leadSource="Adoption Form"/>
+            <input type="hidden" name="Role__c" value={selectedRole} />
+            <ContactInfo validatorRef={validatorRef} />
+        </React.Fragment>
+    );
+}
+
+function firstSearchArgument() {
+    return decodeURIComponent(window.location.search.substr(1))
+        .replace(/&.*/, '');
+}
+
+function BookSelectorPage({selectedBooksRef}) {
+    const preselectedTitle = firstSearchArgument();
+    const [selectedBooks, toggleBook] = useSelectedBooks();
+
+    selectedBooksRef.current = selectedBooks;
+    return (
+        <React.Fragment>
+            <BookSelector prompt="Which textbook(s) are you currently using?"
+                required
+                selectedBooks={selectedBooks}
+                preselectedTitle={preselectedTitle}
+                toggleBook={toggleBook}
+            />
+            <HowUsing selectedBooks={selectedBooks} />
+        </React.Fragment>
+    );
+}
+
+function FacultyForm({selectedRole, onPageChange}) {
+    const contactValidatorRef = useRef();
+    const selectedBooksRef = useRef();
+    const [currentBook, setCurrentBook] = useState();
+    const formRef = useRef();
+    const salesforce = useDataFromPromise(salesforcePromise, {});
+
+    function validatePage(page) {
+        const validateContactInfo = contactValidatorRef.current;
+
+        if (page === 1 && !validateContactInfo()) {
+            return false;
+        }
+        if (page === 2 && selectedBooksRef.current.length < 1) {
+            return false;
+        }
+        return true;
     }
-};
 
-export default class AdoptionForm extends componentType(spec, canonicalLinkMixin) {
+    useEffect(() => {
+        if (currentBook) {
+            formRef.current.submit();
+        }
+    }, [currentBook]);
 
-    init() {
-        super.init();
-        this.selectedBooks = [];
-        this.usingInfo = {};
-        this.disableHowUsing = false;
-        this.currentBookInfo = {};
-        this.hiddenFields = new HiddenFields(
-            () => Object.assign({
-                role: this.roleSelector ? this.roleSelector.selectedRole : 'none selected'
-            }, this.currentBookInfo)
-        );
-        this.howUsing = new HowUsing(
-            () => ({
-                selectedBooks: this.selectedBooks,
-                disable: this.disableHowUsing
-            }),
-            (newValue) => {
-                this.usingInfo = newValue;
+
+    function onSubmit(form) {
+        const selectedBooks = selectedBooksRef.current;
+        const submitQueue = selectedBooks.slice();
+        const iframe = document.getElementById(form.target);
+
+        // eslint-disable-next-line no-use-before-define
+        const submitAfterDelay = () => setTimeout(submitNextBook, 300);
+
+        function submitNextBook() {
+            const preselectedTitle = firstSearchArgument();
+
+            if (submitQueue.length > 0) {
+                setCurrentBook(submitQueue.shift());
+            } else if (iframe) {
+                setCurrentBook(null);
+                iframe.removeEventListener('load', submitAfterDelay);
+                afterFormSubmit(preselectedTitle, selectedBooks);
             }
-        );
-        this.setCanonicalLink('/adoption');
-        this.preselectedTitle = decodeURIComponent(window.location.search.substr(1))
-            .replace(/&.*/, '');
+        }
+
+        formRef.current = form;
+        if (iframe) {
+            iframe.addEventListener('load', submitAfterDelay);
+        }
+        submitNextBook();
     }
 
-    onLoaded() {
+    return (
+        <FormSubmitContext.Provider value={currentBook}>
+            <MultiPageForm validatePage={validatePage} action={salesforce.webtoleadUrl}
+                onPageChange={onPageChange} onSubmit={onSubmit} debug={salesforce.debug}
+                submitting={currentBook}
+            >
+                <ContactInfoPage selectedRole={selectedRole} validatorRef={contactValidatorRef} />
+                <BookSelectorPage selectedBooksRef={selectedBooksRef} />
+            </MultiPageForm>
+        </FormSubmitContext.Provider>
+    );
+}
+
+export function AdoptionForm() {
+    const [selectedRole, setSelectedRole] = useState('');
+    const [hideRoleSelector, setHideRoleSelector] = useState(false);
+    const ref = useRef();
+
+    function onPageChange(page) {
+        setHideRoleSelector(page > 1);
+        ref.current.scrollIntoView();
+    }
+
+    useEffect(() => {
         $.setPageTitleAndDescription('Adoption Form');
         // Pardot tracking
         if ('piTracker' in window) {
             piTracker(window.location.href.split('#')[0]);
         }
-        this.regions.header.attach(new FormHeader('pages/adoption-form'));
+    }, []);
+    useCanonicalLink();
 
-        const studentForm = new StudentForm();
-        const firstPage = () => {
-            const contactForm = new ContactInfo({
-                validationMessage(name) {
-                    return this.validated ? this.el.querySelector(`[name="${name}"]`).validationMessage : '';
-                }
-            });
-            const result = new SeriesOfComponents({
-                className: 'page-1',
-                contents: [
-                    this.hiddenFields,
-                    contactForm
-                ]
-            });
-
-            result.validate = function () {
-                return contactForm.checkSchoolName() || contactForm.validate();
-            };
-            return result;
-        };
-        const secondPage = () => {
-            const bookSelector = new BookSelector({
-                prompt: 'Which textbook(s) are you currently using?',
-                required: true,
-                preselectedTitle: this.preselectedTitle
-            });
-            const result = new SeriesOfComponents({
-                className: 'page-2',
-                contents: [
-                    bookSelector,
-                    this.howUsing
-                ]
-            });
-
-            bookSelector.on('change', (selectedBooks) => {
-                this.selectedBooks = selectedBooks;
-                this.howUsing.update();
-            });
-            result.validate = () => {
-                const bsv = bookSelector.validate();
-                const huv = this.howUsing.validate();
-
-                return bsv || huv;
-            };
-            return result;
-        };
-        const facultyPages = [
-            firstPage(),
-            secondPage()
-        ];
-
-        salesforcePromise.then(() => {
-            const facultyForm = new MultiPageForm(
-                () => ({
-                    action: salesforce.webtoleadUrl,
-                    debug: salesforce.debug,
-                    contents: facultyPages
-                }),
-                {
-                    onPageChange: this.onPageChange.bind(this),
-                    onSubmit: this.onSubmit.bind(this),
-                    afterSubmit: this.afterSubmit.bind(this)
-                }
-            );
-
-            this.roleSelector = new RoleSelector(
-                () => [
-                    {
-                        contents: studentForm,
-                        hideWhen: (role) => role !== 'Student'
-                    },
-                    {
-                        contents: facultyForm,
-                        hideWhen: (role) => ['', 'Student'].includes(role)
-                    }
-                ]
-            );
-            this.roleSelector.on('change', () => {
-                this.hiddenFields.update();
-            });
-            this.regions.roleSelector.attach(this.roleSelector);
-        });
-    }
-
-    onPageChange(pageNumber) {
-        if (this.roleSelector) {
-            this.roleSelector.isHidden = pageNumber > 0;
-            this.roleSelector.update();
-        }
-    }
-
-    onSubmit(event) {
-        this.disableHowUsing = true;
-        this.howUsing.update();
-        const form = event.target;
-
-        this.submitQueue = this.selectedBooks.map((b, i) => {
-            return () => {
-                this.currentBookInfo = {
-                    book: b.value,
-                    adoptionStatus: this.usingInfo.checked[b.value],
-                    numberOfStudents: this.usingInfo.howMany[b.value],
-                    isFirst: i === 0 ? '1' : '0'
-                };
-                this.hiddenFields.update();
-                form.submit();
-            };
-        });
-        this.afterSubmit();
-    }
-
-    afterSubmit() {
-        if (this.submitQueue && this.submitQueue.length) {
-            const action = this.submitQueue.shift();
-
-            // Ensure a little break between submissions
-            setTimeout(action, 300);
-        } else {
-            afterFormSubmit(this.preselectedTitle, this.selectedBooks);
-        }
-    }
-
+    return (
+        <React.Fragment>
+            <FormHeader slug="pages/adoption-form" />
+            <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
+            <div className="text-content" ref={ref}>
+                <RoleSelector value={selectedRole} setValue={setSelectedRole} hidden={hideRoleSelector}>
+                    <StudentForm />
+                    <FacultyForm selectedRole={selectedRole} onPageChange={onPageChange} />
+                </RoleSelector>
+            </div>
+        </React.Fragment>
+    );
 }
+
+const view = {
+    classes: ['adoption-form-v2'],
+    tag: 'main'
+};
+
+export default pageWrapper(AdoptionForm, view);

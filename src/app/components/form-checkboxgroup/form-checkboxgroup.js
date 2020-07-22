@@ -1,14 +1,32 @@
-import {Controller} from 'superb.js';
-import {description as template} from './form-checkboxgroup.html';
+import React from 'react';
 
-export default class FormCheckboxGroup extends Controller {
+function Option({item, name}) {
+    const inputProps = item.value ? {
+        name,
+        value: item.value
+    } : {};
 
-    init(props) {
-        this.template = template;
-        this.model = props;
-        this.view = {
-            classes: ['form-checkboxgroup']
-        };
-    }
+    return (
+        <div class="checkbox-control-group">
+            <label>
+                <input type="checkbox" {...inputProps} />
+                {item.label}
+            </label>
+        </div>
+    );
+}
 
+export default function FormCheckboxgroup({name, label, longLabel, instructions, options}) {
+    return (
+        <div className="form-checkboxgroup">
+            {label && <label className="field-label">{label}</label>}
+            {longLabel && <label className="field-long-label">{longLabel}</label>}
+            {instructions && <label class="hint">{instructions}</label>}
+            {
+                options.map((item) =>
+                    <Option item={item} name={name}/>
+                )
+            }
+        </div>
+    );
 }

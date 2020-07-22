@@ -7,6 +7,7 @@ global.pi = jest.fn();
 
 window.MutationObserver = function () {};
 window.MutationObserver.prototype.observe = function () {};
+window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
 (function() {
     var lastTime = 0;

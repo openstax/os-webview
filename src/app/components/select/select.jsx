@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
+import {useSelectList} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './select.css';
 
 function Option({optionEl, setValue, active}) {
@@ -12,12 +13,14 @@ function Option({optionEl, setValue, active}) {
     }, [optionEl, active]);
 
     function onClick(event) {
-        setValue(event.target.dataset.value);
+        setValue(optionEl.value);
+        event.stopPropagation();
+        event.preventDefault();
     }
 
     return (
-        <li className={classes} onClick={onClick}
-            data-value={optionEl.value}
+        <li className={classes} hidden={optionEl.disabled}
+            onClick={onClick}
             ref={ref}
         >
             {optionEl.textContent}
@@ -26,106 +29,131 @@ function Option({optionEl, setValue, active}) {
 }
 
 function SelectProxyFor({selectEl, open, activeIndex, setValue}) {
-    const placeholder = selectEl.getAttribute('placeholder');
     const optionsClassList = `options ${open ? ' open' : ''}`;
-    const selectionHasBeenMade = selectEl.selectedIndex >= 0;
+    const selectedOption = selectEl.options[selectEl.selectedIndex];
+    const isPlaceholder = selectedOption.disabled;
 
     return (
         <React.Fragment>
             {
-                selectionHasBeenMade ?
-                    <span class="item">{selectEl.value}</span> :
-                    <span class="item none">{placeholder || 'Please choose an option...'}</span>
+                isPlaceholder ?
+                    <span class="item none">{selectedOption.textContent}</span> :
+                    <span class="item">{selectedOption.textContent}</span>
             }
             <ul className={optionsClassList}>
                 {
-                    Array.from(selectEl.options).map((opt, index) =>
-                        <Option optionEl={opt}
-                            setValue={setValue}
-                            active={activeIndex === index}
-                        />
-                    )
+                    Array.from(selectEl.options)
+                        .map((opt, index) =>
+                            <Option optionEl={opt}
+                                setValue={setValue}
+                                active={activeIndex === index}
+                            />
+                        )
                 }
             </ul>
         </React.Fragment>
     );
 }
 
-export default function Select({children, ...selectProps}) {
+export default function Select({children, placeholder, onChange, ...selectProps}) {
     const [open, setOpen] = useState(false);
-    const [activeIndex, setActiveIndex] = useState(-1);
     const [selectEl, setSelectEl] = useState();
     const selectRef = useRef();
 
     function setValue(newValue) {
         selectEl.value = newValue;
         selectEl.dispatchEvent(new Event('change'));
+        setOpen(false);
     }
+    const [activeIndex, handleKeyDown] = useSelectList({
+        getItems: () => selectEl.children,
+        accept(item) {
+            setValue(item.value);
+        },
+        cancel() {
+            setOpen(false);
+        },
+        minActiveIndex: placeholder ? 1 : 0
+    });
 
     useEffect(() => {
         setSelectEl(selectRef.current);
     }, []);
-    useEffect(() => {
-        if (!open) {
-            setActiveIndex(-1);
-        }
-    }, [open]);
 
     function onClick(event) {
         setOpen(!open);
         event.preventDefault();
         event.stopPropagation();
     }
-    // eslint-disable-next-line complexity
+
     function onKeyDown(event) {
-        let handled = true;
+        let handled = false;
 
         if (open) {
-            switch (event.key) {
-            case 'Enter':
-            case ' ':
-                if (activeIndex > -1) {
-                    setValue(selectEl.children[activeIndex].value);
-                }
-                // eslint-disable-next-line no-fallthrough
-            case 'Escape':
-                setOpen(false);
-                break;
-            case 'ArrowDown':
-                setActiveIndex(Math.min(activeIndex + 1, selectEl.children.length - 1));
-                break;
-            case 'ArrowUp':
-                setActiveIndex(Math.max(activeIndex - 1, 0));
-                break;
-            default:
-                if (event.key.length === 1) {
-                    const letter = event.key.toLowerCase();
-                    const values = Array.from(selectEl.children)
-                        .map((opt) => opt.value.toLowerCase());
-                    let foundIndex = values.findIndex((val, i) =>
-                        i > activeIndex && val.startsWith(letter)
-                    );
-
-                    if (!(foundIndex > -1)) {
-                        foundIndex = values.findIndex((val) => val.startsWith(letter));
-                    }
-                    if (foundIndex > -1) {
-                        setActiveIndex(foundIndex);
-                    }
-                } else {
-                    handled = false;
-                }
-            }
+            handled = handleKeyDown(event);
         } else if (['Enter', ' '].includes(event.key)) {
             setOpen(true);
-        } else {
-            handled = false;
+            handled = true;
         }
         if (handled) {
             event.preventDefault();
             event.stopPropagation();
         }
     }
+    // // eslint-disable-next-line complexity
+    // function onKeyDown(event) {
+    //     let handled = true;
+    //     const minActiveIndex = placeholder ? 1 : 0;
+    //
+    //     if (open) {
+    //         switch (event.key) {
+    //         case 'Enter':
+    //         case ' ':
+    //             if (activeIndex > -1) {
+    //                 setValue(selectEl.children[activeIndex].value);
+    //             }
+    //             // eslint-disable-next-line no-fallthrough
+    //         case 'Escape':
+    //             setOpen(false);
+    //             break;
+    //         case 'ArrowDown':
+    //             setActiveIndex(Math.min(
+    //                 Math.max(activeIndex + 1, minActiveIndex),
+    //                 selectEl.children.length - 1)
+    //             );
+    //             break;
+    //         case 'ArrowUp':
+    //             setActiveIndex(Math.max(activeIndex - 1, minActiveIndex));
+    //             break;
+    //         default:
+    //             if (event.key.length === 1) {
+    //                 const letter = event.key.toLowerCase();
+    //                 const values = Array.from(selectEl.children)
+    //                     .map((opt) => opt.textContent.toLowerCase());
+    //                 let foundIndex = values.findIndex((val, i) =>
+    //                     i > activeIndex && val.startsWith(letter)
+    //                 );
+    //
+    //                 if (!(foundIndex > -1)) {
+    //                     foundIndex = values.findIndex((val) => val.startsWith(letter));
+    //                 }
+    //                 if (foundIndex > -1) {
+    //                     setActiveIndex(foundIndex);
+    //                 }
+    //             } else {
+    //                 handled = false;
+    //             }
+    //         }
+    //     } else if (['Enter', ' '].includes(event.key)) {
+    //         setOpen(true);
+    //     } else {
+    //         handled = false;
+    //     }
+    //     if (handled) {
+    //         event.preventDefault();
+    //         event.stopPropagation();
+    //     }
+    // }
     function onBlur() {
         setOpen(false);
     }
@@ -137,7 +165,11 @@ export default function Select({children, ...selectProps}) {
             onBlur={onBlur}
             tabIndex="0"
         >
-            <select {...selectProps} ref={selectRef}>
+            <select {...selectProps} ref={selectRef} onChange={onChange}>
+                {
+                    placeholder &&
+                        <option disabled selected value>{placeholder}</option>
+                }
                 {children}
             </select>
             {

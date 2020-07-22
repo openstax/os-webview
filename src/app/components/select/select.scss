@@ -60,6 +60,10 @@ select {
             display: inline-block;
             margin-right: 0.9rem;
             padding-top: 0.9rem;
+
+            &[hidden] {
+                display: none;
+            }
         }
     }
 
