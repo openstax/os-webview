@@ -1,7 +1,7 @@
 import GetThisTitle from '~/components/get-this-title/get-this-title';
 import {clickElement} from '../../../test-utils';
 import shellBus from '~/components/shell/shell-bus';
-// Biology book details
+// College algebra book details
 import details from '../../data/details';
 
 describe('GetThisTitle', () => {
@@ -26,7 +26,7 @@ describe('GetThisTitle', () => {
         expect(expandLink()).toBeTruthy();
         expect(linkCount()).toBe(3);
         clickElement(expandLink());
-        expect(linkCount()).toBe(5);
+        expect(linkCount()).toBe(4);
         clickElement(expandLink());
         expect(linkCount()).toBe(3);
     });

@@ -31,6 +31,9 @@ describe('Instructor Resources Tab', () => {
                     blurb: pageData.webinar_content.content.content
                 },
                 featuredResources: [],
+                videoResources: [],
+                blogLinkResources: [],
+                referenceResources: [],
                 otherResources: [],
                 communityResource: {
                     heading: pageData.community_resource_heading,

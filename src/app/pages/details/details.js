@@ -268,7 +268,16 @@ export default class Details extends BaseClass {
                 tabLabels.push(label);
             };
             const featuredResources = this.pageData.book_faculty_resources.filter((r) => r.featured);
-            const otherResources = this.pageData.book_faculty_resources.filter((r) => !r.featured);
+            const videoResources = this.pageData.book_video_faculty_resources;
+            const blogLinkResources = this.pageData.book_faculty_resources
+                .filter((r) => r.link_text === 'View resources');
+            const referenceResources = this.pageData.book_faculty_resources
+                .filter((r) => r.video_reference_number !== null);
+            const otherResources = this.pageData.book_faculty_resources
+                .filter((r) =>
+                    !r.featured && r.video_reference_number === null &&
+                    r.link_text !== 'View resources'
+                );
             const errataResource = this.pageData.book_faculty_resources
                 .find((r) => r.resource_heading === 'Errata Release Notes');
 
@@ -285,6 +294,9 @@ export default class Details extends BaseClass {
                     featuredResourcesHeader: this.pageData.featured_resources_header,
                     model: {
                         featuredResources,
+                        videoResources,
+                        blogLinkResources,
+                        referenceResources,
                         otherResources,
                         freeStuff: {
                             heading: this.pageData.free_stuff_instructor.content.heading,
@@ -376,6 +388,8 @@ export default class Details extends BaseClass {
                 featuredResources,
                 isRex,
                 isTutor,
+                videoResources,
+                referenceResources,
                 otherResources,
                 slug: this.slug,
                 salesforceAbbreviation: this.pageData.salesforce_abbreviation,

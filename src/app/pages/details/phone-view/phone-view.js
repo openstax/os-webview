@@ -62,6 +62,8 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
                 contentComponent: new InstructorResourcePane({
                     featuredResourcesHeader: this.props.featuredResourcesHeader,
                     featuredResources: this.props.featuredResources,
+                    videoResources: this.props.videoResources,
+                    referenceResources: this.props.referenceResources,
                     otherResources: this.props.otherResources,
                     userStatusPromise: this.props.userStatusPromise,
                     compCopyDialogProps: this.props.compCopyDialogProps,

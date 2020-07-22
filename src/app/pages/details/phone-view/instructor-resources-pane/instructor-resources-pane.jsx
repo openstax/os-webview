@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import routerBus from '~/helpers/router-bus';
 import {instructorResourceBoxPermissions} from '../../resource-box/resource-box';
 import FeaturedResources from '../../instructor-resource-tab/featured-resources/featured-resources.jsx';
-import ResourceBoxes from '../../resource-box/resource-boxes.jsx';
+import ResourceBoxes, {VideoResourceBoxes} from '../../resource-box/resource-boxes.jsx';
 import WrappedJsx from '~/controllers/jsx-wrapper';
 import './instructor-resources-pane.css';
 
@@ -15,7 +15,8 @@ function resourceBoxModel(resourceData, userStatus, dialogProps) {
         comingSoon: Boolean(resourceData.coming_soon_text),
         comingSoonText: '',
         k12: resourceData.k12,
-        dialogProps
+        dialogProps,
+        videoReferenceNumber: resourceData.video_reference_number
     }, instructorResourceBoxPermissions(resourceData, userStatus, 'Instructor resources'));
 }
 
@@ -37,6 +38,8 @@ function FeaturedResourcesSection({header, models}) {
 export function InstructorResourcePane({
     featuredResourcesHeader,
     featuredResources,
+    videoResources,
+    referenceResources,
     otherResources,
     userStatusPromise,
     compCopyDialogProps,
@@ -44,6 +47,8 @@ export function InstructorResourcePane({
 }) {
     const [userStatus, updateUserStatus] = useState({});
     const featuredModels = featuredResources
+        .map((res) => resourceBoxModel(res, userStatus));
+    const referenceModels = referenceResources
         .map((res) => resourceBoxModel(res, userStatus));
     const otherModels = otherResources
         .map((res) => resourceBoxModel(res, userStatus, compCopyDialogProps));
@@ -70,6 +75,9 @@ export function InstructorResourcePane({
                 <FontAwesomeIcon icon="sign-out-alt" />
             </a>
             <div className="free-resources-region">
+                <VideoResourceBoxes models={videoResources}
+                    referenceModels={referenceModels}
+                />
                 <ResourceBoxes models={otherModels} />
             </div>
         </div>
