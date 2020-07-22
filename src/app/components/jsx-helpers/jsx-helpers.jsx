@@ -15,7 +15,7 @@ export function WindowContextProvider({children}) {
     const [value, setValue] = useState(getValuesFromWindow());
 
     useLayoutEffect(() => {
-        const handleScroll = throttle(() => setValue(getValuesFromWindow()), 40);
+        const handleScroll = () => setValue(getValuesFromWindow());
 
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', handleScroll);
@@ -68,32 +68,34 @@ export function useCanonicalLink(controlsHeader=true) {
 
 export const ActiveElementContext = React.createContext(document.activeElement);
 
-export function ActiveElementContextProvider({children}) {
-    const [value, setValue] = useState(document.activeElement);
-    const handler = () => {
-        setValue(document.activeElement);
-    };
-    const blurHandler = ({relatedTarget}) => {
-        if (!relatedTarget) {
-            setValue(document.activeElement);
-        }
-    };
-
-    useLayoutEffect(() => {
-        document.addEventListener('focus', handler, true);
-        document.addEventListener('blur', blurHandler, true);
-
-        return () => {
-            document.removeEventListener('focus', handler, true);
-            document.removeEventListener('blur', blurHandler, true);
-        };
-    }, []);
+    if (statusPage) {
+        return statusPage;
+    }
 
     return (
-        <ActiveElementContext.Provider value={value}>
-            {children}
-        </ActiveElementContext.Provider>
+        <Child {...{data, ...props}} />
     );
+}
+
+export function useDataFromPromise(promise, defaultValue) {
+    const [data, setData] = useState(defaultValue);
+
+    useEffect(() => {
+        promise.then(setData);
+    }, []);
+
+    return data;
+}
+
+export function useCanonicalLink(controlsHeader=true) {
+    useEffect(() => {
+        if (!controlsHeader) {
+            return null;
+        }
+        const linkController = $.setCanonicalLink();
+
+        return () => linkController.remove();
+    }, []);
 }
 
 export function createPageContextProvider({Context, slug}) {
