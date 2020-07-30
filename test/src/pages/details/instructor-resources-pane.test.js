@@ -14,6 +14,7 @@ const instructor = {
 describe('InstructorResourcePane (as instructor)', () => {
     it('matches snapshot', () => {
         const wrapper = makeMountRender(InstructorResourcePane, {
+            bookId: 42,
             compCopyDialogProps: {},
             featuredResources: [],
             videoResources: [],

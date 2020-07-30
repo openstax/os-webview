@@ -48,7 +48,7 @@ function FeaturedResourcesSection({header, models}) {
     );
 }
 
-function resourceBoxModel(resourceData, userStatus, dialogProps) {
+function resourceBoxModel(resourceData, userStatus, bookId, dialogProps) {
     const isCompCopyLink = (/comp-copy/).test(resourceData.link_document_url);
 
     return Object.assign(
@@ -61,7 +61,15 @@ function resourceBoxModel(resourceData, userStatus, dialogProps) {
             featured: resourceData.featured,
             k12: resourceData.k12,
             dialogProps: isCompCopyLink ? dialogProps : null,
-            videoReferenceNumber: resourceData.video_reference_number
+            videoReferenceNumber: resourceData.video_reference_number,
+            trackResource: Boolean(userStatus.isInstructor) &&
+                {
+                    book: bookId,
+                    // eslint-disable-next-line camelcase
+                    account_id: userStatus.userInfo.accounts_id,
+                    // eslint-disable-next-line camelcase
+                    resource_name: resourceData.resource_heading
+                }
         },
         instructorResourceBoxPermissions(resourceData, userStatus, 'Instructor resources')
     );
@@ -80,6 +88,7 @@ function toBlurb(partner) {
 }
 
 export function InstructorResourceTabJsx({
+    bookId,
     bookAbbreviation,
     userStatusPromise,
     featuredResourcesHeader,
@@ -113,13 +122,13 @@ export function InstructorResourceTabJsx({
     }, [userStatusPromise]);
 
     const featuredModels = model.featuredResources
-        .map((res) => resourceBoxModel(res, userStatus));
+        .map((res) => resourceBoxModel(res, userStatus, bookId));
     const blogLinkModels = model.blogLinkResources
-        .map((res) => resourceBoxModel(res, userStatus, dialogProps));
+        .map((res) => resourceBoxModel(res, userStatus, bookId, dialogProps));
     const referenceModels = model.referenceResources
-        .map((res) => resourceBoxModel(res, userStatus, dialogProps));
+        .map((res) => resourceBoxModel(res, userStatus, bookId, dialogProps));
     const otherModels = model.otherResources
-        .map((res) => resourceBoxModel(res, userStatus, dialogProps));
+        .map((res) => resourceBoxModel(res, userStatus, bookId, dialogProps));
     const partnersModel = {
         title: partnerListLabel,
         seeMoreText,

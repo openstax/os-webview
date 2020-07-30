@@ -60,6 +60,7 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
                 title: 'Instructor resources',
                 titleTag: 'updated',
                 contentComponent: new InstructorResourcePane({
+                    bookId: this.props.bookInfo.id,
                     featuredResourcesHeader: this.props.featuredResourcesHeader,
                     featuredResources: this.props.featuredResources,
                     videoResources: this.props.videoResources,
