@@ -86,7 +86,7 @@ function oldUserModel(sfUserModel) {
         }) || {}).value;
     const isStudent = ['student', 'unknown_role'].includes(sfUserModel.self_reported_role);
     const pending = !isStudent &&
-        ['pending_faculty', 'no_faculty_info'].includes(sfUserModel.faculty_status);
+        ['pending_faculty'].includes(sfUserModel.faculty_status);
     const groups = (function () {
         const result = (sfUserModel.applications || [])
             .map((obj) => obj.name)
