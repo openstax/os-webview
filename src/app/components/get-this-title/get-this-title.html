@@ -10,7 +10,7 @@
             </div>
             <div if="!model.comingSoon && model.webviewLink" class="option">
                 <div class="option-with-callout">
-                    <a href="{model.webviewLink}" data-local="{model.isRex}"
+                    <a href="{model.webviewLink}" data-local="{model.isRex}" data-track="Rex"
                         _target="{model.isTutor ? '_blank' : ''}"
                         tabindex="{model.submenu === '' ? 0 : -1}" data-submenu="{model.submenu}">
                         <if condition="model.isTutor">
@@ -34,7 +34,7 @@
                 </a>
             </div>
             <div if="model.pdfLink" class="option">
-                <a href="{model.pdfLink}"
+                <a href="{model.pdfLink}" data-track="PDF"
                     tabindex="{model.submenu === '' ? 0 : -1}">
                     <span class="fas fa-cloud-download-alt"></span>
                     <span class="text">
@@ -54,7 +54,7 @@
             </div>
             <if condition="model.optionsExpanded || model.additionalOptions < 1">
                 <div if="model.bookshareLink" class="option">
-                    <a href="{model.bookshareLink}"
+                    <a href="{model.bookshareLink}" data-track="iBooks"
                         tabindex="{model.submenu === '' ? 0 : -1}">
                         <span class="fa fa-volume-up"></span>
                         <span class="text">
@@ -70,17 +70,17 @@
                                 Download on iBooks
                             </span>
                         </span>
-                        <a href="{model.ibookLink}"
+                        <a href="{model.ibookLink}" data-track="iBooks"
                             tabindex="{model.submenu === '' ? 0 : -1}">
                             Part 1
                         </a>
-                        <a href="{model.ibookLink2}"
+                        <a href="{model.ibookLink2}" data-track="iBooks"
                             tabindex="{model.submenu === '' ? 0 : -1}">
                             Part 2
                         </a>
                     </div>
                     <div if="!model.ibookLink2" class="option">
-                        <a href="{model.ibookLink}"
+                        <a href="{model.ibookLink}" data-track="iBooks"
                             tabindex="{model.submenu === '' ? 0 : -1}">
                             <span class="fab fa-apple"></span>
                             <span class="text">
@@ -90,7 +90,7 @@
                     </div>
                 </if>
                 <div if="model.kindleLink" class="option">
-                    <a href="{model.kindleLink}"
+                    <a href="{model.kindleLink}" data-track="Kindle"
                         tabindex="{model.submenu === '' ? 0 : -1}">
                         <span class="fab fa-amazon"></span>
                         <span class="text">
@@ -99,7 +99,7 @@
                     </a>
                 </div>
                 <div if="model.cheggLink" class="option">
-                    <a href="{model.cheggLink}"
+                    <a href="{model.cheggLink}" data-track="Chegg"
                         tabindex="{model.submenu === '' ? 0 : -1}">
                         <img class="logo-img" src="/images/icons/Chegglogo.svg" alt="">
                         <span class="text">
