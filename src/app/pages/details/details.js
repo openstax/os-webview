@@ -289,6 +289,7 @@ export default class Details extends BaseClass {
             detailsTab.emit('put-toc-in', this.regionFrom(this.el.querySelector('.toc-slideout-contents')));
             if (!polish && this.pageData.free_stuff_instructor.content) {
                 addTab('Instructor resources', new InstructorResourceTab({
+                    bookId: this.pageData.id,
                     bookAbbreviation: this.pageData.salesforce_abbreviation,
                     userStatusPromise: this.userStatusPromise,
                     featuredResourcesHeader: this.pageData.featured_resources_header,

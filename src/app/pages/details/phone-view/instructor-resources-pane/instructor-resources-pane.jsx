@@ -7,7 +7,7 @@ import ResourceBoxes, {VideoResourceBoxes} from '../../resource-box/resource-box
 import WrappedJsx from '~/controllers/jsx-wrapper';
 import './instructor-resources-pane.css';
 
-function resourceBoxModel(resourceData, userStatus, dialogProps) {
+function resourceBoxModel(resourceData, userStatus, bookId, dialogProps) {
     return Object.assign({
         heading: resourceData.resource_heading,
         description: '',
@@ -16,7 +16,15 @@ function resourceBoxModel(resourceData, userStatus, dialogProps) {
         comingSoonText: '',
         k12: resourceData.k12,
         dialogProps,
-        videoReferenceNumber: resourceData.video_reference_number
+        videoReferenceNumber: resourceData.video_reference_number,
+        trackResource: Boolean(userStatus.isInstructor) &&
+            {
+                book: bookId,
+                // eslint-disable-next-line camelcase
+                account_id: userStatus.userInfo.accounts_id,
+                // eslint-disable-next-line camelcase
+                resource_name: resourceData.resource_heading
+            }
     }, instructorResourceBoxPermissions(resourceData, userStatus, 'Instructor resources'));
 }
 
@@ -36,6 +44,7 @@ function FeaturedResourcesSection({header, models}) {
 }
 
 export function InstructorResourcePane({
+    bookId,
     featuredResourcesHeader,
     featuredResources,
     videoResources,
@@ -47,11 +56,11 @@ export function InstructorResourcePane({
 }) {
     const [userStatus, updateUserStatus] = useState({});
     const featuredModels = featuredResources
-        .map((res) => resourceBoxModel(res, userStatus));
+        .map((res) => resourceBoxModel(res, userStatus, bookId));
     const referenceModels = referenceResources
-        .map((res) => resourceBoxModel(res, userStatus));
+        .map((res) => resourceBoxModel(res, userStatus, bookId));
     const otherModels = otherResources
-        .map((res) => resourceBoxModel(res, userStatus, compCopyDialogProps));
+        .map((res) => resourceBoxModel(res, userStatus, bookId, compCopyDialogProps));
 
     function goToPartners(event) {
         event.preventDefault();

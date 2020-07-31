@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './resource-box.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import $ from '~/helpers/$';
 import shellBus from '~/components/shell/shell-bus';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 
@@ -106,6 +107,19 @@ function ResourceBox({model, icon}) {
             model.onClick(event);
         }
         updateIsNew(model.isNew);
+        if (model.trackResource) {
+            fetch(
+                `${$.apiOriginAndOldPrefix}/salesforce/download-tracking/`,
+                {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(model.trackResource)
+                }
+            );
+        }
     };
     const {Tag, ...props} = model.link ?
         {

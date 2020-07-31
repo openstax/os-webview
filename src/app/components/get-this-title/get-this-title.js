@@ -10,7 +10,7 @@ import calloutCounter from './callout-counter';
 import {description as template} from './get-this-title.html';
 import {description as polishTemplate} from './get-this-title-polish.html';
 import css from './get-this-title.css';
-import settings from 'settings';
+import userModel from '~/models/usermodel';
 
 const MAX_CALLOUTS = 3;
 
@@ -59,6 +59,10 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
         this.slug = data.slug;
         this.calloutTitle = data.rex_callout_title;
         this.calloutBlurb = data.rex_callout_blurb;
+        this.bookId = data.id;
+        userModel.load().then((userInfo) => {
+            this.userInfo = userInfo;
+        });
 
         // eslint-disable-next-line complexity
         this.model = () => ({
@@ -193,6 +197,21 @@ export default class GetThisTitle extends componentType(spec, busMixin) {
         event.preventDefault();
         this.optionsExpanded = !this.optionsExpanded;
         this.update();
+    }
+
+    @on('click [data-track]')
+    trackDownload(event) {
+        const trackThis = Boolean(this.userInfo.accounts_id);
+
+        if (trackThis) {
+            event.trackingInfo = {
+                book: this.bookId,
+                // eslint-disable-next-line camelcase
+                account_id: this.userInfo.accounts_id,
+                // eslint-disable-next-line camelcase
+                book_format: event.delegateTarget.dataset.track
+            };
+        }
     }
 
 }
