@@ -3,6 +3,7 @@ import analytics from './helpers/analytics';
 import linkHelper from './helpers/link';
 import shell from './components/shell/shell';
 import routerBus from '~/helpers/router-bus';
+import $ from '~/helpers/$';
 
 const path404 = '/error/404';
 const PAGES = [
@@ -126,7 +127,21 @@ function linkHandler(e) {
     // This was el.getAttribute('href'), but with a relative path, the login
     // url will not be recognized as external. This gets the fully-qualified
     // url.
-    navigateTo(el.href);
+    if (e.trackingInfo) {
+        fetch(
+            `${$.apiOriginAndOldPrefix}/salesforce/download-tracking/`,
+            {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(e.trackingInfo)
+            }
+        ).finally(() => navigateTo(el.href));
+    } else {
+        navigateTo(el.href);
+    }
 }
 
 class AppRouter extends Router {
