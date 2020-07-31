@@ -16,7 +16,7 @@ function Header({icon, heading, content}) {
 
 function Button({href, text, buttonClass, onClick}) {
     return (
-        <a className={`btn ${buttonClass}`} href={href} onClick={onClick}>
+        <a className={`btn ${buttonClass}`} href={href} onClick={onClick} data-track="Print">
             {text}
         </a>
     );
@@ -29,7 +29,7 @@ export default function OrderPrintCopy({bookstoreContent, amazonLink, closeAfter
                 {
                     bookstoreContent.map((entry) =>
                         <a className="box" href={entry.button_url || amazonLink}
-                            onClick={closeAfterDelay}
+                            onClick={closeAfterDelay} data-track="Print"
                         >
                             <Header icon={entry.button_url ? 'users' : 'user'}
                                 heading={entry.heading}

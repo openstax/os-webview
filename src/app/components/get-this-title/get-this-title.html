@@ -10,7 +10,7 @@
             </div>
             <div if="!model.comingSoon && model.webviewLink" class="option">
                 <div class="option-with-callout">
-                    <a href="{model.webviewLink}" data-local="{model.isRex}" data-track="Rex"
+                    <a href="{model.webviewLink}" data-local="{model.isRex}" data-track="Online"
                         _target="{model.isTutor ? '_blank' : ''}"
                         tabindex="{model.submenu === '' ? 0 : -1}" data-submenu="{model.submenu}">
                         <if condition="model.isTutor">
@@ -54,7 +54,7 @@
             </div>
             <if condition="model.optionsExpanded || model.additionalOptions < 1">
                 <div if="model.bookshareLink" class="option">
-                    <a href="{model.bookshareLink}" data-track="iBooks"
+                    <a href="{model.bookshareLink}" data-track="Bookshare"
                         tabindex="{model.submenu === '' ? 0 : -1}">
                         <span class="fa fa-volume-up"></span>
                         <span class="text">
@@ -99,7 +99,7 @@
                     </a>
                 </div>
                 <div if="model.cheggLink" class="option">
-                    <a href="{model.cheggLink}" data-track="Chegg"
+                    <a href="{model.cheggLink}" data-track="Chegg Reader"
                         tabindex="{model.submenu === '' ? 0 : -1}">
                         <img class="logo-img" src="/images/icons/Chegglogo.svg" alt="">
                         <span class="text">
