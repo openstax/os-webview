@@ -1,4 +1,5 @@
 import React from 'react';
+import LinkWithChevron from '../link-with-chevron/link-with-chevron';
 import './education.css';
 
 export default function ({content, linkUrl, linkText}) {
@@ -7,7 +8,9 @@ export default function ({content, linkUrl, linkText}) {
             <div className="container">
                 <div className="quote">
                     <div dangerouslySetInnerHTML={{__html: content}}/>
-                    <a className="btn primary" href={linkUrl}>{linkText}</a>
+                    <LinkWithChevron href={linkUrl}>
+                        {linkText}
+                    </LinkWithChevron>
                 </div>
                 <div className="student" role="img" aria-label="student holding history book"></div>
             </div>

@@ -28,6 +28,13 @@ button,
     padding: 1rem;
     text-align: center;
     transition: all 0.2s ease-in-out;
+
+    &.default {
+        background-color: ui-color(white);
+        border: thin solid ui-color(form-border);
+        border-radius: 0.2rem;
+        color: text-color(normal);
+    }
 }
 
 .btn-large {
