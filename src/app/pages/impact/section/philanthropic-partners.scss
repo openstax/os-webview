@@ -4,24 +4,24 @@
 
     .text-overlapping-photo > .text-block {
         padding: 0;
-    }
 
-    .card {
-        @include width-up-to($phone-max) {
-            padding: $normal-margin 0;
-        }
-
-        .text-block {
-            @include width-up-to($tablet-max) {
-                margin-left: 1rem;
+        .card {
+            @include width-up-to($phone-max) {
+                padding: $normal-margin 0;
             }
-        }
 
-        .name {
-            font-weight: bold;
+            .text-block {
+                @include width-up-to($tablet-max) {
+                    margin-left: 1rem;
+                }
+            }
 
-            &::before {
-                content: '– ';
+            .name {
+                font-weight: bold;
+
+                &::before {
+                    content: '– ';
+                }
             }
         }
     }

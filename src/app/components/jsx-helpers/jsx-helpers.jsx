@@ -15,7 +15,7 @@ export function WindowContextProvider({children}) {
     const [value, setValue] = useState(getValuesFromWindow());
 
     useLayoutEffect(() => {
-        const handleScroll = () => setValue(getValuesFromWindow());
+        const handleScroll = throttle(() => setValue(getValuesFromWindow()), 40);
 
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', handleScroll);
@@ -33,8 +33,8 @@ export function WindowContextProvider({children}) {
     );
 }
 
-export function LoaderPage({slug, Child, props={}}) {
-    const [data, statusPage] = usePageData({slug, setsPageTitleAndDescription: false});
+export function LoaderPage({slug, Child, props={}, preserveWrapping}) {
+    const [data, statusPage] = usePageData({slug, setsPageTitleAndDescription: false, preserveWrapping});
 
     if (statusPage) {
         return statusPage;
@@ -68,34 +68,32 @@ export function useCanonicalLink(controlsHeader=true) {
 
 export const ActiveElementContext = React.createContext(document.activeElement);
 
-    if (statusPage) {
-        return statusPage;
-    }
+export function ActiveElementContextProvider({children}) {
+    const [value, setValue] = useState(document.activeElement);
+    const handler = () => {
+        setValue(document.activeElement);
+    };
+    const blurHandler = ({relatedTarget}) => {
+        if (!relatedTarget) {
+            setValue(document.activeElement);
+        }
+    };
+
+    useLayoutEffect(() => {
+        document.addEventListener('focus', handler, true);
+        document.addEventListener('blur', blurHandler, true);
+
+        return () => {
+            document.removeEventListener('focus', handler, true);
+            document.removeEventListener('blur', blurHandler, true);
+        };
+    }, []);
 
     return (
-        <Child {...{data, ...props}} />
+        <ActiveElementContext.Provider value={value}>
+            {children}
+        </ActiveElementContext.Provider>
     );
-}
-
-export function useDataFromPromise(promise, defaultValue) {
-    const [data, setData] = useState(defaultValue);
-
-    useEffect(() => {
-        promise.then(setData);
-    }, []);
-
-    return data;
-}
-
-export function useCanonicalLink(controlsHeader=true) {
-    useEffect(() => {
-        if (!controlsHeader) {
-            return null;
-        }
-        const linkController = $.setCanonicalLink();
-
-        return () => linkController.remove();
-    }, []);
 }
 
 export function createPageContextProvider({Context, slug}) {

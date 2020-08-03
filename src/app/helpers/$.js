@@ -294,6 +294,26 @@ $.fade = (element, {fromOpacity, toOpacity, steps=10}) => {
     });
 };
 
+function camelCase(underscored) {
+    return underscored.replace(/_([a-z0-9])/g, (_, chr) => chr ? chr.toUpperCase() : '');
+}
+
+function camelCaseKeys(obj) {
+    if (!(obj instanceof Object)) {
+        return obj;
+    }
+
+    if (obj instanceof Array) {
+        return obj.map((v) => camelCaseKeys(v));
+    }
+
+    return Reflect.ownKeys(obj).reduce((result, k) => {
+        result[camelCase(k)] = camelCaseKeys(obj[k]);
+        return result;
+    }, {});
+}
+$.camelCaseKeys = camelCaseKeys;
+
 $.key = {
     esc: 27,
     space: 32,
