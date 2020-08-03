@@ -8,6 +8,8 @@ import WrappedJsx from '~/controllers/jsx-wrapper';
 import './instructor-resources-pane.css';
 
 function resourceBoxModel(resourceData, userStatus, bookId, dialogProps) {
+    const isCompCopyLink = (/comp-copy/).test(resourceData.link_document_url);
+
     return Object.assign({
         heading: resourceData.resource_heading,
         description: '',
@@ -15,7 +17,7 @@ function resourceBoxModel(resourceData, userStatus, bookId, dialogProps) {
         comingSoon: Boolean(resourceData.coming_soon_text),
         comingSoonText: '',
         k12: resourceData.k12,
-        dialogProps,
+        dialogProps: isCompCopyLink ? dialogProps : null,
         videoReferenceNumber: resourceData.video_reference_number,
         trackResource: Boolean(userStatus.isInstructor) &&
             {
