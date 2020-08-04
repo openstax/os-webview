@@ -1,86 +1,90 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.statbox {
-    align-items: center;
+.stat-bg {
     background: linear-gradient(90deg, #326ba4 0%, #2e217a 100%);
     background-color: rgba(1, 35, 102, 0.5);
-    display: grid;
-    grid-column-gap: $normal-margin;
-    grid-template-columns: repeat(4, 26rem);
-    height: 50rem;
-    justify-content: center;
-    overflow-x: auto;
     padding: 0 $normal-margin;
     width: 100%;
 
-    @include width-up-to(#{104em * $scale-factor + 4.5em}) {
-        justify-content: flex-start;
-    }
-
-    ::-webkit-scrollbar { display: none; }
-
-    .col1 {
-        border-radius: 0.3rem; // background: linear-gradient(224.64deg, rgba(250,188,77,0) 0%, #FABC4D 100%), linear-gradient(0deg, #F4D019 0%, #F4D019 100%);
-        box-shadow: 0 1.5rem 4rem 0 rgba(0, 0, 0, 0.2);
-        height: 36rem;
-        width: 100%;
-    }
-
-    .col-img {
-        border-radius: 0.3rem 0.3rem 0 0;
-        width: 100%;
-    }
-
-    .col-img-div {
-        height: 14.8rem;
-    }
-
-    .col-txt {
-        background-color: #fff;
-        border-radius: 0 0 0.3rem 0.3rem;
-        display: flex;
-        flex-direction: column;
-        height: 21.2rem;
+    .statbox {
+        align-items: center;
+        display: grid;
+        grid-auto-flow: column;
+        grid-column-gap: $normal-margin;
+        height: 50rem;
         justify-content: center;
-        width: 26rem;
-    }
+        overflow-x: auto;
 
-    .uper-txt {
-        display: flex;
-        flex-direction: row;
-        padding-left: 4rem;
-    }
+        @include width-up-to(#{104em * $scale-factor + 4.5em}) {
+            justify-content: start;
+            width: calc(100vw - 3rem);
+        }
 
-    .lower-txt {
-        height: 4rem;
-        padding-left: 4rem;
-        padding-right: 4rem;
-        padding-top: 2rem;
-    }
+        ::-webkit-scrollbar { display: none; }
 
-    .u-txt1 {
-        @include title-font(5.6rem);
-        color: text-color(normal);
-        line-height: 3.4rem;
-    }
+        .col1 {
+            border-radius: 0.3rem; // background: linear-gradient(224.64deg, rgba(250,188,77,0) 0%, #FABC4D 100%), linear-gradient(0deg, #F4D019 0%, #F4D019 100%);
+            box-shadow: 0 1.5rem 4rem 0 rgba(0, 0, 0, 0.2);
+            height: 36rem;
+            width: 26rem;
+        }
 
-    .u-txt2 {
-        font-size: 2.8rem;
-        font-weight: bold;
-        padding-top: 1.5rem;
-    }
+        .col-img {
+            border-radius: 0.3rem 0.3rem 0 0;
+            width: 100%;
+        }
 
-    .scd-txt {
-        @include set-font(body-regular);
-        color: text-color(normal);
-        padding-left: 14%;
-        padding-right: 7%;
-        padding-top: 4%;
-        text-align: left;
+        .col-img-div {
+            height: 14.8rem;
+        }
 
-        @include width-up-to($phone-max) {
-            height: 10rem;
-            white-space: normal;
+        .col-txt {
+            background-color: #fff;
+            border-radius: 0 0 0.3rem 0.3rem;
+            display: flex;
+            flex-direction: column;
+            height: 21.2rem;
+            justify-content: center;
+            width: 26rem;
+        }
+
+        .upper-txt {
+            display: flex;
+            flex-direction: row;
+            padding-left: 4rem;
+        }
+
+        .lower-txt {
+            height: 4rem;
+            padding-left: 4rem;
+            padding-right: 4rem;
+            padding-top: 2rem;
+        }
+
+        .u-txt1 {
+            @include title-font(5.6rem);
+            color: text-color(normal);
+            line-height: 3.4rem;
+        }
+
+        .u-txt2 {
+            font-size: 2.8rem;
+            font-weight: bold;
+            padding-top: 1.5rem;
+        }
+
+        .scd-txt {
+            @include set-font(body-regular);
+            color: text-color(normal);
+            padding-left: 14%;
+            padding-right: 7%;
+            padding-top: 4%;
+            text-align: left;
+
+            @include width-up-to($phone-max) {
+                height: 10rem;
+                white-space: normal;
+            }
         }
     }
 }

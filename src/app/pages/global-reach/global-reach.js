@@ -1,70 +1,56 @@
-import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
+import React from 'react';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
+import {LoaderPage, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import $ from '~/helpers/$';
 import Map from './map/map';
-import State from './statistics/stat';
-import Studentinfo from './studentinfo/studentinfo';
-import Schoolmap from './schoolmap/schoolmap';
+import Statistics from './statistics/stat';
+import StudentInfo from './studentinfo/studentinfo';
+import SchoolMap from './schoolmap/schoolmap';
 
-const spec = {
-    view: {
-        classes: ['global-reach', 'page'],
-        tag: 'main'
-    },
-    model: {
-        loaded: ''
-    },
-    slug: 'pages/global-reach'
-};
-const BaseClass = componentType(spec, canonicalLinkMixin);
+function preprocessData(data) {
+    return $.camelCaseKeys(
+        Reflect.ownKeys(data).reduce((result, key) => {
+            const value = data[key];
+            const matches = key.match(/(section_.)_(.*)/);
 
-export default class ImpactDev extends BaseClass {
+            if (matches) {
+                const [_, sectionKey, newKey] = matches;
 
-    onDataLoaded() {
-        const data = this.pageData;
-
-        this.regions.self.attach(new Map({
-            model: {
-                pageType: 'landing',
-                heading: data.title,
-                buttonText: data.header_text,
-                imageUrl: data.map_image_url
-            }
-        }));
-        this.regions.self.append(new State({
-            model: data.section_1_cards.map((obj) => (
-                {
-                    imageUrl: obj.image.image,
-                    uText1: obj.number,
-                    uText2: obj.unit,
-                    lowerText: obj.description
+                if (!(sectionKey in result)) {
+                    result[sectionKey] = {};
                 }
-            ))
-        }));
-        /*
-         * This section has two subjections, each with a header, description,
-         * image, and link.
-         */
-        this.regions.self.append(new Studentinfo({
-            model: {
-                header1: data.section_2_header_1,
-                description1: data.section_2_blurb_1,
-                linkUrl1: data.section_2_link_1,
-                linkText1: data.section_2_cta_1,
-                image1: data.section_2_image_1_url,
-                header2: data.section_2_header_2,
-                description2: data.section_2_blurb_2,
-                linkUrl2: data.section_2_link_2,
-                linkText2: data.section_2_cta_2,
-                image2: data.section_2_image_2_url
+                result[sectionKey][newKey] = value;
+            } else {
+                result[key] = value;
             }
-        }));
-        this.regions.self.append(new Schoolmap({
-            model: {
-                heading: data.section_3_heading,
-                description: data.section_3_blurb,
-                linkText: data.section_3_cta,
-                linkUrl: data.section_3_link
-            }
-        }));
-    }
-
+            return result;
+        }, {})
+    );
 }
+
+function GlobalReachPage({data}) {
+    const ppData = preprocessData(data);
+
+    return (
+        <React.Fragment>
+            <Map title={ppData.title} buttonText={ppData.headerText} imageUrl={ppData.mapImageUrl} />
+            <Statistics {...ppData.section1} />
+            <StudentInfo {...ppData.section2} />
+            <SchoolMap {...ppData.section3} />
+        </React.Fragment>
+    );
+}
+
+const slug = 'pages/global-reach';
+const view = {
+    classes: ['global-reach', 'page'],
+    tag: 'main'
+};
+
+function GlobalReachLoader() {
+    return (
+        <LoaderPage slug={slug} Child={GlobalReachPage} />
+    );
+}
+
+export default pageWrapper(GlobalReachLoader, view);
