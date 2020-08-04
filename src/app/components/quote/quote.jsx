@@ -33,7 +33,7 @@ export default function Quote({model}) {
                 }
                 {
                     Boolean(model.cta) &&
-                        <a className="btn btn-orange" href={model.link}>{model.cta}</a>
+                        <a className="btn default" href={model.link}>{model.cta}</a>
                 }
             </div>
         </div>

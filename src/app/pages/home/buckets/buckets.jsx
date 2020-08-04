@@ -1,4 +1,5 @@
 import React from 'react';
+import LinkWithChevron from '../link-with-chevron/link-with-chevron';
 import './buckets.css';
 
 function Bucket({model}) {
@@ -18,7 +19,7 @@ function Bucket({model}) {
                     <span className="title">{model.heading}</span>
                     <blurb-html className="blurb" dangerouslySetInnerHTML={{__html: model.content}} />
                 </div>
-                <a className="btn primary" href={model.link}>{model.cta}</a>
+                <LinkWithChevron href={model.link} children={model.cta} />
             </div>
         </div>
     );
