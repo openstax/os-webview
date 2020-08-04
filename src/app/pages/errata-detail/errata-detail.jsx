@@ -6,10 +6,8 @@ import {getDisplayStatus, getDetailModel} from '~/helpers/errata';
 import './errata-detail.css';
 
 async function getPageData(slug) {
-    console.log('Before fetch');
     const detail = await cmsFetch(slug);
 
-    console.log('Fetched', detail);
     if (detail.created) {
         const detailModel = await getDetailModel(detail);
         const {status, barStatus} = getDisplayStatus(detail);
