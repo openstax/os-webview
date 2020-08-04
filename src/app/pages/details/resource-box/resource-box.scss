@@ -1,6 +1,7 @@
 @import 'pattern-library/core/pattern-library/headers';
 @import 'mixins/coming-soon';
 @import 'mixins/placeholder-selectors';
+@use 'sass:math';
 
 .resource-box {
     background-color: ui-color(white);
@@ -20,6 +21,7 @@
         cursor: pointer;
 
         video {
+            max-width: 100%;
             pointer-events: none;
         }
     }
@@ -72,17 +74,17 @@
 
     .reference-number {
         align-content: center;
-        background-color: os-color(light-blue);
-        color: text-color(white);
+        background-color: transparent;
+        color: os-color(light-blue);
         display: grid;
-        font-size: 1.4rem;
+        font-size: 1.2rem;
         font-weight: bold;
-        height: 1.5rem;
+        height: 2rem;
         justify-content: center;
         left: 0;
         position: absolute;
         top: 0;
-        width: 1.5rem;
+        width: 2rem;
     }
 
     .top-line {
@@ -125,6 +127,7 @@
         align-items: baseline;
         display: flex;
         justify-content: space-between;
+        padding-top: 1rem;
         width: 100%;
 
         .left {
@@ -153,10 +156,27 @@
     display: grid;
     justify-content: center;
     padding: 2rem;
-    width: 100%;
+    width: max-content;
 
-    video {
-        max-width: 100%;
-        width: 72rem;
+    .aspect-16-by-9-container {
+        background-color: ui-color(default-hover);
+        padding-top: 56.25%;
+        max-width: calc(100vw - 14rem);
+        position: relative;
+        width: calc(177vh - 24rem);
+
+        @include width-up-to($phone-max) {
+            max-width: none;
+            width: calc(100vw - 7rem);
+        }
+
+        > * {
+            left: 50%;
+            max-height: 100%;
+            max-width: 100%;
+            position: absolute;
+            top: 0;
+            transform: translateX(-50%);
+        }
     }
 }

@@ -166,7 +166,9 @@ export default function ResourceBoxes({models, communityResource}) {
 
 function VideoViewer({file}) {
     return (
-        <video controls src={file} />
+        <div className="aspect-16-by-9-container">
+            <video controls src={file} />
+        </div>
     );
 }
 const SuperbVideoViewer = pageWrapper(VideoViewer, {classes: ['instructor-resource-video-viewer']});
@@ -176,7 +178,8 @@ export function VideoResourceBoxes({models, blogLinkModels, referenceModels}) {
         const [model] = models;
         const dialogProps = {
             title: model.video_title || model.resource_heading,
-            content: new SuperbVideoViewer({file: model.video_file})
+            content: new SuperbVideoViewer({file: model.video_file}),
+            customClass: 'reverse-colors'
         };
 
         event.preventDefault();
@@ -187,14 +190,16 @@ export function VideoResourceBoxes({models, blogLinkModels, referenceModels}) {
         <React.Fragment>
             {
                 models.map((model) =>
-                    <div className="video resource-box" onClick={onClick} >
-                        <div className="top-line">
-                            <h3>{model.resource_heading}</h3>
+                    <div className="video resource-box" onClick={onClick}>
+                        <div>
+                            <div className="top-line">
+                                <h3>{model.resource_heading}</h3>
+                            </div>
+                            <RawHTML className="description" html={model.resource_description} />
+                            <video controls preload="metadata">
+                                <source src={model.video_file} type="video/avi" />
+                            </video>
                         </div>
-                        <RawHTML className="description" html={model.resource_description} />
-                        <video controls preload="metadata">
-                            <source src={model.video_file} type="video/avi" />
-                        </video>
                         <BottomBasic leftContent="Watch video" icon="play" />
                     </div>
                 )

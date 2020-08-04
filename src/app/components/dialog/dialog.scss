@@ -8,20 +8,28 @@ dialog {
     display: grid;
     grid-template-rows: auto auto 1fr;
     height: auto;
-    max-width: 90rem;
     overflow: hidden;
     padding: 0;
     width: calc(100% - #{2 * $normal-margin});
 
     @include wider-than($phone-max) {
-        width: calc(100% - 16rem);
+        width: max-content;
+    }
+
+    &.reverse-colors {
+        .title-bar {
+            background-color: ui-color(white);
+        }
+
+        .main-region {
+            background-color: ui-color(form-bg);
+        }
     }
 
     .title-bar {
-        @include set-font(h3);
+        @include title-font(1.8rem);
 
         background-color: ui-color(form-bg);
-        border-bottom: thin solid ui-color(form-border);
         display: flex;
         justify-content: space-between;
 
@@ -34,7 +42,7 @@ dialog {
         @include wider-than($phone-max) {
             align-items: center;
             color: inherit;
-            padding: 1.5rem 3rem;
+            padding: $normal-margin 1.7rem;
         }
     }
 
@@ -43,12 +51,12 @@ dialog {
     }
 
     .put-away {
-        @include body-font(1.8rem);
+        @include body-font(3.2rem);
         background-color: transparent;
         border: 0;
-        color: text-color(helper);
-        margin: 0;
-        padding: 0.5rem 1rem;
+        color: inherit;
+        margin: 0 1rem 0 0;
+        padding: 0 1rem;
         z-index: 1;
 
         @include width-up-to($phone-max) {
@@ -56,7 +64,7 @@ dialog {
         }
 
         &:hover {
-            color: inherit;
+            color: text-color(helper);
         }
 
         &.no-title-bar {
@@ -69,7 +77,7 @@ dialog {
     }
 
     .main-region {
-        background-color: white;
+        background-color: ui-color(white);
         border-bottom-left-radius: 0.4rem;
         border-bottom-right-radius: 0.4rem;
         height: auto;

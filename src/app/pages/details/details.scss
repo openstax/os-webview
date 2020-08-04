@@ -277,7 +277,6 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
     .resources {
         display: grid;
         grid-gap: 2 * $normal-margin  2 * $normal-margin;
-        grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
         margin: 2rem 0 0;
 
         &.ally {
