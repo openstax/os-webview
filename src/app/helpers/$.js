@@ -250,6 +250,31 @@ $.insertHtml = (containerEl, model) => {
     }
 };
 
+
+function splitSearchString() {
+    return window.location.search.substr(1).split('&')
+        .filter((piece) => piece.length > 0);
+}
+
+$.findSelectedTab = (labels) => {
+    const possibleTabs = splitSearchString().map(decodeURIComponent);
+
+    return labels.find((label) => possibleTabs.includes(label)) || labels[0];
+};
+
+$.replaceSearchTerm = (labels, selectedTab, newValue) => {
+    const possibleTabs = splitSearchString();
+    const index = possibleTabs.findIndex((t) => labels.includes(decodeURIComponent(t)));
+
+    if (index < 0) {
+        possibleTabs.unshift(encodeURIComponent(newValue));
+    } else {
+        possibleTabs[index] = encodeURIComponent(newValue);
+    }
+    return `?${possibleTabs.join('&')}`;
+};
+
+
 $.parseSearchString = (searchString) => {
     const result = {};
 
