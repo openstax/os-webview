@@ -24,7 +24,7 @@ export function getDisplayStatus(detail) {
         barStatus: ''
     };
 
-    if (['New', 'Editorial Review'].includes(detail.status)) {
+    if (detail.status.match(/New|Editorial Review/)) {
         result.status = 'In Review';
     } else if (detail.resolution === 'Approved') {
         Object.assign(result, approvedStatuses(detail.created));
