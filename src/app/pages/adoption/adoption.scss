@@ -6,4 +6,11 @@
         color: text-color(helper);
         font-style: italic;
     }
+
+    [type="checkbox"] {
+        height: 2rem;
+        margin-right: 0.5rem;
+        transform: translateY(0.3rem);
+        width: 2rem;
+    }
 }
