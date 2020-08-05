@@ -222,10 +222,6 @@ export default class Tutor extends BaseClass {
                 window.particlesJS('particles', particleConfig);
             }
         }
-        // Pardot tracking
-        if ('piTracker' in window) {
-            piTracker(window.location.href.split('#')[0]);
-        }
     }
 
     onClose() {
