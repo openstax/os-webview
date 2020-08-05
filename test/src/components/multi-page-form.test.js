@@ -1,57 +1,38 @@
-import MultiPageForm from '~/components/multi-page-form/multi-page-form';
-import {Controller} from 'superb.js';
-import {clickElement, doKeyDown} from '../../test-utils';
-
-class SuperSimpleForm extends Controller {
-
-    init() {
-        this.template = () => '';
-    }
-
-    onLoaded() {
-        const i = document.createElement('input');
-
-        this.el.appendChild(i);
-    }
-
-}
+import {makeMountRender} from '../../helpers/jsx-test-utils.jsx';
+import MultiPageForm from '~/components/multi-page-form/multi-page-form.jsx';
+import React from 'react';
 
 describe('MultiPageForm', () => {
-    it('handles next and back', () => {
-        const contents = [0, 1].map(i => new SuperSimpleForm());
-        const p = new MultiPageForm(() => ({
+    let wrapper;
+    let submitted = false;
+
+    beforeEach(() => {
+        const props = {
             action: '//submit-somewhere',
-            contents
-        }), {});
-
-        expect(p).toBeTruthy();
-        expect(p.currentPage).toBe(0);
-        const nextButton = p.el.querySelector('.next');
-
-        clickElement(nextButton);
-        expect(p.currentPage).toBe(1);
-        const backButton = p.el.querySelector('.back');
-
-        clickElement(backButton);
-        expect(p.currentPage).toBe(0);
-        const inputEl = p.el.querySelector('input');
-
-        doKeyDown(inputEl, 'Enter');
-        expect(p.currentPage).toBe(1);
-    });
-    it('handles submit', () => {
-        const contents = [0, 1].map(i => new SuperSimpleForm());
-        let submitted = false;
-        const p = new MultiPageForm(() => ({
-            contents
-        }), {
+            children: [<div className="page-1"/>, <div className="page-2" />, <div className="page-3" />],
             onSubmit() {
                 submitted = true;
             }
-        });
-        // Jest does not do actual submit events; just test the associated method
-        p.handleSubmit(new Event('submit'));
+        };
+
+        wrapper = makeMountRender(MultiPageForm, props)();
+    });
+
+    it('handles next and submit', () => {
+        expect(wrapper).toBeTruthy();
+        let hiddenButtons = wrapper.find('button').filter({hidden: true});
+
+        expect(hiddenButtons).toHaveLength(2);
+        expect(hiddenButtons.at(0).text()).toBe('Back');
+        wrapper.find('button.next').simulate('click');
+        hiddenButtons = wrapper.find('button').filter({hidden: true});
+        expect(hiddenButtons).toHaveLength(1);
+        expect(hiddenButtons.at(0).text()).toBe('Submit');
+        wrapper.find('button.next').simulate('click');
+        hiddenButtons = wrapper.find('button').filter({hidden: true});
+        expect(hiddenButtons).toHaveLength(1);
+        expect(hiddenButtons.at(0).text()).toBe('Next');
+        wrapper.find('button').find({type: 'submit'}).simulate('click');
         expect(submitted).toBe(true);
-        p.onClose();
     });
 });

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {RawHTML, ActiveElementContextProvider, useResultOfPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {RawHTML, ActiveElementContextProvider, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {BookCover} from './book';
 import categoryPromise from '~/models/subjectCategories';
 
@@ -52,7 +52,7 @@ function CategorySection({categoryData, categorizedBooks, category}) {
 }
 
 export default function BookViewer({books, category}) {
-    const categories = useResultOfPromise(categoryPromise, []);
+    const categories = useDataFromPromise(categoryPromise, []);
     const categorizedBooks = organizeBooksByCategory(books, categories);
 
     if (!categorizedBooks) {

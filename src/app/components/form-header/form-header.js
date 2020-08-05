@@ -1,32 +1,25 @@
-import componentType from '~/helpers/controller/init-mixin';
-import {description as template} from './form-header.html';
-import css from './form-header.css';
+import React from 'react';
+import {RawHTML, LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import './form-header.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['form-header']
-    },
-    model() {
-        return this.pageData ? {
-            introHeading: this.pageData.intro_heading,
-            introDescription: this.pageData.intro_description
-        } : {};
-    },
-    slug: 'set in init'
-};
+function FormHeader({data}) {
+    const {
+        intro_heading: heading,
+        intro_description: description
+    } = data;
 
-export default class Header extends componentType(spec) {
+    return (
+        <div className="form-header">
+            <div className="text-content subhead">
+                <h1>{heading}</h1>
+                <RawHTML Tag="span" html={description} />
+            </div>
+        </div>
+    );
+}
 
-    init(slug) {
-        super.init();
-        this.slug = slug;
-    }
-
-    onDataLoaded() {
-        this.update();
-        this.insertHtml();
-    }
-
+export default function FormHeaderLoader({slug}) {
+    return (
+        <LoaderPage slug={slug} Child={FormHeader} />
+    );
 }

@@ -1,21 +1,17 @@
-import {Controller} from 'superb.js';
-import {on} from '~/helpers/controller/decorators';
-import {description as template} from './student-form.html';
-import css from './student-form.css';
+import React from 'react';
+import './student-form.css';
 
-export default class StudentForm extends Controller {
-
-    init() {
-        this.template = template;
-        this.view = {
-            classes: ['student-form']
-        };
-        this.css = css;
-    }
-
-    @on('click button')
-    goBack() {
+export default function StudentForm() {
+    function onClick() {
         history.back();
     }
 
+    return (
+        <div className="student-form text-content">
+            Students don't need to fill out any forms to use our books. Access them free now!
+            <div class="cta">
+                <button class="btn" tabindex="0" onClick={onClick}>Go back</button>
+            </div>
+        </div>
+    );
 }

@@ -1,5 +1,28 @@
 import React, {useState, useRef} from 'react';
-import {useSalesforceLoadedState, salesforce} from '~/models/salesforce';
+import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {LoadPageAfterSalesforce, salesforce} from '~/models/salesforce';
+
+export const FormSubmitContext = React.createContext();
+
+function HiddenFieldsInternals({leadSource}) {
+    return (
+        <React.Fragment>
+            <input name="utf8" type="hidden" value="✓" />
+            <input type="hidden" name="Application_Source__c" value="OS Web/Accounts" />
+            <input type="hidden" name="oid" value={salesforce.oid} />
+            {
+                salesforce.debug && <input type="hidden" name="debug" value="1" />
+            }
+            <input type="hidden" name="lead_source" value={leadSource} />
+        </React.Fragment>
+    );
+}
+
+export function HiddenFields(props) {
+    return (
+        <LoadPageAfterSalesforce Child={HiddenFieldsInternals} {...props} />
+    );
+}
 
 function SfForm({children, postTo = salesforce.webtoleadUrl, afterSubmit}) {
     const [listening, setListening] = useState(false);
@@ -37,12 +60,8 @@ function SfForm({children, postTo = salesforce.webtoleadUrl, afterSubmit}) {
     );
 }
 
-export default function SalesforceForm({postTo, ...otherProps}) {
-    const sfLoaded = useSalesforceLoadedState();
-
-    if (!sfLoaded) {
-        return (<div>Loading</div>);
-    }
-
-    return <SfForm postTo={postTo} {...otherProps} />;
+export default function SalesforceForm(props) {
+    return (
+        <LoadPageAfterSalesforce Child={SfForm} {...props} />
+    );
 }

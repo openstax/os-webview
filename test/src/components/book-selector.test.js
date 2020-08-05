@@ -1,18 +1,30 @@
+import {makeMountRender} from '../../helpers/jsx-test-utils.jsx';
 import BookSelector from '~/components/book-selector/book-selector';
-import instanceReady from '../../helpers/instance-ready';
+import cmsFetch from '~/models/cmsFetch';
 
 describe('BookSelector', () => {
-    const {instance:p, ready} = instanceReady(BookSelector, {
-        prompt: 'Which textbook(s) are you currently using?',
-        required: true,
-        preselectedTitle: 'College Physics'
+    let wrapper;
+
+    beforeEach((done) => {
+        const props = {
+            prompt: 'Which textbook(s) are you currently using?',
+            required: true,
+            preselectedTitle: 'College Physics',
+            selectedBooks: [],
+            toggleBook(book) {
+                console.log('Toggled', book);
+            }
+        };
+        wrapper = makeMountRender(BookSelector, props)();
+        setTimeout(() => {
+            wrapper.update();
+            done();
+        }, 10);
     });
 
-    it ('lists the books', () =>
-        ready.then(() => {
-            const labels = Array.from(p.el.querySelectorAll('label:not(.field-label)'));
+    it ('lists the books', () => {
+        const checkableItems = wrapper.find('[aria-checked]');
 
-            expect(labels.length).toBe(32);
-        })
-    );
+        expect(checkableItems).toHaveLength(32);
+    });
 });

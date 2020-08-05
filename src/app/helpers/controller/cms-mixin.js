@@ -2,6 +2,7 @@ import $ from '~/helpers/$';
 import bookPromise from '~/models/book-titles';
 import {urlFromSlug} from '~/models/cmsFetch';
 import React, {useState, useEffect} from 'react';
+import {useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
 
 export function transformData(data) {
     Reflect.ownKeys(data).forEach((prop) => {
@@ -106,14 +107,6 @@ export async function fetchPageData({slug, preserveWrapping, setsPageTitleAndDes
     return data;
 }
 
-export function useCanonicalLink() {
-    useEffect(() => {
-        const linkController = $.setCanonicalLink();
-
-        return () => linkController.remove();
-    }, []);
-}
-
 export function usePageData(fpdParams) {
     const [pageData, setPageData] = useState();
     const [pageDataError, setPageDataError] = useState();
@@ -129,7 +122,7 @@ export function usePageData(fpdParams) {
         }
         fetchData();
     }, [fpdParams.slug]);
-    useCanonicalLink();
+    useCanonicalLink(Boolean(fpdParams.setTitleAndDescription));
 
     if (pageDataError) {
         statusPage =

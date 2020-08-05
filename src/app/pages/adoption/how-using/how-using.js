@@ -1,122 +1,81 @@
-import {Controller} from 'superb.js';
-import {on} from '~/helpers/controller/decorators';
-import salesforcePromise, {salesforce} from '~/models/salesforce';
-import {description as template} from './how-using.html';
-import css from './how-using.css';
+import React, {useState, useContext} from 'react';
+import {LoadPageAfterSalesforce, salesforce} from '~/models/salesforce';
+import FormInput from '~/components/form-input/form-input.jsx';
+import FormRadioGroup from '~/components/form-radiogroup/form-radiogroup';
+import {FormSubmitContext} from '~/components/salesforce-form/salesforce-form.jsx';
+import './how-using.css';
 
-export default class HowUsing extends Controller {
+function HowUsingBook({book, selectedValue, setSelectedValue}) {
+    const sfOptions = salesforce.adoption(['adopted', 'recommended']);
+    // Tricky: don't want a name at submit time, but need one for validation
+    const name = selectedValue ? null : book.value;
 
-    init(getProps, onChange) {
-        this.template = template;
-        this.getProps = getProps;
-        this.onChange = onChange;
-        this.view = {
-            classes: ['how-using']
-        };
-        this.css = css;
-        this.model = () => this.getModel();
-        this.checked = {};
-        this.howMany = {};
-        this.value = () => ({
-            checked: this.checked,
-            howMany: this.howMany
-        });
-        this.validated = false;
-        this.needToDoErrors = false;
-        this.numberValidationMessage = (value) => {
-            if (this.validated) {
-                const el = this.el.querySelector(`[type="number"][name="${this.numberName(value)}"]`);
+    return (
+        <FormRadioGroup label={`How are you using ${book.text}?`}
+            options={sfOptions} selectedValue={selectedValue}
+            required name
+            setSelectedValue={setSelectedValue}
+        />
+    );
+}
 
-                return el && el.validationMessage;
+function HowManyStudents({book, value, setValue}) {
+    function onChange({target}) {
+        setValue(target.value);
+    }
+
+    return (
+        <div>
+            How many students are using {book.text} each semester?
+            <div className="hint">Include sections taught by TAs that you oversee</div>
+            <FormInput inputProps={{
+                type: 'number',
+                min: '1',
+                max: '999',
+                required: true,
+                value,
+                onChange
+            }} />
+        </div>
+    );
+}
+
+function BothQuestionsForBook({book, isFirst}) {
+    const [adoptionStatus, setAdoptionStatus] = useState();
+    const [numberOfStudents, setNumberOfStudents] = useState();
+    const bookBeingSubmitted = useContext(FormSubmitContext);
+
+    return (
+        <div>
+            <HowUsingBook book={book} selectedValue={adoptionStatus} setSelectedValue={setAdoptionStatus} />
+            <HowManyStudents book={book} value={numberOfStudents} setValue={setNumberOfStudents} />
+            {
+                book === bookBeingSubmitted &&
+                    <React.Fragment>
+                        <input type="hidden" name="Subject__c" value={book.value} />
+                        <input type="hidden" name="Adoption_Status__c" value={adoptionStatus} />
+                        <input type="hidden" name="Number_of_Students__c" value={numberOfStudents} />
+                        <input type="hidden" name="First__c" value={isFirst} />
+                    </React.Fragment>
             }
-            return null;
-        };
-        this.radioValidationMessage = (value) => {
-            if (this.validated) {
-                const el = this.el.querySelector(`[type="radio"][name="${this.radioName(value)}"]`);
+        </div>
+    );
+}
 
-                return el && el.validationMessage;
+function HowUsing({selectedBooks}) {
+    return (
+        <div className="how-using">
+            {
+                selectedBooks.map((book, i) =>
+                    <BothQuestionsForBook book={book} isFirst={i === 0} />
+                )
             }
-            return null;
-        };
-    }
+        </div>
+    );
+}
 
-    getModel() {
-        this.props = this.getProps();
-
-        return {
-            selectedBooks: this.props.selectedBooks,
-            sfOptions: salesforce.adoption(['adopted', 'recommended']),
-            radioName: this.radioName,
-            numberName: this.numberName,
-            numberValidationMessage: this.numberValidationMessage,
-            radioValidationMessage: this.radioValidationMessage,
-            disable: this.props.disable
-        };
-    }
-
-    onLoaded() {
-        if (super.onLoaded) {
-            super.onLoaded();
-        }
-        salesforcePromise.then(() => this.update());
-    }
-
-    // DOM diffing does not preserve the state of elements
-    /* eslint complexity: 0 */
-    onUpdate() {
-        if (super.onUpdate) {
-            super.onUpdate();
-        }
-        for (const r of this.el.querySelectorAll('[type="radio"]')) {
-            const shouldBeChecked = this.checked[r.name] === r.value;
-
-            r.checked = shouldBeChecked;
-        }
-        for (const n of this.el.querySelectorAll('[type="number"]')) {
-            n.value = this.howMany[n.name] || '';
-        }
-        // Error messages won't be right if you don't update a second time
-        if (this.needToDoErrors) {
-            this.needToDoErrors = false;
-            this.update();
-            setTimeout(() => {
-                this.needToDoErrors = this.validated;
-            }, 200);
-        }
-    }
-
-    @on('change [type="radio"]')
-    radioChanged(event) {
-        const radio = event.delegateTarget;
-
-        this.checked[radio.name] = radio.value;
-        this.onChange(this.value());
-        this.update();
-    }
-
-    @on('input [type="number"]')
-    updateHowMany(event) {
-        const input = event.delegateTarget;
-
-        this.howMany[input.name] = input.value;
-        this.onChange(this.value());
-        this.update();
-    }
-
-    validate() {
-        this.validated = true;
-        this.needToDoErrors = true;
-        this.update();
-        return this.el.querySelector(':invalid');
-    }
-
-    numberName(value) {
-        return value;
-    }
-
-    radioName(value) {
-        return value;
-    }
-
+export default function HowUsingLoader(props) {
+    return (
+        <LoadPageAfterSalesforce Child={HowUsing} {...props} />
+    );
 }

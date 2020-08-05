@@ -3,6 +3,8 @@
 .multi-page-form {
     display: grid;
     grid-gap: 4rem;
+    grid-template-columns: minmax(47rem, auto);
+    justify-content: center;
     margin-top: 4rem;
 
     button {
@@ -23,8 +25,24 @@
 
     .button-row {
         display: grid;
+        grid-auto-flow: column;
         grid-gap: 1rem;
-        grid-template-columns: repeat(9, auto) 1fr;
-        margin-top: 4rem;
+        justify-content: start;
+    }
+
+    form > div {
+        &:not(.validated) {
+            .invalid-message {
+                display: none;
+            }
+        }
+
+        &.validated  {
+            :invalid {
+                background-color: ui-color(error-bg);
+                border-color: ui-color(error-border);
+                color: ui-color(error-fg);
+            }
+        }
     }
 }

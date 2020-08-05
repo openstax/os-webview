@@ -1,54 +1,43 @@
-import componentType from '~/helpers/controller/init-mixin';
-import {on} from '~/helpers/controller/decorators';
-import {description as template} from './book-checkbox.html';
-import css from './book-checkbox.css';
-import busMixin from '~/helpers/controller/bus-mixin';
+import React, {useState} from 'react';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import './book-checkbox.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['book-checkbox']
-    },
-    model() {
-        const props = this.getProps();
+// eslint-disable-next-line complexity
+export default function BookCheckbox({book, name, checked, toggle}) {
+    const classList = ['book-checkbox'];
+    const {
+        value,
+        text: label,
+        coverUrl: imageUrl
+    } = book;
 
-        this.el.classList.toggle('has-image', Boolean(props.imageUrl));
-
-        return {
-            id: props.id,
-            name: props.name,
-            value: props.value,
-            imageUrl: props.imageUrl,
-            label: props.label,
-            checked: this.checked
-        };
+    if (checked) {
+        classList.push('checked');
     }
-
-};
-
-export default class BookCheckbox extends componentType(spec, busMixin) {
-
-    init(getProps) {
-        super.init();
-        this.getProps = getProps;
-        this.checked = false;
+    if (imageUrl) {
+        classList.push('has-image');
     }
-
-    @on('click')
-    toggleChecked() {
-        this.checked = !this.checked;
-        this.el.classList.toggle('checked', this.checked);
-        this.update();
-        this.emit('change', this.checked);
+    function onClick() {
+        toggle(book);
     }
-
-    @on('keydown .indicator')
-    toggleOnSpace(event) {
-        if (event.key === ' ' || event.key === 'Enter') {
+    function onKeyDown(event) {
+        if ([' ', 'Enter'].includes(event.key)) {
+            toggle(book);
             event.preventDefault();
-            this.toggleChecked();
         }
     }
 
+    return (
+        <div className={classList.join(' ')} onClick={onClick} >
+            {checked && <input type="hidden" name={name} value={value} />}
+            {imageUrl && <img src={imageUrl} alt="" />}
+            <label>{label}</label>
+            <div className="indicator" tabIndex="0"
+                role="checkbox" aria-checked={checked}
+                onKeyDown={onKeyDown}
+            >
+                {checked && <FontAwesomeIcon icon="check" />}
+            </div>
+        </div>
+    );
 }

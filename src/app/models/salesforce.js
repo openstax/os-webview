@@ -59,4 +59,14 @@ export function useSalesforceLoadedState() {
     return sfLoaded;
 }
 
+export function LoadPageAfterSalesforce({Child, ...props}) {
+    const sfLoaded = useSalesforceLoadedState();
+
+    if (!sfLoaded) {
+        return (<div>Loading</div>);
+    }
+
+    return <Child {...props} />;
+}
+
 export default salesforcePromise;

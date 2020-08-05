@@ -1,34 +1,35 @@
+import {makeMountRender} from '../../helpers/jsx-test-utils.jsx';
 import BookCheckbox from '~/components/book-checkbox/book-checkbox';
-import {clickElement, doKeyDown} from '../../test-utils';
 
 describe('BookCheckbox', () => {
-    const cb = new BookCheckbox(() => ({
-        name: 'Partner_Interest__c',
-        value: 'a_value',
-        label: 'A Label',
-        imageUrl: '//someImage/foo.jpg'
-    }));
+    let checked = false;
+    const props = {
+        book: {
+            value: 'book-value',
+            text: 'book-text',
+            coverUrl: 'book-url'
+        },
+        name: 'cb-name',
+        checked,
+        toggle() {
+            checked = !checked;
+        }
+    };
+
+    const wrapper = makeMountRender(BookCheckbox, props)();
 
     it('handles click', () => {
-        let clicked = false;
-
-        expect(cb).toBeTruthy();
-        cb.on('change', (c) => {
-            clicked = c;
-        }, 'once')
-        clickElement(cb.el);
-        expect(clicked).toBe(true);
+        expect(wrapper.find({"aria-checked": true})).toHaveLength(0);
+        wrapper.find('.book-checkbox').simulate('click');
+        wrapper.setProps({checked});
+        expect(wrapper.find({"aria-checked": true})).toHaveLength(1);
     });
-
     it('handles enter keypress', () => {
-        let selected = cb.checked = false;
-        const target = cb.el.querySelector('.indicator');
-
-        expect(target).toBeTruthy();
-        cb.on('change', (c) => {
-            selected = c;
-        }, 'once');
-        doKeyDown(target, 'Enter');
-        expect(selected).toBe(true);
+        expect(checked).toBe(true);
+        expect(wrapper.find({"aria-checked": true})).toHaveLength(1);
+        wrapper.find('.indicator').prop('onKeyDown')({key: 'Enter', preventDefault: () => 1});
+        expect(checked).toBe(false);
+        wrapper.setProps({checked});
+        expect(wrapper.find({"aria-checked": true})).toHaveLength(0);
     });
 });
