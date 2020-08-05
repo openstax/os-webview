@@ -52,7 +52,17 @@ $icon-size: 6rem;
         }
 
         &.include-partners {
-            grid-template-columns: 2fr 1fr;
+            @include width-between($phone-max, $tablet-max) {
+                grid-template-columns: 1fr 1fr;
+
+                .double {
+                    grid-column: span 1;
+                }
+            }
+
+            @include wider-than($tablet-max) {
+                grid-template-columns: 2fr 1fr;
+            }
         }
 
         .resources {

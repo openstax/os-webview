@@ -32,17 +32,16 @@ dialog {
         background-color: ui-color(form-bg);
         display: flex;
         justify-content: space-between;
+        padding: $normal-margin 1.7rem;
 
         @include width-up-to($phone-max) {
             align-items: center;
             min-height: 7rem;
-            padding: 1rem 1rem 0 3rem;
         }
 
         @include wider-than($phone-max) {
             align-items: center;
             color: inherit;
-            padding: $normal-margin 1.7rem;
         }
     }
 
@@ -55,8 +54,8 @@ dialog {
         background-color: transparent;
         border: 0;
         color: inherit;
-        margin: 0 1rem 0 0;
-        padding: 0 1rem;
+        margin: 0 -0.5rem;
+        padding: 0 0.5rem;
         z-index: 1;
 
         @include width-up-to($phone-max) {
