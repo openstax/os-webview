@@ -12,7 +12,7 @@ function Option({item, name, required, selectedValue, setSelectedValue}) {
                     name={name}
                     value={item.value}
                     checked={item.value === selectedValue}
-                    required="{model.required}"
+                    required={required}
                     onChange={onChange}
                 />
                 {item.label || item.text}

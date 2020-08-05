@@ -11,12 +11,6 @@ function SuggestionItem({value, accept, index, activeIndex, setActiveIndex}) {
     if (active) {
         classList.push('active');
     }
-    function onClick() {
-        accept(value);
-    }
-    function onMouseEnter() {
-        setActiveIndex(index);
-    }
     useLayoutEffect(() => {
         if (active) {
             ref.current.scrollIntoView({block: 'nearest'});
@@ -25,7 +19,8 @@ function SuggestionItem({value, accept, index, activeIndex, setActiveIndex}) {
 
     return (
         <div className={classList.join(' ')} ref={ref}
-            onClick={onClick} onMouseMove={onMouseEnter}
+            onClick={() => accept(value)}
+            onMouseMove={setActiveIndex(index)}
         >{value}</div>
     );
 }
@@ -58,6 +53,7 @@ function SuggestionBox({matches, exactMatch, accepted, accept, activeIndex, setA
                     !exactMatch && !accepted && matches.map((match, i) =>
                         <SuggestionItem value={match} accept={accept} index={i}
                             activeIndex={activeIndex} setActiveIndex={setActiveIndex}
+                            key={match}
                         />)
                 }
             </div>

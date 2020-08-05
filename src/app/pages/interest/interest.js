@@ -94,12 +94,7 @@ function FacultyForm({selectedRole, onPageChange}) {
     const formRef = useRef();
 
     function validatePage(page) {
-        const validateContactInfo = contactValidatorRef.current;
-
-        if (page === 1 && !validateContactInfo()) {
-            return false;
-        }
-        return true;
+        return Boolean(page !== 1 || contactValidatorRef.current());
     }
 
     useEffect(() => {
