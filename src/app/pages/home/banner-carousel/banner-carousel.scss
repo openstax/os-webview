@@ -23,7 +23,9 @@
         }
 
         .dots {
-            display: table-row;
+            align-items: center;
+            display: grid;
+            grid-auto-flow: column;
 
             > div {
                 display: table-cell;
@@ -33,13 +35,15 @@
                 background-color: transparent;
                 border: thin solid text-color(helper);
                 border-radius: 50%;
-                margin: 0 0.8rem 0.26rem;
-                transform: scale(0.90, 0.90);
-                vertical-align: middle;
+                height: 2.2rem;
+                margin: 0.2rem 0.8rem;
+                padding: 0;
+                width: 2.2rem;
 
                 &.active {
                     background-color: os-color(gold);
-                    transform: scale(1, 1);
+                    height: 2.4rem;
+                    width: 2.4rem;
                 }
             }
         }

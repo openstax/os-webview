@@ -7,9 +7,7 @@ export default function ({quotes}) {
 
     return (
         <div className={`quotes ${boxClass}`}>
-            {
-                quotes.map((quote) => <Quote model={quote} />)
-            }
+            {quotes.map((quote) => <Quote model={quote} />)}
         </div>
     );
 }

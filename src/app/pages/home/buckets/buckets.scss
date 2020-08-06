@@ -12,6 +12,7 @@
         border-radius: 0.3rem;
         color: text-color(white);
         max-width: 100%;
+        overflow: hidden;
 
         @include collapsed {
             flex-direction: column;
@@ -66,14 +67,6 @@
 
             > div {
                 max-width: 100%;
-            }
-        }
-
-        .btn {
-            @extend %button;
-
-            &.primary {
-                @extend %primary;
             }
         }
     }

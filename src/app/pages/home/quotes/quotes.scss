@@ -14,6 +14,7 @@
     .quote-bucket {
         background-color: ui-color(white);
         border-radius: 0.3rem;
+        overflow: hidden;
 
         @include wider-than($phone-max) {
             display: grid;
@@ -104,6 +105,11 @@
                     text-indent: -1rem;
                 }
             }
+        }
+
+        .btn {
+            font-weight: normal;
+            height: 5rem;
         }
     }
 
