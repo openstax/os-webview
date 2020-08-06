@@ -38,6 +38,7 @@ const accountsModel = {
         //     faculty_status: "pending_faculty",
         //     is_instructor_verification_stale: false,
         //     is_profile_complete: false,
+        //     is_newflow: true,
         //     self_reported_role: "student",
         //     self_reported_school: "Rice U",
         //     school_type: "unknown_school_type",
@@ -88,11 +89,10 @@ function oldUserModel(sfUserModel) {
             return a;
         }) || {}).value;
     const isStudent = ['student', 'unknown_role'].includes(sfUserModel.self_reported_role);
-    const isVerificationPending = !isStudent &&
-        ['pending_faculty'].includes(sfUserModel.faculty_status);
     const isVerificationStale = !isStudent && sfUserModel.is_instructor_verification_stale;
+    const isVerificationPending = !isStudent &&
+        ['pending_faculty'].includes(sfUserModel.faculty_status) && !isVerificationStale;
     const isVerificationRejected = !isStudent && ['rejected_faculty'].includes(sfUserModel.faculty_status);
-    const needsProfileCompleted = !isStudent && !sfUserModel.is_profile_complete;
     const groups = (function () {
         const result = (sfUserModel.applications || [])
             .map((obj) => obj.name)
@@ -118,7 +118,8 @@ function oldUserModel(sfUserModel) {
         pending_verification: isVerificationPending,
         stale_verification: isVerificationStale,
         rejected_verification: isVerificationRejected,
-        needs_profile_completed: needsProfileCompleted,
+        needs_profile_completed: sfUserModel.needs_complete_edu_profile,
+        is_newflow: sfUserModel.is_newflow,
         username: sfUserModel.id,
         self_reported_role: sfUserModel.self_reported_role,
         is_not_gdpr_location: sfUserModel.is_not_gdpr_location

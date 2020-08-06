@@ -61,10 +61,11 @@ class LoginMenu extends componentType(spec, busMixin) {
     }
 
     attachLoginDropdown() {
-        const facultyAccessLink = `${settings.accountHref}/faculty_access/apply`;
         const facultySignupStep4 = `${settings.accountHref}/i/signup/educator/profile_form`;
-        const rejectedFacultySignupStep4 = `${settings.accountHref}/i/signup/educator/cs_form`;
-        const staleFacultySignupLink = `${rejectedFacultySignupStep4}/?is_stale=true`;
+        const facultyAccessLink = `${settings.accountHref}/i/signup/educator/cs_form`;
+        const facultyAccessLinkLegacy = `${facultyAccessLink}/?is_legacy=true`;
+        const facultyAccessLinkStale = `${facultyAccessLink}/?is_stale=true`;
+        const rejectedFacultySignupStep4 = `${facultyAccessLink}/?prev_rejected=true`;
         const items = [
             {
                 label: 'Account Profile',
@@ -80,23 +81,26 @@ class LoginMenu extends componentType(spec, busMixin) {
                 url: facultySignupStep4,
                 exclude: () => Boolean(
                     this.user.stale_verification ||
-                    !this.user.needs_profile_completed
+                    !this.user.needs_profile_completed ||
+                    this.user.is_newflow
                 )
             },
             {
                 label: 'Request instructor access',
-                url: facultyAccessLink,
+                url: facultyAccessLinkLegacy,
                 exclude: () => Boolean(
                     (this.user.groups || []).includes('Faculty') ||
                     (this.user.groups || []).includes('Student') ||
-                    (this.user.pending_verification)
+                    (this.user.pending_verification) ||
+                    (this.user.is_newflow)
                 )
             },
             {
                 label: 'Request instructor access',
-                url: staleFacultySignupLink,
+                url: facultyAccessLinkStale,
                 exclude: () => Boolean(
-                    !this.user.stale_verification
+                    !this.user.stale_verification ||
+                    this.user.needs_profile_completed
                 )
             },
             {
