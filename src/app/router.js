@@ -111,6 +111,7 @@ function linkHandler(e) {
     if (!el || e.button !== 0) {
         return;
     }
+    const fullyQualifiedHref = el.href;
     const navigateTo = (href) => {
         const internalLink = this.canRoute(href);
         const handleAsExternal = linkHelper.isExternal(href) || el.target ||
@@ -123,10 +124,11 @@ function linkHandler(e) {
         }
     };
 
+    // Pardot tracking
+    if ('piTracker' in window) {
+        piTracker(fullyQualifiedHref.split('#')[0]);
+    }
     e.preventDefault();
-    // This was el.getAttribute('href'), but with a relative path, the login
-    // url will not be recognized as external. This gets the fully-qualified
-    // url.
     if (e.trackingInfo) {
         fetch(
             `${$.apiOriginAndOldPrefix}/salesforce/download-tracking/`,
@@ -138,9 +140,9 @@ function linkHandler(e) {
                 },
                 body: JSON.stringify(e.trackingInfo)
             }
-        ).finally(() => navigateTo(el.href));
+        ).finally(() => navigateTo(fullyQualifiedHref));
     } else {
-        navigateTo(el.href);
+        navigateTo(fullyQualifiedHref);
     }
 }
 
@@ -190,17 +192,23 @@ class AppRouter extends Router {
     }
 
     start() {
-        const path = window.location.pathname;
+        const loc = window.location;
+        const path = loc.pathname;
+        const canonicalUrl = `${loc.origin}${path}`;
 
         if (!this.canRoute(path) && !path.startsWith(path404)) {
             window.location = `${path404}?path=${path}`;
         }
         super.start();
 
-        analytics.sendPageview(location.pathname);
+        analytics.sendPageview(path);
 
         this.linkHandler = linkHandler.bind(this);
         document.addEventListener('click', this.linkHandler);
+        // Track initial page view in Pardot
+        if ('piTracker' in window) {
+            piTracker(canonicalUrl);
+        }
     }
 
     stop() {

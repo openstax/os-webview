@@ -155,10 +155,6 @@ export function InterestForm() {
 
     useEffect(() => {
         $.setPageTitleAndDescription('Interest Form');
-        // Pardot tracking
-        if ('piTracker' in window) {
-            piTracker(window.location.href.split('#')[0]);
-        }
     }, []);
     useCanonicalLink();
 
