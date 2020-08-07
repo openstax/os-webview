@@ -9,8 +9,13 @@ sticky-note {
 }
 
 .page-header:not(.fixed) .sticky-note {
+    @include set-font(body-large);
+
+    align-items: center;
     background-color: os-color(orange);
     color: text-color(white);
+    display: flex;
+    min-height: 6rem;
     padding: 1rem 0;
     position: relative;
     width: 100%;
@@ -122,20 +127,4 @@ sticky-note {
         white-space: nowrap;
     }
 
-    .multi-button {
-        display: none;
-
-        @include wider-than($tablet-max) {
-            display: flex;
-        }
-    }
-
-    .single-button {
-        display: flex;
-        justify-content: center;
-
-        @include wider-than($tablet-max) {
-            display: none;
-        }
-    }
 }

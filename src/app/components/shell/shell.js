@@ -1,5 +1,7 @@
 import {Controller} from 'superb.js';
 import header from './header/header';
+import lowerStickyNote from './lower-sticky-note/lower-sticky-note';
+import microsurvey from './microsurvey-popup/microsurvey-popup';
 import footer from './footer/footer';
 import ModalDialog, {Dialog} from '../dialog/dialog';
 import bus from './shell-bus';
@@ -17,6 +19,8 @@ class Shell extends Controller {
         this.el = 'body';
         this.regions = {
             header: '#header',
+            lowerStickyNote: '#lower-sticky-note',
+            microsurvey: '#microsurvey',
             dialog: '#dialog',
             main: '#main',
             footer: '#footer'
@@ -35,6 +39,8 @@ class Shell extends Controller {
         const mainObserver = new MutationObserver((observations) => {
             document.body.classList.remove('initial-load');
             this.regions.header.attach(header);
+            this.regions.lowerStickyNote.attach(lowerStickyNote);
+            this.regions.microsurvey.attach(microsurvey);
             this.regions.footer.attach(footer);
             mainObserver.disconnect();
         });

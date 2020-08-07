@@ -1,5 +1,5 @@
 import {Controller} from 'superb.js';
-import stickyNote from '../sticky-note/sticky-note';
+import stickyNote from './sticky-note/sticky-note';
 import UpperMenu from './upper-menu/upper-menu';
 import MainMenu from './main-menu/main-menu';
 import $ from '~/helpers/$';
@@ -14,7 +14,6 @@ class Header extends Controller {
         this.template = template;
         this.css = css;
         this.view = {
-            tag: 'header',
             classes: ['page-header', 'hide-until-loaded']
         };
         this.regions = {
@@ -40,13 +39,6 @@ class Header extends Controller {
     }
 
     onUpdate() {
-        const currentPage = window.location.pathname;
-        const stickyUpdate = currentPage !== this.stickyDisplayedOnPage;
-
-        if (stickyUpdate !== this.lastStickyUpdate) {
-            stickyNote.forceHide(stickyUpdate);
-            this.lastStickyUpdate = stickyUpdate;
-        }
         this.el.classList.toggle('active', this.model.headerActive);
         this.mainMenu.update();
     }

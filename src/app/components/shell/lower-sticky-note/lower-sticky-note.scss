@@ -1,0 +1,37 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.lower-sticky-note-content {
+    background-color: #049676;
+    box-shadow: 0 0.2rem 0.4rem 0 rgba(ui-color(black), 0.5);
+    color: text-color(white);
+    padding: $normal-margin;
+
+    .content {
+        @extend %content;
+
+        display: grid;
+        grid-row-gap: 0.6rem;
+        grid-template-columns: 100%;
+        justify-items: left;
+        padding: 3rem 0;
+
+        h1 {
+            @include set-font(h2);
+
+            margin: 0;
+        }
+
+        .blurb {
+            @include set-font(body-large);
+        }
+
+        a {
+            color: inherit;
+        }
+    }
+
+    .btn.primary {
+        @extend %button;
+        @extend %primary;
+    }
+}

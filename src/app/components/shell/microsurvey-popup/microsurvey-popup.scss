@@ -1,0 +1,11 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.microsurvey-content {
+    .btn {
+        @extend %button;
+        @extend %primary;
+
+        height: 4rem;
+        margin-top: 1rem;
+    }
+}

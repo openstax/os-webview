@@ -137,7 +137,8 @@
         height: 2.8rem;
 
         a {
-            height:100%;
+            display: block;
+            height: 100%;
 
             &:active,
             &:focus,
