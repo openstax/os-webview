@@ -43,6 +43,13 @@ function BookSelectorPage({selectedBooksRef}) {
                 toggleBook={toggleBook}
             />
             <HowUsing selectedBooks={selectedBooks} />
+            <label>
+                <div className="control-group">
+                    <input type="checkbox" name="Have_Xanedu__c" />
+                    Have Xanedu, the OpenStax print partner, contact me about how to
+                    get print copies for my students.
+                </div>
+            </label>
         </React.Fragment>
     );
 }
