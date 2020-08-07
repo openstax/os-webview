@@ -1,10 +1,12 @@
-.btn-social {
+.btn.btn-social {
     align-content: center;
+    border: 0;
     border-radius: 50%;
     display: grid;
     font-size: 1.6rem;
     height: 3rem;
     justify-content: center;
     overflow: hidden;
+    padding: 0;
     width: 3rem;
 }

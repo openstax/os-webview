@@ -38,10 +38,9 @@ $button-breakpoint: 100em * $scale-factor;
         background-color: rgba(os-color(light-blue), 0.8);
         border-radius: 0.3rem;
         color: text-color(white);
-        margin-bottom: 1.5rem;
+        margin: 1.5rem;
         padding: 3rem;
         position: relative;
-        top: 5rem;
         width: 100%;
 
         @include wider-than($girl-breakpoint) {
