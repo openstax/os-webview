@@ -92,7 +92,6 @@ function oldUserModel(sfUserModel) {
     const isVerificationStale = !isStudent && sfUserModel.is_instructor_verification_stale;
     const isVerificationPending = !isStudent &&
         ['pending_faculty'].includes(sfUserModel.faculty_status) && !isVerificationStale;
-    const isVerificationRejected = !isStudent && ['rejected_faculty'].includes(sfUserModel.faculty_status);
     const groups = (function () {
         const result = (sfUserModel.applications || [])
             .map((obj) => obj.name)
@@ -117,7 +116,6 @@ function oldUserModel(sfUserModel) {
         last_name: sfUserModel.last_name,
         pending_verification: isVerificationPending,
         stale_verification: isVerificationStale,
-        rejected_verification: isVerificationRejected,
         needs_profile_completed: sfUserModel.needs_complete_edu_profile,
         is_newflow: sfUserModel.is_newflow,
         username: sfUserModel.id,

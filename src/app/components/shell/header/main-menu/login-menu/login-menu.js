@@ -62,10 +62,7 @@ class LoginMenu extends componentType(spec, busMixin) {
 
     attachLoginDropdown() {
         const facultySignupStep4 = `${settings.accountHref}/i/signup/educator/profile_form`;
-        const facultyAccessLink = `${settings.accountHref}/i/signup/educator/cs_form`;
-        const facultyAccessLinkLegacy = `${facultyAccessLink}/?is_legacy=true`;
-        const facultyAccessLinkStale = `${facultyAccessLink}/?is_stale=true`;
-        const rejectedFacultySignupStep4 = `${facultyAccessLink}/?prev_rejected=true`;
+        const reqFacultyAccessLink = `${settings.accountHref}/i/signup/educator/cs_form`;
         const items = [
             {
                 label: 'Account Profile',
@@ -80,34 +77,18 @@ class LoginMenu extends componentType(spec, busMixin) {
                 label: 'Finish signing up',
                 url: facultySignupStep4,
                 exclude: () => Boolean(
-                    this.user.stale_verification ||
+                    (this.user.groups || []).includes('Student') ||
                     !this.user.needs_profile_completed ||
-                    this.user.is_newflow
+                    !this.user.is_newflow ||
+                    this.user.stale_verification
                 )
             },
             {
                 label: 'Request instructor access',
-                url: facultyAccessLinkLegacy,
+                url: reqFacultyAccessLink,
                 exclude: () => Boolean(
                     (this.user.groups || []).includes('Faculty') ||
-                    (this.user.groups || []).includes('Student') ||
-                    (this.user.pending_verification) ||
-                    (this.user.is_newflow)
-                )
-            },
-            {
-                label: 'Request instructor access',
-                url: facultyAccessLinkStale,
-                exclude: () => Boolean(
-                    !this.user.stale_verification ||
-                    this.user.needs_profile_completed
-                )
-            },
-            {
-                label: 'Request instructor access',
-                url: rejectedFacultySignupStep4,
-                exclude: () => Boolean(
-                    !this.user.rejected_verification
+                    (!this.user.stale_verification && this.user.pending_verification)
                 )
             },
             {
