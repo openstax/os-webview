@@ -7,4 +7,33 @@
     h2 {
         @include set-font(h3);
     }
+
+    .booking {
+        display: grid;
+        grid-gap: $normal-margin;
+        grid-template-columns: auto 1fr;
+
+        .card {
+            @include card();
+
+            height: 10rem;
+            overflow: hidden;
+            position: relative;
+            width: 10rem;
+        }
+
+        img {
+            margin-left: 50%;
+            max-height: 100%;
+            transform: translateX(-50%);
+        }
+
+        .span-2 {
+            grid-column-start: span 2;
+        }
+
+        .name {
+            font-weight: bold;
+        }
+    }
 }

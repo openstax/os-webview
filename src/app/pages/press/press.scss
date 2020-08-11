@@ -33,7 +33,6 @@
         }
     }
 
-    .mobile-view,
     .mobile-selector {
         @include wider-than($phone-max) {
             display: none;
@@ -49,7 +48,18 @@
         padding-top: 4rem;
 
         @include width-up-to($phone-max) {
-            display: none;
+            grid-template-columns: 1fr;
+            margin-bottom: 2rem;
+
+            .hidden-on-mobile:not(.active) {
+                display: none;
+            }
+        }
+
+        @include wider-than($phone-max) {
+            .mobile-only {
+                display: none;
+            }
         }
     }
 
@@ -57,6 +67,10 @@
     .sidebar {
         display: grid;
         grid-row-gap: 6rem;
+
+        @include width-up-to($phone-max) {
+            display: block;
+        }
 
         h2 {
             line-height: normal;

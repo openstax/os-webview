@@ -1,6 +1,6 @@
 import settings from 'settings';
 
-const EXTERNAL = /^((f|ht)tps?:)?\/\//;
+const EXTERNAL = /^([a-z]+:)/;
 const ABSOLUTE_OPENSTAX = new RegExp(
     `(?:https?://openstax.org|${window.location.origin})(?!/(?:books|accounts|oxauth|blog-feed)/)`
 );

@@ -48,8 +48,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isOsTutor = (/pages\/openstax-tutor/).test(args[0]);
     const isPartner = (/pages\/partners/).test(args[0]);
     const isPolishPhysics = (/fizyka/).test(args[0]);
-    const isPress = (/api\/press\/\?/).test(args[0]);
-    const isPressArticle = (/api\/press\//).test(args[0]);
+    const isPress = (/api\/press\/?$/).test(args[0]);
+    const isPressArticle = (/api\/press\/./).test(args[0]);
     const isPrintOrder = (/pages\/print-order/).test(args[0]);
     const isResearch = (/pages\/research/).test(args[0]);
     const isRoles = (/snippets\/roles/).test(args[0]);
