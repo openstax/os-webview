@@ -29,8 +29,8 @@ export default function Inquiries() {
                     {
                         Boolean(name) && <div>{name}</div>
                     }
-                    <div>{phone}</div>
-                    <div>{email}</div>
+                    <div><a href={`tel:${phone}`}>{phone}</a></div>
+                    <div><a href={`mailto:${email}`}>{email}</a></div>
                 </div>
             </div>
             <div className="find-us">

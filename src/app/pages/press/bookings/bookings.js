@@ -48,7 +48,7 @@ export default function Bookings() {
                 <RawHTML html={blurb} />
             </div>
             {
-                bios.map((bio) => <Booking {...bio} />)
+                bios.map((bio) => <Booking {...bio} key={bio.name} />)
             }
         </div>
     );

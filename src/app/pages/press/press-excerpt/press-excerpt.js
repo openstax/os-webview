@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from 'react';
+import React from 'react';
 import {BylineJsx} from '~/components/byline/byline';
 import './press-excerpt.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -14,19 +14,15 @@ function OptionalExcerpt({excerpt, url}) {
 }
 
 export default function PressExcerpt({iconUrl, author, date, source, url, headline, excerpt}) {
-    const ref = useRef();
+    const classList = ['press-excerpt'];
 
-    useEffect(() => {
-        if (iconUrl) {
-            ref.current.classList.add('with-icon');
-        }
-    });
+    if (iconUrl) {
+        classList.push('with-icon');
+    }
 
     return (
-        <div className="press-excerpt" ref={ref}>
-            {
-                iconUrl && <img src={iconUrl} alt="" />
-            }
+        <div className={classList.join(' ')}>
+            {iconUrl && <img src={iconUrl} alt="" />}
             <BylineJsx author={author} date={date} source={source} />
             <div className="headline">
                 <a href={url}>{headline}

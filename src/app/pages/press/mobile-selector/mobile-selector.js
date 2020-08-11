@@ -21,7 +21,7 @@ function Menu({selectedValue, values, onChange}) {
             <div role="menu">
                 {
                     values.map((value) =>
-                        <MenuItem selectedValue={selectedValue} value={value} onChange={onChange}/>
+                        <MenuItem {...{selectedValue, value, onChange}} key={value} />
                     )
                 }
             </div>

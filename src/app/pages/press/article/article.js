@@ -38,7 +38,7 @@ function Article({data}) {
                 <BylineJsx author={author} date={date} />
                 <div className="body">
                     {
-                        bodyData.map((unit) => <BodyUnit unit={unit} />)
+                        bodyData.map((unit) => <BodyUnit unit={unit} key={unit.value} />)
                     }
                 </div>
             </article>

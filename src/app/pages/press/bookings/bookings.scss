@@ -14,7 +14,7 @@
         grid-template-columns: auto 1fr;
 
         .card {
-            @extend %card;
+            @include card();
 
             height: 10rem;
             overflow: hidden;
