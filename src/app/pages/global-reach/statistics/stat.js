@@ -22,7 +22,7 @@ export default function Statistics({cards}) {
     return (
         <div className="stat-bg">
             <div className="statbox">
-                {cards.map((card) => <Card item={card} />)}
+                {cards.map((card) => <Card item={card} key={card} />)}
             </div>
         </div>
     );
