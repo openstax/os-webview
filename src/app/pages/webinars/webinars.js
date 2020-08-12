@@ -8,6 +8,7 @@ import WebinarList from './webinar-list/webinar-list';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import cmsFetch from '~/models/cmsFetch';
 import orderBy from 'lodash/orderBy';
+import $ from '~/helpers/$';
 
 const spec = {
     template,
@@ -53,7 +54,7 @@ export default class extends componentType(spec) {
 
     attachChildren(webinarList) {
         const tabLabels = ['Upcoming webinars', 'Past webinar recordings'];
-        let selectedTab = decodeURIComponent(window.location.search.replace('?', '')) || tabLabels[0];
+        let selectedTab = $.findSelectedTab(tabLabels) || tabLabels[0];
         const contents = {};
         const addTab = (label, tabContents) => {
             contents[label] = tabContents;
@@ -106,9 +107,11 @@ export default class extends componentType(spec) {
             tabLabels,
             selectedTab,
             setSelected(newValue) {
+                const newSearchString = $.replaceSearchTerm(tabLabels, selectedTab, newValue);
+
                 selectedTab = newValue;
                 contentGroup.update();
-                window.history.replaceState({}, selectedTab, `?${selectedTab}`);
+                window.history.replaceState({}, selectedTab, newSearchString);
             }
         }));
 

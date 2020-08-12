@@ -58,29 +58,6 @@ const spec = {
 };
 const BaseClass = componentType(spec, canonicalLinkMixin);
 
-function splitSearchString() {
-    return window.location.search.substr(1).split('&')
-        .filter((piece) => piece.length > 0);
-}
-
-function findSelectedTab(labels) {
-    const possibleTabs = splitSearchString().map(decodeURIComponent);
-
-    return labels.find((label) => possibleTabs.includes(label)) || labels[0];
-}
-
-function replaceSearchTerm(labels, selectedTab, newValue) {
-    const possibleTabs = splitSearchString();
-    const index = possibleTabs.findIndex((t) => labels.includes(decodeURIComponent(t)));
-
-    if (index < 0) {
-        possibleTabs.unshift(encodeURIComponent(newValue));
-    } else {
-        possibleTabs[index] = encodeURIComponent(newValue);
-    }
-    return `?${possibleTabs.join('&')}`;
-}
-
 export default class Details extends BaseClass {
 
     init() {
@@ -344,7 +321,7 @@ export default class Details extends BaseClass {
                 }));
             }
 
-            let selectedTab = findSelectedTab(tabLabels);
+            let selectedTab = $.findSelectedTab(tabLabels);
             const contentGroup = new ContentGroup(() => ({
                 selectedTab,
                 contents
@@ -357,7 +334,7 @@ export default class Details extends BaseClass {
                 tabLabels,
                 selectedTab,
                 setSelected(newValue) {
-                    const newSearchString = replaceSearchTerm(tabLabels, selectedTab, newValue);
+                    const newSearchString = $.replaceSearchTerm(tabLabels, selectedTab, newValue);
 
                     selectedTab = newValue;
                     setDetailsTabClass();
