@@ -2,6 +2,15 @@
 
 .dropdown {
     position: relative;
+
+    // Keeps rightmost menu from hanging off the screen
+    &.rightmost .dropdown-container {
+        right: -1rem;
+
+        @include width-up-to($tablet-max) {
+            right: auto;
+        }
+    }
 }
 
 // This is necessary to allow the menu to be wider than the header item
@@ -10,15 +19,6 @@
     overflow: visible;
     position: absolute;
     top: 100%;
-
-    // Keeps rightmost menu from hanging off the screen
-    &.rightmost {
-        right: -$normal-margin;
-
-        @include width-up-to($tablet-max) {
-            right: auto;
-        }
-    }
 }
 
 .dropdown-menu {
