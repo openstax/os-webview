@@ -7,7 +7,7 @@ import {WrappedPopupJsx} from '~/components/popup/popup.jsx';
 const message = 'Please enter your full school name without abbreviations.' +
     ' If this is your full school name, you can click Next.';
 
-export default function ({validatorRef}) {
+export default function ContactInfo({validatorRef}) {
     const [schoolIsOk, setSchoolIsOk] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
     const schools = useDataFromPromise(schoolPromise, []).sort();
@@ -33,7 +33,8 @@ export default function ({validatorRef}) {
 
     return (
         <div>
-            <FormInput label="First name"
+            <FormInput
+                label="First name"
                 inputProps={{
                     type: 'text',
                     name: 'first_name',
@@ -41,7 +42,8 @@ export default function ({validatorRef}) {
                     autocomplete: 'given-name'
                 }}
             />
-            <FormInput label="Last name"
+            <FormInput
+                label="Last name"
                 inputProps={{
                     type: 'text',
                     name: 'last_name',
@@ -49,7 +51,8 @@ export default function ({validatorRef}) {
                     autocomplete: 'family-name'
                 }}
             />
-            <FormInput label="Email address"
+            <FormInput
+                label="Email address"
                 inputProps={{
                     type: 'email',
                     name: 'email',
@@ -57,7 +60,8 @@ export default function ({validatorRef}) {
                     autocomplete: 'email'
                 }}
             />
-            <FormInput label="Phone number"
+            <FormInput
+                label="Phone number"
                 inputProps={{
                     type: 'text',
                     name: 'phone',
@@ -65,7 +69,8 @@ export default function ({validatorRef}) {
                     autocomplete: 'tel-national'
                 }}
             />
-            <FormInput label="School name"
+            <FormInput
+                label="School name"
                 suggestions={schools}
                 inputProps={{
                     type: 'text',

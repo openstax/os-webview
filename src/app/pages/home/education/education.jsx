@@ -7,7 +7,7 @@ export default function ({content, linkUrl, linkText}) {
         <div className="education-banner">
             <div className="container">
                 <div className="quote">
-                    <div dangerouslySetInnerHTML={{__html: content}}/>
+                    <div dangerouslySetInnerHTML={{__html: content}} />
                     <LinkWithChevron href={linkUrl}>
                         {linkText}
                     </LinkWithChevron>

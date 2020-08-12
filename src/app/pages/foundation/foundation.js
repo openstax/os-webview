@@ -25,13 +25,14 @@ function Page() {
                 </div>
             </div>
             <div className="blurbs">
-                <img className="strips" src="/images/components/strips.svg"
+                <img
+                    className="strips" src="/images/components/strips.svg"
                     height="10" alt="" role="presentation"
                 />
                 <div className="boxed">
                     {
                         model.funders.map((funder) => (
-                            <div className="funder">
+                            <div className="funder" key={funder}>
                                 <h2>{funder.title}</h2>
                             </div>
                         ))

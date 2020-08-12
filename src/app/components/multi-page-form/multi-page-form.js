@@ -12,9 +12,10 @@ function MarkupChildren({children, currentPage, activeRef, validatedPages}) {
         const isValidated = pageNumber in validatedPages;
 
         return (
-            <div className={isValidated ? 'validated' : undefined}
+            <div
+                className={isValidated ? 'validated' : undefined}
                 hidden={!isActive}
-                ref={isActive ? activeRef : null}
+                ref={isActive ? activeRef : null} key={child}
             >
                 {child}
             </div>
@@ -49,19 +50,22 @@ function ButtonRow({pages, currentPage, setCurrentPage,
 
     return (
         <div class="button-row">
-            <button type="button" class="secondary back"
+            <button
+                type="button" class="secondary back"
                 hidden={currentPage === 1}
                 onClick={previousPage}
             >
                 Back
             </button>
-            <button type="submit" class="primary"
+            <button
+                type="submit" class="primary"
                 hidden={currentPage < pages}
                 onClick={validateAndSubmit}
             >
                 Submit
             </button>
-            <button type="button" class="primary next"
+            <button
+                type="button" class="primary next"
                 hidden={currentPage === pages}
                 onClick={nextPage}
             >
@@ -99,9 +103,11 @@ export default function MultiPageForm({
 
     return (
         <div className="multi-page-form">
-            <iframe name="form-response" id="form-response" class="hidden"
+            <iframe
+                name="form-response" id="form-response" class="hidden"
                 src="" width="0" height="0" tabindex="-1" />
-            <form accept-charset="UTF-8" class="form"
+            <form
+                accept-charset="UTF-8" class="form"
                 target={debug ? undefined : 'form-response'}
                 action={action} method="post" ref={formRef}>
                 <MarkupChildren

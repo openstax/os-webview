@@ -177,7 +177,17 @@ function eslint() {
             'require-yield': 'error',
             'rest-spread-spacing': ['error', 'never'],
             'template-curly-spacing': ['error', 'never'],
-            'yield-star-spacing': ['error', {'before': false, 'after': true}]
+            'yield-star-spacing': ['error', {'before': false, 'after': true}],
+
+             'react/jsx-curly-newline': ['error', 'consistent'],
+             'react/jsx-curly-brace-presence': ['error', 'never'],
+             'react/jsx-equals-spacing': ['error', 'never'],
+             'react/jsx-first-prop-new-line': ['error', 'multiline'],
+             'react/jsx-indent': ['error', 4],
+             'react/jsx-indent-props': ['error', 4],
+             'react/jsx-key': 'error',
+             'react/jsx-no-target-blank': 'error',
+             'react/jsx-tag-spacing': 'error'
         },
         envs: [
             'browser',

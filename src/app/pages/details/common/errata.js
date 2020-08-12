@@ -4,16 +4,19 @@ import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 function ButtonGroup({polish, title}) {
     const PolishButtonGroup = () => (
         <div className="button-group">
-            <a href="https://openstax.pl/pl/errata"
+            <a
+                href="https://openstax.pl/pl/errata"
                 className="btn secondary medium">Zgłoś poprawkę</a>
         </div>
     );
 
     const EnglishButtonGroup = () => (
         <div className="button-group">
-            <a href={`/errata/form?book=${encodeURIComponent(title)}`}
+            <a
+                href={`/errata/form?book=${encodeURIComponent(title)}`}
                 className="btn secondary medium">Suggest a correction</a>
-            <a href={`/errata/?book=${encodeURIComponent(title)}`}
+            <a
+                href={`/errata/?book=${encodeURIComponent(title)}`}
                 className="btn default medium">Errata list</a>
         </div>
     );
@@ -41,7 +44,7 @@ export default function ErrataSection({bookState, ...otherProps}) {
     return (
         <div className="loc-errata">
             <h3>Errata</h3>
-            <ErrataContents bookState={bookState} {...otherProps}/>
+            <ErrataContents bookState={bookState} {...otherProps} />
         </div>
     );
 }

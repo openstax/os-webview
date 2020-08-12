@@ -5,7 +5,7 @@ describe('HowUsing', () => {
 
     let wrapper;
 
-    beforeEach((done) => {
+    beforeEach(() => {
         const props = {
             selectedBooks: [],
             selectedBooks: [{
@@ -14,13 +14,10 @@ describe('HowUsing', () => {
             }]
         };
         wrapper = makeMountRender(HowUsing, props)();
-        setTimeout(() => {
-            wrapper.update();
-            done();
-        }, 10);
     });
 
     it('creates', () => {
+        wrapper.update();
         expect(wrapper.text()).toContain('How are you using First Book?')
         const radios = wrapper.find('[type="radio"]');
 

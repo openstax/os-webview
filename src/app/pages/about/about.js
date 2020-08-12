@@ -56,10 +56,7 @@ function Page() {
                     <div className="cards">
                         {
                             cards.map((card) =>
-                                <a
-                                    className="card"
-                                    href={card.link}
-                                >
+                                <a className="card" href={card.link} key={card}>
                                     <img src={card.image} role="presentation" />
                                     <div className="content">
                                         {card.text}

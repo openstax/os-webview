@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import routerBus from '~/helpers/router-bus';
 import {instructorResourceBoxPermissions} from '../../resource-box/resource-box';
 import FeaturedResources from '../../instructor-resource-tab/featured-resources/featured-resources.jsx';
-import ResourceBoxes, {VideoResourceBoxes} from '../../resource-box/resource-boxes.jsx';
+import ResourceBoxes, {VideoResourceBoxes} from '../../resource-box/resource-boxes';
 import WrappedJsx from '~/controllers/jsx-wrapper';
 import './instructor-resources-pane.css';
 
@@ -84,9 +84,7 @@ export function InstructorResourcePane({
                 <FontAwesomeIcon icon="sign-out-alt" />
             </a>
             <div className="free-resources-region">
-                <VideoResourceBoxes models={videoResources}
-                    referenceModels={referenceModels}
-                />
+                <VideoResourceBoxes models={videoResources} referenceModels={referenceModels} />
                 <ResourceBoxes models={otherModels} />
             </div>
         </div>

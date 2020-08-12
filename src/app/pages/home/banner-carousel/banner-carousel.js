@@ -52,6 +52,7 @@ export default function ({largeImages, smallImages}) {
                             aria-label={image.alt_text}
                             tabIndex={index === frameNumber ? 0 : -1}
                             onClick={reportImageClick}
+                            key={image.link}
                         />
                     )
                 }
@@ -64,6 +65,7 @@ export default function ({largeImages, smallImages}) {
                                 className={`dot ${index === frameNumber ? 'active' : ''}`}
                                 type="button"
                                 onClick={() => updateFrameNumber(index)}
+                                key={image.link}
                             />
                         )
                     }
@@ -71,7 +73,8 @@ export default function ({largeImages, smallImages}) {
             </div>
             {
                 frameNumber > 0 &&
-                    <button className="left-arrow" type="button"
+                    <button
+                        className="left-arrow" type="button"
                         onClick={() => updateFrameNumber(frameNumber - 1)}
                     >
                         <FontAwesomeIcon icon="chevron-left" />
@@ -79,7 +82,8 @@ export default function ({largeImages, smallImages}) {
             }
             {
                 frameNumber < images.length - 1 &&
-                    <button className="right-arrow" type="button"
+                    <button
+                        className="right-arrow" type="button"
                         onClick={() => updateFrameNumber(frameNumber + 1)}
                     >
                         <FontAwesomeIcon icon="chevron-right" />

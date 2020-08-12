@@ -11,7 +11,8 @@ export default function Tutor({heading, description, rightImage, link, linkText,
                     <a href={link}>{linkText}</a>
                 </HeadingAndDescription>
             </div>
-            <img className="bottom-image"
+            <img
+                className="bottom-image"
                 src={bottomImage.image} alt={bottomImage.altText} />
         </Section>
     );

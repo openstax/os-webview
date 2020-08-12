@@ -6,7 +6,7 @@ import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin
 import userModel from '~/models/usermodel';
 import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
 import {getDetailModel} from '~/helpers/errata';
-import Detail from '~/pages/errata-detail/detail/detail.jsx';
+import Detail from '~/pages/errata-detail/detail/detail';
 import './confirmation.css';
 
 const applyLink = `${settings.accountHref}/faculty_access/apply?r=${encodeURIComponent(`${settings.apiOrigin}/`)}`;
@@ -84,7 +84,7 @@ function BelowHeader({text, buttons}) {
                 <div className="buttons">
                     {
                         buttons.map((b) =>
-                            <a className={`btn ${b.colorScheme}`} href={b.url}>
+                            <a className={`btn ${b.colorScheme}`} href={b.url} key={b}>
                                 {b.text}
                             </a>
                         )

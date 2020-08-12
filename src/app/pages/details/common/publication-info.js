@@ -41,7 +41,7 @@ function IsbnInfo({model, label, tag}) {
                 <h4>{`${label}:`}</h4>
                 {
                     entries.map(({number, value}) =>
-                        <div>{`ISBN-${number}: ${value}`}</div>
+                        <div key={value}>{`ISBN-${number}: ${value}`}</div>
                     )
                 }
             </div>
@@ -150,11 +150,13 @@ export default function PublicationInfo({model, url, polish}) {
 
     return (
         <React.Fragment>
-            <LabeledDate label="Publish Date:"
+            <LabeledDate
+                label="Publish Date:"
                 className="loc-pub-date"
                 formattedDate={model.formattedPublishDate}
             />
-            <LabeledDate label="Web Version Last Updated:"
+            <LabeledDate
+                label="Web Version Last Updated:"
                 className="loc-web-update-date"
                 formattedDate={model.formattedWebUpdateDate}
             />
@@ -162,12 +164,14 @@ export default function PublicationInfo({model, url, polish}) {
             <IsbnInfo model={model} label="Hardcover" tag="print" />
             <IsbnInfo model={model} label="Paperback" tag="print_softcover" />
             <IsbnInfo model={model} label="Digital" tag="digital" />
-            <IsbnInfo model={model}
+            <IsbnInfo
+                model={model}
                 label={model.ibook_volume_2_isbn_10 || model.ibook_volume_2_isbn_13 ? 'iBooks Part 1' : 'iBooks'}
                 tag="ibook"
             />
             <IsbnInfo model={model} label="iBooks Part 2" tag="ibook" />
-            <LicenseInfo name={model.license_name}
+            <LicenseInfo
+                name={model.license_name}
                 icon={model.licenseIcon}
                 text={model.license_text}
                 title={model.license_title}

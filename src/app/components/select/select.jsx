@@ -19,7 +19,8 @@ function Option({optionEl, setValue, active}) {
     }
 
     return (
-        <li className={classes} hidden={optionEl.disabled}
+        <li
+            className={classes} hidden={optionEl.disabled}
             onClick={onClick}
             ref={ref}
         >
@@ -44,9 +45,9 @@ function SelectProxyFor({selectEl, open, activeIndex, setValue}) {
                 {
                     Array.from(selectEl.options)
                         .map((opt, index) =>
-                            <Option optionEl={opt}
-                                setValue={setValue}
-                                active={activeIndex === index}
+                            <Option
+                                optionEl={opt} setValue={setValue}
+                                active={activeIndex === index} key={opt}
                             />
                         )
                 }
@@ -100,66 +101,13 @@ export default function Select({children, placeholder, onChange, ...selectProps}
             event.stopPropagation();
         }
     }
-    // // eslint-disable-next-line complexity
-    // function onKeyDown(event) {
-    //     let handled = true;
-    //     const minActiveIndex = placeholder ? 1 : 0;
-    //
-    //     if (open) {
-    //         switch (event.key) {
-    //         case 'Enter':
-    //         case ' ':
-    //             if (activeIndex > -1) {
-    //                 setValue(selectEl.children[activeIndex].value);
-    //             }
-    //             // eslint-disable-next-line no-fallthrough
-    //         case 'Escape':
-    //             setOpen(false);
-    //             break;
-    //         case 'ArrowDown':
-    //             setActiveIndex(Math.min(
-    //                 Math.max(activeIndex + 1, minActiveIndex),
-    //                 selectEl.children.length - 1)
-    //             );
-    //             break;
-    //         case 'ArrowUp':
-    //             setActiveIndex(Math.max(activeIndex - 1, minActiveIndex));
-    //             break;
-    //         default:
-    //             if (event.key.length === 1) {
-    //                 const letter = event.key.toLowerCase();
-    //                 const values = Array.from(selectEl.children)
-    //                     .map((opt) => opt.textContent.toLowerCase());
-    //                 let foundIndex = values.findIndex((val, i) =>
-    //                     i > activeIndex && val.startsWith(letter)
-    //                 );
-    //
-    //                 if (!(foundIndex > -1)) {
-    //                     foundIndex = values.findIndex((val) => val.startsWith(letter));
-    //                 }
-    //                 if (foundIndex > -1) {
-    //                     setActiveIndex(foundIndex);
-    //                 }
-    //             } else {
-    //                 handled = false;
-    //             }
-    //         }
-    //     } else if (['Enter', ' '].includes(event.key)) {
-    //         setOpen(true);
-    //     } else {
-    //         handled = false;
-    //     }
-    //     if (handled) {
-    //         event.preventDefault();
-    //         event.stopPropagation();
-    //     }
-    // }
     function onBlur() {
         setOpen(false);
     }
 
     return (
-        <div className={`select with-arrow ${open ? 'open' : ''}`}
+        <div
+            className={`select with-arrow ${open ? 'open' : ''}`}
             onClick={onClick}
             onKeyDown={onKeyDown}
             onBlur={onBlur}
@@ -174,7 +122,8 @@ export default function Select({children, placeholder, onChange, ...selectProps}
             </select>
             {
                 Boolean(selectEl) &&
-                    <SelectProxyFor selectEl={selectEl}
+                    <SelectProxyFor
+                        selectEl={selectEl}
                         open={open}
                         activeIndex={activeIndex}
                         setValue={setValue}

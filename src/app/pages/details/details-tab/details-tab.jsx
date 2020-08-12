@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import WrappedJsx, {SuperbItem} from '~/controllers/jsx-wrapper';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {Bus} from '~/helpers/controller/bus-mixin';
-import {Authors, PublicationInfo, ErrataSection} from '../common/common.jsx';
+import {Authors, PublicationInfo, ErrataSection} from '../common/common';
 import GetThisTitle from '~/components/get-this-title/get-this-title';
 import LetUsKnow from '../let-us-know/let-us-know.jsx';
 import TocDrawer from '../table-of-contents/table-of-contents';
@@ -91,7 +91,7 @@ export function DetailsTab({polish, ...model}) {
         });
     }
 
-    return polish ? <PolishTab model={model} gtt={gtt} /> : <EnglishTab model={model} gtt={gtt}/>;
+    return polish ? <PolishTab model={model} gtt={gtt} /> : <EnglishTab model={model} gtt={gtt} />;
 }
 
 export default class extends WrappedJsx {

@@ -12,7 +12,8 @@ function OtherSourceInput() {
     return (
         <div className="other-group">
             <InvalidMessage />
-            <input type="text"
+            <input
+                type="text"
                 name="resource_other" maxLength="250"
                 ref={inputRef} onChange={updateInvalidMessage}
                 required
@@ -54,7 +55,8 @@ export default function ErrorSourceSelector({initialSource}) {
                 {
                     sourceTypes.map((sType, index) => (
                         <label key={sType}>
-                            <input type="radio" name="resource"
+                            <input
+                                type="radio" name="resource"
                                 value={sType}
                                 defaultChecked={selectedSource === sType ? '' : null}
                                 ref={index === 0 ? radioRef : null}

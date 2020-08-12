@@ -5,7 +5,8 @@ import './map.css';
 
 export default function Map({heading, description, image1, image2, link, linkText, backgroundImage}) {
     return (
-        <Section id="map"
+        <Section
+            id="map"
             style={{
                 backgroundImage: `url(${backgroundImage.image})`,
                 position: 'relative'

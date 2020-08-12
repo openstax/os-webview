@@ -3,7 +3,7 @@ import $ from '~/helpers/$';
 import settings from 'settings';
 import {studentResourceBoxPermissions} from '../resource-box/resource-box';
 import WrappedJsx from '~/controllers/jsx-wrapper';
-import ResourceBoxes from '../resource-box/resource-boxes.jsx';
+import ResourceBoxes from '../resource-box/resource-boxes';
 import {description as template} from './student-resource-tab.html';
 import css from './student-resource-tab.css';
 

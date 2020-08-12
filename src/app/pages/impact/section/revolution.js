@@ -8,11 +8,13 @@ function Letter({heading, letterBody, portrait, signatureImage, signatureText}) 
             <h2>{heading}</h2>
             <RawHTML html={letterBody} className="text-block" />
             <div className="signature-section">
-                <img className="mobile-only little-headshot"
+                <img
+                    className="mobile-only little-headshot"
                     src={portrait.image} alt={portrait.altText}
                 />
                 <div>
-                    <img className="signature-image" src={signatureImage.image}
+                    <img
+                        className="signature-image" src={signatureImage.image}
                         alt={signatureImage.altText}
                     />
                     <RawHTML html={signatureText} />

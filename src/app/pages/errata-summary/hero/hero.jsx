@@ -32,7 +32,7 @@ export default function Hero({slug, title}) {
                     <div className="instructions">{instructions}</div>
                     <div className="with-tooltip">
                         {moreAbout}
-                        <RawHTML className="tooltip" html={errataHoverHtml}/>
+                        <RawHTML className="tooltip" html={errataHoverHtml} />
                     </div>
                 </div>
             </div>

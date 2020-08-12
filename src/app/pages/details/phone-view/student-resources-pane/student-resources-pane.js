@@ -2,7 +2,7 @@ import {Controller} from 'superb.js';
 import settings from 'settings';
 import {studentResourceBoxPermissions} from '../../resource-box/resource-box';
 import WrappedJsx from '~/controllers/jsx-wrapper';
-import ResourceBoxes from '../../resource-box/resource-boxes.jsx';
+import ResourceBoxes from '../../resource-box/resource-boxes';
 import css from './student-resources-pane.css';
 
 function resourceBoxModel(resourceData, userStatus) {

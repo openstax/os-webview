@@ -143,7 +143,8 @@ export function BlogPage() {
 
     return (
         <React.Fragment>
-            <ArticlePage slug={`news/${slugMatch[1]}`}
+            <ArticlePage
+                slug={`news/${slugMatch[1]}`}
                 articles={pageData.articles}
                 setPath={setPath}
             />

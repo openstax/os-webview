@@ -1,5 +1,5 @@
 import {makeMountRender, snapshotify} from '../../../helpers/jsx-test-utils.jsx';
-import Buckets from '~/pages/home/buckets/buckets.jsx';
+import Buckets from '~/pages/home/buckets/buckets';
 import higherEd from '../../data/buckets';
 
 describe('Buckets', () => {

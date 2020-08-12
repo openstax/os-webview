@@ -49,7 +49,8 @@ function ShareInterior({pageUrl, message, minimal}) {
 
     return (
         <div className={`buttons ${minimal ? 'minimal' : ''}`}>
-            <div className="fb-share-button"
+            <div
+                className="fb-share-button"
                 data-href="https://developers.facebook.com/docs/plugins/"
                 data-layout="link"
                 data-mobile-iframe="true"
@@ -58,7 +59,7 @@ function ShareInterior({pageUrl, message, minimal}) {
             </div>
             {
                 buttonData.slice(1).map((data) =>
-                    <SocialLink {...data} minimal={minimal} />
+                    <SocialLink {...data} minimal={minimal} key={data} />
                 )
             }
         </div>

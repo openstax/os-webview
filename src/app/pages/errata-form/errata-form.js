@@ -7,7 +7,7 @@ import {urlFromSlug} from '~/models/cmsFetch';
 import css from './errata-form.css';
 import linkHelper from '~/helpers/link';
 import WrappedJsx from '~/controllers/jsx-wrapper';
-import Form from './form/form.jsx';
+import Form from './form/form';
 
 const spec = {
     template,

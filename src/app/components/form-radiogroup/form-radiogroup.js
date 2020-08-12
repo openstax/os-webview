@@ -8,7 +8,8 @@ function Option({item, name, required, selectedValue, setSelectedValue}) {
     return (
         <div className="radio-control-group">
             <label>
-                <input type="radio"
+                <input
+                    type="radio"
                     name={name}
                     value={item.value}
                     checked={item.value === selectedValue}
@@ -36,7 +37,7 @@ export default function FormRadioGroup({label, longLabel, name, options, selecte
             {label && <label className="field-label">{label}</label>}
             {longLabel && <label className="field-long-label">{longLabel}</label>}
             <div>
-                {options.map((item) => <Option item={item} {...passThruProps} />)}
+                {options.map((item) => <Option item={item} {...passThruProps} key={item} />)}
             </div>
             <div className="invalid-message">{validationMessage}</div>
         </div>

@@ -18,7 +18,8 @@ function SuggestionItem({value, accept, index, activeIndex, setActiveIndex}) {
     }, [active]);
 
     return (
-        <div className={classList.join(' ')} ref={ref}
+        <div
+            className={classList.join(' ')} ref={ref}
             onClick={() => accept(value)}
             onMouseMove={setActiveIndex(index)}
         >{value}</div>
@@ -51,7 +52,8 @@ function SuggestionBox({matches, exactMatch, accepted, accept, activeIndex, setA
             <div className="suggestion-box">
                 {
                     !exactMatch && !accepted && matches.map((match, i) =>
-                        <SuggestionItem value={match} accept={accept} index={i}
+                        <SuggestionItem
+                            value={match} accept={accept} index={i}
                             activeIndex={activeIndex} setActiveIndex={setActiveIndex}
                             key={match}
                         />)
@@ -114,10 +116,11 @@ export default function FormInput({label, longLabel, inputProps, suggestions}) {
             <div className="control-group">
                 {label && <label className="field-label">{label}</label>}
                 {longLabel && <label className="field-long-label">{longLabel}</label>}
-                <ValidatingInput value={value} inputProps={{onKeyDown, ...otherProps}} onChange={onChange}/>
+                <ValidatingInput value={value} inputProps={{onKeyDown, ...otherProps}} onChange={onChange} />
                 {
                     suggestions &&
-                        <SuggestionBox matches={matches} exactMatch={exactMatch}
+                        <SuggestionBox
+                            matches={matches} exactMatch={exactMatch}
                             accepted={accepted}
                             accept={accept} activeIndex={activeIndex}
                             setActiveIndex={setActiveIndex}

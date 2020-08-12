@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {ProgressBar} from './progress-bar/progress-bar.jsx';
-import {Detail} from './detail/detail.jsx';
+import {Detail} from './detail/detail';
 import cmsFetch from '~/models/cmsFetch';
 import {getDisplayStatus, getDetailModel} from '~/helpers/errata';
 import './errata-detail.css';
@@ -40,7 +40,8 @@ export default function ErrataDetail({slug}) {
                             <ProgressBar status={pageData.status} barStatus={pageData.barStatus} />
                         </div>
                         <div className="errata-detail-block">
-                            <Detail detail={pageData.detailModel.detail}
+                            <Detail
+                                detail={pageData.detailModel.detail}
                                 showDecisionDetails={pageData.detailModel.showDecisionDetails} />
                         </div>
                     </React.Fragment>

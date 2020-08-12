@@ -33,17 +33,20 @@ function SearchBarInterior({setPath}) {
     return (
         <React.Fragment>
             <div className="input-with-clear-button">
-                <input type="text" placeholder="Search" name="search-input"
+                <input
+                    type="text" placeholder="Search" name="search-input"
                     value={searchString} onChange={onChange} onKeyPress={searchOnEnter}
                 />
-                <span className="clear-search"
+                <span
+                    className="clear-search"
                     role="button" aria-label="clear search" tabindex="0"
                     hidden={clearHidden} onClick={clearSearch} onKeyPress={clearByKey}
                 >
                     <FontAwesomeIcon icon="times" />
                 </span>
             </div>
-            <button className="btn primary" type="button" onClick={doSearch}>
+            <button
+                className="btn primary" type="button" onClick={doSearch}>
                 <FontAwesomeIcon icon="search" />
             </button>
         </React.Fragment>

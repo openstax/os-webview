@@ -9,7 +9,7 @@ function Authors({heading, className, authors, CustomTag='div'}) {
             <CustomTag className="author-heading" role="heading">{heading}</CustomTag>
             {
                 authors.map((author) =>
-                    <div className={className}>
+                    <div className={className} key={author.name}>
                         {author.name}
                         {author.university ? `, ${author.university}` : ''}
                     </div>
@@ -28,11 +28,13 @@ export default function AuthorsSection({model, polish}) {
 
     return (
         <React.Fragment>
-            <Authors heading={headings[0]}
+            <Authors
+                heading={headings[0]}
                 className="loc-senior-author"
                 authors={model.allSenior}
             />
-            <Authors heading={headings[1]}
+            <Authors
+                heading={headings[1]}
                 className="loc-nonsenior-author"
                 authors={model.allNonsenior}
             />

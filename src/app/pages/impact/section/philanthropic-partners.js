@@ -9,7 +9,8 @@ export default function PhilanthropicPartners({
 }) {
     return (
         <Section id="philanthropic-partners" className="white">
-            <HeadingAndDescription classList={['centered', 'content']}
+            <HeadingAndDescription
+                classList={['centered', 'content']}
                 {...{heading, description}}
             />
             <div className="text-overlapping-photo">

@@ -8,9 +8,10 @@ export default function Sustainability({heading, description, partners}) {
             <div class="scroll-on-mobile">
                 <div class="icon-row">
                     {
-                        partners.map((icon) =>
-                            <img src={icon.image.image}
-                                alt={icon.imageAltText || icon.image.altText}
+                        partners.map(({image, imageAltText}) =>
+                            <img
+                                src={image.image} key={image.image}
+                                alt={imageAltText || image.altText}
                             />
                         )
                     }

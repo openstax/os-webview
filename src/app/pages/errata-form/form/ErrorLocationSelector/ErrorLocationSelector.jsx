@@ -40,7 +40,8 @@ function ChapterOption({entry, chapterFilter, updateChapterFilter}) {
     };
 
     return (
-        <option className="chapter"
+        <option
+            className="chapter"
             value={entry.expandedValue}
             onClick={onClick}
         >
@@ -51,7 +52,8 @@ function ChapterOption({entry, chapterFilter, updateChapterFilter}) {
 
 function PageOption({entry}) {
     return (
-        <option className={`indent-${entry.indentLevel}`}
+        <option
+            className={`indent-${entry.indentLevel}`}
             value={entry.expandedValue}
         >
             {entry.title}
@@ -95,7 +97,8 @@ function TocSelector({selectedBook, required=true, updateValue}) {
         <React.Fragment>
             <div className="question">Where in the book did you find the error?</div>
             <InvalidMessage />
-            <select size="10" name="location"
+            <select
+                size="10" name="location"
                 ref={inputRef} onChange={onChange}
                 required={required}
             >
@@ -134,7 +137,8 @@ function AdditionalLocationInput({defaultValue='', readOnly=false, updateValue, 
         <React.Fragment>
             <div className="question">Additional location information, if applicable</div>
             <InvalidMessage />
-            <input type="text" name="additional_location_information"
+            <input
+                type="text" name="additional_location_information"
                 placeholder="Describe where you found the error"
                 value={defaultValue} onChange={onChange}
                 ref={inputRef} readOnly={readOnly}
@@ -158,7 +162,7 @@ function NotDefaultValue({selectedBook, defaultValue}) {
     return (
         <React.Fragment>
             <TocSelector selectedBook={selectedBook} required={required()} updateValue={updateTocV} />
-            <AdditionalLocationInput defaultValue={addlV} required={required()} updateValue={updateAddlV}/>
+            <AdditionalLocationInput defaultValue={addlV} required={required()} updateValue={updateAddlV} />
         </React.Fragment>
     );
 }

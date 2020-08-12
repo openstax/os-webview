@@ -1,5 +1,5 @@
 import {makeMountRender, snapshotify} from '../../helpers/jsx-test-utils.jsx';
-import {PaginatedResults, PaginatorControls} from '~/components/paginator/paginator.jsx';
+import {PaginatedResults, PaginatorControls} from '~/components/paginator/paginator.js';
 
 describe('PaginatorControls', () => {
     let page = 2;

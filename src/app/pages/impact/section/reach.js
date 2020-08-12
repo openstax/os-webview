@@ -21,7 +21,7 @@ export default function Reach({heading, description, facts}) {
         <Section id="reach">
             <HeadingAndDescription classList={['text-block']} {...{heading, description}} />
             <div class="fact-boxes scroll-on-mobile">
-                {facts.map((fact) => <FactBox fact={fact} />)}
+                {facts.map((fact) => <FactBox fact={fact} key={fact.number} />)}
             </div>
         </Section>
     );

@@ -5,7 +5,7 @@ import $ from '~/helpers/$';
 import FormHeader from '~/components/form-header/form-header';
 import RoleSelector from '~/components/role-selector/role-selector';
 import StudentForm from '~/components/student-form/student-form';
-import MultiPageForm from '~/components/multi-page-form/multi-page-form.jsx';
+import MultiPageForm from '~/components/multi-page-form/multi-page-form';
 import {HiddenFields} from '~/components/salesforce-form/salesforce-form.jsx';
 import ContactInfo from '~/components/contact-info/contact-info';
 import BookSelector, {useSelectedBooks} from '~/components/book-selector/book-selector';
@@ -43,7 +43,8 @@ function HowDidYouHear() {
     ];
 
     return (
-        <FormCheckboxgroup name="How_did_you_Hear__c"
+        <FormCheckboxgroup
+            name="How_did_you_Hear__c"
             longLabel="How did you hear about OpenStax?"
             instructions="Select all that apply (optional)."
             options={options}
@@ -58,7 +59,8 @@ function BookSelectorPage({selectedBooksRef, bookBeingSubmitted}) {
     selectedBooksRef.current = selectedBooks;
     return (
         <div className="page-2">
-            <BookSelector prompt="Which textbook(s) are you currently using?"
+            <BookSelector
+                prompt="Which textbook(s) are you currently using?"
                 required
                 selectedBooks={selectedBooks}
                 preselectedTitle={preselectedTitle}
@@ -132,12 +134,13 @@ function FacultyForm({selectedRole, onPageChange}) {
 
     return (
         <React.Fragment>
-            <MultiPageForm validatePage={validatePage} action={salesforce.webtoleadUrl}
+            <MultiPageForm
+                validatePage={validatePage} action={salesforce.webtoleadUrl}
                 onPageChange={onPageChange} onSubmit={onSubmit} debug={salesforce.debug}
                 submitting={currentBook}
             >
                 <ContactInfoPage selectedRole={selectedRole} validatorRef={contactValidatorRef} />
-                <BookSelectorPage selectedBooksRef={selectedBooksRef} bookBeingSubmitted={currentBook}/>
+                <BookSelectorPage selectedBooksRef={selectedBooksRef} bookBeingSubmitted={currentBook} />
             </MultiPageForm>
         </React.Fragment>
     );

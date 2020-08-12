@@ -30,13 +30,15 @@ function Dropdown({urlBase, details}) {
             <QuickLink url={urlBase} icon="book" text="Get this book" />
             {
                 details.hasFacultyResources &&
-                    <QuickLink url={`${urlBase}?Instructor%20resources`}
+                    <QuickLink
+                        url={`${urlBase}?Instructor%20resources`}
                         icon="chalkboard-teacher" text="Instructor Resources"
                     />
             }
             {
                 details.hasStudentResources &&
-                    <QuickLink url={`${urlBase}?Student%20resources`}
+                    <QuickLink
+                        url={`${urlBase}?Student%20resources`}
                         icon="graduation-cap" text="Student Resources" />
             }
         </div>
@@ -92,7 +94,8 @@ function ThreeDotMenu({slug, details}) {
     }
 
     return (
-        <div className={classList.join(' ')}
+        <div
+            className={classList.join(' ')}
             role="button" tabIndex="0" ref={ref}
         >
             <FontAwesomeIcon icon="ellipsis-v" />

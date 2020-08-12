@@ -24,7 +24,7 @@ export default function FormCheckboxgroup({name, label, longLabel, instructions,
             {instructions && <label class="hint">{instructions}</label>}
             {
                 options.map((item) =>
-                    <Option item={item} name={name} key={item.value}/>
+                    <Option item={item} name={name} key={item} />
                 )
             }
         </div>

@@ -4,7 +4,7 @@ import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
 import uniqBy from 'lodash/uniqBy';
 import {ArticleSummary, blurbModel} from '../article-summary/article-summary.jsx';
 import analytics from '~/helpers/analytics';
-import {PaginatedResults, PaginatorControls} from '~/components/paginator/paginator.jsx';
+import {PaginatedResults, PaginatorControls} from '~/components/paginator/paginator.js';
 import './search-results.css';
 
 function useAllArticles(location) {
@@ -38,8 +38,8 @@ export default function SearchResults({location, setPath}) {
             <PaginatedResults currentPage={currentPage}>
                 {
                     allArticles.map((article) =>
-                        <div className="card">
-                            <ArticleSummary {...{...article, setPath}} />
+                        <div className="card" key={article.articleSlug}>
+                            <ArticleSummary {...{...article, setPath}} key={article.slug} />
                         </div>
                     )
                 }

@@ -5,7 +5,7 @@ import $ from '~/helpers/$';
 import FormHeader from '~/components/form-header/form-header';
 import RoleSelector from '~/components/role-selector/role-selector';
 import StudentForm from '~/components/student-form/student-form';
-import MultiPageForm from '~/components/multi-page-form/multi-page-form.jsx';
+import MultiPageForm from '~/components/multi-page-form/multi-page-form';
 import {HiddenFields, FormSubmitContext} from '~/components/salesforce-form/salesforce-form.jsx';
 import ContactInfo from '~/components/contact-info/contact-info';
 import BookSelector, {useSelectedBooks} from '~/components/book-selector/book-selector';
@@ -17,7 +17,7 @@ import css from './adoption.css';
 function ContactInfoPage({selectedRole, validatorRef}) {
     return (
         <React.Fragment>
-            <HiddenFields leadSource="Adoption Form"/>
+            <HiddenFields leadSource="Adoption Form" />
             <input type="hidden" name="Role__c" value={selectedRole} />
             <ContactInfo validatorRef={validatorRef} />
         </React.Fragment>
@@ -36,7 +36,8 @@ function BookSelectorPage({selectedBooksRef}) {
     selectedBooksRef.current = selectedBooks;
     return (
         <React.Fragment>
-            <BookSelector prompt="Which textbook(s) are you currently using?"
+            <BookSelector
+                prompt="Which textbook(s) are you currently using?"
                 required
                 selectedBooks={selectedBooks}
                 preselectedTitle={preselectedTitle}
@@ -109,7 +110,8 @@ function FacultyForm({selectedRole, onPageChange}) {
 
     return (
         <FormSubmitContext.Provider value={currentBook}>
-            <MultiPageForm validatePage={validatePage} action={salesforce.webtoleadUrl}
+            <MultiPageForm
+                validatePage={validatePage} action={salesforce.webtoleadUrl}
                 onPageChange={onPageChange} onSubmit={onSubmit} debug={salesforce.debug}
                 submitting={currentBook}
             >
