@@ -19,7 +19,8 @@ export default function ResultGrid(props) {
         <div className="boxed grid">
             {
                 entries.map((entry) =>
-                    <ResultCard key={entry.title}
+                    <ResultCard
+                        key={entry.title}
                         model={modelFromEntry(entry)}
                         emitSelect={() => emitSelect(entry)}
                     />

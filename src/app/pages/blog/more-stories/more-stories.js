@@ -12,7 +12,7 @@ export default function MoreStories({articles, setPath}) {
             <div className="cards boxed">
                 {
                     articles.map((article) =>
-                        <div className="card">
+                        <div className="card" key={article.articleSlug}>
                             <DelayedImagesSummary {...{...article, setPath}} />
                         </div>
                     )

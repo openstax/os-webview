@@ -33,8 +33,8 @@ export function WindowContextProvider({children}) {
     );
 }
 
-export function LoaderPage({slug, Child, props={}}) {
-    const [data, statusPage] = usePageData({slug, setsPageTitleAndDescription: false});
+export function LoaderPage({slug, Child, props={}, preserveWrapping}) {
+    const [data, statusPage] = usePageData({slug, setsPageTitleAndDescription: false, preserveWrapping});
 
     if (statusPage) {
         return statusPage;

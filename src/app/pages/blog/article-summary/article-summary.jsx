@@ -31,7 +31,8 @@ export function ArticleSummary({
 
     return (
         <React.Fragment>
-            <a className="link-image" href={`/blog/${articleSlug}`}
+            <a
+                className="link-image" href={`/blog/${articleSlug}`}
                 ref={forwardRef}
                 aria-label={altText}
                 style={`background-image: url("${image}")`}></a>

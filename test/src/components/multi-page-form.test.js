@@ -1,5 +1,5 @@
 import {makeMountRender} from '../../helpers/jsx-test-utils.jsx';
-import MultiPageForm from '~/components/multi-page-form/multi-page-form.jsx';
+import MultiPageForm from '~/components/multi-page-form/multi-page-form';
 import React from 'react';
 
 describe('MultiPageForm', () => {

@@ -55,6 +55,7 @@ function PageButtonBar({currentPage, pages, setCurrentPage}) {
             {
                 pageIndicators.map((indicator) =>
                     <button
+                        key={indicator}
                         disabled={indicator.disabled}
                         aria-selected={indicator.selected}
                         aria-label={indicator.page}
@@ -78,7 +79,8 @@ export function PaginatorControls({items, currentPage, setCurrentPage}) {
         <div className="paginator">
             {
                 pages > 1 &&
-                    <PageButtonBar pages={pages}
+                    <PageButtonBar
+                        pages={pages}
                         currentPage={currentPage} setCurrentPage={setCurrentPage}
                     />
             }

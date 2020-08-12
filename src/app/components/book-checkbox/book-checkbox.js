@@ -32,7 +32,8 @@ export default function BookCheckbox({book, name, checked, toggle}) {
             {checked && <input type="hidden" name={name} value={value} />}
             {imageUrl && <img src={imageUrl} alt="" />}
             <label>{label}</label>
-            <div className="indicator" tabIndex="0"
+            <div
+                className="indicator" tabIndex="0"
                 role="checkbox" aria-checked={checked}
                 onKeyDown={onKeyDown}
             >

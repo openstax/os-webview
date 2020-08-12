@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import ResourceBoxes from '../../resource-box/resource-boxes.jsx';
+import ResourceBoxes from '../../resource-box/resource-boxes';
 import './featured-resources.css';
 
 export default function FeaturedResources({headline, resources}) {

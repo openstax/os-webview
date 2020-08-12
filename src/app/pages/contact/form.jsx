@@ -71,6 +71,7 @@ function ContactForm({defaultPostTo}) {
                     {
                         subjects.map((subject) =>
                             <option
+                                key={subject}
                                 value={subject}
                                 selected={selected(subject)}
                             >

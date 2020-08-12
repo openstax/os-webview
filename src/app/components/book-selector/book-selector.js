@@ -11,7 +11,8 @@ function Subject({subject, books, name, selectedBooks, toggleBook}) {
             <div className="two-columns">
                 {
                     books.map((book) =>
-                        <BookCheckbox book={book} name={name}
+                        <BookCheckbox
+                            key={book} book={book} name={name}
                             checked={selectedBooks.includes(book)} toggle={toggleBook}
                         />)
                 }
@@ -41,7 +42,9 @@ function BookSelector({data, prompt, name, selectedBooks, toggleBook, preselecte
             </div>
             {
                 subjects.map((subject) =>
-                    <Subject subject={subject} books={booksBySubject(subject)} name={name}
+                    <Subject
+                        key={subject}
+                        subject={subject} books={booksBySubject(subject)} name={name}
                         selectedBooks={selectedBooks} toggleBook={toggleBook}
                     />
                 )

@@ -164,6 +164,23 @@ export default function ResourceBoxes({models, communityResource}) {
     );
 }
 
+function VideoResourceBox({model, onClick}) {
+    return (
+        <div className="video resource-box" onClick={onClick} key={model.resource_heading}>
+            <div>
+                <div className="top-line">
+                    <h3>{model.resource_heading}</h3>
+                </div>
+                <RawHTML className="description" html={model.resource_description} />
+                <video controls preload="metadata">
+                    <source src={model.video_file} type="video/avi" />
+                </video>
+            </div>
+            <BottomBasic leftContent="Watch video" icon="play" />
+        </div>
+    );
+}
+
 function VideoViewer({file}) {
     return (
         <div className="aspect-16-by-9-container">
@@ -190,23 +207,12 @@ export function VideoResourceBoxes({models, blogLinkModels, referenceModels}) {
         <React.Fragment>
             {
                 models.map((model) =>
-                    <div className="video resource-box" onClick={onClick}>
-                        <div>
-                            <div className="top-line">
-                                <h3>{model.resource_heading}</h3>
-                            </div>
-                            <RawHTML className="description" html={model.resource_description} />
-                            <video controls preload="metadata">
-                                <source src={model.video_file} type="video/avi" />
-                            </video>
-                        </div>
-                        <BottomBasic leftContent="Watch video" icon="play" />
-                    </div>
+                    <VideoResourceBox {...{model, onClick}} key={model.video_file} />
                 )
             }
             {
                 blogLinkModels && blogLinkModels.map((model) =>
-                    <ResourceBox model={model} icon="link" />
+                    <ResourceBox model={model} icon="link" key={model.heading} />
                 )
             }
             {

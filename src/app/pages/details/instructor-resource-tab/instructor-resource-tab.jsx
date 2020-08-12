@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import FeaturedResources from './featured-resources/featured-resources.jsx';
 import {instructorResourceBoxPermissions} from '../resource-box/resource-box';
-import ResourceBoxes, {VideoResourceBoxes} from '../resource-box/resource-boxes.jsx';
+import ResourceBoxes, {VideoResourceBoxes} from '../resource-box/resource-boxes';
 import partnerFeaturePromise, {tooltipText} from '~/models/salesforce-partners';
 import shuffle from 'lodash/shuffle';
-import Partners from './partners/partners.jsx';
+import Partners from './partners/partners';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import WrappedJsx from '~/controllers/jsx-wrapper';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
@@ -13,7 +13,7 @@ import './instructor-resource-tab.css';
 function FreeStuff({heading, blurb}) {
     return (
         <div className="free-stuff-blurb">
-            <RawHTML Tag="h2" html={heading}/>
+            <RawHTML Tag="h2" html={heading} />
             <RawHTML className="blurb-body" html={blurb} />
         </div>
     );
@@ -27,7 +27,7 @@ function Webinar({url, text, blurb}) {
             </div>
             <div className="blurb">
                 <h2>{text}</h2>
-                <RawHTML className="blurb" html={blurb}/>
+                <RawHTML className="blurb" html={blurb} />
             </div>
         </a>
     );
@@ -146,7 +146,8 @@ export function InstructorResourceTabJsx({
                 }
                 <div className={`cards ${includePartners}`}>
                     <div className="resources">
-                        <VideoResourceBoxes models={model.videoResources}
+                        <VideoResourceBoxes
+                            models={model.videoResources}
                             blogLinkModels={blogLinkModels}
                             referenceModels={referenceModels}
                         />

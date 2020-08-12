@@ -61,7 +61,10 @@ export default function Partners({bookAbbreviation, model}) {
                 <div className="blurbs">
                     {
                         blurbs.map((blurb) =>
-                            <Blurb blurb={blurb} onClick={onClick} badgeImage={badgeImage}/>
+                            <Blurb
+                                blurb={blurb} onClick={onClick} badgeImage={badgeImage}
+                                key={blurb.url}
+                            />
                         )
                     }
                 </div>

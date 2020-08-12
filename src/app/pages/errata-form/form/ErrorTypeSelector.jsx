@@ -8,7 +8,8 @@ function OtherErrorInput() {
     return (
         <div className="other-group">
             <InvalidMessage />
-            <input type="text"
+            <input
+                type="text"
                 name="error_type_other"
                 maxLength="250"
                 ref={inputRef}
@@ -44,7 +45,8 @@ export default function ErrorTypeSelector({selectedError, updateSelectedError}) 
                 {
                     errorTypes.map((eType) =>
                         <label key={eType}>
-                            <input type="radio" name="error_type" value={eType}
+                            <input
+                                type="radio" name="error_type" value={eType}
                                 ref={inputRef}
                                 onChange={onChange}
                                 required

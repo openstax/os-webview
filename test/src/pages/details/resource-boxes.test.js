@@ -1,4 +1,4 @@
-import ResourceBoxes from '~/pages/details/resource-box/resource-boxes.jsx';
+import ResourceBoxes from '~/pages/details/resource-box/resource-boxes';
 import {instructorResourceBoxPermissions, studentResourceBoxPermissions} from '~/pages/details/resource-box/resource-box';
 import {makeMountRender} from '../../../helpers/jsx-test-utils.jsx';
 

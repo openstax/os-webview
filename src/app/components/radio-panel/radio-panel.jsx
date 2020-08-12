@@ -13,7 +13,8 @@ function RadioButton({item, isSelected, onChange}) {
     };
 
     return (
-        <div className="filter-button" tabIndex="0"
+        <div
+            className="filter-button" tabIndex="0"
             role="button" aria-pressed={isSelected(item.value)}
             onClick={onClick}
             onKeyDown={onKeyDown}
@@ -44,8 +45,7 @@ export default function RadioPanel({items, selectedValue, onChange}) {
         <React.Fragment>
             {
                 items && items.map((item) => (
-                    <RadioButton key={item.value}
-                        item={item} isSelected={isSelected} onChange={onChange} />
+                    <RadioButton key={item.value} {...{item, isSelected, onChange}} />
                 ))
             }
         </React.Fragment>

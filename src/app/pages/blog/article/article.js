@@ -40,11 +40,7 @@ function ArticleBody({bodyData, setReadTime, bodyRef}) {
 
     return (
         <div className="body" ref={bodyRef}>
-            {
-                bodyData.map((unit) =>
-                    <BodyUnit unit={unit} />
-                )
-            }
+            {bodyData.map((unit) => <BodyUnit unit={unit} key={unit} />)}
         </div>
     );
 }
@@ -52,11 +48,7 @@ function ArticleBody({bodyData, setReadTime, bodyRef}) {
 function Tags({tagData}) {
     return tagData.length > 0 &&
         <div className="tags">
-            {
-                tagData.map((tag) =>
-                    <div className="tag">{tag}</div>
-                )
-            }
+            {tagData.map((tag) => <div className="tag" key={tag}>{tag}</div>)}
         </div>
     ;
 }

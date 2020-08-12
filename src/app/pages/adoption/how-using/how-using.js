@@ -11,7 +11,8 @@ function HowUsingBook({book, selectedValue, setSelectedValue}) {
     const name = selectedValue ? null : book.value;
 
     return (
-        <FormRadioGroup label={`How are you using ${book.text}?`}
+        <FormRadioGroup
+            label={`How are you using ${book.text}?`}
             options={sfOptions} selectedValue={selectedValue}
             required name
             setSelectedValue={setSelectedValue}
@@ -28,14 +29,15 @@ function HowManyStudents({book, value, setValue}) {
         <div>
             How many students are using {book.text} each semester?
             <div className="hint">Include sections taught by TAs that you oversee</div>
-            <FormInput inputProps={{
-                type: 'number',
-                min: '1',
-                max: '999',
-                required: true,
-                value,
-                onChange
-            }} />
+            <FormInput
+                inputProps={{
+                    type: 'number',
+                    min: '1',
+                    max: '999',
+                    required: true,
+                    value,
+                    onChange
+                }} />
         </div>
     );
 }
@@ -67,7 +69,7 @@ function HowUsing({selectedBooks}) {
         <div className="how-using">
             {
                 selectedBooks.map((book, i) =>
-                    <BothQuestionsForBook book={book} isFirst={i === 0} />
+                    <BothQuestionsForBook book={book} isFirst={i === 0} key={book.value} />
                 )
             }
         </div>

@@ -8,7 +8,7 @@ import TocPane from '../table-of-contents/table-of-contents';
 import InstructorResourcePane from './instructor-resources-pane/instructor-resources-pane.jsx';
 import StudentResourcePane from './student-resources-pane/student-resources-pane';
 // import ErrataPane from './errata-pane/errata-pane';
-import {ErrataContents} from '../common/common.jsx';
+import {ErrataContents} from '../common/common';
 import {description as template} from './phone-view.html';
 import css from './phone-view.css';
 

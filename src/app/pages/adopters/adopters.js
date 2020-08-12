@@ -22,7 +22,7 @@ function Page() {
             <ul className="adopters">
                 {
                     pageData.map((adopter) =>
-                        <li className="adopter">{adopter.name}</li>
+                        <li className="adopter" key={adopter}>{adopter.name}</li>
                     )
                 }
             </ul>

@@ -27,7 +27,8 @@ function ErrorExplanationBox() {
                 contact us at <a href="mailto:errata@openstax.org">errata@openstax.org</a>.
             </div>
             <InvalidMessage />
-            <textarea maxLength="4000" name="detail" skip="true"
+            <textarea
+                maxLength="4000" name="detail" skip="true"
                 ref={inputRef} onChange={updateInvalidMessage}
                 required></textarea>
         </React.Fragment>
@@ -123,7 +124,9 @@ export default function ErrataForm({model}) {
     }
 
     return (
-        <form className={`body-block ${hasBeenSubmitted ? '' : 'hide-errors'}`} method="post" action={postEndpoint}
+        <form
+            className={`body-block ${hasBeenSubmitted ? '' : 'hide-errors'}`}
+            method="post" action={postEndpoint}
             encType="multipart/form-data" ref={formRef}
             onSubmit={onSubmit}
         >

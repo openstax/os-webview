@@ -34,6 +34,18 @@ function CardFeatures({supplier}) {
     );
 }
 
+function CanadaFlagCard() {
+    return (
+        <div className="flag-card">
+            <div className="canada-flag">
+                <div className="white-field">
+                    <FontAwesomeIcon icon={['fab', 'canadian-maple-leaf']} />
+                </div>
+            </div>
+        </div>
+    );
+}
+
 export function Page() {
     const [pageData, statusPage] = usePageData({slug});
 
@@ -77,7 +89,7 @@ export function Page() {
                 </div>
                 {
                     featuredSupplier.map((supplier) =>
-                        <div className="card featured">
+                        <div className="card featured" key={supplier}>
                             <CardFeatures supplier={supplier} />
                         </div>
                     )
@@ -87,17 +99,8 @@ export function Page() {
                     <div className="cards">
                         {
                             model.suppliers.map((supplier) =>
-                                <div className="card">
-                                    {
-                                        Boolean(supplier.isCanadian) &&
-                                            <div className="flag-card">
-                                                <div className="canada-flag">
-                                                    <div className="white-field">
-                                                        <FontAwesomeIcon icon={['fab', 'canadian-maple-leaf']} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                    }
+                                <div className="card" key={supplier}>
+                                    {Boolean(supplier.isCanadian) && <CanadaFlagCard />}
                                     <CardFeatures supplier={supplier} />
                                 </div>
                             )

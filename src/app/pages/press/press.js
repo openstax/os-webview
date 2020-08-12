@@ -44,7 +44,7 @@ function PressReleases({excludeSlug, Container=MoreFewer}) {
 
     return (
         <Container pluralItemName="press releases">
-            {pressReleases.map((props) => <PressExcerpt {...props} />)}
+            {pressReleases.map((props) => <PressExcerpt {...props} key={props} />)}
         </Container>
     );
 }
@@ -69,7 +69,7 @@ function NewsMentions() {
 
     return (
         <Paginated>
-            {newsMentions.map((props) => <PressExcerpt {...props} />)}
+            {newsMentions.map((props) => <PressExcerpt {...props} key={props} />)}
         </Paginated>
     );
 }
@@ -86,7 +86,7 @@ function MissionStatements() {
 
     return (
         <React.Fragment>
-            {missionStatements.map((html) => <RawHTML html={html} />)}
+            {missionStatements.map((html) => <RawHTML html={html} key={html} />)}
         </React.Fragment>
     );
 }
@@ -139,7 +139,8 @@ function MainPage() {
         <React.Fragment>
             <div className="hero">
                 <h1>{headline}</h1>
-                <MobileSelector values={sections}
+                <MobileSelector
+                    values={sections}
                     selectedValue={selectedSection}
                     onChange={setSelectedSection}
                 />

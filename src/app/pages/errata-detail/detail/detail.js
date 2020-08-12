@@ -22,7 +22,7 @@ function LabelValuePairs({detail, pairs}) {
         <React.Fragment>
             {
                 pairs.map((pair) =>
-                    <div className="label-value-pair">
+                    <div className="label-value-pair" key={pair[0]}>
                         <div className="label">{pair[0]}</div>
                         <RawHTML className="value" html={detail[pair[1]] || ''} />
                     </div>
