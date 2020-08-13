@@ -1,13 +1,18 @@
-import componentType from '~/helpers/controller/init-mixin';
-import {description as template} from './map.html';
-import css from './map.css';
+import React from 'react';
+import './map.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['mapbox']
-    }
-};
-
-export default componentType(spec);
+export default function ({title, buttonText, imageUrl}) {
+    return (
+        <div className="mapbox">
+            <div className="map-image" style={{backgroundImage: `url(${imageUrl})`}}></div>
+            <div className="overlay">
+                <div className="boxed">
+                    <h1>{title}</h1>
+                    <a href="/separatemap" className="btn primary">
+                        {buttonText}
+                    </a>
+                </div>
+            </div>
+        </div>
+    );
+}

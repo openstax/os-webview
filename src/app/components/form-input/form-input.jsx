@@ -1,16 +1,13 @@
 import React, {useState, useRef, useEffect, useLayoutEffect} from 'react';
 import {useSelectList} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import shellBus from '~/components/shell/shell-bus';
+import cn from 'classnames';
 import './form-input.css';
 
 function SuggestionItem({value, accept, index, activeIndex, setActiveIndex}) {
-    const classList = ['suggestion'];
     const ref = useRef();
     const active = index === activeIndex;
 
-    if (active) {
-        classList.push('active');
-    }
     useLayoutEffect(() => {
         if (active) {
             ref.current.scrollIntoView({block: 'nearest'});
@@ -19,9 +16,9 @@ function SuggestionItem({value, accept, index, activeIndex, setActiveIndex}) {
 
     return (
         <div
-            className={classList.join(' ')} ref={ref}
+            className={cn('suggestion', {active})} ref={ref}
             onClick={() => accept(value)}
-            onMouseMove={setActiveIndex(index)}
+            onMouseMove={() => setActiveIndex(index)}
         >{value}</div>
     );
 }
@@ -80,15 +77,17 @@ function ValidatingInput({value, inputProps, onChange}) {
 }
 
 export default function FormInput({label, longLabel, inputProps, suggestions}) {
-    const {onChange: otherOnChange, ...otherProps} = inputProps;
     const [value, setValue] = useState('');
+    const {onChange: otherOnChange, ...otherProps} = inputProps;
     const [matches, exactMatch] = useMatches(value.toLowerCase(), suggestions);
     const [accepted, setAccepted] = useState(false);
 
     function accept(item) {
         setValue(item);
         setAccepted(true);
-        otherOnChange({target: {value: item}});
+        if (otherOnChange) {
+            otherOnChange({target: {value: item}});
+        }
     }
 
     const [activeIndex, handleKeyDown, setActiveIndex] = useSelectList({
