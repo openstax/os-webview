@@ -3,21 +3,18 @@ import WrappedJsx from '~/controllers/jsx-wrapper';
 import mix from '~/helpers/controller/mixins';
 import RadioPanelJsx from './radio-panel.jsx';
 import busMixin from '~/helpers/controller/bus-mixin';
+import cn from 'classnames';
 import {on} from '~/helpers/controller/decorators';
 
 export function RadioPanel({selectedItem, items, onChange}) {
     const [active, setActive] = useState(false);
-    const classList = ['filter-buttons'];
 
     function toggleActive() {
         setActive(!active);
     }
 
-    if (active) {
-        classList.push('active');
-    }
     return (
-        <div className={classList.join(' ')} onClick={toggleActive}>
+        <div className={cn('filter-buttons', {active})} onClick={toggleActive}>
             <RadioPanelJsx items={items} selectedValue={selectedItem} onChange={onChange} />
         </div>
     );

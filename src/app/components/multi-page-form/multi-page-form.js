@@ -15,7 +15,8 @@ function MarkupChildren({children, currentPage, activeRef, validatedPages}) {
             <div
                 className={isValidated ? 'validated' : undefined}
                 hidden={!isActive}
-                ref={isActive ? activeRef : null} key={child}
+                ref={isActive ? activeRef : null}
+                key={pageNumber}
             >
                 {child}
             </div>
