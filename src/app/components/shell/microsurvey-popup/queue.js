@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import useStickyMicrosurveyContent from './stickyContent';
+import useStickyMicrosurveyContent from './sticky-content';
+import useAdoptionMicrosurveyContent from './adoption-content';
 
 export default function useMSQueue() {
     const [queue, setQueue] = useState([]);
@@ -19,6 +20,7 @@ export default function useMSQueue() {
     }
 
     useEnqueueWhenReady(useStickyMicrosurveyContent);
+    useEnqueueWhenReady(useAdoptionMicrosurveyContent);
 
     return [QueuedItem, () => setQueue(queue.slice(1))];
 }
