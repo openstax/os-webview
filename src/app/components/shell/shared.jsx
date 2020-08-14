@@ -24,7 +24,7 @@ export function useSeenCounter(seenEnough) {
     return [hasBeenSeenEnough, increment];
 }
 
-function PutAway({onClick}) {
+export function PutAway({onClick}) {
     return (
         <div className="put-away" role="button" onClick={onClick}>
             &times;
