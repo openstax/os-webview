@@ -27,4 +27,13 @@
         max-width: $text-content-max;
     }
 
+    .resources {
+        @include width-between($phone-max, $tablet-max) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @include wider-than($tablet-max) {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+    }
 }

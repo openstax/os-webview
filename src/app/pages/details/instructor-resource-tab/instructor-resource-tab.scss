@@ -47,9 +47,15 @@ $icon-size: 6rem;
         display: grid;
         grid-column-gap: 3rem;
 
-        &:not(.include-partners) .partners {
-            display: none;
-        }
+        &:not(.include-partners) {
+            .resources {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            .partners {
+                display: none;
+            }
+       }
 
         &.include-partners {
             @include width-between($phone-max, $tablet-max) {
