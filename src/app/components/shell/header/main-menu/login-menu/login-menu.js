@@ -61,7 +61,8 @@ class LoginMenu extends componentType(spec, busMixin) {
     }
 
     attachLoginDropdown() {
-        const facultyAccessLink = `${settings.accountHref}/faculty_access/apply`;
+        const facultySignupStep4 = `${settings.accountHref}/i/signup/educator/profile_form`;
+        const reqFacultyAccessLink = `${settings.accountHref}/i/signup/educator/cs_form`;
         const items = [
             {
                 label: 'Account Profile',
@@ -73,12 +74,21 @@ class LoginMenu extends componentType(spec, busMixin) {
                 exclude: () => !this.isTutorUser
             },
             {
+                label: 'Finish signing up',
+                url: facultySignupStep4,
+                exclude: () => Boolean(
+                    (this.user.groups || []).includes('Student') ||
+                    !this.user.needs_profile_completed ||
+                    !this.user.is_newflow ||
+                    this.user.stale_verification
+                )
+            },
+            {
                 label: 'Request instructor access',
-                url: facultyAccessLink,
+                url: reqFacultyAccessLink,
                 exclude: () => Boolean(
                     (this.user.groups || []).includes('Faculty') ||
-                    (this.user.groups || []).includes('Student') ||
-                    this.user.pending_verification
+                    (!this.user.stale_verification && this.user.pending_verification)
                 )
             },
             {
