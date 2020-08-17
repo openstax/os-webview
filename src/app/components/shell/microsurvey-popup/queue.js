@@ -16,7 +16,7 @@ export default function useMSQueue() {
             if (ready) {
                 enqueue(Item);
             }
-        }, [ready, Item]);
+        }, [ready]); // eslint-disable-line react-hooks/exhaustive-deps
     }
 
     useEnqueueWhenReady(useStickyMicrosurveyContent);
