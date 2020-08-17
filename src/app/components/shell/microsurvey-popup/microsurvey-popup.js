@@ -13,7 +13,7 @@ function MicroSurvey() {
 
     return (
         <React.Fragment>
-            <PutAway onClick={nextItem}/>
+            <PutAway onClick={nextItem} />
             <QueuedItem />
         </React.Fragment>
     );

@@ -8,17 +8,17 @@ export default function useMSQueue() {
     function enqueue(Item) {
         setQueue([...queue, Item]);
     }
-    function enqueueWhenReady(useContent) {
+    function useEnqueueWhenReady(useContent) {
         const [ready, Item] = useContent();
 
         useEffect(() => {
             if (ready) {
                 enqueue(Item);
             }
-        }, [ready]);
+        }, [ready, Item]);
     }
 
-    enqueueWhenReady(useStickyMicrosurveyContent);
+    useEnqueueWhenReady(useStickyMicrosurveyContent);
 
     return [QueuedItem, () => setQueue(queue.slice(1))];
 }
