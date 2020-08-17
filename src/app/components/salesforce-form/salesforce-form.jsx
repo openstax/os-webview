@@ -1,5 +1,4 @@
 import React, {useState, useRef} from 'react';
-import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {LoadPageAfterSalesforce, salesforce} from '~/models/salesforce';
 
 export const FormSubmitContext = React.createContext();

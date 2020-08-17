@@ -27,9 +27,7 @@ export function WindowContextProvider({children}) {
     }, []);
 
     return (
-        <WindowContext.Provider value={value}>
-            {children}
-        </WindowContext.Provider>
+        <WindowContext.Provider value={value} children={children} />
     );
 }
 
@@ -90,11 +88,10 @@ export function ActiveElementContextProvider({children}) {
     }, []);
 
     return (
-        <ActiveElementContext.Provider value={value}>
-            {children}
-        </ActiveElementContext.Provider>
+        <ActiveElementContext.Provider value={value} children={children} />
     );
 }
+
 
 export function createPageContextProvider({Context, slug}) {
     return function ({children}) {

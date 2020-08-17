@@ -1,0 +1,16 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.put-away {
+    @include body-font(1.4rem);
+
+    background-color: rgba(ui-color(black), 0.56);
+    border-radius: 0.3rem;
+    color: white;
+    height: 3rem;
+    line-height: 2.6rem;
+    position: absolute;
+    right: $normal-margin;
+    text-align: center;
+    top: $normal-margin;
+    width: 3rem;
+}

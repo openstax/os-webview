@@ -177,6 +177,36 @@ sup {
     z-index: 2;
 }
 
+#lower-sticky-note {
+    position: sticky;
+    top: 5rem;
+    z-index: 3;
+}
+
+#microsurvey {
+    background-color: ui-color(white);
+    border-radius: 0.3rem;
+    bottom: $normal-margin;
+    box-shadow: 0 0.2rem 0.6rem 0 rgba(ui-color(black), 0.25);
+    max-width: 25%;
+    overflow: hidden;
+    position: fixed;
+    right: $normal-margin;
+    z-index: 3;
+
+    > div:not(:empty) {
+        padding: 2.5rem 2.5rem $normal-margin $normal-margin;
+    }
+
+    .put-away {
+        height: 2rem;
+        line-height: 1.8rem;
+        right: 0.7rem;
+        top: 0.7rem;
+        width: 2rem;
+    }
+}
+
 #main {
     flex: 1 0 auto;
     z-index: 0;
