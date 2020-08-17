@@ -6,7 +6,6 @@ import footer from './footer/footer';
 import ModalDialog, {Dialog} from '../dialog/dialog';
 import bus from './shell-bus';
 import showNoticeIfNeeded from './cookie-notice/cookie-notice';
-import {default as showAdoptionsIfNeeded} from './adoption-dialog/adoption-dialog';
 import '~/helpers/font-awesome';
 
 /*
@@ -48,7 +47,6 @@ class Shell extends Controller {
         mainObserver.observe(document.getElementById('main'), {childList: true, subtree: true});
         window.addEventListener('navigate', this.hideDialog.bind(this));
         showNoticeIfNeeded();
-        showAdoptionsIfNeeded();
     }
 
     enqueueDialog(getProps) {

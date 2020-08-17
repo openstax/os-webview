@@ -4,7 +4,6 @@ import {useStickyData, useSeenCounter} from '../shared.jsx';
 
 const SEEN_ENOUGH = 3;
 
-
 export default function useStickyMicrosurveyContent() {
     const stickyData = useStickyData();
     const [hasBeenSeenEnough, incrementSeenCount] = useSeenCounter(SEEN_ENOUGH);
