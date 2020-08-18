@@ -118,6 +118,10 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
             items: accordionItems
         }));
 
+        if (this.props.giveLink) {
+            this.regions.accordion.append(this.props.giveLink);
+        }
+
         const titleArg = polish ? this.props.bookTitle : this.props.salesforceAbbreviation;
 
         if (titleArg) {

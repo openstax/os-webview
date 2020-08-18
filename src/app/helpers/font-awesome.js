@@ -39,6 +39,7 @@ const loadRegularIcon = loaderForPath('free-regular-svg-icons');
     'faExternalLinkAlt',
     'faGraduationCap',
     'faHandHoldingUsd',
+    'faHeart',
     'faLaptop',
     'faLink',
     'faListOl',
