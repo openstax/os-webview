@@ -14,7 +14,7 @@ function MicroSurvey() {
     return (
         <React.Fragment>
             <PutAway onClick={nextItem} />
-            <QueuedItem />
+            <QueuedItem onDone={nextItem} />
         </React.Fragment>
     );
 }

@@ -55,7 +55,12 @@ export default function useAdoptionMicrosurveyContent() {
     const ready = adoptions.length > 0;
     const ref = useRef();
 
-    function AdoptionContent() {
+    function AdoptionContent({onDone}) {
+        function onSubmit() {
+            submitForm(ref, accountId);
+            onDone();
+        }
+
         return (
             <div className="microsurvey-content" ref={ref}>
                 <h1>
@@ -63,7 +68,7 @@ export default function useAdoptionMicrosurveyContent() {
                     Check all that apply.
                 </h1>
                 {adoptions.map((info) => <BookCheckbox key={info.id} info={info} />)}
-                <button onClick={() => submitForm(ref, accountId)}>Submit</button>
+                <button onClick={onSubmit}>Submit</button>
             </div>
         );
     }
