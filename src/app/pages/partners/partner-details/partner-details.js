@@ -5,6 +5,7 @@ import Carousel from './carousel/carousel';
 import {on} from '~/helpers/controller/decorators';
 import analyticsEvents from '../analytics-events';
 import shellBus from '~/components/shell/shell-bus';
+import booksPromise from '~/models/books';
 
 const spec = {
     template,
@@ -20,7 +21,7 @@ const spec = {
             icon: this.logoUrl || 'https://via.placeholder.com/150x150?text=[no%20logo]',
             headline: this.title,
             blurb: this.blurb,
-            titles: this.books, // TODO: lookup proper titles from Salesforce names
+            titles: this.books,
             tags: this.tags,
             infoUrl: this.infoUrl,
             infoText: this.infoLinkText,
@@ -44,6 +45,23 @@ export default class extends componentType(spec, insertHtmlMixin) {
             images: this.images,
             videos: this.videos
         }));
+        // Replace Salesforce abbreviations with book names
+        booksPromise.then((results) => {
+            const abbrevs = this.books;
+
+            this.books = abbrevs
+                .map((a) => results.find((b) => b.salesforce_abbreviation === a) || a)
+                .filter((b) => {
+                    const found = typeof b === 'object';
+
+                    if (!found) {
+                        console.warn('Book not found:', b);
+                    }
+                    return found;
+                })
+                .map((b) => b.salesforce_name);
+            this.update();
+        });
     }
 
     onAttached() {
