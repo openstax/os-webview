@@ -78,25 +78,27 @@ function BottomBasic({leftContent, icon}) {
     );
 }
 
+function BottomDownloadButton({model, onClick}) {
+    const [text, icon, url] = [model.link.text, model.iconType, model.link.url];
+
+    return (
+        <a className="download-button" href={url} data-local={icon === 'lock'} onClick={onClick}>
+            <FontAwesomeIcon icon={icon} />
+            {text}
+        </a>
+    );
+}
+
+function BottomAccessPending() {
+    return (
+        <div>
+            <FontAwesomeIcon icon="lock" />
+            Access pending
+        </div>
+    );
+}
+
 function Bottom({model, overrideIcon}) {
-    const leftContent = model.link ? model.link.text : 'Access pending';
-    const icon = model.link ? model.iconType : 'lock';
-
-    return (
-        <BottomBasic leftContent={leftContent} icon={overrideIcon || icon} />
-    );
-}
-
-function ReferenceNumber({referenceNumber}) {
-    return (
-        referenceNumber !== null &&
-            <div className="reference-number">{referenceNumber}</div>
-    );
-}
-
-function ResourceBox({model, icon}) {
-    const classNames = ['resource-box'];
-    const [isNew, updateIsNew] = useState(model.isNew);
     const onClick = (event) => {
         if (model.dialogProps) {
             event.preventDefault();
@@ -121,16 +123,28 @@ function ResourceBox({model, icon}) {
             );
         }
     };
-    const {Tag, ...props} = model.link ?
-        {
-            Tag: 'a',
-            href: model.link.url,
-            'data-local': model.iconType === 'lock' ? 'true' : 'false',
-            onClick
-        } :
-        {
-            Tag: 'div'
-        };
+
+    return (
+        <div className="bottom">
+            {
+                model.link ?
+                    <BottomDownloadButton model={model} onClick={onClick} /> :
+                    <BottomAccessPending />
+            }
+        </div>
+    );
+}
+
+function ReferenceNumber({referenceNumber}) {
+    return (
+        referenceNumber !== null &&
+            <div className="reference-number">{referenceNumber}</div>
+    );
+}
+
+function ResourceBox({model, icon}) {
+    const classNames = ['resource-box'];
+    const [isNew, updateIsNew] = useState(model.isNew);
 
     if (model.double) {
         classNames.push('double');
@@ -140,11 +154,11 @@ function ResourceBox({model, icon}) {
     }
 
     return (
-        <Tag className={classNames.join(' ')} {...props}>
+        <div className={classNames.join(' ')}>
             <ReferenceNumber referenceNumber={model.videoReferenceNumber} />
             <Top model={model} isNew={isNew} />
             <Bottom model={model} overrideIcon={icon} />
-        </Tag>
+        </div>
     );
 }
 
