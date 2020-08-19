@@ -7,8 +7,8 @@ import DetailsPane from './details-pane/details-pane.jsx';
 import TocPane from '../table-of-contents/table-of-contents';
 import InstructorResourcePane from './instructor-resources-pane/instructor-resources-pane.jsx';
 import StudentResourcePane from './student-resources-pane/student-resources-pane';
-// import ErrataPane from './errata-pane/errata-pane';
 import {ErrataContents} from '../common/common';
+import $ from '~/helpers/$';
 import {description as template} from './phone-view.html';
 import css from './phone-view.css';
 
@@ -113,9 +113,11 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
                 )
             });
         }
+        const selectedTab = $.findSelectedTab(accordionItems.map((i) => i.title));
 
         this.regions.accordion.append(new AccordionGroup({
-            items: accordionItems
+            items: accordionItems,
+            preExpanded: selectedTab
         }));
 
         const titleArg = polish ? this.props.bookTitle : this.props.salesforceAbbreviation;
