@@ -12,9 +12,7 @@ function modelFromEntry(entry) {
     };
 }
 
-export default function ResultGrid(props) {
-    const {entries, emitSelect} = props;
-
+export default function ResultGrid({entries, emitSelect}) {
     return (
         <div className="boxed grid">
             {

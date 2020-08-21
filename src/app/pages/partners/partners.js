@@ -2,7 +2,6 @@ import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
 import {description as template} from './partners.html';
 import css from './partners.css';
 import Controls from './controls/controls';
-import MobileFilters from './mobile-filters/mobile-filters';
 import Results, {costOptions} from './results/results';
 import ActiveFilters from './active-filters/active-filters';
 import PartnerDetails from './partner-details/partner-details';
@@ -165,11 +164,6 @@ export default class extends componentType(spec, insertHtmlMixin) {
 
         this.controls = new Controls({
             el: this.el.querySelector('.controls.desktop'),
-            advancedFilterOptions,
-            typeOptions
-        });
-        this.mobileFilters = new MobileFilters({
-            el: this.el.querySelector('.controls.mobile'),
             advancedFilterOptions,
             typeOptions
         });

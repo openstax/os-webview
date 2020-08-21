@@ -17,30 +17,6 @@
         margin-bottom: 2rem;
     }
 
-    .form-control {
-        display: block;
-        margin-bottom: 0.5rem;
-        white-space: nowrap;
-
-        .indicator {
-            border-radius: 0.2rem;
-            border: thin solid ui-color(form-border);
-            height: 2.4rem;
-            margin-right: 0.7rem;
-            width: 2.4rem;
-
-            &:not(.checked) {
-                .tick {
-                    opacity: 0;
-                }
-            }
-
-            input[type="checkbox"] {
-                appearance: none;
-            }
-        }
-    }
-
     .label-text {
         white-space: normal;
     }

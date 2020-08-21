@@ -1,9 +1,0 @@
-<template args="model">
-    <label each="option in model.options" class="form-control">
-        <span class="{`indicator ${model.checkedClass(option.value)}`}">
-            <input class="hidden" type="checkbox" value="{option.value}">
-            <i class="tick fa fa-check"></i>
-        </span>
-        <span class="label-text">{option.label}</span>
-    </label>
-</template>

@@ -1,47 +1,15 @@
-import componentType, {cleanupMixin} from '~/helpers/controller/init-mixin';
-import busMixin from '~/helpers/controller/bus-mixin';
-import {description as template} from './controls.html';
-import css from './controls.css';
-import PopoverControlButton from './button-with-popover/button-with-popover';
-import BookOptions from './book-options/book-options';
+import React, {useState, useEffect} from 'react';
 import OptionsList from './options-list/options-list';
-import AccordionGroup from '~/components/accordion-group/accordion-group';
-import Checkboxes from './checkboxes-linked-to-store/checkboxes-linked-to-store';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {books, types, advanced, sort} from '../store';
-import {RadioPanel} from '~/components/radio-panel/radio-panel';
-import shellBus from '~/components/shell/shell-bus';
-import sortBy from 'lodash/sortBy';
-import $ from '~/helpers/$';
+import BookOptions from './book-options/book-options';
+import AdvancedOptions from './advanced-options/advanced-options';
+import cn from 'classnames';
+import './controls.css';
+import './button-with-popover.css';
 import {on} from '~/helpers/controller/decorators';
-
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['controls']
-    },
-    regions: {
-        buttonRow: '.button-row',
-        otherControls: '.other-controls',
-        popoverContainer: '.popover-container'
-    },
-    model() {
-        return {
-            triangleClass: `triangle-${this.triangleColor}`,
-            putAwayHidden: $.booleanAttribute(!['Books', 'Advanced Filters'].includes(this.selectedFilter))
-        };
-    },
-    selectedFilter: null
-};
-
-export function setupOptionsList(selected, items) {
-    const ol = new OptionsList({
-        items,
-        selected
-    });
-
-    return ol;
-}
+import shellBus from '~/components/shell/shell-bus';
 
 const sortOptions = [
     {
@@ -54,120 +22,95 @@ const sortOptions = [
     }
 ];
 
-export default class extends componentType(spec, busMixin, cleanupMixin) {
 
-    init(...args) {
-        super.init(...args);
-        this.advancedFilterItems = sortBy(
-            this.advancedFilterOptions
-                .map((group) => ({
-                    title: group.title,
-                    contentComponent: new Checkboxes({
-                        options: group.options,
-                        store: advanced
-                    })
-                })),
-            'title'
-        );
+function BaseButton({label, openButton, setOpenButton, children}) {
+    const isOpen = openButton === label;
+    const caretDirection = isOpen ? 'up' : 'down';
+
+    function toggle(event) {
+        event.stopPropagation();
+        setOpenButton(isOpen ? null : label);
     }
 
-    get triangleColor() {
-        if (this.selectedFilter === 'Advanced Filters') {
-            return this.openLabel === this.advancedFilterItems[0].title ? 'dark' : 'light';
+    return (
+        <div className={cn('button-with-popover', {detached: !children})}>
+            <button
+                type="button" onClick={toggle}
+                aria-pressed={isOpen}
+            >
+                <span>{label}</span>
+                <FontAwesomeIcon icon={`caret-${caretDirection}`} />
+            </button>
+            <div className="popover">
+                {isOpen && children}
+            </div>
+        </div>
+    );
+}
+
+function Controls({advancedFilterOptions, typeOptions}) {
+    const [openTab, setOpenTab] = useState();
+    const [openButton, setOpenButton] = useState(null);
+    const commonButtonProps = {
+        openButton,
+        setOpenButton
+    };
+
+    function triangleClass() {
+        if (openButton !== 'Advanced Filters') {
+            return 'triangle-white';
         }
-
-        return 'white';
+        return (openTab === 0 ? 'triangle-dark' : 'triangle-light');
     }
 
-    updateSelected(label, isOpen) {
-        this.selectedFilter = isOpen ? label : null;
-        this.emit('update', {
-            selectedFilter: this.selectedFilter
-        });
-        this.update();
-        shellBus.emit('with-sticky', isOpen);
-    }
-
-    attachButtons() {
-        const advancedFilters = new AccordionGroup({
-            items: this.advancedFilterItems,
-            noScroll: true
-        });
-
-        this.cleanup.push(
-            advanced.on('notify', () => this.update())
-        );
-        advancedFilters.on('open', (openLabel) => {
-            this.openLabel = openLabel;
-            this.update();
-        });
-        [
-            {
-                label: 'Books',
-                content: new BookOptions({
-                    store: books
-                }),
-                style: 'detached',
-                container: this.regions.popoverContainer
-            },
-            {
-                label: 'Type',
-                content: setupOptionsList(types, this.typeOptions),
-                style: 'attached',
-                closeOnSelect: types
-            },
-            {
-                label: 'Advanced Filters',
-                content: advancedFilters,
-                style: 'detached',
-                container: this.regions.popoverContainer
-            },
-            {
-                label: 'Sort',
-                content: setupOptionsList(sort, sortOptions),
-                region: this.regions.otherControls,
-                closeOnSelect: sort
-            }
-        ].forEach(({label, region=this.regions.buttonRow, content, style, container, closeOnSelect}) => {
-            const bwd = new PopoverControlButton({
-                label,
-                open: false,
-                content,
-                style,
-                container
-            });
-
-            if (closeOnSelect) {
-                this.cleanup.push(
-                    closeOnSelect.on('notify', () => {
-                        this.updateSelected(label, false);
-                    })
-                );
-            }
-            bwd.on('toggle', (isOpen) => {
-                this.updateSelected(label, isOpen);
-            });
-            this.on('update', (obj) => {
-                if ('selectedFilter' in obj) {
-                    bwd.emit('update-props', {
-                        open: this.selectedFilter === label
-                    });
-                }
-            });
-            region.append(bwd);
-        });
-    }
-
-    onLoaded() {
-        if (super.onLoaded) {
-            super.onLoaded();
+    useEffect(() => {
+        function closeAnyOpenButton() {
+            setOpenButton(null);
         }
-        this.attachButtons();
-    }
+        window.addEventListener('click', closeAnyOpenButton);
+        shellBus.emit('with-sticky');
 
-    @on('click .popover-closer')
-    closePopups() {
-        this.updateSelected(null);
+        return () => {
+            window.removeEventListener('click', closeAnyOpenButton);
+            shellBus.emit('no-sticky');
+        };
+    }, []);
+
+    return (
+        <React.Fragment>
+            <div className={`button-row ${triangleClass()}`}>
+                <BaseButton label="Books" {...commonButtonProps} />
+                <BaseButton label="Type" {...commonButtonProps}>
+                    <OptionsList items={typeOptions} selected={types} />
+                </BaseButton>
+                <BaseButton label="Advanced Filters" {...commonButtonProps} />
+            </div>
+            <div className="other-controls">
+                <BaseButton label="Sort" {...commonButtonProps}>
+                    <OptionsList items={sortOptions} selected={sort} />
+                </BaseButton>
+            </div>
+            <div className="popover-container">
+                {openButton === 'Books' && <BookOptions store={books} />}
+                {openButton === 'Advanced Filters' &&
+                    <AdvancedOptions
+                        store={advanced} options={advancedFilterOptions}
+                        onTabIndex={setOpenTab}
+                    />}
+            </div>
+        </React.Fragment>
+    );
+}
+
+const view = {
+    classes: ['controls']
+};
+
+export default class extends pageWrapper(Controls, view) {
+
+    @on('click')
+    stopClickPropagation(event) {
+        event.stopPropagation();
     }
 
 }
