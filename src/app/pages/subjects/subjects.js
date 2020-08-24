@@ -105,7 +105,13 @@ function SubjectsLoader() {
     const slug = 'books';
     const [model, statusPage] = usePageData({slug, preserveWrapping: true});
 
-    return statusPage ? statusPage : <Subjects model={model} />;
+    if (statusPage) {
+        return statusPage;
+    }
+
+    model.books = model.books.filter((b) => b.book_state !== 'retired');
+
+    return <Subjects model={model} />;
 }
 
 const view = {
