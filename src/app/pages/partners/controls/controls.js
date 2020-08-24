@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import OptionsList from './options-list/options-list';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {books, types, advanced, sort} from '../store';
 import BookOptions from './book-options/book-options';
@@ -48,7 +47,15 @@ function BaseButton({label, openButton, setOpenButton, children}) {
     );
 }
 
-function Controls({advancedFilterOptions, typeOptions}) {
+function preSelectBooks() {
+    if (history.state && history.state.book) {
+        for (const book of [].concat(history.state.book)) {
+            books.toggle(book);
+        }
+    }
+}
+
+export default function Controls({advancedFilterOptions, typeOptions}) {
     const [openTab, setOpenTab] = useState();
     const [openButton, setOpenButton] = useState(null);
     const commonButtonProps = {
@@ -69,6 +76,7 @@ function Controls({advancedFilterOptions, typeOptions}) {
         }
         window.addEventListener('click', closeAnyOpenButton);
         shellBus.emit('with-sticky');
+        preSelectBooks();
 
         return () => {
             window.removeEventListener('click', closeAnyOpenButton);
@@ -76,8 +84,12 @@ function Controls({advancedFilterOptions, typeOptions}) {
         };
     }, []);
 
+    function stopClickPropagation(event) {
+        event.stopPropagation();
+    }
+
     return (
-        <React.Fragment>
+        <section className="desktop controls" onClick={stopClickPropagation}>
             <div className={`button-row ${triangleClass()}`}>
                 <BaseButton label="Books" {...commonButtonProps} />
                 <BaseButton label="Type" {...commonButtonProps}>
@@ -98,19 +110,6 @@ function Controls({advancedFilterOptions, typeOptions}) {
                         onTabIndex={setOpenTab}
                     />}
             </div>
-        </React.Fragment>
+        </section>
     );
-}
-
-const view = {
-    classes: ['controls']
-};
-
-export default class extends pageWrapper(Controls, view) {
-
-    @on('click')
-    stopClickPropagation(event) {
-        event.stopPropagation();
-    }
-
 }

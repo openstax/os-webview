@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import ResultGrid from './result-grid';
 import {books, types, advanced, sort, resultCount} from '../store';
+import partnerFeaturePromise, {tooltipText} from '~/models/salesforce-partners';
+import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import shuffle from 'lodash/shuffle';
 import orderBy from 'lodash/orderBy';
 import './results.css';
@@ -62,26 +63,90 @@ function filterEntries(entries) {
         shuffle(result);
 }
 
-function Results({entries, callback: {onSelect}}) {
+
+//             if (this.searchPartner) {
+//                 const partnerName = decodeURIComponent(this.searchPartner);
+//                 const foundEntry = resultData.find((entry) => entry.title === partnerName);
+//
+//                 if (foundEntry) {
+//                     this.showDetailDialog(foundEntry);
+//                 }
+//             }
+//         });
+
+function advancedFilterKeys(partnerEntry) {
+    return Reflect.ownKeys(partnerEntry).filter((k) => [false, true].includes(partnerEntry[k]));
+}
+
+// eslint-disable-next-line complexity
+function resultEntry(pd) {
+    return {
+        title: pd.partner_name,
+        blurb: pd.short_partner_description ||
+            '[no description]',
+        tags: [
+            {
+                label: 'type',
+                value: pd.partner_type
+            },
+            {
+                label: 'cost',
+                value: pd.affordability_cost
+            }
+        ].filter((v) => Boolean(v.value)),
+        richDescription: pd.rich_description ||
+            pd.partner_description ||
+            '[no rich description]',
+        logoUrl: pd.partner_logo,
+        books: (pd.books||'').split(/;/),
+        advancedFeatures: advancedFilterKeys(pd).filter((k) => pd[k] === true),
+        website: pd.landing_page,
+        images: [pd.image_1, pd.image_2, pd.image_3, pd.image_4, pd.image_5]
+            .filter((img) => Boolean(img)),
+        videos: [pd.video_1, pd.video_2]
+            .filter((vid) => Boolean(vid)),
+        type: pd.partner_type,
+        cost: pd.affordability_cost,
+        infoUrl: pd.formstack_url,
+        verifiedFeatures: pd.verified_by_instructor ? tooltipText : false
+    };
+}
+
+function ResultGridLoader({partnerData, linkTexts}) {
+    const entries = partnerData.map(resultEntry);
     const [filteredEntries, setFilteredEntries] = useState(filterEntries(entries));
 
     useEffect(() => {
         function handleNotifyFor(store) {
-            store.on('notify', () => setFilteredEntries(filterEntries(entries)));
+            return store.on('notify', () => setFilteredEntries(filterEntries(entries)));
         }
 
         const cleanup = [books, types, advanced, sort].map(handleNotifyFor);
 
         return () => cleanup.forEach((fn) => fn());
+    }, [entries]);
+
+    useEffect(() => {
+        [books, types, advanced].forEach((store) => store.clear());
     }, []);
 
+
     return (
-        <ResultGrid entries={filteredEntries} emitSelect={onSelect} />
+        // ALSO TODO: figure out where the link text params go to wind up on partner details
+        <ResultGrid entries={filteredEntries} linkTexts={linkTexts} />
     );
 }
 
-const view = {
-    classes: ['results']
-};
+export default function Results({linkTexts}) {
+    const partnerData = useDataFromPromise(partnerFeaturePromise);
 
-export default pageWrapper(Results, view);
+    if (!partnerData) {
+        return null;
+    }
+
+    return (
+        <section className="results">
+            <ResultGridLoader {...{partnerData, linkTexts}} />
+        </section>
+    );
+}

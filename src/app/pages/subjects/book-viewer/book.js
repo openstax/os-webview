@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect, useContext} from 'react';
+import React, {useRef, useEffect, useContext} from 'react';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {ActiveElementContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
@@ -14,19 +14,12 @@ function QuickLink({url, icon, text}) {
 }
 
 function Dropdown({urlBase, details}) {
-    const ref = useRef();
-
-    useEffect(() => {
-        const el = ref.current;
-        const theClickStopsHere = (event) => event.stopPropagation();
-
-        el.addEventListener('click', theClickStopsHere);
-
-        return () => el.removeEventListener('click', theClickStopsHere);
-    });
+    function stopClickPropagation(event) {
+        event.stopPropagation();
+    }
 
     return (
-        <div className="ur-dropdown" ref={ref}>
+        <div className="ur-dropdown" onClick={stopClickPropagation}>
             <QuickLink url={urlBase} icon="book" text="Get this book" />
             {
                 details.hasFacultyResources &&

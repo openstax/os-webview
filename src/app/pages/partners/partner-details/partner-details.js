@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import Carousel from './carousel/carousel';
@@ -7,8 +7,6 @@ import './partner-details.css';
 import booksPromise from '~/models/books';
 import analyticsEvents from '../analytics-events';
 import shellBus from '~/components/shell/shell-bus';
-
-// import {on} from '~/helpers/controller/decorators';
 
 function useRealTitles(books) {
     const [titles, setTitles] = useState(books);
@@ -79,6 +77,22 @@ function RequestInfoButton({infoUrl, infoText}) {
     );
 }
 
+function logScrollingInParent(el, name) {
+    const scrollingRegion = el.parentNode.parentNode;
+    // eslint-disable-next-line prefer-const
+    let scrollCallback;
+    const removeScrollListener = () => scrollingRegion.removeEventListener('scroll', scrollCallback);
+
+    scrollCallback = (event) => {
+        analyticsEvents.lightboxScroll(name);
+        removeScrollListener();
+    };
+
+    scrollingRegion.addEventListener('scroll', scrollCallback);
+
+    return removeScrollListener;
+}
+
 function PartnerDetails({
     verifiedFeatures, title: headline, richDescription: description,
     website, partner_website: partnerWebsite, websiteLinkText: partnerLinkText,
@@ -87,10 +101,15 @@ function PartnerDetails({
 ) {
     const icon = logoUrl || 'https://via.placeholder.com/150x150?text=[no%20logo]';
     const titles = useRealTitles(books);
+    const ref = useRef();
+
+    useEffect(() => {
+        logScrollingInParent(ref.current, headline);
+    }, []);
 
     return (
         <React.Fragment>
-            <section className="synopsis">
+            <section className="synopsis" ref={ref}>
                 <img className="icon" src={icon} alt="" />
                 <VerifiedBadge verifiedFeatures={verifiedFeatures} />
                 <div className="headline">{headline}</div>
@@ -129,31 +148,11 @@ function PartnerDetails({
     );
 }
 
+// This still returns a Superb component because that is what the Dialog expects
+// Possible future development: make Dialog handle React components.
+// That will be a job in itself.
 const view = {
     classes: ['partner-details']
 };
 
-export default class extends pageWrapper(PartnerDetails, view) {
-
-    onAttached() {
-        if (super.onAttached) {
-            super.onAttached();
-        }
-        const scrollingRegion = this.el.parentNode;
-        const scrollCallback = (event) => {
-            analyticsEvents.lightboxScroll(this.title);
-            this.removeScrollListener();
-            delete this.removeScrollListener;
-        };
-
-        scrollingRegion.addEventListener('scroll', scrollCallback);
-        this.removeScrollListener = () => scrollingRegion.removeEventListener('scroll', scrollCallback);
-    }
-
-    onClose() {
-        if (this.removeScrollListener) {
-            this.removeScrollListener();
-        }
-    }
-
-}
+export default pageWrapper(PartnerDetails, view);

@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import FilterRemover from './filter-remover';
 import {books, types, advanced, resultCount} from '../store';
 import './active-filters.css';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 
 function childPropertiesForStore(store, decoder) {
     if (store.value instanceof Array) {
@@ -33,7 +32,7 @@ function clearFilters(event) {
     advanced.clear();
 }
 
-function ActiveFilters({advancedFilterOptions}) {
+export default function ActiveFilters({advancedFilterOptions}) {
     const advancedFilterDecoder = advancedFilterOptions.reduce((a, b) => {
         b.options.forEach((opt) => {
             a[opt.value] = opt.label;
@@ -56,7 +55,7 @@ function ActiveFilters({advancedFilterOptions}) {
         return null;
     }
     return (
-        <React.Fragment>
+        <div className="active-filters desktop">
             <div className="result-count">{resultCount.value} matching partners</div>
             <div>
                 <div className="filters">
@@ -64,12 +63,6 @@ function ActiveFilters({advancedFilterOptions}) {
                 </div>
                 <a href="clear" onClick={clearFilters}>Clear All</a>
             </div>
-        </React.Fragment>
+        </div>
     );
 }
-
-const view = {
-    classes: ['active-filters']
-};
-
-export default pageWrapper(ActiveFilters, view);
