@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import ResultCard from './result-card.jsx';
+import ResultCard from './result-card';
 
 function modelFromEntry(entry) {
     return {

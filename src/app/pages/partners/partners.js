@@ -97,18 +97,19 @@ export default class extends componentType(spec, insertHtmlMixin) {
             books,
             types,
             advanced,
-            sort
-        });
+            sort,
+            callback: {
+                onSelect: (entry) => {
+                    const href = `?${entry.title}`;
 
-        results.on('select', (entry) => {
-            const href = `?${entry.title}`;
-
-            // Dialog closes on navigation; need to wait for that before opening it.
-            setTimeout(() => {
-                history.replaceState('', '', href);
-                analyticsEvents.partnerDetails(entry.title);
-                this.showDetailDialog(entry);
-            }, 0);
+                    // Dialog closes on navigation; need to wait for that before opening it.
+                    setTimeout(() => {
+                        history.replaceState('', '', href);
+                        analyticsEvents.partnerDetails(entry.title);
+                        this.showDetailDialog(entry);
+                    }, 0);
+                }
+            }
         });
     }
 

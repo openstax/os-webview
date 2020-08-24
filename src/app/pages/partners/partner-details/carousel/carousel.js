@@ -1,63 +1,79 @@
-import componentType from '~/helpers/controller/init-mixin';
-import {description as template} from './carousel.html';
-import css from './carousel.css';
+import React, {useState, useEffect, useRef} from 'react';
 import $ from '~/helpers/$';
-import {on} from '~/helpers/controller/decorators';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import './carousel.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['carousel']
-    },
-    model() {
-        return {
-            frameNumber: this.frameNumber,
-            images: this.frameCount ? this.images : [this.icon],
-            videos: this.videos,
-            frameCount: this.frameCount || 1,
-            onlyLogo: this.frameCount === 0
-        };
-    },
-    frameNumber: 0
-};
+function Images({images, icon, frameCount}) {
+    const imagesOrIcon = frameCount ? images : [icon];
+    const onlyLogo = frameCount === 0;
 
-export default class extends componentType(spec) {
+    return (
+        imagesOrIcon.map((image) =>
+            <div key={image} className={onlyLogo ? 'logo-holder' : 'image-holder'}>
+                <img src={image} />
+            </div>
+        )
 
-    get frameCount() {
-        return this.images.length + this.videos.length;
-    }
+    );
+}
 
-    @on('click .navigate.previous')
-    handleLeftClick(event) {
-        this.changeFrame(Number(this.frameNumber) - 1);
-        event.stopPropagation();
-    }
+function Videos({videos}) {
+    return (
+        videos.map((video) =>
+            <div className="image-holder" key={video}>
+                <video controls>
+                    <source src={video} type="video/mp4" />
+                </video>
+            </div>
+        )
+    );
+}
 
-    @on('click .navigate.next')
-    handleRightClick(event) {
-        this.changeFrame(Number(this.frameNumber) + 1);
-        event.stopPropagation();
-    }
+function FrameChanger({frameNumber, diff, frameCount, setFrameNumber}) {
+    const [chevronDirection, buttonClass] = diff < 0 ?
+        ['left', 'previous'] :
+        ['right', 'next'];
+    const destFrame = frameNumber + diff;
 
-    @on('click')
-    preventClosing(event) {
-        event.stopPropagation();
-    }
+    return (
+        destFrame >= 0 && destFrame < frameCount &&
+            <button
+                type="button" className={`navigate ${buttonClass}`}
+                onClick={() => setFrameNumber(destFrame)}
+            >
+                <FontAwesomeIcon icon={`chevron-${chevronDirection}`} />
+            </button>
+    );
+}
 
-    changeFrame(newFrameNumber) {
-        const oldFrameNumber = Number(this.frameNumber);
+export default function Carousel({icon, images, videos}) {
+    const [frameNumber, setFrameNumber] = useState(0);
+    const frameCount = images.length + videos.length;
+    const rowStyle = {
+        'grid-template-columns': `repeat(${frameCount || 1}, 1fr)`,
+        width: `${frameCount || 1}00%`
+    };
+    const imageRowRef = useRef();
+    const prevFrame = useRef(0);
 
-        this.frameNumber = newFrameNumber;
-        this.update();
-        if (this.frameNumber >= 0 && this.frameNumber < this.frameCount) {
-            $.scrollToFrame({
-                divEl: this.el.querySelector('.image-row'),
-                newFrameNumber,
-                oldFrameNumber,
-                unit: '%'
-            });
-        }
-    }
+    useEffect(() => {
+        $.scrollToFrame({
+            divEl: imageRowRef.current,
+            newFrameNumber: frameNumber,
+            oldFrameNumber: prevFrame.current,
+            unit: '%'
+        });
+        prevFrame.current = frameNumber;
+    }, [frameNumber]);
 
+    return (
+        <div className="carousel" onClick={(e) => e.stopPropagation()}>
+            <div className="image-row" style={rowStyle} ref={imageRowRef}>
+                <Images images={images} icon={icon} frameCount={frameCount} />
+                <Videos videos={videos} />
+            </div>
+            <FrameChanger {...{frameNumber, diff: -1, frameCount, setFrameNumber}} />
+            <FrameChanger {...{frameNumber, diff: +1, frameCount, setFrameNumber}} />
+        </div>
+    );
 }
