@@ -1,25 +1,16 @@
-import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
-import {on} from '~/helpers/controller/decorators';
-import {description as template} from './pulsing-dot.html';
-import css from './pulsing-dot.css';
+import React, {useState} from 'react';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import cn from 'classnames';
+import './pulsing-dot.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['pulsing-dot']
-    },
-    model: {
-        stopPulsing: false
-    }
-};
+export default function PulsingDot({html}) {
+    const [pulsing, setPulsing] = useState(true);
 
-export default class extends componentType(spec, insertHtmlMixin) {
-
-    @on('click')
-    stopPulsing() {
-        this.model.stopPulsing = true;
-        this.update();
-    }
-
+    return (
+        <div className="pulsing-dot" onClick={() => setPulsing(false)}>
+            <div className={cn('dot', {stopped: !pulsing})} />
+            <div className="pulse">!</div>
+            <RawHTML className="popup" html={html} />
+        </div>
+    );
 }

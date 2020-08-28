@@ -1,35 +1,35 @@
-import {Controller} from 'superb.js';
-import {on} from '~/helpers/controller/decorators';
+import React, {useState, useEffect, useContext} from 'react';
 import $ from '~/helpers/$';
-import {description as template} from './section-navigator.html';
-import css from './section-navigator.css';
-import debounce from 'lodash/debounce';
+import {WindowContextProvider, WindowContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import cn from 'classnames';
+import './section-navigator.css';
 
-export default class SectionNavigator extends Controller {
+function Hotspot({id, selectedId, setSelectedId}) {
+    return (
+        <div
+            className={cn('hotspot', {selected: selectedId === id})}
+            onClick={() => setSelectedId(id)}
+        >
+            <span class="dot" />
+        </div>
+    );
+}
 
-    init(idList) {
-        this.template = template;
-        this.model = {
-            idList,
-            selectedId: idList[0]
-        };
-        this.view = {
-            classes: ['section-navigator']
-        };
-        this.css = css;
-        this.boundScrollFn = debounce(this.setSelectedIdToNearest.bind(this), 40);
-    }
+function SectionNavigator({idList}) {
+    const [selectedId, setSelectedId] = useState(idList[0]);
+    const wcx = useContext(WindowContext);
 
-    onLoaded() {
-        window.addEventListener('scroll', this.boundScrollFn);
-    }
+    useEffect(() => {
+        const el = document.getElementById(selectedId);
+        const target = document.getElementById(`${selectedId}-target`);
 
-    onClose() {
-        window.removeEventListener('scroll', this.boundScrollFn);
-    }
+        if (el) {
+            $.scrollTo(target || el);
+        }
+    }, [selectedId]);
 
-    setSelectedIdToNearest() {
-        const sections = this.model.idList.map((id) => document.getElementById(id));
+    useEffect(() => {
+        const sections = idList.map((id) => document.getElementById(id));
         const firstWhoseMiddleIsVisible = sections.find((el) => {
             const rect = el.getBoundingClientRect();
             const middle = (rect.top + rect.bottom) / 2;
@@ -37,21 +37,26 @@ export default class SectionNavigator extends Controller {
             return middle >= 0;
         });
 
-        this.model.selectedId = firstWhoseMiddleIsVisible && firstWhoseMiddleIsVisible.id;
-        this.update();
+        setSelectedId(firstWhoseMiddleIsVisible && firstWhoseMiddleIsVisible.id);
+    }, [idList, wcx]);
+
+    return (
+        idList.map((id) =>
+            <Hotspot key={id} {...{id, selectedId, setSelectedId}} />
+        )
+    );
+}
+
+export default function SectionNavigatorWait({idList}) {
+    if (idList.length === 0) {
+        return null;
     }
 
-    @on('click .hotspot')
-    selectDot(event) {
-        this.model.selectedId = event.delegateTarget.dataset.id;
-        let targetEl = document.getElementById(`${this.model.selectedId}-target`);
-
-        if (!targetEl) {
-            targetEl = document.getElementById(this.model.selectedId);
-        }
-
-        $.scrollTo(targetEl);
-        this.update();
-    }
-
+    return (
+        <WindowContextProvider>
+            <div className="section-navigator">
+                <SectionNavigator idList={idList} />
+            </div>
+        </WindowContextProvider>
+    );
 }

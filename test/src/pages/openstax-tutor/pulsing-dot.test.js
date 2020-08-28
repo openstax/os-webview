@@ -1,14 +1,19 @@
+import {makeMountRender} from '../../../helpers/jsx-test-utils.jsx';
 import PulsingDot from '~/pages/openstax-tutor/pulsing-dot/pulsing-dot';
-import {clickElement} from '../../../test-utils';
 
 describe('PulsingDot', () => {
-    const p = new PulsingDot();
+    const wrapper = makeMountRender(PulsingDot)();
 
     it('starts pulsing', () => {
-        expect(p.model.stopPulsing).toBe(false);
+        const stopped = wrapper.find('.stopped');
+
+        expect(stopped.length).toBe(0);
     });
     it('stops when you click it', () => {
-        clickElement(p.el);
-        expect(p.model.stopPulsing).toBe(true);
+        wrapper.find('.pulsing-dot').simulate('click');
+
+        const stopped = wrapper.find('.stopped');
+
+        expect(stopped.length).toBe(1);
     });
 });
