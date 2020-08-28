@@ -1,12 +1,37 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {usePutAway, useStickyData, useSeenCounter} from '../shared.jsx';
+import analytics from '~/helpers/analytics';
 import './lower-sticky-note.css';
 
 const SEEN_ENOUGH = 7;
 
-// eslint-disable-next-line complexity
+function trackClickFor(el, target, eventArgs) {
+    if (el && el.contains(target)) {
+        analytics.sendPageEvent(...eventArgs);
+    }
+}
+
+function trackClick(event) {
+    const div = event.currentTarget;
+    const target = event.target;
+    const putAwayEl = div.querySelector('.put-away');
+    const linkEl = div.querySelector('.blurb a');
+    const buttonEl = div.querySelector('a.primary');
+
+    trackClickFor(putAwayEl, target,
+        ['Microdonation header X', 'close', 'Microdonation header']
+    );
+    trackClickFor(linkEl, target,
+        ['Microdonation header learn more link', 'open', linkEl.href]
+    );
+    trackClickFor(buttonEl, target,
+        ['Microdonation header give button', 'open', buttonEl.href]
+    );
+}
+
+// eXslint-disable-next-line complexity
 function LowerStickyNote() {
     const stickyData = useStickyData();
     const [closed, PutAway] = usePutAway();
@@ -21,7 +46,7 @@ function LowerStickyNote() {
     incrementSeenCount();
 
     return (
-        <div className="lower-sticky-note-content">
+        <div className="lower-sticky-note-content" onClick={trackClick}>
             <PutAway />
             <div className="content">
                 <h1>{stickyData.header}</h1>
