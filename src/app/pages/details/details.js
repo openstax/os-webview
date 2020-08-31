@@ -7,7 +7,7 @@ import InstructorResourceTab from './instructor-resource-tab/instructor-resource
 import PhoneView from './phone-view/phone-view';
 import StudentResourceTab from './student-resource-tab/student-resource-tab';
 import VideosTab from './videos-tab/videos-tab';
-import TabGroup from '~/components/tab-group/tab-group';
+import TabGroup from './tab-group-with-link/tab-group-with-link';
 import userModel from '~/models/usermodel';
 import fetchRexRelease from '~/models/rex-release';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
@@ -15,6 +15,9 @@ import analytics from '~/helpers/analytics';
 import {description as template} from './details.html';
 import css from './details.css';
 import {on} from '~/helpers/controller/decorators';
+import React from 'react';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 function getSlugFromTitle(bookTitle) {
     let slug;
@@ -30,6 +33,23 @@ function getSlugFromTitle(bookTitle) {
     }
 
     return slug;
+}
+
+function wrappedGiveLink({give_link: url, give_link_text: text}) {
+    function GiveLink() {
+        return (
+            <React.Fragment>
+                <a href={url}>{text}</a>
+                <FontAwesomeIcon icon="heart" />
+            </React.Fragment>
+        );
+    }
+
+    const Constructor = pageWrapper(GiveLink, {
+        classes: ['give-link']
+    });
+
+    return new Constructor();
 }
 
 const spec = {
@@ -329,6 +349,7 @@ export default class Details extends BaseClass {
             const setDetailsTabClass = () => {
                 this.el.classList.toggle('card-background', selectedTab !== 'Book details');
             };
+            const giveLinkData = this.pageData.give_today.content;
             const tabGroup = new TabGroup(() => ({
                 tag: 'h2',
                 tabLabels,
@@ -341,7 +362,8 @@ export default class Details extends BaseClass {
                     contentGroup.update();
                     window.history.replaceState({}, selectedTab, newSearchString);
                     window.dispatchEvent(new CustomEvent('navigate'));
-                }
+                },
+                link: giveLinkData ? wrappedGiveLink(giveLinkData) : null
             }));
 
             this.bookTitle = this.pageData.title;
@@ -381,7 +403,9 @@ export default class Details extends BaseClass {
                     featureUrl: this.pageData.community_resource_url,
                     featureText: this.pageData.community_resource_cta,
                     communityResource: true
-                }
+                },
+                giveLink: giveLinkData ? wrappedGiveLink(giveLinkData) : null
+
             }));
             this.regions.tabController.attach(tabGroup);
             this.regions.tabContent.attach(contentGroup);
