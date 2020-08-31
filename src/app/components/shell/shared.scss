@@ -1,6 +1,7 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.put-away {
+#lower-sticky-note .put-away,
+#microsurvey .put-away {
     @include body-font(1.4rem);
 
     background-color: rgba(ui-color(black), 0.56);

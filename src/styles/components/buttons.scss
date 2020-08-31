@@ -1,23 +1,37 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-[role="button"] {
-    cursor: pointer;
-    touch-action: manipulation;
-}
-
+[role="button"],
 button,
 .btn {
-    @include button();
+    border: 0;
+    cursor: pointer;
+    display: inline-block;
     touch-action: manipulation;
 
-    &.default {
-        background-color: ui-color(white);
+    &:focus {
+        border-radius: 0.3rem;
+        box-shadow: 0 0 0.5rem 0.3rem rgba(os-color(light-blue), 0.7);
     }
 
     &:hover,
     &:focus {
         text-decoration: none;
     }
+}
+
+button,
+.btn {
+    background-color: ui-color(secondary);
+    color: ui-color(white);
+    font-size: inherit;
+    font-weight: 500;
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-large {
+    padding: 2.5rem;
 }
 
 // Call-to-action buttons generally have this style
@@ -28,7 +42,17 @@ button,
 
 .cta > .btn,
 .btn-orange {
-    @include button-type-specific(primary);
+    background-color: ui-color(primary);
+    border: 0;
+    color: ui-color(white);
+
+    &:active {
+        background-color: ui-color(primary-active);
+    }
+
+    &:hover {
+        background-color: ui-color(primary-hover);
+    }
 }
 
 .btn-cyan {
