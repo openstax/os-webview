@@ -23,7 +23,6 @@ $.apiOriginAndOldPrefix = $.apiOriginAndPrefix.replace('/v2', '');
 
 $.treatSpaceOrEnterAsClick = ({target, key, preventDefault}) => {
     if (['Enter', ' '].includes(key)) {
-        console.info('Target is', target);
         target.dispatchEvent(new MouseEvent('click', {
             'view': window,
             'bubbles': true,
