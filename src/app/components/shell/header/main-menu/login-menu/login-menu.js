@@ -83,14 +83,14 @@ class LoginMenu extends componentType(spec, busMixin) {
                     this.user.stale_verification
                 )
             },
-            {
-                label: 'Request instructor access',
-                url: reqFacultyAccessLink,
-                exclude: () => Boolean(
-                    (this.user.groups || []).includes('Faculty') ||
-                    (!this.user.stale_verification && this.user.pending_verification)
-                )
-            },
+            // {
+            //     label: 'Request instructor access',
+            //     url: reqFacultyAccessLink,
+            //     exclude: () => Boolean(
+            //         (this.user.groups || []).includes('Faculty') ||
+            //         (!this.user.stale_verification && this.user.pending_verification)
+            //     )
+            // },
             {
                 get url() {
                     return linkHelper.logoutLink();
