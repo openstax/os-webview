@@ -11,14 +11,8 @@ import './accordion-group.css';
 import $ from '~/helpers/$';
 import {SuperbItem} from '~/controllers/jsx-wrapper';
 
-export default function AccordionGroup({
-    items,
-    accordionProps={allowZeroExpanded: true},
-    noScroll=false,
-    forwardOnChange
-}) {
+function useChevronDirection(forwardOnChange) {
     const [openTabs, updateOpenTabs] = useState([]);
-    const root = useRef();
 
     function chevronDirection(uuid) {
         return openTabs.includes(uuid) ? 'down' : 'right';
@@ -30,6 +24,49 @@ export default function AccordionGroup({
         }
         updateOpenTabs(newOpenTabs);
     }
+
+    return [chevronDirection, onChange];
+}
+
+function TitleBar({title, titleTag, chevronDirection}) {
+    return (
+        <AccordionItemHeading aria-level="2">
+            <AccordionItemButton className="accordion-button">
+                <div className="label">
+                    {title}
+                    {
+                        titleTag &&
+                            <span className="title-tag">{titleTag}</span>
+                    }
+                </div>
+                <div className="chevron">
+                    <FontAwesomeIcon icon={`chevron-${chevronDirection}`} />
+                </div>
+            </AccordionItemButton>
+        </AccordionItemHeading>
+    );
+}
+
+function Item({title, titleTag, chevronDirection, contentComponent}) {
+    return (
+        <AccordionItem uuid={title} className="accordion-item">
+            <TitleBar {...{title, titleTag, chevronDirection}} />
+            <AccordionItemPanel className="content-pane">
+                <SuperbItem component={contentComponent} />
+            </AccordionItemPanel>
+        </AccordionItem>
+    );
+}
+
+export default function AccordionGroup({
+    items,
+    accordionProps={allowZeroExpanded: true},
+    noScroll=false,
+    forwardOnChange,
+    preExpanded=[]
+}) {
+    const root = useRef();
+    const [chevronDirection, onChange] = useChevronDirection(forwardOnChange);
 
     useEffect(() => {
         if (!noScroll) {
@@ -43,28 +80,15 @@ export default function AccordionGroup({
 
     return (
         <div ref={root}>
-            <Accordion {...accordionProps} onChange={onChange} className="accordion-group">
+            <Accordion
+                {...accordionProps}
+                onChange={onChange}
+                className="accordion-group"
+                preExpanded={preExpanded}
+            >
                 {
                     items.map((item, index) =>
-                        <AccordionItem key={item.title} uuid={item.title} className="accordion-item">
-                            <AccordionItemHeading aria-level="2">
-                                <AccordionItemButton className="accordion-button">
-                                    <div className="label">
-                                        {item.title}
-                                        {
-                                            item.titleTag &&
-                                            <span className="title-tag">{item.titleTag}</span>
-                                        }
-                                    </div>
-                                    <div className="chevron">
-                                        <FontAwesomeIcon icon={`chevron-${chevronDirection(item.title)}`} />
-                                    </div>
-                                </AccordionItemButton>
-                            </AccordionItemHeading>
-                            <AccordionItemPanel className="content-pane">
-                                <SuperbItem component={item.contentComponent} />
-                            </AccordionItemPanel>
-                        </AccordionItem>
+                        <Item key={item.title} {...item} chevronDirection={chevronDirection(item.title)} />
                     )
                 }
             </Accordion>
