@@ -1,36 +1,40 @@
-import componentType, {cleanupMixin} from '~/helpers/controller/init-mixin';
-import {description as template} from './checkboxes-linked-to-store.html';
-import css from './checkboxes-linked-to-store.css';
-import {on} from '~/helpers/controller/decorators';
+import React, {useState, useEffect} from 'react';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import cn from 'classnames';
+import './checkboxes-linked-to-store.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['checkboxes-linked-to-store']
-    },
-    model() {
-        return {
-            options: this.options,
-            checkedClass: (value) => this.store.includes(value) ? 'checked' : ''
-        };
-    }
-};
+function Checkbox({label, value, store}) {
+    const [checked, setChecked] = useState(store.includes(value));
 
-export default class extends componentType(spec, cleanupMixin) {
+    useEffect(() => {
+        const cleanup = store.on('notify', () => setChecked(store.includes(value)));
 
-    onLoaded() {
-        if (super.onLoaded) {
-            super.onLoaded();
-        }
-        this.cleanup.push(this.store.on('notify', () => this.update()));
-    }
+        return cleanup;
+    }, []);
 
-    @on('change [type="checkbox"]')
-    emitChange(event) {
-        const cb = event.delegateTarget;
+    return (
+        <label className="form-control">
+            <span className={cn('indicator', {checked})}>
+                <input
+                    className="hidden" type="checkbox"
+                    value={value}
+                    onChange={() => store.toggle(value)}
+                />
+                <FontAwesomeIcon className="tick" icon="check" />
+            </span>
+            <span className="label-text">{label}</span>
+        </label>
+    );
+}
 
-        this.store.toggle(cb.value);
-    }
-
+export default function CheckboxesLinkedToStore({store, options}) {
+    return (
+        <div className="checkboxes-linked-to-store">
+            {
+                options.map((option) =>
+                    <Checkbox key={option.value} label={option.label} value={option.value} store={store} />
+                )
+            }
+        </div>
+    );
 }

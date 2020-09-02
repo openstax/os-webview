@@ -34,10 +34,7 @@ function TitleBar({title, titleTag, chevronDirection}) {
             <AccordionItemButton className="accordion-button">
                 <div className="label">
                     {title}
-                    {
-                        titleTag &&
-                            <span className="title-tag">{titleTag}</span>
-                    }
+                    {titleTag && <span className="title-tag">{titleTag}</span>}
                 </div>
                 <div className="chevron">
                     <FontAwesomeIcon icon={`chevron-${chevronDirection}`} />
@@ -48,11 +45,15 @@ function TitleBar({title, titleTag, chevronDirection}) {
 }
 
 function Item({title, titleTag, chevronDirection, contentComponent}) {
+    const child = React.isValidElement(contentComponent) ?
+        contentComponent:
+        <SuperbItem component={contentComponent} />;
+
     return (
         <AccordionItem uuid={title} className="accordion-item">
             <TitleBar {...{title, titleTag, chevronDirection}} />
             <AccordionItemPanel className="content-pane">
-                <SuperbItem component={contentComponent} />
+                {child}
             </AccordionItemPanel>
         </AccordionItem>
     );

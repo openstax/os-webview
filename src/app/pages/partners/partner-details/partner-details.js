@@ -1,81 +1,158 @@
-import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
-import {description as template} from './partner-details.html';
-import css from './partner-details.css';
+import React, {useState, useEffect, useRef} from 'react';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import Carousel from './carousel/carousel';
-import {on} from '~/helpers/controller/decorators';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import './partner-details.css';
+import booksPromise from '~/models/books';
 import analyticsEvents from '../analytics-events';
 import shellBus from '~/components/shell/shell-bus';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['partner-details']
-    },
-    regions: {
-        carousel: '.carousel'
-    },
-    model() {
-        return {
-            icon: this.logoUrl || 'https://via.placeholder.com/150x150?text=[no%20logo]',
-            headline: this.title,
-            blurb: this.blurb,
-            titles: this.books, // TODO: lookup proper titles from Salesforce names
-            tags: this.tags,
-            infoUrl: this.infoUrl,
-            infoText: this.infoLinkText,
-            description: this.richDescription,
-            partnerUrl: this.website || this.partner_website,
-            partnerLinkText: this.websiteLinkText,
-            verifiedFeatures: this.verifiedFeatures,
-            badgeImage: '/images/partners/verified-badge.svg'
-        };
-    }
-};
+function useRealTitles(books) {
+    const [titles, setTitles] = useState(books);
 
-export default class extends componentType(spec, insertHtmlMixin) {
+    function getTitlesFromAbbreviations(abbreviations, bookInfo) {
+        return abbreviations
+            .map((abbrev) => bookInfo.find((b) => b.salesforce_abbreviation === abbrev) || abbrev)
+            .filter((b) => {
+                const found = typeof b === 'object';
 
-    onLoaded() {
-        if (super.onLoaded) {
-            super.onLoaded();
-        }
-        this.regions.carousel.attach(new Carousel({
-            icon: this.logoUrl,
-            images: this.images,
-            videos: this.videos
-        }));
+                if (!found) {
+                    console.warn('Book not found:', b);
+                }
+                return found;
+            })
+            .map((b) => b.salesforce_name);
     }
 
-    onAttached() {
-        if (super.onAttached) {
-            super.onAttached();
-        }
-        const scrollingRegion = this.el.parentNode;
-        const scrollCallback = (event) => {
-            analyticsEvents.lightboxScroll(this.title);
-            this.removeScrollListener();
-            delete this.removeScrollListener;
-        };
+    useEffect(
+        () =>
+            booksPromise.then((results) => setTitles(getTitlesFromAbbreviations(books, results))),
+        [books]
+    );
 
-        scrollingRegion.addEventListener('scroll', scrollCallback);
-        this.removeScrollListener = () => scrollingRegion.removeEventListener('scroll', scrollCallback);
+    return titles;
+}
+
+function VerifiedBadge({verifiedFeatures}) {
+    const badgeImage = '/images/partners/verified-badge.svg';
+
+    return (
+        verifiedFeatures &&
+            <div className="badge">
+                <img className="background" src={badgeImage} alt="verified" />
+                <FontAwesomeIcon icon="check" className="checkmark" />
+                <div className="tooltip bottom">
+                    {verifiedFeatures}
+                </div>
+            </div>
+    );
+}
+
+function PartnerLink({partnerUrl, partnerLinkText}) {
+    function trackPartnerVisit() {
+        analyticsEvents.partnerWebsite(partnerUrl);
     }
 
-    onClose() {
-        if (this.removeScrollListener) {
-            this.removeScrollListener();
-        }
-    }
+    return (
+        partnerUrl &&
+            <a className="partner-website" href={partnerUrl} onClick={trackPartnerVisit}>
+                {partnerLinkText}
+                <FontAwesomeIcon icon="external-link-alt" />
+            </a>
+    );
+}
 
-    @on('click .btn.primary')
-    sendRequestInfoEvent() {
+function RequestInfoButton({infoUrl, infoText}) {
+    function trackInfoRequest(event) {
         analyticsEvents.requestInfo(this.title);
         shellBus.emit('hideDialog');
     }
 
-    @on('click .partner-website')
-    sendPartnerWebsiteEvent(event) {
-        analyticsEvents.partnerWebsite(event.target.href);
-    }
-
+    return (
+        infoUrl &&
+            <section>
+                <a className="btn primary" href={infoUrl} onClick={trackInfoRequest}>{infoText}</a>
+            </section>
+    );
 }
+
+function logScrollingInParent(el, name) {
+    const scrollingRegion = el.parentNode.parentNode;
+    // eslint-disable-next-line prefer-const
+    let scrollCallback;
+    const removeScrollListener = () => scrollingRegion.removeEventListener('scroll', scrollCallback);
+
+    scrollCallback = (event) => {
+        analyticsEvents.lightboxScroll(name);
+        removeScrollListener();
+    };
+
+    scrollingRegion.addEventListener('scroll', scrollCallback);
+
+    return removeScrollListener;
+}
+
+function PartnerDetails({
+    verifiedFeatures, title: headline, richDescription: description,
+    website, partner_website: partnerWebsite, websiteLinkText: partnerLinkText,
+    infoUrl, infoLinkText: infoText, books, tags, logoUrl, images, videos
+}
+) {
+    const icon = logoUrl || 'https://via.placeholder.com/150x150?text=[no%20logo]';
+    const titles = useRealTitles(books);
+    const ref = useRef();
+
+    useEffect(() => {
+        logScrollingInParent(ref.current, headline);
+    }, []);
+
+    return (
+        <React.Fragment>
+            <section className="synopsis" ref={ref}>
+                <img className="icon" src={icon} alt="" />
+                <VerifiedBadge verifiedFeatures={verifiedFeatures} />
+                <div className="headline">{headline}</div>
+                <PartnerLink {...{partnerUrl: website || partnerWebsite, partnerLinkText}} />
+            </section>
+            <div className="scrolling-region text-content">
+                <section className="carousel">
+                    <Carousel {...{icon, images, videos}} />
+                </section>
+                <RequestInfoButton {...{infoUrl, infoText}} />
+                <hr />
+                <section>
+                    <h2>Overview</h2>
+                    <RawHTML className="main-text" html={description} />
+                    <h2>Related Books</h2>
+                    <div className="titles">
+                        {
+                            titles.map((title) =>
+                                <span className="title" key={title}>{title}</span>
+                            )
+                        }
+                    </div>
+                    <h2>Related Tags</h2>
+                    <div className="tags">
+                        {
+                            tags.map((entry) =>
+                                <span className="tag" key={entry.value}>
+                                    {entry.label}: {entry.value}
+                                </span>
+                            )
+                        }
+                    </div>
+                </section>
+            </div>
+        </React.Fragment>
+    );
+}
+
+// This still returns a Superb component because that is what the Dialog expects
+// Possible future development: make Dialog handle React components.
+// That will be a job in itself.
+const view = {
+    classes: ['partner-details']
+};
+
+export default pageWrapper(PartnerDetails, view);

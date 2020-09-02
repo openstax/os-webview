@@ -1,11 +1,11 @@
-import componentType, {cleanupMixin} from '~/helpers/controller/init-mixin';
-import busMixin from '~/helpers/controller/bus-mixin';
-import css from './results.css';
-import orderBy from 'lodash/orderBy';
+import React, {useState, useEffect} from 'react';
+import ResultGrid from './result-grid';
+import {books, types, advanced, sort, resultCount} from '../store';
+import partnerFeaturePromise, {tooltipText} from '~/models/salesforce-partners';
+import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import shuffle from 'lodash/shuffle';
-import {resultCount} from '../store';
-import WrappedJsx from '~/controllers/jsx-wrapper';
-import ResultGrid from './result-grid.jsx';
+import orderBy from 'lodash/orderBy';
+import './results.css';
 
 export const costOptions = [
     'Free - $10',
@@ -19,96 +19,134 @@ export const costOptions = [
 
 const costOptionValues = costOptions.map((entry) => entry.value);
 
-const spec = {
-    css,
-    view: {
-        classes: ['results']
-    }
-};
+// eslint-disable-next-line complexity
+function filterEntries(entries) {
+    let result = entries;
 
-export default class extends componentType(spec, busMixin, cleanupMixin) {
-
-    // eslint-disable-next-line complexity
-    get filteredEntries() {
-        let result = this.entries;
-
-        if (this.books.value.length > 0) {
-            result = result.filter((entry) => {
-                return entry.books.find((title) => this.books.includes(title));
-            });
-        }
-
-        if (this.types.value) {
-            result = result.filter((entry) => {
-                return this.types.value === entry.type;
-            });
-        }
-
-        if (this.advanced.value.length > 0) {
-            result = result.filter((entry) => {
-                return this.advanced.value
-                    .filter((feature) => !costOptionValues.includes(feature))
-                    .every((requiredFeature) => {
-                        return entry.advancedFeatures.includes(requiredFeature);
-                    });
-            });
-            const costFeatures = this.advanced.value
-                .filter((feature) => costOptionValues.includes(feature));
-
-            if (costFeatures.length) {
-                result = result.filter((entry) => {
-                    return costFeatures.some((costPossibility) => entry.cost === costPossibility);
-                });
-            }
-        }
-
-        resultCount.value = result.length;
-
-        return ['1', '-1'].includes(this.sort.value) ?
-            orderBy(
-                result,
-                [(entry) => entry.title.toLowerCase()],
-                [(this.sort.value === '-1' ? 'desc' : 'asc')]
-            ) :
-            shuffle(result);
-    }
-
-    onLoaded() {
-        const handleNotifyFor = (store) => {
-            this.cleanup.push(
-                store.on('notify', () => this.update())
-            );
-        };
-
-        if (super.onLoaded) {
-            super.onLoaded();
-        }
-        handleNotifyFor(this.books);
-        handleNotifyFor(this.types);
-        handleNotifyFor(this.advanced);
-        handleNotifyFor(this.sort);
-        this.attachResults();
-    }
-
-    attachResults() {
-        const props = {
-            entries: this.filteredEntries,
-            emitSelect: (entry) => this.emit('select', entry)
-        };
-
-        this.resultGrid = new WrappedJsx(ResultGrid, props, this.regions.self.el);
-    }
-
-    updateResults() {
-        this.resultGrid.updateProps({
-            entries: this.filteredEntries
+    if (books.value.length > 0) {
+        result = result.filter((entry) => {
+            return entry.books.find((title) => books.includes(title));
         });
     }
 
-    update() {
-        if (this.resultGrid) {
-            this.updateResults();
+    if (types.value) {
+        result = result.filter((entry) => {
+            return types.value === entry.type;
+        });
+    }
+
+    if (advanced.value.length > 0) {
+        result = result.filter((entry) => {
+            return advanced.value
+                .filter((feature) => !costOptionValues.includes(feature))
+                .every((requiredFeature) => {
+                    return entry.advancedFeatures.includes(requiredFeature);
+                });
+        });
+        const costFeatures = advanced.value
+            .filter((feature) => costOptionValues.includes(feature));
+
+        if (costFeatures.length) {
+            result = result.filter((entry) => {
+                return costFeatures.some((costPossibility) => entry.cost === costPossibility);
+            });
         }
     }
 
+    resultCount.value = result.length;
+    return ['1', '-1'].includes(sort.value) ?
+        orderBy(
+            result,
+            [(entry) => entry.title.toLowerCase()],
+            [(sort.value === '-1' ? 'desc' : 'asc')]
+        ) :
+        shuffle(result);
+}
+
+
+//             if (this.searchPartner) {
+//                 const partnerName = decodeURIComponent(this.searchPartner);
+//                 const foundEntry = resultData.find((entry) => entry.title === partnerName);
+//
+//                 if (foundEntry) {
+//                     this.showDetailDialog(foundEntry);
+//                 }
+//             }
+//         });
+
+function advancedFilterKeys(partnerEntry) {
+    return Reflect.ownKeys(partnerEntry).filter((k) => [false, true].includes(partnerEntry[k]));
+}
+
+// eslint-disable-next-line complexity
+function resultEntry(pd) {
+    return {
+        title: pd.partner_name,
+        blurb: pd.short_partner_description ||
+            '[no description]',
+        tags: [
+            {
+                label: 'type',
+                value: pd.partner_type
+            },
+            {
+                label: 'cost',
+                value: pd.affordability_cost
+            }
+        ].filter((v) => Boolean(v.value)),
+        richDescription: pd.rich_description ||
+            pd.partner_description ||
+            '[no rich description]',
+        logoUrl: pd.partner_logo,
+        books: (pd.books||'').split(/;/),
+        advancedFeatures: advancedFilterKeys(pd).filter((k) => pd[k] === true),
+        website: pd.landing_page,
+        images: [pd.image_1, pd.image_2, pd.image_3, pd.image_4, pd.image_5]
+            .filter((img) => Boolean(img)),
+        videos: [pd.video_1, pd.video_2]
+            .filter((vid) => Boolean(vid)),
+        type: pd.partner_type,
+        cost: pd.affordability_cost,
+        infoUrl: pd.formstack_url,
+        verifiedFeatures: pd.verified_by_instructor ? tooltipText : false
+    };
+}
+
+function ResultGridLoader({partnerData, linkTexts}) {
+    const entries = partnerData.map(resultEntry);
+    const [filteredEntries, setFilteredEntries] = useState(filterEntries(entries));
+
+    useEffect(() => {
+        function handleNotifyFor(store) {
+            return store.on('notify', () => setFilteredEntries(filterEntries(entries)));
+        }
+
+        const cleanup = [books, types, advanced, sort].map(handleNotifyFor);
+
+        return () => cleanup.forEach((fn) => fn());
+    }, [entries]);
+
+    useEffect(() => {
+        [books, types, advanced].forEach((store) => store.clear());
+    }, []);
+
+
+    return (
+        // ALSO TODO: figure out where the link text params go to wind up on partner details
+        <ResultGrid entries={filteredEntries} linkTexts={linkTexts} />
+    );
+}
+
+export default function Results({linkTexts}) {
+    const partnerData = useDataFromPromise(partnerFeaturePromise);
+
+    if (!partnerData) {
+        return null;
+    }
+
+    return (
+        <section className="results">
+            <ResultGridLoader {...{partnerData, linkTexts}} />
+        </section>
+    );
 }

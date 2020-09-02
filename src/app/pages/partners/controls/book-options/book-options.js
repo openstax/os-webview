@@ -1,54 +1,37 @@
-import componentType from '~/helpers/controller/init-mixin';
-import {description as template} from './book-options.html';
-import css from './book-options.css';
-import booksPromise, {salesforceTitles, subjects} from '~/models/books';
+import React from 'react';
+import booksPromise, {salesforceTitles as getTitles, subjects as getSubjects} from '~/models/books';
+import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Checkboxes from '../checkboxes-linked-to-store/checkboxes-linked-to-store';
+import './book-options.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['book-options']
-    },
-    model() {
-        return {
-            subjects: this.subjects
-        };
-    },
-    subjects: []
-};
+export default function BookOptions({store}) {
+    const books = useDataFromPromise(booksPromise);
 
-export default class extends componentType(spec) {
+    if (!books) {
+        return null;
+    }
+    const salesforceTitles = getTitles(books);
+    const subjects = getSubjects(salesforceTitles);
 
-    init(...args) {
-        super.init(...args);
-        booksPromise.then((books) => {
-            this.salesforceTitles = salesforceTitles(books);
-            this.subjects = subjects(this.salesforceTitles);
-        });
+    function optionsForSubject(subject) {
+        return salesforceTitles
+            .filter((b) => b.subjects.includes(subject))
+            .map(({text, value}) => ({
+                label: text,
+                value
+            }));
     }
 
-    onLoaded() {
-        if (super.onLoaded) {
-            super.onLoaded();
-        }
-        booksPromise.then(() => {
-            this.update();
-            this.subjects.forEach((subject) => {
-                const options = this.salesforceTitles
-                    .filter((b) => b.subjects.includes(subject))
-                    .map((info) => ({
-                        label: info.text,
-                        value: info.value
-                    }));
-                const region = this.regionFrom(`[data-subject="${subject}"]`);
-                const cb = new Checkboxes({
-                    el: region.el,
-                    store: this.store,
-                    options
-                });
-            });
-        });
-    }
-
+    return (
+        <div className="book-options">
+            {
+                subjects.map((subject) =>
+                    <div className="subject" key={subject}>
+                        <h2>{subject}</h2>
+                        <Checkboxes store={store} options={optionsForSubject(subject)} />
+                    </div>
+                )
+            }
+        </div>
+    );
 }

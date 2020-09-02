@@ -1,38 +1,48 @@
-import componentType from '~/helpers/controller/init-mixin';
-import {description as template} from './options-list.html';
-import css from './options-list.css';
-import {on} from '~/helpers/controller/decorators';
+import React, {useEffect, useState} from 'react';
+import './options-list.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['options-list'],
-        role: 'listbox'
-    },
-    model() {
-        return {
-            items: this.items,
-            selected: (value) => this.selected.includes(value)
-        };
-    }
-};
+function Item({label, value, selected}) {
+    const [isSelected, setIsSelected] = useState(selected.includes(value));
 
-export default class extends componentType(spec) {
+    useEffect(() => {
+        const cleanup = selected.on('notify', () => setIsSelected(selected.includes(value)));
 
-    onLoaded() {
-        this.selected.on('notify', () => this.update());
-    }
+        return cleanup;
+    }, []);
 
-    @on('click [role="option"]')
-    toggleSelected(event) {
-        const value = event.delegateTarget.dataset.value;
-
-        if ('toggle' in this.selected) {
-            this.selected.toggle(value);
+    function toggleSelected() {
+        if ('toggle' in selected) {
+            selected.toggle(value);
         } else {
-            this.selected.value = value;
+            selected.value = value;
         }
     }
 
+    return (
+        <div
+            role="option"
+            aria-selected={isSelected}
+            class="option"
+            onClick={toggleSelected}
+        >
+            {label}
+        </div>
+    );
+}
+
+export default function OptionsList({items, selected}) {
+    return (
+        <div role='listbox' className="options-list">
+            {
+                items.map((item) =>
+                    <Item
+                        key={item.value}
+                        value={item.value}
+                        label={item.label}
+                        selected={selected}
+                    />
+                )
+            }
+        </div>
+    );
 }
