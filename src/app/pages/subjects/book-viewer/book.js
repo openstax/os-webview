@@ -127,9 +127,7 @@ export function BookCover({
 
     return (
         <div className={classList.join(' ')}>
-            {/*
-                <ThreeDotMenu slug={slug} details={details} />
-            */}
+            <ThreeDotMenu slug={slug} details={details} />
             <a href={`/details/${slug}`}>
                 <img src={coverUrl} alt={title} />
             </a>
