@@ -159,7 +159,7 @@ $.scrollToFrame = ({divEl, newFrameNumber, oldFrameNumber, unit='vw'}) => {
 };
 
 $.hashClick = (event, options = {doHistory: true}) => {
-    const node = event.delegateTarget;
+    const node = event.delegateTarget || event.currentTarget;
     const destUrl = `${node.pathname}${node.hash}`;
     const targetEl = document.getElementById(node.hash.substr(1));
 

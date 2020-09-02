@@ -1,335 +1,131 @@
-import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
+import React, {useState, useEffect, useRef} from 'react';
+import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
+import linkHelper from '~/helpers/link';
+import Frontier from './frontier';
+import HowItWorks from './how-it-works';
+import WhatStudentsGet from './what-students-get';
+import Features from './features';
+import WhereMoneyGoes from './where-money-goes';
+import Science from './science';
+import FAQ from './faq';
+import LearnMore from './learn-more';
 import SectionNavigator from '~/components/section-navigator/section-navigator';
-import StickyFooter from '~/components/sticky-footer/sticky-footer';
 import PulsingDot from './pulsing-dot/pulsing-dot';
-import {on} from '~/helpers/controller/decorators';
+import StickyFooter from '~/components/sticky-footer/sticky-footer';
 import analytics from '~/helpers/analytics';
-import {description as template} from './openstax-tutor.html';
-import css from './openstax-tutor.css';
-import 'particles.js/particles';
-import particleConfig from './particlesjs-config';
-import debounce from 'lodash/debounce';
+import {pageWrapper, SuperbItem} from '~/controllers/jsx-wrapper';
+import './openstax-tutor.css';
 
 const availableUrl = '/images/openstax-tutor/available-flag.svg';
 const unavailableUrl = '/images/openstax-tutor/unavailable-flag.svg';
 const availableImageData = {url: availableUrl, description: 'available'};
 const unavailableImageData = {url: unavailableUrl, description: 'not available'};
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['openstax-tutor-page', 'page'],
-        tag: 'main'
-    },
-    model: {
-        frontier: false,
-        howItWorks: {},
-        whatStudentsGet: {
-            currentImage: null,
-            images: [
-            ]
-
-        },
-        featureMatrix: {},
-        comingSoon: {},
-        whereMoneyGoes: {},
-        science: {},
-        faq: {},
-        learnMore: {}
-    },
-    slug: 'pages/openstax-tutor',
-    regions: {
-        floatingTools: '.floating-tools',
-        stickyFooter: '.sticky-footer-region'
-    }
-};
-const BaseClass = componentType(spec, canonicalLinkMixin);
-
-export default class Tutor extends BaseClass {
-
-    onDataError(e) {
-        console.warn(e);
-    }
-
-    onDataLoaded() {
-        /* eslint complexity: 0 */
-        const data = this.pageData;
-
-        Object.assign(this.model, data);
-        this.model.footerHeight = 'collapsed';
-        this.update();
-        this.model.access = {
-            text: data.access_tagline,
-            label: data.access_button_cta,
-            url: data.access_button_link
-        };
-        this.model.frontier = {
-            headline: data.section_1_heading,
-            subhead: data.section_1_subheading,
-            description: data.section_1_paragraph,
-            learnMore: {
-                href: data.section_1_cta_link,
-                text: data.section_1_cta_text
-            }
-        };
-        // Magic: turn learnmore link into simple hash link
-        const lm = this.model.frontier.learnMore;
-        const hashLink = lm.href.replace(/.*\/openstax-tutor/, '');
-        const targetLink = `${hashLink}-target`;
-        const targetEl = document.getElementById(targetLink);
-
-        lm.href = targetEl ? targetLink : hashLink;
-
-        Object.assign(this.model.howItWorks, {
-            headline: data.section_2_heading,
-            subhead: data.section_2_subheading,
-            description: data.section_2_paragraph,
-            blurbs: [1, 2, 3, 4].map((num) => (
-                {
-                    headline: data[`icon_${num}_subheading`],
-                    iconDescription: `${data[`icon_${num}_subheading`]} icon`,
-                    description: data[`icon_${num}_paragraph`],
-                    imageUrl: data[`icon_${num}_image_url`]
-                }
-            ))
-        });
-        Object.assign(this.model.whatStudentsGet, {
-            headline: data.section_3_heading,
-            description: data.section_3_paragraph,
-            images: data.marketing_videos.map((entry) => ({
-                url: entry.video_url || entry.video_file || entry.image_url || entry.image,
-                description: entry.video_image_blurb,
-                title: entry.video_title
-            }))
-        });
-        this.model.whatStudentsGet.currentImage = this.model.whatStudentsGet.images[0];
-
-        Object.assign(this.model.featureMatrix, {
-            headline: data.section_4_heading,
-            description: data.section_4_paragraph ||
-             '<p>XX THIS TEXT NEEDS TO BE ENTERED INTO THE CMS XX</p>',
-            availability: data.section_4_book_heading,
-            availableBooks: data.marketing_books.map((b) => ({
-                description: b.title,
-                url: b.cover_url
-            })),
-            resourceFinePrint: data.section_4_resource_fine_print
-        });
-        Object.assign(this.model.comingSoon, {
-            headline: data.section_4_coming_soon_heading,
-            description: data.section_4_coming_soon_text
-        });
-        Object.assign(this.model.whereMoneyGoes, {
-            headline: data.section_5_heading,
-            description: data.section_5_paragraph
-        });
-        Object.assign(this.model.science, {
-            headline: data.section_5_science_heading,
-            description: data.section_5_science_paragraph
-        });
-        Object.assign(this.model.faq, {
-            headline: data.section_6_heading,
-            items: data.faqs,
-            knowledgeBaseCopy: data.section_6_knowledge_base_copy
-        });
-        Object.assign(this.model.learnMore, {
-            headline: data.section_7_heading,
-            subhead: data.section_7_subheading,
-            buttons: [
-                {
-                    text: data.section_7_cta_text_1,
-                    description: data.section_7_cta_blurb_1,
-                    url: data.section_7_cta_link_1
-                },
-                {
-                    text: data.section_7_cta_text_2,
-                    description: data.section_7_cta_blurb_2,
-                    url: data.section_7_cta_link_2
-                }
-            ].filter((obj) => obj.text) // only keep the ones with text values
-        });
-
-        this.model.featureMatrix.features = data.resource_availability;
-
-        this.update();
-        this.insertHtml();
-        this.onLoaded();
-
-        this.regions.stickyFooter.attach(new StickyFooter({
+function OpenstaxTutor({data}) {
+    const model = $.camelCaseKeys(data);
+    const [sectionIds, setSectionIds] = useState([]);
+    const sfRef = useRef(
+        new StickyFooter({
             leftButton: {
-                link: data.floating_footer_button_1_link,
-                text: data.floating_footer_button_1_cta,
-                description: data.floating_footer_button_1_caption
+                link: model.floatingFooterButton1Link,
+                text: model.floatingFooterButton1Cta,
+                description: model.floatingFooterButton1Caption
             },
             rightButton: {
-                link: data.floating_footer_button_2_link,
-                text: data.floating_footer_button_2_cta,
-                description: data.floating_footer_button_2_caption
+                link: model.floatingFooterButton2Link,
+                text: model.floatingFooterButton2Cta,
+                description: model.floatingFooterButton2Caption
             }
-        }));
+        })
+    );
 
-        let lastYOffset = 0;
+    useEffect(() => {
+        const elList = Array.from(document.querySelectorAll('section[id]'));
 
-        this.handleScroll = debounce((event) => {
-            const newYOffset = window.pageYOffset;
-            const distanceFromBottom = document.body.offsetHeight - window.innerHeight - newYOffset;
-            const newFooterHeight = (newYOffset < 100) || (distanceFromBottom < 100) ? 'collapsed' : '';
+        setSectionIds(elList.map((el) => el.id));
+    }, []);
 
-            if (newFooterHeight !== this.model.footerHeight) {
-                this.model.footerHeight = newFooterHeight;
-                this.update();
-            }
-            lastYOffset = newYOffset;
-        }, 80);
+    function pageLinkClick(event) {
+        const el = linkHelper.validUrlClick(event);
 
-        window.addEventListener('scroll', this.handleScroll);
-        const pageFooter = document.querySelector('.page-footer');
-        const mainSection = document.getElementById('main');
+        if (el) {
+            const linkText = el.textContent;
 
-        if (pageFooter) {
-            pageFooter.classList.add('openstax-tutor-footer');
-        }
-        if (mainSection) {
-            mainSection.classList.add('openstax-tutor-main');
-        }
-
-        const pulsingDot = new PulsingDot({
-            model: {
-                html: data.pop_up_text
-            }
-        });
-
-        this.regions.floatingTools.append(pulsingDot);
-        if (window.location.hash) {
-            const el = document.getElementById(window.location.hash.substr(1));
-
-            $.scrollTo(el);
+            analytics.sendPageEvent(
+                `OXT marketing page [${linkText}] page`,
+                'open',
+                el.href
+            );
+            event.stopPropagation();
         }
     }
 
-    onLoaded() {
-        if (this.model.frontier) {
-            $.scrollToHash();
-            const sectionIds = Array.from(this.el.querySelectorAll('section[id]'))
-                .map((el) => el.id);
-            const sectionNavigator = new SectionNavigator(sectionIds);
+    function footerClick(event) {
+        const el = linkHelper.validUrlClick(event);
 
-            this.regions.floatingTools.attach(sectionNavigator);
+        if (el) {
+            const linkText = el.textContent;
 
-            if (document.getElementById('particles')) {
-                window.particlesJS('particles', particleConfig);
-            }
+            analytics.sendPageEvent(
+                `OXT marketing page [${linkText}] footer`,
+                'open',
+                el.href
+            );
+            event.stopPropagation();
         }
     }
 
-    onClose() {
-        super.onClose();
-        window.removeEventListener('scroll', this.handleScroll);
-        document.querySelector('.page-footer').classList.remove('openstax-tutor-footer');
-        document.getElementById('main').classList.remove('openstax-tutor-main');
-    }
-
-    @on('click .toggled-item[role="button"]')
-    toggleItem(event) {
-        const index = event.delegateTarget.dataset.index;
-        const item = this.model.faq.items[index];
-
-        item.isOpen = !item.isOpen;
-        this.update();
-    }
-
-    setCurrentImage(index) {
-        const isVideo = (url) => (/.mp4/).test(url);
-        const wsg = this.model.whatStudentsGet;
-
-        wsg.transitioning = 'transitioning';
-        this.update();
-
-        setTimeout(() => {
-            wsg.transitioning = '';
-            wsg.currentImage = wsg.images[index];
-            this.update();
-            $.insertHtml(this.el.querySelector('#what-students-get'), this.model);
-            const videoTag = this.el.querySelector('#what-students-get .viewer video');
-            const thumbnailEl = this.el.querySelector('#what-students-get .thumbnails');
-            const thumbnailWidth = thumbnailEl.scrollWidth;
-            const thumbnailScrollDest = thumbnailWidth * index / wsg.images.length;
-
-            const scrollStep = () => {
-                const stepSize = 25;
-                const currentPosition = thumbnailEl.scrollLeft;
-                const direction = thumbnailScrollDest < currentPosition ? -1 : 1;
-                const isLastStep = Math.abs(thumbnailScrollDest - currentPosition) < stepSize;
-                const nextPosition = isLastStep ? thumbnailScrollDest : currentPosition + direction * stepSize;
-
-                thumbnailEl.scrollLeft = nextPosition;
-
-                if (!isLastStep && thumbnailEl.scrollLeft === nextPosition) {
-                    window.requestAnimationFrame(scrollStep);
-                }
-            };
-
-            window.requestAnimationFrame(scrollStep);
-
-            // Delay play start
-            if (isVideo(wsg.currentImage.url)) {
-                setTimeout(() => {
-                    videoTag.currentTime = 0;
-                    videoTag.play();
-                }, 400);
-            }
-        }, 400);
-    }
-
-    @on('click a[href^="#"]')
-    hashClick(e) {
-        analytics.sendPageEvent(
-            'OXT marketing page Learn more',
-            'scroll',
-            e.delegateTarget.href
-        );
-        $.hashClick(e);
-    }
-
-    @on('click a:not([href^="#"])')
-    externalLinkClick(e) {
-        const target = e.delegateTarget;
-        const linkText = target.textContent;
-        const footerEl = this.el.querySelector('.sticky-footer');
-        const pageOrFooter = footerEl.contains(target) ? 'footer' : 'page';
-
-        analytics.sendPageEvent(
-            `OXT marketing page [${linkText}] ${pageOrFooter}`,
-            'open',
-            target.href
-        );
-    }
-
-    @on('click .carousel .viewer [role="button"]')
-    carouselArrowClick(e) {
-        analytics.sendPageEvent(
-            'OXT marketing page video carousel',
-            'scroll',
-            'video'
-        );
-    }
-
-    @on('click .carousel .thumbnails > div')
-    carouselThumbnailClick(e) {
-        const clickedThumbnail = e.delegateTarget;
-        const thumbnails = Array.from(this.el.querySelectorAll('.carousel .thumbnails > div'));
-        const itemIndex = thumbnails.indexOf(clickedThumbnail);
-        const blurb = $.htmlToText(this.model.whatStudentsGet.images[itemIndex].description);
-
-        analytics.sendPageEvent(
-            `OXT marketing button [${blurb}]`,
-            'open',
-            'video'
-        );
-        this.setCurrentImage(itemIndex);
-        e.preventDefault();
-    }
-
+    return (
+        <div onClick={pageLinkClick}>
+            <div className="floating-tools">
+                <SectionNavigator idList={sectionIds} />
+                <PulsingDot html={model.popUpText} />
+            </div>
+            <div className="sticky-footer-region" onClick={footerClick}>
+                <SuperbItem component={sfRef.current} />
+            </div>
+            <Frontier model={model} />
+            <HowItWorks model={model} />
+            <WhatStudentsGet model={model} />
+            <Features model={model} />
+            <WhereMoneyGoes model={model} />
+            <Science model={model} />
+            <div class="divider">
+                <img src="/images/openstax-tutor/faq-top-background.svg" alt="boat sailing past icebergs" />
+            </div>
+            <FAQ model={model} />
+            <LearnMore model={model} />
+        </div>
+    );
 }
+
+function OpenstaxTutorLoader() {
+    return (
+        <LoaderPage slug="pages/openstax-tutor" Child={OpenstaxTutor} />
+    );
+}
+
+const view = {
+    classes: ['openstax-tutor-page', 'page'],
+    tag: 'main'
+};
+
+export default pageWrapper(OpenstaxTutorLoader, view);
+
+//
+//     @on('click a:not([href^="#"])')
+//     externalLinkClick(e) {
+//         const target = e.delegateTarget;
+//         const linkText = target.textContent;
+//         const footerEl = this.el.querySelector('.sticky-footer');
+//         const pageOrFooter = footerEl.contains(target) ? 'footer' : 'page';
+//
+//         analytics.sendPageEvent(
+//             `OXT marketing page [${linkText}] ${pageOrFooter}`,
+//             'open',
+//             target.href
+//         );
+//     }
+//
+// }
