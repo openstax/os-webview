@@ -1,0 +1,24 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.details-page {
+    .tab-controller {
+        position: relative;
+
+        .give-link {
+            @include set-font(body-large);
+
+            bottom: 1.8rem;
+            position: absolute;
+            right: 3rem;
+
+            a {
+                text-decoration: none;
+            }
+
+            svg {
+                color: os-color(red);
+                margin-left: 1rem;
+            }
+        }
+    }
+}

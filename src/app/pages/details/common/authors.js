@@ -25,18 +25,22 @@ export default function AuthorsSection({model, polish}) {
     ] : [
         'Senior Contributing Authors', 'Contributing Authors'
     ];
+    const senior = (author) => author.seniorAuthor;
+    const nonsenior = (author) => !author.seniorAuthor;
+    const allSenior = model.authors.filter(senior);
+    const allNonsenior = model.authors.filter(nonsenior);
 
     return (
         <React.Fragment>
             <Authors
                 heading={headings[0]}
                 className="loc-senior-author"
-                authors={model.allSenior}
+                authors={allSenior}
             />
             <Authors
                 heading={headings[1]}
                 className="loc-nonsenior-author"
-                authors={model.allNonsenior}
+                authors={allNonsenior}
             />
         </React.Fragment>
     );

@@ -41,7 +41,7 @@
             @include set-font(h4);
         }
 
-        .resource-box {
+        .Login to unlockx {
             width: 20rem;
 
             &.double {
@@ -67,10 +67,6 @@
 
         .resources {
             @extend %swipe-zone;
-
-            .resource-box {
-                width: 20rem;
-            }
         }
     }
 

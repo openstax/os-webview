@@ -1,42 +1,34 @@
-import {Controller} from 'superb.js';
-import settings from 'settings';
-import {studentResourceBoxPermissions} from '../../resource-box/resource-box';
-import WrappedJsx from '~/controllers/jsx-wrapper';
-import ResourceBoxes from '../../resource-box/resource-boxes';
-import css from './student-resources-pane.css';
+import React from 'react';
+import {studentResourceBoxPermissions} from '../../common/resource-box/resource-box';
+import ResourceBoxes from '../../common/resource-box/resource-boxes';
+import {useUserStatus} from '../../common/hooks';
+import './student-resources-pane.css';
 
 function resourceBoxModel(resourceData, userStatus) {
     return Object.assign({
-        heading: resourceData.resource_heading,
+        heading: resourceData.resourceHeading,
         description: '',
-        comingSoon: Boolean(resourceData.coming_soon_text),
+        comingSoon: Boolean(resourceData.comingSoonText),
         comingSoonText: '',
-        printLink: resourceData.print_link
+        printLink: resourceData.printLink
     }, studentResourceBoxPermissions(resourceData, userStatus, 'Student resources'));
 }
 
-export default class StudentResourcePane extends Controller {
+function StudentResourcesPane({model, userStatus}) {
+    return (
+        <div className="student-resources-pane">
+            <ResourceBoxes models={model.bookStudentResources.map((res) => resourceBoxModel(res, userStatus))} />
+        </div>
+    );
+}
 
-    init(props) {
-        this.props = props;
-        this.template = () => '';
-        this.view = {
-            classes: ['student-resources-pane']
-        };
-        this.css = css;
+export default function LoadUserStatusThenStudentPane({model}) {
+    const userStatus = useUserStatus();
+
+    if (!userStatus) {
+        return null;
     }
-
-    onLoaded() {
-        this.props.userStatusPromise.then((userStatus) => {
-            const models = this.props.resources.map((res) => resourceBoxModel(res, userStatus));
-            const resourceBoxes = new WrappedJsx(
-                ResourceBoxes, {models},
-                this.regions.self.el
-            );
-        });
-    }
-
-    update() {}
-    template() {}
-
+    return (
+        <StudentResourcesPane model={model} userStatus={userStatus} />
+    );
 }

@@ -1,0 +1,37 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.student-resources {
+    margin-bottom: 3.5rem;
+
+    h2 {
+        font-weight: normal;
+        margin: 0;
+    }
+
+    .free-stuff-blurb {
+        display: grid;
+        grid-gap: $normal-margin;
+        grid-template-columns: auto;
+        margin-bottom: 4rem;
+
+        @include wider-than($tablet-max) {
+            margin-bottom: 5rem;
+        }
+    }
+
+    .blurb-body {
+        @include set-font(body-large);
+
+        max-width: $text-content-max;
+    }
+
+    .resources {
+        @include width-between($phone-max, $tablet-max) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @include wider-than($tablet-max) {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+    }
+}

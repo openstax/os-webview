@@ -132,7 +132,6 @@ function ResultGridLoader({partnerData, linkTexts}) {
 
 
     return (
-        // ALSO TODO: figure out where the link text params go to wind up on partner details
         <ResultGrid entries={filteredEntries} linkTexts={linkTexts} />
     );
 }

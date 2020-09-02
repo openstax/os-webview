@@ -1,0 +1,43 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.featured-resources {
+    .card {
+        @extend %card;
+
+        background-color: ui-color(white);
+        display: grid;
+        grid-row-gap: 2rem;
+        grid-template-columns: 100%;
+        padding: 2rem;
+
+        .headline {
+            @include title-font(1.8rem);
+
+            background-color: os-color(yellow);
+            border-radius: 0.3rem;
+            padding: 0.8rem $normal-margin;
+        }
+
+        .resources {
+            display: grid;
+            grid-gap: $normal-margin;
+            grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+            justify-items: center;
+            margin: 0;
+            width: 100%;
+
+            .resource-box {
+                border-bottom: 0.5rem solid os-color(yellow);
+                border-radius: 0.3rem;
+                padding: 2rem;
+                min-width: 100%;
+
+                .description {
+                    @include body-font(1.4rem);
+
+                    color: text-color(helper);
+                }
+            }
+        }
+    }
+}

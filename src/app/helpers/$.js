@@ -21,14 +21,14 @@ $.booleanAttribute = (whether) => whether ? '' : null;
 $.apiOriginAndPrefix = `${settings.apiOrigin}/apps/cms/api/v2`;
 $.apiOriginAndOldPrefix = $.apiOriginAndPrefix.replace('/v2', '');
 
-$.treatSpaceOrEnterAsClick = ({target, key, preventDefault}) => {
-    if (['Enter', ' '].includes(key)) {
-        target.dispatchEvent(new MouseEvent('click', {
+$.treatSpaceOrEnterAsClick = (event) => {
+    if (['Enter', ' '].includes(event.key)) {
+        event.target.dispatchEvent(new MouseEvent('click', {
             'view': window,
             'bubbles': true,
             'cancelable': true
         }));
-        preventDefault();
+        event.preventDefault();
     }
 };
 

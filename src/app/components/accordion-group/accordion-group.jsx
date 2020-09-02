@@ -44,16 +44,23 @@ function TitleBar({title, titleTag, chevronDirection}) {
     );
 }
 
-function Item({title, titleTag, chevronDirection, contentComponent}) {
-    const child = React.isValidElement(contentComponent) ?
-        contentComponent:
-        <SuperbItem component={contentComponent} />;
+function toUuid(name) {
+    return name.replace(/\W+/g, '_');
+}
+
+function Item({title, titleTag, checkChevronDirection, contentComponent}) {
+    const uuid = toUuid(title);
+    const chevronDirection = checkChevronDirection(uuid);
 
     return (
-        <AccordionItem uuid={title} className="accordion-item">
+        <AccordionItem uuid={uuid} className="accordion-item">
             <TitleBar {...{title, titleTag, chevronDirection}} />
             <AccordionItemPanel className="content-pane">
-                {child}
+                {
+                    React.isValidElement(contentComponent) ?
+                        contentComponent :
+                        <SuperbItem component={contentComponent} />
+                }
             </AccordionItemPanel>
         </AccordionItem>
     );
@@ -85,11 +92,12 @@ export default function AccordionGroup({
                 {...accordionProps}
                 onChange={onChange}
                 className="accordion-group"
-                preExpanded={preExpanded}
+                preExpanded={preExpanded.map(toUuid)}
             >
                 {
                     items.map((item, index) =>
-                        <Item key={item.title} {...item} chevronDirection={chevronDirection(item.title)} />
+                        item.inline ||
+                            <Item key={item.title} {...item} checkChevronDirection={chevronDirection} />
                     )
                 }
             </Accordion>

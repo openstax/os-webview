@@ -24,27 +24,30 @@ function ButtonGroup({polish, title}) {
     return polish ? <PolishButtonGroup /> : <EnglishButtonGroup />;
 }
 
-export function ErrataContents({blurb, title, polish, bookState}) {
+export function ErrataContents({model, polish}) {
+    const title = model.bookTitle;
+    const blurb = model.errataContent.content && model.errataContent.content.content;
+
     return (
         <React.Fragment>
             <RawHTML Tag="p" html={blurb} />
             {
-                bookState !== 'deprecated' &&
+                model.bookState !== 'deprecated' &&
                     <ButtonGroup polish={polish} title={title} />
             }
         </React.Fragment>
     );
 }
 
-export default function ErrataSection({bookState, ...otherProps}) {
-    if (!['live', 'new_edition_available', 'deprecated'].includes(bookState)) {
+export default function ErrataSection({model, polish=false}) {
+    if (!['live', 'new_edition_available', 'deprecated'].includes(model.bookState)) {
         return null;
     }
 
     return (
         <div className="loc-errata">
             <h3>Errata</h3>
-            <ErrataContents bookState={bookState} {...otherProps} />
+            <ErrataContents model={model} polish={polish} />
         </div>
     );
 }

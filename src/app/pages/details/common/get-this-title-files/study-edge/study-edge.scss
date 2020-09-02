@@ -1,0 +1,105 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.wider-dialog {
+    position: relative;
+    max-width: $wide-screen-min;
+
+    .main-region {
+        background-position: left bottom;
+        background-repeat: no-repeat;
+
+        @include width-up-to($tablet-max) {
+            background-image: url('/images/study-edge/graphic-1.svg');
+            background-size: calc(10vw + 5rem);
+            margin-bottom: -0.1rem; // because image has a little edge
+            margin-left: -0.1rem;
+            padding-bottom: 9rem;
+        }
+
+        @include wider-than($phone-max) {
+            min-height: 46rem;
+        }
+
+        @include wider-than($tablet-max) {
+            background-image: url('/images/study-edge/graphic-large.svg');
+            background-size: contain;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        @include width-between($tablet-max, $wide-screen-min) {
+            background-position: calc(36vw - 50.4rem) bottom;
+        }
+    }
+}
+
+.going-to-study-edge {
+    align-content: center;
+    display: grid;
+    grid-column-gap: 1rem;
+    grid-row-gap: 2rem;
+    grid-template-columns: 100%;
+    height: 100%;
+    justify-content: center;
+    max-width: #{$text-content-max + 49rem};
+    text-align: center;
+
+    @include width-up-to($phone-max) {
+        padding: 3rem;
+    }
+
+    @include wider-than($phone-max) {
+        padding: 8rem 5rem;
+    }
+
+    @include wider-than($tablet-max) {
+        padding-left: 49rem;
+    }
+
+
+    h1,
+    .text-block {
+        @include set-font(body-large);
+
+        grid-column: 1 / -1;
+        margin: 0;
+    }
+
+    h1 {
+        @include width-up-to($phone-max) {
+            @include set-font(h3);
+        }
+        @include wider-than($phone-max) {
+            @include set-font(h2);
+        }
+    }
+
+    .button-group {
+        display: grid;
+        grid-gap: 1.3rem;
+        justify-content: center;
+        max-width: 100%;
+
+        @include width-up-to($phone-max) {
+            grid-template-columns: min-content;
+        }
+
+        @include wider-than($phone-max) {
+            grid-template-columns: repeat(2, min-content);
+            padding-left: 1rem;
+        }
+
+        .badge {
+            height: 4rem;
+
+            > img {
+                height: 100%;
+
+                &.padded {
+                    margin: -6%;
+                    height: 147%;
+                }
+            }
+        }
+    }
+}

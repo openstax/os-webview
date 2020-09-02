@@ -1,7 +1,0 @@
-<template args="model">
-    <div each="item in model.videos" class="video-block">
-        <h2 class="title">{item.title}</h2>
-        <div data-html="videos[{$item}].description" skip="true" class="description"></div>
-        <div data-html="videos[{$item}].embed" skip="true" class="embed"></div>
-    </div>
-</template>
