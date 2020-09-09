@@ -21,6 +21,7 @@ function AdvancedFilters({store, options}) {
         })),
         'title'
     );
+
     return (
         <AccordionGroup items={items} noScroll={true} />
     );
