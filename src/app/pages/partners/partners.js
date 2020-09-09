@@ -3,6 +3,7 @@ import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {RawHTML, LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Controls from './controls/controls';
 import ActiveFilters from './active-filters/active-filters';
+import MobileFilters from './mobile-filters/mobile-filters';
 import Results, {costOptions} from './results/results';
 import './partners.css';
 
@@ -94,6 +95,7 @@ function Partners({data}) {
                 <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
             </section>
             <div className="padding">
+                <MobileFilters {...{advancedFilterOptions, typeOptions}} />
                 <ActiveFilters advancedFilterOptions={advancedFilterOptions} />
                 <Results linkTexts={linkTexts} />
             </div>
