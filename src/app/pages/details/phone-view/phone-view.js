@@ -117,7 +117,7 @@ export default class PhoneView extends componentType(spec, insertHtmlMixin) {
 
         this.regions.accordion.append(new AccordionGroup({
             items: accordionItems,
-            preExpanded: selectedTab
+            preExpanded: [selectedTab]
         }));
 
         if (this.props.giveLink) {
