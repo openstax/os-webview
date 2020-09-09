@@ -108,6 +108,9 @@
         }
 
         .btn {
+            @include button();
+
+            background-color: transparent;
             font-weight: normal;
             height: 5rem;
         }

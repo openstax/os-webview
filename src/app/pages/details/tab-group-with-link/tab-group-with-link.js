@@ -5,7 +5,11 @@ export default class extends TabGroup {
 
     onLoaded() {
         super.onLoaded();
-        this.regions.tabs.append(this.getProps().link);
+        const link = this.getProps().link;
+
+        if (link) {
+            this.regions.tabs.append(link);
+        }
     }
 
 };
