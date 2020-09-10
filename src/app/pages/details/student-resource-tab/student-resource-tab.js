@@ -12,7 +12,8 @@ function resourceBoxModel(resourceData, userStatus, search) {
         heading: resourceData.resource_heading,
         description: resourceData.resource_description,
         comingSoon: Boolean(resourceData.coming_soon_text),
-        comingSoonText: resourceData.coming_soon_text
+        comingSoonText: resourceData.coming_soon_text,
+        printLink: resourceData.print_link
     }, studentResourceBoxPermissions(resourceData, userStatus, 'Student resources'));
 }
 

@@ -25,7 +25,7 @@ function resourceBoxPermissions({
         locked: {
             iconType: 'lock',
             link: {
-                text: 'Log in to unlock',
+                text: 'Login to unlock',
                 url: loginUrl
             }
         }

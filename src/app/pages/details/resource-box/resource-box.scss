@@ -125,13 +125,33 @@
 
     .bottom {
         align-items: baseline;
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        grid-auto-flow: column;
+        grid-gap: 0.8rem;
+        justify-content: start;
         padding-top: 1rem;
         width: 100%;
 
         .left {
             @include set-font(helper-label);
+        }
+
+        .left-button,
+        .print-link {
+            @include button();
+            @include set-font(helper-label);
+
+            background-color: transparent;
+            padding-left: 1rem;
+            padding-right: 1rem;
+
+            > :not(:first-child) {
+                margin-left: 0.7rem;
+            }
+        }
+
+        .print-link {
+            border: 0;
         }
     }
 
