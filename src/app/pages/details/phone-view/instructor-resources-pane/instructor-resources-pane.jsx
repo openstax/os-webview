@@ -26,7 +26,8 @@ function resourceBoxModel(resourceData, userStatus, bookId, dialogProps) {
                 account_id: userStatus.userInfo.accounts_id,
                 // eslint-disable-next-line camelcase
                 resource_name: resourceData.resource_heading
-            }
+            },
+        printLink: resourceData.print_link
     }, instructorResourceBoxPermissions(resourceData, userStatus, 'Instructor resources'));
 }
 

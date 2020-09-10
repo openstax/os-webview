@@ -10,7 +10,8 @@ function resourceBoxModel(resourceData, userStatus) {
         heading: resourceData.resource_heading,
         description: '',
         comingSoon: Boolean(resourceData.coming_soon_text),
-        comingSoonText: ''
+        comingSoonText: '',
+        printLink: resourceData.print_link
     }, studentResourceBoxPermissions(resourceData, userStatus, 'Student resources'));
 }
 

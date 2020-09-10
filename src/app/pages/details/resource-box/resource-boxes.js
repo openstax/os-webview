@@ -70,20 +70,46 @@ function Top({isNew, model}) {
 function BottomBasic({leftContent, icon}) {
     return (
         <div className="bottom">
-            <div className="left">{leftContent}</div>
-            <div className="right">
+            <a className="left">
                 <FontAwesomeIcon icon={icon} />
-            </div>
+                {leftContent}
+            </a>
         </div>
     );
 }
 
+function LeftContent({model, icon}) {
+    return (
+        model.link ?
+            <a
+                className="left-button"
+                href={model.link.url}
+                data-local={model.iconType === 'lock'}
+            >
+                <FontAwesomeIcon icon={model.iconType} />
+                <span>{model.link.text}</span>
+            </a> :
+            <span>
+                <FontAwesomeIcon icon="lock" />
+                Access Pending
+            </span>
+    );
+}
+
 function Bottom({model, overrideIcon}) {
-    const leftContent = model.link ? model.link.text : 'Access pending';
     const icon = model.link ? model.iconType : 'lock';
 
     return (
-        <BottomBasic leftContent={leftContent} icon={overrideIcon || icon} />
+        <div className="bottom">
+            <LeftContent model={model} icon={overrideIcon || icon} />
+            {
+                model.printLink &&
+                    <a className="print-link" href={model.printLink}>
+                        <FontAwesomeIcon icon="shopping-cart" />
+                        <span>Buy print</span>
+                    </a>
+            }
+        </div>
     );
 }
 
@@ -121,16 +147,6 @@ function ResourceBox({model, icon}) {
             );
         }
     };
-    const {Tag, ...props} = model.link ?
-        {
-            Tag: 'a',
-            href: model.link.url,
-            'data-local': model.iconType === 'lock' ? 'true' : 'false',
-            onClick
-        } :
-        {
-            Tag: 'div'
-        };
 
     if (model.double) {
         classNames.push('double');
@@ -140,11 +156,11 @@ function ResourceBox({model, icon}) {
     }
 
     return (
-        <Tag className={classNames.join(' ')} {...props}>
+        <div className={classNames.join(' ')}>
             <ReferenceNumber referenceNumber={model.videoReferenceNumber} />
             <Top model={model} isNew={isNew} />
             <Bottom model={model} overrideIcon={icon} />
-        </Tag>
+        </div>
     );
 }
 

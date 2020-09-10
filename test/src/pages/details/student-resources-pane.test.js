@@ -30,7 +30,7 @@ describe('StudentResourcesPane (as student)', () => {
     );
     it('unlocks resources', () =>
         ready.then(() => {
-            const box = pane.el.querySelector('.resource-box .bottom > .left');
+            const box = pane.el.querySelector('.resource-box .bottom > .left-button');
 
             expect(box.textContent).toBe('Download');
         })
@@ -55,9 +55,9 @@ describe('StudentResourcesPane (as nonstudent)', () => {
     );
     it('does not unlock resources', () =>
         ready.then(() => {
-            const box = pane.el.querySelector('.resource-box .bottom > .left');
+            const box = pane.el.querySelector('.resource-box .bottom > .left-button');
 
-            expect(box.textContent).toBe('Log in to unlock');
+            expect(box.textContent).toBe('Login to unlock');
         })
     );
 });
