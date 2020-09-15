@@ -88,7 +88,6 @@ class LoginMenu extends componentType(spec, busMixin) {
                 url: facultyAccessLink,
                 exclude: () => Boolean(
                     (this.user.groups || []).includes('Faculty') ||
-                    (this.user.groups || []).includes('Student') ||
                     this.user.pending_verification
                 )
             },
