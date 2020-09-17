@@ -51,6 +51,7 @@ const loadRegularIcon = loaderForPath('free-regular-svg-icons');
     'faQuoteLeft',
     'faRssSquare',
     'faSearch',
+    'faShoppingCart',
     'faSignOutAlt',
     'faSlidersH',
     'faTabletAlt',

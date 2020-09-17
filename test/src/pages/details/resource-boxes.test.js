@@ -53,7 +53,7 @@ describe('ResourceBoxes', () => {
 
         expect(wrapper.find('.top h3').text()).toBe(payload.heading);
         expect(wrapper.find('.top-line + .description').html()).toContain(payload.description);
-        expect(wrapper.find('.bottom .left').text()).toBe(resourceData.link_text);
+        expect(wrapper.find('.bottom .left-button').text()).toBe(resourceData.link_text);
     });
 
     it('handles locked instructor resources', () => {
@@ -61,7 +61,7 @@ describe('ResourceBoxes', () => {
             resource_unlocked: false
         });
 
-        expect(wrapper.find('.bottom .left').text()).toBe('Log in to unlock');
+        expect(wrapper.find('.bottom .left-button').text()).toBe('Login to unlock');
     });
 
     it('allows instructors access to locked resources', () => {
@@ -74,7 +74,7 @@ describe('ResourceBoxes', () => {
             }
         );
 
-        expect(wrapper.find('.bottom .left').text()).toBe(resourceData.link_text);
+        expect(wrapper.find('.bottom .left-button').text()).toBe(resourceData.link_text);
     });
 
     it('handles locked student resources', () => {
@@ -86,7 +86,7 @@ describe('ResourceBoxes', () => {
             isInstructor: false
         });
 
-        expect(wrapper.find('.bottom .left').text()).toBe('Log in to unlock');
+        expect(wrapper.find('.bottom .left-button').text()).toBe('Login to unlock');
     });
 
     it('allows students access to locked resources', () => {
@@ -97,7 +97,7 @@ describe('ResourceBoxes', () => {
             isInstructor: false
         });
 
-        expect(wrapper.find('.bottom .left').text()).toBe(resourceData.link_text);
+        expect(wrapper.find('.bottom .left-button').text()).toBe(resourceData.link_text);
     });
 
     it('allows instructors access to locked student resources', () => {
@@ -108,7 +108,7 @@ describe('ResourceBoxes', () => {
             isInstructor: true
         });
 
-        expect(wrapper.find('.bottom .left').text()).toBe(resourceData.link_text);
+        expect(wrapper.find('.bottom .left-button').text()).toBe(resourceData.link_text);
         expect(wrapper.find('.bottom .right .fa-download')).toBeTruthy();
     });
 
@@ -122,7 +122,7 @@ describe('ResourceBoxes', () => {
             isInstructor: true
         });
 
-        expect(wrapper.find('.bottom .left').text()).toBe(resourceData.link_text);
+        expect(wrapper.find('.bottom .left-button').text()).toBe(resourceData.link_text);
         expect(wrapper.find('.bottom .right .fa-external-link-alt')).toBeTruthy();
     });
 });
