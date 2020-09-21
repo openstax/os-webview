@@ -80,7 +80,7 @@ function Partners({data}) {
     const description = data.description;
     const linkTexts = {
         websiteLinkText: data.partner_landing_page_link,
-        infoLinkText: data.partner_request_info_link
+        infoLinkText: (data.partner_request_info_link || 'Request info')
     };
 
     return (
