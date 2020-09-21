@@ -169,7 +169,6 @@ export default function PublicationInfo({model, url, polish}) {
     }, [model]);
 
     if (polish) {
-        console.info('Doing polish publication', model);
         return new PolishPublicationInfo({model});
     }
 
