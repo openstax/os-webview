@@ -1,5 +1,5 @@
 import React from 'react';
-import LetUsKnow from '../common/let-us-know/let-us-know.jsx';
+import LetUsKnow from '../common/let-us-know/let-us-know';
 import GetThisTitle from '../common/get-this-title';
 import AccordionGroup from '~/components/accordion-group/accordion-group.jsx';
 import $ from '~/helpers/$';

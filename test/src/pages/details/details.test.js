@@ -1,84 +1,72 @@
-import Details from '~/pages/details/details';
-import instanceReady from '../../../helpers/instance-ready';
-import {clickElement} from '../../../test-utils';
+import React, {useRef} from 'react';
+import {BookDetails} from '~/pages/details/details';
+import {makeMountRender} from '../../../helpers/jsx-test-utils.jsx';
+import rawEnglishData from '../../data/details-biology-2e';
+import {transformData} from '~/helpers/controller/cms-mixin';
+import rawPolishData from '../../data/details-polish';
 
-let pathname = '/details/no-such-book';
-let ready;
-let p;
+let wrapper;
+let rawData = rawEnglishData;
+
+function WrappedDetailsPage() {
+    const data = transformData(rawData);
+    const ref = useRef();
+    jest.spyOn(document, 'querySelector').mockImplementation(
+        (selector) => ref.current
+    );
+
+    return (
+        <div className="details-page" ref={ref}>
+            <BookDetails data={data} />
+        </div>
+    );
+}
 
 beforeEach(function () {
-    window.history.pushState({}, 'details', pathname);
-    ({instance:p, ready} = instanceReady(Details));
+    wrapper = makeMountRender(WrappedDetailsPage)();
 });
 
-const englishTabs = ['Book details', 'Instructor resources', 'Student resources'];
-
 describe('Book Details page', () => {
+    const isActive = (rw) => rw.getDOMNode().getAttribute('aria-current') === 'page';
 
-    it('[set biology title]', () => {
-        pathname = '/details/biology-2e';
+    it('has expected tabs', () => {
+        const tabGroup = wrapper.find('.tab-group');
+        const tabs = tabGroup.find('.tab');
+        const firstTabEl = tabs.at(0).getDOMNode();
+        const expectedLabels = ['Book details', 'Instructor resources', 'Student resources'];
+
+        expect(tabs).toHaveLength(3);
+        expectedLabels.forEach((label, i) => expect(tabs.at(i).text()).toBe(label));
     });
-    it('creates', () =>
-        ready.then(() => {
-            expect(p).toBeTruthy();
-            expect(p.slug).toBe('books/biology-2e');
-        })
-    );
-    // it('has the expected tabs', () =>
-    //     ready.then(() => {
-    //         const tabs = Array.from(p.el.querySelectorAll('.tab-group > .tab'));
-    //         console.log('Tabs?', p.el.innerHTML);
-    //         const isActive = (el) => el.getAttribute('aria-current') === 'page';
-    //
-    //         englishTabs.forEach((label) => {
-    //             expect(tabs.find((el) => el.textContent === label)).toBeTruthy();
-    //         });
-    //
-    //         expect(isActive(tabs[1])).toBeFalsy();
-    //         clickElement(tabs[1]);
-    //         expect(isActive(tabs[1])).toBeTruthy();
-    //     })
-    // );
-    // it('has expected accordion groups in mobile', () =>
-    //     ready.then(() => {
-    //         const expectedLabels = [
-    //             'Book details',
-    //             'Table of contents',
-    //             'Instructor resourcesupdated', // this got the new callout
-    //             'Student resources',
-    //             'Report errata'
-    //         ];
-    //         const accordionItems = Array.from(p.el.querySelectorAll('.accordion-group .accordion-item .label'));
-    //
-    //         expect(accordionItems.length).toBe(expectedLabels.length);
-    //         expectedLabels.forEach((label, i) => expect(accordionItems[i].textContent).toBe(label));
-    //     })
-    // );
-    it ('[set Polish title]', () => {
-        pathname = '/details/fizyka-dla-szkół-wyższych-tom-1'
+    it('selects clicked tabs', () => {
+        const tabs = wrapper.find('.tab');
+
+        expect(isActive(tabs.at(0))).toBe(true);
+        expect(isActive(tabs.at(1))).toBe(false);
+        tabs.at(1).simulate('click');
+        expect(isActive(tabs.at(0))).toBe(false);
+        expect(isActive(tabs.at(1))).toBe(true);
     });
+    it('has expected accordion groups in mobile', () => {
+        const accordionLabels = wrapper.find('.accordion-group .label');
+        const expectedLabels = [
+            'Book details',
+            'Table of contents',
+            'Instructor resourcesupdated', // this got the new callout
+            'Student resources',
+            'Report errata'
+        ];
 
-    it ('creates polish', () =>
-        ready.then(() => {
-            const tabs = Array.from(p.el.querySelectorAll('.tab-group > .tab'));
+        expect(accordionLabels).toHaveLength(5);
+        expectedLabels.forEach((label, i) => expect(accordionLabels.at(i).text()).toBe(label));
+    });
+    it('[use Polish data]', () => {
+        rawData = rawPolishData;
+    });
+    it('has expected tab for Polish book', () => {
+        const tabs = wrapper.find('.tab');
 
-            expect(p).toBeTruthy();
-            expect(decodeURIComponent(p.slug)).toBe('books/fizyka-dla-szkół-wyższych-tom-1');
-            ['Book details', 'Instructor resources', 'Student resources'].forEach((label) => {
-                expect(tabs.find((el) => el.textContent === label)).toBeFalsy();
-            });
-        })
-    );
-    it ('has no English tabs for Polish book', () =>
-        ready.then(() => {
-            const tabs = Array.from(p.el.querySelectorAll('.tab-group > .tab'));
-
-            return ready.then(() => {
-                expect(decodeURIComponent(p.slug)).toBe('books/fizyka-dla-szkół-wyższych-tom-1');
-                englishTabs.forEach((label) => {
-                    expect(tabs.find((el) => el.textContent === label)).toBeFalsy();
-                });
-            })
-        })
-    );
+        expect(tabs.at(0).text()).toBe('Szczegóły książki');
+        expect(tabs).toHaveLength(1);
+    });
 });

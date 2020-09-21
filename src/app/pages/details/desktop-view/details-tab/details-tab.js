@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {Authors, PublicationInfo, ErrataSection} from '../../common/common';
 import GetThisTitle from '../../common/get-this-title';
-import LetUsKnow from '../../common/let-us-know/let-us-know.jsx';
+import LetUsKnow from '../../common/let-us-know/let-us-know';
 import './details-tab.css';
 
 function PolishTab({model, tocState}) {

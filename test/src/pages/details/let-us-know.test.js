@@ -1,5 +1,5 @@
 import WrappedJsx from '~/controllers/jsx-wrapper';
-import LetUsKnow from '~/pages/details/let-us-know/let-us-know.jsx';
+import LetUsKnow from '~/pages/details/common/let-us-know/let-us-know';
 
 const englishTitle = 'Some book';
 const polishTitle = 'Fizyka dla szkół wyższych. Tom 1';

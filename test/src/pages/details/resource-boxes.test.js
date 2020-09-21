@@ -1,5 +1,5 @@
-import ResourceBoxes from '~/pages/details/resource-box/resource-boxes';
-import {instructorResourceBoxPermissions, studentResourceBoxPermissions} from '~/pages/details/resource-box/resource-box';
+import ResourceBoxes from '~/pages/details/common/resource-box/resource-boxes';
+import {instructorResourceBoxPermissions, studentResourceBoxPermissions} from '~/pages/details/common/resource-box/resource-box';
 import {makeMountRender} from '../../../helpers/jsx-test-utils.jsx';
 
 // Test all the conditions in here:
@@ -10,9 +10,9 @@ import {makeMountRender} from '../../../helpers/jsx-test-utils.jsx';
 
 describe('ResourceBoxes', () => {
     const resourceData = {
-        resource_unlocked: true,
-        link_text: 'Click this',
-        link_document_url: '/download'
+        resourceUnlocked: true,
+        linkText: 'Click this',
+        linkDocumentUrl: '/download'
     };
     const userStatus = {
         isInstructor: false
@@ -53,12 +53,12 @@ describe('ResourceBoxes', () => {
 
         expect(wrapper.find('.top h3').text()).toBe(payload.heading);
         expect(wrapper.find('.top-line + .description').html()).toContain(payload.description);
-        expect(wrapper.find('.bottom .left-button').text()).toBe(resourceData.link_text);
+        expect(wrapper.find('.bottom .left-button').text()).toBe(resourceData.linkText);
     });
 
     it('handles locked instructor resources', () => {
         const wrapper = instructorWrapper({
-            resource_unlocked: false
+            resourceUnlocked: false
         });
 
         expect(wrapper.find('.bottom .left-button').text()).toBe('Login to unlock');
@@ -67,19 +67,19 @@ describe('ResourceBoxes', () => {
     it('allows instructors access to locked resources', () => {
         const wrapper = instructorWrapper(
             {
-                resource_unlocked: false
+                resourceUnlocked: false
             },
             {
                 isInstructor: true
             }
         );
 
-        expect(wrapper.find('.bottom .left-button').text()).toBe(resourceData.link_text);
+        expect(wrapper.find('.bottom .left-button').text()).toBe(resourceData.linkText);
     });
 
     it('handles locked student resources', () => {
         const wrapper = studentWrapper({
-            resource_unlocked: false
+            resourceUnlocked: false
         },
         {
             isStudent: false,
@@ -97,7 +97,7 @@ describe('ResourceBoxes', () => {
             isInstructor: false
         });
 
-        expect(wrapper.find('.bottom .left-button').text()).toBe(resourceData.link_text);
+        expect(wrapper.find('.bottom .left-button').text()).toBe(resourceData.linkText);
     });
 
     it('allows instructors access to locked student resources', () => {
@@ -108,21 +108,21 @@ describe('ResourceBoxes', () => {
             isInstructor: true
         });
 
-        expect(wrapper.find('.bottom .left-button').text()).toBe(resourceData.link_text);
+        expect(wrapper.find('.bottom .left-button').text()).toBe(resourceData.linkText);
         expect(wrapper.find('.bottom .right .fa-download')).toBeTruthy();
     });
 
     it('understands external links', () => {
         const wrapper = studentWrapper({
-            link_document_url: null,
-            link_external: 'http://example.com/external_link'
+            linkDocumentUrl: null,
+            linkExternal: 'http://example.com/external_link'
         },
         {
             isStudent: false,
             isInstructor: true
         });
 
-        expect(wrapper.find('.bottom .left-button').text()).toBe(resourceData.link_text);
+        expect(wrapper.find('.bottom .left-button').text()).toBe(resourceData.linkText);
         expect(wrapper.find('.bottom .right .fa-external-link-alt')).toBeTruthy();
     });
 });

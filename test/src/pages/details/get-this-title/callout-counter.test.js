@@ -1,4 +1,4 @@
-import calloutCounter, {Implementation} from '~/components/get-this-title/callout-counter';
+import calloutCounter, {Implementation} from '~/pages/details/common/get-this-title-files/recommended-callout/callout-counter';
 
 describe('calloutCounter', () => {
     it('throws an error if no slug set', () => {

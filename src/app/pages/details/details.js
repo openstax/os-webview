@@ -90,7 +90,7 @@ function setCardBackground(isShowingCards) {
     el.classList[isShowingCards ? 'add' : 'remove']('card-background');
 }
 
-function BookDetails({data}) {
+export function BookDetails({data}) {
     const modelRef = useRef($.camelCaseKeys(data));
     const model = modelRef.current;
     const {

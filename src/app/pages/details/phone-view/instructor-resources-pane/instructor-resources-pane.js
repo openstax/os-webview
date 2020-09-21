@@ -44,7 +44,7 @@ function FeaturedResourcesSection({header, models}) {
     );
 }
 
-function InstructorResourcesPane({model, userStatus}) {
+export function InstructorResourcesPane({model, userStatus}) {
     const bookId = model.id;
     const featuredResources = model.bookFacultyResources.filter((r) => r.featured);
     const featuredModels = featuredResources
