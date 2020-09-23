@@ -1,0 +1,33 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.module-list {
+    .toggle,
+    label {
+        @include set-font(body-regular);
+
+        align-items: center;
+        display: grid;
+        grid-auto-flow: column;
+        grid-column-gap: 1rem;
+        justify-content: left;
+    }
+
+    .indent {
+        margin-left: $normal-margin;
+    }
+
+    [type="checkbox"] {
+        height: 2rem;
+        width: 2rem;
+    }
+
+    .os-divider::before {
+        content: '.';
+    }
+
+    .not-selectable {
+        @include set-font(helper-label);
+
+        font-style: italic;
+    }
+}

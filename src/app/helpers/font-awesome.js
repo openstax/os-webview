@@ -56,6 +56,7 @@ const loadRegularIcon = loaderForPath('free-regular-svg-icons');
     'faSlidersH',
     'faTabletAlt',
     'faTasks',
+    'faThumbtack',
     'faTimes',
     'faUser',
     'faUserPlus',
