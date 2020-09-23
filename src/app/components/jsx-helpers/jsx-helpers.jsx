@@ -111,6 +111,16 @@ export function RawHTML({Tag='div', html, ...otherProps}) {
     );
 }
 
+export function useToggle(initialState) {
+    const [value, setValue] = useState(initialState);
+
+    function toggle(newValue=!value) {
+        setValue(newValue);
+    }
+
+    return [value, toggle];
+}
+
 export function useSelectList({
     getItems, accept,
     cancel = () => null, minActiveIndex = 0, searchable = true

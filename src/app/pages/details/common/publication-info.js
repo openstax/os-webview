@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {formatDateForBlog as formatDate} from '~/helpers/data';
+import fetchRexRelease from '~/models/rex-release';
 
 function PdfUpdateInfo({updateDate, url}) {
     if (!(updateDate && url)) {
@@ -22,7 +24,7 @@ function PdfUpdateInfo({updateDate, url}) {
 
 function IsbnInfo({model, label, tag}) {
     const entries = ['10', '13'].map((number) => {
-        const value = model[`${tag}_isbn_${number}`];
+        const value = model[`${tag}Isbn${number}`];
 
         return {
             number,
@@ -49,7 +51,16 @@ function IsbnInfo({model, label, tag}) {
     );
 }
 
-function LicenseInfo({name, icon, text, title, version}) {
+function LicenseIcon({name}) {
+    const icon = name.match(/share/i) ?
+        '/images/details/by-nc-sa.svg' : '/images/details/by.svg';
+
+    return (
+        <img src={icon} alt="" />
+    );
+}
+
+function LicenseInfo({name, text, title, version}) {
     if (!name) {
         return null;
     }
@@ -57,7 +68,7 @@ function LicenseInfo({name, icon, text, title, version}) {
     return (
         <div className="loc-license">
             <h4>License:</h4>
-            <img src={icon} alt="" />
+            <LicenseIcon name={name} />
             <div>
                 {
                     text ?
@@ -74,8 +85,8 @@ function LicenseInfo({name, icon, text, title, version}) {
 }
 
 function PolishIsbn({format, header, model}) {
-    const n10 = model[`${format}_isbn_10`];
-    const n13 = model[`${format}_isbn_13`];
+    const n10 = model[`${format}Isbn10`];
+    const n13 = model[`${format}Isbn13`];
 
     if (!(n10 || n13)) {
         return null;
@@ -91,22 +102,23 @@ function PolishIsbn({format, header, model}) {
 }
 
 function PolishLicense({model}) {
-    if (!model.license_name) {
+    if (!model.licenseName) {
         return null;
     }
 
     return (
         <div className="loc-license">
             <h4>Licencja:</h4>
+            <LicenseIcon name={model.licenseName} />
             <img src={model.licenseIcon} alt="" />
             <div>
                 {
-                    model.license_text ?
-                        <RawHTML html={model.license_text} /> :
+                    model.licenseText ?
+                        <RawHTML html={model.licenseText} /> :
                         <div>
                             <RawHTML Tag="span" html={model.title} />
                             by OpenStax jest licencjonowana na licencji
-                            <span className="text">{model.license_name} v{model.license_version}</span>
+                            <span className="text">{model.licenseName} v{model.licenseVersion}</span>
                         </div>
                 }
             </div>
@@ -118,10 +130,10 @@ function PolishPublicationInfo({model}) {
     return (
         <div className="publication-info">
             {
-                model.formattedPublishDate ?
+                model.publishDate ?
                     <div className="loc-pub-date">
                         <h4>Data publikacji:</h4>
-                        {model.formattedPublishDate}
+                        {formatDate(model.publishDate)}
                     </div> : null
             }
             <PolishIsbn header="Wydrukowane:" model={model} format="print" />
@@ -144,6 +156,18 @@ function LabeledDate({label, formattedDate, className}) {
 }
 
 export default function PublicationInfo({model, url, polish}) {
+    const [webUpdate, setWebUpdate] = useState(model.lastUpdatedWeb);
+
+    useEffect(() => {
+        const isTutor = model.webviewRexLink.includes('tutor');
+        const isRex = !isTutor && Boolean(model.webviewRexLink);
+
+        if (isRex) {
+            fetchRexRelease(model.webviewRexLink, model.cnxId)
+                .then(({revised}) => setWebUpdate(revised));
+        }
+    }, [model]);
+
     if (polish) {
         return new PolishPublicationInfo({model});
     }
@@ -153,29 +177,28 @@ export default function PublicationInfo({model, url, polish}) {
             <LabeledDate
                 label="Publish Date:"
                 className="loc-pub-date"
-                formattedDate={model.formattedPublishDate}
+                formattedDate={formatDate(model.publishDate)}
             />
             <LabeledDate
                 label="Web Version Last Updated:"
                 className="loc-web-update-date"
-                formattedDate={model.formattedWebUpdateDate}
+                formattedDate={formatDate(webUpdate)}
             />
-            <PdfUpdateInfo updateDate={model.formattedPDFUpdateDate} url={url} />
+            <PdfUpdateInfo updateDate={formatDate(model.lastUpdatedPdf)} url={url} />
             <IsbnInfo model={model} label="Hardcover" tag="print" />
-            <IsbnInfo model={model} label="Paperback" tag="print_softcover" />
+            <IsbnInfo model={model} label="Paperback" tag="printSoftcover" />
             <IsbnInfo model={model} label="Digital" tag="digital" />
             <IsbnInfo
                 model={model}
-                label={model.ibook_volume_2_isbn_10 || model.ibook_volume_2_isbn_13 ? 'iBooks Part 1' : 'iBooks'}
+                label={model.ibookVolume2Isbn10 || model.ibookVolume2isbn13 ? 'iBooks Part 1' : 'iBooks'}
                 tag="ibook"
             />
             <IsbnInfo model={model} label="iBooks Part 2" tag="ibook" />
             <LicenseInfo
-                name={model.license_name}
-                icon={model.licenseIcon}
-                text={model.license_text}
-                title={model.license_title}
-                version={model.license_version}
+                name={model.licenseName}
+                text={model.licenseText}
+                title={model.licenseTitle}
+                version={model.licenseVersion}
             />
         </React.Fragment>
     );

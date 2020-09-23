@@ -25,6 +25,6 @@ describe('BookSelector', () => {
     it ('lists the books', () => {
         const checkableItems = wrapper.find('[aria-checked]');
 
-        expect(checkableItems).toHaveLength(32);
+        expect(checkableItems).toHaveLength(24);
     });
 });

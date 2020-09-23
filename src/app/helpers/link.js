@@ -40,7 +40,6 @@ function validUrlClick(e) {
 }
 
 function isTOCLink(el) {
-    const isDetailsPage = (/^\/details/).test(window.location.pathname);
     const tocEl = document.querySelector('.table-of-contents');
 
     return tocEl && tocEl.contains(el);

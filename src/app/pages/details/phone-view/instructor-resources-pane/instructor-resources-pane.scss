@@ -67,10 +67,6 @@
 
         .resources {
             @extend %swipe-zone;
-
-            .resource-box {
-                width: 20rem;
-            }
         }
     }
 

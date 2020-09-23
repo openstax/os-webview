@@ -22,6 +22,7 @@ import printOrderData from '../src/data/print-order';
 import researchData from '../src/data/research';
 import rolesData from '../src/data/roles';
 import salesforceData from '../src/data/salesforce';
+import salesforcePartnerData from '../src/data/salesforce-partners';
 import schoolsData from '../src/data/schools';
 import stickyData from '../src/data/sticky';
 import subjectData from '../src/data/subject-categories';
@@ -57,10 +58,11 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isSticky = (/api\/sticky/).test(args[0]);
     const isSubjects = (/snippets\/subjects/).test(args[0]);
     const isTeam = (/pages\/team/).test(args[0]);
-    const isUser = (/accounts.*\/api\/user/).test(args[0]);
+    const isUser = (/api\/user/).test(args[0]);
     const isImage = (/api\/v2\/images/).test(args[0]);
     const isArchive = (/archive\.cnx/).test(args[0]);
     const isSalesforceForms = (/salesforce\/forms/).test(args[0]);
+    const isSalesforcePartners = (/salesforce\/partners/).test(args[0]);
 
     return new Promise(
         function (resolve, reject) {
@@ -126,6 +128,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = booksData;
             } else if (isSalesforceForms) {
                 payload = salesforceData;
+            } else if (isSalesforcePartners) {
+                payload = salesforcePartnerData;
             } else if (isImage) {
                 // ignore
             } else {
@@ -134,7 +138,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
             resolve({
                 ok: true,
                 json() {
-                    return payload;
+                    return Promise.resolve(payload);
                 }
             })
         }

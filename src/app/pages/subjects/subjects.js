@@ -2,7 +2,7 @@ import routerBus from '~/helpers/router-bus';
 import React, {useState, useEffect} from 'react';
 import {pageWrapper, SuperbItem} from '~/controllers/jsx-wrapper';
 import {usePageData} from '~/helpers/controller/cms-mixin';
-import {RawHTML, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {RawHTML, useDataFromPromise, useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import BookViewer from './book-viewer/book-viewer';
 import categoryPromise from '~/models/subjectCategories';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
@@ -104,6 +104,8 @@ function Subjects({model}) {
 function SubjectsLoader() {
     const slug = 'books';
     const [model, statusPage] = usePageData({slug, preserveWrapping: true});
+
+    useCanonicalLink();
 
     if (statusPage) {
         return statusPage;

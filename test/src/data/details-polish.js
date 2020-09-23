@@ -1555,5 +1555,16 @@ export default {
     },
     "tutor_marketing_book": false,
     "promote_image": null,
-    "videos": []
+    "videos": [],
+    "give_today": [
+        {
+            "type": "content",
+            "value": {
+                "id": 1,
+                "give_link_text": "Give today",
+                "give_link": "https://openstax.org/give"
+            },
+            "id": "bd8582a8-4c8b-4a18-95e6-a1aa77d38327"
+        }
+    ]
 };
