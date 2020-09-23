@@ -1,6 +1,7 @@
 import React from 'react';
+import groupBy from 'lodash/groupBy';
 
-function Authors({heading, className, authors, CustomTag='div'}) {
+function Authors({heading, className, authors=[], CustomTag='div'}) {
     if (authors.length === 0) {
         return null;
     }
@@ -25,22 +26,20 @@ export default function AuthorsSection({model, polish}) {
     ] : [
         'Senior Contributing Authors', 'Contributing Authors'
     ];
-    const senior = (author) => author.seniorAuthor;
-    const nonsenior = (author) => !author.seniorAuthor;
-    const allSenior = model.authors.filter(senior);
-    const allNonsenior = model.authors.filter(nonsenior);
+    const groupFn = (author) => author.seniorAuthor ? 'senior' : 'regular';
+    const groupedAuthors = groupBy(model.authors, groupFn);
 
     return (
         <React.Fragment>
             <Authors
                 heading={headings[0]}
                 className="loc-senior-author"
-                authors={allSenior}
+                authors={groupedAuthors.senior}
             />
             <Authors
                 heading={headings[1]}
                 className="loc-nonsenior-author"
-                authors={allNonsenior}
+                authors={groupedAuthors.regular}
             />
         </React.Fragment>
     );
