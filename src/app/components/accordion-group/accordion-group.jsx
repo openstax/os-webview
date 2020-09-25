@@ -11,8 +11,8 @@ import './accordion-group.css';
 import $ from '~/helpers/$';
 import {SuperbItem} from '~/controllers/jsx-wrapper';
 
-function useChevronDirection(forwardOnChange) {
-    const [openTabs, updateOpenTabs] = useState([]);
+function useChevronDirection(forwardOnChange, preExpanded) {
+    const [openTabs, updateOpenTabs] = useState([...preExpanded]);
 
     function chevronDirection(uuid) {
         return openTabs.includes(uuid) ? 'down' : 'right';
@@ -74,7 +74,8 @@ export default function AccordionGroup({
     preExpanded=[]
 }) {
     const root = useRef();
-    const [chevronDirection, onChange] = useChevronDirection(forwardOnChange);
+    const preExpandedUuids = preExpanded.map(toUuid);
+    const [chevronDirection, onChange] = useChevronDirection(forwardOnChange, preExpandedUuids);
 
     useEffect(() => {
         if (!noScroll) {
@@ -92,7 +93,7 @@ export default function AccordionGroup({
                 {...accordionProps}
                 onChange={onChange}
                 className="accordion-group"
-                preExpanded={preExpanded.map(toUuid)}
+                preExpanded={preExpandedUuids}
             >
                 {
                     items.map((item, index) =>
