@@ -10,7 +10,7 @@ export default function VideoTab({videos}) {
                     <div className="video-block" key={title}>
                         <h2 className="title">{title}</h2>
                         <RawHTML html={description} className="description" />
-                        <RawHTML html={embed} className="embed" />
+                        <RawHTML html={embed} className="embed" embed={true} />
                     </div>
                 )
             }
