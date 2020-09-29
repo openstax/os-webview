@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import $ from '~/helpers/$';
 import showDialog, {hideDialog} from '../show-dialog';
 import CompCopyRequestForm from './request-form/request-form';
+import CustomizationForm from '../customization-form/customization-form';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 
 function CommonsHubBox({model}) {
@@ -81,8 +82,9 @@ function BottomBasic({leftContent, icon}) {
 
 function LeftContent({model, icon}) {
     const isCompCopy = model.link.url.endsWith('comp-copy');
+    const isCustomization = model.link.url.endsWith('customized-modules');
 
-    function handleCompCopyRequest(event) {
+    function handleSpecialLinks(event) {
         if (isCompCopy) {
             showDialog({
                 event,
@@ -90,7 +92,15 @@ function LeftContent({model, icon}) {
                 dialogContent: CompCopyRequestForm,
                 dialogContentArgs: {model, done: hideDialog}
             });
-            event.preventDefault();
+        }
+        if (isCustomization) {
+            console.info('CUSTOMIZED!!!', model);
+            showDialog({
+                event,
+                dialogTitle: 'Customization form',
+                dialogContent: CustomizationForm,
+                dialogContentArgs: {model: model.bookModel}
+            });
         }
     }
 
@@ -100,7 +110,7 @@ function LeftContent({model, icon}) {
                 className="left-button"
                 href={model.link.url}
                 data-local={model.iconType === 'lock'}
-                onClick={handleCompCopyRequest}
+                onClick={handleSpecialLinks}
             >
                 <FontAwesomeIcon icon={model.iconType} />
                 <span>{model.link.text}</span>

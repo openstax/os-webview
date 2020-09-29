@@ -8,13 +8,10 @@ dialog {
     display: grid;
     grid-template-rows: auto auto 1fr;
     height: auto;
+    max-width: calc(100% - #{2 * $normal-margin});
     overflow: hidden;
     padding: 0;
-    width: calc(100% - #{2 * $normal-margin});
-
-    @include wider-than($phone-max) {
-        width: max-content;
-    }
+    width: max-content;
 
     &.reverse-colors {
         .title-bar {
@@ -50,7 +47,7 @@ dialog {
     }
 
     .put-away {
-        @include body-font(1.8rem);
+        @include body-font(3.2rem);
         background-color: transparent;
         border: 0;
         color: inherit;
@@ -80,7 +77,7 @@ dialog {
         border-bottom-left-radius: 0.4rem;
         border-bottom-right-radius: 0.4rem;
         height: auto;
-        max-height: calc(100vh - 7rem);
+        max-height: calc(100vh - 10rem);
         overflow-y: auto;
     }
 }

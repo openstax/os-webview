@@ -1,0 +1,75 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.customization-form {
+    h1,
+    h2,
+    h3 {
+        @include title-font(1.8rem);
+        margin: 0 0 1rem;
+    }
+
+    .top {
+        padding: 3rem;
+
+        display: grid;
+        grid-column-gap: 3rem;
+        grid-row-gap: 2rem;
+
+        @include width-up-to($phone-max) {
+            grid-template: 'desc'
+            'inputs'
+            'modules' / 100%;
+        }
+
+        @include wider-than($phone-max) {
+            grid-template: 'desc desc'
+            'inputs modules' / 1fr 1fr;
+        }
+
+        .inputs {
+            align-content: start;
+            grid-area: inputs;
+            display: grid;
+            grid-row-gap: 1rem;
+        }
+
+        .modules {
+            grid-area: modules;
+        }
+
+        .description {
+            grid-area: desc;
+        }
+    }
+
+    .disclaimer,
+    .next-steps {
+        border-radius: 0.3rem;
+        margin-bottom: 1rem;
+        padding: 2rem 3rem;
+    }
+
+    .disclaimer {
+        background-color: rgb(248, 244, 232);
+        border: thin solid rgb(226, 208, 152);
+    }
+
+    .next-steps {
+        background-color: ui-color(default);
+        border: thin solid ui-color(form-border);;
+    }
+
+    .bottom {
+        border-top: thin solid ui-color(form-border);
+        padding: 3rem;
+        text-align: right;
+
+        [type="submit"],
+        [type="button"] {
+            @include button();
+            @extend %primary;
+
+            float: none;
+        }
+    }
+}
