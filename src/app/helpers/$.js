@@ -12,7 +12,7 @@ $.isMobileDisplay = () => {
 
 $.isTestingEnvironment = () => (/(localhost|staging|dev|qa)/).test(window.location.hostname);
 
-$.isPolish = (titleOrSlug) => (/fizyka/i).test(titleOrSlug) || (/polska/i).test(titleOrSlug);
+$.isPolish = (titleOrSlug) => (/fizyka|psychologia/i).test(titleOrSlug);
 
 $.focusable = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
