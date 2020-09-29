@@ -94,7 +94,6 @@ function LeftContent({model, icon}) {
             });
         }
         if (isCustomization) {
-            console.info('CUSTOMIZED!!!', model);
             showDialog({
                 event,
                 dialogTitle: 'Customization form',
