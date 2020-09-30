@@ -26,16 +26,6 @@ describe('Header', () => {
         header.updateHeaderStyle();
     });
 
-    it('opens dropdowns', () => {
-        const link = header.el.querySelector('.dropdown > a');
-
-        clickElement(link);
-    });
-
-    it('closes dropdowns', () => {
-        clickElement(document.body);
-    });
-
     it('toggle fullscreen', () => {
         const link = header.el.querySelector('.expand');
 

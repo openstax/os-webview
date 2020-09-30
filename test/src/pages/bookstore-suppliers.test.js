@@ -1,14 +1,11 @@
-import {BookstorePageLoader} from '~/pages/bookstore-suppliers/bookstore-suppliers';
+import {BookstorePage} from '~/pages/bookstore-suppliers/bookstore-suppliers';
 import {makeMountRender, snapshotify} from '../../helpers/jsx-test-utils.jsx';
+import pageData from '../data/print-order';
 
 describe('BookstoreSuppliers', () => {
     it('matches snapshot', () => {
-        const wrapper = makeMountRender(BookstorePageLoader, {})()
+        const wrapper = makeMountRender(BookstorePage, {data: pageData})();
 
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(expect(snapshotify(wrapper)).toMatchSnapshot());
-            }, 0);
-        });
+        expect(snapshotify(wrapper)).toMatchSnapshot();
     });
 });

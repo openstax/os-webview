@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect, useLayoutEffect} from 'react';
 import $ from '~/helpers/$';
-import {usePageData} from '~/helpers/controller/cms-mixin';
+import {usePageData, fetchFromCMS} from '~/helpers/controller/cms-mixin';
 import throttle from 'lodash/throttle';
 
 function getValuesFromWindow() {
@@ -36,6 +36,16 @@ export function useDataFromPromise(promise, defaultValue) {
 
     useEffect(() => {
         promise.then(setData);
+    }, []);
+
+    return data;
+}
+
+export function useDataFromSlug(slug, preserveWrapping=false) {
+    const [data, setData] = useState();
+
+    useEffect(() => {
+        fetchFromCMS(slug, preserveWrapping).then(setData);
     }, []);
 
     return data;

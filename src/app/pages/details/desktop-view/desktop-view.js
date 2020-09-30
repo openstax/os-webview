@@ -54,7 +54,7 @@ export default function ({model, tocState, onContentChange}) {
         <React.Fragment>
             <div className="tab-controller">
                 <TabGroup {...{TabTag, labels, selectedLabel, setSelectedLabel}} />
-                <GiveLink content={model.giveToday.content} />
+                <GiveLink />
             </div>
             <div className="tab-content">
                 <ContentGroup activeIndex={labels.indexOf(selectedLabel)}>

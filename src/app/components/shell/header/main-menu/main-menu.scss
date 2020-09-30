@@ -73,6 +73,11 @@
             margin: 0;
             overflow: visible;
         }
+
+        .btn {
+            @include button();
+            @extend %primary;
+        }
     }
 
     .nav-menu-item {

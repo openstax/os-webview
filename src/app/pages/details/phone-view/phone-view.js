@@ -69,7 +69,7 @@ function items(model) {
     }
 
     result.push({
-        inline: <GiveLink content={model.giveToday.content} />
+        inline: <GiveLink />
     });
 
     return result;
