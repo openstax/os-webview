@@ -1,4 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
+import analytics from '~/helpers/analytics';
 import './multi-page-form.css';
 
 function pass() {
@@ -24,6 +25,19 @@ function MarkupChildren({children, currentPage, activeRef, validatedPages}) {
     });
 }
 
+function trackSubmissionInGA(form) {
+    if (form.action.startsWith('https://webto.salesforce.com/')) {
+        const formData = new FormData(form);
+        const eventLabel = formData.get('lead_source');
+
+        analytics.sendEvent({
+            eventCategory: 'Salesforce',
+            eventAction: 'submit',
+            eventLabel
+        });
+    }
+}
+
 function ButtonRow({pages, currentPage, setCurrentPage,
     validatePage, validatedPages, setValidatedPages,
     activeRef, formRef, onSubmit
@@ -45,6 +59,7 @@ function ButtonRow({pages, currentPage, setCurrentPage,
     function validateAndSubmit(event) {
         if (validateCurrentPage()) {
             onSubmit(formRef.current);
+            trackSubmissionInGA(formRef.current);
         }
         event.preventDefault();
     }

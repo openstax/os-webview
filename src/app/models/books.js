@@ -41,19 +41,13 @@ export function afterFormSubmit(preselectedTitle, selectedBooks) {
         const liveBooks = b.filter((entry) => ['live', 'new_edition_available'].includes(entry.book_state));
         const backTo = liveBooks.find((entry) => entry.salesforce_abbreviation === preselectedTitle);
 
-        if (backTo && !$.isPhoneDisplay()) {
-            routerBus.emit('navigate', `/details/${backTo.slug}?Instructor resources`, {
-                partnerTooltip: true
-            });
-        } else {
-            /* Send to Tech Scout with books pre-selected */
-            const scoutBooks = selectedBooks.map((sfBook) => sfBook.value);
+        /* Send to Tech Scout with books pre-selected */
+        const scoutBooks = selectedBooks.map((sfBook) => sfBook.value);
 
-            routerBus.emit('navigate', '/partners', {
-                confirmation: 'adoption',
-                book: scoutBooks,
-                slug: backTo && backTo.slug
-            });
-        }
+        routerBus.emit('navigate', '/partners', {
+            confirmation: 'adoption',
+            book: scoutBooks,
+            slug: backTo && backTo.slug
+        });
     });
 }

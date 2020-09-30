@@ -21,7 +21,6 @@ const sortOptions = [
     }
 ];
 
-
 function BaseButton({label, openButton, setOpenButton, children}) {
     const isOpen = openButton === label;
     const caretDirection = isOpen ? 'up' : 'down';
@@ -76,6 +75,7 @@ export default function Controls({advancedFilterOptions, typeOptions}) {
         }
         window.addEventListener('click', closeAnyOpenButton);
         shellBus.emit('with-sticky');
+        [books, types, advanced].forEach((store) => store.clear());
         preSelectBooks();
 
         return () => {

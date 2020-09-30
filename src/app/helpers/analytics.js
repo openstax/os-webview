@@ -270,22 +270,6 @@ class Analytics {
                 window.ga('set', {'dimension2': adopter});
             }
         });
-
-        document.addEventListener('submit', (e) => {
-            if (typeof e.target !== 'object' || typeof e.target.action !== 'string') {
-                return;
-            }
-
-            if (e.target.action.indexOf('https://webto.salesforce.com/') === 0) {
-                const formData = new FormData(e.target);
-
-                this.sendEvent({
-                    eventCategory: 'Salesforce',
-                    eventAction: 'submit',
-                    eventLabel: formData.get('lead_source')
-                });
-            }
-        });
     }
 
 }

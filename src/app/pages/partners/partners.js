@@ -1,13 +1,20 @@
 import React from 'react';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
-import {RawHTML, LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {RawHTML, LoaderPage, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Controls from './controls/controls';
 import ActiveFilters from './active-filters/active-filters';
 import MobileFilters from './mobile-filters/mobile-filters';
 import Results, {costOptions} from './results/results';
 import './partners.css';
 
-function Confirmation({bookSlug}) {
+function Confirmation() {
+    const bookSlug = history.state && history.state.slug;
+    const [done, toggleDone] = useToggle();
+
+    if (done) {
+        return null;
+    }
+
     return (
         <section className="above-the-banner">
             <div className="content">
@@ -22,7 +29,7 @@ function Confirmation({bookSlug}) {
                     }
                     .
                 </div>
-                <button type="button" className="put-away">&times;</button>
+                <button type="button" className="put-away" onClick={toggleDone}>&times;</button>
             </div>
         </section>
     );
@@ -68,7 +75,7 @@ function getFilterOptions(data) {
 }
 
 function Partners({data}) {
-    const confirmation = (history.state || {}).confirmation;
+    const {confirmation} = history.state || {};
     const advancedFilterOptions = getFilterOptions(data);
     const typeOptions = data.partner_type_choices
         .sort()
@@ -85,7 +92,7 @@ function Partners({data}) {
 
     return (
         <React.Fragment>
-            {confirmation && <Confirmation bookSlug={bookSlug} />}
+            {confirmation && <Confirmation />}
             <section className="banner hero">
                 <div className="boxed">
                     <h1>{headline}</h1>

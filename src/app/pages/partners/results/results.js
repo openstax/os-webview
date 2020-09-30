@@ -115,11 +115,6 @@ function ResultGridLoader({partnerData, linkTexts}) {
         return () => cleanup.forEach((fn) => fn());
     }, [entries]);
 
-    useEffect(() => {
-        [books, types, advanced].forEach((store) => store.clear());
-    }, []);
-
-
     return (
         <ResultGrid entries={filteredEntries} linkTexts={linkTexts} />
     );
