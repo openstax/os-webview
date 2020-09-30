@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import $ from '~/helpers/$';
 import './options-list.css';
 
 function Item({label, value, selected}) {
@@ -24,6 +25,8 @@ function Item({label, value, selected}) {
             aria-selected={isSelected}
             class="option"
             onClick={toggleSelected}
+            tabIndex="0"
+            onKeyDown={$.treatSpaceOrEnterAsClick}
         >
             {label}
         </div>

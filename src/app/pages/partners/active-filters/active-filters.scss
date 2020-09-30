@@ -3,7 +3,13 @@
 .active-filters {
     @extend %content;
 
-    margin-top: 4rem;
+    @include width-up-to($phone-max) {
+        margin: -1rem 0 2rem;
+    }
+
+    @include wider-than($phone-max) {
+        margin-top: 4rem;
+    }
 
     > div {
         display: flex;

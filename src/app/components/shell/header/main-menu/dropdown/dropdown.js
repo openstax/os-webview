@@ -29,6 +29,7 @@ export default class Dropdown extends componentType(spec, insertHtmlMixin) {
         this.closeMenuBound = (event) => {
             if (this.openedByTouch) {
                 this.openedByTouch = false;
+                this.closeMenu();
                 return;
             }
             if (!$.isMobileDisplay()) {

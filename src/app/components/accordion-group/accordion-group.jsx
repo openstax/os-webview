@@ -34,7 +34,10 @@ function TitleBar({title, titleTag, chevronDirection}) {
             <AccordionItemButton className="accordion-button">
                 <div className="label">
                     {title}
-                    {titleTag && <span className="title-tag">{titleTag}</span>}
+                    {
+                        titleTag &&
+                            <span className="title-tag">{titleTag}</span>
+                    }
                 </div>
                 <div className="chevron">
                     <FontAwesomeIcon icon={`chevron-${chevronDirection}`} />

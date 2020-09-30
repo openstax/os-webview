@@ -55,7 +55,7 @@ export default function ActiveFilters({advancedFilterOptions}) {
         return null;
     }
     return (
-        <div className="active-filters desktop">
+        <div className="active-filters">
             <div className="result-count">{resultCount.value} matching partners</div>
             <div>
                 <div className="filters">

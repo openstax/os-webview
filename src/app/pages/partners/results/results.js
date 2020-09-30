@@ -63,17 +63,6 @@ function filterEntries(entries) {
         shuffle(result);
 }
 
-
-//             if (this.searchPartner) {
-//                 const partnerName = decodeURIComponent(this.searchPartner);
-//                 const foundEntry = resultData.find((entry) => entry.title === partnerName);
-//
-//                 if (foundEntry) {
-//                     this.showDetailDialog(foundEntry);
-//                 }
-//             }
-//         });
-
 function advancedFilterKeys(partnerEntry) {
     return Reflect.ownKeys(partnerEntry).filter((k) => [false, true].includes(partnerEntry[k]));
 }
