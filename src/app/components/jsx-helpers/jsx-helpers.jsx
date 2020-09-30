@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useLayoutEffect} from 'react';
+import React, {useState, useRef, useEffect, useLayoutEffect} from 'react';
 import $ from '~/helpers/$';
 import {usePageData} from '~/helpers/controller/cms-mixin';
 import throttle from 'lodash/throttle';
@@ -105,9 +105,16 @@ export function createPageContextProvider({Context, slug}) {
     };
 }
 
-export function RawHTML({Tag='div', html, ...otherProps}) {
+export function RawHTML({Tag='div', html, embed=false, ...otherProps}) {
+    const ref=useRef();
+
+    useEffect(() => {
+        if (embed) {
+            $.activateScripts(ref.current);
+        }
+    });
     return (
-        <Tag dangerouslySetInnerHTML={{__html: html}} {...otherProps} />
+        <Tag dangerouslySetInnerHTML={{__html: html}} {...otherProps} ref={ref} />
     );
 }
 
