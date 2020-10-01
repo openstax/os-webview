@@ -102,7 +102,7 @@ function OpenstaxTutor({data}) {
 
 function OpenstaxTutorLoader() {
     return (
-        <LoaderPage slug="pages/openstax-tutor" Child={OpenstaxTutor} />
+        <LoaderPage slug="pages/openstax-tutor" Child={OpenstaxTutor} doDocumentSetup />
     );
 }
 
@@ -112,20 +112,3 @@ const view = {
 };
 
 export default pageWrapper(OpenstaxTutorLoader, view);
-
-//
-//     @on('click a:not([href^="#"])')
-//     externalLinkClick(e) {
-//         const target = e.delegateTarget;
-//         const linkText = target.textContent;
-//         const footerEl = this.el.querySelector('.sticky-footer');
-//         const pageOrFooter = footerEl.contains(target) ? 'footer' : 'page';
-//
-//         analytics.sendPageEvent(
-//             `OXT marketing page [${linkText}] ${pageOrFooter}`,
-//             'open',
-//             target.href
-//         );
-//     }
-//
-// }

@@ -3,6 +3,7 @@ import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin
 import ContentGroup from '~/components/content-group/content-group';
 import PeopleTab from './people-tab/people-tab';
 import TabGroup from '~/components/tab-group/tab-group';
+import $ from '~/helpers/$';
 import {description as template} from './team.html';
 import css from './team.css';
 
@@ -33,6 +34,7 @@ const BaseClass = componentType(spec, canonicalLinkMixin);
 export default class Team extends BaseClass {
 
     onDataLoaded() {
+        $.setPageTitleAndDescriptionFromBookData(this.pageData);
         this.update();
         const data = this.pageData;
         const tabLabels = data.openstax_people.map((t) => t.heading);

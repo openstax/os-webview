@@ -1,5 +1,5 @@
 import React, {useRef, useEffect} from 'react';
-import {LoaderPage, useToggle, RawHTML, useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {LoaderPage, useToggle, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import $ from '~/helpers/$';
 import analytics from '~/helpers/analytics';
@@ -153,10 +153,8 @@ function getSlugFromLocation() {
 }
 
 function BookDetailsLoader() {
-    useCanonicalLink();
-
     return (
-        <LoaderPage slug={getSlugFromLocation()} Child={BookDetails} />
+        <LoaderPage slug={getSlugFromLocation()} Child={BookDetails} doDocumentSetup />
     );
 }
 

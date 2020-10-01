@@ -31,18 +31,6 @@ export function WindowContextProvider({children}) {
     );
 }
 
-export function LoaderPage({slug, Child, props={}, preserveWrapping}) {
-    const [data, statusPage] = usePageData({slug, setsPageTitleAndDescription: false, preserveWrapping});
-
-    if (statusPage) {
-        return statusPage;
-    }
-
-    return (
-        <Child {...{data, ...props}} />
-    );
-}
-
 export function useDataFromPromise(promise, defaultValue) {
     const [data, setData] = useState(defaultValue);
 
@@ -62,6 +50,22 @@ export function useCanonicalLink(controlsHeader=true) {
 
         return () => linkController.remove();
     }, []);
+}
+
+export function LoaderPage({slug, Child, props={}, preserveWrapping, doDocumentSetup=false}) {
+    const [data, statusPage] = usePageData({slug, setsPageTitleAndDescription: false, preserveWrapping});
+
+    useCanonicalLink(doDocumentSetup);
+    if (statusPage) {
+        return statusPage;
+    }
+    if (doDocumentSetup) {
+        $.setPageTitleAndDescriptionFromBookData(data);
+    }
+
+    return (
+        <Child {...{data, ...props}} />
+    );
 }
 
 export const ActiveElementContext = React.createContext(document.activeElement);

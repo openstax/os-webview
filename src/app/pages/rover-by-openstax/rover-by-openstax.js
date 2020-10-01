@@ -10,6 +10,7 @@ import OfficeHours from './office-hours/office-hours';
 import FAQ from './faq/faq';
 import PopupContent from './popup/popup';
 import ModalContent from '~/components/modal-content/modal-content';
+import $ from '~/helpers/$';
 import {on} from '~/helpers/controller/decorators';
 
 const spec = {
@@ -32,6 +33,8 @@ export default class RoverRedesign extends BaseClass {
 
     onDataLoaded() {
         const data = this.flattenPageData();
+
+        $.setPageTitleAndDescriptionFromBookData(this.pageData);
         const headerImage = '/images/rover-by-openstax/rover-logo-orange.svg';
         const officeHours = data.officeHours.content && data.officeHours.content[0];
         const sections = [

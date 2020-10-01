@@ -1,6 +1,6 @@
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import React, {useState, useEffect} from 'react';
-import {usePageData} from '~/helpers/controller/cms-mixin';
+import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import './bookstore-suppliers.css';
 
@@ -46,22 +46,16 @@ function CanadaFlagCard() {
     );
 }
 
-export function Page() {
-    const [pageData, statusPage] = usePageData({slug});
-
-    if (statusPage) {
-        return statusPage;
-    }
-
-    const suppliers = pageData.providers.map(providerToModel);
-    const featuredSupplier = pageData.featured_providers.map(providerToModel); // should only be 1
+export function BookstorePage({data}) {
+    const suppliers = data.providers.map(providerToModel);
+    const featuredSupplier = data.featured_providers.map(providerToModel); // should only be 1
     const model = {
-        headline: pageData.title,
-        subhead: pageData.intro_heading,
-        subhead2: pageData.intro_description,
+        headline: data.title,
+        subhead: data.intro_heading,
+        subhead2: data.intro_description,
         featuredSupplier,
-        featuredSuppliersBlurb: pageData.featured_provider_intro_blurb,
-        suppliersBlurb: pageData.other_providers_intro_blurb,
+        featuredSuppliersBlurb: data.featured_provider_intro_blurb,
+        suppliersBlurb: data.other_providers_intro_blurb,
         suppliers
     };
 
@@ -112,4 +106,10 @@ export function Page() {
     );
 }
 
-export default pageWrapper(Page, view);
+export function BookstorePageLoader() {
+    return (
+        <LoaderPage slug={slug} Child={BookstorePage} doDocumentSetup />
+    );
+}
+
+export default pageWrapper(BookstorePageLoader, view);

@@ -26,6 +26,7 @@ const spec = {
 export default class extends componentType(spec) {
 
     onDataLoaded() {
+        $.setPageTitleAndDescriptionFromBookData(this.pageData);
         shellBus.emit('with-sticky');
         const data = this.pageData;
         const navLinks = data.navigator[0].map((nData) => ({

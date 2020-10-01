@@ -62,7 +62,7 @@ const view = {
 
 function ImpactLoader() {
     return (
-        <LoaderPage slug={slug} Child={ImpactPage} preserveWrapping={true} />
+        <LoaderPage slug={slug} Child={ImpactPage} preserveWrapping={true} doDocumentSetup />
     );
 }
 

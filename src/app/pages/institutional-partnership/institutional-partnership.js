@@ -11,6 +11,7 @@ import Participants from './sections/participants/participants';
 import SmallQuote from './sections/small-quote/small-quote';
 import SignUp from './sections/sign-up/sign-up';
 import StickyFooter from '~/components/sticky-footer/sticky-footer';
+import $ from '~/helpers/$';
 
 const spec = {
     css,
@@ -24,6 +25,7 @@ const spec = {
 export default class extends componentType(spec) {
 
     onDataLoaded() {
+        $.setPageTitleAndDescriptionFromBookData(this.pageData);
         const data = this.pageData;
 
         this.regions.self.attach(new Banner({

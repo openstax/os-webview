@@ -2,7 +2,6 @@ import $ from '~/helpers/$';
 import bookPromise from '~/models/book-titles';
 import {urlFromSlug} from '~/models/cmsFetch';
 import React, {useState, useEffect} from 'react';
-import {useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
 
 export function transformData(data) {
     Reflect.ownKeys(data).forEach((prop) => {
@@ -86,23 +85,12 @@ export async function fetchFromCMS(slug, preserveWrapping=false) {
     return preserveWrapping ? data : transformData(data);
 }
 
-function setTitleAndDescription(data) {
-    const meta = data.meta || {};
-    const defaultDescription = data.description ?
-        $.htmlToText(data.description) : '';
-
-    $.setPageTitleAndDescription(
-        meta.seo_title || data.title,
-        meta.search_description || defaultDescription
-    );
-}
-
 export async function fetchPageData({slug, preserveWrapping, setsPageTitleAndDescription=true}) {
     const data = await fetchFromCMS(slug, preserveWrapping);
 
     await loadImages(data);
     if (setsPageTitleAndDescription) {
-        setTitleAndDescription(data);
+        $.setPageTitleAndDescriptionFromBookData(data);
     }
     return data;
 }
@@ -122,7 +110,6 @@ export function usePageData(fpdParams) {
         }
         fetchData();
     }, [fpdParams.slug]);
-    useCanonicalLink(Boolean(fpdParams.setTitleAndDescription));
 
     if (pageDataError) {
         statusPage =
