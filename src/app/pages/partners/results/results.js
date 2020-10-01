@@ -48,7 +48,9 @@ function filterEntries(entries) {
 
         if (costFeatures.length) {
             result = result.filter((entry) => {
-                return costFeatures.some((costPossibility) => entry.cost === costPossibility);
+                const costs = entry.cost || '';
+
+                return costFeatures.some((costPossibility) => costs.includes(costPossibility));
             });
         }
     }
