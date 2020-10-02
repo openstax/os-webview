@@ -134,22 +134,23 @@
         padding-top: 1rem;
         width: 100%;
 
-        .left {
+        .left,
+        .left-button,
+        .print-link {
             @include set-font(helper-label);
+
+            > :not(:first-child) {
+                margin-left: 0.7rem;
+            }
         }
 
         .left-button,
         .print-link {
             @include button();
-            @include set-font(helper-label);
 
             background-color: transparent;
             padding-left: 1rem;
             padding-right: 1rem;
-
-            > :not(:first-child) {
-                margin-left: 0.7rem;
-            }
         }
 
         .print-link {

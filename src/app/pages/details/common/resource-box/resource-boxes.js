@@ -24,7 +24,6 @@ function CommonsHubBox({model}) {
                 </a>
             </div>
             <div className="bottom">
-                <div className="left" />
                 <div className="right">
                     <a href={model.featureUrl}>
                         {model.featureText}
@@ -114,9 +113,9 @@ function LeftContent({model, icon}) {
                 <FontAwesomeIcon icon={model.iconType} />
                 <span>{model.link.text}</span>
             </a> :
-            <span>
+            <span className="left">
                 <FontAwesomeIcon icon="lock" />
-                Access Pending
+                <span>Access Pending</span>
             </span>
     );
 }
