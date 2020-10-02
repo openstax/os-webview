@@ -20,14 +20,13 @@ function AdditionalOptions({model, toggle}) {
             <BookshareOption model={model} />
             <IbooksOption model={model} />
             <KindleOption model={model} />
-            <CheggOption model={model} />
         </React.Fragment>
     );
 }
 
 export default function GetThisTitle({model, tocState}) {
     const additionalOptions = [
-        'bookshareLink', 'ibookLink', 'kindleLink', 'cheggLink'
+        'bookshareLink', 'ibookLink', 'kindleLink'
     ].filter((key) => model[key]).length;
     const [expanded, toggleExpanded] = useToggle(additionalOptions < 1);
 
@@ -57,6 +56,7 @@ export default function GetThisTitle({model, tocState}) {
                     <StudyEdgeOption model={model} />
                     <PdfOption model={model} />
                     <PrintOption model={model} />
+                    <CheggOption model={model} />
                     {
                         expanded &&
                             <AdditionalOptions model={model} toggle={toggleExpanded} />
