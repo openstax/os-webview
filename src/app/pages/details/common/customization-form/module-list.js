@@ -69,15 +69,9 @@ function SelectableModule({item, selectedModules}) {
 }
 
 function ModuleSelector({item, selectedModules}) {
-    const isNumbered = item.title.includes('os-divider');
-
     return (
         <div>
-            {
-                isNumbered ?
-                    <SelectableModule {...{item, selectedModules}} /> :
-                    <RawHTML className="not-selectable" html={item.title} />
-            }
+            <SelectableModule {...{item, selectedModules}} />
         </div>
     );
 }
