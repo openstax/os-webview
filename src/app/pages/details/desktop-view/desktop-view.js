@@ -40,7 +40,7 @@ function useSelectedLabelTiedToSearchString(labels) {
     return [selectedLabel, updateSelectedLabel];
 }
 
-export default function ({model, tocState, onContentChange}) {
+export default function DesktopView({model, tocState, onContentChange}) {
     const polish = $.isPolish(model.title);
     const labels = labelsFromModel(model, polish);
     const [selectedLabel, setSelectedLabel] = useSelectedLabelTiedToSearchString(labels);
