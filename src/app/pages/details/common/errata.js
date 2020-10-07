@@ -25,7 +25,7 @@ function ButtonGroup({polish, title}) {
 }
 
 export function ErrataContents({model, polish}) {
-    const title = model.bookTitle;
+    const title = model.title;
     const blurb = model.errataContent.content && model.errataContent.content.content;
 
     return (
