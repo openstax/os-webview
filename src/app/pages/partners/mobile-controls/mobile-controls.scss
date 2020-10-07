@@ -1,0 +1,123 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.partners .mobile-control-row {
+    align-items: center;
+    display: grid;
+    grid-column-gap: 1rem;
+    padding: $normal-margin;
+    width: 100%;
+
+    @include width-up-to($phone-max) {
+        background-color: ui-color(default);
+        grid-template-columns: 1fr auto auto;
+        position: sticky;
+        top: 5rem;
+        z-index: 2;
+
+        &.stuck {
+            box-shadow: 0 0.2rem 0.6rem 0 rgba(0,0,0,0.25);
+        }
+    }
+
+    .title-bar {
+        @include set-font(body-regular);
+
+        align-items: center;
+        display: flex;
+        font-weight: bold;
+        justify-content: space-between;
+        margin-bottom: -$normal-margin;
+        padding: $normal-margin;
+
+        .put-away {
+            font-size: 4rem;
+            font-weight: normal;
+            transform: translateY(-0.5rem);
+        }
+    }
+
+    .result-count {
+        margin-top: 0;
+    }
+
+    .result-count + div {
+        @include width-up-to($phone-max) {
+            display: none;
+        }
+    }
+
+    .button-with-popover {
+        background-color: ui-color(white);
+
+        @include wider-than($phone-max) {
+            display: none;
+        }
+    }
+
+    .filter-section {
+        border: thin solid ui-color(form-border);
+    }
+
+    .button-row {
+        display: grid;
+        grid-gap: 1rem;
+        grid-template-columns: 1fr 1fr;
+        padding: $normal-margin;
+
+        button {
+            @include button();
+            background-color: ui-color(white);
+
+            &.primary {
+                @extend %primary;
+            }
+        }
+    }
+
+    button {
+        padding: 0 $normal-margin;
+    }
+
+    .popover {
+        height: calc(100vh - 5rem);
+        left: 0;
+        overflow: auto;
+        position: fixed;
+        top: 5rem;
+        width: 100vw;
+        z-index: 1;
+    }
+
+    .mobile-filters {
+        padding: 1rem 0;
+
+        .accordion-group {
+            grid-gap: 0;
+            margin-bottom: 0;
+
+            .accordion-item:not(:first-child) .accordion-button {
+                border-top: 0;
+            }
+
+            .accordion-group {
+                .label,
+                .checkboxes-linked-to-store {
+                    margin-left: 2rem;
+                }
+
+                .accordion-button {
+                    border: 0;
+                }
+            }
+        }
+
+        .title-tag {
+            @include set-font(body-regular);
+
+            background-color: inherit;
+            color: text-color(link);
+            margin-left: 0.7rem;
+            padding: 0;
+        }
+    }
+}

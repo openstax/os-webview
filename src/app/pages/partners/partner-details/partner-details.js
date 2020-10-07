@@ -93,6 +93,31 @@ function logScrollingInParent(el, name) {
     return removeScrollListener;
 }
 
+function Synopsis({icon, verifiedFeatures, headline, tags, partnerLinkProps}) {
+    const ref = useRef();
+
+    useEffect(() => {
+        logScrollingInParent(ref.current, headline);
+    }, []);
+    return (
+        <section className="synopsis" ref={ref}>
+            <img className="icon" src={icon} alt="" />
+            <VerifiedBadge verifiedFeatures={verifiedFeatures} />
+            <div className="headline">{headline}</div>
+            <div className="tags">
+                {
+                    tags.map((entry) =>
+                        <span className="tag" key={entry.value}>
+                            {entry.value}
+                        </span>
+                    )
+                }
+            </div>
+            <PartnerLink {...partnerLinkProps} />
+        </section>
+    );
+}
+
 function PartnerDetails({
     verifiedFeatures, title: headline, richDescription: description,
     website, partner_website: partnerWebsite, websiteLinkText: partnerLinkText,
@@ -101,20 +126,11 @@ function PartnerDetails({
 ) {
     const icon = logoUrl || 'https://via.placeholder.com/150x150?text=[no%20logo]';
     const titles = useRealTitles(books);
-    const ref = useRef();
-
-    useEffect(() => {
-        logScrollingInParent(ref.current, headline);
-    }, []);
+    const partnerLinkProps = {partnerUrl: website || partnerWebsite, partnerLinkText};
 
     return (
         <React.Fragment>
-            <section className="synopsis" ref={ref}>
-                <img className="icon" src={icon} alt="" />
-                <VerifiedBadge verifiedFeatures={verifiedFeatures} />
-                <div className="headline">{headline}</div>
-                <PartnerLink {...{partnerUrl: website || partnerWebsite, partnerLinkText}} />
-            </section>
+            <Synopsis {...{icon, verifiedFeatures, headline, tags, partnerLinkProps}} />
             <div className="scrolling-region text-content">
                 <section className="carousel">
                     <Carousel {...{icon, images, videos}} />
@@ -133,15 +149,6 @@ function PartnerDetails({
                         }
                     </div>
                     <h2>Related Tags</h2>
-                    <div className="tags">
-                        {
-                            tags.map((entry) =>
-                                <span className="tag" key={entry.value}>
-                                    {entry.label}: {entry.value}
-                                </span>
-                            )
-                        }
-                    </div>
                 </section>
             </div>
         </React.Fragment>

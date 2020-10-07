@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import OptionsList from './options-list/options-list';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {books, types, advanced, sort} from '../store';
+import {books, types, advanced, sort, clearStores} from '../store';
 import BookOptions from './book-options/book-options';
 import AdvancedOptions from './advanced-options/advanced-options';
 import cn from 'classnames';
@@ -12,16 +12,16 @@ import shellBus from '~/components/shell/shell-bus';
 
 const sortOptions = [
     {
-        label: 'A-Z',
+        label: 'Name: A to Z',
         value: '1'
     },
     {
-        label: 'Z-A',
+        label: 'Name: Z to A',
         value: '-1'
     }
 ];
 
-function BaseButton({label, openButton, setOpenButton, children}) {
+export function BaseButton({label, openButton, setOpenButton, children, size}) {
     const isOpen = openButton === label;
     const caretDirection = isOpen ? 'up' : 'down';
 
@@ -33,10 +33,14 @@ function BaseButton({label, openButton, setOpenButton, children}) {
     return (
         <div className={cn('button-with-popover', {detached: !children})}>
             <button
+                className={cn({'has-selections': size > 0})}
                 type="button" onClick={toggle}
                 aria-pressed={isOpen}
             >
-                <span>{label}</span>
+                <span>
+                    {label}
+                    {size > 0 && <span className="size">({size})</span>}
+                </span>
                 <FontAwesomeIcon icon={`caret-${caretDirection}`} />
             </button>
             <div className="popover">
@@ -54,6 +58,17 @@ function preSelectBooks() {
     }
 }
 
+export function useStoreSize(store) {
+    const [size, setSize] = useState(store.size);
+
+    useEffect(() => {
+        setSize(store.size);
+        return store.on('notify', () => setSize(store.size));
+    }, [store]);
+
+    return size;
+}
+
 export default function Controls({advancedFilterOptions, typeOptions}) {
     const [openTab, setOpenTab] = useState();
     const [openButton, setOpenButton] = useState(null);
@@ -61,6 +76,9 @@ export default function Controls({advancedFilterOptions, typeOptions}) {
         openButton,
         setOpenButton
     };
+    const bookSize = useStoreSize(books);
+    const typeSize = useStoreSize(types);
+    const advancedSize = useStoreSize(advanced);
 
     function triangleClass() {
         if (openButton !== 'Advanced Filters') {
@@ -75,7 +93,7 @@ export default function Controls({advancedFilterOptions, typeOptions}) {
         }
         window.addEventListener('click', closeAnyOpenButton);
         shellBus.emit('with-sticky');
-        [books, types, advanced].forEach((store) => store.clear());
+        clearStores();
         preSelectBooks();
 
         return () => {
@@ -91,11 +109,11 @@ export default function Controls({advancedFilterOptions, typeOptions}) {
     return (
         <section className="desktop controls" onClick={stopClickPropagation}>
             <div className={`button-row ${triangleClass()}`}>
-                <BaseButton label="Books" {...commonButtonProps} />
-                <BaseButton label="Type" {...commonButtonProps}>
+                <BaseButton label="Books" {...commonButtonProps} size={bookSize} />
+                <BaseButton label="Type" {...commonButtonProps} size={typeSize}>
                     <OptionsList items={typeOptions} selected={types} />
                 </BaseButton>
-                <BaseButton label="Advanced Filters" {...commonButtonProps} />
+                <BaseButton label="Advanced Filters" {...commonButtonProps} size={advancedSize} />
             </div>
             <div className="other-controls">
                 <BaseButton label="Sort" {...commonButtonProps}>
