@@ -80,7 +80,7 @@ function BottomBasic({leftContent, icon}) {
 }
 
 function LeftContent({model, icon}) {
-    const isCompCopy = model.link.url.endsWith('comp-copy');
+    const isCompCopy = (model.link || {}).url.endsWith('comp-copy');
 
     function handleCompCopyRequest(event) {
         if (isCompCopy) {

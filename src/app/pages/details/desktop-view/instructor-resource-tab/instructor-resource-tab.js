@@ -100,7 +100,7 @@ function InstructorResourceTab({model, userStatus}) {
     const webinarContent = model.webinarContent.content;
     const webinar = {
         text: webinarContent.heading,
-        url: webinarContent.link,
+        url: model.webinarContent.link,
         blurb: webinarContent.content
     };
     const communityResource = {
