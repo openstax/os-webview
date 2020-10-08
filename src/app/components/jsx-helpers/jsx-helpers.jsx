@@ -66,11 +66,13 @@ export function LoaderPage({slug, Child, props={}, preserveWrapping, doDocumentS
     const [data, statusPage] = usePageData({slug, setsPageTitleAndDescription: false, preserveWrapping});
 
     useCanonicalLink(doDocumentSetup);
+    useEffect(() => {
+        if (!statusPage && doDocumentSetup) {
+            $.setPageTitleAndDescriptionFromBookData(data);
+        }
+    });
     if (statusPage) {
         return statusPage;
-    }
-    if (doDocumentSetup) {
-        $.setPageTitleAndDescriptionFromBookData(data);
     }
 
     return (
