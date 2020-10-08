@@ -79,7 +79,19 @@ function BottomBasic({leftContent, icon}) {
     );
 }
 
+function AccessPending() {
+    return (
+        <span className="left">
+            <FontAwesomeIcon icon="lock" />
+            <span>Access Pending</span>
+        </span>
+    );
+}
+
 function LeftContent({model, icon}) {
+    if (!model.link) {
+        return (<AccessPending />);
+    }
     const isCompCopy = model.link.url.endsWith('comp-copy');
     const isCustomization = model.link.url.endsWith('customized-modules');
 
@@ -103,20 +115,15 @@ function LeftContent({model, icon}) {
     }
 
     return (
-        model.link ?
-            <a
-                className="left-button"
-                href={model.link.url}
-                data-local={model.iconType === 'lock'}
-                onClick={handleSpecialLinks}
-            >
-                <FontAwesomeIcon icon={model.iconType} />
-                <span>{model.link.text}</span>
-            </a> :
-            <span className="left">
-                <FontAwesomeIcon icon="lock" />
-                <span>Access Pending</span>
-            </span>
+        <a
+            className="left-button"
+            href={model.link.url}
+            data-local={model.iconType === 'lock'}
+            onClick={handleSpecialLinks}
+        >
+            <FontAwesomeIcon icon={model.iconType} />
+            <span>{model.link.text}</span>
+        </a>
     );
 }
 

@@ -1,6 +1,6 @@
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import React from 'react';
-import {usePageData} from '~/helpers/controller/cms-mixin';
+import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './foundation.css';
 
 const slug = 'pages/foundation';
@@ -9,13 +9,7 @@ const view = {
     tag: 'main'
 };
 
-function Page() {
-    const [model, statusPage] = usePageData({slug});
-
-    if (statusPage) {
-        return statusPage;
-    }
-
+function FoundationPage({data: model}) {
     return (
         <React.Fragment>
             <div className="hero">
@@ -43,4 +37,10 @@ function Page() {
     );
 }
 
-export default pageWrapper(Page, view);
+function FoundationLoader() {
+    return (
+        <LoaderPage slug={slug} Child={FoundationPage} doDocumentSetup />
+    );
+}
+
+export default pageWrapper(FoundationLoader, view);

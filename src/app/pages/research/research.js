@@ -4,6 +4,7 @@ import ContentGroup from '~/components/content-group/content-group';
 import TabGroup from '~/components/tab-group/tab-group';
 import AlumniTab from './alumni-tab/alumni-tab';
 import MembersTab from './members-tab/members-tab';
+import $ from '~/helpers/$';
 import {description as template} from './research.html';
 import css from './research.css';
 
@@ -53,6 +54,7 @@ const BaseClass = componentType(spec, canonicalLinkMixin, insertHtmlMixin);
 export default class Research extends BaseClass {
 
     onDataLoaded() {
+        $.setPageTitleAndDescriptionFromBookData(this.pageData);
         Object.assign(this.pageData, this.mockPageData);
         this.update();
         const tabLabels = ['Alumni', 'Current members', 'External collaborators'];

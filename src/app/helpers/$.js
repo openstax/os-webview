@@ -181,6 +181,17 @@ $.setPageDescription = (description) => {
     }
 };
 
+$.setPageTitleAndDescriptionFromBookData = (data) => {
+    const meta = data.meta || {};
+    const defaultDescription = data.description ?
+        $.htmlToText(data.description) : '';
+
+    $.setPageTitleAndDescription(
+        data.title || meta.seo_title,
+        meta.search_description || defaultDescription
+    );
+};
+
 $.setPageTitleAndDescription = (title, description) => {
     $.setPageDescription(description);
     document.title = title ? `${title} - OpenStax` : 'OpenStax';

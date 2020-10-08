@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect, useLayoutEffect} from 'react';
 import $ from '~/helpers/$';
-import {usePageData} from '~/helpers/controller/cms-mixin';
+import {usePageData, fetchFromCMS} from '~/helpers/controller/cms-mixin';
 import throttle from 'lodash/throttle';
 
 function getValuesFromWindow() {
@@ -31,23 +31,21 @@ export function WindowContextProvider({children}) {
     );
 }
 
-export function LoaderPage({slug, Child, props={}, preserveWrapping}) {
-    const [data, statusPage] = usePageData({slug, setsPageTitleAndDescription: false, preserveWrapping});
-
-    if (statusPage) {
-        return statusPage;
-    }
-
-    return (
-        <Child {...{data, ...props}} />
-    );
-}
-
 export function useDataFromPromise(promise, defaultValue) {
     const [data, setData] = useState(defaultValue);
 
     useEffect(() => {
         promise.then(setData);
+    }, []);
+
+    return data;
+}
+
+export function useDataFromSlug(slug, preserveWrapping=false) {
+    const [data, setData] = useState();
+
+    useEffect(() => {
+        fetchFromCMS(slug, preserveWrapping).then(setData);
     }, []);
 
     return data;
@@ -62,6 +60,24 @@ export function useCanonicalLink(controlsHeader=true) {
 
         return () => linkController.remove();
     }, []);
+}
+
+export function LoaderPage({slug, Child, props={}, preserveWrapping, doDocumentSetup=false}) {
+    const [data, statusPage] = usePageData({slug, setsPageTitleAndDescription: false, preserveWrapping});
+
+    useCanonicalLink(doDocumentSetup);
+    useEffect(() => {
+        if (!statusPage && doDocumentSetup) {
+            $.setPageTitleAndDescriptionFromBookData(data);
+        }
+    });
+    if (statusPage) {
+        return statusPage;
+    }
+
+    return (
+        <Child {...{data, ...props}} />
+    );
 }
 
 export const ActiveElementContext = React.createContext(document.activeElement);
