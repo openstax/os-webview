@@ -90,7 +90,7 @@ function Subjects({model}) {
                                     <RawHTML Tag="p" className="text" html={blurbDescription2} />
                                 </div>
                                 <div className="blurb">
-                                    <h3 className="title">{model.dev_standard_2_heading}</h3>
+                                    <h3 className="title">{model.dev_standard_3_heading}</h3>
                                     <RawHTML Tag="p" className="text" html={blurbDescription3} />
                                 </div>
                             </div>
