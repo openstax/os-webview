@@ -8,6 +8,12 @@
         margin: 0 0 1rem;
     }
 
+    &:not(.showErrors) {
+        .invalid-message {
+            display: none;
+        }
+    }
+
     .top {
         padding: 3rem;
 

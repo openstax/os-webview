@@ -1,14 +1,18 @@
 import React, {useState, useRef} from 'react';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import FormInput from '~/components/form-input/form-input.jsx';
 import ModuleList from './module-list';
 import {useUserStatus} from '../hooks';
 import showDialog, {hideDialog} from '../show-dialog';
 import {cmsPost} from '~/models/cmsFetch';
+import cn from 'classnames';
 import './customization-form.css';
 
 // This stuff will come from the CMS
-const description = 'Please select the modules (up to 10) that you want to customize with Google Docs.';
+const description = `
+    Please fill out the form and select the modules (up to 10) that you want to
+    customize with Google Docs. All form fields are required.
+`;
 const disclaimer = `
     <h2>Disclaimer</h2>
     <p>The following features and functionality are not available to
@@ -82,6 +86,9 @@ function useSelectedModulesTracker(maxItems=10) {
     const [size, setSize] = useState(0);
 
     return {
+        get isEmpty() {
+            return items.size === 0;
+        },
         get isFull() {
             return items.size >= maxItems;
         },
@@ -116,13 +123,25 @@ function payloadFromForm(form) {
     }, {modules: []});
 }
 
+function markInvalids(form) {
+    const invalids = form.querySelectorAll(':invalid');
+
+    return invalids.length;
+}
+
 export default function CustomizationForm({model}) {
     const [submitted, setSubmitted] = useState(false);
+    const [showErrors, toggleShowErrors] = useToggle(false);
     const selectedModules = useSelectedModulesTracker();
+    const ref = useRef();
 
     function doSubmit(event) {
         event.preventDefault();
-        cmsPost('customize', payloadFromForm(event.target))
+        if (markInvalids(ref.current) || selectedModules.isEmpty) {
+            toggleShowErrors(true);
+            return;
+        }
+        cmsPost('customize', payloadFromForm(ref.current))
             .then(
                 (response) => {
                     setSubmitted(selectedModules.html);
@@ -141,7 +160,7 @@ export default function CustomizationForm({model}) {
     }
 
     return (
-        <form className="customization-form" onSubmit={doSubmit}>
+        <form className={cn('customization-form', {showErrors})} ref={ref}>
             <div className="top">
                 <div className="description">{description}</div>
                 <div className="inputs">
@@ -165,16 +184,15 @@ export default function CustomizationForm({model}) {
                             required: true
                         }}
                     />
-                    <label className="form-input">
-                        <div className="control-group">
-                            <label className="field-label">
-                                Why do you want or need to customize the OpenStax content?
-                            </label>
-                            <textarea name="reason" required>
-                            </textarea>
-                        </div>
-                    </label>
-
+                    <FormInput
+                        label="Why do you want or need to customize the OpenStax content?"
+                        inputProps={{
+                            maxlength: '500',
+                            required: true,
+                            name: 'reason',
+                            Tag: 'textarea'
+                        }}
+                    />
                 </div>
                 <div className="modules">
                     <h2>Customizable modules</h2>
@@ -182,11 +200,17 @@ export default function CustomizationForm({model}) {
                         You may select up to 10 modules to customize<br />
                         {selectedModules.countMessage}
                     </p>
+                    {
+                        selectedModules.isEmpty &&
+                            <div className="invalid-message">
+                                You have not selected any modules.
+                            </div>
+                    }
                     <ModuleList model={model} selectedModules={selectedModules} />
                 </div>
             </div>
             <div className="bottom">
-                <input type="submit" />
+                <input type="submit" onClick={doSubmit} />
             </div>
         </form>
     );

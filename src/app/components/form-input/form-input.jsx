@@ -63,6 +63,7 @@ function SuggestionBox({matches, exactMatch, accepted, accept, activeIndex, setA
 function ValidatingInput({value, inputProps, onChange}) {
     const [validationMessage, setValidationMessage] = useState('');
     const ref = useRef();
+    const Tag = inputProps.Tag || 'input';
 
     useLayoutEffect(() => {
         setValidationMessage(ref.current.validationMessage);
@@ -70,7 +71,7 @@ function ValidatingInput({value, inputProps, onChange}) {
 
     return (
         <React.Fragment>
-            <input ref={ref} onChange={onChange} value={value} {...inputProps} />
+            <Tag ref={ref} onChange={onChange} value={value} {...inputProps} />
             <div className="invalid-message">{validationMessage}</div>
         </React.Fragment>
     );

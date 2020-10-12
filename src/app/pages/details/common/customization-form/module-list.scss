@@ -24,10 +24,4 @@
     .os-divider::before {
         content: '.';
     }
-
-    .not-selectable {
-        @include set-font(helper-label);
-
-        font-style: italic;
-    }
 }
