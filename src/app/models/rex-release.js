@@ -16,7 +16,7 @@ const fetchRexRelease = memoize((rexOrigin) => {
 
 // REMEMBER: The first parameter is the memo key
 const fetchContents = memoize((cnxId, rexOrigin) => {
-    if ($.isTestingEnvironment()) {
+    if ($.isTestingEnvironment() || rexOrigin.includes('tutor')) {
         return fetch(`//archive.cnx.org/contents/${cnxId}`)
             .then((r) => r.json());
     }
