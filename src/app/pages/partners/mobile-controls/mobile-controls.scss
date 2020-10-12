@@ -23,11 +23,15 @@
         @include set-font(body-regular);
 
         align-items: center;
+        background-color: ui-color(white);
+        box-shadow: 0 0.2rem 0.6rem 0 rgba(0,0,0,0.25);
         display: flex;
         font-weight: bold;
         justify-content: space-between;
-        margin-bottom: -$normal-margin;
+        margin-bottom: #{0.6rem - $normal-margin};
         padding: $normal-margin;
+        position: sticky;
+        top: 0;
 
         .put-away {
             font-size: 4rem;
@@ -59,10 +63,17 @@
     }
 
     .button-row {
+        bottom: 0;
         display: grid;
         grid-gap: 1rem;
         grid-template-columns: 1fr 1fr;
         padding: $normal-margin;
+        position: sticky;
+
+        &.stuck {
+            background-color: ui-color(white);
+            box-shadow: 0 -0.2rem 0.6rem 0 rgba(0,0,0,0.25);
+        }
 
         button {
             @include button();
@@ -78,7 +89,7 @@
         padding: 0 $normal-margin;
     }
 
-    .popover {
+    .modal .popover {
         height: calc(100vh - 5rem);
         left: 0;
         overflow: auto;

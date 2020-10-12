@@ -63,4 +63,18 @@
             min-width: 100%;
         }
     }
+
+    button {
+        font-weight: normal;
+
+        &.has-selections {
+            background-color: rgba(text-color(link), 0.1);
+            border: thin solid text-color(link);
+
+            .size {
+                color: text-color(link);
+                margin-left: 0.25rem;
+            }
+        }
+    }
 }

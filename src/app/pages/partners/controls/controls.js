@@ -10,7 +10,7 @@ import './button-with-popover.css';
 import {on} from '~/helpers/controller/decorators';
 import shellBus from '~/components/shell/shell-bus';
 
-const sortOptions = [
+export const sortOptions = [
     {
         label: 'Name: A to Z',
         value: '1'
@@ -21,7 +21,7 @@ const sortOptions = [
     }
 ];
 
-export function BaseButton({label, openButton, setOpenButton, children, size}) {
+export function BaseButton({label, openButton, setOpenButton, children, size, modal=false}) {
     const isOpen = openButton === label;
     const caretDirection = isOpen ? 'up' : 'down';
 
@@ -31,7 +31,7 @@ export function BaseButton({label, openButton, setOpenButton, children, size}) {
     }
 
     return (
-        <div className={cn('button-with-popover', {detached: !children})}>
+        <div className={cn('button-with-popover', {detached: !children, modal})}>
             <button
                 className={cn({'has-selections': size > 0})}
                 type="button" onClick={toggle}

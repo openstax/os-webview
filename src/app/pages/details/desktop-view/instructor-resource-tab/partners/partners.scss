@@ -59,8 +59,7 @@
         display: grid;
         grid-column-gap: $normal-margin;
         grid-row-gap: 0.5rem;
-        grid-template: 'logo title'
-        'logo info' / 10rem 1fr;
+        grid-template: 'logo info' / 10rem 1fr;
         min-height: 13rem;
         padding: 1.2rem 1rem 1.2rem 1.2rem;
         position: relative;
@@ -98,44 +97,21 @@
             z-index: 1;
         }
 
+        .info {
+            grid-area: info;
+        }
+
         .name {
             @include title-font(1.6rem);
 
-            grid-area: title;
+            line-height: 1.5;
         }
 
         .tags {
-            display: flex;
-            flex-wrap: wrap;
-            grid-area: info;
-            margin-bottom: -1rem;
-            margin-right: -0.5rem;
-            min-height: 2.5rem;
-
-            .info {
-                margin-bottom: 1rem;
-                margin-right: 0.5rem;
-            }
-        }
-
-        .info {
             @include body-font(1.2rem);
 
-            background-color: ui-color(default);
-            border-radius: 0.3rem;
-            display: flex;
-            padding: 0.5rem $normal-margin;
-            text-transform: uppercase;
-
-            .label {
-                font-weight: bold;
-                margin-right: 0.3rem;
-
-                &:not(:first-child)::before {
-                    content: '|';
-                    margin: 0 0.7rem;
-                }
-            }
+            color: text-color(helper);
+            line-height: 1.3;
         }
     }
 }

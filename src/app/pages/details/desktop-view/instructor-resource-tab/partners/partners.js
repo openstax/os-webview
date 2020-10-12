@@ -4,6 +4,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import './partners.css';
 
 function Blurb({blurb, badgeImage, onClick}) {
+    const tags = [blurb.type, blurb.cost].filter((t) => t);
+
     return (
         <a className="blurb" href={blurb.url} onClick={onClick}>
             <div className="logo">
@@ -19,21 +21,11 @@ function Blurb({blurb, badgeImage, onClick}) {
                         </div>
                     </div>
             }
-            <div className="name">{blurb.name}</div>
-            <div className="tags">
-                {
-                    blurb.cost &&
-                        <div className="info">
-                            <span className="label">Cost:</span>
-                            {blurb.cost}
-                        </div>
-                }
-                {
-                    blurb.type &&
-                        <div className="info">
-                            <span className="label">Type:</span>{blurb.type}
-                        </div>
-                }
+            <div className="info">
+                <div className="name">{blurb.name}</div>
+                <div className="tags">
+                    {tags.join(' • ')}
+                </div>
             </div>
         </a>
     );

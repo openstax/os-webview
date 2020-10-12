@@ -1,5 +1,5 @@
 import React, {useState, useContext, useRef, useEffect, useLayoutEffect} from 'react';
-import {books, types, advanced, resultCount, clearStores} from '../store';
+import {books, types, advanced, resultCount, clearStores, sort} from '../store';
 import ActiveFilters from '../active-filters/active-filters';
 import AccordionGroup from '~/components/accordion-group/accordion-group.jsx';
 import BookOptions from '../controls/book-options/book-options';
@@ -7,7 +7,7 @@ import OptionsList from '../controls/options-list/options-list';
 import Checkboxes from '../controls/checkboxes-linked-to-store/checkboxes-linked-to-store';
 import {WindowContext, WindowContextProvider} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {BaseButton, useStoreSize} from '../controls/controls';
+import {BaseButton, useStoreSize, sortOptions} from '../controls/controls';
 import shellBus from '~/components/shell/shell-bus';
 import sortBy from 'lodash/sortBy';
 import cn from 'classnames';
@@ -75,7 +75,7 @@ function MobileFilters({
                     <AccordionGroup items={items} />
                 </div>
             </div>
-            <div className="button-row">
+            <div className="button-row stuck">
                 <button type="button" onClick={clearStores}>Clear all</button>
                 <button type="button" className="primary" onClick={onClose}>Apply</button>
             </div>
@@ -83,12 +83,8 @@ function MobileFilters({
     );
 }
 
-function MobileFiltersToggle({typeOptions, advancedFilterOptions}) {
+function FilterToggle({typeOptions, advancedFilterOptions}) {
     const [openButton, setOpenButton] = useState(null);
-    const commonButtonProps = {
-        openButton,
-        setOpenButton
-    };
     const bookSize = useStoreSize(books);
     const typeSize = useStoreSize(types);
     const advancedSize = useStoreSize(advanced);
@@ -99,14 +95,30 @@ function MobileFiltersToggle({typeOptions, advancedFilterOptions}) {
     }, [openButton]);
 
     return (
+        <BaseButton label="Filters" {...{openButton, setOpenButton}} size={filterSize} modal>
+            <MobileFilters
+                {...{typeOptions, advancedFilterOptions, bookSize, typeSize, advancedSize}}
+                onClose={() => setOpenButton(null)}
+            />
+        </BaseButton>
+    );
+}
+
+function SortToggle() {
+    const [openButton, setOpenButton] = useState(null);
+
+    return (
+        <BaseButton label="Sort" {...{openButton, setOpenButton}}>
+            <OptionsList items={sortOptions} selected={sort} />
+        </BaseButton>
+    );
+}
+
+function MobileFiltersToggle({typeOptions, advancedFilterOptions}) {
+    return (
         <React.Fragment>
-            <BaseButton label="Filters" {...commonButtonProps} size={filterSize}>
-                <MobileFilters
-                    {...{typeOptions, advancedFilterOptions, bookSize, typeSize, advancedSize}}
-                    onClose={() => setOpenButton(null)}
-                />
-            </BaseButton>
-            <BaseButton label="Sort" {...commonButtonProps} />
+            <FilterToggle {...{typeOptions, advancedFilterOptions}} />
+            <SortToggle />
         </React.Fragment>
     );
 }
