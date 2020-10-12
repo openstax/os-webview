@@ -157,7 +157,7 @@ export function PdfOption({model}) {
 
 export function PrintOption({model}) {
     const printLink = Boolean(
-        model.amazonLink || [].concat(model.bookstoreContent).filter((c) => c.buttonUrl)
+        model.amazonLink || [].concat(model.bookstoreContent).filter((c) => c.buttonUrl).length
     );
     const dialogContentArgs = {
         bookstoreContent: model.bookstoreContent,
