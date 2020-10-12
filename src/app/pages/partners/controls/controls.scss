@@ -44,9 +44,46 @@ $breakpt-med: 93em * $scale-factor;
         }
     }
 
+    .button-with-popover {
+        &:not(.detached) {
+            .popover {
+                border: thin solid ui-color(form-border);
+                border-radius: 0.3rem;
+                border-top-left-radius: 0;
+                margin-top: -0.1rem;
+                padding: 1.3rem 0;
+
+                .option {
+                    padding: 0.7rem 2.7rem;
+                    white-space: nowrap;
+                }
+            }
+        }
+
+        button {
+            font-weight: normal;
+
+            &.has-selections {
+                background-color: rgba(text-color(link), 0.1);
+                border: thin solid text-color(link);
+
+                .size {
+                    color: text-color(link);
+                    margin-left: 0.25rem;
+                }
+            }
+        }
+    }
+
     .other-controls {
         @include wider-than($breakpt-med) {
             justify-content: right;
+        }
+
+        .button-with-popover .popover {
+            border-top-left-radius: 0.3rem;
+            border-top-right-radius: 0;
+            right: 0;
         }
     }
 

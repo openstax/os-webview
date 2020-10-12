@@ -3,10 +3,6 @@
 .active-filters {
     @extend %content;
 
-    @include width-up-to($phone-max) {
-        margin: -1rem 0 2rem;
-    }
-
     @include wider-than($phone-max) {
         margin-top: 4rem;
     }
@@ -14,7 +10,7 @@
     > div {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: flex-start;
         margin-top: 2rem;
 
         &[hidden] {
@@ -46,6 +42,10 @@
                 color: text-color(normal);
                 margin-left: 1rem;
                 padding: 0;
+            }
+
+            & + a {
+                margin-left: $normal-margin;
             }
         }
 

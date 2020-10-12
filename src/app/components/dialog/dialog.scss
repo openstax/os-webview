@@ -47,13 +47,13 @@ dialog {
     }
 
     .put-away {
-        @include body-font(3.2rem);
+        @include body-font(4rem);
         background-color: transparent;
         border: 0;
         color: inherit;
         margin: 0 -0.5rem;
         padding: 0 0.5rem;
-        z-index: 1;
+        z-index: 2;
 
         @include width-up-to($phone-max) {
             align-self: start;

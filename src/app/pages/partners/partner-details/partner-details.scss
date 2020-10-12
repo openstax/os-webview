@@ -30,6 +30,9 @@
             grid-template: 'icon title'
             'icon site-link'
             'icon tags' / auto 1fr;
+            position: sticky;
+            top: 0;
+            z-index: 1;
         }
 
         .icon {
@@ -94,27 +97,14 @@
         }
     }
 
-    .tags {
-        align-items: center;
-        display: grid;
-        grid-gap: 0.5rem;
-        margin-bottom: -0.5rem;
-        max-height: 100%;
+    .tag {
+        @include body-font(1.2rem);
 
-        @include wider-than($phone-max) {
-            grid-auto-flow: column;
-            justify-content: start;
-        }
+        color: text-color(helper);
 
-        .tag {
-            @include body-font(1.2rem);
-
-            background-color: ui-color(default);
-            border: thin solid ui-color(form-border);
-            border-radius: 0.3rem;
-            font-weight: bold;
-            padding: 0.2rem 0.4rem;
-            text-transform: uppercase;
+        &:not(:first-child)::before {
+            content: '•';
+            margin: 0 0.5rem;
         }
     }
 

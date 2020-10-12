@@ -307,8 +307,9 @@ sup {
     width: 100%;
 }
 
-[href=""],  // for testing empty links
-[href="#"] {
+[href=""],  // for testing empty/malformed links
+[href="#"],
+[href*="undefined"] {
     border: 0.3rem solid ui-color(error-border);
 }
 

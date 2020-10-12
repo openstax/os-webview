@@ -2,8 +2,7 @@ import React from 'react';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {RawHTML, LoaderPage, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Controls from './controls/controls';
-import ActiveFilters from './active-filters/active-filters';
-import MobileFilters from './mobile-filters/mobile-filters';
+import MobileControlRow from './mobile-controls/mobile-controls';
 import Results, {costOptions} from './results/results';
 import './partners.css';
 
@@ -101,9 +100,8 @@ function Partners({data}) {
                 </div>
                 <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
             </section>
+            <MobileControlRow {...{advancedFilterOptions, typeOptions}} />
             <div className="padding">
-                <MobileFilters {...{advancedFilterOptions, typeOptions}} />
-                <ActiveFilters advancedFilterOptions={advancedFilterOptions} />
                 <Results linkTexts={linkTexts} />
             </div>
         </React.Fragment>

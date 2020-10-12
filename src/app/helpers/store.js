@@ -18,7 +18,7 @@ class Store {
 
 export class ScalarStore extends Store {
 
-    constructor(initialValue) {
+    constructor(initialValue=null) {
         super();
         this._data = initialValue;
     }
@@ -46,6 +46,10 @@ export class ScalarStore extends Store {
 
     clear() {
         this.value = null;
+    }
+
+    get size() {
+        return this._data === null ? 0 : 1;
     }
 
 }
@@ -77,6 +81,10 @@ export class SetStore extends Store {
 
     get value() {
         return Array.from(this._data);
+    }
+
+    get size() {
+        return this._data.size;
     }
 
 }

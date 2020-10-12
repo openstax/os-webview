@@ -51,18 +51,18 @@ export default function ActiveFilters({advancedFilterOptions}) {
         return () => cleanup.forEach((f) => f());
     }, [advancedFilterDecoder]);
 
-    if (cp.length === 0) {
-        return null;
-    }
     return (
         <div className="active-filters">
-            <div className="result-count">{resultCount.value} matching partners</div>
-            <div>
-                <div className="filters">
-                    {cp.map((props) => <FilterRemover key={props.value} {...props} />)}
-                </div>
-                <a href="clear" onClick={clearFilters}>Clear All</a>
-            </div>
+            <div className="result-count">{resultCount.value} results</div>
+            {
+                cp.length > 0 &&
+                    <div>
+                        <div className="filters">
+                            {cp.map((props) => <FilterRemover key={props.value} {...props} />)}
+                        </div>
+                        <a href="clear" onClick={clearFilters}>Clear All</a>
+                    </div>
+            }
         </div>
     );
 }

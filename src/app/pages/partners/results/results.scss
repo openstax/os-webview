@@ -13,13 +13,13 @@
         grid-gap: 3rem;
 
         &.grid {
-            grid-template-columns: repeat(auto-fill, 21rem);
-
             @include width-up-to($phone-max) {
+                grid-template-columns: repeat(auto-fill, 100%);
                 justify-content: center;
             }
 
             @include wider-than($phone-max) {
+                grid-template-columns: repeat(auto-fill, 21rem);
                 justify-content: left;
             }
 
@@ -54,6 +54,7 @@
                     align-self: start;
                     grid-area: image;
                     justify-self: end;
+                    z-index: auto;
                 }
 
                 .resource-title {
