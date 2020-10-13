@@ -111,16 +111,16 @@ export function WebviewOption({model}) {
                 >
                     <IconAndText {...iconAndTextArgs} />
                 </a>
-                <div className="callout recommended-callout">
-                    {
-                        showCallout &&
+                {
+                    showCallout &&
+                        <div className="callout recommended-callout">
                             <RecommendedCallout
                                 title={model.rexCalloutTitle}
                                 blurb={model.rexCalloutBlurb}
                                 onPutAway={hideForever}
                             />
-                    }
-                </div>
+                        </div>
+                }
             </div>
         </Option>
     );
