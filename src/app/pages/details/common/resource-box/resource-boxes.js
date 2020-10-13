@@ -88,9 +88,21 @@ function AccessPending() {
     );
 }
 
+function MissingLink() {
+    return (
+        <span className="left missing-link">
+            <FontAwesomeIcon icon="exclamation-triangle" />
+            <span>MISSING LINK</span>
+        </span>
+    );
+}
+
 function LeftContent({model, icon}) {
     if (!model.link) {
         return (<AccessPending />);
+    }
+    if (!model.link.url) {
+        return (<MissingLink />);
     }
     const isCompCopy = model.link.url.endsWith('comp-copy');
     const isCustomization = model.link.url.endsWith('customized-modules');
