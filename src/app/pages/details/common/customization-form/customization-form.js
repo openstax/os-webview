@@ -41,7 +41,7 @@ const nextSteps = `
     <ol>
         <li>Within two business days, you will receive an email for each module
         that you have requested access to customize.</li>
-        <li>The link provided in the email will be y our own copy of the Google
+        <li>The link provided in the email will be your own copy of the Google
         Doc that OpenStax has generated for you.</li>
         <li>Once you have accessed the document you can make the changes you
         desire and share with your students. We recommend using the "Publish to
