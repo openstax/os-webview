@@ -72,7 +72,7 @@ function MobileFilters({
                     <span className="put-away" onClick={onClose}>&times;</span>
                 </div>
                 <div className="mobile controls mobile-filters">
-                    <AccordionGroup items={items} />
+                    <AccordionGroup items={items} preExpanded={['Advanced Filters']} />
                 </div>
             </div>
             <div className="button-row">

@@ -1,0 +1,103 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.partner-details .reviews {
+    align-items: center;
+    background-color: ui-color(white);
+    display: grid;
+    grid-column-gap: 6rem;
+    grid-row-gap: 3rem;
+    grid-template: 'synopsis bars login'
+    'reviews reviews reviews' / auto auto 1fr;
+    margin-bottom: 6rem;
+    padding: 2rem 0;
+
+    @include width-up-to($phone-max) {
+        grid-column-gap: $normal-margin;
+        grid-template: 'synopsis bars'
+        'login login'
+        'reviews reviews';
+    }
+
+    .review-synopsis {
+        grid-area: synopsis;
+
+        h2 {
+            @include title-font(1.8rem);
+            margin: 0;
+        }
+
+        .giant-number {
+            @include body-font(7.7rem);
+            color: text-color(button-bar);
+
+            @include width-up-to($phone-max) {
+                @include body-font(4.8rem);
+                color: text-color(normal);
+            }
+        }
+    }
+
+    .distribution-bars {
+        @include body-font(1.2rem);
+
+        align-content: start;
+        align-items: center;
+        grid-area: bars;
+        color: text-color(button-bar);
+        display: grid;
+        grid-gap: 1rem;
+        grid-template-columns: auto 1fr;
+        width: 24rem;
+
+        @include width-up-to($phone-max) {
+            grid-gap: 0.5rem;
+            width: 16rem;
+        }
+
+        progress[value] {
+            border: 0;
+            border-radius: 0.3rem;
+            height: 1rem;
+
+            &::-webkit-progress-bar {
+                background-color: ui-color(default);
+                border-radius: 0.3rem;
+            }
+
+            &::-webkit-progress-value {
+                background-color: os-color(green);
+                border-radius: 0.3rem;
+            }
+
+            &::-moz-progress-bar {
+                background-color: os-color(green);
+                border-radius: 0.3rem;
+            }
+        }
+    }
+
+    .leave-a-review {
+        grid-area: login;
+        height: 100%;
+
+        @include width-up-to($phone-max) {
+            display: grid;
+            grid-row-gap: 1rem;
+            grid-template-columns: auto;
+            justify-content: start;
+            margin-bottom: -2rem;
+        }
+
+        button {
+            margin-top: 1rem;
+        }
+    }
+
+    .review-list {
+        grid-area: reviews;
+    }
+
+    .rating-form {
+        grid-area: rf;
+    }
+}

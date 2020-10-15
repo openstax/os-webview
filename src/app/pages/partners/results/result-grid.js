@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import shellBus from '~/components/shell/shell-bus';
 import PartnerDetails from '../partner-details/partner-details';
+import StarsAndCount from '~/components/stars-and-count/stars-and-count';
 
 function modelFromEntry(entry) {
     return {
@@ -9,7 +10,9 @@ function modelFromEntry(entry) {
         description: entry.blurb,
         tags: entry.tags,
         verifiedFeatures: entry.verifiedFeatures,
-        badgeImage: '/images/partners/verified-badge.svg'
+        badgeImage: '/images/partners/verified-badge.svg',
+        rating: entry.rating,
+        ratingCount: entry.ratingCount
     };
 }
 
@@ -39,7 +42,9 @@ function showDetailDialog({entry, linkTexts}) {
 }
 
 function ResultCard({entry, linkTexts}) {
-    const model = modelFromEntry(entry);
+    const {
+        title, logoUrl, verifiedFeatures, badgeImage, tags, rating, ratingCount
+    } = modelFromEntry(entry);
 
     function onSelect(event) {
         event.preventDefault();
@@ -49,31 +54,25 @@ function ResultCard({entry, linkTexts}) {
     }
 
     return (
-        <a href={`?${model.title}`} type="button" className="card" onClick={onSelect}>
+        <a href={`?${title}`} type="button" className="card" onClick={onSelect}>
             <div className="logo">
-                {
-                    model.logoUrl && <img src={model.logoUrl} alt="" />
-                }
+                {logoUrl && <img src={logoUrl} alt="" />}
             </div>
             {
-                model.verifiedFeatures &&
+                verifiedFeatures &&
                 <div className="badge">
-                    <img className="background" src={model.badgeImage} alt="verified" />
+                    <img className="background" src={badgeImage} alt="verified" />
                     <i className="checkmark fa fa-check"></i>
                     <div className="tooltip top">
-                        {model.verifiedFeatures}
+                        {verifiedFeatures}
                     </div>
                 </div>
             }
-            <div className="resource-title">{model.title}</div>
-            <div className="resource-description">{model.description}</div>
+            <div className="resource-title">{title}</div>
             <div className="tags">
-                {
-                    model.tags.map(({value, label}) =>
-                        <span key={value}>{label}: {value}</span>
-                    )
-                }
+                {tags.map(({value, label}) => <div key={value}>{value}</div>)}
             </div>
+            <StarsAndCount rating={rating} count={ratingCount} showNumber />
         </a>
     );
 }

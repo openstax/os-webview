@@ -52,6 +52,7 @@
     }
 
     .blurb {
+        align-content: center;
         align-items: center;
         background-color: ui-color(white);
         border-bottom: thin solid ui-color(form-border);
@@ -59,8 +60,8 @@
         display: grid;
         grid-column-gap: $normal-margin;
         grid-row-gap: 0.5rem;
-        grid-template: 'logo title'
-        'logo info' / 10rem 1fr;
+        grid-template-columns: 10rem 1fr;
+        grid-template-rows: 100%;
         min-height: 13rem;
         padding: 1.2rem 1rem 1.2rem 1.2rem;
         position: relative;
@@ -80,8 +81,9 @@
         .logo {
             align-items: center;
             display: grid;
-            grid-area: logo;
+            height: 100%;
             max-width: 100%;
+            position: relative;
 
             > img {
                 max-width: 100%;
@@ -91,51 +93,29 @@
         .badge {
             @extend %verified-badge;
 
-            align-self: start;
-            grid-area: logo;
-            justify-self: end;
             margin-top: 0.5rem;
+            position: absolute;
+            right: 0;
+            top: 0;
             z-index: 1;
         }
 
         .name {
-            @include title-font(1.6rem);
-
-            grid-area: title;
+            @include title-font(1.8rem);
         }
 
         .tags {
-            display: flex;
-            flex-wrap: wrap;
-            grid-area: info;
-            margin-bottom: -1rem;
-            margin-right: -0.5rem;
-            min-height: 2.5rem;
+            @include body-font(1.2rem);
 
-            .info {
-                margin-bottom: 1rem;
-                margin-right: 0.5rem;
+            color: text-color(helper);
+
+            .tag:not(:first-child)::before {
+                content: ' • ';
             }
         }
 
-        .info {
-            @include body-font(1.2rem);
-
-            background-color: ui-color(default);
-            border-radius: 0.3rem;
-            display: flex;
-            padding: 0.5rem $normal-margin;
-            text-transform: uppercase;
-
-            .label {
-                font-weight: bold;
-                margin-right: 0.3rem;
-
-                &:not(:first-child)::before {
-                    content: '|';
-                    margin: 0 0.7rem;
-                }
-            }
+        .stars-and-count {
+            margin-top: $normal-margin;
         }
     }
 }

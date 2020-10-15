@@ -1,69 +1,29 @@
 @import 'pattern-library/core/pattern-library/headers';
-@import 'mixins/placeholder-selectors';
 
 .partner-details {
     background-color: ui-color(default);
 
     section {
-        padding: 3rem;
-
-        &.carousel {
-            padding-bottom: 0;
-        }
-    }
-    .synopsis {
-        background-color: ui-color(white);
-        display: grid;
-        grid-column-gap: 3rem;
-        padding-right: 4rem;
-
-        @include width-up-to($phone-max) {
-            grid-row-gap: 1rem;
-            grid-template: 'icon'
-            'title'
-            'site-link'
-            'tags' / 100%;
-        }
+        padding: 3rem 0;
 
         @include wider-than($phone-max) {
-            grid-row-gap: 0.5rem;
-            grid-template: 'icon title'
-            'icon site-link'
-            'icon tags' / auto 1fr;
-            position: sticky;
-            top: 0;
-            z-index: 1;
-        }
-
-        .icon {
-            align-self: center;
-            grid-area: icon;
-            justify-self: center;
-            max-height: 12rem;
-            max-width: 12rem;
-        }
-
-        .badge {
-            @extend %verified-badge;
-
-            align-self: start;
-            grid-area: icon;
-            justify-self: end;
-            margin-top: 0.5rem;
-        }
-        .headline {
-            @include title-font(1.6rem);
-
-            grid-area: title;
-        }
-        .partner-website {
-            grid-area: site-link;
+            padding: 3rem;
         }
     }
 
     .scrolling-region {
+        background-color: ui-color(white);
         height: 100%;
         overflow: auto;
+        padding: 0 $normal-margin;
+
+        @include wider-than($phone-max) {
+            padding: 0 3rem;
+        }
+
+        @include wider-than($tablet-max) {
+            min-width: 80rem;
+        }
     }
 
     .primary {
@@ -74,6 +34,23 @@
     hr {
         border-top: thin solid ui-color(form-border);
         margin: 0 3rem;
+
+        &.tab-baseline {
+            margin: 0;
+        }
+    }
+
+    .tab-heading {
+        width: 100%;
+
+        .tab {
+            padding-top: 3rem;
+        }
+    }
+
+    .tab-content,
+    .content-group > div {
+        width: 100%;
     }
 
     .main-text > :first-child {
@@ -107,5 +84,4 @@
             margin: 0 0.5rem;
         }
     }
-
 }

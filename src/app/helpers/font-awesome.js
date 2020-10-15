@@ -16,6 +16,7 @@ const loadBrandIcon = loaderForPath('free-brands-svg-icons');
 const loadRegularIcon = loaderForPath('free-regular-svg-icons');
 
 [
+    'faArrowLeft',
     'faArrowUp',
     'faAtom',
     'faAward',
@@ -42,6 +43,7 @@ const loadRegularIcon = loaderForPath('free-regular-svg-icons');
     'faHandHoldingHeart',
     'faHandHoldingUsd',
     'faHeart',
+    'faInfoCircle',
     'faLaptop',
     'faLink',
     'faListOl',
@@ -56,6 +58,8 @@ const loadRegularIcon = loaderForPath('free-regular-svg-icons');
     'faShoppingCart',
     'faSignOutAlt',
     'faSlidersH',
+    'faStar',
+    'faStarHalfAlt',
     'faTabletAlt',
     'faTasks',
     'faThumbtack',
@@ -80,7 +84,8 @@ const loadRegularIcon = loaderForPath('free-regular-svg-icons');
 ].forEach(loadBrandIcon);
 
 [
-    'faEnvelopeOpen'
+    'faEnvelopeOpen',
+    'faStar'
 ].forEach(loadRegularIcon);
 
 // This handles non-React tag replacement

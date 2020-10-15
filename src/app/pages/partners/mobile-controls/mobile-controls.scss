@@ -59,10 +59,12 @@
     }
 
     .button-row {
+        bottom: 0;
         display: grid;
         grid-gap: 1rem;
         grid-template-columns: 1fr 1fr;
         padding: $normal-margin;
+        position: sticky;
 
         button {
             @include button();
@@ -97,6 +99,10 @@
 
             .accordion-item:not(:first-child) .accordion-button {
                 border-top: 0;
+
+                &#accordion__heading-Advanced_Filters {
+                    border-bottom: 0;
+                }
             }
 
             .accordion-group {

@@ -1,10 +1,14 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .tab-group {
-    @extend %tab-group;
+    @include tab-group();
 
     .tab {
         @extend %tab;
+
+        @include width-up-to($phone-max) {
+            padding-top: 1rem;
+        }
 
         &[aria-current] {
             @extend %active;
@@ -13,5 +17,5 @@
 }
 
 .tab-baseline {
-    @extend %tab-baseline;
+    @include tab-baseline();
 }

@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from 'react';
+import React, {useRef, useLayoutEffect} from 'react';
 import $ from '~/helpers/$';
 import './tab-group.css';
 
@@ -7,7 +7,7 @@ function Tab({label, selectedLabel, setSelectedLabel, TabTag}) {
 
     // Couldn't get this to work as a normal attribute expression;
     // it would not remove the aria-current attribute, only its value
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (label === selectedLabel) {
             ref.current.setAttribute('aria-current', 'page');
         } else {

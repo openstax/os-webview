@@ -18,6 +18,14 @@ const sortOptions = [
     {
         label: 'Name: Z to A',
         value: '-1'
+    },
+    {
+        label: 'Rating: Low to High',
+        value: '2'
+    },
+    {
+        label: 'Rating: High to Low',
+        value: '-2'
     }
 ];
 

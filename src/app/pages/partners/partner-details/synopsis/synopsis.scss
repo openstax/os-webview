@@ -1,0 +1,60 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/placeholder-selectors';
+
+.partner-details {
+    > .synopsis {
+        align-items: start;
+        background-color: ui-color(white);
+        border-bottom: thin solid ui-color(form-border);
+        display: grid;
+        grid-column-gap: 3rem;
+        grid-template: 'icon title'
+        'icon tags'
+        'icon ratings'
+        'icon site-link' 1fr / auto 1fr;
+        padding-right: 4rem;
+
+        @include wider-than($phone-max) {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        .icon {
+            align-self: center;
+            grid-area: icon;
+            justify-self: center;
+
+            @include width-up-to($phone-max) {
+                max-height: 8rem;
+                max-width: 8rem;
+            }
+
+            @include wider-than($phone-max) {
+                max-height: 12rem;
+                max-width: 12rem;
+            }
+        }
+
+        .badge {
+            @extend %verified-badge;
+
+            align-self: start;
+            grid-area: icon;
+            justify-self: end;
+            margin-top: 0.5rem;
+        }
+        .headline {
+            @include title-font(1.6rem);
+
+            grid-area: title;
+        }
+        .partner-website {
+            grid-area: site-link;
+
+            @include body-font(1.2rem);
+            margin-top: 1rem;
+            text-decoration: none;
+        }
+    }
+}
