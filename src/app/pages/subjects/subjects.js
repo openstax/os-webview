@@ -30,6 +30,37 @@ function useCategoryTiedToPath() {
     return category;
 }
 
+function AboutBlurb({heading, description}) {
+    return (
+        <div className="blurb">
+            <h3 className="title">{heading}</h3>
+            <RawHTML Tag="p" className="text" html={description} />
+        </div>
+    );
+}
+
+function AboutOurTextBooks({model}) {
+    const textData = Reflect.ownKeys(model)
+        .filter((k) => k.startsWith('dev_standard_'))
+        .reduce((a, b) => {
+            const [_, num, textId] = b.match(/(\d+)_(\w+)/);
+            const index = num - 1;
+
+            a[index] = a[index] || {};
+            a[index][textId] = model[b];
+            return a;
+        }, []);
+
+    return (
+        <div>
+            <h2 className="text-content">About Our Textbooks</h2>
+            <div className="boxed-row feature-block">
+                {textData.map((data) => <AboutBlurb {...data} key={data.description} />)}
+            </div>
+        </div>
+    );
+}
+
 function Subjects({model}) {
     const category = useCategoryTiedToPath();
     const categories = useDataFromPromise(categoryPromise, []);
@@ -53,12 +84,6 @@ function Subjects({model}) {
 
     const {
         page_description: heroHtml,
-        dev_standard_1_heading: blurbHeading1,
-        dev_standard_1_description: blurbDescription1,
-        dev_standard_2_heading: blurbHeading2,
-        dev_standard_2_description: blurbDescription2,
-        dev_standard_3_heading: blurbHeading3,
-        dev_standard_3_description: blurbDescription3,
         books
     } = model;
 
@@ -76,26 +101,7 @@ function Subjects({model}) {
                 <div className="boxed container">
                     <BookViewer books={books} category={category} />
                 </div>
-                <div>
-                    <h2 className="text-content">About Our Textbooks</h2>
-                    {
-                        blurbHeading1 &&
-                            <div className="boxed-row feature-block">
-                                <div className="blurb">
-                                    <h3 className="title">{blurbHeading1}</h3>
-                                    <RawHTML Tag="p" className="text" html={blurbDescription1} />
-                                </div>
-                                <div className="blurb">
-                                    <h3 className="title">{model.dev_standard_2_heading}</h3>
-                                    <RawHTML Tag="p" className="text" html={blurbDescription2} />
-                                </div>
-                                <div className="blurb">
-                                    <h3 className="title">{model.dev_standard_3_heading}</h3>
-                                    <RawHTML Tag="p" className="text" html={blurbDescription3} />
-                                </div>
-                            </div>
-                    }
-                </div>
+                <AboutOurTextBooks model={model} />
             </div>
         </React.Fragment>
     );

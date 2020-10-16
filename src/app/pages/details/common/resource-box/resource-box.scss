@@ -156,6 +156,10 @@
         .print-link {
             border: 0;
         }
+
+        .left.missing-link {
+            color: os-color(red);
+        }
     }
 
     @at-root :not(:hover) .bottom .left {
