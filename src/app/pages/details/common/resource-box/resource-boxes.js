@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './resource-box.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -6,6 +6,7 @@ import $ from '~/helpers/$';
 import showDialog, {hideDialog} from '../show-dialog';
 import CompCopyRequestForm from './request-form/request-form';
 import CustomizationForm from '../customization-form/customization-form';
+import DetailsContext from '../../context';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 
 function CommonsHubBox({model}) {
@@ -98,6 +99,8 @@ function MissingLink() {
 }
 
 function LeftContent({model, icon}) {
+    const bookModel = useContext(DetailsContext);
+
     if (!model.link) {
         return (<AccessPending />);
     }
@@ -119,7 +122,7 @@ function LeftContent({model, icon}) {
         if (isCustomization) {
             showDialog({
                 event,
-                dialogTitle: 'Customization form',
+                dialogTitle: bookModel.customizationFormHeading,
                 dialogContent: CustomizationForm,
                 dialogContentArgs: {model: model.bookModel}
             });

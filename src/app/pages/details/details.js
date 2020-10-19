@@ -7,6 +7,7 @@ import cn from 'classnames';
 import PhoneView from './phone-view/phone-view';
 import DesktopView from './desktop-view/desktop-view';
 import {useTableOfContents} from './common/hooks';
+import DetailsContext from './context';
 import './details.css';
 import './table-of-contents.css';
 
@@ -114,7 +115,7 @@ export function BookDetails({data}) {
     }, [data, model]);
 
     return (
-        <React.Fragment>
+        <DetailsContext.Provider value={model}>
             <div className={cn('hero', {'reverse-gradient': reverseGradient})}>
                 <div className="content book-title">
                     {titleImage && <TitleImage {...{titleImage, bookTitle, titleLogo}} />}
@@ -131,7 +132,7 @@ export function BookDetails({data}) {
                     </div>
                 </div>
             </div>
-        </React.Fragment>
+        </DetailsContext.Provider>
     );
 }
 

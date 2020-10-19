@@ -8,48 +8,9 @@ import {cmsPost} from '~/models/cmsFetch';
 import cn from 'classnames';
 import './customization-form.css';
 
-// This stuff will come from the CMS
-const description = `
-    Please fill out the form and select the modules (up to 10) that you want to
-    customize with Google Docs. All form fields are required.
-`;
-const disclaimer = `
-    <h2>Disclaimer</h2>
-    <p>The following features and functionality are not available to
-    teachers and students using Google Docs customized content:
-    </p>
-    <ul>
-        <li>
-            <b>Errata updates.</b> OpenStax webview is updated at least twice
-            yearly. Customized Google Docs will not receive these content updates.
-        </li>
-        <li>
-            <b>Access to study tools.</b> OpenStax webview has in-book search,
-            highlighting, study guides, and more available for free. This
-            functionality will not be available in Google Docs versions.
-        </li>
-        <li>
-            <b>Formatting.</b> Print books and webview have a specific design and
-            structure format developed for those platforms. These functionalities
-            are not available in the Google Docs versions.
-        </li>
-    </ul>
-`;
 const thankYou = 'Thank you &mdash; your request has been sent to the OpenStax team.';
-const nextSteps = `
-    <h2>Next Steps</h2>
-    <ol>
-        <li>Within two business days, you will receive an email for each module
-        that you have requested access to customize.</li>
-        <li>The link provided in the email will be y our own copy of the Google
-        Doc that OpenStax has generated for you.</li>
-        <li>Once you have accessed the document you can make the changes you
-        desire and share with your students. We recommend using the "Publish to
-        the Web" functionality under the File menu for sharing with students.</li>
-    </ol>
-`;
 
-function Feedback({data}) {
+function Feedback({data, nextSteps}) {
     return (
         <div className="customization-form">
             <div className="top">
@@ -155,16 +116,16 @@ export default function CustomizationForm({model}) {
 
     if (submitted) {
         return (
-            <Feedback data={submitted} />
+            <Feedback data={submitted} nextSteps={model.customizationFormNextSteps} />
         );
     }
 
     return (
         <form className={cn('customization-form', {showErrors})} ref={ref}>
             <div className="top">
-                <div className="description">{description}</div>
+                <div className="description">{model.customizationFormSubheading}</div>
                 <div className="inputs">
-                    <RawHTML className="disclaimer" html={disclaimer} />
+                    <RawHTML className="disclaimer" html={model.customizationFormDisclaimer} />
                     <FormInput
                         label="Google Account email"
                         inputProps={{
@@ -197,7 +158,6 @@ export default function CustomizationForm({model}) {
                 <div className="modules">
                     <h2>Customizable modules</h2>
                     <p>
-                        You may select up to 10 modules to customize<br />
                         {selectedModules.countMessage}
                     </p>
                     {
