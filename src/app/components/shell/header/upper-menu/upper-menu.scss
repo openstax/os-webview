@@ -30,6 +30,7 @@
         display: grid;
 
         @include width-up-to($tablet-max) {
+            justify-items: left;
             margin-left: auto;
             margin-right: auto;
         }
@@ -44,6 +45,14 @@
 
             a {
                 color: inherit;
+            }
+        }
+
+        .give-button {
+            margin-top: 1rem;
+
+            @include wider-than($tablet-max) {
+                display: none;
             }
         }
     }

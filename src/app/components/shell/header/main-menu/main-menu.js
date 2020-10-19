@@ -4,7 +4,7 @@ import Dropdown from './dropdown/dropdown';
 import React, {useRef, useEffect} from 'react';
 import categoryPromise from '~/models/subjectCategories';
 import attachLoginMenu from './login-menu/login-menu';
-import useGiveToday from '~/models/give-today';
+import GiveButton from '../give-button/give-button';
 import './main-menu.css';
 
 function SubjectsMenu() {
@@ -24,18 +24,6 @@ function SubjectsMenu() {
 
     return (
         <SuperbItem Tag="li" className="subjects-dropdown" component={dd} />
-    );
-}
-
-function GiveButton() {
-    const giveData = useGiveToday();
-
-    if (!giveData.showButton) {
-        return null;
-    }
-
-    return (
-        <li><a href={giveData.give_link} className="btn medium">Give</a></li>
     );
 }
 
@@ -82,7 +70,7 @@ function MainMenu() {
                 <SuperbItem Tag="li" className="technology-dropdown" component={technologyDropdown} />
                 <SuperbItem Tag="li" className="what-we-do-dropdown" component={whatWeDoDropdown} />
                 <li className="login-menu" ref={loginMenuRef} />
-                <GiveButton />
+                <li className="give-button-item"><GiveButton /></li>
             </ul>
             <button className="expand" aria-haspopup="true" aria-label="Toggle Meta Navigation Menu" tabindex="0">
                 <span></span>

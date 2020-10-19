@@ -1,0 +1,11 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.give-button {
+    @include button();
+    @extend %primary;
+
+    &:active,
+    &:hover {
+        color: text-color(white);
+    }
+}

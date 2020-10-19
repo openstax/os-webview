@@ -74,9 +74,10 @@
             overflow: visible;
         }
 
-        .btn {
-            @include button();
-            @extend %primary;
+        .give-button-item {
+            @include width-up-to($tablet-max) {
+                display: none;
+            }
         }
     }
 
