@@ -5,6 +5,7 @@ import {usePageData} from '~/helpers/controller/cms-mixin';
 import {RawHTML, useDataFromPromise, useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import BookViewer from './book-viewer/book-viewer';
 import categoryPromise from '~/models/subjectCategories';
+import savingsPromise from '~/models/savings';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
 import './subjects.css';
 import $ from '~/helpers/$';
@@ -30,11 +31,33 @@ function useCategoryTiedToPath() {
     return category;
 }
 
-function AboutBlurb({heading, description}) {
+function plugInto(container, id, value) {
+    const el = container.querySelector(`#${id}`);
+
+    if (el) {
+        el.textContent = value;
+    }
+}
+
+function useSavingsDataIn(description, data) {
+    if (!data) {
+        return description;
+    }
+    const el = document.createElement('div');
+
+    el.innerHTML = description.trim();
+    plugInto(el, 'adoption_number', data.adoptions_count);
+    plugInto(el, 'savings', data.savings);
+    return el.innerHTML;
+}
+
+function AboutBlurb({heading, description, savingsData}) {
+    const html = useSavingsDataIn(description, savingsData);
+
     return (
         <div className="blurb">
             <h3 className="title">{heading}</h3>
-            <RawHTML Tag="p" className="text" html={description} />
+            <RawHTML Tag="p" className="text" html={html} />
         </div>
     );
 }
@@ -50,12 +73,16 @@ function AboutOurTextBooks({model}) {
             a[index][textId] = model[b];
             return a;
         }, []);
+    const savingsData = useDataFromPromise(savingsPromise);
 
     return (
         <div>
             <h2 className="text-content">About Our Textbooks</h2>
             <div className="boxed-row feature-block">
-                {textData.map((data) => <AboutBlurb {...data} key={data.description} />)}
+                {
+                    textData.map((data) =>
+                        <AboutBlurb {...data} key={data.description} savingsData={savingsData} />)
+                }
             </div>
         </div>
     );
