@@ -23,9 +23,11 @@ function trackClick(event) {
     trackClickFor(putAwayEl, target,
         ['Microdonation header X', 'close', 'Microdonation header']
     );
-    trackClickFor(linkEl, target,
-        ['Microdonation header learn more link', 'open', linkEl.href]
-    );
+    if (linkEl) {
+        trackClickFor(linkEl, target,
+            ['Microdonation header learn more link', 'open', linkEl.href]
+        );
+    }
     trackClickFor(buttonEl, target,
         ['Microdonation header give button', 'open', buttonEl.href]
     );
