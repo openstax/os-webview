@@ -5,6 +5,7 @@ import {usePageData} from '~/helpers/controller/cms-mixin';
 import {RawHTML, useDataFromPromise, useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import BookViewer from './book-viewer/book-viewer';
 import categoryPromise from '~/models/subjectCategories';
+import savingsPromise from '~/models/savings';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
 import './subjects.css';
 import $ from '~/helpers/$';
@@ -30,12 +31,46 @@ function useCategoryTiedToPath() {
     return category;
 }
 
+function plugInto(container, id, value) {
+    const el = container.querySelector(`#${id}`);
+
+    if (el) {
+        el.textContent = value;
+    }
+}
+
+function useSavingsDataIn(description, data) {
+    if (!data) {
+        return description;
+    }
+    const el = document.createElement('div');
+
+    el.innerHTML = description.trim();
+    plugInto(el, 'adoption_number', data.adoptions_count);
+    plugInto(el, 'savings', data.savings);
+    return el.innerHTML;
+}
+
 function AboutBlurb({heading, description}) {
     return (
         <div className="blurb">
             <h3 className="title">{heading}</h3>
             <RawHTML Tag="p" className="text" html={description} />
         </div>
+    );
+}
+
+function SavingsBlurb({description}) {
+    const savingsData = useDataFromPromise(savingsPromise);
+    const html = useSavingsDataIn(description, savingsData);
+
+    return (
+        <React.Fragment>
+            <hr />
+            <div className="text-content">
+                <RawHTML Tag="p" className="savings-blurb" html={html} />
+            </div>
+        </React.Fragment>
     );
 }
 
@@ -55,8 +90,15 @@ function AboutOurTextBooks({model}) {
         <div>
             <h2 className="text-content">About Our Textbooks</h2>
             <div className="boxed-row feature-block">
-                {textData.map((data) => <AboutBlurb {...data} key={data.description} />)}
+                {
+                    textData.slice(0, 3).map((data) =>
+                        <AboutBlurb {...data} key={data.description} />)
+                }
             </div>
+            {
+                textData.length > 3 &&
+                    <SavingsBlurb description={textData[3].description} />
+            }
         </div>
     );
 }

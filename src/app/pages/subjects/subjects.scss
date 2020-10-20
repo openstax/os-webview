@@ -56,6 +56,14 @@
         }
     }
 
+    .savings-blurb {
+        text-align: center;
+
+        span {
+            font-weight: bold;
+        }
+    }
+
     .books {
         display: grid;
         grid-gap: 6.5rem;
