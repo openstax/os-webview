@@ -2,6 +2,7 @@ import React from 'react';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {useDataFromSlug, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import useGiveToday from '~/models/give-today';
+import GiveButton from '../give-button/give-button';
 import './upper-menu.css';
 
 function BlogItem() {
@@ -40,6 +41,7 @@ function UpperMenu() {
             <a className="logo rice-logo logo-wrapper" href="http://www.rice.edu">
                 <img src="/images/rice.png" alt="Rice University logo" height="30" />
             </a>
+            <GiveButton />
         </React.Fragment>
     );
 }
