@@ -32,7 +32,6 @@ function MainMenu() {
         dropdownLabel: 'Technology',
         items: [
             {url: '/openstax-tutor', label: 'OpenStax Tutor'},
-            {url: '/rover-by-openstax', label: 'Rover by OpenStax'},
             {url: '/partners', label: 'OpenStax Tech Scout'}
         ]
     });
