@@ -51,14 +51,26 @@ function useSavingsDataIn(description, data) {
     return el.innerHTML;
 }
 
-function AboutBlurb({heading, description, savingsData}) {
-    const html = useSavingsDataIn(description, savingsData);
-
+function AboutBlurb({heading, description}) {
     return (
         <div className="blurb">
             <h3 className="title">{heading}</h3>
-            <RawHTML Tag="p" className="text" html={html} />
+            <RawHTML Tag="p" className="text" html={description} />
         </div>
+    );
+}
+
+function SavingsBlurb({description}) {
+    const savingsData = useDataFromPromise(savingsPromise);
+    const html = useSavingsDataIn(description, savingsData);
+
+    return (
+        <React.Fragment>
+            <hr />
+            <div className="text-content">
+                <RawHTML Tag="p" className="savings-blurb" html={html} />
+            </div>
+        </React.Fragment>
     );
 }
 
@@ -73,17 +85,20 @@ function AboutOurTextBooks({model}) {
             a[index][textId] = model[b];
             return a;
         }, []);
-    const savingsData = useDataFromPromise(savingsPromise);
 
     return (
         <div>
             <h2 className="text-content">About Our Textbooks</h2>
             <div className="boxed-row feature-block">
                 {
-                    textData.map((data) =>
-                        <AboutBlurb {...data} key={data.description} savingsData={savingsData} />)
+                    textData.slice(0, 3).map((data) =>
+                        <AboutBlurb {...data} key={data.description} />)
                 }
             </div>
+            {
+                textData.length > 3 &&
+                    <SavingsBlurb description={textData[3].description} />
+            }
         </div>
     );
 }
