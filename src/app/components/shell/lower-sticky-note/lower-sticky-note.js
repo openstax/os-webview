@@ -1,11 +1,9 @@
 import React from 'react';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {usePutAway, useStickyData, useSeenCounter} from '../shared.jsx';
+import {usePutAway, useStickyData} from '../shared.jsx';
 import analytics from '~/helpers/analytics';
 import './lower-sticky-note.css';
-
-const SEEN_ENOUGH = 7;
 
 function trackClickFor(el, target, eventArgs) {
     if (el && el.contains(target)) {
@@ -37,15 +35,12 @@ function trackClick(event) {
 function LowerStickyNote() {
     const stickyData = useStickyData();
     const [closed, PutAway] = usePutAway();
-    const [hasBeenSeenEnough, incrementSeenCount] = useSeenCounter(SEEN_ENOUGH);
-    const shouldNotDisplay = !stickyData || closed || hasBeenSeenEnough ||
+    const shouldNotDisplay = !stickyData || closed ||
         stickyData.mode !== 'banner';
 
     if (shouldNotDisplay) {
         return null;
     }
-
-    incrementSeenCount();
 
     return (
         <div className="lower-sticky-note-content" onClick={trackClick}>
