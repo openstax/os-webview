@@ -23,7 +23,7 @@ function Confirmation() {
                     {
                         bookSlug &&
                             <span>or return to
-                                <a href={`/details/${model.bookSlug}`}>your book</a>
+                                <a href={`/details/${bookSlug}`}>your book</a>
                             </span>
                     }
                     .

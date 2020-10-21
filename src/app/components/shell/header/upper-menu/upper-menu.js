@@ -5,7 +5,7 @@ import useGiveToday from '~/models/give-today';
 import './upper-menu.css';
 
 function BlogItem() {
-    const data = useDataFromSlug('openstax-news');
+    const data = useDataFromSlug('news');
     const shouldDisplay = data && Reflect.has(data, 'articles') &&
         Object.keys(data.articles).length;
 
