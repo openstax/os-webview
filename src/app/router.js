@@ -37,7 +37,6 @@ const PAGES = [
     'press/*path',
     'quiz-results/*path',
     'research',
-    'rover-by-openstax',
     'separatemap',
     'subjects',
     'subjects/*path',
