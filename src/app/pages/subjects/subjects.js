@@ -6,6 +6,7 @@ import {RawHTML, useDataFromPromise, useCanonicalLink} from '~/components/jsx-he
 import BookViewer from './book-viewer/book-viewer';
 import categoryPromise from '~/models/subjectCategories';
 import savingsPromise from '~/models/savings';
+import useSavingsDataIn, {linkClickTracker} from '~/helpers/savings-blurb';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
 import './subjects.css';
 import $ from '~/helpers/$';
@@ -31,29 +32,11 @@ function useCategoryTiedToPath() {
     return category;
 }
 
-function plugInto(container, id, value) {
-    const el = container.querySelector(`#${id}`);
-
-    if (el) {
-        el.textContent = value;
-    }
-}
-
-function useSavingsDataIn(description, data) {
-    if (!data) {
-        return description;
-    }
-    const el = document.createElement('div');
-
-    el.innerHTML = description.trim();
-    plugInto(el, 'adoption_number', data.adoptions_count);
-    plugInto(el, 'savings', data.savings);
-    return el.innerHTML;
-}
-
 function AboutBlurb({heading, description}) {
+    const eventName = 'Microdonation subjects page donor supported blurb impact link';
+
     return (
-        <div className="blurb">
+        <div className="blurb" onClick={linkClickTracker(eventName)}>
             <h3 className="title">{heading}</h3>
             <RawHTML Tag="p" className="text" html={description} />
         </div>
@@ -61,17 +44,32 @@ function AboutBlurb({heading, description}) {
 }
 
 function SavingsBlurb({description}) {
-    const savingsData = useDataFromPromise(savingsPromise);
-    const html = useSavingsDataIn(description, savingsData);
+    const eventName = 'Microdonation subjects page bottom sentence impact link';
 
     return (
         <React.Fragment>
             <hr />
-            <div className="text-content">
-                <RawHTML Tag="p" className="savings-blurb" html={html} />
+            <div className="text-content" onClick={linkClickTracker(eventName)}>
+                <RawHTML Tag="p" className="savings-blurb" html={description} />
             </div>
         </React.Fragment>
     );
+}
+
+function useLastBlurb(data) {
+    const {adoptions_count: adoptions, savings} = useDataFromPromise(savingsPromise, {});
+    const description = useSavingsDataIn(data.description, adoptions, savings);
+
+    if (!data) {
+        return false;
+    }
+    if (data.heading) {
+        return {
+            heading: data.heading,
+            description
+        };
+    }
+    return description;
 }
 
 function AboutOurTextBooks({model}) {
@@ -85,6 +83,7 @@ function AboutOurTextBooks({model}) {
             a[index][textId] = model[b];
             return a;
         }, []);
+    const lastBlurb = useLastBlurb(textData[3]);
 
     return (
         <div>
@@ -94,10 +93,11 @@ function AboutOurTextBooks({model}) {
                     textData.slice(0, 3).map((data) =>
                         <AboutBlurb {...data} key={data.description} />)
                 }
+                {lastBlurb.heading && <AboutBlurb {...lastBlurb} />}
             </div>
             {
-                textData.length > 3 &&
-                    <SavingsBlurb description={textData[3].description} />
+                !lastBlurb.heading &&
+                    <SavingsBlurb description={lastBlurb} />
             }
         </div>
     );
