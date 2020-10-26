@@ -72,7 +72,7 @@ function MainMenu() {
                 <li className="give-button-item"><GiveButton /></li>
             </ul>
             <button className="expand" aria-haspopup="true" aria-label="Toggle Meta Navigation Menu" tabindex="0">
-                <span></span>
+                <span />
             </button>
         </React.Fragment>
     );
