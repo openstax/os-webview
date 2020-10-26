@@ -35,6 +35,18 @@ function getUserStatusPromise() {
     };
 
     return userModel.load().then((user) => {
+        if (!user || Reflect.ownKeys(user).length === 0) {
+            console.debug('No user info retrieved');
+        } else if (!('pending_verification' in user)) {
+            console.debug('No pending_verification flag set in user info', user);
+        } else {
+            console.debug('User info:', {
+                email: user.email,
+                pendingVerification: user.pending_verification,
+                groups: user.groups
+            });
+        }
+
         return {
             isInstructor: isInstructor(user),
             isStudent: isStudent(user),
