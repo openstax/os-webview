@@ -135,7 +135,7 @@ class Header extends Controller {
     toggleFullScreenNav(button) {
         const wasActive = this.model.headerActive;
         const reconfigure = () => {
-            document.body.classList.toggle('no-scroll');
+            document.body.parentNode.classList.toggle('no-scroll');
             this.model.headerActive = !this.model.headerActive;
             this.update();
             this.removeAllOpenClasses();
