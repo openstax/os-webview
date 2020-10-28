@@ -32,11 +32,11 @@ select {
     &::after {
         color: os-color(gray);
         position: absolute;
-        right: 1.2rem;
+        right: 1.3rem;
         text-align: center;
-        top: calc(50% - 1rem);
+        top: calc(50% - 1.3rem);
         transform: rotate(90deg);
-        transform-origin: 63% 55%;
+        transform-origin: 68% 52%;
         transition: All 0.2s ease-in-out;
         width: 2rem;
     }

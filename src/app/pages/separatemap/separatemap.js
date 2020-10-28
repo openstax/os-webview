@@ -1,44 +1,30 @@
-import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
-import $ from '~/helpers/$';
-import {on} from '~/helpers/controller/decorators';
+import React, {useState, useRef, useEffect} from 'react';
+import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import shellBus from '~/components/shell/shell-bus';
-import {description as template} from './separatemap.html';
-import css from './separatemap.css';
-import SearchBox from './search-box/search-box';
-import Map from '~/helpers/map-api';
-import {queryById} from '~/models/querySchools';
-import TestimonialForm from './testimonial-form/testimonial-form';
-import {accountsModel} from '~/models/usermodel';
+import $ from '~/helpers/$';
+import cn from 'classnames';
 import analytics from '~/helpers/analytics';
+import {queryById} from '~/models/querySchools';
+import Map from '~/helpers/map-api';
+import SearchBox from './search-box/search-box';
+import './separatemap.css';
 
-const spec = {
-    template,
-    css,
-    regions: {
-        searchBox: '.search-box-region'
-    },
-    view: {
-        classes: ['separatemap', 'page'],
-        tag: 'main',
-        id: 'maincontent'
-    },
-    model() {
-        return {
-            popupVisible: this.popupVisible,
-            searchBoxMinimized: this.searchBoxMinimized
-        };
-    },
-    searchBoxMinimized: false,
-    popupVisible: true
+const view = {
+    classes: ['separatemap', 'page'],
+    tag: 'main',
+    id: 'maincontent'
 };
-const accountPromise = accountsModel.load();
 
-export default class SeparateMap extends componentType(spec, canonicalLinkMixin) {
+function useMap() {
+    const [map, setMap] = useState();
+    const [selectedSchool, setSelectedSchool] = useState();
 
-    onAttached() {
-        shellBus.emit('with-sticky');
+    useEffect(() => {
         const mapZoom = $.isMobileDisplay() ? 2 : 3;
-        const map = new Map({
+
+        setMap(new Map({
             container: 'mapd',
             center: [-95.712891, 37.090240],
             zoom: mapZoom,
@@ -46,98 +32,102 @@ export default class SeparateMap extends componentType(spec, canonicalLinkMixin)
             dragRotate: false,
             touchZoomRotate: false,
             interactive: true
-        });
-        const sb = new SearchBox({
-            minimized: this.searchBoxMinimized
-        });
+        }));
+    }, []);
 
-        this.regions.searchBox.append(sb);
-        sb.on('results', (results) => {
-            map.showPoints(results);
-        });
-        sb.on('reset', () => map.reset());
-        sb.on('show-details', (info) => {
-            map.showTooltip(info, true);
-        });
-        sb.on('toggle-minimized', () => {
-            this.searchBoxMinimized = !this.searchBoxMinimized;
-            sb.emit('update-props', {
-                minimized: this.searchBoxMinimized
-            });
-            this.update();
-        });
-        accountPromise.then((info) => {
-            if (!('id' in info)) {
-                return;
-            }
-            const formParameters = {
-                role: info.self_reported_role,
-                email: (info.contact_infos || [])
-                    .filter((i) => i.is_verified)
-                    .reduce((a, b) => (a.is_guessed_preferred ? a : b), {})
-                    .value,
-                school: info.self_reported_school,
-                firstName: info.first_name,
-                lastName: info.last_name
-            };
-            const newForm = () => {
-                const tf = new TestimonialForm(formParameters);
+    useEffect(() => {
+        if (map) {
+            const container = document.getElementById('mapd');
 
-                tf.on('close-form', () => {
-                    shellBus.emit('hideDialog');
-                    this.testimonialForm = null;
-                });
-                return tf;
-            };
+            container.addEventListener('click', (event) => {
+                const delegateTarget = event.target.closest('.mapboxgl-popup-content .put-away');
 
-            sb.emit('update-props', {
-                loggedIn: true
-            });
-            sb.on('submit-testimonial', () => {
-                if (!this.testimonialForm) {
-                    this.testimonialForm = newForm();
+                if (delegateTarget) {
+                    map.tooltip.remove();
                 }
-                shellBus.emit('showDialog', () => ({
-                    title: 'Submit your testimonial',
-                    content: this.testimonialForm
-                }));
             });
-        });
-        map.on('select-school', (id) => {
-            queryById(id).then((schoolInfo) => {
-                map.showTooltip(schoolInfo);
-                sb.emit('show-one-school', schoolInfo);
+            map.on('select-school', (id) => {
+                queryById(id).then((schoolInfo) => {
+                    setSelectedSchool(schoolInfo);
+                });
             });
-        });
-        this.map = map;
-    }
-
-    @on('click .popup-msg-cross')
-    popupClose() {
-        if (!$.isMobileDisplay()) {
-            this.popupVisible = false;
-            this.update();
         }
-    }
+    }, [map]);
 
-    @on('click .mapboxgl-popup-content .put-away button')
-    closetooltip() {
-        this.map.tooltip.remove();
-    }
+    return [map, selectedSchool];
+}
 
-    @on('click .back-impact-div')
-    sendCloseMapEvent() {
-        analytics.sendPageEvent('map', 'close', '');
-    }
+function GoBackControl() {
+    return (
+        <a
+            href="/global-reach" className="back-impact-div"
+            onClick={() => analytics.sendPageEvent('map', 'close', '')}
+        >
+            <span className="close-map-msg">Close map</span>
+            <div className="back-impact-btn">
+                <FontAwesomeIcon icon="times" className="left-arrow-bak" />
+            </div>
+        </a>
+    );
+}
 
-    @on('click .popup-message-link')
-    sendAdoptionEvent() {
+function SearchBoxDiv() {
+    const [minimized, toggle] = useToggle(false);
+    const [map, selectedSchool] = useMap();
+
+    return (
+        <div className={cn('search-box-region', {minimized})}>
+            <SearchBox
+                map={map} minimized={minimized} toggle={toggle}
+                selectedSchool={selectedSchool}
+            />
+        </div>
+    );
+}
+
+function PopupMessage() {
+    const [popupVisible, togglePopup] = useToggle(true);
+
+    function sendAdoptionEvent() {
         analytics.sendPage('map', 'adoption', '');
     }
 
-    onClose() {
-        shellBus.emit('no-sticky');
-    }
-
-
+    return popupVisible && (
+        <div className="popup-msg-div">
+            <div className="popup-msg-cross">
+                <FontAwesomeIcon
+                    icon="times" className="popup-msg-cross-icon"
+                    role="button" tabindex="0"
+                    onClick={() => togglePopup()}
+                />
+            </div>
+            <div>Not seeing your school? Numbers aren't right?</div>
+            <div className="popup-msg-link" onClick={sendAdoptionEvent}>
+                <a href="https://openstax.org/adoption">Let us know.</a>
+            </div>
+            <div>
+                Since our books are free, we rely on instructors to
+                tell us they’re using our books.
+            </div>
+        </div>
+    );
 }
+
+function SeparateMap() {
+    useEffect(() => {
+        shellBus.emit('with-sticky');
+
+        return () => shellBus.emit('no-sticky');
+    }, []);
+
+    return (
+        <React.Fragment>
+            <div id="mapd" className="mapd" />
+            <GoBackControl />
+            <SearchBoxDiv />
+            <PopupMessage />
+        </React.Fragment>
+    );
+}
+
+export default pageWrapper(SeparateMap, view);

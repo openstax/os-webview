@@ -1,63 +1,67 @@
-import componentType from '~/helpers/controller/init-mixin';
-import {description as template} from './filters.html';
-import css from './filters.css';
-import {on} from '~/helpers/controller/decorators';
-import busMixin from '~/helpers/controller/bus-mixin';
-import FormSelect from '~/components/form-select/form-select';
+import React from 'react';
+import FormSelect from '~/components/form-select/form-select.jsx';
+import './filters.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['filters']
-    },
-    regions: {
-        institution: '.institution-region'
-    },
-    filters: {}
-};
+function InstitutionSelector({setInstitution}) {
+    const options = [
+        {label: 'Any', value: '', selected: true},
+        {label: 'College/University', value: 'College/University'},
+        {label: 'Technical/Community College', value: 'Technical/Community College'},
+        {label: 'High School', value: 'High School'}
+    ];
 
-export default class extends componentType(spec, busMixin) {
-
-    onLoaded() {
-        if (super.onLoaded) {
-            super.onLoaded();
-        }
-
-        const options = [
-            {label: 'Any', value: '', selected: true},
-            {label: 'College/University', value: 'College/University'},
-            {label: 'Technical/Community College', value: 'Technical/Community College'},
-            {label: 'High School', value: 'High School'}
-        ];
-
-        this.select = new FormSelect({
-            instructions: 'Type of institution',
-            validationMessage: () => '',
-            name: 'institution-type',
-            options
-        });
-        this.regions.institution.attach(this.select);
-        this.select.on('change', (newValue) => {
-            if (newValue) {
-                this.filters['institution-type'] = newValue;
-            } else {
-                delete this.filters['institution-type'];
-            }
-            this.emit('change', this.filters);
-        });
+    function onChange(event) {
+        console.info('Set institution', event.target.value);
+        setInstitution(event.target.value);
     }
 
-    @on('change [type="checkbox"]')
-    handleChange(event) {
-        const el = event.delegateTarget;
+    return (
+        <FormSelect
+            name='institution-type'
+            selectAttributes={{onChange}}
+            label="Type of institution"
+            options={options}
+        />
+    );
+}
 
-        if (el.checked) {
-            this.filters[el.name] = true;
+function ForCheckbox({name, label, selected}) {
+    function onChange(event) {
+        const {checked} = event.target;
+
+        if (checked) {
+            selected.add(name);
         } else {
-            delete this.filters[el.name];
+            selected.delete(name);
         }
-        this.emit('change', this.filters);
     }
 
-};
+    return (
+        <label class="for-checkbox">
+            <input type="checkbox" name={name} onChange={onChange} />
+            {label}
+        </label>
+    );
+}
+
+export default function Filters({selected, setInstitution}) {
+    return (
+        <div className="filters">
+            <div class="institution-region">
+                <InstitutionSelector setInstitution={setInstitution} />
+            </div>
+            <ForCheckbox
+                name="partners" label="OpenStax institutional partners"
+                selected={selected}
+            />
+            <ForCheckbox
+                name="savings" label="Schools that have saved over $1 million"
+                selected={selected}
+            />
+            <ForCheckbox
+                name="testimonials" label="Have testimonials"
+                selected={selected}
+            />
+        </div>
+    );
+}
