@@ -1,0 +1,78 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/placeholder-selectors';
+
+$statue-of-liberty-green: #7bb6ae;
+
+.llph.page {
+    .hero {
+        @extend %light-on-dark;
+
+        background-color: $statue-of-liberty-green;
+        background-position: center;
+        background-size: cover;
+        color: text-color(white);
+        text-align: left;
+
+        .content {
+            @extend %content;
+
+            .block {
+                max-width: 67rem;
+            }
+        }
+        h1 {
+            @include set-font(h1);
+        }
+        .hero-blurb {
+            line-height: 1.875;
+            margin-bottom: 2rem;
+        }
+        .primary {
+            @extend %button;
+            @extend %primary;
+        }
+    }
+    .info {
+        background-color: ui-color(white);
+        padding: 6rem 0;
+
+        .content {
+            @extend %content;
+
+            @include wider-than($phone-max) {
+                display: grid;
+                grid-column-gap: 3rem;
+                grid-template-columns: 30% 1fr;
+            }
+        }
+
+        h2 {
+            margin: 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    }
+    .icon-links {
+        background-color: ui-color(default);
+        padding: 3rem 0;
+
+        .content {
+            display: grid;
+            grid-gap: 3rem;
+            line-height: 1;
+            margin: auto;
+            width: fit-content;
+
+            @include width-up-to($phone-max) {
+                grid-auto-flow: row;
+                text-align: center;
+            }
+
+            @include wider-than($phone-max) {
+                grid-auto-flow: column;
+            }
+        }
+    }
+}

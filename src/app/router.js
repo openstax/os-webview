@@ -30,6 +30,7 @@ const PAGES = [
     'institutional-partnership-application',
     'institutional-partnership',
     'interest',
+    'llph',
     'openstax-tutor',
     'partners',
     'partners/*path',
