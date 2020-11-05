@@ -1,36 +1,34 @@
 import React from 'react';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {RawHTML, LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import linkHelper from '~/helpers/link';
 import './llph.css';
 
+function loginClickHandler(event) {
+    event.preventDefault(); // REMOVE THIS!!!
+    console.info('Caught a click');
+}
+
 function LLPH({data}) {
-    const heroBackground = 'https://via.placeholder.com/1440x400/7BB6AE/666666?text=Statue of Liberty';
-    const headline = 'A new learning tool for U.S. History';
-    const heroBlurb = `Life, Liberty, & the Pursuit of Happiness is a blended learning
-    tool for high school students that uses our OpenStax Tutor
-    courseware to help students stay engaged while reading and
-    doing homework assignments.`;
-    const infoHeadline = 'Free for students, aligned with A.P. standards.';
-    const infoHtml = `<p>
-    Life, Liberty, & the Pursuit of Happiness is based on compelling
-    stories that bring American history to life. With OpenStax Tutor, teachers can
-    assign reading and homework assignments to their students and take advantage of
-    included lesson plans and supporting resources, creating a blended learning tool
-    that’s perfect for in class or remote learning.
-    </p><p>
-    Life, Liberty, and the Pursuit of Happiness is produced through a collaborative
-    publishing agreement between OpenStax and the Bill of Rights Institute. The
-    course is designed to align with the curriculum guidelines for AP U.S. History
-    from the College Board.
-    </p>
-    `;
-    const coverUrl = 'https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/life_libery_and_the_pursuit_of_happiness_QFfFHz3_cover.svg';
-    const infoLinkSlug = 'life-liberty-and-pursuit-happiness';
-    const infoLinkText = 'Not an educator? Take a look at the book here.';
+    const {
+        heading: headline,
+        subheading: heroBlurb,
+        book_heading: infoHeadline,
+        book_description: infoHtml,
+        book_cover_url: coverUrl,
+        info_link_slug: infoLinkSlug,
+        info_link_text: infoLinkText,
+        signup_link_text: signupLinkText,
+        signup_link_href: signupLinkHref
+    } = data;
+    const heroBackground = data.hero_background.meta.download_url;
     const ostLink = '/openstax-tutor';
-    const ostLogo = 'https://via.placeholder.com/194x40/DDDDDD/888833?text=Tutor';
+    const ostLogo = '/images/llph/tutor-logo.svg';
     const briLink = 'https://billofrightsinstitute.org/';
-    const briLogo = 'https://via.placeholder.com/110x40/DDDDDD/333388?text=Bill';
+    const briLogo = '/images/llph/bri-logo.png';
+    const loginLocation = new URL(linkHelper.loginLink());
+
+    loginLocation.search = `?r=${encodeURIComponent(signupLinkHref)}&bri_book=LLPH`;
 
     return (
         <React.Fragment>
@@ -39,7 +37,7 @@ function LLPH({data}) {
                     <div className="block">
                         <h1>{headline}</h1>
                         <div className="hero-blurb">{heroBlurb}</div>
-                        <a className="btn primary">Sign in to OpenStax Tutor</a>
+                        <a className="btn primary" href={loginLocation}>{signupLinkText}</a>
                     </div>
                 </div>
             </section>
@@ -67,7 +65,7 @@ function LLPH({data}) {
 
 function LLPHLoader() {
     return (
-        <LoaderPage slug="pages/partners" Child={LLPH} doDocumentSetup />
+        <LoaderPage slug="pages/llph" Child={LLPH} doDocumentSetup />
     );
 }
 
