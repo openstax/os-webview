@@ -14,7 +14,7 @@ function HowUsingBook({book, selectedValue, setSelectedValue}) {
         <FormRadioGroup
             label={`How are you using ${book.text}?`}
             options={sfOptions} selectedValue={selectedValue}
-            required name
+            required name={name}
             setSelectedValue={setSelectedValue}
         />
     );
