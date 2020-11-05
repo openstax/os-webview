@@ -18,7 +18,7 @@ function sendAddEvent(actionObj) {
 }
 
 function filterIsSelected() {
-    return types.value || advanced.value.length > 0;
+    return types.value || advanced.value.length > 0 || books.value.length > 0;
 }
 
 types.on('notify', sendAddEvent);
