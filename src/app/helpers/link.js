@@ -73,7 +73,7 @@ function isCloudFront(href) {
 function loginOrOutLink(loginOrLogout) {
     const encodedLocation = encodeURIComponent(decodeURIComponent(window.location.href));
 
-    return `${settings.apiOrigin}/oxauth/${loginOrLogout}/?next=${encodedLocation}`;
+    return `${settings.accountHref}/accounts/i/${loginOrLogout}/?r=${encodedLocation}`;
 }
 
 function loginLink() {
@@ -81,7 +81,7 @@ function loginLink() {
 }
 
 function logoutLink() {
-    return loginOrOutLink('logout');
+    return loginOrOutLink('signout');
 }
 
 export default {

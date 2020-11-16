@@ -67,8 +67,8 @@ const browserId = () => {
 $.isSupported = () => {
     const info = browserId();
 
-    return ((info.name === 'Safari' && +info.version >= 10.1) ||
-     (info.name === 'Edge' && +info.version >= 16) ||
+    return ((info.name === 'Safari' && +info.version >= 11) ||
+     (info.name === 'Edge' && +info.version >= 79) ||
      (info.name === 'Firefox' && +info.version >= 52) ||
      (info.name === 'Chrome' && +info.version >= 57));
 };
