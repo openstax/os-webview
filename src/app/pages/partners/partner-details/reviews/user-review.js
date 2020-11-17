@@ -2,6 +2,7 @@ import React from 'react';
 import {Stars} from '~/components/stars-and-count/stars-and-count';
 import {PageContext} from './contexts';
 import {useMyReview} from './rating-form';
+import ClippedText from '~/components/clipped-text/clipped-text';
 import './user-review.css';
 
 function UserControls() {
@@ -32,6 +33,8 @@ function UserControls() {
 export default function UserReview({
     initials, userName, rating, review, updated, response, allowEdit=false
 }) {
+    const {partnerName} = React.useContext(PageContext);
+
     return (
         <div className="user-review">
             <span className="initials">{initials}</span>
@@ -41,8 +44,16 @@ export default function UserReview({
                 <span className="updated">{updated}</span>
                 {allowEdit && <UserControls />}
             </div>
-            {review && <div className="review">{review}</div>}
-            {response && <div className="response">RESPONSE GOES HERE</div>}
+            {review && <ClippedText className="review">{review}</ClippedText>}
+            {
+                response &&
+                    <div className="response">
+                        <div className="partner-name">{partnerName}</div>
+                        <ClippedText>
+                            {response}
+                        </ClippedText>
+                    </div>
+            }
         </div>
     );
 }

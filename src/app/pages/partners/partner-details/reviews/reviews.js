@@ -146,12 +146,23 @@ function ReviewsPage() {
 function usePageContext(togglePage, partnerId) {
     const [ratings, postRating] = useReviews(partnerId);
     const userModel = useUserModel();
+    const [partnerName, summary, reviews] = ratings ?
+        [
+            ratings.partnerName,
+            {count: ratings.ratingCount, rating: ratings.averageRating.ratingAvg},
+            ratings.reviews
+        ] : [
+            null,
+            {},
+            []
+        ];
 
     return {
         togglePage,
         partnerId,
-        summary: ratings ? {count: ratings.ratingCount, rating: ratings.averageRating.ratingAvg} : {},
-        reviews: ratings ? ratings.reviews : [],
+        partnerName,
+        summary,
+        reviews,
         postRating,
         accountId: userModel && userModel.id,
         userName: userModel && userModel.last_name &&

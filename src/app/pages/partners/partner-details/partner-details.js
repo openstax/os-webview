@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, useContext} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import Synopsis from './synopsis/synopsis';
 import Carousel from './carousel/carousel';
