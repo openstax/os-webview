@@ -10,7 +10,7 @@ import './button-with-popover.css';
 import {on} from '~/helpers/controller/decorators';
 import shellBus from '~/components/shell/shell-bus';
 
-const sortOptions = [
+export const sortOptions = [
     {
         label: 'Name: A to Z',
         value: '1'

@@ -10,8 +10,15 @@
 
     .boxed {
         display: grid;
-        grid-gap: 3rem;
         grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+
+        @include width-up-to($phone-max) {
+            grid-gap: 1.5rem;
+        }
+
+        @include wider-than($phone-max) {
+            grid-gap: 3rem;
+        }
 
         &.grid {
             @include width-up-to($phone-max) {

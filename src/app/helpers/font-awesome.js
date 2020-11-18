@@ -59,7 +59,7 @@ const loadRegularIcon = loaderForPath('free-regular-svg-icons');
     'faSignOutAlt',
     'faSlidersH',
     'faStar',
-    'faStarHalfAlt',
+    'faStarHalf',
     'faTabletAlt',
     'faTasks',
     'faThumbtack',
@@ -84,8 +84,7 @@ const loadRegularIcon = loaderForPath('free-regular-svg-icons');
 ].forEach(loadBrandIcon);
 
 [
-    'faEnvelopeOpen',
-    'faStar'
+    'faEnvelopeOpen'
 ].forEach(loadRegularIcon);
 
 // This handles non-React tag replacement

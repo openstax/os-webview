@@ -24,6 +24,10 @@
         width: 3.5rem;
     }
 
+    .name {
+        font-weight: bold;
+    }
+
     .rating-and-controls {
         @include body-font(1.2rem);
 
@@ -33,6 +37,7 @@
 
         .stars {
             padding: 0;
+            white-space: nowrap;
         }
     }
 
@@ -48,6 +53,10 @@
         margin: 0 $normal-margin;
         padding: 0 1rem;
         text-transform: uppercase;
+
+        @include width-up-to($phone-max) {
+            display: none;
+        }
     }
 
     .response {

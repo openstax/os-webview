@@ -23,11 +23,15 @@
         @include set-font(body-regular);
 
         align-items: center;
+        background-color: ui-color(white);
+        border-bottom: thin solid ui-color(form-border);
         display: flex;
         font-weight: bold;
         justify-content: space-between;
         margin-bottom: -$normal-margin;
         padding: $normal-margin;
+        position: sticky;
+        top: 0;
 
         .put-away {
             font-size: 4rem;
@@ -59,6 +63,8 @@
     }
 
     .button-row {
+        background-color: ui-color(white);
+        border-top: thin solid ui-color(form-border);
         bottom: 0;
         display: grid;
         grid-gap: 1rem;

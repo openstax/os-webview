@@ -2,7 +2,7 @@
 @import 'mixins/placeholder-selectors';
 
 .partner-details {
-    > .synopsis {
+    > .sticky-region > .synopsis {
         align-items: start;
         background-color: ui-color(white);
         border-bottom: thin solid ui-color(form-border);
@@ -13,12 +13,6 @@
         'icon ratings'
         'icon site-link' 1fr / auto 1fr;
         padding-right: 4rem;
-
-        @include wider-than($phone-max) {
-            position: sticky;
-            top: 0;
-            z-index: 1;
-        }
 
         .icon {
             align-self: center;

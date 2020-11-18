@@ -66,7 +66,7 @@ function Overview({model, icon}) {
             </section>
             <RequestInfoButton {...{infoUrl, infoText}} />
             <hr />
-            <section>
+            <section className="overview">
                 <h2>Overview</h2>
                 <RawHTML className="main-text" html={description} />
                 <h2>Related Books</h2>
@@ -82,23 +82,6 @@ function Overview({model, icon}) {
     );
 }
 
-function ContentTabs({model, icon}) {
-    const labels = ['Overview', 'Reviews'];
-    const [selectedLabel, setSelectedLabel] = useState(labels[0]);
-
-    return (
-        <React.Fragment>
-            <TabGroup {...{labels, selectedLabel, setSelectedLabel}} />
-            <div className="tab-content">
-                <ContentGroup activeIndex={labels.indexOf(selectedLabel)}>
-                    <Overview model={model} icon={icon} />
-                    <Reviews partnerId={model.id} />
-                </ContentGroup>
-            </div>
-        </React.Fragment>
-    );
-}
-
 function PartnerDetails(model) {
     const {
         website, partner_website: partnerWebsite, websiteLinkText: partnerLinkText,
@@ -106,12 +89,22 @@ function PartnerDetails(model) {
     } = model;
     const icon = logoUrl || 'https://via.placeholder.com/150x150?text=[no%20logo]';
     const partnerLinkProps = {partnerUrl: website || partnerWebsite, partnerLinkText};
+    const labels = ['Overview', 'Reviews'];
+    const [selectedLabel, setSelectedLabel] = useState(labels[0]);
 
     return (
         <div className="partner-details" onClick={(e) => e.stopPropagation()}>
-            <Synopsis {...{model, icon, partnerLinkProps}} />
-            <div className="scrolling-region text-content" onClick={(e) => e.stopPropagation()}>
-                <ContentTabs model={model} icon={icon} />
+            <div className="sticky-region">
+                <Synopsis {...{model, icon, partnerLinkProps}} />
+                <TabGroup {...{labels, selectedLabel, setSelectedLabel}} />
+            </div>
+            <div className="scrolling-region boxed" onClick={(e) => e.stopPropagation()}>
+                <div className="tab-content">
+                    <ContentGroup activeIndex={labels.indexOf(selectedLabel)}>
+                        <Overview model={model} icon={icon} />
+                        <Reviews partnerId={model.id} />
+                    </ContentGroup>
+                </div>
             </div>
         </div>
     );

@@ -81,15 +81,19 @@
         height: 100%;
 
         @include width-up-to($phone-max) {
-            display: grid;
-            grid-row-gap: 1rem;
-            grid-template-columns: auto;
-            justify-content: start;
             margin-bottom: -2rem;
         }
 
         button {
-            margin-top: 1rem;
+            margin-top: 0.7rem;
+        }
+
+        .review-status {
+            text-transform: uppercase;
+
+            @include width-up-to($phone-max) {
+                display: none;
+            }
         }
     }
 

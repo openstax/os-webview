@@ -11,8 +11,26 @@
     justify-content: left;
 
     .stars {
-        color: os-color(yellow);
         font-size: 75%;
         padding-bottom: 3%;
+
+        .full {
+            color: os-color(yellow);
+        }
+
+        .empty {
+            color: ui-color(default);
+        }
+
+        .overlaid-stars {
+            position: relative;
+
+            :not(:first-child) {
+                position: absolute;
+                bottom: 50%;
+                left: 0;
+                transform: translateY(50%);
+            }
+        }
     }
 }

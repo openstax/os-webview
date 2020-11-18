@@ -34,7 +34,14 @@
             align-items: center;
             display: flex;
             justify-content: center;
-            height: 31rem;
+
+            @include width-up-to($phone-max) {
+                height: 15rem;
+            }
+
+            @include wider-than($phone-max) {
+                height: 31rem;
+            }
 
             img,
             video {
