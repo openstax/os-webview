@@ -1,0 +1,9 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.clipped-text {
+    overflow: hidden;
+
+    & ~ a {
+        text-decoration: none;
+    }
+}

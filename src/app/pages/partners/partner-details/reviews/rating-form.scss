@@ -1,0 +1,105 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.partner-details .rating-form {
+    width: 100%;
+
+    .text-content {
+        display: block;
+        padding-bottom: 6rem;
+    }
+
+    .back-button {
+        float: left;
+    }
+
+    h1 {
+        @include title-font(1.8rem);
+
+        margin-bottom: 3rem;
+        text-align: center;
+    }
+
+    .info-button {
+        color: os-color(medium-blue);
+        margin-left: 1rem;
+        display: inline;
+
+        &.with-tooltip:hover > .tooltip {
+            border: thin solid ui-color(form-border);
+            box-shadow: none;
+
+            @include width-up-to($phone-max) {
+                position: static;
+                width: 100%;
+            }
+
+            // See https://stackoverflow.com/a/36872375/392102
+            @include wider-than($phone-max) {
+                left: calc(100% + 2rem);
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 40rem;
+
+                &::before,
+                &::after {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    left: auto;
+                    right: 100%;
+                    top: calc(50% - 1rem);
+                    width: 0;
+                    height: 0;
+                }
+
+                &::before {
+                    border: 1rem solid transparent;
+                    border-right-color: ui-color(form-border);
+                }
+
+                &::after {
+                    border: 0.9rem solid transparent;
+                    border-right-color: white;
+                    transform: translateY(0.1rem);
+                }
+            }
+
+        }
+    }
+
+    .star-selector {
+        align-items: center;
+        display: grid;
+        grid-auto-flow: column;
+        grid-column-gap: 1rem;
+        justify-content: left;
+        margin-top: 2rem;
+    }
+
+    .stars {
+        color: os-color(yellow);
+        font-size: 3rem;
+    }
+
+    .review-form {
+        margin-top: 3rem;
+    }
+
+    textarea {
+        border: thin solid ui-color(form-border);
+        height: 21rem;
+        margin: 1rem 0 3rem;
+        width: 100%;
+    }
+
+    .button-row {
+        display: grid;
+        grid-column-gap: 1rem;
+        grid-template-columns: 1fr auto auto;
+
+        .required-message {
+            color: os-color(red);
+        }
+    }
+}

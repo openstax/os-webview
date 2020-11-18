@@ -1,39 +1,40 @@
 import React from 'react';
 import routerBus from '~/helpers/router-bus';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import StarsAndCount from '~/components/stars-and-count/stars-and-count';
 import './partners.css';
 
-function Blurb({blurb, badgeImage, onClick}) {
+function Blurb({blurb, badgeImage, onClick, partnerId}) {
+    const tags = [blurb.cost, blurb.type].filter((x) => x);
+    const {count: ratingCount, average: rating} = blurb;
+
     return (
         <a className="blurb" href={blurb.url} onClick={onClick}>
             <div className="logo">
                 <img src={blurb.image} alt="" />
+                {
+                    blurb.verifiedFeatures &&
+                        <div className="badge">
+                            <img className="background" src={badgeImage} alt="verified" />
+                            <FontAwesomeIcon className="checkmark" icon="check" />
+                            <div className="tooltip right">
+                                {blurb.verifiedFeatures}
+                            </div>
+                        </div>
+                }
             </div>
-            {
-                blurb.verifiedFeatures &&
-                    <div className="badge">
-                        <img className="background" src={badgeImage} alt="verified" />
-                        <FontAwesomeIcon className="checkmark" icon="check" />
-                        <div className="tooltip right">
-                            {blurb.verifiedFeatures}
-                        </div>
-                    </div>
-            }
-            <div className="name">{blurb.name}</div>
-            <div className="tags">
-                {
-                    blurb.cost &&
-                        <div className="info">
-                            <span className="label">Cost:</span>
-                            {blurb.cost}
-                        </div>
-                }
-                {
-                    blurb.type &&
-                        <div className="info">
-                            <span className="label">Type:</span>{blurb.type}
-                        </div>
-                }
+            <div className="info">
+                <div className="name">{blurb.name}</div>
+                <div className="tags">
+                    {
+                        tags.map((value) =>
+                            <span className="tag" key={value}>
+                                {value}
+                            </span>
+                        )
+                    }
+                </div>
+                <StarsAndCount rating={blurb.rating} count={blurb.ratingCount} showNumber />
             </div>
         </a>
     );
@@ -62,7 +63,7 @@ export default function Partners({bookAbbreviation, model}) {
                     {
                         blurbs.map((blurb) =>
                             <Blurb
-                                blurb={blurb} onClick={onClick} badgeImage={badgeImage}
+                                blurb={blurb} onClick={onClick} badgeImage={badgeImage} partnerId={blurb.id}
                                 key={blurb.url}
                             />
                         )

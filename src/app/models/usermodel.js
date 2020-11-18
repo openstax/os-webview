@@ -1,3 +1,4 @@
+import {useState, useEffect} from 'react';
 import settings from 'settings';
 import $ from '~/helpers/$';
 import bus from './usermodel-bus';
@@ -143,8 +144,18 @@ const userModel = {
 };
 const makeDocModel = (docId) => new UserModel(`${docUrlBase}/${docId}`);
 
+function useUserModel() {
+    const [data, setData] = useState();
+
+    useEffect(() => {
+        userModel.load().then(setData);
+    }, []);
+
+    return data;
+}
+
 bus.serve('userModel-load', () => userModel.load());
 bus.serve('accountsModel-load', () => accountsModel.load());
 
 export default userModel;
-export {accountsModel, makeDocModel};
+export {accountsModel, makeDocModel, useUserModel};

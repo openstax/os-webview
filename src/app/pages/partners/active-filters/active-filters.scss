@@ -20,27 +20,31 @@
         .filters {
             @include body-font(1.4rem);
 
+            align-items: center;
             display: flex;
             flex-flow: row wrap;
             margin-bottom: -1rem;
             margin-right: -1rem;
 
-            $baby-blue: rgb(230, 242, 247);
-            $border-blue: rgb(19, 127, 179);
             .filter-remover {
-                background-color: $baby-blue;
-                border: thin solid $border-blue;
+                background-color: ui-color(white);
+                border: thin solid ui-color(form-border);
                 border-radius: 0.2rem;
+                display: grid;
+                grid-column-gap: $normal-margin;
+                grid-template-columns: 1fr auto;
+                height: 4rem;
+                line-height: 1.8rem;
                 margin-bottom: 1rem;
                 margin-right: 1rem;
-                padding: 0.5rem 1rem;
+                padding: 1rem;
             }
 
             button {
                 appearance: none;
                 background-color: transparent;
                 color: text-color(normal);
-                margin-left: 1rem;
+                font-size: 2rem;
                 padding: 0;
             }
 

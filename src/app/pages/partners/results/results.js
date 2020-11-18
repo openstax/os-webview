@@ -56,13 +56,22 @@ function filterEntries(entries) {
     }
 
     resultCount.value = result.length;
-    return ['1', '-1'].includes(sort.value) ?
-        orderBy(
-            result,
-            [(entry) => entry.title.toLowerCase()],
-            [(sort.value === '-1' ? 'desc' : 'asc')]
-        ) :
-        shuffle(result);
+
+    if (Math.abs(sort.value) === 0) {
+        return shuffle(result);
+    }
+
+    const getFieldsDict = {
+        1: (r) => r.title.toLowerCase(),
+        2: (r) => Math.abs(r.rating)
+    };
+    const sortDir = sort.value < 0 ? 'desc' : 'asc';
+
+    return orderBy(
+        result,
+        [getFieldsDict[Math.abs(sort.value)]],
+        [sortDir]
+    );
 }
 
 function advancedFilterKeys(partnerEntry) {
@@ -72,6 +81,7 @@ function advancedFilterKeys(partnerEntry) {
 // eslint-disable-next-line complexity
 function resultEntry(pd) {
     return {
+        id: pd.id,
         title: pd.partner_name,
         blurb: pd.short_partner_description ||
             '[no description]',
@@ -99,7 +109,9 @@ function resultEntry(pd) {
         type: pd.partner_type,
         cost: pd.affordability_cost,
         infoUrl: pd.formstack_url,
-        verifiedFeatures: pd.verified_by_instructor ? tooltipText : false
+        verifiedFeatures: pd.verified_by_instructor ? tooltipText : false,
+        rating: pd.average_rating.rating__avg,
+        ratingCount: pd.rating_count
     };
 }
 

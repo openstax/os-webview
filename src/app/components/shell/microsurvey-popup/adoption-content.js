@@ -41,7 +41,8 @@ function BookCheckbox({info}) {
 async function submitForm(formRef, accountId) {
     for (const cb of formRef.current.querySelectorAll('[type=checkbox]')) {
         const students = cb.checked ? cb.value : 0;
-        const postOutput = await cmsPost(`salesforce/renewal/${accountId}/`, {
+
+        await cmsPost(`salesforce/renewal/${accountId}/`, {
             // eslint-disable-next-line camelcase
             confirmed_yearly_students: students,
             id: cb.name

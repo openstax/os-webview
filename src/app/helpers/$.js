@@ -330,7 +330,7 @@ $.fade = (element, {fromOpacity, toOpacity, steps=10}) => {
 };
 
 function camelCase(underscored) {
-    return underscored.replace(/_([a-z0-9])/g, (_, chr) => chr ? chr.toUpperCase() : '');
+    return underscored.replace(/_+([a-z0-9])/g, (_, chr) => chr ? chr.toUpperCase() : '');
 }
 
 function camelCaseKeys(obj) {

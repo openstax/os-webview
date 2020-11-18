@@ -1,0 +1,18 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.stars-and-count {
+    @include body-font(1.2rem);
+
+    align-items: center;
+    color: os-color(light-gray);
+    display: grid;
+    grid-auto-flow: column;
+    grid-column-gap: 0.7rem;
+    justify-content: left;
+
+    .stars {
+        color: os-color(yellow);
+        font-size: 75%;
+        padding-bottom: 3%;
+    }
+}

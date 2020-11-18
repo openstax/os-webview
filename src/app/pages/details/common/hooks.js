@@ -3,6 +3,7 @@ import userModel from '~/models/usermodel';
 import tableOfContentsHtml from '~/models/table-of-contents-html';
 import partnerFeaturePromise, {tooltipText} from '~/models/salesforce-partners';
 import shuffle from 'lodash/shuffle';
+import $ from '~/helpers/$';
 
 export function useTableOfContents(model) {
     const isTutor = model.webviewRexLink.includes('tutor');
@@ -70,14 +71,19 @@ export function useUserStatus() {
 }
 
 function toBlurb(partner) {
+    const pData = $.camelCaseKeys(partner);
+
     return {
-        image: partner.partner_logo,
-        name: partner.partner_name,
-        description: partner.short_partner_description,
-        cost: partner.affordability_cost,
-        type: partner.partner_type,
-        url: `/partners?${partner.partner_name}`,
-        verifiedFeatures: partner.verified_by_instructor ? tooltipText : false
+        id: pData.id,
+        image: pData.partnerLogo,
+        name: pData.partnerName,
+        description: pData.shortPartnerDescription,
+        cost: pData.affordabilityCost,
+        type: pData.partnerType,
+        url: `/partners?${pData.partnerName}`,
+        verifiedFeatures: pData.verifiedByInstructor ? tooltipText : false,
+        rating: pData.averageRating.ratingAvg,
+        ratingCount: pData.ratingCount
     };
 }
 
