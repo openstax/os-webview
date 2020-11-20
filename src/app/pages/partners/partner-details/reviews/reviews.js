@@ -63,7 +63,7 @@ function LeaveAReview() {
 
     return (
         <div className="leave-a-review">
-            Leave a review for this product
+            <div>Leave a review for this product</div>
             <button type="button" className="primary" onClick={togglePage}>
                 Write a review
             </button>
@@ -74,23 +74,21 @@ function LeaveAReview() {
 function LoginToReview() {
     return (
         <div className="leave-a-review">
-            Sign in to leave a review
+            <div>Sign in to leave a review</div>
             <a href={linkHelper.loginLink()} className="btn primary">Login</a>
         </div>
     );
 }
 
-function YouLeftAReview() {
-    const date = '6/25/2020';
-    const status = ''; // Future: reviews will have a status
-
+function YouLeftAReview({status, updated}) {
     return (
         <div className="leave-a-review">
-            You submitted a review for this resource on <b>{date}</b>.
+            <div>You submitted a review for this resource on <b>{updated}</b>.</div>
             {
-                status === 'PENDING' &&
+                status !== 'Approved' &&
                     <span>
-                        The status of your submission is <b>{status}</b>.
+                        The status of your submission is{' '}
+                        <b className="review-status">{status}</b>.
                         An email will be sent when your review has been processed.
                     </span>
             }
@@ -98,14 +96,16 @@ function YouLeftAReview() {
     );
 }
 
-function ReviewPrompt({accountId, hasWrittenReview}) {
+function ReviewPrompt({accountId, hasWrittenReview, status, updated}) {
     if (!accountId) {
         return (<LoginToReview />);
     }
     if (!hasWrittenReview) {
         return (<LeaveAReview />);
     }
-    return null;
+    return (
+        <YouLeftAReview status={status} updated={updated} />
+    );
 }
 
 function ReviewsPage() {
@@ -118,8 +118,9 @@ function ReviewsPage() {
         id: r.submittedByAccountId,
         allowEdit: false,
         updated: new Date(`${r.updated}T00:00:00`).toLocaleDateString('en-us'),
-        response: r.partnerResponse
-    }));
+        response: r.partnerResponse,
+        status: r.status
+    })).sort((a, b) => new Date(b.updated) - new Date(a.updated));
     const indexOfUserReview = reviewModels.findIndex((r) => r.id === accountId);
     const notLoggedIn = !accountId;
 
@@ -129,12 +130,18 @@ function ReviewsPage() {
         userReview.allowEdit = true;
         reviewModels.unshift(userReview);
     }
+    const yourReviewModel = reviewModels[0] || {};
 
     return (
         <div className="reviews">
             <Synopsis />
             <DistributionBars />
-            <ReviewPrompt accountId={accountId} hasWrittenReview={indexOfUserReview >= 0} />
+            <ReviewPrompt
+                accountId={accountId}
+                hasWrittenReview={indexOfUserReview >= 0}
+                status={yourReviewModel.status}
+                updated={yourReviewModel.updated}
+            />
             <div className="review-list">
                 {reviewModels.map((model) => <UserReview {...model} key={model.id} />)}
             </div>

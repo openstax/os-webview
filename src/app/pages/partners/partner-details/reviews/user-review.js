@@ -5,8 +5,7 @@ import {useMyReview} from './rating-form';
 import ClippedText from '~/components/clipped-text/clipped-text';
 import './user-review.css';
 
-function UserControls() {
-    const status='pending';
+function UserControls({status}) {
     const {togglePage, postRating} = React.useContext(PageContext);
     const myReview = useMyReview();
 
@@ -22,7 +21,7 @@ function UserControls() {
 
     return (
         <React.Fragment>
-            <span className="review-status">{status}</span>
+            {status !== 'Approved' && <span className="review-status">pending</span>}
             <a href="!delete" onClick={onDelete}>Delete</a>
             &nbsp;&bull;&nbsp;
             <a href="!update" onClick={onUpdate}>Update</a>
@@ -30,21 +29,12 @@ function UserControls() {
     );
 }
 
-export default function UserReview({
-    initials, userName, rating, review, updated, response, allowEdit=false
-}) {
+function ReviewAndResponse({review, response}) {
     const {partnerName} = React.useContext(PageContext);
 
     return (
-        <div className="user-review">
-            <span className="initials">{initials}</span>
-            <span className="name">{userName}</span>
-            <div className="rating-and-controls stars-and-count">
-                <Stars stars={rating} />
-                <span className="updated">{updated}</span>
-                {allowEdit && <UserControls />}
-            </div>
-            {review && <ClippedText className="review">{review}</ClippedText>}
+        <React.Fragment>
+            <ClippedText className="review">{review}</ClippedText>
             {
                 response &&
                     <div className="response">
@@ -54,6 +44,25 @@ export default function UserReview({
                         </ClippedText>
                     </div>
             }
+        </React.Fragment>
+    );
+}
+
+export default function UserReview({
+    initials, userName, rating, review, updated, response, status, allowEdit=false
+}) {
+    const showTheReview = review && (status === 'Approved' || allowEdit);
+
+    return (
+        <div className="user-review">
+            <span className="initials">{initials}</span>
+            <span className="name">{userName}</span>
+            <div className="rating-and-controls stars-and-count">
+                <Stars stars={rating} />
+                <span className="updated">{updated}</span>
+                {allowEdit && <UserControls status={status} />}
+            </div>
+            {showTheReview && <ReviewAndResponse review={review} response={response} />}
         </div>
     );
 }

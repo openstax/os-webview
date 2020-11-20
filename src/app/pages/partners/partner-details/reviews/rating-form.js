@@ -1,13 +1,14 @@
 import React, {useState, useContext, useRef} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {FullStar, EmptyStar} from '~/components/stars-and-count/stars-and-count';
 import {PageContext} from './contexts';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './rating-form.css';
 
 const nameInfo = 'Your name as it is displayed here will be shown publicly when you leave a rating.';
 
 function Star({starValue, full, setRating}) {
-    const icon = full ? 'star' : ['far', 'star'];
+    const StarType = full ? FullStar : EmptyStar;
 
     function saveRating() {
         setRating(starValue);
@@ -15,7 +16,8 @@ function Star({starValue, full, setRating}) {
 
     return (
         <span role="button" onClick={saveRating}>
-            <FontAwesomeIcon icon={icon} />
+            <EmptyStar />
+            <StarType />
         </span>
     );
 }
@@ -24,7 +26,7 @@ const translations = [
     'unrated',
     'Terrible resource',
     'Poor resource',
-    'Decent resouce',
+    'Decent resource',
     'Good resource',
     'Great resource'
 ];
@@ -62,11 +64,26 @@ function useRating() {
     return [rating, setRating, myReview];
 }
 
+function InfoButton({info}) {
+    const [hovering, toggle] = useToggle(false);
+
+    return (
+        <div
+            className="info-button with-tooltip"
+            onClick={() => toggle()}
+            onMouseLeave={() => toggle(false)}
+        >
+            <FontAwesomeIcon icon="info-circle" />
+            <RawHTML className="tooltip" html={info} hidden={!hovering} />
+        </div>
+    );
+}
+
 export default function RatingForm() {
     const {userName, accountId, togglePage, postRating, partnerId} = React.useContext(PageContext);
     const [rating, setRating, myReview] = useRating();
     const textAreaRef = useRef();
-    const [heading, instructions, buttonText] = rating ?
+    const [heading, instructions, buttonText] = myReview ?
         [
             'Update your rating or review',
             `Select a new rating or update your review below. Updated ratings and
@@ -121,22 +138,25 @@ export default function RatingForm() {
                 <div className="user-name">{userName}</div>
                 <div>
                     Posting is public
-                    <div className="info-button with-tooltip">
-                        <FontAwesomeIcon icon="info-circle" />
-                        <RawHTML className="tooltip" html={nameInfo} />
-                    </div>
+                    <InfoButton info={nameInfo} />
                 </div>
                 <Stars {...{rating, setRating}} />
                 <div className="review-form">
                     {instructions}
-                    <textarea name="review" ref={textAreaRef}>
+                    <textarea
+                        name="review" ref={textAreaRef}
+                        placeholder="Please tell us about your experience (optional)"
+                    >
                         {myReview && myReview.review}
                     </textarea>
                 </div>
                 <div className="button-row">
-                    <span className="required-message">
-                        Rating is required
-                    </span>
+                    {
+                        !rating &&
+                            <span className="required-message">
+                                Rating is required
+                            </span>
+                    }
                     <button type="button" onClick={() => togglePage()}>Cancel</button>
                     <button
                         type="submit" className="primary" onClick={postReview}

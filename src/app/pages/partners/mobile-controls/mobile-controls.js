@@ -1,5 +1,5 @@
 import React, {useState, useContext, useRef, useEffect, useLayoutEffect} from 'react';
-import {books, types, advanced, resultCount, clearStores} from '../store';
+import {books, types, advanced, sort, resultCount, clearStores} from '../store';
 import ActiveFilters from '../active-filters/active-filters';
 import AccordionGroup from '~/components/accordion-group/accordion-group.jsx';
 import BookOptions from '../controls/book-options/book-options';
@@ -7,7 +7,7 @@ import OptionsList from '../controls/options-list/options-list';
 import Checkboxes from '../controls/checkboxes-linked-to-store/checkboxes-linked-to-store';
 import {WindowContext, WindowContextProvider} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {BaseButton, useStoreSize} from '../controls/controls';
+import {BaseButton, useStoreSize, sortOptions} from '../controls/controls';
 import shellBus from '~/components/shell/shell-bus';
 import sortBy from 'lodash/sortBy';
 import cn from 'classnames';
@@ -98,6 +98,10 @@ function MobileFiltersToggle({typeOptions, advancedFilterOptions}) {
         shellBus.emit(openButton ? 'with-modal' : 'no-modal');
     }, [openButton]);
 
+    function unselect() {
+        setOpenButton(null);
+    }
+
     return (
         <React.Fragment>
             <BaseButton label="Filters" {...commonButtonProps} size={filterSize}>
@@ -106,7 +110,13 @@ function MobileFiltersToggle({typeOptions, advancedFilterOptions}) {
                     onClose={() => setOpenButton(null)}
                 />
             </BaseButton>
-            <BaseButton label="Sort" {...commonButtonProps} />
+            <BaseButton label="Sort" {...commonButtonProps}>
+                <div className="title-bar">
+                    <span>Sort options</span>
+                    <span className="put-away" onClick={unselect}>&times;</span>
+                </div>
+                <OptionsList items={sortOptions} selected={sort} />
+            </BaseButton>
         </React.Fragment>
     );
 }

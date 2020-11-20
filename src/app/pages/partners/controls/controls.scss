@@ -13,7 +13,10 @@ $breakpt-med: 93em * $scale-factor;
                 border-radius: 0.3rem;
                 border-top-left-radius: 0;
                 margin-top: -0.1rem;
-                padding: 2rem 0;
+
+                @include wider-than($phone-max) {
+                    padding: 2rem 0;
+                }
 
                 .option {
                     padding: 0.7rem 2.7rem;

@@ -75,6 +75,8 @@
     }
 
     .padding {
-        padding: 0 $normal-margin;
+        @include wider-than($phone-max) {
+            padding: 0 $normal-margin;
+        }
     }
 }

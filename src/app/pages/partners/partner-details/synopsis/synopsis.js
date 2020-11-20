@@ -20,18 +20,15 @@ function VerifiedBadge({verifiedFeatures}) {
 
 function logScrollingInParent(el, name) {
     const scrollingRegion = el.parentNode.parentNode;
-    // eslint-disable-next-line prefer-const
-    let scrollCallback;
-    const removeScrollListener = () => scrollingRegion.removeEventListener('scroll', scrollCallback);
-
-    scrollCallback = (event) => {
+    const removeScrollListener = (callback) => scrollingRegion.removeEventListener('scroll', callback);
+    const scrollCallback = (event) => {
         analyticsEvents.lightboxScroll(name);
-        removeScrollListener();
+        removeScrollListener(scrollCallback);
     };
 
     scrollingRegion.addEventListener('scroll', scrollCallback);
 
-    return removeScrollListener;
+    return () => removeScrollListener(scrollCallback);
 }
 
 function PartnerLink({partnerUrl, partnerLinkText}) {

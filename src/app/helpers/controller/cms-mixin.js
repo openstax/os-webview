@@ -75,7 +75,7 @@ export async function fetchFromCMS(slug, preserveWrapping=false) {
     let data;
 
     try {
-        data = await (await fetch(apiUrl, {credentials: 'include'})).json();
+        data = await (await fetch(apiUrl)).json();
     } catch (err) {
         console.warn(`ERROR fetching slug ${slug}: ${err}`);
         data = {error: err};

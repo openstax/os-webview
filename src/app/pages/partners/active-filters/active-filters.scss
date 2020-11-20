@@ -3,6 +3,10 @@
 .active-filters {
     @extend %content;
 
+    @include width-up-to($phone-max) {
+        padding: 0;
+    }
+
     @include wider-than($phone-max) {
         margin-top: 4rem;
     }
@@ -44,8 +48,8 @@
                 appearance: none;
                 background-color: transparent;
                 color: text-color(normal);
-                font-size: 2rem;
                 padding: 0;
+                transform: scale(1.5);
             }
 
             & + a {
