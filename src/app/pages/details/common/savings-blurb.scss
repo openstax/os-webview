@@ -1,0 +1,30 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.savings-blurb {
+    align-items: center;
+    display: grid;
+    grid-column-gap: 1rem;
+    grid-template-columns: auto 1fr;
+
+    @include width-up-to($phone-max) {
+        display: block;
+    }
+
+    .book-icon {
+        align-items: center;
+        border-radius: 50%;
+        display: flex;
+        font-size: 2.7rem;
+        height: 6rem;
+        justify-content: center;
+        width: 6rem;
+
+        @include width-up-to($phone-max) {
+            display: none;
+        }
+    }
+
+    span[id] {
+        font-weight: bold;
+    }
+}

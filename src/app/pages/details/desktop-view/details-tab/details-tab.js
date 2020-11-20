@@ -3,8 +3,7 @@ import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {Authors, PublicationInfo, ErrataSection} from '../../common/common';
 import GetThisTitle from '../../common/get-this-title';
 import LetUsKnow from '../../common/let-us-know/let-us-know';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import useSavingsDataIn, {linkClickTracker} from '~/helpers/savings-blurb';
+import SavingsBlurb from '../../common/savings-blurb';
 import './details-tab.css';
 
 function PolishTab({model, tocState}) {
@@ -30,20 +29,6 @@ function PolishTab({model, tocState}) {
                 <ErrataSection model={model} polish={true} />
                 <PublicationInfo model={model} polish={true} />
             </div>
-        </div>
-    );
-}
-
-function SavingsBlurb({model}) {
-    const html = useSavingsDataIn(model.supportStatement, model.adoptions, model.savings);
-    const eventName = 'Microdonation book page impact link';
-
-    return (
-        <div className="savings-blurb" onClick={linkClickTracker(eventName)}>
-            <span className="book-icon">
-                <FontAwesomeIcon icon="hand-holding-heart" />
-            </span>
-            <RawHTML html={html} />
         </div>
     );
 }
