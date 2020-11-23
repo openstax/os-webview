@@ -70,7 +70,7 @@ function SchoolDetails({model}) {
     }
 
     return (
-        <div className="school-details" if="isOpen">
+        <div className="school-details">
             <div className="savings-box">
                 <div className="savings-header">Student savings</div>
                 <div className="this-year">This year: {savingsThisYear}</div>

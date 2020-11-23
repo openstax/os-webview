@@ -11,7 +11,6 @@ function InstitutionSelector({setInstitution}) {
     ];
 
     function onChange(event) {
-        console.info('Set institution', event.target.value);
         setInstitution(event.target.value);
     }
 
