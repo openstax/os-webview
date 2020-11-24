@@ -4,6 +4,7 @@ import linkHelper from './helpers/link';
 import './components/shell/shell';
 import routerBus from '~/helpers/router-bus';
 import $ from '~/helpers/$';
+import './sentry';
 
 const path404 = '/error/404';
 const PAGES = [
