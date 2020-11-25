@@ -1,14 +1,21 @@
-import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
-import {description as template} from './speaking.html';
-import css from './speaking.css';
+import React from 'react';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import './speaking.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        tag: 'section',
-        classes: ['speaking', 'white']
-    }
-};
-
-export default componentType(spec, insertHtmlMixin);
+export default function Speaking({
+    heading, description, imageAlt, imageCaption,
+    image: {meta: {downloadUrl: image}}
+}) {
+    return (
+        <section className="speaking white">
+            <div className="content-block">
+                <div className="left-group">
+                    <h2 className="ul">{heading}</h2>
+                    <RawHTML className="ll description-block" html={description} />
+                </div>
+                <img className="ur" src={image} alt={imageAlt} />
+                <RawHTML className="lr caption" html={imageCaption} />
+            </div>
+        </section>
+    );
+}
