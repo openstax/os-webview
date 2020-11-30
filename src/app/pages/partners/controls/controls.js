@@ -29,7 +29,7 @@ export const sortOptions = [
     }
 ];
 
-export function BaseButton({label, openButton, setOpenButton, children, size}) {
+export function BaseButton({label, openButton, setOpenButton, children, size, fullScreen}) {
     const isOpen = openButton === label;
     const caretDirection = isOpen ? 'up' : 'down';
 
@@ -51,7 +51,7 @@ export function BaseButton({label, openButton, setOpenButton, children, size}) {
                 </span>
                 <FontAwesomeIcon icon={`caret-${caretDirection}`} />
             </button>
-            <div className="popover">
+            <div className={cn('popover', {fullScreen})}>
                 {isOpen && children}
             </div>
         </div>

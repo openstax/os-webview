@@ -6,7 +6,6 @@ import './llph.css';
 
 function loginClickHandler(event) {
     event.preventDefault(); // REMOVE THIS!!!
-    console.info('Caught a click');
 }
 
 function LLPH({data}) {
