@@ -86,16 +86,6 @@
         padding: 0 $normal-margin;
     }
 
-    .popover {
-        height: calc(100vh - 5rem);
-        left: 0;
-        overflow: auto;
-        position: fixed;
-        top: 5rem;
-        width: 100vw;
-        z-index: 1;
-    }
-
     .mobile-filters {
         padding: 1rem 0;
 

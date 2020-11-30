@@ -1,6 +1,5 @@
 import React, {useState, useContext, useRef} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {FullStar, EmptyStar} from '~/components/stars-and-count/stars-and-count';
 import {PageContext} from './contexts';
 import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './rating-form.css';
@@ -8,7 +7,7 @@ import './rating-form.css';
 const nameInfo = 'Your name as it is displayed here will be shown publicly when you leave a rating.';
 
 function Star({starValue, full, setRating}) {
-    const StarType = full ? FullStar : EmptyStar;
+    const imgUrl = full ? '/images/partners/full-star.svg' : '/images/partners/empty-star.svg';
 
     function saveRating() {
         setRating(starValue);
@@ -16,8 +15,7 @@ function Star({starValue, full, setRating}) {
 
     return (
         <span role="button" onClick={saveRating}>
-            <EmptyStar />
-            <StarType />
+            <img src={imgUrl} />
         </span>
     );
 }

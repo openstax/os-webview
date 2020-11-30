@@ -29,6 +29,10 @@
         position: absolute;
         top: 100%;
         z-index: 3;
+
+        @include width-up-to($phone-max) {
+            right: 0;
+        }
     }
 
     &.detached .popover {
