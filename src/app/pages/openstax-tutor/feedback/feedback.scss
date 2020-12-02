@@ -1,0 +1,59 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.openstax-tutor-page .split-section {
+    background-color: rgb(254, 247, 217);
+    display: grid;
+
+    @include width-up-to($tablet-max) {
+        > img {
+            height: 44rem;
+            left: 50%;
+            order: 2;
+            overflow: hidden;
+            position: relative;
+            transform: translateX(-50%);
+        }
+    }
+
+    @include wider-than($tablet-max) {
+        grid-template-columns: 50% 50%;
+
+        > img {
+            justify-self: right;
+            height: 100%;
+        }
+    }
+
+    section {
+        @include body-font(2.4rem);
+
+        @include wider-than($phone-max) {
+            padding-left: 3rem;
+        }
+
+        .content {
+            @include width-up-to($phone-max) {
+                padding: $normal-margin 0;
+            }
+        }
+
+        .block-with-a-big-quote {
+            margin-left: 8rem;
+            max-width: 48rem;
+            position: relative;
+
+            &::before {
+                @include title-font(8rem);
+
+                content: '“';
+                position: absolute;
+                left: -6rem;
+                margin-top: -4%;
+            }
+
+            .quote {
+                margin-bottom: 3rem;
+            }
+        }
+    }
+}
