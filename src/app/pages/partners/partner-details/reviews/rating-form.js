@@ -97,6 +97,7 @@ export default function RatingForm() {
             be sure that your review follows our guideline.`,
             'Publish'
         ];
+    const requiredMessage = rating ? '' : 'Rating is required';
 
     function postReview(event) {
         const commonPayload = {
@@ -149,12 +150,9 @@ export default function RatingForm() {
                     </textarea>
                 </div>
                 <div className="button-row">
-                    {
-                        !rating &&
-                            <span className="required-message">
-                                Rating is required
-                            </span>
-                    }
+                    <span className="required-message">
+                        {requiredMessage}
+                    </span>
                     <button type="button" onClick={() => togglePage()}>Cancel</button>
                     <button
                         type="submit" className="primary" onClick={postReview}

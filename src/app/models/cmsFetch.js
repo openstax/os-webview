@@ -13,20 +13,20 @@ export function urlFromSlug(initialSlug) {
 export default async function cmsFetch(path) {
     const url = path.replace(/[^?]+/, urlFromSlug);
 
-    return await (await fetch(url)).json();
+    return (await fetch(url)).json();
 }
 
 export async function cmsPost(path, payload, method='POST') {
     const url = path.replace(/[^?]+/, urlFromSlug);
 
-    return await (await fetch(url, {
+    return (await fetch(url, {
         method,
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
-    }));
+    })).json();
 }
 
 /**
