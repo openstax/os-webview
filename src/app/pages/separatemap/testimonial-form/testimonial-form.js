@@ -1,78 +1,72 @@
-import componentType from '~/helpers/controller/init-mixin';
-import busMixin from '~/helpers/controller/bus-mixin';
-import {description as template} from './testimonial-form.html';
-import css from './testimonial-form.css';
+import React, {useState} from 'react';
+import FormSelect from '~/components/form-select/form-select.jsx';
+import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import booksPromise from '~/models/books';
-import FormSelect from '~/components/form-select/form-select';
-import salesforcePromise, {salesforce} from '~/models/salesforce';
-import {on} from '~/helpers/controller/decorators';
+import {useSalesforceLoadedState, salesforce} from '~/models/salesforce';
+import './testimonial-form.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['testimonial-form']
-    },
-    regions: {
-        selector: '.book-selector'
-    },
-    model() {
-        return {
-            role: this.role,
-            book: this.book,
-            email: this.email,
-            school: this.school,
-            firstName: this.firstName,
-            lastName: this.lastName,
-            salesforce,
-            submitTo: salesforce.webtoleadUrl
-        };
-    }
-};
+function Controls({book}) {
+    return (
+        <React.Fragment>
+            <div class="control-group">
+                <label class="field-label">Your testimonial</label>
+                <textarea name="00N0B000006K1PC" rows="8" cols="80" required />
+            </div>
+            <input type="submit" />
+        </React.Fragment>
+    );
+}
 
+export default function TestimonialForm({email, school, firstName, lastName, afterSubmit}) {
+    const [bookIsSelected, setBookIsSelected] = useState(false);
+    const options = useDataFromPromise(booksPromise, [])
+        .map((i) => ({
+            label: i.title,
+            value: i.salesforce_abbreviation
+        }));
+    const sfLoaded = useSalesforceLoadedState();
 
-export default class TestimonialForm extends componentType(spec, busMixin) {
+    function onSubmit(event) {
+        const form = document.getElementById('form-response');
 
-    onLoaded() {
-        this.hideDialog = () => {
-            this.emit('close-form');
-            const el = this.el;
-
-            this.detach();
-            el.remove();
-        };
-        salesforcePromise.then(() => this.update());
-        booksPromise.then((items) => {
-            const options = items.map((i) => ({
-                label: i.title,
-                value: i.salesforce_abbreviation
-            }));
-            const fs = new FormSelect({
-                instructions: 'Book title',
-                validationMessage: () => '',
-                placeholder: 'Please select one',
-                name: '00NU00000053nzR',
-                options
-            });
-
-            this.regions.selector.attach(fs);
-            fs.on('change', (newValue) => {
-                this.book = newValue;
-                this.update();
-            });
-        });
-    }
-
-    @on('submit form')
-    watchForResponse() {
-        if (!this.listeningForResponse) {
-            this.listeningForResponse = true;
-            this.el.querySelector('#form-response').addEventListener('load', this.hideDialog);
+        function doAfterSubmitAndCleanup() {
+            form.removeEventListener('load', doAfterSubmitAndCleanup);
+            afterSubmit();
         }
+
+        form.addEventListener('load', doAfterSubmitAndCleanup);
     }
 
-    onClose() {
-        this.el.querySelector('#form-response').removeEventListener('load', this.hideDialog);
-    }
-
+    return (
+        <div className="testimonial-form">
+            <iframe
+                name="form-response" id="form-response" class="hidden"
+                src="" width="0" height="0" tabindex="-1"
+            />
+            <form
+                accept-charset="UTF-8" class="form" target="form-response"
+                action={salesforce.webtoleadUrl} method="post"
+                onSubmit={onSubmit}
+            >
+                <input type="hidden" name="oid" value={salesforce.oid} />
+                <input type="hidden" name="lead_source" value="Testimonial" />
+                <input type="hidden" name="first_name" value={firstName} />
+                <input type="hidden" name="last_name" value={lastName} />
+                <input type="hidden" name="email" value={email} />
+                <input type="hidden" name="00NU0000005VkYv" value={school} />
+                <div class="book-selector">
+                    <FormSelect
+                        name="00NU00000053nzR"
+                        selectAttributes={{
+                            placeholder: 'Please select one',
+                            onChange() {
+                                setBookIsSelected(true);
+                            }
+                        }}
+                        label="Book title" options={options} />
+                </div>
+                {bookIsSelected && <Controls />}
+            </form>
+        </div>
+    );
 }

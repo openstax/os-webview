@@ -1,35 +1,50 @@
 import ResultBox from '~/pages/separatemap/search-box/result-box/result-box';
-import {clickElement} from '../../../test-utils';
+import {makeMountRender} from '../../../helpers/jsx-test-utils.jsx';
+import React from 'react';
+
+function Wrapper({model, onChange}) {
+    const [theOpenOne, setTheOpenOne] = React.useState();
+
+    React.useLayoutEffect(() => {
+        onChange(theOpenOne);
+    }, [theOpenOne]);
+
+    return (
+        <ResultBox {...{theOpenOne, setTheOpenOne, model}} />
+    );
+}
 
 describe('ResultBox', () => {
-    const instance = new ResultBox({
+    let theOpenOne = null;
+    const wrapper = makeMountRender(Wrapper, {
         model: {
-            name: 'Institution Name',
-            location: 'City, State',
-            savingsThisYear: '$1,234',
-            savingsTotal: '$5,678',
-            isOpen: false,
+            cityState: "Pomfret, Maryland",
+            fields: {
+                salesforce_id: "0016f00002alpsuAAA",
+                name: "Maurice J. McDonough High School",
+                phone: "(301) 934-2944",
+                website: "https://www.ccboe.com/schools/mcdonough/",
+                type: "High School"
+            },
+            institutionType: "High School",
+            institutionalPartner: false,
+            lngLat: (2) [-77.034, 38.555],
+            pk: 656595,
             testimonial: {
                 text: 'Good stuff',
                 name: 'Some Body',
                 position: 'Chief Example'
             }
         },
-        info: {pk: 5}
-    });
-    const getSchoolDetails = () => instance.el.querySelector('.school-details');
-
-    it('creates', () => {
-        expect(instance).toBeTruthy();
-        expect(getSchoolDetails()).toBeNull();
-    });
+        onChange(value) {
+            theOpenOne = value;
+        }
+    })();
 
     it('opens on click of toggle', () => {
-        const t = instance.el.querySelector('.toggle-details');
-
-        expect(instance.model.isOpen).toBeFalsy();
-        clickElement(t);
-        expect(instance.model.isOpen).toBe(true);
-        expect(getSchoolDetails()).toBeTruthy();
+        expect(wrapper.find('.school-details')).toHaveLength(0);
+        expect(theOpenOne).toBeFalsy();
+        wrapper.find('.toggle-details').simulate('click');
+        expect(theOpenOne).toBeTruthy();
     });
 });

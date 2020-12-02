@@ -1,19 +1,21 @@
 import SearchBox from '~/pages/separatemap/search-box/search-box';
+import {makeMountRender} from '../../../helpers/jsx-test-utils.jsx';
 
 describe('SearchBox', () => {
-    const instance = new SearchBox({
+    const factory = makeMountRender(SearchBox, {
         minimized: false
     });
-    const isMinimized = () => instance.el.querySelectorAll('.minimized').length > 0;
+    const wrapper = factory();
+    const minimizedWrapper = factory({minimized: true});
 
-    it('creates', () => {
-        expect(instance).toBeTruthy();
-        expect(isMinimized()).toBe(false);
+    it('handles being unminimized', () => {
+        const topBox = wrapper.find('.top-box.minimized');
+
+        expect(topBox).toHaveLength(0);
     });
-    it('responds to minimize', () => {
-        instance.emit('update-props', {
-            minimized: true
-        });
-        expect(isMinimized()).toBe(true);
+    it('handles being minimized', () => {
+        const topBox = minimizedWrapper.find('.top-box.minimized');
+
+        expect(topBox).toHaveLength(1);
     });
 });

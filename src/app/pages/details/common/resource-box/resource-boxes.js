@@ -3,7 +3,7 @@ import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './resource-box.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import $ from '~/helpers/$';
-import showDialog, {hideDialog} from '../show-dialog';
+import showDialog, {hideDialog} from '~/helpers/show-dialog';
 import CompCopyRequestForm from './request-form/request-form';
 import CustomizationForm from '../customization-form/customization-form';
 import DetailsContext from '../../context';

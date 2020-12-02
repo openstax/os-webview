@@ -1,169 +1,88 @@
-import componentType from '~/helpers/controller/init-mixin';
-import busMixin from '~/helpers/controller/bus-mixin';
-import {description as template} from './search-box.html';
-import css from './search-box.css';
-import querySchools from '~/models/querySchools';
+import React, {useState, useEffect} from 'react';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import cn from 'classnames';
+import {useToggle, useSet} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Inputs from './inputs/inputs';
-import ResultBox from './result-box/result-box';
 import Filters from './filters/filters';
-import analytics from '~/helpers/analytics';
+import ResultBox from './result-box/result-box';
+import useResults from './results';
+import './search-box.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['search-box']
-    },
-    model() {
-        return {
-            minimized: this.minimized,
-            searchMessage: this.searchMessage,
-            resultsHidden: this.resultsHidden || this.minimized,
-            filtersHidden: this.filtersHidden || this.minimized
-        };
-    },
-    regions: {
-        inputs: '.top-box',
-        filterSettings: '.filter-settings-region',
-        searchResults: '.search-results-region'
-    },
-    searchValue: '',
-    filtersHidden: true,
-    resultsHidden: true
-};
+/*
+When you select school, see if it is in results.
+If so, setTheOpenOne to it and scroll to it.
+Otherwise, put it in as the sole element of the list
+*/
 
-export default class extends componentType(spec, busMixin) {
+function useTheOpenOne({map, selectedSchool, results}) {
+    const [theOpenOne, setTheOpenOne] = useState();
 
-    attachResults(schools) {
-        const formatter = new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD'
-        });
-        const resultBoxes = schools.map((info) =>
-            new ResultBox({
-                model: {
-                    name: info.fields.name,
-                    location: info.cityState,
-                    savingsTotal: formatter.format(info.fields.all_time_savings),
-                    savingsThisYear: formatter.format(info.fields.current_year_savings),
-                    isOpen: schools.length === 1,
-                    testimonial: info.testimonial,
-                    loggedIn: this.loggedIn
-                },
-                testimonialBus: this,
-                info
-            })
-        );
-
-        this.closeAllExcept = (theOpenOne) => {
-            resultBoxes.forEach((component) => {
-                component.emit('close-if-not', theOpenOne);
-            });
-            if (theOpenOne && theOpenOne.lngLat) {
-                this.emit('show-details', theOpenOne);
-            } else {
-                this.emit('results', schools);
-            }
-        };
-        this.resultsHidden = schools.length === 0;
-        this.singleResult = schools.length === 1;
-        this.update();
-        this.regions.searchResults.empty();
-        const appendBoxes = (index = 0) => {
-            if (index < resultBoxes.length) {
-                this.regions.searchResults.append(resultBoxes[index]);
-                resultBoxes[index].on('set-open-result', this.closeAllExcept);
-                window.requestAnimationFrame(() => appendBoxes(index + 1));
-            }
-        };
-
-        appendBoxes();
-    }
-
-    whenPropsUpdated() {
-        this.update();
-    }
-
-    onLoaded() {
-        if (super.onLoaded) {
-            super.onLoaded();
-        }
-        const inputs = new Inputs(
-            {
-                textValue: this.searchValue,
-                minimized: this.minimized,
-                filtersHidden: this.filtersHidden
-            }
-        );
-        const filters = new Filters();
-
-        this.regions.inputs.attach(inputs);
-        this.regions.filterSettings.attach(filters);
-
-        inputs.on('search-value', (value) => {
-            this.searchValue = value;
-            inputs.emit('update-props', {textValue: this.searchValue});
-        });
-        inputs.on('toggle-minimized', () => {
-            this.emit('toggle-minimized');
-            this.update();
-            inputs.emit('update-props', {
-                minimized: this.minimized
-            });
-        });
-        inputs.on('run-search', () => {
-            this.runQuery();
-        });
-        inputs.on('filter-toggle', () => {
-            this.filtersHidden = !this.filtersHidden;
-            inputs.emit('update-props', {
-                filtersHidden: this.filtersHidden
-            });
-            this.update();
-        });
-        filters.on('change', (selectedFilters) => {
-            this.selectedFilters = (Reflect.ownKeys(selectedFilters).length > 0) ? selectedFilters : null;
-            this.runQuery();
-        });
-        this.on('show-one-school', (schoolInfo) => {
-            if (this.resultsHidden || this.singleResult) {
-                this.attachResults([schoolInfo]);
-            } else {
-                this.closeAllExcept(schoolInfo);
-            }
-        });
-    }
-
-    runQuery() {
-        const value = this.el.querySelector('.search-input').value;
-        const schoolsPromise = querySchools(value, this.selectedFilters);
-        const filterList = Object.keys(this.selectedFilters || {}).map((k) => {
-            const filterValue = this.selectedFilters[k];
-
-            return filterValue === true ? k : filterValue;
-        }).join(', ');
-
-        this.searchMessage = null;
-        if (schoolsPromise) {
-            analytics.sendPageEvent('map', 'search', value);
-            analytics.sendPageEvent('map', 'filters', filterList);
-            schoolsPromise.then(
-                (schools) => {
-                    this.attachResults(schools);
-                    this.emit('results', schools);
-                    if (schools.TOO_MANY) {
-                        this.searchMessage = 'Too many matching results';
-                        this.update();
-                    } else if (schools.length === 0) {
-                        this.searchMessage = 'No matching results';
-                        this.update();
-                    }
-                }
-            );
+    useEffect(() => {
+        if (selectedSchool) {
+            setTheOpenOne(results.find((r) => r.pk === selectedSchool.pk));
+            map && map.showTooltip(selectedSchool);
         } else {
-            this.emit('reset');
-            this.attachResults([]);
+            setTheOpenOne(null);
+        }
+    }, [selectedSchool, results]);
+    useEffect(() => {
+        setTheOpenOne(results.length === 1 ? results[0] : null);
+    }, [results]);
+
+    if (map) {
+        if (theOpenOne) {
+            map.showPoints([theOpenOne]);
+            map.showTooltip(theOpenOne);
+        } else if (results.length > 0) {
+            map.showPoints(results);
         }
     }
 
+    return [theOpenOne, setTheOpenOne];
+}
+
+function SearchResults({minimized, map, results=[], selectedSchool}) {
+    const showSelectedSchool = results.length < 1 && selectedSchool;
+    const resultsOrSchool = showSelectedSchool ? [selectedSchool] : results;
+    const resultsHidden = resultsOrSchool.length < 1;
+    const [theOpenOne, setTheOpenOne] = useTheOpenOne({map, selectedSchool, results});
+
+    return (
+        <div className="search-results-region" hidden={minimized || resultsHidden}>
+            {
+                resultsOrSchool && resultsOrSchool.map((school) =>
+                    <ResultBox
+                        model={school} totalCount={resultsOrSchool.length} key={school.pk}
+                        theOpenOne={theOpenOne} setTheOpenOne={setTheOpenOne}
+                    />
+                )
+            }
+        </div>
+    );
+}
+
+export default function SearchBox({map, minimized, toggle, selectedSchool}) {
+    const [searchValue, setSearchValue] = useState('');
+    const [filtersHidden, toggleFilters] = useToggle(true);
+    const selectedFilters = useSet();
+    const [institution, setInstitution] = useState('');
+    const [results, searchMessage] = useResults(searchValue, selectedFilters, institution);
+
+    return (
+        <div className="search-box">
+            <div className={cn('top-box', {minimized})}>
+                <Inputs {...{searchValue, setSearchValue, toggle, minimized, filtersHidden, toggleFilters}} />
+            </div>
+            {
+                searchMessage &&
+                    <div className="search-message" hidden={minimized}>
+                        {searchMessage}
+                    </div>
+            }
+            <div className="filter-settings-region" hidden={minimized || filtersHidden}>
+                <Filters selected={selectedFilters} setInstitution={setInstitution} />
+            </div>
+            <SearchResults {...{minimized, map, results, selectedSchool}} />
+        </div>
+    );
 }

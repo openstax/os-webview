@@ -48,19 +48,18 @@ $small-shadow: 0 0.2rem 0.5rem 0 rgba(0, 0, 0, 0.15);
         box-shadow: $big-shadow;
         max-width: $text-content-max;
         overflow: hidden;
+        position: fixed;
 
         @include wider-than($phone-max) {
             align-self: flex-start;
             left: 5rem;
-            position: relative;
-            top: 3rem;
+            top: 15.35rem;
             width: calc(100% - 10rem);
         }
 
         @include width-up-to($phone-max) {
             bottom: 0;
             margin: 1rem;
-            position: absolute;
         }
 
         &.minimized {
@@ -169,13 +168,13 @@ $small-shadow: 0 0.2rem 0.5rem 0 rgba(0, 0, 0, 0.15);
     .mapboxgl-popup {
         .put-away {
             display: grid;
+            font-size: 1.8rem;
             justify-content: right;
 
             > button {
                 background-color: unset;
                 color: unset;
-                cursor: pointer;
-                padding: 0.3rem;
+                padding: 0;
             }
         }
     }
