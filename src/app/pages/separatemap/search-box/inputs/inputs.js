@@ -3,8 +3,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import cn from 'classnames';
 import './inputs.css';
 
-// import $ from '~/helpers/$';
-
 function FilterToggleButton({filtersHidden, toggleFilters, children}) {
     return (
         <button className="filter-toggle" aria-pressed={!filtersHidden} onClick={() => toggleFilters()}>
