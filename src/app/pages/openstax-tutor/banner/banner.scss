@@ -19,10 +19,6 @@ $margin-breakpoint: $media-content-max - $media-margin;
         display: grid;
         grid-gap: $normal-margin;
         grid-template-columns: 7.5fr 5fr;
-
-        .right-side {
-            justify-self: right;
-        }
     }
 
     .left-side {
@@ -57,11 +53,8 @@ $margin-breakpoint: $media-content-max - $media-margin;
     }
 
     .right-side {
-        max-width: 100%;
-
-        a {
-            font-weight: bold;
-        }
+        height: 100%;
+        width: 100%;
     }
 
     .ost-logo {
@@ -73,10 +66,4 @@ $margin-breakpoint: $media-content-max - $media-margin;
             align-self: center;
         }
     }
-}
-
-.openstax-tutor-page .sticky-footer {
-    position: sticky;
-    bottom: 0;
-    width: 100%;
 }

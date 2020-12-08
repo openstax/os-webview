@@ -4,23 +4,15 @@
     background-color: rgb(254, 247, 217);
     display: grid;
 
-    @include width-up-to($tablet-max) {
-        > img {
-            height: 44rem;
-            left: 50%;
-            order: 2;
-            overflow: hidden;
-            position: relative;
-            transform: translateX(-50%);
-        }
-    }
-
     @include wider-than($tablet-max) {
         grid-template-columns: 50% 50%;
+    }
 
-        > img {
-            justify-self: right;
-            height: 100%;
+    .clipped-image {
+        min-height: 40rem;
+
+        @include width-up-to($tablet-max) {
+            order: 2;
         }
     }
 

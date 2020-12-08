@@ -1,14 +1,8 @@
 import React, {useState} from 'react';
 import {LabeledSection} from '../common';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import ClippedImage from '../clipped-image/clipped-image';
 import './feedback.css';
-
-// TODO: Distinguish video and display correctly
-function ImageOrVideo({src}) {
-    return (
-        <img src={src} />
-    );
-}
 
 export default function Webinars({model: {
     feedbackImage,
@@ -22,7 +16,10 @@ export default function Webinars({model: {
 
     return (
         <div className="split-section">
-            <ImageOrVideo src={feedbackImage.meta.downloadUrl} />
+            <ClippedImage
+                src={feedbackImage.meta.downloadUrl}
+                backgroundPosition="top center"
+            />
             <LabeledSection headerLabel={headerLabel} headline={headline}>
                 <div className="block-with-a-big-quote">
                     <div className="quote">{quote}</div>

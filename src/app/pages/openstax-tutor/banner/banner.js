@@ -1,6 +1,7 @@
 import React from 'react';
 import linkHelper from '~/helpers/link';
 import ButtonRow from '../button-row/button-row';
+import ClippedImage from '../clipped-image/clipped-image';
 import './banner.css';
 
 export default function Banner({model}) {
@@ -24,7 +25,10 @@ export default function Banner({model}) {
                 </div>
                 <ButtonRow model={model} />
             </div>
-            <img className="right-side" src={src} alt={altText} />
+            <ClippedImage
+                className="right-side" src={src} alt={altText}
+                backgroundPosition="40% 30%"
+            />
         </section>
     );
 }
