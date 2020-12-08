@@ -2,6 +2,7 @@ import React, {useState, useLayoutEffect} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import $ from '~/helpers/$';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
+import useAmazonAssociatesLink from './amazon-associates-link';
 import StudyEdge from './study-edge/study-edge';
 import showDialog, {hideDialog} from '~/helpers/show-dialog';
 import RecommendedCallout from './recommended-callout/recommended-callout';
@@ -156,17 +157,21 @@ export function PdfOption({model}) {
 }
 
 export function PrintOption({model}) {
+    const slug = (model.slug || '').replace('books/', '');
+    const amazonDataLink = useAmazonAssociatesLink(slug);
+    const bookstoreContentArray = [].concat(model.bookstoreContent)
+        .filter((entry) => entry.content);
     const printLink = Boolean(
-        model.amazonLink || [].concat(model.bookstoreContent).filter((c) => c.buttonUrl).length
+        bookstoreContentArray.filter((c) => c.buttonUrl).length
     );
     const dialogContentArgs = {
-        bookstoreContent: model.bookstoreContent,
-        amazonLink: model.amazonLink,
+        bookstoreContent: bookstoreContentArray,
         closeAfterDelay(event) {
             if (event) {
                 window.requestAnimationFrame(hideDialog);
             }
-        }
+        },
+        amazonDataLink
     };
     const text = $.isPolish(model.title) ? 'Zamów egzemplarz drukowany' : 'Order a print copy';
 
