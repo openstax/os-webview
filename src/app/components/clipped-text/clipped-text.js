@@ -1,39 +1,37 @@
-import React, {useLayoutEffect, useRef, useState} from 'react';
+import React, {useRef, useEffect} from 'react';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import cn from 'classnames';
 import './clipped-text.css';
 
-function useIsClipped(el) {
-    const [isClipped, setIsClipped] = useState(false);
+function useIsClipped() {
+    const ref = useRef();
+    const [isClipped, setIsClipped] = useToggle(false);
 
-    if (el) {
-        const {clientHeight, scrollHeight} = el;
+    useEffect(() => {
+        const {clientHeight, scrollHeight} = ref.current;
 
-        if (scrollHeight > clientHeight) {
-            setIsClipped(true);
-        }
-    }
+        setIsClipped(scrollHeight > clientHeight);
+    });
 
-    return isClipped;
+    return [ref, isClipped];
 }
 
 function useReadMore() {
     const [isOpen, toggle] = useToggle();
     const rmText = isOpen ? 'Show less' : 'Read more';
+    const style = isOpen ? {maxHeight: 'none'} : {};
 
     function toggleOnClick(event) {
         event.preventDefault();
         toggle();
     }
 
-    return [isOpen, rmText, toggleOnClick];
+    return [style, rmText, toggleOnClick];
 }
 
 export default function ClippedText({children, className=''}) {
-    const ref = useRef();
-    const isClipped = useIsClipped(ref.current);
-    const [isOpen, rmText, toggle] = useReadMore();
-    const style = isOpen ? {maxHeight: 'none'} : {};
+    const [ref, isClipped] = useIsClipped();
+    const [style, rmText, toggle] = useReadMore();
 
     return (
         <React.Fragment>
