@@ -8,6 +8,7 @@ import './user-review.css';
 function UserControls({status}) {
     const {togglePage, postRating} = React.useContext(PageContext);
     const myReview = useMyReview();
+    const displayStatus = status === 'Rejected' ? status : 'pending';
 
     function onUpdate(event) {
         event.preventDefault();
@@ -16,15 +17,20 @@ function UserControls({status}) {
 
     function onDelete(event) {
         event.preventDefault();
-        postRating({id: myReview.id}, 'DELETE');
+        // eslint-disable-next-line no-alert
+        if (window.confirm('Are you sure you want to delete this review?')) {
+            postRating({id: myReview.id}, 'DELETE');
+        }
     }
 
     return (
         <React.Fragment>
-            {status !== 'Approved' && <span className="review-status">pending</span>}
-            <a href="!delete" onClick={onDelete}>Delete</a>
-            &nbsp;&bull;&nbsp;
-            <a href="!update" onClick={onUpdate}>Update</a>
+            {status !== 'Approved' && <span className="review-status">{displayStatus}</span>}
+            <div className="user-controls">
+                <a href="!delete" onClick={onDelete}>Delete</a>
+                &nbsp;&bull;&nbsp;
+                <a href="!update" onClick={onUpdate}>Update</a>
+            </div>
         </React.Fragment>
     );
 }

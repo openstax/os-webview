@@ -104,17 +104,13 @@ function MobileFiltersToggle({typeOptions, advancedFilterOptions}) {
 
     return (
         <React.Fragment>
-            <BaseButton label="Filters" {...commonButtonProps} size={filterSize}>
+            <BaseButton label="Filters" {...commonButtonProps} fullScreen size={filterSize}>
                 <MobileFilters
                     {...{typeOptions, advancedFilterOptions, bookSize, typeSize, advancedSize}}
                     onClose={() => setOpenButton(null)}
                 />
             </BaseButton>
             <BaseButton label="Sort" {...commonButtonProps}>
-                <div className="title-bar">
-                    <span>Sort options</span>
-                    <span className="put-away" onClick={unselect}>&times;</span>
-                </div>
                 <OptionsList items={sortOptions} selected={sort} />
             </BaseButton>
         </React.Fragment>
