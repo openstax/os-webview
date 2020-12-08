@@ -1,35 +1,24 @@
+import React, {useState} from 'react';
 import Filters from '~/pages/separatemap/search-box/filters/filters';
-import {clickElement} from '../../../test-utils';
+import {useSet} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {makeMountRender} from '../../../helpers/jsx-test-utils.jsx';
+
+function Wrapper() {
+    const selectedFilters = useSet();
+    const [institution, setInstitution] = useState('');
+
+    return (
+        <Filters selected={selectedFilters} setInstitution={setInstitution} />
+    );
+}
 
 describe('Filters', () => {
-    const instance = new Filters();
+    const wrapper = makeMountRender(Wrapper)();
 
     it('creates', () => {
-        expect(instance).toBeTruthy();
+        const getCbs = () => wrapper.find('input[type="checkbox"]');
+        const cbs = getCbs().filterWhere((cb) => !cb.checked);
+
+        expect(cbs).toHaveLength(3);
     });
-    it('sets values by checkbox', () => {
-        const getUncheckedCbs = () => Array
-            .from(instance.el.querySelectorAll('input[type="checkbox"]'))
-            .filter((cb) => !cb.checked);
-        const cbs = getUncheckedCbs();
-
-        expect(cbs.length).toBe(3);
-        cbs.forEach((cb) => {
-            cb.checked = true;
-        });
-        expect(getUncheckedCbs().length).toBe(0);
-
-        cbs.forEach((cb) => {
-            cb.checked = true;
-            instance.handleChange({delegateTarget: cb});
-            expect(instance.filters[cb.name]).toBe(true);
-        });
-    });
-
-    it('sets institution value by select', () => {
-        instance.select.emit('change', 'whatever');
-        expect(instance.filters['institution-type']).toBe('whatever');
-        instance.select.emit('change', null);
-        expect(instance.filters).not.toHaveProperty('institution-type');
-    })
 });

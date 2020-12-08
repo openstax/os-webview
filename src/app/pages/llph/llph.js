@@ -4,10 +4,6 @@ import {RawHTML, LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import linkHelper from '~/helpers/link';
 import './llph.css';
 
-function loginClickHandler(event) {
-    event.preventDefault(); // REMOVE THIS!!!
-}
-
 function LLPH({data}) {
     const {
         heading: headline,

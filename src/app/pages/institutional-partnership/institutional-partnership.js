@@ -1,5 +1,7 @@
-import componentType from '~/helpers/controller/init-mixin';
-import css from './institutional-partnership.css';
+import React from 'react';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
+import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import $ from '~/helpers/$';
 import Banner from './sections/banner/banner';
 import OverlappingQuote from './sections/overlapping-quote/overlapping-quote';
 import About from './sections/about/about';
@@ -10,140 +12,75 @@ import Results from './sections/results/results';
 import Participants from './sections/participants/participants';
 import SmallQuote from './sections/small-quote/small-quote';
 import SignUp from './sections/sign-up/sign-up';
-import StickyFooter from '~/components/sticky-footer/sticky-footer';
-import $ from '~/helpers/$';
+import StickyFooter from '~/components/sticky-footer/sticky-footer.jsx';
+import './institutional-partnership.css';
 
-const spec = {
-    css,
-    view: {
-        classes: ['institutional-partnership', 'page'],
-        tag: 'main'
-    },
-    slug: 'pages/institutional-partners'
-};
+function unprefixKey(newObject, oldKey, prefix, data) {
+    const newKey = oldKey.replace(prefix, '');
 
-export default class extends componentType(spec) {
-
-    onDataLoaded() {
-        $.setPageTitleAndDescriptionFromBookData(this.pageData);
-        const data = this.pageData;
-
-        this.regions.self.attach(new Banner({
-            model: {
-                heading: data.section_1_heading,
-                description: data.section_1_description,
-                linkText: data.section_1_link_text,
-                linkUrl: data.section_1_link,
-                backgroundImage: data.section_1_background_image.meta.download_url
-            }
-        }));
-        this.regions.self.append(new OverlappingQuote({
-            model: {
-                quote: data.quote,
-                name: data.quote_name,
-                title: data.quote_title,
-                school: data.quote_school
-            }
-        }));
-        this.regions.self.append(new About({
-            model: {
-                heading: data.section_2_heading,
-                description: data.section_2_description,
-                image: data.section_2_image.meta.download_url,
-                altText: data.section_2_image_alt
-            }
-        }));
-        this.regions.self.append(new Promoting({
-            model: {
-                heading: data.section_3_heading,
-                description: data.section_3_description,
-                wideCards: data.section_3_wide_cards[0],
-                tallCards: data.section_3_tall_cards[0].map(({html, link, link_text: linkText}) => (
-                    {
-                        html,
-                        link,
-                        linkText
-                    }
-                ))
-            }
-        }));
-        this.regions.self.append(new BigQuote({
-            model: {
-                quote: data.section_4_quote_text,
-                name: data.section_4_quote_name,
-                title: data.section_4_quote_title,
-                school: data.section_4_quote_school,
-                backgroundImage: data.section_4_background_image.meta.download_url
-            }
-        }));
-        this.regions.self.append(new Speaking({
-            model: {
-                heading: data.section_5_heading,
-                description: data.section_5_description,
-                image: data.section_5_image.meta.download_url,
-                altText: data.section_5_image_alt,
-                caption: data.section_5_image_caption
-            }
-        }));
-        this.regions.self.append(new Results({
-            model: {
-                heading: data.section_6_heading,
-                description: data.section_6_description,
-                cards: data.section_6_cards[0].map((c, i) => ({
-                    headingNumber: c.heading_number,
-                    headingUnit: c.heading_unit,
-                    description: c.description,
-                    icon: {
-                        image: i % 2 ? '/images/institutional-partnership/second-result-icon.svg' :
-                            '/images/institutional-partnership/first-result-icon.svg'
-                    }
-                }))
-            }
-        }));
-        this.regions.self.append(new Participants({
-            model: {
-                heading: data.section_7_heading,
-                subheading: data.section_7_subheading,
-                established: data.section_7_icons[0]
-                    .filter((i) => !i.current_cohort)
-                    .map((i) => ({
-                        image: i.image.image,
-                        altText: i.image_alt_text
-                    })),
-                current: data.section_7_icons[0]
-                    .filter((i) => i.current_cohort)
-                    .map((i) => ({
-                        image: i.image.image,
-                        altText: i.image_alt_text
-                    })),
-                linkText: data.section_7_link_text,
-                linkTarget: data.section_7_link_target
-            }
-        }));
-        this.regions.self.append(new SmallQuote({
-            model: {
-                quote: data.section_8_quote_text,
-                name: data.section_8_quote_name,
-                title: data.section_8_quote_title,
-                school: data.section_8_quote_school
-            }
-        }));
-        this.regions.self.append(new SignUp({
-            model: {
-                heading: data.section_9_heading,
-                submitUrl: data.section_9_submit_url,
-                formPrompt: data.section_9_form_prompt,
-                buttonText: data.section_9_button_text,
-                contactHtml: data.section_9_contact_html
-            }
-        }));
-        this.regions.self.append(new StickyFooter({
-            leftButton: {
-                descriptionHtml: data.section_1_description,
-                text: data.section_1_link_text,
-                link: data.section_1_link
-            }
-        }));
-    }
-
+    newObject[newKey] = data[oldKey];
+    return newObject;
 }
+
+function sectionData(data, sectionNumber) {
+    const sectionPrefix = `section_${sectionNumber}_`;
+
+    return $.camelCaseKeys(
+        Reflect.ownKeys(data)
+            .filter((k) => k.startsWith(sectionPrefix))
+            .reduce(
+                (a, oldKey) => unprefixKey(a, oldKey, sectionPrefix, data), {}
+            )
+    );
+}
+
+function quoteData(data) {
+    return Reflect.ownKeys(data)
+        .filter((k) => k.startsWith('quote'))
+        .reduce(
+            (a, oldKey) => unprefixKey(a, oldKey, 'quote_', data), {}
+        );
+}
+
+function InstitutionalPartnership({data}) {
+    const leftButton = {
+        descriptionHtml: data.section_1_description,
+        text: data.section_1_link_text,
+        link: data.section_1_link
+    };
+
+    return (
+        <React.Fragment>
+            <Banner {...sectionData(data, 1)} />
+            <OverlappingQuote {...quoteData(data)} />
+            <About {...sectionData(data, 2)} />
+            <Promoting {...sectionData(data, 3)} />
+            <BigQuote
+                {...{
+                    backgroundImage: data.section_4_background_image.meta.download_url,
+                    ...sectionData(data, '4_quote')
+                }}
+            />
+            <Speaking {...sectionData(data, 5)} />
+            <Results {...sectionData(data, 6)} />
+            <Participants {...sectionData(data, 7)} />
+            <SmallQuote {...sectionData(data, '8_quote')} />
+            <SignUp {...sectionData(data, 9)} />
+            <StickyFooter leftButton={leftButton} />
+        </React.Fragment>
+    );
+}
+
+const view = {
+    classes: ['institutional-partnership', 'page'],
+    tag: 'main'
+};
+const slug = 'pages/institutional-partners';
+
+function PageLoader() {
+    return (
+        <LoaderPage slug={slug} Child={InstitutionalPartnership} doDocumentSetup />
+    );
+}
+
+export default pageWrapper(PageLoader, view);

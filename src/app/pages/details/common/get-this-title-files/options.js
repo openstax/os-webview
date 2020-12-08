@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import $ from '~/helpers/$';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
 import StudyEdge from './study-edge/study-edge';
-import showDialog, {hideDialog} from '../show-dialog';
+import showDialog, {hideDialog} from '~/helpers/show-dialog';
 import RecommendedCallout from './recommended-callout/recommended-callout';
 import calloutCounter from './recommended-callout/callout-counter';
 

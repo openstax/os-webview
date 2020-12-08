@@ -1,8 +1,0 @@
-<template args="model">
-    <div class="top-box {model.minimized ? 'minimized' : ''}" skip="true"></div>
-    <div if="model.searchMessage" class="search-message" hidden="{model.minimized ? '' : null}">
-        {model.searchMessage}
-    </div>
-    <div class="filter-settings-region" skip="true" hidden="{model.filtersHidden ? '' : null}"></div>
-    <div class="search-results-region" skip="true" hidden="{model.resultsHidden ? '' : null}"></div>
-</template>
