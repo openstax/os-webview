@@ -90,10 +90,6 @@
 
         .review-status {
             text-transform: uppercase;
-
-            @include width-up-to($phone-max) {
-                display: none;
-            }
         }
     }
 
