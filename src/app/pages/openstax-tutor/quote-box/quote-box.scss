@@ -2,11 +2,11 @@
 
 .openstax-tutor-page .quote-box-section {
     @include width-up-to($phone-max) {
-        padding: $normal-margin;
+        padding: 0;
     }
 
     @include wider-than($phone-max) {
-        padding: 3rem 0 0;
+        padding: 3rem $normal-margin 0;
     }
 
     .boxed {

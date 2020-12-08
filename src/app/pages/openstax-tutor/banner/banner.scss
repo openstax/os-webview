@@ -1,8 +1,8 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 $bgcolor: rgb(219, 243, 248);
-$media-margin: 1.5em * $scale-factor;
-$margin-breakpoint: $media-content-max + $media-margin;
+$media-margin: 3em * $scale-factor;
+$margin-breakpoint: $media-content-max - $media-margin;
 
 .openstax-tutor-page #banner {
     background-color: $bgcolor;
@@ -52,7 +52,7 @@ $margin-breakpoint: $media-content-max + $media-margin;
 
     @include wider-than($margin-breakpoint) {
         .left-side {
-            margin-left: calc(50vw - #{$content-max / 2});
+            margin-left: calc(50vw - #{$content-max / 2 - $normal-margin});
         }
     }
 

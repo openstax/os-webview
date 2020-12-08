@@ -12,8 +12,8 @@
         flex-direction: column;
         grid-row-gap: 3rem;
         margin: auto;
-        max-width: $content-max;
-        padding: 4rem 3rem;
+        max-width: #{$content-max - 6rem};
+        padding: 4rem 0;
 
         @include width-up-to($phone-max) {
             grid-row-gap: $normal-margin;
