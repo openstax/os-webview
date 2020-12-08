@@ -1,14 +1,18 @@
-import componentType from '~/helpers/controller/init-mixin';
-import {description as template} from './small-quote.html';
-import css from './small-quote.css';
+import React from 'react';
+import './small-quote.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        tag: 'section',
-        classes: ['small-quote', 'near-white']
-    }
-};
-
-export default componentType(spec);
+export default function SmallQuote({text, name, title, school}) {
+    return (
+        <section className="small-quote near-white">
+            <div className="content">
+                <div className="big-quote-mark">“</div>
+                <div className="text-block">
+                    <div className="quote">{text}</div>
+                    <div className="name">- {name}</div>
+                    <div className="title">{title}</div>
+                    <div className="school">{school}</div>
+                </div>
+            </div>
+        </section>
+    );
+}

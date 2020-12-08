@@ -1,14 +1,20 @@
-import componentType from '~/helpers/controller/init-mixin';
-import {description as template} from './big-quote.html';
-import css from './big-quote.css';
+import React from 'react';
+import './big-quote.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        tag: 'section',
-        classes: ['big-quote']
-    }
-};
-
-export default componentType(spec);
+export default function ({text, name, title, school, backgroundImage, ...other}) {
+    return (
+        <section className="big-quote">
+            <div class="background-image" style={{backgroundImage: `url(${backgroundImage})`}} />
+            <div class="gradient-overlay" />
+            <div class="content">
+                <div class="big-quote-mark">“</div>
+                <div class="text-block">
+                    <div class="quote">{text}</div>
+                    <div class="name">- {name}</div>
+                    <div class="title">{title}</div>
+                    <div class="school">{school}</div>
+                </div>
+            </div>
+        </section>
+    );
+}

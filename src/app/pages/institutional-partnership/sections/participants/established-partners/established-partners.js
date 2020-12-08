@@ -1,13 +1,19 @@
-import componentType from '~/helpers/controller/init-mixin';
-import {description as template} from './established-partners.html';
-import css from './established-partners.css';
+import React from 'react';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
+import './established-partners.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['established-partners']
-    }
+function EstablishedPartners({model}) {
+    return (
+        <React.Fragment>
+            {
+                model.map((icon) => <img key={icon} src={icon.image.image} alt={icon.altText} />)
+            }
+        </React.Fragment>
+    );
+}
+
+const view = {
+    classes: ['established-partners']
 };
 
-export default componentType(spec);
+export default pageWrapper(EstablishedPartners, view);

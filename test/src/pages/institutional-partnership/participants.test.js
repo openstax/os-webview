@@ -1,20 +1,16 @@
 import Participants from '~/pages/institutional-partnership/sections/participants/participants';
 import shellBus from '~/components/shell/shell-bus';
-import {clickElement} from '../../../test-utils';
+import {makeMountRender} from '../../../helpers/jsx-test-utils.jsx';
 
 describe('Participants', () => {
     it('handles click', () => {
-        const p = new Participants({
-            model: {
-                icons: []
-            }
-        });
-        const clickables = p.el.querySelectorAll('.show-established-partners');
+        const wrapper = makeMountRender(Participants, {icons: []})();
+        const clickables = wrapper.find('.show-established-partners');
 
-        expect(clickables.length).toBe(1);
+        expect(clickables).toHaveLength(1);
         const dialogShown = new Promise((resolve) => {
             shellBus.on('showDialog', resolve, 'once');
-            clickElement(clickables[0]);
+            clickables.at(0).simulate('click');
         });
 
         return dialogShown;
