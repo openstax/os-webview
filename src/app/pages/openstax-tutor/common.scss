@@ -1,0 +1,36 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.labeled-section {
+    padding: 0 $normal-margin;
+
+    @include wider-than($phone-max) {
+        min-height: 48rem;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        grid-row-gap: 3rem;
+        margin: auto;
+        max-width: #{$content-max - 6rem};
+        padding: 4rem 0;
+
+        @include width-up-to($phone-max) {
+            grid-row-gap: $normal-margin;
+            padding: $normal-margin 0;
+        }
+    }
+    header {
+        @include title-font(1.8rem);
+
+        text-transform: uppercase;
+    }
+    h1 {
+        @include set-font(h2);
+        margin: 0;
+
+        @include width-up-to($phone-max) {
+            @include title-font(2.4rem);
+        }
+    }
+}

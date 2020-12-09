@@ -1,0 +1,30 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.openstax-tutor-page .materials {
+    display: grid;
+    grid-gap: 3rem;
+    grid-template-columns: repeat(auto-fit, 26rem);
+
+    @include width-up-to($phone-max) {
+        grid-gap: $normal-margin;
+        grid-template-columns: repeat(2, 21rem);
+        overflow-x: auto;
+    }
+
+    .book-card {
+        align-items: center;
+        background-color: ui-color(white);
+        border: thin solid ui-color(form-border);
+        border-radius: 0.3rem;
+        display: grid;
+        grid-gap: 0.7rem;
+        grid-template-columns: 5rem 1fr;
+        line-height: 1;
+        padding: 0.5rem;
+
+        img {
+            border-radius: 0.3rem;
+            max-height: 4.8rem;
+        }
+    }
+}

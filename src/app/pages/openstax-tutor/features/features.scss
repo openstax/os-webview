@@ -1,0 +1,30 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.openstax-tutor-page .features {
+    display: flex;
+    grid-column-gap: 2rem;
+    overflow-x: auto;
+
+    .blurb {
+        align-items: start;
+        display: flex;
+        flex-direction: column;
+        grid-row-gap: 1rem;
+
+        img {
+            max-height: 5.3rem;
+        }
+
+        h2 {
+            @include title-font(1.8rem);
+
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        p {
+            margin: 0;
+            min-width: 20rem;
+        }
+    }
+}

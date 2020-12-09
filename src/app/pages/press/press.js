@@ -44,7 +44,7 @@ function PressReleases({excludeSlug, Container=MoreFewer}) {
 
     return (
         <Container pluralItemName="press releases">
-            {pressReleases.map((props) => <PressExcerpt {...props} key={props} />)}
+            {pressReleases.map((props) => <PressExcerpt {...props} key={props.url} />)}
         </Container>
     );
 }
@@ -69,7 +69,7 @@ function NewsMentions() {
 
     return (
         <Paginated>
-            {newsMentions.map((props) => <PressExcerpt {...props} key={props} />)}
+            {newsMentions.map((props) => <PressExcerpt {...props} key={props.url} />)}
         </Paginated>
     );
 }
