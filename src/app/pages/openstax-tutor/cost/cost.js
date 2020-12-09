@@ -24,7 +24,7 @@ export default function Cost({model: {
             <div className="cost">
                 <RawHTML html={description} />
                 <div className="cards">
-                    {blurbs.map((blurb, i) => <Card {...blurb} key={i} />)}
+                    {blurbs.map((blurb) => <Card {...blurb} key={blurb.description} />)}
                 </div>
                 <RawHTML html={costInstitutionMessage} />
             </div>

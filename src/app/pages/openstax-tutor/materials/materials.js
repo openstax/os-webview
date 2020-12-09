@@ -11,7 +11,7 @@ export default function Materials({model: {availableBooksHeader: headline, tutor
             <div className="materials">
                 {
                     books.map((book) =>
-                        <div className="book-card" key={book}>
+                        <div className="book-card" key={book.title}>
                             <img src={book.coverUrl} alt={`${book.title} cover`} />
                             <RawHTML html={book.title} />
                         </div>

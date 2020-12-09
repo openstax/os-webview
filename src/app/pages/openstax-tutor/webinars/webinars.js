@@ -27,7 +27,7 @@ export default function Webinars({model: {
         <LabeledSection headerLabel={headerLabel} headline={headline}>
             <div className="webinars carousel">
                 <div className="cards">
-                    {blurbs.map((blurb, i) => <Card {...blurb} key={i} />)}
+                    {blurbs.map((blurb) => <Card {...blurb} key={blurb.link} />)}
                 </div>
             </div>
         </LabeledSection>

@@ -11,7 +11,7 @@ export default function Features({model: {featuresHeader, featuresCards: blurbs}
             <div className="features">
                 {
                     blurbs.map((blurb) =>
-                        <div className="blurb" key={blurb}>
+                        <div className="blurb" key={blurb.description}>
                             <img src={blurb.icon.file} />
                             <h2>{blurb.title}</h2>
                             <RawHTML html={blurb.description} />
