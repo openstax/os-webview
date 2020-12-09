@@ -1,0 +1,38 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.openstax-tutor-page .quote-box-section {
+    @include width-up-to($phone-max) {
+        padding: 0;
+    }
+
+    @include wider-than($phone-max) {
+        padding: 3rem $normal-margin 0;
+    }
+
+    .boxed {
+        align-self: flex-start;
+        max-width: 114rem;
+        padding: 0;
+    }
+
+    .quote-box {
+        @include body-font(1.4rem);
+
+        border: thin solid ui-color(form-border);
+        border-radius: 0.3rem;
+        line-height: 2.4rem;
+        padding: $normal-margin;
+        padding-left: 5rem;
+        position: relative;
+
+        &::before {
+            @include title-font(3.4rem);
+
+            color: os-color(orange);
+            content: '“';
+            position: absolute;
+            left: 1.7rem;
+            margin-top: -1rem;
+        }
+    }
+}

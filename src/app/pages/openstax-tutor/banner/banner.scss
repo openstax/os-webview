@@ -1,0 +1,69 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+$bgcolor: rgb(219, 243, 248);
+$media-margin: 3em * $scale-factor;
+$margin-breakpoint: $media-content-max - $media-margin;
+
+.openstax-tutor-page #banner {
+    background-color: $bgcolor;
+
+    @include width-up-to($tablet-max) {
+        .right-side {
+            display: none;
+        }
+    }
+
+    @include wider-than($tablet-max) {
+        align-content: center;
+        align-items: center;
+        display: grid;
+        grid-gap: $normal-margin;
+        grid-template-columns: 7.5fr 5fr;
+    }
+
+    .left-side {
+        display: flex;
+        flex-direction: column;
+        grid-row-gap: 3rem;
+        max-width: $margin-breakpoint;
+        padding: $normal-margin;
+
+        @include wider-than($phone-max) {
+            @include set-font(body-large);
+
+            padding-bottom: 4rem;
+        }
+    }
+
+    h1 {
+        margin: 0;
+        margin-bottom: 2rem;
+
+        @include width-up-to($phone-max) {
+            @include title-font(2.4rem);
+
+            margin-bottom: 1rem;
+        }
+    }
+
+    @include wider-than($margin-breakpoint) {
+        .left-side {
+            margin-left: calc(50vw - #{$content-max / 2 - $normal-margin});
+        }
+    }
+
+    .right-side {
+        height: 100%;
+        width: 100%;
+    }
+
+    .ost-logo {
+        margin-left: -2.5%;
+        max-height: 4rem;
+        width: min-content;
+
+        @include width-up-to($phone-max) {
+            align-self: center;
+        }
+    }
+}

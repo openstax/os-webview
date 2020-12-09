@@ -1,108 +1,44 @@
-import React, {useState, useEffect, useRef} from 'react';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import React from 'react';
+import Banner from './banner/banner';
+import QuoteBox from './quote-box/quote-box';
+import Features from './features/features';
+import Materials from './materials/materials';
+import Cost from './cost/cost';
+import Webinars from './webinars/webinars';
+import Feedback from './feedback/feedback';
+import FAQ from './faq/faq';
+import StickyFooter from '~/components/sticky-footer/sticky-footer-wrapper.jsx';
+import ButtonRow from './button-row/button-row';
 import $ from '~/helpers/$';
-import linkHelper from '~/helpers/link';
-import Frontier from './frontier';
-import HowItWorks from './how-it-works';
-import WhatStudentsGet from './what-students-get';
-import Features from './features';
-import WhereMoneyGoes from './where-money-goes';
-import Science from './science';
-import FAQ from './faq';
-import LearnMore from './learn-more';
-import SectionNavigator from '~/components/section-navigator/section-navigator';
-import PulsingDot from './pulsing-dot/pulsing-dot';
-import StickyFooter from '~/components/sticky-footer/sticky-footer';
-import analytics from '~/helpers/analytics';
-import {pageWrapper, SuperbItem} from '~/controllers/jsx-wrapper';
 import './openstax-tutor.css';
 
-const availableUrl = '/images/openstax-tutor/available-flag.svg';
-const unavailableUrl = '/images/openstax-tutor/unavailable-flag.svg';
-const availableImageData = {url: availableUrl, description: 'available'};
-const unavailableImageData = {url: unavailableUrl, description: 'not available'};
-
-function OpenstaxTutor({data}) {
+export function TutorMarketingPage({data}) {
     const model = $.camelCaseKeys(data);
-    const [sectionIds, setSectionIds] = useState([]);
-    const sfRef = useRef(
-        new StickyFooter({
-            leftButton: {
-                link: model.floatingFooterButton1Link,
-                text: model.floatingFooterButton1Cta,
-                description: model.floatingFooterButton1Caption
-            },
-            rightButton: {
-                link: model.floatingFooterButton2Link,
-                text: model.floatingFooterButton2Cta,
-                description: model.floatingFooterButton2Caption
-            }
-        })
-    );
-
-    useEffect(() => {
-        const elList = Array.from(document.querySelectorAll('section[id]'));
-
-        setSectionIds(elList.map((el) => el.id));
-    }, []);
-
-    function pageLinkClick(event) {
-        const el = linkHelper.validUrlClick(event);
-
-        if (el) {
-            const linkText = el.textContent;
-
-            analytics.sendPageEvent(
-                `OXT marketing page [${linkText}] page`,
-                'open',
-                el.href
-            );
-            event.stopPropagation();
-        }
-    }
-
-    function footerClick(event) {
-        const el = linkHelper.validUrlClick(event);
-
-        if (el) {
-            const linkText = el.textContent;
-
-            analytics.sendPageEvent(
-                `OXT marketing page [${linkText}] footer`,
-                'open',
-                el.href
-            );
-            event.stopPropagation();
-        }
-    }
 
     return (
-        <div onClick={pageLinkClick}>
-            <div className="floating-tools">
-                <SectionNavigator idList={sectionIds} />
-                <PulsingDot html={model.popUpText} />
-            </div>
-            <div className="sticky-footer-region" onClick={footerClick}>
-                <SuperbItem component={sfRef.current} />
-            </div>
-            <Frontier model={model} />
-            <HowItWorks model={model} />
-            <WhatStudentsGet model={model} />
+        <React.Fragment>
+            <Banner model={model} />
+            <QuoteBox model={model} />
+            <div className="reset-odd-counter" />
             <Features model={model} />
-            <WhereMoneyGoes model={model} />
-            <Science model={model} />
-            <div class="divider">
-                <img src="/images/openstax-tutor/faq-top-background.svg" alt="boat sailing past icebergs" />
-            </div>
+            <Materials model={model} />
+            <Cost model={model} />
+            <Feedback model={model} />
+            <div className="reset-odd-counter" />
+            <Webinars model={model} />
             <FAQ model={model} />
-            <LearnMore model={model} />
-        </div>
+            <StickyFooter>
+                <ButtonRow model={model} />
+            </StickyFooter>
+        </React.Fragment>
     );
 }
 
-function OpenstaxTutorLoader() {
+function Loader() {
     return (
-        <LoaderPage slug="pages/openstax-tutor" Child={OpenstaxTutor} doDocumentSetup />
+        <LoaderPage slug="pages/openstax-tutor" Child={TutorMarketingPage} doDocumentSetup />
     );
 }
 
@@ -111,4 +47,4 @@ const view = {
     tag: 'main'
 };
 
-export default pageWrapper(OpenstaxTutorLoader, view);
+export default pageWrapper(Loader, view);

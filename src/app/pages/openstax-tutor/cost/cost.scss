@@ -1,0 +1,61 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.openstax-tutor-page .cost {
+    display: flex;
+    flex-direction: column;
+    grid-row-gap: 2rem;
+    margin-top: -1rem;
+
+    .cards {
+        display: grid;
+        grid-gap: $normal-margin;
+        overflow-x: auto;
+        margin: -1rem 0;
+        padding: 1rem 1rem 0 0;
+
+        @include width-up-to($phone-max) {
+            grid-auto-flow: column;
+        }
+
+        @include wider-than($phone-max) {
+            grid-template-columns: repeat(auto-fit, minmax(21rem, 1fr));
+        }
+    }
+
+    .card {
+        border-radius: 0.3rem;
+        min-height: 10rem;
+        min-width: 21rem;
+        overflow: hidden;
+        padding: $normal-margin;
+
+        @include wider-than($phone-max) {
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            @include title-font(1.6rem);
+
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        &:not(.no-border) {
+            border-left: 0.2rem solid transparent;
+            box-shadow: 0 0.2rem 0.6rem 0 rgba(ui-color(black), 0.25);
+
+            &:nth-child(4n+1) {
+                border-left-color: os-color(yellow);
+            }
+            &:nth-child(4n+2) {
+                border-left-color: os-color(deep-green);
+            }
+            &:nth-child(4n+3) {
+                border-left-color: os-color(blue);
+            }
+            &:nth-child(4n) {
+                border-left-color: os-color(red);
+            }
+        }
+    }
+}

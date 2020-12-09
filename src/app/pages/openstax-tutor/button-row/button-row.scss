@@ -1,0 +1,22 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.openstax-tutor-page .button-row {
+    display: flex;
+    align-items: center;
+    grid-gap: 1rem;
+
+    @include width-up-to($phone-max) {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .btn.primary {
+        @include button();
+        @extend %primary;
+    }
+
+    a {
+        font-weight: bold;
+        text-decoration: none;
+    }
+}

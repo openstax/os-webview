@@ -22,7 +22,7 @@ export default function Testimonials({heading, description, testimonials}) {
         <Section id="testimonials" className="light">
             <HeadingAndDescription {...{heading, description}} />
             <div className="testimonial-boxes">
-                {testimonials.map((info) => <Testimonial info={info} key={info} />)}
+                {testimonials.map((info) => <Testimonial info={info} key={info.quote} />)}
             </div>
         </Section>
     );

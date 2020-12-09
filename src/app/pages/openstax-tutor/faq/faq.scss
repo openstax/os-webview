@@ -1,0 +1,34 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.openstax-tutor-page .faq-table {
+    border: thin solid ui-color(form-border);
+
+    .q-n-a {
+        border-bottom: thin solid ui-color(form-border);
+    }
+
+    .question,
+    .answer {
+        p:first-child {
+            margin-top: 0;
+        }
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    .question {
+        @include set-font(body-large);
+
+        align-items: center;
+        display: flex;
+        font-weight: bold;
+        justify-content: space-between;
+        padding: 2rem 3rem;
+    }
+
+    .answer {
+        padding: 0 7rem 3rem 3rem;
+    }
+}
