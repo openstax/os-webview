@@ -77,8 +77,10 @@ export function LoaderPage({slug, Child, props={}, preserveWrapping, doDocumentS
         return statusPage;
     }
 
+    const camelCaseData = $.camelCaseKeys(data);
+
     return (
-        <Child {...{data, ...props}} />
+        <Child {...{data: camelCaseData, ...props}} />
     );
 }
 

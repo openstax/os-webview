@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {LabeledSection} from '../common';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import ClippedImage from '../clipped-image/clipped-image';
+import ClippedImage from '~/components/clipped-image/clipped-image';
 import './feedback.css';
 
 export default function Webinars({model: {
