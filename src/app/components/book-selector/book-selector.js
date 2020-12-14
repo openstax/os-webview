@@ -70,6 +70,6 @@ export function useSelectedBooks() {
 
 export default function BookSelectorLoader(props) {
     return (
-        <LoaderPage slug="books" props={props} Child={BookSelector} />
+        <LoaderPage slug="books" props={props} Child={BookSelector} noCamelCase />
     );
 }

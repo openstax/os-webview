@@ -4,8 +4,8 @@ import './form-header.css';
 
 function FormHeader({data}) {
     const {
-        intro_heading: heading,
-        intro_description: description
+        introHeading: heading,
+        introDescription: description
     } = data;
 
     return (

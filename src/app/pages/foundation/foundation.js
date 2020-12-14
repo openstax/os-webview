@@ -15,7 +15,7 @@ function FoundationPage({data: model}) {
             <div className="hero">
                 <div className="text-content">
                     <h1>{model.title}</h1>
-                    <p>{model.page_description}</p>
+                    <p>{model.pageDescription}</p>
                 </div>
             </div>
             <div className="blurbs">

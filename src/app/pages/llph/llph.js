@@ -8,15 +8,15 @@ function LLPH({data}) {
     const {
         heading: headline,
         subheading: heroBlurb,
-        book_heading: infoHeadline,
-        book_description: infoHtml,
-        book_cover_url: coverUrl,
-        info_link_slug: infoLinkSlug,
-        info_link_text: infoLinkText,
-        signup_link_text: signupLinkText,
-        signup_link_href: signupLinkHref
+        bookHeading: infoHeadline,
+        bookDescription: infoHtml,
+        bookCoverUrl: coverUrl,
+        infoLinkSlug,
+        infoLinkText,
+        signupLinkText,
+        signupLinkHref
     } = data;
-    const heroBackground = data.hero_background.meta.download_url;
+    const heroBackground = data.heroBackground.meta.downloadUrl;
     const ostLink = '/openstax-tutor';
     const ostLogo = '/images/llph/tutor-logo.svg';
     const briLink = 'https://billofrightsinstitute.org/';

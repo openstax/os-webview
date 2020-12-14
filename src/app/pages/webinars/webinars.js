@@ -80,7 +80,7 @@ function WebinarsLoader() {
 
 const view = {
     classes: ['webinars', 'page'],
-    tag: 'main' // if the HTML doesn't contain a main tag
+    tag: 'main'
 };
 
 export default pageWrapper(WebinarsLoader, view);

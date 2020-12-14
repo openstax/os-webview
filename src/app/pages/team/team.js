@@ -63,7 +63,7 @@ function TeamPage({data: {
     );
 }
 
-function TeamLoader() {
+export function TeamLoader() {
     return (
         <LoaderPage slug="pages/team" Child={TeamPage} doDocumentSetup />
     );
@@ -75,43 +75,3 @@ const view = {
 };
 
 export default pageWrapper(TeamLoader, view);
-
-// const spec = {
-//     onDataLoaded() {
-//         const tabLabels = data.openstax_people.map((t) => t.heading);
-//         const tabContents = data.openstax_people.map((t) => new PeopleTab(() => t.people));
-//         let selectedTab = tabLabels[0];
-//         const contents = {};
-//
-//         tabLabels.forEach((v, i) => {
-//             contents[v] = tabContents[i];
-//         });
-//
-//         const contentGroup = new ContentGroup(() => ({
-//             selectedTab,
-//             contents
-//         }));
-//         const tabGroup = new TabGroup(() => ({
-//             tag: 'h3',
-//             tabLabels,
-//             selectedTab,
-//             setSelected(newValue) {
-//                 selectedTab = newValue;
-//                 contentGroup.update();
-//             }
-//         }));
-//         const accordionItems = data.openstax_people.map((t) => (
-//             {
-//                 title: t.heading,
-//                 contentComponent: new PeopleTab(() => t.people)
-//             }
-//         ));
-//
-//         this.regions.tabGroup.attach(tabGroup);
-//         this.regions.tabContent.attach(contentGroup);
-//         this.regions.accordion.attach(new AccordionGroup({
-//             items: accordionItems
-//         }));
-//     }
-//
-// }

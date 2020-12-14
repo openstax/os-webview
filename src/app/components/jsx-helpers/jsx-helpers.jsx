@@ -64,7 +64,10 @@ export function useCanonicalLink(controlsHeader=true) {
     }, []);
 }
 
-export function LoaderPage({slug, Child, props={}, preserveWrapping, doDocumentSetup=false}) {
+export function LoaderPage({
+    slug, Child, props={}, preserveWrapping, doDocumentSetup=false,
+    noCamelCase=false
+}) {
     const [data, statusPage] = usePageData({slug, setsPageTitleAndDescription: false, preserveWrapping});
 
     useCanonicalLink(doDocumentSetup);
@@ -77,7 +80,7 @@ export function LoaderPage({slug, Child, props={}, preserveWrapping, doDocumentS
         return statusPage;
     }
 
-    const camelCaseData = $.camelCaseKeys(data);
+    const camelCaseData = noCamelCase ? data : $.camelCaseKeys(data);
 
     return (
         <Child {...{data: camelCaseData, ...props}} />

@@ -1,6 +1,6 @@
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import React, {useState, useEffect} from 'react';
-import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {LoaderPage, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import './bookstore-suppliers.css';
 
@@ -28,7 +28,7 @@ function CardFeatures({supplier}) {
                 <img src={supplier.logoUrl} alt="company logo" />
             </div>
             <h2>{supplier.name}</h2>
-            <div className="blurb" dangerouslySetInnerHTML={{__html: supplier.description}} />
+            <RawHTML className="blurb" html={supplier.description} />
             <a className="btn primary" href={supplier.buttonUrl}>{supplier.buttonText}</a>
         </React.Fragment>
     );
@@ -48,14 +48,16 @@ function CanadaFlagCard() {
 
 export function BookstorePage({data}) {
     const suppliers = data.providers.map(providerToModel);
-    const featuredSupplier = data.featured_providers.map(providerToModel); // should only be 1
+
+    console.info(JSON.stringify(Reflect.ownKeys(data), null, 2));
+    const featuredSupplier = data.featuredProviders.map(providerToModel); // should only be 1
     const model = {
         headline: data.title,
-        subhead: data.intro_heading,
-        subhead2: data.intro_description,
+        subhead: data.introHeading,
+        subhead2: data.introDescription,
         featuredSupplier,
-        featuredSuppliersBlurb: data.featured_provider_intro_blurb,
-        suppliersBlurb: data.other_providers_intro_blurb,
+        featuredSuppliersBlurb: data.featuredProviderIntroBlurb,
+        suppliersBlurb: data.otherProvidersIntroBlurb,
         suppliers
     };
 
@@ -65,8 +67,8 @@ export function BookstorePage({data}) {
                 <div className="content">
                     <div className="text">
                         <h1>{model.headline}</h1>
-                        <div className="small-screen" dangerouslySetInnerHTML={{__html: model.subhead}} />
-                        <div className="larger-screen" dangerouslySetInnerHTML={{__html: model.subhead2}} />
+                        <RawHTML className="small-screen" html={model.subhead} />
+                        <RawHTML className="larger-screen" html={model.subhead2} />
                     </div>
                 </div>
                 <div className="images">
