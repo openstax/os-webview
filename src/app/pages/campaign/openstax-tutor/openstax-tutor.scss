@@ -1,0 +1,156 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+
+.campaign .openstax-tutor {
+    h1,
+    h2,
+    h3 {
+        margin: 0;
+    }
+
+    .banner {
+        background-color: #f5f5f5;
+        background-position: right bottom;
+        background-repeat: no-repeat;
+
+        @include width-up-to($phone-max) {
+            background-image: url(/images/campaign/ost-header-mobile.jpg);
+            background-size: 100%;
+            padding-bottom: 82vw;
+        }
+
+        @include width-between($phone-max, $tablet-max) {
+            background-image: url(/images/campaign/ost-header.jpg);
+            background-size: auto 55vw;
+            padding-bottom: 30vw;
+        }
+
+        @include wider-than($tablet-max) {
+            background-size: calc(100% - 36rem) auto;
+            background-image: url(/images/campaign/ost-header.jpg);
+        }
+
+        .boxed {
+            align-items: flex-start;
+            padding: 0;
+
+            .text {
+                @include set-font(body-large);
+
+                text-align: left;
+
+                @include wider-than($tablet-max) {
+                    max-width: 65%;
+                    width: 67rem;
+                }
+
+                h1 {
+                    margin-bottom: 2rem;
+
+                    @include width-up-to($phone-max) {
+                        @include set-font(h1);
+                    }
+                }
+
+                .description {
+                    margin-bottom: 3rem;
+                }
+            }
+        }
+    }
+    .color-bar-divider {
+        height: 1.3rem;
+        position: relative;
+        width: 100%;
+    }
+
+    .features {
+        background-color: ui-color(white);
+
+        @include width-up-to($tablet-max) {
+            padding: 3.5rem 0 4.5rem;
+        }
+
+        @include wider-than($tablet-max) {
+            padding: 7rem 0 11rem;
+        }
+
+        .boxed {
+            align-items: flex-start;
+        }
+
+        header {
+            @include width-up-to($phone-max) {
+                @include set-font(h4);
+            }
+
+            @include wider-than($phone-max) {
+                @include set-font(h3);
+            }
+
+            line-height: 1.67;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            @include width-up-to($phone-max) {
+                @include set-font(h3);
+            }
+        }
+
+        h3 {
+            @include width-up-to($phone-max) {
+                @include set-font(h4);
+            }
+        }
+
+        .blurbs {
+            display: grid;
+
+            @include width-up-to($phone-max) {
+                margin-top: 3rem;
+                grid-row-gap: 3.5rem;
+            }
+
+            @include wider-than($phone-max) {
+                grid-gap: 5rem 4rem;
+                grid-template-columns: 1fr 1fr;
+                margin-top: 5rem;
+            }
+
+            .blurb {
+                display: grid;
+                grid-template-rows: 6.5rem auto auto;
+                grid-gap: 1rem;
+
+                > img {
+                    align-self: center;
+                }
+
+                > * {
+                    margin: 0;
+                }
+            }
+        }
+
+        .resource-blurb {
+            @include body-font(2rem);
+
+            align-items: flex-start;
+            background-color: ui-color(default);
+            padding: 1.8rem;
+            display: flex;
+            flex-direction: column;
+            grid-gap: 4rem;
+            justify-content: space-between;
+        }
+    }
+
+    .btn {
+        @include button();
+
+        &.primary {
+            @extend %primary;
+        }
+    }
+}
