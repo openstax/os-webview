@@ -110,18 +110,20 @@ function ReviewPrompt({accountId, hasWrittenReview, status, updated}) {
 
 function ReviewsPage() {
     const {partnerId, reviews, accountId} = useContext(PageContext);
-    const reviewModels = reviews.map((r) => ({
-        initials: r.submittedByName.replace(/[^A-Z]/g, '').substr(0, 2),
-        userName: r.submittedByName,
-        rating: r.rating,
-        review: r.review,
-        id: r.submittedByAccountId,
-        allowEdit: false,
-        updated: new Date(`${r.updated}T00:00:00`).toLocaleDateString('en-us'),
-        response: r.partnerResponse,
-        status: r.status
-    })).sort((a, b) => new Date(b.updated) - new Date(a.updated));
-    const indexOfUserReview = reviewModels.findIndex((r) => r.id === accountId);
+    const reviewModels = reviews
+        .map((r) => ({
+            initials: r.submittedByName.replace(/[^A-Z]/g, '').substr(0, 2),
+            userName: r.submittedByName,
+            rating: r.rating,
+            review: r.review,
+            allowEdit: r.submittedByAccountId === accountId,
+            updated: new Date(`${r.updated}T00:00:00`).toLocaleDateString('en-us'),
+            response: r.partnerResponse,
+            status: r.status
+        }))
+        .filter((r) => r.review.length > 0 || r.allowEdit)
+        .sort((a, b) => new Date(b.updated) - new Date(a.updated));
+    const indexOfUserReview = reviewModels.findIndex((r) => r.allowEdit);
     const notLoggedIn = !accountId;
 
     if (indexOfUserReview > -1) {
