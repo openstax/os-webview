@@ -140,7 +140,7 @@ class BaseClass {
         let html = `
         <div class="put-away">
             <button type="button">
-                <i  class="fa fa-times"></i>
+                &times;
             </button>
         </div>
         <b>${schoolInfo.fields.name}</b>

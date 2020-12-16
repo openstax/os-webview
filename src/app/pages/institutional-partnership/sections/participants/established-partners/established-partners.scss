@@ -6,7 +6,9 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, 12rem);
     justify-content: center;
+    max-width: 100%;
     padding: 2rem;
+    width: 120rem;
 
     @include width-up-to($phone-max) {
         grid-gap: 3rem;

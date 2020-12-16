@@ -35,8 +35,10 @@ export function useDataFromPromise(promise, defaultValue) {
     const [data, setData] = useState(defaultValue);
 
     useEffect(() => {
-        promise.then(setData);
-    }, []);
+        if (promise) {
+            promise.then(setData);
+        }
+    }, [promise]);
 
     return data;
 }
@@ -142,6 +144,29 @@ export function useToggle(initialState) {
     }
 
     return [value, toggle];
+}
+
+export function useSet(initialValue=[]) {
+    const setRef = useRef(new Set(initialValue));
+    const set = setRef.current;
+    const [handle, setHandle] = useState({
+        add(newValue) {
+            set.add(newValue);
+            setHandle({...handle});
+        },
+        delete(oldValue) {
+            set.delete(oldValue);
+            setHandle({...handle});
+        },
+        has(v) {
+            return set.has(v);
+        },
+        values() {
+            return set.values();
+        }
+    });
+
+    return handle;
 }
 
 export function useSelectList({

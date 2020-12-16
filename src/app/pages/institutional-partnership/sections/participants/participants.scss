@@ -21,12 +21,14 @@
     }
 
     a {
-        display: block;
+        align-items: center;
+        display: flex;
         justify-self: center;
         text-decoration: none;
 
-        .fa-chevron-right {
-            font-size: 50%;
+        > :not(:first-child) {
+            font-size: 75%;
+            margin-left: 0.3rem;
         }
     }
 }

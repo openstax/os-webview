@@ -1,34 +1,44 @@
-import componentType from '~/helpers/controller/init-mixin';
-import {description as template} from './participants.html';
-import css from './participants.css';
-import {on} from '~/helpers/controller/decorators';
+import React from 'react';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import groupBy from 'lodash/groupBy';
+import './participants.css';
 import EstablishedPartners from './established-partners/established-partners';
 import shellBus from '~/components/shell/shell-bus';
 
-const spec = {
-    template,
-    css,
-    view: {
-        tag: 'section',
-        classes: ['participants', 'white']
-    }
-};
+export default function Participants({
+    heading, subheading, icons: [icons], linkTarget, linkText, ...other
+}) {
+    const {true: current, false: established} = groupBy(icons, 'currentCohort');
 
-export default class extends componentType(spec) {
-
-    onLoaded() {
-        this.establishedPartners = new EstablishedPartners({
-            model: this.model.established
-        });
-    }
-
-    @on('click .show-established-partners')
-    showPrintSubmenu(event) {
+    function showEstablished(event) {
         event.preventDefault();
         shellBus.emit('showDialog', () => ({
             title: 'Established Partners',
-            content: this.establishedPartners
+            content: new EstablishedPartners({model: established})
         }));
     }
 
-};
+    return (
+        <section className="participants white">
+            <div className="content-block">
+                <h2>{heading}</h2>
+                <h3>{subheading}</h3>
+                <div className="icons">
+                    {
+                        current && current.map((icon) =>
+                            <img key={icon} src={icon.image.image} alt={icon.imageAltText} />
+                        )
+                    }
+                </div>
+                <a
+                    className="show-established-partners"
+                    href="{linkTarget}"
+                    onClick={showEstablished}
+                >
+                    <span>{linkText}</span>
+                    <FontAwesomeIcon icon="chevron-right" />
+                </a>
+            </div>
+        </section>
+    );
+}

@@ -29,18 +29,26 @@ function Option({optionEl, setValue, active}) {
     );
 }
 
+function SelectedItem({selectEl}) {
+    const selectedOption = selectEl.options[selectEl.selectedIndex];
+
+    if (!selectedOption) {
+        return null;
+    }
+
+    const isPlaceholder = selectedOption.disabled;
+
+    return isPlaceholder ?
+        <span class="item none">{selectedOption.textContent}</span> :
+        <span class="item">{selectedOption.textContent}</span>;
+}
+
 function SelectProxyFor({selectEl, open, activeIndex, setValue}) {
     const optionsClassList = `options ${open ? ' open' : ''}`;
-    const selectedOption = selectEl.options[selectEl.selectedIndex];
-    const isPlaceholder = selectedOption.disabled;
 
     return (
         <React.Fragment>
-            {
-                isPlaceholder ?
-                    <span class="item none">{selectedOption.textContent}</span> :
-                    <span class="item">{selectedOption.textContent}</span>
-            }
+            <SelectedItem selectEl={selectEl} />
             <ul className={optionsClassList}>
                 {
                     Array.from(selectEl.options)

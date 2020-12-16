@@ -3,7 +3,7 @@ import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import FormInput from '~/components/form-input/form-input.jsx';
 import ModuleList from './module-list';
 import {useUserStatus} from '../hooks';
-import showDialog, {hideDialog} from '../show-dialog';
+import showDialog, {hideDialog} from '~/helpers/show-dialog';
 import {cmsPost} from '~/models/cmsFetch';
 import cn from 'classnames';
 import './customization-form.css';
