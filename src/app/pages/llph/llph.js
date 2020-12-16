@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {RawHTML, LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import linkHelper from '~/helpers/link';
@@ -25,6 +25,16 @@ function LLPH({data}) {
 
     loginLocation.search = `?r=${encodeURIComponent(signupLinkHref)}&bri_book=LLPH`;
 
+    // Caution: spooky action at a distance
+    // Update login menu link
+    useEffect(() => {
+        const loginMenuLink = document.querySelector('.nav-menu .login-menu a');
+
+        if (loginMenuLink) {
+            loginMenuLink.href = loginLocation.href;
+        }
+    }, [loginLocation.href]);
+
     return (
         <React.Fragment>
             <section className="hero" style={{backgroundImage: `url('${heroBackground}')`}}>
@@ -32,7 +42,7 @@ function LLPH({data}) {
                     <div className="block">
                         <h1>{headline}</h1>
                         <div className="hero-blurb">{heroBlurb}</div>
-                        <a className="btn primary" href={loginLocation}>{signupLinkText}</a>
+                        <a className="btn primary" href={loginLocation.href}>{signupLinkText}</a>
                     </div>
                 </div>
             </section>
