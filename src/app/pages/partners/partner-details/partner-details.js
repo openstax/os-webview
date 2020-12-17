@@ -59,6 +59,15 @@ function Overview({model, icon}) {
     } = model;
     const titles = useRealTitles(books);
 
+    // For TESTING
+    // if (images.length < 6) {
+    //     images.push(...([1,2,3,4,'last'].map(
+    //         (i) => `https://via.placeholder.com/150x150?text=[image ${i}]`
+    //     )));
+    // }
+    // console.info('Images', images);
+    // TESTING
+
     return (
         <React.Fragment>
             <section className="carousel">
