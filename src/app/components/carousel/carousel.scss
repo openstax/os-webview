@@ -1,0 +1,46 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.carousel {
+    &.mobile-slider {
+        @include width-up-to($phone-max) {
+            .frame-changer {
+                display: none;
+            }
+
+            .items {
+                overflow-x: auto;
+            }
+        }
+    }
+
+    .frame-changer {
+        height: 7rem;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+
+        &.left {
+            border-bottom-right-radius: 0.3rem;
+            border-top-right-radius: 0.3rem;
+            left: 0;
+        }
+
+        &.right {
+            border-bottom-left-radius: 0.3rem;
+            border-top-left-radius: 0.3rem;
+            right: 0;
+        }
+    }
+
+    .viewport {
+        overflow-x: hidden;
+    }
+
+    .items {
+        display: flex;
+        position: relative;
+        overflow-x: visible;
+    }
+
+
+}

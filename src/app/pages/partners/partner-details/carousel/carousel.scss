@@ -1,68 +1,49 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.carousel {
-    overflow: hidden;
-    position: relative;
+.partner-details .carousel {
+    .carousel {
+        position: relative;
+    }
 
-    .navigate {
-        height: 7rem;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-
-        &.previous {
-            border-bottom-right-radius: 0.3rem;
-            border-top-right-radius: 0.3rem;
-            left: 0;
-        }
-
-        &.next {
-            border-bottom-left-radius: 0.3rem;
-            border-top-left-radius: 0.3rem;
-            right: 0;
+    .items {
+        > * {
+            min-width: 100%;
         }
     }
 
-    .image-row {
-        background-color: ui-color(default-hover);
-        display: grid;
-        position: relative;
-        width: 500%;
+    .image-holder,
+    .logo-holder {
+        align-items: center;
+        display: flex;
+        justify-content: center;
 
-        .image-holder,
-        .logo-holder {
-            align-items: center;
-            display: flex;
-            justify-content: center;
-
-            @include width-up-to($phone-max) {
-                height: 15rem;
-            }
-
-            @include wider-than($phone-max) {
-                height: 31rem;
-            }
-
-            img,
-            video {
-                max-height: 100%;
-                max-width: calc(100% - 6rem); // leave room for nav buttons
-            }
+        @include width-up-to($phone-max) {
+            height: 15rem;
         }
 
-        .logo-holder {
-            background-color: ui-color(white);
-            padding: 2rem calc(50% - 15rem);
+        @include wider-than($phone-max) {
+            height: 31rem;
+        }
+
+        img,
+        video {
+            max-height: 100%;
+            max-width: calc(100% - 6rem); // leave room for nav buttons
+        }
+    }
+
+    .logo-holder {
+        background-color: ui-color(white);
+        padding: 2rem calc(50% - 15rem);
+        max-width: 100%;
+
+        @include width-up-to($phone-max) {
+            padding: 2rem 10%;
+        }
+
+        > img {
+            max-height: 100%;
             max-width: 100%;
-
-            @include width-up-to($phone-max) {
-                padding: 2rem 10%;
-            }
-
-            > img {
-                max-height: 100%;
-                max-width: 100%;
-            }
         }
     }
 }

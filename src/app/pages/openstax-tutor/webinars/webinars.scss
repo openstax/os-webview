@@ -1,18 +1,29 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .openstax-tutor-page .webinars {
-    .cards {
-        display: grid;
-        grid-column-gap: 3rem;
-        overflow-x: auto;
-
-        @include width-up-to($phone-max) {
-            grid-auto-flow: column;
-            grid-column-gap: $normal-margin;
-        }
+    .carousel {
+        position: relative;
 
         @include wider-than($phone-max) {
-            grid-template-columns: repeat(auto-fit, minmax(29.5rem, 1fr));
+            padding: 0 8rem;
+        }
+
+        .frame-changer {
+            background-color: rgba(ui-color(black), 0.3);
+            height: 8rem;
+            width: 4rem;
+        }
+
+        .items {
+
+            @include width-up-to($phone-max) {
+                grid-column-gap: $normal-margin;
+            }
+
+            @include wider-than($phone-max) {
+                grid-column-gap: 3rem;
+                grid-template-columns: repeat(auto-fit, minmax(29.5rem, 1fr));
+            }
         }
     }
 
@@ -24,9 +35,19 @@
         grid-gap: 3rem;
         grid-template-rows: auto 1fr auto;
         min-height: 10rem;
-        min-width: 22rem;
         overflow: hidden;
         padding: 3rem;
+        position: relative;
+
+        @include width-up-to($phone-max) {
+            min-width: calc(100% - 4rem);
+            max-width: calc(100% - 4rem);
+        }
+
+        @include wider-than($phone-max) {
+            min-width: calc(calc(100% / 3) - 2rem);
+            max-width: calc(calc(100% / 3) - 2rem);
+        }
 
         h2 {
             @include set-font(h3);

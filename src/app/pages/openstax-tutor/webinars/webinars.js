@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {LabeledSection} from '../common';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import Carousel from '~/components/carousel/carousel';
 import './webinars.css';
 
 function Card({title='*No title given', description, link: url}) {
@@ -23,12 +24,20 @@ export default function Webinars({model: {
 }}) {
     const headerLabel = 'Webinars';
 
+    // For testing
+    // if (blurbs.length < 5) {
+    //     blurbs.push(...[1,2,3,4,'last'].map((i) => ({
+    //         title: `Card ${i}`
+    //     })));
+    // }
+    //
+
     return (
         <LabeledSection headerLabel={headerLabel} headline={headline}>
             <div className="webinars carousel">
-                <div className="cards">
+                <Carousel atATime="3" mobileSlider>
                     {blurbs.map((blurb) => <Card {...blurb} key={blurb.link} />)}
-                </div>
+                </Carousel>
             </div>
         </LabeledSection>
     );
