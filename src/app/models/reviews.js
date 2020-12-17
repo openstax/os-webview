@@ -13,17 +13,33 @@ function usePartnerData(id) {
             .then(setData);
     }
 
+    function update(review) {
+        const newData = {...data};
+        const replaceIndex = data.reviews.findIndex((item) => item.id === review.id);
+
+        if (replaceIndex >= 0) {
+            newData.reviews.splice(replaceIndex, 1, review);
+        } else {
+            newData.reviews.push(review);
+        }
+        setData(newData);
+    }
+
     useLayoutEffect(refresh, [id]);
-    return [data, refresh];
+    return [data, update];
 }
 
 export default function useReviews(partnerId) {
-    const [data, refresh] = usePartnerData(partnerId);
+    const [data, updateReview] = usePartnerData(partnerId);
 
     async function postData(payload, method) {
-        const postResult = await cmsPost(postUrl, payload, method);
+        try {
+            const postResult = await cmsPost(postUrl, payload, method);
 
-        refresh();
+            updateReview($.camelCaseKeys(postResult));
+        } catch (e) {
+            console.warn(method, 'failed:', e);
+        }
     }
 
     return [data, postData];

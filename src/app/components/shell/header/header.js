@@ -169,7 +169,7 @@ class Header extends Controller {
         const button = this.el.querySelector('.expand');
 
         if (this.model.headerActive) {
-            document.body.classList.remove('no-scroll');
+            document.body.parentNode.classList.remove('no-scroll');
         }
 
         this.model.headerActive = false;
