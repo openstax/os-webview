@@ -9,7 +9,7 @@ function dataStuffFor(title) {
         return {
             url1: 'https://openstax.pl/pl/newsletter',
             text1: 'Zarejestruj się,<br>aby dowiedzieć się więcej',
-            url2: 'https://docs.google.com/forms/d/e/1FAIpQLSc87Eu8-nNJ6c-vW0FTuMXi-B_5I1x92wuvS_jryzOILRpqMQ/viewform',
+            url2: 'https://openstax.pl/formularz-adopcyjny',
             text2: 'Korzystasz z tej książki? Daj nam znać.'
         };
     }
