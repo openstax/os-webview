@@ -110,7 +110,7 @@ function Partners({data}) {
 
 function PartnersLoader() {
     return (
-        <LoaderPage slug="pages/partners" Child={Partners} doDocumentSetup />
+        <LoaderPage slug="pages/partners" Child={Partners} doDocumentSetup noCamelCase />
     );
 }
 

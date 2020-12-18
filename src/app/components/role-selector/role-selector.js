@@ -19,11 +19,11 @@ function RoleSelector({data: options, value, setValue, children, hidden=false}) 
                         {
                             options.map((opt) =>
                                 <option
-                                    value={opt.salesforce_name}
-                                    selected={value === opt.salesforce_name}
-                                    key={opt.salesforce_name}
+                                    value={opt.salesforceName}
+                                    selected={value === opt.salesforceName}
+                                    key={opt.salesforceName}
                                 >
-                                    {opt.display_name}
+                                    {opt.displayName}
                                 </option>
                             )
                         }

@@ -3,14 +3,13 @@
 .team {
 
     @include width-up-to($phone-max) {
-        people-tabs,
-        tab-content {
+        .bigger-view {
             display: none;
         }
     }
 
     @include wider-than($phone-max) {
-        accordion-region {
+        .phone-view {
             display: none;
         }
     }
@@ -68,14 +67,7 @@
         }
     }
 
-    accordion-region {
-
-        > .accordion-group .content-pane {
-            background-color: transparent;
-        }
-
-        .people-tab .card.description::before {
-            left: 50%;
-        }
+    .accordion-group .content-pane {
+        background-color: transparent;
     }
 }

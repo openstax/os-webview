@@ -1,19 +1,14 @@
-import Team from '~/pages/team/team';
-import {clickElement} from '../../test-utils';
+import {TeamLoader} from '~/pages/team/team';
+import {makeMountRender} from '../../helpers/jsx-test-utils.jsx';
 
 describe('Team Page', () => {
-    const p = new Team();
+    const wrapper = makeMountRender(TeamLoader, {})();
 
     it('creates', () => {
-        expect(p).toBeTruthy();
+        expect(wrapper).toBeTruthy();
     });
-    it('has team tab selected', () => {
-        const selectedTab = p.el.querySelector('.tab-group .tab[aria-current="page"]');
-        const selectedContent = p.el.querySelector('.content-group > .people-tab:not([hidden])');
-        const cardsOnSelectedContent = Array.from(selectedContent.querySelectorAll('.card')).length;
-        const headings = p.pageData.openstax_people.map((obj) => obj.heading);
-
-        expect(selectedTab.textContent).toBe(headings[0]);
-        expect(cardsOnSelectedContent).toBe(61);
+    it('has a big chunk of content', () => {
+        wrapper.update();
+        expect(wrapper.html().length).toBeGreaterThan(500);
     });
 });

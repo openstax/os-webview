@@ -1,7 +1,7 @@
 import React from 'react';
 import linkHelper from '~/helpers/link';
 import ButtonRow from '../button-row/button-row';
-import ClippedImage from '../clipped-image/clipped-image';
+import ClippedImage from '~/components/clipped-image/clipped-image';
 import './banner.css';
 
 export default function Banner({model}) {

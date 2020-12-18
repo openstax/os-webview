@@ -49,7 +49,7 @@ const view = {
 
 function GlobalReachLoader() {
     return (
-        <LoaderPage slug={slug} Child={GlobalReachPage} />
+        <LoaderPage slug={slug} Child={GlobalReachPage} noCamelCase />
     );
 }
 

@@ -79,7 +79,7 @@ const slug = 'pages/institutional-partners';
 
 function PageLoader() {
     return (
-        <LoaderPage slug={slug} Child={InstitutionalPartnership} doDocumentSetup />
+        <LoaderPage slug={slug} Child={InstitutionalPartnership} doDocumentSetup noCamelCase />
     );
 }
 
