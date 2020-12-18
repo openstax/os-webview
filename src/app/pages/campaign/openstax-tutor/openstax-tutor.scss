@@ -1,5 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
-
+@import 'mixins/placeholder-selectors';
 
 .campaign .openstax-tutor {
     h1,
@@ -15,8 +15,9 @@
 
         @include width-up-to($phone-max) {
             background-image: url(/images/campaign/ost-header-mobile.jpg);
-            background-size: 100%;
-            padding-bottom: 82vw;
+            background-size: 106%;
+            padding-bottom: 80vw;
+            padding-top: 4rem;
         }
 
         @include width-between($phone-max, $tablet-max) {
@@ -151,6 +152,25 @@
 
         &.primary {
             @extend %primary;
+        }
+
+        &.super {
+            @extend %light-on-dark;
+            @include title-font(3.6rem);
+
+            background-color: os-color(light-blue);
+            border-radius: 0.3rem;
+            color: text-color(white);
+            height: auto;
+            line-height: 1.1;
+            max-width: 100%;
+            min-height: 8rem;
+            padding: $normal-margin 4rem;
+            white-space: normal;
+
+            @include width-up-to($phone-max) {
+                padding: $normal-margin 2rem;
+            }
         }
     }
 }

@@ -8,7 +8,12 @@ const data = {
     easy-to-use online courseware they need to stay engaged while reading,
     writing and doing homework assignments. All while you, the teacher, is
     provided with insight into how your students are learning and where they
-    need additional support.`,
+    need additional support.<br><br>
+    <b>Available books:</b><br>
+    Anatomy and Physiology, Biology 2e, College Physics, Biology for
+    AP<sup>&reg;</sup> Courses, The AP<sup>&reg;</sup> Physics Collection,
+    Psychology 2e, Introduciton to Sociology 2e, and Entrepreneurship.
+    `,
     buttonUrl: 'case-study-download.pdf',
     buttonText: 'Download the case study',
     sectionHeader: 'Features',
@@ -67,7 +72,7 @@ export default function TutorPage() {
                     <div className="text">
                         <h1>{headline}</h1>
                         <RawHTML className="description" html={description} />
-                        <a className="btn primary" href={buttonUrl}>{buttonText}</a>
+                        <a className="btn super" href={buttonUrl}>{buttonText}</a>
                     </div>
                 </div>
             </section>
