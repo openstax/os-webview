@@ -3,10 +3,10 @@ import './people-tab.css';
 
 function PersonCard({entry}) {
     return (
-        <div class="card">
+        <div className="card">
             <div className="content">
-                <div class="name">{entry.name}</div>
-                <div class="bio">{entry.bio}</div>
+                <div className="name">{entry.name}</div>
+                <div className="bio">{entry.bio}</div>
             </div>
         </div>
     );
