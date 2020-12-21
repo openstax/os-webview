@@ -57,7 +57,11 @@ function ReviewAndResponse({review, response}) {
 export default function UserReview({
     initials, userName, rating, review, updated, response, status, allowEdit=false
 }) {
-    const showTheReview = review && (status === 'Approved' || allowEdit);
+    const showTheReview = allowEdit || (review && status === 'Approved');
+
+    if (!showTheReview) {
+        return null;
+    }
 
     return (
         <div className="user-review">
@@ -68,7 +72,7 @@ export default function UserReview({
                 <span className="updated">{updated}</span>
                 {allowEdit && <UserControls status={status} />}
             </div>
-            {showTheReview && <ReviewAndResponse review={review} response={response} />}
+            <ReviewAndResponse review={review} response={response} />
         </div>
     );
 }
