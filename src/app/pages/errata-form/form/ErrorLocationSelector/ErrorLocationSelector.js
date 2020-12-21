@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
-import managedInvalidMessage from '../InvalidMessage.jsx';
+import managedInvalidMessage from '../InvalidMessage.js';
 import bookToc from '~/models/book-toc';
 import $ from '~/helpers/$';
 import css from './ErrorLocationSelector.css';
