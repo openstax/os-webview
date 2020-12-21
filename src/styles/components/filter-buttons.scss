@@ -28,15 +28,25 @@ $width-of-filter-by: 7.5rem;
 }
 
 .filter-buttons {
+    min-height: $form-element-height;
+
     @include set-font(body-large);
     @include width-up-to($tablet-max) {
         height: auto;
         justify-items: right;
-        min-height: $form-element-height;
     }
 
     @include wider-than($tablet-max) {
         @include button-bar();
+
+        // These things need to be changed in button-bar :(
+        align-items: center;
+        background-color: ui-color(white);
+        display: grid;
+        grid-auto-flow: column;
+        height: auto;
+        max-width: #{$content-max - 3rem};
+        width: calc(100vw - 3rem);
 
         :not(:first-child) {
             border-bottom-left-radius: 0;
@@ -50,15 +60,21 @@ $width-of-filter-by: 7.5rem;
     }
 
     .filter-button {
-
         @include width-up-to($tablet-max) {
             align-items: center;
             cursor: pointer;
             display: flex;
             height: $form-element-height;
             overflow: hidden;
-            padding: 0 $normal-margin;
             white-space: nowrap;
+            padding: 1.25rem $normal-margin;
+        }
+
+        @include wider-than($tablet-max) {
+            line-height: 1.33;
+            min-height: $form-element-height;
+            padding: 0.5rem $normal-margin;
+            white-space: normal;
         }
 
         &:focus {
