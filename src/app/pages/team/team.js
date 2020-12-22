@@ -3,7 +3,7 @@ import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import TabGroup from '~/components/tab-group/tab-group.jsx';
 import ContentGroup from '~/components/content-group/content-group.jsx';
-import AccordionGroup from '~/components/accordion-group/accordion-group.jsx';
+import AccordionGroup from '~/components/accordion-group/accordion-group.js';
 import PeopleTab from './people-tab/people-tab';
 import $ from '~/helpers/$';
 import './team.css';
