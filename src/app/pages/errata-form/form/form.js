@@ -1,9 +1,9 @@
 import React, {useState, useRef} from 'react';
-import ErrorTypeSelector from './ErrorTypeSelector.jsx';
-import ErrorSourceSelector from './ErrorSourceSelector.jsx';
-import ErrorLocationSelector from './ErrorLocationSelector/ErrorLocationSelector.jsx';
-import FileUploader from './FileUploader.jsx';
-import managedInvalidMessage from './InvalidMessage.jsx';
+import ErrorTypeSelector from './ErrorTypeSelector';
+import ErrorSourceSelector from './ErrorSourceSelector';
+import ErrorLocationSelector from './ErrorLocationSelector/ErrorLocationSelector';
+import FileUploader from './FileUploader';
+import managedInvalidMessage from './InvalidMessage.js';
 import $ from '~/helpers/$';
 import shellBus from '~/components/shell/shell-bus';
 import routerBus from '~/helpers/router-bus';

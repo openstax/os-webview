@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import managedInvalidMessage from './InvalidMessage.jsx';
+import managedInvalidMessage from './InvalidMessage.js';
 import getFields from '~/models/errata-fields';
 
 const resourcePromise = getFields('resources')
