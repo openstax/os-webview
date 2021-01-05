@@ -1,142 +1,127 @@
-import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
-import {on} from '~/helpers/controller/decorators';
-import $ from '~/helpers/$';
+import React, {useRef} from 'react';
+import {useToggle, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import headerBus from '../../bus';
-import {description as template} from './dropdown.html';
-import css from './dropdown.css';
+import $ from '~/helpers/$';
+import './dropdown.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['nav-menu-item', 'dropdown']
-    },
-    isOpen: false,
-    selectedIndex: -1,
-    model() {
-        return {
-            isOpen: this.isOpen,
-            selectedIndex: this.selectedIndex,
-            dropdownLabel: this.dropdownLabel,
-            items: this.items.filter((i) => !i.exclude || !i.exclude())
-        };
-    }
-};
+export function MenuItem({label, url, local}) {
+    return (
+        <RawHTML
+            Tag="a" html={label}
+            href={url} tabIndex={-1} data-local={local} role="menuitem"
+        />
+    );
+}
 
-export default class Dropdown extends componentType(spec, insertHtmlMixin) {
+function OptionalWrapper({isWrapper=true, children}) {
+    return (
+        isWrapper ?
+            <div className="nav-menu-item dropdown">
+                {children}
+            </div> : children
+    );
+}
 
-    onLoaded() {
-        this.closeMenuBound = (event) => {
-            if (this.openedByTouch) {
-                this.openedByTouch = false;
-                this.closeMenu();
-                return;
-            }
-            if (!$.isMobileDisplay()) {
-                this.closeMenu();
-            }
-        };
-        this.el.addEventListener('mouseleave', this.closeMenuBound);
-        this.removeCloseMenusHandler = headerBus.on('close-menus', this.closeMenuBound);
+export default function Dropdown({Tag='li', className, label, children, excludeWrapper=false}) {
+    const [isOpen, toggleIsOpen] = useToggle(false);
+    const topRef = useRef();
+    const dropdownRef = useRef();
+
+    function closeMenu() {
+        toggleIsOpen(false);
     }
 
-    onClose() {
-        this.el.removeEventListener('mouseleave', this.closeMenuBound);
-        this.removeCloseMenusHandler();
-    }
-
-    setFocus() {
-        this.settingFocus = true;
-        if (this.selectedIndex < 0) {
-            this.el.querySelector('a').focus();
-        } else {
-            this.el.querySelectorAll('.dropdown-menu [role="menuitem"]')[this.selectedIndex].focus();
-        }
-        this.settingFocus = false;
-    }
-
-    openMenu() {
-        if (!this.isOpen) {
-            this.isOpen = true;
-            if ($.isMobileDisplay()) {
-                headerBus.emit('recognizeDropdownOpen', {
-                    el: this.el,
-                    label: this.dropdownLabel,
-                    close: this.closeMenu.bind(this)
-                });
-            }
-            this.update();
-        }
-    }
-
-    closeMenu() {
-        if (this.isOpen) {
-            this.isOpen = false;
-            headerBus.emit('recognizeDropdownOpen', null);
-            this.update();
-        }
-    }
-
-    @on('focusin')
-    @on('mouseover')
-    openDesktopMenu() {
+    function closeDesktopMenu() {
         if (!$.isMobileDisplay()) {
-            this.openMenu();
+            closeMenu();
         }
     }
 
-    @on('focusout')
-    navigateAway(event) {
-        if (event.target.parentNode === this.el && !$.isMobileDisplay() && !this.settingFocus) {
-            this.closeMenuBound(event);
-        }
-    }
-
-    @on('touchstart .dropdown > [role="menuitem"]')
-    openByTouch(event) {
-        this.openedByTouch = true;
-    }
-
-    @on('click .dropdown > [role="menuitem"]')
-    openMobileMenu(event) {
+    function openDesktopMenu(event) {
+        toggleIsOpen(true);
         event.preventDefault();
-        this.openMenu();
     }
 
-    @on('keydown')
-    moveSelection(event) {
-        /* eslint complexity: 0 */
-        const lastIndex = this.items.length - 1;
+    React.useEffect(() => {
+        if (!$.isMobileDisplay()) {
+            return;
+        }
 
-        switch (event.keyCode) {
-        case $.key.down:
-            if (this.selectedIndex < lastIndex) {
-                ++this.selectedIndex;
+        if (isOpen) {
+            headerBus.emit('recognizeDropdownOpen', {
+                el: topRef.current.parentNode,
+                label,
+                close: closeMenu
+            });
+        } else {
+            headerBus.emit('recognizeDropdownOpen', null);
+        }
+    }, [isOpen]);
+
+    // eslint-disable-next-line complexity
+    function navigateByKey(event) {
+        switch (event.key) {
+        case 'ArrowDown':
+            event.preventDefault();
+            if (document.activeElement === topRef.current) {
+                dropdownRef.current.firstChild.focus();
+            } else {
+                document.activeElement.nextSibling.focus();
             }
-            event.preventDefault();
-            this.setFocus();
             break;
-        case $.key.up:
-            --this.selectedIndex;
-            if (this.selectedIndex < 0) {
-                this.selectedIndex = -1;
+        case 'ArrowUp':
+            event.preventDefault();
+            if (document.activeElement !== topRef.current) {
+                const focusOn = document.activeElement.previousSibling || topRef.current;
+
+                focusOn.focus();
             }
-            event.preventDefault();
-            this.setFocus();
             break;
-        case $.key.enter:
-        case $.key.space:
-            document.activeElement.dispatchEvent(new Event('click', {bubbles: true}));
-            // Falls through to close
-        case $.key.esc:
-            document.activeElement.blur();
-            this.closeMenuBound();
+        case 'Escape':
             event.preventDefault();
+            event.target.blur();
+            // falls through -- these do default behavior and close menu
+        case 'Enter':
+        case 'Tab':
+            closeDesktopMenu();
             break;
         default:
             break;
         }
-        this.update();
     }
 
+    return (
+        <Tag
+            className={className}
+            onMouseEnter={openDesktopMenu}
+            onMouseLeave={closeDesktopMenu}
+            onKeyDown={navigateByKey}
+        >
+            <OptionalWrapper isWrapper={!excludeWrapper}>
+                <a
+                    href="." role="menuitem" aria-haspopup="true"
+                    onFocus={openDesktopMenu}
+                    ref={topRef}
+                    onClick={openDesktopMenu}
+                >
+                    {label}
+                    <svg className="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 30">
+                        <title>arrow</title>
+                        <path d="M12,1L26,16,12,31,8,27,18,16,8,5Z" transform="translate(-8 -1)" />
+                    </svg>
+                </a>
+                <div className="dropdown-container">
+                    <nav
+                        className="dropdown-menu"
+                        role="menu"
+                        aria-expanded={isOpen}
+                        aria-label={`${label} menu`}
+                        ref={dropdownRef}
+                    >
+                        {children}
+                    </nav>
+                </div>
+            </OptionalWrapper>
+        </Tag>
+    );
 }

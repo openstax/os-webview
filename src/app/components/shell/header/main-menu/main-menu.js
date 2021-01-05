@@ -1,9 +1,9 @@
-import {pageWrapper, SuperbItem} from '~/controllers/jsx-wrapper';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import Dropdown from './dropdown/dropdown';
+import DropdownJsx, {MenuItem} from './dropdown/dropdown';
 import React, {useRef, useEffect} from 'react';
 import categoryPromise from '~/models/subjectCategories';
-import attachLoginMenu from './login-menu/login-menu';
+import LoginMenu from './login-menu/login-menu';
 import GiveButton from '../give-button/give-button';
 import './main-menu.css';
 
@@ -14,43 +14,22 @@ function SubjectsMenu() {
         return (<li>Loading...</li>);
     }
 
-    const dd = new Dropdown({
-        dropdownLabel: 'Subjects',
-        items: categories.map((obj) => ({
-            url: `/subjects/${obj.value}`,
-            label: obj.html.replace('View ', '')
-        }))
-    });
-
     return (
-        <SuperbItem Tag="li" className="subjects-dropdown" component={dd} />
+        <DropdownJsx className="subjects-dropdown" label="Subjects">
+            {
+                categories.map((obj) =>
+                    <MenuItem
+                        key={obj.value}
+                        label={obj.html.replace('View ', '')}
+                        url={`/subjects/${obj.value}`}
+                    />
+                )
+            }
+        </DropdownJsx>
     );
 }
 
 function MainMenu() {
-    const technologyDropdown = new Dropdown({
-        dropdownLabel: 'Technology',
-        items: [
-            {url: '/openstax-tutor', label: 'OpenStax Tutor'},
-            {url: '/partners', label: 'OpenStax Tech Scout'}
-        ]
-    });
-    const whatWeDoDropdown = new Dropdown({
-        dropdownLabel: 'What we do',
-        items: [
-            {url: '/about', label: 'About Us'},
-            {url: '/team', label: 'Team'},
-            {url: '/research', label: 'Research'},
-            {url: '/institutional-partnership', label: 'Institutional Partnerships'},
-            {url: '/creator-fest', label: 'Creator Fest'}
-        ]
-    });
-    const loginMenuRef = useRef();
-
-    useEffect(() => {
-        attachLoginMenu(loginMenuRef.current);
-    }, []);
-
     return (
         <React.Fragment>
             <span className="logo-wrapper">
@@ -66,9 +45,18 @@ function MainMenu() {
 
             <ul className="nav-menu main-menu no-bullets">
                 <SubjectsMenu />
-                <SuperbItem Tag="li" className="technology-dropdown" component={technologyDropdown} />
-                <SuperbItem Tag="li" className="what-we-do-dropdown" component={whatWeDoDropdown} />
-                <li className="login-menu" ref={loginMenuRef} />
+                <DropdownJsx className="technology-dropdown" label="Technology">
+                    <MenuItem url="/openstax-tutor" label="OpenStax Tutor" />
+                    <MenuItem url="/partners" label="OpenStax Tech Scout" />
+                </DropdownJsx>
+                <DropdownJsx className="what-we-do-dropdown" label="What we do">
+                    <MenuItem url="/about" label="About Us" />
+                    <MenuItem url="/team" label="Team" />
+                    <MenuItem url="/research" label="Research" />
+                    <MenuItem url="/institutional-partnership" label="Institutional Partnerships" />
+                    <MenuItem url="/creator-fest" label="Creator Fest" />
+                </DropdownJsx>
+                <LoginMenu />
                 <li className="give-button-item"><GiveButton /></li>
             </ul>
             <button className="expand" aria-haspopup="true" aria-label="Toggle Meta Navigation Menu" tabindex="0">
