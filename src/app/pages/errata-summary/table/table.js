@@ -75,33 +75,33 @@ const sortFunctions = {
     }
 };
 
-function DesktopHeaderColumn({md, sortController}) {
+function DesktopHeaderColumn({colSpec, sortController}) {
     const {sortKey, sortDir, setSortFn, setSortDir, setSortKey} = sortController;
     const onClick = (event) => {
-        if (sortKey === md.id) {
+        if (sortKey === colSpec.id) {
             setSortDir(-sortDir);
         } else {
-            setSortFn(md.sortFn);
-            setSortKey(md.id);
+            setSortFn(colSpec.sortFn);
+            setSortKey(colSpec.id);
             setSortDir(1);
         }
     };
-    const sortAttributes = md.sortFn ? {
+    const sortAttributes = colSpec.sortFn ? {
         role: 'button', tabIndex: 0, onClick, onKeyDown: $.treatSpaceOrEnterAsClick
     } : {};
-    const sortIndicator = md.sortFn ?
-        <span className={`will-sort sortdir${md.sortFn === 'sort' ? 1 : -1}`} /> :
+    const sortIndicator = colSpec.sortFn ?
+        <span className={`will-sort sortdir${colSpec.sortFn === 'sort' ? 1 : -1}`} /> :
         null;
 
     return (
         <th
-            key={md.id}
-            className={md.cssClass}
+            key={colSpec.id}
+            className={colSpec.cssClass}
             {...sortAttributes}
         >
-            {md.label}
+            {colSpec.label}
             {
-                sortKey === md.id ?
+                sortKey === colSpec.id ?
                     <span className={`sortdir${sortDir}`} /> :
                     sortIndicator
             }
@@ -113,25 +113,25 @@ function DesktopHeaderRow({sortController}) {
     return (
         <tr>
             {
-                columnSpecs.map((md) =>
-                    <DesktopHeaderColumn key={md.id} md={md} sortController={sortController} />
+                columnSpecs.map((colSpec) =>
+                    <DesktopHeaderColumn key={colSpec.id} colSpec={colSpec} sortController={sortController} />
                 )
             }
         </tr>
     );
 }
 
-function DesktopDataColumn({md, entry}) {
+function DesktopDataColumn({colSpec, entry}) {
     return (
         <td>
-            <div className={md.cssClass}>
+            <div className={colSpec.cssClass}>
                 {
-                    md.id === 'id' ?
-                        <a href={entry[md.id]}>{entry[md.id] || ''}</a> :
+                    colSpec.id === 'id' ?
+                        <a href={entry[colSpec.id]}>{entry[colSpec.id] || ''}</a> :
                         <React.Fragment>
-                            {entry[md.id]}{' '}
+                            {entry[colSpec.id]}{' '}
                             {
-                                md.id === 'displayStatus' && entry[md.id] === 'No Correction' &&
+                                colSpec.id === 'displayStatus' && entry[colSpec.id] === 'No Correction' &&
                                     <a href={`/errata/${entry.id}`}>Details</a>
                             }
                         </React.Fragment>
@@ -144,7 +144,7 @@ function DesktopDataColumn({md, entry}) {
 function DesktopDataRow({entry}) {
     return (
         <tr>
-            {columnSpecs.map((md) => <DesktopDataColumn key={md.id} md={md} entry={entry} />)}
+            {columnSpecs.map((colSpec) => <DesktopDataColumn key={colSpec.id} colSpec={colSpec} entry={entry} />)}
         </tr>
     );
 }
@@ -200,12 +200,12 @@ function MobileTable({entry}) {
         <table className="body-block summary-table-mobile">
             <tbody>
                 {
-                    columnSpecs.map((md) =>
+                    columnSpecs.map((colSpec) =>
                         <MobileRow
-                            key={md.label}
+                            key={colSpec.label}
                             entry={entry}
-                            label={md.label}
-                            columnId={md.id}
+                            label={colSpec.label}
+                            columnId={colSpec.id}
                         />
                     )
                 }
