@@ -13,7 +13,10 @@ export default function ProjectsSection({data: {projectsHeader, projects, ...oth
                 <div className="project-cards">
                     {
                         projects.map((project, i) =>
-                            <div className={cn('card', projectColors[i])} key={project.title}>
+                            <div
+                                className={cn('card', projectColors[i % projectColors.length])}
+                                key={project.title}
+                            >
                                 <LinkOrNot url={project.url}>
                                     <div className="card-content">
                                         <h2>{project.title}</h2>
