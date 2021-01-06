@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
-import {useToggle, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import headerBus from '../../bus';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {DropdownContext} from '../../dropdown-context';
 import $ from '~/helpers/$';
 import './dropdown.css';
 
@@ -23,12 +23,13 @@ function OptionalWrapper({isWrapper=true, children}) {
 }
 
 export default function Dropdown({Tag='li', className, label, children, excludeWrapper=false}) {
-    const [isOpen, toggleIsOpen] = useToggle(false);
     const topRef = useRef();
     const dropdownRef = useRef();
+    const dropdownCtx = React.useContext(DropdownContext);
+    const isOpen = dropdownCtx.activeDropdown === topRef;
 
     function closeMenu() {
-        toggleIsOpen(false);
+        dropdownCtx.setActiveDropdown({});
     }
 
     function closeDesktopMenu() {
@@ -37,26 +38,19 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
         }
     }
 
-    function openDesktopMenu(event) {
-        toggleIsOpen(true);
+    function openMenu(event) {
         event.preventDefault();
+        console.info('Setting active dropdown', topRef.current.textContent);
+        dropdownCtx.setActiveDropdown(topRef);
+        dropdownCtx.setSubmenuLabel(label);
     }
 
-    React.useEffect(() => {
+    function openDesktopMenu(event) {
+        event.preventDefault();
         if (!$.isMobileDisplay()) {
-            return;
+            openMenu(event);
         }
-
-        if (isOpen) {
-            headerBus.emit('recognizeDropdownOpen', {
-                el: topRef.current.parentNode,
-                label,
-                close: closeMenu
-            });
-        } else {
-            headerBus.emit('recognizeDropdownOpen', null);
-        }
-    }, [isOpen]);
+    }
 
     // eslint-disable-next-line complexity
     function navigateByKey(event) {
@@ -102,7 +96,7 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
                     href="." role="menuitem" aria-haspopup="true"
                     onFocus={openDesktopMenu}
                     ref={topRef}
-                    onClick={openDesktopMenu}
+                    onClick={openMenu}
                 >
                     {label}
                     <svg className="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 30">

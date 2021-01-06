@@ -1,4 +1,3 @@
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import DropdownJsx, {MenuItem} from './dropdown/dropdown';
 import React, {useRef, useEffect} from 'react';
@@ -29,9 +28,9 @@ function SubjectsMenu() {
     );
 }
 
-function MainMenu() {
+export default function MainMenu({children}) {
     return (
-        <React.Fragment>
+        <div className="container">
             <span className="logo-wrapper">
                 <span className="logo">
                     <a href="/" aria-label="Home Page">
@@ -59,15 +58,7 @@ function MainMenu() {
                 <LoginMenu />
                 <li className="give-button-item"><GiveButton /></li>
             </ul>
-            <button className="expand" aria-haspopup="true" aria-label="Toggle Meta Navigation Menu" tabindex="0">
-                <span />
-            </button>
-        </React.Fragment>
+            {children}
+        </div>
     );
 }
-
-const view = {
-    classes: ['container']
-};
-
-export default pageWrapper(MainMenu, view);

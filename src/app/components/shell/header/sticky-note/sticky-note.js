@@ -1,10 +1,9 @@
 import React from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {usePutAway, useStickyData} from '../../shared.jsx';
 import './sticky-note.css';
 
-function StickyNote() {
+export default function StickyNote() {
     const stickyData = useStickyData();
     const [closed, PutAway] = usePutAway();
 
@@ -21,5 +20,3 @@ function StickyNote() {
         </div>
     );
 }
-
-export default new (pageWrapper(StickyNote))();

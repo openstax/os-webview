@@ -1,5 +1,4 @@
 import React from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {useDataFromSlug, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import useGiveToday from '~/models/give-today';
 import GiveButton from '../give-button/give-button';
@@ -29,9 +28,9 @@ function GiveItem() {
     );
 }
 
-function UpperMenu() {
+export default function UpperMenu() {
     return (
-        <React.Fragment>
+        <div className="container">
             <a className="nav-menu" href="/bookstore-suppliers">Bookstores</a>
             <a className="nav-menu" href="/impact">Our Impact</a>
             <a className="nav-menu" href="/foundation">Supporters</a>
@@ -42,12 +41,6 @@ function UpperMenu() {
                 <img src="/images/rice.png" alt="Rice University logo" height="30" />
             </a>
             <GiveButton />
-        </React.Fragment>
+        </div>
     );
 }
-
-const view = {
-    classes: ['container']
-};
-
-export default pageWrapper(UpperMenu, view);
