@@ -58,6 +58,10 @@
                 }
             }
         }
+
+        .available-books-header {
+            font-weight: bold;
+        }
     }
     .color-bar-divider {
         height: 1.3rem;
@@ -83,10 +87,16 @@
         header {
             @include width-up-to($phone-max) {
                 @include set-font(h4);
+
+                line-height: 3rem;
+                margin-bottom: 1.5rem;
             }
 
             @include wider-than($phone-max) {
                 @include set-font(h3);
+
+                line-height: 6rem;
+                margin-bottom: 2rem;
             }
 
             line-height: 1.67;
@@ -116,7 +126,7 @@
             @include wider-than($phone-max) {
                 grid-gap: 5rem 4rem;
                 grid-template-columns: 1fr 1fr;
-                margin-top: 5rem;
+                margin-top: 7rem;
             }
 
             .blurb {
@@ -126,6 +136,7 @@
 
                 > img {
                     align-self: center;
+                    max-width: 6.4rem;
                 }
 
                 > * {
@@ -163,6 +174,7 @@
             color: text-color(white);
             height: auto;
             line-height: 1.1;
+            margin-top: 3rem;
             max-width: 100%;
             min-height: 8rem;
             padding: $normal-margin 4rem;
