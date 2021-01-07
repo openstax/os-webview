@@ -3,13 +3,14 @@ import {BookDetails} from '~/pages/details/details';
 import {makeMountRender} from '../../../helpers/jsx-test-utils.jsx';
 import rawEnglishData from '../../data/details-biology-2e';
 import {transformData} from '~/helpers/controller/cms-mixin';
+import $ from '~/helpers/$';
 import rawPolishData from '../../data/details-polish';
 
 let wrapper;
 let rawData = rawEnglishData;
 
 function WrappedDetailsPage() {
-    const data = transformData(rawData);
+    const data = $.camelCaseKeys(transformData(rawData));
     const ref = useRef();
     jest.spyOn(document, 'querySelector').mockImplementation(
         (selector) => ref.current

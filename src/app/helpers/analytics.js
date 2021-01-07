@@ -173,15 +173,15 @@ class Analytics {
 
     addResourcesToLookupTable(item) {
         const resourceMarker = {
-            'book_student_resources': 'Student',
-            'book_faculty_resources': 'Faculty'
+            'bookStudentResources': 'Student',
+            'bookFacultyResources': 'Faculty'
         };
 
         Reflect.ownKeys(resourceMarker).forEach((resourceBranch) => {
             const marker = resourceMarker[resourceBranch];
 
             item[resourceBranch].forEach((resource) => {
-                this.sourceByUrl[resource.link_document_url] = `${item.title} ${marker}`;
+                this.sourceByUrl[resource.linkDocumentUrl] = `${item.title} ${marker}`;
             });
         });
     }
