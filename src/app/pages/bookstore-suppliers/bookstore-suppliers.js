@@ -48,8 +48,6 @@ function CanadaFlagCard() {
 
 export function BookstorePage({data}) {
     const suppliers = data.providers.map(providerToModel);
-
-    console.info(JSON.stringify(Reflect.ownKeys(data), null, 2));
     const featuredSupplier = data.featuredProviders.map(providerToModel); // should only be 1
     const model = {
         headline: data.title,

@@ -40,7 +40,6 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
 
     function openMenu(event) {
         event.preventDefault();
-        console.info('Setting active dropdown', topRef.current.textContent);
         dropdownCtx.setActiveDropdown(topRef);
         dropdownCtx.setSubmenuLabel(label);
     }
