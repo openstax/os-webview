@@ -36,7 +36,6 @@ const PAGES = [
     'partners/*path',
     'press',
     'press/*path',
-    'quiz-results/*path',
     'research',
     'separatemap',
     'subjects',

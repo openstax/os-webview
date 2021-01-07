@@ -1,6 +1,6 @@
 import React from 'react';
 import Checkboxes from '../checkboxes-linked-to-store/checkboxes-linked-to-store';
-import AccordionGroup from '~/components/accordion-group/accordion-group.jsx';
+import AccordionGroup from '~/components/accordion-group/accordion-group.js';
 import sortBy from 'lodash/sortBy';
 
 export default function AdvancedOptions({store, options, onTabIndex}) {
