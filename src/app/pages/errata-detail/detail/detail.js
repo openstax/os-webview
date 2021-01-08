@@ -48,7 +48,7 @@ export function Detail({showDecisionDetails, detail}) {
                 {'You can check the status of all errata submissions on the '}
                 <a href={`/errata/?book=${encodeURIComponent(detail.bookTitle)}`}>
                     <RawHTML Tag="span" html={detail.bookTitle} />
-                    Errata Page
+                    {' '}Errata Page
                 </a>.
             </div>
         </React.Fragment>
