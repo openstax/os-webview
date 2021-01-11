@@ -93,8 +93,12 @@
     .file-button {
         grid-template-columns: auto auto 1fr;
 
-        &.empty + .file-button.empty {
-            display: none;
+        &.empty {
+            order: 1;
+
+            + .file-button.empty {
+                display: none;
+            }
         }
     }
 
@@ -111,6 +115,10 @@
 
         min-width: 9em;
         text-indent: inherit;
+    }
+
+    .submit-button {
+        order: 2;
     }
 
     [type="submit"].btn {
