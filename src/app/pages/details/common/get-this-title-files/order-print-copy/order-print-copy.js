@@ -3,32 +3,26 @@ import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import './order-print-copy.css';
 
-function Header({entry, disclosure}) {
-    const icon = entry.buttonUrl ? 'users' : 'user';
-
+function Header({entry}) {
     return (
         <React.Fragment>
             <h1>
-                <FontAwesomeIcon icon={icon} />
-                {entry.heading}
+                <FontAwesomeIcon icon={entry.headerIcon} />
+                {entry.headerText}
             </h1>
-            <RawHTML html={disclosure || entry.content.content} />
+            <RawHTML html={entry.disclosure} />
         </React.Fragment>
     );
 }
 
-function PhoneBox({entry, amazonDataLink, closeAfterDelay}) {
-    const [href, disclosure] = entry.buttonUrl ?
-        [entry.buttonUrl, ''] :
-        [amazonDataLink.url, amazonDataLink.disclosure];
-
+function PhoneBox({entry, closeAfterDelay}) {
     return (
         <a
             className="box"
-            href={href}
+            href={entry.buttonUrl}
             onClick={closeAfterDelay} data-track="Print"
         >
-            <Header entry={entry} disclosure={disclosure} />
+            <Header entry={entry} />
         </a>
     );
 }
@@ -49,23 +43,16 @@ function Button({href, text, buttonClass, onClick}) {
     );
 }
 
-function DesktopBox({index, entry, amazonDataLink, closeAfterDelay}) {
-    const urlButtonClass = index < 2 ? 'secondary' : '';
-    const [buttonClass, href, disclosure, buttonText] = entry.buttonUrl ?
-        [urlButtonClass, entry.buttonUrl, '', entry.buttonText] :
-        [
-            'primary', amazonDataLink.url,
-            amazonDataLink.disclosure || amazonDataLink.provider,
-            entry.buttonText || amazonDataLink.provider
-        ];
+function DesktopBox({index, entry, closeAfterDelay}) {
+    const buttonClass = ['primary', 'secondary'][index];
 
-    return (<div className="box" key={entry.content}>
-        <Header entry={entry} disclosure={disclosure} />
+    return (<div className="box" key={entry.headerText}>
+        <Header entry={entry} />
         <Button
-            href={href}
             buttonClass={buttonClass}
+            href={entry.buttonUrl}
             onClick={closeAfterDelay}
-            text={buttonText}
+            text={entry.buttonText}
         />
     </div>);
 }
@@ -82,8 +69,29 @@ function DesktopBoxes({contentArray, ...otherProps}) {
     );
 }
 
-export default function OrderPrintCopy({bookstoreContent, ...otherProps}) {
-    const contentArray = bookstoreContent;
+export default function OrderPrintCopy({amazonDataLink}) {
+    const contentArray = [
+        {
+            headerText: 'Individual',
+            headerIcon: 'user',
+            disclosure: amazonDataLink.disclosure,
+            buttonText: 'Order a personal copy',
+            buttonUrl: amazonDataLink.url
+        },
+        {
+            headerText: 'Bookstore',
+            headerIcon: 'users',
+            buttonText: 'Order options',
+            buttonUrl: 'https://buyprint.openstax.org/bookstore-suppliers'
+        }
+    ];
+    const otherProps = {
+        closeAfterDelay(event) {
+            if (event) {
+                window.requestAnimationFrame(hideDialog);
+            }
+        }
+    };
 
     return (
         <nav className="order-print-copy">

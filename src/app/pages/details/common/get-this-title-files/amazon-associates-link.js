@@ -8,9 +8,7 @@ export default function useAmazonAssociatesLink(slug) {
     React.useEffect(() => {
         fetch(`${buyprintServer}/${slug}.json`)
             .then((response) => response.json())
-            .then(({buy_urls: urls}) => {
-                setData(urls[0]);
-            });
+            .then(({buy_urls: urls}) => setData(urls[0]));
     }, [slug]);
 
     return data;
