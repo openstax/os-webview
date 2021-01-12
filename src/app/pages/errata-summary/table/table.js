@@ -248,7 +248,10 @@ export default function Table({data, filter}) {
             displayStatus: displayStatus.status,
             barStatus: displayStatus.barStatus,
             errorType: item.errorType === 'Other' ? item.errorTypeOther : item.errorType,
-            ...item
+            id: item.id,
+            location: [item.location, item.additionalLocationInformation]
+                .filter((loc) => loc).join('; '),
+            detail: item.detail
         };
     });
     const filteredDetails = details.filter((item) => matchesFilter(filter, item));
