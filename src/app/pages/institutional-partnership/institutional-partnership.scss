@@ -12,9 +12,12 @@ $near-white: #f8f8f8;
     .content-block {
         @extend %content;
 
+        @include width-up-to($phone-max) {
+            padding: 0;
+        }
+
         display: grid;
         grid-gap: 4rem;
-        // max-width: 100%;
 
         > * {
             margin: 0;
