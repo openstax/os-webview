@@ -175,6 +175,17 @@ sup {
 
 #header {
     z-index: 3;
+
+    @include width-up-to($tablet-max) {
+        position: fixed;
+        top: 0;
+        width: 100vw;
+    }
+
+    @include wider-than($tablet-max) {
+        position: sticky;
+        top: -5rem;
+    }
 }
 
 #lower-sticky-note {
