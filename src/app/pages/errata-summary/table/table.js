@@ -152,7 +152,7 @@ function DesktopDataRow({entry}) {
 function useSortController() {
     const [sortFn, setSortFn] = useState('sortDate');
     const [sortKey, setSortKey] = useState('date');
-    const [sortDir, setSortDir] = useState(1);
+    const [sortDir, setSortDir] = useState(-1);
 
     return {sortFn, sortKey, sortDir, setSortFn, setSortKey, setSortDir};
 }
@@ -253,7 +253,8 @@ export default function Table({data, filter}) {
                 .filter((loc) => loc).join('; '),
             detail: item.detail
         };
-    });
+    })
+        .sort((a, b) => b.id - a.id);
     const filteredDetails = details.filter((item) => matchesFilter(filter, item));
 
     return (
