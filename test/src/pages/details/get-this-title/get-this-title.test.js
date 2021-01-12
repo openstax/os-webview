@@ -1,6 +1,5 @@
 import GetThisTitle from '~/pages/details/common/get-this-title';
 import {makeMountRender} from '../../../../helpers/jsx-test-utils.jsx';
-import shellBus from '~/components/shell/shell-bus';
 // College algebra book details
 import details from '../../../data/details';
 import {transformData} from '~/helpers/controller/cms-mixin';
@@ -14,19 +13,16 @@ describe('GetThisTitle', () => {
         tocState: false
     })();
 
-    it('handles Print Copy dialog', () => {
-        const options = wrapper.find('.option');
-        const showed = new Promise((resolve) => {
-            shellBus.on('showDialog', resolve);
-        });
+    it('handles Print Copy dialog', (done) => {
+        setTimeout(() => {
+            wrapper.update();
+            const options = wrapper.find('.option');
+            const printOption = options.filterWhere((opt) => opt.text() === 'Order a print copy');
 
-        expect(options).toHaveLength(5);
-        options.forEach((opt) => {
-            if (opt.text() === 'Order a print copy') {
-                opt.find('a').simulate('click');
-            }
-        });
-        return showed;
+            expect(options).toHaveLength(5);
+            expect(printOption).toHaveLength(1);
+            done();
+        }, 0);
     });
     it('handles hiding and expanding non-preferred formats', () => {
         const expandLink = () => wrapper.find('.option.expander a');

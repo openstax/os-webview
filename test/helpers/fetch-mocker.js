@@ -4,6 +4,7 @@ import blogArticleData from '../src/data/blog-article';
 import booksData from '../src/data/books';
 import booksForAnalyticsData from '../src/data/books-for-analytics';
 import bookTitleData from '../src/data/book-titles';
+import buyprintData from '../src/data/buyprint';
 import errataData from '../src/data/errata';
 import errataBookData from '../src/data/errata-book';
 import errata7199 from '../src/data/errata-7199';
@@ -37,6 +38,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isBooks = (/api\/books/).test(args[0]);
     const isBooksForAnalytics = (/book_student_resources/).test(args[0]);
     const isBookTitles = (/fields=title,id/).test(args[0]);
+    const isBuyprint = args[0].includes('buyprint');
     const isErrata = (/pages\/errata\/$/).test(args[0]);
     const isErrataBook = (/errata\/\?book_title/).test(args[0]);
     const isErrata7199 = (/errata[?/]7199/).test(args[0]);
@@ -126,6 +128,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = archiveData;
             } else if (isBooks) {
                 payload = booksData;
+            } else if (isBuyprint) {
+                payload = buyprintData;
             } else if (isSalesforceForms) {
                 payload = salesforceData;
             } else if (isSalesforcePartners) {
