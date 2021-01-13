@@ -1,6 +1,7 @@
 import React from 'react';
 import WrappedJsx from '~/controllers/jsx-wrapper';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useErrataDetail, shouldShowDecisionDetails} from '~/helpers/errata';
 import './detail.css';
 
 const detailDataPairs = [
@@ -32,7 +33,14 @@ function LabelValuePairs({detail, pairs}) {
     );
 }
 
-export function Detail({showDecisionDetails, detail}) {
+export function Detail({data}) {
+    const detail = useErrataDetail(data);
+
+    if (!detail) {
+        return null;
+    }
+    const showDecisionDetails = shouldShowDecisionDetails(data);
+
     return (
         <React.Fragment>
             {
