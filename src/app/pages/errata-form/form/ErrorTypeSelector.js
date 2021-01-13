@@ -20,7 +20,7 @@ function OtherErrorInput() {
     );
 }
 
-export default function ErrorTypeSelector({selectedError, updateSelectedError}) {
+export default function ErrorTypeSelector() {
     const errorTypes = [
         'Broken link',
         'Incorrect answer, calculation, or solution',
@@ -31,6 +31,8 @@ export default function ErrorTypeSelector({selectedError, updateSelectedError}) 
     ];
     const inputRef = useRef();
     const [InvalidMessage, updateInvalidMessage] = managedInvalidMessage(inputRef);
+    const [selectedError, updateSelectedError] = useState();
+    const helpBoxVisible = selectedError === 'Other' ? 'visible' : 'not-visible';
 
     function onChange(event) {
         updateSelectedError(event.target.value);
@@ -60,6 +62,10 @@ export default function ErrorTypeSelector({selectedError, updateSelectedError}) 
                         </label>
                     )
                 }
+            </div>
+            <div className={`helpbox ${helpBoxVisible}`}>
+                <span>Need help logging in or have general questions? Contact Support at </span>
+                <a href="mailto:support@openstax.org">support@openstax.org</a>.
             </div>
         </React.Fragment>
     );

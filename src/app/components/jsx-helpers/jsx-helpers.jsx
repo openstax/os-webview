@@ -31,6 +31,22 @@ export function WindowContextProvider({children}) {
     );
 }
 
+export function useLocation() {
+    const [location, setLocation] = useState(window.location.href);
+
+    useEffect(() => {
+        const updateLocation = () => {
+            setLocation(window.location.href);
+        };
+
+        window.addEventListener('navigate', updateLocation);
+        return () => window.removeEventListener('navigate', updateLocation);
+    }, []);
+
+    return location;
+}
+
+
 export function useDataFromPromise(promise, defaultValue) {
     const [data, setData] = useState(defaultValue);
 

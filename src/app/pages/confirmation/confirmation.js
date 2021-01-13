@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {pageWrapper, SuperbItem} from '~/controllers/jsx-wrapper';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
 import settings from 'settings';
 import $ from '~/helpers/$';
 import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import userModel from '~/models/usermodel';
 import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
-import {getDetailModel} from '~/helpers/errata';
-import Detail from '~/pages/errata-detail/detail/detail';
+import {useErrataDetail} from '~/helpers/errata';
+import {ErrataDetailBlock} from '~/pages/errata-detail/errata-detail';
+import {LoaderPage, useDataFromSlug, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './confirmation.css';
 
 const applyLink = `${settings.accountHref}/faculty_access/apply?r=${encodeURIComponent(`${settings.apiOrigin}/`)}`;
@@ -39,29 +40,6 @@ function getReferringPage() {
     return referringPage;
 }
 
-function useErrataButtonsAndDetail(errataId) {
-    const slug = `errata/${errataId}`;
-    const [belowHeaderButtons, setBelowHeaderButtons] = useState([]);
-    const [detailComponent, setDetailComponent] = useState();
-
-    useEffect(() => {
-        async function fetchData() {
-            const detail = await fetchFromCMS(slug);
-            const detailModel = await getDetailModel(detail);
-
-            setDetailComponent(new Detail(detailModel));
-            setBelowHeaderButtons([{
-                text: `Submit ${detailModel.detail.bookTitle} errata`,
-                colorScheme: 'white-on-blue',
-                url: `/errata/form?book=${encodeURIComponent(detailModel.detail.bookTitle)}`
-            }]);
-        }
-        fetchData();
-    }, [errataId, slug]);
-
-    return [belowHeaderButtons, detailComponent];
-}
-
 function useDefaultEmail() {
     const [email, setEmail] = useState();
 
@@ -76,19 +54,27 @@ function useDefaultEmail() {
     return email;
 }
 
-function BelowHeader({text, buttons}) {
+function SubmitAgainButton({detail}) {
+    const url = `/errata/form?book=${encodeURIComponent(detail.bookTitle)}`;
+    const text = `Submit ${detail.bookTitle} errata`;
+
+    return (
+        <a className="btn white-on-blue" href={url}>
+            {text}
+        </a>
+
+    );
+}
+
+function BelowHeader({text, data}) {
+    const detail = useErrataDetail(data);
+
     return (
         <div className="wrapper">
             <div className="text-content">
                 <div className="below-header-text">{text}</div>
                 <div className="buttons">
-                    {
-                        buttons.map((b) =>
-                            <a className={`btn ${b.colorScheme}`} href={b.url} key={b}>
-                                {b.text}
-                            </a>
-                        )
-                    }
+                    {detail && <SubmitAgainButton detail={detail} />}
                 </div>
             </div>
         </div>
@@ -116,19 +102,19 @@ function ErrataStatusNotification({errataId}) {
 }
 
 function ErrataButtonsAndDetail({errataId, text}) {
-    const [buttons, detailComponent] = useErrataButtonsAndDetail(errataId);
+    const slug = `errata/${errataId}`;
+    const data = $.camelCaseKeys(useDataFromSlug(slug));
 
     return (
         <React.Fragment>
             {
                 Boolean(text) &&
-                    <BelowHeader text={text} buttons={buttons} />
+                    <BelowHeader text={text} data={data} />
             }
             <div className="wrapper">
-                {
-                    Boolean(detailComponent) &&
-                        <SuperbItem component={detailComponent} className="boxed" />
-                }
+                <div className="boxed">
+                    {data && <ErrataDetailBlock data={data} />}
+                </div>
             </div>
         </React.Fragment>
     );

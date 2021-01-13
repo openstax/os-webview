@@ -1,7 +1,7 @@
 import React, {useState, useContext, useRef, useEffect, useLayoutEffect} from 'react';
 import {books, types, advanced, sort, resultCount, clearStores} from '../store';
 import ActiveFilters from '../active-filters/active-filters';
-import AccordionGroup from '~/components/accordion-group/accordion-group.jsx';
+import AccordionGroup from '~/components/accordion-group/accordion-group.js';
 import BookOptions from '../controls/book-options/book-options';
 import OptionsList from '../controls/options-list/options-list';
 import Checkboxes from '../controls/checkboxes-linked-to-store/checkboxes-linked-to-store';

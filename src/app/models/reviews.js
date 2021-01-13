@@ -1,6 +1,7 @@
 import {useState, useLayoutEffect} from 'react';
 import cmsFetch, {cmsPost} from './cmsFetch';
 import $ from '~/helpers/$';
+import meanBy from 'lodash/meanBy';
 
 const postUrl = 'salesforce/reviews/';
 
@@ -22,6 +23,10 @@ function usePartnerData(id) {
         } else {
             newData.reviews.push(review);
         }
+        // Properly, would refesh to get these, but there's a lag in calculating
+        // them on the server and it's pretty easy to do here.
+        newData.ratingCount = newData.reviews.length;
+        newData.averageRating.ratingAvg = meanBy(newData.reviews, (r) => r.rating);
         setData(newData);
     }
 

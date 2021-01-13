@@ -1,9 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-sticky-note {
-    width: 100%;
-}
-
 .page-header.fixed .sticky-note {
     display: none;
 }
@@ -126,5 +122,4 @@ sticky-note {
         margin-left: 1rem;
         white-space: nowrap;
     }
-
 }

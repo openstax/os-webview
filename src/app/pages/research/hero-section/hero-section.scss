@@ -1,0 +1,98 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.research.page .hero-section {
+    @include set-font(body-large);
+
+    background-color: rgb(0, 191, 217);
+    display: grid;
+    max-width: 100%;
+    padding: 0;
+
+    @include width-up-to($phone-max) {
+        grid-template-rows: auto auto;
+        width: 100%;
+    }
+
+    @include width-between($phone-max, $media-content-max) {
+        grid-gap: 2rem;
+        grid-template-columns: 50vw 1fr;
+    }
+
+    @include wider-than($media-content-max) {
+        grid-template-columns: minmax(50vw, 3fr) 4fr;
+    }
+
+    @include wider-than($wide-screen-min) {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    h1 {
+        @include set-font(h1);
+
+        margin: 0 0 2rem;
+    }
+
+    .content {
+        align-items: center;
+        display: grid;
+        text-align: left;
+
+        @include width-between($tablet-max, $media-content-max) {
+            min-height: calc(100vw * #{35em / $media-content-max});
+        }
+
+        @include wider-than($media-content-max) {
+            margin-left: calc(50vw - 60rem);
+            max-width: calc(50% + 24rem);
+            min-height: 60rem;
+            width: 77rem;
+        }
+
+        > div {
+            @include width-up-to($phone-max) {
+                padding-top: 6rem;
+            }
+
+            @include wider-than($phone-max) {
+                padding: 6rem 0;
+            }
+        }
+
+    }
+
+    .images {
+        place-self: end end;
+        position: relative;
+        width: 100%;
+
+        .clipping {
+            display: grid;
+            width: 100%;
+
+            > img {
+                width: 100%;
+            }
+        }
+
+        .globe-clipping {
+            bottom: 0;
+            overflow: hidden;
+            position: absolute;
+            right: 0;
+            transform: translateY(35%);
+            width: 100%;
+            z-index: 1;
+
+            @include width-up-to($phone-max) {
+                max-width: 70vw;
+                transform: translate(-20%, 30%);
+            }
+
+            img {
+                max-height: 150%;
+                max-width: 100%;
+                transform: translateX(calc(7% + 2rem));
+            }
+        }
+    }
+}

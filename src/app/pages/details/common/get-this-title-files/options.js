@@ -156,33 +156,23 @@ export function PdfOption({model}) {
     );
 }
 
+function isRealPrintLink(url) {
+    return typeof url === 'string' && !url.includes('stores/page');
+}
+
 export function PrintOption({model}) {
     const slug = (model.slug || '').replace('books/', '');
     const amazonDataLink = useAmazonAssociatesLink(slug);
-    const bookstoreContentArray = [].concat(model.bookstoreContent)
-        .filter((entry) => entry.content);
-    const printLink = Boolean(
-        bookstoreContentArray.filter((c) => c.buttonUrl).length
-    );
-    const dialogContentArgs = {
-        bookstoreContent: bookstoreContentArray,
-        closeAfterDelay(event) {
-            if (event) {
-                window.requestAnimationFrame(hideDialog);
-            }
-        },
-        amazonDataLink
-    };
     const text = $.isPolish(model.title) ? 'Zamów egzemplarz drukowany' : 'Order a print copy';
 
     return (
         <SimpleLinkOption
-            link={printLink} icon="book" text={text}
+            link={isRealPrintLink(amazonDataLink.url)} icon="book" text={text}
             onClick={(event) => showDialog({
                 event,
                 dialogTitle: text,
                 dialogContent: OrderPrintCopy,
-                dialogContentArgs
+                dialogContentArgs: {amazonDataLink}
             })}
         />
     );
@@ -203,14 +193,10 @@ export function Ibooks2Volumes({model}) {
             <span className="option-header">
                 <IconAndText icon={['fab', 'apple']} text="Download on iBooks" />
             </span>
-            <a
-                href={model.ibookLink} data-track="iBooks"
-            >
+            <a href={model.ibookLink} data-track="iBooks">
                 Part 1
             </a>
-            <a
-                href={model.ibookLink2} data-track="iBooks"
-            >
+            <a href={model.ibookLink2} data-track="iBooks">
                 Part 2
             </a>
         </React.Fragment>

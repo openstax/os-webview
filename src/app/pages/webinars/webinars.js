@@ -4,7 +4,7 @@ import {LoaderPage, useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.
 import ClippedImage from '~/components/clipped-image/clipped-image';
 import TabGroup from '~/components/tab-group/tab-group.jsx';
 import ContentGroup from '~/components/content-group/content-group.jsx';
-import AccordionGroup from '~/components/accordion-group/accordion-group.jsx';
+import AccordionGroup from '~/components/accordion-group/accordion-group.js';
 import $ from '~/helpers/$';
 import WebinarList from './webinar-list/webinar-list';
 import './webinars.css';

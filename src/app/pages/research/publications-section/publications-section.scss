@@ -1,0 +1,30 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.research.page .publications-section {
+    max-width: 100%;
+
+    h1 {
+        margin: 0;
+    }
+
+    .content {
+        @extend %text-content;
+
+        display: grid;
+        grid-row-gap: 2.5rem;
+    }
+
+    .publication {
+        display: grid;
+        grid-row-gap: 1rem;
+
+        a {
+            align-items: center;
+            grid-template-columns: auto 1fr;
+        }
+    }
+
+    .headline {
+        font-weight: bold;
+    }
+}

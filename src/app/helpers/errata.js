@@ -1,3 +1,4 @@
+import React, {useState, useEffect} from 'react';
 import bookPromise from '~/models/book-titles';
 
 // eslint-disable-next-line complexity
@@ -18,17 +19,20 @@ export function approvedStatuses(created) {
 }
 
 // eslint-disable-next-line complexity
-export function getDisplayStatus(detail) {
+export function getDisplayStatus(data) {
     const result = {
         status: 'Reviewed',
         barStatus: ''
     };
 
-    if (detail.status.match(/New|Editorial Review/)) {
+    if (!data) {
+        return result;
+    }
+    if (data.status.match(/New|Editorial Review/)) {
         result.status = 'In Review';
-    } else if (detail.resolution === 'Approved') {
-        Object.assign(result, approvedStatuses(detail.created));
-    } else if (detail.status === 'Completed' && detail.resolution === 'Duplicate') {
+    } else if (data.resolution === 'Approved') {
+        Object.assign(result, approvedStatuses(data.created));
+    } else if (data.status === 'Completed' && data.resolution === 'Duplicate') {
         result.status = result.barStatus = 'Duplicate';
     } else {
         result.status = result.barStatus = 'No Correction';
@@ -37,25 +41,37 @@ export function getDisplayStatus(detail) {
     return result;
 }
 
-export function getDetailModel(detail) {
-    const {status, barStatus} = getDisplayStatus(detail);
+export function shouldShowDecisionDetails(data) {
+    const {status, barStatus} = getDisplayStatus(data);
 
-    return bookPromise.then((bookList) => {
-        const entry = bookList.find((info) => info.id === detail.book);
+    return barStatus || status === 'Will Correct';
+}
 
-        return {
-            showDecisionDetails: barStatus || status === 'Will Correct',
-            detail: {
-                id: detail.id,
-                bookTitle: entry.title,
-                source: detail.resource === 'Other' ? detail.resource_other : detail.resource,
-                status,
-                errorType: detail.error_type,
-                location: detail.location,
-                detail: detail.detail,
-                date: new Date(detail.created).toLocaleDateString(),
-                resolutionNotes: detail.resolution_notes
+export function useErrataDetail(data) {
+    const [detail, setDetail] = useState();
+
+    useEffect(() => {
+        bookPromise.then((bookList) => {
+            if (!data) {
+                return;
             }
-        };
-    });
+            const entry = bookList.find((info) => info.id === data.book);
+            const location = [data.location, data.additionalLocationInformation]
+                .filter((info) => info).join('; ');
+
+            setDetail({
+                id: data.id,
+                bookTitle: entry.title,
+                source: data.resource === 'Other' ? data.resourceOther : data.resource,
+                status,
+                errorType: data.errorType,
+                location,
+                detail: data.detail,
+                date: new Date(data.created).toLocaleDateString(),
+                resolutionNotes: data.resolutionNotes
+            });
+        });
+    }, [data]);
+
+    return detail;
 }
