@@ -117,7 +117,7 @@ function ReviewsPage() {
             rating: r.rating,
             review: r.review,
             allowEdit: r.submittedByAccountId === accountId,
-            updated: new Date(`${r.updated}T00:00:00`).toLocaleDateString('en-us'),
+            updated: new Date(`${r.created}T00:00:00`).toLocaleDateString('en-us'),
             response: r.partnerResponse,
             status: r.status
         }))
