@@ -1,7 +1,7 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .institutional-partnership .promoting {
-    padding: 16rem 0;
+    padding: 8rem 0 16rem;
     position: relative;
 
     @include width-up-to($phone-max) {
@@ -12,8 +12,12 @@
         display: grid;
         grid-gap: $normal-margin;
 
+        @include width-up-to($tablet-max) {
+            grid-template-columns: 100%;
+        }
+
         @include wider-than($tablet-max) {
-            grid-template-columns: repeat(4, minmax(auto, 28rem));
+            grid-template-columns: 3fr 2fr;
         }
     }
 
@@ -31,10 +35,6 @@
             display: grid;
             grid-column-start: 1;
             padding: 0 3rem;
-
-            @include wider-than($phone-max) {
-                grid-column-end: 3;
-            }
 
             .wide-card-entry {
                 align-items: center;
