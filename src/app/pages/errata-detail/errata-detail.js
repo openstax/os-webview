@@ -3,8 +3,8 @@ import {LoaderPage, useDataFromSlug, useDataFromPromise} from '~/components/jsx-
 import React, {useState, useEffect} from 'react';
 import {ProgressBar} from './progress-bar/progress-bar.jsx';
 import {Detail} from './detail/detail';
+import {getDisplayStatus} from '~/helpers/errata';
 import cmsFetch from '~/models/cmsFetch';
-import {getDisplayStatus, getDetailModel} from '~/helpers/errata';
 import './errata-detail.css';
 
 function ProgressBarBlock({data}) {
@@ -17,23 +17,18 @@ function ProgressBarBlock({data}) {
     );
 }
 
-function ErrataDetailBlock({data}) {
-    const {detail, showDecisionDetails} = useDataFromPromise(getDetailModel(data), {});
-
-    if (!detail) {
-        return null;
-    }
-
+export function ErrataDetailBlock({data}) {
     return (
         <div className="errata-detail-block">
-            <Detail
-                detail={detail}
-                showDecisionDetails={showDecisionDetails} />
+            <Detail data={data} />
         </div>
     );
 }
 
 function ErrataDetail({data}) {
+    if (!data) {
+        return null;
+    }
     return (
         <React.Fragment>
             <div class="hero padded"><h1>Errata Submission Details</h1></div>
