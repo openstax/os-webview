@@ -62,7 +62,7 @@ function WebinarBox({entry, upcoming}) {
                         </div>
                     </div>
             }
-            <a href={entry.url}>
+            <a href={entry.registrationUrl}>
                 {entry.registrationLinkText}{' '}
                 <FontAwesomeIcon icon="chevron-right" />
             </a>
@@ -75,7 +75,7 @@ export default function WebinarList({data, upcoming=false}) {
         <div className="webinar-list">
             {
                 data.map((entry) =>
-                    <WebinarBox entry={entry} key={entry.url} upcoming={upcoming} />
+                    <WebinarBox entry={entry} key={entry.registrationUrl} upcoming={upcoming} />
                 )
             }
         </div>
