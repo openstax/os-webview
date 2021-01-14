@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Create an archive for packages.cnx.org
+
+# curr_tag=$(git describe --tags $(git rev-list --tags --max-count=1))
+git fetch --prune --unshallow
+curr_tag=$(git describe)
+version=$curr_tag
+head_rev=$(git rev-parse HEAD)
+
+# Save the commit sha in the tarball (in case the file is renamed or something)
+echo "$head_rev ($curr_tag)" > dist/rev.txt
+
+tarball="os-webview_${version}.tar.gz"
+tarball_filepath="$PWD/$tarball"
+(
+    cd dist || exit
+    tar --create --verbose --gzip --file="${tarball_filepath}" ./*
+)
+
+echo "==> Uploading ${head_rev} as ${tarball}.tar.gz . Branch: ${GIT_BRANCH}"
+
+# Upload the build artifact
+
+# ###
+# Send
+# ###
+
+remote_user="rundeck"
+remote_host="packages.cnx.org"
+remote_dir="/var/www/repo/js-builds"
+
+rsync -avp -e "ssh -l${remote_user}" "${tarball}" ${remote_host}:${remote_dir}
+
+# Create a symlink if this is a build of the master branch
+if [[ "origin/master" = "${GIT_BRANCH}" ]] ; then
+  echo "==> Updating symlink for os-webview_master.tar.gz to point to ${tarball}"
+  # shellcheck disable=SC2029
+  ssh ${remote_user}@${remote_host} "ln -sf '${remote_dir}/${tarball}'  ${remote_dir}/os-webview_master.tar.gz"
+fi

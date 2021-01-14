@@ -1,0 +1,31 @@
+---
+jobs:
+  osweb:
+    runs-on: ubuntu-18.04
+    steps:
+      -
+        name: "Checkout release tag"
+        uses: actions/checkout@v2
+      -
+        name: "Setup NVM"
+        uses: dcodeIO/setup-node-nvm@master
+        with:
+          node-version: v10.22.0
+      -
+        name: "Setup environment"
+        run: ./script/setup
+      -
+        name: "Build osweb"
+        run: ./script/build
+      -
+        name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.JENKINS_RUNDECK_ID_RSA }}
+          name: id_rsa
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+      -
+        name: "Create archive for packages.cnx.org"
+        run: ./script/archive
+name: build
+on: push
