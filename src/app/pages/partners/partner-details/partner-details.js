@@ -37,9 +37,9 @@ function useRealTitles(books) {
     return titles;
 }
 
-function RequestInfoButton({infoUrl, infoText}) {
+function RequestInfoButton({infoUrl, infoText, partnerName}) {
     function trackInfoRequest(event) {
-        analyticsEvents.requestInfo(this.title);
+        analyticsEvents.requestInfo(partnerName);
         shellBus.emit('hideDialog');
     }
 
@@ -55,7 +55,7 @@ function Overview({model, icon}) {
     const {
         richDescription: description,
         infoUrl, infoLinkText: infoText,
-        books, images, videos
+        books, images, videos, title: partnerName
     } = model;
     const titles = useRealTitles(books);
 
@@ -73,7 +73,7 @@ function Overview({model, icon}) {
             <section className="carousel">
                 <Carousel {...{icon, images, videos}} />
             </section>
-            <RequestInfoButton {...{infoUrl, infoText}} />
+            <RequestInfoButton {...{infoUrl, infoText, partnerName}} />
             <hr />
             <section className="overview">
                 <h2>Overview</h2>
@@ -91,6 +91,19 @@ function Overview({model, icon}) {
     );
 }
 
+function logScrollingInRegion(detailsEl, name) {
+    const scrollingRegion = detailsEl.closest('.main-region');
+    const removeScrollListener = (callback) => scrollingRegion.removeEventListener('scroll', callback);
+    const scrollCallback = (event) => {
+        analyticsEvents.lightboxScroll(name);
+        removeScrollListener(scrollCallback);
+    };
+
+    scrollingRegion.addEventListener('scroll', scrollCallback);
+
+    return () => removeScrollListener(scrollCallback);
+}
+
 function PartnerDetails(model) {
     const {
         website, partner_website: partnerWebsite, websiteLinkText: partnerLinkText,
@@ -100,9 +113,15 @@ function PartnerDetails(model) {
     const partnerLinkProps = {partnerUrl: website || partnerWebsite, partnerLinkText};
     const labels = ['Overview', 'Reviews'];
     const [selectedLabel, setSelectedLabel] = useState(labels[0]);
+    const ref = useRef();
+
+    useEffect(() => logScrollingInRegion(ref.current, model.title), []);
 
     return (
-        <div className="partner-details" onClick={(e) => e.stopPropagation()}>
+        <div
+            className="partner-details" onClick={(e) => e.stopPropagation()}
+            ref={ref}
+        >
             <div className="sticky-region">
                 <Synopsis {...{model, icon, partnerLinkProps}} />
                 <TabGroup {...{labels, selectedLabel, setSelectedLabel}} />

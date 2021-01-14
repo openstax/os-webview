@@ -50,7 +50,6 @@ function getFilterOptions(data) {
             return obj;
         }, {});
 
-
     Object.entries(data.field_name_mapping)
         .forEach(([label, value]) => {
             const entry = {

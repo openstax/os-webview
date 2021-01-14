@@ -1,5 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import StarsAndCount from '~/components/stars-and-count/stars-and-count';
+import analyticsEvents from '../../analytics-events';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import './synopsis.css';
 
@@ -16,19 +17,6 @@ function VerifiedBadge({verifiedFeatures}) {
                 </div>
             </div>
     );
-}
-
-function logScrollingInParent(el, name) {
-    const scrollingRegion = el.parentNode.parentNode;
-    const removeScrollListener = (callback) => scrollingRegion.removeEventListener('scroll', callback);
-    const scrollCallback = (event) => {
-        analyticsEvents.lightboxScroll(name);
-        removeScrollListener(scrollCallback);
-    };
-
-    scrollingRegion.addEventListener('scroll', scrollCallback);
-
-    return () => removeScrollListener(scrollCallback);
 }
 
 function PartnerLink({partnerUrl, partnerLinkText}) {
@@ -49,10 +37,6 @@ export default function Synopsis({model, icon, partnerLinkProps}) {
     const {verifiedFeatures, title, tags, rating, ratingCount} = model;
     const ref = useRef();
 
-    useEffect(
-        () => logScrollingInParent(ref.current, title),
-        [title]
-    );
     return (
         <section className="synopsis" ref={ref}>
             <img className="icon" src={icon} alt="" />

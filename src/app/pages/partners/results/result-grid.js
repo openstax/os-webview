@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import shellBus from '~/components/shell/shell-bus';
 import PartnerDetails from '../partner-details/partner-details';
 import StarsAndCount from '~/components/stars-and-count/stars-and-count';
+import analyticsEvents from '../analytics-events';
 
 function modelFromEntry(entry) {
     return {
@@ -30,6 +31,7 @@ function showDetailDialog({entry, linkTexts}) {
         shellBus.emit('hideDialog');
     };
 
+    analyticsEvents.partnerDetails(entry.title);
     window.addEventListener('click', onOutsideClick);
     shellBus.emit('showDialog', () => ({
         title: '',
