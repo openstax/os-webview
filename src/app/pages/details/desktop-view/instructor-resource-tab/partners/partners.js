@@ -2,14 +2,20 @@ import React from 'react';
 import routerBus from '~/helpers/router-bus';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import StarsAndCount from '~/components/stars-and-count/stars-and-count';
+import analyticsEvents from '~/pages/partners/analytics-events';
 import './partners.css';
 
 function Blurb({blurb, badgeImage, onClick, partnerId}) {
     const tags = [blurb.cost, blurb.type].filter((x) => x);
     const {count: ratingCount, average: rating} = blurb;
 
+    function trackClick(event) {
+        analyticsEvents.partnerDetails(blurb.name);
+        onClick(event);
+    }
+
     return (
-        <a className="blurb" href={blurb.url} onClick={onClick}>
+        <a className="blurb" href={blurb.url} onClick={trackClick}>
             <div className="logo">
                 <img src={blurb.image} alt="" />
                 {
