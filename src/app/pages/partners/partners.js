@@ -22,7 +22,7 @@ function Confirmation() {
                     available for our books below
                     {
                         bookSlug &&
-                            <span>or return to
+                            <span>{' '}or return to{' '}
                                 <a href={`/details/${bookSlug}`}>your book</a>
                             </span>
                     }
