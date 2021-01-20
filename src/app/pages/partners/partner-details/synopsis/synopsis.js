@@ -1,4 +1,5 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useRef, useContext} from 'react';
+import PartnerContext from '../partner-context';
 import StarsAndCount from '~/components/stars-and-count/stars-and-count';
 import analyticsEvents from '../../analytics-events';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -34,14 +35,15 @@ function PartnerLink({partnerUrl, partnerLinkText}) {
 }
 
 export default function Synopsis({model, icon, partnerLinkProps}) {
-    const {verifiedFeatures, title, tags, rating, ratingCount} = model;
+    const {verifiedFeatures, tags} = model;
     const ref = useRef();
+    const {partnerName, summary: {rating, count}} = useContext(PartnerContext);
 
     return (
         <section className="synopsis" ref={ref}>
             <img className="icon" src={icon} alt="" />
             <VerifiedBadge verifiedFeatures={verifiedFeatures} />
-            <div className="headline">{title}</div>
+            <div className="headline">{partnerName}</div>
             <div className="tags">
                 {
                     tags.map((entry) =>
@@ -51,7 +53,7 @@ export default function Synopsis({model, icon, partnerLinkProps}) {
                     )
                 }
             </div>
-            <StarsAndCount rating={rating} count={ratingCount} showNumber />
+            <StarsAndCount rating={rating} count={count} showNumber />
             <PartnerLink {...partnerLinkProps} />
         </section>
     );

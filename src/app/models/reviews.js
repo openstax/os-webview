@@ -5,29 +5,37 @@ import meanBy from 'lodash/meanBy';
 
 const postUrl = 'salesforce/reviews/';
 
+// Deleted ones aren't omitted on the server, and after updates, I have to
+// calculate them anyway.
+// Note: mutator
+function recalculateRatings(data) {
+    const reviewsThatCount = data.reviews.filter((r) => r.status !== 'Deleted');
+
+    data.ratingCount = reviewsThatCount.length;
+    data.averageRating.ratingAvg = meanBy(reviewsThatCount, (r) => r.rating);
+    return data;
+}
+
 function usePartnerData(id) {
     const [data, setData] = useState();
 
     function refresh() {
         cmsFetch(`salesforce/partners/${id}`)
             .then($.camelCaseKeys)
+            .then(recalculateRatings)
             .then(setData);
     }
 
     function update(review) {
-        const newData = {...data};
         const replaceIndex = data.reviews.findIndex((item) => item.id === review.id);
 
         if (replaceIndex >= 0) {
-            newData.reviews.splice(replaceIndex, 1, review);
+            data.reviews.splice(replaceIndex, 1, review);
         } else {
-            newData.reviews.push(review);
+            data.reviews.push(review);
         }
-        // Properly, would refesh to get these, but there's a lag in calculating
-        // them on the server and it's pretty easy to do here.
-        newData.ratingCount = newData.reviews.length;
-        newData.averageRating.ratingAvg = meanBy(newData.reviews, (r) => r.rating);
-        setData(newData);
+        recalculateRatings(data);
+        setData({...data});
     }
 
     useLayoutEffect(refresh, [id]);
