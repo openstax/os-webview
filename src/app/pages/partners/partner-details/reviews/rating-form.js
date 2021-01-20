@@ -1,6 +1,8 @@
 import React, {useState, useContext, useRef} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {PageContext} from './contexts';
+import PageContext from './page-context';
+import UserContext from './user-context';
+import PartnerContext from '../partner-context';
 import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './rating-form.css';
 
@@ -49,7 +51,8 @@ function Stars({rating, setRating}) {
 }
 
 export function useMyReview() {
-    const {reviews, accountId} = useContext(PageContext);
+    const {reviews} = useContext(PartnerContext);
+    const {accountId} = useContext(UserContext);
     const myReview = reviews.find((r) => r.submittedByAccountId === accountId);
 
     return myReview;
@@ -78,7 +81,9 @@ function InfoButton({info}) {
 }
 
 export default function RatingForm() {
-    const {userName, accountId, togglePage, postRating, partnerId} = React.useContext(PageContext);
+    const togglePage = useContext(PageContext);
+    const {accountId, userName} = useContext(UserContext);
+    const {postRating, partnerId} = useContext(PartnerContext);
     const [rating, setRating, myReview] = useRating();
     const textAreaRef = useRef();
     const [heading, instructions, buttonText] = myReview ?

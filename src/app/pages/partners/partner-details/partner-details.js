@@ -1,15 +1,16 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
+import PartnerContext, {PartnerContextProvider} from './partner-context';
 import Synopsis from './synopsis/synopsis';
 import Carousel from './carousel/carousel';
 import Reviews from './reviews/reviews';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import TabGroup from '~/components/tab-group/tab-group.jsx';
 import ContentGroup from '~/components/content-group/content-group.jsx';
-import './partner-details.css';
 import booksPromise from '~/models/books';
 import analyticsEvents from '../analytics-events';
 import shellBus from '~/components/shell/shell-bus';
+import './partner-details.css';
 
 function useRealTitles(books) {
     const [titles, setTitles] = useState(books);
@@ -104,9 +105,10 @@ function logScrollingInRegion(detailsEl, name) {
     return () => removeScrollListener(scrollCallback);
 }
 
-function PartnerDetails(model) {
+function PartnerDetails({model}) {
+    const context = useContext(PartnerContext);
     const {
-        website, partner_website: partnerWebsite, websiteLinkText: partnerLinkText,
+        website, partnerWebsite, websiteLinkText: partnerLinkText,
         logoUrl
     } = model;
     const icon = logoUrl || 'https://via.placeholder.com/150x150?text=[no%20logo]';
@@ -138,7 +140,15 @@ function PartnerDetails(model) {
     );
 }
 
+function PartnerDetailsWrapper({id, ...model}) {
+    return (
+        <PartnerContextProvider partnerId={id}>
+            <PartnerDetails model={model} />
+        </PartnerContextProvider>
+    );
+}
+
 // This still returns a Superb component because that is what the Dialog expects
 // Possible future development: make Dialog handle React components.
 // That will be a job in itself.
-export default pageWrapper(PartnerDetails);
+export default pageWrapper(PartnerDetailsWrapper);
