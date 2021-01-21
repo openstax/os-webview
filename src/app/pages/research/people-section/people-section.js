@@ -6,27 +6,36 @@ import AlumniTab from './alumni-tab/alumni-tab';
 import MembersTab from './members-tab/members-tab';
 import './people-section.css';
 
-function TabAccordionCombo({children}) {
-    const labels = children.map((c) => c.props.label);
-    const initialSelection = children.findIndex((c) => c.props.selected) || 0;
+function DesktopTabs({labels, initialSelection, children}) {
     const [selectedLabel, setSelectedLabel] = useState(labels[initialSelection]);
     const selectedIndex = labels.indexOf(selectedLabel);
-    const items = children.map((child, i) => ({
+
+    return (
+        <div className="desktop-only">
+            <TabGroup
+                TabTag="h2" labels={labels}
+                {...{selectedLabel, setSelectedLabel}}
+            />
+            <ContentGroup activeIndex={selectedIndex}>
+                {children}
+            </ContentGroup>
+        </div>
+    );
+}
+
+function TabAccordionCombo({children}) {
+    const labels = React.Children.map(children, (c) => c.props.label);
+    const initialSelection = children.findIndex((c) => c.props.selected) || 0;
+    const items = React.Children.map(children, (child, i) => ({
         title: labels[i],
         contentComponent: child
     }));
 
     return (
         <React.Fragment>
-            <div className="desktop-only">
-                <TabGroup
-                    TabTag="h2" labels={labels}
-                    {...{selectedLabel, setSelectedLabel}}
-                />
-                <ContentGroup activeIndex={selectedIndex}>
-                    {children}
-                </ContentGroup>
-            </div>
+            <DesktopTabs labels={labels} initialSelection={initialSelection}>
+                {children}
+            </DesktopTabs>
             <div className="mobile-only">
                 <AccordionGroup items={items} preExpanded={[labels[initialSelection]]} />
             </div>
