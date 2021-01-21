@@ -6,7 +6,7 @@ const PartnerContext = createContext();
 export default PartnerContext;
 
 // eslint-disable-next-line complexity
-function usePartnerContext(partnerId) {
+function usePartnerContext(partnerId, onUpdate) {
     const [ratings, postRating] = useReviews(partnerId);
     const [partnerName, summary, reviews] = ratings ?
         [
@@ -22,6 +22,10 @@ function usePartnerContext(partnerId) {
             []
         ];
 
+    React.useEffect(() => {
+        onUpdate(summary);
+    }, [summary]);
+
     return {
         partnerId,
         partnerName,
@@ -31,9 +35,9 @@ function usePartnerContext(partnerId) {
     };
 }
 
-export function PartnerContextProvider({partnerId, children}) {
+export function PartnerContextProvider({partnerId, onUpdate, children}) {
     return (
-        <PartnerContext.Provider value={usePartnerContext(partnerId)}>
+        <PartnerContext.Provider value={usePartnerContext(partnerId, onUpdate)}>
             {children}
         </PartnerContext.Provider>
     );

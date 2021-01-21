@@ -140,9 +140,9 @@ function PartnerDetails({model}) {
     );
 }
 
-function PartnerDetailsWrapper({id, ...model}) {
+function PartnerDetailsWrapper({detailData: {id, ...model}, onUpdate}) {
     return (
-        <PartnerContextProvider partnerId={id}>
+        <PartnerContextProvider partnerId={id} onUpdate={onUpdate}>
             <PartnerDetails model={model} />
         </PartnerContextProvider>
     );
