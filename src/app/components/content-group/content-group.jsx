@@ -4,7 +4,7 @@ export default function ContentGroup({activeIndex, children}) {
     return (
         <div className="content-group">
             {
-                children.map((child, i) =>
+                React.Children.map(children, (child, i) =>
                     <div hidden={activeIndex !== i} key={i}>
                         {child}
                     </div>
