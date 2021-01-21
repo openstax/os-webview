@@ -46,12 +46,16 @@ export default function useReviews(partnerId) {
     const [data, updateReview] = usePartnerData(partnerId);
 
     async function postData(payload, method) {
-        const postResult = await cmsPost(postUrl, payload, method);
+        try {
+            const postResult = await cmsPost(postUrl, payload, method);
 
-        if (typeof postResult === 'string') {
-            console.warn(method, 'failed:', e);
-        } else {
-            updateReview($.camelCaseKeys(postResult));
+            if (typeof postResult === 'string') {
+                throw postResult;
+            } else {
+                updateReview($.camelCaseKeys(postResult));
+            }
+        } catch (e) {
+            alert(`Failed to ${method}: ${e}`);
         }
     }
 
