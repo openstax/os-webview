@@ -55,6 +55,7 @@ export default function useReviews(partnerId) {
                 updateReview($.camelCaseKeys(postResult));
             }
         } catch (e) {
+            // eslint-disable-next-line no-alert
             alert(`Failed to ${method}: ${e}`);
         }
     }
