@@ -1,0 +1,110 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.annual-report.page .testimonials {
+    padding-bottom: 0;
+
+    .carousel {
+        position: relative;
+    }
+
+    .items {
+        align-items: stretch;
+        grid-gap: 3rem;
+        padding: 0.5rem;
+        margin: 0.5rem;
+    }
+
+    .card {
+        @include card();
+
+        flex-shrink: 0;
+
+        @include width-up-to($phone-max) {
+            width: calc(100vw - 10rem);
+        }
+
+        @include wider-than($phone-max) {
+            width: 38rem;
+        }
+
+        .picture-part {
+            display: block;
+            height: 38rem;
+            max-width: 100%;
+            overflow: hidden;
+
+            > .clipped-image,
+            > .embedded-video {
+                height: 100%;
+                width: 100%;
+            }
+
+            > .embedded-video > * {
+                width: 100%;
+            }
+        }
+
+        .text-part {
+            background-color: ui-color(white);
+            display: flex;
+            flex-direction: column;
+            grid-gap: 3rem;
+            height: calc(100% - 38rem);
+            justify-content: space-between;
+            padding: 4rem;
+            position: relative;
+        }
+
+        .link-with-chevron {
+            color: text-color(link);
+
+            &:hover,
+            &:active {
+                color: text-color(link-hover);
+            }
+        }
+    }
+}
+
+.impact-testimonial-overlay .main-region {
+    > div {
+        height: 100%;
+    }
+
+    .lightbox-testimonial {
+        height: 100%;
+        padding-top: 4rem;
+
+        > .carousel,
+        > .carousel > .viewport,
+        > .carousel > .viewport > .items,
+        > .carousel > .viewport > .items > .lightbox-article {
+            height: 100%;
+        }
+
+        .lightbox-article {
+            overflow-y: scroll;
+        }
+
+        .floater {
+            display: none;
+        }
+
+        .carousel .items {
+            display: flex;
+            grid-gap: 3rem;
+            max-width: 90rem;
+
+            > * {
+                align-items: flex-start;
+                flex-shrink: 0;
+                width: 100%;
+
+                > .text-content {
+                    margin: auto;
+                    width: auto;
+                }
+            }
+        }
+    }
+}

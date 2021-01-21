@@ -1,6 +1,5 @@
 import BodyUnit from '~/components/body-units/body-units.jsx';
-import css from './article.css';
-import {BylineJsx} from '~/components/byline/byline';
+import {Byline} from '~/components/byline/byline';
 import ProgressRing from '~/components/progress-ring/progress-ring';
 import {ShareJsx} from '~/components/share/share';
 import React, {useState, useEffect, useRef, useContext} from 'react';
@@ -8,6 +7,7 @@ import {WindowContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {usePageData} from '~/helpers/controller/cms-mixin';
 import routerBus from '~/helpers/router-bus';
+import './article.css';
 
 const view = {
     classes: ['article']
@@ -45,7 +45,7 @@ function ArticleBody({bodyData, setReadTime, bodyRef}) {
     );
 }
 
-function Tags({tagData}) {
+function Tags({tagData=[]}) {
     return tagData.length > 0 &&
         <div className="tags">
             {tagData.map((tag) => <div className="tag" key={tag}>{tag}</div>)}
@@ -96,7 +96,7 @@ function useScrollProgress(ref) {
     return [progress, bodyRef];
 }
 
-function Article({data}) {
+export function Article({data}) {
     const [readTime, setReadTime] = useState();
     const ref = useRef();
     const [progress, bodyRef] = useScrollProgress(ref);
@@ -117,7 +117,7 @@ function Article({data}) {
                 Boolean(subheading) &&
                     <h2>{subheading}</h2>
             }
-            <BylineJsx date={data.date} author={data.author} />
+            <Byline date={data.date} author={data.author} />
             <ArticleBody
                 bodyData={data.body}
                 setReadTime={setReadTime}

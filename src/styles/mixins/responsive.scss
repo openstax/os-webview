@@ -3,3 +3,37 @@
         @content;
     }
 }
+
+@mixin scaling-title-font($spec-small, $spec-large) {
+    @include width-up-to($phone-max) {
+        @include set-font($spec-small);
+    }
+    @include wider-than($tablet-max) {
+        @include set-font($spec-large);
+    }
+    @include width-between($phone-max, $tablet-max) {
+        $phone-max-rem: $phone-max / 1em * 1rem / $scale-factor;
+        $tablet-max-rem: $tablet-max / 1em * 1rem / $scale-factor;
+        $width-diff: $tablet-max-rem - $phone-max-rem;
+
+        $fs1: map-get($font-specs, $spec-small);
+        $fs2: map-get($font-specs, $spec-large);
+
+        $font-diff: nth($fs2, 1) - nth($fs1, 1);
+        $font-to-width-ratio: $font-diff / $width-diff;
+        $font-size-vw: $font-to-width-ratio * 100vw;
+        $font-size-offset: $font-to-width-ratio * $phone-max-rem - nth($fs1, 1);
+        font-size: calc(#{$font-size-vw} - #{$font-size-offset});
+        font-weight: bold;
+
+        $spacing-vw: -0.04 * $font-size-vw;
+        $spacing-rem: -0.04 * $font-size-offset;
+        letter-spacing: calc(#{$spacing-vw} - #{$spacing-rem});
+
+        $lh-diff: nth($fs2, 2) - nth($fs1, 2);
+        $lh-to-width-ratio: $lh-diff / $width-diff;
+        $lh-vw: $lh-to-width-ratio * 100vw;
+        $lh-offset: $lh-to-width-ratio * $phone-max-rem - nth($fs1, 2);
+        line-height: calc(#{$lh-vw} - #{$lh-offset});
+    }
+}

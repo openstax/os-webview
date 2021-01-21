@@ -1,0 +1,101 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.hero-component {
+    padding: 0;
+
+    &.wrapped {
+        .text-content {
+            grid-gap: $normal-margin;
+            margin: 0;
+            max-width: none;
+            padding: $normal-margin;
+        }
+
+        .picture-content {
+            display: flex; // Avoids extra space showing
+            width: 100%;
+
+            > .clipped-image {
+                display: none;
+            }
+
+            > img {
+                width: 100%
+            }
+        }
+    }
+
+    &.reverse {
+        .text-content {
+            order: 2
+        }
+    }
+
+    &:not(.wrapped) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: min-content;
+
+        $mcm-plus-padding: $media-content-max + 3em * $scale-factor;
+
+        &.reverse .text-content {
+            padding-left: 6rem;
+
+            @include wider-than($mcm-plus-padding) {
+                padding-right: calc(50vw - #{$content-max / 2});
+            }
+        }
+
+        &:not(.reverse) .text-content {
+            padding-right: 6rem;
+
+            @include wider-than($mcm-plus-padding) {
+                margin-left: 0;
+                padding-left: calc(50vw - #{$content-max / 2});
+            }
+        }
+
+        .text-content {
+            @include wider-than($mcm-plus-padding) {
+                margin-left: 0;
+                max-width: none;
+                padding-left: calc(50vw - #{$content-max / 2});
+            }
+
+            @include width-up-to($mcm-plus-padding) {
+                padding-left: $normal-margin;
+            }
+
+            grid-gap: 3rem;
+            padding: 4rem;
+        }
+
+        .picture-content {
+            > img {
+                display: none;
+            }
+
+            > .clipped-image {
+                height: 100%;
+                min-height: calc(900vw / 32);
+                width: 100%;
+            }
+        }
+    }
+
+    .text-content {
+        align-content: center;
+        display: grid;
+        margin-right: 0;
+        text-align: left;
+
+        > * {
+            margin: 0;
+        }
+    }
+
+    .picture-content {
+        background-color: os-color(light-blue);
+        height: 100%;
+        overflow: hidden;    }
+}

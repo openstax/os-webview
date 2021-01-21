@@ -1,0 +1,69 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.annual-report.page .our-reach {
+    padding: 0;
+
+    .strips {
+        width: 50%;
+
+        @include wider-than($phone-max) {
+            display: none;
+        }
+    }
+
+    .hero.wrapped {
+        background-color: transparent;
+
+        .picture-content {
+            display: none;
+        }
+        .text-content {
+            padding: 4rem;
+        }
+    }
+
+    .cards {
+        grid-gap: $normal-margin;
+        overflow-x: auto;
+        margin: -0.5rem;
+        padding: 0.5rem;
+
+        @include width-up-to($phone-max) {
+            display: grid;
+            grid-auto-flow: column;
+            grid-gap: $normal-margin;
+            width: calc(100vw - 6rem);
+            // Space for box shadow
+            &::after {
+                content: '';
+                margin-left: -1rem;
+                width: 0.1rem;
+            }
+        }
+
+        @include wider-than($phone-max) {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .card {
+            @include card();
+
+            background-color: ui-color(white);
+            display: grid;
+            grid-gap: 0.8rem;
+            grid-template-columns: auto;
+            min-width: 17rem;
+            padding: $normal-margin;
+
+            > img {
+                height: 3rem;
+                margin-bottom: 1.2rem;
+            }
+
+            > a {
+                color: text-color(link);
+            }
+        }
+    }
+}

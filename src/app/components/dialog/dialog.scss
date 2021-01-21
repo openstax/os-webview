@@ -47,7 +47,7 @@ dialog {
     }
 
     .put-away {
-        @include body-font(4rem);
+        @include body-font(3.6rem);
         background-color: transparent;
         border: 0;
         color: inherit;
@@ -64,11 +64,14 @@ dialog {
         }
 
         &.no-title-bar {
+            background-color: rgba(ui-color(white), 0.5);
+            border-radius: 50%;
+            height: 1.25em;
             justify-self: end;
-            padding: 0.5rem 1rem;
             position: absolute;
             top: 1rem;
             right: 1rem;
+            width: 1.25em;
         }
     }
 

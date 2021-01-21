@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {WindowContextProvider, WindowContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import cn from 'classnames';
 import './carousel.css';
 
@@ -38,11 +39,13 @@ function RightFrameChanger({frameNumber, frameCount, setFrameNumber, step=1}) {
     );
 }
 
-export default function Carousel({children, atATime=1, mobileSlider=false}) {
-    const [frameNumber, setFrameNumber] = useState(0);
-    const [frameCount, setFrameCount] = useState(1);
+function Carousel({children, atATime=1, mobileSlider=false, initialFrame=0}) {
+    const [frameNumber, setFrameNumber] = useState(initialFrame);
+    const frameCount = React.Children.count(children);
     const ref = useRef();
     const step = Number(atATime);
+    const firstTimeRef = useRef(true);
+    const wcx = React.useContext(WindowContext);
 
     useEffect(() => {
         const targetItem = ref.current.querySelectorAll('.items > *')[frameNumber];
@@ -52,13 +55,10 @@ export default function Carousel({children, atATime=1, mobileSlider=false}) {
 
         ref.current.scrollTo({
             left,
-            behavior: 'smooth'
+            behavior: firstTimeRef.current ? 'auto' : 'smooth'
         });
-    }, [frameNumber]);
-
-    React.useLayoutEffect(() => {
-        setFrameCount(ref.current.querySelectorAll('.items > *').length);
-    }, [children]);
+        firstTimeRef.current = false;
+    }, [frameNumber, wcx.innerWidth]);
 
     return (
         <div className={cn('carousel', {'mobile-slider': mobileSlider})}>
@@ -70,5 +70,13 @@ export default function Carousel({children, atATime=1, mobileSlider=false}) {
             <LeftFrameChanger {...{frameNumber, setFrameNumber, step}} />
             <RightFrameChanger {...{frameNumber, setFrameNumber, frameCount, step}} />
         </div>
+    );
+}
+
+export default function CarouselWithContext(props) {
+    return (
+        <WindowContextProvider>
+            <Carousel {...props} />
+        </WindowContextProvider>
     );
 }

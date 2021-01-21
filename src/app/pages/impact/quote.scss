@@ -1,0 +1,88 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.annual-report.page .founder-quote {
+    background-color: ui-color(default);
+    padding: 0;
+
+    .boxed {
+        display: flex;
+
+        @include width-up-to($phone-max) {
+            flex-direction: column;
+
+            .quote {
+                margin-left: 4rem;
+            }
+        }
+
+        @include wider-than($phone-max) {
+            flex-direction: row;
+        }
+
+        @include width-up-to($tablet-max) {
+            padding: 4rem;
+            grid-gap: 4rem;
+        }
+
+        @include wider-than($tablet-max) {
+            padding: 6rem $normal-margin;
+            grid-gap: 11rem;
+        }
+
+        &.trimmed {
+            padding-bottom: 3rem;
+
+            + .boxed {
+                padding-top: 0;
+            }
+        }
+    }
+
+    .picture-porthole {
+        border-radius: 50%;
+        flex-shrink: 0;
+        overflow: hidden;
+
+        @include width-up-to($tablet-max) {
+            height: calc(20vw + 9.6rem);
+            width: calc(20vw + 9.6rem);
+        }
+
+        @include wider-than($tablet-max) {
+            height: 32rem;
+            width: 32rem;
+        }
+
+        > img {
+            max-width: 100%;
+        }
+    }
+
+    .quote {
+        display: flex;
+        flex-direction: column;
+        grid-gap: 3rem;
+        position: relative;
+
+        &::before {
+            color: os-color(orange);
+            content: '“';
+            font-size: 6rem;
+            font-weight: bold;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translate(-175%, 50%);
+        }
+    }
+
+    .strips {
+        display: block;
+        position: static;
+        width: 58vw;
+
+        @include width-up-to($tablet-max) {
+            display: none;
+        }
+    }
+}

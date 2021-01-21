@@ -13,7 +13,7 @@
         grid-row-gap: 0.6rem;
         grid-template-columns: 100%;
         justify-items: left;
-        max-width: 100%;
+        max-width: $content-max;
         padding: 3rem 0;
 
         h1 {
