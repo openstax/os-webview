@@ -7,7 +7,7 @@ const view = {
     classes: ['byline']
 };
 
-export function BylineJsx({date, author, source}) {
+export function Byline({date, author, source}) {
     return (
         <div className="byline">
             {
@@ -20,4 +20,4 @@ export function BylineJsx({date, author, source}) {
     );
 }
 
-export default pageWrapper(BylineJsx, view);
+export default pageWrapper(Byline, view);

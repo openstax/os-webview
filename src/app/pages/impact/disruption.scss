@@ -1,0 +1,23 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.disruption-section {
+    position: relative;
+
+    .boxed,
+    .text-content {
+        grid-gap: 3rem;
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    .strips {
+        bottom: 0;
+        left: auto;
+        max-width: 50%;
+        right: 0;
+        transform: rotate(180deg);
+        width: 60rem;
+    }
+}

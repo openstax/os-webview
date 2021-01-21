@@ -1,5 +1,5 @@
 import React from 'react';
-import LinkWithChevron from '../link-with-chevron/link-with-chevron';
+import LinkWithChevron from '~/components/link-with-chevron/link-with-chevron';
 import './education.css';
 
 export default function ({content, linkUrl, linkText}) {

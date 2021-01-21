@@ -1,5 +1,5 @@
 import React from 'react';
-import {BylineJsx} from '~/components/byline/byline';
+import {Byline} from '~/components/byline/byline';
 import './press-excerpt.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
@@ -23,7 +23,7 @@ export default function PressExcerpt({iconUrl, author, date, source, url, headli
     return (
         <div className={classList.join(' ')}>
             {iconUrl && <img src={iconUrl} alt="" />}
-            <BylineJsx author={author} date={date} source={source} />
+            <Byline author={author} date={date} source={source} />
             <div className="headline">
                 <a href={url}>{headline}
                     {

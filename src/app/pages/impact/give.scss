@@ -1,0 +1,31 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/placeholder-selectors';
+
+.annual-report.page .give-section {
+    @extend %light-on-dark;
+
+    background-color: os-color(deep-green);
+    color: text-color(white);
+
+    .text-content {
+        align-items: center;
+        grid-gap: 3rem;
+        margin-left: auto;
+        text-align: center;
+
+        .nonprofit-statement {
+            @include set-font(helper-label);
+
+            font-style: italic;
+        }
+
+        .btn.primary {
+            @include button();
+            @extend %primary;
+        }
+
+        a {
+            color: inherit;
+        }
+    }
+}

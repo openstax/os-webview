@@ -1,60 +1,41 @@
 import React from 'react';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
-import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import Banner from './section/banner';
-import Revolution from './section/revolution';
-import Founding from './section/founding';
-import Reach from './section/reach';
-import Testimonials from './section/testimonials';
-import Sustainability from './section/sustainability';
-import Disruption from './section/disruption';
-import LookingAhead from './section/looking-ahead';
-import Map from './section/map';
-import Tutor from './section/tutor';
-import PhilanthropicPartners from './section/philanthropic-partners';
-import Giving from './section/giving';
-import $ from '~/helpers/$';
+import {LoaderPage, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import Hero from '~/components/hero/hero';
+import OurReach from './our-reach';
+import Quote from './quote';
+import Testimonials from './testimonials';
+import Disruption from './disruption';
+import Give from './give';
 import './impact.css';
 
-function preprocessPageData(data) {
-    return $.camelCaseKeys(
-        Reflect.ownKeys(data)
-            .filter((k) => data[k] instanceof Array)
-            .reduce((result, k) => {
-                const values = data[k];
-
-                result[k] = values.reduce((newEntry, v) => {
-                    newEntry[v.type] = v.value;
-                    return newEntry;
-                }, {});
-
-                return result;
-            }, {})
-    );
-}
-
 function ImpactPage({data}) {
-    const ppData = preprocessPageData(data);
+    const {
+        heading: headline,
+        image: {image: imageSrc, altText: imageAlt},
+        description,
+        buttonHref,
+        buttonText
+    } = data.improvingAccess.content;
 
     return (
         <React.Fragment>
-            <Banner {...ppData.improvingAccess} />
-            <Revolution {...ppData.revolution} />
-            <Founding {...ppData.founding} />
-            <Reach {...ppData.reach} />
-            <Testimonials {...ppData.testimonials} />
-            <Sustainability {...ppData.sustainability} />
-            <Disruption {...ppData.disruption} />
-            <LookingAhead {...ppData.lookingAhead} />
-            <Map {...ppData.map} />
-            <Tutor {...ppData.tutor} />
-            <PhilanthropicPartners {...ppData.philanthropicPartners} />
-            <Giving {...ppData.giving} />
+            <Hero src={imageSrc} alt={imageAlt}>
+                <h1>{headline}</h1>
+                <RawHTML className="strip-outer-margins" html={description} />
+                <a className="btn primary" href={buttonHref}>{buttonText}</a>
+            </Hero>
+            <OurReach model={data.reach.content} />
+            <Quote model={data.quote.content} />
+            <Testimonials model={data.makingADifference.content} />
+            <Disruption model={data.disruption.content} />
+            <Quote supporter noStrips model={data.supporterCommunity.content} />
+            <Give model={data.giving.content} />
         </React.Fragment>
     );
 }
 
-const slug = 'pages/annual-report';
+const slug = 'pages/impact';
 const view = {
     classes: ['annual-report', 'page'],
     tag: 'main'
@@ -62,7 +43,7 @@ const view = {
 
 function ImpactLoader() {
     return (
-        <LoaderPage slug={slug} Child={ImpactPage} preserveWrapping={true} doDocumentSetup />
+        <LoaderPage slug={slug} Child={ImpactPage} doDocumentSetup />
     );
 }
 
