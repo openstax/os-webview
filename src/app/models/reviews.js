@@ -46,7 +46,8 @@ export default function useReviews(partnerId) {
     const [data, updateReview] = usePartnerData(partnerId);
 
     async function postData(payload, method) {
-        const postResult = await cmsPost(postUrl, payload, method);
+        try {
+            const postResult = await cmsPost(postUrl, payload, method);
 
             if (typeof postResult === 'string') {
                 throw postResult;
