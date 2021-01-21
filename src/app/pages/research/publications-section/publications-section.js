@@ -10,7 +10,7 @@ function Publication({pub}) {
                 {pub.authors} ({pub.date}). {pub.title}
             </div>
             <RawHTML html={pub.excerpt} />
-            <a href={pub.downloadLink}>
+            <a href={pub.downloadUrl}>
                 View PDF{' '}
                 <FontAwesomeIcon icon="external-link-alt" />
             </a>
