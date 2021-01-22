@@ -86,20 +86,24 @@ export default function RatingForm() {
     const {postRating, partnerId} = useContext(PartnerContext);
     const [rating, setRating, myReview] = useRating();
     const textAreaRef = useRef();
+    const guidelinesLink = `
+        <a href="/general/tech-scout-review-standards-and-language" target="_blank">
+        our guidelines</a>
+    `;
     const [heading, instructions, buttonText] = myReview ?
         [
             'Update your rating or review',
             `Select a new rating or update your review below. Updated ratings and
             reviews will replace your current rating and review. If you make any
             changes to your written review, you will have to resubmit it for approval.
-            Please be sure that your review follows our guidelines.`,
+            Please be sure that your review follows ${guidelinesLink}.`,
             'Update'
         ] :
         [
             'Rate this resource',
             `Written reviews will be submitted for approval before they are posted.
             You will receive an email notifying you of your review status. Please
-            be sure that your review follows our guideline.`,
+            be sure that your review follows ${guidelinesLink}.`,
             'Publish'
         ];
     const requiredMessage = rating ? '' : 'Rating is required';
@@ -146,7 +150,7 @@ export default function RatingForm() {
                 </div>
                 <Stars {...{rating, setRating}} />
                 <div className="review-form">
-                    {instructions}
+                    <RawHTML html={instructions} />
                     <textarea
                         name="review" ref={textAreaRef}
                         placeholder="Please tell us about your experience (optional)"
