@@ -25,12 +25,13 @@ function UserControls({status}) {
         }
     }
 
+    // Temporarily disabling delete with "false" below.
     return (
         <React.Fragment>
             {status !== 'Approved' && <span className="review-status">{displayStatus}</span>}
             <div className="user-controls">
                 {
-                    status !== 'Deleted' &&
+                    false && status !== 'Deleted' &&
                         <React.Fragment>
                             <a href="!delete" onClick={onDelete}>Delete</a>
                             &nbsp;&bull;&nbsp;
