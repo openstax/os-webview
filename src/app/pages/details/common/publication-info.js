@@ -189,6 +189,14 @@ export default function PublicationInfo({model, url, polish}) {
                 className="loc-pdf-update-date"
                 date={model.lastUpdatedPdf}
             />
+            {
+                model.lastUpdatedPdf &&
+                    <LabeledDate
+                        label="PDF Version Last Updated:"
+                        className="loc-pdf-update-date"
+                        formattedDate={formatDate(model.lastUpdatedPdf)}
+                    />
+            }
             <PdfUpdateInfo updateDate={formatDate(model.lastUpdatedPdf)} url={url} />
             <IsbnInfo model={model} label="Hardcover" tag="print" />
             <IsbnInfo model={model} label="Paperback" tag="printSoftcover" />
