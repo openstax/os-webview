@@ -9880,9 +9880,9 @@ path-type@^2.0.0:
   dependencies:
     pify "^2.0.0"
 
-"pattern-library@github:openstax/pattern-library":
-  version "1.1.18"
-  resolved "https://codeload.github.com/openstax/pattern-library/tar.gz/c3dd0b2c8ed987f9089b7da302fb02d2fc4cd840"
+pattern-library@openstax/pattern-library:
+  version "1.2.0"
+  resolved "https://codeload.github.com/openstax/pattern-library/tar.gz/4f51a68ee748074f0ea5fc3664542c37027d4205"
 
 pbf@^3.0.5, pbf@^3.2.1:
   version "3.2.1"
