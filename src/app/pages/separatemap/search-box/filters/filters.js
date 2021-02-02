@@ -36,7 +36,7 @@ function ForCheckbox({name, label, selected}) {
     }
 
     return (
-        <label class="for-checkbox">
+        <label className="for-checkbox">
             <input type="checkbox" name={name} onChange={onChange} />
             {label}
         </label>
@@ -46,7 +46,7 @@ function ForCheckbox({name, label, selected}) {
 export default function Filters({selected, setInstitution}) {
     return (
         <div className="filters">
-            <div class="institution-region">
+            <div className="institution-region">
                 <InstitutionSelector setInstitution={setInstitution} />
             </div>
             <ForCheckbox

@@ -40,7 +40,7 @@ function CategorySection({categoryData, categorizedBooks, category}) {
     return (
         <div className={classList.join(' ')}>
             <RawHTML Tag="h2" html={subjectHtml} className="subject" />
-            <div class="row">
+            <div className="row">
                 {
                     books.map((book) =>
                         <BookCover {...book} key={book.slug} />

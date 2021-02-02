@@ -8,8 +8,8 @@ import './testimonial-form.css';
 function Controls({book}) {
     return (
         <React.Fragment>
-            <div class="control-group">
-                <label class="field-label">Your testimonial</label>
+            <div className="control-group">
+                <label className="field-label">Your testimonial</label>
                 <textarea name="00N0B000006K1PC" rows="8" cols="80" required />
             </div>
             <input type="submit" />
@@ -40,11 +40,11 @@ export default function TestimonialForm({email, school, firstName, lastName, aft
     return (
         <div className="testimonial-form">
             <iframe
-                name="form-response" id="form-response" class="hidden"
+                name="form-response" id="form-response" className="hidden"
                 src="" width="0" height="0" tabindex="-1"
             />
             <form
-                accept-charset="UTF-8" class="form" target="form-response"
+                accept-charset="UTF-8" className="form" target="form-response"
                 action={salesforce.webtoleadUrl} method="post"
                 onSubmit={onSubmit}
             >
@@ -54,7 +54,7 @@ export default function TestimonialForm({email, school, firstName, lastName, aft
                 <input type="hidden" name="last_name" value={lastName} />
                 <input type="hidden" name="email" value={email} />
                 <input type="hidden" name="00NU0000005VkYv" value={school} />
-                <div class="book-selector">
+                <div className="book-selector">
                     <FormSelect
                         name="00NU00000053nzR"
                         selectAttributes={{
