@@ -1,12 +1,14 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .institutional-partnership .promoting {
-    padding: 8rem 0 16rem;
+    padding: {
+        left: 2rem;
+        right: 2rem;
+    }
     position: relative;
 
-    @include width-up-to($phone-max) {
-        padding: 6rem 2rem 2rem;
-    }
+    @include scale-feature(padding-top, 6rem, 8rem);
+    @include scale-feature(padding-bottom, 2rem, 16rem);
 
     .cards {
         display: grid;

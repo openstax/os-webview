@@ -15,8 +15,9 @@
         max-width: #{$content-max - 6rem};
         padding: 4rem 0;
 
+        @include scale-feature(grid-row-gap, $normal-margin, 3rem);
+
         @include width-up-to($phone-max) {
-            grid-row-gap: $normal-margin;
             padding: $normal-margin 0;
         }
     }
@@ -26,11 +27,7 @@
         text-transform: uppercase;
     }
     h1 {
-        @include set-font(h2);
+        @include scale-set-font(h3, h2);
         margin: 0;
-
-        @include width-up-to($phone-max) {
-            @include title-font(2.4rem);
-        }
     }
 }

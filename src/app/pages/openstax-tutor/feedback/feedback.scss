@@ -17,7 +17,8 @@
     }
 
     section {
-        @include body-font(2.4rem);
+        @include scale-feature(font-size, 1.8rem, 2.4rem);
+        line-height: normal;
 
         @include wider-than($phone-max) {
             padding-left: 3rem;

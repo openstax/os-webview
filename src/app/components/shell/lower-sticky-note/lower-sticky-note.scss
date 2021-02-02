@@ -17,13 +17,13 @@
         padding: 3rem 0;
 
         h1 {
-            @include set-font(h2);
+            @include scale-set-font(h3, h2);
 
             margin: 0;
         }
 
         .blurb {
-            @include set-font(body-large);
+            @include scale-feature(font-size, 1.6rem, 1.8rem);
         }
 
         a {

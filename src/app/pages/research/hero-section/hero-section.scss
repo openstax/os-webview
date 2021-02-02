@@ -1,7 +1,7 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .research.page .hero-section {
-    @include set-font(body-large);
+    @include scale-set-font(body-regular, body-large);
 
     background-color: rgb(0, 191, 217);
     display: grid;

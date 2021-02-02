@@ -1,5 +1,6 @@
 import React from 'react';
 import LinkWithChevron from '~/components/link-with-chevron/link-with-chevron';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './education.css';
 
 export default function ({content, linkUrl, linkText}) {
@@ -7,7 +8,7 @@ export default function ({content, linkUrl, linkText}) {
         <div className="education-banner">
             <div className="container">
                 <div className="quote">
-                    <div dangerouslySetInnerHTML={{__html: content}} />
+                    <RawHTML html={content} />
                     <LinkWithChevron href={linkUrl}>
                         {linkText}
                     </LinkWithChevron>

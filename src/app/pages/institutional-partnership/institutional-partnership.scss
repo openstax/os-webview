@@ -11,13 +11,9 @@ $near-white: #f8f8f8;
 
     .content-block {
         @extend %content;
-
-        @include width-up-to($phone-max) {
-            padding: 0;
-        }
+        @include scale-feature(grid-gap, $normal-margin, 4rem);
 
         display: grid;
-        grid-gap: 4rem;
 
         > * {
             margin: 0;

@@ -1,10 +1,12 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .sign-up {
-    padding: 24rem 0;
+    @include scale-feature(padding-top, 4rem, 24rem);
+    @include scale-feature(padding-bottom, 4rem, 24rem);
 
-    @include width-up-to($tablet-max) {
-        padding: 4rem 2rem;
+    padding: {
+        left: 2rem;
+        right: 2rem;
     }
 
     .content {
