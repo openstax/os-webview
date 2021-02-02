@@ -4,17 +4,17 @@ import './alumni-tab.css';
 
 export default function AlumniTab({data}) {
     return (
-        <div class="alumni-tab">
-            <div class="card-container">
+        <div className="alumni-tab">
+            <div className="card-container">
                 {
                     data.map((entry) =>
-                        <div class="entry" key={entry.name}>
-                            <div class="name">
+                        <div className="entry" key={entry.name}>
+                            <div className="name">
                                 <LinkOrNot url={entry.website}>
                                     {entry.name}
                                 </LinkOrNot>
                             </div>
-                            <div class="description">{entry.title}</div>
+                            <div className="description">{entry.title}</div>
                         </div>
                     )
                 }

@@ -23,7 +23,7 @@ function Item({label, value, selected}) {
         <div
             role="option"
             aria-selected={isSelected}
-            class="option"
+            className="option"
             onClick={toggleSelected}
             tabIndex="0"
             onKeyDown={$.treatSpaceOrEnterAsClick}
