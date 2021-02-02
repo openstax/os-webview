@@ -14,7 +14,7 @@
         text-align: center;
 
         .nonprofit-statement {
-            @include set-font(helper-label);
+            @include body-font(1.2rem);
 
             font-style: italic;
         }

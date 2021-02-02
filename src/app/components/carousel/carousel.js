@@ -4,42 +4,49 @@ import {WindowContextProvider, WindowContext} from '~/components/jsx-helpers/jsx
 import cn from 'classnames';
 import './carousel.css';
 
-function FrameChanger({chevronDirection, onClick}) {
+function FrameChanger({chevronDirection, onClick, hoverText}) {
     return (
         <button
             type="button" className={`frame-changer ${chevronDirection}`}
             onClick={onClick}
         >
             <FontAwesomeIcon icon={`chevron-${chevronDirection}`} />
+            {
+                hoverText && <span className="hover-text">{hoverText}</span>
+            }
         </button>
     );
 }
 
-function LeftFrameChanger({frameNumber, setFrameNumber, step=1}) {
+function LeftFrameChanger({frameNumber, setFrameNumber, step=1, hoverTextThing}) {
     const destFrame = frameNumber - step;
+    const hoverText = hoverTextThing ? `Previous ${hoverTextThing}` : null;
 
     return (
         destFrame >= 0 &&
             <FrameChanger
                 chevronDirection="left"
                 onClick={() => setFrameNumber(destFrame)}
+                hoverText={hoverText}
             />
     );
 }
 
-function RightFrameChanger({frameNumber, frameCount, setFrameNumber, step=1}) {
+function RightFrameChanger({frameNumber, frameCount, setFrameNumber, step=1, hoverTextThing}) {
     const destFrame = frameNumber + step;
+    const hoverText = hoverTextThing ? `Next ${hoverTextThing}` : null;
 
     return (
         destFrame < frameCount &&
             <FrameChanger
                 chevronDirection="right"
                 onClick={() => setFrameNumber(destFrame)}
+                hoverText={hoverText}
             />
     );
 }
 
-function Carousel({children, atATime=1, mobileSlider=false, initialFrame=0}) {
+function Carousel({children, atATime=1, mobileSlider=false, initialFrame=0, hoverTextThing}) {
     const [frameNumber, setFrameNumber] = useState(initialFrame);
     const frameCount = React.Children.count(children);
     const ref = useRef();
@@ -58,7 +65,7 @@ function Carousel({children, atATime=1, mobileSlider=false, initialFrame=0}) {
             behavior: firstTimeRef.current ? 'auto' : 'smooth'
         });
         firstTimeRef.current = false;
-    }, [frameNumber, wcx.innerWidth]);
+    }, [frameNumber, wcx.innerWidth, initialFrame]);
 
     return (
         <div className={cn('carousel', {'mobile-slider': mobileSlider})}>
@@ -67,8 +74,8 @@ function Carousel({children, atATime=1, mobileSlider=false, initialFrame=0}) {
                     {children}
                 </div>
             </div>
-            <LeftFrameChanger {...{frameNumber, setFrameNumber, step}} />
-            <RightFrameChanger {...{frameNumber, setFrameNumber, frameCount, step}} />
+            <LeftFrameChanger {...{frameNumber, setFrameNumber, step, hoverTextThing}} />
+            <RightFrameChanger {...{frameNumber, setFrameNumber, frameCount, step, hoverTextThing}} />
         </div>
     );
 }

@@ -11,15 +11,20 @@ import './testimonials.css';
 function LightboxContent({cards, initialPosition, articleDataArr, done}) {
     function ArticleCard({position}) {
         const articleData = articleDataArr[position];
+        const {embeddedVideo} = cards[position];
 
         if (!articleData) {
             return <div className="text-content"><h2>Loading</h2></div>;
         }
         // eslint-disable-next-line camelcase
-        articleData.article_image = articleData.featured_image.meta.download_url;
+        articleData.article_image = embeddedVideo ? null : articleData.featured_image.meta.download_url;
 
         return (
             <div className="lightbox-article">
+                {
+                    embeddedVideo &&
+                        <RawHTML className="embedded-video" html={embeddedVideo} embed />
+                }
                 <Article data={articleData} />
             </div>
         );
@@ -27,7 +32,7 @@ function LightboxContent({cards, initialPosition, articleDataArr, done}) {
 
     return (
         <div className="lightbox-testimonial">
-            <Carousel initialFrame={initialPosition}>
+            <Carousel initialFrame={initialPosition} hoverTextThing="story">
                 {cards.map((c, position) => <ArticleCard position={position} key={position} />)}
             </Carousel>
         </div>
@@ -43,17 +48,25 @@ function useDataFromCard(card) {
 function addAndRemoveClass(onDone) {
     let overlayEl;
 
-    function start() {
-        overlayEl = document.querySelector('.page-overlay');
-
-        overlayEl.classList.add('impact-testimonial-overlay');
-    }
-
     function done() {
         if (overlayEl) {
             overlayEl.classList.remove('impact-testimonial-overlay');
         }
         onDone();
+    }
+
+    function onOutsideClick(event) {
+        if (event.target.classList.contains('impact-testimonial-overlay')) {
+            window.removeEventListener('click', onOutsideClick);
+            done();
+        }
+    }
+
+    function start() {
+        overlayEl = document.querySelector('.page-overlay');
+
+        overlayEl.classList.add('impact-testimonial-overlay');
+        window.addEventListener('click', onOutsideClick);
     }
 
     return [start, done];
@@ -77,11 +90,7 @@ function Card({position, cards}) {
     return (
         <div className="card">
             <div className="picture-part">
-                {
-                    embeddedVideo ?
-                        <RawHTML className="embedded-video" html={embeddedVideo} embed /> :
-                        (image && <ClippedImage src={image.file} />)
-                }
+                {image && <ClippedImage src={image.file} />}
             </div>
             <div className="text-part">
                 <div>{description}</div>
