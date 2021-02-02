@@ -1,6 +1,8 @@
 import React, {useState, useContext, useRef} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {PageContext} from './contexts';
+import PageContext from './page-context';
+import UserContext from './user-context';
+import PartnerContext from '../partner-context';
 import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './rating-form.css';
 
@@ -49,7 +51,8 @@ function Stars({rating, setRating}) {
 }
 
 export function useMyReview() {
-    const {reviews, accountId} = useContext(PageContext);
+    const {reviews} = useContext(PartnerContext);
+    const {accountId} = useContext(UserContext);
     const myReview = reviews.find((r) => r.submittedByAccountId === accountId);
 
     return myReview;
@@ -78,23 +81,29 @@ function InfoButton({info}) {
 }
 
 export default function RatingForm() {
-    const {userName, accountId, togglePage, postRating, partnerId} = React.useContext(PageContext);
+    const togglePage = useContext(PageContext);
+    const {accountId, userName} = useContext(UserContext);
+    const {postRating, partnerId} = useContext(PartnerContext);
     const [rating, setRating, myReview] = useRating();
     const textAreaRef = useRef();
+    const guidelinesLink = `
+        <a href="/general/tech-scout-review-standards-and-language" target="_blank">
+        our guidelines</a>
+    `;
     const [heading, instructions, buttonText] = myReview ?
         [
             'Update your rating or review',
             `Select a new rating or update your review below. Updated ratings and
             reviews will replace your current rating and review. If you make any
             changes to your written review, you will have to resubmit it for approval.
-            Please be sure that your review follows our guidelines.`,
+            Please be sure that your review follows ${guidelinesLink}.`,
             'Update'
         ] :
         [
             'Rate this resource',
             `Written reviews will be submitted for approval before they are posted.
             You will receive an email notifying you of your review status. Please
-            be sure that your review follows our guideline.`,
+            be sure that your review follows ${guidelinesLink}.`,
             'Publish'
         ];
     const requiredMessage = rating ? '' : 'Rating is required';
@@ -141,7 +150,7 @@ export default function RatingForm() {
                 </div>
                 <Stars {...{rating, setRating}} />
                 <div className="review-form">
-                    {instructions}
+                    <RawHTML html={instructions} />
                     <textarea
                         name="review" ref={textAreaRef}
                         placeholder="Please tell us about your experience (optional)"

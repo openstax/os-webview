@@ -24,9 +24,9 @@ function baseHref() {
     return h.href;
 }
 
-function showDetailDialog({entry, linkTexts}) {
+function showDetailDialog({entry, onUpdate, linkTexts}) {
     const detailData = {...entry, ...linkTexts};
-    const pd = new PartnerDetails(detailData);
+    const pd = new PartnerDetails({detailData, onUpdate});
     const onOutsideClick = () => {
         shellBus.emit('hideDialog');
     };
@@ -47,12 +47,24 @@ function ResultCard({entry, linkTexts}) {
     const {
         title, logoUrl, verifiedFeatures, badgeImage, tags, rating, ratingCount
     } = modelFromEntry(entry);
+    const [detailData, setDetailData] = React.useState();
+    const summary = detailData || {count: ratingCount, rating};
+    const onUpdate = setDetailData;
+
+    useEffect(() => {
+        const searchArgs = window.location.search.substr(1).split('&').map(decodeURIComponent);
+        const foundPartner = searchArgs.some((arg) => entry.title === arg);
+
+        if (foundPartner) {
+            showDetailDialog({entry, onUpdate, linkTexts});
+        }
+    }, [onUpdate]);
 
     function onSelect(event) {
         event.preventDefault();
         event.stopPropagation();
         history.replaceState('', '', event.currentTarget.href);
-        showDetailDialog({entry, linkTexts});
+        showDetailDialog({entry, onUpdate, linkTexts});
     }
 
     return (
@@ -74,22 +86,16 @@ function ResultCard({entry, linkTexts}) {
             <div className="tags">
                 {tags.map(({value, label}) => <div key={value}>{value}</div>)}
             </div>
-            <StarsAndCount rating={rating} count={ratingCount} showNumber />
+            <StarsAndCount
+                rating={summary.rating}
+                count={summary.count}
+                showNumber />
         </a>
     );
 }
 
 
 export default function ResultGrid({entries, linkTexts}) {
-    useEffect(() => {
-        const searchArgs = window.location.search.substr(1).split('&').map(decodeURIComponent);
-        const foundPartner = entries.find((entry) => searchArgs.some((arg) => entry.title === arg));
-
-        if (foundPartner) {
-            showDetailDialog({entry: foundPartner, linkTexts});
-        }
-    }, []);
-
     return (
         <div className="boxed grid">
             {

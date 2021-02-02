@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Stars} from '~/components/stars-and-count/stars-and-count';
-import {PageContext} from './contexts';
+import PageContext from './page-context';
+import PartnerContext from '../partner-context';
 import {useMyReview} from './rating-form';
 import ClippedText from '~/components/clipped-text/clipped-text';
 import './user-review.css';
 
 function UserControls({status}) {
-    const {togglePage, postRating} = React.useContext(PageContext);
+    const togglePage = useContext(PageContext);
+    const {postRating} = useContext(PartnerContext);
     const myReview = useMyReview();
     const displayStatus = ['Deleted', 'Rejected'].includes(status) ? status : 'pending';
 
@@ -41,7 +43,7 @@ function UserControls({status}) {
 }
 
 function ReviewAndResponse({review, response}) {
-    const {partnerName} = React.useContext(PageContext);
+    const {partnerName} = useContext(PartnerContext);
 
     return (
         <React.Fragment>
