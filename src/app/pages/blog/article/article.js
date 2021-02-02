@@ -111,7 +111,7 @@ export function Article({data}) {
     return (
         <div className="text-content" ref={ref}>
             <FloatingSideBar readTime={readTime} progress={progress} />
-            <img src={image} alt={imageAlt} />
+            {image && <img src={image} alt={imageAlt} />}
             <h1>{title}</h1>
             {
                 Boolean(subheading) &&

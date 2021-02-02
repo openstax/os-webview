@@ -22,9 +22,14 @@
         }
     }
 
+    .text-content > div > :first-child {
+        margin-top: 0;
+    }
+
     .cards {
         grid-gap: $normal-margin;
         overflow-x: auto;
+        line-height: normal;
         margin: -0.5rem;
         padding: 0.5rem;
 

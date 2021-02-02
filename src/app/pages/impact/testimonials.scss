@@ -9,7 +9,7 @@
 
     .items {
         align-items: stretch;
-        grid-gap: 3rem;
+        grid-gap: $normal-margin;
         padding: 0.5rem;
         margin: 0.5rem;
     }
@@ -17,7 +17,9 @@
     .card {
         @include card();
 
+        border-radius: 0.5rem;
         flex-shrink: 0;
+        overflow: hidden;
 
         @include width-up-to($phone-max) {
             width: calc(100vw - 10rem);
@@ -66,43 +68,69 @@
     }
 }
 
-.impact-testimonial-overlay .main-region {
-    > div {
-        height: 100%;
+.impact-testimonial-overlay {
+    width: 100%;
+
+    @include width-up-to($phone-max) {
+        padding: $normal-margin {
+            bottom: 5rem;
+        }
     }
 
-    .lightbox-testimonial {
-        height: 100%;
-        padding-top: 4rem;
+    @include wider-than($phone-max) {
+        padding: 8rem;
+    }
 
-        > .carousel,
-        > .carousel > .viewport,
-        > .carousel > .viewport > .items,
-        > .carousel > .viewport > .items > .lightbox-article {
+    .main-region {
+        > div {
             height: 100%;
         }
 
-        .lightbox-article {
-            overflow-y: scroll;
-        }
+        .lightbox-testimonial {
+            height: 100%;
+            padding-top: 5rem;
 
-        .floater {
-            display: none;
-        }
+            > .carousel,
+            > .carousel > .viewport,
+            > .carousel > .viewport > .items,
+            > .carousel > .viewport > .items > .lightbox-article {
+                height: 100%;
+            }
 
-        .carousel .items {
-            display: flex;
-            grid-gap: 3rem;
-            max-width: 90rem;
+            .lightbox-article {
+                overflow-y: scroll;
+            }
 
-            > * {
-                align-items: flex-start;
-                flex-shrink: 0;
-                width: 100%;
+            .floater {
+                display: none;
+            }
 
-                > .text-content {
-                    margin: auto;
-                    width: auto;
+            .carousel {
+
+                @include width-up-to($phone-max) {
+                    padding: 0;
+                    width: calc(100vw - 3rem);
+                }
+
+                @include wider-than($phone-max) {
+                    padding: 0 3.5rem;
+                    width: calc(100vw - 10rem);
+                }
+
+                .items {
+                    display: flex;
+                    grid-gap: 3rem;
+
+                    > * {
+                        align-items: flex-start;
+                        flex-shrink: 0;
+                        width: 100%;
+
+                        > .text-content {
+                            margin: auto;
+                            width: auto;
+                        }
+                    }
                 }
             }
         }
