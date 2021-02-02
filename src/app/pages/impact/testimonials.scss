@@ -35,13 +35,8 @@
             max-width: 100%;
             overflow: hidden;
 
-            > .clipped-image,
-            > .embedded-video {
+            > .clipped-image {
                 height: 100%;
-                width: 100%;
-            }
-
-            > .embedded-video > * {
                 width: 100%;
             }
         }
@@ -125,6 +120,11 @@
                         align-items: flex-start;
                         flex-shrink: 0;
                         width: 100%;
+
+                        .embedded-video {
+                            margin: 0 auto;
+                            max-width: 72rem;
+                        }
 
                         > .text-content {
                             margin: auto;
