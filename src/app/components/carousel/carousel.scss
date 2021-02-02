@@ -14,19 +14,25 @@
     }
 
     .frame-changer {
-        @include wider-than($phone-max) {
-            align-items: center;
-            background-color: rgba(ui-color(black), 0.4);
-            display: flex;
-            height: 7rem;
-            justify-content: space-between;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
+        // @include wider-than($phone-max) {
+        align-items: center;
+        background-color: rgba(ui-color(black), 0.4);
+        display: flex;
+        height: 7rem;
+        justify-content: space-between;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
 
+        .hover-text {
+            display: none;
+            overflow: hidden;
+            padding: 0 1rem;
+        }
+
+        @media(hover: hover) and (pointer: fine) {
             .hover-text {
-                overflow: hidden;
-                padding: 0 1rem;
+                display: block;
             }
 
             &:hover {
@@ -45,53 +51,54 @@
                     transition: max-width 0.3s;
                 }
             }
-
-            &.left {
-                border-bottom-right-radius: 0.3rem;
-                border-top-right-radius: 0.3rem;
-                left: 0;
-            }
-
-            &.right {
-                border-bottom-left-radius: 0.3rem;
-                border-top-left-radius: 0.3rem;
-                right: 0;
-
-                .hover-text {
-                    order: -1;
-                }
-            }
         }
 
-        @include width-up-to($phone-max) {
-            align-items: center;
-            appearance: none;
-            background-color: ui-color(white);
-            border-top: thin solid ui-color(form-border);
-            color: text-color(link);
-            display: grid;
-            grid-auto-flow: column;
-            grid-gap: 1rem;
-            height: 5rem;
-            position: fixed;
-            bottom: 0;
-            width: 50%;
+        &.left {
+            border-bottom-right-radius: 0.3rem;
+            border-top-right-radius: 0.3rem;
+            left: 0;
+        }
 
-            &.left {
-                justify-content: left;
-                left: 0;
-            }
+        &.right {
+            border-bottom-left-radius: 0.3rem;
+            border-top-left-radius: 0.3rem;
+            right: 0;
 
-            &.right {
-                right: 0;
-                text-align: right;
-                justify-content: right;
-
-                .hover-text {
-                    order: -1;
-                }
+            .hover-text {
+                order: -1;
             }
         }
+        // }
+
+        // @include width-up-to($phone-max) {
+        //     align-items: center;
+        //     appearance: none;
+        //     background-color: ui-color(white);
+        //     border-top: thin solid ui-color(form-border);
+        //     color: text-color(link);
+        //     display: grid;
+        //     grid-auto-flow: column;
+        //     grid-gap: 1rem;
+        //     height: 5rem;
+        //     position: fixed;
+        //     bottom: 0;
+        //     width: 50%;
+        //
+        //     &.left {
+        //         justify-content: left;
+        //         left: 0;
+        //     }
+        //
+        //     &.right {
+        //         right: 0;
+        //         text-align: right;
+        //         justify-content: right;
+        //
+        //         .hover-text {
+        //             order: -1;
+        //         }
+        //     }
+        // }
     }
 
     .viewport {

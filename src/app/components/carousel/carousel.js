@@ -54,18 +54,21 @@ function Carousel({children, atATime=1, mobileSlider=false, initialFrame=0, hove
     const firstTimeRef = useRef(true);
     const wcx = React.useContext(WindowContext);
 
-    useEffect(() => {
-        const targetItem = ref.current.querySelectorAll('.items > *')[frameNumber];
-        const {left: viewportLeft} = ref.current.getBoundingClientRect();
-        const {left: targetLeft} = targetItem.getBoundingClientRect();
-        const left = targetLeft - viewportLeft + ref.current.scrollLeft;
+    React.useEffect(() => {
+        // On initial draw, need to wait for render.
+        setTimeout(() => {
+            const targetItem = ref.current.querySelectorAll('.items > *')[frameNumber];
+            const {left: viewportLeft} = ref.current.getBoundingClientRect();
+            const {left: targetLeft} = targetItem.getBoundingClientRect();
+            const left = targetLeft - viewportLeft + ref.current.scrollLeft;
 
-        ref.current.scrollTo({
-            left,
-            behavior: firstTimeRef.current ? 'auto' : 'smooth'
-        });
-        firstTimeRef.current = false;
-    }, [frameNumber, wcx.innerWidth, initialFrame]);
+            ref.current.scrollTo({
+                left,
+                behavior: firstTimeRef.current ? 'auto' : 'smooth'
+            });
+            firstTimeRef.current = false;
+        }, 10);
+    }, [frameNumber, wcx.innerWidth]);
 
     return (
         <div className={cn('carousel', {'mobile-slider': mobileSlider})}>
