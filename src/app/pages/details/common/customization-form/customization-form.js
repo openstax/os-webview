@@ -170,6 +170,7 @@ export default function CustomizationForm({model}) {
                 </div>
             </div>
             <div className="bottom">
+                <input type="hidden" name="book" value={model.id} />
                 <input type="submit" onClick={doSubmit} />
             </div>
         </form>
