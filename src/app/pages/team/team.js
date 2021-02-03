@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import Hero from '~/components/hero/hero';
 import TabGroup from '~/components/tab-group/tab-group.jsx';
 import ContentGroup from '~/components/content-group/content-group.jsx';
 import AccordionGroup from '~/components/accordion-group/accordion-group.js';
@@ -32,17 +33,12 @@ function TeamPage({data: {
     }
     return (
         <React.Fragment>
-            <section className="hero">
-                <div className="text-content">
-                    <div>
-                        <h1>{heroHeadline}</h1>
-                        <div>{heroParagraph}</div>
-                    </div>
+            <Hero src={heroImage} alt="">
+                <div>
+                    <h1>{heroHeadline}</h1>
+                    <div>{heroParagraph}</div>
                 </div>
-                <div className="picture-content">
-                    <img src={heroImage} alt="" />
-                </div>
-            </section>
+            </Hero>
             <section className="team">
                 <h2>{teamHeader}</h2>
                 <div className="phone-view">

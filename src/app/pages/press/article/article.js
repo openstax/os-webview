@@ -1,6 +1,6 @@
 import React from 'react';
 import BodyUnit from '~/components/body-units/body-units.jsx';
-import {BylineJsx} from '~/components/byline/byline';
+import {Byline} from '~/components/byline/byline';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
 import '~/pages/blog/article/article.css';
 import {usePageData} from '~/helpers/controller/cms-mixin';
@@ -36,7 +36,7 @@ function Article({data}) {
                 {
                     Boolean(subheading) && <h2>{subheading}</h2>
                 }
-                <BylineJsx author={author} date={date} />
+                <Byline author={author} date={date} />
                 <div className="body">
                     {
                         bodyData.map((unit) => <BodyUnit unit={unit} key={unit.value} />)

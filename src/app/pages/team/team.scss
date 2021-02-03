@@ -16,36 +16,7 @@
 
     .hero {
         background-color: os-color(orange);
-        display: grid;
-        padding: 0;
-
-        @include wider-than($phone-max) {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .text-content {
-            color: text-color(white);
-            display: grid;
-            margin-right: 0;
-            max-width: #{$media-content-max / 2};
-            padding: 4rem;
-            text-align: left;
-
-            h1 {
-                @include set-font(h1);
-            }
-        }
-
-        .picture-content {
-            align-items: stretch;
-            background-color: os-color(light-blue);
-            display: grid;
-            max-width: 100rem;
-
-            img {
-                max-width: 100%;
-            }
-        }
+        color: text-color(white);
     }
 
     .team {

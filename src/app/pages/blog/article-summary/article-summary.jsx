@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect, useContext} from 'react';
 import {RawHTML, WindowContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {BylineJsx} from '~/components/byline/byline';
+import {Byline} from '~/components/byline/byline';
 import $ from '~/helpers/$';
 import debounce from 'lodash/debounce';
 
@@ -46,7 +46,7 @@ export function ArticleSummary({
                 }
                 <RawHTML className="article-blurb" html={body} />
                 <a className="go-to" href={`/blog/${articleSlug}`} onClick={onClick}>read more</a>
-                <BylineJsx date={date} author={author} />
+                <Byline date={date} author={author} />
             </div>
         </React.Fragment>
     );

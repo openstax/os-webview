@@ -1,64 +1,74 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {WindowContextProvider, WindowContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import cn from 'classnames';
 import './carousel.css';
 
-function FrameChanger({chevronDirection, onClick}) {
+function FrameChanger({chevronDirection, onClick, hoverText}) {
     return (
         <button
             type="button" className={`frame-changer ${chevronDirection}`}
             onClick={onClick}
         >
             <FontAwesomeIcon icon={`chevron-${chevronDirection}`} />
+            {
+                hoverText && <span className="hover-text">{hoverText}</span>
+            }
         </button>
     );
 }
 
-function LeftFrameChanger({frameNumber, setFrameNumber, step=1}) {
+function LeftFrameChanger({frameNumber, setFrameNumber, step=1, hoverTextThing}) {
     const destFrame = frameNumber - step;
+    const hoverText = hoverTextThing ? `Previous ${hoverTextThing}` : null;
 
     return (
         destFrame >= 0 &&
             <FrameChanger
                 chevronDirection="left"
                 onClick={() => setFrameNumber(destFrame)}
+                hoverText={hoverText}
             />
     );
 }
 
-function RightFrameChanger({frameNumber, frameCount, setFrameNumber, step=1}) {
+function RightFrameChanger({frameNumber, frameCount, setFrameNumber, step=1, hoverTextThing}) {
     const destFrame = frameNumber + step;
+    const hoverText = hoverTextThing ? `Next ${hoverTextThing}` : null;
 
     return (
         destFrame < frameCount &&
             <FrameChanger
                 chevronDirection="right"
                 onClick={() => setFrameNumber(destFrame)}
+                hoverText={hoverText}
             />
     );
 }
 
-export default function Carousel({children, atATime=1, mobileSlider=false}) {
-    const [frameNumber, setFrameNumber] = useState(0);
-    const [frameCount, setFrameCount] = useState(1);
+function Carousel({children, atATime=1, mobileSlider=false, initialFrame=0, hoverTextThing}) {
+    const [frameNumber, setFrameNumber] = useState(initialFrame);
+    const frameCount = React.Children.count(children);
     const ref = useRef();
     const step = Number(atATime);
+    const firstTimeRef = useRef(true);
+    const wcx = React.useContext(WindowContext);
 
-    useEffect(() => {
-        const targetItem = ref.current.querySelectorAll('.items > *')[frameNumber];
-        const {left: viewportLeft} = ref.current.getBoundingClientRect();
-        const {left: targetLeft} = targetItem.getBoundingClientRect();
-        const left = targetLeft - viewportLeft + ref.current.scrollLeft;
+    React.useEffect(() => {
+        // On initial draw, need to wait for render.
+        setTimeout(() => {
+            const targetItem = ref.current.querySelectorAll('.items > *')[frameNumber];
+            const {left: viewportLeft} = ref.current.getBoundingClientRect();
+            const {left: targetLeft} = targetItem.getBoundingClientRect();
+            const left = targetLeft - viewportLeft + ref.current.scrollLeft;
 
-        ref.current.scrollTo({
-            left,
-            behavior: 'smooth'
-        });
-    }, [frameNumber]);
-
-    React.useLayoutEffect(() => {
-        setFrameCount(ref.current.querySelectorAll('.items > *').length);
-    }, [children]);
+            ref.current.scrollTo({
+                left,
+                behavior: firstTimeRef.current ? 'auto' : 'smooth'
+            });
+            firstTimeRef.current = false;
+        }, 10);
+    }, [frameNumber, wcx.innerWidth]);
 
     return (
         <div className={cn('carousel', {'mobile-slider': mobileSlider})}>
@@ -67,8 +77,16 @@ export default function Carousel({children, atATime=1, mobileSlider=false}) {
                     {children}
                 </div>
             </div>
-            <LeftFrameChanger {...{frameNumber, setFrameNumber, step}} />
-            <RightFrameChanger {...{frameNumber, setFrameNumber, frameCount, step}} />
+            <LeftFrameChanger {...{frameNumber, setFrameNumber, step, hoverTextThing}} />
+            <RightFrameChanger {...{frameNumber, setFrameNumber, frameCount, step, hoverTextThing}} />
         </div>
+    );
+}
+
+export default function CarouselWithContext(props) {
+    return (
+        <WindowContextProvider>
+            <Carousel {...props} />
+        </WindowContextProvider>
     );
 }

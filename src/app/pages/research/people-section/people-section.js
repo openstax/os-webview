@@ -47,8 +47,8 @@ export default function PeopleSection({
     data: {peopleHeader, alumni, currentMembers, externalCollaborators}
 }) {
     return (
-        <section class="people-section">
-            <div class="content">
+        <section className="people-section">
+            <div className="content">
                 <h1>{peopleHeader}</h1>
                 <TabAccordionCombo>
                     <AlumniTab label="Alumni" data={alumni} />
