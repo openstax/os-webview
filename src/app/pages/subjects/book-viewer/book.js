@@ -2,6 +2,7 @@ import React, {useRef, useEffect, useContext} from 'react';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {ActiveElementContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
+import cn from 'classnames';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 function QuickLink({url, icon, text}) {
@@ -106,23 +107,20 @@ export function BookCover({
     has_faculty_resources: hasFacultyResources,
     has_student_resources: hasStudentResources
 }) {
-    const classList = ['cover'];
     const details = {
         coverColor, hasFacultyResources, hasStudentResources
     };
-
-    if (state === 'coming_soon') {
-        classList.push('coming-soon');
-    }
-    if ($.isPolish(slug)) {
-        classList.push('polish');
-    }
+    const className = cn('cover', {
+        'coming-soon': state === 'coming_soon',
+        polish: $.isPolish(slug)
+    });
 
     return (
-        <div className={classList.join(' ')}>
+        <div className={className}>
             <ThreeDotMenu slug={slug} details={details} />
             <a href={`/details/${slug}`}>
                 <img src={coverUrl} alt={title} />
+                <div className="cover-caption">{title}</div>
             </a>
         </div>
     );
