@@ -92,21 +92,9 @@
         .row {
             display: grid;
             grid-gap: 4rem 2rem;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
             margin: $normal-margin 0;
             width: 100%;
-
-            @include wider-than($media-content-max - 35em) {
-                grid-template-columns: repeat(3, 1fr);
-            }
-
-            @include wider-than($media-content-max - 20em) {
-                grid-template-columns: repeat(4, 1fr);
-            }
-
-            @include wider-than($media-content-max - 5em) {
-                grid-template-columns: repeat(5, 1fr);
-            }
         }
 
         .cover {
@@ -124,8 +112,17 @@
             > a,
             img {
                 display: block;
-                height: 100%;
                 width: 100%;
+            }
+
+            > a {
+                color: inherit;
+                line-height: normal;
+                text-decoration: none;
+
+                .cover-caption {
+                    margin-top: 0.5rem;
+                }
             }
 
             .ur-menu {
