@@ -92,9 +92,21 @@
         .row {
             display: grid;
             grid-gap: 4rem 2rem;
-            grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             margin: $normal-margin 0;
             width: 100%;
+
+            @include wider-than($media-content-max - 35em) {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            @include wider-than($media-content-max - 20em) {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            @include wider-than($media-content-max - 5em) {
+                grid-template-columns: repeat(5, 1fr);
+            }
         }
 
         .cover {

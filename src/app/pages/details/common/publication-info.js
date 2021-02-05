@@ -179,11 +179,14 @@ export default function PublicationInfo({model, url, polish}) {
                 className="loc-pub-date"
                 formattedDate={formatDate(model.publishDate)}
             />
-            <LabeledDate
-                label="Web Version Last Updated:"
-                className="loc-web-update-date"
-                formattedDate={formatDate(webUpdate)}
-            />
+            {
+                webUpdate &&
+                    <LabeledDate
+                        label="Web Version Last Updated:"
+                        className="loc-web-update-date"
+                        formattedDate={formatDate(webUpdate)}
+                    />
+            }
             {
                 model.lastUpdatedPdf &&
                     <LabeledDate
