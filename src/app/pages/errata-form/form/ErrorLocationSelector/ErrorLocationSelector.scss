@@ -4,7 +4,7 @@
     .horizontal-group {
         display: flex;
     }
-    select {
+    select[size] {
         @include set-font(body-regular);
         display: initial;
         padding-left: 0.7rem;
