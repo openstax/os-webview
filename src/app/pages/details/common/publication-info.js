@@ -143,14 +143,14 @@ function PolishPublicationInfo({model}) {
     );
 }
 
-function LabeledDate({label, formattedDate, className}) {
-    if (!formattedDate) {
+function LabeledDate({label, date, className}) {
+    if (!date) {
         return null;
     }
     return (
         <div className={className}>
             <h4>{label}</h4>
-            {formattedDate}
+            {formatDate(date)}
         </div>
     );
 }
@@ -177,21 +177,18 @@ export default function PublicationInfo({model, url, polish}) {
             <LabeledDate
                 label="Publish Date:"
                 className="loc-pub-date"
-                formattedDate={formatDate(model.publishDate)}
+                date={model.publishDate}
             />
             <LabeledDate
                 label="Web Version Last Updated:"
                 className="loc-web-update-date"
-                formattedDate={formatDate(webUpdate)}
+                date={webUpdate}
             />
-            {
-                model.lastUpdatedPdf &&
-                    <LabeledDate
-                        label="PDF Version Last Updated:"
-                        className="loc-pdf-update-date"
-                        formattedDate={formatDate(model.lastUpdatedPdf)}
-                    />
-            }
+            <LabeledDate
+                label="PDF Version Last Updated:"
+                className="loc-pdf-update-date"
+                date={model.lastUpdatedPdf}
+            />
             <PdfUpdateInfo updateDate={formatDate(model.lastUpdatedPdf)} url={url} />
             <IsbnInfo model={model} label="Hardcover" tag="print" />
             <IsbnInfo model={model} label="Paperback" tag="printSoftcover" />
