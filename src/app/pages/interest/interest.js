@@ -26,8 +26,7 @@ function ContactInfoPage({selectedRole, validatorRef}) {
 }
 
 function firstSearchArgument() {
-    return decodeURIComponent(window.location.search.substr(1))
-        .replace(/&.*/, '');
+    return decodeURIComponent(window.location.search.substr(1).replace(/&.*/, ''));
 }
 
 function HowDidYouHear() {
@@ -109,6 +108,10 @@ function FacultyForm({selectedRole, onPageChange}) {
         const selectedBooks = selectedBooksRef.current;
         const submitQueue = selectedBooks.slice();
         const iframe = document.getElementById(form.target);
+
+        if (submitQueue.length === 0) {
+            return;
+        }
 
         // eslint-disable-next-line no-use-before-define
         const submitAfterDelay = () => setTimeout(submitNextBook, 300);

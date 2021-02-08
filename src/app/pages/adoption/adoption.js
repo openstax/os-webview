@@ -25,8 +25,7 @@ function ContactInfoPage({selectedRole, validatorRef}) {
 }
 
 function firstSearchArgument() {
-    return decodeURIComponent(window.location.search.substr(1))
-        .replace(/&.*/, '');
+    return decodeURIComponent(window.location.search.substr(1).replace(/&.*/, ''));
 }
 
 function BookSelectorPage({selectedBooksRef}) {
