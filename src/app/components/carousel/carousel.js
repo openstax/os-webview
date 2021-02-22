@@ -46,9 +46,11 @@ function RightFrameChanger({frameNumber, frameCount, setFrameNumber, step=1, hov
     );
 }
 
-function Carousel({children, atATime=1, mobileSlider=false, initialFrame=0, hoverTextThing}) {
+function Carousel({
+    children, atATime=1, mobileSlider=false, initialFrame=0, hoverTextThing,
+    frameCount = React.Children.count(children)
+}) {
     const [frameNumber, setFrameNumber] = useState(initialFrame);
-    const frameCount = React.Children.count(children);
     const ref = useRef();
     const step = Number(atATime);
     const firstTimeRef = useRef(true);
