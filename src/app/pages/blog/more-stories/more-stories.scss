@@ -50,4 +50,8 @@ $image-height: 24rem;
     h2 {
         @include title-font(2.4rem);
     }
+
+    @media print {
+        display: none;
+    }
 }

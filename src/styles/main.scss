@@ -186,6 +186,10 @@ sup {
         position: sticky;
         top: -5rem;
     }
+
+    @media print {
+        display: none;
+    }
 }
 
 #lower-sticky-note {
@@ -237,6 +241,10 @@ sup {
 
 #footer {
     z-index: 0;
+
+    @media print {
+        display: none;
+    }
 }
 
 #maincontent {
