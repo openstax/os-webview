@@ -27,7 +27,7 @@ function Option({condition, children}) {
     );
 }
 
-export function SimpleLinkOption({link, icon, text, ...linkOptions}) {
+export function SimpleLinkOption({link, icon, text, children, ...linkOptions}) {
     return (
         <Option condition={link}>
             <a
@@ -36,6 +36,7 @@ export function SimpleLinkOption({link, icon, text, ...linkOptions}) {
             >
                 <IconAndText icon={icon} text={text} />
             </a>
+            {children}
         </Option>
     );
 }
@@ -223,7 +224,11 @@ export function KindleOption({model}) {
         <SimpleLinkOption
             link={model.kindleLink} icon={['fab', 'amazon']} text="Download for Kindle"
             data-track="Kindle"
-        />
+        >
+            <div class="disclaimer">
+                As an Amazon Associate we earn from qualifying purchases
+            </div>
+        </SimpleLinkOption>
     );
 }
 

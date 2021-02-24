@@ -73,20 +73,24 @@
     }
 
     .options {
-        display: grid;
+        display: flex;
+        flex-direction: column;
         grid-gap: $normal-margin;
         margin: 1rem 0;
         opacity: 1;
         transition: opacity 0.2s;
+
+        @include wider-than($tablet-max) {
+            width: min-content;
+        }
     }
 
     .option {
         font-size: 2.2rem; // This is for the icons
 
         // Brands look a little undersized
-        .fa-apple,
-        .fa-amazon {
-            font-size: 2.5rem;
+        [data-prefix="fab"] {
+            font-size: 2.4rem;
         }
 
         .logo-img {
@@ -142,6 +146,13 @@
             }
         }
 
+        .disclaimer {
+            @include set-font(helper-label);
+
+            font-style: italic;
+            line-height: normal;
+            margin-top: 0.5em;
+        }
     }
 
     .option-with-callout {
