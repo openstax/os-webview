@@ -1,70 +1,96 @@
-import componentType, {canonicalLinkMixin, insertHtmlMixin} from '~/helpers/controller/init-mixin';
-import {makeDocModel} from '~/models/usermodel';
-import {on} from '~/helpers/controller/decorators';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
+import {LoaderPage, RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import React from 'react';
+import cn from 'classnames';
 import $ from '~/helpers/$';
-import {description as template} from './faq.html';
-import css from './faq.css';
+import './faq.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['faq-page', 'page'],
-        tag: 'main'
-    },
-    model: {},
-    slug: 'pages/faq'
-};
-const BaseClass = componentType(spec, canonicalLinkMixin, insertHtmlMixin);
+const docUrlBase = `${$.apiOriginAndPrefix}/documents`;
 
-export default class FAQ extends BaseClass {
+function useDocModel(docId) {
+    const [docData, setDocData] = React.useState({});
 
-    init() {
-        super.init();
-    }
+    React.useEffect(() => {
+        const url = `${docUrlBase}/${docId}`;
 
-    onDataLoaded() {
-        const d = this.pageData;
-        const slug = window.location.hash.substr(1);
-        const item = d.questions.find((q) => q.slug === slug);
+        fetch(url, {credentials: 'include'})
+            .then((r) => r.json())
+            .then((r) => setDocData({
+                title: r.title,
+                file: r.meta.download_url
+            }));
+    }, [docId]);
 
-        if (item) {
-            item.isOpen = true;
-        }
-
-        this.model = {
-            heading: d.intro_heading,
-            subhead: d.intro_description,
-            questions: d.questions
-        };
-        this.update();
-
-
-        if (item) {
-            const targetEl = document.getElementById(slug);
-
-            $.scrollTo(targetEl);
-        }
-
-        // Load documents
-        for (const q of this.model.questions) {
-            if (q.document) {
-                makeDocModel(q.document).load().then((data) => {
-                    q.documentUrl = data.file;
-                    q.documentTitle = data.title;
-                    this.update();
-                });
-            }
-        }
-    }
-
-    @on('click .question')
-    toggleQuestion(event) {
-        const index = +event.delegateTarget.dataset.item;
-        const q = this.model.questions[index];
-
-        q.isOpen = !q.isOpen;
-        this.update();
-    }
-
+    return docData;
 }
+
+function Document({document}) {
+    const {title, file} = useDocModel(document);
+
+    return (
+        <div className="answer">
+            <div className="document-title">{title}</div>
+            <a className="download-link" href={file}>Download</a>
+        </div>
+    );
+}
+
+function QuestionAndAnswer({qa}) {
+    const [open, toggle] = useToggle(false);
+    const ref = React.useRef();
+
+    React.useEffect(() => {
+        const slug = window.location.hash.substr(1);
+
+        if (slug === qa.slug) {
+            toggle();
+            ref.current.scrollIntoView({block: 'center'});
+        }
+    }, [toggle]);
+
+    return (
+        <div
+            id={qa.slug} key={qa.slug} ref={ref} className={cn('qa', {open})}
+        >
+            <RawHTML className="question" html={qa.question} onClick={() => toggle()} />
+            <RawHTML className="answer" html={qa.answer} />
+            {qa.document && <Document document={qa.document} />}
+        </div>
+    );
+}
+
+function FAQ({data: {
+    introHeading: heading,
+    introDescription: subhead,
+    questions
+}}) {
+    return (
+        <React.Fragment>
+            <div className="hero">
+                <div className="boxed">
+                    <h1>{heading}</h1>
+                    <RawHTML className="text-content" html={subhead} />
+                </div>
+            </div>
+            <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
+            <div className="desktop-row boxed">
+                <div className="faq-list">
+                    {questions.map((qa) => <QuestionAndAnswer key={qa.slug} qa={qa} />)}
+                </div>
+            </div>
+        </React.Fragment>
+    );
+}
+
+function FAQLoader() {
+    return (
+        <LoaderPage slug="pages/faq" Child={FAQ} doDocumentSetup />
+    );
+}
+
+const view = {
+    classes: ['faq-page', 'page'],
+    tag: 'main'
+};
+
+export default pageWrapper(FAQLoader, view);
