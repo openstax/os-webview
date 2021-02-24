@@ -34,7 +34,7 @@ export default function PartnerCarousel({icon, images, videos}) {
     const frameCount = images.length + videos.length;
 
     return (
-        <Carousel>
+        <Carousel frameCount={frameCount}>
             <Images {...{images, icon, frameCount}} />
             <Videos videos={videos} />
         </Carousel>
