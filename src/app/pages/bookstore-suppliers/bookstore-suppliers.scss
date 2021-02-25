@@ -44,7 +44,7 @@
             }
 
             h1 {
-                @include set-font(h1);
+                @include scale-set-font(h2, h1);
             }
 
             a {
@@ -253,7 +253,7 @@
                 }
 
                 > .blurb {
-                    @include body-font(2.4rem);
+                    @include scale-feature(font-size, 1.8rem, 2.4rem);
 
                     grid-area: blurb;
                 }

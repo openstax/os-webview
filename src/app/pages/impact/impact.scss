@@ -1,10 +1,8 @@
 @import 'pattern-library/core/pattern-library/headers';
-@import 'mixins/placeholder-selectors';
-@import 'mixins/responsive';
 
 .annual-report.page {
     > .hero {
-        @extend %light-on-dark;
+        @include light-on-dark();
 
         background-color: os-color(deep-green);
         color: white;
@@ -22,13 +20,13 @@
     }
 
     h1 {
-        @include scaling-title-font(h3, h1);
+        @include scale-set-font(h3, h1);
 
         margin: 0;
     }
 
     h2 {
-        @include scaling-title-font(h3, h2);
+        @include scale-set-font(h3, h2);
 
         margin: 0;
     }

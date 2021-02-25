@@ -1,13 +1,13 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .big-quote {
-    color: text-color(white);
-    padding: 16rem 0;
-    position: relative;
+    @include scale-feature(padding-top, 4rem, 16rem);
+    @include scale-feature(padding-bottom, 4rem, 16rem);
 
-    @include width-up-to($phone-max) {
-        padding: 4rem 2rem;
-    }
+    color: text-color(white);
+    padding-left: 2rem;
+    padding-right: 2rem;
+    position: relative;
 
     .background-image,
     .gradient-overlay {
@@ -34,43 +34,34 @@
     }
 
     .big-quote-mark {
-        @include title-font(12rem);
+        @include scale-feature(font-size, 8rem, 12rem);
+        @include scale-feature(letter-spacing, -0.04 * 8rem, -0.04 * 12rem);
+        @include scale-feature(margin-top, -1.5rem, -2.2rem);
+        @include scale-feature(width, 5rem, 8rem);
 
-        margin-top: -2.2rem;
-        width: 8rem;
-
-        @include width-up-to($phone-max) {
-            @include title-font(8rem);
-
-            margin-top: -1.5rem;
-            width: 5rem;
-        }
+        font-weight: bold;
+        line-height: normal;
     }
 
     .quote {
-        @include set-font(h1);
+        @include scale-feature(font-size, 2.8rem, 4.8rem);
+        @include scale-feature(letter-spacing, -0.04 * 2.8rem, -0.04 * 4.8rem);
 
+        font-weight: bold;
+        line-height: normal;
         margin-bottom: 4rem;
-
-        @include width-up-to($phone-max) {
-            @include title-font(2.8rem);
-        }
     }
 
     .name {
-        @include set-font(h2);
+        @include scale-feature(font-size, 2.8rem, 3.6rem);
+        @include scale-feature(letter-spacing, -0.04 * 2.8rem, -0.04 * 3.6rem);
 
-        @include width-up-to($phone-max) {
-            @include title-font(2.8rem);
-        }
+        font-weight: bold;
+        line-height: normal;
     }
 
     .title,
     .school {
-        @include body-font(3.6rem);
-
-        @include width-up-to($phone-max) {
-            @include body-font(2.6rem);
-        }
+        @include scale-feature(font-size, 2.6rem, 3.6rem);
     }
 }

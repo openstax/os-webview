@@ -4,8 +4,8 @@ import {usePageData} from '~/helpers/controller/cms-mixin';
 import $ from '~/helpers/$';
 import BannerCarousel from './banner-carousel/banner-carousel';
 import Buckets from './buckets/buckets';
-import Education from './education/education.jsx';
-import Quotes from './quotes/quotes.jsx';
+import Education from './education/education';
+import Quotes from './quotes/quotes';
 import './home.css';
 
 const view = {

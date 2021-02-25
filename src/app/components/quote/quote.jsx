@@ -1,4 +1,5 @@
 import React from 'react';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 
 // eslint-disable-next-line complexity
 export default function Quote({model}) {
@@ -21,7 +22,7 @@ export default function Quote({model}) {
             }
             <div className={`quote ${model.colorScheme || ''}`}>
                 <blockquote>
-                    <quote-html dangerouslySetInnerHTML={{__html: model.content}} />
+                    <RawHTML html={model.content} />
                     {
                         Boolean(model.attribution) &&
                             <div className="attribution">— {model.attribution}</div>

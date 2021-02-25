@@ -28,46 +28,12 @@
         top: 0;
     }
 
+    .boxed {
+        grid-row-gap: 2rem;
+        text-align: center;
+    }
+
     .funder {
-        @include set-font(body-large);
-
-        display: flex;
-        justify-content: center;
-        margin-bottom: 1rem;
-        width: 100%;
-
-        @include wider-than($tablet-max) {
-            align-items: center;
-            flex-flow: row nowrap;
-        }
-
-        h2 {
-            @include set-font(h3);
-        }
-
-        .logo {
-            flex: 0 0 auto;
-            margin-bottom: 3rem;
-
-            @include wider-than($tablet-max) {
-                flex: 0 0 25%;
-                margin-bottom: 0;
-                margin-right: 3rem;
-            }
-
-            img {
-                max-width: 30rem;
-                width: 100%;
-            }
-        }
-
-        .text {
-            align-items: flex-start;
-            display: block;
-
-            @include width-up-to($phone-max) {
-                @include set-font(body-regular);
-            }
-        }
+        @include scale-set-font(h4, h3);
     }
 }

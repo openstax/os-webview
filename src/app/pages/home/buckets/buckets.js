@@ -1,5 +1,6 @@
 import React from 'react';
 import LinkWithChevron from '~/components/link-with-chevron/link-with-chevron';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './buckets.css';
 
 function Bucket({bucketClass, image, hasImage, heading, content, link, cta}) {
@@ -18,7 +19,7 @@ function Bucket({bucketClass, image, hasImage, heading, content, link, cta}) {
             <div className="quote">
                 <div>
                     <span className="title">{heading}</span>
-                    <blurb-html className="blurb" dangerouslySetInnerHTML={{__html: content}} />
+                    <RawHTML className="blurb" html={content} />
                 </div>
                 <LinkWithChevron href={link} children={cta} />
             </div>

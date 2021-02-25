@@ -27,7 +27,7 @@ function FoundationPage({data: model}) {
                     {
                         model.funders.map((funder) => (
                             <div className="funder" key={funder}>
-                                <h2>{funder.title}</h2>
+                                {funder.title}
                             </div>
                         ))
                     }

@@ -15,14 +15,16 @@
         }
 
         .items {
+            flex-shrink: 0;
 
             @include width-up-to($phone-max) {
                 grid-column-gap: $normal-margin;
             }
 
             @include wider-than($phone-max) {
+                display: grid;
                 grid-column-gap: 3rem;
-                grid-template-columns: repeat(auto-fit, minmax(29.5rem, 1fr));
+                grid-auto-flow: column;
             }
         }
     }
@@ -35,22 +37,13 @@
         grid-gap: 3rem;
         grid-template-rows: auto 1fr auto;
         min-height: 10rem;
+        min-width: 28rem;
         overflow: hidden;
         padding: 3rem;
         position: relative;
 
-        @include width-up-to($phone-max) {
-            min-width: calc(100% - 4rem);
-            max-width: calc(100% - 4rem);
-        }
-
-        @include wider-than($phone-max) {
-            min-width: calc(calc(100% / 3) - 2rem);
-            max-width: calc(calc(100% / 3) - 2rem);
-        }
-
         h2 {
-            @include set-font(h3);
+            @include scale-set-font(h4, h3);
 
             margin-bottom: 1rem;
         }

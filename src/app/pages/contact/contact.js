@@ -1,6 +1,7 @@
 import React from 'react';
 import {pageWrapper, SuperbItem} from '~/controllers/jsx-wrapper';
 import {usePageData} from '~/helpers/controller/cms-mixin';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Form from './form.jsx';
 import './contact.css';
 
@@ -38,8 +39,8 @@ function Page() {
                 </div>
                 <div class="col">
                     <h2>{mailingHeader}</h2>
-                    <address dangerouslySetInnerHTML={{__html: mailingAddress}} />
-                    <div dangerouslySetInnerHTML={{__html: customerService}} />
+                    <RawHTML Tag="address" html={mailingAddress} />
+                    <RawHTML html={customerService} />
                 </div>
             </div>
         </main>

@@ -1,40 +1,40 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .institutional-partnership.page .speaking {
-    padding: 12rem 0 10rem;
     position: relative;
 
-    @include width-up-to($phone-max) {
-        padding: 4rem 2rem;
-    }
+    @include scale-feature(padding-top, 4rem, 12rem);
+    @include scale-feature(padding-bottom, 4rem, 10rem);
+    @include scale-feature(padding-left, 2rem, 0rem);
+    @include scale-feature(padding-right, 2rem, 0rem);
 
     .content-block {
-        @include width-up-to($phone-max) {
-            grid-template-columns: 100%;
-        }
-
         @include wider-than($phone-max) {
-            grid-row-gap: 1rem;
-            grid-template: 'l ur'
-            'l lr';
-
-            .left-group {
-                grid-area: l;
-            }
-
-            .ur {
-                grid-area: ur;
-            }
-
-            .lr {
-                grid-area: lr;
-            }
+            display: block;
         }
 
-        img {
-            max-width: 100%;
-        }
+        figure {
+            @include width-up-to($phone-max) {
+                max-width: 100%;
+                order: 2;
+            }
+            @include wider-than($phone-max) {
+                float: right;
+                margin: $normal-margin {
+                    top: 0;
+                }
+                max-width: 40%;
+            }
 
+            img {
+                max-width: 100%;
+            }
+
+            figcaption {
+                @include set-font(helper-label);
+                line-height: normal;
+            }
+        }
     }
 
 }

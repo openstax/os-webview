@@ -2,7 +2,7 @@
 
 .research.page {
     h1 {
-        @include set-font(h2);
+        @include scale-set-font(h3, h2);
 
         margin-bottom: 2rem;
     }

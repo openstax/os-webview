@@ -91,14 +91,13 @@ $button-breakpoint: 100em * $scale-factor;
             }
 
             h3 {
-                @include set-font(h1);
+                @include scale-set-font(h2, h1);
                 color: os-color(yellow);
                 margin: 1rem 0;
 
                 @include wider-than($tablet-max) {
                     width: 37rem;
                 }
-
             }
 
             > p:last-child {

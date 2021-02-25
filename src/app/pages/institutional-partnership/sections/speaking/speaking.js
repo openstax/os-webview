@@ -9,12 +9,14 @@ export default function Speaking({
     return (
         <section className="speaking white">
             <div className="content-block">
+                <figure className="inset-image" style="float:right">
+                    <img src={image} alt={imageAlt} />
+                    <RawHTML Tag="figcaption" html={imageCaption} />
+                </figure>
                 <div className="left-group">
-                    <h2 className="ul">{heading}</h2>
-                    <RawHTML className="ll description-block" html={description} />
+                    <h2>{heading}</h2>
+                    <RawHTML className="description-block" html={description} />
                 </div>
-                <img className="ur" src={image} alt={imageAlt} />
-                <RawHTML className="lr caption" html={imageCaption} />
             </div>
         </section>
     );

@@ -2,11 +2,17 @@
 
 .institutional-partnership .banner {
     color: text-color(white);
-    padding: 16rem 0 24rem;
+    padding: 0;
     position: relative;
 
+    @include scale-feature(padding-top, 4rem, 16rem);
+
+    @include wider-than($phone-max) {
+        padding-bottom: 24rem;
+    }
+
     @include width-up-to($phone-max) {
-        padding: 4rem 0 6rem;
+        padding-bottom: 6rem;
     }
 
     .background-image {
