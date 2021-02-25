@@ -159,13 +159,11 @@ export function RawHTML({Tag='div', html, embed=false, ...otherProps}) {
 
 export function useToggle(initialState) {
     const [value, setValue] = useState(initialState);
-    const toggleRef = useRef(
-        (newValue=!value) => {
-            setValue(newValue);
-        }
-    );
+    const toggle = (newValue=!value) => {
+        setValue(newValue);
+    };
 
-    return [value, toggleRef.current];
+    return [value, toggle];
 }
 
 export function useSet(initialValue=[]) {

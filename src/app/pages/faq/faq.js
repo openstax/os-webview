@@ -36,17 +36,16 @@ function Document({document}) {
 }
 
 function QuestionAndAnswer({qa}) {
-    const [open, toggle] = useToggle(false);
+    const slug = window.location.hash.substr(1);
+    const initiallyOpen = slug === qa.slug;
+    const [open, toggle] = useToggle(initiallyOpen);
     const ref = React.useRef();
 
     React.useEffect(() => {
-        const slug = window.location.hash.substr(1);
-
-        if (slug === qa.slug) {
-            toggle();
+        if (initiallyOpen) {
             ref.current.scrollIntoView({block: 'center'});
         }
-    }, [toggle]);
+    }, [initiallyOpen]);
 
     return (
         <div
