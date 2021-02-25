@@ -27,6 +27,11 @@
         @extend %text-content;
 
         padding-top: 4rem;
+
+        @include width-up-to($phone-max) {
+            padding-left: 0;
+            padding-right: 0;
+        }
     }
 
     .qa {

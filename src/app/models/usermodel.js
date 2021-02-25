@@ -1,10 +1,8 @@
 import {useState, useEffect} from 'react';
 import settings from 'settings';
-import $ from '~/helpers/$';
 import bus from './usermodel-bus';
 import isEqual from 'lodash/isEqual';
 
-const docUrlBase = `${$.apiOriginAndPrefix}/documents`;
 const accountsUrl = `${settings.accountHref}/api/user`;
 
 function cached(fn) {
@@ -142,7 +140,6 @@ const userModel = {
         return accountsModel.load().then(oldUserModel);
     }
 };
-const makeDocModel = (docId) => new UserModel(`${docUrlBase}/${docId}`);
 
 function useUserModel() {
     const [data, setData] = useState();
@@ -158,4 +155,4 @@ bus.serve('userModel-load', () => userModel.load());
 bus.serve('accountsModel-load', () => accountsModel.load());
 
 export default userModel;
-export {accountsModel, makeDocModel, useUserModel};
+export {accountsModel, useUserModel};
