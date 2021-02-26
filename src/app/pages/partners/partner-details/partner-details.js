@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useRef, useContext} from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import PartnerContext, {PartnerContextProvider} from './partner-context';
 import Synopsis from './synopsis/synopsis';
 import Carousel from './carousel/carousel';
@@ -140,15 +139,10 @@ function PartnerDetails({model}) {
     );
 }
 
-function PartnerDetailsWrapper({detailData: {id, ...model}, onUpdate}) {
+export default function PartnerDetailsWrapper({detailData: {id, ...model}, onUpdate}) {
     return (
         <PartnerContextProvider partnerId={id} onUpdate={onUpdate}>
             <PartnerDetails model={model} />
         </PartnerContextProvider>
     );
 }
-
-// This still returns a Superb component because that is what the Dialog expects
-// Possible future development: make Dialog handle React components.
-// That will be a job in itself.
-export default pageWrapper(PartnerDetailsWrapper);

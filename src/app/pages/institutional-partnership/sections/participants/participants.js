@@ -1,9 +1,9 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import groupBy from 'lodash/groupBy';
-import './participants.css';
 import EstablishedPartners from './established-partners/established-partners';
-import shellBus from '~/components/shell/shell-bus';
+import showDialog from '~/helpers/show-dialog';
+import './participants.css';
 
 export default function Participants({
     heading, subheading, icons: [icons], linkTarget, linkText, ...other
@@ -12,10 +12,13 @@ export default function Participants({
 
     function showEstablished(event) {
         event.preventDefault();
-        shellBus.emit('showDialog', () => ({
-            title: 'Established Partners',
-            content: new EstablishedPartners({model: established})
-        }));
+        showDialog({
+            dialogTitle: 'Established Partners',
+            dialogContent: EstablishedPartners,
+            dialogContentArgs: {
+                model: established
+            }
+        });
     }
 
     return (

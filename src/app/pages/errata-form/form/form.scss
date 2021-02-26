@@ -1,5 +1,9 @@
 @import 'pattern-library/core/pattern-library/headers';
 
+.banned-notice {
+    padding: $normal-margin;
+}
+
 .form-container {
     background-color: inherit;
     margin-bottom: 18rem;

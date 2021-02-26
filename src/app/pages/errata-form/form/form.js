@@ -5,9 +5,8 @@ import ErrorLocationSelector from './ErrorLocationSelector/ErrorLocationSelector
 import FileUploader from './FileUploader';
 import managedInvalidMessage from './InvalidMessage.js';
 import $ from '~/helpers/$';
-import shellBus from '~/components/shell/shell-bus';
+import showDialog from '~/helpers/show-dialog';
 import routerBus from '~/helpers/router-bus';
-import BannedNotice from '../banned-notice/banned-notice';
 import cn from 'classnames';
 import css from './form.css';
 
@@ -110,6 +109,12 @@ function removeEmptyFileWidgets(formEl) {
     };
 }
 
+function BannedNotice({text}) {
+    return (
+        <div className="banned-notice">{text}</div>
+    );
+}
+
 export default function ErrataForm({
     model: {books, selectedTitle, source, submittedBy, location}
 }) {
@@ -141,14 +146,13 @@ export default function ErrataForm({
                         if (json.id) {
                             routerBus.emit('navigate', `/confirmation/errata?id=${json.id}`);
                         } else if (json.submitted_by_account_id) {
-                            shellBus.emit('showDialog', () => ({
-                                title: 'Errata submission rejected',
-                                content: new BannedNotice({
-                                    model: {
-                                        text: json.submitted_by_account_id[0]
-                                    }
-                                })
-                            }));
+                            showDialog({
+                                dialogTitle: 'Errata submission rejected',
+                                dialogContent: BannedNotice,
+                                dialogContentArgs: {
+                                    text: json.submitted_by_account_id[0]
+                                }
+                            });
                         }
                     },
                     (fetchError) => {

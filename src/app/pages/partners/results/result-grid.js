@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import shellBus from '~/components/shell/shell-bus';
+import showDialog, {hideDialog} from '~/helpers/show-dialog';
 import PartnerDetails from '../partner-details/partner-details';
 import StarsAndCount from '~/components/stars-and-count/stars-and-count';
 import analyticsEvents from '../analytics-events';
@@ -26,21 +26,23 @@ function baseHref() {
 
 function showDetailDialog({entry, onUpdate, linkTexts}) {
     const detailData = {...entry, ...linkTexts};
-    const pd = new PartnerDetails({detailData, onUpdate});
     const onOutsideClick = () => {
-        shellBus.emit('hideDialog');
+        hideDialog();
     };
 
     analyticsEvents.partnerDetails(entry.title);
     window.addEventListener('click', onOutsideClick);
-    shellBus.emit('showDialog', () => ({
-        title: '',
-        content: pd,
-        onClose() {
-            window.removeEventListener('click', onOutsideClick);
-            history.replaceState('', '', baseHref());
+    showDialog({
+        dialogTitle: '',
+        dialogContent: PartnerDetails,
+        dialogContentArgs: {detailData, onUpdate},
+        dialogArgs: {
+            onClose() {
+                window.removeEventListener('click', onOutsideClick);
+                history.replaceState('', '', baseHref());
+            }
         }
-    }));
+    });
 }
 
 function ResultCard({entry, linkTexts}) {
