@@ -1,8 +1,8 @@
 import shellBus from '~/components/shell/shell-bus';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 
-export function hideDialog() {
-    shellBus.emit('hideDialog');
+export function hideDialog(modal = true) {
+    shellBus.emit(modal ? 'hideDialog' : 'hideNonModal');
 }
 
 export default function showDialog({
@@ -15,6 +15,8 @@ export default function showDialog({
         content,
         ...dialogArgs
     }));
-    event.stopPropagation();
-    event.preventDefault();
+    if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
 }

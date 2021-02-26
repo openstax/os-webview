@@ -77,6 +77,7 @@
         "preact": "^10.4.0",
         "preact-compat": "^3.19.0",
         "preact-test-utils": "^0.1.4",
+        "react-modal": "^3.12.1",
         "regenerator-runtime": "^0.11.0",
         "require-dir": "0.3.2",
         "source-map-loader": "^0.2.4",

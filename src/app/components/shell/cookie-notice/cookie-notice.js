@@ -1,19 +1,8 @@
-import componentType from '~/helpers/controller/init-mixin';
-import busMixin from '~/helpers/controller/bus-mixin';
-import {description as template} from './cookie-notice.html';
-import css from './cookie-notice.css';
-import {on} from '~/helpers/controller/decorators';
+import React from 'react';
 import accountsModel from '~/models/usermodel';
-import shellBus from '../shell-bus';
+import showDialog, {hideDialog} from '~/helpers/show-dialog';
 import analytics from '~/helpers/analytics';
-
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['cookie-notice']
-    }
-};
+import './cookie-notice.css';
 
 const cookie = {
     get hash() {
@@ -36,14 +25,17 @@ function acknowledged() {
     return cookie.hash[ACKNOWLEDGEMENT_KEY];
 }
 
-class CookieNotice extends componentType(spec, busMixin) {
-
-    @on('click button.primary')
-    acknowledge() {
-        cookie.setKey(ACKNOWLEDGEMENT_KEY);
-        this.emit('close');
-    }
-
+function CookieNoticeBody({onClose}) {
+    return (
+        <div className="cookie-notice">
+            <div class="message">
+                We use cookies to optimize your experience on our website. By continuing on the
+                website, you are agreeing to our use of cookies. You can find more information,
+                including how to opt out, in our <a href="/privacy-policy">Privacy Policy</a>.
+            </div>
+            <button type="button" class="primary" onClick={onClose}>Got it!</button>
+        </div>
+    );
 }
 
 export default function showNoticeIfNeeded() {
@@ -61,21 +53,21 @@ export default function showNoticeIfNeeded() {
             }
             analytics.setUser(userid);
             if (!acknowledged()) {
-                const cookieNotice = new CookieNotice({
-                    userid
-                });
-
-                shellBus.emit('showDialog', () => ({
-                    title: 'Privacy and cookies',
-                    content: cookieNotice,
-                    customClass: 'footer-style',
-                    nonModal: true,
-                    noPutAway: true,
-                    noAutoFocus: true
-                }));
-                cookieNotice.on('close', () => {
-                    shellBus.emit('hideNonModal');
-                    cookieNotice.detach();
+                showDialog({
+                    dialogTitle: 'Privacy and cookies',
+                    dialogContent: CookieNoticeBody,
+                    dialogContentArgs: {
+                        onClose() {
+                            cookie.setKey(ACKNOWLEDGEMENT_KEY);
+                            hideDialog(false);
+                        }
+                    },
+                    dialogArgs: {
+                        customClass: 'footer-style',
+                        nonModal: true,
+                        noPutAway: true,
+                        noAutoFocus: true
+                    }
                 });
             }
         }

@@ -8,6 +8,7 @@ import CompCopyRequestForm from './request-form/request-form';
 import CustomizationForm from '../customization-form/customization-form';
 import DetailsContext from '../../context';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
+import cn from 'classnames';
 
 function CommonsHubBox({model}) {
     return (
@@ -167,42 +168,14 @@ function ReferenceNumber({referenceNumber}) {
 }
 
 function ResourceBox({model, icon}) {
-    const classNames = ['resource-box'];
-    const [isNew, updateIsNew] = useState(model.isNew);
-    const onClick = (event) => {
-        if (model.dialogProps) {
-            event.preventDefault();
-            event.stopPropagation();
-            shellBus.emit('showDialog', () => model.dialogProps);
-        }
-        if (model.onClick) {
-            model.onClick(event);
-        }
-        updateIsNew(model.isNew);
-        if (model.trackResource) {
-            fetch(
-                `${$.apiOriginAndOldPrefix}/salesforce/download-tracking/`,
-                {
-                    method: 'POST',
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(model.trackResource)
-                }
-            );
-        }
+    const classNames = {
+        double: model.double,
+        'coming-soon': model.comingSoon
     };
-
-    if (model.double) {
-        classNames.push('double');
-    }
-    if (model.comingSoon) {
-        classNames.push('coming-soon');
-    }
+    const [isNew, updateIsNew] = useState(model.isNew);
 
     return (
-        <div className={classNames.join(' ')}>
+        <div className={cn('resource-box', classNames)}>
             <ReferenceNumber referenceNumber={model.videoReferenceNumber} />
             <Top model={model} isNew={isNew} />
             <Bottom model={model} overrideIcon={icon} />
@@ -250,19 +223,28 @@ function VideoViewer({file}) {
         </div>
     );
 }
-const SuperbVideoViewer = pageWrapper(VideoViewer, {classes: ['instructor-resource-video-viewer']});
+
+function ResourceVideoViewer(...args) {
+    return (
+        <div className="instructor-resource-video-viewer">
+            <VideoViewer {...args} />
+        </div>
+    );
+}
 
 export function VideoResourceBoxes({models, blogLinkModels, referenceModels}) {
     function onClick(event) {
         const [model] = models;
-        const dialogProps = {
-            title: model.video_title || model.resource_heading,
-            content: new SuperbVideoViewer({file: model.video_file}),
-            customClass: 'reverse-colors'
-        };
 
         event.preventDefault();
-        shellBus.emit('showDialog', () => dialogProps);
+        showDialog({
+            event,
+            dialogTitle: model.video_title || model.resource_heading,
+            dialogContent: ResourceVideoViewer,
+            dialogContentArgs: {
+                customClass: 'reverse-colors'
+            }
+        });
     }
 
     return (
