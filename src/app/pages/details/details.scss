@@ -286,7 +286,7 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
     }
 
     .btn.default {
-        background-color: ui-color(white);
+        @include button();
     }
 
     .table-of-contents {
