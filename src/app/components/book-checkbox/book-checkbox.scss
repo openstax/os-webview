@@ -18,7 +18,7 @@
     }
 
     &.checked {
-        background-color: darken(ui-color(default), 3%);
+        background-color: darken(ui-color(page-bg), 3%);
         font-size: 1.1rem;
 
         > .indicator {

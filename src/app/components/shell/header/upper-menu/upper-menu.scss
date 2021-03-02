@@ -17,7 +17,7 @@
     @include wider-than($tablet-max) {
         @include set-font(helper-label);
 
-        background-color: ui-color(default);
+        background-color: ui-color(page-bg);
         height: 5rem;
         order: 1;
         overflow: inherit;
@@ -82,7 +82,7 @@
 
     .logo-wrapper {
         align-items: center;
-        background: ui-color(default);
+        background: ui-color(page-bg);
         border-top: 0.1rem solid ui-color(form-border);
         display: flex;
         flex-flow: row nowrap;

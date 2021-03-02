@@ -1,7 +1,7 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .partner-details {
-    background-color: ui-color(default);
+    background-color: ui-color(page-bg);
 
     section {
         @include width-up-to($phone-max) {

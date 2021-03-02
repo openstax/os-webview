@@ -129,7 +129,7 @@ $breakpt-med: 93em * $scale-factor;
     }
 
     .triangle-light .popover::after {
-        border-bottom-color: ui-color(default);
+        border-bottom-color: ui-color(page-bg);
     }
 
     .book-options {
@@ -175,7 +175,7 @@ $breakpt-med: 93em * $scale-factor;
         }
 
         [aria-expanded="false"] {
-            background-color: ui-color(default);
+            background-color: ui-color(page-bg);
         }
     }
 }

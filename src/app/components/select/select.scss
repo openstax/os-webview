@@ -18,7 +18,7 @@ select {
     position: relative;
 
     &::before {
-        background-color: ui-color(default);
+        background-color: ui-color(page-bg);
         content: '';
         display: block;
         height: $form-element-height;
@@ -114,7 +114,7 @@ select {
         border-style: solid;
         border-top-color: ui-color(white);
         border-width: 0.1rem;
-        box-shadow: 0 0.2rem 0.3rem rgba(ui-color(default), 0.8);
+        box-shadow: 0 0.2rem 0.3rem rgba(ui-color(page-bg), 0.8);
         cursor: pointer;
         display: none;
         left: 0;

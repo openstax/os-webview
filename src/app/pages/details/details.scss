@@ -55,10 +55,10 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
 
         &.card-background {
             > .content-wrapper {
-                background-image: linear-gradient(to bottom, ui-color(white), ui-color(white) 10rem, ui-color(default) 25rem);
+                background-image: linear-gradient(to bottom, ui-color(white), ui-color(white) 10rem, ui-color(page-bg) 25rem);
 
                 @include wider-than($tablet-max) {
-                    background-image: linear-gradient(to bottom, ui-color(white), ui-color(white) 15rem, ui-color(default) 30rem);
+                    background-image: linear-gradient(to bottom, ui-color(white), ui-color(white) 15rem, ui-color(page-bg) 30rem);
                 }
 
             }
