@@ -3,14 +3,13 @@ import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import FormInput from '~/components/form-input/form-input.jsx';
 import ModuleList from './module-list';
 import {useUserStatus} from '../hooks';
-import {hideDialog} from '~/helpers/show-dialog';
 import {cmsPost} from '~/models/cmsFetch';
 import cn from 'classnames';
 import './customization-form.css';
 
 const thankYou = 'Thank you &mdash; your request has been sent to the OpenStax team.';
 
-function Feedback({data, nextSteps}) {
+function Feedback({data, nextSteps, done}) {
     return (
         <div className="customization-form">
             <div className="top">
@@ -22,7 +21,7 @@ function Feedback({data, nextSteps}) {
                 </div>
             </div>
             <div className="bottom">
-                <button type="button" className="primary" onClick={hideDialog}>
+                <button type="button" className="primary" onClick={done}>
                     Close
                 </button>
             </div>
@@ -90,7 +89,7 @@ function markInvalids(form) {
     return invalids.length;
 }
 
-export default function CustomizationForm({model}) {
+export default function CustomizationForm({model, done}) {
     const [submitted, setSubmitted] = useState(false);
     const [showErrors, toggleShowErrors] = useToggle(false);
     const selectedModules = useSelectedModulesTracker();
@@ -116,7 +115,10 @@ export default function CustomizationForm({model}) {
 
     if (submitted) {
         return (
-            <Feedback data={submitted} nextSteps={model.customizationFormNextSteps} />
+            <Feedback
+                data={submitted} nextSteps={model.customizationFormNextSteps}
+                done={done}
+            />
         );
     }
 

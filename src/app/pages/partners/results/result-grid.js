@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import showDialog, {hideDialog} from '~/helpers/show-dialog';
+import React, {useState, useEffect} from 'react';
+import Dialog from '~/components/dialog/dialog.jsx';
 import PartnerDetails from '../partner-details/partner-details';
 import StarsAndCount from '~/components/stars-and-count/stars-and-count';
 import analyticsEvents from '../analytics-events';
@@ -24,49 +24,17 @@ function baseHref() {
     return h.href;
 }
 
-function showDetailDialog({entry, onUpdate, linkTexts}) {
-    const detailData = {...entry, ...linkTexts};
-    const onOutsideClick = () => {
-        hideDialog();
-    };
-
-    analyticsEvents.partnerDetails(entry.title);
-    window.addEventListener('click', onOutsideClick);
-    showDialog({
-        dialogTitle: '',
-        dialogContent: PartnerDetails,
-        dialogContentArgs: {detailData, onUpdate},
-        dialogArgs: {
-            onClose() {
-                window.removeEventListener('click', onOutsideClick);
-                history.replaceState('', '', baseHref());
-            }
-        }
-    });
-}
-
-function ResultCard({entry, linkTexts}) {
+function ResultCard({entry, linkTexts, setPartner}) {
     const {
         title, logoUrl, verifiedFeatures, badgeImage, tags, rating, ratingCount
     } = modelFromEntry(entry);
-    const [detailData, setDetailData] = React.useState();
-    const summary = detailData || {count: ratingCount, rating};
-    const onUpdate = setDetailData;
-
-    useEffect(() => {
-        const searchArgs = window.location.search.substr(1).split('&').map(decodeURIComponent);
-        const foundPartner = searchArgs.some((arg) => entry.title === arg);
-
-        if (foundPartner) {
-            showDetailDialog({entry, onUpdate, linkTexts});
-        }
-    }, [onUpdate]);
+    const summary = {count: ratingCount, rating};
 
     function onSelect(event) {
         event.preventDefault();
         event.stopPropagation();
         history.replaceState('', '', event.currentTarget.href);
-        showDetailDialog({entry, onUpdate, linkTexts});
+        setPartner(entry);
     }
 
     return (
@@ -96,8 +64,28 @@ function ResultCard({entry, linkTexts}) {
     );
 }
 
+function usePartnerFromLocation(entries) {
+    const searchArgs = window.location.search.substr(1).split('&').map(decodeURIComponent);
+    const [partner, setPartner] = useState(entries.find((e) => searchArgs.includes(e.title)));
+
+    useEffect(() => {
+        if (partner) {
+            analyticsEvents.partnerDetails(partner.title);
+        }
+    }, [partner]);
+
+    function closePartner() {
+        history.replaceState('', '', baseHref());
+        setPartner();
+    }
+
+    return [partner, setPartner, closePartner];
+}
 
 export default function ResultGrid({entries, linkTexts}) {
+    const [partner, setPartner, closePartner] = usePartnerFromLocation(entries);
+    const detailData = {...partner, ...linkTexts};
+
     return (
         <div className="boxed grid">
             {
@@ -106,9 +94,16 @@ export default function ResultGrid({entries, linkTexts}) {
                         key={entry.title}
                         entry={entry}
                         linkTexts={linkTexts}
+                        setPartner={setPartner}
                     />
                 )
             }
+            <Dialog isOpen={Boolean(partner)} onPutAway={closePartner}>
+                {
+                    Boolean(partner) &&
+                        <PartnerDetails detailData={detailData} />
+                }
+            </Dialog>
         </div>
     );
 };

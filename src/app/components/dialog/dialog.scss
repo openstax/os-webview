@@ -5,13 +5,25 @@ dialog {
     border: 0;
     border-radius: 0.4rem;
     color: text-color(normal);
-    display: grid;
+    display: block;
     grid-template-rows: auto auto 1fr;
     height: auto;
-    max-width: calc(100% - #{2 * $normal-margin});
+    margin: 0;
     overflow: hidden;
     padding: 0;
+    position: relative;
     width: max-content;
+
+    &.footer-dialog {
+        align-self: flex-end;
+        border-radius: 0;
+        bottom: 0;
+        box-shadow: 0 1rem 2rem 0 rgba(0, 0, 0, 0.2);
+        margin: $normal-margin;
+        max-width: none;
+        position: fixed;
+        width: calc(100% - #{2 * $normal-margin});
+    }
 
     &.reverse-colors {
         .title-bar {
@@ -64,7 +76,7 @@ dialog {
         }
 
         &.no-title-bar {
-            background-color: rgba(ui-color(white), 0.5);
+            background-color: rgba(ui-color(white), 0.6);
             border-radius: 50%;
             height: 1.25em;
             justify-self: end;

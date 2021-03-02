@@ -8,7 +8,6 @@ import TabGroup from '~/components/tab-group/tab-group.jsx';
 import ContentGroup from '~/components/content-group/content-group.jsx';
 import booksPromise from '~/models/books';
 import analyticsEvents from '../analytics-events';
-import shellBus from '~/components/shell/shell-bus';
 import './partner-details.css';
 
 function useRealTitles(books) {
@@ -40,7 +39,6 @@ function useRealTitles(books) {
 function RequestInfoButton({infoUrl, infoText, partnerName}) {
     function trackInfoRequest(event) {
         analyticsEvents.requestInfo(partnerName);
-        shellBus.emit('hideDialog');
     }
 
     return (
@@ -67,7 +65,7 @@ function Overview({model, icon}) {
     // }
     // console.info('Images', images);
     // TESTING
-
+    console.info('Model has url?', model);
     return (
         <React.Fragment>
             <section className="carousel">
@@ -92,6 +90,9 @@ function Overview({model, icon}) {
 }
 
 function logScrollingInRegion(detailsEl, name) {
+    if (!detailsEl) {
+        return null;
+    }
     const scrollingRegion = detailsEl.closest('.main-region');
     const removeScrollListener = (callback) => scrollingRegion.removeEventListener('scroll', callback);
     const scrollCallback = (event) => {

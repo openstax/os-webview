@@ -24,10 +24,10 @@
     .scrolling-region {
         background-color: ui-color(white);
         height: 100%;
-        max-width: 100%;
+        max-width: $content-max;
         overflow: auto;
         padding: 0 $normal-margin;
-        width: $content-max;
+        width: 100%;
 
         @include wider-than($phone-max) {
             padding: 0 3rem;

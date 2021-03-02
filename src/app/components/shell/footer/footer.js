@@ -1,4 +1,5 @@
 import React from 'react';
+import CookieDialog from '../cookie-notice/cookie-notice';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {LoaderPage, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -11,6 +12,7 @@ function Footer({data}) {
 
     return (
         <React.Fragment>
+            <CookieDialog />
             <div className="top">
                 <div className="boxed">
                     <RawHTML html={supporters} />

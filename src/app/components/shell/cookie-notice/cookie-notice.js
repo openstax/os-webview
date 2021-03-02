@@ -1,6 +1,7 @@
 import React from 'react';
+import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {FooterDialog} from '~/components/dialog/dialog.jsx';
 import accountsModel from '~/models/usermodel';
-import showDialog, {hideDialog} from '~/helpers/show-dialog';
 import analytics from '~/helpers/analytics';
 import './cookie-notice.css';
 
@@ -22,6 +23,8 @@ const cookie = {
 const ACKNOWLEDGEMENT_KEY = 'cookie_notice_acknowledged';
 
 function acknowledged() {
+    // ONLY TO test locally:
+    // return false;
     return cookie.hash[ACKNOWLEDGEMENT_KEY];
 }
 
@@ -38,38 +41,48 @@ function CookieNoticeBody({onClose}) {
     );
 }
 
-export default function showNoticeIfNeeded() {
-    accountsModel.load().then((response) => {
-        // Uncomment these three lines ONLY to test locally:
-        // response.uuid = 'testing';
-        // response.is_not_gdpr_location = true;
-        // document.cookie = `${ACKNOWLEDGEMENT_KEY}=true; expires=Tue, 19 Jan 2000 03:14:07 GMT`;
+function CookieNoticeDialog() {
+    const [isOpen, toggle] = useToggle(true);
 
-        if (typeof response.id !== 'undefined') {
-            const userid = response.uuid;
+    function onClose(event) {
+        cookie.setKey(ACKNOWLEDGEMENT_KEY);
+        toggle();
+    }
 
-            if (!response.is_not_gdpr_location || response.opt_out_of_cookies) {
-                return;
+    return (
+        <FooterDialog isOpen={isOpen} title="Privacy and cookies">
+            <CookieNoticeBody onClose={onClose} />
+        </FooterDialog>
+    );
+}
+
+export default function ShowNoticeOrNot() {
+    const [showCookieDialog, toggle] = useToggle();
+
+    React.useEffect(() => {
+        accountsModel.load().then((response) => {
+            // Uncomment these three lines ONLY to test locally:
+            // response.uuid = 'testing';
+            // response.is_not_gdpr_location = true;
+            // document.cookie = `${ACKNOWLEDGEMENT_KEY}=true; expires=Tue, 19 Jan 2000 03:14:07 GMT`;
+
+
+            if (typeof response.id !== 'undefined') {
+                const userid = response.uuid;
+
+                if (!response.is_not_gdpr_location || response.opt_out_of_cookies) {
+                    return;
+                }
+                analytics.setUser(userid);
+                if (!acknowledged()) {
+                    toggle();
+                }
             }
-            analytics.setUser(userid);
-            if (!acknowledged()) {
-                showDialog({
-                    dialogTitle: 'Privacy and cookies',
-                    dialogContent: CookieNoticeBody,
-                    dialogContentArgs: {
-                        onClose() {
-                            cookie.setKey(ACKNOWLEDGEMENT_KEY);
-                            hideDialog(false);
-                        }
-                    },
-                    dialogArgs: {
-                        customClass: 'footer-style',
-                        nonModal: true,
-                        noPutAway: true,
-                        noAutoFocus: true
-                    }
-                });
-            }
-        }
-    });
+        });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    return (
+        showCookieDialog ? <CookieNoticeDialog /> : null
+    );
 }

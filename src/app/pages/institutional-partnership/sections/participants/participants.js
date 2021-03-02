@@ -2,23 +2,19 @@ import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import groupBy from 'lodash/groupBy';
 import EstablishedPartners from './established-partners/established-partners';
-import showDialog from '~/helpers/show-dialog';
+import Dialog from '~/components/dialog/dialog.jsx';
+import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './participants.css';
 
 export default function Participants({
     heading, subheading, icons: [icons], linkTarget, linkText, ...other
 }) {
     const {true: current, false: established} = groupBy(icons, 'currentCohort');
+    const [isOpen, toggle] = useToggle();
 
     function showEstablished(event) {
         event.preventDefault();
-        showDialog({
-            dialogTitle: 'Established Partners',
-            dialogContent: EstablishedPartners,
-            dialogContentArgs: {
-                model: established
-            }
-        });
+        toggle();
     }
 
     return (
@@ -42,6 +38,13 @@ export default function Participants({
                     <FontAwesomeIcon icon="chevron-right" />
                 </a>
             </div>
+            <Dialog
+                isOpen={isOpen} onPutAway={toggle}
+                title="Established Partners"
+                closeOnOutsideClick
+            >
+                <EstablishedPartners model={established} />
+            </Dialog>
         </section>
     );
 }

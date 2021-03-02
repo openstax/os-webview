@@ -5,7 +5,6 @@ import microsurvey from './microsurvey-popup/microsurvey-popup';
 import footer from './footer/footer';
 import ModalDialog, {Dialog} from '../dialog/dialog';
 import bus from './shell-bus';
-import showNoticeIfNeeded from './cookie-notice/cookie-notice';
 import '~/helpers/font-awesome';
 
 /*
@@ -46,7 +45,6 @@ class Shell extends Controller {
 
         mainObserver.observe(document.getElementById('main'), {childList: true, subtree: true});
         window.addEventListener('navigate', this.hideDialog.bind(this));
-        showNoticeIfNeeded();
     }
 
     enqueueDialog(getProps) {
