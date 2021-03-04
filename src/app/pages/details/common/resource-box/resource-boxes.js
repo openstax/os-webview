@@ -4,6 +4,7 @@ import './resource-box.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import $ from '~/helpers/$';
 import Dialog from '~/components/dialog/dialog';
+import analytics from '~/helpers/analytics';
 import CompCopyRequestForm from './request-form/request-form';
 import CustomizationForm from '../customization-form/customization-form';
 import DetailsContext from '../../context';
@@ -130,6 +131,14 @@ function CustomizationDialog({isOpen, toggle}) {
         event.stopPropagation();
         toggle();
     }
+
+    React.useEffect(() => {
+        analytics.sendPageEvent(
+            'Instructor resources',
+            'open',
+            'Google Docs Customization'
+        );
+    }, []);
 
     return (
         <Dialog
