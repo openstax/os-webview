@@ -65,7 +65,6 @@ function Overview({model, icon}) {
     // }
     // console.info('Images', images);
     // TESTING
-    console.info('Model has url?', model);
     return (
         <React.Fragment>
             <section className="carousel">

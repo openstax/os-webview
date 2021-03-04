@@ -100,7 +100,3 @@ export default function ContactInfo({validatorRef}) {
         </div>
     );
 }
-// {
-//     showPopup &&
-//         <WrappedPopup message={message} onClose={onClose} />
-// }
