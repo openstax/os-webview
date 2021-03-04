@@ -2,7 +2,7 @@
 
 .order-print-copy {
 
-    background-color: ui-color(default);
+    background-color: ui-color(page-bg);
 
     h1 {
         @include set-font(h4);

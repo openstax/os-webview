@@ -8,7 +8,7 @@
     width: 100%;
 
     @include width-up-to($phone-max) {
-        background-color: ui-color(default);
+        background-color: ui-color(page-bg);
         grid-template-columns: 1fr auto auto;
         position: sticky;
         top: 5rem;

@@ -35,7 +35,7 @@
             padding: 1rem $normal-margin;
 
             &.selected {
-                background-color: ui-color(default);
+                background-color: ui-color(page-bg);
                 border-left: 0.3rem solid os-color(green);
             }
 
