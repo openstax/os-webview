@@ -4,7 +4,8 @@ import $ from '~/helpers/$';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
 import useAmazonAssociatesLink from './amazon-associates-link';
 import StudyEdge from './study-edge/study-edge';
-import showDialog, {hideDialog} from '~/helpers/show-dialog';
+import Dialog from '~/components/dialog/dialog';
+import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import RecommendedCallout from './recommended-callout/recommended-callout';
 import calloutCounter from './recommended-callout/callout-counter';
 
@@ -129,16 +130,22 @@ export function WebviewOption({model}) {
 }
 
 export function StudyEdgeOption({model}) {
+    const [isOpen, toggle] = useToggle();
+
+    function onClick(event) {
+        event.preventDefault();
+        toggle();
+    }
+
     return (
         <SimpleLinkOption
             link={model.enableStudyEdge} icon="mobile-alt" text="Download the app"
-            onClick={(event) => showDialog({
-                event,
-                dialogContent: StudyEdge,
-                dialogContentArgs: {model},
-                dialogArgs: {customClass: 'wider-dialog'}
-            })}
-        />
+            onClick={onClick}
+        >
+            <Dialog isOpen={isOpen} className="wider-dialog" onPutAway={toggle}>
+                <StudyEdge model={model} />
+            </Dialog>
+        </SimpleLinkOption>
     );
 }
 
@@ -165,17 +172,22 @@ export function PrintOption({model}) {
     const slug = (model.slug || '').replace('books/', '');
     const amazonDataLink = useAmazonAssociatesLink(slug);
     const text = $.isPolish(model.title) ? 'Zamów egzemplarz drukowany' : 'Order a print copy';
+    const [isOpen, toggle] = useToggle();
+
+    function onClick(event) {
+        event.preventDefault();
+        toggle();
+    }
 
     return (
         <SimpleLinkOption
             link={isRealPrintLink(amazonDataLink.url)} icon="book" text={text}
-            onClick={(event) => showDialog({
-                event,
-                dialogTitle: text,
-                dialogContent: OrderPrintCopy,
-                dialogContentArgs: {amazonDataLink}
-            })}
-        />
+            onClick={onClick}
+        >
+            <Dialog title={text} isOpen={isOpen} onPutAway={toggle}>
+                <OrderPrintCopy amazonDataLink={amazonDataLink} />
+            </Dialog>
+        </SimpleLinkOption>
     );
 }
 

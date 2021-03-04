@@ -34,7 +34,7 @@ const accountsModel = {
         //     uuid: "fca73689-fc4d-4369-bc46-ad6e02b9a13b",
         //     support_identifier: "cs_fce9a9e8",
         //     is_test: false,
-        //     faculty_status: "pending_faculty",
+        //     faculty_status: "confirmed_faculty",
         //     is_instructor_verification_stale: false,
         //     is_profile_complete: false,
         //     is_newflow: true,

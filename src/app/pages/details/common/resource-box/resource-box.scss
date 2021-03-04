@@ -180,17 +180,17 @@
 }
 
 .instructor-resource-video-viewer {
-    display: grid;
+    display: flex;
     justify-content: center;
     padding: 2rem;
-    width: max-content;
+    width: 100%;
 
     .aspect-16-by-9-container {
+        align-items: center;
         background-color: ui-color(default-hover);
-        padding-top: 56.25%;
-        max-width: calc(100vw - 14rem);
-        position: relative;
-        width: calc(177vh - 24rem);
+        display: flex;
+        justify-content: center;
+        width: calc(100vw - 8rem);
 
         @include width-up-to($phone-max) {
             max-width: none;
@@ -198,12 +198,8 @@
         }
 
         > * {
-            left: 50%;
-            max-height: 100%;
-            max-width: 100%;
-            position: absolute;
-            top: 0;
-            transform: translateX(-50%);
+            text-align: center;
+            width: 100%;
         }
     }
 }

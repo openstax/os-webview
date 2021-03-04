@@ -1,13 +1,14 @@
 import React, {useState, useContext} from 'react';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './resource-box.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import $ from '~/helpers/$';
-import showDialog, {hideDialog} from '~/helpers/show-dialog';
+import Dialog from '~/components/dialog/dialog';
 import CompCopyRequestForm from './request-form/request-form';
 import CustomizationForm from '../customization-form/customization-form';
 import DetailsContext from '../../context';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
+import cn from 'classnames';
 
 function CommonsHubBox({model}) {
     return (
@@ -98,8 +99,50 @@ function MissingLink() {
     );
 }
 
-function LeftContent({model, icon}) {
+function IbooksDialog({model, isOpen, toggle}) {
     const bookModel = useContext(DetailsContext);
+
+    if (! ('bookModel' in model)) {
+        model.bookModel = bookModel;
+    }
+
+    function done(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        toggle();
+    }
+
+    return (
+        <Dialog
+            isOpen={isOpen} onPutAway={toggle}
+            title="Request a complimentary iBooks title"
+        >
+            <CompCopyRequestForm model={model} done={done} />
+        </Dialog>
+    );
+}
+
+function CustomizationDialog({isOpen, toggle}) {
+    const bookModel = useContext(DetailsContext);
+
+    function done(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        toggle();
+    }
+
+    return (
+        <Dialog
+            isOpen={isOpen} onPutAway={toggle}
+            title={bookModel.customizationFormHeading}
+        >
+            <CustomizationForm model={bookModel} done={done} />
+        </Dialog>
+    );
+}
+
+function LeftContent({model, icon}) {
+    const [isOpen, toggle] = useToggle(false);
 
     if (!model.link) {
         return (<AccessPending />);
@@ -110,35 +153,27 @@ function LeftContent({model, icon}) {
     const isCompCopy = model.link.url.endsWith('comp-copy');
     const isCustomization = model.link.url.endsWith('customized-modules');
 
-    function handleSpecialLinks(event) {
-        if (isCompCopy) {
-            showDialog({
-                event,
-                dialogTitle: 'Request a complimentary iBooks title',
-                dialogContent: CompCopyRequestForm,
-                dialogContentArgs: {model, done: hideDialog}
-            });
-        }
-        if (isCustomization) {
-            showDialog({
-                event,
-                dialogTitle: bookModel.customizationFormHeading,
-                dialogContent: CustomizationForm,
-                dialogContentArgs: {model: model.bookModel}
-            });
+    function openDialog(event) {
+        if (isCompCopy || isCustomization) {
+            event.preventDefault();
+            toggle();
         }
     }
 
     return (
-        <a
-            className="left-button"
-            href={model.link.url}
-            data-local={model.iconType === 'lock'}
-            onClick={handleSpecialLinks}
-        >
-            <FontAwesomeIcon icon={model.iconType} />
-            <span>{model.link.text}</span>
-        </a>
+        <React.Fragment>
+            <a
+                className="left-button"
+                href={model.link.url}
+                data-local={model.iconType === 'lock'}
+                onClick={openDialog}
+            >
+                <FontAwesomeIcon icon={model.iconType} />
+                <span>{model.link.text}</span>
+            </a>
+            {isCompCopy && <IbooksDialog {...{model, isOpen, toggle}} />}
+            {isCustomization && <CustomizationDialog {...{isOpen, toggle}} />}
+        </React.Fragment>
     );
 }
 
@@ -167,42 +202,14 @@ function ReferenceNumber({referenceNumber}) {
 }
 
 function ResourceBox({model, icon}) {
-    const classNames = ['resource-box'];
-    const [isNew, updateIsNew] = useState(model.isNew);
-    const onClick = (event) => {
-        if (model.dialogProps) {
-            event.preventDefault();
-            event.stopPropagation();
-            shellBus.emit('showDialog', () => model.dialogProps);
-        }
-        if (model.onClick) {
-            model.onClick(event);
-        }
-        updateIsNew(model.isNew);
-        if (model.trackResource) {
-            fetch(
-                `${$.apiOriginAndOldPrefix}/salesforce/download-tracking/`,
-                {
-                    method: 'POST',
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(model.trackResource)
-                }
-            );
-        }
+    const classNames = {
+        double: model.double,
+        'coming-soon': model.comingSoon
     };
-
-    if (model.double) {
-        classNames.push('double');
-    }
-    if (model.comingSoon) {
-        classNames.push('coming-soon');
-    }
+    const [isNew, updateIsNew] = useState(model.isNew);
 
     return (
-        <div className={classNames.join(' ')}>
+        <div className={cn('resource-box', classNames)}>
             <ReferenceNumber referenceNumber={model.videoReferenceNumber} />
             <Top model={model} isNew={isNew} />
             <Bottom model={model} overrideIcon={icon} />
@@ -226,7 +233,14 @@ export default function ResourceBoxes({models, communityResource}) {
     );
 }
 
-function VideoResourceBox({model, onClick}) {
+function VideoResourceBox({model}) {
+    const [isOpen, toggle] = useToggle(false);
+
+    function onClick(event) {
+        event.preventDefault();
+        toggle();
+    }
+
     return (
         <div className="video resource-box" onClick={onClick} key={model.resource_heading}>
             <div>
@@ -239,6 +253,12 @@ function VideoResourceBox({model, onClick}) {
                 </video>
             </div>
             <BottomBasic leftContent="Watch video" icon="play" />
+            <Dialog
+                isOpen={isOpen} onPutAway={toggle}
+                title={model.video_title || model.resource_heading}
+            >
+                <ResourceVideoViewer customClass="reverse-colors" />
+            </Dialog>
         </div>
     );
 }
@@ -250,26 +270,21 @@ function VideoViewer({file}) {
         </div>
     );
 }
-const SuperbVideoViewer = pageWrapper(VideoViewer, {classes: ['instructor-resource-video-viewer']});
+
+function ResourceVideoViewer(...args) {
+    return (
+        <div className="instructor-resource-video-viewer">
+            <VideoViewer {...args} />
+        </div>
+    );
+}
 
 export function VideoResourceBoxes({models, blogLinkModels, referenceModels}) {
-    function onClick(event) {
-        const [model] = models;
-        const dialogProps = {
-            title: model.video_title || model.resource_heading,
-            content: new SuperbVideoViewer({file: model.video_file}),
-            customClass: 'reverse-colors'
-        };
-
-        event.preventDefault();
-        shellBus.emit('showDialog', () => dialogProps);
-    }
-
     return (
         <React.Fragment>
             {
                 models.map((model) =>
-                    <VideoResourceBox {...{model, onClick}} key={model.video_file} />
+                    <VideoResourceBox {...{model}} key={model.video_file} />
                 )
             }
             {

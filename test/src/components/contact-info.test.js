@@ -24,6 +24,6 @@ describe('ContactInfo', () => {
 
         expect(validatorRef.current()).toBe(false);
         schoolInput.simulate('change', { value: 'Rice'});
-        expect(wrapper.find('#popupMessage')).toHaveLength(1);
+        expect(wrapper.find('.contact-info-modal')).toHaveLength(1);
     });
 });

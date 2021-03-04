@@ -63,7 +63,7 @@
     }
 }
 
-.impact-testimonial-overlay {
+.impact-testimonial {
     width: 100%;
 
     @include width-up-to($phone-max) {
@@ -76,11 +76,11 @@
         padding: 8rem;
     }
 
-    .main-region {
-        > div {
-            height: 100%;
-        }
+    dialog {
+        display: grid; // Not sure why this fixes sizing/scrolling of contents
+    }
 
+    .main-region {
         .lightbox-testimonial {
             height: 100%;
             padding-top: 5rem;

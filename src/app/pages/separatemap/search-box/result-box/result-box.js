@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useToggle, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {accountsModel} from '~/models/usermodel';
 import TestimonialForm from '../../testimonial-form/testimonial-form';
-import showDialog, {hideDialog} from '~/helpers/show-dialog';
+import Dialog from '~/components/dialog/dialog';
 import './result-box.css';
 
 const format = new Intl.NumberFormat('en-US', {
@@ -29,7 +29,7 @@ function Testimonial({testimonial}) {
     );
 }
 
-function useFormParameters() {
+function useFormParameters(hideDialog) {
     const info = useDataFromPromise(accountsModel.load());
 
     if (!info || !info.id) {
@@ -57,16 +57,12 @@ function SchoolDetails({model}) {
         format(model.fields.current_year_savings),
         model.testimonial
     ];
-    const formParameters = useFormParameters();
+    const [isOpen, toggle] = useToggle();
+    const formParameters = useFormParameters(toggle);
 
     function showTestimonialForm(event) {
-        // Need an onHide parameter or something
-        showDialog({
-            event,
-            dialogTitle: 'Submit your testimonial',
-            dialogContent: TestimonialForm,
-            dialogContentArgs: formParameters
-        });
+        event.preventDefault();
+        toggle();
     }
 
     return (
@@ -83,6 +79,12 @@ function SchoolDetails({model}) {
                         Submit your testimonial
                     </a>
             }
+            <Dialog
+                isOpen={isOpen} onPutAway={toggle}
+                title="Submit your testimonial"
+            >
+                <TestimonialForm {...formParameters} />
+            </Dialog>
         </div>
     );
 }

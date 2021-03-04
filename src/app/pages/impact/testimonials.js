@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 import Carousel from '~/components/carousel/carousel';
 import LinkWithChevron from '~/components/link-with-chevron/link-with-chevron';
-import showDialog, {hideDialog} from '~/helpers/show-dialog';
-import {useDataFromSlug, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import Dialog from '~/components/dialog/dialog';
+import {useToggle, useDataFromSlug, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {Article} from '~/pages/blog/article/article';
 import ClippedImage from '~/components/clipped-image/clipped-image';
 import $ from '~/helpers/$';
 import './testimonials.css';
 
-function LightboxContent({cards, initialPosition, articleDataArr, done}) {
+function LightboxContent({cards, initialPosition, articleDataArr}) {
     function ArticleCard({position}) {
         const articleData = articleDataArr[position];
         const {embeddedVideo} = cards[position];
@@ -45,46 +45,14 @@ function useDataFromCard(card) {
     return useDataFromSlug(slug, true);
 }
 
-function addAndRemoveClass(onDone) {
-    let overlayEl;
-
-    function done() {
-        if (overlayEl) {
-            overlayEl.classList.remove('impact-testimonial-overlay');
-        }
-        onDone();
-    }
-
-    function onOutsideClick(event) {
-        if (event.target.classList.contains('impact-testimonial-overlay')) {
-            window.removeEventListener('click', onOutsideClick);
-            done();
-        }
-    }
-
-    function start() {
-        overlayEl = document.querySelector('.page-overlay');
-
-        overlayEl.classList.add('impact-testimonial-overlay');
-        window.addEventListener('click', onOutsideClick);
-    }
-
-    return [start, done];
-}
-
 function Card({position, cards}) {
     const {image, storyText: description, embeddedVideo} = cards[position];
     const articleDataArr = cards.map(useDataFromCard);
-    const [start, done] = addAndRemoveClass(hideDialog);
+    const [isOpen, toggle] = useToggle();
 
     function onClick(event) {
         event.preventDefault();
-        showDialog({
-            event,
-            dialogContent: LightboxContent,
-            dialogContentArgs: {cards, initialPosition: position, done, articleDataArr}
-        });
-        start();
+        toggle();
     }
 
     return (
@@ -98,6 +66,11 @@ function Card({position, cards}) {
                     Read more
                 </LinkWithChevron>
             </div>
+            <Dialog
+                isOpen={isOpen} onPutAway={toggle} className="impact-testimonial"
+            >
+                <LightboxContent {...{cards, initialPosition: position, articleDataArr}} />
+            </Dialog>
         </div>
     );
 }

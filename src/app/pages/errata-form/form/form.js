@@ -5,9 +5,8 @@ import ErrorLocationSelector from './ErrorLocationSelector/ErrorLocationSelector
 import FileUploader from './FileUploader';
 import managedInvalidMessage from './InvalidMessage.js';
 import $ from '~/helpers/$';
-import shellBus from '~/components/shell/shell-bus';
+import Dialog from '~/components/dialog/dialog';
 import routerBus from '~/helpers/router-bus';
-import BannedNotice from '../banned-notice/banned-notice';
 import cn from 'classnames';
 import css from './form.css';
 
@@ -110,6 +109,12 @@ function removeEmptyFileWidgets(formEl) {
     };
 }
 
+function BannedNotice({text}) {
+    return (
+        <div className="banned-notice">{text}</div>
+    );
+}
+
 export default function ErrataForm({
     model: {books, selectedTitle, source, submittedBy, location}
 }) {
@@ -118,12 +123,21 @@ export default function ErrataForm({
     const [submitting, setSubmitting] = useState(false);
     const formRef = useRef();
     const initialSource = source && sourceNames[source.toLowerCase()];
+    const [bannedText, setBannedText] = useState();
 
     function validate() {
         const invalid = formRef.current.querySelector(':invalid');
 
         setHasError(invalid ? 'You have not completed the form.' : null);
     }
+
+    // TESTING
+    // React.useEffect(() => {
+    //     setTimeout(() => {
+    //         console.info('Setting banned notice text');
+    //         setBannedText('This is your banned notice. Just testing.');
+    //     }, 2200);
+    // }, []);
 
     React.useEffect(() => {
         if (submitting) {
@@ -141,14 +155,7 @@ export default function ErrataForm({
                         if (json.id) {
                             routerBus.emit('navigate', `/confirmation/errata?id=${json.id}`);
                         } else if (json.submitted_by_account_id) {
-                            shellBus.emit('showDialog', () => ({
-                                title: 'Errata submission rejected',
-                                content: new BannedNotice({
-                                    model: {
-                                        text: json.submitted_by_account_id[0]
-                                    }
-                                })
-                            }));
+                            setBannedText(json.submitted_by_account_id[0]);
                         }
                     },
                     (fetchError) => {
@@ -160,18 +167,26 @@ export default function ErrataForm({
     }, [submitting]);
 
     return (
-        <form
-            className={cn('body-block', {'hide-errors': hideErrors})}
-            method="post" action={postEndpoint}
-            encType="multipart/form-data"
-            onChange={validate}
-            ref={formRef}
-        >
-            <FormFields
-                {...{submittedBy, books, initialSource, location, source, selectedTitle,
-                    hasError, setHideErrors, submitting, setSubmitting
-                }}
-            />
-        </form>
+        <React.Fragment>
+            <form
+                className={cn('body-block', {'hide-errors': hideErrors})}
+                method="post" action={postEndpoint}
+                encType="multipart/form-data"
+                onChange={validate}
+                ref={formRef}
+            >
+                <FormFields
+                    {...{submittedBy, books, initialSource, location, source, selectedTitle,
+                        hasError, setHideErrors, submitting, setSubmitting
+                    }}
+                />
+            </form>
+            <Dialog
+                isOpen={bannedText} onPutAway={() => setBannedText(null)}
+                title="Errata submission rejected"
+            >
+                <BannedNotice text={bannedText} />
+            </Dialog>
+        </React.Fragment>
     );
 }

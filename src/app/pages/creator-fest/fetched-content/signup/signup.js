@@ -1,7 +1,6 @@
 import componentType from '~/helpers/controller/init-mixin';
 import {description as template} from './signup.html';
 import css from './signup.css';
-import shellBus from '~/components/shell/shell-bus';
 import {on} from '~/helpers/controller/decorators';
 import SignupForm from './form/form';
 
@@ -36,13 +35,15 @@ export default class extends componentType(spec) {
             session
         });
 
-        shellBus.emit('showDialog', () => ({
-            title: '',
-            content: form,
-            onClose() {
-                form.detach();
-            }
-        }));
+        // Page is currently inactive and due to be ported to React, so just
+        // commenting this out so I can remove showDialog from the shell module
+        // shellBus.emit('showDialog', () => ({
+        //     title: '',
+        //     content: form,
+        //     onClose() {
+        //         form.detach();
+        //     }
+        // }));
     }
 
     @on('click .expandable')

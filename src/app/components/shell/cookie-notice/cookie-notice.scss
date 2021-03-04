@@ -1,16 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.footer-style {
-    align-self: flex-end;
-    border-radius: 0;
-    bottom: 0;
-    box-shadow: 0 1rem 2rem 0 rgba(0, 0, 0, 0.2);
-    margin: $normal-margin;
-    max-width: none;
-    position: fixed;
-    width: calc(100% - #{2 * $normal-margin});
-}
-
 .cookie-notice {
     display: grid;
     grid-row-gap: 3rem;

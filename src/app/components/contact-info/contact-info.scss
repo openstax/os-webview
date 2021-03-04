@@ -1,0 +1,21 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.modal-overlay .modal.contact-info-modal {
+    align-items: flex-start;
+    align-self: center;
+    background-color: ui-color(white);
+    display: flex;
+    flex-direction: column;
+    height: min-content;
+    max-width: 80rem;
+    padding: 2rem 2.5rem;
+
+    p {
+        margin: 0 0 2rem;
+    }
+
+    button {
+        @extend %primary;
+        @include button();
+    }
+}

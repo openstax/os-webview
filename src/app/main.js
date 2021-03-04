@@ -1,7 +1,9 @@
 import $ from './helpers/$';
 import router from './router';
+import ReactModal from 'react-modal';
 
 router.start();
+ReactModal.setAppElement('#main');
 
 if (!$.isSupported()) {
     /* eslint no-alert: 0 */

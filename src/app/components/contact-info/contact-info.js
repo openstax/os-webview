@@ -2,7 +2,9 @@ import React, {useState} from 'react';
 import FormInput from '~/components/form-input/form-input.jsx';
 import schoolPromise from '~/models/schools';
 import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {WrappedPopupJsx} from '~/components/popup/popup.jsx';
+import ReactModal from 'react-modal';
+import shellBus from '~/components/shell/shell-bus';
+import './contact-info.css';
 
 const message = 'Please enter your full school name without abbreviations.' +
     ' If this is your full school name, you can click Next.';
@@ -12,6 +14,12 @@ export default function ContactInfo({validatorRef}) {
     const [showPopup, setShowPopup] = useState(false);
     const schools = useDataFromPromise(schoolPromise, []).sort();
     const schoolSet = new Set(schools.map((s) => s.toLowerCase()));
+
+    React.useEffect(() => {
+        shellBus.emit(showPopup ? 'with-modal' : 'no-modal');
+
+        return () => shellBus.emit('no-modal');
+    }, [showPopup]);
 
     if (validatorRef) {
         validatorRef.current = function validate() {
@@ -32,7 +40,7 @@ export default function ContactInfo({validatorRef}) {
     }
 
     return (
-        <div>
+        <div className="contact-info">
             <FormInput
                 label="First name"
                 inputProps={{
@@ -80,10 +88,15 @@ export default function ContactInfo({validatorRef}) {
                     onChange
                 }}
             />
-            {
-                showPopup &&
-                    <WrappedPopupJsx message={message} onClose={onClose} />
-            }
+            <ReactModal
+                isOpen={showPopup}
+                className="modal contact-info-modal" overlayClassName="modal-overlay"
+            >
+                <p id="popupMessage">{message}</p>
+                <button type="button" className="dismiss" tabindex="1" onClick={onClose}>
+                    Got it
+                </button>
+            </ReactModal>
         </div>
     );
 }
