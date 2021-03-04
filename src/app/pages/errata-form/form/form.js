@@ -5,7 +5,7 @@ import ErrorLocationSelector from './ErrorLocationSelector/ErrorLocationSelector
 import FileUploader from './FileUploader';
 import managedInvalidMessage from './InvalidMessage.js';
 import $ from '~/helpers/$';
-import Dialog from '~/components/dialog/dialog.jsx';
+import Dialog from '~/components/dialog/dialog';
 import routerBus from '~/helpers/router-bus';
 import cn from 'classnames';
 import css from './form.css';

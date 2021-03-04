@@ -4,7 +4,7 @@ import $ from '~/helpers/$';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
 import useAmazonAssociatesLink from './amazon-associates-link';
 import StudyEdge from './study-edge/study-edge';
-import Dialog from '~/components/dialog/dialog.jsx';
+import Dialog from '~/components/dialog/dialog';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import RecommendedCallout from './recommended-callout/recommended-callout';
 import calloutCounter from './recommended-callout/callout-counter';

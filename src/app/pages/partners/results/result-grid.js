@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import Dialog from '~/components/dialog/dialog.jsx';
+import Dialog from '~/components/dialog/dialog';
 import PartnerDetails from '../partner-details/partner-details';
 import StarsAndCount from '~/components/stars-and-count/stars-and-count';
 import analyticsEvents from '../analytics-events';

@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useToggle, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {accountsModel} from '~/models/usermodel';
 import TestimonialForm from '../../testimonial-form/testimonial-form';
-import Dialog from '~/components/dialog/dialog.jsx';
+import Dialog from '~/components/dialog/dialog';
 import './result-box.css';
 
 const format = new Intl.NumberFormat('en-US', {

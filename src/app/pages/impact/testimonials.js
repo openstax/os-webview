@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Carousel from '~/components/carousel/carousel';
 import LinkWithChevron from '~/components/link-with-chevron/link-with-chevron';
-import Dialog from '~/components/dialog/dialog.jsx';
+import Dialog from '~/components/dialog/dialog';
 import {useToggle, useDataFromSlug, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {Article} from '~/pages/blog/article/article';
 import ClippedImage from '~/components/clipped-image/clipped-image';

@@ -2,7 +2,7 @@ import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import groupBy from 'lodash/groupBy';
 import EstablishedPartners from './established-partners/established-partners';
-import Dialog from '~/components/dialog/dialog.jsx';
+import Dialog from '~/components/dialog/dialog';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './participants.css';
 

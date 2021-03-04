@@ -3,7 +3,7 @@ import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './resource-box.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import $ from '~/helpers/$';
-import Dialog from '~/components/dialog/dialog.jsx';
+import Dialog from '~/components/dialog/dialog';
 import CompCopyRequestForm from './request-form/request-form';
 import CustomizationForm from '../customization-form/customization-form';
 import DetailsContext from '../../context';

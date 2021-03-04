@@ -1,139 +1,62 @@
-import componentType from '~/helpers/controller/init-mixin';
-import {on} from '~/helpers/controller/decorators';
-import $ from '~/helpers/$';
-import ModalContent from '../modal-content/modal-content';
-import {description as template} from './dialog.html';
-import css from './dialog.css';
+import React from 'react';
+import ReactModal from 'react-modal';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import cn from 'classnames';
+import './dialog.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        tag: 'dialog'
-    },
-    regions: {
-        main: '.main-region'
-    },
-    model() {
-        this.props = this.getProps();
-
-        return {
-            title: this.props.title,
-            htmlTitle: this.props.htmlTitle,
-            putAwayHidden: $.booleanAttribute(this.props.noPutAway)
-        };
-    }
-};
-
-export class Dialog extends componentType(spec) {
-
-    attachContent() {
-        if (this.props.content && !this.attached) {
-            this.regions.main.append(this.props.content);
-            this.attached = true;
-        }
-    }
-
-    onUpdate() {
-        if (this.props.htmlTitle) {
-            const el = this.el.querySelector('.html-title');
-
-            el.innerHTML = this.props.htmlTitle;
-        }
-        if (this.props.customClass) {
-            this.el.classList.add(this.props.customClass);
-        }
-        // Wait for region to be instantiated
-        if (!this.props.noAutoFocus) {
-            window.requestAnimationFrame(() => {
-                this.attachContent();
-
-                // Wait for content to be drawn
-                setTimeout(() => {
-                    const focusableItems = Array.from(this.props.content.el.querySelectorAll($.focusable));
-                    const first = focusableItems.find((i) => i.offsetParent !== null);
-
-                    if (first) {
-                        first.focus();
-                    }
-                }, 20);
-            });
-        }
-    }
-
-    onLoaded() {
-        this.el.setAttribute('aria-labelledby', 'dialog-title');
-        this.el.style.zIndex = 10;
-        this.attachContent();
-        this.navigateCallback = () => this.closeDialog();
-        window.addEventListener('navigate', this.navigateCallback);
-    }
-
-    /* eslint complexity: 0 */
-    @on('click .put-away')
-    closeDialog() {
-        window.removeEventListener('navigate', this.navigateCallback);
-        const contentComponent = this.props.content;
-
-        if (contentComponent && contentComponent.el && contentComponent.el.parentNode) {
-            contentComponent.el.parentNode.removeChild(contentComponent.el);
-        }
-
-        const controllerIndex = this.regions.main.controllers.indexOf(contentComponent);
-
-        this.regions.main.controllers.splice(controllerIndex, 1);
-
-        if (this.props.customClass) {
-            this.el.classList.remove(this.props.customClass);
-        }
-        if (this.handlers && this.handlers.closeDialog) {
-            this.handlers.closeDialog();
-        }
-        if (this.props.onClose) {
-            this.props.onClose();
-        }
-        this.attached = false;
-    }
-
-    @on('keydown')
-    closeOnEscape(event) {
-        if (event.key === 'Escape') {
-            this.closeDialog();
-        }
-    }
-
+function PutAway({noTitle, onClick}) {
+    return (
+        <button
+            className={cn('put-away', {'no-title-bar': noTitle})}
+            onClick={onClick}
+        >
+            ×
+        </button>
+    );
 }
 
-// This just composes the Dialog into ModalContent
-export default class ModalDialog extends componentType({}) {
-
-    init(getProps, handlers) {
-        super.init();
-        this.dialog = new Dialog({
-            getProps, handlers
-        });
+export function FooterDialog({
+    isOpen, title, children
+}) {
+    if (!isOpen) {
+        return null;
     }
+    return (
+        <dialog className="footer-dialog">
+            <div className="title-bar">
+                <RawHTML Tag="span" html={title} />
+            </div>
+            {children}
+        </dialog>
+    );
+}
 
-    onLoaded() {
-        this.mc = new ModalContent({
-            content: this.dialog
-        });
-        this.regions.self.attach(this.mc);
-    }
-
-    update() {
-        if (this.dialog) {
-            this.dialog.update();
-        }
-    }
-
-    hide() {
-        this.mc.hide();
-    }
-
-    closeDialog() {
-        this.dialog.closeDialog();
-        this.hide();
-    }
-
+export default function Dialog({
+    isOpen, title, onPutAway, children, className, closeOnOutsideClick
+}) {
+    return (
+        <ReactModal
+            isOpen={isOpen}
+            className={cn('modal', className)}
+            overlayClassName="modal-overlay"
+            bodyOpenClassName="no-scroll-dialog"
+            onRequestClose={onPutAway}
+            shouldCloseOnOverlayClick={closeOnOutsideClick}
+            preventScroll
+        >
+            <dialog>
+                {
+                    title ?
+                        <div className="title-bar">
+                            <RawHTML Tag="span" html={title} />
+                            <PutAway onClick={() => onPutAway()} />
+                        </div> :
+                        <PutAway noTitle onClick={() => onPutAway()} />
+                }
+                <div className="main-region">
+                    {children}
+                </div>
+            </dialog>
+        </ReactModal>
+    );
 }

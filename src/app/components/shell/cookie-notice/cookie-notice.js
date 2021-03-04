@@ -1,6 +1,6 @@
 import React from 'react';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {FooterDialog} from '~/components/dialog/dialog.jsx';
+import {FooterDialog} from '~/components/dialog/dialog';
 import accountsModel from '~/models/usermodel';
 import analytics from '~/helpers/analytics';
 import './cookie-notice.css';
