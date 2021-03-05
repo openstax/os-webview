@@ -255,12 +255,13 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
         width: 100%;
 
         .tab {
-            @include set-font(body-large);
+            @include scale-feature(font-size, 1.8rem, 2.2rem);
 
             font-weight: normal;
+            letter-spacing: normal;
+            line-height: normal;
 
             @include wider-than($tablet-max) {
-                font-size: 133%;
                 padding-bottom: $normal-margin;
             }
         }

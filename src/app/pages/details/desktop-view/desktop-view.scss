@@ -2,14 +2,10 @@
 
 .details-page {
     .tab-controller {
-        position: relative;
-
         .give-link {
             @include set-font(body-large);
 
-            bottom: 1.8rem;
-            position: absolute;
-            right: 3rem;
+            white-space: nowrap;
 
             a {
                 text-decoration: none;
