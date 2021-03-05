@@ -133,12 +133,14 @@ function CustomizationDialog({isOpen, toggle}) {
     }
 
     React.useEffect(() => {
-        analytics.sendPageEvent(
-            'Instructor resources',
-            'open',
-            'Google Docs Customization'
-        );
-    }, []);
+        if (isOpen) {
+            analytics.sendPageEvent(
+                'Instructor resources',
+                'open',
+                'Google Docs Customization'
+            );
+        }
+    }, [isOpen]);
 
     return (
         <Dialog
