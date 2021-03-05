@@ -33,12 +33,17 @@ function Tab({label, selectedLabel, setSelectedLabel, TabTag}) {
     );
 }
 
-export default function TabGroup({labels, selectedLabel, setSelectedLabel, TabTag='div'}) {
+export default function TabGroup({
+    labels, selectedLabel, setSelectedLabel, TabTag='div', children
+}) {
     return (
         <div className="tab-heading">
-            <nav className="tab-group">
-                {labels.map((label) => <Tab key={label} {...{label, selectedLabel, setSelectedLabel, TabTag}} />)}
-            </nav>
+            <div className="tabs-and-extras">
+                <nav className="tab-group">
+                    {labels.map((label) => <Tab key={label} {...{label, selectedLabel, setSelectedLabel, TabTag}} />)}
+                </nav>
+                {children}
+            </div>
             <hr className="tab-baseline" />
         </div>
     );

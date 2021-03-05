@@ -53,8 +53,9 @@ export default function DesktopView({model, tocState, onContentChange}) {
     return (
         <React.Fragment>
             <div className="tab-controller">
-                <TabGroup {...{TabTag, labels, selectedLabel, setSelectedLabel}} />
-                <GiveLink />
+                <TabGroup {...{TabTag, labels, selectedLabel, setSelectedLabel}}>
+                    <GiveLink />
+                </TabGroup>
             </div>
             <div className="tab-content">
                 <ContentGroup activeIndex={labels.indexOf(selectedLabel)}>
