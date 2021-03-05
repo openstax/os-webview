@@ -9,7 +9,7 @@ import Cost from './cost/cost';
 import Webinars from './webinars/webinars';
 import Feedback from './feedback/feedback';
 import FAQ from './faq/faq';
-import StickyFooter from '~/components/sticky-footer/sticky-footer-wrapper.jsx';
+import StickyFooter from '~/components/sticky-footer/sticky-footer-wrapper';
 import ButtonRow from './button-row/button-row';
 import $ from '~/helpers/$';
 import './openstax-tutor.css';

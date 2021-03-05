@@ -2,12 +2,10 @@ import React, {useState, useEffect} from 'react';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import settings from 'settings';
 import $ from '~/helpers/$';
-import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
 import userModel from '~/models/usermodel';
-import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
 import {useErrataDetail} from '~/helpers/errata';
 import {ErrataDetailBlock} from '~/pages/errata-detail/errata-detail';
-import {LoaderPage, useDataFromSlug, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './confirmation.css';
 
 const applyLink = `${settings.accountHref}/faculty_access/apply?r=${encodeURIComponent(`${settings.apiOrigin}/`)}`;

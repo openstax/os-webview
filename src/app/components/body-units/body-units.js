@@ -1,60 +1,38 @@
-import componentType from '~/helpers/controller/init-mixin';
-import $ from '~/helpers/$';
-import {description as alignedImageTemplate} from './aligned-image.html';
-import Quote from '~/components/quote/quote';
+import React from 'react';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import Quote from '~/components/quote/quote.jsx';
 
-function bodyUnitMixin(superclass) {
-    return class extends superclass {
+function Paragraph({data}) {
+    return (
+        <RawHTML html={data} />
+    );
+}
 
-        init(data) {
-            super.init();
-            this.data = data;
-        }
+function AlignedImage({data}) {
+    const {
+        caption,
+        image: {original: {src, alt}}
+    } = data;
+    const alignmentClass = ['left', 'right'].includes(data.alignment) ? data.alignment : '';
 
+    return (
+        <figure className={alignmentClass}>
+            <img src={src} alt={alt} />
+            <RawHTML Tag="figcaption" html={caption} />
+        </figure>
+    );
+}
+
+function PullQuote({data}) {
+    const model = {
+        image: {},
+        content: data.quote,
+        attribution: data.attribution
     };
-}
 
-const BodyUnit = componentType({}, bodyUnitMixin);
-
-class Paragraph extends BodyUnit {
-
-    onLoaded() {
-        this.el.innerHTML = this.data;
-    }
-
-}
-
-class AlignedImage extends BodyUnit {
-
-    init(data) {
-        super.init(data);
-        this.template = alignedImageTemplate;
-        const selectedImage = data.image.original;
-
-        this.model = {
-            imageUrl: selectedImage.src,
-            imageAlt: selectedImage.alt,
-            caption: data.caption,
-            alignmentClass: ['left', 'right'].includes(data.alignment) ? data.alignment : ''
-        };
-    }
-
-    onLoaded() {
-        this.insertHtml();
-    }
-
-}
-
-class PullQuote extends Quote {
-
-    init(data) {
-        super.init({
-            image: {},
-            content: data.quote,
-            attribution: data.attribution
-        });
-    }
-
+    return (
+        <Quote model={model} />
+    );
 }
 
 // Using CMS tags, which are not camel-case
@@ -65,16 +43,10 @@ const bodyUnits = {
     pullquote: PullQuote
 };
 
-const bodyUnitView = (bodyUnitData) => {
-    let unitType = bodyUnitData.type;
+export default function BodyUnit({unit}) {
+    const Unit = bodyUnits[unit.type] || Paragraph;
 
-    if (!(unitType in bodyUnits)) {
-        console.warn('Unknown type:', bodyUnitData, '(using paragraph)');
-        unitType = 'paragraph';
-    }
-    const View = bodyUnits[unitType];
-
-    return new View(bodyUnitData.value);
-};
-
-export default bodyUnitView;
+    return (
+        <Unit data={unit.value} />
+    );
+}
