@@ -4,7 +4,7 @@ import {useToggle, useLocation} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {useUserModel} from '~/models/usermodel';
 import userModelBus from '~/models/usermodel-bus';
 import linkHelper from '~/helpers/link';
-import Dropdown, {MenuItem} from '../dropdown/dropdown';
+import Dropdown, {MenuItem} from './dropdown/dropdown';
 
 // Slightly hacky; avoiding adding a new item to settings,
 // but probably will do so eventually

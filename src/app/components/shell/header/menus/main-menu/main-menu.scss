@@ -1,0 +1,131 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.page-header .nav {
+
+    @at-root .page-header:not(.active) .nav {
+        height: 5.2rem;
+    }
+
+    @at-root .active#{&} {
+        box-shadow: none;
+    }
+
+    @at-root .fixed#{&} {
+        left: 0;
+        overflow: visible;
+
+    }
+
+    > .container {
+        height: 100%;
+    }
+
+
+
+    .main-menu {
+        @include set-font(h4);
+
+        display: none;
+        flex-direction: column;
+        height: 0;
+        overflow: hidden;
+        padding: 0;
+
+        @at-root .active#{&} {
+            display: flex;
+            height: auto;
+            margin: 0;
+            overflow: visible;
+        }
+
+        @include wider-than($tablet-max) {
+            align-items: baseline;
+            display: flex;
+            flex-flow: row nowrap;
+            height: auto;
+            justify-content: flex-end;
+            margin: 0;
+            overflow: visible;
+        }
+
+        .give-button-item {
+            @include width-up-to($tablet-max) {
+                display: none;
+            }
+        }
+    }
+
+    .nav-menu-item {
+        white-space: nowrap;
+
+        @at-root .active#{&} {
+            margin-bottom: 1rem;
+        }
+
+        @include wider-than($tablet-max) {
+            margin: 0.5rem 1rem;
+            padding: 0 0.25rem;
+
+            > a {
+                color: os-color(gray);
+                display: inline-block;
+                padding: 1.2rem 0;
+
+                @at-root .transparent#{&} {
+                    color: text-color(white);
+                }
+            }
+
+            .dropdown-menu[aria-expanded="true"] {
+                border-top: 0.5rem solid os-color(green);
+            }
+
+            &:hover:not(.dropdown) {
+                border-bottom: 0.5rem solid os-color(green);
+                margin-bottom: 0;
+            }
+        }
+
+        @media (min-width: 800px) {
+            padding: 0 0.35rem;
+        }
+
+        @media (min-width: 1100px) {
+            padding: 0 0.45rem;
+        }
+
+    }
+
+    .nav-menu {
+        @at-root .active.open#{&} {
+            transform: translate3d(-100rem, 0, 0);
+            transition: transform 0.3s ease-in-out;
+
+            a {
+                color: os-color(gray);
+            }
+
+            .chevron {
+                display: none;
+            }
+
+            .dropdown > a {
+                font-weight: bold;
+            }
+        }
+    }
+
+    .chevron {
+        fill: os-color(blue);
+
+        @include wider-than($tablet-max) {
+            fill: os-color(gray);
+            transform: rotate(90deg);
+            transform-origin: center;
+
+            @at-root .transparent#{&} {
+                fill: text-color(white);
+            }
+        }
+    }
+}
