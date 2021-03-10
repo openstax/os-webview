@@ -2,6 +2,7 @@ import React, {useRef} from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {DropdownContext} from '../../dropdown-context';
 import $ from '~/helpers/$';
+import cn from 'classnames';
 import './dropdown.css';
 
 export function MenuItem({label, url, local}) {
@@ -39,9 +40,17 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
     }
 
     function openMenu(event) {
+        const previousActiveDropdown = dropdownCtx.activeDropdown;
+
         event.preventDefault();
         dropdownCtx.setActiveDropdown(topRef);
         dropdownCtx.setSubmenuLabel(label);
+        if ($.isMobileDisplay()) {
+            event.target.blur();
+            if (previousActiveDropdown === topRef) {
+                closeMenu();
+            }
+        }
     }
 
     function openDesktopMenu(event) {
@@ -96,6 +105,7 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
                     onFocus={openDesktopMenu}
                     ref={topRef}
                     onClick={openMenu}
+                    className={cn({'is-open': isOpen})}
                 >
                     {label}
                     <svg className="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 30">

@@ -1,0 +1,90 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+$button-size: 1.6rem;
+
+.menus .expand {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    border-radius: none;
+    box-shadow: none;
+    cursor: pointer;
+    order: 2;
+    padding: 0;
+    position: absolute;
+    right: 1.6rem;
+    top: 1.2rem;
+    transition: 0.3s;
+    user-select: none;
+    z-index: 1;
+
+    @include wider-than($tablet-max) {
+        display: none;
+
+        @at-root .sticky#{&} {
+            display: block;
+            margin-left: 2rem;
+            order: 3;
+        }
+    }
+
+    &[aria-expanded="true"] {
+        position: absolute;
+        right: 2rem;
+        top: 0;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+        outline: none;
+    }
+
+    span {
+        // create middle line
+        background: os-color(gray);
+        display: inline-block;
+        height: 0.2rem;
+        position: relative;
+        transition: background 0.3s 0.2s ease;
+        width: $button-size;
+
+        // create the upper and lower lines as pseudo-elements of the middle line
+        &::before,
+        &::after {
+            background: os-color(gray);
+            content: '';
+            display: inline-block;
+            height: 0.2rem;
+            left: 0;
+            position: absolute;
+            // set transform origin back to center
+            transform-origin: 50% 50%;
+            transition: top 0.3s 0.2s ease, transform 0.3s ease;
+            width: $button-size;
+        }
+
+        &::before { top: $button-size / 3; }
+        &::after { top: -$button-size / 3; }
+
+        @at-root .active#{&} {
+            background: transparent;
+            transition: background 0.3s 0s ease;
+
+            &::before,
+            &::after {
+                top: 0;
+                transition: top 0.3s ease, transform 0.3s 0.2s ease;
+                width: $button-size;
+            }
+
+            &::before {
+                transform: rotate3d(0, 0, 1, 45deg);
+            }
+
+            &::after {
+                transform: rotate3d(0, 0, 1, -45deg);
+            }
+        }
+    }
+}
