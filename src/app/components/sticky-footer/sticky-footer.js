@@ -1,64 +1,55 @@
-import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
-import {description as template} from './sticky-footer.html';
-import css from './sticky-footer.css';
-import debounce from 'lodash/debounce';
+import React, {useEffect, useContext} from 'react';
+import {WindowContextProvider, WindowContext, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import './sticky-footer.css';
 import shellBus from '~/components/shell/shell-bus';
+import cn from 'classnames';
 
-const spec = {
-    template,
-    view: {
-        classes: ['sticky-footer']
-    },
-    css,
-    footerHeight: ''
-};
+// Note: menus show and hide based on scroll position, which causes the menu to
+// show, then hide, then show again when near the top of the page.
+function useCollapsedState() {
+    const {scrollY, innerHeight} = useContext(WindowContext);
+    const distanceFromBottom = document.body.offsetHeight - innerHeight - scrollY;
 
-export default class StickyFooter extends componentType(spec, insertHtmlMixin) {
+    return scrollY < 100 || distanceFromBottom < 100;
+}
 
-    init(model) {
-        super.init();
-        this.model = model;
-        // Should have leftButton and optional rightButton, each with
-        // link, description, and text
-    }
+function StickyFooterBody({leftButton, rightButton}) {
+    const collapsed = useCollapsedState();
 
-    onLoaded() {
-        if (super.onLoaded) {
-            super.onLoaded();
-        }
-        let lastYOffset = 0;
-
-        this.handleScroll = debounce(() => {
-            const newYOffset = window.pageYOffset;
-            const distanceFromBottom = document.body.offsetHeight - window.innerHeight - newYOffset;
-            const newFooterHeight = (newYOffset < 100) || (distanceFromBottom < 100) ? 'collapsed' : '';
-            const switchClass = (oldValue, newValue) => {
-                if (oldValue) {
-                    this.el.classList.remove(oldValue);
-                }
-                if (newValue) {
-                    this.el.classList.add(newValue);
-                }
-            };
-
-            if (newFooterHeight !== this.footerHeight) {
-                switchClass(this.footerHeight, newFooterHeight);
-                this.footerHeight = newFooterHeight;
-            }
-            lastYOffset = newYOffset;
-        }, 80);
-
-        window.addEventListener('scroll', this.handleScroll);
-        this.handleScroll();
+    useEffect(() => {
         shellBus.emit('with-sticky');
-    }
 
-    onClose() {
-        if (super.onClose) {
-            super.onClose();
-        }
-        window.removeEventListener('scroll', this.handleScroll);
-        shellBus.emit('no-sticky');
-    }
+        return () => shellBus.emit('no-sticky');
+    }, []);
 
+    return (
+        <div className={cn('sticky-footer', {collapsed})}>
+            <div class="button-group">
+                <a href={leftButton.link} class="btn medium">{leftButton.text}</a>
+                {
+                    leftButton.description &&
+                        <div class="description">{leftButton.description}</div>
+                }
+                {
+                    leftButton.descriptionHtml &&
+                        <RawHTML class="description" html={leftButton.descriptionHtml} />
+                }
+            </div>
+            {
+                rightButton &&
+                    <div class="button-group">
+                        <div class="description">{rightButton.description}</div>
+                        <a href="{rightButton.link}" class="btn medium">{rightButton.text}</a>
+                    </div>
+            }
+        </div>
+    );
+}
+
+export default function StickyFooter(model) {
+    return (
+        <WindowContextProvider>
+            <StickyFooterBody {...model} />
+        </WindowContextProvider>
+    );
 }

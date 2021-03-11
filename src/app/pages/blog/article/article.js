@@ -1,4 +1,4 @@
-import BodyUnit from '~/components/body-units/body-units.jsx';
+import BodyUnit from '~/components/body-units/body-units';
 import {Byline} from '~/components/byline/byline';
 import ProgressRing from '~/components/progress-ring/progress-ring';
 import {ShareJsx} from '~/components/share/share';

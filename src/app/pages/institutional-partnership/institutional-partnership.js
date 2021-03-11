@@ -12,7 +12,7 @@ import Results from './sections/results/results';
 import Participants from './sections/participants/participants';
 import SmallQuote from './sections/small-quote/small-quote';
 import SignUp from './sections/sign-up/sign-up';
-import StickyFooter from '~/components/sticky-footer/sticky-footer.jsx';
+import StickyFooter from '~/components/sticky-footer/sticky-footer';
 import './institutional-partnership.css';
 
 function unprefixKey(newObject, oldKey, prefix, data) {
