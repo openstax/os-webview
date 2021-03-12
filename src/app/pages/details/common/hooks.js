@@ -61,7 +61,7 @@ function getUserStatusPromise() {
 }
 
 export function useUserStatus() {
-    const [userStatus, updateUserStatus] = useState();
+    const [userStatus, updateUserStatus] = useState({});
 
     useEffect(() => {
         getUserStatusPromise().then(updateUserStatus);
