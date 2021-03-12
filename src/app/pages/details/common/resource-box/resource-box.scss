@@ -153,6 +153,16 @@
             padding-right: 1rem;
         }
 
+        .left-no-button {
+            @include set-font(helper-label);
+
+            font-style: italic;
+
+            [data-icon] {
+                margin-right: 1em;
+            }
+        }
+
         .print-link {
             border: 0;
         }

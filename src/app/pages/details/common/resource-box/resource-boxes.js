@@ -8,8 +8,11 @@ import analytics from '~/helpers/analytics';
 import CompCopyRequestForm from './request-form/request-form';
 import CustomizationForm from '../customization-form/customization-form';
 import DetailsContext from '../../context';
+import {useUserStatus} from '../hooks';
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import cn from 'classnames';
+
+const UserContext = React.createContext({});
 
 function CommonsHubBox({model}) {
     return (
@@ -152,15 +155,8 @@ function CustomizationDialog({isOpen, toggle}) {
     );
 }
 
-function LeftContent({model, icon}) {
+function LeftButton({model}) {
     const [isOpen, toggle] = useToggle(false);
-
-    if (!model.link) {
-        return (<AccessPending />);
-    }
-    if (!model.link.url) {
-        return (<MissingLink />);
-    }
     const isCompCopy = model.link.url.endsWith('comp-copy');
     const isCustomization = model.link.url.endsWith('customized-modules');
 
@@ -188,12 +184,33 @@ function LeftContent({model, icon}) {
     );
 }
 
-function Bottom({model, overrideIcon}) {
-    const icon = model.link ? model.iconType : 'lock';
+function LeftContent({model}) {
+    const userStatus = useContext(UserContext);
 
+    if (!model.link) {
+        return (<AccessPending />);
+    }
+    if (!model.link.url) {
+        return (<MissingLink />);
+    }
+
+    // logged in but not an instructor
+    if (model.iconType === 'lock' && userStatus.isInstructor === false) {
+        return (
+            <div className="left-no-button">
+                <FontAwesomeIcon icon={model.iconType} />
+                <span>Only available for verified instructors.</span>
+            </div>
+        );
+    }
+
+    return (<LeftButton model={model} />);
+}
+
+function Bottom({model}) {
     return (
         <div className="bottom">
-            <LeftContent model={model} icon={overrideIcon || icon} />
+            <LeftContent model={model} />
             {
                 model.printLink &&
                     <a className="print-link" href={model.printLink}>
@@ -212,7 +229,7 @@ function ReferenceNumber({referenceNumber}) {
     );
 }
 
-function ResourceBox({model, icon}) {
+function ResourceBox({model}) {
     const classNames = {
         double: model.double,
         'coming-soon': model.comingSoon
@@ -223,14 +240,16 @@ function ResourceBox({model, icon}) {
         <div className={cn('resource-box', classNames)}>
             <ReferenceNumber referenceNumber={model.videoReferenceNumber} />
             <Top model={model} isNew={isNew} />
-            <Bottom model={model} overrideIcon={icon} />
+            <Bottom model={model} />
         </div>
     );
 }
 
 export default function ResourceBoxes({models, communityResource}) {
+    const userStatus = useUserStatus();
+
     return (
-        <React.Fragment>
+        <UserContext.Provider value={userStatus}>
             {
                 communityResource &&
                     <CommonsHubBox model={communityResource} key={communityResource.heading} />
@@ -240,7 +259,7 @@ export default function ResourceBoxes({models, communityResource}) {
                     <ResourceBox model={model} key={model.heading} />
                 )
             }
-        </React.Fragment>
+        </UserContext.Provider>
     );
 }
 
@@ -300,7 +319,7 @@ export function VideoResourceBoxes({models, blogLinkModels, referenceModels}) {
             }
             {
                 blogLinkModels && blogLinkModels.map((model) =>
-                    <ResourceBox model={model} icon="link" key={model.heading} />
+                    <ResourceBox model={model} key={model.heading} />
                 )
             }
             {

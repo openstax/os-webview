@@ -81,6 +81,10 @@ $icon-size: 6rem;
         @include set-font(body-large);
 
         max-width: $text-content-max;
+
+        a {
+            text-decoration: none;
+        }
     }
 
     .webinars {
