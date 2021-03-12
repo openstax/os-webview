@@ -12,6 +12,12 @@ export default function Menus({open}) {
     const ref = React.useRef();
     const [active, toggle] = useToggle();
 
+    function clickOverlay(event) {
+        if (event.currentTarget === event.target) {
+            toggle();
+        }
+    }
+
     return (
         <DropdownContextProvider>
             <div className={cn('menus desktop', {open})} ref={ref}>
@@ -28,10 +34,12 @@ export default function Menus({open}) {
             <div className={cn('menus mobile', {active})}>
                 <MenuExpander active={active} onClick={() => toggle()} />
                 <Logo />
-                <div className="menu-popover">
-                    <div className="menu-title">Menu</div>
-                    <MainMenu />
-                    <UpperMenu />
+                <div className="menu-popover-overlay" onClick={clickOverlay}>
+                    <div className="menu-popover">
+                        <div className="menu-title">Menu</div>
+                        <MainMenu />
+                        <UpperMenu />
+                    </div>
                 </div>
             </div>
         </DropdownContextProvider>
