@@ -101,26 +101,39 @@
             }
         }
 
-        &:not(.active) .menu-popover {
-            display: none;
+        &:not(.active) {
+            .menu-popover,
+            .menu-popover-overlay {
+                display: none;
+            }
         }
 
-        &.active .menu-popover {
-            background-color: ui-color(white);
-            bottom: 0;
-            box-shadow: -0.4rem 0 0.4rem rgba(ui-color(black), 0.15);
-            left: 25%;
-            padding: 2rem;
-            position: fixed;
-            right: 0;
-            top: 0;
+        &.active {
+            .menu-popover-overlay,
+            .menu-popover {
+                top: 0;
+                right: 0;
+                position: fixed;
+                bottom: 0;
+            }
 
-            .menu-title {
-                font-size: 1.8rem;
-                font-weight: bold;
-                line-height: 5rem;
-                text-align: center;
-                border-bottom: thin solid ui-color(form-border);
+            .menu-popover-overlay {
+                left: 0;
+            }
+
+            .menu-popover {
+                background-color: ui-color(white);
+                box-shadow: -0.4rem 0 0.4rem rgba(ui-color(black), 0.15);
+                left: 25%;
+                padding: 2rem;
+
+                .menu-title {
+                    font-size: 1.8rem;
+                    font-weight: bold;
+                    line-height: 5rem;
+                    text-align: center;
+                    border-bottom: thin solid ui-color(form-border);
+                }
             }
         }
 
