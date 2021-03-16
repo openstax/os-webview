@@ -1,43 +1,47 @@
-import componentType from '~/helpers/controller/init-mixin';
-import {description as template} from './navigator.html';
-import css from './navigator.css';
-import {on} from '~/helpers/controller/decorators';
+import React from 'react';
 import routerBus from '~/helpers/router-bus';
+import {useLocation} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import './navigator.css';
 
 const basePath = '/creator-fest';
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['boxed', 'navigator-container']
-    },
-    model() {
-        return {
-            navLinks: this.navLinks,
-            currentClass: (url) => {
-                const testUrl = url === 'home' ? basePath : `${basePath}/${url}`;
+const pathFromUrl = (url) => url === 'home' ? basePath : `${basePath}/${url}`;
 
-                return window.location.pathname === testUrl ? 'current' : '';
-            }
-        };
-    }
-};
+function currentClass(url) {
+    return window.location.pathname === pathFromUrl(url) ? 'current' : '';
+}
 
-export default class extends componentType(spec) {
+function onClick(event) {
+    event.preventDefault();
+    const url = event.target.getAttribute('href');
+    const yTarget = history.state.y;
 
-    @on('click a')
-    showLinkInDialog(event) {
-        const target = event.delegateTarget;
-        const url = target.getAttribute('href');
-        const path = url === 'home' ? basePath : `${basePath}/${url}`;
-        const yTarget = history.state.y;
+    routerBus.emit('navigate', pathFromUrl(url), {
+        path: basePath
+    });
+    window.scrollTo(0, yTarget);
+}
 
-        event.preventDefault();
-        routerBus.emit('navigate', path, {
-            path: basePath
-        });
-        window.scrollTo(0, yTarget);
-        this.update();
-    }
+function NavLink({url, text}) {
+    return (
+        <a href={url} className={currentClass(url)} onClick={onClick}>
+            {text}
+        </a>
+    );
+}
 
+export default function Navigator({navLinks}) {
+    const location = useLocation();
+
+    return (
+        <nav id="navigator" className="boxed navigator-container">
+            <div className="navigator">
+                <a href="home" className={currentClass('home')} onClick={onClick}>Home</a>
+                {
+                    navLinks.map(({url, text}) =>
+                        <NavLink url={url} text={text} key={url} />
+                    )
+                }
+            </div>
+        </nav>
+    );
 }

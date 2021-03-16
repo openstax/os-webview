@@ -1,71 +1,58 @@
-import componentType from '~/helpers/controller/init-mixin';
-import {description as template} from './creator-fest.html';
-import css from './creator-fest.css';
-import Navigator from './navigator/navigator';
+import React from 'react';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
+import {LoaderPage, useLocation} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Banner from './banner/banner';
-import HomeContent from './home-content/home-content';
+import Navigator from './navigator/navigator';
 import FetchedContent from './fetched-content/fetched-content';
-import shellBus from '~/components/shell/shell-bus';
-import $ from '~/helpers/$';
+import HomeContent from './home-content/home-content';
+import './creator-fest.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['creator-fest', 'page'],
-        tag: 'main' // if the HTML doesn't contain a main tag
-    },
-    regions: {
-        banner: '#banner',
-        navigator: '#navigator',
-        pageContent: '#page-content'
-    },
-    slug: 'pages/creator-fest'
+function PageContent({data, navLinks}) {
+    const location = useLocation();
+    const linkEntry = navLinks
+        .find((obj) => `/creator-fest/${obj.url}` === window.location.pathname);
+
+    return (
+        <div id="page-content">
+            {
+                linkEntry ?
+                    <FetchedContent slug={linkEntry.slug} pageId={linkEntry.url} /> :
+                    <HomeContent pagePanels={data.pagePanels} register={data.register[0][0]} />
+            }
+        </div>
+    );
+}
+
+function CreatorFest({data}) {
+    const bannerProps = {
+        headline: data.bannerHeadline,
+        content: data.bannerContent,
+        image: data.bannerImage.meta.downloadUrl
+    };
+    const navLinks = data.navigator[0].map((nData) => ({
+        url: nData.slug.replace(/creator-fest|general\/|-/g, ''),
+        text: nData.text,
+        slug: nData.slug.replace('general', 'spike')
+    }));
+
+    return (
+        <React.Fragment>
+            <Banner {...bannerProps} />
+            <Navigator navLinks={navLinks} />
+            <PageContent data={data} navLinks={navLinks} />
+        </React.Fragment>
+    );
+}
+
+function CFLoader() {
+    return (
+        <LoaderPage slug="pages/creator-fest" Child={CreatorFest} doDocumentSetup />
+    );
+}
+
+const view = {
+    classes: ['creator-fest', 'page'],
+    tag: 'main'
 };
 
-export default class extends componentType(spec) {
-
-    onDataLoaded() {
-        $.setPageTitleAndDescriptionFromBookData(this.pageData);
-        shellBus.emit('with-sticky');
-        const data = this.pageData;
-        const navLinks = data.navigator[0].map((nData) => ({
-            url: nData.slug.replace(/creator-fest|general\/|-/g, ''),
-            text: nData.text,
-            fetchUrl: `${$.apiOriginAndPrefix}/${nData.slug.replace('general', 'spike')}`
-        }));
-        const banner = new Banner({
-            el: this.regions.banner.el,
-            model: {
-                headline: data.banner_headline,
-                content: data.banner_content,
-                background: data.banner_image.meta.download_url
-            }
-        });
-        const navigator = new Navigator({
-            el: this.regions.navigator.el,
-            navLinks
-        });
-
-        this.setContentFromLocation = () => {
-            const path = window.location.pathname;
-            const linkEntry = navLinks.find((obj) => `/creator-fest/${obj.url}` === path);
-            const content = linkEntry ?
-                new FetchedContent({pageId: linkEntry.url, url: linkEntry.fetchUrl}) :
-                new HomeContent({data});
-
-            this.regions.pageContent.attach(content);
-        };
-        window.addEventListener('navigate', this.setContentFromLocation);
-        this.setContentFromLocation();
-    }
-
-    onClose() {
-        if (super.onClose) {
-            super.onClose();
-        }
-        window.removeEventListener('navigate', this.setContentFromLocation);
-        shellBus.emit('no-sticky');
-    }
-
-}
+export default pageWrapper(CFLoader, view);

@@ -10,7 +10,7 @@
         padding-bottom: 6rem;
     }
 
-    [data-html="htmlBlock"] {
+    .html-block {
         @include width-up-to($phone-max) {
             > * {
                 max-width: 100%;
