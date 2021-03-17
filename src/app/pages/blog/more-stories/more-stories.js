@@ -1,6 +1,4 @@
-import React, {useState} from 'react';
-// import WrappedJsx from '~/controllers/jsx-wrapper';
-import {Bus} from '~/helpers/controller/bus-mixin';
+import React from 'react';
 import SearchBar from '../search-bar/search-bar';
 import DelayedImagesSummary from '../article-summary/article-summary.jsx';
 import './more-stories.css';

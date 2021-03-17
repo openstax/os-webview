@@ -1,30 +1,42 @@
-import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
-import {description as template} from './why.html';
-import css from './why.css';
+import React from 'react';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import './why.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        tag: 'section',
-        classes: ['why']
-    }
-};
+export default function Why({ data: {
+    superheading,
+    heading,
+    paragraph: description,
+    embed,
+    backgroundImage: {image}
+}}) {
+    const ref = React.useRef();
 
-export default class extends componentType(spec, insertHtmlMixin) {
+    React.useEffect(() => {
+        const el = ref.current;
+        const biStyle = window.getComputedStyle(el).backgroundImage;
+        const newStyle = `${biStyle},url('${image}')`;
 
-    onAttached() {
-        if (this.model.background && this.el) {
-            const biStyle = window.getComputedStyle(this.el).backgroundImage;
+        el.style.backgroundImage = newStyle;
+    }, []);
 
-            if (biStyle) {
-                const newStyle = `${biStyle},url('${this.model.background}')`;
-
-                this.el.style.backgroundImage = newStyle;
-            } else {
-                setTimeout(() => this.onAttached(), 200);
-            }
-        }
-    }
-
+    return (
+        <section className="why" ref={ref}>
+            <div className="boxed">
+                <div className="super-headline">{superheading}</div>
+                <div className="text-block-left">
+                    <div>
+                        <h2>{heading}</h2>
+                        <RawHTML html={description} />
+                        <div className="blue-line" />
+                    </div>
+                    <div className="stack">
+                        <div className="possible-decoration" />
+                        <div className="possibly-decorated">
+                            <RawHTML className="html-block" html={embed} embed />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
 }

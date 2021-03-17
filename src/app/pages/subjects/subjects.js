@@ -1,6 +1,6 @@
 import routerBus from '~/helpers/router-bus';
 import React, {useState, useEffect} from 'react';
-import {pageWrapper, SuperbItem} from '~/controllers/jsx-wrapper';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {usePageData} from '~/helpers/controller/cms-mixin';
 import {RawHTML, useDataFromPromise, useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import BookViewer from './book-viewer/book-viewer';

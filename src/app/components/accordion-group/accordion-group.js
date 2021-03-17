@@ -9,7 +9,6 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import './accordion-group.css';
 import $ from '~/helpers/$';
-import {SuperbItem} from '~/controllers/jsx-wrapper';
 
 function useChevronDirection(forwardOnChange, preExpanded) {
     const [openTabs, updateOpenTabs] = useState([...preExpanded]);
@@ -59,11 +58,7 @@ function Item({title, titleTag, checkChevronDirection, contentComponent}) {
         <AccordionItem uuid={uuid} className="accordion-item">
             <TitleBar {...{title, titleTag, chevronDirection}} />
             <AccordionItemPanel className="content-pane">
-                {
-                    React.isValidElement(contentComponent) ?
-                        contentComponent :
-                        <SuperbItem component={contentComponent} />
-                }
+                {contentComponent}
             </AccordionItemPanel>
         </AccordionItem>
     );

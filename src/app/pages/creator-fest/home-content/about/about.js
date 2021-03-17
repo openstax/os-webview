@@ -1,34 +1,62 @@
-import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
-import {description as template} from './about.html';
-import css from './about.css';
-import {on} from '~/helpers/controller/decorators';
-import shellBus from '~/components/shell/shell-bus';
-import $ from '~/helpers/$';
+import React from 'react';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import './about.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        tag: 'section',
-        classes: ['about']
-    }
-};
+function onClick(event) {
+    const lastSection = Array.from(document.querySelectorAll('section')).pop();
 
-const dialogContent = new (componentType({
-    view: {
-        classes: ['info-box']
-    }
-}))();
+    lastSection.scrollIntoView({block: 'nearest', behavior: 'smooth'});
+    event.currentTarget.blur();
+    event.preventDefault();
+}
 
-export default class extends componentType(spec, insertHtmlMixin) {
+function RegisterBox({register}) {
+    return (
+        <div className="location-box">
+            <h2>{register.headline}</h2>
+            <RawHTML html={register.address} />
+            <a className="btn down-page" href={register.buttonUrl} onClick={onClick}>
+                {register.buttonText}
+            </a>
+        </div>
+    );
+}
 
-    @on('click .down-page')
-    scrollToLastSection(event) {
-        const lastSection = Array.from(document.querySelectorAll('section')).pop();
+export default function About({
+    data,
+    register
+}) {
+    const {
+        superheading,
+        heading,
+        paragraph: description,
+        cards
+    } = data;
 
-        $.scrollTo(lastSection);
-        event.delegateTarget.blur();
-        event.preventDefault();
-    }
-
+    return (
+        <section className="about">
+            <div className="boxed">
+                <RegisterBox register={register} />
+                <div className="super-headline">{superheading}</div>
+                <div className="text-block-left">
+                    <div>
+                        <h2>{heading}</h2>
+                        <RawHTML html={description} />
+                        <div className="blue-line"></div>
+                    </div>
+                    <div className="cards">
+                        {
+                            cards.map((card) =>
+                                <div key={card.headline} className="card">
+                                    <img src={card.icon.image} alt />
+                                    <h3>{card.headline}</h3>
+                                    <RawHTML html={card.description} />
+                                </div>
+                            )
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
 }

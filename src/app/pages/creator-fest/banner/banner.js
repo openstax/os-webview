@@ -1,23 +1,26 @@
-import componentType, {insertHtmlMixin} from '~/helpers/controller/init-mixin';
-import {description as template} from './banner.html';
-import css from './banner.css';
+import React from 'react';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import './banner.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        classes: ['banner', 'hero'],
-        tag: 'section'
-    }
-};
+export default function Banner({headline, image, content}) {
+    const ref = React.useRef();
 
-export default class extends componentType(spec, insertHtmlMixin) {
+    React.useEffect(() => {
+        const el = ref.current;
+        const biStyle = window.getComputedStyle(el).backgroundImage;
+        const newStyle = `${biStyle},url('${image}')`;
 
-    onLoaded() {
-        const biStyle = window.getComputedStyle(this.el).backgroundImage;
-        const newStyle = `${biStyle},url('${this.model.background}')`;
+        el.style.backgroundImage = newStyle;
+    }, []);
 
-        this.el.style.backgroundImage = newStyle;
-    }
-
+    return (
+        <section id="banner" className="banner hero" ref={ref}>
+            <div class="boxed">
+                <div class="text-content">
+                    <h1>{headline}</h1>
+                    <RawHTML html={content} />
+                </div>
+            </div>
+        </section>
+    );
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {pageWrapper, SuperbItem} from '~/controllers/jsx-wrapper';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {usePageData} from '~/helpers/controller/cms-mixin';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Form from './form.jsx';

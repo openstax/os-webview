@@ -1,70 +1,34 @@
-import componentType from '~/helpers/controller/init-mixin';
-import {description as template} from './fetched-content.html';
-import css from './fetched-content.css';
-import $ from '~/helpers/$';
-import Signup from './signup/signup';
-import cmsFetch from '~/models/cmsFetch';
+import React from 'react';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {urlFromSlug} from '~/models/cmsFetch';
+import './fetched-content.css';
 
-const spec = {
-    template,
-    css,
-    get view() {
-        return {
-            tag: 'section'
-        };
-    }
-};
+// March 16 2021: Removing Signup form code. This page is currently inactive with
+// no way to see whether porting worked. If and when we re-activate the page,
+// pull code from older archive
 
-export default class extends componentType(spec) {
+function useTextFromSlug(slug) {
+    const [text, setText] = React.useState();
+    const url = urlFromSlug(slug);
 
-    onLoaded() {
-        const el = this.el;
+    React.useEffect(() => {
+        fetch(url).then((r) => r.text()).then((pageHtml) => {
+            const parser = new DOMParser();
+            const newDoc = parser.parseFromString(pageHtml, 'text/html');
 
-        el.classList.add(this.pageId);
-        fetch(this.url)
-            .then((r) => r.text())
-            .then((html) => {
-                const parser = new DOMParser();
-                const newDoc = parser.parseFromString(html, 'text/html');
-                const destEl = el.querySelector('.boxed');
-
-                destEl.innerHTML = '';
-                Array.from(newDoc.body.children).forEach((child) => {
-                    destEl.appendChild(child);
-                });
-                $.activateScripts(destEl);
-                if ((/session/).test(this.url)) {
-                    this.addSignup();
-                }
-            });
-    }
-
-    addSignup() {
-        cmsFetch('events/sessions').then((sessions) => {
-            const dateFormatSpec = {
-                weekday: 'long', month: 'long', day: 'numeric'
-            };
-            const timeFormatSpec = {
-                hour: 'numeric', minute: '2-digit'
-            };
-            const toCanonicalSession = (s) => {
-                const nativeDate = new Date(s.date);
-
-                return {
-                    id: s.id,
-                    title: s.name,
-                    seatsRemaining: s.seats_remaining,
-                    date: nativeDate.toLocaleDateString('en-US', dateFormatSpec),
-                    time: nativeDate.toLocaleTimeString('en-US', timeFormatSpec),
-                    location: s.location,
-                    description: s.description || '[no description]'
-                };
-            };
-
-            this.regionFrom('.boxed').append(new Signup({
-                sessions: sessions.map(toCanonicalSession)
-            }));
+            setText(newDoc.body.innerHTML);
         });
-    }
+    }, [url]);
 
+    return text;
+}
+
+export default function FetchedContent({pageId, slug}) {
+    const html = useTextFromSlug(slug);
+
+    return (
+        <section className={pageId}>
+            <RawHTML className="boxed" html={html} embed />
+        </section>
+    );
 }
