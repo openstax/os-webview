@@ -1,82 +1,118 @@
-import componentType, {canonicalLinkMixin} from '~/helpers/controller/init-mixin';
-import TabGroup from '~/components/tab-group/tab-group';
-import ContentGroup from '~/components/content-group/content-group';
-import ProgramDetails from './program-details';
-import Application from './application';
-import {description as template} from './institutional-partnership-application.html';
-import css from './institutional-partnership-application.css';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
+import React, {useState} from 'react';
+import {LoaderPage, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import TabGroup from '~/components/tab-group/tab-group.jsx';
+import ContentGroup from '~/components/content-group/content-group.jsx';
+import './institutional-partnership-application.css';
 
-const spec = {
-    template,
-    css,
-    view: {
-        tag: 'main',
-        classes: ['institutional-page', 'page']
-    },
-    model() {
-        return this.pageData && {
-            heading: this.pageData.heading,
-            headingYear: this.pageData.heading_year,
-            testimonial: this.testimonials[this.selectedTab]
-        };
-    },
-    slug: 'pages/institutional-partnership'
-};
-const BaseClass = componentType(spec, canonicalLinkMixin);
+const labels = ['Program details', 'Application'];
 
-export default class Institutional extends BaseClass {
+function TestimonialBlock({selectedLabel, data}) {
+    const testimonials = {
+        'Program details': {
+            block: data.quote,
+            name: data.quoteAuthor,
+            address1: data.quoteTitle,
+            address2: data.quoteSchool
+        },
+        'Application': {
+            block: data.applicationQuote,
+            name: data.applicationQuoteAuthor,
+            address1: data.applicationQuoteTitle,
+            address2: data.applicationQuoteSchool
+        }
+    };
+    const testimonial = testimonials[selectedLabel];
 
-    init() {
-        super.init();
-        this.tabLabels = ['Program details', 'Application'];
-        this.selectedTab = this.tabLabels[0];
-        this.applicationTabContent = new Application();
-    }
-
-    onDataLoaded() {
-        const data = this.pageData;
-        const contents = {
-            'Program details': new ProgramDetails({
-                model: {
-                    sections: data.program_tab_content[0]
-                }
-            }),
-            'Application': this.applicationTabContent
-        };
-        const contentGroup = new ContentGroup(() => ({
-            selectedTab: this.selectedTab,
-            contents
-        }));
-        const tabGroup = new TabGroup(() => ({
-            tag: 'label',
-            tabLabels: this.tabLabels,
-            selectedTab: this.selectedTab,
-            setSelected: (newValue) => {
-                this.selectedTab = newValue;
-                this.update();
-                contentGroup.update();
-            }
-        }));
-
-        this.testimonials = {
-            'Program details': {
-                block: data.quote,
-                name: data.quote_author,
-                address1: data.quote_title,
-                address2: data.quote_school
-            },
-            'Application': {
-                block: data.application_quote,
-                name: data.application_quote_author,
-                address1: data.application_quote_title,
-                address2: data.application_quote_school
-            }
-        };
-        this.update();
-        this.insertHtml();
-
-        this.regionFrom('.tab-controller').attach(tabGroup);
-        this.regionFrom('.tab-content').attach(contentGroup);
-    }
-
+    return (
+        <div class="testimonial">
+            <div class="boxed">
+                <div class="testimonial-box">
+                    <p class="text-block">{testimonial.block}</p>
+                    <div class="writer-info">
+                        <p>
+                            <strong>-{testimonial.name}</strong><br />
+                            {testimonial.address1}<br />
+                            {testimonial.address2}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 }
+
+function Application() {
+    return (
+        <div className="application">
+            <iframe
+                class="form-iframe"
+                src="https://docs.google.com/forms/d/e/1FAIpQLSfI0XpCC-4ag0u9vHizT5w2JLkwcv39HVTZnvQHEtmQj8PJwQ/viewform"
+            />
+        </div>
+    );
+}
+
+function ProgramDetails({model}) {
+    return (
+        model[0].map((section) =>
+            <div key={section.heading}>
+                <h2>{section.heading}</h2>
+                <RawHTML html={section.description} />
+            </div>
+        )
+    );
+}
+
+function Tabs({model}) {
+    const TabTag = 'label';
+    const [selectedLabel, setSelectedLabel] = useState(labels[0]);
+    const activeIndex = labels.indexOf(selectedLabel);
+
+    return (
+        <div className="boxed">
+            <div className="tab-controller">
+                <TabGroup {...{TabTag, labels, selectedLabel, setSelectedLabel}} />
+            </div>
+            <div className="tab-content">
+                <ContentGroup activeIndex={activeIndex}>
+                    <ProgramDetails model={model.programTabContent} />
+                    <Application />
+                </ContentGroup>
+            </div>
+        </div>
+    );
+}
+
+function ApplicationPage({data}) {
+    const [selectedLabel, setSelectedLabel] = useState('Application');
+
+    return (
+        <React.Fragment>
+            <div class="hero">
+                <div class="text-block">
+                    <p>{data.headingYear}</p>
+                    <RawHTML Tag="h1" html={data.heading} />
+                </div>
+            </div>
+            <Tabs model={data} />
+            <TestimonialBlock selectedLabel={selectedLabel} data={data} />
+        </React.Fragment>
+    );
+}
+
+function ApplicationLoader() {
+    return (
+        <LoaderPage
+            slug="pages/institutional-partnership" Child={ApplicationPage}
+            doDocumentSetup
+        />
+    );
+}
+
+const view = {
+    tag: 'main',
+    classes: ['institutional-page', 'page']
+};
+
+export default pageWrapper(ApplicationLoader, view);
