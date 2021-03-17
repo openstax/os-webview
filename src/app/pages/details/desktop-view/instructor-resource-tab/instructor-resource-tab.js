@@ -16,8 +16,7 @@ function FreeStuff({freeStuffContent, userStatus}) {
         false: <div className="blurb-body">
             <FontAwesomeIcon icon="exclamation-circle" />{' '}
             Your account must be instructor verified...
-            <a href="https://openstax.secure.force.com/help">Contact support</a>
-            {' '}to get verified.
+            <a href="https://openstax.secure.force.com/help/articles/FAQ/Requesting-Instructor-only-access-to-the-resources-on-openstax-org">How do I do that?</a>
         </div>
     };
     const blurbContent = blurbLookupByInstructorStatus[userStatus.isInstructor];
