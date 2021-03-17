@@ -8,8 +8,8 @@ export default function HomeContent({pagePanels, register}) {
         <div className="home">
             <About data={pagePanels[0]} register={register} />
             {
-                pagePanels.slice(1).map((data) =>
-                    <Why data={data} key={data.superheading} />
+                pagePanels.slice(1).map((data, i) =>
+                    <Why data={data} key={i} />
                 )
             }
         </div>
