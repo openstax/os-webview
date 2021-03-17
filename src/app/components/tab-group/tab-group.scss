@@ -1,21 +1,30 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.tab-group {
-    @include tab-group();
+.tab-heading {
+    .tabs-and-extras {
+        align-items: baseline;
+        display: flex;
+        grid-gap: 4rem;
+        justify-content: space-between;
+    }
 
-    .tab {
-        @extend %tab;
+    .tab-group {
+        @include tab-group();
 
-        @include width-up-to($phone-max) {
-            padding-top: 1rem;
-        }
+        .tab {
+            @extend %tab;
 
-        &[aria-current] {
-            @extend %active;
+            @include width-up-to($phone-max) {
+                padding-top: 1rem;
+            }
+
+            &[aria-current] {
+                @extend %active;
+            }
         }
     }
-}
 
-.tab-baseline {
-    @include tab-baseline();
+    .tab-baseline {
+        @include tab-baseline();
+    }
 }
