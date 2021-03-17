@@ -37,6 +37,7 @@ const loadRegularIcon = loaderForPath('free-regular-svg-icons');
     'faDesktop',
     'faDownload',
     'faEllipsisV',
+    'faExclamationCircle',
     'faExclamationTriangle',
     'faExternalLinkAlt',
     'faGraduationCap',

@@ -9,11 +9,25 @@ import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {useUserStatus, usePartnerFeatures} from '../../common/hooks';
 import './instructor-resource-tab.css';
 
-function FreeStuff({heading, blurb}) {
+function FreeStuff({freeStuffContent, userStatus}) {
+    const blurbLookupByInstructorStatus = {
+        undefined: freeStuffContent.content,
+        true: freeStuffContent.contentLoggedIn,
+        false: <div className="blurb-body">
+            <FontAwesomeIcon icon="exclamation-circle" />{' '}
+            Your account must be instructor verified...
+            <a href="https://openstax.secure.force.com/help/articles/FAQ/Requesting-Instructor-only-access-to-the-resources-on-openstax-org">How do I do that?</a>
+        </div>
+    };
+    const blurbContent = blurbLookupByInstructorStatus[userStatus.isInstructor];
+    const blurbJsx = typeof blurbContent === 'string' ?
+        <RawHTML className="blurb-body" html={blurbContent} /> :
+        blurbContent;
+
     return (
         <div className="free-stuff-blurb">
-            <RawHTML Tag="h2" html={heading} />
-            <RawHTML className="blurb-body" html={blurb} />
+            <RawHTML Tag="h2" html={freeStuffContent.heading} />
+            {blurbJsx}
         </div>
     );
 }
@@ -91,12 +105,6 @@ function InstructorResourceTab({model, userStatus}) {
         )
         .map((res) => resourceBoxModel(res, userStatus, model));
 
-    const freeStuffContent = model.freeStuffInstructor.content;
-    const freeStuff = {
-        heading: freeStuffContent.heading,
-        blurb: freeStuffContent.content,
-        loggedInBlurb: freeStuffContent.contentLoggedIn
-    };
     const webinarContent = model.webinarContent.content;
     const webinar = {
         text: webinarContent.heading,
@@ -121,11 +129,12 @@ function InstructorResourceTab({model, userStatus}) {
         blurbs,
         badgeImage: '/images/partners/verified-badge.svg'
     };
+    const freeStuffContent = model.freeStuffInstructor.content;
 
     return (
         <div className="instructor-resources">
             <div>
-                <FreeStuff {...freeStuff} />
+                <FreeStuff {...{freeStuffContent, userStatus}} />
                 {
                     featuredModels.length > 0 &&
                         <FeaturedResourcesSection
