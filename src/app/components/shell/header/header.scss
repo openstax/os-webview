@@ -1,7 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-$button-size: 1.6rem;
-
 .page-header {
     align-items: center;
     background-color: rgba(ui-color(white), 0.98);
@@ -16,10 +14,13 @@ $button-size: 1.6rem;
         display: grid;
     }
 
-    &.fixed,
     &.active {
         position: fixed;
         z-index: 2;
+
+        sticky-note {
+            display: none;
+        }
     }
 
     a {
@@ -36,130 +37,12 @@ $button-size: 1.6rem;
         box-shadow: 0 0 0.5rem 0.3rem rgba(os-color(light-blue), 0.7);
     }
 
-    > .meta-nav {
-        order: 1;
-    }
-
-    > .nav {
-        order: 2;
-
-        @include wider-than($tablet-max) {
-            height: 6rem;
-            transform: translate3d(0, 0, 0);
-        }
-
-        .container {
-            align-items: flex-start;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            margin: 0 auto;
-            padding: 0;
-
-            @include wider-than($tablet-max) {
-                align-items: center;
-                flex-direction: row;
-                max-width: $content-max;
-            }
-
-            @at-root :not(.active)#{&} {
-                @include width-up-to($tablet-max) {
-                    position: relative;
-                }
-            }
-        }
-    }
-
     @at-root .active#{&} {
         height: 100%;
         padding-bottom: 6rem;
         padding-left: 4rem;
 
-        > .meta-nav {
-            align-self: start;
-            display: flex;
-            justify-content: center;
-            order: 2;
-            padding-left: 2rem;
-            width: 100%;
-        }
-
-        > .nav {
-            align-self: end;
-            order: 1;
-        }
-
-        .container {
-            width: 17rem;
-        }
-    }
-
-    @at-root .fixed#{&} {
-        > .nav {
-            background-color: ui-color(white);
-
-            @include wider-than($tablet-max) {
-                position: fixed;
-                top: -6rem;
-                transform: translate3d(0, 6rem, 0);
-                transition: transform 0.3s 0.5s ease-in-out;
-            }
-        }
-    }
-
-    .nav-menu {
-        @at-root .active#{&} {
-            transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
-            transition: opacity 0.3s 0.4s, transform 0.3s ease-in-out;
-        }
-
-        @at-root .active.open#{&} {
-            transform: translate3d(-100rem, 0, 0);
-            transition: transform 0.3s ease-in-out;
-
-            a {
-                color: os-color(gray);
-            }
-
-            .chevron {
-                display: none;
-            }
-
-            .dropdown > a {
-                font-weight: bold;
-            }
-        }
-    }
-
-    .submenu-zone {
-        display: none;
-        order: 0;
-        position: relative;
-        width: 19rem;
-
-        .close {
-            color: os-color(light-blue);
-            cursor: pointer;
-        }
-
-        .chevron {
-            fill: os-color(light-blue);
-            height: 1.33rem;
-            margin-right: 1rem;
-            transform: rotate(180deg);
-            transform-origin: center;
-            width: 0.8rem;
-        }
-
-        .menu-title {
-            font-weight: bold;
-        }
-
-        @at-root .active.open#{&} {
-            align-self: end;
-            display: block;
-            margin: 6rem auto 0;
-            width: 17rem;
+        .menus {
         }
     }
 
@@ -177,98 +60,6 @@ $button-size: 1.6rem;
             background-color: os-color(red);
             color: text-color(white);
             padding: 0.5rem $normal-margin;
-        }
-    }
-
-    &.active {
-        sticky-note {
-            display: none;
-        }
-    }
-
-    .expand {
-        appearance: none;
-        background: transparent;
-        border: 0;
-        border-radius: none;
-        box-shadow: none;
-        cursor: pointer;
-        order: 2;
-        padding: 0;
-        position: absolute;
-        right: 1.6rem;
-        top: 1.2rem;
-        transition: 0.3s;
-        user-select: none;
-
-        @include wider-than($tablet-max) {
-            display: none;
-
-            @at-root .sticky#{&} {
-                display: block;
-                margin-left: 2rem;
-                order: 3;
-            }
-        }
-
-        &[aria-expanded="true"] {
-            position: absolute;
-            right: 2rem;
-            top: 0;
-        }
-
-        &:hover,
-        &:focus,
-        &:active {
-            outline: none;
-        }
-
-        span {
-            // create middle line
-            background: os-color(gray);
-            display: inline-block;
-            height: 0.2rem;
-            position: relative;
-            transition: background 0.3s 0.2s ease;
-            width: $button-size;
-
-            // create the upper and lower lines as pseudo-elements of the middle line
-            &::before,
-            &::after {
-                background: os-color(gray);
-                content: '';
-                display: inline-block;
-                height: 0.2rem;
-                left: 0;
-                position: absolute;
-                // set transform origin back to center
-                transform-origin: 50% 50%;
-                transition: top 0.3s 0.2s ease, transform 0.3s ease;
-                width: $button-size;
-            }
-
-            &::before { top: $button-size / 3; }
-            &::after { top: -$button-size / 3; }
-
-            @at-root .active#{&} {
-                background: transparent;
-                transition: background 0.3s 0s ease;
-
-                &::before,
-                &::after {
-                    top: 0;
-                    transition: top 0.3s ease, transform 0.3s 0.2s ease;
-                    width: $button-size;
-                }
-
-                &::before {
-                    transform: rotate3d(0, 0, 1, 45deg);
-                }
-
-                &::after {
-                    transform: rotate3d(0, 0, 1, -45deg);
-                }
-            }
         }
     }
 }

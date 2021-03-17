@@ -1,0 +1,148 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.menus {
+    &.desktop {
+        @include width-up-to($tablet-max) {
+            display: none;
+        }
+
+        > .nav {
+            box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(os-color(gray), 0.1);
+            width: 100%;
+
+            @include wider-than($tablet-max) {
+                height: 6rem;
+                transform: translate3d(0, 0, 0);
+            }
+
+            .container {
+                align-items: flex-start;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                margin: 0 auto;
+                padding: 0;
+
+                @include wider-than($tablet-max) {
+                    align-items: center;
+                    flex-direction: row;
+                    max-width: $content-max;
+                }
+            }
+        }
+
+        // This is necessary to allow the menu to be wider than the header item
+        .dropdown-container {
+            height: 0;
+            overflow: visible;
+            position: absolute;
+            top: 100%;
+        }
+    }
+
+    &.mobile {
+        box-shadow: 0 0.1rem 0.3rem 0.2rem rgba(os-color(gray), 0.1);
+
+        @include wider-than($tablet-max) {
+            display: none;
+        }
+
+        a:not(.give-button) {
+            color: inherit;
+        }
+
+        ul,
+        .container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        ul {
+            font-size: 1.8rem;
+            font-weight: bold;
+            grid-row-gap: 2rem;
+            padding: 0;
+
+            li [role="menuitem"] {
+                display: flex;
+                justify-content: space-between;
+
+                &.is-open .chevron {
+                    transform: rotate(-90deg);
+                }
+
+                &:not(.is-open) .chevron {
+                    transform: rotate(90deg);
+                }
+            }
+        }
+
+        .container {
+            font-size: 1.4rem;
+            line-height: 4.4rem;
+            margin-top: 4rem;
+
+            .logo {
+                bottom: 0;
+                position: absolute;
+                right: 0;
+                width: 11rem;
+            }
+        }
+
+        .dropdown-container {
+            border-bottom: thin solid ui-color(form-border);
+            padding-bottom: 0.7rem;
+
+            .dropdown-menu {
+                box-shadow: none;
+                font-size: 1.4rem;
+                line-height: 4.4rem;
+            }
+        }
+
+        &:not(.active) {
+            .menu-popover,
+            .menu-popover-overlay {
+                display: none;
+            }
+        }
+
+        &.active {
+            .menu-popover-overlay,
+            .menu-popover {
+                top: 0;
+                right: 0;
+                position: fixed;
+                bottom: 0;
+            }
+
+            .menu-popover-overlay {
+                left: 0;
+            }
+
+            .menu-popover {
+                background-color: ui-color(white);
+                box-shadow: -0.4rem 0 0.4rem rgba(ui-color(black), 0.15);
+                left: 25%;
+                padding: 2rem;
+
+                .menu-title {
+                    font-size: 1.8rem;
+                    font-weight: bold;
+                    line-height: 5rem;
+                    text-align: center;
+                    border-bottom: thin solid ui-color(form-border);
+                }
+            }
+        }
+
+        .give-button-item {
+            display: none;
+        }
+
+        .give-button {
+            align-self: flex-start;
+        }
+    }
+}
