@@ -1,9 +1,8 @@
 import React from 'react';
-import WrappedJsx from '~/controllers/jsx-wrapper';
 import './progress-bar.css';
 
 // eslint-disable-next-line complexity
-export function ProgressBar({status, barStatus}) {
+export default function ProgressBar({status, barStatus}) {
     const thirdNodeFill = ['Corrected', 'Will correct'].includes(barStatus) ?
         ' filled' : ' filled-no';
     const bars = barStatus ? 2 : {
@@ -41,15 +40,4 @@ export function ProgressBar({status, barStatus}) {
             </div>
         </React.Fragment>
     );
-}
-
-export default class extends WrappedJsx {
-
-    init(props) {
-        super.init(ProgressBar, props);
-        this.view = {
-            classes: ['progress-bar-container', 'body-block']
-        };
-    }
-
 }
