@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
 import uniqBy from 'lodash/uniqBy';
 import {ArticleSummary, blurbModel} from '../article-summary/article-summary.jsx';

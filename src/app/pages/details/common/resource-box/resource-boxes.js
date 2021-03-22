@@ -9,7 +9,6 @@ import CompCopyRequestForm from './request-form/request-form';
 import CustomizationForm from '../customization-form/customization-form';
 import DetailsContext from '../../context';
 import {useUserStatus} from '../hooks';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import cn from 'classnames';
 
 const UserContext = React.createContext({});

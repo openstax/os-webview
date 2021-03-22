@@ -1,15 +1,15 @@
 import React from 'react';
 import CookieDialog from '../cookie-notice/cookie-notice';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {LoaderPage, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import $ from '~/helpers/$';
 import './footer.css';
 
-function Footer({data}) {
-    const {supporters, copyright, apStatement, facebookLink, twitterLink, linkedinLink} =
-        $.camelCaseKeys(data);
-
+function Footer({
+    data: {
+        supporters, copyright, apStatement,
+        facebookLink, twitterLink, linkedinLink
+    }
+}) {
     return (
         <React.Fragment>
             <CookieDialog />
@@ -69,15 +69,10 @@ function Footer({data}) {
     );
 }
 
-function FooterLoader() {
+export default function FooterLoader() {
     return (
-        <LoaderPage slug="footer" Child={Footer} />
+        <footer className="page-footer">
+            <LoaderPage slug="footer" Child={Footer} />
+        </footer>
     );
 }
-
-const view = {
-    tag: 'footer',
-    classes: ['page-footer']
-};
-
-export default new (pageWrapper(FooterLoader, view))();

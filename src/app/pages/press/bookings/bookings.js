@@ -1,6 +1,5 @@
 import PageContext from '../page-context';
 import React, {useContext} from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import css from './bookings.css';
 

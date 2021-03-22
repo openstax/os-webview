@@ -1,5 +1,5 @@
 import React from 'react';
-import {Byline} from '~/components/byline/byline';
+import Byline from '~/components/byline/byline';
 import './press-excerpt.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
