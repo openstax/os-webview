@@ -309,8 +309,10 @@ function ResourceVideoViewer(...args) {
 }
 
 export function VideoResourceBoxes({models, blogLinkModels, referenceModels}) {
+    const userStatus = useUserStatus();
+
     return (
-        <React.Fragment>
+        <UserContext.Provider value={userStatus}>
             {
                 models.map((model) =>
                     <VideoResourceBox {...{model}} key={model.video_file} />
@@ -326,6 +328,6 @@ export function VideoResourceBoxes({models, blogLinkModels, referenceModels}) {
                     <ResourceBox model={model} key={model.heading} />
                 )
             }
-        </React.Fragment>
+        </UserContext.Provider>
     );
 }
