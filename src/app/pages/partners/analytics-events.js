@@ -66,9 +66,27 @@ function partnerWebsite(url) {
     );
 }
 
+function viewReviews(partner) {
+    analytics.sendPageEvent(
+        'Partner tool reading reviews',
+        'open',
+        partner
+    );
+}
+
+function submitReview(partner) {
+    analytics.sendPageEvent(
+        'Partner tool review submission',
+        'submit',
+        partner
+    );
+}
+
 export default {
     partnerDetails,
     lightboxScroll,
     requestInfo,
-    partnerWebsite
+    partnerWebsite,
+    viewReviews,
+    submitReview
 };

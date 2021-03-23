@@ -4,6 +4,7 @@ import PageContext from './page-context';
 import UserContext from './user-context';
 import PartnerContext from '../partner-context';
 import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import analyticsEvents from '../../analytics-events';
 import './rating-form.css';
 
 const nameInfo = 'Your name as it is displayed here will be shown publicly when you leave a rating.';
@@ -83,7 +84,7 @@ function InfoButton({info}) {
 export default function RatingForm() {
     const togglePage = useContext(PageContext);
     const {accountId, userName} = useContext(UserContext);
-    const {postRating, partnerId} = useContext(PartnerContext);
+    const {postRating, partnerId, partnerName} = useContext(PartnerContext);
     const [rating, setRating, myReview] = useRating();
     const textAreaRef = useRef();
     const guidelinesLink = `
@@ -130,6 +131,7 @@ export default function RatingForm() {
                 'POST'
             ];
 
+        analyticsEvents.submitReview(partnerName);
         postRating(payload, method).then(togglePage);
         event.preventDefault();
     }
