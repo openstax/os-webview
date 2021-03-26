@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useSalesforceLoadedState, salesforce} from '~/models/salesforce';
-import {useUserStatus, usePartnerFeatures} from '../../hooks';
+import {useUserStatus} from '../../hooks';
 import './request-form.css';
 
 function RequestForm({model, done, afterSubmit}) {

@@ -25,12 +25,20 @@ function eslint() {
             'react',
             'react-hooks'
         ],
-        extends: 'eslint:recommended',
+        extends: [
+            'eslint:recommended',
+            'plugin:react/recommended'
+        ],
         globals: [
             'require',
             'SystemJS'
         ],
         quiet: argv.quiet,
+        settings: {
+            react: {
+                version: 'detect'
+            }
+        },
         rules: {
             // Best Practices
             'accessor-pairs': ['error', {'getWithoutSet': false}],
@@ -158,6 +166,7 @@ function eslint() {
             'no-duplicate-imports': 'error',
             'no-new-symbol': 'error',
             'no-this-before-super': 'error',
+            'no-unused-vars': 'error',
             'no-useless-computed-key': 'error',
             'no-useless-constructor': 'error',
             'no-useless-rename': 'error',
@@ -179,15 +188,17 @@ function eslint() {
             'template-curly-spacing': ['error', 'never'],
             'yield-star-spacing': ['error', {'before': false, 'after': true}],
 
-             'react/jsx-curly-newline': ['error', 'consistent'],
-             'react/jsx-curly-brace-presence': ['error', 'never'],
-             'react/jsx-equals-spacing': ['error', 'never'],
-             'react/jsx-first-prop-new-line': ['error', 'multiline'],
-             'react/jsx-indent': ['error', 4],
-             'react/jsx-indent-props': ['error', 4],
-             'react/jsx-key': 'error',
-             'react/jsx-no-target-blank': 'error',
-             'react/jsx-tag-spacing': 'error'
+            'react/jsx-curly-newline': ['error', 'consistent'],
+            'react/jsx-curly-brace-presence': ['error', 'never'],
+            'react/jsx-equals-spacing': ['error', 'never'],
+            'react/jsx-first-prop-new-line': ['error', 'multiline'],
+            'react/jsx-indent': ['error', 4],
+            'react/jsx-indent-props': ['error', 4],
+            'react/jsx-key': 'error',
+            'react/jsx-no-target-blank': 'error',
+            'react/jsx-tag-spacing': 'error',
+            'react/jsx-uses-vars': 'error',
+            'react/jsx-uses-react': 'error'
         },
         envs: [
             'browser',

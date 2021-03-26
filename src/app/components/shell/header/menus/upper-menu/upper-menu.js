@@ -1,5 +1,5 @@
 import React from 'react';
-import {useDataFromSlug, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import useGiveToday from '~/models/give-today';
 import GiveButton from '../give-button/give-button';
 import './upper-menu.css';
