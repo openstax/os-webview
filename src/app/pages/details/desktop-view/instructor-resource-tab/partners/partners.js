@@ -53,7 +53,8 @@ export default function Partners({bookAbbreviation, model}) {
         const destUrl = event.target.getAttribute('href');
 
         routerBus.emit('navigate', destUrl, {
-            book: bookAbbreviation
+            book: bookAbbreviation,
+            redirect: true
         }, true);
     }
 

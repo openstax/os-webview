@@ -61,7 +61,8 @@ export function InstructorResourcesPane({model, userStatus}) {
     function goToPartners(event) {
         event.preventDefault();
         routerBus.emit('navigate', '/partners', {
-            book: model.salesforceAbbreviation
+            book: model.salesforceAbbreviation,
+            redirect: true
         }, true);
     }
 

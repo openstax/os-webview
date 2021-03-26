@@ -1,12 +1,17 @@
-import {Router, Controller} from 'superb.js';
-import analytics from './helpers/analytics';
+import React from 'react';
+import {
+    BrowserRouter,
+    Switch,
+    Route,
+    Link
+} from 'react-router-dom';
 import linkHelper from './helpers/link';
-import './components/shell/shell';
+import analytics from './helpers/analytics';
 import routerBus from '~/helpers/router-bus';
 import $ from '~/helpers/$';
+import './components/shell/shell';
 import './sentry';
 
-const path404 = '/error/404';
 const PAGES = [
     'about',
     'adopters',
@@ -14,18 +19,15 @@ const PAGES = [
     'annual-report',
     'article',
     'blog',
-    'blog/*path',
     'bookstore-suppliers',
-    'campaign/*path',
+    'campaign',
     'confirmation',
-    'confirmation/*path',
     'contact',
     'creator-fest',
-    'creator-fest/*path',
-    'details/*path',
+    'details',
     'faq',
     'foundation',
-    'general/*path',
+    'general',
     'global-reach',
     'hero-journey',
     'impact',
@@ -35,40 +37,18 @@ const PAGES = [
     'llph',
     'openstax-tutor',
     'partners',
-    'partners/*path',
     'press',
-    'press/*path',
     'research',
     'separatemap',
     'subjects',
-    'subjects/*path',
     'team',
     'technology',
     'webinars'
 ];
 
-if (window.location.hostname === 'localhost') {
-    PAGES.push('a-page-template');
-    PAGES.push('a-example');
-}
-
-// CustomEvent polyfill
-(function () {
-    if (typeof window.CustomEvent === 'function') {
-        return;
-    }
-
-    function CustomEvent(event, params={ bubbles: false, cancelable: false }) {
-        const evt = document.createEvent('CustomEvent');
-
-        evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
-        return evt;
-    }
-
-    CustomEvent.prototype = window.Event.prototype;
-
-    window.CustomEvent = CustomEvent;
-})();
+const FOOTER_PAGES = [
+    'license', 'tos', 'privacy-policy', 'accessibility-statement', 'careers'
+].map((s) => `/${s}/`);
 
 function instructorResourceNodeContaining(el) {
     const resourcesSections = Array.from(
@@ -106,30 +86,31 @@ function handleExternalLink(href, el) {
     }
 };
 
+function navigateTo(path, state = {x: 0, y: 0}) {
+    history.pushState(state, '', linkHelper.stripOpenStaxDomain(path));
+    window.dispatchEvent(new PopStateEvent('popstate', {state}));
+}
+
+// eslint-disable-next-line complexity
 function linkHandler(e) {
+    // Only handle left-clicks on links
     const el = linkHelper.validUrlClick(e);
 
     if (!el || e.button !== 0) {
         return;
     }
-    const fullyQualifiedHref = el.href;
-    const navigateTo = (href) => {
-        const internalLink = this.canRoute(href);
-        const handleAsExternal = linkHelper.isExternal(href) || el.target ||
-            !internalLink;
+    e.preventDefault();
 
-        if (handleAsExternal) {
-            handleExternalLink(href, el);
-        } else {
-            this.navigate(linkHelper.stripOpenStaxDomain(href) || '/');
-        }
-    };
+    const fullyQualifiedHref = el.href;
+    const followLink = linkHelper.isExternal(fullyQualifiedHref) ?
+        () => handleExternalLink(fullyQualifiedHref, el) :
+        () => navigateTo(fullyQualifiedHref);
 
     // Pardot tracking
     if ('piTracker' in window) {
         piTracker(fullyQualifiedHref.split('#')[0]);
     }
-    e.preventDefault();
+
     if (e.trackingInfo) {
         fetch(
             `${$.apiOriginAndOldPrefix}/salesforce/download-tracking/`,
@@ -141,114 +122,89 @@ function linkHandler(e) {
                 },
                 body: JSON.stringify(e.trackingInfo)
             }
-        ).finally(() => navigateTo(fullyQualifiedHref));
+        ).finally(followLink);
     } else {
-        navigateTo(fullyQualifiedHref);
+        followLink();
     }
 }
 
-class Shell extends Controller {
+function ImportedPage({name}) {
+    const [Content, setContent] = React.useState(null);
 
-    init() {
-        this.el = '#main';
-    }
-
-    update() {
-
-    }
-
-}
-
-class AppRouter extends Router {
-
-    init() {
-        const shellInstance = new Shell();
-
-        this.defaultRegion = shellInstance.regions.self;
-
-        this.root('home');
-        this.route(/^(\d+)/, 'cms');
-        this.route('errata/form', 'errata-form');
-        this.route('errata/', 'errata-summary');
-        this.route(/errata\/\d+/, 'errata-detail');
-        ['license', 'tos', 'privacy-policy', 'accessibility-statement', 'careers']
-            .forEach((pathname) => {
-                this.route(pathname, 'footer-page');
-            });
-        this.route(path404.substr(1), '404');
-
-        PAGES.forEach((page) => {
-            const isSplat = page.match(/\/\*/);
-
-            if (isSplat) {
-                const basePage = page.substr(0, isSplat.index);
-                const pageRegExp = new RegExp(`${basePage}/.*`);
-
-                this.route(pageRegExp, basePage);
-            } else {
-                this.route(page);
-            }
+    React.useEffect(() => {
+        System.import(`~/pages/${name}/${name}`).then((content) => {
+            setContent(content.default);
         });
-    }
-
-    canRoute(href) {
-        let path;
-
-        try {
-            path = (new URL(href)).pathname;
-        } catch (_) {
-            path = href;
-        }
-
-        return path === '/' || this.routes.some((r) => {
-            return r.path.test(path.substr(1));
-        });
-    }
-
-    start() {
-        const loc = window.location;
-        const path = loc.pathname;
-        const canonicalUrl = `${loc.origin}${path}`;
-
-        if (!this.canRoute(path) && !path.startsWith(path404)) {
-            window.location = `${path404}?path=${path}`;
-        }
-        super.start();
-
-        analytics.sendPageview(path);
-
-        this.linkHandler = linkHandler.bind(this);
-        document.addEventListener('click', this.linkHandler);
-        // Track initial page view in Pardot
-        if ('piTracker' in window) {
-            piTracker(canonicalUrl);
-        }
-    }
-
-    stop() {
-        super.stop();
-
-        document.removeEventListener('click', this.linkHandler);
-    }
-
-    navigate(...args) {
-        super.navigate(...args);
-        window.dispatchEvent(new CustomEvent('navigate'));
-        if (args.length === 1) {
+        if (!(history.state && history.state.redirect)) {
             analytics.sendPageview();
         }
-    }
+    }, [name]);
 
+    return Content;
 }
 
-const router = new AppRouter();
+function canonicalUrl() {
+    const loc = window.location;
+    const path = loc.pathname;
+
+    return `${loc.origin}${path}`;
+}
+
+function error404() {
+    const path404 = '/error/404';
+    const path = window.location.pathname;
+
+    if (!path.startsWith(path404)) {
+        window.location = `${path404}?path=${path}`;
+    }
+}
+
+function Router() {
+    React.useEffect(() => {
+        document.addEventListener('click', linkHandler);
+
+        // Track initial page view in Pardot
+        if ('piTracker' in window) {
+            piTracker(canonicalUrl());
+        }
+
+        return () => document.removeEventListener('click', linkHandler);
+    }, []);
+
+    return (
+        <BrowserRouter>
+            <Switch>
+                {
+                    PAGES.map((pageName) =>
+                        <Route key={pageName} path={`/${pageName}/`}>
+                            <ImportedPage name={pageName} />
+                        </Route>
+                    )
+                }
+                <Route path="/" exact>
+                    <ImportedPage name="home" />
+                </Route>
+                <Route path={FOOTER_PAGES} exact>
+                    <ImportedPage name="footer-page" />
+                </Route>
+                <Route path="/errata/" exact>
+                    <ImportedPage name="errata-summary" />
+                </Route>
+                <Route path="/errata/form/">
+                    <ImportedPage name="errata-form" />
+                </Route>
+                <Route path="/errata/">
+                    <ImportedPage name="errata-detail" />
+                </Route>
+                <Route path="*" render={error404} />
+            </Switch>
+        </BrowserRouter>
+    );
+}
 
 routerBus.on('navigate', (...args) => {
-    router.navigate(...args);
+    navigateTo(...args);
+    window.dispatchEvent(new CustomEvent('navigate'));
 });
 
-routerBus.on('replaceState', (...args) => {
-    router.replaceState(...args);
-});
-
-export default router;
+export default React.createElement(Router);

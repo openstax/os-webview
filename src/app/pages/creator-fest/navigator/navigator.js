@@ -16,9 +16,9 @@ function onClick(event) {
     const yTarget = history.state.y;
 
     routerBus.emit('navigate', pathFromUrl(url), {
-        path: basePath
+        path: basePath,
+        y: yTarget
     });
-    window.scrollTo(0, yTarget);
 }
 
 function NavLink({url, text}) {
