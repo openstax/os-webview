@@ -118,6 +118,12 @@ function PartnerDetails({model}) {
 
     useEffect(() => logScrollingInRegion(ref.current, model.title), []);
 
+    useEffect(() => {
+        if (selectedLabel === 'Reviews') {
+            analyticsEvents.viewReviews(model.title);
+        }
+    }, [selectedLabel]);
+
     return (
         <div
             className="partner-details" onClick={(e) => e.stopPropagation()}
