@@ -1,16 +1,10 @@
 import settings from 'settings';
 import React, {useState, useEffect} from 'react';
-import {useToggle, useLocation} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useToggle, useLocation, useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {useUserModel} from '~/models/usermodel';
 import userModelBus from '~/models/usermodel-bus';
 import linkHelper from '~/helpers/link';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
-
-// Slightly hacky; avoiding adding a new item to settings,
-// but probably will do so eventually
-const dqMatch = settings.accountHref.match(/-[^.]+/);
-const domainQualifier = dqMatch ? dqMatch[0] : '';
-const tutorDomain = `https://tutor${domainQualifier}.openstax.org/dashboard`;
 
 const facultySignupStep4 = `${settings.accountHref}/i/signup/educator/profile_form`;
 const reqFacultyAccessLink = `${settings.accountHref}/i/signup/educator/cs_form`;
@@ -53,11 +47,30 @@ function useIsTutorUser(userModel) {
     return isTutorUser;
 }
 
+function TutorMenuItem() {
+    const tutorPageData = useDataFromSlug('pages/openstax-tutor');
+
+    if (!tutorPageData) {
+        return null;
+    }
+    return (
+        <MenuItem
+            label="OpenStax Tutor"
+            url={`${tutorPageData.tutor_login_link}/dashboard`}
+        />
+    );
+}
+
+function TutorMenuItemIfUser({userModel}) {
+    const isTutorUser = useIsTutorUser(userModel);
+
+    return isTutorUser ? <TutorMenuItem /> : null;
+}
+
 // eslint-disable-next-line complexity
 function LoginMenuWithDropdown({userModel}) {
     const location = useLocation(); // updates logoutLink
     const label = `Hi ${userModel.first_name || userModel.username}`;
-    const isTutorUser = useIsTutorUser(userModel);
     const incomplete = !Boolean(
         (userModel.groups || []).includes('Student') ||
         !userModel.needs_profile_completed ||
@@ -72,7 +85,7 @@ function LoginMenuWithDropdown({userModel}) {
     return (
         <Dropdown className="login-menu nav-menu-item rightmost dropdown" label={label} excludeWrapper>
             <MenuItem label="Account Profile" url={`${settings.accountHref}/profile`} />
-            {isTutorUser && <MenuItem label="OpenStax Tutor" url={tutorDomain} />}
+            <TutorMenuItem userModel={userModel} />
             {incomplete && <MenuItem label="Finish signing up" url={facultySignupStep4} />}
             {
                 instructorEligible &&

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {RawHTML, ActiveElementContextProvider, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {BookCover} from './book';
+import BookCover from './book';
 import categoryPromise from '~/models/subjectCategories';
 
 function organizeBooksByCategory(books, categories) {

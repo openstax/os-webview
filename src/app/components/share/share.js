@@ -1,5 +1,4 @@
 import React from 'react';
-import WrappedJsx from '~/controllers/jsx-wrapper';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import './share.css';
 
@@ -73,21 +72,3 @@ export function ShareJsx(props) {
         </div>
     );
 }
-
-const view = {
-    classes: ['share-buttons']
-};
-
-
-export default class extends WrappedJsx {
-
-    init(pageUrl, message, minimal) {
-        super.init(ShareInterior, {
-            pageUrl: encodeURIComponent(pageUrl),
-            message: encodeURIComponent(message),
-            minimal
-        });
-        this.view = view;
-    }
-
-};
