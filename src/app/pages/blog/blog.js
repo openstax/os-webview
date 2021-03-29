@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {usePageData} from '~/helpers/controller/cms-mixin';
-import WrappedJsx from '~/controllers/jsx-wrapper';
+import {pageWrapper} from '~/controllers/jsx-wrapper';
 import PinnedArticle from './pinned-article/pinned-article';
 import UpdateBox from './update-box/update-box';
 import DisqusForm from './disqus-form/disqus-form';
@@ -152,14 +152,9 @@ export function BlogPage() {
     );
 }
 
-export default class extends WrappedJsx {
+const view = {
+    classes: ['blog', 'page'],
+    tag: 'main'
+};
 
-    init() {
-        super.init(BlogPage);
-        this.view = {
-            classes: ['blog', 'page'],
-            tag: 'main'
-        };
-    }
-
-}
+export default pageWrapper(BlogPage, view);

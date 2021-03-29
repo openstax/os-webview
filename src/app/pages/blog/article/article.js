@@ -1,10 +1,9 @@
 import BodyUnit from '~/components/body-units/body-units';
-import {Byline} from '~/components/byline/byline';
+import Byline from '~/components/byline/byline';
 import ProgressRing from '~/components/progress-ring/progress-ring';
 import {ShareJsx} from '~/components/share/share';
 import React, {useState, useEffect, useRef, useContext} from 'react';
 import {WindowContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {usePageData} from '~/helpers/controller/cms-mixin';
 import routerBus from '~/helpers/router-bus';
 import './article.css';
@@ -145,5 +144,3 @@ export function ArticleFromSlug({slug}) {
         </div>
     );
 }
-
-export default pageWrapper(ArticleLoader, view);

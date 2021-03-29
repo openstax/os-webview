@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {PutAway} from '../shared.jsx';
 import useMSQueue from './queue';
 import './microsurvey-popup.css';
 
-function MicroSurvey() {
+export default function MicroSurvey() {
     const [QueuedItem, nextItem] = useMSQueue();
 
     if (!QueuedItem) {
@@ -18,5 +17,3 @@ function MicroSurvey() {
         </React.Fragment>
     );
 }
-
-export default new (pageWrapper(MicroSurvey))();

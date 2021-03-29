@@ -126,35 +126,3 @@ export function usePageData(fpdParams) {
 
     return [pageData, statusPage];
 }
-
-export default (superclass) => class extends superclass {
-
-    constructor(...args) {
-        super(...args);
-
-        if (this.slug) {
-            // eslint-disable-next-line complexity
-            (async () => {
-                try {
-                    const mainEl = document.getElementById('main');
-                    const parentIsMainEl = mainEl && this.el && this.el.parentNode === mainEl;
-
-                    this.pageData = await fetchPageData({
-                        slug: this.slug,
-                        preserveWrapping: this.preserveWrapping,
-                        setsPageTitleAndDescription: this.setsPageTitleAndDescription || parentIsMainEl
-                    });
-                    this.onDataLoaded();
-                } catch (e) {
-                    if (this.onDataError) {
-                        console.warn('Died fetching', this.slug);
-                        this.onDataError(e);
-                    } else {
-                        console.error(e);
-                    }
-                }
-            })();
-        }
-    }
-
-};

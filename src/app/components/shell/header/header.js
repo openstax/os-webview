@@ -1,10 +1,6 @@
-import React, {useRef} from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
+import React from 'react';
 import StickyNote from './sticky-note/sticky-note';
 import Menus from './menus/menus';
-import $ from '~/helpers/$';
-import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import cn from 'classnames';
 import './header.css';
 
 function doSkipToContent(event) {
@@ -26,7 +22,7 @@ function SkipToContent() {
     );
 }
 
-function Header() {
+export default function Header() {
     return (
         <div className="page-header">
             <SkipToContent />
@@ -35,7 +31,3 @@ function Header() {
         </div>
     );
 }
-
-const HeaderConstructor = pageWrapper(Header);
-
-export default new HeaderConstructor();

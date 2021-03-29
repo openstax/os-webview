@@ -1,5 +1,4 @@
 import React, {useRef, useEffect, useContext} from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {ActiveElementContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
 import cn from 'classnames';
@@ -98,7 +97,7 @@ function ThreeDotMenu({slug, details}) {
     );
 }
 
-export function BookCover({
+export default function BookCover({
     cover_url: coverUrl,
     slug,
     title,
@@ -125,5 +124,3 @@ export function BookCover({
         </div>
     );
 }
-
-export default pageWrapper(BookCover);

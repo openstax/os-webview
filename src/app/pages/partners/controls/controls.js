@@ -7,7 +7,6 @@ import AdvancedOptions from './advanced-options/advanced-options';
 import cn from 'classnames';
 import './controls.css';
 import './button-with-popover.css';
-import {on} from '~/helpers/controller/decorators';
 import shellBus from '~/components/shell/shell-bus';
 
 export const sortOptions = [

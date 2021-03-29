@@ -1,5 +1,4 @@
 import React from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import './byline.css';
 import {formatDateForBlog} from '~/helpers/data';
 
@@ -7,7 +6,7 @@ const view = {
     classes: ['byline']
 };
 
-export function Byline({date, author, source}) {
+export default function Byline({date, author, source}) {
     return (
         <div className="byline">
             {
@@ -19,5 +18,3 @@ export function Byline({date, author, source}) {
         </div>
     );
 }
-
-export default pageWrapper(Byline, view);

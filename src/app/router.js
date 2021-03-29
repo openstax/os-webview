@@ -1,7 +1,7 @@
-import {Router} from 'superb.js';
+import {Router, Controller} from 'superb.js';
 import analytics from './helpers/analytics';
 import linkHelper from './helpers/link';
-import shell from './components/shell/shell';
+import './components/shell/shell';
 import routerBus from '~/helpers/router-bus';
 import $ from '~/helpers/$';
 
@@ -146,17 +146,30 @@ function linkHandler(e) {
     }
 }
 
+class Shell extends Controller {
+
+    init() {
+        this.el = '#main';
+    }
+
+    update() {
+
+    }
+
+}
+
 class AppRouter extends Router {
 
     init() {
-        this.defaultRegion = shell.regions.main;
+        const shellInstance = new Shell();
+
+        this.defaultRegion = shellInstance.regions.self;
 
         this.root('home');
         this.route(/^(\d+)/, 'cms');
         this.route('errata/form', 'errata-form');
         this.route('errata/', 'errata-summary');
         this.route(/errata\/\d+/, 'errata-detail');
-        this.route('higher-ed', 'home');
         ['license', 'tos', 'privacy-policy', 'accessibility-statement', 'careers']
             .forEach((pathname) => {
                 this.route(pathname, 'footer-page');

@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import WrappedJsx from '~/controllers/jsx-wrapper';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import './mobile-selector.css';
 
