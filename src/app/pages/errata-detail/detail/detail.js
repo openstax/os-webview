@@ -1,5 +1,4 @@
 import React from 'react';
-import WrappedJsx from '~/controllers/jsx-wrapper';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {useErrataDetail, shouldShowDecisionDetails} from '~/helpers/errata';
 import './detail.css';
@@ -33,7 +32,7 @@ function LabelValuePairs({detail, pairs}) {
     );
 }
 
-export function Detail({data}) {
+export default function Detail({data}) {
     const detail = useErrataDetail(data);
 
     if (!detail) {
@@ -61,15 +60,4 @@ export function Detail({data}) {
             </div>
         </React.Fragment>
     );
-}
-
-export default class extends WrappedJsx {
-
-    init(props) {
-        super.init(Detail, props);
-        this.view = {
-            classes: ['errata-detail-block']
-        };
-    }
-
 }

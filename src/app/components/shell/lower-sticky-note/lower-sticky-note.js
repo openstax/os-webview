@@ -1,5 +1,4 @@
 import React from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {usePutAway, useStickyData} from '../shared.jsx';
 import analytics from '~/helpers/analytics';
@@ -32,7 +31,7 @@ function trackClick(event) {
 }
 
 // eXslint-disable-next-line complexity
-function LowerStickyNote() {
+export function LowerStickyNote() {
     const stickyData = useStickyData();
     const [closed, PutAway] = usePutAway();
     const shouldNotDisplay = !stickyData || closed ||
@@ -55,5 +54,3 @@ function LowerStickyNote() {
         </div>
     );
 }
-
-export default new (pageWrapper(LowerStickyNote))();

@@ -1,8 +1,8 @@
 import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {LoaderPage, useDataFromSlug, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import React, {useState, useEffect} from 'react';
-import {ProgressBar} from './progress-bar/progress-bar.jsx';
-import {Detail} from './detail/detail';
+import ProgressBar from './progress-bar/progress-bar.jsx';
+import Detail from './detail/detail';
 import {getDisplayStatus} from '~/helpers/errata';
 import cmsFetch from '~/models/cmsFetch';
 import './errata-detail.css';
