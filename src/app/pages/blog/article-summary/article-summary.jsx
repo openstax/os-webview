@@ -2,7 +2,6 @@ import React, {useState, useRef, useEffect, useContext} from 'react';
 import {RawHTML, WindowContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Byline from '~/components/byline/byline';
 import $ from '~/helpers/$';
-import debounce from 'lodash/debounce';
 
 export function blurbModel(articleSlug, data) {
     if (!data) {

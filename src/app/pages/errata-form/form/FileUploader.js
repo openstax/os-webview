@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import $ from '~/helpers/$';
 import cn from 'classnames';
 
 function FileButton({name}) {
@@ -11,7 +10,7 @@ function FileButton({name}) {
         updateFilePath(event.target.value.replace(/.*\\/, ''));
     }
 
-    function clearFile(event) {
+    function clearFile() {
         updateFilePath('');
     }
 

@@ -8,7 +8,7 @@ import $ from '~/helpers/$';
 import Dialog from '~/components/dialog/dialog';
 import routerBus from '~/helpers/router-bus';
 import cn from 'classnames';
-import css from './form.css';
+import './form.css';
 
 const sourceNames = {
     tutor: 'OpenStax Tutor'
@@ -92,7 +92,7 @@ function removeEmptyFileWidgets(formEl) {
     const fileInputs = Array.from(formEl.querySelectorAll('[type="file"]'));
     const fiParents = fileInputs.map((el) => el.parentNode);
 
-    fileInputs.forEach((el, index) => {
+    fileInputs.forEach((el) => {
         if (el.value === '') {
             el.parentNode.removeChild(el);
         }

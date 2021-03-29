@@ -1,6 +1,5 @@
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import React from 'react';
-import {LoaderPage, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {urlFromSlug} from '~/models/cmsFetch';
 import './general.css';
 
@@ -26,7 +25,7 @@ function GeneralPage({html}) {
     );
 }
 
-function GeneralPageLoader() {
+export default function GeneralPageLoader() {
     const [html, setHtml] = React.useState();
 
     React.useEffect(() => {
@@ -39,12 +38,8 @@ function GeneralPageLoader() {
     }, []);
 
     return (
-        html ? <GeneralPage html={html} /> : <h1>Loading...</h1>
+        <main>
+            {html ? <GeneralPage html={html} /> : <h1>Loading...</h1>}
+        </main>
     );
 }
-
-const view = {
-    tag: 'main'
-};
-
-export default pageWrapper(GeneralPageLoader, view);

@@ -23,7 +23,6 @@ function OtherSourceInput() {
 }
 
 export default function ErrorSourceSelector({initialSource}) {
-    const isTutor = false;
     const subnotes = {'Textbook': 'includes print, PDF, and web view'};
     const [sourceTypes, updateSourceTypes] = useState([]);
     const [selectedSource, updateSelectedSource] = useState(initialSource);

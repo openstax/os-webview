@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './progress-ring.css';
 
 function Circle({basicProps, className, style}) {

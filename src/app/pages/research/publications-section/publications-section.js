@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import './publications-section.css';
@@ -18,7 +18,7 @@ function Publication({pub}) {
     );
 }
 
-export default function PublicationsSection({data: {publicationHeader, publications, ...other}}) {
+export default function PublicationsSection({data: {publicationHeader, publications}}) {
     return (
         <section className="publications-section">
             <div className="content">

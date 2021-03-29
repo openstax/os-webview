@@ -7,7 +7,7 @@ import Footer from './footer/footer';
 import bus from './shell-bus';
 import '~/helpers/font-awesome';
 
-const mainObserver = new MutationObserver((observations) => {
+const mainObserver = new MutationObserver(() => {
     document.body.classList.remove('initial-load');
     mainObserver.disconnect();
 });

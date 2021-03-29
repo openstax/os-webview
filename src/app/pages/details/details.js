@@ -1,6 +1,5 @@
 import React, {useRef, useEffect} from 'react';
 import {LoaderPage, useToggle, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import $ from '~/helpers/$';
 import analytics from '~/helpers/analytics';
 import cn from 'classnames';
@@ -153,15 +152,10 @@ function getSlugFromLocation() {
     return slug;
 }
 
-function BookDetailsLoader() {
+export default function BookDetailsLoader() {
     return (
-        <LoaderPage slug={getSlugFromLocation()} Child={BookDetails} doDocumentSetup />
+        <main className="details-page">
+            <LoaderPage slug={getSlugFromLocation()} Child={BookDetails} doDocumentSetup />
+        </main>
     );
 }
-
-const view = {
-    classes: ['details-page'],
-    tag: 'main'
-};
-
-export default pageWrapper(BookDetailsLoader, view);

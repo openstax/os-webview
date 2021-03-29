@@ -1,7 +1,6 @@
-import {pageWrapper} from '~/controllers/jsx-wrapper';
-import React, {useEffect} from 'react';
+import React from 'react';
 
-function Page() {
+export default function Page() {
     return (
         <main className="not-found no-style page">
             <img
@@ -18,5 +17,3 @@ function Page() {
         </main>
     );
 }
-
-export default pageWrapper(Page, {});

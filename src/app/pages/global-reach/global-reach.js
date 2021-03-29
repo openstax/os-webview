@@ -1,6 +1,5 @@
 import React from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
-import {LoaderPage, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
 import Map from './map/map';
 import Statistics from './statistics/stat';
@@ -42,15 +41,11 @@ function GlobalReachPage({data}) {
 }
 
 const slug = 'pages/global-reach';
-const view = {
-    classes: ['global-reach', 'page'],
-    tag: 'main'
-};
 
-function GlobalReachLoader() {
+export default function GlobalReachLoader() {
     return (
-        <LoaderPage slug={slug} Child={GlobalReachPage} noCamelCase />
+        <main className="global-reach page">
+            <LoaderPage slug={slug} Child={GlobalReachPage} noCamelCase />
+        </main>
     );
 }
-
-export default pageWrapper(GlobalReachLoader, view);

@@ -134,7 +134,7 @@ export function ActiveElementContextProvider({children}) {
 
 export function createPageContextProvider({Context, slug}) {
     return function ({children}) {
-        const [data, statusPage] = usePageData({slug});
+        const [data] = usePageData({slug});
 
         return (
             <Context.Provider value={data}>

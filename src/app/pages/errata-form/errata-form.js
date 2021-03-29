@@ -1,4 +1,3 @@
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import React, {useState, useEffect} from 'react';
 import {urlFromSlug} from '~/models/cmsFetch';
 import bookPromise from '~/models/book-titles';
@@ -98,19 +97,16 @@ function TitleSelector({setTitle}) {
     );
 }
 
-function TitleSelectorOrForm() {
+export default function TitleSelectorOrForm() {
     const [title, setTitle] = useState(getBookTitle());
 
     return (
-        title ?
-            <ErrataForm title={title} /> :
-            <TitleSelector setTitle={setTitle} />
+        <main className="errata-form page">
+            {
+                title ?
+                    <ErrataForm title={title} /> :
+                    <TitleSelector setTitle={setTitle} />
+            }
+        </main>
     );
 }
-
-const view = {
-    classes: ['errata-form', 'page'],
-    tag: 'main'
-};
-
-export default pageWrapper(TitleSelectorOrForm, view);

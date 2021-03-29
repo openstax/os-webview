@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
 import PageContext from './page-context';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {RawHTML, createPageContextProvider} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {ArticleLoader} from './article/article';
 import MoreFewer, {Paginated} from '~/components/more-fewer/more-fewer';
@@ -211,7 +210,7 @@ function useArticleSlugFromPath() {
     return slug;
 }
 
-export function PressWrapper() {
+export default function PressWrapper() {
     const articleSlug = useArticleSlugFromPath();
     const PageContextProvider = createPageContextProvider({
         Context: PageContext,
@@ -219,16 +218,14 @@ export function PressWrapper() {
     });
 
     return (
-        <PageContextProvider>
-            {
-                articleSlug ?
-                    <ArticlePage slug={articleSlug} /> :
-                    <MainPage />
-            }
-        </PageContextProvider>
+        <div className="press page">
+            <PageContextProvider>
+                {
+                    articleSlug ?
+                        <ArticlePage slug={articleSlug} /> :
+                        <MainPage />
+                }
+            </PageContextProvider>
+        </div>
     );
 }
-
-const view = {classes: ['press', 'page']};
-
-export default pageWrapper(PressWrapper, view);

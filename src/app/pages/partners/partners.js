@@ -1,5 +1,4 @@
 import React from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {RawHTML, LoaderPage, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Controls from './controls/controls';
 import MobileControlRow from './mobile-controls/mobile-controls';
@@ -107,15 +106,10 @@ function Partners({data}) {
     );
 }
 
-function PartnersLoader() {
+export default function PartnersLoader() {
     return (
-        <LoaderPage slug="pages/partners" Child={Partners} doDocumentSetup noCamelCase />
+        <main className="partners page">
+            <LoaderPage slug="pages/partners" Child={Partners} doDocumentSetup noCamelCase />
+        </main>
     );
 }
-
-const view = {
-    classes: ['partners', 'page'],
-    tag: 'main'
-};
-
-export default pageWrapper(PartnersLoader, view);

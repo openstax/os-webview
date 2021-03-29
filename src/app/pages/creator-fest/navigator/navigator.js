@@ -1,6 +1,5 @@
 import React from 'react';
 import routerBus from '~/helpers/router-bus';
-import {useLocation} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './navigator.css';
 
 const basePath = '/creator-fest';
@@ -30,8 +29,6 @@ function NavLink({url, text}) {
 }
 
 export default function Navigator({navLinks}) {
-    const location = useLocation();
-
     return (
         <nav id="navigator" className="boxed navigator-container">
             <div className="navigator">

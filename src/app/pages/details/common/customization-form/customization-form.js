@@ -1,8 +1,7 @@
 import React, {useState, useRef} from 'react';
 import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import FormInput from '~/components/form-input/form-input.jsx';
+import FormInput from '~/components/form-input/form-input';
 import ModuleList from './module-list';
-import {useUserStatus} from '../hooks';
 import {cmsPost} from '~/models/cmsFetch';
 import cn from 'classnames';
 import './customization-form.css';
@@ -103,7 +102,7 @@ export default function CustomizationForm({model, done}) {
         }
         cmsPost('customize', payloadFromForm(ref.current))
             .then(
-                (response) => {
+                () => {
                     setSubmitted(selectedModules.html);
                 },
                 (err) => {

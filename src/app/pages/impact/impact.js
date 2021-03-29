@@ -1,5 +1,4 @@
 import React from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {LoaderPage, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Hero from '~/components/hero/hero';
 import OurReach from './our-reach';
@@ -36,15 +35,11 @@ function ImpactPage({data}) {
 }
 
 const slug = 'pages/impact';
-const view = {
-    classes: ['annual-report', 'page'],
-    tag: 'main'
-};
 
-function ImpactLoader() {
+export default function ImpactLoader() {
     return (
-        <LoaderPage slug={slug} Child={ImpactPage} doDocumentSetup />
+        <main className="annual-report page">
+            <LoaderPage slug={slug} Child={ImpactPage} doDocumentSetup />
+        </main>
     );
 }
-
-export default pageWrapper(ImpactLoader, view);

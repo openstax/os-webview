@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import FormInput from '~/components/form-input/form-input.jsx';
+import FormInput from '~/components/form-input/form-input';
 import schoolPromise from '~/models/schools';
 import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import ReactModal from 'react-modal';

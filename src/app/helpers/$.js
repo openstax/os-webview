@@ -64,6 +64,7 @@ const browserId = () => {
     return {name: M[0], version: M[1]};
 };
 
+// eslint-disable-next-line complexity
 $.isSupported = () => {
     const info = browserId();
 
@@ -252,26 +253,6 @@ $.activateScripts = function (el) {
 
     processOne();
 };
-
-$.insertHtml = (containerEl, model) => {
-    /* eslint complexity: 0 */
-    const containers = containerEl ? containerEl.querySelectorAll('[data-html]') : [];
-    const modelValue = model instanceof Function ? model() : model;
-
-    for (const htmlEl of containers) {
-        /* eslint no-eval: 0 */
-        const html = htmlEl.dataset ? htmlEl.dataset.html : htmlEl.getAttribute('data-html');
-        const expr = `modelValue.${html}`;
-
-        try {
-            htmlEl.innerHTML = eval(expr) || '';
-            $.activateScripts(htmlEl);
-        } catch (e) {
-            console.warn('Eval', expr, e);
-        }
-    }
-};
-
 
 function splitSearchString() {
     return window.location.search.substr(1).split('&')

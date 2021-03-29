@@ -1,4 +1,4 @@
-import {useState, useRef, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import userModel from '~/models/usermodel';
 import tableOfContentsHtml from '~/models/table-of-contents-html';
 import partnerFeaturePromise, {tooltipText} from '~/models/salesforce-partners';

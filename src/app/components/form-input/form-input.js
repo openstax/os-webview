@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect, useLayoutEffect} from 'react';
+import React, {useState, useRef, useLayoutEffect} from 'react';
 import {useSelectList} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import shellBus from '~/components/shell/shell-bus';
 import cn from 'classnames';

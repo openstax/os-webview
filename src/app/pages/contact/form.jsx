@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
-import SalesforceForm from '~/components/salesforce-form/salesforce-form.jsx';
+import SalesforceForm from '~/components/salesforce-form/salesforce-form';
 import {useSalesforceLoadedState, salesforce} from '~/models/salesforce';
 import Select from '~/components/select/select.jsx';
 import routerBus from '~/helpers/router-bus';

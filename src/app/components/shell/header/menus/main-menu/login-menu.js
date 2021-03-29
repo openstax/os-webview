@@ -1,5 +1,5 @@
 import settings from 'settings';
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {useToggle, useLocation, useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {useUserModel} from '~/models/usermodel';
 import userModelBus from '~/models/usermodel-bus';
@@ -11,6 +11,7 @@ const reqFacultyAccessLink = `${settings.accountHref}/i/signup/educator/cs_form`
 
 function LoginLink() {
     // It's not used directly, but loginLink changes when it does
+    // eslint-disable-next-line no-unused-vars
     const location = useLocation();
 
     return (
@@ -69,6 +70,7 @@ function TutorMenuItemIfUser({userModel}) {
 
 // eslint-disable-next-line complexity
 function LoginMenuWithDropdown({userModel}) {
+    // eslint-disable-next-line no-unused-vars
     const location = useLocation(); // updates logoutLink
     const label = `Hi ${userModel.first_name || userModel.username}`;
     const incomplete = !Boolean(
@@ -85,7 +87,7 @@ function LoginMenuWithDropdown({userModel}) {
     return (
         <Dropdown className="login-menu nav-menu-item rightmost dropdown" label={label} excludeWrapper>
             <MenuItem label="Account Profile" url={`${settings.accountHref}/profile`} />
-            <TutorMenuItem userModel={userModel} />
+            <TutorMenuItemIfUser userModel={userModel} />
             {incomplete && <MenuItem label="Finish signing up" url={facultySignupStep4} />}
             {
                 instructorEligible &&

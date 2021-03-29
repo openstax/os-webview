@@ -1,5 +1,4 @@
-import React, {createContext, useContext} from 'react';
-import useReviews from '~/models/reviews';
+import React, {createContext} from 'react';
 
 const PageContext = createContext();
 

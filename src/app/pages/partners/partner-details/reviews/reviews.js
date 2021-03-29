@@ -19,7 +19,7 @@ function Bar({num, value, max}) {
 }
 
 function DistributionBars() {
-    const {partnerId, reviews, summary} = useContext(PartnerContext);
+    const {reviews, summary} = useContext(PartnerContext);
 
     const ratingsCount = reviews.reduce((a, b) => {
         if (!(b.rating in a)) {
@@ -41,7 +41,7 @@ function DistributionBars() {
 }
 
 function Synopsis() {
-    const {partnerId, summary: {rating, count}} = useContext(PartnerContext);
+    const {summary: {rating, count}} = useContext(PartnerContext);
 
     return (
         <div className="review-synopsis">
@@ -110,7 +110,7 @@ function ReviewPrompt({accountId, hasWrittenReview, status, updated}) {
 
 function ReviewsPage() {
     const {accountId} = useContext(UserContext);
-    const {partnerId, reviews} = useContext(PartnerContext);
+    const {reviews} = useContext(PartnerContext);
     const reviewModels = reviews
         .map((r) => ({
             initials: r.submittedByName.replace(/[^A-Z]/g, '').substr(0, 2),
@@ -125,7 +125,6 @@ function ReviewsPage() {
         .filter((r) => r.review.length > 0 || r.allowEdit)
         .sort((a, b) => new Date(b.updated) - new Date(a.updated));
     const indexOfUserReview = reviewModels.findIndex((r) => r.allowEdit);
-    const notLoggedIn = !accountId;
 
     if (indexOfUserReview > -1) {
         const [userReview] = reviewModels.splice(indexOfUserReview, 1);

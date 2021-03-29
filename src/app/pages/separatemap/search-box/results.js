@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import querySchools from '~/models/querySchools';
 import analytics from '~/helpers/analytics';
 import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';

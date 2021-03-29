@@ -24,7 +24,7 @@ function baseHref() {
     return h.href;
 }
 
-function ResultCard({entry, linkTexts, setPartner}) {
+function ResultCard({entry, setPartner}) {
     const {
         title, logoUrl, verifiedFeatures, badgeImage, tags, rating, ratingCount
     } = modelFromEntry(entry);
@@ -54,7 +54,7 @@ function ResultCard({entry, linkTexts, setPartner}) {
             }
             <div className="resource-title">{title}</div>
             <div className="tags">
-                {tags.map(({value, label}) => <div key={value}>{value}</div>)}
+                {tags.map(({value}) => <div key={value}>{value}</div>)}
             </div>
             <StarsAndCount
                 rating={summary.rating}
@@ -93,7 +93,6 @@ export default function ResultGrid({entries, linkTexts}) {
                     <ResultCard
                         key={entry.title}
                         entry={entry}
-                        linkTexts={linkTexts}
                         setPartner={setPartner}
                     />
                 )

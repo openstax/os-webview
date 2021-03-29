@@ -1,4 +1,3 @@
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import React, {useState} from 'react';
 import {LoaderPage, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import TabGroup from '~/components/tab-group/tab-group.jsx';
@@ -85,8 +84,6 @@ function Tabs({model}) {
 }
 
 function ApplicationPage({data}) {
-    const [selectedLabel, setSelectedLabel] = useState('Application');
-
     return (
         <React.Fragment>
             <div class="hero">
@@ -96,23 +93,18 @@ function ApplicationPage({data}) {
                 </div>
             </div>
             <Tabs model={data} />
-            <TestimonialBlock selectedLabel={selectedLabel} data={data} />
+            <TestimonialBlock selectedLabel="Application" data={data} />
         </React.Fragment>
     );
 }
 
-function ApplicationLoader() {
+export default function ApplicationLoader() {
     return (
-        <LoaderPage
-            slug="pages/institutional-partnership" Child={ApplicationPage}
-            doDocumentSetup
-        />
+        <main className="institutional-page page">
+            <LoaderPage
+                slug="pages/institutional-partnership" Child={ApplicationPage}
+                doDocumentSetup
+            />
+        </main>
     );
 }
-
-const view = {
-    tag: 'main',
-    classes: ['institutional-page', 'page']
-};
-
-export default pageWrapper(ApplicationLoader, view);

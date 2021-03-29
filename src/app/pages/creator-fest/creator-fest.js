@@ -1,5 +1,4 @@
 import React from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {LoaderPage, useLocation} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Banner from './banner/banner';
 import Navigator from './navigator/navigator';
@@ -8,6 +7,8 @@ import HomeContent from './home-content/home-content';
 import './creator-fest.css';
 
 function PageContent({data, navLinks}) {
+    // Gives reactivity on window.location.pathname
+    // eslint-disable-next-line no-unused-vars
     const location = useLocation();
     const linkEntry = navLinks
         .find((obj) => `/creator-fest/${obj.url}` === window.location.pathname);
@@ -44,15 +45,10 @@ function CreatorFest({data}) {
     );
 }
 
-function CFLoader() {
+export default function CFLoader() {
     return (
-        <LoaderPage slug="pages/creator-fest" Child={CreatorFest} doDocumentSetup />
+        <main className="creator-fest page">
+            <LoaderPage slug="pages/creator-fest" Child={CreatorFest} doDocumentSetup />
+        </main>
     );
 }
-
-const view = {
-    classes: ['creator-fest', 'page'],
-    tag: 'main'
-};
-
-export default pageWrapper(CFLoader, view);

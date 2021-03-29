@@ -1,8 +1,7 @@
-import React, {useState, useContext} from 'react';
+import React, {useContext} from 'react';
 import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './resource-box.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import $ from '~/helpers/$';
 import Dialog from '~/components/dialog/dialog';
 import analytics from '~/helpers/analytics';
 import CompCopyRequestForm from './request-form/request-form';
@@ -233,12 +232,11 @@ function ResourceBox({model}) {
         double: model.double,
         'coming-soon': model.comingSoon
     };
-    const [isNew, updateIsNew] = useState(model.isNew);
 
     return (
         <div className={cn('resource-box', classNames)}>
             <ReferenceNumber referenceNumber={model.videoReferenceNumber} />
-            <Top model={model} isNew={isNew} />
+            <Top model={model} isNew={model.isNew} />
             <Bottom model={model} />
         </div>
     );

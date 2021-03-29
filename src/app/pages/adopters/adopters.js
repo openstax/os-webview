@@ -1,15 +1,10 @@
-import {pageWrapper} from '~/controllers/jsx-wrapper';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {usePageData} from '~/helpers/controller/cms-mixin';
 import './adopters.css';
 
-const view = {
-    classes: ['adopters-page', 'text-content'],
-    tag: 'main'
-};
 const slug = 'adopters';
 
-function Page() {
+export default function Adopters() {
     const [pageData, statusPage] = usePageData({slug});
 
     if (statusPage) {
@@ -17,7 +12,7 @@ function Page() {
     }
 
     return (
-        <React.Fragment>
+        <main className="adopters-page text-content">
             <h1>Complete list of institutions that have adopted OpenStax</h1>
             <ul className="adopters">
                 {
@@ -26,8 +21,6 @@ function Page() {
                     )
                 }
             </ul>
-        </React.Fragment>
+        </main>
     );
 }
-
-export default pageWrapper(Page, view);

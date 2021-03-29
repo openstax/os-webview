@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import cn from 'classnames';
 import './inputs.css';
@@ -16,7 +16,11 @@ function FilterToggleButton({filtersHidden, toggleFilters, children}) {
     );
 }
 
-function SearchAndClear({placeholder, textValue='', setTextValue}) {
+function SearchAndClear({
+    placeholder='Search by country, state, city, or institution name',
+    textValue='',
+    setTextValue
+}) {
     const clearIconHiddenFlag = textValue.length < 1;
 
     function updateOnEnter(event) {
@@ -29,7 +33,7 @@ function SearchAndClear({placeholder, textValue='', setTextValue}) {
         <div className="search-and-clear">
             <input
                 type="text" className="search-input"
-                placeholder="Search by country, state, city, or institution name"
+                placeholder={placeholder}
                 value={textValue}
                 onKeyDown={updateOnEnter}
             />

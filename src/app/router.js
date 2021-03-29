@@ -3,7 +3,7 @@ import {
     BrowserRouter,
     Switch,
     Route,
-    Link
+    Redirect
 } from 'react-router-dom';
 import linkHelper from './helpers/link';
 import analytics from './helpers/analytics';
@@ -133,7 +133,7 @@ function ImportedPage({name}) {
 
     React.useEffect(() => {
         System.import(`~/pages/${name}/${name}`).then((content) => {
-            setContent(content.default);
+            setContent(<content.default />);
         });
         if (!(history.state && history.state.redirect)) {
             analytics.sendPageview();
@@ -196,6 +196,7 @@ function Router() {
                 <Route path="/errata/">
                     <ImportedPage name="errata-detail" />
                 </Route>
+                <Redirect from="/books/:title" to="/details/books/:title" />
                 <Route path="*" render={error404} />
             </Switch>
         </BrowserRouter>

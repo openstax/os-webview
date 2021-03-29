@@ -5,7 +5,7 @@ import booksPromise from '~/models/books';
 import {useSalesforceLoadedState, salesforce} from '~/models/salesforce';
 import './testimonial-form.css';
 
-function Controls({book}) {
+function Controls() {
     return (
         <React.Fragment>
             <div className="control-group">
@@ -26,7 +26,11 @@ export default function TestimonialForm({email, school, firstName, lastName, aft
         }));
     const sfLoaded = useSalesforceLoadedState();
 
-    function onSubmit(event) {
+    if (!sfLoaded) {
+        return null;
+    }
+
+    function onSubmit() {
         const form = document.getElementById('form-response');
 
         function doAfterSubmitAndCleanup() {

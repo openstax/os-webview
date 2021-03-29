@@ -2,7 +2,7 @@ import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './results.css';
 
-export default function Results({heading, description, cards: [cards], ...other}) {
+export default function Results({heading, description, cards: [cards]}) {
     const images = [
         '/images/institutional-partnership/first-result-icon.svg',
         '/images/institutional-partnership/second-result-icon.svg'

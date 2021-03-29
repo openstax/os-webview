@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {PutAway} from '../shared.jsx';
 import useMSQueue from './queue';
 import './microsurvey-popup.css';

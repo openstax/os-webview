@@ -1,8 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import FeaturedResources from '../../common/featured-resources/featured-resources.js';
 import {instructorResourceBoxPermissions} from '../../common/resource-box/resource-box';
 import ResourceBoxes, {VideoResourceBoxes} from '../../common/resource-box/resource-boxes';
-import shuffle from 'lodash/shuffle';
 import Partners from './partners/partners';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';

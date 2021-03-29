@@ -1,6 +1,5 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import shellBus from '~/components/shell/shell-bus';
 import $ from '~/helpers/$';
@@ -10,12 +9,6 @@ import {queryById} from '~/models/querySchools';
 import Map from '~/helpers/map-api';
 import SearchBox from './search-box/search-box';
 import './separatemap.css';
-
-const view = {
-    classes: ['separatemap', 'page'],
-    tag: 'main',
-    id: 'maincontent'
-};
 
 function useMap() {
     const [map, setMap] = useState();
@@ -113,7 +106,7 @@ function PopupMessage() {
     );
 }
 
-function SeparateMap() {
+export default function SeparateMap() {
     useEffect(() => {
         shellBus.emit('with-sticky');
 
@@ -121,13 +114,11 @@ function SeparateMap() {
     }, []);
 
     return (
-        <React.Fragment>
+        <main id="maincontent" className="separatemap page">
             <div id="mapd" className="mapd" />
             <GoBackControl />
             <SearchBoxDiv />
             <PopupMessage />
-        </React.Fragment>
+        </main>
     );
 }
-
-export default pageWrapper(SeparateMap, view);

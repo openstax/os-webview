@@ -24,7 +24,7 @@ export default function ({isRex, cnxId, webviewLink, isTutor}) {
             if (entry.contents) {
                 htmlEntities.push(`${entry.title}<ul class="no-bullets">`);
                 buildTableOfContents(entry.contents, 'li')
-                    .forEach((e, i) => {
+                    .forEach((e) => {
                         htmlEntities.push(e);
                     });
                 htmlEntities.push('</ul>');

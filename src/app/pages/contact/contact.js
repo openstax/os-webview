@@ -1,16 +1,12 @@
 import React from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {usePageData} from '~/helpers/controller/cms-mixin';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Form from './form.jsx';
 import './contact.css';
 
-const view = {
-    classes: ['contact-page', 'page']
-};
 const slug = 'pages/contact';
 
-function Page() {
+export default function ContactPage() {
     const [pageData, statusPage] = usePageData({slug});
 
     if (statusPage) {
@@ -25,7 +21,7 @@ function Page() {
     } = pageData;
 
     return (
-        <main id="maincontent">
+        <main id="maincontent" className="contact-page page">
             <div class="hero">
                 <div class="boxed">
                     <h1>{title}</h1>
@@ -47,4 +43,10 @@ function Page() {
     );
 }
 
-export default pageWrapper(Page, view);
+// function pw(C) {
+//     return (
+//         <C />
+//     );
+// }
+//
+// export default pw(ContactPage);

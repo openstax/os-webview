@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import useStickyMicrosurveyContent from './sticky-content';
 import useAdoptionMicrosurveyContent from './adoption-content';
 

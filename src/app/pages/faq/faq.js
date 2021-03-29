@@ -1,4 +1,3 @@
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {LoaderPage, RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import React from 'react';
 import cn from 'classnames';
@@ -81,15 +80,10 @@ function FAQ({data: {
     );
 }
 
-function FAQLoader() {
+export default function FAQLoader() {
     return (
-        <LoaderPage slug="pages/faq" Child={FAQ} doDocumentSetup />
+        <main className="faq-page page">
+            <LoaderPage slug="pages/faq" Child={FAQ} doDocumentSetup />
+        </main>
     );
 }
-
-const view = {
-    classes: ['faq-page', 'page'],
-    tag: 'main'
-};
-
-export default pageWrapper(FAQLoader, view);

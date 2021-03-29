@@ -8,10 +8,6 @@ import {usePageData} from '~/helpers/controller/cms-mixin';
 import routerBus from '~/helpers/router-bus';
 import './article.css';
 
-const view = {
-    classes: ['article']
-};
-
 function getProgress(el) {
     const divRect = el.getBoundingClientRect();
     const viewportBottom = window.innerHeight;

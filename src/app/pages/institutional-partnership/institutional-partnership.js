@@ -1,5 +1,4 @@
 import React from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
 import Banner from './sections/banner/banner';
@@ -71,16 +70,12 @@ function InstitutionalPartnership({data}) {
     );
 }
 
-const view = {
-    classes: ['institutional-partnership', 'page'],
-    tag: 'main'
-};
 const slug = 'pages/institutional-partners';
 
-function PageLoader() {
+export default function PageLoader() {
     return (
-        <LoaderPage slug={slug} Child={InstitutionalPartnership} doDocumentSetup noCamelCase />
+        <main className="institutional-partnership page">
+            <LoaderPage slug={slug} Child={InstitutionalPartnership} doDocumentSetup noCamelCase />
+        </main>
     );
 }
-
-export default pageWrapper(PageLoader, view);

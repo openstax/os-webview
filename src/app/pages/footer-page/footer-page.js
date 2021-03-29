@@ -1,8 +1,27 @@
-import {pageWrapper} from '~/controllers/jsx-wrapper';
-import Page from './footer-page.jsx';
+import React from 'react';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {usePageData} from '~/helpers/controller/cms-mixin';
+import './footer-page.css';
 
-const view = {
-    classes: ['footer-page', 'page']
-};
+export default function FooterPage() {
+    const slug = `pages${window.location.pathname}`;
+    const [data, statusPage] = usePageData({slug});
 
-export default pageWrapper(Page, view);
+    if (statusPage) {
+        return statusPage;
+    }
+
+    const contentFieldName = Reflect.ownKeys(data)
+        .find((k) => k.match(/_content$/));
+    const {intro_heading: heading, [contentFieldName]: content} = data;
+
+    return (
+        <div className="footer-page page">
+            <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
+            <main id="maincontent" className="text-content left-justified">
+                <RawHTML Tag="h1" html={heading} />
+                <RawHTML html={content} />
+            </main>
+        </div>
+    );
+}

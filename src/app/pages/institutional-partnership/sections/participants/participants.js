@@ -7,7 +7,7 @@ import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './participants.css';
 
 export default function Participants({
-    heading, subheading, icons: [icons], linkTarget, linkText, ...other
+    heading, subheading, icons: [icons], linkTarget, linkText
 }) {
     const {true: current, false: established} = groupBy(icons, 'currentCohort');
     const [isOpen, toggle] = useToggle();
@@ -31,7 +31,7 @@ export default function Participants({
                 </div>
                 <a
                     className="show-established-partners"
-                    href="{linkTarget}"
+                    href={linkTarget}
                     onClick={showEstablished}
                 >
                     <span>{linkText}</span>

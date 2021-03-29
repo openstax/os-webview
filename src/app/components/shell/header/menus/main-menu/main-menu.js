@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from 'react';
+import React from 'react';
 import categoryPromise from '~/models/subjectCategories';
 import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Dropdown, {MenuItem} from './dropdown/dropdown';

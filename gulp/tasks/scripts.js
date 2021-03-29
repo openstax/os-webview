@@ -166,7 +166,7 @@ function eslint() {
             'no-duplicate-imports': 'error',
             'no-new-symbol': 'error',
             'no-this-before-super': 'error',
-            'no-unused-vars': 'error',
+            'no-unused-vars': ['error', {'varsIgnorePattern': '_'}],
             'no-useless-computed-key': 'error',
             'no-useless-constructor': 'error',
             'no-useless-rename': 'error',
