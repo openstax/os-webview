@@ -15,22 +15,20 @@ import $ from '~/helpers/$';
 import './openstax-tutor.css';
 
 export function TutorMarketingPage({data}) {
-    const model = $.camelCaseKeys(data);
-
     return (
         <React.Fragment>
-            <Banner model={model} />
-            <QuoteBox model={model} />
+            <Banner model={data} />
+            <QuoteBox model={data} />
             <div className="reset-odd-counter" />
-            <Features model={model} />
-            <Materials model={model} />
-            <Cost model={model} />
-            <Feedback model={model} />
+            <Features model={data} />
+            <Materials model={data} />
+            <Cost model={data} />
+            <Feedback model={data} />
             <div className="reset-odd-counter" />
-            <Webinars model={model} />
-            <FAQ model={model} />
+            <Webinars model={data} />
+            <FAQ model={data} />
             <StickyFooter>
-                <ButtonRow model={model} />
+                <ButtonRow model={data} />
             </StickyFooter>
         </React.Fragment>
     );
