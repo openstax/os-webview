@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import OptionsList from './options-list/options-list';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faCaretUp, faCaretDown} from '@fortawesome/free-solid-svg-icons';
 import {books, types, advanced, sort, clearStores} from '../store';
 import BookOptions from './book-options/book-options';
 import AdvancedOptions from './advanced-options/advanced-options';
@@ -30,7 +31,7 @@ export const sortOptions = [
 
 export function BaseButton({label, openButton, setOpenButton, children, size, fullScreen}) {
     const isOpen = openButton === label;
-    const caretDirection = isOpen ? 'up' : 'down';
+    const caretIcon = isOpen ? faCaretUp : faCaretDown;
 
     function toggle(event) {
         event.stopPropagation();
@@ -48,7 +49,7 @@ export function BaseButton({label, openButton, setOpenButton, children, size, fu
                     {label}
                     {size > 0 && <span className="size">({size})</span>}
                 </span>
-                <FontAwesomeIcon icon={`caret-${caretDirection}`} />
+                <FontAwesomeIcon icon={caretIcon} />
             </button>
             <div className={cn('popover', {fullScreen})}>
                 {isOpen && children}

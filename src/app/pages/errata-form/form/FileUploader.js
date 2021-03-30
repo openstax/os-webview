@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faTimes} from '@fortawesome/free-solid-svg-icons';
 import cn from 'classnames';
 
 function FileButton({name}) {
@@ -34,7 +35,7 @@ function FileButton({name}) {
                     <React.Fragment>
                         <span className="file-name">{filePath}</span>
                         <button type="button" className="clear-file" aria-label="Clear file" onClick={clearFile}>
-                            <FontAwesomeIcon icon="times" />
+                            <FontAwesomeIcon icon={faTimes} />
                         </button>
                     </React.Fragment>
             }

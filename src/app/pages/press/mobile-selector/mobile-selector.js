@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
 import './mobile-selector.css';
 
 function MenuItem({selectedValue, value, onChange}) {
@@ -43,7 +44,7 @@ export default function MobileSelector({selectedValue, values, onChange}) {
         <div className="mobile-selector">
             <div className="selector-button" onClick={toggleShowing}>
                 <span>{selectedValue}</span>
-                <FontAwesomeIcon icon="caret-down" />
+                <FontAwesomeIcon icon={faCaretDown} />
             </div>
             {
                 showingMenu &&

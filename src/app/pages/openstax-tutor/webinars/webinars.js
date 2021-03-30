@@ -2,6 +2,7 @@ import React from 'react';
 import {LabeledSection} from '../common';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import Carousel from '~/components/carousel/carousel';
 import './webinars.css';
 
@@ -12,7 +13,7 @@ function Card({title='*No title given', description, link: url}) {
             <RawHTML html={description} />
             <a href={url}>
                 Watch this webinar&nbsp;
-                <FontAwesomeIcon icon="chevron-right" />
+                <FontAwesomeIcon icon={faChevronRight} />
             </a>
         </div>
     );

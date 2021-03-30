@@ -1,5 +1,9 @@
 import React, {useState, useLayoutEffect} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {
+    faAtom, faBook, faLaptop, faListOl, faMobileAlt, faCloudDownloadAlt, faVolumeUp
+} from '@fortawesome/free-solid-svg-icons';
+import {faAmazon, faApple} from '@fortawesome/free-brands-svg-icons';
 import $ from '~/helpers/$';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
 import useAmazonAssociatesLink from './amazon-associates-link';
@@ -63,7 +67,7 @@ export function TocOption({model, tocState={}}) {
                 onClick={toggleToc}
                 onKeyDown={$.treatSpaceOrEnterAsClick}
             >
-                <FontAwesomeIcon icon="list-ol" />
+                <FontAwesomeIcon icon={faListOl} />
                 <span className="text">{text}</span>
             </a>
         </div>
@@ -98,10 +102,10 @@ export function WebviewOption({model}) {
     const isRex = !isTutor && Boolean(model.webviewRexLink);
     const webviewLink = model.webviewRexLink || model.webviewLink;
     const iconAndTextArgs = isTutor ? {
-        icon: 'atom',
+        icon: faAtom,
         text: 'Go to OpenStax Tutor'
     } : {
-        icon: 'laptop',
+        icon: faLaptop,
         text: $.isPolish(model.title) ? 'Zobacz w przeglądarce' : 'View online'
     };
 
@@ -139,7 +143,7 @@ export function StudyEdgeOption({model}) {
 
     return (
         <SimpleLinkOption
-            link={model.enableStudyEdge} icon="mobile-alt" text="Download the app"
+            link={model.enableStudyEdge} icon={faMobileAlt} text="Download the app"
             onClick={onClick}
         >
             <Dialog isOpen={isOpen} className="wider-dialog" onPutAway={toggle}>
@@ -158,7 +162,7 @@ export function PdfOption({model}) {
 
     return (
         <SimpleLinkOption
-            link={pdfLink} icon="cloud-download-alt" text={text}
+            link={pdfLink} icon={faCloudDownloadAlt} text={text}
             data-track="PDF"
         />
     );
@@ -181,7 +185,7 @@ export function PrintOption({model}) {
 
     return (
         <SimpleLinkOption
-            link={isRealPrintLink(amazonDataLink.url)} icon="book" text={text}
+            link={isRealPrintLink(amazonDataLink.url)} icon={faBook} text={text}
             onClick={onClick}
         >
             <Dialog title={text} isOpen={isOpen} onPutAway={toggle}>
@@ -194,7 +198,7 @@ export function PrintOption({model}) {
 export function BookshareOption({model}) {
     return (
         <SimpleLinkOption
-            link={model.bookshareLink} icon="volume-up" text="Bookshare"
+            link={model.bookshareLink} icon={faVolumeUp} text="Bookshare"
             data-track="Bookshare"
         />
     );
@@ -204,7 +208,7 @@ export function Ibooks2Volumes({model}) {
     return (
         <React.Fragment>
             <span className="option-header">
-                <IconAndText icon={['fab', 'apple']} text="Download on iBooks" />
+                <IconAndText icon={faApple} text="Download on iBooks" />
             </span>
             <a href={model.ibookLink} data-track="iBooks">
                 Part 1
@@ -223,7 +227,7 @@ export function IbooksOption({model}) {
                 model.ibookLink2 ?
                     <Ibooks2Volumes model={model} /> :
                     <a href={model.ibookLink} data-track="iBooks">
-                        <IconAndText icon={['fab', 'apple']} text="Download on iBooks" />
+                        <IconAndText icon={faApple} text="Download on iBooks" />
                     </a>
 
             }
@@ -234,7 +238,7 @@ export function IbooksOption({model}) {
 export function KindleOption({model}) {
     return (
         <SimpleLinkOption
-            link={model.kindleLink} icon={['fab', 'amazon']} text="Download for Kindle"
+            link={model.kindleLink} icon={faAmazon} text="Download for Kindle"
             data-track="Kindle"
         >
             <div class="disclaimer">

@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import './more-fewer.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faCaretLeft, faCaretRight} from '@fortawesome/free-solid-svg-icons';
 import $ from '~/helpers/$';
 
 function PseudoButton({onClick, children}) {
@@ -48,12 +49,12 @@ export function Paginated({children}) {
             {displayedChildren}
             <div class="nav-buttons">
                 <ButtonOrPresentation condition={pageNumber > 1} onClick={prevPage}>
-                    <FontAwesomeIcon icon="caret-left" />
+                    <FontAwesomeIcon icon={faCaretLeft} />
                     Newer
                 </ButtonOrPresentation>
                 <ButtonOrPresentation condition={pageNumber < lastPage} onClick={nextPage}>
                     Older
-                    <FontAwesomeIcon icon="caret-right" />
+                    <FontAwesomeIcon icon={faCaretRight} />
                 </ButtonOrPresentation>
             </div>
         </div>

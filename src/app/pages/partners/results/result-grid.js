@@ -3,6 +3,7 @@ import Dialog from '~/components/dialog/dialog';
 import PartnerDetails from '../partner-details/partner-details';
 import StarsAndCount from '~/components/stars-and-count/stars-and-count';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faCheck} from '@fortawesome/free-solid-svg-icons';
 import analyticsEvents from '../analytics-events';
 
 function modelFromEntry(entry) {
@@ -47,7 +48,7 @@ function ResultCard({entry, setPartner}) {
                 verifiedFeatures &&
                 <div className="badge">
                     <img className="background" src={badgeImage} alt="verified" />
-                    <FontAwesomeIcon icon="check" />
+                    <FontAwesomeIcon icon={faCheck} />
                     <div className="tooltip top">
                         {verifiedFeatures}
                     </div>

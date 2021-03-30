@@ -3,6 +3,9 @@ import {ActiveElementContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
 import cn from 'classnames';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {
+    faBook, faChalkboardTeacher, faEllipsisV, faGraduationCap
+} from '@fortawesome/free-solid-svg-icons';
 
 function QuickLink({url, icon, text}) {
     return (
@@ -20,19 +23,19 @@ function Dropdown({urlBase, details}) {
 
     return (
         <div className="ur-dropdown" onClick={stopClickPropagation}>
-            <QuickLink url={urlBase} icon="book" text="Get this book" />
+            <QuickLink url={urlBase} icon={faBook} text="Get this book" />
             {
                 details.hasFacultyResources &&
                     <QuickLink
                         url={`${urlBase}?Instructor%20resources`}
-                        icon="chalkboard-teacher" text="Instructor Resources"
+                        icon={faChalkboardTeacher} text="Instructor Resources"
                     />
             }
             {
                 details.hasStudentResources &&
                     <QuickLink
                         url={`${urlBase}?Student%20resources`}
-                        icon="graduation-cap" text="Student Resources" />
+                        icon={faGraduationCap} text="Student Resources" />
             }
         </div>
     );
@@ -91,7 +94,7 @@ function ThreeDotMenu({slug, details}) {
             className={classList.join(' ')}
             role="button" tabIndex="0" ref={ref}
         >
-            <FontAwesomeIcon icon="ellipsis-v" />
+            <FontAwesomeIcon icon={faEllipsisV} />
             <Dropdown urlBase={`details/${slug}`} details={details} />
         </div>
     );

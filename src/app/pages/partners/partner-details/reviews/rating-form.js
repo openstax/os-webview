@@ -1,5 +1,6 @@
 import React, {useState, useContext, useRef} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faInfoCircle, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 import PageContext from './page-context';
 import UserContext from './user-context';
 import PartnerContext from '../partner-context';
@@ -75,7 +76,7 @@ function InfoButton({info}) {
             onClick={() => toggle()}
             onMouseLeave={() => toggle(false)}
         >
-            <FontAwesomeIcon icon="info-circle" />
+            <FontAwesomeIcon icon={faInfoCircle} />
             <RawHTML className="tooltip" html={info} hidden={!hovering} />
         </div>
     );
@@ -140,7 +141,7 @@ export default function RatingForm() {
         <div className="rating-form">
             <div>
                 <span className="back-button" role="button" onClick={() => togglePage()}>
-                    <FontAwesomeIcon icon="arrow-left" />
+                    <FontAwesomeIcon icon={faArrowLeft} />
                 </span>
                 <h1>{heading}</h1>
             </div>
