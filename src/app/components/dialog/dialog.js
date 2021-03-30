@@ -18,9 +18,14 @@ function PutAway({noTitle, onClick}) {
 export function FooterDialog({
     isOpen, title, children
 }) {
+    const footerEl = document.getElementById('footer');
+
     if (!isOpen) {
+        footerEl.style.removeProperty('z-index');
         return null;
     }
+
+    footerEl.style.zIndex = 1;
     return (
         <dialog className="footer-dialog">
             <div className="title-bar">
