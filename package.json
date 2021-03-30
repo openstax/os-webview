@@ -16,6 +16,8 @@
         "@fortawesome/free-regular-svg-icons": "^5.13.0",
         "@fortawesome/free-solid-svg-icons": "^5.13.0",
         "@fortawesome/react-fontawesome": "^0.1.9",
+        "@sentry/react": "^5.27.6",
+        "@sentry/tracing": "^6.2.3",
         "browserslist": "^4.16.3",
         "caniuse-lite": "^1.0.30001192",
         "classnames": "^2.2.6",

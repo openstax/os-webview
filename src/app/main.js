@@ -1,6 +1,7 @@
 import $ from './helpers/$';
 import router from './router';
 import ReactModal from 'react-modal';
+import './sentry';
 
 router.start();
 ReactModal.setAppElement('#main');
