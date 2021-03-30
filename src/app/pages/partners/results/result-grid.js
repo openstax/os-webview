@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Dialog from '~/components/dialog/dialog';
 import PartnerDetails from '../partner-details/partner-details';
 import StarsAndCount from '~/components/stars-and-count/stars-and-count';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import analyticsEvents from '../analytics-events';
 
 function modelFromEntry(entry) {
@@ -46,7 +47,7 @@ function ResultCard({entry, setPartner}) {
                 verifiedFeatures &&
                 <div className="badge">
                     <img className="background" src={badgeImage} alt="verified" />
-                    <i className="checkmark fa fa-check"></i>
+                    <FontAwesomeIcon icon="check" />
                     <div className="tooltip top">
                         {verifiedFeatures}
                     </div>

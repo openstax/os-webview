@@ -1,4 +1,4 @@
-import { library, dom } from '@fortawesome/fontawesome-svg-core';
+import { library } from '@fortawesome/fontawesome-svg-core';
 
 function loadToLibrary(path) {
     // eslint-disable-next-line global-require
@@ -86,6 +86,3 @@ const loadRegularIcon = loaderForPath('free-regular-svg-icons');
 [
     'faEnvelopeOpen'
 ].forEach(loadRegularIcon);
-
-// This handles non-React tag replacement
-dom.watch();
