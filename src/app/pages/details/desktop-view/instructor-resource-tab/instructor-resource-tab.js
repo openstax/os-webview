@@ -1,4 +1,5 @@
 import React from 'react';
+import LazyLoad from 'react-lazyload';
 import FeaturedResources from '../../common/featured-resources/featured-resources.js';
 import {instructorResourceBoxPermissions} from '../../common/resource-box/resource-box';
 import ResourceBoxes, {VideoResourceBoxes} from '../../common/resource-box/resource-boxes';
@@ -142,20 +143,22 @@ function InstructorResourceTab({model, userStatus}) {
                             models={featuredModels}
                         />
                 }
-                <div className={`cards ${includePartners}`}>
-                    <div className="resources">
-                        <VideoResourceBoxes
-                            models={model.bookVideoFacultyResources}
-                            blogLinkModels={blogLinkModels}
-                            referenceModels={referenceModels}
+                <LazyLoad>
+                    <div className={`cards ${includePartners}`}>
+                        <div className="resources">
+                            <VideoResourceBoxes
+                                models={model.bookVideoFacultyResources}
+                                blogLinkModels={blogLinkModels}
+                                referenceModels={referenceModels}
+                            />
+                            <ResourceBoxes communityResource={communityResource} models={otherModels} />
+                        </div>
+                        <Partners
+                            bookAbbreviation={bookAbbreviation}
+                            model={partnersModel}
                         />
-                        <ResourceBoxes communityResource={communityResource} models={otherModels} />
                     </div>
-                    <Partners
-                        bookAbbreviation={bookAbbreviation}
-                        model={partnersModel}
-                    />
-                </div>
+                </LazyLoad>
             </div>
             <Webinar {...webinar} />
         </div>

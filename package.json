@@ -26,6 +26,7 @@
         "enzyme-adapter-preact-pure": "^2.2.0",
         "gulp-rev": "^9.0.0",
         "react-accessible-accordion": "^3.0.1",
+        "react-lazyload": "^3.2.0",
         "react-router-dom": "^5.2.0",
         "react-test-renderer": "^16.13.0",
         "workbox-build": "^4.3.1"

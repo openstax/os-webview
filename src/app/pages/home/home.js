@@ -5,6 +5,7 @@ import BannerCarousel from './banner-carousel/banner-carousel';
 import Buckets from './buckets/buckets';
 import Education from './education/education';
 import Quotes from './quotes/quotes';
+import LazyLoad from 'react-lazyload';
 import './home.css';
 
 const slug = 'pages/openstax-homepage';
@@ -50,13 +51,19 @@ export default function Page() {
                 largeImages={pageData.banner_images}
                 smallImages={pageData.mobile_banner_images}
             />
-            <Quotes quotes={quotesData} />
-            <Education
-                content={educationData.content}
-                linkUrl={educationData.link}
-                linkText={educationData.cta}
-            />
-            <Buckets bucketModels={bucketData} />
+            <LazyLoad>
+                <Quotes quotes={quotesData} />
+            </LazyLoad>
+            <LazyLoad>
+                <Education
+                    content={educationData.content}
+                    linkUrl={educationData.link}
+                    linkText={educationData.cta}
+                />
+            </LazyLoad>
+            <LazyLoad>
+                <Buckets bucketModels={bucketData} />
+            </LazyLoad>
         </main>
     );
 }
