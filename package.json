@@ -11,7 +11,7 @@
     },
     "license": "AGPL-3.0",
     "dependencies": {
-        "@babel/eslint-parser": "^7.13.10",
+        "@babel/eslint-parser": "^7.13.14",
         "@fortawesome/fontawesome-svg-core": "^1.2.35",
         "@fortawesome/free-brands-svg-icons": "^5.15.3",
         "@fortawesome/free-regular-svg-icons": "^5.15.3",
@@ -23,7 +23,7 @@
         "caniuse-lite": "^1.0.30001192",
         "classnames": "^2.2.6",
         "enzyme": "^3.11.0",
-        "enzyme-adapter-preact-pure": "^2.2.0",
+        "enzyme-adapter-preact-pure": "^3.0.0",
         "gulp-rev": "^9.0.0",
         "react-accessible-accordion": "^3.0.1",
         "react-lazyload": "^3.2.0",

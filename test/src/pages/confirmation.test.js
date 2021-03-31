@@ -1,4 +1,5 @@
 import Confirmation from '~/pages/confirmation/confirmation';
+import {makeMountRender} from '../../helpers/jsx-test-utils.jsx';
 
 const referrers = {
     contact: 'Thanks for contacting us',
@@ -8,10 +9,10 @@ describe('Confirmation', () => {
     Reflect.ownKeys(referrers).forEach((ref) => {
         it(`does ${ref} thanks`, () => {
             window.history.pushState({}, 'confirmation', `/confirmation/${ref}`);
-            const instance = new Confirmation();
-            const h1 = instance.el.querySelector('h1');
+            const wrapper = makeMountRender(Confirmation, {})();
+            const h1 = wrapper.find('h1');
 
-            expect(h1.textContent).toBe(referrers[ref]);
+            expect(h1.text()).toBe(referrers[ref]);
         });
     });
 });
