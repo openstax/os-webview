@@ -44,7 +44,7 @@ function CookieNoticeBody({onClose}) {
 function CookieNoticeDialog() {
     const [isOpen, toggle] = useToggle(true);
 
-    function onClose(event) {
+    function onClose() {
         cookie.setKey(ACKNOWLEDGEMENT_KEY);
         toggle();
     }

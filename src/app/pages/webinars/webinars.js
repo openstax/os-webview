@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {LoaderPage, useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import ClippedImage from '~/components/clipped-image/clipped-image';
 import TabGroup from '~/components/tab-group/tab-group.jsx';
@@ -18,7 +17,7 @@ function byDate(a, b) {
     return da - db;
 }
 
-function Webinars({data: {headline, description, heroImage, ...props}}) {
+function Webinars({data: {headline, description, heroImage}}) {
     const [selectedLabel, setSelectedLabel] = useState(tabLabels[0]);
     const webinarData = $.camelCaseKeys(
         (useDataFromSlug('webinars/?format=json') || []).sort(byDate)
@@ -72,15 +71,10 @@ function Webinars({data: {headline, description, heroImage, ...props}}) {
     );
 }
 
-function WebinarsLoader() {
+export default function WebinarsLoader() {
     return (
-        <LoaderPage slug="pages/webinars" Child={Webinars} doDocumentSetup />
+        <main className="webinars page">
+            <LoaderPage slug="pages/webinars" Child={Webinars} doDocumentSetup />
+        </main>
     );
 }
-
-const view = {
-    classes: ['webinars', 'page'],
-    tag: 'main'
-};
-
-export default pageWrapper(WebinarsLoader, view);

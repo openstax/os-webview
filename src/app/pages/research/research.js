@@ -1,4 +1,3 @@
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import React from 'react';
 import HeroSection from './hero-section/hero-section';
@@ -18,15 +17,10 @@ function ResearchPage({data}) {
     );
 }
 
-function ResearchLoader() {
+export default function ResearchLoader() {
     return (
-        <LoaderPage slug="pages/research" Child={ResearchPage} doDocumentSetup />
+        <main className="research page">
+            <LoaderPage slug="pages/research" Child={ResearchPage} doDocumentSetup />
+        </main>
     );
 }
-
-const view = {
-    classes: ['research', 'page'],
-    tag: 'main'
-};
-
-export default pageWrapper(ResearchLoader, view);

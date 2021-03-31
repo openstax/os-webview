@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import cn from 'classnames';
 import {useToggle, useSet} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Inputs from './inputs/inputs';

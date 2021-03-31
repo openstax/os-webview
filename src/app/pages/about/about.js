@@ -1,13 +1,8 @@
-import {pageWrapper} from '~/controllers/jsx-wrapper';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {usePageData} from '~/helpers/controller/cms-mixin';
 import './about.css';
 
 const slug = 'pages/about';
-const view = {
-    classes: ['about', 'page'],
-    tag: 'main'
-};
 
 function translateCard(c) {
     const imgEntry = c.find((v) => v.type === 'image');
@@ -20,7 +15,7 @@ function translateCard(c) {
     };
 }
 
-function Page() {
+export default function About() {
     const [pageData, statusPage] = usePageData({slug});
 
     if (statusPage) {
@@ -39,7 +34,7 @@ function Page() {
     const mapAlt = pageData.where_map_alt || 'animated map suggesting where our books are being adopted';
 
     return (
-        <React.Fragment>
+        <main className="about page">
             <section className="who">
                 <div className="content">
                     <div className="text-block">
@@ -78,8 +73,6 @@ function Page() {
                     <img src={map} alt={mapAlt} />
                 </div>
             </div>
-        </React.Fragment>
+        </main>
     );
 }
-
-export default pageWrapper(Page, view);

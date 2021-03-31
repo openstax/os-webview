@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import './search-bar.css';
-import {Bus} from '~/helpers/controller/bus-mixin';
 
 function SearchBarInterior({setPath}) {
     const [searchString, setSearchString] = useState(decodeURIComponent(window.location.search.substr(1)));

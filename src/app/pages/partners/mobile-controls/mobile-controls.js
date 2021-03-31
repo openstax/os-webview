@@ -6,7 +6,6 @@ import BookOptions from '../controls/book-options/book-options';
 import OptionsList from '../controls/options-list/options-list';
 import Checkboxes from '../controls/checkboxes-linked-to-store/checkboxes-linked-to-store';
 import {WindowContext, WindowContextProvider} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {BaseButton, useStoreSize, sortOptions} from '../controls/controls';
 import shellBus from '~/components/shell/shell-bus';
 import sortBy from 'lodash/sortBy';
@@ -97,10 +96,6 @@ function MobileFiltersToggle({typeOptions, advancedFilterOptions}) {
     useLayoutEffect(() => {
         shellBus.emit(openButton ? 'with-modal' : 'no-modal');
     }, [openButton]);
-
-    function unselect() {
-        setOpenButton(null);
-    }
 
     return (
         <React.Fragment>

@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import LinkOrNot from '../link-or-not';
 import cn from 'classnames';
 import './projects-section.css';
 
 const projectColors = ['blue', 'green', 'yellow', 'red', 'orange'];
 
-export default function ProjectsSection({data: {projectsHeader, projects, ...other}}) {
+export default function ProjectsSection({data: {projectsHeader, projects}}) {
     return (
         <section className="projects-section">
             <div className="content">

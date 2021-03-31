@@ -1,6 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
-import settings from 'settings';
 import $ from '~/helpers/$';
 import userModel from '~/models/usermodel';
 import {useErrataDetail} from '~/helpers/errata';
@@ -8,10 +6,6 @@ import {ErrataDetailBlock} from '~/pages/errata-detail/errata-detail';
 import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './confirmation.css';
 
-const applyLink = `${settings.accountHref}/faculty_access/apply?r=${encodeURIComponent(`${settings.apiOrigin}/`)}`;
-const view = {
-    classes: ['confirmation-page', 'page']
-};
 const models = {
     contact: {
         headline: 'Thanks for contacting us',
@@ -118,7 +112,7 @@ function ErrataButtonsAndDetail({errataId, text}) {
     );
 }
 
-function Page() {
+export default function Confirmation() {
     const referringPage = getReferringPage();
     const isErrata = referringPage === 'errata';
     const {id} = $.parseSearchString(window.location.search);
@@ -135,7 +129,7 @@ function Page() {
     $.setCanonicalLink(`/${referringPage}-confirmation`);
 
     return (
-        <React.Fragment>
+        <div className="confirmation-page page">
             <div className="page-intro">
                 <div className="subhead">
                     <div className="text-content centered">
@@ -163,8 +157,6 @@ function Page() {
                     <ErrataButtonsAndDetail errataId={errataId} text={belowHeaderText} /> :
                     <div className="wrapper" />
             }
-        </React.Fragment>
+        </div>
     );
 }
-
-export default pageWrapper(Page, view);

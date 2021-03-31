@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './hero-section.css';
 
 export default function HeroSection({data: {missionBody, missionHeader}}) {

@@ -1,4 +1,3 @@
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import React from 'react';
 import Banner from './banner/banner';
@@ -11,7 +10,6 @@ import Feedback from './feedback/feedback';
 import FAQ from './faq/faq';
 import StickyFooter from '~/components/sticky-footer/sticky-footer-wrapper';
 import ButtonRow from './button-row/button-row';
-import $ from '~/helpers/$';
 import './openstax-tutor.css';
 
 export function TutorMarketingPage({data}) {
@@ -34,15 +32,10 @@ export function TutorMarketingPage({data}) {
     );
 }
 
-function Loader() {
+export default function Loader() {
     return (
-        <LoaderPage slug="pages/openstax-tutor" Child={TutorMarketingPage} doDocumentSetup />
+        <main className="openstax-tutor-page page">
+            <LoaderPage slug="pages/openstax-tutor" Child={TutorMarketingPage} doDocumentSetup />
+        </main>
     );
 }
-
-const view = {
-    classes: ['openstax-tutor-page', 'page'],
-    tag: 'main'
-};
-
-export default pageWrapper(Loader, view);

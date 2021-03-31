@@ -1,8 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Hero from '~/components/hero/hero';
 import LinkWithChevron from '~/components/link-with-chevron/link-with-chevron';
-import $ from '~/helpers/$';
 import './our-reach.css';
 
 function Card({data}) {

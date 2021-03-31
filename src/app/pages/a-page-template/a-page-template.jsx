@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {usePageData} from '~/helpers/controller/cms-mixin';
 import ChildComponent from '~/components/a-component-template/a-component-template.jsx';
 import './a-page-template.css';

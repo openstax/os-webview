@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {LabeledSection} from '../common';
 import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';

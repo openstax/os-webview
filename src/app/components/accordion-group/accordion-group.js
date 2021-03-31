@@ -94,7 +94,7 @@ export default function AccordionGroup({
                 preExpanded={preExpandedUuids}
             >
                 {
-                    items.map((item, index) =>
+                    items.map((item) =>
                         item.inline ||
                             <Item key={item.title} {...item} checkChevronDirection={chevronDirection} />
                     )

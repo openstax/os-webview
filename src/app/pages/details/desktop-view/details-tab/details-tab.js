@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {Authors, PublicationInfo, ErrataSection} from '../../common/common';
 import GetThisTitle from '../../common/get-this-title';
@@ -7,8 +7,6 @@ import SavingsBlurb from '../../common/savings-blurb';
 import './details-tab.css';
 
 function PolishTab({model, tocState}) {
-    const errataBlurb = model.errataContent.content.content;
-
     return (
         <div className="details-tab">
             <div className="sidebar">
@@ -34,8 +32,6 @@ function PolishTab({model, tocState}) {
 }
 
 function EnglishTab({model, tocState}) {
-    const errataBlurb = model.errataContent.content.content;
-
     return (
         <div className="details-tab">
             <div className="sidebar">

@@ -1,9 +1,9 @@
 import $ from './helpers/$';
 import router from './router';
 import ReactModal from 'react-modal';
+import ReactDOM from 'react-dom';
 import './sentry';
 
-router.start();
 ReactModal.setAppElement('#main');
 
 if (!$.isSupported()) {
@@ -11,3 +11,5 @@ if (!$.isSupported()) {
     alert('Our site is designed to work with recent versions of Chrome,' +
     ' Firefox, Edge and Safari. It may not work in your browser.');
 }
+
+ReactDOM.render(router, document.getElementById('main'));

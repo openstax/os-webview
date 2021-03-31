@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import ResourceBoxes from '../resource-box/resource-boxes';
 import './featured-resources.css';
 

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import userModel from '~/models/usermodel';
 import {
@@ -14,7 +14,7 @@ userModel.load().then((i) => {
     userInfo = i;
 });
 
-function AdditionalOptions({model, toggle}) {
+function AdditionalOptions({model}) {
     return (
         <React.Fragment>
             <BookshareOption model={model} />
@@ -59,7 +59,7 @@ export default function GetThisTitle({model, tocState}) {
                     <CheggOption model={model} />
                     {
                         expanded &&
-                            <AdditionalOptions model={model} toggle={toggleExpanded} />
+                            <AdditionalOptions model={model} />
                     }
                     <OptionExpander {...{expanded, additionalOptions}} toggle={toggleExpanded} />
                 </div>

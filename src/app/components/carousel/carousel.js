@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {WindowContextProvider, WindowContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import cn from 'classnames';

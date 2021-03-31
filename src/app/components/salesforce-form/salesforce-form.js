@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState} from 'react';
 import {LoadPageAfterSalesforce, salesforce} from '~/models/salesforce';
 
 export const FormSubmitContext = React.createContext();

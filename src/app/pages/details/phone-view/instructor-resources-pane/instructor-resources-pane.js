@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import routerBus from '~/helpers/router-bus';
 import {instructorResourceBoxPermissions} from '../../common/resource-box/resource-box';
@@ -61,7 +61,8 @@ export function InstructorResourcesPane({model, userStatus}) {
     function goToPartners(event) {
         event.preventDefault();
         routerBus.emit('navigate', '/partners', {
-            book: model.salesforceAbbreviation
+            book: model.salesforceAbbreviation,
+            redirect: true
         }, true);
     }
 

@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useRef, useContext} from 'react';
-import PartnerContext, {PartnerContextProvider} from './partner-context';
+import React, {useState, useEffect, useRef} from 'react';
+import {PartnerContextProvider} from './partner-context';
 import Synopsis from './synopsis/synopsis';
 import Carousel from './carousel/carousel';
 import Reviews from './reviews/reviews';
@@ -37,7 +37,7 @@ function useRealTitles(books) {
 }
 
 function RequestInfoButton({infoUrl, infoText, partnerName}) {
-    function trackInfoRequest(event) {
+    function trackInfoRequest() {
         analyticsEvents.requestInfo(partnerName);
     }
 
@@ -94,7 +94,7 @@ function logScrollingInRegion(detailsEl, name) {
     }
     const scrollingRegion = detailsEl.closest('.main-region');
     const removeScrollListener = (callback) => scrollingRegion.removeEventListener('scroll', callback);
-    const scrollCallback = (event) => {
+    const scrollCallback = () => {
         analyticsEvents.lightboxScroll(name);
         removeScrollListener(scrollCallback);
     };
@@ -105,7 +105,6 @@ function logScrollingInRegion(detailsEl, name) {
 }
 
 function PartnerDetails({model}) {
-    const context = useContext(PartnerContext);
     const {
         website, partnerWebsite, websiteLinkText: partnerLinkText,
         logoUrl

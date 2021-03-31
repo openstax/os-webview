@@ -1,7 +1,7 @@
-import React, {createContext, useContext} from 'react';
+import React from 'react';
 import {useUserModel} from '~/models/usermodel';
 
-const UserContext = createContext();
+const UserContext = React.createContext();
 
 export default UserContext;
 

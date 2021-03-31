@@ -5,7 +5,7 @@ import StarsAndCount from '~/components/stars-and-count/stars-and-count';
 import analyticsEvents from '~/pages/partners/analytics-events';
 import './partners.css';
 
-function Blurb({blurb, badgeImage, onClick, partnerId}) {
+function Blurb({blurb, badgeImage, onClick}) {
     const tags = [blurb.cost, blurb.type].filter((x) => x);
     const {count: ratingCount, average: rating} = blurb;
 
@@ -40,7 +40,7 @@ function Blurb({blurb, badgeImage, onClick, partnerId}) {
                         )
                     }
                 </div>
-                <StarsAndCount rating={blurb.rating} count={blurb.ratingCount} showNumber />
+                <StarsAndCount rating={rating} count={ratingCount} showNumber />
             </div>
         </a>
     );
@@ -53,7 +53,8 @@ export default function Partners({bookAbbreviation, model}) {
         const destUrl = event.target.getAttribute('href');
 
         routerBus.emit('navigate', destUrl, {
-            book: bookAbbreviation
+            book: bookAbbreviation,
+            redirect: true
         }, true);
     }
 
@@ -69,7 +70,7 @@ export default function Partners({bookAbbreviation, model}) {
                     {
                         blurbs.map((blurb) =>
                             <Blurb
-                                blurb={blurb} onClick={onClick} badgeImage={badgeImage} partnerId={blurb.id}
+                                blurb={blurb} onClick={onClick} badgeImage={badgeImage}
                                 key={blurb.url}
                             />
                         )

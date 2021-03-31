@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './a-component-template.css';
 
 export default function ComponentTemplate({message}) {

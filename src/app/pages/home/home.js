@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {usePageData} from '~/helpers/controller/cms-mixin';
 import $ from '~/helpers/$';
 import BannerCarousel from './banner-carousel/banner-carousel';
@@ -8,14 +7,9 @@ import Education from './education/education';
 import Quotes from './quotes/quotes';
 import './home.css';
 
-const view = {
-    classes: ['home-page'],
-    tag: 'main',
-    id: 'maincontent'
-};
 const slug = 'pages/openstax-homepage';
 
-function Page() {
+export default function Page() {
     const [pageData, statusPage] = usePageData({slug});
 
     useEffect(() => {
@@ -51,7 +45,7 @@ function Page() {
     });
 
     return (
-        <React.Fragment>
+        <main id="maincontent" className="home-page">
             <BannerCarousel
                 largeImages={pageData.banner_images}
                 smallImages={pageData.mobile_banner_images}
@@ -63,8 +57,6 @@ function Page() {
                 linkText={educationData.cta}
             />
             <Buckets bucketModels={bucketData} />
-        </React.Fragment>
+        </main>
     );
 }
-
-export default pageWrapper(Page, view);

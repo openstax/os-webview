@@ -2,7 +2,7 @@ import React, {useState, useRef, useEffect} from 'react';
 import managedInvalidMessage from '../InvalidMessage.js';
 import bookToc from '~/models/book-toc';
 import $ from '~/helpers/$';
-import css from './ErrorLocationSelector.css';
+import './ErrorLocationSelector.css';
 
 function treeEntry(title, indentLevel, parent, isChapter) {
     const value = parent ? `${parent}:${title}` : title;

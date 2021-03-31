@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {useToggle, RawHTML, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import bookToc from '~/models/book-toc';

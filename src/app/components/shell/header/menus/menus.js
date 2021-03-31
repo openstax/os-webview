@@ -1,5 +1,5 @@
 import React from 'react';
-import {DropdownContext, DropdownContextProvider} from './dropdown-context';
+import {DropdownContextProvider} from './dropdown-context';
 import MenuExpander from './menu-expander/menu-expander';
 import UpperMenu from './upper-menu/upper-menu';
 import Logo from './logo/logo';

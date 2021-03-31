@@ -1,18 +1,17 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {useDataFromPromise, useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
 import FormHeader from '~/components/form-header/form-header';
 import RoleSelector from '~/components/role-selector/role-selector';
 import StudentForm from '~/components/student-form/student-form';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
-import {HiddenFields, FormSubmitContext} from '~/components/salesforce-form/salesforce-form.jsx';
+import {HiddenFields, FormSubmitContext} from '~/components/salesforce-form/salesforce-form';
 import ContactInfo from '~/components/contact-info/contact-info';
 import BookSelector, {useSelectedBooks} from '~/components/book-selector/book-selector';
 import salesforcePromise from '~/models/salesforce';
 import HowUsing from './how-using/how-using';
 import {afterFormSubmit} from '~/models/books';
-import css from './adoption.css';
+import './adoption.css';
 
 function ContactInfoPage({selectedRole, validatorRef}) {
     return (
@@ -121,7 +120,7 @@ function FacultyForm({selectedRole, onPageChange}) {
     );
 }
 
-export function AdoptionForm() {
+export default function AdoptionForm() {
     const [selectedRole, setSelectedRole] = useState('');
     const [hideRoleSelector, setHideRoleSelector] = useState(false);
     const ref = useRef();
@@ -137,7 +136,7 @@ export function AdoptionForm() {
     useCanonicalLink();
 
     return (
-        <React.Fragment>
+        <main className="adoption-form-v2">
             <FormHeader slug="pages/adoption-form" />
             <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
             <div className="text-content" ref={ref}>
@@ -146,13 +145,6 @@ export function AdoptionForm() {
                     <FacultyForm selectedRole={selectedRole} onPageChange={onPageChange} />
                 </RoleSelector>
             </div>
-        </React.Fragment>
+        </main>
     );
 }
-
-const view = {
-    classes: ['adoption-form-v2'],
-    tag: 'main'
-};
-
-export default pageWrapper(AdoptionForm, view);

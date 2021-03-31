@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
 
 function loadToLibrary(path) {

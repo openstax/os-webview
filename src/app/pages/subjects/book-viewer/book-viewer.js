@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {RawHTML, ActiveElementContextProvider, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import BookCover from './book';
 import categoryPromise from '~/models/subjectCategories';
