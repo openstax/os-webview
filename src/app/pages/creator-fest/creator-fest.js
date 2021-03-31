@@ -8,8 +8,7 @@ import './creator-fest.css';
 
 function PageContent({data, navLinks}) {
     // Gives reactivity on window.location.pathname
-    // eslint-disable-next-line no-unused-vars
-    const location = useLocation();
+    useLocation();
     const linkEntry = navLinks
         .find((obj) => `/creator-fest/${obj.url}` === window.location.pathname);
 

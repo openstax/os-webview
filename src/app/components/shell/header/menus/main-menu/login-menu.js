@@ -11,8 +11,7 @@ const reqFacultyAccessLink = `${settings.accountHref}/i/signup/educator/cs_form`
 
 function LoginLink() {
     // It's not used directly, but loginLink changes when it does
-    // eslint-disable-next-line no-unused-vars
-    const location = useLocation();
+    useLocation();
 
     return (
         <li className="login-menu nav-menu-item rightmost">
@@ -70,8 +69,8 @@ function TutorMenuItemIfUser({userModel}) {
 
 // eslint-disable-next-line complexity
 function LoginMenuWithDropdown({userModel}) {
-    // eslint-disable-next-line no-unused-vars
-    const location = useLocation(); // updates logoutLink
+    // updates logoutLink
+    useLocation();
     const label = `Hi ${userModel.first_name || userModel.username}`;
     const incomplete = !Boolean(
         (userModel.groups || []).includes('Student') ||

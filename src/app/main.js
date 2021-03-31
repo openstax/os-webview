@@ -4,7 +4,6 @@ import ReactModal from 'react-modal';
 import ReactDOM from 'react-dom';
 import './sentry';
 
-// router.start();
 ReactModal.setAppElement('#main');
 
 if (!$.isSupported()) {

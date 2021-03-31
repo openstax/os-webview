@@ -42,11 +42,3 @@ export default function ContactPage() {
         </main>
     );
 }
-
-// function pw(C) {
-//     return (
-//         <C />
-//     );
-// }
-//
-// export default pw(ContactPage);
