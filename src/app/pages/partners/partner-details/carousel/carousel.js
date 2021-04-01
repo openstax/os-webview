@@ -33,8 +33,8 @@ export default function PartnerCarousel({icon, images, videos}) {
 
     return (
         <Carousel frameCount={frameCount}>
-            <Images {...{images, icon, frameCount}} />
             <Videos videos={videos} />
+            <Images {...{images, icon, frameCount}} />
         </Carousel>
     );
 }
