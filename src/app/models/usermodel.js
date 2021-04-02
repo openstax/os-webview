@@ -1,8 +1,8 @@
 import {useState, useEffect} from 'react';
-import settings from 'settings';
 import bus from './usermodel-bus';
 import isEqual from 'lodash/isEqual';
 
+const settings = window.SETTINGS;
 const accountsUrl = `${settings.accountHref}/api/user`;
 
 function cached(fn) {

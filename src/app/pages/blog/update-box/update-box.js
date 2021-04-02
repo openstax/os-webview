@@ -4,6 +4,7 @@ import {faRssSquare} from '@fortawesome/free-solid-svg-icons';
 import settings from 'settings';
 import './update-box.css';
 
+const settings = window.SETTINGS;
 const rssUrl = `${settings.apiOrigin}/blog-feed/rss/`;
 
 export default function UpdateBox() {

@@ -5,12 +5,10 @@ import {
     Route,
     Redirect
 } from 'react-router-dom';
-import linkHelper from './helpers/link';
-import analytics from './helpers/analytics';
+import linkHelper from '~/helpers/link';
+import analytics from '~/helpers/analytics';
 import routerBus from '~/helpers/router-bus';
 import $ from '~/helpers/$';
-import './components/shell/shell';
-import './sentry';
 
 const PAGES = [
     'about',
@@ -159,7 +157,7 @@ function error404() {
     }
 }
 
-function Router() {
+export default function Router() {
     React.useEffect(() => {
         document.addEventListener('click', linkHandler);
 
@@ -207,5 +205,3 @@ routerBus.on('navigate', (...args) => {
     navigateTo(...args);
     window.dispatchEvent(new CustomEvent('navigate'));
 });
-
-export default React.createElement(Router);
