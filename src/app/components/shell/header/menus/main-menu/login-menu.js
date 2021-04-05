@@ -85,7 +85,7 @@ function LoginMenuWithDropdown({userModel}) {
     return (
         <Dropdown className="login-menu nav-menu-item rightmost dropdown" label={label} excludeWrapper>
             <MenuItem label="Account Profile" url={`${settings.accountHref}/profile`} />
-            <TutorMenuItem userModel={userModel} />
+            <TutorMenuItemIfUser userModel={userModel} />
             {incomplete && <MenuItem label="Finish signing up" url={facultySignupStep4} />}
             {
                 instructorEligible &&
