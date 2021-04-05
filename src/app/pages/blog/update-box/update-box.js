@@ -2,7 +2,7 @@ import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faRssSquare} from '@fortawesome/free-solid-svg-icons';
 import settings from 'settings';
-import './update-box.css';
+import './update-box.scss';
 
 const settings = window.SETTINGS;
 const rssUrl = `${settings.apiOrigin}/blog-feed/rss/`;

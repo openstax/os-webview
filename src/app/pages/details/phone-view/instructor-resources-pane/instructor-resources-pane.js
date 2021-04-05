@@ -6,7 +6,7 @@ import {instructorResourceBoxPermissions} from '../../common/resource-box/resour
 import FeaturedResources from '../../common/featured-resources/featured-resources.js';
 import ResourceBoxes, {VideoResourceBoxes} from '../../common/resource-box/resource-boxes';
 import {useUserStatus} from '../../common/hooks';
-import './instructor-resources-pane.css';
+import './instructor-resources-pane.scss';
 
 function resourceBoxModel(resourceData, userStatus, bookId) {
     return Object.assign({

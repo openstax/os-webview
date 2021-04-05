@@ -10,7 +10,7 @@ import {BaseButton, useStoreSize, sortOptions} from '../controls/controls';
 import shellBus from '~/components/shell/shell-bus';
 import sortBy from 'lodash/sortBy';
 import cn from 'classnames';
-import './mobile-controls.css';
+import './mobile-controls.scss';
 
 function TypeOptions({store, options}) {
     return (

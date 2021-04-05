@@ -2,7 +2,7 @@ import React from 'react';
 import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import useGiveToday from '~/models/give-today';
 import GiveButton from '../give-button/give-button';
-import './upper-menu.css';
+import './upper-menu.scss';
 
 function BlogItem() {
     const data = useDataFromSlug('news');

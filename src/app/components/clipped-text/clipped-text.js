@@ -1,7 +1,7 @@
 import React, {useRef, useEffect} from 'react';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import cn from 'classnames';
-import './clipped-text.css';
+import './clipped-text.scss';
 
 function useIsClipped() {
     const ref = useRef();

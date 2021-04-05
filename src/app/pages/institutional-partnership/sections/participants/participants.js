@@ -5,7 +5,7 @@ import groupBy from 'lodash/groupBy';
 import EstablishedPartners from './established-partners/established-partners';
 import Dialog from '~/components/dialog/dialog';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './participants.css';
+import './participants.scss';
 
 export default function Participants({
     heading, subheading, icons: [icons], linkTarget, linkText

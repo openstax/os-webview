@@ -1,6 +1,6 @@
 import React from 'react';
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './foundation.css';
+import './foundation.scss';
 
 const slug = 'pages/foundation';
 

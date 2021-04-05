@@ -1,5 +1,5 @@
 import React from 'react';
-import './byline.css';
+import './byline.scss';
 import {formatDateForBlog} from '~/helpers/data';
 
 export default function Byline({date, author, source}) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './about.css';
+import './about.scss';
 
 export default function About({
     heading, description, altText,

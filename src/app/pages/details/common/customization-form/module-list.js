@@ -3,7 +3,7 @@ import {useToggle, RawHTML, useDataFromPromise} from '~/components/jsx-helpers/j
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faThumbtack, faCaretDown, faCaretRight} from '@fortawesome/free-solid-svg-icons';
 import bookToc from '~/models/book-toc';
-import './module-list.css';
+import './module-list.scss';
 
 function ContentGroup({item, children}) {
     const [expanded, toggleExpanded] = useToggle();

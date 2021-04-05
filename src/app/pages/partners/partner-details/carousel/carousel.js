@@ -1,6 +1,6 @@
 import React from 'react';
 import Carousel from '~/components/carousel/carousel';
-import './carousel.css';
+import './carousel.scss';
 
 function Images({images, icon, frameCount}) {
     const [className, imagesOrIcon] = frameCount ?

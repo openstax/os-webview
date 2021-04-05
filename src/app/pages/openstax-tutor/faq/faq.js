@@ -3,7 +3,7 @@ import {LabeledSection} from '../common';
 import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronUp, faChevronDown} from '@fortawesome/free-solid-svg-icons';
-import './faq.css';
+import './faq.scss';
 
 function QnA({question, answer}) {
     const [isOpen, toggle] = useToggle(false);

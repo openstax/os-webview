@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './resource-box.css';
+import './resource-box.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
     faExternalLinkAlt, faLock, faShoppingCart, faPlay, faExclamationTriangle

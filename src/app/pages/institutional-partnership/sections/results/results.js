@@ -1,6 +1,6 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './results.css';
+import './results.scss';
 
 export default function Results({heading, description, cards: [cards]}) {
     const images = [

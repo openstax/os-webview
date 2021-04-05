@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import $ from '~/helpers/$';
-import './options-list.css';
+import './options-list.scss';
 
 function Item({label, value, selected}) {
     const [isSelected, setIsSelected] = useState(selected.includes(value));

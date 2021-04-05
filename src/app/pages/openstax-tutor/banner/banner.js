@@ -1,7 +1,7 @@
 import React from 'react';
 import ButtonRow from '../button-row/button-row';
 import ClippedImage from '~/components/clipped-image/clipped-image';
-import './banner.css';
+import './banner.scss';
 
 export default function Banner({model}) {
     const tutorLogo = '/images/openstax-tutor/tutor-logo.svg';

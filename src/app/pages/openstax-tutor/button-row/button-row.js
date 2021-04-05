@@ -1,5 +1,5 @@
 import React from 'react';
-import './button-row.css';
+import './button-row.scss';
 
 export default function ButtonRow({model: {demoCtaLink, demoCtaText, tutorLoginLink}}) {
     const tutorLoginText = 'Log in to OpenStax Tutor';

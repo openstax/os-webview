@@ -2,7 +2,7 @@ import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Hero from '~/components/hero/hero';
 import LinkWithChevron from '~/components/link-with-chevron/link-with-chevron';
-import './our-reach.css';
+import './our-reach.scss';
 
 function Card({data}) {
     const {description, icon, linkText, linkHref} = data;

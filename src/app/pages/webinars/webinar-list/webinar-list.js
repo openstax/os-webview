@@ -1,7 +1,7 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
-import './webinar-list.css';
+import './webinar-list.scss';
 
 function DatedHeading({entry}) {
     const start = new Date(entry.start);

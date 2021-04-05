@@ -2,7 +2,7 @@ import React, {useState, useRef, useLayoutEffect} from 'react';
 import {useSelectList} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import shellBus from '~/components/shell/shell-bus';
 import cn from 'classnames';
-import './form-input.css';
+import './form-input.scss';
 
 function SuggestionItem({value, accept, index, activeIndex, setActiveIndex}) {
     const ref = useRef();

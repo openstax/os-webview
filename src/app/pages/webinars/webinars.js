@@ -6,7 +6,7 @@ import ContentGroup from '~/components/content-group/content-group.jsx';
 import AccordionGroup from '~/components/accordion-group/accordion-group.js';
 import $ from '~/helpers/$';
 import WebinarList from './webinar-list/webinar-list';
-import './webinars.css';
+import './webinars.scss';
 
 const tabLabels = ['Upcoming webinars', 'Past webinar recordings'];
 

@@ -8,7 +8,7 @@ import $ from '~/helpers/$';
 import Dialog from '~/components/dialog/dialog';
 import routerBus from '~/helpers/router-bus';
 import cn from 'classnames';
-import './form.css';
+import './form.scss';
 
 const sourceNames = {
     tutor: 'OpenStax Tutor'

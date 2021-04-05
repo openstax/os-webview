@@ -1,6 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-import './clipped-image.css';
+import './clipped-image.scss';
 
 export default function ClippedImage({className, src, alt, ...positionArgs}) {
     const style = {backgroundImage: `url(${src})`, ...positionArgs};

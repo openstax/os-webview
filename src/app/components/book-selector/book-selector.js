@@ -2,7 +2,7 @@ import React, {useState, useRef, useLayoutEffect} from 'react';
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {salesforceTitles} from '~/models/books';
 import BookCheckbox from '~/components/book-checkbox/book-checkbox';
-import './book-selector.css';
+import './book-selector.scss';
 
 function Subject({subject, books, name, selectedBooks, toggleBook}) {
     return (

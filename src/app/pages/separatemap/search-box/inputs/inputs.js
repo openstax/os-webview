@@ -2,7 +2,7 @@ import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSlidersH, faTimes, faSearch, faChevronLeft} from '@fortawesome/free-solid-svg-icons';
 import cn from 'classnames';
-import './inputs.css';
+import './inputs.scss';
 
 function FilterToggleButton({filtersHidden, toggleFilters, children}) {
     return (

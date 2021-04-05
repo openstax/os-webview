@@ -4,7 +4,7 @@ import PageContext from './page-context';
 import PartnerContext from '../partner-context';
 import {useMyReview} from './rating-form';
 import ClippedText from '~/components/clipped-text/clipped-text';
-import './user-review.css';
+import './user-review.scss';
 
 function UserControls({status}) {
     const togglePage = useContext(PageContext);

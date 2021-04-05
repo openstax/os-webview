@@ -2,7 +2,7 @@ import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
 import cn from 'classnames';
-import './book-checkbox.css';
+import './book-checkbox.scss';
 
 // eslint-disable-next-line complexity
 export default function BookCheckbox({book, name, checked, toggle}) {

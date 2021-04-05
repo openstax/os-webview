@@ -3,7 +3,7 @@ import {LoadPageAfterSalesforce, salesforce} from '~/models/salesforce';
 import FormInput from '~/components/form-input/form-input';
 import FormRadioGroup from '~/components/form-radiogroup/form-radiogroup';
 import {FormSubmitContext} from '~/components/salesforce-form/salesforce-form';
-import './how-using.css';
+import './how-using.scss';
 
 function HowUsingBook({book, selectedValue, setSelectedValue}) {
     const sfOptions = salesforce.adoption(['adopted', 'recommended']);

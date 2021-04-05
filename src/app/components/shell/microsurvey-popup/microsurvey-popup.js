@@ -1,7 +1,7 @@
 import React from 'react';
 import {PutAway} from '../shared.jsx';
 import useMSQueue from './queue';
-import './microsurvey-popup.css';
+import './microsurvey-popup.scss';
 
 export default function MicroSurvey() {
     const [QueuedItem, nextItem] = useMSQueue();

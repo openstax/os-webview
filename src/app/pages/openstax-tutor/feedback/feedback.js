@@ -1,7 +1,7 @@
 import React from 'react';
 import {LabeledSection} from '../common';
 import ClippedImage from '~/components/clipped-image/clipped-image';
-import './feedback.css';
+import './feedback.scss';
 
 export default function Webinars({model: {
     feedbackImage,

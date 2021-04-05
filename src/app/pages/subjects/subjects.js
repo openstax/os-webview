@@ -7,7 +7,7 @@ import categoryPromise from '~/models/subjectCategories';
 import savingsPromise from '~/models/savings';
 import useSavingsDataIn, {linkClickTracker} from '~/helpers/savings-blurb';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
-import './subjects.css';
+import './subjects.scss';
 import $ from '~/helpers/$';
 
 const pagePath = '/subjects';

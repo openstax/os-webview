@@ -1,7 +1,7 @@
 import React from 'react';
 import LinkOrNot from '../link-or-not';
 import cn from 'classnames';
-import './projects-section.css';
+import './projects-section.scss';
 
 const projectColors = ['blue', 'green', 'yellow', 'red', 'orange'];
 

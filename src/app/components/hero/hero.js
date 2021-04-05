@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import {WindowContextProvider, WindowContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import ClippedImage from '~/components/clipped-image/clipped-image';
 import cn from 'classnames';
-import './hero.css';
+import './hero.scss';
 
 const TOO_SKINNY_RATIO = 1.15;
 const NARROW_SCREEN = 500;

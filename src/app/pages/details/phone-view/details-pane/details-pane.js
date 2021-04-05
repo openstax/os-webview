@@ -3,7 +3,7 @@ import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {Authors, PublicationInfo} from '../../common/common';
 import CollapsingPane from '~/components/collapsing-pane/collapsing-pane.jsx';
 import SavingsBlurb from '../../common/savings-blurb';
-import './details-pane.css';
+import './details-pane.scss';
 
 export default function DetailsPane({polish, model}) {
     return (

@@ -3,7 +3,7 @@ import FormSelect from '~/components/form-select/form-select.jsx';
 import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import booksPromise from '~/models/books';
 import {useSalesforceLoadedState, salesforce} from '~/models/salesforce';
-import './testimonial-form.css';
+import './testimonial-form.scss';
 
 function Controls() {
     return (

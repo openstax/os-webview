@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import cmsFetch from '~/models/cmsFetch';
 import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './shared.css';
+import './shared.scss';
 
 export function useSeenCounter(seenEnough) {
     const counter = {

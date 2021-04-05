@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import FilterRemover from './filter-remover';
 import {books, types, advanced, resultCount} from '../store';
-import './active-filters.css';
+import './active-filters.scss';
 
 function childPropertiesForStore(store, decoder) {
     if (store.value instanceof Array) {

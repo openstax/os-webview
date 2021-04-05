@@ -5,7 +5,7 @@ import Dialog from '~/components/dialog/dialog';
 import {useToggle, useDataFromSlug, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {Article} from '~/pages/blog/article/article';
 import ClippedImage from '~/components/clipped-image/clipped-image';
-import './testimonials.css';
+import './testimonials.scss';
 
 function LightboxContent({cards, initialPosition, articleDataArr}) {
     function ArticleCard({position}) {

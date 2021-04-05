@@ -4,7 +4,7 @@ import uniqBy from 'lodash/uniqBy';
 import {ArticleSummary, blurbModel} from '../article-summary/article-summary.jsx';
 import analytics from '~/helpers/analytics';
 import {PaginatedResults, PaginatorControls} from '~/components/paginator/paginator.js';
-import './search-results.css';
+import './search-results.scss';
 
 function useAllArticles(location) {
     const [allArticles, setAllArticles] = useState([]);

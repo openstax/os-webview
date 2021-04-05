@@ -8,7 +8,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faExclamationCircle, faDesktop} from '@fortawesome/free-solid-svg-icons';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {useUserStatus, usePartnerFeatures} from '../../common/hooks';
-import './instructor-resource-tab.css';
+import './instructor-resource-tab.scss';
 
 function FreeStuff({freeStuffContent, userStatus}) {
     const blurbLookupByInstructorStatus = {

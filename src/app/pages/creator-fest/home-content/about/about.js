@@ -1,6 +1,6 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './about.css';
+import './about.scss';
 
 function onClick(event) {
     const lastSection = Array.from(document.querySelectorAll('section')).pop();

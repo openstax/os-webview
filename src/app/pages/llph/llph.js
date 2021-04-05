@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {RawHTML, LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import linkHelper from '~/helpers/link';
-import './llph.css';
+import './llph.scss';
 
 function LLPH({data}) {
     const {

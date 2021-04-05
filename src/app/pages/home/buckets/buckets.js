@@ -1,7 +1,7 @@
 import React from 'react';
 import LinkWithChevron from '~/components/link-with-chevron/link-with-chevron';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './buckets.css';
+import './buckets.scss';
 
 function Bucket({bucketClass, image, hasImage, heading, content, link, cta}) {
     const classList = ['bucket', bucketClass, image.alignment].join(' ');

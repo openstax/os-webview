@@ -5,7 +5,7 @@ import Buckets from './buckets/buckets';
 import Education from './education/education';
 import Quotes from './quotes/quotes';
 import LazyLoad from 'react-lazyload';
-import './home.css';
+import './home.scss';
 
 function HomePage({data}) {
     const quotesData = data.row_1.map((columnData) => {

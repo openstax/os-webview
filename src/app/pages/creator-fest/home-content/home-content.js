@@ -1,7 +1,7 @@
 import React from 'react';
 import About from './about/about';
 import Why from './why/why';
-import './home-content.css';
+import './home-content.scss';
 
 export default function HomeContent({pagePanels, register}) {
     return (

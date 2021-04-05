@@ -2,7 +2,7 @@ import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {usePutAway, useStickyData} from '../shared.jsx';
 import analytics from '~/helpers/analytics';
-import './lower-sticky-note.css';
+import './lower-sticky-note.scss';
 
 function trackClickFor(el, target, eventArgs) {
     if (el && el.contains(target)) {

@@ -5,7 +5,7 @@ import Inputs from './inputs/inputs';
 import Filters from './filters/filters';
 import ResultBox from './result-box/result-box';
 import useResults from './results';
-import './search-box.css';
+import './search-box.scss';
 
 /*
 When you select school, see if it is in results.

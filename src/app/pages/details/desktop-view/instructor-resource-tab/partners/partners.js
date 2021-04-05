@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
 import StarsAndCount from '~/components/stars-and-count/stars-and-count';
 import analyticsEvents from '~/pages/partners/analytics-events';
-import './partners.css';
+import './partners.scss';
 
 function Blurb({blurb, badgeImage, onClick}) {
     const tags = [blurb.cost, blurb.type].filter((x) => x);

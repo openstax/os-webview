@@ -2,7 +2,7 @@ import React from 'react';
 import ReactModal from 'react-modal';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import cn from 'classnames';
-import './dialog.css';
+import './dialog.scss';
 
 function PutAway({noTitle, onClick}) {
     return (

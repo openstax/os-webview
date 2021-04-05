@@ -13,7 +13,7 @@ import Participants from './sections/participants/participants';
 import SmallQuote from './sections/small-quote/small-quote';
 import SignUp from './sections/sign-up/sign-up';
 import StickyFooter from '~/components/sticky-footer/sticky-footer';
-import './institutional-partnership.css';
+import './institutional-partnership.scss';
 
 function unprefixKey(newObject, oldKey, prefix, data) {
     const newKey = oldKey.replace(prefix, '');

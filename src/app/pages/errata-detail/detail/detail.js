@@ -1,7 +1,7 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {useErrataDetail, shouldShowDecisionDetails} from '~/helpers/errata';
-import './detail.css';
+import './detail.scss';
 
 const detailDataPairs = [
     ['Submission ID', 'id'],

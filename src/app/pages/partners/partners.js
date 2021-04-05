@@ -3,7 +3,7 @@ import {RawHTML, LoaderPage, useToggle} from '~/components/jsx-helpers/jsx-helpe
 import Controls from './controls/controls';
 import MobileControlRow from './mobile-controls/mobile-controls';
 import Results, {costOptions} from './results/results';
-import './partners.css';
+import './partners.scss';
 
 function Confirmation() {
     const bookSlug = history.state && history.state.slug;

@@ -1,6 +1,6 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './promoting.css';
+import './promoting.scss';
 
 export default function Promoting({
     heading, description,

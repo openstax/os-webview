@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import './more-fewer.css';
+import './more-fewer.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretLeft, faCaretRight} from '@fortawesome/free-solid-svg-icons';
 import $ from '~/helpers/$';

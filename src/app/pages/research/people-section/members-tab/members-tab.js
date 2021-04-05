@@ -1,6 +1,6 @@
 import React from 'react';
 import LinkOrNot from '../../link-or-not';
-import './members-tab.css';
+import './members-tab.scss';
 
 export default function MembersTab({data}) {
     return (

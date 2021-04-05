@@ -1,5 +1,5 @@
 import React from 'react';
-import './hero-section.css';
+import './hero-section.scss';
 
 export default function HeroSection({data: {missionBody, missionHeader}}) {
     return (
