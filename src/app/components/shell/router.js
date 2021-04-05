@@ -130,7 +130,7 @@ function ImportedPage({name}) {
     const [Content, setContent] = React.useState(null);
 
     React.useEffect(() => {
-        System.import(`~/pages/${name}/${name}`).then((content) => {
+        import(`~/pages/${name}/${name}`).then((content) => {
             setContent(<content.default />);
         });
         if (!(history.state && history.state.redirect)) {

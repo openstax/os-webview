@@ -1,7 +1,8 @@
 import $ from './helpers/$';
+import appElement from '/src/app/components/shell/shell';
 import ReactDOM from 'react-dom';
-import appElement from '~/components/shell/shell';
-import './sentry';
+// import './sentry';
+import '../styles/main.scss';
 
 if (!$.isSupported()) {
     /* eslint no-alert: 0 */

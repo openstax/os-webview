@@ -31,7 +31,7 @@ function trackClick(event) {
 }
 
 // eXslint-disable-next-line complexity
-export function LowerStickyNote() {
+export default function LowerStickyNote() {
     const stickyData = useStickyData();
     const [closed, PutAway] = usePutAway();
     const shouldNotDisplay = !stickyData || closed ||
