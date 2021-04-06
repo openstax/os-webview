@@ -102,7 +102,7 @@ function linkHandler(e) {
     e.preventDefault();
 
     const fullyQualifiedHref = el.href;
-    const followLink = linkHelper.isExternal(fullyQualifiedHref) ?
+    const followLink = (el.target || linkHelper.isExternal(fullyQualifiedHref)) ?
         () => handleExternalLink(fullyQualifiedHref, el) :
         () => navigateTo(fullyQualifiedHref);
 
