@@ -2,6 +2,7 @@ import React from 'react';
 import Byline from '~/components/byline/byline';
 import './press-excerpt.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons';
 
 function OptionalExcerpt({excerpt, url}) {
     return (
@@ -25,9 +26,9 @@ export default function PressExcerpt({iconUrl, author, date, source, url, headli
             {iconUrl && <img src={iconUrl} alt="" />}
             <Byline author={author} date={date} source={source} />
             <div className="headline">
-                <a href={url}>{headline}
+                <a href={url}>{headline}{' '}
                     {
-                        source && <FontAwesomeIcon icon="external-link-alt" />
+                        source && <FontAwesomeIcon icon={faExternalLinkAlt} />
                     }
                 </a>
             </div>

@@ -2,12 +2,8 @@ import PageContext from '../page-context';
 import React, {useContext} from 'react';
 import './inquiries.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-
-function FABrandIcon({icon}) {
-    return (
-        <FontAwesomeIcon icon={['fab', icon]} />
-    );
-}
+import {faFacebook, faLinkedin, faTwitterSquare, faInstagram} from '@fortawesome/free-brands-svg-icons';
+import {faDownload} from '@fortawesome/free-solid-svg-icons';
 
 export default function Inquiries() {
     const pageData = useContext(PageContext);
@@ -37,22 +33,22 @@ export default function Inquiries() {
                 <h2>Find us on</h2>
                 <div className="icon-row">
                     <a href="https://www.facebook.com/openstax">
-                        <FABrandIcon icon="facebook" />
+                        <FontAwesomeIcon icon={faFacebook} />
                     </a>
                     <a href="https://www.linkedin.com/company/openstax">
-                        <FABrandIcon icon="linkedin" />
+                        <FontAwesomeIcon icon={faLinkedin} />
                     </a>
                     <a href="https://www.instagram.com/openstax/">
-                        <FABrandIcon icon="instagram" />
+                        <FontAwesomeIcon icon={faInstagram} />
                     </a>
                     <a href="https://twitter.com/openstax">
-                        <FABrandIcon icon="twitter-square" />
+                        <FontAwesomeIcon icon={faTwitterSquare} />
                     </a>
                 </div>
             </div>
             <a href={pressKitUrl} className="btn primary">
                 Download press kit
-                <FontAwesomeIcon icon="download" />
+                <FontAwesomeIcon icon={faDownload} />
             </a>
         </div>
     );

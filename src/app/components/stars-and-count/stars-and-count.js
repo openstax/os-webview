@@ -1,5 +1,6 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faStar, faStarHalf} from '@fortawesome/free-solid-svg-icons';
 import './stars-and-count.css';
 
 export function roundedRating(rating) {
@@ -8,22 +9,22 @@ export function roundedRating(rating) {
 
 export function FullStar() {
     return (
-        <FontAwesomeIcon icon='star' className="full" />
+        <FontAwesomeIcon icon={faStar} className="full" />
     );
 }
 
 function HalfStar() {
     return (
         <span className="overlaid-stars">
-            <FontAwesomeIcon icon='star' className="empty" />
-            <FontAwesomeIcon icon='star-half' className="full" />
+            <FontAwesomeIcon icon={faStar} className="empty" />
+            <FontAwesomeIcon icon={faStarHalf} className="full" />
         </span>
     );
 }
 
 export function EmptyStar() {
     return (
-        <FontAwesomeIcon icon='star' className="empty" />
+        <FontAwesomeIcon icon={faStar} className="empty" />
     );
 }
 

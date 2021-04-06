@@ -1,4 +1,4 @@
-import {ErrataSummaryLoader} from '~/pages/errata-summary/errata-summary';
+import ErrataSummaryLoader from '~/pages/errata-summary/errata-summary';
 import {makeMountRender} from '../../../helpers/jsx-test-utils.jsx';
 import Table from '~/pages/errata-summary/table/table';
 

@@ -2,6 +2,7 @@ import React from 'react';
 import CookieDialog from '../cookie-notice/cookie-notice';
 import {LoaderPage, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faFacebookF, faTwitter, faLinkedinIn, faInstagram} from '@fortawesome/free-brands-svg-icons';
 import './footer.css';
 
 function Footer({
@@ -48,16 +49,16 @@ function Footer({
                     </div>
                     <div className="social" role="directory">
                         <a className="btn btn-social facebook" href={facebookLink} title="Facebook">
-                            <FontAwesomeIcon icon={['fab', 'facebook-f']} />
+                            <FontAwesomeIcon icon={faFacebookF} />
                         </a>
                         <a className="btn btn-social twitter" href={twitterLink} title="Twitter">
-                            <FontAwesomeIcon icon={['fab', 'twitter']} />
+                            <FontAwesomeIcon icon={faTwitter} />
                         </a>
                         <a className="btn btn-social linkedin" href={linkedinLink} title="LinkedIn">
-                            <FontAwesomeIcon icon={['fab', 'linkedin-in']} title="LinkedIn" />
+                            <FontAwesomeIcon icon={faLinkedinIn} title="LinkedIn" />
                         </a>
                         <a className="btn btn-social instagram" href="https://www.instagram.com/openstax/" title="Instagram">
-                            <FontAwesomeIcon icon={['fab', 'instagram']} title="Instagram" />
+                            <FontAwesomeIcon icon={faInstagram} title="Instagram" />
                         </a>
                         <a className="rice-logo" href="http://www.rice.edu">
                             <img src="/images/rice-white-text.png" alt="Rice University logo" />

@@ -1,5 +1,6 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import './schoolmap.css';
 
 export default function SchoolMap({heading, blurb, link: linkUrl, cta: linkText}) {
@@ -12,7 +13,7 @@ export default function SchoolMap({heading, blurb, link: linkUrl, cta: linkText}
                     <div className="txtlink">
                         <a href={linkUrl}>{linkText}</a>
                         <span className="linkarrow">
-                            <FontAwesomeIcon icon="chevron-right" />
+                            <FontAwesomeIcon icon={faChevronRight} />
                         </span>
                     </div>
                 </div>

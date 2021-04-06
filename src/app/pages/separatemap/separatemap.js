@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faTimes} from '@fortawesome/free-solid-svg-icons';
 import shellBus from '~/components/shell/shell-bus';
 import $ from '~/helpers/$';
 import cn from 'classnames';
@@ -58,7 +59,7 @@ function GoBackControl() {
         >
             <span className="close-map-msg">Close map</span>
             <div className="back-impact-btn">
-                <FontAwesomeIcon icon="times" className="left-arrow-bak" />
+                <FontAwesomeIcon icon={faTimes} className="left-arrow-bak" />
             </div>
         </a>
     );
@@ -89,7 +90,7 @@ function PopupMessage() {
         <div className="popup-msg-div">
             <div className="popup-msg-cross">
                 <FontAwesomeIcon
-                    icon="times" className="popup-msg-cross-icon"
+                    icon={faTimes} className="popup-msg-cross-icon"
                     role="button" tabindex="0"
                     onClick={() => togglePopup()}
                 />

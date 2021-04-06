@@ -2,6 +2,7 @@ import React from 'react';
 import {LabeledSection} from '../common';
 import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faChevronUp, faChevronDown} from '@fortawesome/free-solid-svg-icons';
 import './faq.css';
 
 function QnA({question, answer}) {
@@ -11,7 +12,7 @@ function QnA({question, answer}) {
         <div className="q-n-a">
             <div className="question" role="button" onClick={() => toggle()}>
                 <RawHTML html={question} />
-                <FontAwesomeIcon icon={`chevron-${isOpen ? 'up' : 'down'}`} />
+                <FontAwesomeIcon icon={isOpen ? faChevronUp : faChevronDown} />
             </div>
             {isOpen && <RawHTML className="answer" html={answer} />}
         </div>
