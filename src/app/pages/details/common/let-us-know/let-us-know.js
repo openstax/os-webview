@@ -2,6 +2,7 @@ import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faUserPlus} from '@fortawesome/free-solid-svg-icons';
 import './let-us-know.css';
 
 function dataStuffFor(title) {
@@ -29,7 +30,7 @@ export default function LetUsKnow({title}) {
         <div className="let-us-know">
             <a className="top" href={url1}>
                 <span className="book-icon">
-                    <FontAwesomeIcon icon="user-plus" />
+                    <FontAwesomeIcon icon={faUserPlus} />
                 </span>
                 <RawHTML Tag="span" className="text" html={text1} />
             </a>

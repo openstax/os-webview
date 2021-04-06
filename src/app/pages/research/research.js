@@ -1,5 +1,6 @@
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import React from 'react';
+import LazyLoad from 'react-lazyload';
 import HeroSection from './hero-section/hero-section';
 import ProjectsSection from './projects-section/projects-section';
 import PeopleSection from './people-section/people-section';
@@ -10,9 +11,15 @@ function ResearchPage({data}) {
     return (
         <React.Fragment>
             <HeroSection data={data} />
-            <ProjectsSection data={data} />
-            <PeopleSection data={data} />
-            <PublicationsSection data={data} />
+            <LazyLoad>
+                <ProjectsSection data={data} />
+            </LazyLoad>
+            <LazyLoad>
+                <PeopleSection data={data} />
+            </LazyLoad>
+            <LazyLoad>
+                <PublicationsSection data={data} />
+            </LazyLoad>
         </React.Fragment>
     );
 }

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faChevronDown} from '@fortawesome/free-solid-svg-icons';
 import cn from 'classnames';
 
 function RadioButton({item, isSelected, onChange}) {
@@ -30,7 +31,7 @@ function RadioButton({item, isSelected, onChange}) {
             {
                 isSelected(item.value) &&
                     <span className="on-mobile">
-                        <FontAwesomeIcon icon="chevron-down" />
+                        <FontAwesomeIcon icon={faChevronDown} />
                     </span>
             }
         </div>

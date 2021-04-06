@@ -1,5 +1,6 @@
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import React from 'react';
+import LazyLoad from 'react-lazyload';
 import Banner from './banner/banner';
 import QuoteBox from './quote-box/quote-box';
 import Features from './features/features';
@@ -18,13 +19,19 @@ export function TutorMarketingPage({data}) {
             <Banner model={data} />
             <QuoteBox model={data} />
             <div className="reset-odd-counter" />
-            <Features model={data} />
-            <Materials model={data} />
-            <Cost model={data} />
-            <Feedback model={data} />
+            <LazyLoad>
+                <Features model={data} />
+                <Materials model={data} />
+            </LazyLoad>
+            <LazyLoad>
+                <Cost model={data} />
+                <Feedback model={data} />
+            </LazyLoad>
             <div className="reset-odd-counter" />
-            <Webinars model={data} />
-            <FAQ model={data} />
+            <LazyLoad>
+                <Webinars model={data} />
+                <FAQ model={data} />
+            </LazyLoad>
             <StickyFooter>
                 <ButtonRow model={data} />
             </StickyFooter>

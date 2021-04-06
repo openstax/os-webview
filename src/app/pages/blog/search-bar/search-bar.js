@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faTimes, faSearch} from '@fortawesome/free-solid-svg-icons';
 import './search-bar.css';
 
 function SearchBarInterior({setPath}) {
@@ -40,12 +41,12 @@ function SearchBarInterior({setPath}) {
                     role="button" aria-label="clear search" tabindex="0"
                     hidden={clearHidden} onClick={clearSearch} onKeyPress={clearByKey}
                 >
-                    <FontAwesomeIcon icon="times" />
+                    <FontAwesomeIcon icon={faTimes} />
                 </span>
             </div>
             <button
                 className="btn primary" type="button" onClick={doSearch}>
-                <FontAwesomeIcon icon="search" />
+                <FontAwesomeIcon icon={faSearch} />
             </button>
         </React.Fragment>
     );

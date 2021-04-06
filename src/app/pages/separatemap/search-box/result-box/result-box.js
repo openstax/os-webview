@@ -1,5 +1,6 @@
 import React, {useRef, useLayoutEffect} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faChevronUp, faChevronDown, faQuoteLeft} from '@fortawesome/free-solid-svg-icons';
 import {useToggle, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {accountsModel} from '~/models/usermodel';
 import TestimonialForm from '../../testimonial-form/testimonial-form';
@@ -15,7 +16,7 @@ function Testimonial({testimonial}) {
     return (
         <div className="testimonial-box">
             <div className="quote">
-                <FontAwesomeIcon icon="quote-left" className="quotation-mark" />
+                <FontAwesomeIcon icon={faQuoteLeft} className="quotation-mark" />
                 {testimonial.text}
             </div>
             <div className="attribution">
@@ -115,7 +116,7 @@ export default function ResultBox({model, theOpenOne, setTheOpenOne}) {
                     <div>{location}</div>
                 </div>
                 <div className="toggle-indicator">
-                    <FontAwesomeIcon icon={`chevron-${isOpen ? 'up' : 'down'}`} />
+                    <FontAwesomeIcon icon={isOpen ? faChevronUp : faChevronDown} />
                 </div>
             </div>
             {isOpen && <SchoolDetails model={model} />}

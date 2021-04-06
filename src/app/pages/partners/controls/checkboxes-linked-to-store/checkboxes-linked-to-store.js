@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faCheck} from '@fortawesome/free-solid-svg-icons';
 import $ from '~/helpers/$';
 import cn from 'classnames';
 import './checkboxes-linked-to-store.css';
@@ -21,7 +22,7 @@ function Checkbox({label, value, store}) {
                     value={value}
                     onChange={() => store.toggle(value)}
                 />
-                <FontAwesomeIcon className="tick" icon="check" />
+                <FontAwesomeIcon className="tick" icon={faCheck} />
             </span>
             <span className="label-text">{label}</span>
         </label>

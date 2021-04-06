@@ -1,5 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import analytics from '~/helpers/analytics';
 import $ from '~/helpers/$';
 import './banner-carousel.css';
@@ -77,7 +78,7 @@ export default function ({largeImages, smallImages}) {
                         className="left-arrow" type="button"
                         onClick={() => updateFrameNumber(frameNumber - 1)}
                     >
-                        <FontAwesomeIcon icon="chevron-left" />
+                        <FontAwesomeIcon icon={faChevronLeft} />
                     </button>
             }
             {
@@ -86,7 +87,7 @@ export default function ({largeImages, smallImages}) {
                         className="right-arrow" type="button"
                         onClick={() => updateFrameNumber(frameNumber + 1)}
                     >
-                        <FontAwesomeIcon icon="chevron-right" />
+                        <FontAwesomeIcon icon={faChevronRight} />
                     </button>
             }
         </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
 import routerBus from '~/helpers/router-bus';
 import {instructorResourceBoxPermissions} from '../../common/resource-box/resource-box';
 import FeaturedResources from '../../common/featured-resources/featured-resources.js';
@@ -74,7 +75,7 @@ export function InstructorResourcesPane({model, userStatus}) {
             }
             <a className="card filter-for-book" onClick={goToPartners}>
                 OpenStax Partners{' '}
-                <FontAwesomeIcon icon="sign-out-alt" />
+                <FontAwesomeIcon icon={faSignOutAlt} />
             </a>
             <div className="free-resources-region">
                 <VideoResourceBoxes models={model.bookVideoFacultyResources} referenceModels={referenceModels} />

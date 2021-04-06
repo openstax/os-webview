@@ -1,4 +1,4 @@
-import {TeamLoader} from '~/pages/team/team';
+import TeamLoader from '~/pages/team/team';
 import {makeMountRender} from '../../helpers/jsx-test-utils.jsx';
 
 describe('Team Page', () => {

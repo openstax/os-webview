@@ -1,5 +1,5 @@
 import {makeMountRender} from '../../../helpers/jsx-test-utils.jsx';
-import {AdoptionForm} from '~/pages/adoption/adoption';
+import AdoptionForm from '~/pages/adoption/adoption';
 
 describe('AdoptionForm', () => {
     let wrapper;
