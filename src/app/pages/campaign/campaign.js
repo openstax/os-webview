@@ -1,5 +1,4 @@
 import React from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import TutorPage from './openstax-tutor/openstax-tutor';
 
 const pageRoutes = {
@@ -12,13 +11,13 @@ function pageSlugFromPath() {
     return slugMatch ? slugMatch[1] : null;
 }
 
-function DynamicPage() {
+export default function DynamicPage() {
     const slug = pageSlugFromPath();
     const Page = pageRoutes[slug];
 
     return (
-        <Page />
+        <div className="campaign page">
+            <Page />
+        </div>
     );
 }
-
-export default pageWrapper(DynamicPage, {classes: ['campaign', 'page']});

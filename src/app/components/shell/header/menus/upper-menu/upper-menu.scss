@@ -91,6 +91,10 @@
         overflow: hidden;
         width: 0;
 
+        > img {
+            max-height: 3rem;
+        }
+
         @media (max-height: #{39em * $scale-factor}) {
             display: none;
         }

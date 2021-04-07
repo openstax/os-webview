@@ -18,6 +18,9 @@ jobs:
         name: "Build osweb"
         run: ./script/build
       -
+        name: "Run tests"
+        run: ./script/test
+      -
         name: Install SSH key
         uses: shimataro/ssh-key-action@v2
         with:

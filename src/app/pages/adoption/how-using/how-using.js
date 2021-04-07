@@ -1,8 +1,8 @@
 import React, {useState, useContext} from 'react';
 import {LoadPageAfterSalesforce, salesforce} from '~/models/salesforce';
-import FormInput from '~/components/form-input/form-input.jsx';
+import FormInput from '~/components/form-input/form-input';
 import FormRadioGroup from '~/components/form-radiogroup/form-radiogroup';
-import {FormSubmitContext} from '~/components/salesforce-form/salesforce-form.jsx';
+import {FormSubmitContext} from '~/components/salesforce-form/salesforce-form';
 import './how-using.css';
 
 function HowUsingBook({book, selectedValue, setSelectedValue}) {

@@ -1,4 +1,3 @@
-import settings from 'settings';
 import $ from '~/helpers/$';
 import memoize from 'lodash/memoize';
 

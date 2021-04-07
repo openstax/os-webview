@@ -24,7 +24,7 @@ function useBookInfo(book) {
 
                 setInfo([slug, title]);
             } else {
-                routerBus.emit('navigate', '/_404', window.location.href);
+                routerBus.emit('navigate', '/_404', {redirect: true});
             }
         });
     }, []);

@@ -5,9 +5,8 @@ import LowerStickyNote from './lower-sticky-note/lower-sticky-note';
 import Microsurvey from './microsurvey-popup/microsurvey-popup';
 import Footer from './footer/footer';
 import bus from './shell-bus';
-import '~/helpers/font-awesome';
 
-const mainObserver = new MutationObserver((observations) => {
+const mainObserver = new MutationObserver(() => {
     document.body.classList.remove('initial-load');
     mainObserver.disconnect();
 });

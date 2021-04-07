@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './quote.css';
 
@@ -6,7 +6,8 @@ export default function Quote({
     model: {
         heading, quote: quoteBody, image: {image: portraitSrc, altText: portraitAlt},
         linkHref, linkText
-    }, supporter=false, noStrips=false
+    },
+    noStrips=false
 }) {
     return (
         <section className="founder-quote">

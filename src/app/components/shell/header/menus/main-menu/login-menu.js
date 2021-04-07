@@ -1,5 +1,5 @@
 import settings from 'settings';
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {useToggle, useLocation, useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {useUserModel} from '~/models/usermodel';
 import userModelBus from '~/models/usermodel-bus';
@@ -11,7 +11,7 @@ const reqFacultyAccessLink = `${settings.accountHref}/i/signup/educator/cs_form`
 
 function LoginLink() {
     // It's not used directly, but loginLink changes when it does
-    const location = useLocation();
+    useLocation();
 
     return (
         <li className="login-menu nav-menu-item rightmost">
@@ -69,7 +69,8 @@ function TutorMenuItemIfUser({userModel}) {
 
 // eslint-disable-next-line complexity
 function LoginMenuWithDropdown({userModel}) {
-    const location = useLocation(); // updates logoutLink
+    // updates logoutLink
+    useLocation();
     const label = `Hi ${userModel.first_name || userModel.username}`;
     const incomplete = !Boolean(
         (userModel.groups || []).includes('Student') ||

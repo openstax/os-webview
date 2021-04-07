@@ -1,4 +1,5 @@
-import React, {useEffect, useRef} from 'react';
+import React from 'react';
+import LazyLoad from 'react-lazyload';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {Authors, PublicationInfo, ErrataSection} from '../../common/common';
 import GetThisTitle from '../../common/get-this-title';
@@ -7,8 +8,6 @@ import SavingsBlurb from '../../common/savings-blurb';
 import './details-tab.css';
 
 function PolishTab({model, tocState}) {
-    const errataBlurb = model.errataContent.content.content;
-
     return (
         <div className="details-tab">
             <div className="sidebar">
@@ -26,16 +25,18 @@ function PolishTab({model, tocState}) {
                     <RawHTML html={model.description} />
                 </div>
                 <Authors model={model} polish={true} />
-                <ErrataSection model={model} polish={true} />
-                <PublicationInfo model={model} polish={true} />
+                <LazyLoad>
+                    <ErrataSection model={model} polish={true} />
+                </LazyLoad>
+                <LazyLoad>
+                    <PublicationInfo model={model} polish={true} />
+                </LazyLoad>
             </div>
         </div>
     );
 }
 
 function EnglishTab({model, tocState}) {
-    const errataBlurb = model.errataContent.content.content;
-
     return (
         <div className="details-tab">
             <div className="sidebar">
@@ -53,11 +54,15 @@ function EnglishTab({model, tocState}) {
                     <RawHTML html={model.description} />
                 </div>
                 <Authors model={model} />
-                <ErrataSection model={model} />
-                <div className="publication-info">
-                    <PublicationInfo model={model} url={null} />
-                </div>
-                {model.adoptions && <SavingsBlurb model={model} />}
+                <LazyLoad>
+                    <ErrataSection model={model} />
+                    <div className="publication-info">
+                        <PublicationInfo model={model} url={null} />
+                    </div>
+                </LazyLoad>
+                <LazyLoad>
+                    {model.adoptions && <SavingsBlurb model={model} />}
+                </LazyLoad>
             </div>
         </div>
     );

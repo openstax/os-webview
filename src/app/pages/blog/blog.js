@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import {usePageData} from '~/helpers/controller/cms-mixin';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import PinnedArticle from './pinned-article/pinned-article';
 import UpdateBox from './update-box/update-box';
 import DisqusForm from './disqus-form/disqus-form';
@@ -14,7 +13,7 @@ import timers from './timers';
 import './blog.css';
 import $ from '~/helpers/$';
 
-const path = '/blog';
+const stayHere = {path: '/blog'};
 
 function pinnedArticleData(articles) {
     const articleSlug = Reflect.ownKeys(articles)
@@ -42,7 +41,7 @@ function isNotPinned(slug, article) {
 }
 
 function exceptThisSlug(slug) {
-    return (articleSlug, article) => `news/${articleSlug}` !== slug;
+    return (articleSlug) => `news/${articleSlug}` !== slug;
 }
 
 export function DefaultPage({articles, setPath}) {
@@ -92,14 +91,14 @@ function useLocationSynchronizedToPath() {
 
     useEffect(() => {
         // The router refers to history state, to see if it's changing pages
-        history.replaceState({path: '/blog'}, '');
+        history.replaceState(stayHere, '');
         window.addEventListener('popstate', syncLocation);
 
         return () => window.removeEventListener('popstate', syncLocation);
     }, []);
 
     function setPath(href) {
-        history.pushState({path: '/blog'}, '', href);
+        history.pushState(stayHere, '', href);
         syncLocation();
         window.scrollTo(0, 0);
     }
@@ -107,7 +106,7 @@ function useLocationSynchronizedToPath() {
     return [location, setPath];
 }
 
-export function BlogPage() {
+export default function BlogPage() {
     const [pageData, statusPage] = usePageData({slug});
     const [location, setPath] = useLocationSynchronizedToPath();
 
@@ -127,34 +126,30 @@ export function BlogPage() {
     }
 
     const slugMatch = location.pathname.match(/\/blog\/(.+)/);
-    const articles = pageData.articles;
 
     if (!slugMatch) {
         return location.search ?
-            <SearchResultsPage
-                location={location}
-                setPath={setPath}
-            /> :
-            <DefaultPage
-                articles={pageData.articles}
-                setPath={setPath}
-            />;
+            <main className="blog page">
+                <SearchResultsPage
+                    location={location}
+                    setPath={setPath}
+                />
+            </main> :
+            <main className="blog page">
+                <DefaultPage
+                    articles={pageData.articles}
+                    setPath={setPath}
+                />
+            </main>;
     }
 
     return (
-        <React.Fragment>
+        <main className="blog page">
             <ArticlePage
                 slug={`news/${slugMatch[1]}`}
                 articles={pageData.articles}
                 setPath={setPath}
             />
-        </React.Fragment>
+        </main>
     );
 }
-
-const view = {
-    classes: ['blog', 'page'],
-    tag: 'main'
-};
-
-export default pageWrapper(BlogPage, view);

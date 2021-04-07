@@ -1,5 +1,5 @@
 import React from 'react';
-import css from './overlapping-quote.css';
+import './overlapping-quote.css';
 
 export default function OverlappingQuote({quote, name, title, school}) {
     return (

@@ -5,7 +5,7 @@ import {useUserStatus} from '../../common/hooks';
 import ResourceBoxes from '../../common/resource-box/resource-boxes';
 import './student-resource-tab.css';
 
-function resourceBoxModel(resourceData, userStatus, search) {
+function resourceBoxModel(resourceData, userStatus) {
     return Object.assign({
         heading: resourceData.resourceHeading,
         description: resourceData.resourceDescription,
@@ -18,7 +18,7 @@ function resourceBoxModel(resourceData, userStatus, search) {
 function StudentResourceTab({model, userStatus}) {
     const fss = model.freeStuffStudent.content;
     const models = model.bookStudentResources.map((resourceData) =>
-        resourceBoxModel(resourceData, userStatus, 'Student resources')
+        resourceBoxModel(resourceData, userStatus)
     );
 
     return (

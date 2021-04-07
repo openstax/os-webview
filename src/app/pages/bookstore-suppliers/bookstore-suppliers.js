@@ -1,13 +1,9 @@
-import {pageWrapper} from '~/controllers/jsx-wrapper';
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {LoaderPage, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faCanadianMapleLeaf} from '@fortawesome/free-brands-svg-icons';
 import './bookstore-suppliers.css';
 
-const view = {
-    classes: ['bookstore-suppliers', 'page'],
-    tag: 'main'
-};
 const slug = 'pages/print-order';
 
 function providerToModel(p) {
@@ -39,7 +35,7 @@ function CanadaFlagCard() {
         <div className="flag-card">
             <div className="canada-flag">
                 <div className="white-field">
-                    <FontAwesomeIcon icon={['fab', 'canadian-maple-leaf']} />
+                    <FontAwesomeIcon icon={faCanadianMapleLeaf} />
                 </div>
             </div>
         </div>
@@ -106,10 +102,10 @@ export function BookstorePage({data}) {
     );
 }
 
-export function BookstorePageLoader() {
+export default function BookstorePageLoader() {
     return (
-        <LoaderPage slug={slug} Child={BookstorePage} doDocumentSetup />
+        <main className="bookstore-suppliers page">
+            <LoaderPage slug={slug} Child={BookstorePage} doDocumentSetup />
+        </main>
     );
 }
-
-export default pageWrapper(BookstorePageLoader, view);

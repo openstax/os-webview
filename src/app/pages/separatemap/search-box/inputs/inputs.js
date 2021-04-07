@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faSlidersH, faTimes, faSearch, faChevronLeft} from '@fortawesome/free-solid-svg-icons';
 import cn from 'classnames';
 import './inputs.css';
 
@@ -8,15 +9,19 @@ function FilterToggleButton({filtersHidden, toggleFilters, children}) {
         <button className="filter-toggle" aria-pressed={!filtersHidden} onClick={() => toggleFilters()}>
             {
                 filtersHidden ?
-                    <FontAwesomeIcon icon="sliders-h" className="filter-icon" /> :
-                    <FontAwesomeIcon icon="times" className="close-filters" />
+                    <FontAwesomeIcon icon={faSlidersH} className="filter-icon" /> :
+                    <FontAwesomeIcon icon={faTimes} className="close-filters" />
             }
             {children}
         </button>
     );
 }
 
-function SearchAndClear({placeholder, textValue='', setTextValue}) {
+function SearchAndClear({
+    placeholder='Search by country, state, city, or institution name',
+    textValue='',
+    setTextValue
+}) {
     const clearIconHiddenFlag = textValue.length < 1;
 
     function updateOnEnter(event) {
@@ -29,12 +34,12 @@ function SearchAndClear({placeholder, textValue='', setTextValue}) {
         <div className="search-and-clear">
             <input
                 type="text" className="search-input"
-                placeholder="Search by country, state, city, or institution name"
+                placeholder={placeholder}
                 value={textValue}
                 onKeyDown={updateOnEnter}
             />
             <FontAwesomeIcon
-                icon="times" className="search-clear"
+                icon={faTimes} className="search-clear"
                 role="button" tabIndex="0"
                 hidden={clearIconHiddenFlag}
                 onClick={() => setTextValue('')}
@@ -44,7 +49,7 @@ function SearchAndClear({placeholder, textValue='', setTextValue}) {
 }
 
 function SearchIcon({minimized, toggle}) {
-    const icon = minimized ? 'search' : 'chevron-left';
+    const icon = minimized ? faSearch : faChevronLeft;
 
     return (
         <div

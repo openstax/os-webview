@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import Dialog from '~/components/dialog/dialog';
 import PartnerDetails from '../partner-details/partner-details';
 import StarsAndCount from '~/components/stars-and-count/stars-and-count';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faCheck} from '@fortawesome/free-solid-svg-icons';
 import analyticsEvents from '../analytics-events';
 
 function modelFromEntry(entry) {
@@ -24,7 +26,7 @@ function baseHref() {
     return h.href;
 }
 
-function ResultCard({entry, linkTexts, setPartner}) {
+function ResultCard({entry, setPartner}) {
     const {
         title, logoUrl, verifiedFeatures, badgeImage, tags, rating, ratingCount
     } = modelFromEntry(entry);
@@ -46,7 +48,7 @@ function ResultCard({entry, linkTexts, setPartner}) {
                 verifiedFeatures &&
                 <div className="badge">
                     <img className="background" src={badgeImage} alt="verified" />
-                    <i className="checkmark fa fa-check"></i>
+                    <FontAwesomeIcon icon={faCheck} />
                     <div className="tooltip top">
                         {verifiedFeatures}
                     </div>
@@ -54,7 +56,7 @@ function ResultCard({entry, linkTexts, setPartner}) {
             }
             <div className="resource-title">{title}</div>
             <div className="tags">
-                {tags.map(({value, label}) => <div key={value}>{value}</div>)}
+                {tags.map(({value}) => <div key={value}>{value}</div>)}
             </div>
             <StarsAndCount
                 rating={summary.rating}
@@ -93,7 +95,6 @@ export default function ResultGrid({entries, linkTexts}) {
                     <ResultCard
                         key={entry.title}
                         entry={entry}
-                        linkTexts={linkTexts}
                         setPartner={setPartner}
                     />
                 )

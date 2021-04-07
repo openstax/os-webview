@@ -1,6 +1,6 @@
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import React from 'react';
+import LazyLoad from 'react-lazyload';
 import HeroSection from './hero-section/hero-section';
 import ProjectsSection from './projects-section/projects-section';
 import PeopleSection from './people-section/people-section';
@@ -11,22 +11,23 @@ function ResearchPage({data}) {
     return (
         <React.Fragment>
             <HeroSection data={data} />
-            <ProjectsSection data={data} />
-            <PeopleSection data={data} />
-            <PublicationsSection data={data} />
+            <LazyLoad>
+                <ProjectsSection data={data} />
+            </LazyLoad>
+            <LazyLoad>
+                <PeopleSection data={data} />
+            </LazyLoad>
+            <LazyLoad>
+                <PublicationsSection data={data} />
+            </LazyLoad>
         </React.Fragment>
     );
 }
 
-function ResearchLoader() {
+export default function ResearchLoader() {
     return (
-        <LoaderPage slug="pages/research" Child={ResearchPage} doDocumentSetup />
+        <main className="research page">
+            <LoaderPage slug="pages/research" Child={ResearchPage} doDocumentSetup />
+        </main>
     );
 }
-
-const view = {
-    classes: ['research', 'page'],
-    tag: 'main'
-};
-
-export default pageWrapper(ResearchLoader, view);

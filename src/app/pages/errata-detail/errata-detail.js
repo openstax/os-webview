@@ -1,10 +1,8 @@
-import {pageWrapper} from '~/controllers/jsx-wrapper';
-import {LoaderPage, useDataFromSlug, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import React, {useState, useEffect} from 'react';
+import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import React from 'react';
 import ProgressBar from './progress-bar/progress-bar.jsx';
 import Detail from './detail/detail';
 import {getDisplayStatus} from '~/helpers/errata';
-import cmsFetch from '~/models/cmsFetch';
 import './errata-detail.css';
 
 function ProgressBarBlock({data}) {
@@ -40,14 +38,10 @@ function ErrataDetail({data}) {
     );
 }
 
-function ErrataDetailLoader() {
+export default function ErrataDetailLoader() {
     return (
-        <LoaderPage slug={window.location.pathname.substr(1)} Child={ErrataDetail} doDocumentSetup />
+        <div className="errata-detail page">
+            <LoaderPage slug={window.location.pathname.substr(1)} Child={ErrataDetail} doDocumentSetup />
+        </div>
     );
 }
-
-const view = {
-    classes: ['errata-detail', 'page']
-};
-
-export default pageWrapper(ErrataDetailLoader, view);

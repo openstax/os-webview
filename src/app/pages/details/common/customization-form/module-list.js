@@ -1,14 +1,15 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {useToggle, RawHTML, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faThumbtack, faCaretDown, faCaretRight} from '@fortawesome/free-solid-svg-icons';
 import bookToc from '~/models/book-toc';
 import './module-list.css';
 
 function ContentGroup({item, children}) {
     const [expanded, toggleExpanded] = useToggle();
     const [checkedChildren, setCheckedChildren] = useState(0);
-    const pinnedIcon = checkedChildren > 0 ? 'thumbtack' : 'caret-down';
-    const icon = expanded ? pinnedIcon : 'caret-right';
+    const pinnedIcon = checkedChildren > 0 ? faThumbtack : faCaretDown;
+    const icon = expanded ? pinnedIcon : faCaretRight;
 
     function onClick() {
         if (checkedChildren === 0) {

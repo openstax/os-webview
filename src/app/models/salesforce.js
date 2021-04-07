@@ -1,4 +1,3 @@
-import $ from '~/helpers/$';
 import cmsFetch from './cmsFetch';
 import React, {useState, useEffect} from 'react';
 

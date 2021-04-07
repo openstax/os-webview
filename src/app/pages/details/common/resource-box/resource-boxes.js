@@ -1,8 +1,10 @@
-import React, {useState, useContext} from 'react';
+import React, {useContext} from 'react';
 import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './resource-box.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import $ from '~/helpers/$';
+import {
+    faExternalLinkAlt, faLock, faShoppingCart, faPlay, faExclamationTriangle
+} from '@fortawesome/free-solid-svg-icons';
 import Dialog from '~/components/dialog/dialog';
 import analytics from '~/helpers/analytics';
 import CompCopyRequestForm from './request-form/request-form';
@@ -25,7 +27,7 @@ function CommonsHubBox({model}) {
                 <br />
                 <a href={model.url}>
                     {model.cta}{' '}
-                    <FontAwesomeIcon icon="external-link-alt" />
+                    <FontAwesomeIcon icon={faExternalLinkAlt} />
                 </a>
             </div>
             <div className="bottom">
@@ -87,7 +89,7 @@ function BottomBasic({leftContent, icon}) {
 function AccessPending() {
     return (
         <span className="left">
-            <FontAwesomeIcon icon="lock" />
+            <FontAwesomeIcon icon={faLock} />
             <span>Access Pending</span>
         </span>
     );
@@ -96,7 +98,7 @@ function AccessPending() {
 function MissingLink() {
     return (
         <span className="left missing-link">
-            <FontAwesomeIcon icon="exclamation-triangle" />
+            <FontAwesomeIcon icon={faExclamationTriangle} />
             <span>MISSING LINK</span>
         </span>
     );
@@ -197,7 +199,7 @@ function LeftContent({model}) {
     if (model.iconType === 'lock' && userStatus.isInstructor === false) {
         return (
             <div className="left-no-button">
-                <FontAwesomeIcon icon={model.iconType} />
+                <FontAwesomeIcon icon={faLock} />
                 <span>Only available for verified instructors.</span>
             </div>
         );
@@ -213,7 +215,7 @@ function Bottom({model}) {
             {
                 model.printLink &&
                     <a className="print-link" href={model.printLink}>
-                        <FontAwesomeIcon icon="shopping-cart" />
+                        <FontAwesomeIcon icon={faShoppingCart} />
                         <span>Buy print</span>
                     </a>
             }
@@ -233,12 +235,11 @@ function ResourceBox({model}) {
         double: model.double,
         'coming-soon': model.comingSoon
     };
-    const [isNew, updateIsNew] = useState(model.isNew);
 
     return (
         <div className={cn('resource-box', classNames)}>
             <ReferenceNumber referenceNumber={model.videoReferenceNumber} />
-            <Top model={model} isNew={isNew} />
+            <Top model={model} isNew={model.isNew} />
             <Bottom model={model} />
         </div>
     );
@@ -281,7 +282,7 @@ function VideoResourceBox({model}) {
                     <source src={model.video_file} type="video/avi" />
                 </video>
             </div>
-            <BottomBasic leftContent="Watch video" icon="play" />
+            <BottomBasic leftContent="Watch video" icon={faPlay} />
             <Dialog
                 isOpen={isOpen} onPutAway={toggle}
                 title={model.video_title || model.resource_heading}

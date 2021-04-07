@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {LabeledSection} from '../common';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import cn from 'classnames';

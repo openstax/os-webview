@@ -1,34 +1,14 @@
-import React, {useEffect} from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
-import {usePageData} from '~/helpers/controller/cms-mixin';
-import $ from '~/helpers/$';
+import React from 'react';
+import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import BannerCarousel from './banner-carousel/banner-carousel';
 import Buckets from './buckets/buckets';
 import Education from './education/education';
 import Quotes from './quotes/quotes';
+import LazyLoad from 'react-lazyload';
 import './home.css';
 
-const view = {
-    classes: ['home-page'],
-    tag: 'main',
-    id: 'maincontent'
-};
-const slug = 'pages/openstax-homepage';
-
-function Page() {
-    const [pageData, statusPage] = usePageData({slug});
-
-    useEffect(() => {
-        const linkController = $.setCanonicalLink();
-
-        return () => linkController.remove();
-    }, []);
-
-    if (statusPage) {
-        return statusPage;
-    }
-
-    const quotesData = pageData.row_1.map((columnData) => {
+function HomePage({data}) {
+    const quotesData = data.row_1.map((columnData) => {
         const result = Object.assign(
             {
                 hasImage: !!columnData.image.image
@@ -38,9 +18,9 @@ function Page() {
 
         return result;
     });
-    const [educationData] = pageData.row_2;
+    const [educationData] = data.row_2;
     const bucketData = [4, 5].map((rowNum, index) => {
-        const cmsData = pageData[`row_${rowNum}`][0];
+        const cmsData = data[`row_${rowNum}`][0];
         const result = Object.assign({
             bucketClass: index ? 'partners' : 'our-impact',
             btnClass: index ? 'btn-gold' : 'btn-cyan',
@@ -53,18 +33,33 @@ function Page() {
     return (
         <React.Fragment>
             <BannerCarousel
-                largeImages={pageData.banner_images}
-                smallImages={pageData.mobile_banner_images}
+                largeImages={data.banner_images}
+                smallImages={data.mobile_banner_images}
             />
-            <Quotes quotes={quotesData} />
-            <Education
-                content={educationData.content}
-                linkUrl={educationData.link}
-                linkText={educationData.cta}
-            />
-            <Buckets bucketModels={bucketData} />
+            <LazyLoad>
+                <Quotes quotes={quotesData} />
+            </LazyLoad>
+            <LazyLoad>
+                <Education
+                    content={educationData.content}
+                    linkUrl={educationData.link}
+                    linkText={educationData.cta}
+                />
+            </LazyLoad>
+            <LazyLoad>
+                <Buckets bucketModels={bucketData} />
+            </LazyLoad>
         </React.Fragment>
     );
 }
 
-export default pageWrapper(Page, view);
+export default function HomeLoader() {
+    return (
+        <main id="maincontent" className="home-page">
+            <LoaderPage
+                slug="pages/openstax-homepage" Child={HomePage}
+                doDocumentSetup noCamelCase
+            />
+        </main>
+    );
+}

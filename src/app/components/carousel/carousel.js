@@ -1,16 +1,22 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {WindowContextProvider, WindowContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import cn from 'classnames';
 import './carousel.css';
 
 function FrameChanger({chevronDirection, onClick, hoverText}) {
+    const icon = ({
+        'left': faChevronLeft,
+        'right': faChevronRight
+    })[chevronDirection];
+
     return (
         <button
             type="button" className={`frame-changer ${chevronDirection}`}
             onClick={onClick}
         >
-            <FontAwesomeIcon icon={`chevron-${chevronDirection}`} />
+            <FontAwesomeIcon icon={icon} />
             {
                 hoverText && <span className="hover-text">{hoverText}</span>
             }

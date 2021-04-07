@@ -1,7 +1,7 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faTimes} from '@fortawesome/free-solid-svg-icons';
 import shellBus from '~/components/shell/shell-bus';
 import $ from '~/helpers/$';
 import cn from 'classnames';
@@ -10,12 +10,6 @@ import {queryById} from '~/models/querySchools';
 import Map from '~/helpers/map-api';
 import SearchBox from './search-box/search-box';
 import './separatemap.css';
-
-const view = {
-    classes: ['separatemap', 'page'],
-    tag: 'main',
-    id: 'maincontent'
-};
 
 function useMap() {
     const [map, setMap] = useState();
@@ -65,7 +59,7 @@ function GoBackControl() {
         >
             <span className="close-map-msg">Close map</span>
             <div className="back-impact-btn">
-                <FontAwesomeIcon icon="times" className="left-arrow-bak" />
+                <FontAwesomeIcon icon={faTimes} className="left-arrow-bak" />
             </div>
         </a>
     );
@@ -96,7 +90,7 @@ function PopupMessage() {
         <div className="popup-msg-div">
             <div className="popup-msg-cross">
                 <FontAwesomeIcon
-                    icon="times" className="popup-msg-cross-icon"
+                    icon={faTimes} className="popup-msg-cross-icon"
                     role="button" tabindex="0"
                     onClick={() => togglePopup()}
                 />
@@ -113,7 +107,7 @@ function PopupMessage() {
     );
 }
 
-function SeparateMap() {
+export default function SeparateMap() {
     useEffect(() => {
         shellBus.emit('with-sticky');
 
@@ -121,13 +115,11 @@ function SeparateMap() {
     }, []);
 
     return (
-        <React.Fragment>
+        <main id="maincontent" className="separatemap page">
             <div id="mapd" className="mapd" />
             <GoBackControl />
             <SearchBoxDiv />
             <PopupMessage />
-        </React.Fragment>
+        </main>
     );
 }
-
-export default pageWrapper(SeparateMap, view);

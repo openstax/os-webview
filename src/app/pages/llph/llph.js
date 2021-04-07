@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {RawHTML, LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import linkHelper from '~/helpers/link';
 import './llph.css';
@@ -68,15 +67,10 @@ function LLPH({data}) {
     );
 }
 
-function LLPHLoader() {
+export default function LLPHLoader() {
     return (
-        <LoaderPage slug="pages/llph" Child={LLPH} doDocumentSetup />
+        <main className="llph page">
+            <LoaderPage slug="pages/llph" Child={LLPH} doDocumentSetup />
+        </main>
     );
 }
-
-const view = {
-    classes: ['llph', 'page'],
-    tag: 'main'
-};
-
-export default pageWrapper(LLPHLoader, view);

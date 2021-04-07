@@ -3,6 +3,7 @@ import PartnerContext from '../partner-context';
 import StarsAndCount from '~/components/stars-and-count/stars-and-count';
 import analyticsEvents from '../../analytics-events';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faExternalLinkAlt, faCheck} from '@fortawesome/free-solid-svg-icons';
 import './synopsis.css';
 
 function VerifiedBadge({verifiedFeatures}) {
@@ -12,7 +13,7 @@ function VerifiedBadge({verifiedFeatures}) {
         verifiedFeatures &&
             <div className="badge">
                 <img className="background" src={badgeImage} alt="verified" />
-                <FontAwesomeIcon icon="check" className="checkmark" />
+                <FontAwesomeIcon icon={faCheck} className="checkmark" />
                 <div className="tooltip bottom">
                     {verifiedFeatures}
                 </div>
@@ -29,7 +30,7 @@ function PartnerLink({partnerUrl, partnerLinkText}) {
         partnerUrl &&
             <a className="partner-website" href={partnerUrl} onClick={trackPartnerVisit}>
                 {partnerLinkText}{' '}
-                <FontAwesomeIcon icon="external-link-alt" />
+                <FontAwesomeIcon icon={faExternalLinkAlt} />
             </a>
     );
 }

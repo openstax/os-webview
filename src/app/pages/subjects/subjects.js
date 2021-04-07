@@ -1,6 +1,5 @@
 import routerBus from '~/helpers/router-bus';
 import React, {useState, useEffect} from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {usePageData} from '~/helpers/controller/cms-mixin';
 import {RawHTML, useDataFromPromise, useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import BookViewer from './book-viewer/book-viewer';
@@ -149,7 +148,7 @@ function Subjects({model}) {
     );
 }
 
-function SubjectsLoader() {
+export default function SubjectsLoader() {
     const slug = 'books';
     const [model, statusPage] = usePageData({slug, preserveWrapping: true});
 
@@ -161,12 +160,9 @@ function SubjectsLoader() {
 
     model.books = model.books.filter((b) => b.book_state !== 'retired');
 
-    return <Subjects model={model} />;
+    return (
+        <main className="subjects-page">
+            <Subjects model={model} />;
+        </main>
+    );
 }
-
-const view = {
-    classes: ['subjects-page'],
-    tag: 'main'
-};
-
-export default pageWrapper(SubjectsLoader, view);

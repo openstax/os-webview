@@ -1,6 +1,6 @@
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import React from 'react';
+import LazyLoad from 'react-lazyload';
 import Banner from './banner/banner';
 import QuoteBox from './quote-box/quote-box';
 import Features from './features/features';
@@ -11,7 +11,6 @@ import Feedback from './feedback/feedback';
 import FAQ from './faq/faq';
 import StickyFooter from '~/components/sticky-footer/sticky-footer-wrapper';
 import ButtonRow from './button-row/button-row';
-import $ from '~/helpers/$';
 import './openstax-tutor.css';
 
 export function TutorMarketingPage({data}) {
@@ -20,13 +19,19 @@ export function TutorMarketingPage({data}) {
             <Banner model={data} />
             <QuoteBox model={data} />
             <div className="reset-odd-counter" />
-            <Features model={data} />
-            <Materials model={data} />
-            <Cost model={data} />
-            <Feedback model={data} />
+            <LazyLoad>
+                <Features model={data} />
+                <Materials model={data} />
+            </LazyLoad>
+            <LazyLoad>
+                <Cost model={data} />
+                <Feedback model={data} />
+            </LazyLoad>
             <div className="reset-odd-counter" />
-            <Webinars model={data} />
-            <FAQ model={data} />
+            <LazyLoad>
+                <Webinars model={data} />
+                <FAQ model={data} />
+            </LazyLoad>
             <StickyFooter>
                 <ButtonRow model={data} />
             </StickyFooter>
@@ -34,15 +39,10 @@ export function TutorMarketingPage({data}) {
     );
 }
 
-function Loader() {
+export default function Loader() {
     return (
-        <LoaderPage slug="pages/openstax-tutor" Child={TutorMarketingPage} doDocumentSetup />
+        <main className="openstax-tutor-page page">
+            <LoaderPage slug="pages/openstax-tutor" Child={TutorMarketingPage} doDocumentSetup />
+        </main>
     );
 }
-
-const view = {
-    classes: ['openstax-tutor-page', 'page'],
-    tag: 'main'
-};
-
-export default pageWrapper(Loader, view);

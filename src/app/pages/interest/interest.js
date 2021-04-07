@@ -1,15 +1,14 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {useDataFromPromise, useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
 import FormHeader from '~/components/form-header/form-header';
 import RoleSelector from '~/components/role-selector/role-selector';
 import StudentForm from '~/components/student-form/student-form';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
-import {HiddenFields} from '~/components/salesforce-form/salesforce-form.jsx';
+import {HiddenFields} from '~/components/salesforce-form/salesforce-form';
 import ContactInfo from '~/components/contact-info/contact-info';
 import BookSelector, {useSelectedBooks} from '~/components/book-selector/book-selector';
-import FormInput from '~/components/form-input/form-input.jsx';
+import FormInput from '~/components/form-input/form-input';
 import FormCheckboxgroup from '~/components/form-checkboxgroup/form-checkboxgroup';
 import salesforcePromise from '~/models/salesforce';
 import {afterFormSubmit} from '~/models/books';
@@ -149,7 +148,7 @@ function FacultyForm({selectedRole, onPageChange}) {
     );
 }
 
-export function InterestForm() {
+export default function InterestForm() {
     const [selectedRole, setSelectedRole] = useState('');
     const [hideRoleSelector, setHideRoleSelector] = useState(false);
     const ref = useRef();
@@ -165,7 +164,7 @@ export function InterestForm() {
     useCanonicalLink();
 
     return (
-        <React.Fragment>
+        <main className="interest-form-v2">
             <FormHeader slug="pages/interest-form" />
             <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
             <div className="text-content" ref={ref}>
@@ -174,13 +173,6 @@ export function InterestForm() {
                     <FacultyForm selectedRole={selectedRole} onPageChange={onPageChange} />
                 </RoleSelector>
             </div>
-        </React.Fragment>
+        </main>
     );
 }
-
-const view = {
-    classes: ['interest-form-v2'],
-    tag: 'main'
-};
-
-export default pageWrapper(InterestForm, view);

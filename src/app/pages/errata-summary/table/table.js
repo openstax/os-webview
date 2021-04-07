@@ -77,7 +77,7 @@ const sortFunctions = {
 
 function DesktopHeaderColumn({colSpec, sortController}) {
     const {sortKey, sortDir, setSortFn, setSortDir, setSortKey} = sortController;
-    const onClick = (event) => {
+    const onClick = () => {
         if (sortKey === colSpec.id) {
             setSortDir(-sortDir);
         } else {

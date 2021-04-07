@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Hero from '~/components/hero/hero';
 import TabGroup from '~/components/tab-group/tab-group.jsx';
@@ -14,8 +13,7 @@ function TeamPage({data: {
     subheader: heroParagraph,
     headerImageUrl: heroImage,
     teamHeader,
-    openstaxPeople,
-    ...unhandled
+    openstaxPeople
 }}) {
     const accordionItems = openstaxPeople.map((t, i) => ({
         title: t.heading,
@@ -59,15 +57,10 @@ function TeamPage({data: {
     );
 }
 
-export function TeamLoader() {
+export default function TeamLoader() {
     return (
-        <LoaderPage slug="pages/team" Child={TeamPage} doDocumentSetup />
+        <main className="team page">
+            <LoaderPage slug="pages/team" Child={TeamPage} doDocumentSetup />
+        </main>
     );
 }
-
-const view = {
-    classes: ['team', 'page'],
-    tag: 'main' // if the HTML doesn't contain a main tag
-};
-
-export default pageWrapper(TeamLoader, view);

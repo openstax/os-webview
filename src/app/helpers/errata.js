@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import bookPromise from '~/models/book-titles';
 
 // eslint-disable-next-line complexity

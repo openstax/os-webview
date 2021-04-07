@@ -1,11 +1,9 @@
-import {pageWrapper} from '~/controllers/jsx-wrapper';
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import $ from '~/helpers/$';
-import routerBus from '~/helpers/router-bus';
 import Hero from './hero/hero';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
 import Table from './table/table';
-import {LoaderPage, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './errata-summary.css';
 
 const radioItems = [
@@ -48,18 +46,13 @@ function ErrataSummary({data, book}) {
     );
 }
 
-export function ErrataSummaryLoader() {
+export default function ErrataSummaryLoader() {
     const book = $.parseSearchString(window.location.search).book[0];
     const slug = `errata/?book_title=${book}&is_assessment_errata__not=Yes&archived=False`;
 
     return (
-        <LoaderPage slug={slug} Child={ErrataSummary} props={{book}} />
+        <main className="errata-summary page">
+            <LoaderPage slug={slug} Child={ErrataSummary} props={{book}} />
+        </main>
     );
 }
-
-const view = {
-    classes: ['errata-summary', 'page'],
-    tag: 'main' // if the HTML doesn't contain a main tag
-};
-
-export default pageWrapper(ErrataSummaryLoader, view);

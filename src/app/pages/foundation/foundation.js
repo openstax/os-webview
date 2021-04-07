@@ -1,13 +1,8 @@
-import {pageWrapper} from '~/controllers/jsx-wrapper';
 import React from 'react';
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './foundation.css';
 
 const slug = 'pages/foundation';
-const view = {
-    classes: ['foundation-page', 'page'],
-    tag: 'main'
-};
 
 function FoundationPage({data: model}) {
     return (
@@ -37,10 +32,10 @@ function FoundationPage({data: model}) {
     );
 }
 
-function FoundationLoader() {
+export default function FoundationLoader() {
     return (
-        <LoaderPage slug={slug} Child={FoundationPage} doDocumentSetup />
+        <main className="foundation-page page">
+            <LoaderPage slug={slug} Child={FoundationPage} doDocumentSetup />
+        </main>
     );
 }
-
-export default pageWrapper(FoundationLoader, view);

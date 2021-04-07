@@ -21,7 +21,7 @@ function clearTimers() {
 
 function setTimers() {
     clearTimers();
-    fireAt.forEach(([sec, category, label], i) => {
+    fireAt.forEach(([sec, category, label]) => {
         timersRunning.push(
             setTimeout(() => {
                 analytics.sendPageEvent(`TimeOnPage ${category}`, action, label);

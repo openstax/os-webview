@@ -1,6 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
-import $ from '~/helpers/$';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import React from 'react';
 import Carousel from '~/components/carousel/carousel';
 import './carousel.css';
 

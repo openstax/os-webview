@@ -1,5 +1,6 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import groupBy from 'lodash/groupBy';
 import EstablishedPartners from './established-partners/established-partners';
 import Dialog from '~/components/dialog/dialog';
@@ -7,7 +8,7 @@ import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './participants.css';
 
 export default function Participants({
-    heading, subheading, icons: [icons], linkTarget, linkText, ...other
+    heading, subheading, icons: [icons], linkTarget, linkText
 }) {
     const {true: current, false: established} = groupBy(icons, 'currentCohort');
     const [isOpen, toggle] = useToggle();
@@ -31,11 +32,11 @@ export default function Participants({
                 </div>
                 <a
                     className="show-established-partners"
-                    href="{linkTarget}"
+                    href={linkTarget}
                     onClick={showEstablished}
                 >
                     <span>{linkText}</span>
-                    <FontAwesomeIcon icon="chevron-right" />
+                    <FontAwesomeIcon icon={faChevronRight} />
                 </a>
             </div>
             <Dialog

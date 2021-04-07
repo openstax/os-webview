@@ -1,5 +1,5 @@
 import React from 'react';
-import {useDataFromSlug, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import useGiveToday from '~/models/give-today';
 import GiveButton from '../give-button/give-button';
 import './upper-menu.css';
@@ -38,7 +38,7 @@ export default function UpperMenu() {
             <GiveItem />
             <a className="nav-menu" href="https://openstax.secure.force.com/help">Help</a>
             <a className="logo rice-logo logo-wrapper" href="http://www.rice.edu">
-                <img src="/images/rice.png" alt="Rice University logo" height="30" />
+                <img src="/images/rice.png" alt="Rice University logo" />
             </a>
             <GiveButton />
         </div>
