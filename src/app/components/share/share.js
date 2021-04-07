@@ -1,5 +1,6 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faFacebookF, faTwitter, faLinkedinIn} from '@fortawesome/free-brands-svg-icons';
 import './share.css';
 
 /* eslint-disable */
@@ -15,7 +16,7 @@ import './share.css';
 function SocialLink({minimal, aClass, url, icon, iconLabel, target}) {
     return (
         <a className={aClass} target={target} href={url}>
-            <FontAwesomeIcon className="social-icon" icon={{prefix: 'fab', iconName: icon}} />
+            <FontAwesomeIcon className="social-icon" icon={icon} />
             {
                 !minimal && <span>{iconLabel}</span>
             }
@@ -28,20 +29,20 @@ function ShareInterior({pageUrl, message, minimal}) {
         {
             aClass: 'fb-xfbml-parse-ignore facebook btn',
             url: `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}&src=share_button&sdk=joey&display=popup&app_id=`,
-            icon: 'facebook-f',
+            icon: faFacebookF,
             iconLabel: 'Facebook',
             target: '_blank'
         },
         {
             aClass: 'twitter twitter-share-button btn',
             url: `https://twitter.com/intent/tweet?text=${message}&url=${pageUrl}`,
-            icon: 'twitter',
+            icon: faTwitter,
             iconLabel: 'Twitter'
         },
         {
             aClass: 'linkedin btn',
             url: `https://www.linkedin.com/shareArticle?url=${pageUrl}&mini=true&source=OpenStax&title=${message}`,
-            icon: 'linkedin-in',
+            icon: faLinkedinIn,
             iconLabel: 'LinkedIn'
         }
     ];

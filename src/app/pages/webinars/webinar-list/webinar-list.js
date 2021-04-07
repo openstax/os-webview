@@ -1,5 +1,6 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import './webinar-list.css';
 
 function DatedHeading({entry}) {
@@ -64,7 +65,7 @@ function WebinarBox({entry, upcoming}) {
             }
             <a href={entry.registrationUrl}>
                 {entry.registrationLinkText}{' '}
-                <FontAwesomeIcon icon="chevron-right" />
+                <FontAwesomeIcon icon={faChevronRight} />
             </a>
         </div>
     );

@@ -1,6 +1,7 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faUser, faUsers} from '@fortawesome/free-solid-svg-icons';
 import './order-print-copy.css';
 
 function Header({entry}) {
@@ -73,14 +74,14 @@ export default function OrderPrintCopy({amazonDataLink}) {
     const contentArray = [
         {
             headerText: 'Individual',
-            headerIcon: 'user',
+            headerIcon: faUser,
             disclosure: amazonDataLink.disclosure,
             buttonText: 'Order a personal copy',
             buttonUrl: amazonDataLink.url
         },
         {
             headerText: 'Bookstore',
-            headerIcon: 'users',
+            headerIcon: faUsers,
             buttonText: 'Order options',
             buttonUrl: 'https://buyprint.openstax.org/bookstore-suppliers'
         }

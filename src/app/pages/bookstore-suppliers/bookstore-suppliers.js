@@ -1,6 +1,7 @@
 import React from 'react';
 import {LoaderPage, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faCanadianMapleLeaf} from '@fortawesome/free-brands-svg-icons';
 import './bookstore-suppliers.css';
 
 const slug = 'pages/print-order';
@@ -34,7 +35,7 @@ function CanadaFlagCard() {
         <div className="flag-card">
             <div className="canada-flag">
                 <div className="white-field">
-                    <FontAwesomeIcon icon={['fab', 'canadian-maple-leaf']} />
+                    <FontAwesomeIcon icon={faCanadianMapleLeaf} />
                 </div>
             </div>
         </div>

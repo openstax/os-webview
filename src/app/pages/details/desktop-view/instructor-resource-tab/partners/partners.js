@@ -1,6 +1,7 @@
 import React from 'react';
 import routerBus from '~/helpers/router-bus';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faCheck} from '@fortawesome/free-solid-svg-icons';
 import StarsAndCount from '~/components/stars-and-count/stars-and-count';
 import analyticsEvents from '~/pages/partners/analytics-events';
 import './partners.css';
@@ -22,7 +23,7 @@ function Blurb({blurb, badgeImage, onClick}) {
                     blurb.verifiedFeatures &&
                         <div className="badge">
                             <img className="background" src={badgeImage} alt="verified" />
-                            <FontAwesomeIcon className="checkmark" icon="check" />
+                            <FontAwesomeIcon className="checkmark" icon={faCheck} />
                             <div className="tooltip right">
                                 {blurb.verifiedFeatures}
                             </div>

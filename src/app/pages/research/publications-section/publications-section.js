@@ -1,6 +1,7 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons';
 import './publications-section.css';
 
 function Publication({pub}) {
@@ -12,7 +13,7 @@ function Publication({pub}) {
             <RawHTML html={pub.excerpt} />
             <a href={pub.downloadUrl}>
                 View PDF{' '}
-                <FontAwesomeIcon icon="external-link-alt" />
+                <FontAwesomeIcon icon={faExternalLinkAlt} />
             </a>
         </div>
     );

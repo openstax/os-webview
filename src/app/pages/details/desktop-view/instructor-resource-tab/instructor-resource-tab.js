@@ -1,9 +1,11 @@
 import React from 'react';
+import LazyLoad from 'react-lazyload';
 import FeaturedResources from '../../common/featured-resources/featured-resources.js';
 import {instructorResourceBoxPermissions} from '../../common/resource-box/resource-box';
 import ResourceBoxes, {VideoResourceBoxes} from '../../common/resource-box/resource-boxes';
 import Partners from './partners/partners';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faExclamationCircle, faDesktop} from '@fortawesome/free-solid-svg-icons';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {useUserStatus, usePartnerFeatures} from '../../common/hooks';
 import './instructor-resource-tab.css';
@@ -13,7 +15,7 @@ function FreeStuff({freeStuffContent, userStatus}) {
         undefined: freeStuffContent.content,
         true: freeStuffContent.contentLoggedIn,
         false: <div className="blurb-body">
-            <FontAwesomeIcon icon="exclamation-circle" />{' '}
+            <FontAwesomeIcon icon={faExclamationCircle} />{' '}
             Your account must be instructor verified...
             <a href="https://openstax.secure.force.com/help/articles/FAQ/Requesting-Instructor-only-access-to-the-resources-on-openstax-org">How do I do that?</a>
         </div>
@@ -35,7 +37,7 @@ function Webinar({url, text, blurb}) {
     return (
         <a href={url} className="webinars">
             <div className="icon-cell">
-                <FontAwesomeIcon icon="desktop" />
+                <FontAwesomeIcon icon={faDesktop} />
             </div>
             <div className="blurb">
                 <h2>{text}</h2>
@@ -141,20 +143,22 @@ function InstructorResourceTab({model, userStatus}) {
                             models={featuredModels}
                         />
                 }
-                <div className={`cards ${includePartners}`}>
-                    <div className="resources">
-                        <VideoResourceBoxes
-                            models={model.bookVideoFacultyResources}
-                            blogLinkModels={blogLinkModels}
-                            referenceModels={referenceModels}
+                <LazyLoad>
+                    <div className={`cards ${includePartners}`}>
+                        <div className="resources">
+                            <VideoResourceBoxes
+                                models={model.bookVideoFacultyResources}
+                                blogLinkModels={blogLinkModels}
+                                referenceModels={referenceModels}
+                            />
+                            <ResourceBoxes communityResource={communityResource} models={otherModels} />
+                        </div>
+                        <Partners
+                            bookAbbreviation={bookAbbreviation}
+                            model={partnersModel}
                         />
-                        <ResourceBoxes communityResource={communityResource} models={otherModels} />
                     </div>
-                    <Partners
-                        bookAbbreviation={bookAbbreviation}
-                        model={partnersModel}
-                    />
-                </div>
+                </LazyLoad>
             </div>
             <Webinar {...webinar} />
         </div>

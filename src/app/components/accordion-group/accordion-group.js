@@ -7,6 +7,7 @@ import {
     AccordionItemPanel
 } from 'react-accessible-accordion';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faChevronRight, faChevronDown} from '@fortawesome/free-solid-svg-icons';
 import './accordion-group.css';
 import $ from '~/helpers/$';
 
@@ -28,6 +29,11 @@ function useChevronDirection(forwardOnChange, preExpanded) {
 }
 
 function TitleBar({title, titleTag, chevronDirection}) {
+    const icon = ({
+        down: faChevronDown,
+        right: faChevronRight
+    })[chevronDirection];
+
     return (
         <AccordionItemHeading aria-level="2">
             <AccordionItemButton className="accordion-button">
@@ -39,7 +45,7 @@ function TitleBar({title, titleTag, chevronDirection}) {
                     }
                 </div>
                 <div className="chevron">
-                    <FontAwesomeIcon icon={`chevron-${chevronDirection}`} />
+                    <FontAwesomeIcon icon={icon} />
                 </div>
             </AccordionItemButton>
         </AccordionItemHeading>

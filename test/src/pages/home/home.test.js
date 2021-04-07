@@ -1,11 +1,14 @@
-import Home from '~/pages/home/home';
-import instanceReady from '../../../helpers/instance-ready';
+import HomeLoader from '~/pages/home/home';
+import {makeMountRender} from '../../../helpers/jsx-test-utils.jsx';
 
 describe('homepage', () => {
-    const {instance, ready} = instanceReady(Home);
+    const wrapper = makeMountRender(HomeLoader, {})();
 
-    // Can't use ready because it waits for images
     it('creates', () => {
-        expect(instance).toBeTruthy();
+        expect(wrapper).toBeTruthy();
+    });
+    it('has a big chunk of content', () => {
+        wrapper.update();
+        expect(wrapper.html().length).toBeGreaterThan(500);
     });
 });

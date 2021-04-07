@@ -1,5 +1,6 @@
 import React from 'react';
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import LazyLoad from 'react-lazyload';
 import $ from '~/helpers/$';
 import Banner from './sections/banner/banner';
 import OverlappingQuote from './sections/overlapping-quote/overlapping-quote';
@@ -53,19 +54,27 @@ function InstitutionalPartnership({data}) {
             <Banner {...sectionData(data, 1)} />
             <OverlappingQuote {...quoteData(data)} />
             <About {...sectionData(data, 2)} />
-            <Promoting {...sectionData(data, 3)} />
-            <BigQuote
-                {...{
-                    backgroundImage: data.section_4_background_image.meta.download_url,
-                    ...sectionData(data, '4_quote')
-                }}
-            />
-            <Speaking {...sectionData(data, 5)} />
-            <Results {...sectionData(data, 6)} />
-            <Participants {...sectionData(data, 7)} />
-            <SmallQuote {...sectionData(data, '8_quote')} />
-            <SignUp {...sectionData(data, 9)} />
-            <StickyFooter leftButton={leftButton} />
+            <LazyLoad>
+                <Promoting {...sectionData(data, 3)} />
+                <BigQuote
+                    {...{
+                        backgroundImage: data.section_4_background_image.meta.download_url,
+                        ...sectionData(data, '4_quote')
+                    }}
+                />
+            </LazyLoad>
+            <LazyLoad>
+                <Speaking {...sectionData(data, 5)} />
+                <Results {...sectionData(data, 6)} />
+            </LazyLoad>
+            <LazyLoad>
+                <Participants {...sectionData(data, 7)} />
+                <SmallQuote {...sectionData(data, '8_quote')} />
+            </LazyLoad>
+            <LazyLoad>
+                <SignUp {...sectionData(data, 9)} />
+                <StickyFooter leftButton={leftButton} />
+            </LazyLoad>
         </React.Fragment>
     );
 }
