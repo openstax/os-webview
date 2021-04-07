@@ -17,7 +17,7 @@ function RadioButton({item, isSelected, onChange}) {
     return (
         <div
             className="filter-button" tabIndex="0"
-            role="button" aria-pressed={isSelected(item.value)}
+            role="radio" aria-checked={isSelected(item.value)}
             onClick={onClick}
             onKeyDown={onKeyDown}
         >
@@ -62,7 +62,11 @@ export function RadioPanel({selectedItem, items, onChange}) {
     }
 
     return (
-        <div className={cn('filter-buttons', {active})} onClick={toggleActive}>
+        <div
+            role="radiogroup"
+            className={cn('filter-buttons', {active})}
+            onClick={toggleActive}
+        >
             <RadioPanelJsx items={items} selectedValue={selectedItem} onChange={onChange} />
         </div>
     );

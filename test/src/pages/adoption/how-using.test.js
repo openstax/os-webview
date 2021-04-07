@@ -1,26 +1,21 @@
-import {makeMountRender} from '../../../helpers/jsx-test-utils.jsx';
+import React from 'react';
+import {render, screen} from '@testing-library/preact';
+import userEvent from '@testing-library/user-event';
 import HowUsing from '~/pages/adoption/how-using/how-using';
 
-describe('HowUsing', () => {
+const props = {
+    selectedBooks: [],
+    selectedBooks: [{
+        text: 'First Book',
+        value: 'first-book'
+    }]
+};
 
-    let wrapper;
-
-    beforeEach(() => {
-        const props = {
-            selectedBooks: [],
-            selectedBooks: [{
-                text: 'First Book',
-                value: 'first-book'
-            }]
-        };
-        wrapper = makeMountRender(HowUsing, props)();
-    });
-
-    it('creates', () => {
-        wrapper.update();
-        expect(wrapper.text()).toContain('How are you using First Book?')
-        const radios = wrapper.find('[type="radio"]');
-
-        expect(radios).toHaveLength(2);
-    });
+it('creates', (done) => {
+    render(<HowUsing {...props} />);
+    setTimeout(() => {
+        expect(screen.getByText('How are you using First Book', {exact: false}));
+        expect(screen.queryAllByRole('radio')).toHaveLength(2);
+        done();
+    }, 0);
 });

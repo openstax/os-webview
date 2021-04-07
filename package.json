@@ -11,7 +11,6 @@
     },
     "license": "AGPL-3.0",
     "dependencies": {
-        "@babel/eslint-parser": "^7.13.14",
         "@fortawesome/fontawesome-svg-core": "^1.2.35",
         "@fortawesome/free-brands-svg-icons": "^5.15.3",
         "@fortawesome/free-regular-svg-icons": "^5.15.3",
@@ -23,8 +22,6 @@
         "browserslist": "^4.16.3",
         "caniuse-lite": "^1.0.30001192",
         "classnames": "^2.2.6",
-        "enzyme": "^3.11.0",
-        "enzyme-adapter-preact-pure": "^3.0.0",
         "fast-sass-loader": "^2.0.0",
         "html-loader": "^2.1.2",
         "node-sass": "^5.0.0",
@@ -42,21 +39,22 @@
         "@babel/plugin-transform-runtime": "^7.8.3",
         "@babel/preset-env": "^7.8.7",
         "@babel/preset-react": "^7.8.3",
-        "@testing-library/react": "^10.0.1",
+        "@testing-library/jest-dom": "^5.11.10",
+        "@testing-library/preact": "^2.0.1",
+        "@testing-library/user-event": "^13.1.1",
         "babel-eslint": "7.2.3",
         "babel-jest": "^25.1.0",
-        "browser-sync": "^2.18.13",
         "connect-history-api-fallback": "1.3.0",
         "css-loader": "^1.0.1",
         "del": "3.0.0",
-        "eslint": "5.10.0",
+        "eslint": "^7.23.0",
         "eslint-plugin-react": "^7.23.1",
-        "eslint-plugin-react-hooks": "^4.0.4",
+        "eslint-plugin-react-hooks": "^4.2.0",
+        "eslint-webpack-plugin": "^2.5.3",
         "favicons": "^6.2.1",
         "favicons-webpack-plugin": "^5.0.2",
         "find-pkg": "1.0.0",
         "html-webpack-plugin": "^5.3.1",
-        "http-server": "^0.10.0",
         "jest": "^25.1.0",
         "jsdom": "^16.2.1",
         "jsdom-global": "3.0.2",
@@ -69,17 +67,15 @@
         "react-modal": "^3.12.1",
         "regenerator-runtime": "^0.11.0",
         "require-dir": "0.3.2",
-        "source-map-loader": "^0.2.4",
         "style-loader": "^0.23.1",
         "webpack": "^5.30.0",
         "webpack-cli": "^4.6.0",
-        "webpack-dev-server": "^3.11.2",
-        "yargs": "8.0.2"
+        "webpack-dev-server": "^3.11.2"
     },
     "jest": {
         "moduleNameMapper": {
-            "\\.css$": "<rootDir>/__mocks__/styleMock.js",
-            "^~/(.*)": "<rootDir>/dist/app/$1",
+            "\\.scss$": "<rootDir>/__mocks__/styleMock.js",
+            "^~/(.*)": "<rootDir>/src/app/$1",
             "settings": "<rootDir>/src/settings-example.js",
             "^react$": "preact/compat",
             "^react-dom/test-utils$": "preact/test-utils",
@@ -102,6 +98,6 @@
         "testURL": "https://cms-dev.openstax.org/"
     },
     "engines": {
-        "node": ">=6.2"
+        "node": ">=10.22.0"
     }
 }

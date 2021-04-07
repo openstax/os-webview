@@ -122,7 +122,10 @@ export default function CustomizationForm({model, done}) {
     }
 
     return (
-        <form className={cn('customization-form', {showErrors})} ref={ref}>
+        <form
+            name="customization-form" ref={ref}
+            className={cn('customization-form', {showErrors})}
+        >
             <div className="top">
                 <div className="description">{model.customizationFormSubheading}</div>
                 <div className="inputs">

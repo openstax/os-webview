@@ -49,11 +49,12 @@ function PageButtonBar({currentPage, pages, setCurrentPage}) {
     }
 
     return (
-        <div className="button-bar">
+        <div className="button-bar" role="listbox">
             <button disabled={disablePrevious} onClick={prevPage}>Previous</button>
             {
                 pageIndicators.map((indicator) =>
                     <button
+                        role="option"
                         key={indicator}
                         disabled={indicator.disabled}
                         aria-selected={indicator.selected}

@@ -42,7 +42,7 @@ export default function MobileSelector({selectedValue, values, onChange}) {
 
     return (
         <div className="mobile-selector">
-            <div className="selector-button" onClick={toggleShowing}>
+            <div className="selector-button" role="button" onClick={toggleShowing}>
                 <span>{selectedValue}</span>
                 <FontAwesomeIcon icon={faCaretDown} />
             </div>

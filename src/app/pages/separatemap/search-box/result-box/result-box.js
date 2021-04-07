@@ -108,7 +108,7 @@ export default function ResultBox({model, theOpenOne, setTheOpenOne}) {
     return (
         <div className="result-box" ref={ref}>
             <div
-                className="toggle-details" role="button" aria-pressed={isOpen}
+                className="toggle-details" role="switch" aria-checked={isOpen}
                 onClick={toggle}
             >
                 <div className="school-info">

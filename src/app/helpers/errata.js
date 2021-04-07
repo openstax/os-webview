@@ -47,12 +47,12 @@ export function shouldShowDecisionDetails(data) {
     return barStatus || status === 'Will Correct';
 }
 
-export function useErrataDetail(data) {
+export function useErrataDetail(data={}) {
     const [detail, setDetail] = useState();
 
     useEffect(() => {
         bookPromise.then((bookList) => {
-            if (!data) {
+            if (!data.id) {
                 return;
             }
             const entry = bookList.find((info) => info.id === data.book);

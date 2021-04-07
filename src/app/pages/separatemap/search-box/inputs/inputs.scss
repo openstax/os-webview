@@ -108,7 +108,7 @@
     .search-input {
         @extend %non-button-input;
 
-        @include wider-than($phone-max) {
+        @include wider-than($tablet-max) {
             min-width: 40rem;
         }
 

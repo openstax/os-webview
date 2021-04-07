@@ -1,14 +1,12 @@
+import React from 'react';
+import {render, screen} from '@testing-library/preact';
 import TeamLoader from '~/pages/team/team';
-import {makeMountRender} from '../../helpers/jsx-test-utils.jsx';
 
-describe('Team Page', () => {
-    const wrapper = makeMountRender(TeamLoader, {})();
-
-    it('creates', () => {
-        expect(wrapper).toBeTruthy();
-    });
-    it('has a big chunk of content', () => {
-        wrapper.update();
-        expect(wrapper.html().length).toBeGreaterThan(500);
-    });
+it('creates with a big chunk of data', (done) => {
+    render(<TeamLoader />);
+    setTimeout(() => {
+        expect(screen.getByRole('navigation'));
+        expect(screen.queryAllByRole('heading').length).toBeGreaterThan(3);
+        done();
+    }, 0);
 });

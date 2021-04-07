@@ -1,28 +1,32 @@
+import React from 'react';
+import {render, screen} from '@testing-library/preact';
+import userEvent from '@testing-library/user-event';
 import MobileSelector from '~/pages/press/mobile-selector/mobile-selector';
-import {makeMountRender, snapshotify} from '../../../helpers/jsx-test-utils.jsx';
 
-describe('press/MobileSelector', () => {
-    it('opens, changes values, and closes', () => {
-        let mobileSelection = 'Press releases';
-        const values = [
-            'Press releases',
-            'News mentions',
-            'Press inquiries',
-            'Booking'
-        ];
-        const wrapper = makeMountRender(MobileSelector, {
-            selectedValue: mobileSelection,
-            values,
-            onChange(newValue) {
-                mobileSelection = newValue;
-            }
-        })();
+test('opens, changes values, and closes', () => {
+    let mobileSelection = 'Press releases';
+    const values = [
+        'Press releases',
+        'News mentions',
+        'Press inquiries',
+        'Booking'
+    ];
+    const props = {
+        selectedValue: mobileSelection,
+        values,
+        onChange(newValue) {
+            mobileSelection = newValue;
+        }
+    };
 
-        expect(wrapper.find('[role="menuitem"]')).toHaveLength(0);
-        wrapper.find('.selector-button').simulate('click');
-        expect(wrapper.find('[role="menuitem"]')).toHaveLength(values.length);
-        wrapper.find('[role="menuitem"]:not(.selected)').at(0).simulate('click');
-        expect(mobileSelection).toBe(values[1]);
-        expect(wrapper.find('[role="menuitem"]')).toHaveLength(0);
-    });
+    render(<MobileSelector {...props} />);
+    expect(screen.queryByRole('menuitem')).toBeNull();
+
+    const selectorButton = screen.getByRole('button');
+
+    userEvent.click(selectorButton);
+    expect(screen.queryAllByRole('menuitem')).toHaveLength(values.length);
+    userEvent.click(screen.getByText(values[1]));
+    expect(mobileSelection).toBe(values[1]);
+    expect(screen.queryByRole('menuitem')).toBeNull();
 });

@@ -1,27 +1,33 @@
-import {makeMountRender, snapshotify} from '../../helpers/jsx-test-utils.jsx';
+import React from 'react';
+import {render, screen} from '@testing-library/preact';
+import userEvent from '@testing-library/user-event';
 import {PaginatedResults, PaginatorControls} from '~/components/paginator/paginator.js';
 
-describe('PaginatorControls', () => {
-    let page = 2;
-    const wrapper = makeMountRender(PaginatorControls, {
+function WrappedPaginator() {
+    const [currentPage, setCurrentPage] = React.useState(2);
+    const props = {
         items: 33,
-        currentPage: page,
-        setCurrentPage(newPage) {
-            page = newPage;
-        }
-    })();
+        currentPage,
+        setCurrentPage
+    }
 
-    it('operates by button clicks', () => {
-        expect(snapshotify(wrapper)).toMatchSnapshot();
-        const getButtons = () => wrapper.find('button');
-        const nextPageButton = getButtons().last();
+    return (
+        <PaginatorControls {...props} />
+    );
+}
 
-        expect(nextPageButton.text()).toBe('Next');
-        nextPageButton.simulate('click');
-        expect(page).toBe(3);
-        getButtons().first().simulate('click');
-        expect(page).toBe(1);
-        getButtons().at(2).simulate('click');
-        expect(page).toBe(2);
-    });
+function activePage() {
+    const activeButton = screen.getByRole('option', {selected: true});
+
+    return activeButton.textContent;
+}
+
+test('operates by button clicks', () => {
+    render(<WrappedPaginator />);
+    userEvent.click(screen.getByText('Next'));
+    expect(activePage()).toBe('3');
+    userEvent.click(screen.getByText('4'));
+    expect(activePage()).toBe('4');
+    userEvent.click(screen.getByText('Previous'));
+    expect(activePage()).toBe('3');
 });
