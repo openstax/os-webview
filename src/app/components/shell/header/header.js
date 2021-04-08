@@ -1,6 +1,7 @@
 import React from 'react';
 import StickyNote from './sticky-note/sticky-note';
 import Menus from './menus/menus';
+import $ from '~/helpers/$';
 import './header.scss';
 
 function doSkipToContent(event) {

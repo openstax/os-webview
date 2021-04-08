@@ -38,7 +38,7 @@ function SearchBarInterior({setPath}) {
                 />
                 <span
                     className="clear-search"
-                    role="button" aria-label="clear search" tabindex="0"
+                    role="button" aria-label="clear search" tabIndex="0"
                     hidden={clearHidden} onClick={clearSearch} onKeyPress={clearByKey}
                 >
                     <FontAwesomeIcon icon={faTimes} />

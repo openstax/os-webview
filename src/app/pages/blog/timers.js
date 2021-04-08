@@ -16,14 +16,14 @@ const action = 'time spent';
 const timersRunning = [];
 
 function clearTimers() {
-    timersRunning.forEach((timer) => clearTimeout(timer));
+    timersRunning.forEach((timer) => window.clearTimeout(timer));
 }
 
 function setTimers() {
     clearTimers();
     fireAt.forEach(([sec, category, label]) => {
         timersRunning.push(
-            setTimeout(() => {
+            window.setTimeout(() => {
                 analytics.sendPageEvent(`TimeOnPage ${category}`, action, label);
             }, sec * 1000)
         );

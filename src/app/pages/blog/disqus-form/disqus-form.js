@@ -40,6 +40,6 @@ export default function DisqusForm() {
     });
 
     return (
-        <div id="disqus_thread" class="disqus" />
+        <div id="disqus_thread" className="disqus" />
     );
 }

@@ -11,7 +11,7 @@ export {default as ErrataSection, ErrataContents} from './errata';
 function trackLinkClick(event) {
     analytics.sendPageEvent(
         'Microdonation book page give link',
-        open,
+        'open',
         event.target.href
     );
 }

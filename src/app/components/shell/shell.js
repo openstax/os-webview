@@ -35,7 +35,7 @@ function App() {
     const ref = React.useRef();
 
     React.useEffect(() => {
-        const mainObserver = new MutationObserver(() => {
+        const mainObserver = new window.MutationObserver(() => {
             document.body.classList.remove('initial-load');
             mainObserver.disconnect();
         });

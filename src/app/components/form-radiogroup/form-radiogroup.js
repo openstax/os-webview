@@ -30,7 +30,7 @@ export default function FormRadioGroup({label, longLabel, name, options, selecte
         const invalid = required && !options.find((opt) => selectedValue === opt.value);
 
         setValidationMessage(invalid ? 'Please select one' : '');
-    }, [selectedValue]);
+    }, [selectedValue, options, required]);
 
     return (
         <div className='form-radiogroup'>

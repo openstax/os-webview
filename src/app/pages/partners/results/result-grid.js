@@ -20,7 +20,7 @@ function modelFromEntry(entry) {
 }
 
 function baseHref() {
-    const h = new URL(window.location.href);
+    const h = new window.URL(window.location.href);
 
     h.search = '';
     return h.href;
@@ -107,4 +107,4 @@ export default function ResultGrid({entries, linkTexts}) {
             </Dialog>
         </div>
     );
-};
+}

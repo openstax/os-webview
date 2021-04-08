@@ -6,7 +6,7 @@ export default function Byline({date, author, source}) {
     return (
         <div className="byline">
             {
-                Boolean(source) ?
+                source ?
                     <span className="source">{source}</span> :
                     <span className="author">{author}</span>
             }

@@ -133,7 +133,7 @@ export default function ErrataForm({
 
     // TESTING
     // React.useEffect(() => {
-    //     setTimeout(() => {
+    //     window.setTimeout(() => {
     //         console.info('Setting banned notice text');
     //         setBannedText('This is your banned notice. Just testing.');
     //     }, 2200);
@@ -143,7 +143,7 @@ export default function ErrataForm({
         if (submitting) {
             const formEl = formRef.current;
             const putFileWidgetsBack = removeEmptyFileWidgets(formEl);
-            const formData = new FormData(formEl);
+            const formData = new window.FormData(formEl);
 
             // Programmatically post the form
             fetch(postEndpoint, {

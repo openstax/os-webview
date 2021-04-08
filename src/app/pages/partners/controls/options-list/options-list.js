@@ -3,13 +3,14 @@ import $ from '~/helpers/$';
 import './options-list.scss';
 
 function Item({label, value, selected}) {
+    // This might be a case for useReducer
     const [isSelected, setIsSelected] = useState(selected.includes(value));
 
     useEffect(() => {
         const cleanup = selected.on('notify', () => setIsSelected(selected.includes(value)));
 
         return cleanup;
-    }, []);
+    }, [selected, value]);
 
     function toggleSelected() {
         if ('toggle' in selected) {

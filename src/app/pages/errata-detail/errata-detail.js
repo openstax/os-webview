@@ -29,8 +29,8 @@ function ErrataDetail({data}) {
     }
     return (
         <React.Fragment>
-            <div class="hero padded"><h1>Errata Submission Details</h1></div>
-            <div class="boxed">
+            <div className="hero padded"><h1>Errata Submission Details</h1></div>
+            <div className="boxed">
                 <ProgressBarBlock data={data} />
                 <ErrataDetailBlock data={data} />
             </div>

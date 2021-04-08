@@ -64,7 +64,7 @@ function Carousel({
 
     React.useEffect(() => {
         // On initial draw, need to wait for render.
-        setTimeout(() => {
+        window.setTimeout(() => {
             const targetItem = ref.current.querySelectorAll('.items > *')[frameNumber];
             const {left: viewportLeft} = ref.current.getBoundingClientRect();
             const {left: targetLeft} = targetItem.getBoundingClientRect();

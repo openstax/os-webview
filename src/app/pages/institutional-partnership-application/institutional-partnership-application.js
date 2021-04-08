@@ -24,11 +24,11 @@ function TestimonialBlock({selectedLabel, data}) {
     const testimonial = testimonials[selectedLabel];
 
     return (
-        <div class="testimonial">
-            <div class="boxed">
-                <div class="testimonial-box">
-                    <p class="text-block">{testimonial.block}</p>
-                    <div class="writer-info">
+        <div className="testimonial">
+            <div className="boxed">
+                <div className="testimonial-box">
+                    <p className="text-block">{testimonial.block}</p>
+                    <div className="writer-info">
                         <p>
                             <strong>-{testimonial.name}</strong><br />
                             {testimonial.address1}<br />
@@ -45,7 +45,7 @@ function Application() {
     return (
         <div className="application">
             <iframe
-                class="form-iframe"
+                className="form-iframe"
                 src="https://docs.google.com/forms/d/e/1FAIpQLSfI0XpCC-4ag0u9vHizT5w2JLkwcv39HVTZnvQHEtmQj8PJwQ/viewform"
             />
         </div>
@@ -86,8 +86,8 @@ function Tabs({model}) {
 function ApplicationPage({data}) {
     return (
         <React.Fragment>
-            <div class="hero">
-                <div class="text-block">
+            <div className="hero">
+                <div className="text-block">
                     <p>{data.headingYear}</p>
                     <RawHTML Tag="h1" html={data.heading} />
                 </div>

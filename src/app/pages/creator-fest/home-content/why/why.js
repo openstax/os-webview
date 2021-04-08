@@ -17,7 +17,7 @@ export default function Why({ data: {
         const newStyle = `${biStyle},url('${image}')`;
 
         el.style.backgroundImage = newStyle;
-    }, []);
+    }, [image]);
 
     return (
         <section className="why" ref={ref}>

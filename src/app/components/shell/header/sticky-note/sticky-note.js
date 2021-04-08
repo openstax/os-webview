@@ -13,7 +13,7 @@ export default function StickyNote() {
 
     return (
         <div className="sticky-note">
-            <div class="text-content" role="alert">
+            <div className="text-content" role="alert">
                 <PutAway />
                 <RawHTML className="html-content" html={stickyData.emergency_content} />
             </div>

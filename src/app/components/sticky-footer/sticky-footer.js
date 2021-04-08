@@ -24,22 +24,22 @@ function StickyFooterBody({leftButton, rightButton}) {
 
     return (
         <div className={cn('sticky-footer', {collapsed})}>
-            <div class="button-group">
-                <a href={leftButton.link} class="btn medium">{leftButton.text}</a>
+            <div className="button-group">
+                <a href={leftButton.link} className="btn medium">{leftButton.text}</a>
                 {
                     leftButton.description &&
-                        <div class="description">{leftButton.description}</div>
+                        <div className="description">{leftButton.description}</div>
                 }
                 {
                     leftButton.descriptionHtml &&
-                        <RawHTML class="description" html={leftButton.descriptionHtml} />
+                        <RawHTML className="description" html={leftButton.descriptionHtml} />
                 }
             </div>
             {
                 rightButton &&
-                    <div class="button-group">
-                        <div class="description">{rightButton.description}</div>
-                        <a href="{rightButton.link}" class="btn medium">{rightButton.text}</a>
+                    <div className="button-group">
+                        <div className="description">{rightButton.description}</div>
+                        <a href="{rightButton.link}" className="btn medium">{rightButton.text}</a>
                     </div>
             }
         </div>

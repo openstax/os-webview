@@ -113,7 +113,7 @@ function FacultyForm({selectedRole, onPageChange}) {
         }
 
         // eslint-disable-next-line no-use-before-define
-        const submitAfterDelay = () => setTimeout(submitNextBook, 300);
+        const submitAfterDelay = () => window.setTimeout(submitNextBook, 300);
 
         function submitNextBook() {
             const preselectedTitle = firstSearchArgument();

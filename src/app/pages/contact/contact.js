@@ -22,18 +22,18 @@ export default function ContactPage() {
 
     return (
         <main id="maincontent" className="contact-page page">
-            <div class="hero">
-                <div class="boxed">
+            <div className="hero">
+                <div className="boxed">
                     <h1>{title}</h1>
                     <p>{tagline}</p>
                 </div>
             </div>
-            <img class="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
-            <div class="boxed left-justified">
-                <div class="col form-container">
+            <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
+            <div className="boxed left-justified">
+                <div className="col form-container">
                     <Form />
                 </div>
-                <div class="col">
+                <div className="col">
                     <h2>{mailingHeader}</h2>
                     <RawHTML Tag="address" html={mailingAddress} />
                     <RawHTML html={customerService} />

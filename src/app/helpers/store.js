@@ -58,7 +58,7 @@ export class SetStore extends Store {
 
     constructor() {
         super();
-        this._data = new Set();
+        this._data = new window.Set();
     }
 
     toggle(value) {

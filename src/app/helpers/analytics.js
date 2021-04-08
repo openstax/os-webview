@@ -5,17 +5,17 @@ import './tag-manager';
 
 const settings = window.SETTINGS;
 const RELATIVE_TO_ROOT = /^\//;
-const SETUP_GA = Symbol();
+const SETUP_GA = window.Symbol();
 const waitForAnalytics = new Promise((resolve, reject) => {
     let triesLeft = 10;
-    const tryInterval = setInterval(() => {
+    const tryInterval = window.setInterval(() => {
         if (typeof window.ga === 'function') {
-            clearInterval(tryInterval);
+            window.clearInterval(tryInterval);
             resolve(true);
         } else if (triesLeft > 0) {
             --triesLeft;
         } else {
-            clearInterval(tryInterval);
+            window.clearInterval(tryInterval);
             reject('Failed to load Google Analytics');
         }
     }, 500);
@@ -54,7 +54,7 @@ class Analytics {
     }
 
     sendPageview(page) {
-        let frag = page || location.pathname;
+        let frag = page || window.location.pathname;
 
         if (!(RELATIVE_TO_ROOT).test(frag)) {
             frag = `/${frag}`;
@@ -63,7 +63,7 @@ class Analytics {
         this.send({
             hitType: 'pageview',
             page: frag,
-            location: location.href
+            location: window.location.href
         });
     }
 
@@ -146,7 +146,7 @@ class Analytics {
                     eventCategory: 'External',
                     eventAction: 'open',
                     eventLabel: href,
-                    location: location.href
+                    location: window.location.href
                 });
             }
         }
@@ -250,7 +250,7 @@ class Analytics {
         accountsModel.load().then((accountResponse) => {
             if (accountResponse.opt_out_of_cookies) {
                 this.disableAllTracking();
-                setInterval(() => {
+                window.setInterval(() => {
                     this.disableAllTracking();
                 }, 3000);
 

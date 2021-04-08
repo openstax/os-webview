@@ -5,16 +5,16 @@ import './featured-resources.scss';
 export default function FeaturedResources({headline, resources}) {
     const modResources = resources.map((res) => {
         const storageKey = `featured-resource-${res.heading}`;
-        const seenTimes = 1 + Number(localStorage[storageKey] || 0);
+        const seenTimes = 1 + Number(window.localStorage[storageKey] || 0);
         const model = Object.assign({
             isNew: seenTimes <= 3,
             onClick: () => {
-                localStorage[storageKey] = 5;
+                window.localStorage[storageKey] = 5;
                 model.isNew = false;
             }
         }, res);
 
-        localStorage[storageKey] = seenTimes;
+        window.localStorage[storageKey] = seenTimes;
 
         return model;
     });

@@ -22,32 +22,26 @@ function useWrappingRules(el) {
         if (el && !wrapped && isTooSkinny(el)) {
             setWrapNarrowerThan(innerWidth);
         }
-    }, [wrapped, innerWidth]);
+    }, [el, wrapped, innerWidth]);
 
     return wrapped;
 }
 
-function Innards({children, src, alt, Tag='div', reverse}) {
+export default function Hero({children, src, alt, Tag='div', reverse}) {
     const pictureRef = useRef();
     const wrapped = useWrappingRules(pictureRef.current);
 
     return (
-        <Tag className={cn('hero-component hero', {wrapped, reverse})}>
-            <div className="text-content">
-                {children}
-            </div>
-            <div className="picture-content" ref={pictureRef}>
-                <ClippedImage src={src} alt={alt} />
-                <img src={src} alt={alt} />
-            </div>
-        </Tag>
-    );
-}
-
-export default function Hero(props) {
-    return (
         <WindowContextProvider>
-            <Innards {...props} />
+            <Tag className={cn('hero-component hero', {wrapped, reverse})}>
+                <div className="text-content">
+                    {children}
+                </div>
+                <div className="picture-content" ref={pictureRef}>
+                    <ClippedImage src={src} alt={alt} />
+                    <img src={src} alt={alt} />
+                </div>
+            </Tag>
         </WindowContextProvider>
     );
 }

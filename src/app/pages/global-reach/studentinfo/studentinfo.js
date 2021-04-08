@@ -7,21 +7,21 @@ export default function StudentInfo({
 }) {
     return (
         <div className="studentinfobox">
-            <div class="photo-and-text">
+            <div className="photo-and-text">
                 <div>
-                    <div class="girl-txt-head">{header1}</div>
+                    <div className="girl-txt-head">{header1}</div>
                     <p>{blurb1}</p>
-                    <a href={link1} class="sbox">{cta1}</a>
+                    <a href={link1} className="sbox">{cta1}</a>
                 </div>
-                <img class="girl-img" src={image1Url} alt="Student" />
+                <img className="girl-img" src={image1Url} alt="Student" />
             </div>
 
-            <div class="photo-and-text">
-                <img class="stick-up" src={image2Url} alt="Student" />
-                <div class="first-in-mobile">
-                    <div class="std-txt-head">{header2}</div>
+            <div className="photo-and-text">
+                <img className="stick-up" src={image2Url} alt="Student" />
+                <div className="first-in-mobile">
+                    <div className="std-txt-head">{header2}</div>
                     <p>{blurb2}</p>
-                    <a href={link2} class="sbox">{cta2}</a>
+                    <a href={link2} className="sbox">{cta2}</a>
                 </div>
             </div>
         </div>

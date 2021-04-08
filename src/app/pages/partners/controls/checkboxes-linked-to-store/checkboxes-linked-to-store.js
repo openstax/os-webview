@@ -6,12 +6,14 @@ import cn from 'classnames';
 import './checkboxes-linked-to-store.scss';
 
 function Checkbox({label, value, store}) {
+    // Probably a case for useReducer?
     const [checked, setChecked] = useState(store.includes(value));
 
     useEffect(() => {
         const cleanup = store.on('notify', () => setChecked(store.includes(value)));
 
         return cleanup;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

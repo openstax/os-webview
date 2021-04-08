@@ -13,7 +13,7 @@ export default function ContactInfo({validatorRef}) {
     const [schoolIsOk, setSchoolIsOk] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
     const schools = useDataFromPromise(schoolPromise, []).sort();
-    const schoolSet = new Set(schools.map((s) => s.toLowerCase()));
+    const schoolSet = new window.Set(schools.map((s) => s.toLowerCase()));
 
     React.useEffect(() => {
         shellBus.emit(showPopup ? 'with-modal' : 'no-modal');
@@ -93,7 +93,7 @@ export default function ContactInfo({validatorRef}) {
                 className="modal contact-info-modal" overlayClassName="modal-overlay"
             >
                 <p id="popupMessage">{message}</p>
-                <button type="button" className="dismiss" tabindex="1" onClick={onClose}>
+                <button type="button" className="dismiss" tabIndex="1" onClick={onClose}>
                     Got it
                 </button>
             </ReactModal>

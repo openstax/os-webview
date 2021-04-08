@@ -41,9 +41,9 @@ function SfForm({children, postTo = salesforce.webtoleadUrl, afterSubmit}) {
         <React.Fragment>
             <iframe
                 name="form-response" id="form-response" className="hidden"
-                src="" width="0" height="0" tabindex="-1" onLoad={onLoad} />
+                src="" width="0" height="0" tabIndex="-1" onLoad={onLoad} />
             <form
-                accept-charset="UTF-8" className="form"
+                acceptCharset="UTF-8" className="form"
                 target={salesforce.debug ? undefined : 'form-response'}
                 action={postTo} method="post"
                 onSubmit={onSubmit}

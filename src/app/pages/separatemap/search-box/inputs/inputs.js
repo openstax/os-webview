@@ -54,7 +54,7 @@ function SearchIcon({minimized, toggle}) {
     return (
         <div
             className="search-icon" role="button" aria-pressed={minimized}
-            tabindex="0" onClick={() => toggle()}
+            tabIndex="0" onClick={() => toggle()}
         >
             <FontAwesomeIcon icon={icon} />
         </div>
@@ -84,7 +84,7 @@ export default function Inputs({
 }) {
     const commonViewProps = {
         minimized, toggle, searchValue, setSearchValue,
-        filtersHidden, toggleFilters, searchValue, setSearchValue
+        filtersHidden, toggleFilters
     };
 
     return (

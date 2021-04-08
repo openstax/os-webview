@@ -91,11 +91,11 @@ function PopupMessage() {
             <div className="popup-msg-cross">
                 <FontAwesomeIcon
                     icon={faTimes} className="popup-msg-cross-icon"
-                    role="button" tabindex="0"
+                    role="button" tabIndex="0"
                     onClick={() => togglePopup()}
                 />
             </div>
-            <div>Not seeing your school? Numbers aren't right?</div>
+            <div>Not seeing your school? Numbers aren&apos;t right?</div>
             <div className="popup-msg-link" onClick={sendAdoptionEvent}>
                 <a href="https://openstax.org/adoption">Let us know.</a>
             </div>

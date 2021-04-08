@@ -42,6 +42,7 @@ function useFormModel(title) {
                 window.location = linkHelper.loginLink();
             }
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return model;
@@ -82,7 +83,7 @@ function TitleSelector({setTitle}) {
     return (
         <div className="text-content title-selector">
             <p>
-                It looks like you got referred here but they didn't tell us what
+                It looks like you got referred here but they didn&apos;t tell us what
                 book you were looking at.
             </p>
             <FormSelect

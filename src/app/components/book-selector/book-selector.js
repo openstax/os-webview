@@ -32,6 +32,7 @@ function BookSelector({data, prompt, name, selectedBooks, toggleBook, preselecte
 
     useLayoutEffect(() => {
         books.filter((book) => preselectedTitle === book.value).forEach(toggleBook);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [preselectedTitle, books]);
 
     return (

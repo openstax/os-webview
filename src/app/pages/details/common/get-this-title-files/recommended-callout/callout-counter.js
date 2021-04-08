@@ -22,14 +22,14 @@ export class Implementation {
     }
 
     get lastReset() {
-        const savedValue = Number(localStorage.getItem(this.resetIndex)) ||
+        const savedValue = Number(window.localStorage.getItem(this.resetIndex)) ||
             Number(this.resetDate) - 100;
 
         return new Date(savedValue);
     }
 
     set lastReset(now) {
-        localStorage.setItem(this.resetIndex, Number(now).toString());
+        window.localStorage.setItem(this.resetIndex, Number(now).toString());
     }
 
     get index() {
@@ -40,11 +40,11 @@ export class Implementation {
     }
 
     get count() {
-        return Number(localStorage.getItem(this.index));
+        return Number(window.localStorage.getItem(this.index));
     }
 
     set count(newValue) {
-        localStorage.setItem(this.index, newValue);
+        window.localStorage.setItem(this.index, newValue);
     }
 
     increment() {

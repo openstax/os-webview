@@ -7,7 +7,7 @@ import TestimonialForm from '../../testimonial-form/testimonial-form';
 import Dialog from '~/components/dialog/dialog';
 import './result-box.scss';
 
-const format = new Intl.NumberFormat('en-US', {
+const format = new window.Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD'
 }).format;

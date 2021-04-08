@@ -27,7 +27,7 @@ export default function MenuExpander({active, onClick}) {
             type="button"
             className="expand"
             aria-haspopup="true" aria-label="Toggle Meta Navigation Menu"
-            tabindex="0"
+            tabIndex="0"
             onClick={onClickAndBlur}
             ref={ref}
         >

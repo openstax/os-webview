@@ -1,6 +1,7 @@
 import React from 'react';
 import BodyUnit from '~/components/body-units/body-units';
 import Byline from '~/components/byline/byline';
+import routerBus from '~/helpers/router-bus';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
 import '~/pages/blog/article/article.scss';
 import {usePageData} from '~/helpers/controller/cms-mixin';

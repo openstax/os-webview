@@ -22,7 +22,7 @@ $.apiOriginAndOldPrefix = $.apiOriginAndPrefix.replace('/v2', '');
 
 $.treatSpaceOrEnterAsClick = (event) => {
     if (['Enter', ' '].includes(event.key)) {
-        event.target.dispatchEvent(new MouseEvent('click', {
+        event.target.dispatchEvent(new window.MouseEvent('click', {
             'view': window,
             'bubbles': true,
             'cancelable': true
@@ -32,11 +32,11 @@ $.treatSpaceOrEnterAsClick = (event) => {
 };
 
 const browserId = () => {
-    const ua = navigator.userAgent;
+    const ua = window.navigator.userAgent;
     let M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
     let tem;
     const checkEdge = () => {
-        if (/\bEdge\b/.test(ua)) {
+        if ((/\bEdge\b/).test(ua)) {
             tem = ua.match(/Edge\/(\d+)/);
             M = ['Edge', 'Edge', (tem[1] || '')];
         }
@@ -55,7 +55,7 @@ const browserId = () => {
     checkEdge();
     checkChrome();
     checkFirefox();
-    M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+    M = M[2] ? [M[1], M[2]] : [window.navigator.appName, window.navigator.appVersion, '-?'];
     if ((tem = ua.match(/version\/(\d+)/i)) !== null) {
         M.splice(1, 1, tem[1]);
     }
@@ -109,7 +109,7 @@ $.scrollTo = (el, offset = 0) => {
     const chosenStep = (targetStep + magnitude / targetTicks) / 2;
 
     return new Promise((resolve) => {
-        const i = setInterval(() => {
+        const i = window.setInterval(() => {
             const step = (magnitude > chosenStep) ? chosenStep : magnitude;
             const scrollBody = document.documentElement.scrollTop || document.body.scrollTop;
 
@@ -121,7 +121,7 @@ $.scrollTo = (el, offset = 0) => {
                 const finalPosition = getOffsetTop() + finalScrollBody;
 
                 window.scrollTo(0, finalPosition);
-                clearInterval(i);
+                window.clearInterval(i);
                 resolve();
             }
         }, tick);
@@ -301,11 +301,11 @@ $.fade = (element, {fromOpacity, toOpacity, steps=10}) => {
                 return true;
             }
             element.style.opacity = opacity;
-            requestAnimationFrame(doStep);
+            window.requestAnimationFrame(doStep);
             return false;
         };
 
-        requestAnimationFrame(doStep);
+        window.requestAnimationFrame(doStep);
     });
 };
 

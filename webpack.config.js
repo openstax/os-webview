@@ -59,7 +59,8 @@ const config = {
         new HtmlWebpackPlugin({
             template: './src/index.html'
         }),
-        new FaviconsWebpackPlugin('./src/images/favicon.svg')
+        new FaviconsWebpackPlugin('./src/images/favicon.svg'),
+        new ESLintPlugin({fix: true})
     ],
     performance: {
       maxEntrypointSize: 2.5 * 1000000, // 1MB

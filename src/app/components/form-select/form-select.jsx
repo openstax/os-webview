@@ -10,7 +10,7 @@ export default function FormSelect({
             {label && <label className="field-label">{label}</label>}
             {labelHtml && <RawHTML Tag="label" className="field-label" html={labelHtml} />}
             {instructions && <label className="field-label">{' '}{instructions}</label>}
-            <div className="proxy-select" tabindex="0">
+            <div className="proxy-select" tabIndex="0">
                 <Select name={name} {...selectAttributes}>
                     {
                         options.map((opt) =>

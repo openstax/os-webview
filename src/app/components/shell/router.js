@@ -82,11 +82,11 @@ function handleExternalLink(href, el) {
             document.location.href = href;
         }
     }
-};
+}
 
 function navigateTo(path, state = {x: 0, y: 0}) {
     history.pushState(state, '', linkHelper.stripOpenStaxDomain(path));
-    window.dispatchEvent(new PopStateEvent('popstate', {state}));
+    window.dispatchEvent(new window.PopStateEvent('popstate', {state}));
 }
 
 // eslint-disable-next-line complexity
@@ -203,5 +203,5 @@ export default function Router() {
 
 routerBus.on('navigate', (...args) => {
     navigateTo(...args);
-    window.dispatchEvent(new CustomEvent('navigate'));
+    window.dispatchEvent(new window.CustomEvent('navigate'));
 });

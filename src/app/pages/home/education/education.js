@@ -3,7 +3,7 @@ import LinkWithChevron from '~/components/link-with-chevron/link-with-chevron';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './education.scss';
 
-export default function ({content, linkUrl, linkText}) {
+export default function Education({content, linkUrl, linkText}) {
     return (
         <div className="education-banner">
             <div className="container">

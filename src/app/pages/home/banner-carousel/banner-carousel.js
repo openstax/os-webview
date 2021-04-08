@@ -5,7 +5,7 @@ import analytics from '~/helpers/analytics';
 import $ from '~/helpers/$';
 import './banner-carousel.scss';
 
-export default function ({largeImages, smallImages}) {
+export default function BannerCarousel({largeImages, smallImages}) {
     const [frameNumber, updateFrameNumber] = useState(0);
     const [isMobile, updateIsMobile] = useState($.isMobileDisplay());
     const previousFrameNumber = useRef();

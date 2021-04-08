@@ -56,7 +56,7 @@ export function instructorResourceBoxPermissions(resourceData, userStatus, searc
         resourceStatus,
         loginUrl
     });
-};
+}
 
 // Utility function for student resources
 export function studentResourceBoxPermissions(resourceData, userStatus, search) {
@@ -73,4 +73,4 @@ export function studentResourceBoxPermissions(resourceData, userStatus, search) 
         resourceStatus,
         loginUrl
     });
-};
+}

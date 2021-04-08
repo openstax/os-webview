@@ -11,12 +11,12 @@ export default function DetailsPane({polish, model}) {
             <RawHTML html={model.description} />
             <hr className="thin-rule" />
             {model.adoptions && <SavingsBlurb model={model} />}
-            <div class="authors-region">
+            <div className="authors-region">
                 <CollapsingPane title={polish ? 'Autorzy' : 'Authors'}>
                     <Authors model={model} polish={polish} />
                 </CollapsingPane>
             </div>
-            <div class="product-details-region">
+            <div className="product-details-region">
                 <CollapsingPane title={polish ? 'Szczegóły Produktu' : 'Product details'}>
                     <PublicationInfo model={model} polish={polish} />
                 </CollapsingPane>

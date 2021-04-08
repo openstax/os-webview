@@ -45,10 +45,10 @@ export default function TestimonialForm({email, school, firstName, lastName, aft
         <div className="testimonial-form">
             <iframe
                 name="form-response" id="form-response" className="hidden"
-                src="" width="0" height="0" tabindex="-1"
+                src="" width="0" height="0" tabIndex="-1"
             />
             <form
-                accept-charset="UTF-8" className="form" target="form-response"
+                acceptCharset="UTF-8" className="form" target="form-response"
                 action={salesforce.webtoleadUrl} method="post"
                 onSubmit={onSubmit}
             >

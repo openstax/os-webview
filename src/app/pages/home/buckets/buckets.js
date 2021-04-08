@@ -27,7 +27,7 @@ function Bucket({bucketClass, image, hasImage, heading, content, link, cta}) {
     );
 }
 
-export default function ({bucketModels}) {
+export default function BucketsSection({bucketModels}) {
     return (
         <div className="buckets-section">
             {
