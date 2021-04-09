@@ -4,7 +4,7 @@ import userModel from '~/models/usermodel';
 import {useErrataDetail} from '~/helpers/errata';
 import {ErrataDetailBlock} from '~/pages/errata-detail/errata-detail';
 import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './confirmation.css';
+import './confirmation.scss';
 
 const models = {
     contact: {

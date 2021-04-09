@@ -1,7 +1,7 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {urlFromSlug} from '~/models/cmsFetch';
-import './fetched-content.css';
+import './fetched-content.scss';
 
 // March 16 2021: Removing Signup form code. This page is currently inactive with
 // no way to see whether porting worked. If and when we re-activate the page,

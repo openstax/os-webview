@@ -1,6 +1,6 @@
 import React from 'react';
 import Byline from '~/components/byline/byline';
-import './press-excerpt.css';
+import './press-excerpt.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons';
 

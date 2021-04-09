@@ -1,5 +1,5 @@
 import React from 'react';
-import './progress-ring.css';
+import './progress-ring.scss';
 
 function Circle({basicProps, className, style}) {
     return (

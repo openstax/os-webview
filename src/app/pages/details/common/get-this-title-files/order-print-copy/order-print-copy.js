@@ -2,7 +2,7 @@ import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUser, faUsers} from '@fortawesome/free-solid-svg-icons';
-import './order-print-copy.css';
+import './order-print-copy.scss';
 
 function Header({entry}) {
     return (

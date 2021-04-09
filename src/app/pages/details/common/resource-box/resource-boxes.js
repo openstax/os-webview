@@ -1,9 +1,9 @@
 import React, {useContext} from 'react';
 import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './resource-box.css';
+import './resource-box.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
-    faExternalLinkAlt, faLock, faShoppingCart, faPlay, faExclamationTriangle
+    faExternalLinkAlt, faLock, faDownload, faShoppingCart, faPlay, faExclamationTriangle
 } from '@fortawesome/free-solid-svg-icons';
 import Dialog from '~/components/dialog/dialog';
 import analytics from '~/helpers/analytics';
@@ -160,6 +160,10 @@ function LeftButton({model}) {
     const [isOpen, toggle] = useToggle(false);
     const isCompCopy = model.link.url.endsWith('comp-copy');
     const isCustomization = model.link.url.endsWith('customized-modules');
+    const icon = ({
+        'lock': faLock,
+        'download': faDownload
+    })[model.iconType] || faExclamationTriangle;
 
     function openDialog(event) {
         if (isCompCopy || isCustomization) {
@@ -176,7 +180,7 @@ function LeftButton({model}) {
                 data-local={model.iconType === 'lock'}
                 onClick={openDialog}
             >
-                <FontAwesomeIcon icon={model.iconType} />
+                <FontAwesomeIcon icon={icon} />
                 <span>{model.link.text}</span>
             </a>
             {isCompCopy && <IbooksDialog {...{model, isOpen, toggle}} />}

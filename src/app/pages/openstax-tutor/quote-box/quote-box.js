@@ -1,6 +1,6 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './quote-box.css';
+import './quote-box.scss';
 
 export default function QuoteBox({model: {quote}}) {
     return (

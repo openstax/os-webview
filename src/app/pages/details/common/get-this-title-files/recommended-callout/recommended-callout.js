@@ -2,7 +2,7 @@ import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons';
-import './recommended-callout.css';
+import './recommended-callout.scss';
 
 export default function RecommendedCalloutJsx({title='Recommended', blurb, onPutAway}) {
     return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import useGiveToday from '~/models/give-today';
 import analytics from '~/helpers/analytics';
-import './give-button.css';
+import './give-button.scss';
 
 function trackClick(event) {
     analytics.sendPageEvent('Microdonation nav give button', 'open', event.target.href);

@@ -3,7 +3,7 @@ import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {studentResourceBoxPermissions} from '../../common/resource-box/resource-box';
 import {useUserStatus} from '../../common/hooks';
 import ResourceBoxes from '../../common/resource-box/resource-boxes';
-import './student-resource-tab.css';
+import './student-resource-tab.scss';
 
 function resourceBoxModel(resourceData, userStatus) {
     return Object.assign({

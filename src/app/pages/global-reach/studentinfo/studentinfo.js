@@ -1,5 +1,5 @@
 import React from 'react';
-import './studentinfo.css';
+import './studentinfo.scss';
 
 export default function StudentInfo({
     header1, blurb1, cta1, link1, image1Url,

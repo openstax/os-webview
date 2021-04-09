@@ -2,7 +2,7 @@ import React from 'react';
 import {LabeledSection} from '../common';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import cn from 'classnames';
-import './cost.css';
+import './cost.scss';
 
 function Card({title: headline, description}) {
     return (

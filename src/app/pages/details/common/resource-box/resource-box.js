@@ -1,4 +1,4 @@
-import settings from 'settings';
+const settings = window.SETTINGS;
 
 function encodeLocation(search) {
     const pathWithoutSearch = `${window.location.origin}${window.location.pathname}`;

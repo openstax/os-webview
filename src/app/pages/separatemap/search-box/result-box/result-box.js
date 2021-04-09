@@ -5,7 +5,7 @@ import {useToggle, useDataFromPromise} from '~/components/jsx-helpers/jsx-helper
 import {accountsModel} from '~/models/usermodel';
 import TestimonialForm from '../../testimonial-form/testimonial-form';
 import Dialog from '~/components/dialog/dialog';
-import './result-box.css';
+import './result-box.scss';
 
 const format = new Intl.NumberFormat('en-US', {
     style: 'currency',

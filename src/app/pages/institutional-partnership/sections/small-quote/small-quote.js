@@ -1,5 +1,5 @@
 import React from 'react';
-import './small-quote.css';
+import './small-quote.scss';
 
 export default function SmallQuote({text, name, title, school}) {
     return (

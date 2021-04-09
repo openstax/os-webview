@@ -2,7 +2,7 @@ import {LoaderPage, RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpe
 import React from 'react';
 import cn from 'classnames';
 import $ from '~/helpers/$';
-import './faq.css';
+import './faq.scss';
 
 const docUrlBase = `${$.apiOriginAndPrefix}/documents`;
 

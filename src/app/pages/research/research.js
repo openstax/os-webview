@@ -5,7 +5,7 @@ import HeroSection from './hero-section/hero-section';
 import ProjectsSection from './projects-section/projects-section';
 import PeopleSection from './people-section/people-section';
 import PublicationsSection from './publications-section/publications-section';
-import './research.css';
+import './research.scss';
 
 function ResearchPage({data}) {
     return (

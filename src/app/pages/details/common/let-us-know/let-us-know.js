@@ -3,7 +3,7 @@ import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUserPlus} from '@fortawesome/free-solid-svg-icons';
-import './let-us-know.css';
+import './let-us-know.scss';
 
 function dataStuffFor(title) {
     if ($.isPolish(title)) {

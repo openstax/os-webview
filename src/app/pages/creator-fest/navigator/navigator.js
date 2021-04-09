@@ -1,6 +1,6 @@
 import React from 'react';
 import routerBus from '~/helpers/router-bus';
-import './navigator.css';
+import './navigator.scss';
 
 const basePath = '/creator-fest';
 const pathFromUrl = (url) => url === 'home' ? basePath : `${basePath}/${url}`;

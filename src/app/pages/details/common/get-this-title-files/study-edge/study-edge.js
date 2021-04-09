@@ -1,5 +1,5 @@
 import React from 'react';
-import './study-edge.css';
+import './study-edge.scss';
 
 export default function StudyEdge({model}) {
     const shortName = model.slug.replace('books/', '');

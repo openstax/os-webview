@@ -1,7 +1,7 @@
 import PageContext from '../page-context';
 import React, {useContext} from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './bookings.css';
+import './bookings.scss';
 
 function Booking({imageUrl, name, contact, bio, title}) {
     return (

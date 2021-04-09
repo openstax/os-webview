@@ -11,7 +11,7 @@ import BookSelector, {useSelectedBooks} from '~/components/book-selector/book-se
 import salesforcePromise from '~/models/salesforce';
 import HowUsing from './how-using/how-using';
 import {afterFormSubmit} from '~/models/books';
-import './adoption.css';
+import './adoption.scss';
 
 function ContactInfoPage({selectedRole, validatorRef}) {
     return (

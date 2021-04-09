@@ -6,7 +6,7 @@ import Logo from './logo/logo';
 import MainMenu from './main-menu/main-menu';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import cn from 'classnames';
-import './menus.css';
+import './menus.scss';
 
 export default function Menus({open}) {
     const ref = React.useRef();

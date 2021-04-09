@@ -9,7 +9,7 @@ import analytics from '~/helpers/analytics';
 import {queryById} from '~/models/querySchools';
 import Map from '~/helpers/map-api';
 import SearchBox from './search-box/search-box';
-import './separatemap.css';
+import './separatemap.scss';
 
 function useMap() {
     const [map, setMap] = useState();

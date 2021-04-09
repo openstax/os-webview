@@ -6,7 +6,7 @@ import ContentGroup from '~/components/content-group/content-group.jsx';
 import AccordionGroup from '~/components/accordion-group/accordion-group.js';
 import PeopleTab from './people-tab/people-tab';
 import $ from '~/helpers/$';
-import './team.css';
+import './team.scss';
 
 function TeamPage({data: {
     header: heroHeadline,

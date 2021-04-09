@@ -1,6 +1,6 @@
 import React from 'react';
 import Quote from '~/components/quote/quote.jsx';
-import './quotes.css';
+import './quotes.scss';
 
 export default function ({quotes}) {
     const boxClass = `boxes-${quotes.length}`;

@@ -1,6 +1,6 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './why.css';
+import './why.scss';
 
 export default function Why({ data: {
     superheading,

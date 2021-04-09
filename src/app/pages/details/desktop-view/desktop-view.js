@@ -7,7 +7,7 @@ import StudentResourceTab from './student-resource-tab/student-resource-tab';
 import VideoTab from './videos-tab/videos-tab';
 import {GiveLink} from '../common/common';
 import $ from '~/helpers/$';
-import './desktop-view.css';
+import './desktop-view.scss';
 
 // eslint-disable-next-line complexity
 function labelsFromModel(model, polish) {

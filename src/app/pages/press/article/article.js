@@ -2,7 +2,7 @@ import React from 'react';
 import BodyUnit from '~/components/body-units/body-units';
 import Byline from '~/components/byline/byline';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
-import '~/pages/blog/article/article.css';
+import '~/pages/blog/article/article.scss';
 import {usePageData} from '~/helpers/controller/cms-mixin';
 
 function Hero({coverUrl}) {

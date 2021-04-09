@@ -1,6 +1,6 @@
 import React from 'react';
 import ResourceBoxes from '../resource-box/resource-boxes';
-import './featured-resources.css';
+import './featured-resources.scss';
 
 export default function FeaturedResources({headline, resources}) {
     const modResources = resources.map((res) => {

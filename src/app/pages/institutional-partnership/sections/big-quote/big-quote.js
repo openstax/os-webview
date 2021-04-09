@@ -1,5 +1,5 @@
 import React from 'react';
-import './big-quote.css';
+import './big-quote.scss';
 
 export default function ({text, name, title, school, backgroundImage}) {
     return (

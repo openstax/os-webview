@@ -1,6 +1,6 @@
 import React, {useRef, useLayoutEffect} from 'react';
 import $ from '~/helpers/$';
-import './tab-group.css';
+import './tab-group.scss';
 
 function Tab({label, selectedLabel, setSelectedLabel, TabTag}) {
     const ref = useRef();

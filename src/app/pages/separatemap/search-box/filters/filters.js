@@ -1,6 +1,6 @@
 import React from 'react';
 import FormSelect from '~/components/form-select/form-select.jsx';
-import './filters.css';
+import './filters.scss';
 
 function InstitutionSelector({setInstitution}) {
     const options = [

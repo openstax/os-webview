@@ -1,5 +1,5 @@
 import React from 'react';
-import './a-component-template.css';
+import './a-component-template.scss';
 
 export default function ComponentTemplate({message}) {
     return (

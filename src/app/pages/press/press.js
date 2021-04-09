@@ -7,7 +7,7 @@ import Inquiries from './inquiries/inquiries';
 import Bookings from './bookings/bookings';
 import MobileSelector from './mobile-selector/mobile-selector';
 import PressExcerpt from './press-excerpt/press-excerpt';
-import './press.css';
+import './press.scss';
 
 const asDate = (dateStr) => {
     const [year, month, day] = dateStr.split('-');

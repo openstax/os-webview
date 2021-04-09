@@ -1,5 +1,5 @@
 import React from 'react';
-import './student-form.css';
+import './student-form.scss';
 
 export default function StudentForm() {
     function onClick() {

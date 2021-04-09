@@ -1,6 +1,6 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './videos-tab.css';
+import './videos-tab.scss';
 
 export default function VideoTab({videos}) {
     return (

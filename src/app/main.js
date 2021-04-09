@@ -1,10 +1,8 @@
 import $ from './helpers/$';
-import router from './router';
-import ReactModal from 'react-modal';
+import appElement from '/src/app/components/shell/shell';
 import ReactDOM from 'react-dom';
-import './sentry';
-
-ReactModal.setAppElement('#main');
+// import './sentry';
+import '../styles/main.scss';
 
 if (!$.isSupported()) {
     /* eslint no-alert: 0 */
@@ -12,4 +10,4 @@ if (!$.isSupported()) {
     ' Firefox, Edge and Safari. It may not work in your browser.');
 }
 
-ReactDOM.render(router, document.getElementById('main'));
+ReactDOM.render(appElement, document.getElementById('app'));

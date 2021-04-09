@@ -7,8 +7,8 @@ import PhoneView from './phone-view/phone-view';
 import DesktopView from './desktop-view/desktop-view';
 import {useTableOfContents} from './common/hooks';
 import DetailsContext from './context';
-import './details.css';
-import './table-of-contents.css';
+import './details.scss';
+import './table-of-contents.scss';
 
 // import getCompCopyDialogProps from './comp-copy-dialog-props';
 

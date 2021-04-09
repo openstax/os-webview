@@ -1,6 +1,6 @@
 import React from 'react';
 import {LoaderPage, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './openstax-tutor.css';
+import './openstax-tutor.scss';
 
 function Blurb({icon, title, description}) {
     return (

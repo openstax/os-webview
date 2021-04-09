@@ -1,5 +1,5 @@
 import React from 'react';
-import './progress-bar.css';
+import './progress-bar.scss';
 
 // eslint-disable-next-line complexity
 export default function ProgressBar({status, barStatus}) {

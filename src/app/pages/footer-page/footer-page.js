@@ -1,7 +1,7 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {usePageData} from '~/helpers/controller/cms-mixin';
-import './footer-page.css';
+import './footer-page.scss';
 
 export default function FooterPage() {
     const slug = `pages${window.location.pathname}`;
