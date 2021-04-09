@@ -4,7 +4,7 @@ import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
 import LoginMenu from './login-menu';
 import GiveButton from '../give-button/give-button';
-import './main-menu.css';
+import './main-menu.scss';
 
 function SubjectsMenu() {
     const categories = useDataFromPromise(categoryPromise);

@@ -5,7 +5,7 @@ import {
     TocOption, WebviewOption, StudyEdgeOption, PdfOption, PrintOption, BookshareOption,
     IbooksOption, KindleOption, CheggOption, OptionExpander
 } from './get-this-title-files/options';
-import './get-this-title-files/get-this-title.css';
+import './get-this-title-files/get-this-title.scss';
 import linkhelper from '~/helpers/link';
 
 let userInfo;

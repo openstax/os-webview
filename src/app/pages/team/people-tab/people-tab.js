@@ -1,5 +1,5 @@
 import React from 'react';
-import './people-tab.css';
+import './people-tab.scss';
 
 function PersonCard({entry}) {
     return (

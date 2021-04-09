@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
 import $ from '~/helpers/$';
 import cn from 'classnames';
-import './checkboxes-linked-to-store.css';
+import './checkboxes-linked-to-store.scss';
 
 function Checkbox({label, value, store}) {
     const [checked, setChecked] = useState(store.includes(value));

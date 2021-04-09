@@ -6,7 +6,7 @@ import linkHelper from '~/helpers/link';
 import Form from './form/form';
 import FormSelect from '~/components/form-select/form-select.jsx';
 import $ from '~/helpers/$';
-import './errata-form.css';
+import './errata-form.scss';
 
 function getBookTitle() {
     const queryDict = $.parseSearchString(window.location.search);

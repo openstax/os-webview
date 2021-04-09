@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import analytics from '~/helpers/analytics';
-import './multi-page-form.css';
+import './multi-page-form.scss';
 
 function pass() {
     return true;

@@ -6,7 +6,7 @@ import UserContext from './user-context';
 import PartnerContext from '../partner-context';
 import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import analyticsEvents from '../../analytics-events';
-import './rating-form.css';
+import './rating-form.scss';
 
 const nameInfo = 'Your name as it is displayed here will be shown publicly when you leave a rating.';
 

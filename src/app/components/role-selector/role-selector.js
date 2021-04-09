@@ -1,7 +1,7 @@
 import React from 'react';
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Select from '~/components/select/select.jsx';
-import './role-selector.css';
+import './role-selector.scss';
 
 function RoleSelector({data: options, value, setValue, children, hidden=false}) {
     const [studentContent, facultyContent] = children;

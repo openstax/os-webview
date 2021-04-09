@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPlus, faMinus} from '@fortawesome/free-solid-svg-icons';
-import './collapsing-pane.css';
+import './collapsing-pane.scss';
 
 export default function CollapsingPane({title, children}) {
     const [isOpen, updateIsOpen] = useState(false);

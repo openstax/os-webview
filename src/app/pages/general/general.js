@@ -1,7 +1,7 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {urlFromSlug} from '~/models/cmsFetch';
-import './general.css';
+import './general.scss';
 
 function GeneralPage({html}) {
     const parser = new DOMParser();

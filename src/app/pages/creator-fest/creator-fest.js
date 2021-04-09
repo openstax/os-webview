@@ -4,7 +4,7 @@ import Banner from './banner/banner';
 import Navigator from './navigator/navigator';
 import FetchedContent from './fetched-content/fetched-content';
 import HomeContent from './home-content/home-content';
-import './creator-fest.css';
+import './creator-fest.scss';
 
 function PageContent({data, navLinks}) {
     // Gives reactivity on window.location.pathname

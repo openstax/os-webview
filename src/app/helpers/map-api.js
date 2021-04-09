@@ -1,8 +1,9 @@
 import mapboxgl from 'mapbox-gl';
 import mix from '~/helpers/controller/mixins';
 import busMixin from '~/helpers/controller/bus-mixin';
-import settings from 'settings';
 import mapboxPromise from '~/models/mapbox';
+
+const settings = window.SETTINGS;
 
 // Set up CSS once, when needed
 (() => {

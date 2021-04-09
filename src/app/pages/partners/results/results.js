@@ -5,7 +5,7 @@ import partnerFeaturePromise, {tooltipText} from '~/models/salesforce-partners';
 import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import shuffle from 'lodash/shuffle';
 import orderBy from 'lodash/orderBy';
-import './results.css';
+import './results.scss';
 
 export const costOptions = [
     'Free - $10',

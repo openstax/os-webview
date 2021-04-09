@@ -4,7 +4,7 @@ import StarsAndCount from '~/components/stars-and-count/stars-and-count';
 import analyticsEvents from '../../analytics-events';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faExternalLinkAlt, faCheck} from '@fortawesome/free-solid-svg-icons';
-import './synopsis.css';
+import './synopsis.scss';
 
 function VerifiedBadge({verifiedFeatures}) {
     const badgeImage = '/images/partners/verified-badge.svg';

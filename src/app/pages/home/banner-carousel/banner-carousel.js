@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import analytics from '~/helpers/analytics';
 import $ from '~/helpers/$';
-import './banner-carousel.css';
+import './banner-carousel.scss';
 
 export default function ({largeImages, smallImages}) {
     const [frameNumber, updateFrameNumber] = useState(0);

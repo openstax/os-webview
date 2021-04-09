@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faEnvelopeOpen} from '@fortawesome/free-regular-svg-icons';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 
-import './sign-up.css';
+import './sign-up.scss';
 
 export default function SignUp({heading, contactHtml, submitUrl, buttonText}) {
     return (

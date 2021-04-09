@@ -1,7 +1,7 @@
 import React from 'react';
 import LinkWithChevron from '~/components/link-with-chevron/link-with-chevron';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './education.css';
+import './education.scss';
 
 export default function ({content, linkUrl, linkText}) {
     return (

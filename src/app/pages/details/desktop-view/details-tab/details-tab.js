@@ -5,7 +5,7 @@ import {Authors, PublicationInfo, ErrataSection} from '../../common/common';
 import GetThisTitle from '../../common/get-this-title';
 import LetUsKnow from '../../common/let-us-know/let-us-know';
 import SavingsBlurb from '../../common/savings-blurb';
-import './details-tab.css';
+import './details-tab.scss';
 
 function PolishTab({model, tocState}) {
     return (

@@ -7,7 +7,7 @@ import Quote from './quote';
 import Testimonials from './testimonials';
 import Disruption from './disruption';
 import Give from './give';
-import './impact.css';
+import './impact.scss';
 
 function ImpactPage({data}) {
     const {

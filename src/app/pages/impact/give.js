@@ -1,5 +1,5 @@
 import React from 'react';
-import './give.css';
+import './give.scss';
 
 export default function Give({
     model: {

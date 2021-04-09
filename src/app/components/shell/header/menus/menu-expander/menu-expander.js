@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {DropdownContext} from '../dropdown-context';
 import {useLocation} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './menu-expander.css';
+import './menu-expander.scss';
 
 export default function MenuExpander({active, onClick}) {
     const ref = React.useRef();

@@ -1,4 +1,3 @@
-import settings from 'settings';
 import React, {useEffect} from 'react';
 import {useToggle, useLocation, useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {useUserModel} from '~/models/usermodel';
@@ -6,6 +5,7 @@ import userModelBus from '~/models/usermodel-bus';
 import linkHelper from '~/helpers/link';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
 
+const settings = window.SETTINGS;
 const facultySignupStep4 = `${settings.accountHref}/i/signup/educator/profile_form`;
 const reqFacultyAccessLink = `${settings.accountHref}/i/signup/educator/cs_form`;
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './quote.css';
+import './quote.scss';
 
 export default function Quote({
     model: {

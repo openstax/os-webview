@@ -4,7 +4,7 @@ import Hero from './hero/hero';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
 import Table from './table/table';
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './errata-summary.css';
+import './errata-summary.scss';
 
 const radioItems = [
     {value: '', html: 'View All'},

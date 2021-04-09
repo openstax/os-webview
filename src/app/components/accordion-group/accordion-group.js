@@ -8,7 +8,7 @@ import {
 } from 'react-accessible-accordion';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronRight, faChevronDown} from '@fortawesome/free-solid-svg-icons';
-import './accordion-group.css';
+import './accordion-group.scss';
 import $ from '~/helpers/$';
 
 function useChevronDirection(forwardOnChange, preExpanded) {

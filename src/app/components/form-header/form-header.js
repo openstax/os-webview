@@ -1,6 +1,6 @@
 import React from 'react';
 import {RawHTML, LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './form-header.css';
+import './form-header.scss';
 
 function FormHeader({data}) {
     const {

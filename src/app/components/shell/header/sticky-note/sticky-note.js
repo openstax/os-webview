@@ -1,7 +1,7 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {usePutAway, useStickyData} from '../../shared.jsx';
-import './sticky-note.css';
+import './sticky-note.scss';
 
 export default function StickyNote() {
     const stickyData = useStickyData();

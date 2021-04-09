@@ -4,7 +4,7 @@ import ContentGroup from '~/components/content-group/content-group.jsx';
 import AccordionGroup from '~/components/accordion-group/accordion-group.js';
 import AlumniTab from './alumni-tab/alumni-tab';
 import MembersTab from './members-tab/members-tab';
-import './people-section.css';
+import './people-section.scss';
 
 function DesktopTabs({labels, initialSelection, children}) {
     const [selectedLabel, setSelectedLabel] = useState(labels[initialSelection]);

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useSalesforceLoadedState, salesforce} from '~/models/salesforce';
 import {useUserStatus} from '../../hooks';
-import './request-form.css';
+import './request-form.scss';
 
 function RequestForm({model, done, afterSubmit}) {
     const userStatus = useUserStatus();

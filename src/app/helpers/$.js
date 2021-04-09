@@ -1,5 +1,4 @@
-import settings from 'settings';
-
+const settings = window.SETTINGS;
 const $ = {};
 
 $.isPhoneDisplay = () => {

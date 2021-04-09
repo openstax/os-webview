@@ -3,7 +3,7 @@ import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {DropdownContext} from '../../dropdown-context';
 import $ from '~/helpers/$';
 import cn from 'classnames';
-import './dropdown.css';
+import './dropdown.scss';
 
 export function MenuItem({label, url, local}) {
     return (

@@ -4,7 +4,7 @@ import schoolPromise from '~/models/schools';
 import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import ReactModal from 'react-modal';
 import shellBus from '~/components/shell/shell-bus';
-import './contact-info.css';
+import './contact-info.scss';
 
 const message = 'Please enter your full school name without abbreviations.' +
     ' If this is your full school name, you can click Next.';

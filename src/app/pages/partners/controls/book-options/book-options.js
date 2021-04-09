@@ -2,7 +2,7 @@ import React from 'react';
 import booksPromise, {salesforceTitles as getTitles, subjects as getSubjects} from '~/models/books';
 import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Checkboxes from '../checkboxes-linked-to-store/checkboxes-linked-to-store';
-import './book-options.css';
+import './book-options.scss';
 
 export default function BookOptions({store}) {
     const books = useDataFromPromise(booksPromise);

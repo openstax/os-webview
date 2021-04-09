@@ -4,7 +4,7 @@ import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import Carousel from '~/components/carousel/carousel';
-import './webinars.css';
+import './webinars.scss';
 
 function Card({title='*No title given', description, link: url}) {
     return (

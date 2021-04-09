@@ -10,7 +10,7 @@ import {ArticleFromSlug} from './article/article';
 import {blurbModel} from './article-summary/article-summary.jsx';
 import {WindowContextProvider} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import timers from './timers';
-import './blog.css';
+import './blog.scss';
 import $ from '~/helpers/$';
 
 const stayHere = {path: '/blog'};

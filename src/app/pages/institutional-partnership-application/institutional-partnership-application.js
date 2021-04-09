@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {LoaderPage, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import TabGroup from '~/components/tab-group/tab-group.jsx';
 import ContentGroup from '~/components/content-group/content-group.jsx';
-import './institutional-partnership-application.css';
+import './institutional-partnership-application.scss';
 
 const labels = ['Program details', 'Application'];
 

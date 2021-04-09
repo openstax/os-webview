@@ -1,5 +1,5 @@
 import React from 'react';
-import './paginator.css';
+import './paginator.scss';
 
 const RESULTS_PER_PAGE = 10;
 

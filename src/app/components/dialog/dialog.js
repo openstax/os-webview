@@ -2,7 +2,7 @@ import React from 'react';
 import ReactModal from 'react-modal';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import cn from 'classnames';
-import './dialog.css';
+import './dialog.scss';
 
 function PutAway({noTitle, onClick}) {
     return (
@@ -18,9 +18,14 @@ function PutAway({noTitle, onClick}) {
 export function FooterDialog({
     isOpen, title, children
 }) {
+    const footerEl = document.getElementById('footer');
+
     if (!isOpen) {
+        footerEl.style.removeProperty('z-index');
         return null;
     }
+
+    footerEl.style.zIndex = 1;
     return (
         <dialog className="footer-dialog">
             <div className="title-bar">

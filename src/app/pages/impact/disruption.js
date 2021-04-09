@@ -1,5 +1,5 @@
 import React from 'react';
-import './disruption.css';
+import './disruption.scss';
 
 export default function Disruption({
     model: {

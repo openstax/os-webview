@@ -1,6 +1,6 @@
 import React from 'react';
 import {usePageData} from '~/helpers/controller/cms-mixin';
-import './adopters.css';
+import './adopters.scss';
 
 const slug = 'adopters';
 

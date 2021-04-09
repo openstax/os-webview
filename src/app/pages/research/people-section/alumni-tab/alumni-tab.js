@@ -1,6 +1,6 @@
 import React from 'react';
 import LinkOrNot from '../../link-or-not';
-import './alumni-tab.css';
+import './alumni-tab.scss';
 
 export default function AlumniTab({data}) {
     return (

@@ -8,7 +8,7 @@ import TabGroup from '~/components/tab-group/tab-group.jsx';
 import ContentGroup from '~/components/content-group/content-group.jsx';
 import booksPromise from '~/models/books';
 import analyticsEvents from '../analytics-events';
-import './partner-details.css';
+import './partner-details.scss';
 
 function useRealTitles(books) {
     const [titles, setTitles] = useState(books);

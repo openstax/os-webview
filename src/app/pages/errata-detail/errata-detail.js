@@ -3,7 +3,7 @@ import React from 'react';
 import ProgressBar from './progress-bar/progress-bar.jsx';
 import Detail from './detail/detail';
 import {getDisplayStatus} from '~/helpers/errata';
-import './errata-detail.css';
+import './errata-detail.scss';
 
 function ProgressBarBlock({data}) {
     const {status, barStatus} = getDisplayStatus(data);

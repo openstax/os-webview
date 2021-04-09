@@ -1,7 +1,7 @@
 import React from 'react';
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import LazyLoad from 'react-lazyload';
-import './about.css';
+import './about.scss';
 
 const slug = 'pages/about';
 

@@ -4,7 +4,7 @@ import FormInput from '~/components/form-input/form-input';
 import ModuleList from './module-list';
 import {cmsPost} from '~/models/cmsFetch';
 import cn from 'classnames';
-import './customization-form.css';
+import './customization-form.scss';
 
 const thankYou = 'Thank you &mdash; your request has been sent to the OpenStax team.';
 

@@ -6,7 +6,7 @@ import React, {useState, useEffect, useRef, useContext} from 'react';
 import {WindowContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {usePageData} from '~/helpers/controller/cms-mixin';
 import routerBus from '~/helpers/router-bus';
-import './article.css';
+import './article.scss';
 
 function getProgress(el) {
     const divRect = el.getBoundingClientRect();

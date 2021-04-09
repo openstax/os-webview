@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
-import './mobile-selector.css';
+import './mobile-selector.scss';
 
 function MenuItem({selectedValue, value, onChange}) {
     const selectedClass = value === selectedValue ? 'selected' : null;

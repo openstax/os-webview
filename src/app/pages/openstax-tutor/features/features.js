@@ -1,7 +1,7 @@
 import React from 'react';
 import {LabeledSection} from '../common';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './features.css';
+import './features.scss';
 
 export default function Features({model: {featuresHeader, featuresCards: blurbs}}) {
     const headerLabel = 'Features';

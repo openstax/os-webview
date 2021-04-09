@@ -7,7 +7,7 @@ import UserReview from './user-review';
 import StarsAndCount, {roundedRating} from '~/components/stars-and-count/stars-and-count';
 import RatingForm from './rating-form';
 import linkHelper from '~/helpers/link';
-import './reviews.css';
+import './reviews.scss';
 
 function Bar({num, value, max}) {
     return (

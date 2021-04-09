@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import $ from '~/helpers/$';
 import {WindowContextProvider, WindowContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import cn from 'classnames';
-import './section-navigator.css';
+import './section-navigator.scss';
 
 function Hotspot({id, selectedId, setSelectedId}) {
     return (

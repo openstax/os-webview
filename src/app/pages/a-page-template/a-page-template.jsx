@@ -1,7 +1,7 @@
 import React from 'react';
 import {usePageData} from '~/helpers/controller/cms-mixin';
 import ChildComponent from '~/components/a-component-template/a-component-template.jsx';
-import './a-page-template.css';
+import './a-page-template.scss';
 import $ from '~/helpers/$';
 
 const slug = 'books/biology-2e';

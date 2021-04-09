@@ -1,5 +1,5 @@
 import React from 'react';
-import './map.css';
+import './map.scss';
 
 export default function ({title, buttonText, imageUrl}) {
     return (

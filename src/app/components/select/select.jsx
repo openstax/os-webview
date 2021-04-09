@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {useSelectList} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './select.css';
+import './select.scss';
 
 function Option({optionEl, setValue, active}) {
     const classes = `option ${active ? 'active' : ''}`;

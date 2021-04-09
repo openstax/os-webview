@@ -9,7 +9,7 @@ import StudentResourcesPane from './student-resources-pane/student-resources-pan
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {useTableOfContents} from '../common/hooks';
 import {ErrataContents, GiveLink} from '../common/common';
-import './phone-view.css';
+import './phone-view.scss';
 
 function TocPane({model}) {
     const tocHtml = useTableOfContents(model);

@@ -1,6 +1,6 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './banner.css';
+import './banner.scss';
 
 export default function Banner({headline, image, content}) {
     const ref = React.useRef();

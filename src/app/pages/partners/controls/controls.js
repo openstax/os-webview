@@ -6,8 +6,8 @@ import {books, types, advanced, sort, clearStores} from '../store';
 import BookOptions from './book-options/book-options';
 import AdvancedOptions from './advanced-options/advanced-options';
 import cn from 'classnames';
-import './controls.css';
-import './button-with-popover.css';
+import './controls.scss';
+import './button-with-popover.scss';
 import shellBus from '~/components/shell/shell-bus';
 
 export const sortOptions = [

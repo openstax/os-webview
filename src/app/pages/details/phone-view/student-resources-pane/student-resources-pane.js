@@ -2,7 +2,7 @@ import React from 'react';
 import {studentResourceBoxPermissions} from '../../common/resource-box/resource-box';
 import ResourceBoxes from '../../common/resource-box/resource-boxes';
 import {useUserStatus} from '../../common/hooks';
-import './student-resources-pane.css';
+import './student-resources-pane.scss';
 
 function resourceBoxModel(resourceData, userStatus) {
     return Object.assign({

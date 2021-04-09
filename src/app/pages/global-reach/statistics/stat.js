@@ -1,5 +1,5 @@
 import React from 'react';
-import './stat.css';
+import './stat.scss';
 
 function Card({item}) {
     return (

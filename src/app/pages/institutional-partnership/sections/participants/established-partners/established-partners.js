@@ -1,5 +1,5 @@
 import React from 'react';
-import './established-partners.css';
+import './established-partners.scss';
 
 export default function EstablishedPartners({model=[]}) {
     return (

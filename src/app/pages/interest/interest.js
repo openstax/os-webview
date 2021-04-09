@@ -12,7 +12,7 @@ import FormInput from '~/components/form-input/form-input';
 import FormCheckboxgroup from '~/components/form-checkboxgroup/form-checkboxgroup';
 import salesforcePromise from '~/models/salesforce';
 import {afterFormSubmit} from '~/models/books';
-import './interest.css';
+import './interest.scss';
 
 function ContactInfoPage({selectedRole, validatorRef}) {
     return (

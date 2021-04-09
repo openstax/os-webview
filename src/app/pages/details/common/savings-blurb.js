@@ -3,7 +3,7 @@ import useSavingsDataIn, {linkClickTracker} from '~/helpers/savings-blurb';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faHandHoldingHeart} from '@fortawesome/free-solid-svg-icons';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './savings-blurb.css';
+import './savings-blurb.scss';
 
 export default function SavingsBlurb({model}) {
     const html = useSavingsDataIn(model.supportStatement, model.adoptions, model.savings);

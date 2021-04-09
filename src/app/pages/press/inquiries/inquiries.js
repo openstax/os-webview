@@ -1,6 +1,6 @@
 import PageContext from '../page-context';
 import React, {useContext} from 'react';
-import './inquiries.css';
+import './inquiries.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faFacebook, faLinkedin, faTwitterSquare, faInstagram} from '@fortawesome/free-brands-svg-icons';
 import {faDownload} from '@fortawesome/free-solid-svg-icons';

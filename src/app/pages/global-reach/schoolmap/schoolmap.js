@@ -1,7 +1,7 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
-import './schoolmap.css';
+import './schoolmap.scss';
 
 export default function SchoolMap({heading, blurb, link: linkUrl, cta: linkText}) {
     return (

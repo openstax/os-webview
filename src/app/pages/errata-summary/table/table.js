@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import $ from '~/helpers/$';
 import {getDisplayStatus} from '~/helpers/errata';
-import './table.css'; // ?? wasn't used before ??
+import './table.scss'; // ?? wasn't used before ??
 
 const columnSpecs = [
     {

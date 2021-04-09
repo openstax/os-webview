@@ -1,7 +1,7 @@
 import React from 'react';
 import {LabeledSection} from '../common';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './materials.css';
+import './materials.scss';
 
 export default function Materials({model: {availableBooksHeader: headline, tutorBooks: books}}) {
     const headerLabel = 'Materials';
