@@ -1,6 +1,6 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
+import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons/faSignOutAlt';
 import routerBus from '~/helpers/router-bus';
 import {instructorResourceBoxPermissions} from '../../common/resource-box/resource-box';
 import FeaturedResources from '../../common/featured-resources/featured-resources.js';

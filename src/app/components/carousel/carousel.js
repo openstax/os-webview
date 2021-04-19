@@ -1,6 +1,7 @@
 import React, {useState, useRef} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
+import {faChevronLeft} from '@fortawesome/free-solid-svg-icons/faChevronLeft';
+import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
 import {WindowContextProvider, WindowContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import cn from 'classnames';
 import './carousel.scss';

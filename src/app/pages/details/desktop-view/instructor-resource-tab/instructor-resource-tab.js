@@ -5,7 +5,8 @@ import {instructorResourceBoxPermissions} from '../../common/resource-box/resour
 import ResourceBoxes, {VideoResourceBoxes} from '../../common/resource-box/resource-boxes';
 import Partners from './partners/partners';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faExclamationCircle, faDesktop} from '@fortawesome/free-solid-svg-icons';
+import {faExclamationCircle} from '@fortawesome/free-solid-svg-icons/faExclamationCircle';
+import {faDesktop} from '@fortawesome/free-solid-svg-icons/faDesktop';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {useUserStatus, usePartnerFeatures} from '../../common/hooks';
 import './instructor-resource-tab.scss';

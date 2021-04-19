@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
+import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
 import './link-with-chevron.scss';
 
 export default function LinkWithChevron({children, className, ...props}) {

@@ -1,6 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
+import {faChevronLeft} from '@fortawesome/free-solid-svg-icons/faChevronLeft';
+import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
 import analytics from '~/helpers/analytics';
 import $ from '~/helpers/$';
 import './banner-carousel.scss';

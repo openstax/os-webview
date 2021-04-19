@@ -1,7 +1,8 @@
 import React, {useState, useEffect, useRef} from 'react';
 import './more-fewer.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCaretLeft, faCaretRight} from '@fortawesome/free-solid-svg-icons';
+import {faCaretLeft} from '@fortawesome/free-solid-svg-icons/faCaretLeft';
+import {faCaretRight} from '@fortawesome/free-solid-svg-icons/faCaretRight';
 import $ from '~/helpers/$';
 
 function PseudoButton({onClick, children}) {

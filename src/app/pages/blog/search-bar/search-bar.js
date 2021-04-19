@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faTimes, faSearch} from '@fortawesome/free-solid-svg-icons';
+import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
+import {faSearch} from '@fortawesome/free-solid-svg-icons/faSearch';
 import './search-bar.scss';
 
 function SearchBarInterior({setPath}) {

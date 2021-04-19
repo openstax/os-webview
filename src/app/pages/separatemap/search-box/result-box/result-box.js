@@ -1,6 +1,8 @@
 import React, {useRef, useLayoutEffect} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faChevronUp, faChevronDown, faQuoteLeft} from '@fortawesome/free-solid-svg-icons';
+import {faChevronUp} from '@fortawesome/free-solid-svg-icons/faChevronUp';
+import {faChevronDown} from '@fortawesome/free-solid-svg-icons/faChevronDown';
+import {faQuoteLeft} from '@fortawesome/free-solid-svg-icons/faQuoteLeft';
 import {useToggle, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {accountsModel} from '~/models/usermodel';
 import TestimonialForm from '../../testimonial-form/testimonial-form';
