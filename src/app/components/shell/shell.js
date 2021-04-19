@@ -3,6 +3,7 @@ import Header from './header/header';
 import LowerStickyNote from './lower-sticky-note/lower-sticky-note';
 import Microsurvey from './microsurvey-popup/microsurvey-popup';
 import Footer from './footer/footer';
+import {BrowserRouter} from 'react-router-dom';
 import Router from './router';
 import ReactModal from 'react-modal';
 import bus from './shell-bus';
@@ -45,8 +46,9 @@ function App() {
         ReactModal.setAppElement(ref.current);
     }, []);
 
+    // BrowserRouter has to include everything that uses useLocation
     return (
-        <React.Fragment>
+        <BrowserRouter>
             <div id="microsurvey">
                 <Microsurvey />
             </div>
@@ -62,7 +64,7 @@ function App() {
             <footer id="footer">
                 <Footer />
             </footer>
-        </React.Fragment>
+        </BrowserRouter>
     );
 }
 

@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {DropdownContext} from '../dropdown-context';
-import {useLocation} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useLocation} from 'react-router-dom';
 import './menu-expander.scss';
 
 export default function MenuExpander({active, onClick}) {
