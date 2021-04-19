@@ -3,7 +3,8 @@ import PartnerContext from '../partner-context';
 import StarsAndCount from '~/components/stars-and-count/stars-and-count';
 import analyticsEvents from '../../analytics-events';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faExternalLinkAlt, faCheck} from '@fortawesome/free-solid-svg-icons';
+import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
+import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
 import './synopsis.scss';
 
 function VerifiedBadge({verifiedFeatures}) {

@@ -3,7 +3,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
     faAtom, faBook, faLaptop, faListOl, faMobileAlt, faCloudDownloadAlt, faVolumeUp
 } from '@fortawesome/free-solid-svg-icons';
-import {faAmazon, faApple} from '@fortawesome/free-brands-svg-icons';
+import {faAmazon} from '@fortawesome/free-brands-svg-icons/faAmazon';
+import {faApple} from '@fortawesome/free-brands-svg-icons/faApple';
 import $ from '~/helpers/$';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
 import useAmazonAssociatesLink from './amazon-associates-link';

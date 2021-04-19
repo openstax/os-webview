@@ -2,8 +2,11 @@ import PageContext from '../page-context';
 import React, {useContext} from 'react';
 import './inquiries.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faFacebook, faLinkedin, faTwitterSquare, faInstagram} from '@fortawesome/free-brands-svg-icons';
-import {faDownload} from '@fortawesome/free-solid-svg-icons';
+import {faFacebook} from '@fortawesome/free-brands-svg-icons/faFacebook';
+import {faLinkedin} from '@fortawesome/free-brands-svg-icons/faLinkedin';
+import {faTwitterSquare} from '@fortawesome/free-brands-svg-icons/faTwitterSquare';
+import {faInstagram} from '@fortawesome/free-brands-svg-icons/faInstagram';
+import {faDownload} from '@fortawesome/free-solid-svg-icons/faDownload';
 
 export default function Inquiries() {
     const pageData = useContext(PageContext);

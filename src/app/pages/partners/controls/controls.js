@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import OptionsList from './options-list/options-list';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCaretUp, faCaretDown} from '@fortawesome/free-solid-svg-icons';
+import {faCaretUp} from '@fortawesome/free-solid-svg-icons/faCaretUp';
+import {faCaretDown} from '@fortawesome/free-solid-svg-icons/faCaretDown';
 import {books, types, advanced, sort, clearStores} from '../store';
 import BookOptions from './book-options/book-options';
 import AdvancedOptions from './advanced-options/advanced-options';

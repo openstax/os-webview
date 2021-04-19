@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faChevronDown} from '@fortawesome/free-solid-svg-icons';
+import {faChevronDown} from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import cn from 'classnames';
 
 function RadioButton({item, isSelected, onChange}) {

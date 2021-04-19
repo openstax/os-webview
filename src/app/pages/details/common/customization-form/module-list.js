@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import {useToggle, RawHTML, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faThumbtack, faCaretDown, faCaretRight} from '@fortawesome/free-solid-svg-icons';
+import {faThumbtack} from '@fortawesome/free-solid-svg-icons/faThumbtack';
+import {faCaretDown} from '@fortawesome/free-solid-svg-icons/faCaretDown';
+import {faCaretRight} from '@fortawesome/free-solid-svg-icons/faCaretRight';
 import bookToc from '~/models/book-toc';
 import './module-list.scss';
 

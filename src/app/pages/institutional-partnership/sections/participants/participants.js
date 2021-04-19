@@ -1,6 +1,6 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
+import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
 import groupBy from 'lodash/groupBy';
 import EstablishedPartners from './established-partners/established-partners';
 import Dialog from '~/components/dialog/dialog';

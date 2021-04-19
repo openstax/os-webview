@@ -1,6 +1,7 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faStar, faStarHalf} from '@fortawesome/free-solid-svg-icons';
+import {faStar} from '@fortawesome/free-solid-svg-icons/faStar';
+import {faStarHalf} from '@fortawesome/free-solid-svg-icons/faStarHalf';
 import './stars-and-count.scss';
 
 export function roundedRating(rating) {

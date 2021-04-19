@@ -2,7 +2,7 @@ import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faUserPlus} from '@fortawesome/free-solid-svg-icons';
+import {faUserPlus} from '@fortawesome/free-solid-svg-icons/faUserPlus';
 import './let-us-know.scss';
 
 function dataStuffFor(title) {
