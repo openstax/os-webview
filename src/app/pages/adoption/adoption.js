@@ -74,6 +74,7 @@ function FacultyForm({selectedRole, onPageChange}) {
 
     useEffect(() => {
         if (currentBook) {
+            console.info('Form should submit', formRef.current);
             formRef.current.submit();
         }
     }, [currentBook]);
@@ -84,6 +85,7 @@ function FacultyForm({selectedRole, onPageChange}) {
         const submitQueue = selectedBooks.slice();
         const iframe = document.getElementById(form.target);
 
+        console.info('onSubmit called; iframe is', iframe);
         // eslint-disable-next-line no-use-before-define
         const submitAfterDelay = () => window.setTimeout(submitNextBook, 300);
 
@@ -92,7 +94,9 @@ function FacultyForm({selectedRole, onPageChange}) {
 
             if (submitQueue.length > 0) {
                 setCurrentBook(submitQueue.shift());
+                console.info('Book is set to submit');
             } else if (iframe) {
+                console.info('Submitting finished');
                 setCurrentBook(null);
                 iframe.removeEventListener('load', submitAfterDelay);
                 afterFormSubmit(preselectedTitle, selectedBooks);
