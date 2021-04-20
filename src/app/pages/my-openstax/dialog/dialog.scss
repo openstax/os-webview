@@ -1,0 +1,50 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+dialog {
+  border: 0;
+  color: inherit;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding: 0;
+  position: static;
+  width: 100%;
+
+  > .title-bar,
+  > .content {
+    padding: 3rem;
+  }
+
+  > .content {
+    @include width-up-to($phone-max) {
+      padding: $normal-margin;
+    }
+
+    @include wider-than($phone-max) {
+      padding: 3rem;
+    }
+
+    display: grid;
+    grid-template-rows: 100%;
+    max-height: calc(100vh - 16.6rem);
+    overflow: hidden;
+  }
+
+  .title-bar {
+    @include set-font(h4);
+
+    align-items: center;
+    background-color: ui-color(default);
+    display: flex;
+    grid-gap: 5rem;
+    justify-content: space-between;
+    padding: 3rem {
+      bottom: 2rem;
+      top: 2rem;
+    };
+    white-space: nowrap;
+
+    .put-away {
+      font-size: 2.4rem;
+    }
+  }
+}

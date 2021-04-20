@@ -1,0 +1,84 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.main-card {
+  @extend %card;
+
+  @include wider-than($phone-max) {
+    max-width: 120rem;
+    width: calc(100vw - 12rem);
+  }
+
+  background-color: ui-color(white);
+  border-radius: 0.4rem;
+  margin-bottom: 5rem;
+  margin-top: 5rem;
+  padding-bottom: 3rem;
+
+  .layout-grid {
+    @include width-up-to($tablet-max) {
+      grid-template: 'banner'
+      'nav'
+      'main';
+    }
+
+    @include wider-than($tablet-max) {
+      grid-template: 'banner banner' auto
+      'nav main' auto / auto 1fr;
+    }
+
+    border-image: linear-gradient(
+      to right, os-color(orange), os-color(blue), red 50%, os-color(orange), os-color(gold), os-color(light-blue)
+    ) 1 stretch;
+    border-top: 0.5rem solid;
+    box-sizing: border-box;
+    display: grid;
+    height: 100%;
+    position: relative;
+    top: 0;
+
+    > * {
+      @include width-up-to($phone-max) {
+        padding: 3rem $normal-margin;
+      }
+
+      @include wider-than($phone-max) {
+        padding: 3rem;
+      }
+    }
+  }
+
+
+  .banner {
+    @include width-up-to($tablet-max) {
+      padding: 1rem 3rem;
+    }
+
+    grid-area: banner;
+  }
+
+  .left-bar {
+    @include width-up-to($tablet-max) {
+      padding: 0;
+    }
+
+    border-right: thin solid ui-color(form-border);
+    grid-area: nav;
+  }
+
+  .main-content {
+    grid-area: main;
+    position: relative;
+    top: 0;
+  }
+
+  .banner,
+  .left-bar,
+  .main-content {
+    border-bottom: thin solid ui-color(form-border);
+  }
+
+  hr {
+    border: 0;
+    border-top: thin solid ui-color(form-border);
+  }
+}

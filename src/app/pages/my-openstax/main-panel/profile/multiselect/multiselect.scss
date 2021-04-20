@@ -1,0 +1,98 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.multiselect-overlay {
+    align-items: center;
+    background-color: rgba(ui-color(black), 0.5);
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    left: 0;
+    padding: 3rem;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 2;
+
+    .multiselect-window {
+        border-radius: 0.3rem;
+        max-width: 54rem;
+        overflow: hidden;
+        width: 100%;
+
+        .title-bar {
+            @include title-font(1.8rem);
+
+            align-items: center;
+            background-color: ui-color(default);
+            display: flex;
+            height: $form-element-height;
+            justify-content: space-between;
+            padding: 0 3rem;
+        }
+
+        .ms-body {
+            background-color: ui-color(white);
+            padding: $normal-margin 3rem;
+
+            .prompt {
+                @include set-font(helper-label);
+                font-weight: bold;
+                margin-bottom: 0.3rem;
+            }
+        }
+
+        .selections-and-filter {
+            align-items: center;
+            border: thin solid ui-color(form-border);
+            display: flex;
+            flex-flow: row wrap;
+            padding: 0.5rem 0.2rem 0 0.2rem;
+
+            .selection,
+            input {
+                margin: 0 0.3rem 0.5rem 0.3rem;
+            }
+
+            .selection {
+                $box-background: rgb(231, 242, 246);
+                $box-border: rgb(84, 143, 185);
+                @include set-font(helper-label);
+
+                align-items: center;
+                background-color: $box-background;
+                border: thin solid $box-border;
+                border-radius: 0.2rem;
+                display: flex;
+                justify-content: space-between;
+                padding: 0 1rem;
+
+                .put-away {
+                    margin-left: 2rem;
+                    padding: 0.5rem;
+                }
+            }
+
+            input {
+                @include set-font(body-regular);
+
+                border: 0;
+                padding: 0.3rem 0.5rem;
+            }
+        }
+
+        .filtered-options {
+            @include set-font(body-regular);
+
+            border: thin solid ui-color(form-border);
+            width: 100%;
+
+            option {
+                padding: $normal-margin 2rem;
+
+                &.active {
+                    background-color: ui-color(default);
+                }
+            }
+        }
+    }
+}

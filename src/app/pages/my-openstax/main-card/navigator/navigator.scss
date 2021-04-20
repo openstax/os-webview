@@ -1,0 +1,38 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+nav {
+  @include width-up-to($tablet-max) {
+    display: grid;
+    grid-auto-flow: column;
+  }
+
+  min-width: 26rem;
+
+  .nav-item {
+    @include set-font(body-large);
+
+    @include width-up-to($tablet-max) {
+      border: thin solid ui-color(form-border);
+      justify-content: center;
+      line-height: normal;
+      padding: 0 1rem;
+    }
+
+    @include wider-than($tablet-max) {
+      padding: 0 5rem;
+    }
+
+    align-items: center;
+    color: inherit;
+    display: flex;
+    height: $form-element-height;
+    text-decoration: none;
+
+    &:hover {
+      @include title-font(1.8rem);
+
+      background-color: #f5f5f5;
+      color: inherit;
+    }
+  }
+}

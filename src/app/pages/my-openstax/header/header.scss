@@ -1,0 +1,37 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.header {
+  align-items: center;
+  display: grid;
+  grid-column-gap: 3rem;
+  grid-template-columns: auto 1fr;
+
+  $circle-color: rgb(38, 114, 151);
+  $circle-size: 6rem;
+  $circle-size-mobile: 4rem;
+
+  .initials {
+    @include width-up-to($tablet-max) {
+      @include set-font(body-large);
+      height: $circle-size-mobile;
+      width: $circle-size-mobile;
+    }
+
+    @include wider-than($tablet-max) {
+      @include body-font(2.4rem);
+      height: $circle-size;
+      width: $circle-size;
+    }
+
+    align-items: center;
+    background-color: $circle-color;
+    border-radius: 50%;
+    color: text-color(white);
+    display: flex;
+    justify-content: center;
+  }
+
+  h1 {
+    margin: 0;
+  }
+}

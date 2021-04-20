@@ -33,6 +33,7 @@ const PAGES = [
     'institutional-partnership',
     'interest',
     'llph',
+    'my-openstax',
     'openstax-tutor',
     'partners',
     'press',
