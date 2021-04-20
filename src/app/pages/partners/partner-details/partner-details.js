@@ -115,13 +115,13 @@ function PartnerDetails({model}) {
     const [selectedLabel, setSelectedLabel] = useState(labels[0]);
     const ref = useRef();
 
-    useEffect(() => logScrollingInRegion(ref.current, model.title), []);
+    useEffect(() => logScrollingInRegion(ref.current, model.title), [model.title]);
 
     useEffect(() => {
         if (selectedLabel === 'Reviews') {
             analyticsEvents.viewReviews(model.title);
         }
-    }, [selectedLabel]);
+    }, [selectedLabel, model.title]);
 
     return (
         <div

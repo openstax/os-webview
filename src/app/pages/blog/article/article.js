@@ -31,7 +31,8 @@ function ArticleBody({bodyData, setReadTime, bodyRef}) {
         const WORDS_PER_MINUTE = 225;
 
         setReadTime(Math.round(words.length / WORDS_PER_MINUTE));
-    }, [bodyData]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div className="body" ref={bodyRef}>
@@ -77,7 +78,7 @@ function useScrollProgress(ref) {
             .forEach((img) => {
                 img.onload = () => setProgress(getProgress(bodyRef.current));
             });
-    }, [bodyRef]);
+    }, [ref, bodyRef]);
 
     useEffect(() => {
         if (typeof bodyRef === 'undefined') {

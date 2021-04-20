@@ -9,7 +9,7 @@ export default function RecommendedCalloutJsx({title='Recommended', blurb, onPut
         <div className="triangle-attachment">
             <div className="container">
                 <span className="callout-title">{title}</span>
-                <button type="button" class="put-away" onClick={onPutAway}>
+                <button type="button" className="put-away" onClick={onPutAway}>
                     <FontAwesomeIcon icon={faTimes} />
                 </button>
                 {

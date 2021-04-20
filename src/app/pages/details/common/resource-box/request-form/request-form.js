@@ -35,7 +35,7 @@ function RequestForm({model, done, afterSubmit}) {
                 <iframe name="form-response" id="form-response" src="about:blank" width="0" height="0" />
             </div>
             <form
-                accept-charset="UTF-8" target="form-response"
+                acceptCharset="UTF-8" target="form-response"
                 action={salesforce.webtoleadUrl} method="post"
             >
                 <div>
@@ -78,7 +78,7 @@ function Confirmation({done}) {
                 <div className="confirmation-header">Your request was submitted!</div>
                 {' '}
                 <div className="confirmation-content">
-                    We'll send you an email shortly with your download code.
+                    We&apos;ll send you an email shortly with your download code.
                 </div>
             </div>
             <button type="button" className="primary close-button" onClick={done}>Close</button>

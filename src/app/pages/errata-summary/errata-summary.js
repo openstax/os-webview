@@ -21,7 +21,7 @@ function ErrataSummary({data, book}) {
         setselectedFilter(newlySelectedValue);
         history.replaceState('', '',
             newlySelectedValue ? `#${newlySelectedValue}` :
-                window.location.href.replace(location.hash, '')
+                window.location.href.replace(window.location.hash, '')
         );
     }
 
@@ -30,10 +30,10 @@ function ErrataSummary({data, book}) {
             <Hero book={book} />
             <div className="strips-and-filter">
                 <img
-                    class="strips" src="/images/components/strips2.png"
+                    className="strips" src="/images/components/strips2.png"
                     height="10" alt="" role="presentation"
                 />
-                <div class="filter">
+                <div className="filter">
                     <RadioPanel
                         items={radioItems}
                         selectedItem={selectedFilter}

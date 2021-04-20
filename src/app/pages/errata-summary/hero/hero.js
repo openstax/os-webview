@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import cmsFetch from '~/models/cmsFetch';
 import bookPromise from '~/models/book-titles';
+import routerBus from '~/helpers/router-bus';
 
 const instructions = 'Errata submissions are displayed below until a new PDF is published online.';
 const moreAbout = 'More about our correction schedule';
@@ -27,6 +28,7 @@ function useBookInfo(book) {
                 routerBus.emit('navigate', '/_404', {redirect: true});
             }
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return info;

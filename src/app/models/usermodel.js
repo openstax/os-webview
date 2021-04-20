@@ -27,25 +27,25 @@ const accountsModel = {
         // Uncomment ONLY to TEST
         // return Promise.resolve({
         //     id: 315605,
-        //     name: "Roy2 Johnson",
-        //     first_name: "Roy2",
-        //     last_name: "Johnson",
-        //     full_name: "Roy2 Johnson",
-        //     uuid: "fca73689-fc4d-4369-bc46-ad6e02b9a13b",
-        //     support_identifier: "cs_fce9a9e8",
+        //     name: 'Roy2 Johnson',
+        //     first_name: 'Roy2',
+        //     last_name: 'Johnson',
+        //     full_name: 'Roy2 Johnson',
+        //     uuid: 'fca73689-fc4d-4369-bc46-ad6e02b9a13b',
+        //     support_identifier: 'cs_fce9a9e8',
         //     is_test: false,
-        //     faculty_status: "confirmed_faculty",
+        //     faculty_status: 'confirmed_faculty',
         //     is_instructor_verification_stale: false,
         //     is_profile_complete: false,
         //     is_newflow: true,
-        //     self_reported_role: "student",
-        //     self_reported_school: "Rice U",
-        //     school_type: "unknown_school_type",
+        //     self_reported_role: 'student',
+        //     self_reported_school: 'Rice U',
+        //     school_type: 'unknown_school_type',
         //     contact_infos: [
         //         {
         //             id: 312328,
-        //             type: "EmailAddress",
-        //             value: "rej2+2@rice.edu",
+        //             type: 'EmailAddress',
+        //             value: 'rej2+2@rice.edu',
         //             is_verified: true,
         //             is_guessed_preferred: true
         //         }
@@ -54,6 +54,7 @@ const accountsModel = {
         //         // {name: 'OpenStax Tutor'}
         //     ]
         // });
+        // // eslint-disable-next-line no-unreachable
         return fetch(accountsUrl, {credentials: 'include'})
             .then(
                 (response) => {

@@ -67,7 +67,7 @@ function TOCSlideout({tocState, html}) {
         <div className="toc-slideout">
             <div className="top-padding">
                 <span
-                    className="close-toc" role="button" tabindex="0"
+                    className="close-toc" role="button" tabIndex="0"
                     onClick={() => tocState.toggle()}
                     onKeyDown={$.treatSpaceOrEnterAsClick}
                 >
@@ -139,13 +139,13 @@ function getSlugFromLocation() {
     const bookTitle = window.location.pathname.replace(/.*details\//, '');
     let slug;
 
-    if (/^books/.test(bookTitle)) {
+    if ((/^books/).test(bookTitle)) {
         slug = bookTitle;
     } else {
         slug = `books/${bookTitle}`;
     }
     // Special handling for books whose slugs have changed
-    if (/university-physics$/.test(slug)) {
+    if ((/university-physics$/).test(slug)) {
         slug += '-volume-1';
     }
 

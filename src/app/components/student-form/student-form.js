@@ -8,9 +8,9 @@ export default function StudentForm() {
 
     return (
         <div className="student-form text-content">
-            Students don't need to fill out any forms to use our books. Access them free now!
-            <div class="cta">
-                <button class="btn" tabindex="0" onClick={onClick}>Go back</button>
+            Students don&apos;t need to fill out any forms to use our books. Access them free now!
+            <div className="cta">
+                <button className="btn" tabIndex="0" onClick={onClick}>Go back</button>
             </div>
         </div>
     );

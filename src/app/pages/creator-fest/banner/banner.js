@@ -11,12 +11,12 @@ export default function Banner({headline, image, content}) {
         const newStyle = `${biStyle},url('${image}')`;
 
         el.style.backgroundImage = newStyle;
-    }, []);
+    }, [image]);
 
     return (
         <section id="banner" className="banner hero" ref={ref}>
-            <div class="boxed">
-                <div class="text-content">
+            <div className="boxed">
+                <div className="text-content">
                     <h1>{headline}</h1>
                     <RawHTML html={content} />
                 </div>

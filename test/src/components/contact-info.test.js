@@ -1,29 +1,22 @@
-import {makeMountRender} from '../../helpers/jsx-test-utils.jsx';
+import React from 'react';
+import {render, screen} from '@testing-library/preact';
+import userEvent from '@testing-library/user-event';
 import ContactInfo from '~/components/contact-info/contact-info';
 
-describe('ContactInfo', () => {
-    const validatorRef = {};
-    const props = {validatorRef};
+const validatorRef = {}
+const props = {validatorRef};
 
-    let wrapper;
+it('creates', () => {
+    render(<ContactInfo {...props} />);
+    expect(validatorRef).toHaveProperty('current');
+});
+it('validates schools', () => {
+    render(<ContactInfo {...props} />);
 
-    beforeEach((done) => {
-        wrapper = makeMountRender(ContactInfo, props)();
+    const inputs = screen.getAllByRole('textbox');
+    const schoolInput = inputs.find((i) => i.name === 'company');
 
-        setTimeout(() => {
-            wrapper.update();
-            done();
-        }, 10);
-    });
-
-    it('creates', () => {
-        expect(validatorRef).toHaveProperty('current');
-    });
-    it('validates schools', () => {
-        const schoolInput = wrapper.find({name: 'company'});
-
-        expect(validatorRef.current()).toBe(false);
-        schoolInput.simulate('change', { value: 'Rice'});
-        expect(wrapper.find('.contact-info-modal')).toHaveLength(1);
-    });
+    userEvent.type(schoolInput, 'Rice');
+    // Fire the validator function
+    expect(validatorRef.current()).toBe(false);
 });

@@ -34,7 +34,7 @@ function useSelectedLabelTiedToSearchString(labels) {
 
         setSelectedLabel(newValue);
         window.history.replaceState({}, '', newSearchString);
-        window.dispatchEvent(new CustomEvent('navigate'));
+        window.dispatchEvent(new window.CustomEvent('navigate'));
     }
 
     return [selectedLabel, updateSelectedLabel];
@@ -48,7 +48,7 @@ export default function DesktopView({model, tocState, onContentChange}) {
 
     useEffect(() => {
         onContentChange(selectedLabel !== 'Book details');
-    }, [selectedLabel]);
+    }, [selectedLabel, onContentChange]);
 
     return (
         <React.Fragment>

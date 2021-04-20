@@ -70,7 +70,7 @@ function DesktopBoxes({contentArray, ...otherProps}) {
     );
 }
 
-export default function OrderPrintCopy({amazonDataLink}) {
+export default function OrderPrintCopy({amazonDataLink, hideDialog}) {
     const contentArray = [
         {
             headerText: 'Individual',

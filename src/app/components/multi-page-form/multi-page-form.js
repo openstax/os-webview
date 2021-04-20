@@ -27,7 +27,7 @@ function MarkupChildren({children, currentPage, activeRef, validatedPages}) {
 
 function trackSubmissionInGA(form) {
     if (form.action.startsWith('https://webto.salesforce.com/')) {
-        const formData = new FormData(form);
+        const formData = new window.FormData(form);
         const eventLabel = formData.get('lead_source');
 
         analytics.sendEvent({
@@ -65,23 +65,23 @@ function ButtonRow({pages, currentPage, setCurrentPage,
     }
 
     return (
-        <div class="button-row">
+        <div className="button-row">
             <button
-                type="button" class="secondary back"
+                type="button" className="secondary back"
                 hidden={currentPage === 1}
                 onClick={previousPage}
             >
                 Back
             </button>
             <button
-                type="submit" class="primary"
+                type="submit" className="primary"
                 hidden={currentPage < pages}
                 onClick={validateAndSubmit}
             >
                 Submit
             </button>
             <button
-                type="button" class="primary next"
+                type="button" className="primary next"
                 hidden={currentPage === pages}
                 onClick={nextPage}
             >
@@ -96,6 +96,7 @@ export default function MultiPageForm({
     validatePage=pass, onPageChange=pass, onSubmit=pass,
     submitting
 }) {
+    // This might be another useReducer opportunity
     const [currentPage, setCurrentPage] = useState(1);
     const [validatedPages, setValidatedPages] = useState({});
     const formRef = useRef();
@@ -115,15 +116,15 @@ export default function MultiPageForm({
 
     useEffect(() => {
         onPageChange(currentPage);
-    }, [currentPage]);
+    }, [currentPage, onPageChange]);
 
     return (
         <div className="multi-page-form">
             <iframe
-                name="form-response" id="form-response" class="hidden"
-                src="" width="0" height="0" tabindex="-1" />
+                name="form-response" id="form-response" className="hidden"
+                src="" width="0" height="0" tabIndex="-1" />
             <form
-                accept-charset="UTF-8" class="form"
+                acceptCharset="UTF-8" className="form"
                 target={debug ? undefined : 'form-response'}
                 action={action} method="post" ref={formRef}>
                 <MarkupChildren

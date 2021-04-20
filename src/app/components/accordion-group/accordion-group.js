@@ -80,16 +80,15 @@ export default function AccordionGroup({
     const root = useRef();
     const preExpandedUuids = preExpanded.map(toUuid);
     const [chevronDirection, onChange] = useChevronDirection(forwardOnChange, preExpandedUuids);
+    const openItem = root.current && root.current.querySelector('[aria-expanded="true"]');
 
     useEffect(() => {
         if (!noScroll) {
-            const openItem = root.current.querySelector('[aria-expanded="true"]');
-
             if (openItem) {
                 $.scrollTo(openItem);
             }
         }
-    });
+    }, [openItem, noScroll]);
 
     return (
         <div ref={root}>

@@ -162,7 +162,8 @@ function LeftButton({model}) {
     const isCustomization = model.link.url.endsWith('customized-modules');
     const icon = ({
         'lock': faLock,
-        'download': faDownload
+        'download': faDownload,
+        'external-link-alt': faExternalLinkAlt
     })[model.iconType] || faExclamationTriangle;
 
     function openDialog(event) {

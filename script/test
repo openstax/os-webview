@@ -2,10 +2,5 @@
 source ./script/bootstrap || exit 111
 cd "$(dirname "$0")/.." || exit 111
 
-# TEMPORARILY BYPASS TESTS
-# NEED TO MAKE THEM WORK WITH NEW BUNDLED CODE
-echo "TODO: Make tests work"
-echo "Bypassing tests..."
-exit 0
 yarn test || exit 5
 shellcheck ./script/*

@@ -189,7 +189,7 @@ export function PrintOption({model}) {
             onClick={onClick}
         >
             <Dialog title={text} isOpen={isOpen} onPutAway={toggle}>
-                <OrderPrintCopy amazonDataLink={amazonDataLink} />
+                <OrderPrintCopy amazonDataLink={amazonDataLink} hideDialog={() => toggle()} />
             </Dialog>
         </SimpleLinkOption>
     );
@@ -241,7 +241,7 @@ export function KindleOption({model}) {
             link={model.kindleLink} icon={faAmazon} text="Download for Kindle"
             data-track="Kindle"
         >
-            <div class="disclaimer">
+            <div className="disclaimer">
                 As an Amazon Associate we earn from qualifying purchases
             </div>
         </SimpleLinkOption>

@@ -2,7 +2,7 @@ import $ from '~/helpers/$';
 import memoize from 'lodash/memoize';
 
 function rexOriginFromWebview(url) {
-    return (new URL(url)).origin;
+    return (new window.URL(url)).origin;
 }
 
 // CAUTION: Lodash memoize only distinguishes the first parameter
@@ -26,4 +26,4 @@ const fetchContents = memoize((cnxId, rexOrigin) => {
 
 export default function (webviewLink, cnxId) {
     return fetchContents(cnxId, rexOriginFromWebview(webviewLink));
-};
+}

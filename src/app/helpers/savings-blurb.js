@@ -12,7 +12,7 @@ export default function useSavingsDataIn(description, adoptions, savings) {
     if (!adoptions) {
         return description;
     }
-    const numFormat = Intl.NumberFormat('en-US').format; // eslint-disable-line new-cap
+    const numFormat = window.Intl.NumberFormat('en-US').format; // eslint-disable-line new-cap
     const el = document.createElement('div');
 
     el.innerHTML = description.trim();

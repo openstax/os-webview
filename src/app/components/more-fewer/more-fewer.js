@@ -47,7 +47,7 @@ export function Paginated({children}) {
     return (
         <div className="headline-paginator" ref={ref}>
             {displayedChildren}
-            <div class="nav-buttons">
+            <div className="nav-buttons">
                 <ButtonOrPresentation condition={pageNumber > 1} onClick={prevPage}>
                     <FontAwesomeIcon icon={faCaretLeft} />
                     Newer
@@ -65,7 +65,7 @@ export default function MoreFewer({children, pluralItemName}) {
     const [expanded, setExpanded] = useState(false);
     const displayedChildren = expanded ?
         <Paginated>{children}</Paginated> :
-        <div class="fewer">{children.slice(0, 2)}</div>;
+        <div className="fewer">{children.slice(0, 2)}</div>;
     const theOther = expanded ? 'fewer' : 'more';
 
     function toggle() {

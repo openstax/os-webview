@@ -31,12 +31,12 @@ function acknowledged() {
 function CookieNoticeBody({onClose}) {
     return (
         <div className="cookie-notice">
-            <div class="message">
+            <div className="message">
                 We use cookies to optimize your experience on our website. By continuing on the
                 website, you are agreeing to our use of cookies. You can find more information,
                 including how to opt out, in our <a href="/privacy-policy">Privacy Policy</a>.
             </div>
-            <button type="button" class="primary" onClick={onClose}>Got it!</button>
+            <button type="button" className="primary" onClick={onClose}>Got it!</button>
         </div>
     );
 }

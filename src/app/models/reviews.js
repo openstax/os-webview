@@ -56,7 +56,7 @@ export default function useReviews(partnerId) {
             }
         } catch (e) {
             // eslint-disable-next-line no-alert
-            alert(`Failed to ${method}: ${e}`);
+            window.alert(`Failed to ${method}: ${e}`);
         }
     }
 

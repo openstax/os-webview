@@ -1,8 +1,22 @@
+import 'settings';
 import './helpers/fetch-mocker';
 import {LocalStorage} from 'node-localstorage';
+import ReactModal from 'react-modal';
+
+ReactModal.setAppElement(window.document.createElement('div'));
 
 global.localStorage = new LocalStorage('./local-storage-scratch');
 global.pi = jest.fn();
+global.document.createRange = () => ({
+  setStart: () => {},
+  setEnd: () => {},
+  selectNodeContents: () => {},
+  commonAncestorContainer: {
+    nodeName: 'BODY',
+    ownerDocument: document,
+  },
+});
+global.document.getSelection = () => {};
 
 window.MutationObserver = function () {};
 window.MutationObserver.prototype.observe = function () {};

@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
+import {render, screen} from '@testing-library/preact';
 import Filters from '~/pages/separatemap/search-box/filters/filters';
 import {useSet} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {makeMountRender} from '../../../helpers/jsx-test-utils.jsx';
 
-function Wrapper() {
+// I need the hooks
+function WrappedFilters() {
     const selectedFilters = useSet();
     const [institution, setInstitution] = useState('');
 
@@ -11,14 +12,7 @@ function Wrapper() {
         <Filters selected={selectedFilters} setInstitution={setInstitution} />
     );
 }
-
-describe('Filters', () => {
-    const wrapper = makeMountRender(Wrapper)();
-
-    it('creates', () => {
-        const getCbs = () => wrapper.find('input[type="checkbox"]');
-        const cbs = getCbs().filterWhere((cb) => !cb.checked);
-
-        expect(cbs).toHaveLength(3);
-    });
+it('creates', () => {
+    render(<WrappedFilters />);
+    expect(screen.getAllByRole('checkbox')).toHaveLength(3);
 });

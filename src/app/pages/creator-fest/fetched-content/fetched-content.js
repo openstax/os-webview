@@ -13,7 +13,7 @@ function useTextFromSlug(slug) {
 
     React.useEffect(() => {
         fetch(url).then((r) => r.text()).then((pageHtml) => {
-            const parser = new DOMParser();
+            const parser = new window.DOMParser();
             const newDoc = parser.parseFromString(pageHtml, 'text/html');
 
             setText(newDoc.body.innerHTML);

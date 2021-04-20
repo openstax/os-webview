@@ -65,7 +65,7 @@ async function getUrlFor(initialSlug) {
         }
     }
 
-    const qsChar = (/\?/.test(apiUrl)) ? '&' : '?';
+    const qsChar = ((/\?/).test(apiUrl)) ? '&' : '?';
 
     return `${apiUrl}${qsChar}format=json`;
 }
@@ -109,6 +109,7 @@ export function usePageData(fpdParams) {
             }
         }
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fpdParams.slug]);
 
     if (pageDataError) {

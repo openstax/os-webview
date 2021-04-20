@@ -4,7 +4,7 @@ import {urlFromSlug} from '~/models/cmsFetch';
 import './general.scss';
 
 function GeneralPage({html}) {
-    const parser = new DOMParser();
+    const parser = new window.DOMParser();
     const newDoc = parser.parseFromString(html, 'text/html');
     const strips = parser
         .parseFromString(

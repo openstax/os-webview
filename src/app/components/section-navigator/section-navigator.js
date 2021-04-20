@@ -10,7 +10,7 @@ function Hotspot({id, selectedId, setSelectedId}) {
             className={cn('hotspot', {selected: selectedId === id})}
             onClick={() => setSelectedId(id)}
         >
-            <span class="dot" />
+            <span className="dot" />
         </div>
     );
 }

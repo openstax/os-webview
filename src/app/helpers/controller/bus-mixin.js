@@ -3,8 +3,8 @@
  * parent and child components
  */
 
-const HANDLERS = Symbol();
-const BUS = Symbol();
+const HANDLERS = window.Symbol();
+const BUS = window.Symbol();
 
 export class Bus {
 

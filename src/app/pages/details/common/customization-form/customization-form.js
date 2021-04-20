@@ -40,7 +40,7 @@ function compareSlugs(a, b) {
 }
 
 function useSelectedModulesTracker(maxItems=10) {
-    const itemsRef = useRef(new Map());
+    const itemsRef = useRef(new window.Map());
     const items = itemsRef.current;
     const [size, setSize] = useState(0);
 
@@ -69,7 +69,7 @@ function useSelectedModulesTracker(maxItems=10) {
 }
 
 function payloadFromForm(form) {
-    const fd = new FormData(form);
+    const fd = new window.FormData(form);
     const data = Array.from(fd.entries());
 
     return data.reduce((obj, [key, val]) => {
@@ -122,7 +122,10 @@ export default function CustomizationForm({model, done}) {
     }
 
     return (
-        <form className={cn('customization-form', {showErrors})} ref={ref}>
+        <form
+            name="customization-form" ref={ref}
+            className={cn('customization-form', {showErrors})}
+        >
             <div className="top">
                 <div className="description">{model.customizationFormSubheading}</div>
                 <div className="inputs">

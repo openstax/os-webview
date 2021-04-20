@@ -7,7 +7,7 @@ function Option({item, name}) {
     } : {};
 
     return (
-        <div class="checkbox-control-group">
+        <div className="checkbox-control-group">
             <label>
                 <input type="checkbox" {...inputProps} />
                 {item.label}
@@ -21,7 +21,7 @@ export default function FormCheckboxgroup({name, label, longLabel, instructions,
         <div className="form-checkboxgroup">
             {label && <label className="field-label">{label}</label>}
             {longLabel && <label className="field-long-label">{longLabel}</label>}
-            {instructions && <label class="hint">{instructions}</label>}
+            {instructions && <label className="hint">{instructions}</label>}
             {
                 options.map((item) =>
                     <Option item={item} name={name} key={item} />

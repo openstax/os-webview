@@ -46,7 +46,6 @@ $small-shadow: 0 0.2rem 0.5rem 0 rgba(0, 0, 0, 0.15);
         background-color: ui-color(white);
         border-radius: 0.3rem;
         box-shadow: $big-shadow;
-        max-width: $text-content-max;
         overflow: hidden;
         position: fixed;
 
@@ -54,7 +53,6 @@ $small-shadow: 0 0.2rem 0.5rem 0 rgba(0, 0, 0, 0.15);
             align-self: flex-start;
             left: 5rem;
             top: 15.35rem;
-            width: calc(100% - 10rem);
         }
 
         @include width-up-to($phone-max) {
@@ -62,9 +60,17 @@ $small-shadow: 0 0.2rem 0.5rem 0 rgba(0, 0, 0, 0.15);
             margin: 1rem;
         }
 
+        &:not(.minimized) {
+            @include width-between($phone-max, $tablet-max) {
+                min-width: 40rem;
+                max-width: calc(100% - 10rem);
+            }
+        }
+
         &.minimized {
             border-radius: 50%;
             max-width: 4rem;
+            min-width: none;
         }
     }
 

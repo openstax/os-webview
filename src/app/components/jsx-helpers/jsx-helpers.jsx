@@ -64,7 +64,7 @@ export function useDataFromSlug(slug, preserveWrapping=false) {
 
     useEffect(() => {
         fetchFromCMS(slug, preserveWrapping).then(setData);
-    }, []);
+    }, [slug, preserveWrapping]);
 
     return data;
 }
@@ -77,7 +77,7 @@ export function useCanonicalLink(controlsHeader=true) {
         const linkController = $.setCanonicalLink();
 
         return () => linkController.remove();
-    }, []);
+    }, [controlsHeader]);
 }
 
 export function LoaderPage({
@@ -167,7 +167,7 @@ export function useToggle(initialState) {
 }
 
 export function useSet(initialValue=[]) {
-    const setRef = useRef(new Set(initialValue));
+    const setRef = useRef(new window.Set(initialValue));
     const set = setRef.current;
     const [handle, setHandle] = useState({
         add(newValue) {

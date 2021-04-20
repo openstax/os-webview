@@ -1,7 +1,9 @@
+import React from 'react';
+import {render, screen} from '@testing-library/preact';
+import userEvent from '@testing-library/user-event';
 import TestimonialForm from '~/pages/separatemap/testimonial-form/testimonial-form';
-import {makeMountRender} from '../../../helpers/jsx-test-utils.jsx';
 
-const formParameters = {
+const props = {
     email: 'e@mail.com',
     school: 'info.self_reported_school',
     firstName: 'Firstly',
@@ -11,14 +13,16 @@ const formParameters = {
     }
 };
 
-describe('Testimonial-form', () => {
-    const wrapper = makeMountRender(TestimonialForm, formParameters)();
+test('initially hides textarea and submit', (done) => {
+    render(<TestimonialForm {...props} />);
 
-    it('initially hides textarea and submit', () => {
-        const ta = wrapper.find('textarea');
-        const submit = wrapper.find('[type="submit"]');
-
-        expect(ta).toHaveLength(0);
-        expect(submit).toHaveLength(0);
-    });
+    setTimeout(() => {
+        expect(screen.queryAllByRole('textbox')).toHaveLength(0);
+        expect(screen.queryAllByRole('submit')).toHaveLength(0);
+        userEvent.click(screen.getByRole('listbox'));
+        userEvent.click(screen.getAllByRole('option')[2]);
+        // At this point, there should be textbox and submit, but they
+        // are not showing up in the test. :(
+        done();
+    }, 0);
 });

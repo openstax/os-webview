@@ -34,7 +34,6 @@ function getPageIndicators(pages, currentPage) {
         result[i] = result[i-1] + 1;
     }
     return result.map(propsFor);
-    return result;
 }
 
 function PageButtonBar({currentPage, pages, setCurrentPage}) {
@@ -50,11 +49,12 @@ function PageButtonBar({currentPage, pages, setCurrentPage}) {
     }
 
     return (
-        <div className="button-bar">
+        <div className="button-bar" role="listbox">
             <button disabled={disablePrevious} onClick={prevPage}>Previous</button>
             {
                 pageIndicators.map((indicator) =>
                     <button
+                        role="option"
                         key={indicator}
                         disabled={indicator.disabled}
                         aria-selected={indicator.selected}
@@ -84,7 +84,7 @@ export function PaginatorControls({items, currentPage, setCurrentPage}) {
                         currentPage={currentPage} setCurrentPage={setCurrentPage}
                     />
             }
-            <div className="summary">{resultRange} of {items} for <b>'{searchTerm}'</b></div>
+            <div className="summary">{resultRange} of {items} for <b>&apos;{searchTerm}&apos;</b></div>
         </div>
     );
 }

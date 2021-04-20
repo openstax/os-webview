@@ -10,7 +10,7 @@ export default function Page() {
             <div className="boxed">
                 <h1>Uh-oh, no page here</h1>
                 <p>
-                    Kudos on your desire to explore! Unfortunately, we don't have a page to go
+                    Kudos on your desire to explore! Unfortunately, we don&apos;t have a page to go
                     with that particular location.
                 </p>
             </div>

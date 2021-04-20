@@ -28,7 +28,7 @@ function ignoreClick(e) {
 }
 
 function validUrlClick(e) {
-    const el = findAncestor(e.target, HTMLAnchorElement) || e.target;
+    const el = findAncestor(e.target, window.HTMLAnchorElement) || e.target;
     const href = el.getAttribute('href');
 
     if (ignoreClick(e) || ignoreUrl(href)) {

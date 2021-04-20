@@ -47,12 +47,12 @@ export function shouldShowDecisionDetails(data) {
     return barStatus || status === 'Will Correct';
 }
 
-export function useErrataDetail(data) {
+export function useErrataDetail(data={}) {
     const [detail, setDetail] = useState();
 
     useEffect(() => {
         bookPromise.then((bookList) => {
-            if (!data) {
+            if (!data.id) {
                 return;
             }
             const entry = bookList.find((info) => info.id === data.book);
@@ -63,7 +63,7 @@ export function useErrataDetail(data) {
                 id: data.id,
                 bookTitle: entry.title,
                 source: data.resource === 'Other' ? data.resourceOther : data.resource,
-                status,
+                status: data.status,
                 errorType: data.errorType,
                 location,
                 detail: data.detail,
@@ -71,7 +71,8 @@ export function useErrataDetail(data) {
                 resolutionNotes: data.resolutionNotes
             });
         });
-    }, [data]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data.id]);
 
     return detail;
 }

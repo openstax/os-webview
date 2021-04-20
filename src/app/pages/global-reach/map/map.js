@@ -1,7 +1,7 @@
 import React from 'react';
 import './map.scss';
 
-export default function ({title, buttonText, imageUrl}) {
+export default function Map({title, buttonText, imageUrl}) {
     return (
         <div className="mapbox">
             <div className="map-image" style={{backgroundImage: `url(${imageUrl})`}}></div>

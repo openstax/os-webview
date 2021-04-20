@@ -23,7 +23,7 @@ function useTheOpenOne({map, selectedSchool, results}) {
         } else {
             setTheOpenOne(null);
         }
-    }, [selectedSchool, results]);
+    }, [map, selectedSchool, results]);
     useEffect(() => {
         setTheOpenOne(results.length === 1 ? results[0] : null);
     }, [results]);

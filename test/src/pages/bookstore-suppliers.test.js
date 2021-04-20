@@ -1,11 +1,10 @@
+import React from 'react';
+import {render, screen} from '@testing-library/preact';
 import {BookstorePage} from '~/pages/bookstore-suppliers/bookstore-suppliers';
-import {makeMountRender, snapshotify} from '../../helpers/jsx-test-utils.jsx';
 import pageData from '../data/print-order';
 
-describe('BookstoreSuppliers', () => {
-    it('matches snapshot', () => {
-        const wrapper = makeMountRender(BookstorePage, {data: pageData})();
-
-        expect(snapshotify(wrapper)).toMatchSnapshot();
-    });
+test('renders some links', () => {
+    render(<BookstorePage data={pageData} />);
+    expect(screen.queryAllByRole('link')).toHaveLength(1);
+    expect(screen.queryAllByText('XanEdu', {exact: false})).toHaveLength(1);
 });

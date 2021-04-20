@@ -27,7 +27,7 @@ $width-of-filter-by: 7.5rem;
     }
 }
 
-.filter-buttons {
+[role="radiogroup"] {
     min-height: $form-element-height;
 
     @include set-font(body-large);
@@ -59,7 +59,7 @@ $width-of-filter-by: 7.5rem;
         }
     }
 
-    .filter-button {
+    [role="radio"] {
         @include width-up-to($tablet-max) {
             align-items: center;
             cursor: pointer;
@@ -82,7 +82,7 @@ $width-of-filter-by: 7.5rem;
             z-index: 1;
         }
 
-        &[aria-pressed="true"] {
+        &[aria-checked="true"] {
             @include wider-than($tablet-max) {
                 @include button-bar-selected();
 
@@ -94,7 +94,7 @@ $width-of-filter-by: 7.5rem;
             }
         }
 
-        &:not([aria-pressed="true"]) {
+        &:not([aria-checked="true"]) {
             @include width-up-to($tablet-max) {
                 height: 0;
                 opacity: 0;

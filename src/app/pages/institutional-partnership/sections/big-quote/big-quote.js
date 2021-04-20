@@ -1,7 +1,7 @@
 import React from 'react';
 import './big-quote.scss';
 
-export default function ({text, name, title, school, backgroundImage}) {
+export default function BigQuote({text, name, title, school, backgroundImage}) {
     return (
         <section className="big-quote">
             <div className="background-image" style={{backgroundImage: `url(${backgroundImage})`}} />

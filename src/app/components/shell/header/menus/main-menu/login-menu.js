@@ -16,7 +16,7 @@ function LoginLink() {
     return (
         <li className="login-menu nav-menu-item rightmost">
             <a
-                href={linkHelper.loginLink()} class="pardotTrackClick"
+                href={linkHelper.loginLink()} className="pardotTrackClick"
                 data-local="true" role="menuitem"
             >
                 Log in
@@ -27,9 +27,9 @@ function LoginLink() {
 
 function useIsTutorUser(userModel) {
     const [isTutorUser, toggle] = useToggle((userModel.groups || []).includes('OpenStax Tutor'));
-    const userPollInterval = setInterval(() => {
+    const userPollInterval = window.setInterval(() => {
         if (isTutorUser) {
-            clearInterval(userPollInterval);
+            window.clearInterval(userPollInterval);
             return;
         }
         userModelBus.get('accountsModel-load')
@@ -39,7 +39,7 @@ function useIsTutorUser(userModel) {
 
                 if (foundTutor) {
                     toggle(true);
-                    clearInterval(userPollInterval);
+                    window.clearInterval(userPollInterval);
                 }
             });
     }, 60000);
@@ -72,16 +72,12 @@ function LoginMenuWithDropdown({userModel}) {
     // updates logoutLink
     useLocation();
     const label = `Hi ${userModel.first_name || userModel.username}`;
-    const incomplete = !Boolean(
-        (userModel.groups || []).includes('Student') ||
+    const incomplete = !((userModel.groups || []).includes('Student') ||
         !userModel.needs_profile_completed ||
         !userModel.is_newflow ||
-        userModel.stale_verification
-    );
-    const instructorEligible = !Boolean(
-        (userModel.groups || []).includes('Faculty') ||
-        (!userModel.stale_verification && userModel.pending_verification)
-    );
+        userModel.stale_verification);
+    const instructorEligible = !((userModel.groups || []).includes('Faculty') ||
+        (!userModel.stale_verification && userModel.pending_verification));
 
     return (
         <Dropdown className="login-menu nav-menu-item rightmost dropdown" label={label} excludeWrapper>

@@ -14,7 +14,7 @@ function childPropertiesForStore(store, decoder) {
     return store.value ? {
         value: store.value,
         store,
-        label: decoder ? decoder[value] : store.value
+        label: decoder ? decoder[store.value] : store.value
     } : [];
 }
 

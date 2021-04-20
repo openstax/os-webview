@@ -226,13 +226,10 @@ function matchesFilter(filter, item) {
     switch (filter) {
     case '':
         return true;
-        break;
     case 'in-review':
         return status === 'In Review';
-        break;
     case 'reviewed':
         return (/Reviewed|Will Correct|No Correction/).test(status);
-        break;
     default:
         return (/^Corrected/).test(status);
     }

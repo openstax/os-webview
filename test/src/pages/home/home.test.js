@@ -1,14 +1,12 @@
+import React from 'react';
+import {render, screen} from '@testing-library/preact';
 import HomeLoader from '~/pages/home/home';
-import {makeMountRender} from '../../../helpers/jsx-test-utils.jsx';
 
-describe('homepage', () => {
-    const wrapper = makeMountRender(HomeLoader, {})();
-
-    it('creates', () => {
-        expect(wrapper).toBeTruthy();
-    });
-    it('has a big chunk of content', () => {
-        wrapper.update();
-        expect(wrapper.html().length).toBeGreaterThan(500);
-    });
+test('creates and has a lot of content', (done) => {
+    render(<HomeLoader />);
+    setTimeout(() => {
+        expect(screen.queryAllByText('Learn more')).not.toBeNull();
+        expect(screen.queryAllByRole('link')).toHaveLength(3);
+        done();
+    }, 0);
 });

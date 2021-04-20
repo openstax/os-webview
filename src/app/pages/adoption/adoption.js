@@ -85,7 +85,7 @@ function FacultyForm({selectedRole, onPageChange}) {
         const iframe = document.getElementById(form.target);
 
         // eslint-disable-next-line no-use-before-define
-        const submitAfterDelay = () => setTimeout(submitNextBook, 300);
+        const submitAfterDelay = () => window.setTimeout(submitNextBook, 300);
 
         function submitNextBook() {
             const preselectedTitle = firstSearchArgument();
