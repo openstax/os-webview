@@ -170,7 +170,7 @@ sup {
 }
 
 #header {
-    z-index: 3;
+    z-index: 5;
 
     @include width-up-to($tablet-max) {
         position: fixed;
@@ -191,7 +191,7 @@ sup {
 #lower-sticky-note {
     position: sticky;
     top: 5rem;
-    z-index: 2;
+    z-index: 4;
 }
 
 #microsurvey {
@@ -203,7 +203,7 @@ sup {
     overflow: hidden;
     position: fixed;
     right: $normal-margin;
-    z-index: 3;
+    z-index: 4;
 
     > div:not(:empty) {
         padding: 2.5rem 2.5rem $normal-margin $normal-margin;
