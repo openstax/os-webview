@@ -148,13 +148,17 @@ function canonicalUrl() {
     return `${loc.origin}${path}`;
 }
 
-function error404() {
+function Error404() {
     const path404 = '/error/404';
     const path = window.location.pathname;
 
     if (!path.startsWith(path404)) {
         window.location = `${path404}?path=${path}`;
     }
+
+    return (
+        <ImportedPage name="404" />
+    );
 }
 
 export default function Router() {
@@ -195,7 +199,7 @@ export default function Router() {
                     <ImportedPage name="errata-detail" />
                 </Route>
                 <Redirect from="/books/:title" to="/details/books/:title" />
-                <Route path="*" render={error404} />
+                <Route path="*" render={Error404} />
             </Switch>
         </BrowserRouter>
     );
