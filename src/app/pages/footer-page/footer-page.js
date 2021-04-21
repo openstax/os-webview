@@ -17,6 +17,9 @@ export default function FooterPage() {
         .find((k) => k.match(/_content$/));
     const {intro_heading: heading, [contentFieldName]: content} = data;
 
+    // Component only renders when location changes, which means new page
+    // loads, which means it should go to the top of the page.
+    window.scrollTo(0, 0);
     return (
         <div className="footer-page page">
             <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
