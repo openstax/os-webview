@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-    BrowserRouter,
     Switch,
     Route,
     Redirect
@@ -170,34 +169,32 @@ export default function Router() {
     }, []);
 
     return (
-        <BrowserRouter>
-            <Switch>
-                {
-                    PAGES.map((pageName) =>
-                        <Route key={pageName} path={`/${pageName}/`}>
-                            <ImportedPage name={pageName} />
-                        </Route>
-                    )
-                }
-                <Route path="/" exact>
-                    <ImportedPage name="home" />
-                </Route>
-                <Route path={FOOTER_PAGES} exact>
-                    <ImportedPage name="footer-page" />
-                </Route>
-                <Route path="/errata/" exact>
-                    <ImportedPage name="errata-summary" />
-                </Route>
-                <Route path="/errata/form/">
-                    <ImportedPage name="errata-form" />
-                </Route>
-                <Route path="/errata/">
-                    <ImportedPage name="errata-detail" />
-                </Route>
-                <Redirect from="/books/:title" to="/details/books/:title" />
-                <Route path="*" render={error404} />
-            </Switch>
-        </BrowserRouter>
+        <Switch>
+            {
+                PAGES.map((pageName) =>
+                    <Route key={pageName} path={`/${pageName}/`}>
+                        <ImportedPage name={pageName} />
+                    </Route>
+                )
+            }
+            <Route path="/" exact>
+                <ImportedPage name="home" />
+            </Route>
+            <Route path={FOOTER_PAGES} exact>
+                <ImportedPage name="footer-page" />
+            </Route>
+            <Route path="/errata/" exact>
+                <ImportedPage name="errata-summary" />
+            </Route>
+            <Route path="/errata/form/">
+                <ImportedPage name="errata-form" />
+            </Route>
+            <Route path="/errata/">
+                <ImportedPage name="errata-detail" />
+            </Route>
+            <Redirect from="/books/:title" to="/details/books/:title" />
+            <Route path="*" render={error404} />
+        </Switch>
     );
 }
 

@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import bus from './usermodel-bus';
 import isEqual from 'lodash/isEqual';
+import throttle from 'lodash/throttle';
 
 const settings = window.SETTINGS;
 const accountsUrl = `${settings.accountHref}/api/user`;
@@ -124,7 +125,7 @@ function oldUserModel(sfUserModel) {
     };
 }
 
-window.addEventListener('focus', () => {
+const throttledLoginCheck = throttle(() => {
     accountsModel.load().then((oldUser) => {
         accountsModel.load.invalidate();
         accountsModel.load().then((newUser) => {
@@ -134,7 +135,9 @@ window.addEventListener('focus', () => {
             }
         });
     });
-});
+}, 90000);
+
+window.addEventListener('focus', throttledLoginCheck);
 
 const userModel = {
     load() {
@@ -152,7 +155,6 @@ function useUserModel() {
     return data;
 }
 
-bus.serve('userModel-load', () => userModel.load());
 bus.serve('accountsModel-load', () => accountsModel.load());
 
 export default userModel;

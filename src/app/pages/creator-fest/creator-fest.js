@@ -1,5 +1,6 @@
 import React from 'react';
-import {LoaderPage, useLocation} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useLocation} from 'react-router-dom';
 import Banner from './banner/banner';
 import Navigator from './navigator/navigator';
 import FetchedContent from './fetched-content/fetched-content';
