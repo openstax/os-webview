@@ -1,9 +1,11 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {usePageData} from '~/helpers/controller/cms-mixin';
+import {useLocation} from 'react-router-dom';
 import './footer-page.scss';
 
 export default function FooterPage() {
+    useLocation();
     const slug = `pages${window.location.pathname}`;
     const [data, statusPage] = usePageData({slug});
 
