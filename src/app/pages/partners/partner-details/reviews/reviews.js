@@ -116,7 +116,7 @@ function ReviewsPage() {
             initials: r.submittedByName.replace(/[^A-Z]/g, '').substr(0, 2),
             userName: r.submittedByName,
             rating: r.rating,
-            review: r.review,
+            review: r.review || '',
             allowEdit: r.submittedByAccountId === accountId,
             updated: new Date(`${r.created}T00:00:00`).toLocaleDateString('en-us'),
             response: r.partnerResponse,
