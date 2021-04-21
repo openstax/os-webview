@@ -39,6 +39,12 @@ export function FooterDialog({
 export default function Dialog({
     isOpen, title, onPutAway, children, className, closeOnOutsideClick
 }) {
+    // Modal seems to use state for scroll position. If you don't save the
+    // position, it scrolls to the top of the page
+    if (isOpen) {
+        window.history.replaceState({...history.state, y: window.scrollY}, '');
+    }
+
     return (
         <ReactModal
             isOpen={isOpen}
@@ -47,7 +53,7 @@ export default function Dialog({
             bodyOpenClassName="no-scroll-dialog"
             onRequestClose={onPutAway}
             shouldCloseOnOverlayClick={closeOnOutsideClick}
-            preventScroll
+            shouldCloseOnEsc={closeOnOutsideClick}
         >
             <dialog>
                 {
