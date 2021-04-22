@@ -7,7 +7,8 @@ import {
     AccordionItemPanel
 } from 'react-accessible-accordion';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faChevronRight, faChevronDown} from '@fortawesome/free-solid-svg-icons';
+import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
+import {faChevronDown} from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import './accordion-group.scss';
 import $ from '~/helpers/$';
 

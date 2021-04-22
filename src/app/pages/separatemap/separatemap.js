@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faTimes} from '@fortawesome/free-solid-svg-icons';
+import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
 import shellBus from '~/components/shell/shell-bus';
 import $ from '~/helpers/$';
 import cn from 'classnames';

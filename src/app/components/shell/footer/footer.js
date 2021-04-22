@@ -2,7 +2,10 @@ import React from 'react';
 import CookieDialog from '../cookie-notice/cookie-notice';
 import {LoaderPage, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faFacebookF, faTwitter, faLinkedinIn, faInstagram} from '@fortawesome/free-brands-svg-icons';
+import {faFacebookF} from '@fortawesome/free-brands-svg-icons/faFacebookF';
+import {faTwitter} from '@fortawesome/free-brands-svg-icons/faTwitter';
+import {faLinkedinIn} from '@fortawesome/free-brands-svg-icons/faLinkedinIn';
+import {faInstagram} from '@fortawesome/free-brands-svg-icons/faInstagram';
 import './footer.scss';
 
 function Footer({

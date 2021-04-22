@@ -1,6 +1,6 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faRssSquare} from '@fortawesome/free-solid-svg-icons';
+import {faRssSquare} from '@fortawesome/free-solid-svg-icons/faRssSquare';
 import './update-box.scss';
 
 const settings = window.SETTINGS;

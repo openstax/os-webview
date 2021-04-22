@@ -1,7 +1,7 @@
 import React from 'react';
 import {LoaderPage, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCanadianMapleLeaf} from '@fortawesome/free-brands-svg-icons';
+import {faCanadianMapleLeaf} from '@fortawesome/free-brands-svg-icons/faCanadianMapleLeaf';
 import './bookstore-suppliers.scss';
 
 const slug = 'pages/print-order';

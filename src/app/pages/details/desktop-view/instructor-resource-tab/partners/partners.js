@@ -1,7 +1,7 @@
 import React from 'react';
 import routerBus from '~/helpers/router-bus';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCheck} from '@fortawesome/free-solid-svg-icons';
+import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
 import StarsAndCount from '~/components/stars-and-count/stars-and-count';
 import analyticsEvents from '~/pages/partners/analytics-events';
 import './partners.scss';

@@ -1,6 +1,9 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faSlidersH, faTimes, faSearch, faChevronLeft} from '@fortawesome/free-solid-svg-icons';
+import {faSlidersH} from '@fortawesome/free-solid-svg-icons/faSlidersH';
+import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
+import {faSearch} from '@fortawesome/free-solid-svg-icons/faSearch';
+import {faChevronLeft} from '@fortawesome/free-solid-svg-icons/faChevronLeft';
 import cn from 'classnames';
 import './inputs.scss';
 

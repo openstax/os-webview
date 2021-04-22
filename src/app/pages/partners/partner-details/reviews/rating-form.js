@@ -1,6 +1,7 @@
 import React, {useState, useContext, useRef} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faInfoCircle, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
+import {faInfoCircle} from '@fortawesome/free-solid-svg-icons/faInfoCircle';
+import {faArrowLeft} from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 import PageContext from './page-context';
 import UserContext from './user-context';
 import PartnerContext from '../partner-context';

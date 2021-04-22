@@ -1,6 +1,8 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faFacebookF, faTwitter, faLinkedinIn} from '@fortawesome/free-brands-svg-icons';
+import {faFacebookF} from '@fortawesome/free-brands-svg-icons/faFacebookF';
+import {faTwitter} from '@fortawesome/free-brands-svg-icons/faTwitter';
+import {faLinkedinIn} from '@fortawesome/free-brands-svg-icons/faLinkedinIn';
 import './share.scss';
 
 /* eslint-disable */

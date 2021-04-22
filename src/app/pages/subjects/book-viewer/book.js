@@ -95,7 +95,7 @@ function ThreeDotMenu({slug, details}) {
             role="button" tabIndex="0" ref={ref}
         >
             <FontAwesomeIcon icon={faEllipsisV} />
-            <Dropdown urlBase={`details/${slug}`} details={details} />
+            <Dropdown urlBase={`/details/${slug}`} details={details} />
         </div>
     );
 }

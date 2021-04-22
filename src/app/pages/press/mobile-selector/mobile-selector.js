@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
+import {faCaretDown} from '@fortawesome/free-solid-svg-icons/faCaretDown';
 import './mobile-selector.scss';
 
 function MenuItem({selectedValue, value, onChange}) {

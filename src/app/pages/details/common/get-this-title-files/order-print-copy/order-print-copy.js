@@ -1,7 +1,8 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faUser, faUsers} from '@fortawesome/free-solid-svg-icons';
+import {faUser} from '@fortawesome/free-solid-svg-icons/faUser';
+import {faUsers} from '@fortawesome/free-solid-svg-icons/faUsers';
 import './order-print-copy.scss';
 
 function Header({entry}) {
