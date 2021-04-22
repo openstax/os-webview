@@ -1,5 +1,4 @@
 import {useState, useEffect} from 'react';
-import bus from './usermodel-bus';
 import isEqual from 'lodash/isEqual';
 import throttle from 'lodash/throttle';
 
@@ -125,37 +124,37 @@ function oldUserModel(sfUserModel) {
     };
 }
 
-const throttledLoginCheck = throttle(() => {
-    accountsModel.load().then((oldUser) => {
-        accountsModel.load.invalidate();
-        accountsModel.load().then((newUser) => {
-            if (!isEqual(oldUser, newUser)) {
-                bus.emit('update-userModel', newUser);
-                bus.emit('update-accountsModel', oldUserModel(newUser));
-            }
-        });
-    });
-}, 90000);
-
-window.addEventListener('focus', throttledLoginCheck);
-
 const userModel = {
     load() {
         return accountsModel.load().then(oldUserModel);
     }
 };
 
+const throttledLoginCheck = throttle((setData) => {
+    accountsModel.load().then((oldUser) => {
+        accountsModel.load.invalidate();
+        accountsModel.load().then((newUser) => {
+            if (!isEqual(oldUser, newUser)) {
+                userModel.load().then(setData);
+            }
+        });
+    });
+}, 30000);
+
 function useUserModel() {
     const [data, setData] = useState();
 
     useEffect(() => {
+        const check = () => throttledLoginCheck(setData);
+
+        window.addEventListener('focus', check);
         userModel.load().then(setData);
+
+        return () => window.removeEventListener('focus', check);
     }, []);
 
     return data;
 }
-
-bus.serve('accountsModel-load', () => accountsModel.load());
 
 export default userModel;
 export {accountsModel, useUserModel};

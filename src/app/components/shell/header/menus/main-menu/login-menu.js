@@ -1,8 +1,7 @@
 import React, {useEffect} from 'react';
-import {useToggle, useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {useLocation} from 'react-router-dom';
 import {useUserModel} from '~/models/usermodel';
-import userModelBus from '~/models/usermodel-bus';
 import linkHelper from '~/helpers/link';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
 
@@ -26,28 +25,6 @@ function LoginLink() {
     );
 }
 
-function useIsTutorUser(userModel) {
-    const [isTutorUser, toggle] = useToggle((userModel.groups || []).includes('OpenStax Tutor'));
-    const userPollInterval = window.setInterval(() => {
-        if (isTutorUser) {
-            window.clearInterval(userPollInterval);
-            return;
-        }
-        userModelBus.get('accountsModel-load')
-            .then((accountResponse) => {
-                const foundTutor = accountResponse.applications
-                    .find((app) => app.name === 'OpenStax Tutor');
-
-                if (foundTutor) {
-                    toggle(true);
-                    window.clearInterval(userPollInterval);
-                }
-            });
-    }, 60000);
-
-    return isTutorUser;
-}
-
 function TutorMenuItem() {
     const tutorPageData = useDataFromSlug('pages/openstax-tutor');
 
@@ -63,7 +40,7 @@ function TutorMenuItem() {
 }
 
 function TutorMenuItemIfUser({userModel}) {
-    const isTutorUser = useIsTutorUser(userModel);
+    const isTutorUser = (userModel.groups || []).includes('OpenStax Tutor');
 
     return isTutorUser ? <TutorMenuItem /> : null;
 }
