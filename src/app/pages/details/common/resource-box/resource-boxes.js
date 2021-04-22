@@ -32,9 +32,12 @@ function CommonsHubBox({model}) {
             </div>
             <div className="bottom">
                 <div className="right">
-                    <a href={model.featureUrl}>
-                        {model.featureText}
-                    </a>
+                    {
+                        model.featureUrl &&
+                            <a href={model.featureUrl}>
+                                {model.featureText}
+                            </a>
+                    }
                 </div>
             </div>
         </div>
