@@ -27,7 +27,7 @@ $width-of-filter-by: 7.5rem;
     }
 }
 
-[role="radiogroup"] {
+[role="radiogroup"]:not(.custom) {
     min-height: $form-element-height;
 
     @include set-font(body-large);

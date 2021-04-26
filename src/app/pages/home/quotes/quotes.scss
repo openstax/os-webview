@@ -1,205 +1,116 @@
-@import 'mixins/triangle';
 @import 'pattern-library/core/pattern-library/headers';
 
-.quotes {
-    display: grid;
-    grid-gap: #{2 * $normal-margin};
-    padding: 0 $normal-margin;
-    width: 100%;
+.home.page .quotes {
+    // @include scale-set-font(body-regular, body-large);
+    @include light-on-dark();
+    @include scale-feature(font-size, 1.6rem, 1.8rem);
 
-    @include wider-than($tablet-max) {
-        grid-template-columns: repeat(auto-fit, minmax(30%, auto));
+    background-color: os-color(blue);
+    color: text-color(white);
+
+    h2 {
+        @include title-font(2.4rem);
+
+        margin: 0;
+        text-align: center;
+        width: 100%;
     }
 
-    .quote-bucket {
-        background-color: ui-color(white);
-        border-radius: 0.3rem;
+    .images {
+        bottom: 0;
+        display: flex;
+        justify-content: space-between;
         overflow: hidden;
-
-        @include wider-than($phone-max) {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(50%, auto));
-        }
-
-        &:last-child {
-            margin-bottom: 0;
-        }
-
-        .cyan {
-            background-color: os-color(light-blue);
-        }
-
-        &.right {
-
-            @media (min-width: 700px) {
-                margin-left: 1.5rem;
-            }
-
-            @media (min-width: 1050px) {
-                margin-left: 1.5rem;
-                margin-right: 1.5rem;
-            }
-
-            > .image {
-                order: 2;
-            }
-
-            > .quote {
-                order: 1;
-
-                &::before {
-                    @include triangle(
-                        $direction: left,
-                        $position: top calc(50% - 2.4rem) left -2.4rem,
-                        $color: ui-color(white),
-                        $size: 2.4rem
-                    );
-                }
-            }
-        }
-
-        &.left {
-            .image {
-                background-position: 62%;
-                order: 1;
-            }
-
-            > .quote {
-                order: 2;
-
-                &::before {
-                    @include triangle(
-                        $direction: top,
-                        $position: left calc(50% - 2.4rem) top -1rem,
-                        $color: ui-color(white),
-                        $size: 2.4rem
-                    );
-
-                    @include wider-than($phone-max) {
-                        @include triangle(
-                            $direction: left,
-                            $position: top 50% left -4.4rem,
-                            $color: ui-color(white),
-                            $size: 2.4rem
-                        );
-                    }
-                }
-            }
-        }
-
-        &.full {
-            background-color: os-color(orange);
-            color: text-color(white);
-            font-weight: 400;
-
-            &:nth-child(odd) {
-                background-color: os-color(light-blue);
-            }
-
-            blockquote {
-                font-size: 130%;
-
-                p {
-                    margin: -0.6rem 0 0;
-                    padding: 0 4rem 2rem 1rem;
-                    text-indent: -1rem;
-                }
-            }
-        }
-
-        .btn {
-            @include button();
-
-            background-color: transparent;
-            font-weight: normal;
-            height: 5rem;
-        }
-    }
-
-    .image {
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        display: block;
-        flex: 1 1 auto;
-        height: 20rem;
+        position: absolute;
         width: 100%;
 
-        @include wider-than($phone-max) {
-            flex: 1 1 50%;
-            height: auto;
-            width: auto;
+        @include width-up-to($tablet-max) {
+            margin-top: -4rem; // counter some of boxed padding
+            position: relative;
+        }
+
+        @include width-up-to($phone-max) {
+            height: 56vw;
+
+            .left-bg {
+                z-index: 1;
+            }
+        }
+
+        @include width-between($phone-max, $tablet-max) {
+            @include scale-feature(height, 33.6rem, 45rem);
+        }
+
+        @include wider-than($tablet-max) {
+            .left-bg,
+            .right-bg {
+                position: relative;
+            }
         }
     }
 
-    .quote {
-        align-items: flex-start;
-        display: flex;
-        flex: 1 1 auto;
-        flex-flow: column nowrap;
-        justify-content: space-between;
-        padding: 2rem;
+    .side-by-side {
+        text-align: left;
+
+        @include wider-than($tablet-max) {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-column-gap: 3rem;
+            margin: auto;
+            margin-top: 2rem;
+            max-width: 90rem;
+            z-index: 1;
+        }
+    }
+
+    .with-big-quote,
+    .attribution {
+        @include scale-feature(margin-left, 0, 12rem);
+
+        background-color: rgba(os-color(blue), 0.66);
+
+        @include wider-than($tablet-max) {
+            padding: $normal-margin;
+        }
+    }
+
+    .attribution {
+        border-bottom-left-radius: 0.4rem;
+    }
+
+    .with-big-quote {
+        margin-top: 6rem;
         position: relative;
 
-        @include wider-than($phone-max) {
-            flex: 1 1 50%;
+        @include width-up-to($tablet-max) {
+            @include scale-feature(margin-top, 7rem, 14rem);
         }
 
-        > * {
-            max-width: 100%;
-        }
+        &::before {
+            @include scale-feature(font-size, 10rem, 20rem);
+            @include scale-feature(letter-spacing, -0.04 * 10rem, -0.04 * 20rem);
 
-        blockquote {
-            display: block;
-            line-height: 1.7;
-            margin: 1rem 0;
-        }
-
-        .overlay {
-            display: none;
-
-            @include wider-than($phone-max) {
-                bottom: 0;
-                display: block;
-                height: calc(18% + 5rem);
-                position: absolute;
-                right: 5%;
+            @include width-up-to($tablet-max) {
+                @include scale-feature(top, -7rem, -14rem);
             }
-        }
-    }
-}
 
-.old-quotes {
-    align-items: stretch;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin: 0 auto;
-    padding: 1.5rem 0;
-    position: relative;
-    width: 100%;
-
-    @include wider-than($tablet-max) {
-        flex-flow: row nowrap;
-        padding: 8rem 0;
-    }
-
-
-    &.boxes-2 {
-        > .quote-bucket {
             @include wider-than($tablet-max) {
-                flex-basis: calc(50% - 1.5rem);
+                @include scale-feature(top, -5rem, -10rem);
+                @include scale-feature(left, -5rem, -10rem);
             }
+
+            content: '“';
+            font-weight: bold;
+            line-height: normal;
+            position: absolute;
         }
     }
 
-    &.boxes-3 {
-        > .quote-bucket {
-            @include wider-than($tablet-max) {
-                flex-basis: 33.33%;
-                margin: 0 1.5rem;
-            }
-        }
+    .student-quote .with-big-quote::before {
+        color: os-color(yellow);
     }
 
+    .instructor-quote .with-big-quote::before {
+        color: os-color(orange);
+    }
 }

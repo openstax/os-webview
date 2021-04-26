@@ -1,13 +1,40 @@
 import React from 'react';
-import Quote from '~/components/quote/quote.jsx';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './quotes.scss';
 
-export default function Quotes({quotes}) {
-    const boxClass = `boxes-${quotes.length}`;
-
+function Quote({className, quote, attribution}) {
     return (
-        <div className={`quotes ${boxClass}`}>
-            {quotes.map((quote) => <Quote model={quote} key={quote.content} />)}
+        <div className={className}>
+            <RawHTML className="with-big-quote" html={quote} />
+            <div className="attribution">
+                &ndash; {attribution}
+            </div>
         </div>
+    );
+}
+
+export default function ComponentTemplate({data}) {
+    return (
+        <section className="quotes">
+            <div className="boxed">
+                <h2>{data.headline}</h2>
+                <div className="side-by-side">
+                    <Quote
+                        className="student-quote"
+                        quote={data.studentQuote}
+                        attribution={data.studentAttribution}
+                    />
+                    <Quote
+                        className="instructor-quote"
+                        quote={data.instructorQuote}
+                        attribution={data.instructorAttribution}
+                    />
+                </div>
+            </div>
+            <div className="images">
+                <img className="left-bg" src={data.studentImage} alt />
+                <img className="right-bg" src={data.instructorImage} alt />
+            </div>
+        </section>
     );
 }
