@@ -2,9 +2,12 @@ import React, {useContext} from 'react';
 import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './resource-box.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {
-    faExternalLinkAlt, faLock, faDownload, faShoppingCart, faPlay, faExclamationTriangle
-} from '@fortawesome/free-solid-svg-icons';
+import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
+import {faLock} from '@fortawesome/free-solid-svg-icons/faLock';
+import {faDownload} from '@fortawesome/free-solid-svg-icons/faDownload';
+import {faShoppingCart} from '@fortawesome/free-solid-svg-icons/faShoppingCart';
+import {faPlay} from '@fortawesome/free-solid-svg-icons/faPlay';
+import {faExclamationTriangle} from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
 import Dialog from '~/components/dialog/dialog';
 import analytics from '~/helpers/analytics';
 import CompCopyRequestForm from './request-form/request-form';
