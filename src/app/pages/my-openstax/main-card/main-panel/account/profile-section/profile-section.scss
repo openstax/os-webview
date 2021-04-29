@@ -1,0 +1,9 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+#account .profile-section {
+    th {
+        @include set-font(h4);
+
+        text-align: left;
+    }
+}

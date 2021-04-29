@@ -1,0 +1,43 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.styled-checkbox {
+    @include form-border();
+
+    align-items: center;
+    color: ui-color(form-border);
+    cursor: pointer;
+    display: flex;
+    font-size: 200%;
+    height: 2rem;
+    justify-content: center;
+    margin: 0.5rem;
+    margin-right: 1rem;
+    width: 2rem;
+
+    &[aria-checked="true"] {
+        background-color: ui-color(white);
+        border-radius: 50%;
+        color: os-color(green);
+        height: 3rem;
+        margin: 0;
+        margin-right: 0.5rem;
+        width: 3rem;
+    }
+}
+
+.click-forwarding {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+}
+
+.suggestion-list {
+    [role="option"]  {
+        cursor: pointer;
+        padding: 0.5rem;
+
+        &.active {
+            background-color: ui-color(page-bg);
+        }
+    }
+}

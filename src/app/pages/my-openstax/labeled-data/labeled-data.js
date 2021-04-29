@@ -8,7 +8,7 @@ export default function LabeledData({
     return (
         <Tag className={cn('labeled-data', className)} {...other}>
             <LabelTag>{label}</LabelTag>
-            <div className='value'>{children}</div>
+            <div>{children}</div>
         </Tag>
     );
 }

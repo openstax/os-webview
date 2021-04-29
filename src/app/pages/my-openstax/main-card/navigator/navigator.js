@@ -1,16 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
+import NavigationContext from '../navigation-context';
+import cn from 'classnames';
 import './navigator.scss';
 
-function scrollSource(event) {
-    const hash = (new window.URL(event.target.href)).hash;
-    const el = document.getElementById(hash.substr(1));
-
-    el.scrollIntoView({ behavior: 'smooth' });
-    event.preventDefault();
-}
-
 function useElById(id) {
-    const [el, setEl] = useState(document.getElementById(id));
+    const [el, setEl] = React.useState(document.getElementById(id));
 
     const elPoll = window.setInterval(() => {
         if (el) {
@@ -23,26 +17,23 @@ function useElById(id) {
     return el;
 }
 
-function SectionTarget({ id }) {
+function SectionTarget({id}) {
     const el = useElById(id);
+    const [activeId, setActiveId] = React.useContext(NavigationContext);
+    const active = activeId === id;
 
     if (!el) {
         return null;
     }
 
     return (
-        <a
-            className='nav-item' href={`#${id}`}
-            onClick={scrollSource} key={id}
-        >
+        <a className={cn('nav-item', {active})} href={`#${id}`} onClick={() => setActiveId(id)}>
             {el.firstChild.textContent}
         </a>
     );
 }
 
-export default function Navigator() {
-    const targetIds = ['account', 'profile', 'email-prefs'];
-
+export default function Navigator({targetIds}) {
     return (
         <nav>
             {targetIds.map((id) => <SectionTarget id={id} key={id} />)}

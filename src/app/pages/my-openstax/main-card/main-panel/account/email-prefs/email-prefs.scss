@@ -10,9 +10,8 @@
 
     .checkbox {
       align-items: center;
-      border: thin solid ui-color(form-border) {
-        radius: 0.2rem;
-      };
+      border: thin solid ui-color(form-border);
+      border-radius: 0.2rem;
       display: flex;
       height: $box-size;
       justify-content: center;

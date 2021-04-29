@@ -1,0 +1,29 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import '../common';
+
+#collection:not([hidden]) {
+    display: flex;
+    flex-direction: column;
+    grid-row-gap: $normal-margin;
+
+    .plus-box {
+        @include icon();
+    }
+
+    .add-book {
+        align-self: center;
+        background-color: ui-color(default);
+        border-radius: 0.3rem;
+        display: inline-grid;
+        font-size: inherit;
+        grid-row-gap: 1rem;
+        padding: 1rem;
+        text-align: center;
+
+        .plus-box {
+            font-size: 1.8rem;
+            height: 16rem;
+            width: 16rem;
+        }
+    }
+}

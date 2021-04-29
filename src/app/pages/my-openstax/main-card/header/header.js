@@ -11,7 +11,7 @@ export default function Header() {
     return (
         <div className='header'>
             <div className='initials'>{initials}</div>
-            <h1>Settings</h1>
+            <h1>My OpenStax</h1>
         </div>
     );
 }

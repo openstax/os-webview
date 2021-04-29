@@ -27,7 +27,7 @@
       grid-gap: 1rem;
 
       .icon {
-        @extend %icon;
+        @include icon();
 
         font-size: 3.2rem;
       }

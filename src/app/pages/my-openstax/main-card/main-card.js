@@ -1,23 +1,29 @@
-import React, { useRef } from 'react';
+import React from 'react';
+import Header from './header/header';
 import Navigator from './navigator/navigator';
+import MainPanel, {targetIds} from './main-panel/main-panel';
+import NavigationContext from './navigation-context';
 import './main-card.scss';
 
-export default function MainCard({ header, mainPanel }) {
-    const contentEl = useRef(null);
+export default function MainCard() {
+    const initialId = window.location.hash.substr(1) || targetIds[0];
+    const idState = React.useState(initialId);
 
     return (
         <div className='main-card'>
-            <div className='layout-grid'>
-                <div className='banner'>
-                    {header}
+            <NavigationContext.Provider value={idState}>
+                <div className='layout-grid'>
+                    <div className='banner'>
+                        <Header />
+                    </div>
+                    <div className='left-bar'>
+                        <Navigator targetIds={targetIds} />
+                    </div>
+                    <main className='main-content'>
+                        <MainPanel />
+                    </main>
                 </div>
-                <div className='left-bar'>
-                    <Navigator />
-                </div>
-                <main className='main-content' ref={contentEl}>
-                    {mainPanel}
-                </main>
-            </div>
+            </NavigationContext.Provider>
         </div>
     );
 }

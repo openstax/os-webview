@@ -8,6 +8,20 @@
     width: calc(100vw - 12rem);
   }
 
+  h1,
+  h2,
+  h3 {
+      margin: 0;
+  }
+
+  h2 {
+      @include set-font(h3);
+  }
+
+  h3 {
+      @include set-font(h4);
+  }
+
   background-color: ui-color(white);
   border-radius: 0.4rem;
   margin-bottom: 5rem;
@@ -46,7 +60,6 @@
       }
     }
   }
-
 
   .banner {
     @include width-up-to($tablet-max) {

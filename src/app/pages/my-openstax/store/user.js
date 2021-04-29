@@ -1,55 +1,76 @@
-const accountsUserAPI = 'https://accounts-dev.openstax.org/api/user';
+import sfApiFetch from './sfapi';
 
-function transformData(data) {
-    return {
-        accountsId: data.id,
-        firstName: data.first_name,
-        lastName: data.last_name,
-        username: data.username,
-        emails: data.contact_infos.filter((info) => info.type === 'EmailAddress')
-            .map((info) => ({
-                address: info.value,
-                verified: info.is_verified,
-                primary: info.is_guessed_preferred
-            }))
-    };
+export function sfSchoolToInstitution(school) {
+    return ({
+        id: school.salesforce_id,
+        name: school.name
+    });
 }
 
-function loadData() {
-    return fetch(`${accountsUserAPI}`, { credentials: 'include' })
-        .then(
-            (response) => response.json(),
-            (err) => {
-                console.warn('Accounts fetch error:', err);
-            }
-        )
-        .then((result) => {
-            return transformData(result);
-        });
+// There is no direct data source for Institutions. The list should include:
+// 1. The school in the Contact
+// 2. All schools in opportunities
+// 3. Any others that are explicitly added
+function institutionEditor() {
+    let data = [];
+
+    function values() {
+        return [...data];
+    }
+
+    function save(scratchValues) {
+        data = [...scratchValues];
+    }
+
+    async function refresh(contactInfo) {
+        const idsAlreadyThere = data.map((v) => v.id);
+        const idsToCheck = [
+            contactInfo.school_id
+            // Also need ids from Opportunities
+        ];
+        const promises = idsToCheck
+            .filter((id) => !idsAlreadyThere.includes(id))
+            .map((id) => sfApiFetch('schools', `/${id}`));
+        const schools = await (Promise.all(promises));
+
+        for (const s of schools) {
+            data.push(sfSchoolToInstitution(s));
+        }
+    }
+
+    return {values, refresh, save};
+}
+
+const institutions = institutionEditor();
+
+async function initializeUser(store) {
+    const user = await sfApiFetch('users');
+
+    await institutions.refresh(user.contact);
+    store.dispatch('user/update');
 }
 
 export default function (store) {
-    function refreshData(data) {
-        return store.dispatch('account/loaded', data);
-    }
-    const NOT_READY = {
-        account: {
-            ready: false
+    const INITIAL_STATE = {
+        user: {
+            institutions: [],
+            scratchInstitutions: []
         }
     };
 
     store.on('@init', () => {
-        loadData().then(refreshData);
-        return NOT_READY;
+        initializeUser(store);
+        return INITIAL_STATE;
     });
-    store.on('account/loaded', (_, data) => {
+
+    store.on('user/update', () => ({
+        user: { institutions: institutions.values() }
+    }));
+
+    store.on('user/save', (oldState, newInfo) => {
+        institutions.save(Array.from(newInfo).map(sfSchoolToInstitution));
         return {
-            account: Object.assign(
-                {
-                    ready: true
-                },
-                data
-            )
+            user: { institutions: institutions.values() }
         };
     });
 }

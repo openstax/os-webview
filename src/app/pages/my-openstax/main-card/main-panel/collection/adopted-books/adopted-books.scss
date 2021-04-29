@@ -1,0 +1,57 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.adopted-books {
+    @include card();
+
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5rem 2rem 3rem;
+
+    .card-with-subtitle {
+        .card {
+            @include card();
+
+            align-items: center;
+            background-color: red;
+            height: 22.2rem;
+            justify-content: center;
+            margin-bottom: $normal-margin;
+            padding: $normal-margin;
+            width: 22.2rem;
+
+            .plus-box {
+                max-height: 5rem;
+                max-width: 5rem;
+            }
+        }
+    }
+}
+
+dialog .add-book {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 3rem;
+    width: 54rem;
+
+    .instructions {
+        @include set-font(helper-label);
+
+        margin-bottom: 3rem;
+    }
+
+    .institution-selector {
+        .form-input > .control-group {
+            margin: 1rem 0 2rem 6rem;
+        }
+    }
+
+    .checkbox-group {
+        margin-top: 0.7rem;
+    }
+
+    [type="submit"] {
+        align-self: flex-end;
+        padding: 0 3.5rem;
+        width: auto;
+    }
+}

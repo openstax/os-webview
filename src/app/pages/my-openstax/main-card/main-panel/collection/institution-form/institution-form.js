@@ -123,10 +123,10 @@ export default function InstitutionForm({ school, close }) {
     const { adoptions } = useStoreon('adoptions');
     const [selectedSchool, setSelectedSchool] = useState(selectableSchool);
     const adoptionsForSchool = school ?
-        adoptions.find((entry) => entry.schoolId === selectedSchool.value).books :
+        adoptions.find((entry) => entry.schoolId === selectedSchool.value) :
         null;
-    const initialSelections = school ?
-        adoptionsForSchool.map((b) => ({
+    const initialSelections = adoptionsForSchool ?
+        (adoptionsForSchool.books || []).map((b) => ({
             title: { label: b.abbreviation, value: b.abbreviation },
             numStudents: b.numStudents
         })) :

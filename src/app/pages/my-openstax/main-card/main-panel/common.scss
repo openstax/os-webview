@@ -2,7 +2,7 @@
 
 $icon-size: $form-element-height;
 
-%icon {
+@mixin icon() {
   align-items: center;
   background-color: os-color(light-gray);
   border-radius: 0.3rem;
@@ -26,14 +26,20 @@ $icon-size: $form-element-height;
   justify-self: left;
   padding: 1rem {
     right: 3rem;
-  };
+  }
+
+  .plus-box {
+      @include icon();
+  }
 }
 
-button,
-.btn {
-    @include button();
+@mixin usual-buttons() {
+    button,
+    .btn {
+        @include button();
 
-    &.primary {
-        @extend %primary;
+        &.primary {
+            @extend %primary;
+        }
     }
 }

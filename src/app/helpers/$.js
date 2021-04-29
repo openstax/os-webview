@@ -31,6 +31,12 @@ $.treatSpaceOrEnterAsClick = (event) => {
     }
 };
 
+$.forwardEvent = (event, el) => {
+    const newE = new event.constructor(event.type, event);
+
+    el.dispatchEvent(newE);
+};
+
 const browserId = () => {
     const ua = window.navigator.userAgent;
     let M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
