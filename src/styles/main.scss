@@ -220,6 +220,7 @@ sup {
 
 #main {
     flex: 1 0 auto;
+    min-height: 50vh;
     z-index: 0;
 
     @include width-up-to($tablet-max) {
