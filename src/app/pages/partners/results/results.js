@@ -21,7 +21,7 @@ const costOptionValues = costOptions.map((entry) => entry.value);
 
 // eslint-disable-next-line complexity
 function filterEntries(entries) {
-    let result = entries;
+    let result = shuffle(entries);
 
     if (books.value.length > 0) {
         result = result.filter((entry) => {
@@ -58,19 +58,19 @@ function filterEntries(entries) {
     resultCount.value = result.length;
 
     if (Math.abs(sort.value) === 0) {
-        return shuffle(result);
+        return result;
     }
 
     const getFieldsDict = {
-        1: (r) => r.title.toLowerCase(),
-        2: (r) => Math.abs(r.rating)
+        1: [(r) => r.title.toLowerCase()],
+        2: [(r) => Math.abs(r.rating), (r) => r.ratingCount]
     };
     const sortDir = sort.value < 0 ? 'desc' : 'asc';
 
     return orderBy(
         result,
-        [getFieldsDict[Math.abs(sort.value)]],
-        [sortDir]
+        getFieldsDict[Math.abs(sort.value)],
+        [sortDir, sortDir]
     );
 }
 
