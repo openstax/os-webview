@@ -1,11 +1,22 @@
 {
     "presets": [
-        '@babel/preset-env',
+        [
+            '@babel/preset-env',
+            {
+                targets: [
+                    'last 2 major versions',
+                    'not ie > 0', 'not dead',
+                    'iOS > 8'
+                ]
+            }
+        ],
         '@babel/preset-react'
     ],
     "plugins": [
-        ["@babel/plugin-transform-runtime", {
-            "regenerator": true
+        [
+            "@babel/plugin-transform-runtime",
+            {
+                "regenerator": true
             }
         ]
     ]
