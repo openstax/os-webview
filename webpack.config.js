@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const production = process.env.NODE_ENV === 'production';
 
 console.log('*** Building production?', production);
@@ -61,7 +62,10 @@ const config = {
             template: './src/index.html'
         }),
         new FaviconsWebpackPlugin('./src/images/favicon.svg'),
-        new ESLintPlugin({fix: true})
+        new ESLintPlugin({fix: true}),
+        new CopyWebpackPlugin({
+            patterns: [{from: 'src/images', to:'images'}]
+        })
     ],
     performance: {
       maxEntrypointSize: 2.5 * 1000000, // 1MB

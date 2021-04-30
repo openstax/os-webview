@@ -1,8 +1,12 @@
 import React, {useState, useLayoutEffect} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {
-    faAtom, faBook, faLaptop, faListOl, faMobileAlt, faCloudDownloadAlt, faVolumeUp
-} from '@fortawesome/free-solid-svg-icons';
+import {faAtom} from '@fortawesome/free-solid-svg-icons/faAtom';
+import {faBook} from '@fortawesome/free-solid-svg-icons/faBook';
+import {faLaptop} from '@fortawesome/free-solid-svg-icons/faLaptop';
+import {faListOl} from '@fortawesome/free-solid-svg-icons/faListOl';
+import {faMobileAlt} from '@fortawesome/free-solid-svg-icons/faMobileAlt';
+import {faCloudDownloadAlt} from '@fortawesome/free-solid-svg-icons/faCloudDownloadAlt';
+import {faVolumeUp} from '@fortawesome/free-solid-svg-icons/faVolumeUp';
 import {faAmazon} from '@fortawesome/free-brands-svg-icons/faAmazon';
 import {faApple} from '@fortawesome/free-brands-svg-icons/faApple';
 import $ from '~/helpers/$';

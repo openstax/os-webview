@@ -3,9 +3,10 @@ import {ActiveElementContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
 import cn from 'classnames';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {
-    faBook, faChalkboardTeacher, faEllipsisV, faGraduationCap
-} from '@fortawesome/free-solid-svg-icons';
+import {faBook} from '@fortawesome/free-solid-svg-icons/faBook';
+import {faChalkboardTeacher} from '@fortawesome/free-solid-svg-icons/faChalkboardTeacher';
+import {faEllipsisV} from '@fortawesome/free-solid-svg-icons/faEllipsisV';
+import {faGraduationCap} from '@fortawesome/free-solid-svg-icons/faGraduationCap';
 
 function QuickLink({url, icon, text}) {
     return (
