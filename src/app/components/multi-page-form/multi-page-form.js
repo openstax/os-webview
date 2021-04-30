@@ -96,7 +96,6 @@ export default function MultiPageForm({
     validatePage=pass, onPageChange=pass, onSubmit=pass,
     submitting
 }) {
-    // This might be another useReducer opportunity
     const [currentPage, setCurrentPage] = useState(1);
     const [validatedPages, setValidatedPages] = useState({});
     const formRef = useRef();

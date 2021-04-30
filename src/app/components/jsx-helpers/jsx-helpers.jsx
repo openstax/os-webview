@@ -142,12 +142,7 @@ export function RawHTML({Tag='div', html, embed=false, ...otherProps}) {
 }
 
 export function useToggle(initialState) {
-    const [value, setValue] = useState(initialState);
-    const toggle = (newValue=!value) => {
-        setValue(newValue);
-    };
-
-    return [value, toggle];
+    return React.useReducer((state, newValue=!state) => newValue, initialState);
 }
 
 export function useSet(initialValue=[]) {

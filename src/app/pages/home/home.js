@@ -1,5 +1,6 @@
 import React from 'react';
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import LazyLoad from 'react-lazyload';
 import Banner from './banner/banner';
 import Features from './features/features';
 import Quotes from './quotes/quotes';
@@ -88,9 +89,15 @@ function Homepage({data}) {
         <React.Fragment>
             <Banner data={data.banner} />
             <Features data={data.features} />
-            <Quotes data={data.quotes} />
-            <Tutor data={data.tutor} />
-            <WhatsOpenStax data={data.whatsOpenstax} />
+            <LazyLoad once offset={100} height={400}>
+                <Quotes data={data.quotes} />
+            </LazyLoad>
+            <LazyLoad once offset={100} height={400}>
+                <Tutor data={data.tutor} />
+            </LazyLoad>
+            <LazyLoad once offset={100} height={400}>
+                <WhatsOpenStax data={data.whatsOpenstax} />
+            </LazyLoad>
         </React.Fragment>
     );
 }

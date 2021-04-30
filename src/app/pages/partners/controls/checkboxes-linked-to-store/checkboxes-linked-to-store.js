@@ -6,7 +6,6 @@ import cn from 'classnames';
 import './checkboxes-linked-to-store.scss';
 
 function Checkbox({label, value, store}) {
-    // Probably a case for useReducer?
     const [checked, setChecked] = useState(store.includes(value));
 
     useEffect(() => {

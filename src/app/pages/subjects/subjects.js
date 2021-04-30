@@ -7,6 +7,7 @@ import categoryPromise from '~/models/subjectCategories';
 import savingsPromise from '~/models/savings';
 import useSavingsDataIn, {linkClickTracker} from '~/helpers/savings-blurb';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
+import {forceCheck} from 'react-lazyload';
 import './subjects.scss';
 import $ from '~/helpers/$';
 
@@ -22,6 +23,7 @@ function useCategoryTiedToPath() {
     useEffect(() => {
         const setIt = () => {
             setCategory(categoryFromPath());
+            window.requestAnimationFrame(forceCheck);
         };
 
         window.addEventListener('popstate', setIt);

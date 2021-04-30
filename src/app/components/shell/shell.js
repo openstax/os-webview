@@ -36,12 +36,6 @@ function App() {
     const ref = React.useRef();
 
     React.useEffect(() => {
-        const mainObserver = new window.MutationObserver(() => {
-            document.body.classList.remove('initial-load');
-            mainObserver.disconnect();
-        });
-
-        mainObserver.observe(ref.current, {childList: true, subtree: true});
         setUpBus(ref.current);
         ReactModal.setAppElement(ref.current);
     }, []);
