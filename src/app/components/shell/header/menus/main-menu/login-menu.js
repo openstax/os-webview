@@ -14,7 +14,7 @@ function LoginLink() {
     useLocation();
 
     return (
-        <li className="login-menu nav-menu-item rightmost">
+        <li className="login-menu nav-menu-item rightmost" role="presentation">
             <a
                 href={linkHelper.loginLink()} className="pardotTrackClick"
                 data-local="true" role="menuitem"
