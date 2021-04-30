@@ -54,7 +54,7 @@ export default function StarsAndCount({rating, count=0, showNumber=false}) {
         <div className="stars-and-count">
             <Stars stars={rating} />
             {showNumber && (count > 0) && roundedRating(rating)}
-            <span>({count || 'no ratings'})</span>
+            <span>({count || 'no reviews'})</span>
         </div>
     );
 }

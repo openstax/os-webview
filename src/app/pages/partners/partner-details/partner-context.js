@@ -21,12 +21,14 @@ function usePartnerContext(partnerId) {
             {},
             []
         ];
+    const reviewCount = reviews.reduce((a, b) => a + b.status === 'Approved' ? 1 : 0, 0);
 
     return {
         partnerId,
         partnerName,
         summary,
         reviews,
+        reviewCount,
         postRating
     };
 }
