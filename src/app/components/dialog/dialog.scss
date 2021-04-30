@@ -23,6 +23,7 @@ dialog {
         max-width: none;
         position: fixed;
         width: calc(100% - #{2 * $normal-margin});
+        z-index: 3;
     }
 
     &.reverse-colors {

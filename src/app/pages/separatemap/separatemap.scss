@@ -13,6 +13,7 @@ $small-shadow: 0 0.2rem 0.5rem 0 rgba(0, 0, 0, 0.15);
         right: 0;
         top: 0;
         width: 100%;
+        z-index: 1;
 
         @include width-up-to($tablet-max) {
             display: flex;

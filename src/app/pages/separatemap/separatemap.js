@@ -109,9 +109,9 @@ function PopupMessage() {
 
 export default function SeparateMap() {
     useEffect(() => {
-        shellBus.emit('with-sticky');
+        shellBus.emit('with-modal');
 
-        return () => shellBus.emit('no-sticky');
+        return () => shellBus.emit('no-modal');
     }, []);
 
     return (
