@@ -41,7 +41,7 @@ function DistributionBars() {
 }
 
 function Synopsis() {
-    const {summary: {rating, count}} = useContext(PartnerContext);
+    const {summary: {rating, count}, reviewCount} = useContext(PartnerContext);
 
     return (
         <div className="review-synopsis">
@@ -51,7 +51,7 @@ function Synopsis() {
                     <React.Fragment>
                         <h2>User Reviews</h2>
                         <div className="giant-number">{roundedRating(rating)}</div>
-                        <StarsAndCount rating={rating} count={count} />
+                        <StarsAndCount rating={rating} count={reviewCount} />
                     </React.Fragment>
             }
         </div>

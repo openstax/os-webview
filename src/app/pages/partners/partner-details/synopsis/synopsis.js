@@ -39,7 +39,7 @@ function PartnerLink({partnerUrl, partnerLinkText}) {
 export default function Synopsis({model, icon, partnerLinkProps}) {
     const {verifiedFeatures, tags} = model;
     const ref = useRef();
-    const {partnerName, summary: {rating, count}} = useContext(PartnerContext);
+    const {partnerName, summary: {rating}, reviewCount} = useContext(PartnerContext);
 
     return (
         <section className="synopsis" ref={ref}>
@@ -55,7 +55,7 @@ export default function Synopsis({model, icon, partnerLinkProps}) {
                     )
                 }
             </div>
-            <StarsAndCount rating={rating} count={count} showNumber />
+            <StarsAndCount rating={rating} count={reviewCount} showNumber />
             <PartnerLink {...partnerLinkProps} />
         </section>
     );
