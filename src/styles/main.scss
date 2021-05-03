@@ -39,16 +39,6 @@ strong {
     font-weight: bold;
 }
 
-.page-loading > .os-loader {
-    opacity: 0;
-}
-
-.os-loader {
-    height: 0;
-    opacity: 0;
-    width: 0;
-}
-
 .no-bullets {
     // Hide bullets in IE
     list-style-image: url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7);
@@ -365,7 +355,6 @@ a:not([href]) {
 @import 'components/filter-buttons';
 @import 'components/forms';
 @import 'components/hero';
-@import 'components/loader';
 @import 'components/radio-buttons';
 @import 'components/social';
 @import 'components/tooltip';

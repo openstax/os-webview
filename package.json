@@ -3,7 +3,8 @@
     "version": "2.79.0",
     "description": "OpenStax webview",
     "scripts": {
-        "test": "jest ./test/src"
+        "test": "jest ./test/src",
+        "stats": "webpack --profile --json stats.json"
     },
     "repository": {
         "type": "git",
