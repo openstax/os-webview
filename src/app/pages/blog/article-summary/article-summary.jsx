@@ -19,7 +19,7 @@ export function blurbModel(articleSlug, data) {
     };
 }
 
-export function ArticleSummary({
+export default function ArticleSummary({
     articleSlug, altText, image, headline, subheading, body, date, author,
     forwardRef={}, setPath
 }) {
@@ -48,21 +48,5 @@ export function ArticleSummary({
                 <Byline date={date} author={author} />
             </div>
         </React.Fragment>
-    );
-}
-
-export default function DelayedImagesSummary({image, ...otherProps}) {
-    const [delayedImage, setDelayedImage] = useState('');
-    const elRef = useRef();
-    const windowCx = useContext(WindowContext);
-
-    useEffect(() => {
-        if (delayedImage !== image && elRef.current && $.overlapsViewport(elRef.current)) {
-            setDelayedImage(image);
-        }
-    }, [delayedImage, image, windowCx]);
-
-    return (
-        <ArticleSummary image={delayedImage} {...otherProps} forwardRef={elRef} />
     );
 }

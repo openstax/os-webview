@@ -14,8 +14,6 @@ $image-height: 24rem;
         grid-gap: 3rem;
         grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
         justify-items: center;
-        max-height: calc(100vh - 10rem);
-        overflow: auto;
 
         @include width-up-to($tablet-max) {
             max-width: calc(100% - 4rem);

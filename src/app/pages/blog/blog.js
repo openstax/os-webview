@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {usePageData} from '~/helpers/controller/cms-mixin';
+import {LoaderPage, WindowContextProvider} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import PinnedArticle from './pinned-article/pinned-article';
 import UpdateBox from './update-box/update-box';
 import DisqusForm from './disqus-form/disqus-form';
@@ -8,10 +8,9 @@ import SearchBar from './search-bar/search-bar';
 import SearchResults from './search-results/search-results';
 import {ArticleFromSlug} from './article/article';
 import {blurbModel} from './article-summary/article-summary.jsx';
-import {WindowContextProvider} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import timers from './timers';
 import './blog.scss';
-import $ from '~/helpers/$';
+// import $ from '~/helpers/$';
 
 const stayHere = {path: '/blog'};
 
@@ -106,24 +105,14 @@ function useLocationSynchronizedToPath() {
     return [location, setPath];
 }
 
-export default function BlogPage() {
-    const [pageData, statusPage] = usePageData({slug});
+function BlogPage({data}) {
     const [location, setPath] = useLocationSynchronizedToPath();
 
-    useEffect(() => {
-        const linkController = $.setCanonicalLink();
-
-        return () => linkController.remove();
-    }, []);
     useEffect(() => {
         timers.start();
 
         return () => timers.clear();
     }, [location]);
-
-    if (statusPage) {
-        return statusPage;
-    }
 
     const slugMatch = location.pathname.match(/\/blog\/(.+)/);
 
@@ -137,7 +126,7 @@ export default function BlogPage() {
             </main> :
             <main className="blog page">
                 <DefaultPage
-                    articles={pageData.articles}
+                    articles={data.articles}
                     setPath={setPath}
                 />
             </main>;
@@ -147,9 +136,15 @@ export default function BlogPage() {
         <main className="blog page">
             <ArticlePage
                 slug={`news/${slugMatch[1]}`}
-                articles={pageData.articles}
+                articles={data.articles}
                 setPath={setPath}
             />
         </main>
+    );
+}
+
+export default function LoadBlog() {
+    return (
+        <LoaderPage slug={slug} Child={BlogPage} doDocumentSetup noCamelCase />
     );
 }
