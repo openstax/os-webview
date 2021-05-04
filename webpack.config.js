@@ -26,7 +26,7 @@ const config = {
             { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' },
             {
                 test: /\.scss$/,
-                use: [ 'style-loader', 'css-loader',
+                use: [ 'style-loader', 'fast-css-loader',
                     {
                         loader:  'fast-sass-loader',
                         options: {
