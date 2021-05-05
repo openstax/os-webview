@@ -53,17 +53,6 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
     @include wider-than($phone-max) {
         background-color: ui-color(white);
 
-        &.card-background {
-            > .content-wrapper {
-                background-image: linear-gradient(to bottom, ui-color(white), ui-color(white) 10rem, ui-color(page-bg) 25rem);
-
-                @include wider-than($tablet-max) {
-                    background-image: linear-gradient(to bottom, ui-color(white), ui-color(white) 15rem, ui-color(page-bg) 30rem);
-                }
-
-            }
-        }
-
         .content-wrapper {
             display: grid;
             grid-template-columns: auto 1fr;
@@ -74,10 +63,6 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
                 padding-right: calc(50vw - #{$content-max / 2});
             }
 
-            &:not(.drawer-open) > .toc-slideout {
-                height: 0;
-            }
-
             > .toc-slideout {
                 background-color: ui-color(white);
                 border-right: thin solid ui-color(form-border);
@@ -86,6 +71,12 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
                 position: relative;
                 transition: width 0.3s;
                 width: 30vw;
+            }
+
+            &:not(.drawer-open) > .toc-slideout {
+                height: 0;
+                padding: 0;
+                width: 0;
             }
 
             .toc-drawer {
@@ -124,9 +115,15 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
             }
         }
 
-        .content-wrapper:not(.drawer-open) > .toc-slideout {
-            padding: 0;
-            width: 0;
+        &.card-background {
+            > .content-wrapper {
+                background-image: linear-gradient(to bottom, ui-color(white), ui-color(white) 10rem, ui-color(page-bg) 25rem);
+
+                @include wider-than($tablet-max) {
+                    background-image: linear-gradient(to bottom, ui-color(white), ui-color(white) 15rem, ui-color(page-bg) 30rem);
+                }
+
+            }
         }
     }
 

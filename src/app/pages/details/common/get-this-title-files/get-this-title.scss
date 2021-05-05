@@ -17,15 +17,6 @@
             color: text-color(helper);
         }
 
-        &.pdf .pdf-submenu,
-        &.print .print-submenu {
-            height: auto;
-            opacity: 1;
-            transform: scale3d(1, 1, 1);
-            width: auto;
-
-        }
-
         .pdf-submenu,
         .print-submenu {
             height: 0;
@@ -34,6 +25,15 @@
             transform: scale3d(0, 0, 0);
             transition: opacity 0.2s;
             width: 0;
+
+        }
+
+        &.pdf .pdf-submenu,
+        &.print .print-submenu {
+            height: auto;
+            opacity: 1;
+            transform: scale3d(1, 1, 1);
+            width: auto;
 
         }
 
@@ -82,6 +82,15 @@
 
         @include wider-than($tablet-max) {
             width: min-content;
+        }
+    }
+
+    .expander {
+        margin-left: 3rem;
+
+        a {
+            display: block;
+            font-weight: bold;
         }
     }
 
@@ -161,14 +170,5 @@
         grid-column-gap: $normal-margin;
         grid-template-columns: auto min-content;
         width: 0;
-    }
-
-    .expander {
-        margin-left: 3rem;
-
-        a {
-            display: block;
-            font-weight: bold;
-        }
     }
 }

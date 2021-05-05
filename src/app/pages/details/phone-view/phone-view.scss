@@ -37,24 +37,23 @@
                 padding-top: $normal-margin;
             }
         }
-    }
 
-    .give-link {
-        // Copied from accordion-button
-        align-items: center;
-        background-color: ui-color(white);
-        border-radius: 0.2rem;
-        display: flex;
-        height: 5rem;
-        justify-content: space-between;
-        padding: 0 2rem;
+        .give-link {
+            // Copied from accordion-button
+            align-items: center;
+            border-radius: 0.2rem;
+            display: flex;
+            height: 5rem;
+            justify-content: space-between;
+            padding: 0 2rem;
 
-        a {
-            text-decoration: none;
-        }
+            a {
+                text-decoration: none;
+            }
 
-        svg {
-            color: os-color(red);
+            svg {
+                color: os-color(red);
+            }
         }
     }
 

@@ -33,6 +33,12 @@
         margin-bottom: 3rem;
         margin-top: 0.5rem;
 
+        .tooltip {
+            > p:first-child {
+                margin-top: 0;
+            }
+        }
+
         &:hover {
             margin-bottom: 0;
             padding-bottom: 3rem;
@@ -41,12 +47,5 @@
                 padding: 3rem;
             }
         }
-
-        .tooltip {
-            > p:first-child {
-                margin-top: 0;
-            }
-        }
-
     }
 }

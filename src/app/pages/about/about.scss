@@ -57,6 +57,21 @@ $offset-bottom-section: 12rem;
         }
     }
 
+    .map {
+        background-color: ui-color(white);
+        padding-bottom: 8rem;
+
+        .content {
+            margin-top: -$offset-bottom-section;
+        }
+
+        img {
+            box-shadow: $card-shadow;
+            margin-top: 4rem;
+            max-width: 100%;
+        }
+    }
+
     .cards {
         display: grid;
         grid-gap: 2rem;
@@ -102,21 +117,6 @@ $offset-bottom-section: 12rem;
 
         h1 {
             @include set-font(h2);
-        }
-    }
-
-    .map {
-        background-color: ui-color(white);
-        padding-bottom: 8rem;
-
-        .content {
-            margin-top: -$offset-bottom-section;
-        }
-
-        img {
-            box-shadow: $card-shadow;
-            margin-top: 4rem;
-            max-width: 100%;
         }
     }
 }

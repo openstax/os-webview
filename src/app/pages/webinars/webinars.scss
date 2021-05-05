@@ -2,6 +2,10 @@
 @import 'mixins/placeholder-selectors';
 
 .webinars.page {
+    h1 {
+        @include set-font(h1);
+    }
+
     .hero {
         @extend %light-on-dark;
         @include set-font(body-large);
@@ -32,10 +36,6 @@
             @include wider-than($media-content-max) {
                 padding-left: calc(50vw - #{$content-max / 2 - $normal-margin});
             }
-        }
-
-        h1 {
-            @include set-font(h1);
         }
 
         .picture-side {

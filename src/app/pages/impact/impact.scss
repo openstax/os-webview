@@ -45,6 +45,10 @@
         }
     }
 
+    .text-content {
+        margin-left: 0;
+    }
+
     .boxed,
     .text-content {
         align-items: flex-start;
@@ -52,10 +56,6 @@
         > .text-content {
             padding: 0;
         }
-    }
-
-    .text-content {
-        margin-left: 0;
     }
 
     .strip-outer-margins {

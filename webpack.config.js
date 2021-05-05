@@ -1,9 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
-const ESLintPlugin = require('eslint-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const StylelintPlugin = require('stylelint-webpack-plugin');
 const production = process.env.NODE_ENV === 'production';
 
 console.log('*** Building production?', production);
@@ -38,6 +39,27 @@ const config = {
             }
         ]
     },
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+        maxInitialRequests: production ? 5 : 1,
+      },
+    },
+    plugins: [
+        new CopyWebpackPlugin({
+            patterns: [{from: 'src/images', to:'images'}]
+        }),
+        new ESLintPlugin({fix: true}),
+        new FaviconsWebpackPlugin('./src/images/favicon.svg'),
+        new HtmlWebpackPlugin({
+            template: './src/index.html'
+        }),
+        new StylelintPlugin()
+    ],
+    performance: {
+      maxEntrypointSize: 2.5 * 1000000, // 1MB
+      maxAssetSize: 2.1 * 1000000,
+    },
     resolve: {
         alias: {
             'react': 'preact/compat',
@@ -50,26 +72,6 @@ const config = {
             'node_modules',
         ],
         extensions: ['.js', '.jsx']
-    },
-    optimization: {
-      splitChunks: {
-        chunks: 'all',
-        maxInitialRequests: production ? 5 : 1,
-      },
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: './src/index.html'
-        }),
-        new FaviconsWebpackPlugin('./src/images/favicon.svg'),
-        new ESLintPlugin({fix: true}),
-        new CopyWebpackPlugin({
-            patterns: [{from: 'src/images', to:'images'}]
-        })
-    ],
-    performance: {
-      maxEntrypointSize: 2.5 * 1000000, // 1MB
-      maxAssetSize: 2.1 * 1000000,
     },
     watchOptions: {
       aggregateTimeout: 500,

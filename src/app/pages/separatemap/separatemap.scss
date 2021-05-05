@@ -85,6 +85,14 @@ $small-shadow: 0 0.2rem 0.5rem 0 rgba(0, 0, 0, 0.15);
         width: 4rem;
     }
 
+    .close-map-msg {
+        padding-left: $normal-margin;
+
+        @include width-up-to($phone-max) {
+            display: none;
+        }
+    }
+
     .back-impact-div {
         align-items: center;
         background-color: white;
@@ -117,14 +125,6 @@ $small-shadow: 0 0.2rem 0.5rem 0 rgba(0, 0, 0, 0.15);
             .close-map-msg {
                 display: none;
             }
-        }
-    }
-
-    .close-map-msg {
-        padding-left: $normal-margin;
-
-        @include width-up-to($phone-max) {
-            display: none;
         }
     }
 

@@ -49,31 +49,6 @@ $lower-footer: #3b3b3b;
             }
         }
 
-        .column {
-            display: grid;
-            grid-gap: 0.5rem;
-
-            a {
-                text-decoration: none;
-
-                &:hover {
-                    text-decoration: underline;
-                }
-            }
-
-            &.col1 {
-                grid-area: col1;
-            }
-
-            &.col2 {
-                grid-area: col2;
-            }
-
-            &.col3 {
-                grid-area: col3;
-            }
-        }
-
         h2 {
             grid-area: headline;
             margin: 0;
@@ -101,6 +76,31 @@ $lower-footer: #3b3b3b;
 
             a {
                 font-weight: bold;
+            }
+        }
+
+        .column {
+            display: grid;
+            grid-gap: 0.5rem;
+
+            a {
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            &.col1 {
+                grid-area: col1;
+            }
+
+            &.col2 {
+                grid-area: col2;
+            }
+
+            &.col3 {
+                grid-area: col3;
             }
         }
     }

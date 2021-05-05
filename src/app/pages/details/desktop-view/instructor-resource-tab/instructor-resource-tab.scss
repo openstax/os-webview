@@ -47,6 +47,11 @@ $icon-size: 6rem;
         display: grid;
         grid-column-gap: 3rem;
 
+        .resources {
+            grid-auto-rows: min-content;
+            margin-top: 0;
+        }
+
         &:not(.include-partners) {
             .resources {
                 grid-template-columns: 1fr 1fr 1fr;
@@ -69,11 +74,6 @@ $icon-size: 6rem;
             @include wider-than($tablet-max) {
                 grid-template-columns: 2fr 1fr;
             }
-        }
-
-        .resources {
-            grid-auto-rows: min-content;
-            margin-top: 0;
         }
     }
 

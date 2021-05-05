@@ -24,6 +24,29 @@ form {
         width: 15rem;
     }
 
+    [type="date"] {
+        appearance: none;
+    }
+
+    .btn {
+        margin-top: 3rem;
+    }
+
+    .wrapper {
+        background-color: ui-color(form-bg);
+
+        .strips {
+            margin-bottom: 0;
+        }
+    }
+
+    .invalid-message {
+        @include set-font(helper-label);
+
+        color: text-color(error);
+        display: block;
+    }
+
     .control-group {
         margin-bottom: 3rem;
 
@@ -57,14 +80,6 @@ form {
 
     fieldset {
         border: 0;
-    }
-
-
-    .invalid-message {
-        @include set-font(helper-label);
-
-        color: text-color(error);
-        display: block;
     }
 
     &.labeled-inputs {
@@ -125,6 +140,12 @@ form {
         display: block;
     }
 
+    textarea {
+        height: 21.42rem;
+        overflow-y: auto;
+        white-space: normal;
+    }
+
     [type="text"],
     [type="url"],
     [type="number"],
@@ -162,14 +183,13 @@ form {
 
     &.submitted {
         :not(output),
+        textarea,
+        .selected-button,
         [type="text"],
         [type="url"],
         [type="number"],
         [type="email"],
-        [type="date"],
-        textarea,
-        .selected-button {
-
+        [type="date"] {
             &:invalid {
                 background-color: ui-color(error-bg);
                 border: thin solid ui-color(error-border);
@@ -193,33 +213,11 @@ form {
         }
     }
 
-    textarea {
-        height: 21.42rem;
-        overflow-y: auto;
-        white-space: normal;
-    }
-
     .select-instructions {
         @include set-font(helper-label);
 
         color: text-color(helper);
         display: block;
         font-style: italic;
-    }
-
-    [type="date"] {
-        appearance: none;
-    }
-
-    .btn {
-        margin-top: 3rem;
-    }
-
-    .wrapper {
-        background-color: ui-color(form-bg);
-
-        .strips {
-            margin-bottom: 0;
-        }
     }
 }

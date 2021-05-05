@@ -17,10 +17,6 @@ body {
     width: auto;
 }
 
-plug-in {
-    width: 100%;
-}
-
 iframe {
     border: 0;
 }
@@ -128,10 +124,6 @@ sup {
         -webkit-appearance: none;
     }
 
-    &::-webkit-scrollbar:vertical {
-        width: 0.8rem;
-    }
-
     &::-webkit-scrollbar-thumb {
         background-color: rgba(ui-color(footer-bg), 0.3);
         border: thin solid ui-color(white);
@@ -141,6 +133,10 @@ sup {
     &::-webkit-scrollbar-track {
         background-color: ui-color(white);
         border-radius: 0.8rem;
+    }
+
+    &::-webkit-scrollbar:vertical {
+        width: 0.8rem;
     }
 }
 
