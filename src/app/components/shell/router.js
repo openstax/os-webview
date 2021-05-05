@@ -132,6 +132,7 @@ function ImportedPage({name}) {
     React.useEffect(() => {
         import(`~/pages/${name}/${name}`).then((content) => {
             setContent(<content.default />);
+            window.scrollTo(0, 0);
         });
         if (!(history.state && history.state.redirect)) {
             analytics.sendPageview();

@@ -64,7 +64,7 @@ function Footer({
                             <FontAwesomeIcon icon={faInstagram} title="Instagram" />
                         </a>
                         <a className="rice-logo" href="http://www.rice.edu">
-                            <img src="/images/rice-white-text.png" alt="Rice University logo" />
+                            <img src="/images/rice-white-text.png" alt="Rice University logo" width="99" height="40" />
                         </a>
                     </div>
                 </div>

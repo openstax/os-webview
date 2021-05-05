@@ -9,7 +9,7 @@ function Card({data}) {
 
     return (
         <div className="card">
-            {icon && <img src={icon.file} alt="" />}
+            {icon && <img src={icon.file} alt="" height="30" width="30" />}
             <RawHTML html={description} />
             {linkText && <LinkWithChevron href={linkHref}>{linkText}</LinkWithChevron>}
         </div>

@@ -7,12 +7,16 @@
         padding: 0 0 4rem;
     }
 
+    h2 {
+        @include title-font(2.4rem);
+    }
+
     .half-boxed {
         display: grid;
 
         @include width-up-to($tablet-max) {
             grid-row-gap: 3rem;
-            grid-template-rows: 60vw auto;
+            grid-template-rows: calc(35vw + 19.3rem) auto;
         }
 
         @include wider-than($tablet-max) {

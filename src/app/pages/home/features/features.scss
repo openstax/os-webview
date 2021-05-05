@@ -4,6 +4,10 @@
     background-color: ui-color(white);
     position: relative;
 
+    h2 {
+        letter-spacing: normal;
+    }
+
     .right-bg {
         transform: rotate(180deg);
 

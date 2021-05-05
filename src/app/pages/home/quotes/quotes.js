@@ -18,6 +18,12 @@ export default function ComponentTemplate({data}) {
         <section className="quotes">
             <div className="boxed">
                 <h2>{data.headline}</h2>
+            </div>
+            <div className="images">
+                <img className="left-bg" src={data.studentImage} alt />
+                <img className="right-bg" src={data.instructorImage} alt />
+            </div>
+            <div className="boxed">
                 <div className="side-by-side">
                     <Quote
                         className="student-quote"
@@ -30,10 +36,6 @@ export default function ComponentTemplate({data}) {
                         attribution={data.instructorAttribution}
                     />
                 </div>
-            </div>
-            <div className="images">
-                <img className="left-bg" src={data.studentImage} alt />
-                <img className="right-bg" src={data.instructorImage} alt />
             </div>
         </section>
     );

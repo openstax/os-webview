@@ -72,7 +72,7 @@ function Homepage({data}) {
     };
     data.whatsOpenstax = {
         imageUrl: 'https://assets.openstax.org/oscms-prodcms/media/original_images/summer_interns_portraits-33.original.jpg',
-        headline: 'What’s OpenStax',
+        headline: 'What’s OpenStax?',
         description: `OpenStax is part of Rice University, which is a 501(c)(3)
         nonprofit charitable corporation. Our mission is to improve educational
         access and learning for everyone. We do this by publishing openly
