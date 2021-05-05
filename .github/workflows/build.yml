@@ -16,7 +16,7 @@ jobs:
         run: ./script/setup
       -
         name: "Build osweb"
-        run: ./script/build
+        run: ./script/build production
       -
         name: "Run tests"
         run: ./script/test
