@@ -6,7 +6,7 @@ test('creates and has a lot of content', (done) => {
     render(<HomeLoader />);
     setTimeout(() => {
         expect(screen.queryAllByText('Learn more')).not.toBeNull();
-        expect(screen.queryAllByRole('link')).toHaveLength(1);
+        expect(screen.queryAllByRole('link')).toHaveLength(3);
         done();
     }, 0);
 });
