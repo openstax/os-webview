@@ -35,30 +35,43 @@
         display: flex;
         justify-content: space-between;
         left: 0;
+        max-height: calc(20vw + 14rem);
         overflow: hidden;
         position: absolute;
         width: 100%;
 
         @include width-up-to($tablet-max) {
             position: relative;
-        }
 
-        @include width-up-to($phone-max) {
-            height: 56vw;
+            @include scale-feature(height, 33.6rem, 45rem);
+
+            .right-bg {
+                @include scale-feature(right, -6rem, 0);
+            }
 
             .left-bg {
+                @include scale-feature(left, -2rem, -6rem);
                 z-index: 1;
             }
         }
 
-        @include width-between($phone-max, $tablet-max) {
-            @include scale-feature(height, 33.6rem, 45rem);
+        @include width-up-to($phone-max) {
+            height: 56vw;
         }
 
         @include wider-than($tablet-max) {
             .left-bg,
             .right-bg {
                 position: relative;
+                height: calc(15vw + 18rem);
+            }
+
+            .left-bg {
+                left: -5%;
+            }
+
+            .right-bg {
+                right: -5%;
             }
         }
     }
@@ -79,7 +92,7 @@
 
     .with-big-quote,
     .attribution {
-        @include scale-feature(margin-left, 0, 12rem);
+        @include scale-feature(margin-left, 0, 9rem);
 
         background-color: rgba(os-color(blue), 0.66);
 

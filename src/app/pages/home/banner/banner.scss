@@ -19,13 +19,13 @@
             background-size: contain;
             bottom: -10vw;
             height: 70vw;
-            left: -15vw;
+            left: -6vw;
             margin-top: -10vw;
             width: 115vw;
             position: relative;
         }
         @include wider-than($phone-max) {
-            background-position: left bottom;
+            background-position: left -2rem;
             height: 116%;
             top: 0;
             width: 50%;
