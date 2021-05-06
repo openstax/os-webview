@@ -22,7 +22,7 @@ export default function ComponentTemplate({data}) {
     return (
         <section className="whats-openstax">
             <div className="half-boxed">
-                <ClippedImage src={data.imageUrl} alt="" />
+                <ClippedImage src={data.image} alt="" />
                 <div className="text-block">
                     <h2>{data.headline}</h2>
                     <div>{data.description}</div>

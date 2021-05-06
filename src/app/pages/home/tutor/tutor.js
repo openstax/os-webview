@@ -1,11 +1,11 @@
 import React from 'react';
 import './tutor.scss';
 
-function Buttons() {
+function Buttons({data}) {
     return (
         <div className="buttons">
-            <a className="btn primary">About OpenStax Tutor</a>
-            <a className="btn">Schedule a demo</a>
+            <a className="btn primary" href={data.buttonLink}>{data.buttonText}</a>
+            <a className="btn" href={data.demoLink}>{data.demoText}</a>
         </div>
     );
 }
@@ -24,15 +24,16 @@ export default function ComponentTemplate({data}) {
         <section className="tutor">
             <div className="boxed">
                 <div className="text-block">
-                    <img src={data.logoUrl} alt="OpenStax Tutor" />
+                    <img src={data.logo} alt="OpenStax Tutor" />
                     <div>{data.description}</div>
-                    <Buttons />
+                    <Buttons data={data} />
                 </div>
                 <div className="icon-block">
-                    <IconGroup icon={data.homeworkIcon} text={data.homeworkText} />
-                    <IconGroup icon={data.analyticsIcon} text={data.analyticsText} />
-                    <IconGroup icon={data.readingIcon} text={data.readingText} />
-                    <IconGroup icon={data.lmsIcon} text={data.lmsText} />
+                    {
+                        data.features[0].map((f, key) =>
+                            <IconGroup key={key} icon={f.image.file} text={f.title} />
+                        )
+                    }
                 </div>
             </div>
         </section>

@@ -14,6 +14,8 @@ function Quote({className, quote, attribution}) {
 }
 
 export default function ComponentTemplate({data}) {
+    const quotes = data.quotes[0];
+
     return (
         <section className="quotes">
             <div className="boxed">
@@ -27,13 +29,13 @@ export default function ComponentTemplate({data}) {
                 <div className="side-by-side">
                     <Quote
                         className="student-quote"
-                        quote={data.studentQuote}
-                        attribution={data.studentAttribution}
+                        quote={quotes[0].testimonial}
+                        attribution={quotes[0].author}
                     />
                     <Quote
                         className="instructor-quote"
-                        quote={data.instructorQuote}
-                        attribution={data.instructorAttribution}
+                        quote={quotes[1].testimonial}
+                        attribution={quotes[1].author}
                     />
                 </div>
             </div>

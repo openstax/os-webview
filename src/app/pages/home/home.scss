@@ -46,9 +46,11 @@
     }
 
     .buttons {
-        align-items: flex-start;
-        display: flex;
+        align-self: flex-start;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         grid-gap: 2.5rem;
+        justify-content: start;
 
         @include width-up-to($phone-max) {
             align-items: center;

@@ -94,7 +94,7 @@
             &:nth-child(4) {
                 border-color: os-color(red);
             }
-            &:nth-child(5) {
+            &:last-child {
                 background-color: ui-color(white);
                 border: 0;
                 border-radius: 0.2rem;
