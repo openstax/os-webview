@@ -1,5 +1,5 @@
 module.exports = {
-    'parser': 'babel-eslint',
+    'parser': '@babel/eslint-parser',
     'parserOptions': {
         'ecmaVersion': 6,
         'sourceType': 'module',
@@ -127,7 +127,6 @@ module.exports = {
         'max-params': ['error', 4],
         'new-cap': 'error',
         'new-parens': 'error',
-        'newline-after-var': ['error', 'always'],
         'no-array-constructor': 'error',
         'no-implicit-globals': 'error',
         'no-lonely-if': 'error',
@@ -145,6 +144,15 @@ module.exports = {
             'switches': 'never',
             'classes': 'always'
         }],
+        'padding-line-between-statements': [
+            'error',
+            {'blankLine': 'always', 'prev': 'let', 'next': '*'},
+            {'blankLine': 'always', 'prev': 'const', 'next': '*'},
+            {'blankLine': 'any', 'prev': 'let', 'next': 'let'},
+            {'blankLine': 'any', 'prev': 'let', 'next': 'const'},
+            {'blankLine': 'any', 'prev': 'const', 'next': 'let'},
+            {'blankLine': 'any', 'prev': 'const', 'next': 'const'},
+        ],
         'quotes': ['error', 'single'],
         'semi-spacing': ['error', {'before': false, 'after': true}],
         'semi': ['error', 'always'],

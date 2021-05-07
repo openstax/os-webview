@@ -1,27 +1,65 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .separatemap .search-inputs {
-    .phone-view.minimized,
-    .desktop-view.minimized {
-        align-items: center;
-        justify-content: center;
-        text-align: center;
+    button {
+        @extend %button;
 
-        .search-and-clear,
-        .filter-toggle {
+        align-items: center;
+        background-color: transparent;
+        height: 4rem;
+        padding: 0 $normal-margin;
+
+        * ~ * {
+            margin-left: 0.5rem;
+        }
+    }
+
+    .search-input {
+        @extend %non-button-input;
+
+        @include wider-than($tablet-max) {
+            min-width: 40rem;
+        }
+
+        &:not(:focus) {
+            border: 0;
+        }
+    }
+
+    .filter-toggle {
+        border: thin solid ui-color(form-border);
+        color: text-color(normal);
+    }
+
+    .search-icon {
+        align-items: center;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        font-size: 1.4rem;
+        justify-content: center;
+
+        &:focus {
+            height: 3.8rem;
+            outline: none;
+            width: 3.8rem;
+        }
+    }
+
+    .search-clear {
+        cursor: pointer;
+
+        &[hidden] {
             display: none;
         }
     }
 
-    .phone-view:not(.minimized),
-    .desktop-view:not(.minimized) {
-        .search-icon {
-            background-color: ui-color(page-bg);
-            height: 3.2rem;
-            width: 3.2rem;
-        }
+    .search-and-clear {
+        align-items: center;
+        display: grid;
+        grid-gap: 0.5rem;
+        grid-template-columns: 1fr auto;
     }
-
 
     .phone-view {
         @include wider-than($phone-max) {
@@ -65,63 +103,24 @@
         }
     }
 
-    .search-and-clear {
+    .phone-view.minimized,
+    .desktop-view.minimized {
         align-items: center;
-        display: grid;
-        grid-gap: 0.5rem;
-        grid-template-columns: 1fr auto;
-    }
-
-    button {
-        @extend %button;
-
-        align-items: center;
-        background-color: transparent;
-        height: 4rem;
-        padding: 0 $normal-margin;
-
-        * ~ * {
-            margin-left: 0.5rem;
-        }
-    }
-
-    .filter-toggle {
-        border: thin solid ui-color(form-border);
-        color: text-color(normal);
-    }
-
-    .search-icon {
-        align-items: center;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        font-size: 1.4rem;
         justify-content: center;
+        text-align: center;
 
-        &:focus {
-            height: 3.8rem;
-            outline: none;
-            width: 3.8rem;
-        }
-    }
-
-    .search-input {
-        @extend %non-button-input;
-
-        @include wider-than($tablet-max) {
-            min-width: 40rem;
-        }
-
-        &:not(:focus) {
-            border: 0;
-        }
-    }
-
-    .search-clear {
-        cursor: pointer;
-
-        &[hidden] {
+        .search-and-clear,
+        .filter-toggle {
             display: none;
+        }
+    }
+
+    .phone-view:not(.minimized),
+    .desktop-view:not(.minimized) {
+        .search-icon {
+            background-color: ui-color(page-bg);
+            height: 3.2rem;
+            width: 3.2rem;
         }
     }
 }

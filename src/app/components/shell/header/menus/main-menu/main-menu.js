@@ -30,7 +30,7 @@ function SubjectsMenu() {
 
 export default function MainMenu() {
     return (
-        <ul className="nav-menu main-menu no-bullets">
+        <ul className="nav-menu main-menu no-bullets" role="menubar">
             <SubjectsMenu />
             <Dropdown className="technology-dropdown" label="Technology">
                 <MenuItem url="/openstax-tutor" label="OpenStax Tutor" />
@@ -44,7 +44,7 @@ export default function MainMenu() {
                 <MenuItem url="/creator-fest" label="Creator Fest" />
             </Dropdown>
             <LoginMenu />
-            <li className="give-button-item"><GiveButton /></li>
+            <li className="give-button-item" role="presentation"><GiveButton /></li>
         </ul>
     );
 }

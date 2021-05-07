@@ -1,8 +1,4 @@
 import React from 'react';
-import Header from './header/header';
-import LowerStickyNote from './lower-sticky-note/lower-sticky-note';
-import Microsurvey from './microsurvey-popup/microsurvey-popup';
-import Footer from './footer/footer';
 import {BrowserRouter} from 'react-router-dom';
 import Router from './router';
 import ReactModal from 'react-modal';
@@ -32,16 +28,34 @@ function setUpBus(mainEl) {
     });
 }
 
+function Suspense() {
+    return (
+        <div>Loading...</div>
+    );
+}
+
+// Because lazy/Suspense is not yet recommended...
+function ImportedComponent({name}) {
+    const [Content, setContent] = React.useState(Suspense);
+
+    React.useEffect(
+        () => import(`./${name}/${name}`)
+            .then((content) => setContent(<content.default />)),
+        [name]
+    );
+
+    return Content;
+}
+
+const Microsurvey = () => <ImportedComponent name="microsurvey-popup" />;
+const Header = () => <ImportedComponent name="header" />;
+const LowerStickyNote = () => <ImportedComponent name="lower-sticky-note" />;
+const Footer = () => <ImportedComponent name="footer" />;
+
 function App() {
     const ref = React.useRef();
 
     React.useEffect(() => {
-        const mainObserver = new window.MutationObserver(() => {
-            document.body.classList.remove('initial-load');
-            mainObserver.disconnect();
-        });
-
-        mainObserver.observe(ref.current, {childList: true, subtree: true});
         setUpBus(ref.current);
         ReactModal.setAppElement(ref.current);
     }, []);

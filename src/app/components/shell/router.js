@@ -7,6 +7,7 @@ import {
 import linkHelper from '~/helpers/link';
 import analytics from '~/helpers/analytics';
 import routerBus from '~/helpers/router-bus';
+import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 import $ from '~/helpers/$';
 
 const PAGES = [
@@ -126,11 +127,12 @@ function linkHandler(e) {
 }
 
 function ImportedPage({name}) {
-    const [Content, setContent] = React.useState(null);
+    const [Content, setContent] = React.useState(LoadingPlaceholder);
 
     React.useEffect(() => {
         import(`~/pages/${name}/${name}`).then((content) => {
             setContent(<content.default />);
+            window.scrollTo(0, 0);
         });
         if (!(history.state && history.state.redirect)) {
             analytics.sendPageview();

@@ -10,3 +10,4 @@ yarn-error.log
 /vendor/
 .bundle/config
 /Gemfile.lock
+stats.json

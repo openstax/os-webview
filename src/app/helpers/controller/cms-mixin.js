@@ -2,6 +2,7 @@ import $ from '~/helpers/$';
 import bookPromise from '~/models/book-titles';
 import {urlFromSlug} from '~/models/cmsFetch';
 import React, {useState, useEffect} from 'react';
+import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 
 export function transformData(data) {
     Reflect.ownKeys(data).forEach((prop) => {
@@ -120,9 +121,7 @@ export function usePageData(fpdParams) {
         ;
     }
     if (!pageData) {
-        statusPage =
-            <div className="content loading" />
-        ;
+        statusPage = <LoadingPlaceholder />;
     }
 
     return [pageData, statusPage];

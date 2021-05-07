@@ -3,6 +3,23 @@
 .hero-component {
     padding: 0;
 
+    .text-content {
+        align-content: center;
+        display: grid;
+        margin-right: 0;
+        text-align: left;
+
+        > * {
+            margin: 0;
+        }
+    }
+
+    .picture-content {
+        background-color: os-color(light-blue);
+        height: 100%;
+        overflow: hidden;
+    }
+
     &.wrapped {
         .text-content {
             grid-gap: $normal-margin;
@@ -38,6 +55,21 @@
 
         $mcm-plus-padding: $media-content-max + 3em * $scale-factor;
 
+        .text-content {
+            @include wider-than($mcm-plus-padding) {
+                margin-left: 0;
+                max-width: none;
+                padding-left: calc(50vw - #{$content-max / 2});
+            }
+
+            @include width-up-to($mcm-plus-padding) {
+                padding-left: $normal-margin;
+            }
+
+            grid-gap: 3rem;
+            padding: 4rem;
+        }
+
         &.reverse .text-content {
             padding-left: 6rem;
 
@@ -55,21 +87,6 @@
             }
         }
 
-        .text-content {
-            @include wider-than($mcm-plus-padding) {
-                margin-left: 0;
-                max-width: none;
-                padding-left: calc(50vw - #{$content-max / 2});
-            }
-
-            @include width-up-to($mcm-plus-padding) {
-                padding-left: $normal-margin;
-            }
-
-            grid-gap: 3rem;
-            padding: 4rem;
-        }
-
         .picture-content {
             > img {
                 display: none;
@@ -81,22 +98,5 @@
                 width: 100%;
             }
         }
-    }
-
-    .text-content {
-        align-content: center;
-        display: grid;
-        margin-right: 0;
-        text-align: left;
-
-        > * {
-            margin: 0;
-        }
-    }
-
-    .picture-content {
-        background-color: os-color(light-blue);
-        height: 100%;
-        overflow: hidden;
     }
 }

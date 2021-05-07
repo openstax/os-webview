@@ -26,16 +26,6 @@ dialog {
         z-index: 3;
     }
 
-    &.reverse-colors {
-        .title-bar {
-            background-color: ui-color(white);
-        }
-
-        .main-region {
-            background-color: ui-color(form-bg);
-        }
-    }
-
     .title-bar {
         @include title-font(1.8rem);
 
@@ -95,5 +85,15 @@ dialog {
         height: auto;
         max-height: calc(100vh - 10rem);
         overflow-y: auto;
+    }
+
+    &.reverse-colors {
+        .title-bar {
+            background-color: ui-color(white);
+        }
+
+        .main-region {
+            background-color: ui-color(form-bg);
+        }
     }
 }

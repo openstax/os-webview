@@ -21,6 +21,10 @@
             display: none;
         }
 
+        a {
+            white-space: nowrap;
+        }
+
         .filters {
             @include body-font(1.4rem);
 
@@ -55,10 +59,6 @@
             & + a {
                 margin-left: $normal-margin;
             }
-        }
-
-        a {
-            white-space: nowrap;
         }
     }
 }

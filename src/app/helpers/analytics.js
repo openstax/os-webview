@@ -24,18 +24,12 @@ const waitForAnalytics = new Promise((resolve, reject) => {
 class Analytics {
 
     constructor() {
-        this.start();
-    }
-
-    start() {
         this[SETUP_GA]();
     }
 
     setUser(userId) {
         waitForAnalytics.then(
-            () => {
-                window.ga('set', 'userId', userId);
-            }
+            () => window.ga('set', 'userId', userId)
         );
     }
 

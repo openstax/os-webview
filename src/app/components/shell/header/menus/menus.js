@@ -24,7 +24,7 @@ export default function Menus({open}) {
                 <nav className="meta-nav">
                     <UpperMenu />
                 </nav>
-                <nav className="nav" role="menubar" aria-label="Main menu">
+                <nav className="nav" aria-label="Main menu">
                     <div className="container">
                         <Logo />
                         <MainMenu />

@@ -6,7 +6,10 @@ export default function Logo() {
         <span className="logo-wrapper">
             <span className="logo">
                 <a href="/" aria-label="Home Page">
-                    <img className="logo-color" src="/images/logo.svg" alt="OpenStax logo" />
+                    <img
+                        className="logo-color" src="/images/logo.svg" alt="OpenStax logo"
+                        width="354" height="81"
+                    />
                     <img className="logo-white" src="/images/logo-white.svg" alt="OpenStax logo" />
                 </a>
             </span>

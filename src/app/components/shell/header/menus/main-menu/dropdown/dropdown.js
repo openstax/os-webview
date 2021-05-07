@@ -17,7 +17,7 @@ export function MenuItem({label, url, local}) {
 function OptionalWrapper({isWrapper=true, children}) {
     return (
         isWrapper ?
-            <div className="nav-menu-item dropdown">
+            <div className="nav-menu-item dropdown" role="menu">
                 {children}
             </div> : children
     );
@@ -28,6 +28,7 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
     const dropdownRef = useRef();
     const dropdownCtx = React.useContext(DropdownContext);
     const isOpen = dropdownCtx.activeDropdown === topRef;
+    const labelId = `menulabel-${label}`;
 
     function closeMenu() {
         dropdownCtx.setActiveDropdown({});
@@ -98,6 +99,8 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
             onMouseEnter={openDesktopMenu}
             onMouseLeave={closeDesktopMenu}
             onKeyDown={navigateByKey}
+            role="menuitem" aria-haspopup="true"
+            labelledby={labelId}
         >
             <OptionalWrapper isWrapper={!excludeWrapper}>
                 <a
@@ -107,14 +110,14 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
                     onClick={openMenu}
                     className={cn({'is-open': isOpen})}
                 >
-                    {label}
+                    <span id={labelId}>{label}</span>
                     <svg className="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 30">
                         <title>arrow</title>
                         <path d="M12,1L26,16,12,31,8,27,18,16,8,5Z" transform="translate(-8 -1)" />
                     </svg>
                 </a>
                 <div className="dropdown-container">
-                    <nav
+                    <div
                         className="dropdown-menu"
                         role="menu"
                         aria-expanded={isOpen}
@@ -122,7 +125,7 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
                         ref={dropdownRef}
                     >
                         {children}
-                    </nav>
+                    </div>
                 </div>
             </OptionalWrapper>
         </Tag>

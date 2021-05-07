@@ -17,10 +17,6 @@
     &.active {
         position: fixed;
         z-index: 2;
-
-        sticky-note {
-            display: none;
-        }
     }
 
     a {
@@ -41,9 +37,6 @@
         height: 100%;
         padding-bottom: 6rem;
         padding-left: 4rem;
-
-        .menus {
-        }
     }
 
     > .skiptocontent {

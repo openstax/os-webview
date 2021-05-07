@@ -4,25 +4,6 @@
 .button-with-popover {
     position: relative;
 
-    button {
-        @extend %button;
-
-        background-color: transparent;
-        font-weight: bold;
-
-        > :first-child {
-            margin-right: 2rem;
-        }
-
-        > :last-child {
-            font-size: 2rem;
-        }
-
-        &[aria-pressed="false"] ~ .popover {
-            display: none;
-        }
-    }
-
     .popover {
         background-color: ui-color(white);
         color: text-color(normal);
@@ -65,6 +46,25 @@
             border-bottom-right-radius: 0.2rem;
             margin-top: -0.1rem;
             min-width: 100%;
+        }
+    }
+
+    button {
+        @extend %button;
+
+        background-color: transparent;
+        font-weight: bold;
+
+        > :first-child {
+            margin-right: 2rem;
+        }
+
+        > :last-child {
+            font-size: 2rem;
+        }
+
+        &[aria-pressed="false"] ~ .popover {
+            display: none;
         }
     }
 }

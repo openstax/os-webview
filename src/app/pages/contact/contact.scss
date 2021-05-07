@@ -6,22 +6,6 @@
         padding: 0;
     }
 
-    .hero {
-        background-color: os-color(green);
-        color: text-color(white);
-        padding: 6rem 1.5rem;
-
-        h1 {
-            color: inherit;
-            width: 100%;
-        }
-
-        .boxed {
-            flex-flow: column nowrap;
-            padding: 0 1.5rem;
-        }
-    }
-
     .boxed {
         padding: 4rem 1.5rem  0;
 
@@ -55,6 +39,22 @@
                 font-weight: bold;
                 text-transform: lowercase;
             }
+        }
+    }
+
+    .hero {
+        background-color: os-color(green);
+        color: text-color(white);
+        padding: 6rem 1.5rem;
+
+        h1 {
+            color: inherit;
+            width: 100%;
+        }
+
+        .boxed {
+            flex-flow: column nowrap;
+            padding: 0 1.5rem;
         }
     }
 

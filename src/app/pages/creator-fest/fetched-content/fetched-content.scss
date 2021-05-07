@@ -173,7 +173,6 @@
     }
 
     .travel {
-
         > :first-child {
             display: grid;
             grid-gap: 3rem;
@@ -191,6 +190,25 @@
                 'venue map'
                 'hotels map'
                 'airports airports' / 45rem 1fr;
+            }
+
+            ul {
+                display: grid;
+                grid-gap: 3rem;
+                list-style: none;
+                margin: 0;
+                padding-left: 0;
+            }
+
+            li:not(:first-child) {
+                @extend %bordered-box;
+                padding: 1.8rem 3rem;
+            }
+
+            li:first-child {
+                b {
+                    @include set-font(h3);
+                }
             }
 
             > .block-heading {
@@ -230,25 +248,6 @@
 
             > :nth-child(5) {
                 grid-area: map;
-            }
-
-            ul {
-                display: grid;
-                grid-gap: 3rem;
-                list-style: none;
-                margin: 0;
-                padding-left: 0;
-            }
-
-            li:not(:first-child) {
-                @extend %bordered-box;
-                padding: 1.8rem 3rem;
-            }
-
-            li:first-child {
-                b {
-                    @include set-font(h3);
-                }
             }
         }
 

@@ -1,258 +1,229 @@
 export default {
-    "id": 29,
-    "meta": {
-        "slug": "openstax-homepage",
-        "seo_title": "",
-        "search_description": "",
-        "type": "pages.HomePage",
-        "detail_url": "https://cms-dev.openstax.org/api/v2/pages/29/",
-        "html_url": "http://openstax.org/",
-        "show_in_menus": false,
-        "first_published_at": "2016-03-08T19:13:03.627281-06:00",
-        "parent": null
+    id: 29,
+    meta: {
+        slug: "openstax-homepage",
+        seo_title: "OpenStax Home",
+        search_description: "Free books. No catch.",
+        type: "pages.HomePage",
+        detail_url: "https://cms-dev.openstax.org/apps/cms/api/v2/pages/29/",
+        html_url: "https://cms-dev.openstax.org/",
+        show_in_menus: false,
+        first_published_at: "2016-03-08T19:13:03.627281-06:00",
+        parent: null
     },
-    "title": "Openstax Homepage",
-    "mobile_banner_images": [
+    title: "Openstax Homepage",
+    banner_headline: "Free and flexible textbooks and resources.",
+    banner_description: "<b>Create a free account</b> for full access to our free textbooks and resources.",
+    banner_get_started_text: "Get started now",
+    banner_get_started_link: "https://accounts.openstax.org/accounts/i/login/?r=https://openstax.org/",
+    banner_login_text: "Login",
+    banner_login_link: "https://accounts.openstax.org/accounts/i/login/?r=https://openstax.org/",
+    banner_logged_in_text: "Explore Now",
+    banner_logged_in_link: "https://openstax.org/subjects",
+    banner_left_image: {
+        id: 738,
+        meta: {
+            type: "wagtailimages.Image",
+            detail_url: "https://cms-dev.openstax.org/apps/cms/api/v2/images/738/",
+            download_url: "https://assets.openstax.org/oscms-dev/media/original_images/bg-pluses.webp"
+        },
+        title: "bg-pluses.webp"
+    },
+    banner_right_image: {
+        id: 741,
+        meta: {
+            type: "wagtailimages.Image",
+            detail_url: "https://cms-dev.openstax.org/apps/cms/api/v2/images/741/",
+            download_url: "https://assets.openstax.org/oscms-dev/media/original_images/books-devices.webp"
+        },
+        title: "books-devices.webp"
+    },
+    features_headline: "More than just books.",
+    features_tab1_heading: "For Instructors",
+    features_tab2_heading: "For Students",
+    features_tab1_features: [
         {
-            "type": "image",
-            "id": "9942ee6b-cc7b-4e69-8fac-114c016f3d06",
-            "value": {
-                "identifier": "free-books-no-catch-mobile",
-                "link": "https://openstax.org/subjects",
-                "image": 515,
-                "alignment": "left",
-                "alt_text": ""
-            }
+            type: "feature_text",
+            value: "LMS integration",
+            id: "7f0224b4-5c27-4e00-88a2-c3f6840c644a"
         },
         {
-            "type": "image",
-            "id": "3bad42c0-7a9a-4e7a-865f-a5582d8e6842",
-            "value": {
-                "identifier": "education-over-profit-mobile",
-                "link": "https://openstax.org/about",
-                "image": 516,
-                "alignment": "left",
-                "alt_text": ""
-            }
+            type: "feature_text",
+            value: "Test banks",
+            id: "85726a5b-fcee-4c3f-8da4-601ddc299419"
         },
         {
-            "type": "image",
-            "id": "62849c81-9716-4d7c-9303-0c4ce20bc80f",
-            "value": {
-                "identifier": "academic-freedom-mobile",
-                "link": "https://openstax.org/subjects",
-                "image": 517,
-                "alignment": "left",
-                "alt_text": ""
-            }
+            type: "feature_text",
+            value: "Answer guides",
+            id: "4f3b0789-1258-4832-8d8f-a91c7f825de1"
+        },
+        {
+            type: "feature_text",
+            value: "Powerpoint slides",
+            id: "e7d765d7-8a47-4262-971f-ce647efe0ae2"
         }
     ],
-    "banner_images": [
+    features_tab1_explore_text: "Explore now",
+    features_tab1_explore_url: "https://openstax.org/subjects",
+    features_tab1_explore_logged_in_text: "Explore Now",
+    features_tab1_explore_logged_in_url: "https://openstax.org/subjects",
+    features_tab2_features: [
         {
-            "type": "image",
-            "id": "d41f1141-7e19-4d2d-8545-735906bb64a7",
-            "value": {
-                "identifier": "free-books-no-catch",
-                "link": "https://openstax.org/subjects",
-                "image": 502,
-                "alignment": "left",
-                "alt_text": ""
-            }
+            type: "feature_text",
+            value: "Highlighting",
+            id: "9b493aee-895e-4dd9-97cd-e3ff6eafd6c5"
         },
         {
-            "type": "image",
-            "id": "4a51bc1d-c6a2-4c8a-82c9-a67b6a7b6f3b",
-            "value": {
-                "identifier": "education-over-profit",
-                "link": "https://openstax.org/about",
-                "image": 501,
-                "alignment": "left",
-                "alt_text": ""
-            }
+            type: "feature_text",
+            value: "Note-taking",
+            id: "625910b1-a223-4555-8d1b-d1f9eabce52a"
         },
         {
-            "type": "image",
-            "id": "c297c744-a8cd-46a2-94ec-f555e112f99e",
-            "value": {
-                "identifier": "academic-freedom",
-                "link": "https://openstax.org/subjects",
-                "image": 500,
-                "alignment": "left",
-                "alt_text": ""
-            }
-        }
-    ],
-    "row_1": [
-        {
-            "type": "column",
-            "id": "08e4e2fa-9a6f-4462-bb1b-7ab340d93433",
-            "value": {
-                "content": "<p>Get OpenStax updates in your inbox! We’ll let you know when we make updates or release new textbooks.<br/></p>",
-                "link": "http://www2.openstax.org/l/218812/2016-10-04/lvk",
-                "document": null,
-                "image": {
-                    "identifier": "",
-                    "link": "",
-                    "image": 38,
-                    "alignment": "left",
-                    "alt_text": ""
-                },
-                "heading": "",
-                "cta": "Subscribe"
-            }
+            type: "feature_text",
+            value: "Multiple different book formats",
+            id: "dc1f9ade-e0c3-4829-846f-5ba36a564b15"
         },
         {
-            "type": "column",
-            "id": "b92b5f05-a43a-4176-bb48-48eef4782c67",
-            "value": {
-                "content": "<p>&quot;OpenStax is amazing. Access to these high-quality textbooks is game-changing for our students.&quot;</p><p><i>- Prof. Wendy Riggs, College of the Redwoods</i></p>",
-                "link": "",
-                "document": null,
-                "image": {
-                    "identifier": "",
-                    "link": "",
-                    "image": null,
-                    "alignment": "left",
-                    "alt_text": ""
-                },
-                "heading": "",
-                "cta": ""
-            }
+            type: "feature_text",
+            value: "Low cost or free",
+            id: "b48a9092-4e19-4f17-b134-02d9c37d9f37"
+        }
+    ],
+    features_tab2_explore_text: "Explore Now",
+    features_tab2_explore_url: "https://openstax.org/subjects",
+    features_bg_image: {
+        id: 738,
+        meta: {
+            type: "wagtailimages.Image",
+            detail_url: "https://cms-dev.openstax.org/apps/cms/api/v2/images/738/",
+            download_url: "https://assets.openstax.org/oscms-dev/media/original_images/bg-pluses.webp"
         },
+        title: "bg-pluses.webp"
+    },
+    quotes_headline: "Improving education for students and instructors.",
+    quotes: [
         {
-            "type": "column",
-            "id": "ae992742-531c-4aa4-9353-76bafacf3656",
-            "value": {
-                "content": "<p>If you&#x27;re with a campus bookstore or school and looking for print copies of OpenStax textbooks, we offer several print options to meet your needs.</p>",
-                "link": "https://openstax.org/bookstore-suppliers",
-                "document": null,
-                "image": {
-                    "identifier": "",
-                    "link": "",
-                    "image": null,
-                    "alignment": "left",
-                    "alt_text": ""
+            type: "quote",
+            value: [
+                {
+                    testimonial: "I was assigned the OpenStax Psychology textbook in my first psychology course. <b>I thought it was great that the book was free online.</b> I thought it was even better that I could get the physical book, brand new for $30 because that's how I learn best. <b>I feel like the book helped my instructor bring in more real world, relatable examples because it was so current.</b>",
+                    author: "Christine Mompoint, student at Houston Community College"
                 },
-                "heading": "",
-                "cta": "Order here"
-            }
+                {
+                    testimonial: "OpenStax has changed the way I teach this subject and the way my students navigate the learning process.",
+                    author: "Instructor at Midlands College"
+                }
+            ],
+            id: "8e59b024-0a81-40e7-80b6-a7f8081a1ed2"
         }
     ],
-    "row_2": [
-        {
-            "type": "column",
-            "id": "67f070b5-7729-4f5f-88fd-11e7a4fc49fc",
-            "value": {
-                "content": "<p>When it comes to education,</p><h3>there should be no limits.</h3><p>Our high-quality educational tools give students access to the learning materials they need to succeed, at little to no cost. Because we don&#x27;t believe anything should come between students and their future.</p>",
-                "link": "",
-                "document": null,
-                "image": {
-                    "identifier": "",
-                    "link": "",
-                    "image": null,
-                    "alignment": "left",
-                    "alt_text": ""
-                },
-                "heading": "",
-                "cta": ""
-            }
+    quotes_instructor_image: {
+        id: 740,
+        meta: {
+            type: "wagtailimages.Image",
+            detail_url: "https://cms-dev.openstax.org/apps/cms/api/v2/images/740/",
+            download_url: "https://assets.openstax.org/oscms-dev/media/original_images/instructor.webp"
         },
-        {
-            "type": "column",
-            "id": "dd91ed91-7b1d-45dd-95eb-4067c7866edb",
-            "value": {
-                "content": "<p>Free, peer-reviewed college and AP®-aligned textbooks<br/></p>",
-                "link": "https://openstax.org/subjects",
-                "document": null,
-                "image": {
-                    "identifier": "",
-                    "link": "",
-                    "image": null,
-                    "alignment": "left",
-                    "alt_text": ""
-                },
-                "heading": "Books",
-                "cta": ""
-            }
+        title: "instructor.webp"
+    },
+    quotes_student_image: {
+        id: 739,
+        meta: {
+            type: "wagtailimages.Image",
+            detail_url: "https://cms-dev.openstax.org/apps/cms/api/v2/images/739/",
+            download_url: "https://assets.openstax.org/oscms-dev/media/original_images/student.webp"
         },
+        title: "student.webp"
+    },
+    tutor_logo: {
+        id: 742,
+        meta: {
+            type: "wagtailimages.Image",
+            detail_url: "https://cms-dev.openstax.org/apps/cms/api/v2/images/742/",
+            download_url: "https://assets.openstax.org/oscms-dev/media/original_images/tutor-logo.webp"
+        },
+        title: "tutor-logo.svg"
+    },
+    tutor_description: "OpenStax Tutor, our courseware platform, costs only $10 per student, and enables better learning for your students and easy course creation for you. With digital reading, personalized homework, a library of thousands of assessments, and LMS integration, OpenStax Tutorworks well for online, hybrid, and in-person courses.",
+    tutor_button_text: "About Openstax Tutor",
+    tutor_button_link: "https://openstax.org/openstax-tutor",
+    tutor_demo_text: "Schedule a demo",
+    tutor_demo_link: "https://calendly.com/creighton-2",
+    tutor_features: [
         {
-            "type": "column",
-            "id": "7b4d3bfd-82d1-4fe9-b898-272beca23f50",
-            "value": {
-                "content": "<p>Low-cost learning technology integrated with OpenStax content<br/></p>",
-                "link": "https://openstax.org/technology",
-                "document": null,
-                "image": {
-                    "identifier": "",
-                    "link": "",
-                    "image": null,
-                    "alignment": "left",
-                    "alt_text": ""
+            type: "features",
+            value: [
+                {
+                    image: {
+                        id: 710,
+                        file: "https://assets.openstax.org/oscms-dev/media/original_images/lms3x.png",
+                        title: "ost-features-lms-icon",
+                        height: 159,
+                        width: 159,
+                        created_at: "2020-12-07T12:27:03.234729-06:00"
+                    },
+                    title: "Personalized homework"
                 },
-                "heading": "Technology",
-                "cta": ""
-            }
+                {
+                    image: {
+                        id: 711,
+                        file: "https://assets.openstax.org/oscms-dev/media/original_images/learning3x.png",
+                        title: "ost-features-learning-icon",
+                        height: 159,
+                        width: 159,
+                        created_at: "2020-12-07T12:27:46.895869-06:00"
+                    },
+                    title: "Analytics"
+                },
+                {
+                    image: {
+                        id: 708,
+                        file: "https://assets.openstax.org/oscms-dev/media/original_images/books3x.png",
+                        title: "ost-features-books-icon",
+                        height: 159,
+                        width: 159,
+                        created_at: "2020-12-07T12:24:26.132738-06:00"
+                    },
+                    title: "Digital reading"
+                },
+                {
+                    image: {
+                        id: 709,
+                        file: "https://assets.openstax.org/oscms-dev/media/original_images/data-science3x.png",
+                        title: "ost-features-science-icon",
+                        height: 159,
+                        width: 159,
+                        created_at: "2020-12-07T12:25:35.545806-06:00"
+                    },
+                    title: "LMS integration"
+                }
+            ],
+            id: "6cd931fe-d03c-42e2-836c-3f8829c62fb1"
         }
     ],
-    "row_3": [
-        {
-            "type": "column",
-            "id": "2bd8e194-d7c7-4980-afd0-33cca26775dc",
-            "value": {
-                "content": "<p></p>",
-                "link": "",
-                "document": null,
-                "image": {
-                    "identifier": "",
-                    "link": "",
-                    "image": null,
-                    "alignment": "left",
-                    "alt_text": ""
-                },
-                "heading": "",
-                "cta": ""
-            }
-        }
-    ],
-    "row_4": [
-        {
-            "type": "column",
-            "id": "46be8609-b7bc-4455-9cf8-6285bb5b4fc8",
-            "value": {
-                "content": "<p>Prof. Wolchonok has saved students $15,000 and opened doors for them to pursue health science careers by adopting our free Anatomy and Physiology book.</p>",
-                "link": "http://openstax.org/impact",
-                "document": null,
-                "image": {
-                    "identifier": "",
-                    "link": "",
-                    "image": 140,
-                    "alignment": "left",
-                    "alt_text": ""
-                },
-                "heading": "Our Impact",
-                "cta": "See our impact"
-            }
-        }
-    ],
-    "row_5": [
-        {
-            "type": "column",
-            "id": "8725207d-1188-4585-851a-5707b0030167",
-            "value": {
-                "content": "<p>OpenStax partners have united with us to increase access to high-quality learning materials. Their low-cost tools integrate seamlessly with OpenStax books.</p>",
-                "link": "http://openstax.org/partners",
-                "document": null,
-                "image": {
-                    "identifier": "",
-                    "link": "",
-                    "image": null,
-                    "alignment": "left",
-                    "alt_text": ""
-                },
-                "heading": "OpenStax Partners",
-                "cta": "View Partners"
-            }
-        }
-    ],
-    "promote_image": null
-};
+    whats_openstax_headline: "What’s OpenStax",
+    whats_openstax_description: "OpenStax is part of Rice University, which is a 501(c)(3) nonprofit charitable corporation. Our mission is to improve educational access and learning for everyone. We do this by publishing openly licensed books, developing and improving research-based courseware, establishing partnerships with educational resource companies, and more.",
+    whats_openstax_donate_text: "We couldn’t do what we do without the help of our generous supporters.",
+    whats_openstax_give_text: "Give today",
+    whats_openstax_give_link: "https://openstax.org/give",
+    whats_openstax_learn_more_text: "Learn more about OpenStax",
+    whats_openstax_learn_more_link: "https://openstax.org/about",
+    whats_openstax_image: {
+        id: 667,
+        meta: {
+            type: "wagtailimages.Image",
+            detail_url: "https://cms-dev.openstax.org/apps/cms/api/v2/images/667/",
+            download_url: "https://assets.openstax.org/oscms-dev/media/original_images/summer_interns_portraits-33.original.jpg"
+        },
+        title: "summer_interns_portraits-33.original.jpg"
+    },
+    promote_image: {
+        id: 728,
+        meta: {
+            type: "wagtailimages.Image",
+            detail_url: "https://cms-dev.openstax.org/apps/cms/api/v2/images/728/",
+            download_url: "https://assets.openstax.org/oscms-dev/media/original_images/Astronomysplash.jpeg"
+        },
+        title: "Astronomysplash.jpeg"
+    }
+}

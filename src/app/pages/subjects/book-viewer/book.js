@@ -7,6 +7,7 @@ import {faBook} from '@fortawesome/free-solid-svg-icons/faBook';
 import {faChalkboardTeacher} from '@fortawesome/free-solid-svg-icons/faChalkboardTeacher';
 import {faEllipsisV} from '@fortawesome/free-solid-svg-icons/faEllipsisV';
 import {faGraduationCap} from '@fortawesome/free-solid-svg-icons/faGraduationCap';
+import LazyLoad from 'react-lazyload';
 
 function QuickLink({url, icon, text}) {
     return (
@@ -122,7 +123,9 @@ export default function BookCover({
         <div className={className}>
             <ThreeDotMenu slug={slug} details={details} />
             <a href={`/details/${slug}`}>
-                <img src={coverUrl} alt={title} />
+                <LazyLoad once offset={100}>
+                    <img src={coverUrl} alt={title} />
+                </LazyLoad>
                 <div className="cover-caption">{title}</div>
             </a>
         </div>

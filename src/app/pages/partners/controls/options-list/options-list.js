@@ -1,13 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import $ from '~/helpers/$';
 import './options-list.scss';
 
 function Item({label, value, selected}) {
-    // This might be a case for useReducer
-    const [isSelected, setIsSelected] = useState(selected.includes(value));
+    const [isSelected, dispatch] = React.useReducer(
+        () => selected.includes(value),
+        selected.includes(value)
+    );
 
     useEffect(() => {
-        const cleanup = selected.on('notify', () => setIsSelected(selected.includes(value)));
+        const cleanup = selected.on('notify', dispatch);
 
         return cleanup;
     }, [selected, value]);

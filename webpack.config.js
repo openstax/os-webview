@@ -1,32 +1,26 @@
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
-const ESLintPlugin = require('eslint-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const production = process.env.NODE_ENV === 'production';
+const ESLintPlugin = require('eslint-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const StylelintPlugin = require('stylelint-webpack-plugin');
 
-console.log('*** Building production?', production);
-
-const port = 3000;
+const devServerPort = 3000;
 const publicPath = '/';
 
 const config = {
-    mode: production ? 'production' : 'development',
     entry: './src/app/main.js',
     output: {
-        chunkFilename: 'chunk-[chunkhash].js',
-        filename: production ? '[name]-[hash].min.js' : '[name].js',
         path: path.resolve(__dirname, 'dist'),
         publicPath
     },
-    devtool: production ? 'source-map' : 'inline-source-map',
     module: {
         rules: [
             { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' },
             {
                 test: /\.scss$/,
-                use: [ 'style-loader', 'css-loader',
+                use: [ 'style-loader', 'fast-css-loader',
                     {
                         loader:  'fast-sass-loader',
                         options: {
@@ -37,6 +31,28 @@ const config = {
                 ]
             }
         ]
+    },
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+      },
+    },
+    plugins: [
+        new CopyWebpackPlugin({
+            patterns: [{from: 'src/images', to:'images'}]
+        }),
+        new ESLintPlugin({fix: true}),
+        new FaviconsWebpackPlugin('./src/images/favicon.svg'),
+        new HtmlWebpackPlugin({
+            template: './src/index.html'
+        }),
+        new StylelintPlugin({
+            files: './src/**/*.scss'
+        })
+    ],
+    performance: {
+      maxEntrypointSize: 2.5 * 1000000, // 1MB
+      maxAssetSize: 2.1 * 1000000,
     },
     resolve: {
         alias: {
@@ -50,26 +66,6 @@ const config = {
             'node_modules',
         ],
         extensions: ['.js', '.jsx']
-    },
-    optimization: {
-      splitChunks: {
-        chunks: 'all',
-        maxInitialRequests: production ? 5 : 1,
-      },
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: './src/index.html'
-        }),
-        new FaviconsWebpackPlugin('./src/images/favicon.svg'),
-        new ESLintPlugin({fix: true}),
-        new CopyWebpackPlugin({
-            patterns: [{from: 'src/images', to:'images'}]
-        })
-    ],
-    performance: {
-      maxEntrypointSize: 2.5 * 1000000, // 1MB
-      maxAssetSize: 2.1 * 1000000,
     },
     watchOptions: {
       aggregateTimeout: 500,
@@ -91,16 +87,28 @@ const config = {
       liveReload: true,
       noInfo: false,
       open: true,
-      port,
+      port: devServerPort,
       publicPath,
       quiet: false,
       stats: 'errors-only',
     },
 }
 
-if (!production) {
-    delete config.output.chunkFilename;
-    config.plugins.push(new webpack.HotModuleReplacementPlugin())
-}
+module.exports = (env, argv) => {
+    config.mode = argv.mode || 'development';
+    console.log('Building', config.mode);
 
-module.exports = config;
+    if (config.mode === 'production') {
+        config.output.filename = '[name]-[hash].min.js';
+        config.devtool = 'source-map';
+        config.optimization.splitChunks.maxInitialRequests = 5;
+        config.output.chunkFilename = 'chunk-[chunkhash].js';
+    } else {
+        config.output.filename = '[name].js',
+        config.devtool = 'inline-source-map',
+        config.optimization.splitChunks.maxInitialRequests = 1;
+        config.plugins.push(new webpack.HotModuleReplacementPlugin())
+    }
+
+    return config;
+};

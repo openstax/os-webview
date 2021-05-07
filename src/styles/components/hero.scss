@@ -14,6 +14,12 @@
         padding: 1.5rem;
     }
 
+    // DEPRECATED: this should be in pattern-library
+    p {
+        margin: 2rem auto 0;
+        max-width: calc(#{$text-content-max} - 3rem);
+    }
+
     h1 {
         color: inherit;
         margin-bottom: 1rem;
@@ -28,12 +34,6 @@
         @include set-font(h1);
 
         color: inherit;
-    }
-
-    // DEPRECATED: this should be in pattern-library
-    p {
-        margin: 2rem auto 0;
-        max-width: calc(#{$text-content-max} - 3rem);
     }
 
     .cta {

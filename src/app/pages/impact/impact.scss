@@ -4,6 +4,14 @@
     > .hero {
         @include light-on-dark();
 
+        @include width-up-to($phone-max) {
+            grid-template-columns: 100%;
+
+            .picture-content {
+                height: calc(35vw + 14rem);
+            }
+        }
+
         background-color: os-color(deep-green);
         color: white;
 
@@ -45,6 +53,10 @@
         }
     }
 
+    .text-content {
+        margin-left: 0;
+    }
+
     .boxed,
     .text-content {
         align-items: flex-start;
@@ -52,10 +64,6 @@
         > .text-content {
             padding: 0;
         }
-    }
-
-    .text-content {
-        margin-left: 0;
     }
 
     .strip-outer-margins {

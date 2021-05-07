@@ -265,6 +265,13 @@
             }
         }
 
+        ~ h2 {
+            @include wider-than($phone-max) {
+                margin-bottom: -3rem;
+                margin-top: 3rem;
+            }
+        }
+
         &:not(.featured) h2 {
             @include title-font(2.4rem);
 
@@ -302,13 +309,6 @@
                 padding-left: 0;
                 padding-right: 0;
                 width: 100%;
-            }
-        }
-
-        ~ h2 {
-            @include wider-than($phone-max) {
-                margin-bottom: -3rem;
-                margin-top: 3rem;
             }
         }
     }
