@@ -191,7 +191,7 @@ sup {
     right: $normal-margin;
     z-index: 4;
 
-    > div:not(:empty) {
+    > div:not(:empty):not(.put-away) {
         padding: 2.5rem 2.5rem $normal-margin $normal-margin;
     }
 
