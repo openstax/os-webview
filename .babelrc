@@ -5,8 +5,8 @@
             {
                 targets: [
                     'last 2 major versions',
-                    'not ie > 0', 'not dead',
-                    'iOS > 8'
+                    'not ie > 0', 'not node > 0', 'not dead',
+                    'iOS > 10'
                 ]
             }
         ],

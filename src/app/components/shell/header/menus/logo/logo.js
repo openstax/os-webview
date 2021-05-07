@@ -8,7 +8,7 @@ export default function Logo() {
                 <a href="/" aria-label="Home Page">
                     <img
                         className="logo-color" src="/images/logo.svg" alt="OpenStax logo"
-                        width="353.76" height="80.973"
+                        width="354" height="81"
                     />
                     <img className="logo-white" src="/images/logo-white.svg" alt="OpenStax logo" />
                 </a>
