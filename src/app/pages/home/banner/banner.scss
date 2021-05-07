@@ -9,6 +9,10 @@
         @include width-up-to($phone-max) {
             padding-bottom: 0;
         }
+
+        @include wider-than($phone-max) {
+            padding-bottom: 11rem;
+        }
     }
 
     .right-bg {
@@ -25,9 +29,9 @@
             position: relative;
         }
         @include wider-than($phone-max) {
-            background-position: left -2rem;
+            background-position: left bottom;
             height: 116%;
-            top: 0;
+            top: -2rem;
             width: 50%;
         }
     }

@@ -4,8 +4,10 @@
     background-color: ui-color(white);
     position: relative;
 
-    h2 {
-        letter-spacing: normal;
+    .boxed {
+        @include wider-than($phone-max) {
+            padding-bottom: 11rem;
+        }
     }
 
     .right-bg {
@@ -18,9 +20,12 @@
 
     [role="radiogroup"] {
         display: flex;
+        line-height: normal;
+        margin-bottom: 3rem;
 
         @include width-up-to($phone-max) {
             flex-direction: column;
+            margin-bottom: 2rem;
         }
     }
 
@@ -56,6 +61,8 @@
         display: flex;
         flex-wrap: wrap;
         grid-row-gap: 3rem;
+        justify-content: space-between;
+        width: 100%;
 
         @include width-up-to($phone-max) {
             justify-content: center;
@@ -121,6 +128,7 @@
                         left: -2.5rem;
                     }
                 }
+
             }
         }
     }

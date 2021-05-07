@@ -52,7 +52,7 @@ export default function Features({data}) {
                         featureList.map((f) => <Feature key={f} name={f} />)
                     }
                     <a className="feature explore" href={exploreLink}>
-                        Explore now
+                        <span>Explore now</span>&nbsp;
                         <FontAwesomeIcon icon={faArrowRight} />
                     </a>
                 </div>
