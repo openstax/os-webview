@@ -20,7 +20,7 @@ function RequestForm({model, done, afterSubmit}) {
     if (!userStatus || !sfLoaded) {
         return null;
     }
-    const {salesforceName, title, coverUrl} = model.bookModel;
+    const {salesforceAbbreviation, title, coverUrl} = model.bookModel;
 
     return (
         <div className="comp-copy-request-form">
@@ -45,7 +45,7 @@ function RequestForm({model, done, afterSubmit}) {
                     <input type="hidden" name="first_name" value={userStatus.firstName} />
                     <input type="hidden" name="last_name" value={userStatus.lastName} />
                     <input type="hidden" name="email" value={userStatus.email} />
-                    <input type="hidden" name="00NU00000053nzR" value={salesforceName} />
+                    <input type="hidden" name="00NU00000053nzR" value={salesforceAbbreviation} />
                     How many students will be using {title} this semester?
                     <div className="hint">
                         Include sections taught by any teaching assistants that you supervise.
@@ -58,7 +58,7 @@ function RequestForm({model, done, afterSubmit}) {
                         <div className="button-row">
                             <button
                                 className="primary"
-                                disabled={!salesforceName}
+                                disabled={!salesforceAbbreviation}
                                 onClick={listenForResponse}
                             >
                                 Request iBooks edition
