@@ -7,9 +7,12 @@ function RadioItem({item, selectedItem, changeItem}) {
     const checked = selectedItem === item;
 
     return (
-        <div role="radio" onClick={() => changeItem(item)} aria-checked={checked}>
-            {item}
-        </div>
+        <React.Fragment>
+            <span className="item-separator">|</span>
+            <div role="radio" onClick={() => changeItem(item)} aria-checked={checked}>
+                {item}
+            </div>
+        </React.Fragment>
     );
 }
 
