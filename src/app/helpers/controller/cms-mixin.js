@@ -126,3 +126,20 @@ export function usePageData(fpdParams) {
 
     return [pageData, statusPage];
 }
+
+export function useTextFromSlug(slug) {
+    const [text, setText] = React.useState();
+
+    React.useEffect(() => {
+        const url = urlFromSlug(slug);
+
+        fetch(url).then((r) => r.text()).then((pageHtml) => {
+            const parser = new window.DOMParser();
+            const newDoc = parser.parseFromString(pageHtml, 'text/html');
+
+            setText(newDoc.body.innerHTML);
+        });
+    }, [slug]);
+
+    return text;
+}
