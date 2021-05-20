@@ -14,15 +14,16 @@ export async function sfApiPost(objectType, data, method = 'POST') {
             body: JSON.stringify(data)
         };
         const raw = await fetch(`${server}/api/v1/${objectType}`, options);
-        const text = await raw.json();
 
         if (!raw.ok) {
+            const text = await raw.json();
+
             console.warn('Failed with status', raw.status);
             console.warn(text.error);
         }
         return raw;
     } catch (err) {
-        console.warn(`Fetch (POST) ${objectType}: ${err}`);
+        console.warn(`Fetch (${method}) ${objectType}: ${err}`);
         return null;
     }
 }

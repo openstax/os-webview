@@ -1,0 +1,201 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/triangle';
+
+.my-openstax.page .book-details {
+    &.card {
+        @include card();
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .subdivision {
+        @include width-up-to($tablet-max) {
+            padding: $normal-margin;
+        }
+
+        @include wider-than($tablet-max) {
+            padding: $normal-margin 3rem;
+        }
+    }
+
+    .top-bar {
+        align-items: center;
+        border-bottom: thin solid ui-color(form-border);
+        display: grid;
+        column-gap: 3rem;
+
+        @include width-up-to($tablet-max) {
+            grid-template: 'back back'
+            'status edit';
+        }
+
+        @include wider-than($tablet-max) {
+            grid-template-columns: 1fr auto auto;
+        }
+
+        .back {
+            @include set-font(body-large);
+
+            font-weight: bold;
+
+            @include width-up-to($tablet-max) {
+                border-bottom: thin solid ui-color(form-border);
+                grid-area: back;
+            }
+        }
+    }
+
+    .bottom-section {
+        display: flex;
+        flex-direction: column;
+        row-gap: 2rem;
+    }
+
+    .icon-and-text {
+        align-items: center;
+        column-gap: $normal-margin;
+        display: flex;
+    }
+
+    .btn {
+        @include button();
+
+        justify-self: start;
+
+        &.primary {
+            @extend %primary;
+        }
+    }
+
+    .summary {
+        align-items: center;
+        gap: 2rem;
+
+        @include width-up-to($phone-max) {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @include width-between($phone-max, $tablet-max) {
+            align-items: start;
+            display: grid;
+            grid-template: 'title title title'
+            'cover button link'
+            'summary summary summary' 1fr / min-content auto 1fr;
+        }
+
+        @include wider-than($tablet-max) {
+            display: grid;
+            grid-template: 'title title title'
+            'cover button link'
+            'cover summary summary' 1fr / min-content auto 1fr;
+        }
+
+        > h2 {
+            grid-area: title;
+        }
+
+        .cover {
+            grid-area: cover;
+
+            @include scale-feature(width, 13rem, 20rem);
+
+            @include wider-than($phone-max) {
+                align-self: start;
+            }
+        }
+
+        > .btn {
+            @include width-up-to($phone-max) {
+                width: 100%;
+            }
+
+            @include wider-than($phone-max) {
+                grid-area: button;
+                padding: $normal-margin;
+            }
+        }
+
+        > a:not(.btn) {
+            grid-area: link;
+        }
+
+        > .text-block {
+            align-self: start;
+            grid-area: summary;
+
+            .summary-text {
+                max-height: 17rem;
+                overflow: hidden;
+                position: relative;
+
+                > * {
+                    margin: 0;
+                }
+            }
+        }
+    }
+
+    .resources {
+        border: thin solid ui-color(form-border);
+        border-radius: 0.5rem;
+        overflow: hidden;
+
+        .top-bar {
+            background-color: ui-color(page-bg);
+            text-align: center;
+        }
+    }
+
+    .partners {
+        @include wider-than($phone-max) {
+            display: grid;
+            grid-template-columns: 54% 1fr;
+        }
+
+        h3 {
+            @include set-font(h3);
+        }
+
+        .text-block {
+            align-items: flex-start;
+            background-color: os-color(yellow);
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            position: relative;
+            row-gap: $normal-margin;
+
+            $triangle-size: 2rem;
+            @include width-up-to($phone-max) {
+                &::after {
+                    @include triangle(
+                        $direction: bottom,
+                        $position: left calc(50% - #{$triangle-size}) top 100%,
+                        $color: os-color(yellow),
+                        $size: $triangle-size
+                    );
+
+                    transform: none;
+                }
+            }
+            @include wider-than($phone-max) {
+                &::after {
+                    @include triangle(
+                        $direction: right,
+                        $position: top calc(35% - #{$triangle-size}) left 100%,
+                        $color: os-color(yellow),
+                        $size: $triangle-size
+                    );
+                }
+            }
+        }
+        .clipped-image {
+            @include width-up-to($phone-max) {
+                height: 55vw;
+            }
+        }
+    }
+}

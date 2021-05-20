@@ -24,7 +24,7 @@ export default function useDialog() {
     const open = () => updateShowDialog(true);
     const close = () => updateShowDialog();
 
-    function BoundDialog({ title, children, modal = true }) {
+    function BoundDialog({ title, children, modal = true, ...otherProps }) {
         const Modal = modal ? ReactModal : React.Fragment;
 
         return (
@@ -33,6 +33,7 @@ export default function useDialog() {
                 className='modal'
                 overlayClassName="modal-overlay"
                 bodyOpenClassName="no-scroll-dialog"
+                {...otherProps}
             >
                 <Dialog title={title} isOpen={showDialog} doClose={close}>
                     {children}

@@ -1,12 +1,10 @@
 import React from 'react';
 import './header.scss';
-import { useStoreon } from 'storeon/preact';
+import useAccount from '~/pages/my-openstax/store/use-account';
 
 export default function Header() {
-    const { account } = useStoreon('account');
-    const initials = 'firstName' in account ?
-        `${account.firstName.substr(0, 1)}${account.lastName.substr(0, 1)}` :
-        '';
+    const {firstName='', lastName=''} = useAccount();
+    const initials = `${firstName.substr(0, 1)}${lastName.substr(0, 1)}`;
 
     return (
         <div className='header'>

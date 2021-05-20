@@ -77,7 +77,7 @@ $.isSupported = () => {
         (info.name === 'Chrome' && +info.version >= 79) ||
         (info.name === 'Edge' && +info.version >= 79) ||
         (info.name === 'Firefox' && +info.version >= 74) ||
-        (info.name === 'Safari' && +info.version >= 13)
+        (info.name === 'Safari' && +info.version >= 14.1)
     );
 };
 

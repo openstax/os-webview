@@ -15,7 +15,7 @@
   }
 
   h2 {
-      @include set-font(h3);
+      @include scale-set-font(h4, h3);
   }
 
   h3 {

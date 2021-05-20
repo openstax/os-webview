@@ -25,87 +25,47 @@ function cached(fn) {
 const accountsModel = {
     load: cached(() => {
         // Uncomment ONLY to TEST
-        // return Promise.resolve({
-        //     id: 16249,
-        //     username: 'roynonfaculty',
-        //     name: 'Roy Johnson',
-        //     first_name: 'Roy',
-        //     last_name: 'Johnson',
-        //     full_name: 'Roy Johnson',
-        //     title: '',
-        //     uuid: '3a2789ae-eced-483f-a7ff-246988e074be',
-        //     support_identifier: 'cs_b0343fbc',
-        //     is_not_gdpr_location: true,
-        //     is_test: false,
-        //     opt_out_of_cookies: false,
-        //     using_openstax: false,
-        //     salesforce_contact_id: '0030v00000UlMyeAAF',
-        //     faculty_status: 'confirmed_faculty',
-        //     is_newflow: false,
-        //     is_instructor_verification_stale: false,
-        //     needs_complete_edu_profile: false,
-        //     self_reported_role: 'instructor',
-        //     self_reported_school: 'Rice',
-        //     school_type: 'college',
-        //     school_location: 'domestic_school',
-        //     is_kip: false,
-        //     is_administrator: true,
-        //     grant_tutor_access: false,
-        //     contact_infos: [
-        //         {
-        //             id: 1061,
-        //             type: 'EmailAddress',
-        //             value: 'rej2+faculty2@rice.edu',
-        //             is_verified: false,
-        //             num_pin_verification_attempts_remaining: 12,
-        //             is_guessed_preferred: false
-        //         },
-        //         {
-        //             id: 910,
-        //             type: 'EmailAddress',
-        //             value: 'rej2+verify.1@rice.edu',
-        //             is_verified: true,
-        //             is_guessed_preferred: true
-        //         },
-        //         {
-        //             id: 943,
-        //             type: 'EmailAddress',
-        //             value: 'roy.e.johnson@gmail.com',
-        //             is_verified: true,
-        //             is_guessed_preferred: false
-        //         },
-        //         {
-        //             id: 184,
-        //             type: 'EmailAddress',
-        //             value: 'rej2+1@rice.edu',
-        //             is_verified: true,
-        //             is_guessed_preferred: false
-        //         }
-        //     ],
-        //     applications: [
-        //         {
-        //             id: 1,
-        //             name: 'OpenStax Exercises'
-        //         },
-        //         {
-        //             id: 2,
-        //             name: 'OpenStax Tutor'
-        //         },
-        //         {
-        //             id: 5,
-        //             name: 'OpenStax CMS Dev'
-        //         },
-        //         {
-        //             id: 11,
-        //             name: 'OpenStax CNX Beta'
-        //         },
-        //         {
-        //             id: 12,
-        //             name: 'Payments'
-        //         }
-        //     ]
-        // });
-        // // eslint-disable-next-line no-unreachable
+        return Promise.resolve({
+            id: 10060116,
+            name: 'Roy Johnson',
+            first_name: 'Roy',
+            last_name: 'Johnson',
+            full_name: 'Roy Johnson',
+            uuid: '53cdf5b7-6dd9-45a5-bad7-e1f5532180e2',
+            support_identifier: 'cs_5bcab9be',
+            is_not_gdpr_location: true,
+            is_test: false,
+            opt_out_of_cookies: false,
+            using_openstax: false,
+            salesforce_contact_id: '0037h00000SEXNqAAP',
+            faculty_status: 'no_faculty_info',
+            is_newflow: true,
+            is_instructor_verification_stale: false,
+            needs_complete_edu_profile: false,
+            self_reported_role: 'instructor',
+            self_reported_school: '',
+            school_type: 'college',
+            school_location: 'domestic_school',
+            is_kip: false,
+            is_administrator: false,
+            grant_tutor_access: false,
+            contact_infos: [
+                {
+                    id: 61694,
+                    type: 'EmailAddress',
+                    value: 'rej2+mos1@rice.edu',
+                    is_verified: true,
+                    is_guessed_preferred: true
+                }
+            ],
+            applications: [
+                {
+                    id: 5,
+                    name: 'OpenStax CMS Dev'
+                }
+            ]
+        });
+        // eslint-disable-next-line no-unreachable
         return fetch(accountsUrl, {credentials: 'include'})
             .then(
                 (response) => {

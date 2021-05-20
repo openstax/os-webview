@@ -21,8 +21,8 @@ export function StyledCheckbox({name, value, checked, onClick, forwardRef}) {
     );
 }
 
-export function useStyledCheckbox() {
-    const [checked, toggle] = useToggle();
+export function useStyledCheckbox(initChecked=false) {
+    const [checked, toggle] = useToggle(initChecked);
 
     function SCB({name, value, forwardRef}) {
         return (

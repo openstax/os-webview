@@ -1,76 +1,82 @@
 import sfApiFetch from './sfapi';
+import $ from '~/helpers/$';
 
-export function sfSchoolToInstitution(school) {
-    return ({
-        id: school.salesforce_id,
-        name: school.name
-    });
-}
-
-// There is no direct data source for Institutions. The list should include:
-// 1. The school in the Contact
-// 2. All schools in opportunities
-// 3. Any others that are explicitly added
-function institutionEditor() {
-    let data = [];
-
-    function values() {
-        return [...data];
-    }
-
-    function save(scratchValues) {
-        data = [...scratchValues];
-    }
-
-    async function refresh(contactInfo) {
-        const idsAlreadyThere = data.map((v) => v.id);
-        const idsToCheck = [
-            contactInfo.school_id
-            // Also need ids from Opportunities
-        ];
-        const promises = idsToCheck
-            .filter((id) => !idsAlreadyThere.includes(id))
-            .map((id) => sfApiFetch('schools', `/${id}`));
-        const schools = await (Promise.all(promises));
-
-        for (const s of schools) {
-            data.push(sfSchoolToInstitution(s));
-        }
-    }
-
-    return {values, refresh, save};
-}
-
-const institutions = institutionEditor();
-
-async function initializeUser(store) {
-    const user = await sfApiFetch('users');
-
-    await institutions.refresh(user.contact);
-    store.dispatch('user/update');
-}
+// const sfBookPromise = booksPromise.then((books) => salesforceTitles(books));
+//
+// function opportunityEditor() {
+//     let adoptions = [];
+//     const interesteds = [];
+//
+//     async function refresh({opportunity}) {
+//         const bookData = await sfBookPromise;
+//
+//         adoptions = opportunity.map((op) => {
+//             const dataItem = bookData.find((b) => b.value === op.book_name);
+//
+//             return {
+//                 label: dataItem.text,
+//                 value: dataItem.value,
+//                 coverUrl: dataItem.coverUrl,
+//                 salesforceId: bookData.salesforce_id
+//             };
+//         });
+//     }
+//
+//     return {
+//         get adoptions() {return adoptions;},
+//         get interesteds() {return interesteds;},
+//         refresh
+//     };
+// }
+//
+// const institutions = institutionEditor();
+// const opportunities = opportunityEditor();
+// const MOCK_OPPORTUNITY = {
+//     'id': 26,
+//     'salesforce_id': '006U000000ZH4uAIAT',
+//     'term_year': '2015 - 16 Spring',
+//     'book_name': 'Biology',
+//     'contact_id': '003U000001hcCzuIAE',
+//     'new': true,
+//     'created_at': '2020-08-03T18:54:06.581Z',
+//     'updated_at': '2020-09-08T14:00:39.431Z',
+//     'close_date': '2016-01-05T00:00:00.000Z',
+//     'stage_name': 'Confirmed Adoption Won',
+//     'update_type': 'New Business',
+//     'number_of_students': null,
+//     'student_number_status': 'Annualized',
+//     'time_period': 'Semester',
+//     'class_start_date': '2016-01-05T00:00:00.000Z',
+//     'school_id': '001U0000007gjDyIAI',
+//     'book_id': 'a0ZU0000008pytKMAQ',
+//     'lead_source': null,
+//     'salesforce_updated': true,
+//     'os_accounts_id': null,
+//     'name': 'Biology - 2015 - 16 - Jennifer Example'
+// };
 
 export default function (store) {
     const INITIAL_STATE = {
         user: {
-            institutions: [],
-            scratchInstitutions: []
+            contact: {},
+            opportunity: [],
+            lead: [{}],
+            schools: []
         }
     };
 
     store.on('@init', () => {
-        initializeUser(store);
+        store.dispatch('user/fetch');
         return INITIAL_STATE;
     });
 
-    store.on('user/update', () => ({
-        user: { institutions: institutions.values() }
-    }));
+    store.on('user/fetch', async () => {
+        const user = await sfApiFetch('users');
 
-    store.on('user/save', (oldState, newInfo) => {
-        institutions.save(Array.from(newInfo).map(sfSchoolToInstitution));
-        return {
-            user: { institutions: institutions.values() }
-        };
+        if (!user.contact) {
+            user.contact = {};
+        }
+        store.dispatch('user/update', $.camelCaseKeys(user));
     });
+    store.on('user/update', (_, user) => ({user}));
 }

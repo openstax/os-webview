@@ -2,28 +2,46 @@
 @import '../common';
 
 #collection:not([hidden]) {
-    display: flex;
-    flex-direction: column;
-    grid-row-gap: $normal-margin;
+    display: grid;
+    gap: $normal-margin;
 
-    .plus-box {
-        @include icon();
+    @include width-up-to($phone-max) {
+        grid-template: 'header'
+        'add-button'
+        'card';
     }
 
-    .add-book {
-        align-self: center;
-        background-color: ui-color(default);
-        border-radius: 0.3rem;
-        display: inline-grid;
-        font-size: inherit;
-        grid-row-gap: 1rem;
-        padding: 1rem;
-        text-align: center;
+    @include wider-than($phone-max) {
+        grid-template: 'header add-button'
+        'card card' / auto 1fr;
+    }
 
-        .plus-box {
-            font-size: 1.8rem;
-            height: 16rem;
-            width: 16rem;
+    h2 {
+        grid-area: header;
+    }
+
+    .add-button {
+        @include add-button();
+
+        grid-area: add-button;
+
+        @include wider-than($phone-max) {
+            justify-self: right;
+        }
+    }
+
+    > .card {
+        @include wider-than($phone-max) {
+            @include card();
+        }
+
+        display: flex;
+        flex-direction: column;
+        grid-area: card;
+        min-height: 3rem; // temporary
+
+        > :not(:first-child) {
+            border-top: thin solid ui-color(form-border);
         }
     }
 }

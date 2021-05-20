@@ -36,4 +36,12 @@ dialog .edit-institutions {
         grid-column-gap: $normal-margin;
         justify-content: flex-end;
     }
+
+    .input-with-suggestions {
+        .suggestion-list {
+            max-height: 40vh;
+            overflow: auto;
+            width: 100%;
+        }
+    }
 }

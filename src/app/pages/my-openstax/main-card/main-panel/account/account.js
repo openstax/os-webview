@@ -1,10 +1,9 @@
 import React from 'react';
-import { useStoreon } from 'storeon/preact';
-import { LoadingSection } from '../common';
+import useAccount from '~/pages/my-openstax/store/use-account';
 import LabeledData from '~/pages/my-openstax/labeled-data/labeled-data';
 import ProfileSection from './profile-section/profile-section';
 import EmailPrefs from './email-prefs/email-prefs';
-import orderBy from 'lodash/orderBy';
+// import orderBy from 'lodash/orderBy';
 import cn from 'classnames';
 import './account.scss';
 
@@ -18,8 +17,8 @@ function Email({ email }) {
     );
 }
 
-function AccountSection({store}) {
-    const emails = orderBy(store.emails, ['primary', 'verified'], ['desc', 'desc']);
+function AccountSection() {
+    const {firstName, lastName, emails} = useAccount();
 
     return (
         <section>
@@ -28,8 +27,8 @@ function AccountSection({store}) {
             <section>
                 <h3>General</h3>
                 <div className='fields general-fields'>
-                    <LabeledData label='First name' children={store.firstName} />
-                    <LabeledData label='Last name' children={store.lastName} />
+                    <LabeledData label='First name' children={firstName} />
+                    <LabeledData label='Last name' children={lastName} />
                 </div>
             </section>
             <section>
@@ -44,21 +43,13 @@ function AccountSection({store}) {
     );
 }
 
-function Account({ store, id, hidden }) {
+export default function Account({ id, hidden }) {
     return (
         <section id={id} hidden={hidden}>
             <h2 hidden>My Account</h2>
-            <AccountSection store={store} />
+            <AccountSection />
             <ProfileSection />
             <EmailPrefs />
         </section>
-    );
-}
-
-export default function AccountLoader({id, hidden}) {
-    const { account: store } = useStoreon('account');
-
-    return (
-        store.ready ? <Account {...{store, id, hidden}} /> : <LoadingSection />
     );
 }

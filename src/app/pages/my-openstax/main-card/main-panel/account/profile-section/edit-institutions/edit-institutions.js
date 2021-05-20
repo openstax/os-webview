@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import Dialog from '~/components/dialog/dialog';
+import React, {useState, useEffect} from 'react';
+import useDialog from '~/pages/my-openstax/dialog/dialog';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import { useStoreon } from 'storeon/preact';
+import useInstitutions from '~/pages/my-openstax/store/use-institutions';
 import sfApiFetch from '~/pages/my-openstax/store/sfapi';
 import {LabeledElement, FilteringSelect} from '~/components/form-elements/form-elements';
 import { AddButton } from '../../../common';
@@ -49,13 +49,11 @@ function scratchReducer(state, [type, payload]) {
 }
 
 function useScratchInstitutions() {
-    const {user: {institutions}} = useStoreon('user');
+    const {institutions} = useInstitutions();
     const [data, dispatch] = React.useReducer(scratchReducer, institutions);
 
-    React.useEffect(() => {
-        for (const value of institutions) {
-            dispatch(['add', value]);
-        }
+    useEffect(() => {
+        dispatch(['reset', institutions]);
     }, [institutions]);
 
     return [data, dispatch];
@@ -76,7 +74,7 @@ function InstitutionInput({dispatch}) {
         onChange({target: inputRef.current});
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (inputRef.current) {
             inputRef.current.focus();
         }
@@ -97,7 +95,7 @@ function InstitutionInput({dispatch}) {
     );
 }
 
-function InstitutionRow({institution, dispatch}) {
+function DeletableRow({institution, dispatch}) {
     function doDelete(event) {
         event.preventDefault();
         dispatch(['remove', institution]);
@@ -113,65 +111,65 @@ function InstitutionRow({institution, dispatch}) {
     );
 }
 
-function EditInstitutions({isOpen, onPutAway}) {
+function EditInstitutions({onPutAway}) {
     const [institutions, dispatchInstitution] = useScratchInstitutions();
-    const {dispatch, user} = useStoreon('user');
+    const {primarySchoolId, save} = useInstitutions();
+    const nonDeletableInstitutions = institutions.filter((i) => i.id === primarySchoolId);
+    const deletableInstitutions = institutions.filter((i) => i.id !== primarySchoolId);
 
     function onSave() {
-        dispatch('user/save', institutions.values());
-        onPutAway();
+        save(institutions.map((obj) => obj.id)).then(onPutAway);
     }
 
-    React.useEffect(() => {
-        if (isOpen) {
-            dispatchInstitution(['reset', user.institutions]);
-        }
-    }, [isOpen, dispatchInstitution, user.institutions]);
-
     return (
-        <Dialog
-            isOpen={isOpen} onPutAway={onPutAway}
-            title="Edit institutions"
-        >
-            <div className="edit-institutions">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Institution name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            Array.from(institutions).map((i) =>
-                                <InstitutionRow
-                                    key={i.id} institution={i} dispatch={dispatchInstitution}
-                                />
-                            )
-                        }
-                    </tbody>
-                </table>
-                <InstitutionInput dispatch={dispatchInstitution} />
-                <div className="button-row">
-                    <button type="button" onClick={() => onPutAway()}>Cancel</button>
-                    <button type="button" className="primary" onClick={onSave}>Save</button>
-                </div>
+        <div className="edit-institutions">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Institution name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        Array.from(nonDeletableInstitutions).map((i) =>
+                            <tr key={i.name}>
+                                <td>{i.name}</td>
+                                <td />
+                            </tr>
+                        )
+                    }
+                    {
+                        Array.from(deletableInstitutions).map((i) =>
+                            <DeletableRow
+                                key={i.id} institution={i} dispatch={dispatchInstitution}
+                            />
+                        )
+                    }
+                </tbody>
+            </table>
+            <InstitutionInput dispatch={dispatchInstitution} />
+            <div className="button-row">
+                <button type="button" onClick={() => onPutAway()}>Cancel</button>
+                <button type="button" className="primary" onClick={onSave}>Save</button>
             </div>
-        </Dialog>
+        </div>
     );
 }
 
 export default function EditInstitutionsDialogLink({text}) {
-    const [isOpen, toggle] = useToggle();
+    const [Dialog, open, close] = useDialog();
 
-    function onClick(event) {
-        event.preventDefault();
-        toggle();
+    function onClick(e) {
+        e.preventDefault();
+        open();
     }
 
     return (
         <a href={text} className="edit-link" onClick={onClick}>
             {text}
-            <EditInstitutions isOpen={isOpen} onPutAway={toggle} />
+            <Dialog title="Edit institutions">
+                <EditInstitutions onPutAway={close} />
+            </Dialog>
         </a>
     );
 }
