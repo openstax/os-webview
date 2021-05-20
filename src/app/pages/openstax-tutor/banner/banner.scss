@@ -19,6 +19,7 @@ $margin-breakpoint: $media-content-max - $media-margin;
         display: grid;
         grid-gap: $normal-margin;
         grid-template-columns: 7.5fr 5fr;
+        grid-template-rows: 100%;
     }
 
     .left-side {
