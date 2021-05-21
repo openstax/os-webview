@@ -14,7 +14,7 @@ export default function CollapsingPane({title, children}) {
 
     return (
         <div className="collapsing-pane">
-            <div class="control-bar" onClick={toggle}>
+            <div className="control-bar" onClick={toggle}>
                 <div>{title}</div>
                 <FontAwesomeIcon icon={plusOrMinus} />
             </div>

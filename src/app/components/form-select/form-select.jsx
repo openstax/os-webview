@@ -3,7 +3,7 @@ import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Select from '~/components/select/select.jsx';
 
 export default function FormSelect({
-    label, labelHtml, instructions, selectAttributes, options=[]
+    label, labelHtml, instructions, name, selectAttributes, options=[]
 }) {
     return (
         <div className="control-group">

@@ -31,7 +31,7 @@ function LabeledInputWithInvalidMessage({
         updateMessage();
         el.addEventListener(eventType, updateMessage);
         return () => el.removeEventListener(eventType, updateMessage);
-    }, []);
+    }, [eventType]);
 
     return (
         <label ref={ref} className={className}>
@@ -98,7 +98,7 @@ function ContactForm({defaultPostTo}) {
     );
 }
 
-export default function () {
+export default function ContactFormLoader() {
     const sfLoaded = useSalesforceLoadedState();
 
     if (!sfLoaded) {
