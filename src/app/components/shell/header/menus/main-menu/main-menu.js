@@ -42,7 +42,6 @@ export default function MainMenu() {
                 <MenuItem url="/research" label="Research" />
                 <MenuItem url="/institutional-partnership" label="Institutional Partnerships" />
                 <MenuItem url="/general/openstax-ally-application" label="Technology Partnerships" />
-                <MenuItem url="/creator-fest" label="Creator Fest" />
             </Dropdown>
             <LoginMenu />
             <li className="give-button-item" role="presentation"><GiveButton /></li>
