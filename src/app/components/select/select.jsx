@@ -39,8 +39,8 @@ function SelectedItem({selectEl}) {
     const isPlaceholder = selectedOption.disabled;
 
     return isPlaceholder ?
-        <span class="item none">{selectedOption.textContent}</span> :
-        <span class="item">{selectedOption.textContent}</span>;
+        <span className="item none">{selectedOption.textContent}</span> :
+        <span className="item">{selectedOption.textContent}</span>;
 }
 
 function SelectProxyFor({selectEl, open, activeIndex, setValue}) {
@@ -71,7 +71,7 @@ export default function Select({children, placeholder, onChange, ...selectProps}
 
     function setValue(newValue) {
         selectEl.value = newValue;
-        selectEl.dispatchEvent(new Event('change'));
+        selectEl.dispatchEvent(new window.Event('change'));
         setOpen(false);
     }
     const [activeIndex, handleKeyDown] = useSelectList({

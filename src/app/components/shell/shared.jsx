@@ -6,19 +6,17 @@ import './shared.scss';
 export function useSeenCounter(seenEnough) {
     const counter = {
         get value() {
-            return Number(localStorage.visitedGive || 0);
+            return Number(window.localStorage.visitedGive || 0);
         },
         set value(newValue) {
-            localStorage.visitedGive = newValue;
+            window.localStorage.visitedGive = newValue;
         }
     };
     const [hasBeenSeenEnough, setHasBeenSeenEnough] = useState(counter.value > seenEnough);
 
     function increment() {
-        try {
-            ++counter.value;
-            setHasBeenSeenEnough(counter.value > seenEnough);
-        } catch (e) {}
+        ++counter.value;
+        setHasBeenSeenEnough(counter.value > seenEnough);
     }
 
     return [hasBeenSeenEnough, increment];
@@ -69,11 +67,11 @@ function useCampaign(stickyData) {
     useEffect(() => {
         if (mode) {
             const campaignId = `${mode}-${start}`;
-            const savedId = localStorage.campaignId;
+            const savedId = window.localStorage.campaignId;
 
             if (savedId !== campaignId) {
-                localStorage.campaignId = campaignId;
-                localStorage.visitedGive = 0;
+                window.localStorage.campaignId = campaignId;
+                window.localStorage.visitedGive = 0;
             }
         }
     }, [start, mode]);
