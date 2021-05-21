@@ -16,7 +16,7 @@ export default function Webinars({model: {
     return (
         <div className="split-section">
             <ClippedImage
-                src={feedbackImage.meta.downloadUrl}
+                src={feedbackImage && feedbackImage.meta.downloadUrl}
                 backgroundPosition="top center"
             />
             <LabeledSection headerLabel={headerLabel} headline={headline}>

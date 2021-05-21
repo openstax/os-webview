@@ -9,7 +9,7 @@ const postUrl = 'salesforce/reviews/';
 // calculate them anyway.
 // Note: mutator
 function recalculateRatings(data) {
-    const reviewsThatCount = data.reviews.filter((r) => r.status !== 'Deleted');
+    const reviewsThatCount = data.reviews.filter((r) => r.status === 'Approved');
 
     data.ratingCount = reviewsThatCount.length;
     data.averageRating.ratingAvg = meanBy(reviewsThatCount, (r) => r.rating);
