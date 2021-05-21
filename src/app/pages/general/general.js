@@ -1,6 +1,7 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {urlFromSlug} from '~/models/cmsFetch';
+import {useTextFromSlug} from '~/helpers/controller/cms-mixin';
+import $ from '~/helpers/$';
 import './general.scss';
 
 function GeneralPage({html}) {
@@ -26,15 +27,11 @@ function GeneralPage({html}) {
 }
 
 export default function GeneralPageLoader() {
-    const [html, setHtml] = React.useState();
+    const slug = window.location.pathname.substr(1).replace('general', 'spike');
+    const html = useTextFromSlug(slug);
 
     React.useEffect(() => {
-        const slug = window.location.pathname.substr(1).replace('general', 'spike');
-        const url = urlFromSlug(slug);
-
-        fetch(url)
-            .then((r) => r.text())
-            .then(setHtml);
+        $.setPageTitleAndDescription();
     }, []);
 
     return (
