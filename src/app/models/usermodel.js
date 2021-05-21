@@ -120,7 +120,8 @@ function oldUserModel(sfUserModel) {
         is_newflow: sfUserModel.is_newflow,
         username: sfUserModel.id,
         self_reported_role: sfUserModel.self_reported_role,
-        is_not_gdpr_location: sfUserModel.is_not_gdpr_location
+        is_not_gdpr_location: sfUserModel.is_not_gdpr_location,
+        salesforce_contact_id: sfUserModel.salesforce_contact_id
     };
 }
 

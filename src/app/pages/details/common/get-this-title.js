@@ -39,11 +39,14 @@ export default function GetThisTitle({model, tocState}) {
         const trackThis = userInfo.accounts_id && el.dataset.track;
 
         if (trackThis) {
+            /* eslint-disable camelcase */
             event.trackingInfo = {
                 book: model.id,
-                account_id: userInfo.accounts_id, // eslint-disable-line camelcase
-                book_format: el.dataset.track // eslint-disable-line camelcase
+                account_id: userInfo.accounts_id,
+                book_format: el.dataset.track,
+                contact_id: userInfo.salesforce_contact_id
             };
+            /* eslint-enable camelcase */
         }
     }
 
