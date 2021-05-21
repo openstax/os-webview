@@ -4,8 +4,10 @@
     background-color: ui-color(white);
     position: relative;
 
-    h2 {
-        letter-spacing: normal;
+    .boxed {
+        @include wider-than($phone-max) {
+            padding-bottom: 11rem;
+        }
     }
 
     .right-bg {
@@ -18,24 +20,32 @@
 
     [role="radiogroup"] {
         display: flex;
+        line-height: normal;
+        margin-bottom: 3rem;
 
         @include width-up-to($phone-max) {
             flex-direction: column;
+            margin-bottom: 2rem;
         }
     }
 
-    [role="radio"] {
-        letter-spacing: 0.1rem;
-        text-transform: uppercase;
+    .item-separator {
+        display: none;
 
         @include wider-than($phone-max) {
-            &:not(:first-child)::before {
+            &:not(:first-child) {
                 color: text-color(normal);
-                content: '|';
+                display: inline;
                 font-weight: bold;
                 margin: 0 1rem;
             }
         }
+    }
+
+    [role="radio"] {
+        cursor: pointer;
+        letter-spacing: 0.1rem;
+        text-transform: uppercase;
 
         &:hover,
         &[aria-checked] {
@@ -56,6 +66,8 @@
         display: flex;
         flex-wrap: wrap;
         grid-row-gap: 3rem;
+        justify-content: space-between;
+        width: 100%;
 
         @include width-up-to($phone-max) {
             justify-content: center;
@@ -121,6 +133,7 @@
                         left: -2.5rem;
                     }
                 }
+
             }
         }
     }

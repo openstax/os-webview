@@ -22,6 +22,7 @@ $mid-tablet: ($tablet-max + $phone-max) / 2;
 
     .text-block {
         align-items: flex-start;
+        grid-row-gap: 4rem;
         text-align: left;
 
         img {

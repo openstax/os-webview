@@ -2,6 +2,8 @@
 
 .openstax-tutor-page .webinars {
     .carousel {
+        overflow-x: auto;
+        overflow-y: hidden;
         position: relative;
 
         @include wider-than($phone-max) {

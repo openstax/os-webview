@@ -7,9 +7,12 @@ function RadioItem({item, selectedItem, changeItem}) {
     const checked = selectedItem === item;
 
     return (
-        <div role="radio" onClick={() => changeItem(item)} aria-checked={checked}>
-            {item}
-        </div>
+        <React.Fragment>
+            <span className="item-separator">|</span>
+            <div role="radio" onClick={() => changeItem(item)} aria-checked={checked}>
+                {item}
+            </div>
+        </React.Fragment>
     );
 }
 
@@ -52,7 +55,7 @@ export default function Features({data}) {
                         featureList.map((f) => <Feature key={f} name={f} />)
                     }
                     <a className="feature explore" href={exploreLink}>
-                        Explore now
+                        <span>Explore now</span>&nbsp;
                         <FontAwesomeIcon icon={faArrowRight} />
                     </a>
                 </div>
