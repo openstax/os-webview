@@ -7,7 +7,7 @@ function HiddenFieldsInternals({leadSource}) {
     return (
         <React.Fragment>
             <input name="utf8" type="hidden" value="✓" />
-            <input type="hidden" name="Application_Source__c" value="OS Web/Accounts" />
+            <input type="hidden" name="Application_Source__c" value="OS Web" />
             <input type="hidden" name="oid" value={salesforce.oid} />
             {
                 salesforce.debug && <input type="hidden" name="debug" value="1" />
