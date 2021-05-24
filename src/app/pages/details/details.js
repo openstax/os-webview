@@ -93,6 +93,8 @@ function setCardBackground(isShowingCards) {
 export function BookDetails({data}) {
     const modelRef = useRef($.camelCaseKeys(data));
     const model = modelRef.current;
+
+    model.comingSoon = model.bookState === 'coming_soon';
     const {
         reverseGradient,
         title: bookTitle,
