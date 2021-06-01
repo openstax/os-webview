@@ -345,13 +345,16 @@ a:not([href]) {
     }
 }
 
+[type="radio"] {
+    @include radio-button();
+}
+
 @import 'components/animations';
 @import 'components/bucket';
 @import 'components/buttons';
 @import 'components/filter-buttons';
 @import 'components/forms';
 @import 'components/hero';
-@import 'components/radio-buttons';
 @import 'components/social';
 @import 'components/tooltip';
 @import 'components/tag-multi-select';
