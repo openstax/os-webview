@@ -160,11 +160,9 @@ form {
         border-radius: 0;
         display: inline-block;
         font-weight: 500;
-        height: $form-element-height;
         overflow: hidden;
         padding: 0.84rem;
         text-overflow: ellipsis;
-        white-space: nowrap;
         width: 100%;
 
         // These come from pattern-library, but it has no placeholders or macros for them
@@ -173,7 +171,17 @@ form {
             box-shadow: 0 0 0.4rem 0 rgba(os-color(light-blue), 0.5);
             outline: 0;
         }
+    }
 
+    // All but textarea (separated so it didn't get overridden)
+    [type="text"],
+    [type="url"],
+    [type="number"],
+    [type="email"],
+    [type="date"],
+    .selected-button {
+        height: $form-element-height;
+        white-space: nowrap;
     }
 
     // Turn off invalid-highlighting box-shadow in FF
