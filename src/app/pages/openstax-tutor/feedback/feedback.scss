@@ -8,11 +8,33 @@
         grid-template-columns: 50% 50%;
     }
 
-    .clipped-image {
+    .clipped-image,
+    .feedback-media {
         min-height: 40rem;
 
         @include width-up-to($tablet-max) {
             order: 2;
+        }
+    }
+
+    .feedback-media {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+
+        > * {
+            width: calc(20vw + 32rem);
+            height: calc(11.25vw + 18rem);
+        }
+
+        @include width-up-to($tablet-max) {
+            justify-content: flex-start;
+
+            > * {
+                height: calc(56vw - 4rem);
+                margin-left: 2rem;
+                width: calc(100vw - 7rem);
+            }
         }
     }
 
