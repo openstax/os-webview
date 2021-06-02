@@ -5,7 +5,7 @@ $image-height: 24rem;
 
 .blog.page .more-stories {
     background-color: ui-color(page-bg);
-    padding-bottom: 2rem;
+    padding-bottom: 4rem;
     padding-top: 2rem;
     width: 100%;
 
@@ -57,5 +57,17 @@ $image-height: 24rem;
 
     @media print {
         display: none;
+    }
+
+    .button-row {
+        display: flex;
+        justify-content: space-between;
+        margin: 2rem auto 0;
+        max-width: $content-max;
+
+        button {
+            background-color: transparent;
+            color: inherit;
+        }
     }
 }

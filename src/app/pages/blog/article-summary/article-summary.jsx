@@ -3,19 +3,20 @@ import {RawHTML, WindowContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Byline from '~/components/byline/byline';
 import $ from '~/helpers/$';
 
-export function blurbModel(articleSlug, data) {
+export function blurbModel(data) {
     if (!data) {
         return {};
     }
+
     return {
         headline: data.heading,
         subheading: data.subheading,
-        image: data.article_image,
-        altText: data.article_image_alt,
-        body: data.body_blurb,
+        image: data.articleImage,
+        altText: data.articleImageAlt,
+        body: data.bodyBlurb,
         author: data.author,
         date: data.date,
-        articleSlug
+        articleSlug: data.slug || data.meta.slug
     };
 }
 

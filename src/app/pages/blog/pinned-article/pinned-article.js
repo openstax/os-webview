@@ -1,8 +1,16 @@
 import React from 'react';
-import ArticleSummary from '../article-summary/article-summary.jsx';
+import ArticleSummary, {blurbModel} from '../article-summary/article-summary.jsx';
+import BlogContext from '../blog-context';
 import './pinned-article.scss';
 
-export default function PinnedArticle({model}) {
+export default function PinnedArticle() {
+    const {pinnedStory, setPath} = React.useContext(BlogContext);
+
+    if (!pinnedStory) {
+        return null;
+    }
+    const model = {...blurbModel(pinnedStory), setPath};
+
     return (
         <div className="pinned-article boxed">
             <ArticleSummary {...model} />
