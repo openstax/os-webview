@@ -40,7 +40,7 @@ function trackSubmissionInGA(form) {
 
 function ButtonRow({pages, currentPage, setCurrentPage,
     validatePage, validatedPages, setValidatedPages,
-    activeRef, formRef, onSubmit
+    activeRef, formRef, onSubmit, disabled=false
 }) {
     function validateCurrentPage() {
         const invalid = activeRef.current.querySelector(':invalid');
@@ -70,6 +70,7 @@ function ButtonRow({pages, currentPage, setCurrentPage,
                 type="button" className="secondary back"
                 hidden={currentPage === 1}
                 onClick={previousPage}
+                disabled={disabled}
             >
                 Back
             </button>
@@ -77,6 +78,7 @@ function ButtonRow({pages, currentPage, setCurrentPage,
                 type="submit" className="primary"
                 hidden={currentPage < pages}
                 onClick={validateAndSubmit}
+                disabled={disabled}
             >
                 Submit
             </button>
@@ -84,6 +86,7 @@ function ButtonRow({pages, currentPage, setCurrentPage,
                 type="button" className="primary next"
                 hidden={currentPage === pages}
                 onClick={nextPage}
+                disabled={disabled}
             >
                 Next
             </button>
@@ -134,10 +137,10 @@ export default function MultiPageForm({
                     onSubmit={onSubmit}
                 />
                 {
-                    submitting ?
-                        <div className="big-message">Submitting...</div> :
-                        <ButtonRow {...buttonRowProps} />
+                    submitting &&
+                        <div className="big-message">Submitting...</div>
                 }
+                <ButtonRow disabled={submitting} {...buttonRowProps} />
             </form>
         </div>
     );
