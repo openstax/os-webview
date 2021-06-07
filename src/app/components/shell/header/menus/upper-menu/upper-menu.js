@@ -5,9 +5,11 @@ import GiveButton from '../give-button/give-button';
 import './upper-menu.scss';
 
 function BlogItem() {
-    const data = useDataFromSlug('news');
-    const shouldDisplay = data && Reflect.has(data, 'articles') &&
-        Object.keys(data.articles).length;
+    const data = useDataFromSlug(
+        'pages?type=news.newsArticle&fields=id&limit=3'
+    );
+
+    const shouldDisplay = data && data.items.length > 0;
 
     if (!shouldDisplay) {
         return null;

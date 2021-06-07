@@ -8,13 +8,15 @@ import './how-using.scss';
 function HowUsingBook({book, selectedValue, setSelectedValue}) {
     const sfOptions = salesforce.adoption(['adopted', 'recommended']);
     // Tricky: don't want a name at submit time, but need one for validation
+    // Also, required is invalid if there is no name
     const name = selectedValue ? null : book.value;
+    const required = !selectedValue;
 
     return (
         <FormRadioGroup
             label={`How are you using ${book.text}?`}
             options={sfOptions} selectedValue={selectedValue}
-            required name={name}
+            required={required} name={name}
             setSelectedValue={setSelectedValue}
         />
     );

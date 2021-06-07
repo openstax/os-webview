@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
+import BlogContext from '../blog-context';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
 import {faSearch} from '@fortawesome/free-solid-svg-icons/faSearch';
 import './search-bar.scss';
 
-function SearchBarInterior({setPath}) {
+function SearchBarInterior() {
+    const {setPath} = React.useContext(BlogContext);
     const [searchString, setSearchString] = useState(decodeURIComponent(window.location.search.substr(1)));
     const clearHidden = searchString.length === 0;
 
@@ -53,10 +55,10 @@ function SearchBarInterior({setPath}) {
     );
 }
 
-export default function SearchBar(props) {
+export default function SearchBar() {
     return (
         <div className="search-bar">
-            <SearchBarInterior {...props} />
+            <SearchBarInterior />
         </div>
     );
 }

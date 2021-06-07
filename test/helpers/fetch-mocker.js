@@ -1,6 +1,8 @@
 import adoptionFormData from '../src/data/adoption-form';
 import biologyData from '../src/data/details-biology-2e';
 import blogArticleData from '../src/data/blog-article';
+import blogMoreStories from '../src/data/blog-more';
+import blogPinned from '../src/data/blog-pinned';
 import booksData from '../src/data/books';
 import booksForAnalyticsData from '../src/data/books-for-analytics';
 import bookTitleData from '../src/data/book-titles';
@@ -34,6 +36,8 @@ import archiveData from '../src/data/archive';
 global.fetch = jest.fn().mockImplementation((...args) => {
     const isAdoption = (/pages\/adoption-form/).test(args[0]);
     const isBiology = (/v2\/pages\/207/).test(args[0]);
+    const isBlogPinned = (/pin_to_top=true/).test(args[0]);
+    const isBlogMoreStories = (/pin_to_top=false/).test(args[0]);
     const isBlogArticle = (/blog-article/).test(args[0]);
     const isBooks = (/api\/books/).test(args[0]);
     const isBooksForAnalytics = (/book_student_resources/).test(args[0]);
@@ -74,6 +78,10 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = adoptionFormData;
             } else if (isPartner) {
                 payload = pageData;
+            } else if (isBlogMoreStories) {
+                payload = blogMoreStories;
+            } else if (isBlogPinned) {
+                payload = blogPinned
             } else if (isErrata) {
                 payload = errataData;
             } else if (isErrataBook) {
