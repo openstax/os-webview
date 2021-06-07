@@ -1,5 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import {usePageData} from '~/helpers/controller/cms-mixin';
+import React, {useEffect} from 'react';
+import BlogContext, {BlogContextProvider} from './blog-context';
+import {LoaderPage, WindowContextProvider} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import PinnedArticle from './pinned-article/pinned-article';
 import UpdateBox from './update-box/update-box';
 import DisqusForm from './disqus-form/disqus-form';
@@ -7,149 +8,81 @@ import MoreStories from './more-stories/more-stories';
 import SearchBar from './search-bar/search-bar';
 import SearchResults from './search-results/search-results';
 import {ArticleFromSlug} from './article/article';
-import {blurbModel} from './article-summary/article-summary.jsx';
-import {WindowContextProvider} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import timers from './timers';
 import './blog.scss';
-import $ from '~/helpers/$';
 
-const stayHere = {path: '/blog'};
+export function DefaultPage() {
+    const {pinnedStory} = React.useContext(BlogContext);
 
-function pinnedArticleData(articles) {
-    const articleSlug = Reflect.ownKeys(articles)
-        .find((k) => articles[k].pin_to_top);
-    const pinnedData = articles[articleSlug];
-
-    return blurbModel(articleSlug, pinnedData);
-}
-
-function moreStoriesOptions(articles, test) {
-    const slugs = Reflect.ownKeys(articles)
-        .filter((k) => test(k, articles[k]))
-        .sort((a, b) => articles[a].date < articles[b].date ? 1 : -1);
-
-    return slugs.map((s) => {
-        const model = blurbModel(s, articles[s]);
-
-        delete model.subheading;
-        return model;
-    });
-}
-
-function isNotPinned(slug, article) {
-    return !article.pin_to_top;
-}
-
-function exceptThisSlug(slug) {
-    return (articleSlug) => `news/${articleSlug}` !== slug;
-}
-
-export function DefaultPage({articles, setPath}) {
     return (
         <WindowContextProvider>
-            <PinnedArticle model={{setPath, ...pinnedArticleData(articles)}} />
+            <PinnedArticle />
             <UpdateBox />
-            <MoreStories
-                articles={moreStoriesOptions(articles, isNotPinned)}
-                setPath={setPath}
-            />
+            <MoreStories exceptSlug={pinnedStory && pinnedStory.meta.slug} />
         </WindowContextProvider>
     );
 }
 
-export function SearchResultsPage({location, setPath}) {
+export function SearchResultsPage() {
     return (
         <React.Fragment>
-            <SearchBar setPath={setPath} />
-            <SearchResults location={location} setPath={setPath} />
+            <SearchBar />
+            <SearchResults />
         </React.Fragment>
     );
 }
 
-export function ArticlePage({slug, articles, setPath}) {
+export function ArticlePage({slug}) {
     return (
         <WindowContextProvider>
-            <ArticleFromSlug slug={slug} />
+            <ArticleFromSlug slug={`news/${slug}`} />
             <DisqusForm />
             <UpdateBox />
-            <MoreStories
-                articles={moreStoriesOptions(articles, exceptThisSlug(slug))}
-                setPath={setPath}
-            />
+            <MoreStories exceptSlug={slug} />
         </WindowContextProvider>
     );
 }
 
-const slug = 'news';
+function ContentBasedOnLocation() {
+    const {location} = React.useContext(BlogContext);
 
-function useLocationSynchronizedToPath() {
-    const [location, setLocation] = useState(window.location);
-
-    function syncLocation() {
-        setLocation({...window.location});
-    }
-
-    useEffect(() => {
-        // The router refers to history state, to see if it's changing pages
-        history.replaceState(stayHere, '');
-        window.addEventListener('popstate', syncLocation);
-
-        return () => window.removeEventListener('popstate', syncLocation);
-    }, []);
-
-    function setPath(href) {
-        history.pushState(stayHere, '', href);
-        syncLocation();
-        window.scrollTo(0, 0);
-    }
-
-    return [location, setPath];
-}
-
-export default function BlogPage() {
-    const [pageData, statusPage] = usePageData({slug});
-    const [location, setPath] = useLocationSynchronizedToPath();
-
-    useEffect(() => {
-        const linkController = $.setCanonicalLink();
-
-        return () => linkController.remove();
-    }, []);
     useEffect(() => {
         timers.start();
 
         return () => timers.clear();
     }, [location]);
 
-    if (statusPage) {
-        return statusPage;
-    }
-
     const slugMatch = location.pathname.match(/\/blog\/(.+)/);
 
-    if (!slugMatch) {
-        return location.search ?
-            <main className="blog page">
-                <SearchResultsPage
-                    location={location}
-                    setPath={setPath}
-                />
-            </main> :
-            <main className="blog page">
-                <DefaultPage
-                    articles={pageData.articles}
-                    setPath={setPath}
-                />
-            </main>;
+    if (slugMatch) {
+        return (
+            <ArticlePage slug={slugMatch[1]} />
+        );
+    }
+
+    if (location.search) {
+        return (
+            <SearchResultsPage />
+        );
     }
 
     return (
+        <DefaultPage />
+    );
+}
+
+function BlogPage() {
+    return (
         <main className="blog page">
-            <ArticlePage
-                slug={`news/${slugMatch[1]}`}
-                articles={pageData.articles}
-                setPath={setPath}
-            />
+            <BlogContextProvider>
+                <ContentBasedOnLocation />
+            </BlogContextProvider>
         </main>
+    );
+}
+
+export default function LoadBlog() {
+    return (
+        <LoaderPage slug="news" Child={BlogPage} doDocumentSetup noCamelCase />
     );
 }

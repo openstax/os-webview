@@ -1,13 +1,9 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
-import userEvent from '@testing-library/user-event';
+import {BlogContextProvider} from '~/pages/blog/blog-context';
 import {BlogPage, DefaultPage, ArticlePage} from '~/pages/blog/blog';
-import {fetchPageData} from '~/helpers/controller/cms-mixin';
 
-const slug = 'news';
-const pageDataPromise = fetchPageData({slug});
-
-test('blog default page', () => {
+test('blog default page', (done) => {
     window.location = {
         "href":"https://cms-dev.openstax.org/blog",
         "ancestorOrigins":{},
@@ -21,10 +17,16 @@ test('blog default page', () => {
         "hash":""
     };
 
-    return pageDataPromise.then(({articles}) => {
-        render(<DefaultPage articles={articles} />);
-        expect(screen.queryAllByText('read more')).toHaveLength(93);
-    });
+    render(
+        <BlogContextProvider>
+            <DefaultPage />
+        </BlogContextProvider>
+    );
+    setTimeout(() => {
+        expect(screen.queryAllByText('read more')).toHaveLength(13);
+        expect(screen.queryAllByRole('textbox')).toHaveLength(1);
+        done();
+    }, 10);
 });
 
 test('blog Article page', () => {
@@ -40,12 +42,15 @@ test('blog Article page', () => {
         "search":"",
         "hash":""
     };
-    const setPath = (newPath) => {
-        console.log('setPath called with', newPath);
-    };
 
-    return pageDataPromise.then(({articles}) => {
-        render(<ArticlePage location={window.location} {...{setPath, articles}}/>);
-        expect(screen.queryAllByText('read more')).toHaveLength(93);
-    });
+    render(
+        <BlogContextProvider>
+            <ArticlePage slug="blog-article" />
+        </BlogContextProvider>
+    );
+    setTimeout(() => {
+        expect(screen.queryAllByText('read more')).toHaveLength(12);
+        expect(screen.queryAllByRole('textbox')).toHaveLength(1);
+        done();
+    }, 10);
 });
