@@ -17,6 +17,11 @@
         &.secondary {
             @extend %secondary;
         }
+
+        &[disabled] {
+            cursor: not-allowed;
+            opacity: 0.4;
+        }
     }
 
     [hidden] {
