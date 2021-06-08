@@ -13,9 +13,9 @@ import $ from '~/helpers/$';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
 import useAmazonAssociatesLink from './amazon-associates-link';
 import StudyEdge from './study-edge/study-edge';
-import Dialog from '~/components/dialog/dialog';
-import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDialog} from '~/components/dialog/dialog';
 import RecommendedCallout from './recommended-callout/recommended-callout';
+import useGiveDialog from './give-before-pdf/give-before-pdf';
 import calloutCounter from './recommended-callout/callout-counter';
 
 function IconAndText({icon, text}) {
@@ -139,11 +139,11 @@ export function WebviewOption({model}) {
 }
 
 export function StudyEdgeOption({model}) {
-    const [isOpen, toggle] = useToggle();
+    const [Dialog, open] = useDialog();
 
     function onClick(event) {
         event.preventDefault();
-        toggle();
+        open();
     }
 
     return (
@@ -151,7 +151,7 @@ export function StudyEdgeOption({model}) {
             link={model.enableStudyEdge} icon={faMobileAlt} text="Download the app"
             onClick={onClick}
         >
-            <Dialog isOpen={isOpen} className="wider-dialog" onPutAway={toggle}>
+            <Dialog className="wider-dialog">
                 <StudyEdge model={model} />
             </Dialog>
         </SimpleLinkOption>
@@ -164,12 +164,24 @@ export function PdfOption({model}) {
     const sampleText = polish ? ' przykład' : ' sample';
     const text = pdfText + (model.comingSoon ? sampleText : '');
     const pdfLink = (model.highResolutionPdfUrl || model.lowResolutionPdfUrl);
+    const {GiveDialog, open} = useGiveDialog();
+
+    function onClick(event) {
+        if (!$.isMobileDisplay()) {
+            event.preventDefault();
+            open();
+        }
+    }
 
     return (
-        <SimpleLinkOption
-            link={pdfLink} icon={faCloudDownloadAlt} text={text}
-            data-track="PDF"
-        />
+        <React.Fragment>
+            <SimpleLinkOption
+                link={pdfLink} icon={faCloudDownloadAlt} text={text}
+                data-track="PDF"
+                onClick={onClick}
+            />
+            <GiveDialog link={pdfLink} />
+        </React.Fragment>
     );
 }
 
@@ -181,11 +193,11 @@ export function PrintOption({model}) {
     const slug = (model.slug || '').replace('books/', '');
     const amazonDataLink = useAmazonAssociatesLink(slug);
     const text = $.isPolish(model.title) ? 'Zamów egzemplarz drukowany' : 'Order a print copy';
-    const [isOpen, toggle] = useToggle();
+    const [Dialog, open, close] = useDialog();
 
     function onClick(event) {
         event.preventDefault();
-        toggle();
+        open();
     }
 
     return (
@@ -193,8 +205,8 @@ export function PrintOption({model}) {
             link={isRealPrintLink(amazonDataLink.url)} icon={faBook} text={text}
             onClick={onClick}
         >
-            <Dialog title={text} isOpen={isOpen} onPutAway={toggle}>
-                <OrderPrintCopy amazonDataLink={amazonDataLink} hideDialog={() => toggle()} />
+            <Dialog title={text} >
+                <OrderPrintCopy amazonDataLink={amazonDataLink} hideDialog={() => close()} />
             </Dialog>
         </SimpleLinkOption>
     );

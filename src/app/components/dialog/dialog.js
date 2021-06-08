@@ -8,7 +8,8 @@ function PutAway({noTitle, onClick}) {
     return (
         <button
             className={cn('put-away', {'no-title-bar': noTitle})}
-            onClick={onClick}
+            hidden={!onClick}
+            onClick={() => onClick()}
         >
             ×
         </button>
@@ -60,9 +61,9 @@ export default function Dialog({
                     title ?
                         <div className="title-bar">
                             <RawHTML Tag="span" html={title} />
-                            <PutAway onClick={() => onPutAway()} />
+                            <PutAway onClick={onPutAway} />
                         </div> :
-                        <PutAway noTitle onClick={() => onPutAway()} />
+                        <PutAway noTitle onClick={onPutAway} />
                 }
                 <div className="main-region">
                     {children}
@@ -70,4 +71,37 @@ export default function Dialog({
             </dialog>
         </ReactModal>
     );
+}
+
+export function useDialog() {
+    const [showDialog, updateShowDialog] = React.useState(false);
+    const open = () => updateShowDialog(true);
+    const close = () => updateShowDialog(false);
+
+    function BoundDialog({
+        title, children, modal = true, className,
+        showPutAway=true,
+        ...otherProps
+    }) {
+        const Modal = modal ? ReactModal : React.Fragment;
+
+        return (
+            <Modal
+                isOpen={showDialog}
+                className='modal'
+                overlayClassName="modal-overlay"
+                bodyOpenClassName="no-scroll-dialog"
+                {...otherProps}
+            >
+                <Dialog
+                    title={title} className={className} isOpen={showDialog}
+                    onPutAway={showPutAway && close}
+                >
+                    {children}
+                </Dialog>
+            </Modal>
+        );
+    }
+
+    return [BoundDialog, open, close];
 }
