@@ -101,6 +101,7 @@ function ThankYou({userModel={}, link, close}) {
                 />
             </label>
             <button className="primary">Submit note and go to PDF</button>
+            <a className="never-mind" href={link}>Never mind, just go to the PDF</a>
         </FormWithAfterSubmit>
     );
 }

@@ -72,6 +72,10 @@
         }
         &.go-to {
             width: 22rem;
+
+            &::after {
+                content: '';
+            }
         }
     }
 
@@ -80,61 +84,5 @@
 
         color: text-color(helper);
         font-style: italic;
-    }
-}
-
-.thank-you-form {
-    display: flex;
-    flex-direction: column;
-    padding: 3rem 4rem;
-    row-gap: 3rem;
-
-    h1 {
-        @include set-font(h4);
-
-        margin: 0;
-        text-align: center;
-    }
-
-    .instructions {
-        @include set-font(helper-label);
-    }
-
-    button {
-        @include button();
-
-        &.primary {
-            @extend %primary;
-
-            align-self: flex-end;
-        }
-    }
-
-    label {
-        font-weight: bold;
-
-        input,
-        textarea {
-            margin-top: 0.5rem;
-        }
-    }
-
-    .asterisk::after {
-        color: os-color(red);
-        content: ' * ';
-    }
-
-    textarea {
-        display: block;
-        font-family: inherit;
-        height: auto;
-        resize: none;
-    }
-
-    .names {
-        column-gap: 2rem;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-
     }
 }

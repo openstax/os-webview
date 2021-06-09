@@ -92,7 +92,7 @@ export default function useGiveDialog() {
         );
 
         return (
-            <Dialog showPutAway={!showThankYou}>
+            <Dialog>
                 <GiveBeforePdf
                     {...{
                         link, showThankYou, setShowThankYou,
