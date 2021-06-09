@@ -1,7 +1,6 @@
-import React, {useState, useRef, useEffect, useContext} from 'react';
-import {RawHTML, WindowContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import React from 'react';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Byline from '~/components/byline/byline';
-import $ from '~/helpers/$';
 
 export function blurbModel(data) {
     if (!data) {
