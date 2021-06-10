@@ -37,12 +37,17 @@ function useEmails(accountsData) {
 */
 export default function useAccount() {
     const {user} = useStoreon('user');
+    const accountsData = useAccountsModel();
+    const emails = useEmails(accountsData);
+
+    if (user.error) {
+        console.warn('Error reading account:', user.error);
+        return {};
+    }
     const {
         contact: {firstName, lastName, facultyVerified, ...others},
         lead: [{role}]
     } = user;
-    const accountsData = useAccountsModel();
-    const emails = useEmails(accountsData);
 
     return {
         accountsId: accountsData.id,

@@ -43,7 +43,8 @@
     border-image: linear-gradient(
       to right, os-color(orange), os-color(blue), red 50%, os-color(orange), os-color(gold), os-color(light-blue)
     ) 1 stretch;
-    border-top: 0.5rem solid;
+    border-style: solid;
+    border-width: 0.5rem 0 0;
     box-sizing: border-box;
     display: grid;
     height: 100%;

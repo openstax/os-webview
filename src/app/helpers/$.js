@@ -62,7 +62,7 @@ const browserId = () => {
     checkChrome();
     checkFirefox();
     M = M[2] ? [M[1], M[2]] : [window.navigator.appName, window.navigator.appVersion, '-?'];
-    if ((tem = ua.match(/version\/(\d+)/i)) !== null) {
+    if ((tem = ua.match(/version\/([\d.]+)/i)) !== null) {
         M.splice(1, 1, tem[1]);
     }
 
@@ -73,11 +73,13 @@ const browserId = () => {
 $.isSupported = () => {
     const info = browserId();
 
+    console.info('Browser info:', info);
+    console.info('Version', window.navigator.appVersion);
     return (
-        (info.name === 'Chrome' && +info.version >= 79) ||
-        (info.name === 'Edge' && +info.version >= 79) ||
-        (info.name === 'Firefox' && +info.version >= 74) ||
-        (info.name === 'Safari' && +info.version >= 14.1)
+        (info.name === 'Chrome' && parseFloat(info.version) >= 79) ||
+        (info.name === 'Edge' && parseFloat(info.version) >= 79) ||
+        (info.name === 'Firefox' && parseFloat(info.version) >= 74) ||
+        (info.name === 'Safari' && parseFloat(info.version) >= 14.1)
     );
 };
 

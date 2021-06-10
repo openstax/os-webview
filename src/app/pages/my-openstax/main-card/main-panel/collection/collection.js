@@ -11,6 +11,15 @@ import './collection.scss';
 function Collection({id, hidden}) {
     const [Dialog, open, close] = useDialog();
     const {adoptions} = useAdoptions();
+    const actualAdoptions = Reflect.ownKeys(adoptions)
+        .filter((b) => !adoptions[b][0].stageName.includes('Interest'))
+        .reduce((a, b) => {a[b]=adoptions[b]; return a;}, {});
+    const interests = Reflect.ownKeys(adoptions)
+        .filter((b) => adoptions[b][0].stageName.includes('Interest'))
+        .reduce((a, b) => {a[b]=adoptions[b]; return a;}, {});
+
+
+    console.info('Actual adoptions from', adoptions);
 
     return (
         <section id={id} hidden={hidden}>
@@ -20,8 +29,8 @@ function Collection({id, hidden}) {
                 <AddBookForm afterSubmit={close} />
             </Dialog>
             <div className="card">
-                <BookList header="My adopted books" adoptions={adoptions} />
-                <BookList header="Books I’m interested in" />
+                <BookList header="My adopted books" adoptions={actualAdoptions} />
+                <BookList header="Books I’m interested in" adoptions={interests} />
             </div>
         </section>
     );

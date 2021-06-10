@@ -18,7 +18,7 @@ function Email({ email }) {
 }
 
 function AccountSection() {
-    const {firstName, lastName, emails} = useAccount();
+    const {firstName, lastName, emails=[]} = useAccount();
 
     return (
         <section>
