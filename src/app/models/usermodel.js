@@ -25,47 +25,47 @@ function cached(fn) {
 const accountsModel = {
     load: cached(() => {
         // Uncomment ONLY to TEST
-        return Promise.resolve({
-            id: 10060116,
-            name: 'Roy Johnson',
-            first_name: 'Roy',
-            last_name: 'Johnson',
-            full_name: 'Roy Johnson',
-            uuid: '53cdf5b7-6dd9-45a5-bad7-e1f5532180e2',
-            support_identifier: 'cs_5bcab9be',
-            is_not_gdpr_location: true,
-            is_test: false,
-            opt_out_of_cookies: false,
-            using_openstax: false,
-            salesforce_contact_id: '0037h00000SEXNqAAP',
-            faculty_status: 'no_faculty_info',
-            is_newflow: true,
-            is_instructor_verification_stale: false,
-            needs_complete_edu_profile: false,
-            self_reported_role: 'instructor',
-            self_reported_school: '',
-            school_type: 'college',
-            school_location: 'domestic_school',
-            is_kip: false,
-            is_administrator: false,
-            grant_tutor_access: false,
-            contact_infos: [
-                {
-                    id: 61694,
-                    type: 'EmailAddress',
-                    value: 'rej2+mos1@rice.edu',
-                    is_verified: true,
-                    is_guessed_preferred: true
-                }
-            ],
-            applications: [
-                {
-                    id: 5,
-                    name: 'OpenStax CMS Dev'
-                }
-            ]
-        });
-        // eslint-disable-next-line no-unreachable
+        // return Promise.resolve({
+        //     id: 10060116,
+        //     name: 'Roy Johnson',
+        //     first_name: 'Roy',
+        //     last_name: 'Johnson',
+        //     full_name: 'Roy Johnson',
+        //     uuid: '53cdf5b7-6dd9-45a5-bad7-e1f5532180e2',
+        //     support_identifier: 'cs_5bcab9be',
+        //     is_not_gdpr_location: true,
+        //     is_test: false,
+        //     opt_out_of_cookies: false,
+        //     using_openstax: false,
+        //     salesforce_contact_id: '0037h00000SEXNqAAP',
+        //     faculty_status: 'no_faculty_info',
+        //     is_newflow: true,
+        //     is_instructor_verification_stale: false,
+        //     needs_complete_edu_profile: false,
+        //     self_reported_role: 'instructor',
+        //     self_reported_school: '',
+        //     school_type: 'college',
+        //     school_location: 'domestic_school',
+        //     is_kip: false,
+        //     is_administrator: false,
+        //     grant_tutor_access: false,
+        //     contact_infos: [
+        //         {
+        //             id: 61694,
+        //             type: 'EmailAddress',
+        //             value: 'rej2+mos1@rice.edu',
+        //             is_verified: true,
+        //             is_guessed_preferred: true
+        //         }
+        //     ],
+        //     applications: [
+        //         {
+        //             id: 5,
+        //             name: 'OpenStax CMS Dev'
+        //         }
+        //     ]
+        // });
+        // // eslint-disable-next-line no-unreachable
         return fetch(accountsUrl, {credentials: 'include'})
             .then(
                 (response) => {

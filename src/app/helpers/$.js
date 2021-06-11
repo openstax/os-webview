@@ -73,8 +73,6 @@ const browserId = () => {
 $.isSupported = () => {
     const info = browserId();
 
-    console.info('Browser info:', info);
-    console.info('Version', window.navigator.appVersion);
     return (
         (info.name === 'Chrome' && parseFloat(info.version) >= 79) ||
         (info.name === 'Edge' && parseFloat(info.version) >= 79) ||

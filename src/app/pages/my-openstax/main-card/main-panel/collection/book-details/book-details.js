@@ -26,7 +26,6 @@ function useAdoptionStatus(book) {
     const thisAdoption = adoptions[book.label];
     const statusValue = thisAdoption[0].stageName;
 
-    console.info('SV', statusValue);
     return statusValue.toLowerCase().includes('interest') ?
         'I am interested in this book' :
         'I have adopted this book';
@@ -88,23 +87,25 @@ export default function BookDetails({book}) {
                         <RawHTML className="summary-text" html={summaryText} />
                     </div>
                 </div>
-                <div className="resources">
-                    <h3 className="top-bar subdivision">
-                        OpenStax resources and technology available for this book
-                    </h3>
-                    <div className="subdivision">
-                    </div>
-                </div>
-                <div className="partners">
-                    <div className="text-block">
-                        <h3>Technology Partners</h3>
-                        <div>
-                            We partner with dozens of external technology partners to
-                            help you find the best solution for your course.
+                <div className="after-summary">
+                    <div className="resources">
+                        <h3 className="top-bar subdivision">
+                            OpenStax resources and technology available for this book
+                        </h3>
+                        <div className="subdivision">
                         </div>
-                        <a href="/partners" className="btn" onClick={goToPartners}>Explore options</a>
                     </div>
-                    <ClippedImage src="/images/my-openstax/partners-bg.png" alt="" />
+                    <div className="partners">
+                        <div className="text-block">
+                            <h3>Technology Partners</h3>
+                            <div>
+                                We partner with dozens of external technology partners to
+                                help you find the best solution for your course.
+                            </div>
+                            <a href="/partners" className="btn" onClick={goToPartners}>Explore options</a>
+                        </div>
+                        <ClippedImage src="/images/my-openstax/partners-bg.png" alt="" />
+                    </div>
                 </div>
             </div>
         </div>

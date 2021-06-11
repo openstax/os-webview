@@ -64,7 +64,7 @@
 
   .banner {
     @include width-up-to($tablet-max) {
-      padding: 1rem 3rem;
+      padding: 1rem $normal-margin;
     }
 
     grid-area: banner;

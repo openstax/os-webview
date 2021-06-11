@@ -32,11 +32,11 @@ dialog {
         background-color: ui-color(form-bg);
         display: flex;
         justify-content: space-between;
+        min-height: 5rem;
         padding: $normal-margin 1.7rem;
 
         @include width-up-to($phone-max) {
             align-items: center;
-            min-height: 7rem;
         }
 
         @include wider-than($phone-max) {

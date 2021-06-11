@@ -3,9 +3,12 @@
 dialog .add-book {
     display: flex;
     flex-direction: column;
-    margin: -1rem 0; // Counters padding in dialog .content
     row-gap: 1rem;
-    width: 54rem;
+
+    @include wider-than($phone-max) {
+        margin: -1rem 0; // Counters padding in dialog .content
+        width: 54rem;
+    }
 
     .instructions {
         @include set-font(helper-label);

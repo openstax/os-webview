@@ -163,6 +163,9 @@ export default function AddBookForm({afterSubmit}) {
         afterSubmit();
     }
 
+    console.info('Books are', books);
+    console.info('Suggestions', suggestions);
+
     return (
         <form className="add-book" onSubmit={onSubmit}>
             <div className="instructions">

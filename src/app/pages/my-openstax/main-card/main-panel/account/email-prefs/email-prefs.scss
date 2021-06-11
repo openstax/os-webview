@@ -1,41 +1,46 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 #email-prefs {
-  .labeled-checkbox {
-    align-items: center;
-    display: flex;
-    margin: 0.7rem 0;
+    .labeled-checkbox {
+        align-items: start;
+        display: grid;
+        grid-template-columns: 3rem 1fr;
+        line-height: 2.2rem;
+        margin: 1rem 0 0.7rem;
 
-    $box-size: 1.8rem;
+        $box-size: 2rem;
 
-    .checkbox {
-      align-items: center;
-      border: thin solid ui-color(form-border);
-      border-radius: 0.2rem;
-      display: flex;
-      height: $box-size;
-      justify-content: center;
-      margin-bottom: 0.4rem;
-      margin-right: 1.1rem;
-      overflow: hidden;
-      width: $box-size;
+        .checkbox {
+            align-items: center;
+            border: thin solid ui-color(form-border);
+            border-radius: 0.2rem;
+            display: flex;
+            height: $box-size;
+            justify-content: center;
+            overflow: hidden;
+            width: $box-size;
 
-      &[aria-checked='true'] {
-        background-color: text-color(link);
-        border-color: text-color(link);
-        color: text-color(white);
-        font-size: $box-size;
-      }
+            &[aria-checked='true'] {
+                background-color: text-color(link);
+                border-color: text-color(link);
+                color: text-color(white);
+                font-size: $box-size;
+            }
+        }
+
+
+        .description {
+            @include set-font(helper-label);
+        }
+
+        .message {
+            margin-left: 2rem;
+
+            &.fadeout {
+                opacity: 0;
+                transition: visibility 0s 2s, opacity 2s linear;
+                visibility: hidden;
+            }
+        }
     }
-
-    .message {
-      margin-left: 2rem;
-
-      &.fadeout {
-        opacity: 0;
-        transition: visibility 0s 2s, opacity 2s linear;
-        visibility: hidden;
-      }
-    }
-  }
 }

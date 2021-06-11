@@ -20,7 +20,7 @@ function useEmails(accountsData) {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        setData(accountsData.contact_infos
+        setData((accountsData.contact_infos || [])
             .filter((info) => info.type === 'EmailAddress')
             .map((info) => ({
                 address: info.value,

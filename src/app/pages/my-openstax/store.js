@@ -1,8 +1,8 @@
 import { createStoreon } from 'storeon';
-import emailPrefs from './store/email-prefs';
 import user from './store/user';
+import lists from './store/lists';
 import schoolLookup from './store/school-lookup';
 
 export const store = createStoreon([
-    user, emailPrefs, schoolLookup
+    user, schoolLookup, lists
 ]);

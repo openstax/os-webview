@@ -4,9 +4,10 @@
     > section {
         display: flex;
         flex-direction: column;
-        grid-row-gap: 3rem;
         min-height: 20rem;
         position: relative;
+
+        @include scale-feature(row-gap, 2rem, 3rem);
 
         &:not(:last-child) {
             border-bottom: thin solid ui-color(form-border);
@@ -19,7 +20,7 @@
         position: absolute;
         right: 0;
         text-decoration: none;
-        top: 1rem;
+        top: 0;
     }
 
     .email {
@@ -42,7 +43,8 @@
 
 .fields {
     display: grid;
-    grid-gap: 3rem;
+
+    @include scale-feature(gap, 2rem, 3rem);
 
     &.general-fields {
         grid-template-columns: repeat(auto-fill, minmax(24rem, 36rem));

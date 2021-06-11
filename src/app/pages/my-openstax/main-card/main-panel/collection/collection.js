@@ -18,9 +18,6 @@ function Collection({id, hidden}) {
         .filter((b) => adoptions[b][0].stageName.includes('Interest'))
         .reduce((a, b) => {a[b]=adoptions[b]; return a;}, {});
 
-
-    console.info('Actual adoptions from', adoptions);
-
     return (
         <section id={id} hidden={hidden}>
             <h2>My Collection</h2>

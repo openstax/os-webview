@@ -12,7 +12,7 @@
 
     .subdivision {
         @include width-up-to($tablet-max) {
-            padding: $normal-margin;
+            padding: 0;
         }
 
         @include wider-than($tablet-max) {
@@ -27,12 +27,19 @@
         column-gap: 3rem;
 
         @include width-up-to($tablet-max) {
+            column-gap: 0;
             grid-template: 'back back'
             'status edit';
+            padding: 0;
+
+            > * {
+                padding: $normal-margin;
+            }
         }
 
         @include wider-than($tablet-max) {
             grid-template-columns: 1fr auto auto;
+            padding: $normal-margin;
         }
 
         .back {
@@ -51,6 +58,8 @@
         display: flex;
         flex-direction: column;
         row-gap: 2rem;
+
+        @include scale-feature(padding-bottom, 2rem, 3rem);
     }
 
     .icon-and-text {
@@ -73,9 +82,12 @@
         align-items: center;
         gap: 2rem;
 
+        @include scale-feature(margin-bottom, 0, 2rem);
+
         @include width-up-to($phone-max) {
             display: flex;
             flex-direction: column;
+            padding: 1rem $normal-margin;
         }
 
         @include width-between($phone-max, $tablet-max) {
@@ -84,6 +96,7 @@
             grid-template: 'title title title'
             'cover button link'
             'summary summary summary' 1fr / min-content auto 1fr;
+            padding: 1rem $normal-margin;
         }
 
         @include wider-than($tablet-max) {
@@ -127,14 +140,26 @@
             grid-area: summary;
 
             .summary-text {
-                max-height: 17rem;
+                display: -webkit-box;
+                -webkit-line-clamp: 4;
+                -webkit-box-orient: vertical;
                 overflow: hidden;
-                position: relative;
+                height: 10rem;
 
                 > * {
                     margin: 0;
                 }
             }
+        }
+    }
+
+    .after-summary {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+
+        @include width-up-to($tablet-max) {
+            padding: 0 $normal-margin;
         }
     }
 
@@ -145,6 +170,9 @@
 
         .top-bar {
             background-color: ui-color(page-bg);
+            display: flex;
+            justify-content: center;
+            padding: $normal-margin;
             text-align: center;
         }
     }

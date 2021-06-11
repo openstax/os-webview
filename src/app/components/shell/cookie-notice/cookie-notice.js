@@ -3,23 +3,9 @@ import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FooterDialog} from '~/components/dialog/dialog';
 import accountsModel from '~/models/usermodel';
 import analytics from '~/helpers/analytics';
+import cookie from '~/helpers/cookie';
 import './cookie-notice.scss';
 
-const cookie = {
-    get hash() {
-        return decodeURIComponent(document.cookie)
-            .split('; ')
-            .reduce((a, b) => {
-                const [key, val] = b.split('=');
-
-                a[key] = val;
-                return a;
-            }, {});
-    },
-    setKey(key) {
-        document.cookie = `${key}=true;path=/;expires=Tue, 19 Jan 2038 03:14:07 GMT`;
-    }
-};
 const ACKNOWLEDGEMENT_KEY = 'cookie_notice_acknowledged';
 
 function acknowledged() {

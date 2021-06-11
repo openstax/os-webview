@@ -1,50 +1,43 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 dialog {
-  border: 0;
-  color: inherit;
-  display: grid;
-  grid-template-rows: auto 1fr;
-  padding: 0;
-  position: static;
-  width: 100%;
-
-  > .title-bar,
-  > .content {
-    padding: 3rem;
-  }
-
-  > .content {
-    @include width-up-to($phone-max) {
-      padding: $normal-margin;
-    }
-
-    @include wider-than($phone-max) {
-      padding: 3rem;
-    }
-
+    border: 0;
+    color: inherit;
     display: grid;
-    grid-template-rows: 100%;
-    max-height: calc(100vh - 16.6rem);
-    overflow: hidden;
-  }
+    grid-template-rows: auto 1fr;
+    padding: 0;
+    position: static;
+    width: 100%;
 
-  .title-bar {
-    @include set-font(h4);
+    > .content {
+        @include width-up-to($tablet-max) {
+            padding: $normal-margin;
+        }
 
-    align-items: center;
-    background-color: ui-color(default);
-    display: flex;
-    grid-gap: 5rem;
-    justify-content: space-between;
-    padding: 3rem {
-      bottom: 2rem;
-      top: 2rem;
+        @include wider-than($tablet-max) {
+            max-height: calc(100vh - 16.6rem);
+            padding: 3rem;
+        }
+
+        display: grid;
+        grid-template-rows: 100%;
+        overflow: hidden;
+        padding: 3rem;
     }
-    white-space: nowrap;
 
-    .put-away {
-      font-size: 2.4rem;
+    .title-bar {
+        @include set-font(h4);
+
+        align-content: center;
+        background-color: ui-color(page-bg);
+        display: grid;
+        grid-gap: 5rem;
+        grid-template-columns: 1fr auto;
+        grid-template-rows: 100%;
+
+        .put-away {
+            font-size: 3.2rem;
+            height: 100%;
+        }
     }
-  }
 }

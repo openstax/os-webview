@@ -23,14 +23,19 @@
 
     .cards {
         display: grid;
-        gap: 3rem;
-        grid-template-columns: repeat(auto-fit, calc(33.3% - 2rem));
-        margin-top: 2rem;
+        gap: 2rem 3rem;
 
-        .card-and-qs {
+        @include scale-feature(margin-top, 1rem, 2rem);
+
+        @include width-up-to($tablet-max) {
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+        }
+
+        @include wider-than($tablet-max) {
+            grid-auto-flow: column;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: auto auto auto;
         }
 
         .card {
@@ -62,12 +67,22 @@
 
         .btn {
             @include button();
+
+            height: 4rem;
+            padding: 0 1rem;
         }
 
         .questions {
             display: flex;
             flex-direction: column;
-            gap: 0.7rem;
+
+            @include width-up-to($tablet-max) {
+                margin-bottom: 2rem;
+            }
+
+            @include wider-than($tablet-max) {
+                gap: 0.7rem;
+            }
 
             a {
                 text-decoration: none;

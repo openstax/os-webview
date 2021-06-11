@@ -1,44 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
+import useSubscriptions from '~/pages/my-openstax/store/use-subscriptions';
 import './email-prefs.scss';
-import { useStoreon } from 'storeon/preact';
-
-const PAUSE_BEFORE_FADE = 5000;
-
-function useMessageInfo(savedTime) {
-    const [messageClass, updateMessageClass] = useState('');
-
-    function setMessageClass() {
-        const showStatus = savedTime && Date.now() - savedTime < PAUSE_BEFORE_FADE;
-
-        if (savedTime && showStatus) {
-            updateMessageClass('');
-            window.setTimeout(setMessageClass, PAUSE_BEFORE_FADE);
-        } else {
-            updateMessageClass('fadeout');
-        }
-    }
-
-    setMessageClass();
-
-    return {
-        message: savedTime ? 'Saved' : '',
-        messageClass
-    };
-}
 
 function Checkbox({ item }) {
-    const { dispatch } = useStoreon('emailPrefs');
-    const { label, selected: checked, saved } = item;
+    const {add, remove} = useSubscriptions();
+    const label = item.title;
+    const checked = item.subscribed;
     const id = `${label}-label`;
-    const { message, messageClass } = useMessageInfo(saved);
 
     function toggle() {
-        dispatch('emailPrefs/update', {
-            item,
-            selected: !checked
-        });
+        const action = checked ? remove: add;
+
+        action(item);
     }
     function toggleByKey(event) {
         if (['Enter', ' '].includes(event.key)) {
@@ -59,31 +34,26 @@ function Checkbox({ item }) {
                     <FontAwesomeIcon icon={faCheck} />
                 }
             </span>
-            <label id={id}>{label}</label>
-            <div className={`message ${messageClass}`}>{message}</div>
+            <label id={id}>
+                {label}
+                <br />
+                <span className="description">{item.description}</span>
+            </label>
         </div>
     );
 }
 
 export default function EmailPrefs() {
-    const { emailPrefs } = useStoreon('emailPrefs');
+    const {lists} = useSubscriptions();
 
     return (
         <section id='email-prefs'>
             <h2>Email Preferences</h2>
             <section>
-                <h3>General updates</h3>
+                <h3>Updates</h3>
                 {
-                    emailPrefs.general.map((item) =>
-                        <Checkbox item={item} key={item.label} />
-                    )
-                }
-            </section>
-            <section>
-                <h3>Subject updates</h3>
-                {
-                    emailPrefs.subjectUpdates.map((item) =>
-                        <Checkbox item={item} key={item.label} />
+                    lists.map((item) =>
+                        <Checkbox item={item} key={item.pardotId} />
                     )
                 }
             </section>

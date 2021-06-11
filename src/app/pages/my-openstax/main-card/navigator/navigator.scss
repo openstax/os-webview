@@ -1,39 +1,45 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 nav {
-  @include width-up-to($tablet-max) {
-    display: grid;
-    grid-auto-flow: column;
-  }
-
-  min-width: 26rem;
-
-  .nav-item {
-    @include set-font(body-large);
-
     @include width-up-to($tablet-max) {
-      border: thin solid ui-color(form-border);
-      justify-content: center;
-      line-height: normal;
-      padding: 0 1rem;
+        display: grid;
+        grid-auto-flow: column;
     }
 
-    @include wider-than($tablet-max) {
-      padding: 0 5rem;
+    min-width: 26rem;
+    position: relative;
+
+    .nav-item {
+
+        @include width-up-to($tablet-max) {
+            @include set-font(body-regular);
+
+            border: thin solid ui-color(form-border);
+            height: 6rem;
+            justify-content: center;
+            line-height: normal;
+            padding: 0 1rem;
+            text-align: center;
+        }
+
+        @include wider-than($tablet-max) {
+            @include set-font(body-large);
+
+            height: $form-element-height;
+            padding: 0 5rem;
+        }
+
+        align-items: center;
+        color: inherit;
+        display: flex;
+        text-decoration: none;
+
+        &.active {
+            @include title-font(1.8rem);
+
+            background-color: #f5f5f5;
+            border-radius: 0.3rem;
+            color: inherit;
+        }
     }
-
-    align-items: center;
-    color: inherit;
-    display: flex;
-    height: $form-element-height;
-    text-decoration: none;
-
-    &.active {
-      @include title-font(1.8rem);
-
-      background-color: #f5f5f5;
-      border-radius: 0.3rem;
-      color: inherit;
-    }
-  }
 }

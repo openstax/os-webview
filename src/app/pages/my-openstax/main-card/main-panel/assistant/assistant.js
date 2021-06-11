@@ -5,7 +5,7 @@ import './assistant.scss';
 
 function Card({data}) {
     return (
-        <div className="card-and-qs">
+        <React.Fragment>
             <h3>{data.headline}</h3>
             <div className="card">
                 <ClippedImage src={data.img} alt="" />
@@ -14,15 +14,14 @@ function Card({data}) {
                     <a className="btn" href={data.url}>{data.linkText}</a>
                 </div>
             </div>
-        </div>
-    );
-}
-
-function Qs({data}) {
-    return (
-        <div className="questions">
-            {data.questions.map((q) => <a href={q.url} key={q.text}>{q.text}</a>)}
-        </div>
+            <div className="questions">
+                {
+                    data.questions.map((q) =>
+                        <a href={q.url} key={q.text}>{q.text}</a>
+                    )
+                }
+            </div>
+        </React.Fragment>
     );
 }
 
@@ -96,7 +95,6 @@ export default function Assistant({id, hidden}) {
             </div>
             <div className="cards">
                 {cards.map((c) => <Card key={c.headline} data={c} />)}
-                {cards.map((c) => <Qs key={c.headline} data={c} />)}
             </div>
         </section>
     );
