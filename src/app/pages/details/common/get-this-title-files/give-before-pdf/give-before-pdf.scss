@@ -1,0 +1,88 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.give-before-pdf {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: $normal-margin;
+    padding: 3rem 0;
+    text-align: center;
+
+    .download-icon {
+        font-size: 4rem;
+    }
+
+    &.loading {
+        @include title-font(1.8rem);
+
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        height: 70rem;
+        justify-content: center;
+        max-height: 100%;
+        width: 70rem;
+    }
+
+    h1 {
+        @include title-font(1.8rem);
+
+        margin: 0;
+    }
+
+    hr {
+        border: 0;
+        border-bottom: thin solid ui-color(form-border);
+        height: 0;
+        max-width: 100%;
+        width: 70rem;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    .header-image {
+        border-radius: 50%;
+        height: 16.5rem;
+        margin: $normal-margin 0;
+        width: 16.5rem;
+    }
+
+    .header-title {
+        font-weight: bold;
+    }
+
+    .button-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: $normal-margin;
+    }
+
+    .btn {
+        @include button();
+
+        gap: 0.5rem;
+
+        &.primary {
+            @extend %primary;
+        }
+        &.secondary {
+            @extend %secondary;
+        }
+        &.go-to {
+            width: 22rem;
+
+            &::after {
+                content: '';
+            }
+        }
+    }
+
+    .giving-optional {
+        @include set-font(helper-label);
+
+        color: text-color(helper);
+        font-style: italic;
+    }
+}
