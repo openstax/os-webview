@@ -75,33 +75,36 @@ export default function Dialog({
 
 export function useDialog() {
     const [showDialog, updateShowDialog] = React.useState(false);
-    const open = () => updateShowDialog(true);
-    const close = () => updateShowDialog(false);
 
-    function BoundDialog({
-        title, children, modal = true, className,
-        showPutAway=true,
-        ...otherProps
-    }) {
-        const Modal = modal ? ReactModal : React.Fragment;
+    return React.useMemo(() => {
+        const open = () => updateShowDialog(true);
+        const close = () => updateShowDialog(false);
 
-        return (
-            <Modal
-                isOpen={showDialog}
-                className='modal'
-                overlayClassName="modal-overlay"
-                bodyOpenClassName="no-scroll-dialog"
-                {...otherProps}
-            >
-                <Dialog
-                    title={title} className={className} isOpen={showDialog}
-                    onPutAway={showPutAway && close}
+        function BoundDialog({
+            title, children, modal = true, className,
+            showPutAway=true,
+            ...otherProps
+        }) {
+            const Modal = modal ? ReactModal : React.Fragment;
+
+            return (
+                <Modal
+                    isOpen={showDialog}
+                    className='modal'
+                    overlayClassName="modal-overlay"
+                    bodyOpenClassName="no-scroll-dialog"
+                    {...otherProps}
                 >
-                    {children}
-                </Dialog>
-            </Modal>
-        );
-    }
+                    <Dialog
+                        title={title} className={className} isOpen={showDialog}
+                        onPutAway={showPutAway && close}
+                    >
+                        {children}
+                    </Dialog>
+                </Modal>
+            );
+        }
 
-    return [BoundDialog, open, close];
+        return [BoundDialog, open, close];
+    }, [showDialog]);
 }
