@@ -14,6 +14,7 @@ import CompCopyRequestForm from './request-form/request-form';
 import CustomizationForm from '../customization-form/customization-form';
 import DetailsContext from '../../context';
 import {useUserStatus} from '../hooks';
+import linkhelper from '~/helpers/link';
 import cn from 'classnames';
 
 const UserContext = React.createContext({});
@@ -162,6 +163,28 @@ function CustomizationDialog({isOpen, toggle}) {
     );
 }
 
+// Adapted from get-this-title interceptLinkClicks
+function interceptLinkClicks(event, model, userInfo) {
+    const el = linkhelper.validUrlClick(event);
+    const book = model.bookModel.id;
+
+    if (!el) {
+        return;
+    }
+    const trackThis = userInfo.accounts_id && el.dataset.track;
+
+    if (trackThis) {
+        /* eslint-disable camelcase */
+        event.trackingInfo = {
+            book,
+            account_id: userInfo.accounts_id,
+            book_format: el.dataset.track,
+            contact_id: userInfo.salesforce_contact_id
+        };
+        /* eslint-enable camelcase */
+    }
+}
+
 function LeftButton({model}) {
     const [isOpen, toggle] = useToggle(false);
     const isCompCopy = model.link.url.endsWith('comp-copy');
@@ -171,11 +194,14 @@ function LeftButton({model}) {
         'download': faDownload,
         'external-link-alt': faExternalLinkAlt
     })[model.iconType] || faExclamationTriangle;
+    const {userInfo} = useContext(UserContext);
 
     function openDialog(event) {
         if (isCompCopy || isCustomization) {
             event.preventDefault();
             toggle();
+        } else {
+            interceptLinkClicks(event, model, userInfo);
         }
     }
 
@@ -186,6 +212,7 @@ function LeftButton({model}) {
                 href={model.link.url}
                 data-local={model.iconType === 'lock'}
                 onClick={openDialog}
+                data-track={model.heading}
             >
                 <FontAwesomeIcon icon={icon} />
                 <span>{model.link.text}</span>
