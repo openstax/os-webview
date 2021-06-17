@@ -1,7 +1,7 @@
 import $ from './helpers/$';
 import appElement from '/src/app/components/shell/shell';
 import ReactDOM from 'react-dom';
-// import './sentry';
+import './sentry';
 import '../styles/main.scss';
 
 if (!$.isSupported()) {
