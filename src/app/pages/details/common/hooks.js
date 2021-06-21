@@ -3,6 +3,7 @@ import userModel from '~/models/usermodel';
 import tableOfContentsHtml from '~/models/table-of-contents-html';
 import partnerFeaturePromise, {tooltipText} from '~/models/salesforce-partners';
 import shuffle from 'lodash/shuffle';
+import debounce from 'lodash/debounce';
 import $ from '~/helpers/$';
 
 export function useTableOfContents(model) {
@@ -27,6 +28,8 @@ export function useTableOfContents(model) {
     return tocHtml;
 }
 
+const debouncedDebug = debounce((...args) => console.debug(...args), 100);
+
 function getUserStatusPromise() {
     const isInstructor = (user) => {
         return user && user.username && 'groups' in user && user.groups.includes('Faculty');
@@ -41,7 +44,7 @@ function getUserStatusPromise() {
         } else if (!('pending_verification' in user)) {
             console.debug('No pending_verification flag set in user info', user);
         } else {
-            console.debug('User info:', {
+            debouncedDebug('User info:', {
                 email: user.email,
                 pendingVerification: user.pending_verification,
                 groups: user.groups
