@@ -30,13 +30,9 @@ function OpenGiveInNewWindow(event) {
 }
 
 function GiveBeforePdf({
-    link, showThankYou, setShowThankYou, doneDownloading, close
+    link, showThankYou, setShowThankYou, doneDownloading, close, data
 }) {
-    // Gonna fetch data
-    const data1 = useDataFromSlug('donations/donation-popup');
-    const data = data1 ? data1[0] : {};
-
-    if (!data1 || !doneDownloading) {
+    if (!data.download_ready || !doneDownloading) {
         return <Downloading data={data} />;
     }
 
@@ -81,6 +77,8 @@ function GiveBeforePdf({
 
 export default function useGiveDialog() {
     const [Dialog, open, close] = useDialog();
+    const data1 = useDataFromSlug('donations/donation-popup');
+    const data = data1 ? data1[0] : {};
 
     function GiveDialog({link}) {
         const [showThankYou, setShowThankYou] = React.useState(false);
@@ -96,7 +94,7 @@ export default function useGiveDialog() {
                 <GiveBeforePdf
                     {...{
                         link, showThankYou, setShowThankYou,
-                        doneDownloading, close
+                        doneDownloading, close, data
                     }} />
             </Dialog>
         );
@@ -104,6 +102,7 @@ export default function useGiveDialog() {
 
     return {
         GiveDialog,
-        open
+        open,
+        enabled: !data.hide_donation_popup
     };
 }
