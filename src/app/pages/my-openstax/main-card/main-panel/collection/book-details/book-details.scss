@@ -175,6 +175,51 @@
             padding: $normal-margin;
             text-align: center;
         }
+
+        .subdivision:not(.top-bar) {
+            padding: 0;
+        }
+
+        .resource-panel {
+            gap: 2rem 3rem;
+            display: grid;
+            padding: 2.5rem 3rem;
+
+            @include width-up-to($phone-max) {
+                grid-template-columns: 100%;
+            }
+
+            @include wider-than($phone-max) {
+                grid-template-columns: 26fr 60fr;
+            }
+
+            &:not(:first-child) {
+                border-top: thin solid ui-color(form-border);
+            }
+
+            .left-side {
+                display: flex;
+                flex-direction: column;
+                gap: $normal-margin;
+
+                img {
+                    height: 3rem;
+
+                    &.tutor-logo {
+                        height: auto;
+                        width: 100%;
+                    }
+                }
+            }
+
+            ul {
+                margin: 0;
+            }
+
+            li {
+                margin-bottom: 0.5rem;
+            }
+        }
     }
 
     .partners {
