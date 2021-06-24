@@ -9,7 +9,7 @@ import analytics from '~/helpers/analytics';
 import routerBus from '~/helpers/router-bus';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 import $ from '~/helpers/$';
-import sfApiFetch from '~/pages/my-openstax/store/sfapi';
+import {fetchUser} from '~/pages/my-openstax/store/user';
 
 const PAGES = [
     'about',
@@ -167,9 +167,7 @@ function Error404() {
 function useHomeOrMyOpenStax() {
     const [user, setUser] = React.useState({error: 'not loaded'});
 
-    React.useEffect(() => {
-        sfApiFetch('users').then(setUser);
-    }, []);
+    React.useEffect(() => fetchUser().then(setUser), []);
 
     return user.error ? 'home' : 'my-openstax';
 }

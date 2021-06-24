@@ -1,8 +1,7 @@
 import React from 'react';
 import {useDialog} from '~/components/dialog/dialog';
 import cookie from '~/helpers/cookie';
-import sfApiFetch from '~/pages/my-openstax/store/sfapi';
-import $ from '~/helpers/$';
+import {fetchUser} from '~/pages/my-openstax/store/user';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import routerBus from '~/helpers/router-bus';
 import './welcome.scss';
@@ -30,7 +29,7 @@ function useSFUser() {
     const [data, setData] = React.useState();
 
     React.useEffect(() => {
-        sfApiFetch('users').then((d) => setData($.camelCaseKeys(d)));
+        fetchUser().then((d) => setData(d));
     }, []);
 
     return data;
@@ -50,10 +49,15 @@ function WalkthroughButtons({welcomeDone}) {
         goToMyOpenStax();
     }
 
+    function showWalkthrough() {
+        window.localStorage.showMyOpenStaxWalkthrough = true;
+        goToMyOpenStax();
+    }
+
     return (
         <div className="button-row">
             <button onClick={skipWalkthrough}>Skip walkthrough</button>
-            <button className="primary" onClick={goToMyOpenStax}>Show me around</button>
+            <button className="primary" onClick={showWalkthrough}>Show me around</button>
         </div>
     );
 }
@@ -118,7 +122,7 @@ export default function Welcome() {
         !cookie.hash.hasBeenWelcomed
     );
 
-    if (!showWelcome || !userModel || userModel.error) {
+    if (!showWelcome || !userModel || userModel.error || userModel.lead.length === 0) {
         return null;
     }
 

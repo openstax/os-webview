@@ -11,7 +11,6 @@ async function loadData() {
     const {books} = await cmsFetch('books?format=json');
     const sfBooks = uniqBy(books.filter(isSalesforceBook), 'salesforce_abbreviation');
 
-    console.info('Got books', {books, sfBooks});
     return sfBooks
         .map((book) => ({
             label: book.salesforce_name,

@@ -14,7 +14,7 @@ function useWalkthroughCookie() {
             cookie.setKey('walkthroughDone');
         }
         return !cookie.hash.walkthroughDone;
-    }, !cookie.hash.walkthroughDone);
+    }, window.localStorage.showMyOpenStaxWalkthrough && !cookie.hash.walkthroughDone);
 }
 
 // It needs to be shared so that all instances react to the cookie being set
