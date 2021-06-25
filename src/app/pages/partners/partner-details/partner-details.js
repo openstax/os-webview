@@ -42,7 +42,7 @@ function RequestInfoButton({infoUrl, infoText, partnerName}) {
     }
 
     return (
-        infoUrl &&
+        infoUrl && infoText &&
             <section>
                 <a className="btn primary" href={infoUrl} onClick={trackInfoRequest}>{infoText}</a>
             </section>
