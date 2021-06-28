@@ -122,7 +122,7 @@ function Subjects({model}) {
             filter: newCategory,
             path: pagePath
         });
-        document.title = (categoryEntry && 'title' in categoryEntry) ? categoryEntry.title : model.title;
+        document.title = (categoryEntry && categoryEntry.title) || model.title;
     }
 
     const {
