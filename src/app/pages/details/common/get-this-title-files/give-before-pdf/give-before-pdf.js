@@ -78,7 +78,7 @@ function GiveBeforePdf({
 export default function useGiveDialog() {
     const [Dialog, open, close] = useDialog();
     const data1 = useDataFromSlug('donations/donation-popup');
-    const data = data1 ? data1[0] : {};
+    const data = (data1 && data1.length > 0) ? data1[0] : {};
 
     function GiveDialog({link}) {
         const [showThankYou, setShowThankYou] = React.useState(false);
