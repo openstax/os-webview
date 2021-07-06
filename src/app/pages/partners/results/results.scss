@@ -2,100 +2,99 @@
 @import 'mixins/placeholder-selectors';
 
 .partners .results {
-    padding: 0 0 20rem;
+    align-items: start;
+    padding: 2rem 0 20rem;
+    row-gap: 2rem;
 
-    @include wider-than($phone-max) {
-        padding-top: 5rem;
+    @include width-up-to($phone-max) {
+        padding: 0 $normal-margin 6rem;
     }
 
-    .boxed {
+    h2 {
+        margin: 0;
+    }
+
+    .grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+        padding: 0;
 
         @include width-up-to($phone-max) {
             grid-gap: 1.5rem;
+            justify-content: center;
         }
 
         @include wider-than($phone-max) {
             grid-gap: 3rem;
+            justify-content: left;
         }
 
-        &.grid {
-            @include width-up-to($phone-max) {
-                justify-content: center;
+        .card {
+            background-color: ui-color(white);
+            border-radius: 0.3rem;
+            box-shadow: $card-shadow;
+            color: inherit;
+            display: grid;
+            grid-row-gap: 1rem;
+            grid-template: 'image'  8rem
+            'title'
+            'tags' 1fr
+            'rating';
+            height: 100%;
+            padding: $normal-margin;
+            text-decoration: none;
+
+            .logo {
+                align-self: center;
+                grid-area: image;
+                justify-self: center;
+
+                > img {
+                    max-height: 8rem;
+                    max-width: 100%;
+                }
             }
 
-            @include wider-than($phone-max) {
-                justify-content: left;
+            .badge {
+                @extend %verified-badge;
+
+                align-self: start;
+                grid-area: image;
+                justify-self: end;
+                z-index: auto;
             }
 
-            .card {
-                background-color: ui-color(white);
-                border-radius: 0.3rem;
-                box-shadow: $card-shadow;
-                color: inherit;
+            .resource-title {
+                @include set-font(h4);
+
+                font-weight: bold;
+                grid-area: title;
+                line-height: normal;
+            }
+
+            .tags,
+            .stars-and-count {
+                @include body-font(1.2rem);
+
+                color: text-color(helper);
+            }
+
+            .tags {
+                grid-area: tags;
+            }
+
+            .stars-and-count {
+                align-items: center;
+                grid-area: rating;
                 display: grid;
-                grid-row-gap: 1rem;
-                grid-template: 'image'  8rem
-                'title'
-                'tags' 1fr
-                'rating';
-                height: 100%;
-                padding: $normal-margin;
-                text-decoration: none;
+                grid-auto-flow: column;
+                grid-column-gap: 0.7rem;
+                justify-content: left;
 
-                .logo {
-                    align-self: center;
-                    grid-area: image;
-                    justify-self: center;
-
-                    > img {
-                        max-height: 8rem;
-                        max-width: 100%;
-                    }
-                }
-
-                .badge {
-                    @extend %verified-badge;
-
-                    align-self: start;
-                    grid-area: image;
-                    justify-self: end;
-                    z-index: auto;
-                }
-
-                .resource-title {
-                    @include set-font(h4);
-
-                    font-weight: bold;
-                    grid-area: title;
-                    line-height: normal;
-                }
-
-                .tags,
-                .stars-and-count {
-                    @include body-font(1.2rem);
-
-                    color: text-color(helper);
-                }
-
-                .tags {
-                    grid-area: tags;
-                }
-
-                .stars-and-count {
-                    align-items: center;
-                    grid-area: rating;
-                    display: grid;
-                    grid-auto-flow: column;
-                    grid-column-gap: 0.7rem;
-                    justify-content: left;
-
-                    .stars {
-                        color: os-color(yellow);
-                        font-size: 75%;
-                        padding-bottom: 3%;
-                    }
+                .stars {
+                    color: os-color(yellow);
+                    font-size: 75%;
+                    padding-bottom: 3%;
                 }
             }
         }
