@@ -30,7 +30,7 @@ export default function useDialog() {
         return (
             <Modal
                 isOpen={showDialog}
-                className='modal'
+                className='my-openstax-dialog'
                 overlayClassName="modal-overlay"
                 bodyOpenClassName="no-scroll-dialog"
                 {...otherProps}

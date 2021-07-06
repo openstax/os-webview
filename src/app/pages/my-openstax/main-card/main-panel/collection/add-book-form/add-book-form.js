@@ -10,6 +10,7 @@ import {salesforce} from '~/models/salesforce';
 import useAdoptions from '~/pages/my-openstax/store/use-adoptions';
 import useInstitutions from '~/pages/my-openstax/store/use-institutions';
 import useBooks from '~/pages/my-openstax/store/use-books';
+import useAccount from '~/pages/my-openstax/store/use-account';
 import './add-book-form.scss';
 
 function Book({ name }) {
@@ -74,10 +75,15 @@ const options = salesforce.adoption(['adopted', 'recommended', 'interest'])
         value: a.value
     }));
 
-function payloadFromFormData(formData) {
+function payloadFromFormData(formData, books) {
+    const bookMightNeedLookup = formData.get('book');
+    const book = books ?
+        books.find((b) => bookMightNeedLookup === b.label).value :
+        bookMightNeedLookup;
+
     return {
         id: formData.getAll('id'),
-        book: formData.get('book'),
+        book,
         adoptionStatus: formData.get('adoptionStatus'),
         schools: formData.getAll('school'),
         students: formData.getAll('students')
@@ -86,7 +92,7 @@ function payloadFromFormData(formData) {
 
 function payloadForRemove(book, adoptionData) {
     return {
-        id: adoptionData.map((a) => a.id),
+        id: adoptionData.map((a) => a.salesforceId),
         book,
         adoptionStatus: 'Previous Adoption',
         schools: adoptionData.map((a) => a.schoolId),
@@ -96,7 +102,7 @@ function payloadForRemove(book, adoptionData) {
 
 export function EditBookForm({book, afterSubmit}) {
     const {adoptions, update} = useAdoptions();
-    const thisAdoption = adoptions[book.label];
+    const thisAdoption = adoptions[book.value];
     const [levelOfUseValue, setLevelOfUseValue] = React.useState(thisAdoption[0].stageName);
 
     function onSubmit(event) {
@@ -110,7 +116,7 @@ export function EditBookForm({book, afterSubmit}) {
     // stage_name should be 'Previous Adoption'
     function removeBook(event) {
         event.preventDefault();
-        update(thisAdoption, payloadForRemove(book.label, thisAdoption));
+        update(thisAdoption, payloadForRemove(book.value, thisAdoption));
         afterSubmit();
     }
 
@@ -125,7 +131,7 @@ export function EditBookForm({book, afterSubmit}) {
             </div>
             <LabeledElement label="Book">
                 {book.label}
-                <input type="hidden" name="book" value={book.label} />
+                <input type="hidden" name="book" value={book.value} />
             </LabeledElement>
             <FormSelect
                 label="Level of use"
@@ -152,28 +158,34 @@ export default function AddBookForm({afterSubmit}) {
     const {adoptions, add} = useAdoptions();
     const alreadyAdoptedNames = Reflect.ownKeys(adoptions);
     const suggestions = books
-        .filter((b) => !alreadyAdoptedNames.includes(b.label)) // this was value...why?
+        .filter((b) => !alreadyAdoptedNames.includes(b.value)) // this was value...why?
         .map((b) => b.label);
+    const ref = React.useRef()
 
     function onSubmit(event) {
         event.preventDefault();
         const formData = new window.FormData(event.target);
 
-        add(payloadFromFormData(formData));
+        add(payloadFromFormData(formData, books));
         afterSubmit();
     }
 
-    console.info('Books are', books);
-    console.info('Suggestions', suggestions);
+    React.useEffect(() => {
+        const firstInput = ref.current.querySelector('[name="book"]');
+
+        firstInput.focus();
+    }, []);
 
     return (
-        <form className="add-book" onSubmit={onSubmit}>
+        <form className="add-book" onSubmit={onSubmit} ref={ref}>
             <div className="instructions">
                 All fields are required
             </div>
             <FormInput
                 label="Book"
-                inputProps={{type: 'text', required: true, name: 'book', autocomplete: 'off'}}
+                inputProps={{
+                    type: 'text', required: true, name: 'book', autocomplete: 'off'
+                }}
                 suggestions={suggestions}
             />
             <FormSelect

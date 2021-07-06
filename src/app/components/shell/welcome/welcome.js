@@ -1,7 +1,10 @@
 import React from 'react';
 import {useDialog} from '~/components/dialog/dialog';
 import cookie from '~/helpers/cookie';
-import {fetchUser} from '~/pages/my-openstax/store/user';
+import { createStoreon } from 'storeon';
+import { StoreContext } from 'storeon/preact';
+import user from '~/pages/my-openstax/store/user';
+import useAccount from '~/pages/my-openstax/store/use-account';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import routerBus from '~/helpers/router-bus';
 import './welcome.scss';
@@ -19,22 +22,11 @@ import './welcome.scss';
 */
 
 // FOR TESTING -- these lines reset the welcome and walkthrough cookies
-if ((/dev|local/).test(window.location.hostname)) {
-    console.info('Resetting welcome and walkthrough cookies'); // Leave this
-    cookie.deleteKey('hasBeenWelcomed');
-    cookie.deleteKey('walkthroughDone');
-}
-
-function useSFUser() {
-    const [data, setData] = React.useState();
-
-    React.useEffect(() => {
-        fetchUser().then((d) => setData(d));
-    }, []);
-
-    return data;
-}
-
+// if ((/dev|local/).test(window.location.hostname)) {
+//     console.info('Resetting welcome and walkthrough cookies'); // Leave this
+//     cookie.deleteKey('hasBeenWelcomed');
+//     cookie.deleteKey('walkthroughDone');
+// }
 
 function WalkthroughButtons({welcomeDone}) {
     function goToMyOpenStax() {
@@ -115,18 +107,17 @@ function CustomDialog({data, welcomeDone}) {
     );
 }
 
-export default function Welcome() {
-    const userModel = useSFUser();
+function Welcome() {
     const [showWelcome, welcomeDone] = React.useReducer(
         () => cookie.setKey('hasBeenWelcomed'),
         !cookie.hash.hasBeenWelcomed
     );
+    const {createdAt, firstName, role} = useAccount();
 
-    if (!showWelcome || !userModel || userModel.error || userModel.lead.length === 0) {
+    if (!showWelcome || !firstName) {
         return null;
     }
 
-    const {createdAt, firstName, role} = userModel.lead[0];
     const elapsedHours = (Date.now() - new Date(createdAt)) / HOUR_IN_MS;
     const isNew = elapsedHours < 1000; // *** CHANGE THIS TO LIKE 24
     const isFaculty = role === 'Faculty';
@@ -134,5 +125,15 @@ export default function Welcome() {
 
     return (
         <CustomDialog data={data} welcomeDone={welcomeDone} />
+    );
+}
+
+export default function WelcomeStoreWrapper() {
+    const store = createStoreon([user]);
+
+    return (
+        <StoreContext.Provider value={store}>
+            <Welcome />
+        </StoreContext.Provider>
     );
 }

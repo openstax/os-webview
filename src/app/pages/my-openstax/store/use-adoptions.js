@@ -39,7 +39,7 @@ function adoptionsFromOpportunities(opportunities) {
 
 export default function useAdoptions() {
     const {user, dispatch} = useStoreon('user');
-    const {accountsId} = useAccount();
+    const {accountsId, contactId} = useAccount();
 
     function add({book, students, schools, adoptionStatus}) {
         const promises = schools.map((s, i) =>
@@ -51,6 +51,7 @@ export default function useAdoptions() {
                         book_name: book,
                         number_of_students: students[i],
                         os_accounts_id: accountsId,
+                        contact_id: contactId,
                         school_id: s,
                         stage_name: adoptionStatus,
                         close_date: today()
@@ -71,10 +72,9 @@ export default function useAdoptions() {
             /* eslint-disable camelcase */
             return isUpdate ?
                 sfApiPost(
-                    `opportunities/${isUpdate.id}`,
+                    `opportunities/${isUpdate.salesforceId}`,
                     {
                         opportunity: {
-                            salesforce_id: isUpdate.salesforceId,
                             book_name: book,
                             number_of_students: students[i],
                             os_accounts_id: accountsId,

@@ -41,7 +41,6 @@ dialog {
 
         @include wider-than($phone-max) {
             align-items: center;
-            color: inherit;
         }
     }
 

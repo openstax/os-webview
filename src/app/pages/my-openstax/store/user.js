@@ -4,8 +4,8 @@ import $ from '~/helpers/$';
 export async function fetchUser() {
     const user = await sfApiFetch('users');
 
-    if (!user.contact && (user.lead||[]).length === 0) {
-        user.error = 'no lead or contact';
+    if (!user.contact) {
+        user.error = 'no contact';
     }
     return $.camelCaseKeys(user);
 }
@@ -15,7 +15,6 @@ export default function (store) {
         user: {
             contact: {},
             opportunity: [],
-            lead: [{}],
             schools: [],
             subscriptions: []
         }

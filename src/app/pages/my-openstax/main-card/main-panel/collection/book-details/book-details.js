@@ -15,7 +15,11 @@ import './book-details.scss';
 
 function useAdoptionStatus(book) {
     const {adoptions} = useAdoptions();
-    const thisAdoption = adoptions[book.label];
+    const thisAdoption = adoptions[book.value];
+
+    if (!thisAdoption) {
+        return null;
+    }
     const statusValue = thisAdoption[0].stageName;
 
     return statusValue.toLowerCase().includes('interest') ?

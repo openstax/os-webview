@@ -17,7 +17,7 @@ function Book({book}) {
 export default function BookList({header, adoptions={}}) {
     const names = Reflect.ownKeys(adoptions);
     const allBooks = useBooks();
-    const books = allBooks.filter((b) => names.includes(b.label));
+    const books = allBooks.filter((b) => names.includes(b.value));
 
     if (books.length === 0) {
         return null;

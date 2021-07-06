@@ -32,20 +32,13 @@ function useEmails(accountsData) {
     return orderBy(data, ['primary', 'verified'], ['desc', 'desc']);
 }
 
-function contactInfo(user) {
-    console.info('Getting contactinfo from', user);
-    const {firstName, lastName, createdAt} = user.contact || user.lead[0];
-
-    return {firstName, lastName, createdAt};
-}
-
 const facultyRoleLookup = {
     'confirmed_faculty': 'Faculty',
     'pending_faculty': 'Faculty'
 };
 
 /*
-    Info comes from user.contact and/or user.lead[0]
+    Info comes from user.contact
 */
 export default function useAccount() {
     const {user} = useStoreon('user');
@@ -56,7 +49,7 @@ export default function useAccount() {
         console.warn('Error reading account:', user.error);
         return {};
     }
-    const {firstName, lastName, createdAt} = contactInfo(user);
+    const {firstName, lastName, createdAt, salesforceId: contactId} = user.contact;
     const facultyVerified = accountsData.facultyStatus === 'confirmed_faculty';
     const role = facultyRoleLookup[accountsData.facultyStatus] || 'Student';
 
@@ -67,6 +60,7 @@ export default function useAccount() {
         emails,
         role,
         facultyVerified,
-        createdAt
+        createdAt,
+        contactId
     };
 }

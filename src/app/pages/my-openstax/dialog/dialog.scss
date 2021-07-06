@@ -1,8 +1,7 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-dialog {
+.my-openstax-dialog dialog {
     border: 0;
-    color: inherit;
     display: grid;
     grid-template-rows: auto 1fr;
     padding: 0;
