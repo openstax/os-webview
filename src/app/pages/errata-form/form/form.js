@@ -68,8 +68,12 @@ function RevisionSchedule() {
 
     return (
         <div className="revision-schedule">
-            Errata received from <b>{start}</b> through <b>{end}</b> will be fixed in the
-            online format for the <b>{semester}</b> semester.
+            Errata received from <b>{start}</b> through <b>{end}</b> will be fixed
+            in the online format for the <b>{semester}</b> semester.
+            <br />
+            PDF versions of OpenStax textbooks are only updated once a year, prior
+            to the fall semester, if there are substantial errata updates to the
+            book that year.
         </div>
     );
 }
