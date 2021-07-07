@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import ResultGrid from './result-grid';
 import {books, types, advanced, sort, resultCount} from '../store';
 import partnerFeaturePromise, {tooltipText} from '~/models/salesforce-partners';
-import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromPromise, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import shuffle from 'lodash/shuffle';
 import orderBy from 'lodash/orderBy';
 import './results.scss';
@@ -111,13 +111,47 @@ function resultEntry(pd) {
         infoUrl: pd.formstack_url,
         verifiedFeatures: pd.verified_by_instructor ? tooltipText : false,
         rating: pd.average_rating.rating__avg,
-        ratingCount: pd.rating_count
+        ratingCount: pd.rating_count,
+        partnershipLevel: pd.partnership_level
     };
 }
 
-function ResultGridLoader({partnerData, linkTexts}) {
+function SeeMore({defaultOpen, children}) {
+    const [opened, toggle] = useToggle(false);
+
+    function onClick(event) {
+        event.preventDefault();
+        toggle();
+    }
+
+    if (defaultOpen) {
+        return children;
+    }
+    if (opened) {
+        return (
+            <React.Fragment>
+                {children}
+                <div>
+                    <a href="fewer" onClick={onClick}>See fewer options</a>
+                </div>
+            </React.Fragment>
+        );
+    }
+    return (
+        <React.Fragment>
+            <div>
+                <a href="more" onClick={onClick}>See more options</a>
+            </div>
+        </React.Fragment>
+    );
+}
+
+function ResultGridLoader({partnerData, linkTexts, headerTexts}) {
     const entries = partnerData.map(resultEntry);
     const [filteredEntries, setFilteredEntries] = useState(filterEntries(entries));
+    const filteredPartners = filteredEntries.filter((e) => e.partnershipLevel === 'Full partner');
+    const filteredAllies = filteredEntries.filter((e) => e.partnershipLevel !== 'Full partner');
+    const defaultAlliesOpen = filteredPartners.length === 0;
 
     useEffect(() => {
         function handleNotifyFor(store) {
@@ -130,20 +164,30 @@ function ResultGridLoader({partnerData, linkTexts}) {
     }, [entries]);
 
     return (
-        <ResultGrid entries={filteredEntries} linkTexts={linkTexts} />
+        <React.Fragment>
+            <h2>{headerTexts.partnerHeader}</h2>
+            <div>{headerTexts.partnerDescription}</div>
+            <ResultGrid entries={filteredPartners} linkTexts={linkTexts} />
+            <SeeMore defaultOpen={defaultAlliesOpen}>
+                <h2>{headerTexts.allyHeader}</h2>
+                <div>{headerTexts.allyDescription}</div>
+                <ResultGrid entries={filteredAllies} />
+            </SeeMore>
+        </React.Fragment>
     );
 }
 
-export default function Results({linkTexts}) {
+export default function Results({linkTexts, headerTexts}) {
     const partnerData = useDataFromPromise(partnerFeaturePromise);
 
     if (!partnerData) {
         return null;
     }
+    const visiblePartners = partnerData.filter((e) => e.visible_on_website);
 
     return (
-        <section className="results">
-            <ResultGridLoader {...{partnerData, linkTexts}} />
+        <section className="results boxed">
+            <ResultGridLoader {...{partnerData: visiblePartners, linkTexts, headerTexts}} />
         </section>
     );
 }

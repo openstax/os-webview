@@ -56,6 +56,24 @@ function SubmitButton({hasError, setHideErrors, submitting, setSubmitting}) {
     );
 }
 
+const semesters = [
+    ['March', 'October', 'spring'],
+    ['November', 'February', 'fall']
+];
+
+function RevisionSchedule() {
+    const currentMonth = new Date().getMonth();
+    const index = currentMonth >= 2 && currentMonth <= 9 ? 0 : 1;
+    const [start, end, semester] = semesters[index];
+
+    return (
+        <div className="revision-schedule">
+            Errata received from <b>{start}</b> through <b>{end}</b> will be fixed in the
+            online format for the <b>{semester}</b> semester.
+        </div>
+    );
+}
+
 function FormFields({
     submittedBy, books, initialSource, location, source, selectedTitle,
     hasError, setHideErrors, submitting, setSubmitting
@@ -82,6 +100,7 @@ function FormFields({
                 <FileUploader />
                 <SubmitButton {...{hasError, setHideErrors, submitting, setSubmitting}} />
             </div>
+            <RevisionSchedule />
         </React.Fragment>
     );
 }
