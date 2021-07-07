@@ -164,10 +164,10 @@ export function PdfOption({model}) {
     const sampleText = polish ? ' przykład' : ' sample';
     const text = pdfText + (model.comingSoon ? sampleText : '');
     const pdfLink = (model.highResolutionPdfUrl || model.lowResolutionPdfUrl);
-    const {GiveDialog, open} = useGiveDialog();
+    const {GiveDialog, open, enabled} = useGiveDialog();
 
     function onClick(event) {
-        if (!$.isMobileDisplay()) {
+        if (enabled && !$.isMobileDisplay()) {
             event.preventDefault();
             open();
         }
