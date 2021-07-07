@@ -31,7 +31,9 @@ function filterEntries(entries) {
 
     if (types.value) {
         result = result.filter((entry) => {
-            return types.value === entry.type;
+            return types.value.localeCompare(
+                entry.type, 'en', {sensitivity: 'base'}
+            ) === 0;
         });
     }
 
