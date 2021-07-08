@@ -170,11 +170,14 @@ function ResultGridLoader({partnerData, linkTexts, headerTexts}) {
             <h2>{headerTexts.partnerHeader}</h2>
             <div>{headerTexts.partnerDescription}</div>
             <ResultGrid entries={filteredPartners} linkTexts={linkTexts} />
-            <SeeMore defaultOpen={defaultAlliesOpen}>
-                <h2>{headerTexts.allyHeader}</h2>
-                <div>{headerTexts.allyDescription}</div>
-                <ResultGrid entries={filteredAllies} />
-            </SeeMore>
+            {
+                filteredAllies.length > 0 &&
+                    <SeeMore defaultOpen={defaultAlliesOpen}>
+                        <h2>{headerTexts.allyHeader}</h2>
+                        <div>{headerTexts.allyDescription}</div>
+                        <ResultGrid entries={filteredAllies} />
+                    </SeeMore>
+            }
         </React.Fragment>
     );
 }
