@@ -81,8 +81,8 @@ function textsFromData(data) {
         partnerHeader: data.partner_full_partner_heading || 'Full partners',
         partnerDescription: data.partner_full_partner_description ||
         'Something about what Full Partners are',
-        allyHeaader: data.partner_ally_heading || 'Brand allies',
-        allyDescription: data.partner_ally_descriptioni ||
+        allyHeader: data.partner_ally_heading || 'Brand allies',
+        allyDescription: data.partner_ally_description ||
         'Something about what Brand Allies are'
     };
 
