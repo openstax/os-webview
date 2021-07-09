@@ -30,7 +30,11 @@
 
 
         .description {
-            @include set-font(helper-label);
+            @include body-font(1.2rem);
+
+            display: block;
+            line-height: 1.4rem;
+            margin-top: 0.5rem;
         }
 
         .message {

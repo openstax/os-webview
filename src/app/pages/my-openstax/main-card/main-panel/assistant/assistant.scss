@@ -44,6 +44,7 @@
             border-radius: 0.5rem;
             box-shadow: 0 0.4rem 0.4rem rgba(ui-color(black), 0.25);
             height: 100%;
+            max-width: 38rem;
             overflow: hidden;
 
             &:hover {
@@ -69,7 +70,14 @@
             @include button();
 
             height: 4rem;
-            padding: 0 1rem;
+
+            @include width-up-to($tablet-max) {
+                justify-self: center;
+            }
+
+            @include wider-than($tablet-max) {
+                padding: 0 1rem;
+            }
         }
 
         .questions {

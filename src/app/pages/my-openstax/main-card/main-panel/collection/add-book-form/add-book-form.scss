@@ -36,6 +36,16 @@ dialog .add-book {
         width: auto;
     }
 
+    .select.with-arrow {
+        display: grid;
+
+        .item {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    }
+
     .remove-link {
         align-self: flex-end;
     }

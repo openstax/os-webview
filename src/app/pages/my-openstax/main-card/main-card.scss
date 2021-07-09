@@ -1,98 +1,106 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .main-card {
-  @extend %card;
+    @extend %card;
 
-  @include wider-than($phone-max) {
-    max-width: 120rem;
-    width: calc(100vw - 12rem);
-  }
-
-  h1,
-  h2,
-  h3 {
-      margin: 0;
-  }
-
-  h2 {
-      @include scale-set-font(h4, h3);
-  }
-
-  h3 {
-      @include set-font(h4);
-  }
-
-  background-color: ui-color(white);
-  border-radius: 0.4rem;
-  margin-bottom: 5rem;
-  margin-top: 5rem;
-  padding-bottom: 3rem;
-
-  .layout-grid {
-    @include width-up-to($tablet-max) {
-      grid-template: 'banner'
-      'nav'
-      'main';
+    @include width-up-to($phone-max) {
+        border-radius: 0;
+        margin-bottom: 3rem;
+        margin-top: 0.2rem; // Half the strip height
+        padding-bottom: $normal-margin;
+        width: 100%;
     }
 
-    @include wider-than($tablet-max) {
-      grid-template: 'banner banner' auto
-      'nav main' auto / auto 1fr;
+    @include wider-than($phone-max) {
+        margin-bottom: 5rem;
+        margin-top: 5rem;
+        max-width: 120rem;
+        overflow: hidden;
+        padding-bottom: 3rem;
+        width: calc(100vw - 12rem);
     }
 
-    border-image: linear-gradient(
-      to right, os-color(orange), os-color(blue), red 50%, os-color(orange), os-color(gold), os-color(light-blue)
-    ) 1 stretch;
-    border-style: solid;
-    border-width: 0.5rem 0 0;
-    box-sizing: border-box;
-    display: grid;
-    height: 100%;
-    position: relative;
-    top: 0;
-
-    > * {
-      @include width-up-to($phone-max) {
-        padding: 3rem $normal-margin;
-      }
-
-      @include wider-than($phone-max) {
-        padding: 3rem;
-      }
-    }
-  }
-
-  .banner {
-    @include width-up-to($tablet-max) {
-      padding: 1rem $normal-margin;
+    h1,
+    h2,
+    h3 {
+        margin: 0;
     }
 
-    grid-area: banner;
-  }
-
-  .left-bar {
-    @include width-up-to($tablet-max) {
-      padding: 0;
+    h2 {
+        @include scale-set-font(h4, h3);
     }
 
-    border-right: thin solid ui-color(form-border);
-    grid-area: nav;
-  }
+    h3 {
+        @include set-font(h4);
+    }
 
-  .main-content {
-    grid-area: main;
-    position: relative;
-    top: 0;
-  }
+    background-color: ui-color(white);
 
-  .banner,
-  .left-bar,
-  .main-content {
-    border-bottom: thin solid ui-color(form-border);
-  }
+    .layout-grid {
+        @include width-up-to($tablet-max) {
+            grid-template: 'banner'
+            'nav'
+            'main';
+        }
 
-  hr {
-    border: 0;
-    border-top: thin solid ui-color(form-border);
-  }
+        @include wider-than($tablet-max) {
+            grid-template: 'banner banner' auto
+            'nav main' auto / auto 1fr;
+        }
+
+        border-image: linear-gradient(
+        to right, os-color(orange), os-color(blue), red 50%, os-color(orange), os-color(gold), os-color(light-blue)
+        ) 1 stretch;
+        border-style: solid;
+        border-width: 0.5rem 0 0;
+        box-sizing: border-box;
+        display: grid;
+        height: 100%;
+        position: relative;
+        top: 0;
+
+        > * {
+            @include width-up-to($phone-max) {
+                padding: 3rem $normal-margin;
+            }
+
+            @include wider-than($phone-max) {
+                padding: 3rem;
+            }
+        }
+    }
+
+    .banner {
+        @include width-up-to($tablet-max) {
+            padding: 1rem $normal-margin;
+        }
+
+        grid-area: banner;
+    }
+
+    .left-bar {
+        @include width-up-to($tablet-max) {
+            padding: 0;
+        }
+
+        border-right: thin solid ui-color(form-border);
+        grid-area: nav;
+    }
+
+    .main-content {
+        grid-area: main;
+        position: relative;
+        top: 0;
+    }
+
+    .banner,
+    .left-bar,
+    .main-content {
+        border-bottom: thin solid ui-color(form-border);
+    }
+
+    hr {
+        border: 0;
+        border-top: thin solid ui-color(form-border);
+    }
 }

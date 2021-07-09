@@ -13,31 +13,24 @@ export default function ProfileSection() {
         <section className="profile-section">
             <h2>Profile</h2>
             <EditInstitutionsDialogLink text="Edit institutions" />
-            <table>
-                <thead>
-                    <tr>
-                        <th>Role</th>
-                        <th>Current institutions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            {account.role}{' '}
-                            <span className="role-status">({verification})</span>
-                        </td>
-                        <td>{(institutions[0] || {}).name}</td>
-                    </tr>
+            <div className="table-ish">
+                <div className="head col-1">Role</div>
+                <div className="head col-2">Current institutions</div>
+                <div className="body col-1">
+                    {account.role}{' '}
+                    <span className="role-status">({verification})</span>
+                </div>
+                <div className="body col-2">
                     {
-                        institutions.slice(1).map((i) =>
+                        institutions.map((i) =>
                             <tr key={i.id}>
                                 <td />
                                 <td>{i.name}</td>
                             </tr>
                         )
                     }
-                </tbody>
-            </table>
+                </div>
+            </div>
         </section>
     );
 }
