@@ -1,0 +1,36 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.book-list-with-header {
+    display: flex;
+    flex-direction: column;
+
+    @include width-up-to($phone-max) {
+        row-gap: $normal-margin;
+    }
+
+    @include wider-than($phone-max) {
+        row-gap: 3rem;
+        padding: $normal-margin;
+    }
+
+    .book-list {
+        display: grid;
+        gap: 2rem;
+
+        @include width-up-to($phone-max) {
+            grid-template-columns: repeat(auto-fit, 13rem);
+        }
+
+        @include wider-than($phone-max) {
+            grid-template-columns: repeat(auto-fit, 22rem);
+        }
+
+        .cover-with-title {
+            img {
+                border-radius: 0.5rem;
+                filter: drop-shadow(0 0.4rem 0.4rem rgba(0, 0, 0, 0.25));
+                max-width: 100%;
+            }
+        }
+    }
+}

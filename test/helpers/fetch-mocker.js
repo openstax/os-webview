@@ -28,6 +28,9 @@ import rolesData from '../src/data/roles';
 import salesforceData from '../src/data/salesforce';
 import salesforcePartnerData from '../src/data/salesforce-partners';
 import schoolsData from '../src/data/schools';
+import sfapiUser from '../src/data/sfapi-user';
+import sfapiLists from '../src/data/sfapi-lists';
+import sfapiSchoolTrinity from '../src/data/sfapi-school-trinity';
 import stickyData from '../src/data/sticky';
 import subjectData from '../src/data/subject-categories';
 import teamData from '../src/data/team';
@@ -63,6 +66,9 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isResearch = (/pages\/research/).test(args[0]);
     const isRoles = (/snippets\/roles/).test(args[0]);
     const isSchools = (/salesforce\/schools/).test(args[0]);
+    const isSfapiUser = (/api\/v1\/users/).test(args[0]);
+    const isSfapiLists = (/api\/v1\/lists/).test(args[0]);
+    const isSfapiSchoolTrinity = (/0017h00000YXEBzAAP/).test(args[0]);
     const isSticky = (/api\/sticky/).test(args[0]);
     const isSubjects = (/snippets\/subjects/).test(args[0]);
     const isTeam = (/pages\/team/).test(args[0]);
@@ -146,6 +152,12 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = salesforceData;
             } else if (isSalesforcePartners) {
                 payload = salesforcePartnerData;
+            } else if (isSfapiUser) {
+                payload = sfapiUser;
+            } else if (isSfapiLists) {
+                payload = sfapiLists;
+            } else if (isSfapiSchoolTrinity) {
+                payload = sfapiSchoolTrinity;
             } else if (isImage) {
                 // ignore
             } else {

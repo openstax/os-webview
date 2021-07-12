@@ -1,0 +1,19 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.suggestion-list {
+  border: thin solid ui-color(form-border);
+  list-style: none;
+  margin: 0;
+  overflow: auto;
+  padding-left: 0;
+
+  .item {
+    background-color: ui-color(white);
+    cursor: pointer;
+    padding: 1rem $normal-margin;
+
+    &.active {
+      background-color: ui-color(page-bg);
+    }
+  }
+}

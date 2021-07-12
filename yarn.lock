@@ -7442,7 +7442,7 @@ path-type@^4.0.0:
 
 pattern-library@openstax/pattern-library:
   version "1.3.0"
-  resolved "https://codeload.github.com/openstax/pattern-library/tar.gz/7ba6dfba84de72c1cfe1ed1f1d952b7c9a51e290"
+  resolved "https://codeload.github.com/openstax/pattern-library/tar.gz/95b7968f2e67fe2c0f1f891b80ea8bf8acf4c39c"
 
 pbf@^3.2.1:
   version "3.2.1"
@@ -8852,6 +8852,11 @@ stealthy-require@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
   integrity sha1-NbCYdbT/SfJqd35QmzCQoyJr8ks=
+
+storeon@^3.1.4:
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/storeon/-/storeon-3.1.4.tgz#36366161f6d19c6560bc8f98ad96e1781538227e"
+  integrity sha512-GUSyCevVP00T5b5/Z05ZGkrJFh4IbXjCAl+R27pBslamFLS/qSxJoSwYIGbIZOjujRAgUiWIzPDZP6Ma3vSR9Q==
 
 stream-to-buffer@^0.1.0:
   version "0.1.0"

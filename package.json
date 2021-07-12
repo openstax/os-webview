@@ -4,7 +4,9 @@
     "description": "OpenStax webview",
     "scripts": {
         "test": "jest ./test/src",
-        "stats": "webpack --profile --json stats.json"
+        "stats": "webpack --profile --json stats.json",
+        "eslint": "eslint src",
+        "stylelint": "stylelint src/**/*.scss"
     },
     "repository": {
         "type": "git",
@@ -23,7 +25,8 @@
         "classnames": "^2.2.6",
         "react-accessible-accordion": "^3.0.1",
         "react-lazyload": "^3.2.0",
-        "react-router-dom": "^5.2.0"
+        "react-router-dom": "^5.2.0",
+        "storeon": "^3.1.4"
     },
     "devDependencies": {
         "@babel/core": "^7.8.7",

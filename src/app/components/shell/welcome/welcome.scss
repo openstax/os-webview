@@ -1,0 +1,51 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.welcome-dialog {
+    .title-bar {
+        background-color: ui-color(page-bg);
+    }
+
+    .main-region {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        max-width: 54rem;
+
+        @include width-up-to($phone-max) {
+            padding: $normal-margin;
+        }
+
+        @include wider-than($phone-max) {
+            padding: 3rem;
+        }
+
+        p:first-child {
+            margin-top: 0;
+        }
+        p:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    .button-row {
+        display: flex;
+        gap: 2rem;
+
+        @include width-up-to($phone-max) {
+            flex-direction: column;
+        }
+
+        @include wider-than($phone-max) {
+            align-self: flex-end;
+            flex-direction: row;
+        }
+    }
+
+    button:not(.put-away) {
+        @include button();
+
+        &.primary {
+            @extend %primary;
+        }
+    }
+}

@@ -23,7 +23,6 @@ function SuggestionItem({value, accept, index, activeIndex, setActiveIndex}) {
     );
 }
 
-
 function useMatches(pattern, suggestions=[]) {
     const matches = pattern.length > 1 ?
         suggestions.filter((s) => s.toLowerCase().includes(pattern)) :

@@ -31,6 +31,12 @@ $.treatSpaceOrEnterAsClick = (event) => {
     }
 };
 
+$.forwardEvent = (event, el) => {
+    const newE = new event.constructor(event.type, event);
+
+    el.dispatchEvent(newE);
+};
+
 const browserId = () => {
     const ua = window.navigator.userAgent;
     let M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
@@ -56,7 +62,7 @@ const browserId = () => {
     checkChrome();
     checkFirefox();
     M = M[2] ? [M[1], M[2]] : [window.navigator.appName, window.navigator.appVersion, '-?'];
-    if ((tem = ua.match(/version\/(\d+)/i)) !== null) {
+    if ((tem = ua.match(/version\/([\d.]+)/i)) !== null) {
         M.splice(1, 1, tem[1]);
     }
 
@@ -68,10 +74,10 @@ $.isSupported = () => {
     const info = browserId();
 
     return (
-        (info.name === 'Chrome' && +info.version >= 79) ||
-        (info.name === 'Edge' && +info.version >= 79) ||
-        (info.name === 'Firefox' && +info.version >= 74) ||
-        (info.name === 'Safari' && +info.version >= 13)
+        (info.name === 'Chrome' && parseFloat(info.version) >= 79) ||
+        (info.name === 'Edge' && parseFloat(info.version) >= 79) ||
+        (info.name === 'Firefox' && parseFloat(info.version) >= 74) ||
+        (info.name === 'Safari' && parseFloat(info.version) >= 14.1)
     );
 };
 

@@ -1,0 +1,47 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import '../../../common';
+
+dialog .edit-institutions {
+    display: flex;
+    flex-direction: column;
+    grid-row-gap: 3rem;
+    padding: 3rem;
+    max-width: 100%;
+    width: 54rem;
+
+    @include usual-buttons();
+
+    table {
+        width: 100%;
+
+        th {
+            @include set-font(h4);
+
+            text-align: left;
+        }
+
+        td:nth-child(2) {
+            text-align: right;
+        }
+    }
+
+    .add-button {
+        @include add-button();
+
+        align-self: flex-start;
+    }
+
+    .button-row {
+        display: flex;
+        grid-column-gap: $normal-margin;
+        justify-content: flex-end;
+    }
+
+    .input-with-suggestions {
+        .suggestion-list {
+            max-height: 40vh;
+            overflow: auto;
+            width: 100%;
+        }
+    }
+}
