@@ -10,5 +10,5 @@ test(`shows up with links`, (done) => {
         expect(screen.getAllByRole('link')).toHaveLength(3);
         userEvent.click(screen.getByText('My Assistant', {selector: 'a'}));
         done();
-    }, 20);
+    }, 200);
 });

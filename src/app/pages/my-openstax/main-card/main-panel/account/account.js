@@ -3,7 +3,6 @@ import useAccount from '~/pages/my-openstax/store/use-account';
 import LabeledData from '~/pages/my-openstax/labeled-data/labeled-data';
 import ProfileSection from './profile-section/profile-section';
 import EmailPrefs from './email-prefs/email-prefs';
-// import orderBy from 'lodash/orderBy';
 import cn from 'classnames';
 import './account.scss';
 

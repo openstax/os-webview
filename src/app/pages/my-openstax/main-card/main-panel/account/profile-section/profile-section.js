@@ -21,14 +21,7 @@ export default function ProfileSection() {
                     <span className="role-status">({verification})</span>
                 </div>
                 <div className="body col-2">
-                    {
-                        institutions.map((i) =>
-                            <tr key={i.id}>
-                                <td />
-                                <td>{i.name}</td>
-                            </tr>
-                        )
-                    }
+                    {institutions.map((i) => <div key={i.id}>{i.name}</div>)}
                 </div>
             </div>
         </section>

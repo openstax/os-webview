@@ -8,13 +8,17 @@ import './navigator.scss';
 function useElById(id) {
     const [el, setEl] = React.useState(document.getElementById(id));
 
-    const elPoll = window.setInterval(() => {
-        if (el) {
-            window.clearInterval(elPoll);
-        } else {
-            setEl(document.getElementById(id));
-        }
-    }, 40);
+    React.useEffect(() => {
+        const elPoll = window.setInterval(() => {
+            if (el) {
+                window.clearInterval(elPoll);
+            } else {
+                setEl(document.getElementById(id));
+            }
+        }, 40);
+
+        return () => window.clearInterval(elPoll);
+    });
 
     return el;
 }
