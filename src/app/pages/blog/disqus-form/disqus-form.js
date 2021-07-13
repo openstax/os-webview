@@ -22,10 +22,12 @@ function loadDisqus() {
 }
 
 function reloadDisqus() {
-    DISQUS.reset({
-        reload: true,
-        config: disqus_config
-    });
+    if (DISQUS) {
+        DISQUS.reset({
+            reload: true,
+            config: disqus_config
+        });
+    }
 }
 
 export default function DisqusForm() {
