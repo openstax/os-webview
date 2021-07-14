@@ -6,13 +6,13 @@ import LetUsKnow from '../../common/let-us-know/let-us-know';
 import SavingsBlurb from '../../common/savings-blurb';
 import './details-tab.scss';
 
-function PolishTab({model, tocState}) {
+function PolishTab({model}) {
     return (
         <div className="details-tab">
             <div className="sidebar">
                 <div>
                     <h3>Przejdź do książki</h3>
-                    <GetThisTitle model={model} tocState={tocState} />
+                    <GetThisTitle model={model} />
                 </div>
                 <div className="let-us-know-region" skip="true">
                     <LetUsKnow title={model.title} />
@@ -31,13 +31,13 @@ function PolishTab({model, tocState}) {
     );
 }
 
-function EnglishTab({model, tocState}) {
+function EnglishTab({model}) {
     return (
         <div className="details-tab">
             <div className="sidebar">
                 <div>
                     <h3>Get the book</h3>
-                    <GetThisTitle model={model} tocState={tocState} />
+                    <GetThisTitle model={model} />
                 </div>
                 <div className="let-us-know-region">
                     <LetUsKnow title={model.salesforceAbbreviation} />
@@ -59,8 +59,8 @@ function EnglishTab({model, tocState}) {
     );
 }
 
-export default function DetailsTab({model, polish, tocState}) {
+export default function DetailsTab({model, polish}) {
     const Child = polish ? PolishTab : EnglishTab;
 
-    return (<Child model={model} tocState={tocState} />);
+    return (<Child model={model} />);
 }

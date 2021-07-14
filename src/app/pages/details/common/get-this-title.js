@@ -24,7 +24,7 @@ function AdditionalOptions({model}) {
     );
 }
 
-export default function GetThisTitle({model, tocState}) {
+export default function GetThisTitle({model}) {
     const additionalOptions = [
         'bookshareLink', 'ibookLink', 'kindleLink'
     ].filter((key) => model[key]).length;
@@ -54,7 +54,7 @@ export default function GetThisTitle({model, tocState}) {
         <div className="get-the-book">
             <div className="get-this-title">
                 <div className="options" onClick={interceptLinkClicks}>
-                    <TocOption model={model} tocState={tocState} />
+                    <TocOption model={model} />
                     <WebviewOption model={model} />
                     <StudyEdgeOption model={model} />
                     <PdfOption model={model} />

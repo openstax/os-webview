@@ -13,6 +13,7 @@ import $ from '~/helpers/$';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
 import useAmazonAssociatesLink from './amazon-associates-link';
 import StudyEdge from './study-edge/study-edge';
+import TOCContext from '../toc-slideout/context';
 import {useDialog} from '~/components/dialog/dialog';
 import RecommendedCallout from './recommended-callout/recommended-callout';
 import useGiveDialog from './give-before-pdf/give-before-pdf';
@@ -51,7 +52,8 @@ export function SimpleLinkOption({link, icon, text, children, ...linkOptions}) {
     );
 }
 
-export function TocOption({model, tocState={}}) {
+export function TocOption({model}) {
+    const tocState = React.useContext(TOCContext);
     const includeTOC = ['live', 'new_edition_available'].includes(model.bookState);
     const text = $.isPolish(model.title) ? 'Spis treści' : 'Table of contents';
 

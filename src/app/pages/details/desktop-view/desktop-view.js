@@ -5,6 +5,7 @@ import DetailsTab from './details-tab/details-tab';
 import InstructorResourceTab from './instructor-resource-tab/instructor-resource-tab';
 import StudentResourceTab from './student-resource-tab/student-resource-tab';
 import VideoTab from './videos-tab/videos-tab';
+import DetailsContext from '../context';
 import {GiveLink} from '../common/common';
 import $ from '~/helpers/$';
 import './desktop-view.scss';
@@ -40,7 +41,8 @@ function useSelectedLabelTiedToSearchString(labels) {
     return [selectedLabel, updateSelectedLabel];
 }
 
-export default function DesktopView({model, tocState, onContentChange}) {
+export default function DesktopView({onContentChange}) {
+    const model = React.useContext(DetailsContext);
     const polish = $.isPolish(model.title);
     const labels = labelsFromModel(model, polish);
     const [selectedLabel, setSelectedLabel] = useSelectedLabelTiedToSearchString(labels);
@@ -59,7 +61,7 @@ export default function DesktopView({model, tocState, onContentChange}) {
             </div>
             <div className="tab-content">
                 <ContentGroup activeIndex={labels.indexOf(selectedLabel)}>
-                    <DetailsTab polish={polish} model={model} tocState={tocState} />
+                    <DetailsTab polish={polish} model={model} />
                     <InstructorResourceTab model={model} />
                     <StudentResourceTab model={model} />
                     {model.videos[0] && <VideoTab videos={model.videos[0]} />}
