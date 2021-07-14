@@ -1,6 +1,10 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .form-input {
+    .field-label {
+        margin-bottom: 1rem;
+    }
+
     .suggestions {
         height: 0;
         overflow: visible;
@@ -17,7 +21,7 @@
 
     .suggestion {
         cursor: pointer;
-        padding: 0 1rem;
+        padding: 0.5rem 1rem;
 
         &.active {
             background-color: ui-color(page-bg);

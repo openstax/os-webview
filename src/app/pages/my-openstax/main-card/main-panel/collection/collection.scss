@@ -1,0 +1,47 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import '../common';
+
+#collection:not([hidden]) {
+    display: grid;
+    gap: $normal-margin;
+
+    @include width-up-to($phone-max) {
+        grid-template: 'header'
+        'add-button'
+        'card';
+    }
+
+    @include wider-than($phone-max) {
+        grid-template: 'header add-button'
+        'card card' / auto 1fr;
+    }
+
+    h2 {
+        grid-area: header;
+    }
+
+    .add-button {
+        @include add-button();
+
+        grid-area: add-button;
+
+        @include wider-than($phone-max) {
+            justify-self: right;
+        }
+    }
+
+    > .card {
+        @include wider-than($phone-max) {
+            @include card();
+        }
+
+        display: flex;
+        flex-direction: column;
+        grid-area: card;
+        min-height: 3rem; // temporary
+
+        > :not(:first-child) {
+            border-top: thin solid ui-color(form-border);
+        }
+    }
+}

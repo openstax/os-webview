@@ -2,6 +2,7 @@ import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import Router from './router';
 import ReactModal from 'react-modal';
+import Welcome from './welcome/welcome';
 import bus from './shell-bus';
 
 let stickyCount = 0;
@@ -73,6 +74,7 @@ function App() {
                 <LowerStickyNote />
             </div>
             <div id="main" ref={ref}>
+                <Welcome />
                 <Router />
             </div>
             <footer id="footer">

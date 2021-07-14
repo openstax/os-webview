@@ -73,8 +73,8 @@ export default function Dialog({
     );
 }
 
-export function useDialog() {
-    const [showDialog, updateShowDialog] = React.useState(false);
+export function useDialog(initiallyOpen=false) {
+    const [showDialog, updateShowDialog] = React.useState(initiallyOpen);
 
     return React.useMemo(() => {
         const open = () => updateShowDialog(true);
@@ -82,10 +82,14 @@ export function useDialog() {
 
         function BoundDialog({
             title, children, modal = true, className,
-            showPutAway=true,
+            showPutAway=true, afterClose=() => null,
             ...otherProps
         }) {
             const Modal = modal ? ReactModal : React.Fragment;
+            const closeAndAfterClose = () => {
+                close();
+                afterClose();
+            };
 
             return (
                 <Modal
@@ -97,7 +101,7 @@ export function useDialog() {
                 >
                     <Dialog
                         title={title} className={className} isOpen={showDialog}
-                        onPutAway={showPutAway && close}
+                        onPutAway={showPutAway && closeAndAfterClose}
                     >
                         {children}
                     </Dialog>

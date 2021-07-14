@@ -1,0 +1,33 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.my-openstax.page {
+  @include wider-than($phone-max) {
+    padding: 5rem $normal-margin;
+  }
+
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+
+  &::before,
+  &::after {
+    background-color: os-color(deep-green);
+    content: '';
+    height: 18rem;
+    width: 100%;
+    z-index: -1;
+  }
+
+  &::before {
+      position: fixed;
+    top: 0;
+  }
+
+  &::after {
+    bottom: 0;
+    position: absolute;
+  }
+}

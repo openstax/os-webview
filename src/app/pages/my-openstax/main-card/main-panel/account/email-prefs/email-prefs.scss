@@ -1,0 +1,50 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+#email-prefs {
+    .labeled-checkbox {
+        align-items: start;
+        display: grid;
+        grid-template-columns: 3rem 1fr;
+        line-height: 2.2rem;
+        margin: 1rem 0 0.7rem;
+
+        $box-size: 2rem;
+
+        .checkbox {
+            align-items: center;
+            border: thin solid ui-color(form-border);
+            border-radius: 0.2rem;
+            display: flex;
+            height: $box-size;
+            justify-content: center;
+            overflow: hidden;
+            width: $box-size;
+
+            &[aria-checked='true'] {
+                background-color: text-color(link);
+                border-color: text-color(link);
+                color: text-color(white);
+                font-size: $box-size;
+            }
+        }
+
+
+        .description {
+            @include body-font(1.2rem);
+
+            display: block;
+            line-height: 1.4rem;
+            margin-top: 0.5rem;
+        }
+
+        .message {
+            margin-left: 2rem;
+
+            &.fadeout {
+                opacity: 0;
+                transition: visibility 0s 2s, opacity 2s linear;
+                visibility: hidden;
+            }
+        }
+    }
+}

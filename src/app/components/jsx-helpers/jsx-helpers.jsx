@@ -205,7 +205,7 @@ export function useSelectList({
             if (searchable && event.key.length === 1) {
                 const letter = event.key.toLowerCase();
                 const values = Array.from(items)
-                    .map((opt) => opt.textContent.toLowerCase());
+                    .map((opt) => opt.label.toLowerCase());
                 let foundIndex = values.findIndex((val, i) =>
                     i > activeIndex && val.startsWith(letter)
                 );

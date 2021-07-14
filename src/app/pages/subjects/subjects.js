@@ -164,7 +164,7 @@ export default function SubjectsLoader() {
 
     return (
         <main className="subjects-page">
-            <Subjects model={model} />;
+            <Subjects model={model} />
         </main>
     );
 }

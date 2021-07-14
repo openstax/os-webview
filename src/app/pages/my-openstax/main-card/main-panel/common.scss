@@ -1,0 +1,45 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+$icon-size: $form-element-height;
+
+@mixin icon() {
+  align-items: center;
+  background-color: os-color(light-gray);
+  border-radius: 0.3rem;
+  color: text-color(white);
+  display: flex;
+  height: $icon-size;
+  justify-content: center;
+  width: $icon-size;
+}
+
+@mixin add-button() {
+  align-items: center;
+  background-color: ui-color(page-bg);
+  border: 0;
+  border-radius: 0.3rem;
+  color: text-color(normal);
+  display: inline-flex;
+  font-size: inherit;
+  grid-gap: 1rem;
+  height: auto;
+  justify-self: left;
+  padding: 1rem {
+    right: 3rem;
+  }
+
+  .plus-box {
+      @include icon();
+  }
+}
+
+@mixin usual-buttons() {
+    button,
+    .btn {
+        @include button();
+
+        &.primary {
+            @extend %primary;
+        }
+    }
+}

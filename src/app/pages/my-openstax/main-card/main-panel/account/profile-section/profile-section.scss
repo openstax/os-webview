@@ -1,0 +1,57 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+#account .profile-section {
+    .table-ish {
+        display: grid;
+
+        @include width-up-to($phone-max) {
+            grid-template: 'head-1'
+            'body-1'
+            'head-2'
+            'body-2';
+
+            .head.col-2 {
+                margin-top: $normal-margin;
+            }
+        }
+
+        @include wider-than($phone-max) {
+            grid-template: 'head-1 head-2'
+            'body-1 body-2';
+        }
+
+        .head {
+            @include width-up-to($phone-max) {
+                @include title-font(1.6rem);
+            }
+
+            @include wider-than($phone-max) {
+                @include set-font(h4);
+            }
+
+            text-align: left;
+
+            &.col-1 {
+                grid-area: head-1;
+            }
+
+            &.col-2 {
+                grid-area: head-2;
+            }
+        }
+
+        .body {
+            &.col-1 {
+                grid-area: body-1;
+            }
+
+            &.col-2 {
+                grid-area: body-2;
+            }
+        }
+    }
+
+    .role-status {
+        color: text-color(helper);
+    }
+}

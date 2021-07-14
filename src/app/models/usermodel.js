@@ -26,32 +26,43 @@ const accountsModel = {
     load: cached(() => {
         // Uncomment ONLY to TEST
         // return Promise.resolve({
-        //     id: 315605,
-        //     name: 'Roy2 Johnson',
-        //     first_name: 'Roy2',
+        //     id: 10060116,
+        //     name: 'Roy Johnson',
+        //     first_name: 'Roy',
         //     last_name: 'Johnson',
-        //     full_name: 'Roy2 Johnson',
-        //     uuid: 'fca73689-fc4d-4369-bc46-ad6e02b9a13b',
-        //     support_identifier: 'cs_fce9a9e8',
+        //     full_name: 'Roy Johnson',
+        //     uuid: '53cdf5b7-6dd9-45a5-bad7-e1f5532180e2',
+        //     support_identifier: 'cs_5bcab9be',
+        //     is_not_gdpr_location: true,
         //     is_test: false,
-        //     faculty_status: 'confirmed_faculty',
-        //     is_instructor_verification_stale: false,
-        //     is_profile_complete: false,
+        //     opt_out_of_cookies: false,
+        //     using_openstax: false,
+        //     salesforce_contact_id: '0037h00000SEXNqAAP',
+        //     faculty_status: 'no_faculty_info',
         //     is_newflow: true,
-        //     self_reported_role: 'student',
-        //     self_reported_school: 'Rice U',
-        //     school_type: 'unknown_school_type',
+        //     is_instructor_verification_stale: false,
+        //     needs_complete_edu_profile: false,
+        //     self_reported_role: 'instructor',
+        //     self_reported_school: '',
+        //     school_type: 'college',
+        //     school_location: 'domestic_school',
+        //     is_kip: false,
+        //     is_administrator: false,
+        //     grant_tutor_access: false,
         //     contact_infos: [
         //         {
-        //             id: 312328,
+        //             id: 61694,
         //             type: 'EmailAddress',
-        //             value: 'rej2+2@rice.edu',
+        //             value: 'rej2+mos1@rice.edu',
         //             is_verified: true,
         //             is_guessed_preferred: true
         //         }
         //     ],
         //     applications: [
-        //         // {name: 'OpenStax Tutor'}
+        //         {
+        //             id: 5,
+        //             name: 'OpenStax CMS Dev'
+        //         }
         //     ]
         // });
         // // eslint-disable-next-line no-unreachable
