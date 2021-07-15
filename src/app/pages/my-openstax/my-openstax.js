@@ -1,4 +1,3 @@
-import 'preact/debug';
 import React from 'react';
 import { StoreContext } from 'storeon/preact';
 import { store } from './store.js';

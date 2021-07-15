@@ -49,6 +49,14 @@
         padding-bottom: 8rem;
         position: relative;
 
+        a {
+            color: adjust-color(text-color(link), $lightness: +30%);
+
+            &:hover {
+                color: adjust-color(text-color(link-hover), $lightness: +25%);
+            }
+        }
+
         h1 {
             margin-bottom: 3rem;
 

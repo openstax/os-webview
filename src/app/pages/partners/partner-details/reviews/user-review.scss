@@ -12,6 +12,21 @@
         margin-top: 3rem;
     }
 
+    .initial-circle {
+        position: relative;
+
+        .verified-check {
+            background-color: os-color(medium-blue);
+            border-radius: 50%;
+            border: thin solid ui-color(white);
+            bottom: -0.5rem;
+            color: text-color(white);
+            padding: 0.2rem;
+            position: absolute;
+            right: -0.5rem;
+        }
+    }
+
     .initials {
         @include set-font(helper-label);
         align-items: center;
@@ -26,6 +41,10 @@
 
     .name {
         font-weight: bold;
+    }
+
+    .verified-tag {
+        @include set-font(helper-label);
     }
 
     .rating-and-controls {
