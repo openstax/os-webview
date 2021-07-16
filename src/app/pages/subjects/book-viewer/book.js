@@ -103,13 +103,13 @@ function ThreeDotMenu({slug, details}) {
 }
 
 export default function BookCover({
-    cover_url: coverUrl,
+    coverUrl,
     slug,
     title,
-    book_state: state,
-    cover_color: coverColor,
-    has_faculty_resources: hasFacultyResources,
-    has_student_resources: hasStudentResources
+    bookState: state,
+    coverColor,
+    hasFacultyResources,
+    hasStudentResources
 }) {
     const details = {
         coverColor, hasFacultyResources, hasStudentResources

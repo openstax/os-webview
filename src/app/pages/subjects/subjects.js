@@ -1,7 +1,7 @@
 import routerBus from '~/helpers/router-bus';
 import React, {useState, useEffect} from 'react';
-import {usePageData} from '~/helpers/controller/cms-mixin';
-import {RawHTML, useDataFromPromise, useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import useSubjectsContext, {SubjectsContextProvider} from './context';
+import {RawHTML, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import BookViewer from './book-viewer/book-viewer';
 import categoryPromise from '~/models/subjectCategories';
 import savingsPromise from '~/models/savings';
@@ -19,18 +19,29 @@ function categoryFromPath() {
 
 function useCategoryTiedToPath() {
     const [category, setCategory] = useState(categoryFromPath());
+    const categories = useDataFromPromise(categoryPromise, []);
+    const {title} = useSubjectsContext();
 
     useEffect(() => {
-        const setIt = () => {
-            setCategory(categoryFromPath());
-            window.requestAnimationFrame(forceCheck);
-        };
+        const path = category === 'view-all' ? pagePath : `${pagePath}/${category}`;
 
-        window.addEventListener('popstate', setIt);
-        return () => window.removeEventListener('popstate', setIt);
-    }, []);
+        routerBus.emit('navigate', path, {
+            filter: category,
+            path: pagePath
+        });
+        window.requestAnimationFrame(forceCheck);
+        const linkController = $.setCanonicalLink();
 
-    return category;
+        return () => linkController.remove();
+    }, [category]);
+
+    useEffect(() => {
+        const categoryEntry = categories.find((e) => e.value === category);
+
+        document.title = (categoryEntry && categoryEntry.title) || title;
+    }, [category, categories, title]);
+
+    return {category, setCategory, categories};
 }
 
 function AboutBlurb({heading, description}) {
@@ -73,17 +84,19 @@ function useLastBlurb(data) {
     return description;
 }
 
-function AboutOurTextBooks({model}) {
+function AboutOurTextBooks() {
+    const model = useSubjectsContext();
     const textData = Reflect.ownKeys(model)
-        .filter((k) => k.startsWith('dev_standard_'))
+        .filter((k) => (/^devStandard\d/).test(k))
         .reduce((a, b) => {
-            const [_, num, textId] = b.match(/(\d+)_(\w+)/);
+            const [_, num, textId] = b.match(/(\d+)(\w+)/);
             const index = num - 1;
 
             a[index] = a[index] || {};
-            a[index][textId] = model[b];
+            a[index][textId.toLowerCase()] = model[b];
             return a;
         }, []);
+
     const lastBlurb = useLastBlurb(textData[3]);
 
     return (
@@ -104,67 +117,56 @@ function AboutOurTextBooks({model}) {
     );
 }
 
-function Subjects({model}) {
-    const category = useCategoryTiedToPath();
-    const categories = useDataFromPromise(categoryPromise, []);
+function StripsAndFilter({category, categories, setCategory}) {
+    const {filterIsSticky} = useSubjectsContext();
 
-    useEffect(() => {
-        const description = $.htmlToText(model.page_description);
+    return (
+        <div className="strips-and-filter">
+            <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
+            <div className={`filter ${filterIsSticky ? 'sticky': ''}`}>
+                <RadioPanel selectedItem={category} items={categories} onChange={setCategory} />
+            </div>
+        </div>
+    );
+}
 
-        $.setPageDescription(description);
-    }, [model]);
+function Books({category}) {
+    const {books} = useSubjectsContext();
 
-    function setCategory(newCategory) {
-        const categoryEntry = categories.find((e) => e.value === newCategory);
-        const path = newCategory === 'view-all' ? pagePath : `${pagePath}/${newCategory}`;
+    return (
+        <div className="books">
+            <div className="boxed container">
+                <BookViewer books={books} category={category} />
+            </div>
+            <AboutOurTextBooks />
+        </div>
+    );
+}
 
-        routerBus.emit('navigate', path, {
-            filter: newCategory,
-            path: pagePath
-        });
-        document.title = (categoryEntry && categoryEntry.title) || model.title;
-    }
+function Subjects() {
+    const {pageDescription} = useSubjectsContext();
+    const {category, categories, setCategory} = useCategoryTiedToPath();
 
-    const {
-        page_description: heroHtml,
-        books
-    } = model;
+    useEffect(
+        () => $.setPageDescription($.htmlToText(pageDescription)),
+        [pageDescription]
+    );
 
     return (
         <React.Fragment>
-            <RawHTML className="hero" html={heroHtml} />
-
-            <div className="strips-and-filter">
-                <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
-                <div className={`filter ${model.filterIsSticky ? 'sticky': ''}`}>
-                    <RadioPanel selectedItem={category} items={categories} onChange={setCategory} />
-                </div>
-            </div>
-            <div className="books">
-                <div className="boxed container">
-                    <BookViewer books={books} category={category} />
-                </div>
-                <AboutOurTextBooks model={model} />
-            </div>
+            <RawHTML className="hero" html={pageDescription} />
+            <StripsAndFilter {...{category, categories, setCategory}} />
+            <Books category={category} />
         </React.Fragment>
     );
 }
 
 export default function SubjectsLoader() {
-    const slug = 'books';
-    const [model, statusPage] = usePageData({slug, preserveWrapping: true});
-
-    useCanonicalLink();
-
-    if (statusPage) {
-        return statusPage;
-    }
-
-    model.books = model.books.filter((b) => b.book_state !== 'retired');
-
     return (
-        <main className="subjects-page">
-            <Subjects model={model} />
-        </main>
+        <SubjectsContextProvider>
+            <main className="subjects-page">
+                <Subjects />
+            </main>
+        </SubjectsContextProvider>
     );
 }
