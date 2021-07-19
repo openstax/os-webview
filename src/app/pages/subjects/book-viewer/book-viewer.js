@@ -1,9 +1,12 @@
 import React from 'react';
-import {RawHTML, ActiveElementContextProvider, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {RawHTML, ActiveElementContextProvider} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import useSubjectsContext from '../context';
 import BookCover from './book';
-import categoryPromise from '~/models/subjectCategories';
+import useSubjectCategoryContext from '~/models/subject-category-context';
 
-function organizeBooksByCategory(books, categories) {
+function useCategorizedBooks() {
+    const {books} = useSubjectsContext();
+    const categories = useSubjectCategoryContext();
     const result = {};
     const addLabels = () => {
         for (const category of categories) {
@@ -32,7 +35,7 @@ function organizeBooksByCategory(books, categories) {
 function CategorySection({categoryData, categorizedBooks, category}) {
     const classList = ['book-category'];
     const subjectHtml = categoryData.html;
-    const books = categorizedBooks[categoryData.cms];
+    const books = categorizedBooks[categoryData.cms] || [];
 
     if (!['view-all', categoryData.value].includes(category)) {
         classList.push('hidden');
@@ -51,9 +54,9 @@ function CategorySection({categoryData, categorizedBooks, category}) {
     );
 }
 
-export default function BookViewer({books, category}) {
-    const categories = useDataFromPromise(categoryPromise, []);
-    const categorizedBooks = organizeBooksByCategory(books, categories);
+export default function BookViewer({category}) {
+    const categorizedBooks = useCategorizedBooks();
+    const categories = useSubjectCategoryContext();
 
     if (!categorizedBooks) {
         return (<div>Loading...</div>);

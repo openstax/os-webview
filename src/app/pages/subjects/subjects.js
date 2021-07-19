@@ -1,13 +1,14 @@
 import routerBus from '~/helpers/router-bus';
 import React, {useState, useEffect} from 'react';
 import useSubjectsContext, {SubjectsContextProvider} from './context';
+import useSubjectCategoryContext, {SubjectCategoryContextProvider} from '~/models/subject-category-context';
 import {RawHTML, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import BookViewer from './book-viewer/book-viewer';
-import categoryPromise from '~/models/subjectCategories';
 import savingsPromise from '~/models/savings';
 import useSavingsDataIn, {linkClickTracker} from '~/helpers/savings-blurb';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
 import {forceCheck} from 'react-lazyload';
+import LanguageSelector from '~/components/language-selector/language-selector';
 import './subjects.scss';
 import $ from '~/helpers/$';
 
@@ -19,7 +20,7 @@ function categoryFromPath() {
 
 function useCategoryTiedToPath() {
     const [category, setCategory] = useState(categoryFromPath());
-    const categories = useDataFromPromise(categoryPromise, []);
+    const categories = useSubjectCategoryContext();
     const {title} = useSubjectsContext();
 
     useEffect(() => {
@@ -38,7 +39,11 @@ function useCategoryTiedToPath() {
     useEffect(() => {
         const categoryEntry = categories.find((e) => e.value === category);
 
-        document.title = (categoryEntry && categoryEntry.title) || title;
+        if (!categoryEntry && categories.length > 0) {
+            setCategory(categories[0].value);
+        } else {
+            document.title = (categoryEntry && categoryEntry.title) || title;
+        }
     }, [category, categories, title]);
 
     return {category, setCategory, categories};
@@ -101,7 +106,7 @@ function AboutOurTextBooks() {
 
     return (
         <div>
-            <h2 className="text-content">About Our Textbooks</h2>
+            <h2 className="text-content">{model.devStandardsHeading}</h2>
             <div className="boxed-row feature-block">
                 {
                     textData.slice(0, 3).map((data) =>
@@ -117,7 +122,9 @@ function AboutOurTextBooks() {
     );
 }
 
-function StripsAndFilter({category, categories, setCategory}) {
+
+function StripsAndFilter({category, setCategory}) {
+    const categories = useSubjectCategoryContext();
     const {filterIsSticky} = useSubjectsContext();
 
     return (
@@ -131,21 +138,25 @@ function StripsAndFilter({category, categories, setCategory}) {
 }
 
 function Books({category}) {
-    const {books} = useSubjectsContext();
-
     return (
         <div className="books">
             <div className="boxed container">
-                <BookViewer books={books} category={category} />
+                <BookViewer category={category} />
             </div>
             <AboutOurTextBooks />
         </div>
     );
 }
 
+const leadInText = {
+    en: 'We have textbooks in',
+    es: 'Tenemos libros de texto en'
+};
+
 function Subjects() {
-    const {pageDescription} = useSubjectsContext();
-    const {category, categories, setCategory} = useCategoryTiedToPath();
+    const {pageDescription, translations} = useSubjectsContext();
+    const {category, setCategory} = useCategoryTiedToPath();
+    const otherLocales = translations[0].value.map((t) => t.locale);
 
     useEffect(
         () => $.setPageDescription($.htmlToText(pageDescription)),
@@ -154,8 +165,11 @@ function Subjects() {
 
     return (
         <React.Fragment>
-            <RawHTML className="hero" html={pageDescription} />
-            <StripsAndFilter {...{category, categories, setCategory}} />
+            <div className="hero">
+                <LanguageSelector leadInText={leadInText} otherLocales={otherLocales} />
+                <RawHTML html={pageDescription} />
+            </div>
+            <StripsAndFilter {...{category, setCategory}} />
             <Books category={category} />
         </React.Fragment>
     );
@@ -164,9 +178,11 @@ function Subjects() {
 export default function SubjectsLoader() {
     return (
         <SubjectsContextProvider>
-            <main className="subjects-page">
-                <Subjects />
-            </main>
+            <SubjectCategoryContextProvider>
+                <main className="subjects-page">
+                    <Subjects />
+                </main>
+            </SubjectCategoryContextProvider>
         </SubjectsContextProvider>
     );
 }

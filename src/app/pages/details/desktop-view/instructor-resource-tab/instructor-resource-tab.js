@@ -1,5 +1,5 @@
 import React from 'react';
-import FeaturedResources from '../../common/featured-resources/featured-resources.js';
+import FeaturedResourcesSection from '../../common/featured-resources/featured-resources.js';
 import {instructorResourceBoxPermissions} from '../../common/resource-box/resource-box';
 import ResourceBoxes, {VideoResourceBoxes} from '../../common/resource-box/resource-boxes';
 import Partners from './partners/partners';
@@ -44,21 +44,6 @@ function Webinar({url, text, blurb}) {
                 <RawHTML className="blurb" html={blurb} />
             </div>
         </a>
-    );
-}
-
-function FeaturedResourcesSection({header, models}) {
-    return (
-        <div>
-            <div className="featured-resources">
-                <FeaturedResources headline={header} resources={models} />
-            </div>
-            <div className="divider">
-                <div className="line"></div>
-                see additional resources below
-                <div className="line"></div>
-            </div>
-        </div>
     );
 }
 

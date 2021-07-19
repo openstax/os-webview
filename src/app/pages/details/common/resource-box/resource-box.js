@@ -1,9 +1,29 @@
+import React from 'react';
+import useLanguageContext from '~/models/language-context';
+
 const settings = window.SETTINGS;
 
 function encodeLocation(search) {
     const pathWithoutSearch = `${window.location.origin}${window.location.pathname}`;
 
     return encodeURIComponent(`${pathWithoutSearch}?${search}`);
+}
+
+const localizedText = {
+    'en': 'Login to unlock',
+    'es': 'Inicia sesión para desbloquear'
+};
+
+/*
+    I am sorry for this hack. I needed to be able to use a hook and the chain
+    of hooks became unworkable. So I made a component that returns text.
+*/
+function LocalizedText() {
+    const {language} = useLanguageContext();
+
+    return (
+        localizedText[language]
+    );
 }
 
 function resourceBoxPermissions({
@@ -25,7 +45,7 @@ function resourceBoxPermissions({
         locked: {
             iconType: 'lock',
             link: {
-                text: 'Login to unlock',
+                text: <LocalizedText />,
                 url: loginUrl
             }
         }

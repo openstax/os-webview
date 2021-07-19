@@ -4,6 +4,7 @@ import TOCSlideout from './common/toc-slideout/toc-slideout';
 import $ from '~/helpers/$';
 import analytics from '~/helpers/analytics';
 import cn from 'classnames';
+import LanguageSelector from '~/components/language-selector/language-selector';
 import PhoneView from './phone-view/phone-view';
 import DesktopView from './desktop-view/desktop-view';
 import {useTableOfContents} from './common/hooks';
@@ -87,9 +88,16 @@ function TocSlideoutAndContent({children}) {
     );
 }
 
+const leadInText = {
+    en: 'This textbook is available in',
+    es: 'Este libro de texto está disponible en'
+};
+
 export function BookDetails() {
     const model = useDetailsContext();
-
+    const otherLocales = (model.translations[0] || []).map((t) => {
+        return t.locale;
+    });
     const {
         reverseGradient,
         title: bookTitle,
@@ -112,9 +120,11 @@ export function BookDetails() {
             </div>
             <TocSlideoutAndContent>
                 <div className="phone-view">
+                    <LanguageSelector leadInText={leadInText} otherLocales={otherLocales} />
                     <PhoneView />
                 </div>
                 <div className="bigger-view">
+                    <LanguageSelector leadInText={leadInText} otherLocales={otherLocales} />
                     <DesktopView onContentChange={setCardBackground} />
                 </div>
             </TocSlideoutAndContent>

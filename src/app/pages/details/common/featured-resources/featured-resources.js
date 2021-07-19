@@ -1,8 +1,9 @@
 import React from 'react';
 import ResourceBoxes from '../resource-box/resource-boxes';
+import useLanguageContext from '~/models/language-context';
 import './featured-resources.scss';
 
-export default function FeaturedResources({headline, resources}) {
+function FeaturedResources({headline, resources}) {
     const modResources = resources.map((res) => {
         const storageKey = `featured-resource-${res.heading}`;
         const seenTimes = 1 + Number(window.localStorage[storageKey] || 0);
@@ -26,6 +27,28 @@ export default function FeaturedResources({headline, resources}) {
             </div>
             <div className="resources">
                 <ResourceBoxes models={modResources} />
+            </div>
+        </div>
+    );
+}
+
+const localizedText = {
+    'en': 'see additional resources below',
+    'es': 'ver recursos adicionales a continuación'
+};
+
+export default function FeaturedResourcesSection({header, models}) {
+    const {language} = useLanguageContext();
+
+    return (
+        <div>
+            <div className="featured-resources">
+                <FeaturedResources headline={header} resources={models} />
+            </div>
+            <div className="divider">
+                <div className="line"></div>
+                {localizedText[language]}
+                <div className="line"></div>
             </div>
         </div>
     );

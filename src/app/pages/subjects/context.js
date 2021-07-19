@@ -1,27 +1,37 @@
 import React from 'react';
-import ContextLoader from '~/components/jsx-helpers/context-loader';
+import buildContext from '~/components/jsx-helpers/build-context';
+import usePageData from '~/components/jsx-helpers/page-loader';
+import useLanguageContext from '~/models/language-context';
 
-const SubjectsContext = React.createContext();
+const preserveWrapping = true;
 
-function useContextValue(data) {
-    data.books = data.books.filter((b) => b.bookState !== 'retired');
+function useContextValue() {
+    const [slug, setSlug] = React.useState('subjects');
+    const data = usePageData(`pages/${slug}`, preserveWrapping);
+    const {language} = useLanguageContext();
+
+    React.useEffect(() => {
+        if (!data || !data.translations) {
+            return;
+        }
+        const translations = data.translations[0].value;
+        const thisTranslation = translations.find((t) => t.locale === language);
+
+        if (thisTranslation) {
+            setSlug(thisTranslation.slug);
+        }
+    }, [data, language]);
+
+    if (data) {
+        data.books = data.books.filter((b) => b.bookState !== 'retired');
+    }
 
     return data;
 }
 
-export default function useSubjectsContext() {
-    return React.useContext(SubjectsContext);
-}
+const {useContext, ContextProvider} = buildContext({useContextValue});
 
-export function SubjectsContextProvider({children}) {
-    return (
-        <ContextLoader
-            Context={SubjectsContext}
-            slug="books"
-            useContextValue={useContextValue}
-            preserveWrapping
-        >
-            {children}
-        </ContextLoader>
-    );
-}
+export {
+    useContext as default,
+    ContextProvider as SubjectsContextProvider
+};

@@ -1,9 +1,8 @@
 import React from 'react';
-import ContextLoader from '~/components/jsx-helpers/context-loader';
+import buildContextLoader from '~/components/jsx-helpers/context-loader';
 import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
 
-const BlogContext = React.createContext({});
 const stayHere = {path: '/blog'};
 const fields = [
     'title', 'id', 'article_image', 'featured_image_alt_text', 'heading',
@@ -74,10 +73,12 @@ function useContextValue() {
     };
 }
 
+const {useContext, ContextLoader} = buildContextLoader();
+
 export function BlogContextProvider({children}) {
     return (
         <ContextLoader
-            Context={BlogContext} slug="news" useContextValue={useContextValue}
+            slug="news" useContextValue={useContextValue}
             doDocumentSetup noCamelCase
         >
             {children}
@@ -85,6 +86,4 @@ export function BlogContextProvider({children}) {
     );
 }
 
-export default function useBlogContext() {
-    return React.useContext(BlogContext);
-}
+export default useContext;

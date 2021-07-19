@@ -269,6 +269,14 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
         width: 100%;
     }
 
+    .language-selector {
+        @include scale-feature(margin-top, 2rem, 3rem);
+
+        @include width-up-to($tablet-max) {
+            margin-bottom: 2rem;
+        }
+    }
+
     .unbold {
         font-weight: normal;
     }

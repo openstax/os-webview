@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons/faSignOutAlt';
 import routerBus from '~/helpers/router-bus';
 import {instructorResourceBoxPermissions} from '../../common/resource-box/resource-box';
-import FeaturedResources from '../../common/featured-resources/featured-resources.js';
+import FeaturedResourcesSection from '../../common/featured-resources/featured-resources.js';
 import ResourceBoxes, {VideoResourceBoxes} from '../../common/resource-box/resource-boxes';
 import {useUserStatus} from '../../common/hooks';
 import './instructor-resources-pane.scss';
@@ -27,21 +27,6 @@ function resourceBoxModel(resourceData, userStatus, bookId) {
             },
         printLink: resourceData.printLink
     }, instructorResourceBoxPermissions(resourceData, userStatus, 'Instructor resources'));
-}
-
-function FeaturedResourcesSection({header, models}) {
-    return (
-        <div>
-            <div className="featured-resources">
-                <FeaturedResources headline={header} resources={models} />
-            </div>
-            <div className="divider">
-                <div className="line"></div>
-                see additional resources below
-                <div className="line"></div>
-            </div>
-        </div>
-    );
 }
 
 export function InstructorResourcesPane({model, userStatus}) {

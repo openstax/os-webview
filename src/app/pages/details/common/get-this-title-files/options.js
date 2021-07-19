@@ -11,6 +11,7 @@ import {faAmazon} from '@fortawesome/free-brands-svg-icons/faAmazon';
 import {faApple} from '@fortawesome/free-brands-svg-icons/faApple';
 import $ from '~/helpers/$';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
+import useLanguageContext from '~/models/language-context';
 import useAmazonAssociatesLink from './amazon-associates-link';
 import StudyEdge from './study-edge/study-edge';
 import TOCContext from '../toc-slideout/context';
@@ -52,10 +53,56 @@ export function SimpleLinkOption({link, icon, text, children, ...linkOptions}) {
     );
 }
 
+const localizedTexts = {
+    en: {
+        toc: 'Table of contents',
+        webview: {
+            link: 'View online',
+            tutor: 'Go to OpenStax Tutor'
+        },
+        app: 'Download the app',
+        pdf: {
+            download: ' Download a PDF',
+            sample: ' sample'
+        },
+        print: 'Order a print copy',
+        ibooks: {
+            download: 'Download on iBooks',
+            part: 'Part'
+        },
+        kindle: {
+            header: 'Download for Kindle',
+            disclaimer: 'As an Amazon Associate we earn from qualifying purchases'
+        }
+    },
+    es: {
+        toc: 'Tabla de contenido',
+        webview: {
+            link: 'Ver en línea',
+            tutor: 'Ir al OpenStax Tutor'
+        },
+        app: 'Descargar la aplicación',
+        pdf: {
+            download: ' Descargar un PDF',
+            sample: ' muestra'
+        },
+        print: 'Solicitar una copia impresa',
+        ibooks: {
+            download: 'Descargar en iBooks',
+            part: 'Parte'
+        },
+        kindle: {
+            header: 'Descargar para Kindle',
+            disclaimer: 'Como Asociado de Amazon, ganamos con las compras que califican'
+        }
+    }
+};
+
 export function TocOption({model}) {
     const tocState = React.useContext(TOCContext);
     const includeTOC = ['live', 'new_edition_available'].includes(model.bookState);
-    const text = $.isPolish(model.title) ? 'Spis treści' : 'Table of contents';
+    const {language} = useLanguageContext();
+    const text = $.isPolish(model.title) ? 'Spis treści' : localizedTexts[language].toc;
 
     if (!includeTOC) {
         return null;
@@ -105,15 +152,17 @@ function useCalloutCounter(slug) {
 // eslint-disable-next-line complexity
 export function WebviewOption({model}) {
     const [showCallout, hideForever] = useCalloutCounter(model.slug);
+    const {language} = useLanguageContext();
+    const texts = localizedTexts[language].webview;
     const isTutor = model.webviewRexLink.includes('tutor');
     const isRex = !isTutor && Boolean(model.webviewRexLink);
     const webviewLink = model.webviewRexLink || model.webviewLink;
     const iconAndTextArgs = isTutor ? {
         icon: faAtom,
-        text: 'Go to OpenStax Tutor'
+        text: texts.tutor
     } : {
         icon: faLaptop,
-        text: $.isPolish(model.title) ? 'Zobacz w przeglądarce' : 'View online'
+        text: $.isPolish(model.title) ? 'Zobacz w przeglądarce' : texts.link
     };
 
     return (
@@ -142,6 +191,8 @@ export function WebviewOption({model}) {
 
 export function StudyEdgeOption({model}) {
     const [Dialog, open] = useDialog();
+    const {language} = useLanguageContext();
+    const text = localizedTexts[language].app;
 
     function onClick(event) {
         event.preventDefault();
@@ -150,7 +201,7 @@ export function StudyEdgeOption({model}) {
 
     return (
         <SimpleLinkOption
-            link={model.enableStudyEdge} icon={faMobileAlt} text="Download the app"
+            link={model.enableStudyEdge} icon={faMobileAlt} text={text}
             onClick={onClick}
         >
             <Dialog className="wider-dialog">
@@ -162,8 +213,10 @@ export function StudyEdgeOption({model}) {
 
 export function PdfOption({model}) {
     const polish = $.isPolish(model.title);
-    const pdfText = polish ? ' Pobierz PDF' : ' Download a PDF';
-    const sampleText = polish ? ' przykład' : ' sample';
+    const {language} = useLanguageContext();
+    const texts = localizedTexts[language].pdf;
+    const pdfText = polish ? ' Pobierz PDF' : texts.download;
+    const sampleText = polish ? ' przykład' : texts.sample;
     const text = pdfText + (model.comingSoon ? sampleText : '');
     const pdfLink = (model.highResolutionPdfUrl || model.lowResolutionPdfUrl);
     const {GiveDialog, open, enabled} = useGiveDialog();
@@ -194,7 +247,9 @@ function isRealPrintLink(url) {
 export function PrintOption({model}) {
     const slug = (model.slug || '').replace('books/', '');
     const amazonDataLink = useAmazonAssociatesLink(slug);
-    const text = $.isPolish(model.title) ? 'Zamów egzemplarz drukowany' : 'Order a print copy';
+    const {language} = useLanguageContext();
+    const printText = localizedTexts[language].print;
+    const text = $.isPolish(model.title) ? 'Zamów egzemplarz drukowany' : printText;
     const [Dialog, open, close] = useDialog();
 
     function onClick(event) {
@@ -224,29 +279,35 @@ export function BookshareOption({model}) {
 }
 
 export function Ibooks2Volumes({model}) {
+    const {language} = useLanguageContext();
+    const texts = localizedTexts[language].ibooks;
+
     return (
         <React.Fragment>
             <span className="option-header">
-                <IconAndText icon={faApple} text="Download on iBooks" />
+                <IconAndText icon={faApple} text={texts.download} />
             </span>
             <a href={model.ibookLink} data-track="iBooks">
-                Part 1
+                {`${texts.part} 1`}
             </a>
             <a href={model.ibookLink2} data-track="iBooks">
-                Part 2
+                {`${texts.part} 2`}
             </a>
         </React.Fragment>
     );
 }
 
 export function IbooksOption({model}) {
+    const {language} = useLanguageContext();
+    const texts = localizedTexts[language].ibooks;
+
     return (
         <Option condition={model.ibookLink}>
             {
                 model.ibookLink2 ?
                     <Ibooks2Volumes model={model} /> :
                     <a href={model.ibookLink} data-track="iBooks">
-                        <IconAndText icon={faApple} text="Download on iBooks" />
+                        <IconAndText icon={faApple} text={texts.download} />
                     </a>
 
             }
@@ -255,14 +316,15 @@ export function IbooksOption({model}) {
 }
 
 export function KindleOption({model}) {
+    const {language} = useLanguageContext();
+    const texts = localizedTexts[language].kindle;
+
     return (
         <SimpleLinkOption
-            link={model.kindleLink} icon={faAmazon} text="Download for Kindle"
+            link={model.kindleLink} icon={faAmazon} text={texts.header}
             data-track="Kindle"
         >
-            <div className="disclaimer">
-                As an Amazon Associate we earn from qualifying purchases
-            </div>
+            <div className="disclaimer">{texts.disclaimer}</div>
         </SimpleLinkOption>
     );
 }

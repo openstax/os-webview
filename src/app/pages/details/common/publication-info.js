@@ -2,21 +2,71 @@ import React, {useState, useEffect} from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
 import fetchRexRelease from '~/models/rex-release';
+import useLanguageContext from '~/models/language-context';
+
+const localizedTexts = {
+    'en': {
+        pdf: {
+            heading: 'PDF Version Last Updated:',
+            see: 'See changes in the',
+            notes: 'Revision Notes'
+        },
+        license: {
+            heading: 'License',
+            byline: 'by OpenStax is licensed under'
+        },
+        pub: {
+            pub: 'Publish Date:',
+            web: 'Web Version Last Updated:'
+        }
+    },
+    'es': {
+        pdf: {
+            heading: 'Última actualización de la versión PDF:',
+            see: 'Ver cambios en las',
+            notes: 'Notas de Revisión'
+        },
+        license: {
+            heading: 'Licencia',
+            byline: 'por OpenStax tiene licencia bajo',
+            hard: 'Hardcover',
+            paper: 'Paperback',
+            dig: 'Digital',
+            part: 'Part'
+        },
+        pub: {
+            pub: 'Fecha de publicación:',
+            web: 'Última actualización de la versión web:',
+            hard: 'Tapa dura',
+            paper: 'Tapa blanda',
+            dig: 'Digital',
+            part: 'Parte'
+        }
+    }
+};
 
 function PdfUpdateInfo({updateDate, url}) {
-    if (!(updateDate && url)) {
+    const {language} = useLanguageContext();
+    const texts = localizedTexts[language].pdf;
+
+    if (!updateDate) {
         return null;
     }
-    const messageHtml = `See changes in the <a href="${url}">Revision Notes</a>.`;
 
     return (
         <div className="loc-pdf-update-date">
             <div className="callout-container">
-                <h4>PDF Version Last Updated:</h4>
-                {updateDate}
-                <div className="callout">
-                    <RawHTML html={messageHtml} />
-                </div>
+                <h4>{texts.heading}</h4>
+                {formatDate(updateDate)}
+                {
+                    url &&
+                        <div className="callout">
+                            <div>
+                                {texts.see}{' '}
+                                <a href={url}>{texts.notes}</a>.
+                            </div>
+                        </div>
+                }
             </div>
         </div>
     );
@@ -61,13 +111,16 @@ function LicenseIcon({name}) {
 }
 
 function LicenseInfo({name, text, title, version}) {
+    const {language} = useLanguageContext();
+    const texts = localizedTexts[language].license;
+
     if (!name) {
         return null;
     }
 
     return (
         <div className="loc-license">
-            <h4>License:</h4>
+            <h4>{texts.heading}:</h4>
             <LicenseIcon name={name} />
             <div>
                 {
@@ -75,7 +128,7 @@ function LicenseInfo({name, text, title, version}) {
                         <RawHTML html={text} /> :
                         <div>
                             <RawHTML Tag="span" html={title} />
-                            by OpenStax is licensed under
+                            {texts.byline}{' '}
                             <span className="text">{name} v{version}</span>
                         </div>
                 }
@@ -157,6 +210,8 @@ function LabeledDate({label, date, className}) {
 
 export default function PublicationInfo({model, url, polish}) {
     const [webUpdate, setWebUpdate] = useState(model.lastUpdatedWeb);
+    const {language} = useLanguageContext();
+    const texts = localizedTexts[language].pub;
 
     useEffect(() => {
         const isTutor = model.webviewRexLink.includes('tutor');
@@ -175,38 +230,25 @@ export default function PublicationInfo({model, url, polish}) {
     return (
         <React.Fragment>
             <LabeledDate
-                label="Publish Date:"
+                label={texts.pub}
                 className="loc-pub-date"
                 date={model.publishDate}
             />
             <LabeledDate
-                label="Web Version Last Updated:"
+                label={texts.web}
                 className="loc-web-update-date"
                 date={webUpdate}
             />
-            <LabeledDate
-                label="PDF Version Last Updated:"
-                className="loc-pdf-update-date"
-                date={model.lastUpdatedPdf}
-            />
-            {
-                model.lastUpdatedPdf &&
-                    <LabeledDate
-                        label="PDF Version Last Updated:"
-                        className="loc-pdf-update-date"
-                        formattedDate={formatDate(model.lastUpdatedPdf)}
-                    />
-            }
-            <PdfUpdateInfo updateDate={formatDate(model.lastUpdatedPdf)} url={url} />
-            <IsbnInfo model={model} label="Hardcover" tag="print" />
-            <IsbnInfo model={model} label="Paperback" tag="printSoftcover" />
-            <IsbnInfo model={model} label="Digital" tag="digital" />
+            <PdfUpdateInfo updateDate={model.lastUpdatedPdf} url={url} />
+            <IsbnInfo model={model} label={texts.hard} tag="print" />
+            <IsbnInfo model={model} label={texts.paper} tag="printSoftcover" />
+            <IsbnInfo model={model} label={texts.dig} tag="digital" />
             <IsbnInfo
                 model={model}
-                label={model.ibookVolume2Isbn10 || model.ibookVolume2isbn13 ? 'iBooks Part 1' : 'iBooks'}
+                label={model.ibookVolume2Isbn10 || model.ibookVolume2isbn13 ? `iBooks ${texts.part} 1` : 'iBooks'}
                 tag="ibook"
             />
-            <IsbnInfo model={model} label="iBooks Part 2" tag="ibook" />
+            <IsbnInfo model={model} label={`iBooks ${texts.part} 2`} tag="ibook" />
             <LicenseInfo
                 name={model.licenseName}
                 text={model.licenseText}
