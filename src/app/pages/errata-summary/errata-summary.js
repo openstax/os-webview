@@ -48,7 +48,9 @@ function ErrataSummary({data, book}) {
 
 export default function ErrataSummaryLoader() {
     const book = $.parseSearchString(window.location.search).book[0];
-    const slug = `errata/?book_title=${book}&is_assessment_errata__not=Yes&archived=False&status__not=New`;
+    const slug = `errata/?book_title=${book}` +
+        '&is_assessment_errata__not=Yes&archived=False&status__not=New' +
+        '&status__not=Anthony%20Editorial%20Review';
 
     return (
         <main className="errata-summary page">
