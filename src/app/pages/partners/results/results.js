@@ -148,11 +148,14 @@ function SeeMore({defaultOpen, children}) {
     );
 }
 
+const allyPartnershipLevel = 'Brand Ally';
+const isAlly = (level) => level.localeCompare(allyPartnershipLevel, 'en', {sensitivity: 'base'}) === 0;
+
 function ResultGridLoader({partnerData, linkTexts, headerTexts}) {
     const entries = partnerData.map(resultEntry);
     const [filteredEntries, setFilteredEntries] = useState(filterEntries(entries));
-    const filteredPartners = filteredEntries.filter((e) => e.partnershipLevel === 'Full partner');
-    const filteredAllies = filteredEntries.filter((e) => e.partnershipLevel !== 'Full partner');
+    const filteredPartners = filteredEntries.filter((e) => !isAlly(e.partnershipLevel || ''));
+    const filteredAllies = filteredEntries.filter((e) => isAlly(e.partnershipLevel || ''));
     const defaultAlliesOpen = filteredPartners.length === 0;
 
     useEffect(() => {
