@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
 import uniqBy from 'lodash/uniqBy';
 import BlogContext from '../blog-context';
-import ArticleSummary, {blurbModel} from '../article-summary/article-summary.jsx';
+import ArticleSummary, {blurbModel} from '../article-summary/article-summary';
 import $ from '~/helpers/$';
 import analytics from '~/helpers/analytics';
 import {PaginatedResults, PaginatorControls} from '~/components/paginator/paginator.js';

@@ -1,20 +1,28 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import BlogContext from '../blog-context';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
 import {faSearch} from '@fortawesome/free-solid-svg-icons/faSearch';
 import './search-bar.scss';
 
-function SearchBarInterior() {
-    const {setPath} = React.useContext(BlogContext);
+const SearchContext = React.createContext();
+
+function useSearchContextValue() {
+    const {setPath} = useContext(BlogContext);
     const [searchString, setSearchString] = useState(decodeURIComponent(window.location.search.substr(1)));
-    const clearHidden = searchString.length === 0;
+
+    function doSearch() {
+        setPath(`/blog/?${searchString}`);
+    }
+
+    return {searchString, setSearchString, doSearch};
+}
+
+function SearchInput() {
+    const {searchString, setSearchString, doSearch} = useContext(SearchContext);
 
     function onChange(event) {
         setSearchString(event.target.value);
-    }
-    function doSearch() {
-        setPath(`/blog/?${searchString}`);
     }
     function searchOnEnter(event) {
         if (event.key === 'Enter') {
@@ -22,6 +30,18 @@ function SearchBarInterior() {
             doSearch();
         }
     }
+
+    return (
+        <input
+            type="text" placeholder="Search" name="search-input"
+            value={searchString} onChange={onChange} onKeyPress={searchOnEnter}
+        />
+    );
+}
+
+function ClearButton() {
+    const {searchString, setSearchString} = useContext(SearchContext);
+
     function clearSearch() {
         setSearchString('');
     }
@@ -31,34 +51,42 @@ function SearchBarInterior() {
             clearSearch();
         }
     }
+    const clearHidden = searchString.length === 0;
 
     return (
-        <React.Fragment>
-            <div className="input-with-clear-button">
-                <input
-                    type="text" placeholder="Search" name="search-input"
-                    value={searchString} onChange={onChange} onKeyPress={searchOnEnter}
-                />
-                <span
-                    className="clear-search"
-                    role="button" aria-label="clear search" tabIndex="0"
-                    hidden={clearHidden} onClick={clearSearch} onKeyPress={clearByKey}
-                >
-                    <FontAwesomeIcon icon={faTimes} />
-                </span>
-            </div>
-            <button
-                className="btn primary" type="button" onClick={doSearch}>
-                <FontAwesomeIcon icon={faSearch} />
-            </button>
-        </React.Fragment>
+        <span
+            className="clear-search"
+            role="button" aria-label="clear search" tabIndex="0"
+            hidden={clearHidden} onClick={clearSearch} onKeyPress={clearByKey}
+        >
+            <FontAwesomeIcon icon={faTimes} />
+        </span>
+    );
+}
+
+function SearchButton() {
+    const {doSearch} = useContext(SearchContext);
+
+    return (
+        <button
+            className="btn primary" type="button" onClick={doSearch}>
+            <FontAwesomeIcon icon={faSearch} />
+        </button>
     );
 }
 
 export default function SearchBar() {
+    const contextValue = useSearchContextValue();
+
     return (
-        <div className="search-bar">
-            <SearchBarInterior />
-        </div>
+        <SearchContext.Provider value={contextValue}>
+            <div className="search-bar">
+                <div className="input-with-clear-button">
+                    <SearchInput />
+                    <ClearButton />
+                </div>
+                <SearchButton />
+            </div>
+        </SearchContext.Provider>
     );
 }

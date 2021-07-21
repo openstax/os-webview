@@ -1,5 +1,5 @@
 import React from 'react';
-import ArticleSummary, {blurbModel} from '../article-summary/article-summary.jsx';
+import ArticleSummary, {blurbModel} from '../article-summary/article-summary';
 import BlogContext from '../blog-context';
 import './pinned-article.scss';
 

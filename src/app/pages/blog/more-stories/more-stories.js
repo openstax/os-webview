@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchBar from '../search-bar/search-bar';
-import ArticleSummary, {blurbModel} from '../article-summary/article-summary.jsx';
+import ArticleSummary, {blurbModel} from '../article-summary/article-summary';
 import BlogContext from '../blog-context';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretLeft} from '@fortawesome/free-solid-svg-icons/faCaretLeft';

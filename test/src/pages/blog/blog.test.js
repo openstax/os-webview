@@ -1,7 +1,17 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
-import {BlogContextProvider} from '~/pages/blog/blog-context';
+import BlogContext, {useContextValue} from '~/pages/blog/blog-context';
 import {BlogPage, DefaultPage, ArticlePage} from '~/pages/blog/blog';
+
+function BlogContextProvider({children}) {
+    const value = useContextValue();
+
+    return (
+        <BlogContext.Provider value={value}>
+            {children}
+        </BlogContext.Provider>
+    );
+}
 
 test('blog default page', (done) => {
     window.location = {
@@ -26,7 +36,7 @@ test('blog default page', (done) => {
         expect(screen.queryAllByText('read more')).toHaveLength(13);
         expect(screen.queryAllByRole('textbox')).toHaveLength(1);
         done();
-    }, 10);
+    }, 200);
 });
 
 test('blog Article page', () => {

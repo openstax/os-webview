@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
-import BlogContext, {BlogContextProvider} from './blog-context';
-import {LoaderPage, WindowContextProvider} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import BlogContext, {useContextValue} from './blog-context';
+import ContextLoader from '~/components/jsx-helpers/context-loader';
+import {WindowContextProvider} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import PinnedArticle from './pinned-article/pinned-article';
 import UpdateBox from './update-box/update-box';
 import DisqusForm from './disqus-form/disqus-form';
@@ -71,18 +72,15 @@ function ContentBasedOnLocation() {
     );
 }
 
-function BlogPage() {
-    return (
-        <main className="blog page">
-            <BlogContextProvider>
-                <ContentBasedOnLocation />
-            </BlogContextProvider>
-        </main>
-    );
-}
-
 export default function LoadBlog() {
     return (
-        <LoaderPage slug="news" Child={BlogPage} doDocumentSetup noCamelCase />
+        <main className="blog page">
+            <ContextLoader
+                Context={BlogContext} slug="news" useContextValue={useContextValue}
+                doDocumentSetup noCamelCase
+            >
+                <ContentBasedOnLocation />
+            </ContextLoader>
+        </main>
     );
 }
