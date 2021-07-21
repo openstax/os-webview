@@ -12,7 +12,7 @@ import Dialog from '~/components/dialog/dialog';
 import analytics from '~/helpers/analytics';
 import CompCopyRequestForm from './request-form/request-form';
 import CustomizationForm from '../customization-form/customization-form';
-import DetailsContext from '../../context';
+import useDetailsContext from '../../context';
 import {useUserStatus} from '../hooks';
 import linkhelper from '~/helpers/link';
 import cn from 'classnames';
@@ -112,7 +112,7 @@ function MissingLink() {
 }
 
 function IbooksDialog({model, isOpen, toggle}) {
-    const bookModel = useContext(DetailsContext);
+    const bookModel = useDetailsContext();
 
     if (! ('bookModel' in model)) {
         model.bookModel = bookModel;
@@ -135,7 +135,7 @@ function IbooksDialog({model, isOpen, toggle}) {
 }
 
 function CustomizationDialog({isOpen, toggle}) {
-    const bookModel = useContext(DetailsContext);
+    const bookModel = useDetailsContext();
 
     function done(event) {
         event.preventDefault();

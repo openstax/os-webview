@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import BlogContext, {BlogContextProvider} from './blog-context';
-import {LoaderPage, WindowContextProvider} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import useBlogContext, {BlogContextProvider} from './blog-context';
+import {WindowContextProvider} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import PinnedArticle from './pinned-article/pinned-article';
 import UpdateBox from './update-box/update-box';
 import DisqusForm from './disqus-form/disqus-form';
@@ -12,7 +12,7 @@ import timers from './timers';
 import './blog.scss';
 
 export function DefaultPage() {
-    const {pinnedStory} = React.useContext(BlogContext);
+    const {pinnedStory} = useBlogContext();
 
     return (
         <WindowContextProvider>
@@ -44,7 +44,7 @@ export function ArticlePage({slug}) {
 }
 
 function ContentBasedOnLocation() {
-    const {location} = React.useContext(BlogContext);
+    const {location} = useBlogContext();
 
     useEffect(() => {
         timers.start();
@@ -71,18 +71,12 @@ function ContentBasedOnLocation() {
     );
 }
 
-function BlogPage() {
+export default function LoadBlog() {
     return (
         <main className="blog page">
             <BlogContextProvider>
                 <ContentBasedOnLocation />
             </BlogContextProvider>
         </main>
-    );
-}
-
-export default function LoadBlog() {
-    return (
-        <LoaderPage slug="news" Child={BlogPage} doDocumentSetup noCamelCase />
     );
 }

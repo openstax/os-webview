@@ -2,6 +2,7 @@ import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import GetThisTitle from '~/pages/details/common/get-this-title';
+import Context, {useTocState} from '~/pages/details/common/toc-slideout/context';
 // College algebra book details
 import details from '../../../data/details';
 import {transformData} from '~/helpers/controller/cms-mixin';
@@ -9,9 +10,18 @@ import $ from '~/helpers/$';
 
 const model = $.camelCaseKeys(transformData(details));
 
+function GTTinContext() {
+    const tocState = useTocState();
+
+    return (
+        <Context.Provider value={tocState}>
+            <GetThisTitle model={model} />
+        </Context.Provider>
+    );
+}
 
 test('handles Print Copy dialog', (done) => {
-    render(<GetThisTitle model={model} tocState={false} />);
+    render(<GTTinContext />);
     setTimeout(() => {
         const options = screen.getAllByRole('link');
         const printOption = options.filter((opt) => opt.textContent === 'Order a print copy');

@@ -1,10 +1,10 @@
 import React from 'react';
-import ArticleSummary, {blurbModel} from '../article-summary/article-summary.jsx';
-import BlogContext from '../blog-context';
+import ArticleSummary, {blurbModel} from '../article-summary/article-summary';
+import useBlogContext from '../blog-context';
 import './pinned-article.scss';
 
 export default function PinnedArticle() {
-    const {pinnedStory, setPath} = React.useContext(BlogContext);
+    const {pinnedStory, setPath} = useBlogContext();
 
     if (!pinnedStory) {
         return null;

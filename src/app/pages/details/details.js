@@ -1,12 +1,13 @@
-import React, {useRef, useEffect} from 'react';
-import {LoaderPage, useToggle, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import React, {useEffect} from 'react';
+import TOCContext, {useTocState} from './common/toc-slideout/context';
+import TOCSlideout from './common/toc-slideout/toc-slideout';
 import $ from '~/helpers/$';
 import analytics from '~/helpers/analytics';
 import cn from 'classnames';
 import PhoneView from './phone-view/phone-view';
 import DesktopView from './desktop-view/desktop-view';
 import {useTableOfContents} from './common/hooks';
-import DetailsContext from './context';
+import useDetailsContext, {DetailsContextProvider} from './context';
 import './details.scss';
 import './table-of-contents.scss';
 
@@ -62,102 +63,71 @@ function TitleImage({titleImage, bookTitle, titleLogo}) {
     );
 }
 
-function TOCSlideout({tocState, html}) {
-    return (
-        <div className="toc-slideout">
-            <div className="top-padding">
-                <span
-                    className="close-toc" role="button" tabIndex="0"
-                    onClick={() => tocState.toggle()}
-                    onKeyDown={$.treatSpaceOrEnterAsClick}
-                >
-                    &times;
-                </span>
-            </div>
-            <div className="toc-slideout-contents">
-                <div className="toc-drawer">
-                    <RawHTML html={html} className="table-of-contents" />
-                </div>
-            </div>
-            <div className="bottom-padding"></div>
-        </div>
-    );
-}
-
 function setCardBackground(isShowingCards) {
     const el = document.querySelector('.details-page');
 
     el.classList[isShowingCards ? 'add' : 'remove']('card-background');
 }
 
-export function BookDetails({data}) {
-    const modelRef = useRef($.camelCaseKeys(data));
-    const model = modelRef.current;
+function TocSlideoutAndContent({children}) {
+    const tocState = useTocState();
+    const model = useDetailsContext();
+    const cwClass = cn('content-wrapper', {'drawer-open': tocState.isOpen});
+    const tocHtml = useTableOfContents(model);
 
-    model.comingSoon = model.bookState === 'coming_soon';
+    return (
+        <TOCContext.Provider value={tocState}>
+            <div className={cwClass} data-slug={model.slug}>
+                <TOCSlideout html={tocHtml} />
+                <div className="content">
+                    {children}
+                </div>
+            </div>
+        </TOCContext.Provider>
+    );
+}
+
+export function BookDetails() {
+    const model = useDetailsContext();
+
     const {
         reverseGradient,
         title: bookTitle,
         titleImageUrl: titleImage
     } = model;
     const titleLogo = ''; // For future use
-    const [tocActive, toggleTocActive] = useToggle(false);
-    const tocState = {
-        isOpen: tocActive,
-        toggle: toggleTocActive
-    };
-    const cwClass = cn('content-wrapper', {'drawer-open': tocActive});
-    const tocHtml = useTableOfContents(model);
 
     useEffect(() => {
         setPageColor(model.coverColor);
         setJsonLd(model);
-        analytics.addResourcesToLookupTable(data);
-    }, [data, model]);
+        analytics.addResourcesToLookupTable(model);
+    }, [model]);
 
     return (
-        <DetailsContext.Provider value={model}>
+        <React.Fragment>
             <div className={cn('hero', {'reverse-gradient': reverseGradient})}>
                 <div className="content book-title">
                     {titleImage && <TitleImage {...{titleImage, bookTitle, titleLogo}} />}
                 </div>
             </div>
-            <div className={cwClass} data-slug={model.slug}>
-                <TOCSlideout tocState={tocState} html={tocHtml} />
-                <div className="content">
-                    <div className="phone-view">
-                        <PhoneView model={model} />
-                    </div>
-                    <div className="bigger-view">
-                        <DesktopView model={model} tocState={tocState} onContentChange={setCardBackground} />
-                    </div>
+            <TocSlideoutAndContent>
+                <div className="phone-view">
+                    <PhoneView />
                 </div>
-            </div>
-        </DetailsContext.Provider>
+                <div className="bigger-view">
+                    <DesktopView onContentChange={setCardBackground} />
+                </div>
+            </TocSlideoutAndContent>
+        </React.Fragment>
     );
-}
-
-function getSlugFromLocation() {
-    const bookTitle = window.location.pathname.replace(/.*details\//, '');
-    let slug;
-
-    if ((/^books/).test(bookTitle)) {
-        slug = bookTitle;
-    } else {
-        slug = `books/${bookTitle}`;
-    }
-    // Special handling for books whose slugs have changed
-    if ((/university-physics$/).test(slug)) {
-        slug += '-volume-1';
-    }
-
-    return slug;
 }
 
 export default function BookDetailsLoader() {
     return (
         <main className="details-page">
-            <LoaderPage slug={getSlugFromLocation()} Child={BookDetails} doDocumentSetup />
+            <DetailsContextProvider>
+                <BookDetails />
+            </DetailsContextProvider>
         </main>
     );
 }

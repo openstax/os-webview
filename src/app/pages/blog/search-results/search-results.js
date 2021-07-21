@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
 import uniqBy from 'lodash/uniqBy';
-import BlogContext from '../blog-context';
-import ArticleSummary, {blurbModel} from '../article-summary/article-summary.jsx';
+import useBlogContext from '../blog-context';
+import ArticleSummary, {blurbModel} from '../article-summary/article-summary';
 import $ from '~/helpers/$';
 import analytics from '~/helpers/analytics';
 import {PaginatedResults, PaginatorControls} from '~/components/paginator/paginator.js';
@@ -35,7 +35,7 @@ function useAllArticles(location) {
 
 
 export default function SearchResults() {
-    const {location, setPath} = React.useContext(BlogContext);
+    const {location, setPath} = useBlogContext();
     const allArticles = useAllArticles(location);
     const [currentPage, setCurrentPage] = useState(1);
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchBar from '../search-bar/search-bar';
-import ArticleSummary, {blurbModel} from '../article-summary/article-summary.jsx';
-import BlogContext from '../blog-context';
+import ArticleSummary, {blurbModel} from '../article-summary/article-summary';
+import useBlogContext from '../blog-context';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretLeft} from '@fortawesome/free-solid-svg-icons/faCaretLeft';
 import {faCaretRight} from '@fortawesome/free-solid-svg-icons/faCaretRight';
@@ -9,7 +9,7 @@ import $ from '~/helpers/$';
 import './more-stories.scss';
 
 function LimitController() {
-    const {limit, pageSize, moreStories, fewerStories} = React.useContext(BlogContext);
+    const {limit, pageSize, moreStories, fewerStories} = useBlogContext();
 
     return (
         <div className="button-row">
@@ -32,7 +32,7 @@ function LimitController() {
 export default function MoreStories({exceptSlug}) {
     const {
         pinnedStory, latestStories, setPath, pageSize
-    } = React.useContext(BlogContext);
+    } = useBlogContext();
 
     if (!latestStories) {
         return null;

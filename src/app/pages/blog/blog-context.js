@@ -1,8 +1,9 @@
 import React from 'react';
+import ContextLoader from '~/components/jsx-helpers/context-loader';
 import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
 
-const BlogContext = React.createContext();
+const BlogContext = React.createContext({});
 const stayHere = {path: '/blog'};
 const fields = [
     'title', 'id', 'article_image', 'featured_image_alt_text', 'heading',
@@ -35,7 +36,7 @@ function useLimit() {
     };
 }
 
-function useLocationSynchronizedToPath() {
+function useContextValue() {
     const [location, setLocation] = React.useState(window.location);
     const {limit, moreStories, fewerStories} = useLimit();
     const lsData = useDataFromSlug(
@@ -74,11 +75,16 @@ function useLocationSynchronizedToPath() {
 }
 
 export function BlogContextProvider({children}) {
-    const value = useLocationSynchronizedToPath();
-
     return (
-        <BlogContext.Provider value={value} children={children} />
+        <ContextLoader
+            Context={BlogContext} slug="news" useContextValue={useContextValue}
+            doDocumentSetup noCamelCase
+        >
+            {children}
+        </ContextLoader>
     );
 }
 
-export default BlogContext;
+export default function useBlogContext() {
+    return React.useContext(BlogContext);
+}
