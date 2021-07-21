@@ -5,7 +5,7 @@ import DetailsTab from './details-tab/details-tab';
 import InstructorResourceTab from './instructor-resource-tab/instructor-resource-tab';
 import StudentResourceTab from './student-resource-tab/student-resource-tab';
 import VideoTab from './videos-tab/videos-tab';
-import DetailsContext from '../context';
+import useDetailsContext from '../context';
 import {GiveLink} from '../common/common';
 import $ from '~/helpers/$';
 import './desktop-view.scss';
@@ -42,7 +42,7 @@ function useSelectedLabelTiedToSearchString(labels) {
 }
 
 export default function DesktopView({onContentChange}) {
-    const model = React.useContext(DetailsContext);
+    const model = useDetailsContext();
     const polish = $.isPolish(model.title);
     const labels = labelsFromModel(model, polish);
     const [selectedLabel, setSelectedLabel] = useSelectedLabelTiedToSearchString(labels);

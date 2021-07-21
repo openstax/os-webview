@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import BlogContext from '../blog-context';
+import useBlogContext from '../blog-context';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
 import {faSearch} from '@fortawesome/free-solid-svg-icons/faSearch';
@@ -8,7 +8,7 @@ import './search-bar.scss';
 const SearchContext = React.createContext();
 
 function useSearchContextValue() {
-    const {setPath} = useContext(BlogContext);
+    const {setPath} = useBlogContext();
     const [searchString, setSearchString] = useState(decodeURIComponent(window.location.search.substr(1)));
 
     function doSearch() {

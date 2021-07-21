@@ -1,14 +1,13 @@
 import React, {useEffect} from 'react';
 import TOCContext, {useTocState} from './common/toc-slideout/context';
 import TOCSlideout from './common/toc-slideout/toc-slideout';
-import ContextLoader from '~/components/jsx-helpers/context-loader';
 import $ from '~/helpers/$';
 import analytics from '~/helpers/analytics';
 import cn from 'classnames';
 import PhoneView from './phone-view/phone-view';
 import DesktopView from './desktop-view/desktop-view';
 import {useTableOfContents} from './common/hooks';
-import DetailsContext, {useContextValue} from './context';
+import useDetailsContext, {DetailsContextProvider} from './context';
 import './details.scss';
 import './table-of-contents.scss';
 
@@ -72,7 +71,7 @@ function setCardBackground(isShowingCards) {
 
 function TocSlideoutAndContent({children}) {
     const tocState = useTocState();
-    const model = React.useContext(DetailsContext);
+    const model = useDetailsContext();
     const cwClass = cn('content-wrapper', {'drawer-open': tocState.isOpen});
     const tocHtml = useTableOfContents(model);
 
@@ -89,7 +88,7 @@ function TocSlideoutAndContent({children}) {
 }
 
 export function BookDetails() {
-    const model = React.useContext(DetailsContext);
+    const model = useDetailsContext();
 
     const {
         reverseGradient,
@@ -123,34 +122,12 @@ export function BookDetails() {
     );
 }
 
-function getSlugFromLocation() {
-    const bookTitle = window.location.pathname.replace(/.*details\//, '');
-    let slug;
-
-    if ((/^books/).test(bookTitle)) {
-        slug = bookTitle;
-    } else {
-        slug = `books/${bookTitle}`;
-    }
-    // Special handling for books whose slugs have changed
-    if ((/university-physics$/).test(slug)) {
-        slug += '-volume-1';
-    }
-
-    return slug;
-}
-
 export default function BookDetailsLoader() {
     return (
         <main className="details-page">
-            <ContextLoader
-                Context={DetailsContext}
-                slug={getSlugFromLocation()}
-                useContextValue={useContextValue}
-                doDocumentSetup
-            >
+            <DetailsContextProvider>
                 <BookDetails />
-            </ContextLoader>
+            </DetailsContextProvider>
         </main>
     );
 }

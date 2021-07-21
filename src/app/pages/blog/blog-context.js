@@ -1,4 +1,5 @@
 import React from 'react';
+import ContextLoader from '~/components/jsx-helpers/context-loader';
 import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
 
@@ -35,7 +36,7 @@ function useLimit() {
     };
 }
 
-export function useContextValue() {
+function useContextValue() {
     const [location, setLocation] = React.useState(window.location);
     const {limit, moreStories, fewerStories} = useLimit();
     const lsData = useDataFromSlug(
@@ -73,4 +74,17 @@ export function useContextValue() {
     };
 }
 
-export default BlogContext;
+export function BlogContextProvider({children}) {
+    return (
+        <ContextLoader
+            Context={BlogContext} slug="news" useContextValue={useContextValue}
+            doDocumentSetup noCamelCase
+        >
+            {children}
+        </ContextLoader>
+    );
+}
+
+export default function useBlogContext() {
+    return React.useContext(BlogContext);
+}

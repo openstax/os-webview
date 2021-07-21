@@ -2,7 +2,7 @@ import React from 'react';
 import LetUsKnow from '../common/let-us-know/let-us-know';
 import GetThisTitle from '../common/get-this-title';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
-import DetailsContext from '../context';
+import useDetailsContext from '../context';
 import $ from '~/helpers/$';
 import DetailsPane from './details-pane/details-pane';
 import InstructorResourcesPane from './instructor-resources-pane/instructor-resources-pane';
@@ -77,7 +77,7 @@ function items(model) {
 }
 
 export default function PhoneView() {
-    const model = React.useContext(DetailsContext);
+    const model = useDetailsContext();
     const accordionItems = items(model);
     const selectedTab = $.findSelectedTab(accordionItems.map((i) => i.title));
 

@@ -1,17 +1,7 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
-import BlogContext, {useContextValue} from '~/pages/blog/blog-context';
+import {BlogContextProvider} from '~/pages/blog/blog-context';
 import {BlogPage, DefaultPage, ArticlePage} from '~/pages/blog/blog';
-
-function BlogContextProvider({children}) {
-    const value = useContextValue();
-
-    return (
-        <BlogContext.Provider value={value}>
-            {children}
-        </BlogContext.Provider>
-    );
-}
 
 test('blog default page', (done) => {
     window.location = {
