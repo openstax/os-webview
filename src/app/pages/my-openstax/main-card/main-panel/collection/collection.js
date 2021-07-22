@@ -5,7 +5,7 @@ import useDialog from '~/pages/my-openstax/dialog/dialog';
 import BookDetails from './book-details/book-details';
 import BookList from './book-list/book-list';
 import AddBookForm from './add-book-form/add-book-form';
-import CollectionContext, {CollectionContextProvider} from './collection-context';
+import useCollectionContext, {CollectionContextProvider} from './collection-context';
 import './collection.scss';
 
 function Collection({id, hidden}) {
@@ -34,7 +34,7 @@ function Collection({id, hidden}) {
 }
 
 function CollectionOrBookDetails({id, hidden}) {
-    const {selectedBook} = React.useContext(CollectionContext);
+    const {selectedBook} = useCollectionContext();
 
     return (
         <React.Fragment>

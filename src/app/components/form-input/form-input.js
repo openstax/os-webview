@@ -59,14 +59,17 @@ function SuggestionBox({matches, exactMatch, accepted, accept, activeIndex, setA
     );
 }
 
-function ValidatingInput({value, inputProps, onChange}) {
+function ValidatingInput({value, inputProps, onChange, accepted}) {
     const [validationMessage, setValidationMessage] = useState('');
     const ref = useRef();
     const Tag = inputProps.Tag || 'input';
 
     useLayoutEffect(() => {
         setValidationMessage(ref.current.validationMessage);
-    }, [value]);
+        if (!ref.current.validationMessage && !accepted) {
+            setValidationMessage('Not a valid selection');
+        }
+    }, [value, accepted]);
 
     return (
         <React.Fragment>
@@ -115,7 +118,10 @@ export default function FormInput({label, longLabel, inputProps, suggestions}) {
             <div className="control-group">
                 {label && <label className="field-label">{label}</label>}
                 {longLabel && <label className="field-long-label">{longLabel}</label>}
-                <ValidatingInput value={value} inputProps={{onKeyDown, ...otherProps}} onChange={onChange} />
+                <ValidatingInput
+                    value={value} inputProps={{onKeyDown, ...otherProps}}
+                    onChange={onChange} accepted={accepted}
+                />
                 {
                     suggestions &&
                         <SuggestionBox

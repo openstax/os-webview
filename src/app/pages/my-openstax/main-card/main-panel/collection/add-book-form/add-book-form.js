@@ -42,7 +42,7 @@ function Institution({name, value, adoption=[]}) {
                 <LabeledElement label={studentLabel}>
                     <input
                         name="students" type="number" min="1" max="999" required
-                        defaultValue={opportunityData ? opportunityData.students : ''}
+                        defaultValue={opportunityData ? +opportunityData.students : ''}
                     />
                 </LabeledElement>
             }
@@ -52,10 +52,23 @@ function Institution({name, value, adoption=[]}) {
 
 function InstitutionList({adoption}) {
     const {institutions} = useInstitutions();
+    const [validationMessage, setValidationMessage] = React.useState('');
+    const ref = React.useRef();
+
+    // Catches any clicks below and validates
+    function onClick() {
+        const checked = ref.current.querySelectorAll('[aria-checked="true"]');
+
+        setValidationMessage(checked.length ? '' : 'Check at least one');
+    }
+
+    React.useEffect(() => {
+        setTimeout(onClick, 80); // Give it time to render children
+    }, []);
 
     return (
         <LabeledElement label="Institution(s) where this book would be used">
-            <div className="checkbox-group">
+            <div className="checkbox-group" onClick={onClick} ref={ref}>
                 {
                     institutions.map((i) =>
                         <Institution
@@ -65,6 +78,7 @@ function InstitutionList({adoption}) {
                     )
                 }
             </div>
+            <div className="invalid-message">{validationMessage}</div>
         </LabeledElement>
     );
 }
