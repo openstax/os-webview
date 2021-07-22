@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronLeft} from '@fortawesome/free-solid-svg-icons/faChevronLeft';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
-import {WindowContextProvider, WindowContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import useWindowContext, {WindowContextProvider} from '~/models/window-context';
 import cn from 'classnames';
 import './carousel.scss';
 
@@ -61,7 +61,7 @@ function Carousel({
     const ref = useRef();
     const step = Number(atATime);
     const firstTimeRef = useRef(true);
-    const wcx = React.useContext(WindowContext);
+    const wcx = useWindowContext();
 
     React.useEffect(() => {
         // On initial draw, need to wait for render.

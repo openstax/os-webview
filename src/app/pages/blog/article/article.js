@@ -2,8 +2,8 @@ import BodyUnit from '~/components/body-units/body-units';
 import Byline from '~/components/byline/byline';
 import ProgressRing from '~/components/progress-ring/progress-ring';
 import {ShareJsx} from '~/components/share/share';
-import React, {useState, useEffect, useRef, useContext} from 'react';
-import {WindowContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import React, {useState, useEffect, useRef} from 'react';
+import useWindowContext from '~/models/window-context';
 import {usePageData} from '~/helpers/controller/cms-mixin';
 import routerBus from '~/helpers/router-bus';
 import './article.scss';
@@ -67,7 +67,7 @@ function FloatingSideBar({readTime, progress}) {
 function useScrollProgress(ref) {
     const [progress, setProgress] = useState(0);
     const bodyRef = useRef();
-    const windowCx = useContext(WindowContext);
+    const windowCx = useWindowContext();
 
     useEffect(() => {
         if (typeof bodyRef === 'undefined') {

@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import useBlogContext, {BlogContextProvider} from './blog-context';
-import {WindowContextProvider} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {WindowContextProvider} from '~/models/window-context';
 import PinnedArticle from './pinned-article/pinned-article';
 import UpdateBox from './update-box/update-box';
 import DisqusForm from './disqus-form/disqus-form';

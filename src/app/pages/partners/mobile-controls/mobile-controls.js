@@ -1,11 +1,11 @@
-import React, {useState, useContext, useRef, useEffect, useLayoutEffect} from 'react';
+import React, {useState, useRef, useEffect, useLayoutEffect} from 'react';
 import {books, types, advanced, sort, resultCount, clearStores} from '../store';
 import ActiveFilters from '../active-filters/active-filters';
 import AccordionGroup from '~/components/accordion-group/accordion-group.js';
 import BookOptions from '../controls/book-options/book-options';
 import OptionsList from '../controls/options-list/options-list';
 import Checkboxes from '../controls/checkboxes-linked-to-store/checkboxes-linked-to-store';
-import {WindowContext, WindowContextProvider} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import useWindowContext, {WindowContextProvider} from '~/models/window-context';
 import {BaseButton, useStoreSize, sortOptions} from '../controls/controls';
 import shellBus from '~/components/shell/shell-bus';
 import sortBy from 'lodash/sortBy';
@@ -113,7 +113,7 @@ function MobileFiltersToggle({typeOptions, advancedFilterOptions}) {
 }
 
 function MobileControlRow({advancedFilterOptions, typeOptions}) {
-    const wcx = useContext(WindowContext);
+    const wcx = useWindowContext();
     const ref = useRef();
     const [stuck, setStuck] = useState(false);
 

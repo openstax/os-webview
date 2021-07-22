@@ -3,34 +3,6 @@ import $ from '~/helpers/$';
 import {usePageData, fetchFromCMS} from '~/helpers/controller/cms-mixin';
 import throttle from 'lodash/throttle';
 
-function getValuesFromWindow() {
-    const {innerHeight, innerWidth, scrollY} = window;
-
-    return {innerHeight, innerWidth, scrollY};
-}
-
-export const WindowContext = React.createContext(getValuesFromWindow());
-
-export function WindowContextProvider({children}) {
-    const [value, setValue] = useState(getValuesFromWindow());
-
-    useLayoutEffect(() => {
-        const handleScroll = throttle(() => setValue(getValuesFromWindow()), 40);
-
-        window.addEventListener('scroll', handleScroll);
-        window.addEventListener('resize', handleScroll);
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('resize', handleScroll);
-        };
-    }, []);
-
-    return (
-        <WindowContext.Provider value={value} children={children} />
-    );
-}
-
 export function useDataFromPromise(promise, defaultValue) {
     const [data, setData] = useState(defaultValue);
 
@@ -113,19 +85,6 @@ export function ActiveElementContextProvider({children}) {
     return (
         <ActiveElementContext.Provider value={value} children={children} />
     );
-}
-
-
-export function createPageContextProvider({Context, slug}) {
-    return function ({children}) {
-        const [data] = usePageData({slug});
-
-        return (
-            <Context.Provider value={data}>
-                {children}
-            </Context.Provider>
-        );
-    };
 }
 
 export function RawHTML({Tag='div', html, embed=false, ...otherProps}) {
