@@ -3,6 +3,7 @@ import {render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import GetThisTitle from '~/pages/details/common/get-this-title';
 import Context, {useTocState} from '~/pages/details/common/toc-slideout/context';
+import {LanguageContextProvider} from '~/models/language-context';
 // College algebra book details
 import details from '../../../data/details';
 import {transformData} from '~/helpers/controller/cms-mixin';
@@ -14,9 +15,11 @@ function GTTinContext() {
     const tocState = useTocState();
 
     return (
-        <Context.Provider value={tocState}>
-            <GetThisTitle model={model} />
-        </Context.Provider>
+        <LanguageContextProvider>
+            <Context.Provider value={tocState}>
+                <GetThisTitle model={model} />
+            </Context.Provider>
+        </LanguageContextProvider>
     );
 }
 

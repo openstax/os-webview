@@ -1,5 +1,6 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
+import {LanguageContextProvider} from '~/models/language-context';
 import ResourceBoxes from '~/pages/details/common/resource-box/resource-boxes';
 import {instructorResourceBoxPermissions, studentResourceBoxPermissions} from '~/pages/details/common/resource-box/resource-box';
 
@@ -20,6 +21,14 @@ const userStatus = {
 const payload = {
     heading: 'This is the heading',
     description: 'This is <b>a description</b> in HTML',
+}
+
+function LangWrapResourceBoxes({...args}) {
+    return (
+        <LanguageContextProvider>
+            <ResourceBoxes {...args} />
+        </LanguageContextProvider>
+    )
 }
 
 function instructorModels(resDelta, userDelta={}) {
@@ -44,14 +53,14 @@ function studentModels(resDelta, userDelta={}) {
 }
 
 test('handles unlocked instructor resources', () => {
-    render(<ResourceBoxes models={instructorModels({})} />);
+    render(<LangWrapResourceBoxes models={instructorModels({})} />);
     expect(screen.getByRole('heading').textContent).toBe(payload.heading);
     expect(screen.getAllByText('a description')).toHaveLength(1);
     expect(screen.getByRole('link').textContent).toBe(resourceData.linkText);
 });
 
 test('handles locked instructor resources', () => {
-    render(<ResourceBoxes models={instructorModels({resourceUnlocked: false})} />);
+    render(<LangWrapResourceBoxes models={instructorModels({resourceUnlocked: false})} />);
 
     expect(screen.getByRole('link').textContent).toBe('Login to unlock');
 });
@@ -62,7 +71,7 @@ test('allows instructors access to locked resources', () => {
         {isInstructor: true}
     );
 
-    render(<ResourceBoxes models={models} />);
+    render(<LangWrapResourceBoxes models={models} />);
     expect(screen.getByRole('link').textContent).toBe(resourceData.linkText);
 });
 
@@ -72,7 +81,7 @@ test('handles locked student resources', () => {
         {isStudent: false, isInstructor: false}
     );
 
-    render(<ResourceBoxes models={models} />);
+    render(<LangWrapResourceBoxes models={models} />);
     expect(screen.getByRole('link').textContent).toBe('Login to unlock');
 });
 
@@ -85,7 +94,7 @@ test('allows students access to locked resources', () => {
         }
     );
 
-    render(<ResourceBoxes models={models} />);
+    render(<LangWrapResourceBoxes models={models} />);
     expect(screen.getByRole('link').textContent).toBe(resourceData.linkText);
 });
 
@@ -97,7 +106,7 @@ test('allows instructors access to locked student resources', () => {
         isInstructor: true
     });
 
-    render(<ResourceBoxes models={models} />);
+    render(<LangWrapResourceBoxes models={models} />);
     const link = screen.getByRole('link');
     expect(link.textContent).toBe(resourceData.linkText);
     expect(link.querySelector('.fa-download')).toBeTruthy();
@@ -113,7 +122,7 @@ test('understands external links', () => {
         isInstructor: true
     });
 
-    render(<ResourceBoxes models={models} />);
+    render(<LangWrapResourceBoxes models={models} />);
     const link = screen.getByRole('link');
     expect(link.textContent).toBe(resourceData.linkText);
     expect(link.querySelector('.fa-external-link-alt')).toBeTruthy();
