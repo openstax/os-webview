@@ -7,6 +7,6 @@ Sentry.init({
     dsn: 'https://68df3e19624c434eb975dafa316c03ff@o484761.ingest.sentry.io/5691260',
     release: `osweb@${packageVersion}`,
     integrations: [new Integrations.BrowserTracing()],
-    tracesSampleRate: 0.5,
+    tracesSampleRate: 0.05,
     environment: window.location.hostname
 });
