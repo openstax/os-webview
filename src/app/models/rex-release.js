@@ -16,11 +16,11 @@ const fetchRexRelease = memoize((rexOrigin) => {
 // REMEMBER: The first parameter is the memo key
 const fetchContents = memoize((cnxId, rexOrigin) => {
     if ($.isTestingEnvironment() || rexOrigin.includes('tutor')) {
-        return fetch(`//archive.cnx.org/contents/${cnxId}`)
+        return fetch(`${window.SETTINGS.apiOrigin}/contents/${cnxId}`)
             .then((r) => r.json());
     }
     return fetchRexRelease(rexOrigin)
-        .then((r) => fetch(`//archive.cnx.org/contents/${cnxId}@${r.books[cnxId].defaultVersion}`))
+        .then((r) => fetch(`${window.SETTINGS.apiOrigin}/contents/${cnxId}@${r.books[cnxId].defaultVersion}`))
         .then((r) => r.json());
 });
 

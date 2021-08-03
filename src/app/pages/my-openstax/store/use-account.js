@@ -50,8 +50,8 @@ export default function useAccount() {
         return {};
     }
     const {firstName, lastName, createdAt, salesforceId: contactId} = user.contact;
-    const facultyVerified = accountsData.facultyStatus === 'confirmed_faculty';
-    const role = facultyRoleLookup[accountsData.facultyStatus] || 'Student';
+    const facultyVerified = accountsData.faculty_status === 'confirmed_faculty';
+    const role = facultyRoleLookup[accountsData.faculty_status] || 'Student';
 
     return {
         accountsId: accountsData.id,

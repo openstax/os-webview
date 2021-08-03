@@ -22,7 +22,7 @@ function loadDisqus() {
 }
 
 function reloadDisqus() {
-    if (DISQUS) {
+    if (typeof DISQUS === 'object') {
         DISQUS.reset({
             reload: true,
             config: disqus_config
