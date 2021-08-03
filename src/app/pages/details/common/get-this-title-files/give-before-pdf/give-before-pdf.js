@@ -29,21 +29,12 @@ function OpenGiveInNewWindow(event) {
     );
 }
 
-function GiveBeforePdf({
-    link, showThankYou, setShowThankYou, doneDownloading, close, data
-}) {
-    if (!data.download_ready || !doneDownloading) {
-        return <Downloading data={data} />;
-    }
-
-    if (showThankYou) {
-        return <ThankYou link={link} close={close} />;
-    }
-
-    function onThankYouClick(event) {
-        event.preventDefault();
-        setShowThankYou(true);
-    }
+function GiveBeforePdfAfterConditionals({onThankYouClick, link, data}) {
+    React.useEffect(() => {
+        if (window.dataLayer) {
+            window.dataLayer.push({event: 'optimize.giveBeforePdf'});
+        }
+    });
 
     return (
         <div className="give-before-pdf">
@@ -72,6 +63,28 @@ function GiveBeforePdf({
             <hr />
             <a href={link} className="btn go-to">Go to PDF</a>
         </div>
+    );
+}
+
+function GiveBeforePdf({
+    link, showThankYou, setShowThankYou, doneDownloading, close, data
+}) {
+    if (!data.download_ready || !doneDownloading) {
+        return <Downloading data={data} />;
+    }
+
+    if (showThankYou) {
+        return <ThankYou link={link} close={close} />;
+    }
+
+    function onThankYouClick(event) {
+        event.preventDefault();
+        setShowThankYou(true);
+    }
+
+
+    return (
+        <GiveBeforePdfAfterConditionals {...{onThankYouClick, link, data}} />
     );
 }
 
