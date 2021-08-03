@@ -59,7 +59,6 @@ function LoginMenuWithDropdown({userModel}) {
 
     return (
         <Dropdown className="login-menu nav-menu-item rightmost dropdown" label={label} excludeWrapper>
-            <MenuItem label="My OpenStax" url="/my-openstax" />
             <MenuItem label="Account Profile" url={`${settings.accountHref}/profile`} />
             <TutorMenuItemIfUser userModel={userModel} />
             {incomplete && <MenuItem label="Finish signing up" url={facultySignupStep4} />}
