@@ -9,6 +9,7 @@ import analytics from '~/helpers/analytics';
 import routerBus from '~/helpers/router-bus';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 import $ from '~/helpers/$';
+import {fetchUser} from '~/pages/my-openstax/store/user';
 
 const PAGES = [
     'about',
@@ -162,8 +163,16 @@ function Error404() {
     );
 }
 
+function useHomeOrMyOpenStax() {
+    const [user, setUser] = React.useState({error: 'not loaded'});
+
+    React.useEffect(() => fetchUser().then(setUser), []);
+
+    return user.error ? 'home' : 'my-openstax';
+}
+
 export default function Router() {
-    // const homeOrMyOpenStax = useHomeOrMyOpenStax();
+    const homeOrMyOpenStax = useHomeOrMyOpenStax();
 
     React.useEffect(() => {
         document.addEventListener('click', linkHandler);
@@ -186,7 +195,7 @@ export default function Router() {
                 )
             }
             <Route path="/" exact>
-                <ImportedPage name="home" />
+                <ImportedPage name={homeOrMyOpenStax} />
             </Route>
             <Route path={FOOTER_PAGES} exact>
                 <ImportedPage name="footer-page" />
