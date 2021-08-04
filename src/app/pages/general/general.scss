@@ -31,6 +31,11 @@
             }
         }
 
+        &.block-image > img {
+            height: auto;
+            max-width: 100%;
+        }
+
         &.block-paragraph > div {
             max-width: $text-content-max;
         }
