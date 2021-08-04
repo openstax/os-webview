@@ -4,6 +4,8 @@ import PageContext from './page-context';
 import PartnerContext from '../partner-context';
 import {useMyReview} from './rating-form';
 import ClippedText from '~/components/clipped-text/clipped-text';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
 import './user-review.scss';
 
 function UserControls({status}) {
@@ -61,10 +63,13 @@ function ReviewAndResponse({review, response}) {
     );
 }
 
+// eslint-disable-next-line complexity
 export default function UserReview({
-    initials, userName, rating, review, updated, response, status, allowEdit=false
+    initials, userName, rating, review, updated, response, status, userFacultyStatus,
+    allowEdit=false
 }) {
     const showTheReview = allowEdit || (review && status === 'Approved');
+    const isVerified = userFacultyStatus === 'confirmed_faculty';
 
     if (!showTheReview) {
         return null;
@@ -72,8 +77,14 @@ export default function UserReview({
 
     return (
         <div className="user-review">
-            <span className="initials">{initials}</span>
-            <span className="name">{userName}</span>
+            <div className="initial-circle">
+                <span className="initials">{initials}</span>
+                {isVerified && <FontAwesomeIcon className="verified-check" icon={faCheck} />}
+            </div>
+            <div className="name-and-verified">
+                <span className="name">{userName}</span>
+                {isVerified && <div className="verified-tag">Verified Instructor</div>}
+            </div>
             <div className="rating-and-controls stars-and-count">
                 <Stars stars={rating} />
                 <span className="updated">{updated}</span>

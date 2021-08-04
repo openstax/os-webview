@@ -120,6 +120,7 @@ function ReviewsPage() {
             allowEdit: r.submittedByAccountId === accountId,
             updated: new Date(`${r.created}T00:00:00`).toLocaleDateString('en-us'),
             response: r.partnerResponse,
+            userFacultyStatus: r.userFacultyStatus,
             status: r.status
         }))
         .filter((r) => r.review.length > 0 || r.allowEdit)
