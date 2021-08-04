@@ -33,7 +33,7 @@ function WalkthroughButtons({welcomeDone}) {
     function goToMyOpenStax() {
         welcomeDone();
         window.setTimeout(() => {
-            routerBus.emit('navigate', '/my-openstax');
+            routerBus.emit('navigate', '/');
         }, 100);
     }
 
