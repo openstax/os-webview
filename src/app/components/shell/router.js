@@ -8,6 +8,7 @@ import linkHelper from '~/helpers/link';
 import analytics from '~/helpers/analytics';
 import routerBus from '~/helpers/router-bus';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
+import useFlagContext from './flag-context';
 import $ from '~/helpers/$';
 import {fetchUser} from '~/pages/my-openstax/store/user';
 
@@ -165,10 +166,11 @@ function Error404() {
 
 function useHomeOrMyOpenStax() {
     const [user, setUser] = React.useState({error: 'not loaded'});
+    const isEnabled = useFlagContext();
 
     React.useEffect(() => fetchUser().then(setUser), []);
 
-    return user.error ? 'home' : 'my-openstax';
+    return (user.error || !isEnabled) ? 'home' : 'my-openstax';
 }
 
 export default function Router() {

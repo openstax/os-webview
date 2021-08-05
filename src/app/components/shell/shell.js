@@ -2,6 +2,7 @@ import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import Router from './router';
 import ReactModal from 'react-modal';
+import {FlagContextProvider} from './flag-context';
 import Welcome from './welcome/welcome';
 import bus from './shell-bus';
 
@@ -73,10 +74,12 @@ function App() {
             <div id="lower-sticky-note">
                 <LowerStickyNote />
             </div>
-            <div id="main" ref={ref}>
-                <Welcome />
-                <Router />
-            </div>
+            <FlagContextProvider>
+                <div id="main" ref={ref}>
+                    <Welcome />
+                    <Router />
+                </div>
+            </FlagContextProvider>
             <footer id="footer">
                 <Footer />
             </footer>
