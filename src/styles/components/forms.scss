@@ -141,9 +141,10 @@ form {
     }
 
     textarea {
+        font-family: inherit;
         height: 21.42rem;
         overflow-y: auto;
-        white-space: normal;
+        white-space: pre-wrap;
     }
 
     [type="text"],
