@@ -7,6 +7,7 @@ import user from '~/pages/my-openstax/store/user';
 import useAccount from '~/pages/my-openstax/store/use-account';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import routerBus from '~/helpers/router-bus';
+import useFlagContext from '../flag-context';
 import './welcome.scss';
 
 /*
@@ -130,6 +131,11 @@ function Welcome() {
 
 export default function WelcomeStoreWrapper() {
     const store = createStoreon([user]);
+    const isEnabled = useFlagContext();
+
+    if (!isEnabled) {
+        return null;
+    }
 
     return (
         <StoreContext.Provider value={store}>
