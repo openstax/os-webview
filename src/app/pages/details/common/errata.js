@@ -1,6 +1,6 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import useLanguageContext from '~/models/language-context';
+import useDetailsContext from '~/pages/details/context';
 
 const localizedTexts = {
     'en': {
@@ -16,7 +16,7 @@ const localizedTexts = {
 };
 
 function EnglishButtonGroup({title}) {
-    const {language} = useLanguageContext();
+    const {language} = useDetailsContext();
     const texts = localizedTexts[language];
 
     return (
@@ -59,7 +59,7 @@ export function ErrataContents({model, polish}) {
 }
 
 export default function ErrataSection({model, polish=false}) {
-    const {language} = useLanguageContext();
+    const {language} = useDetailsContext();
 
     if (!['live', 'new_edition_available', 'deprecated'].includes(model.bookState)) {
         return null;

@@ -6,7 +6,7 @@ import './language-selector.scss';
 
 // This should be in the CMS
 // Translates locales into language names
-const languageTranslations = {
+export const languageTranslations = {
     en: {
         en: 'English',
         es: 'Spanish',

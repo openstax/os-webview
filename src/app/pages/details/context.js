@@ -1,8 +1,6 @@
 import React from 'react';
 import buildContextLoader from '~/components/jsx-helpers/context-loader';
 import buildContext from '~/components/jsx-helpers/build-context';
-import useLanguageContext from '~/models/language-context';
-import routerBus from '~/helpers/router-bus';
 
 /*
     Managing the slug requires a Context
@@ -27,6 +25,16 @@ function getSlugFromLocation() {
 function useSlugContextValue() {
     const [slug, setSlug] = React.useState(getSlugFromLocation());
 
+    React.useEffect(() => {
+        const updateSlug = () => {
+            setSlug(getSlugFromLocation());
+        };
+
+        window.addEventListener('popstate', updateSlug);
+
+        return () => window.removeEventListener('popstate', updateSlug);
+    });
+
     return {slug, setSlug};
 }
 
@@ -37,34 +45,9 @@ const {
 
 // ------
 
-function useSlugTiedToLocation(data) {
-    const {slug, setSlug} = useSlugContext();
-    const {language} = useLanguageContext();
-
-    /*
-        Compare language to available translations
-        If it matches, we need to switch the data
-        1. Get the new slug
-        2. Swap it for the old slug in the Location
-        3. Navigate there and update slug
-    */
-    React.useEffect(() => {
-        if (!data) {
-            return;
-        }
-        const foundTranslation = (data.translations[0] || []).find((tr) => tr.locale === language);
-
-        if (foundTranslation) {
-            routerBus.emit('navigate', `/details/${foundTranslation.slug}`);
-            setSlug(`books/${foundTranslation.slug}`);
-        }
-    }, [language, data, setSlug, slug]);
-}
-
 function useContextValue(data) {
     data.comingSoon = data.bookState === 'coming_soon';
-
-    useSlugTiedToLocation(data);
+    data.language = data.meta.locale;
 
     return data;
 }

@@ -5,7 +5,6 @@ import DetailsTab from './details-tab/details-tab';
 import InstructorResourceTab from './instructor-resource-tab/instructor-resource-tab';
 import StudentResourceTab from './student-resource-tab/student-resource-tab';
 import VideoTab from './videos-tab/videos-tab';
-import useLanguageContext from '~/models/language-context';
 import useDetailsContext from '../context';
 import {GiveLink} from '../common/common';
 import $ from '~/helpers/$';
@@ -28,7 +27,7 @@ const tabsByLanguage = {
 
 // eslint-disable-next-line complexity
 function useLabelsFromModel(model, polish) {
-    const {language} = useLanguageContext();
+    const {language} = useDetailsContext();
     const labelSet = tabsByLanguage[language];
     const tabLabels = [polish ? 'Szczegóły książki' : labelSet[0]];
 
@@ -47,6 +46,10 @@ function useLabelsFromModel(model, polish) {
 
 function useSelectedLabelTiedToSearchString(labels) {
     const [selectedLabel, setSelectedLabel] = useState($.findSelectedTab(labels));
+
+    useEffect(() => {
+        setSelectedLabel($.findSelectedTab(labels));
+    }, [labels]);
 
     function updateSelectedLabel(newValue) {
         const newSearchString = $.replaceSearchTerm(labels, selectedLabel, newValue);

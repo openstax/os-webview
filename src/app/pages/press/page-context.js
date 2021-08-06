@@ -4,8 +4,6 @@ import {usePageData} from '~/helpers/controller/cms-mixin';
 function useContextValue() {
     const [data] = usePageData({slug: 'press'});
 
-    console.info('Pulled', data);
-
     return data;
 }
 

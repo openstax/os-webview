@@ -219,7 +219,10 @@ export default function PublicationInfo({model, url, polish}) {
 
         if (isRex) {
             fetchRexRelease(model.webviewRexLink, model.cnxId)
-                .then(({revised}) => setWebUpdate(revised));
+                .then(
+                    ({revised}) => setWebUpdate(revised),
+                    (err) => console.warn('Error fetching Rex info:', err)
+                );
         }
     }, [model]);
 

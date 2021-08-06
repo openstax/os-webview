@@ -1,5 +1,5 @@
 import React from 'react';
-import useLanguageContext from '~/models/language-context';
+import useDetailsContext from '~/pages/details/context';
 import groupBy from 'lodash/groupBy';
 
 function Authors({heading, className, authors=[], CustomTag='div'}) {
@@ -27,7 +27,7 @@ const localizedHeadings = {
 };
 
 export default function AuthorsSection({model, polish}) {
-    const {language} = useLanguageContext();
+    const {language} = useDetailsContext();
     const headings = polish ? [
         'Główni autorzy', 'Autorzy współpracujący'
     ] : localizedHeadings[language];
