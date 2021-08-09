@@ -34,10 +34,6 @@ const cards = [
         linkText: 'Download',
         questions: [
             {
-                url: '/yes',
-                text: 'Is OER right for me?'
-            },
-            {
                 url: '/faq',
                 text: 'Frequently Asked Questions'
             },
@@ -57,10 +53,6 @@ const cards = [
             {
                 url: 'https://www.oercommons.org/groups/openstax-algebra-and-trigonometry/1045/?__hub_id=27',
                 text: 'OER Commons HUB Resources'
-            },
-            {
-                url: '/no-idea-where-this-goes',
-                text: 'Refer a colleague'
             }
         ]
     },
