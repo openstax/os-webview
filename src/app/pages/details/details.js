@@ -107,7 +107,7 @@ function AnotherLanguage({locale, translation}) {
 }
 
 function LinksToTranslations() {
-    const {translations: [translations], meta: {locale}} = useDetailsContext();
+    const {translations: [translations=[]], meta: {locale}} = useDetailsContext();
     const localLanguage = languageTranslations[locale][locale];
 
     return (
