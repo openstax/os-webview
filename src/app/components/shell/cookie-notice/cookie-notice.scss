@@ -1,9 +1,14 @@
 @import 'pattern-library/core/pattern-library/headers';
 
+dialog.footer-dialog.cookie-footer {
+    margin: $normal-margin auto;
+    max-width: 117rem;
+}
+
 .cookie-notice {
     display: grid;
-    grid-row-gap: 3rem;
-    padding: 3rem;
+    gap: 2rem 3rem;
+    padding: 2rem;
 
     @include width-up-to($phone-max) {
         grid-template-columns: 1fr 1fr;
@@ -15,7 +20,7 @@
 
     @include wider-than($phone-max) {
         grid-auto-flow: column;
-        padding: 5rem;
+        padding: 2rem;
     }
 
     .message {
@@ -33,9 +38,14 @@
         &.primary {
             @extend %primary;
 
-            padding-left: 6rem;
-            padding-right: 6rem;
-            justify-self: end;
+            @include width-up-to($phone-max) {
+                justify-self: start;
+            }
+
+            @include wider-than($phone-max) {
+                align-self: center;
+                justify-self: end;
+            }
         }
     }
 }
