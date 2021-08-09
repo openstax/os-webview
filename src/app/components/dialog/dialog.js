@@ -17,7 +17,7 @@ function PutAway({noTitle, onClick}) {
 }
 
 export function FooterDialog({
-    isOpen, title, children
+    isOpen, title, children, className
 }) {
     const footerEl = document.getElementById('footer');
 
@@ -28,10 +28,13 @@ export function FooterDialog({
 
     footerEl.style.zIndex = 1;
     return (
-        <dialog className="footer-dialog">
-            <div className="title-bar">
-                <RawHTML Tag="span" html={title} />
-            </div>
+        <dialog className={cn('footer-dialog', className)}>
+            {
+                title &&
+                    <div className="title-bar">
+                        <RawHTML Tag="span" html={title} />
+                    </div>
+            }
             {children}
         </dialog>
     );
