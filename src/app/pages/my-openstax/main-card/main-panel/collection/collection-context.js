@@ -1,23 +1,24 @@
 import React from 'react';
+import buildContext from '~/components/jsx-helpers/build-context';
 import NavigationContext from '~/pages/my-openstax/main-card/navigator/navigation-context';
 
-const CollectionContext = React.createContext();
-
-export function CollectionContextProvider({children}) {
+function useContextValue() {
     const [selectedBook, setSelectedBook] = React.useState();
     const {activeId} = React.useContext(NavigationContext);
-    const value = {
-        selectedBook,
-        setSelectedBook
-    };
 
     React.useEffect(() => {
         setSelectedBook(null);
     }, [activeId]);
 
-    return (
-        <CollectionContext.Provider value={value} children={children} />
-    );
+    return {
+        selectedBook,
+        setSelectedBook
+    };
 }
 
-export default CollectionContext;
+const {useContext, ContextProvider} = buildContext({useContextValue});
+
+export {
+    useContext as default,
+    ContextProvider as CollectionContextProvider
+};

@@ -1,10 +1,10 @@
 import React from 'react';
 import useBooks from '~/pages/my-openstax/store/use-books';
-import CollectionContext from '../collection-context';
+import useCollectionContext from '../collection-context';
 import './book-list.scss';
 
 function Book({book}) {
-    const {setSelectedBook} = React.useContext(CollectionContext);
+    const {setSelectedBook} = useCollectionContext();
 
     return (
         <div className="cover-with-title">

@@ -1,5 +1,5 @@
 import React from 'react';
-import CollectionContext from '../collection-context';
+import useCollectionContext from '../collection-context';
 import routerBus from '~/helpers/router-bus';
 import useAdoptions from '~/pages/my-openstax/store/use-adoptions';
 import {RawHTML, useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
@@ -130,7 +130,7 @@ function OnlineResources({detailData}) {
 
 export default function BookDetails({book}) {
     const [Dialog, open, close] = useDialog();
-    const {setSelectedBook} = React.useContext(CollectionContext);
+    const {setSelectedBook} = useCollectionContext();
     const detailData = $.camelCaseKeys(useDataFromSlug(book.slug)) || {};
     const adoptionStatus = useAdoptionStatus(book);
     const summaryText = detailData.description;
