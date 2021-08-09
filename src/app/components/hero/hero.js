@@ -1,35 +1,11 @@
-import React, {useState, useRef} from 'react';
-import useWindowContext, {WindowContextProvider} from '~/models/window-context';
+import React from 'react';
+import {WindowContextProvider} from '~/models/window-context';
 import ClippedImage from '~/components/clipped-image/clipped-image';
 import cn from 'classnames';
 import './hero.scss';
 
-console.info('Using', useState, useWindowContext);
-// const TOO_SKINNY_RATIO = 1.15;
-// const NARROW_SCREEN = 500;
-//
-// function isTooSkinny(el) {
-//     const {height, width} = el.getBoundingClientRect();
-//
-//     return height > TOO_SKINNY_RATIO * width;
-// }
-//
-// function useWrappingRules(el) {
-//     const {innerWidth} = useWindowContext();
-//     const [wrapNarrowerThan, setWrapNarrowerThan] = useState(NARROW_SCREEN);
-//     const wrapped = innerWidth <= wrapNarrowerThan;
-//
-//     React.useLayoutEffect(() => {
-//         if (el && !wrapped && isTooSkinny(el)) {
-//             setWrapNarrowerThan(innerWidth);
-//         }
-//     }, [el, wrapped, innerWidth]);
-//
-//     return wrapped;
-// }
-
 export default function Hero({children, src, alt, Tag='div', reverse}) {
-    const pictureRef = useRef();
+    const pictureRef = React.useRef();
 
     return (
         <WindowContextProvider>
