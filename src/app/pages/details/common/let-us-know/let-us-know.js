@@ -1,11 +1,25 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
+import useLanguageContext from '~/models/language-context';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUserPlus} from '@fortawesome/free-solid-svg-icons/faUserPlus';
 import './let-us-know.scss';
 
-function dataStuffFor(title) {
+const localizedTexts = {
+    'en': {
+        text1: 'Sign up to<br>learn more',
+        text2: 'Using this book? Let us know.'
+    },
+    'es': {
+        text1: 'Regístrese en <br> aprender más',
+        text2: '¿Utiliza este libro? Haznos saber.'
+    }
+};
+
+function useDataStuffFor(title) {
+    const {language} = useLanguageContext();
+
     if ($.isPolish(title)) {
         return {
             url1: 'https://openstax.pl/pl/newsletter',
@@ -18,13 +32,12 @@ function dataStuffFor(title) {
     return {
         url1: `/interest?${encodeURIComponent(title)}`,
         url2: `/adoption?${encodeURIComponent(title)}`,
-        text1: 'Sign up to<br>learn more',
-        text2: 'Using this book? Let us know.'
+        ...localizedTexts[language]
     };
 }
 
 export default function LetUsKnow({title}) {
-    const {url1, url2, text1, text2} = dataStuffFor(title);
+    const {url1, url2, text1, text2} = useDataStuffFor(title);
 
     return (
         <div className="let-us-know">

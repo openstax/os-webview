@@ -1,4 +1,5 @@
 import React from 'react';
+import {LanguageContextProvider} from '~/models/language-context';
 import {BrowserRouter} from 'react-router-dom';
 import Router from './router';
 import ReactModal from 'react-modal';
@@ -64,26 +65,28 @@ function App() {
 
     // BrowserRouter has to include everything that uses useLocation
     return (
-        <BrowserRouter>
-            <div id="microsurvey">
-                <Microsurvey />
-            </div>
-            <header id="header">
-                <Header />
-            </header>
-            <div id="lower-sticky-note">
-                <LowerStickyNote />
-            </div>
-            <FlagContextProvider>
-                <div id="main" ref={ref}>
-                    <Welcome />
-                    <Router />
+        <LanguageContextProvider>
+            <BrowserRouter>
+                <div id="microsurvey">
+                    <Microsurvey />
                 </div>
-            </FlagContextProvider>
-            <footer id="footer">
-                <Footer />
-            </footer>
-        </BrowserRouter>
+                <header id="header">
+                    <Header />
+                </header>
+                <div id="lower-sticky-note">
+                    <LowerStickyNote />
+                </div>
+                <FlagContextProvider>
+                    <div id="main" ref={ref}>
+                        <Welcome />
+                        <Router />
+                    </div>
+                </FlagContextProvider>
+                <footer id="footer">
+                    <Footer />
+                </footer>
+            </BrowserRouter>
+        </LanguageContextProvider>
     );
 }
 

@@ -1,5 +1,6 @@
 import React, {useRef, useEffect, useContext} from 'react';
 import {ActiveElementContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import useLanguageContext from '~/models/language-context';
 import $ from '~/helpers/$';
 import cn from 'classnames';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -18,26 +19,43 @@ function QuickLink({url, icon, text}) {
     );
 }
 
+// Ideally, we would fetch these from the CMS
+const qlLabelsByLanguage = {
+    en: [
+        'Get this book',
+        'Instructor Resources',
+        'Student Resources'
+    ],
+    es: [
+        'Consigue este libro',
+        'Recursos del instructor',
+        'Recursos para estudiantes'
+    ]
+};
+
 function Dropdown({urlBase, details}) {
+    const {language} = useLanguageContext();
+    const labels = qlLabelsByLanguage[language];
+
     function stopClickPropagation(event) {
         event.stopPropagation();
     }
 
     return (
         <div className="ur-dropdown" onClick={stopClickPropagation}>
-            <QuickLink url={urlBase} icon={faBook} text="Get this book" />
+            <QuickLink url={urlBase} icon={faBook} text={labels[0]} />
             {
                 details.hasFacultyResources &&
                     <QuickLink
                         url={`${urlBase}?Instructor%20resources`}
-                        icon={faChalkboardTeacher} text="Instructor Resources"
+                        icon={faChalkboardTeacher} text={labels[1]}
                     />
             }
             {
                 details.hasStudentResources &&
                     <QuickLink
                         url={`${urlBase}?Student%20resources`}
-                        icon={faGraduationCap} text="Student Resources" />
+                        icon={faGraduationCap} text={labels[2]} />
             }
         </div>
     );
@@ -103,13 +121,13 @@ function ThreeDotMenu({slug, details}) {
 }
 
 export default function BookCover({
-    cover_url: coverUrl,
+    coverUrl,
     slug,
     title,
-    book_state: state,
-    cover_color: coverColor,
-    has_faculty_resources: hasFacultyResources,
-    has_student_resources: hasStudentResources
+    bookState: state,
+    coverColor,
+    hasFacultyResources,
+    hasStudentResources
 }) {
     const details = {
         coverColor, hasFacultyResources, hasStudentResources

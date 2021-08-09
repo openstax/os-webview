@@ -1,6 +1,6 @@
-import React, {useState, useEffect, useContext} from 'react';
-import PageContext from './page-context';
-import {RawHTML, createPageContextProvider} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import React, {useState, useEffect} from 'react';
+import usePageContext, {PageContextProvider} from './page-context';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {ArticleLoader} from './article/article';
 import MoreFewer, {Paginated} from '~/components/more-fewer/more-fewer';
 import Inquiries from './inquiries/inquiries';
@@ -23,7 +23,7 @@ const convertedDate = (dateStr) => {
 };
 
 function PressReleases({excludeSlug, Container=MoreFewer}) {
-    const pageData = useContext(PageContext);
+    const pageData = usePageContext();
 
     if (!pageData) {
         return null;
@@ -49,7 +49,7 @@ function PressReleases({excludeSlug, Container=MoreFewer}) {
 }
 
 function NewsMentions() {
-    const pageData = useContext(PageContext);
+    const pageData = usePageContext();
 
     if (!pageData) {
         return null;
@@ -74,7 +74,7 @@ function NewsMentions() {
 }
 
 function MissionStatements() {
-    const pageData = useContext(PageContext);
+    const pageData = usePageContext();
 
     if (!pageData) {
         return null;
@@ -119,7 +119,7 @@ function SelectableSection({selected, className, children}) {
 }
 
 function MainPage() {
-    const pageData = useContext(PageContext);
+    const pageData = usePageContext();
     const sections = [
         'Press releases',
         'News mentions',
@@ -212,10 +212,6 @@ function useArticleSlugFromPath() {
 
 export default function PressWrapper() {
     const articleSlug = useArticleSlugFromPath();
-    const PageContextProvider = createPageContextProvider({
-        Context: PageContext,
-        slug: 'press'
-    });
 
     return (
         <div className="press page">

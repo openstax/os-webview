@@ -1,5 +1,6 @@
-import React, {useEffect, useContext} from 'react';
-import {WindowContextProvider, WindowContext, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import React, {useEffect} from 'react';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import useWindowContext, {WindowContextProvider} from '~/models/window-context';
 import './sticky-footer.scss';
 import shellBus from '~/components/shell/shell-bus';
 import cn from 'classnames';
@@ -7,7 +8,7 @@ import cn from 'classnames';
 // Note: menus show and hide based on scroll position, which causes the menu to
 // show, then hide, then show again when near the top of the page.
 function useCollapsedState() {
-    const {scrollY, innerHeight} = useContext(WindowContext);
+    const {scrollY, innerHeight} = useWindowContext();
     const distanceFromBottom = document.body.offsetHeight - innerHeight - scrollY;
 
     return scrollY < 100 || distanceFromBottom < 100;

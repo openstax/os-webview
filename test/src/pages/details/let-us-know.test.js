@@ -1,12 +1,13 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
+import {LanguageContextProvider} from '~/models/language-context';
 import LetUsKnow from '~/pages/details/common/let-us-know/let-us-know';
 
 const englishTitle = 'Some book';
 const polishTitle = 'Fizyka dla szkół wyższych. Tom 1';
 
 test('handles English title', () => {
-    render(<LetUsKnow title={englishTitle} />);
+    render(<LanguageContextProvider><LetUsKnow title={englishTitle} /></LanguageContextProvider>);
     expect(screen.getByText('Using this book? Let us know.'));
 });
 test('handles Polish title', () => {

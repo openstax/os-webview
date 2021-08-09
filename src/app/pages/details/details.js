@@ -6,8 +6,11 @@ import analytics from '~/helpers/analytics';
 import cn from 'classnames';
 import PhoneView from './phone-view/phone-view';
 import DesktopView from './desktop-view/desktop-view';
+import {languageTranslations} from '~/components/language-selector/language-selector';
 import {useTableOfContents} from './common/hooks';
 import useDetailsContext, {DetailsContextProvider} from './context';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faGlobe} from '@fortawesome/free-solid-svg-icons/faGlobe';
 import './details.scss';
 import './table-of-contents.scss';
 
@@ -87,9 +90,48 @@ function TocSlideoutAndContent({children}) {
     );
 }
 
+const leadInText = {
+    en: 'This textbook is available in',
+    es: 'Este libro de texto está disponible en'
+};
+
+function AnotherLanguage({locale, translation}) {
+    const tr = languageTranslations[locale];
+
+    return (
+        <React.Fragment>
+            {' '}and{' '}
+            <a href={`/details/books/${translation.slug}`}>{tr[translation.locale]}</a>
+        </React.Fragment>
+    );
+}
+
+function LinksToTranslations() {
+    const {translations: [translations], meta: {locale}} = useDetailsContext();
+    const localLanguage = languageTranslations[locale][locale];
+
+    return (
+        <div className="language-selector">
+            <FontAwesomeIcon icon={faGlobe} />
+            <span>
+                {leadInText[locale] || leadInText.en}{' '}
+                {localLanguage}
+                {
+                    translations.map((t) =>
+                        <AnotherLanguage
+                            key={t.locale}
+                            locale={locale}
+                            translation={t}
+                        />
+                    )
+                }
+            </span>
+        </div>
+    );
+}
+
 export function BookDetails() {
     const model = useDetailsContext();
-
     const {
         reverseGradient,
         title: bookTitle,
@@ -103,6 +145,7 @@ export function BookDetails() {
         analytics.addResourcesToLookupTable(model);
     }, [model]);
 
+
     return (
         <React.Fragment>
             <div className={cn('hero', {'reverse-gradient': reverseGradient})}>
@@ -112,9 +155,11 @@ export function BookDetails() {
             </div>
             <TocSlideoutAndContent>
                 <div className="phone-view">
+                    <LinksToTranslations />
                     <PhoneView />
                 </div>
                 <div className="bigger-view">
+                    <LinksToTranslations />
                     <DesktopView onContentChange={setCardBackground} />
                 </div>
             </TocSlideoutAndContent>

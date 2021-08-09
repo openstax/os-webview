@@ -1,13 +1,14 @@
 import routerBus from '~/helpers/router-bus';
 import React, {useState, useEffect} from 'react';
-import {usePageData} from '~/helpers/controller/cms-mixin';
-import {RawHTML, useDataFromPromise, useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import useSubjectsContext, {SubjectsContextProvider} from './context';
+import useSubjectCategoryContext, {SubjectCategoryContextProvider} from '~/models/subject-category-context';
+import {RawHTML, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import BookViewer from './book-viewer/book-viewer';
-import categoryPromise from '~/models/subjectCategories';
 import savingsPromise from '~/models/savings';
 import useSavingsDataIn, {linkClickTracker} from '~/helpers/savings-blurb';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
 import {forceCheck} from 'react-lazyload';
+import LanguageSelector from '~/components/language-selector/language-selector';
 import './subjects.scss';
 import $ from '~/helpers/$';
 
@@ -19,18 +20,33 @@ function categoryFromPath() {
 
 function useCategoryTiedToPath() {
     const [category, setCategory] = useState(categoryFromPath());
+    const categories = useSubjectCategoryContext();
+    const {title} = useSubjectsContext();
 
     useEffect(() => {
-        const setIt = () => {
-            setCategory(categoryFromPath());
-            window.requestAnimationFrame(forceCheck);
-        };
+        const path = category === 'view-all' ? pagePath : `${pagePath}/${category}`;
 
-        window.addEventListener('popstate', setIt);
-        return () => window.removeEventListener('popstate', setIt);
-    }, []);
+        routerBus.emit('navigate', path, {
+            filter: category,
+            path: pagePath
+        });
+        window.requestAnimationFrame(forceCheck);
+        const linkController = $.setCanonicalLink();
 
-    return category;
+        return () => linkController.remove();
+    }, [category]);
+
+    useEffect(() => {
+        const categoryEntry = categories.find((e) => e.value === category);
+
+        if (!categoryEntry && categories.length > 0) {
+            setCategory(categories[0].value);
+        } else {
+            document.title = (categoryEntry && categoryEntry.title) || title;
+        }
+    }, [category, categories, title]);
+
+    return {category, setCategory, categories};
 }
 
 function AboutBlurb({heading, description}) {
@@ -73,22 +89,24 @@ function useLastBlurb(data) {
     return description;
 }
 
-function AboutOurTextBooks({model}) {
+function AboutOurTextBooks() {
+    const model = useSubjectsContext();
     const textData = Reflect.ownKeys(model)
-        .filter((k) => k.startsWith('dev_standard_'))
+        .filter((k) => (/^devStandard\d/).test(k))
         .reduce((a, b) => {
-            const [_, num, textId] = b.match(/(\d+)_(\w+)/);
+            const [_, num, textId] = b.match(/(\d+)(\w+)/);
             const index = num - 1;
 
             a[index] = a[index] || {};
-            a[index][textId] = model[b];
+            a[index][textId.toLowerCase()] = model[b];
             return a;
         }, []);
+
     const lastBlurb = useLastBlurb(textData[3]);
 
     return (
         <div>
-            <h2 className="text-content">About Our Textbooks</h2>
+            <h2 className="text-content">{model.devStandardsHeading}</h2>
             <div className="boxed-row feature-block">
                 {
                     textData.slice(0, 3).map((data) =>
@@ -104,67 +122,67 @@ function AboutOurTextBooks({model}) {
     );
 }
 
-function Subjects({model}) {
-    const category = useCategoryTiedToPath();
-    const categories = useDataFromPromise(categoryPromise, []);
 
-    useEffect(() => {
-        const description = $.htmlToText(model.page_description);
+function StripsAndFilter({category, setCategory}) {
+    const categories = useSubjectCategoryContext();
+    const {filterIsSticky} = useSubjectsContext();
 
-        $.setPageDescription(description);
-    }, [model]);
+    return (
+        <div className="strips-and-filter">
+            <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
+            <div className={`filter ${filterIsSticky ? 'sticky': ''}`}>
+                <RadioPanel selectedItem={category} items={categories} onChange={setCategory} />
+            </div>
+        </div>
+    );
+}
 
-    function setCategory(newCategory) {
-        const categoryEntry = categories.find((e) => e.value === newCategory);
-        const path = newCategory === 'view-all' ? pagePath : `${pagePath}/${newCategory}`;
+function Books({category}) {
+    return (
+        <div className="books">
+            <div className="boxed container">
+                <BookViewer category={category} />
+            </div>
+            <AboutOurTextBooks />
+        </div>
+    );
+}
 
-        routerBus.emit('navigate', path, {
-            filter: newCategory,
-            path: pagePath
-        });
-        document.title = (categoryEntry && categoryEntry.title) || model.title;
-    }
+const leadInText = {
+    en: 'We have textbooks in',
+    es: 'Tenemos libros de texto en'
+};
 
-    const {
-        page_description: heroHtml,
-        books
-    } = model;
+function Subjects() {
+    const {pageDescription, translations} = useSubjectsContext();
+    const {category, setCategory} = useCategoryTiedToPath();
+    const otherLocales = translations[0].value.map((t) => t.locale);
+
+    useEffect(
+        () => $.setPageDescription($.htmlToText(pageDescription)),
+        [pageDescription]
+    );
 
     return (
         <React.Fragment>
-            <RawHTML className="hero" html={heroHtml} />
-
-            <div className="strips-and-filter">
-                <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
-                <div className={`filter ${model.filterIsSticky ? 'sticky': ''}`}>
-                    <RadioPanel selectedItem={category} items={categories} onChange={setCategory} />
-                </div>
+            <div className="hero">
+                <LanguageSelector leadInText={leadInText} otherLocales={otherLocales} />
+                <RawHTML html={pageDescription} />
             </div>
-            <div className="books">
-                <div className="boxed container">
-                    <BookViewer books={books} category={category} />
-                </div>
-                <AboutOurTextBooks model={model} />
-            </div>
+            <StripsAndFilter {...{category, setCategory}} />
+            <Books category={category} />
         </React.Fragment>
     );
 }
 
 export default function SubjectsLoader() {
-    const slug = 'books';
-    const [model, statusPage] = usePageData({slug, preserveWrapping: true});
-
-    useCanonicalLink();
-
-    if (statusPage) {
-        return statusPage;
-    }
-
-    model.books = model.books.filter((b) => b.book_state !== 'retired');
-
     return (
-        <main className="subjects-page">
-            <Subjects model={model} />
-        </main>
+        <SubjectsContextProvider>
+            <SubjectCategoryContextProvider>
+                <main className="subjects-page">
+                    <Subjects />
+                </main>
+            </SubjectCategoryContextProvider>
+        </SubjectsContextProvider>
     );
 }

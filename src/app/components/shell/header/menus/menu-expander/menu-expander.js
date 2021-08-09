@@ -1,12 +1,12 @@
 import React, {useEffect} from 'react';
-import {DropdownContext} from '../dropdown-context';
+import useDropdownContext from '../dropdown-context';
 import {useLocation} from 'react-router-dom';
 import './menu-expander.scss';
 
 export default function MenuExpander({active, onClick}) {
     const ref = React.useRef();
     const location = useLocation();
-    const {setActiveDropdown} = React.useContext(DropdownContext);
+    const {setActiveDropdown} = useDropdownContext();
 
     useEffect(() => {
         if (active) {

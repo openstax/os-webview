@@ -1,5 +1,6 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import useLanguageContext from '~/models/language-context';
 import {Authors, PublicationInfo, ErrataSection} from '../../common/common';
 import GetThisTitle from '../../common/get-this-title';
 import LetUsKnow from '../../common/let-us-know/let-us-know';
@@ -31,7 +32,14 @@ function PolishTab({model}) {
     );
 }
 
+const localizedHeading = {
+    'en': 'Summary',
+    'es': 'Resumen'
+};
+
 function EnglishTab({model}) {
+    const {language} = useLanguageContext();
+
     return (
         <div className="details-tab">
             <div className="sidebar">
@@ -45,7 +53,7 @@ function EnglishTab({model}) {
             </div>
             <div className="main">
                 <div className="loc-summary-text">
-                    <h3>Summary</h3>
+                    <h3>{localizedHeading[language]}</h3>
                     <RawHTML html={model.description} />
                 </div>
                 <Authors model={model} />

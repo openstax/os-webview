@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {DropdownContext} from '../../dropdown-context';
+import useDropdownContext from '../../dropdown-context';
 import $ from '~/helpers/$';
 import cn from 'classnames';
 import './dropdown.scss';
@@ -26,7 +26,7 @@ function OptionalWrapper({isWrapper=true, children}) {
 export default function Dropdown({Tag='li', className, label, children, excludeWrapper=false}) {
     const topRef = useRef();
     const dropdownRef = useRef();
-    const dropdownCtx = React.useContext(DropdownContext);
+    const dropdownCtx = useDropdownContext();
     const isOpen = dropdownCtx.activeDropdown === topRef;
     const labelId = `menulabel-${label}`;
 

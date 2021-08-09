@@ -1,4 +1,5 @@
 import React from 'react';
+import useDetailsContext from '~/pages/details/context';
 import groupBy from 'lodash/groupBy';
 
 function Authors({heading, className, authors=[], CustomTag='div'}) {
@@ -20,12 +21,16 @@ function Authors({heading, className, authors=[], CustomTag='div'}) {
     );
 }
 
+const localizedHeadings = {
+    'en': ['Senior Contributing Authors', 'Contributing Authors'],
+    'es': ['Autores colaboradores principales', 'Autores colaboradores']
+};
+
 export default function AuthorsSection({model, polish}) {
+    const {language} = useDetailsContext();
     const headings = polish ? [
         'Główni autorzy', 'Autorzy współpracujący'
-    ] : [
-        'Senior Contributing Authors', 'Contributing Authors'
-    ];
+    ] : localizedHeadings[language];
     const groupFn = (author) => author.seniorAuthor ? 'senior' : 'regular';
     const groupedAuthors = groupBy(model.authors, groupFn);
 

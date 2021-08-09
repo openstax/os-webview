@@ -1,14 +1,10 @@
 import React from 'react';
-import ContextLoader from '~/components/jsx-helpers/context-loader';
+import buildContextLoader from '~/components/jsx-helpers/context-loader';
+import buildContext from '~/components/jsx-helpers/build-context';
 
-const Context = React.createContext();
-
-function useContextValue(data) {
-    data.comingSoon = data.bookState === 'coming_soon';
-
-    return data;
-}
-
+/*
+    Managing the slug requires a Context
+*/
 function getSlugFromLocation() {
     const bookTitle = window.location.pathname.replace(/.*details\//, '');
     let slug;
@@ -26,11 +22,44 @@ function getSlugFromLocation() {
     return slug;
 }
 
-export function DetailsContextProvider({children}) {
+function useSlugContextValue() {
+    const [slug, setSlug] = React.useState(getSlugFromLocation());
+
+    React.useEffect(() => {
+        const updateSlug = () => {
+            setSlug(getSlugFromLocation());
+        };
+
+        window.addEventListener('popstate', updateSlug);
+
+        return () => window.removeEventListener('popstate', updateSlug);
+    });
+
+    return {slug, setSlug};
+}
+
+const {
+    useContext: useSlugContext,
+    ContextProvider: SlugContextProvider
+} = buildContext({useContextValue: useSlugContextValue});
+
+// ------
+
+function useContextValue(data) {
+    data.comingSoon = data.bookState === 'coming_soon';
+    data.language = data.meta.locale;
+
+    return data;
+}
+
+const {useContext, ContextLoader} = buildContextLoader();
+
+function DetailsLoader({children}) {
+    const {slug} = useSlugContext();
+
     return (
         <ContextLoader
-            Context={Context}
-            slug={getSlugFromLocation()}
+            slug={slug}
             useContextValue={useContextValue}
             doDocumentSetup
         >
@@ -39,6 +68,14 @@ export function DetailsContextProvider({children}) {
     );
 }
 
-export default function useDetailsContext() {
-    return React.useContext(Context);
+export function DetailsContextProvider({children}) {
+    return (
+        <SlugContextProvider>
+            <DetailsLoader>
+                {children}
+            </DetailsLoader>
+        </SlugContextProvider>
+    );
 }
+
+export default useContext;

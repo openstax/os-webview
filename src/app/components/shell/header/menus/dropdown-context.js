@@ -1,20 +1,21 @@
-import React, {useState} from 'react';
+import buildContext from '~/components/jsx-helpers/build-context';
+import {useState} from 'react';
 
-export const DropdownContext = React.createContext();
-
-export function DropdownContextProvider({children}) {
+function useContextValue() {
     const [activeDropdown, setActiveDropdown] = useState({});
     const [submenuLabel, setSubmenuLabel] = useState();
-    const value = {
+
+    return {
         activeDropdown,
         setActiveDropdown,
         submenuLabel,
         setSubmenuLabel
     };
-
-    return (
-        <DropdownContext.Provider value={value}>
-            {children}
-        </DropdownContext.Provider>
-    );
 }
+
+const {useContext, ContextProvider} = buildContext({useContextValue});
+
+export {
+    useContext as default,
+    ContextProvider as DropdownContextProvider
+};

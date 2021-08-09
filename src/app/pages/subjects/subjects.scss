@@ -7,8 +7,14 @@
 
 .subjects-page {
 
-    .hero > h1 {
-        @include set-font(h1);
+    .hero {
+        @include scale-feature(padding-top, 2rem, 6rem);
+
+        h2 {
+            @include scale-set-font(h3, h1);
+
+            margin: 0;
+        }
     }
 
     .subject {
@@ -58,6 +64,10 @@
         span[id] {
             font-weight: bold;
         }
+    }
+
+    .language-selector {
+        @include scale-feature(margin-bottom, 2rem, 3rem);
     }
 
     .savings-blurb {
