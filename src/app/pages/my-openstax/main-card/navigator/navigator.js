@@ -28,13 +28,18 @@ function SectionTarget({id, index}) {
     const {activeId, setActiveId} = React.useContext(NavigationContext);
     const active = activeId === id;
 
+    function clickId(event) {
+        event.preventDefault();
+        setActiveId(id);
+    }
+
     if (!el) {
         return null;
     }
 
     return (
         <React.Fragment>
-            <a className={cn('nav-item', {active})} href={`#${id}`} onClick={() => setActiveId(id)}>
+            <a className={cn('nav-item', {active})} href={`#${id}`} onClick={clickId}>
                 {el.firstChild.textContent}
             </a>
             <Walkthrough active={active} title={el.firstChild.textContent} index={index} />
