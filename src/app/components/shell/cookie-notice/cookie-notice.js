@@ -36,7 +36,7 @@ function CookieNoticeDialog() {
     }
 
     return (
-        <FooterDialog isOpen={isOpen} title="Privacy and cookies">
+        <FooterDialog isOpen={isOpen} className="cookie-footer">
             <CookieNoticeBody onClose={onClose} />
         </FooterDialog>
     );
@@ -47,11 +47,11 @@ export default function ShowNoticeOrNot() {
 
     React.useEffect(() => {
         accountsModel.load().then((response) => {
-            // Uncomment these three lines ONLY to test locally:
+            // Uncomment these four lines ONLY to test locally:
             // response.uuid = 'testing';
+            // // eslint-disable-next-line camelcase
             // response.is_not_gdpr_location = true;
             // document.cookie = `${ACKNOWLEDGEMENT_KEY}=true; expires=Tue, 19 Jan 2000 03:14:07 GMT`;
-
 
             if (typeof response.id !== 'undefined') {
                 const userid = response.uuid;
