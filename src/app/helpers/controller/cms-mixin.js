@@ -102,8 +102,7 @@ export function usePageData(fpdParams) {
 
     useEffect(() => {
         fetchPageData(fpdParams).then(setPageData);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fpdParams.slug]);
+    }, [fpdParams.slug]); // eslint-disable-line react-hooks/exhaustive-deps
 
     if (!pageData) {
         statusPage = <LoadingPlaceholder />;

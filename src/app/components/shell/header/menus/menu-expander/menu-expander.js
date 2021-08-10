@@ -13,9 +13,7 @@ export default function MenuExpander({active, onClick}) {
             onClick();
             setActiveDropdown({});
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location]);
-
+    }, [location]); // eslint-disable-line react-hooks/exhaustive-deps
 
     function onClickAndBlur(event) {
         onClick(event);
