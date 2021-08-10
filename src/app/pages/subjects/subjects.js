@@ -1,7 +1,7 @@
 import routerBus from '~/helpers/router-bus';
 import React, {useState, useEffect} from 'react';
 import useSubjectsContext, {SubjectsContextProvider} from './context';
-import useSubjectCategoryContext, {SubjectCategoryContextProvider} from '~/models/subject-category-context';
+import useSubjectCategoryContext from '~/models/subject-category-context';
 import {RawHTML, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import BookViewer from './book-viewer/book-viewer';
 import savingsPromise from '~/models/savings';
@@ -45,6 +45,15 @@ function useCategoryTiedToPath() {
             document.title = (categoryEntry && categoryEntry.title) || title;
         }
     }, [category, categories, title]);
+
+    useEffect(() => {
+        const handlePopState = () => {
+            setCategory(categoryFromPath());
+        };
+
+        window.addEventListener('popstate', handlePopState);
+        return () => window.removeEventListener('popstate', handlePopState);
+    });
 
     return {category, setCategory, categories};
 }
@@ -178,11 +187,9 @@ function Subjects() {
 export default function SubjectsLoader() {
     return (
         <SubjectsContextProvider>
-            <SubjectCategoryContextProvider>
-                <main className="subjects-page">
-                    <Subjects />
-                </main>
-            </SubjectCategoryContextProvider>
+            <main className="subjects-page">
+                <Subjects />
+            </main>
         </SubjectsContextProvider>
     );
 }

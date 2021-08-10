@@ -1,15 +1,14 @@
 import React from 'react';
-import categoryPromise from '~/models/subjectCategories';
-import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import useSubjectCategoryContext from '~/models/subject-category-context';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
 import LoginMenu from './login-menu';
 import GiveButton from '../give-button/give-button';
 import './main-menu.scss';
 
 function SubjectsMenu() {
-    const categories = useDataFromPromise(categoryPromise);
+    const categories = useSubjectCategoryContext();
 
-    if (!categories) {
+    if (!categories.length) {
         return (<li>Loading...</li>);
     }
 
