@@ -14,12 +14,12 @@ const adoptionOptions = [{
 }, {
     key: 'recommended',
     value: 'Confirmed Will Recommend',
-    text: 'Recommending the book as an option. The students purchase a different book.',
+    text: 'Recommending the book as an option.',
     qtext: 'Yes, I am recommending OpenStax to my students as an optional resource'
 }, {
     key: 'interest',
     value: 'High Interest in Adopting',
-    text: 'Very interested in adopting it.'
+    text: 'Interested in using it.'
 }, {
     key: 'no',
     value: 'Not using',
