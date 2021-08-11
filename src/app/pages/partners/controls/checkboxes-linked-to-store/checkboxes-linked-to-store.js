@@ -12,8 +12,7 @@ function Checkbox({label, value, store}) {
         const cleanup = store.on('notify', () => setChecked(store.includes(value)));
 
         return cleanup;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <label className="form-control">

@@ -160,7 +160,6 @@ form {
         border: 0.1rem solid ui-color(form-border);
         border-radius: 0;
         display: inline-block;
-        font-weight: 500;
         overflow: hidden;
         padding: 0.84rem;
         text-overflow: ellipsis;
@@ -181,6 +180,7 @@ form {
     [type="email"],
     [type="date"],
     .selected-button {
+        font-weight: 500;
         height: $form-element-height;
         white-space: nowrap;
     }

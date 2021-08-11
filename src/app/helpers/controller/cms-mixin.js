@@ -86,7 +86,7 @@ export async function fetchFromCMS(slug, preserveWrapping=false) {
     return preserveWrapping ? data : transformData(data);
 }
 
-export async function fetchPageData({slug, preserveWrapping, setsPageTitleAndDescription=true}) {
+async function fetchPageData({slug, preserveWrapping, setsPageTitleAndDescription=true}) {
     const data = await fetchFromCMS(slug, preserveWrapping);
 
     await loadImages(data);
@@ -98,30 +98,20 @@ export async function fetchPageData({slug, preserveWrapping, setsPageTitleAndDes
 
 export function usePageData(fpdParams) {
     const [pageData, setPageData] = useState();
-    const [pageDataError, setPageDataError] = useState();
     let statusPage = null;
 
     useEffect(() => {
-        async function fetchData() {
-            try {
-                setPageData(await fetchPageData(fpdParams));
-            } catch (err) {
-                setPageDataError(err);
-            }
-        }
-        fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fpdParams.slug]);
+        fetchPageData(fpdParams).then(setPageData);
+    }, [fpdParams.slug]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    if (pageDataError) {
-        statusPage =
-            <div className="page error">
-                Unable to load page: {pageDataError}
-            </div>
-        ;
-    }
     if (!pageData) {
         statusPage = <LoadingPlaceholder />;
+    } else if (pageData.error) {
+        statusPage =
+            <div className="page error">
+                Unable to load page: {pageData.error}
+            </div>
+        ;
     }
 
     return [pageData, statusPage];

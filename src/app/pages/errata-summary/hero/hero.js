@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import cmsFetch from '~/models/cmsFetch';
 import bookPromise from '~/models/book-titles';
-import routerBus from '~/helpers/router-bus';
+import useRouterContext from '~/components/shell/router-context';
 
 const instructions = 'Errata submissions are displayed below until a new PDF is published online.';
 const moreAbout = 'More about our correction schedule';
@@ -14,6 +14,7 @@ const correctionScheduleKeyFromBookState = {
 
 function useBookInfo(book) {
     const [info, setInfo] = useState([]);
+    const {fail} = useRouterContext();
 
     useEffect(() => {
         bookPromise.then((bookList) => {
@@ -25,11 +26,10 @@ function useBookInfo(book) {
 
                 setInfo([slug, title]);
             } else {
-                routerBus.emit('navigate', '/_404', {redirect: true});
+                fail();
             }
         });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return info;
 }

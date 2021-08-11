@@ -2,6 +2,7 @@ import React, {useState, useRef, useEffect, useLayoutEffect} from 'react';
 import $ from '~/helpers/$';
 import {usePageData, fetchFromCMS} from '~/helpers/controller/cms-mixin';
 import throttle from 'lodash/throttle';
+import useRouterContext from '~/components/shell/router-context';
 
 export function useDataFromPromise(promise, defaultValue) {
     const [data, setData] = useState(defaultValue);
@@ -41,6 +42,7 @@ export function LoaderPage({
     noCamelCase=false
 }) {
     const [data, statusPage] = usePageData({slug, setsPageTitleAndDescription: false, preserveWrapping});
+    const {fail} = useRouterContext();
 
     useCanonicalLink(doDocumentSetup);
     useEffect(() => {
@@ -48,6 +50,9 @@ export function LoaderPage({
             $.setPageTitleAndDescriptionFromBookData(data);
         }
     });
+    if (data && data.error) {
+        fail();
+    }
     if (statusPage) {
         return statusPage;
     }

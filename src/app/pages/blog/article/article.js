@@ -5,7 +5,7 @@ import {ShareJsx} from '~/components/share/share';
 import React, {useState, useEffect, useRef} from 'react';
 import useWindowContext from '~/models/window-context';
 import {usePageData} from '~/helpers/controller/cms-mixin';
-import routerBus from '~/helpers/router-bus';
+import useRouterContext from '~/components/shell/router-context';
 import './article.scss';
 
 function getProgress(el) {
@@ -31,8 +31,7 @@ function ArticleBody({bodyData, setReadTime, bodyRef}) {
         const WORDS_PER_MINUTE = 225;
 
         setReadTime(Math.round(words.length / WORDS_PER_MINUTE));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div className="body" ref={bodyRef}>
@@ -126,9 +125,10 @@ export function Article({data}) {
 
 function ArticleLoader({slug}) {
     const [data, statusPage] = usePageData({slug, preserveWrapping: true});
+    const {fail} = useRouterContext();
 
     if (data && data.error) {
-        routerBus.emit('navigate', '/404', {path: '/blog'}, true);
+        fail();
         return null;
     }
     return (statusPage ? statusPage : <Article data={data} />);

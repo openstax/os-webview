@@ -42,8 +42,7 @@ function useFormModel(title) {
                 window.location = linkHelper.loginLink();
             }
         });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return model;
 }
