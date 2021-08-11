@@ -109,7 +109,7 @@ export function usePageData(fpdParams) {
     } else if (pageData.error) {
         statusPage =
             <div className="page error">
-                Unable to load page: {pageData.error}
+                Unable to load page: {pageData.error.toString()}
             </div>
         ;
     }
