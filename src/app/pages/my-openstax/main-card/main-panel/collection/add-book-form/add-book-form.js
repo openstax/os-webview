@@ -172,7 +172,7 @@ export default function AddBookForm({afterSubmit}) {
     const {adoptions, add} = useAdoptions();
     const alreadyAdoptedNames = Reflect.ownKeys(adoptions);
     const suggestions = books
-        .filter((b) => !alreadyAdoptedNames.includes(b.value)) // this was value...why?
+        .filter((b) => !alreadyAdoptedNames.includes(b.value))
         .map((b) => b.label);
     const ref = React.useRef()
 

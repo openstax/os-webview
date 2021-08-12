@@ -39,7 +39,7 @@ export default function schoolLookup(store) {
         });
         // Meanwhile, put placeholders in the state
         const placeholders = toLookUp.reduce((a, id) => {
-            a[id] = '...';
+            a[id] = '';
             return a;
         }, {});
 
