@@ -7,9 +7,9 @@ import debounce from 'lodash/debounce';
 import $ from '~/helpers/$';
 
 export function useTableOfContents(model) {
-    const isTutor = model.webviewRexLink.includes('tutor');
-    const isRex = !isTutor && Boolean(model.webviewRexLink);
     const webviewLink = model.webviewRexLink || model.webviewLink;
+    const isTutor = model.webviewRexLink && model.webviewRexLink.includes('tutor');
+    const isRex = !isTutor && Boolean(model.webviewRexLink);
     const [tocHtml, setTocHtml] = useState('');
 
     tableOfContentsHtml({
@@ -40,9 +40,9 @@ function getUserStatusPromise() {
 
     return userModel.load().then((user) => {
         if (!user || Reflect.ownKeys(user).length === 0) {
-            console.debug('No user info retrieved');
+            debouncedDebug('No user info retrieved');
         } else if (!('pending_verification' in user)) {
-            console.debug('No pending_verification flag set in user info', user);
+            debouncedDebug('No pending_verification flag set in user info', user);
         } else {
             debouncedDebug('User info:', {
                 email: user.email,

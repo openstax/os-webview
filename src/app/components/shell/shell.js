@@ -44,7 +44,10 @@ function ImportedComponent({name}) {
 
     React.useEffect(
         () => import(`./${name}/${name}`)
-            .then((content) => setContent(<content.default />)),
+            .then(
+                (content) => setContent(<content.default />),
+                (err) => console.warn(`Error loading page ${name}:`, err)
+            ),
         [name]
     );
 

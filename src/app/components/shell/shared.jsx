@@ -3,6 +3,13 @@ import cmsFetch from '~/models/cmsFetch';
 import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './shared.scss';
 
+// Shim for incognito windows that disable localStorage
+if (!window.localStorage) {
+    window.localStorage = {
+        getItem(key) { return window.localStorage[key]; }
+    };
+}
+
 export function useSeenCounter(seenEnough) {
     const counter = {
         get value() {
