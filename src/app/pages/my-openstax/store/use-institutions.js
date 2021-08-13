@@ -37,6 +37,13 @@ function saveSchools(contactId, oldSchoolIds, newSchoolIds) {
     return Promise.all([...deletePromises, ...insertPromises]);
 }
 
+function updatePrimary(contactId, schoolId) {
+    sfApiPost(
+        'contacts/set_primary_school',
+        {contact_id: contactId, school_id: schoolId}
+    );
+}
+
 function useLookedupSchools(ids) {
     const {schools, dispatch} = useStoreon('schools');
     const [data, setData] = useState([]);
@@ -68,6 +75,11 @@ export default function useInstitutions() {
         save(newSchoolIds) {
             return saveSchools(contactId, schoolIds, newSchoolIds)
                 .then(dispatch('user/fetch'));
+        },
+        setPrimary(id) {
+            if (id !== primarySchoolId) {
+                updatePrimary(contactId, id);
+            }
         }
     };
 }

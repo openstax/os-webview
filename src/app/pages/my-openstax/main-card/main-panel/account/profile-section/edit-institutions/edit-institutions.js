@@ -29,6 +29,7 @@ function useSchoolSuggestions() {
     return [schools, onChange];
 }
 
+// eslint-disable-next-line complexity
 function scratchReducer(state, [type, payload]) {
     const data = Array.from(state);
 
@@ -43,14 +44,23 @@ function scratchReducer(state, [type, payload]) {
         return [...data.filter((obj) => obj.id !== payload.id)];
     case 'reset':
         return [...payload];
+    case 'makePrimary':
+        return state.map((i) => ({
+            ...i,
+            primary: i.id === payload.id
+        }));
     default:
         throw new Error('scratchReducer: unknown action type');
     }
 }
 
 function useScratchInstitutions() {
-    const {institutions} = useInstitutions();
-    const [data, dispatch] = React.useReducer(scratchReducer, institutions);
+    const {institutions, primarySchoolId} = useInstitutions();
+    const institutionsWithPrimaryFlag = institutions.map((i) => {
+        i.primary = i.id === primarySchoolId;
+        return i;
+    });
+    const [data, dispatch] = React.useReducer(scratchReducer, institutionsWithPrimaryFlag);
 
     useEffect(() => {
         dispatch(['reset', institutions]);
@@ -101,41 +111,51 @@ function DeletableRow({institution, dispatch}) {
         dispatch(['remove', institution]);
     }
 
+    function makePrimary(event) {
+        event.preventDefault();
+        dispatch(['makePrimary', institution]);
+    }
+
     return (
-        <tr>
-            <td>{institution.name}</td>
-            <td><a href="Delete" onClick={doDelete}>
-                Delete this institution
-            </a></td>
-        </tr>
+        <div className="table-row">
+            <div>{institution.name}</div>
+            <div>
+                <a href="Delete" onClick={doDelete}>
+                    Delete this institution
+                </a>
+                <a href="Primary" onClick={makePrimary}>
+                    Make primary
+                </a>
+            </div>
+        </div>
     );
 }
 
 function EditInstitutions({onPutAway}) {
     const [institutions, dispatchInstitution] = useScratchInstitutions();
-    const {primarySchoolId, save} = useInstitutions();
-    const nonDeletableInstitutions = institutions.filter((i) => i.id === primarySchoolId);
-    const deletableInstitutions = institutions.filter((i) => i.id !== primarySchoolId);
+    const {save, setPrimary} = useInstitutions();
+    const nonDeletableInstitutions = institutions.filter((i) => i.primary);
+    const deletableInstitutions = institutions.filter((i) => !i.primary);
 
     function onSave() {
+        const primaryInstitution = institutions.find((i) => i.primary);
+
+        if (primaryInstitution) {
+            setPrimary(primaryInstitution.id);
+        }
         save(institutions.map((obj) => obj.id)).then(onPutAway);
     }
 
     return (
         <div className="edit-institutions">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Institution name</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <div>
+                <div className="table-header">Institution name</div>
+                <div className="table-body">
                     {
                         Array.from(nonDeletableInstitutions).map((i) =>
-                            <tr key={i.name}>
-                                <td>{i.name}</td>
-                                <td />
-                            </tr>
+                            <div className="table-row" key={i.name}>
+                                <span>{i.name} <b>&bull; Primary</b></span>
+                            </div>
                         )
                     }
                     {
@@ -145,8 +165,8 @@ function EditInstitutions({onPutAway}) {
                             />
                         )
                     }
-                </tbody>
-            </table>
+                </div>
+            </div>
             <InstitutionInput dispatch={dispatchInstitution} />
             <div className="button-row">
                 <button type="button" onClick={() => onPutAway()}>Cancel</button>
