@@ -4,24 +4,53 @@
 dialog .edit-institutions {
     display: flex;
     flex-direction: column;
-    grid-row-gap: 3rem;
-    padding: 3rem;
-    max-width: 100%;
-    width: 54rem;
+    row-gap: 2rem;
+    padding: 0.6rem 0;
+
+    @include width-up-to($phone-max) {
+        width: 100%;
+    }
+
+    @include wider-than($phone-max) {
+        width: 54rem;
+    }
 
     @include usual-buttons();
 
-    table {
-        width: 100%;
+    .table-header {
+        @include body-font(1.4rem);
 
-        th {
-            @include set-font(h4);
+        border-bottom: thin solid ui-color(form-border);
+        font-weight: bold;
+        padding-bottom: 0.8rem;
+        text-align: left;
+    }
 
-            text-align: left;
+    .table-row {
+        border-bottom: thin solid ui-color(form-border);
+        display: flex;
+
+        @include width-up-to($phone-max) {
+            align-items: start;
+            flex-direction: column;
+            padding: 0.7rem 0;
+            row-gap: 1rem;
         }
 
-        td:nth-child(2) {
-            text-align: right;
+        @include wider-than($phone-max) {
+            align-items: center;
+            height: 6.5rem;
+            justify-content: space-between;
+
+            :nth-child(2) {
+                text-align: right;
+            }
+        }
+
+
+        a {
+            display: block;
+            text-decoration: none;
         }
     }
 
@@ -33,8 +62,17 @@ dialog .edit-institutions {
 
     .button-row {
         display: flex;
-        grid-column-gap: $normal-margin;
-        justify-content: flex-end;
+        gap: $normal-margin;
+
+        @include width-up-to($phone-max) {
+            align-items: stretch;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        @include wider-than($phone-max) {
+            justify-content: flex-end;
+        }
     }
 
     .input-with-suggestions {
