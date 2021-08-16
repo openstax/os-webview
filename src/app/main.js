@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import './sentry';
 import '../styles/main.scss';
 
-if (window.SETTINGS.analyticsID.endsWith('3')) {
+if (['3', '4'].includes(window.SETTINGS.analyticsID.substr(-1))) {
     import('preact/debug');
 }
 

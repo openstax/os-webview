@@ -11,7 +11,7 @@ function useContextValue() {
     const {language} = useLanguageContext();
 
     React.useEffect(() => {
-        if (!data || !data.translations) {
+        if (!data || !data.translations || !data.translations.length) {
             return;
         }
         const translations = data.translations[0].value;

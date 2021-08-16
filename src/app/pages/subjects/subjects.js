@@ -165,7 +165,10 @@ const leadInText = {
 function Subjects() {
     const {pageDescription, translations} = useSubjectsContext();
     const {category, setCategory} = useCategoryTiedToPath();
-    const otherLocales = translations[0].value.map((t) => t.locale);
+    const otherLocales = translations.length ?
+        translations[0].value.map((t) => t.locale) :
+        []
+    ;
 
     useEffect(
         () => $.setPageDescription($.htmlToText(pageDescription)),
