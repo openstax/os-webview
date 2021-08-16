@@ -57,6 +57,9 @@ function InstitutionList({adoption}) {
 
     // Catches any clicks below and validates
     function onClick() {
+        if (!ref.current) {
+            return;
+        }
         const checked = ref.current.querySelectorAll('[aria-checked="true"]');
 
         setValidationMessage(checked.length ? '' : 'Check at least one');
@@ -94,14 +97,16 @@ function payloadFromFormData(formData, books) {
     const book = books ?
         books.find((b) => bookMightNeedLookup === b.label).value :
         bookMightNeedLookup;
-
-    return {
+    const payload = {
         id: formData.getAll('id'),
         book,
         adoptionStatus: formData.get('adoptionStatus'),
         schools: formData.getAll('school'),
         students: formData.getAll('students')
     };
+    const isValid = payload.adoptionStatus && payload.schools.length && payload.students > 0;
+
+    return isValid ? payload : null;
 }
 
 function payloadForRemove(book, adoptionData) {
@@ -122,8 +127,12 @@ export function EditBookForm({book, afterSubmit}) {
     function onSubmit(event) {
         event.preventDefault();
         const formData = new window.FormData(event.target);
+        const payload = payloadFromFormData(formData);
 
-        update(thisAdoption, payloadFromFormData(formData));
+        if (!payload) {
+            return;
+        }
+        update(thisAdoption, payload);
         afterSubmit();
     }
 
@@ -179,8 +188,12 @@ export default function AddBookForm({afterSubmit}) {
     function onSubmit(event) {
         event.preventDefault();
         const formData = new window.FormData(event.target);
+        const payload = payloadFromFormData(formData, books);
 
-        add(payloadFromFormData(formData, books));
+        if (!payload) {
+            return;
+        }
+        add(payload);
         afterSubmit();
     }
 
