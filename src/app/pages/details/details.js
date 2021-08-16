@@ -110,6 +110,10 @@ function LinksToTranslations() {
     const {translations: [translations=[]], meta: {locale}} = useDetailsContext();
     const localLanguage = languageTranslations[locale][locale];
 
+    if (translations.length === 0) {
+        return null;
+    }
+
     return (
         <div className="language-selector">
             <FontAwesomeIcon icon={faGlobe} />
