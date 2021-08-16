@@ -2,6 +2,7 @@ import { useStoreon } from 'storeon/preact';
 import {useState, useEffect} from 'react';
 import {sfApiPost} from './sfapi';
 import uniq from 'lodash/uniq';
+import orderBy from 'lodash/orderBy';
 
 function useUserSchoolIds() {
     const {user} = useStoreon('user');
@@ -9,12 +10,15 @@ function useUserSchoolIds() {
 
     useEffect(() => {
         const {schools} = user;
-        const schoolIds = schools ? schools.map((s) => s.schoolId) : [];
+        const primarySchoolId = schools.filter((s) => s.primary).map((s) => s.schoolId)[0];
+        const schoolIds = schools ?
+            orderBy(
+                uniq(schools.map((s) => s.schoolId)),
+                (id) => id === primarySchoolId, ['desc']
+            ) :
+            [];
 
-        setData({
-            primarySchoolId: schools.filter((s) => s.primary).map((s) => s.schoolId)[0],
-            schoolIds: uniq(schoolIds)
-        });
+        setData({primarySchoolId, schoolIds});
     }, [user]);
 
     return data;
