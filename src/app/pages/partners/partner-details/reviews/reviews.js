@@ -1,8 +1,7 @@
-import React, {useContext} from 'react';
-import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import PageContext, {PageContextProvider} from './page-context';
+import React from 'react';
+import usePageContext, {PageContextProvider} from './page-context';
 import useUserContext, {UserContextProvider} from '~/contexts/user';
-import PartnerContext from '../partner-context';
+import usePartnerContext from '../partner-context';
 import UserReview from './user-review';
 import StarsAndCount, {roundedRating} from '~/components/stars-and-count/stars-and-count';
 import RatingForm from './rating-form';
@@ -19,7 +18,7 @@ function Bar({num, value, max}) {
 }
 
 function DistributionBars() {
-    const {reviews, summary} = useContext(PartnerContext);
+    const {reviews, summary} = usePartnerContext();
 
     const ratingsCount = reviews.reduce((a, b) => {
         if (!(b.rating in a)) {
@@ -41,7 +40,7 @@ function DistributionBars() {
 }
 
 function Synopsis() {
-    const {summary: {rating, count}, reviewCount} = useContext(PartnerContext);
+    const {summary: {rating, count}, reviewCount} = usePartnerContext();
 
     return (
         <div className="review-synopsis">
@@ -59,7 +58,7 @@ function Synopsis() {
 }
 
 function LeaveAReview() {
-    const togglePage = useContext(PageContext);
+    const {togglePage} = usePageContext();
 
     return (
         <div className="leave-a-review">
@@ -110,7 +109,7 @@ function ReviewPrompt({accountId, hasWrittenReview, status, updated}) {
 
 function ReviewsPage() {
     const {accountId} = useUserContext();
-    const {reviews} = useContext(PartnerContext);
+    const {reviews} = usePartnerContext();
     const reviewModels = reviews
         .map((r) => ({
             initials: r.submittedByName.replace(/[^A-Z]/g, '').substr(0, 2),
@@ -152,14 +151,18 @@ function ReviewsPage() {
     );
 }
 
-// eslint-disable-next-line complexity
-export default function Reviews({partnerId}) {
-    const [showUpdateForm, togglePage] = useToggle(false);
+function PageOrForm() {
+    const {showUpdateForm} = usePageContext();
 
+    return showUpdateForm ? <RatingForm /> : <ReviewsPage />;
+}
+
+// eslint-disable-next-line complexity
+export default function Reviews() {
     return (
-        <PageContextProvider togglePage={togglePage} partnerId={partnerId}>
+        <PageContextProvider>
             <UserContextProvider>
-                {showUpdateForm ? <RatingForm /> : <ReviewsPage />}
+                <PageOrForm />
             </UserContextProvider>
         </PageContextProvider>
     );

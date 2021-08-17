@@ -1,7 +1,7 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Stars} from '~/components/stars-and-count/stars-and-count';
-import PageContext from './page-context';
-import PartnerContext from '../partner-context';
+import usePageContext from './page-context';
+import usePartnerContext from '../partner-context';
 import {useMyReview} from './rating-form';
 import ClippedText from '~/components/clipped-text/clipped-text';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -9,8 +9,8 @@ import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
 import './user-review.scss';
 
 function UserControls({status}) {
-    const togglePage = useContext(PageContext);
-    const {postRating} = useContext(PartnerContext);
+    const {togglePage} = usePageContext();
+    const {postRating} = usePartnerContext();
     const myReview = useMyReview();
     const displayStatus = ['Deleted', 'Rejected'].includes(status) ? status : 'pending';
 
@@ -45,7 +45,7 @@ function UserControls({status}) {
 }
 
 function ReviewAndResponse({review, response}) {
-    const {partnerName} = useContext(PartnerContext);
+    const {partnerName} = usePartnerContext();
 
     return (
         <React.Fragment>

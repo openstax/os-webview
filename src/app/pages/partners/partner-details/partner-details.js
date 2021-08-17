@@ -144,9 +144,9 @@ function PartnerDetails({model}) {
     );
 }
 
-export default function PartnerDetailsWrapper({detailData: {id, ...model}, onUpdate}) {
+export default function PartnerDetailsWrapper({detailData: {id, ...model}}) {
     return (
-        <PartnerContextProvider partnerId={id} onUpdate={onUpdate}>
+        <PartnerContextProvider contextValueParameters={id}>
             <PartnerDetails model={model} />
         </PartnerContextProvider>
     );

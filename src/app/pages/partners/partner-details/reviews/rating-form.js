@@ -1,10 +1,10 @@
-import React, {useState, useRef, useContext} from 'react';
+import React, {useState, useRef} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faInfoCircle} from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons/faArrowLeft';
-import PageContext from './page-context';
+import usePageContext from './page-context';
 import useUserContext from '~/contexts/user';
-import PartnerContext from '../partner-context';
+import usePartnerContext from '../partner-context';
 import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import analyticsEvents from '../../analytics-events';
 import './rating-form.scss';
@@ -54,7 +54,7 @@ function Stars({rating, setRating}) {
 }
 
 export function useMyReview() {
-    const {reviews} = useContext(PartnerContext);
+    const {reviews} = usePartnerContext();
     const {accountId} = useUserContext();
     const myReview = reviews.find((r) => r.submittedByAccountId === accountId);
 
@@ -84,9 +84,9 @@ function InfoButton({info}) {
 }
 
 export default function RatingForm() {
-    const togglePage = useContext(PageContext);
+    const {togglePage} = usePageContext();
     const {accountId, userName} = useUserContext();
-    const {postRating, partnerId, partnerName} = useContext(PartnerContext);
+    const {postRating, partnerId, partnerName} = usePartnerContext();
     const [rating, setRating, myReview] = useRating();
     const textAreaRef = useRef();
     const guidelinesLink = `
