@@ -1,5 +1,14 @@
 import buildContext from '~/components/jsx-helpers/build-context';
-import {useUserModel as useContextValue} from '~/models/usermodel';
+import {useUserModel} from '~/models/usermodel';
+
+function useContextValue() {
+    const model = useUserModel();
+
+    return model ? {
+        accountId: model.id,
+        userName: `${model.first_name} ${model.last_name.substr(0, 1)}.`
+    } : {};
+}
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
 
