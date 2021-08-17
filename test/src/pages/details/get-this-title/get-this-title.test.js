@@ -3,7 +3,7 @@ import {render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import GetThisTitle from '~/pages/details/common/get-this-title';
 import Context, {useTocState} from '~/pages/details/common/toc-slideout/context';
-import {LanguageContextProvider} from '~/models/language-context';
+import {LanguageContextProvider} from '~/contexts/language';
 // College algebra book details
 import details from '../../../data/details';
 import {transformData} from '~/helpers/controller/cms-mixin';

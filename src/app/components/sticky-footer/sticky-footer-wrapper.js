@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import useWindowContext, {WindowContextProvider} from '~/models/window-context';
+import useWindowContext, {WindowContextProvider} from '~/contexts/window';
 import './sticky-footer.scss';
 import shellBus from '~/components/shell/shell-bus';
 import cn from 'classnames';

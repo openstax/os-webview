@@ -64,34 +64,6 @@ export function LoaderPage({
     );
 }
 
-export const ActiveElementContext = React.createContext(document.activeElement);
-
-export function ActiveElementContextProvider({children}) {
-    const [value, setValue] = useState(document.activeElement);
-    const handler = () => {
-        setValue(document.activeElement);
-    };
-    const blurHandler = ({relatedTarget}) => {
-        if (!relatedTarget) {
-            setValue(document.activeElement);
-        }
-    };
-
-    useLayoutEffect(() => {
-        document.addEventListener('focus', handler, true);
-        document.addEventListener('blur', blurHandler, true);
-
-        return () => {
-            document.removeEventListener('focus', handler, true);
-            document.removeEventListener('blur', blurHandler, true);
-        };
-    }, []);
-
-    return (
-        <ActiveElementContext.Provider value={value} children={children} />
-    );
-}
-
 export function RawHTML({Tag='div', html, embed=false, ...otherProps}) {
     const ref=useRef();
 

@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
-import useLanguageContext from '~/models/language-context';
+import useLanguageContext from '~/contexts/language';
 import cmsFetch from './cmsFetch';
 
 function useContextValue() {

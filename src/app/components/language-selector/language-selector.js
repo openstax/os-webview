@@ -1,5 +1,5 @@
 import React from 'react';
-import useLanguageContext from '~/models/language-context';
+import useLanguageContext from '~/contexts/language';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faGlobe} from '@fortawesome/free-solid-svg-icons/faGlobe';
 import './language-selector.scss';

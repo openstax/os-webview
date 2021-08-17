@@ -11,7 +11,7 @@ import {faAmazon} from '@fortawesome/free-brands-svg-icons/faAmazon';
 import {faApple} from '@fortawesome/free-brands-svg-icons/faApple';
 import $ from '~/helpers/$';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
-import useLanguageContext from '~/models/language-context';
+import useLanguageContext from '~/contexts/language';
 import useAmazonAssociatesLink from './amazon-associates-link';
 import StudyEdge from './study-edge/study-edge';
 import TOCContext from '../toc-slideout/context';

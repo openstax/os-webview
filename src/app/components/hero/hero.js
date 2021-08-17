@@ -1,5 +1,5 @@
 import React from 'react';
-import {WindowContextProvider} from '~/models/window-context';
+import {WindowContextProvider} from '~/contexts/window';
 import ClippedImage from '~/components/clipped-image/clipped-image';
 import cn from 'classnames';
 import './hero.scss';

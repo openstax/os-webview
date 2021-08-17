@@ -5,7 +5,7 @@ import AccordionGroup from '~/components/accordion-group/accordion-group.js';
 import BookOptions from '../controls/book-options/book-options';
 import OptionsList from '../controls/options-list/options-list';
 import Checkboxes from '../controls/checkboxes-linked-to-store/checkboxes-linked-to-store';
-import useWindowContext, {WindowContextProvider} from '~/models/window-context';
+import useWindowContext, {WindowContextProvider} from '~/contexts/window';
 import {BaseButton, useStoreSize, sortOptions} from '../controls/controls';
 import shellBus from '~/components/shell/shell-bus';
 import sortBy from 'lodash/sortBy';

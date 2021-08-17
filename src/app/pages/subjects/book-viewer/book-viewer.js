@@ -1,8 +1,9 @@
 import React from 'react';
-import {RawHTML, ActiveElementContextProvider} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {ActiveElementContextProvider} from '~/contexts/active-element';
 import useSubjectsContext from '../context';
 import BookCover from './book';
-import useSubjectCategoryContext from '~/models/subject-category-context';
+import useSubjectCategoryContext from '~/contexts/subject-category';
 
 function useCategorizedBooks() {
     const {books} = useSubjectsContext();

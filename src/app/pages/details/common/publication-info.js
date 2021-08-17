@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
 import fetchRexRelease from '~/models/rex-release';
-import useLanguageContext from '~/models/language-context';
+import useLanguageContext from '~/contexts/language';
 
 const localizedTexts = {
     'en': {

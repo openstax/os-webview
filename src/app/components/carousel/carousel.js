@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronLeft} from '@fortawesome/free-solid-svg-icons/faChevronLeft';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
-import useWindowContext, {WindowContextProvider} from '~/models/window-context';
+import useWindowContext, {WindowContextProvider} from '~/contexts/window';
 import cn from 'classnames';
 import './carousel.scss';
 

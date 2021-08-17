@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
-import useLanguageContext from '~/models/language-context';
-import cmsFetch from './cmsFetch';
+import useLanguageContext from '~/contexts/language';
+import cmsFetch from '~/models/cmsFetch';
 
 function dataToEntry(item) {
     const name = item.name;

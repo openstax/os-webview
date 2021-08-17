@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
-import {LanguageContextProvider} from '~/models/language-context';
+import {LanguageContextProvider} from '~/contexts/language';
 import ResourceBoxes from '~/pages/details/common/resource-box/resource-boxes';
 import {instructorResourceBoxPermissions, studentResourceBoxPermissions} from '~/pages/details/common/resource-box/resource-box';
 
