@@ -4,7 +4,7 @@ import {useUserModel} from '~/models/usermodel';
 function useContextValue() {
     const model = useUserModel();
 
-    return model ? {
+    return (model && model.last_name) ? {
         accountId: model.id,
         userName: `${model.first_name} ${model.last_name.substr(0, 1)}.`
     } : {};
