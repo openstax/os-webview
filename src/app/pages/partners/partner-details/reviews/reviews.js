@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import PageContext, {PageContextProvider} from './page-context';
-import UserContext, {UserContextProvider} from './user-context';
+import useUserContext, {UserContextProvider} from '~/contexts/user';
 import PartnerContext from '../partner-context';
 import UserReview from './user-review';
 import StarsAndCount, {roundedRating} from '~/components/stars-and-count/stars-and-count';
@@ -109,7 +109,7 @@ function ReviewPrompt({accountId, hasWrittenReview, status, updated}) {
 }
 
 function ReviewsPage() {
-    const {accountId} = useContext(UserContext);
+    const {accountId} = useUserContext();
     const {reviews} = useContext(PartnerContext);
     const reviewModels = reviews
         .map((r) => ({
