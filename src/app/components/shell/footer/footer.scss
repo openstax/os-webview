@@ -6,8 +6,11 @@ $lower-footer: #3b3b3b;
     color: text-color(footer);
     display: grid;
 
-    a {
-        color: inherit;
+    .top,
+    .bottom {
+        a {
+            color: inherit;
+        }
     }
 
     .top {
