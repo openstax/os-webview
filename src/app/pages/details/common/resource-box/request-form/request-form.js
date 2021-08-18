@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {useSalesforceLoadedState, salesforce} from '~/models/salesforce';
-import {useUserStatus} from '../../hooks';
+import useUserContext from '~/contexts/user';
 import './request-form.scss';
 
 function RequestForm({model, done, afterSubmit}) {
-    const userStatus = useUserStatus();
+    const {userStatus} = useUserContext();
     const sfLoaded = useSalesforceLoadedState();
 
     function listenForResponse() {

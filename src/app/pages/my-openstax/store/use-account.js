@@ -1,19 +1,12 @@
 import {useState, useEffect} from 'react';
 import { useStoreon } from 'storeon/preact';
-import {accountsModel} from '~/models/usermodel';
+import useUserContext from '~/contexts/user';
 import orderBy from 'lodash/orderBy';
 
 function useAccountsModel() {
-    // eslint-disable-next-line camelcase
-    const [data, setData] = useState({contact_infos: []});
+    const {userModel} = useUserContext();
 
-    accountsModel.load().then((m) => {
-        if (m !== data) {
-            setData(m);
-        }
-    });
-
-    return data;
+    return userModel ? userModel.accountsModel : {};
 }
 
 function useEmails(accountsData) {

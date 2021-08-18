@@ -1,19 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {accountsModel} from '~/models/usermodel';
+import useUserContext from '~/contexts/user';
 import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
 import {cmsPost} from '~/models/cmsFetch';
-
-function useAccountNameAndId() {
-    const [value, setValue] = useState([]);
-
-    useEffect(() => {
-        accountsModel.load().then((response) => {
-            setValue([response.first_name, response.id]);
-        });
-    }, []);
-
-    return value;
-}
 
 function useAdoptions(accountId) {
     const [adoptions, setAdoptions] = useState([]);
@@ -51,7 +39,8 @@ async function submitForm(formRef, accountId) {
 }
 
 export default function useAdoptionMicrosurveyContent() {
-    const [name, accountId] = useAccountNameAndId();
+    const {userModel} = useUserContext();
+    const {first_name: name, id: accountId} = userModel || {};
     const adoptions = useAdoptions(accountId);
     const ready = adoptions.length > 0;
     const ref = useRef();

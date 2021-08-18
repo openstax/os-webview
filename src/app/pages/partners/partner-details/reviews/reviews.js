@@ -1,6 +1,6 @@
 import React from 'react';
 import usePageContext, {PageContextProvider} from './page-context';
-import useUserContext, {UserContextProvider} from '~/contexts/user';
+import useUserContext from '~/contexts/user';
 import usePartnerContext from '../partner-context';
 import UserReview from './user-review';
 import StarsAndCount, {roundedRating} from '~/components/stars-and-count/stars-and-count';
@@ -161,9 +161,7 @@ function PageOrForm() {
 export default function Reviews() {
     return (
         <PageContextProvider>
-            <UserContextProvider>
-                <PageOrForm />
-            </UserContextProvider>
+            <PageOrForm />
         </PageContextProvider>
     );
 }

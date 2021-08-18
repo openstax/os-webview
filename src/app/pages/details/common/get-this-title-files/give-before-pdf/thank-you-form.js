@@ -1,5 +1,5 @@
 import React from 'react';
-import {useUserModel} from '~/models/usermodel';
+import useUserContext from '~/contexts/user';
 import './thank-you-form.scss';
 
 function FormWithAfterSubmit({
@@ -41,7 +41,8 @@ function FormWithAfterSubmit({
     );
 }
 
-function ThankYou({userModel={}, link, close}) {
+export default function ThankYou({link, close}) {
+    const {userModel} = useUserContext();
     const first = userModel.first_name;
     const last = userModel.last_name;
     const school = userModel.self_reported_school;
@@ -103,13 +104,5 @@ function ThankYou({userModel={}, link, close}) {
             <button className="primary">Submit note and go to PDF</button>
             <a className="never-mind" href={link}>Never mind, just go to the PDF</a>
         </FormWithAfterSubmit>
-    );
-}
-
-export default function ThankYouForm({link, close}) {
-    const userModel = useUserModel();
-
-    return (
-        <ThankYou userModel={userModel} link={link} close={close} />
     );
 }

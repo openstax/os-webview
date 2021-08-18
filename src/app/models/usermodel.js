@@ -65,7 +65,7 @@ const accountsModel = {
         //         }
         //     ]
         // });
-        // // eslint-disable-next-line no-unreachable
+        // eslint-disable-next-line no-unreachable
         return fetch(accountsUrl, {credentials: 'include'})
             .then(
                 (response) => {
@@ -133,7 +133,8 @@ function oldUserModel(sfUserModel) {
         self_reported_role: sfUserModel.self_reported_role,
         self_reported_school: sfUserModel.self_reported_school,
         is_not_gdpr_location: sfUserModel.is_not_gdpr_location,
-        salesforce_contact_id: sfUserModel.salesforce_contact_id
+        salesforce_contact_id: sfUserModel.salesforce_contact_id,
+        accountsModel: sfUserModel
     };
 }
 

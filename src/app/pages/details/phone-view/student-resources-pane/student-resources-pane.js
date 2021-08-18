@@ -1,7 +1,7 @@
 import React from 'react';
 import {studentResourceBoxPermissions} from '../../common/resource-box/resource-box';
 import ResourceBoxes from '../../common/resource-box/resource-boxes';
-import {useUserStatus} from '../../common/hooks';
+import useUserContext from '~/contexts/user';
 import './student-resources-pane.scss';
 
 function resourceBoxModel(resourceData, userStatus) {
@@ -23,7 +23,7 @@ function StudentResourcesPane({model, userStatus}) {
 }
 
 export default function LoadUserStatusThenStudentPane({model}) {
-    const userStatus = useUserStatus();
+    const {userStatus} = useUserContext();
 
     if (!userStatus) {
         return null;

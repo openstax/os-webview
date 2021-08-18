@@ -12,6 +12,7 @@ function useContextValue() {
     useLayoutEffect(() => {
         document.addEventListener('focus', dispatch, true);
         document.addEventListener('blur', blurHandler, true);
+        dispatch();
 
         return () => {
             document.removeEventListener('focus', dispatch, true);

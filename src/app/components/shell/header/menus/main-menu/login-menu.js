@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {useLocation} from 'react-router-dom';
-import {useUserModel} from '~/models/usermodel';
+import useUserContext from '~/contexts/user';
 import linkHelper from '~/helpers/link';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
 
@@ -46,7 +46,9 @@ function TutorMenuItemIfUser({userModel}) {
 }
 
 // eslint-disable-next-line complexity
-function LoginMenuWithDropdown({userModel}) {
+function LoginMenuWithDropdown() {
+    const {userModel} = useUserContext();
+
     // updates logoutLink
     useLocation();
     const label = `Hi ${userModel.first_name || userModel.username}`;
@@ -72,18 +74,12 @@ function LoginMenuWithDropdown({userModel}) {
 }
 
 export default function LoginMenu() {
-    const userModel = useUserModel();
+    const {userModel} = useUserContext();
     const loggedIn = Boolean(typeof userModel === 'object' && userModel.id);
-
-    useEffect(() => {
-        if (userModel && userModel.id) {
-            pi('identify_client', userModel.id);
-        }
-    }, [userModel]);
 
     return (
         loggedIn ?
-            <LoginMenuWithDropdown userModel={userModel} /> :
+            <LoginMenuWithDropdown /> :
             <LoginLink />
     );
 }

@@ -41,6 +41,7 @@ function CategorySection({categoryData, categorizedBooks, category}) {
     if (!['view-all', categoryData.value].includes(category)) {
         classList.push('hidden');
     }
+
     return (
         <div className={classList.join(' ')}>
             <RawHTML Tag="h2" html={subjectHtml} className="subject" />
@@ -62,7 +63,6 @@ export default function BookViewer({category}) {
     if (!categorizedBooks) {
         return (<div>Loading...</div>);
     }
-
     return (
         <div className="container">
             <ActiveElementContextProvider>

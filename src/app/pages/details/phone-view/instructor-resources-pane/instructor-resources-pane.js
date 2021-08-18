@@ -5,7 +5,7 @@ import routerBus from '~/helpers/router-bus';
 import {instructorResourceBoxPermissions} from '../../common/resource-box/resource-box';
 import FeaturedResourcesSection from '../../common/featured-resources/featured-resources.js';
 import ResourceBoxes, {VideoResourceBoxes} from '../../common/resource-box/resource-boxes';
-import {useUserStatus} from '../../common/hooks';
+import useUserContext from '~/contexts/user';
 import './instructor-resources-pane.scss';
 
 function resourceBoxModel(resourceData, userStatus, bookId) {
@@ -71,7 +71,7 @@ export function InstructorResourcesPane({model, userStatus}) {
 }
 
 export default function LoadUserStatusThenInstructorPane({model}) {
-    const userStatus = useUserStatus();
+    const {userStatus} = useUserContext();
 
     if (!userStatus) {
         return null;
