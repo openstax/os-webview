@@ -1,5 +1,5 @@
 import React from 'react';
-import NavigationContext from '../navigator/navigation-context';
+import useNavigationContext from '../navigator/navigation-context';
 import Collection from './collection/collection';
 import Assistant from './assistant/assistant';
 import Account from './account/account';
@@ -7,7 +7,7 @@ import Account from './account/account';
 export const targetIds = ['collection', 'assistant', 'account'];
 
 export default function MainPanel() {
-    const {activeId} = React.useContext(NavigationContext);
+    const {activeId} = useNavigationContext();
 
     return (
         <React.Fragment>

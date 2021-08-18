@@ -1,10 +1,10 @@
 import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
-import NavigationContext from '~/pages/my-openstax/main-card/navigator/navigation-context';
+import useNavigationContext from '~/pages/my-openstax/main-card/navigator/navigation-context';
 
 function useContextValue() {
     const [selectedBook, setSelectedBook] = React.useState();
-    const {activeId} = React.useContext(NavigationContext);
+    const {activeId} = useNavigationContext();
 
     React.useEffect(() => {
         setSelectedBook(null);

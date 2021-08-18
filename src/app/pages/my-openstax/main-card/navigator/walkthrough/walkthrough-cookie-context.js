@@ -1,9 +1,6 @@
 import React from 'react';
+import buildContext from '~/components/jsx-helpers/build-context';
 import cookie from '~/helpers/cookie';
-
-const WalkthroughCookieContext = React.createContext();
-
-export default WalkthroughCookieContext;
 
 // This is a degenerate reducer based on a cookie value
 // If the cookie is not set, returns true
@@ -17,8 +14,7 @@ function useWalkthroughCookie() {
     }, window.localStorage.showMyOpenStaxWalkthrough && !cookie.hash.walkthroughDone);
 }
 
-// It needs to be shared so that all instances react to the cookie being set
-export function WalkthroughCookieContextProvider({children}) {
+function useContextValue() {
     const value = useWalkthroughCookie();
     const [_, dispatch] = value;
 
@@ -30,8 +26,12 @@ export function WalkthroughCookieContextProvider({children}) {
         return () => window.removeEventListener('navigate', refresh);
     }, [dispatch]);
 
-
-    return (
-        <WalkthroughCookieContext.Provider children={children} value={value} />
-    );
+    return value;
 }
+
+const {useContext, ContextProvider} = buildContext({useContextValue});
+
+export {
+    useContext as default,
+    ContextProvider as WalkthroughCookieContextProvider
+};

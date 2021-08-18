@@ -1,17 +1,17 @@
 import React from 'react';
-import Context from './context';
+import useTOCContext from './context';
 import $ from '~/helpers/$';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 
 export default function TOCSlideout({html}) {
-    const tocState = React.useContext(Context);
+    const {toggle} = useTOCContext();
 
     return (
         <div className="toc-slideout">
             <div className="top-padding">
                 <span
                     className="close-toc" role="button" tabIndex="0"
-                    onClick={() => tocState.toggle()}
+                    onClick={() => toggle()}
                     onKeyDown={$.treatSpaceOrEnterAsClick}
                 >
                     &times;

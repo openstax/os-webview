@@ -2,7 +2,7 @@ import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import GetThisTitle from '~/pages/details/common/get-this-title';
-import Context, {useTocState} from '~/pages/details/common/toc-slideout/context';
+import {TOCContextProvider} from '~/pages/details/common/toc-slideout/context';
 import {LanguageContextProvider} from '~/contexts/language';
 // College algebra book details
 import details from '../../../data/details';
@@ -12,13 +12,11 @@ import $ from '~/helpers/$';
 const model = $.camelCaseKeys(transformData(details));
 
 function GTTinContext() {
-    const tocState = useTocState();
-
     return (
         <LanguageContextProvider>
-            <Context.Provider value={tocState}>
+            <TOCContextProvider>
                 <GetThisTitle model={model} />
-            </Context.Provider>
+            </TOCContextProvider>
         </LanguageContextProvider>
     );
 }

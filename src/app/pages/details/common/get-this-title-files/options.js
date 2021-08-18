@@ -14,7 +14,7 @@ import OrderPrintCopy from './order-print-copy/order-print-copy';
 import useLanguageContext from '~/contexts/language';
 import useAmazonAssociatesLink from './amazon-associates-link';
 import StudyEdge from './study-edge/study-edge';
-import TOCContext from '../toc-slideout/context';
+import useTOCContext from '../toc-slideout/context';
 import {useDialog} from '~/components/dialog/dialog';
 import RecommendedCallout from './recommended-callout/recommended-callout';
 import useGiveDialog from './give-before-pdf/give-before-pdf';
@@ -99,7 +99,7 @@ const localizedTexts = {
 };
 
 export function TocOption({model}) {
-    const tocState = React.useContext(TOCContext);
+    const {toggle, isOpen} = useTOCContext();
     const includeTOC = ['live', 'new_edition_available'].includes(model.bookState);
     const {language} = useLanguageContext();
     const text = $.isPolish(model.title) ? 'Spis treści' : localizedTexts[language].toc;
@@ -109,7 +109,7 @@ export function TocOption({model}) {
     }
 
     function toggleToc(event) {
-        tocState.toggle();
+        toggle();
         event.preventDefault();
     }
 
@@ -117,7 +117,7 @@ export function TocOption({model}) {
         <div className="option toc-option">
             <a
                 href="/" role="button" className="show-toc"
-                aria-pressed={tocState.isOpen}
+                aria-pressed={isOpen}
                 onClick={toggleToc}
                 onKeyDown={$.treatSpaceOrEnterAsClick}
             >
