@@ -1,8 +1,8 @@
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
 import {LoadPageAfterSalesforce, salesforce} from '~/models/salesforce';
 import FormInput from '~/components/form-input/form-input';
 import FormRadioGroup from '~/components/form-radiogroup/form-radiogroup';
-import {FormSubmitContext} from '~/components/salesforce-form/salesforce-form';
+import useSubmitContext from '../submit-context';
 import './how-using.scss';
 
 function HowUsingBook({book, selectedValue, setSelectedValue}) {
@@ -47,7 +47,7 @@ function HowManyStudents({book, value, setValue}) {
 function BothQuestionsForBook({book, isFirst}) {
     const [adoptionStatus, setAdoptionStatus] = useState();
     const [numberOfStudents, setNumberOfStudents] = useState();
-    const bookBeingSubmitted = useContext(FormSubmitContext);
+    const {currentBook: bookBeingSubmitted} = useSubmitContext();
 
     return (
         <div>
