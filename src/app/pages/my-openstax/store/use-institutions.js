@@ -2,6 +2,13 @@ import { useStoreon } from 'storeon/preact';
 import {useState, useEffect} from 'react';
 import {sfApiPost} from './sfapi';
 import uniq from 'lodash/uniq';
+import analytics from '~/helpers/analytics';
+
+const CATEGORY = 'My OpenStax - My Account';
+
+function sendEvent(action, label) {
+    analytics.sendPageEvent(CATEGORY, action, label);
+}
 
 function useUserSchoolIds() {
     const {user} = useStoreon('user');
@@ -34,6 +41,7 @@ function saveSchools(contactId, oldSchoolIds, newSchoolIds) {
             {contact_id: contactId, school_id: id}
         ));
 
+    sendEvent('update', 'schools');
     return Promise.all([...deletePromises, ...insertPromises]);
 }
 
