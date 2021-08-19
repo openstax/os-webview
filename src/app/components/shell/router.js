@@ -139,8 +139,8 @@ function ImportedPage({name}) {
                 setContent(<content.default />);
                 window.scrollTo(0, 0);
             },
-            (err) => {
-                console.warn(`Unable to import ${name}`, err);
+            (cause) => {
+                throw (new Error(`Unable to load page ${name}`, {cause}));
             }
         );
         if (!(history.state && history.state.redirect)) {

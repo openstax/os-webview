@@ -46,7 +46,9 @@ function ImportedComponent({name}) {
         () => import(`./${name}/${name}`)
             .then(
                 (content) => setContent(<content.default />),
-                (err) => console.warn(`Error loading page ${name}:`, err)
+                (cause) => {
+                    throw (new Error(`Lazy load failed for ${name}`, {cause}));
+                }
             ),
         [name]
     );
