@@ -3,6 +3,7 @@ import {useState, useEffect} from 'react';
 import {sfApiPost} from './sfapi';
 import uniq from 'lodash/uniq';
 import analytics from '~/helpers/analytics';
+import orderBy from 'lodash/orderBy';
 
 const CATEGORY = 'My OpenStax - My Account';
 
@@ -16,12 +17,15 @@ function useUserSchoolIds() {
 
     useEffect(() => {
         const {schools} = user;
-        const schoolIds = schools ? schools.map((s) => s.schoolId) : [];
+        const primarySchoolId = schools.filter((s) => s.primary).map((s) => s.schoolId)[0];
+        const schoolIds = schools ?
+            orderBy(
+                uniq(schools.map((s) => s.schoolId)),
+                (id) => id === primarySchoolId, ['desc']
+            ) :
+            [];
 
-        setData({
-            primarySchoolId: schools.filter((s) => s.primary).map((s) => s.schoolId)[0],
-            schoolIds: uniq(schoolIds)
-        });
+        setData({primarySchoolId, schoolIds});
     }, [user]);
 
     return data;
@@ -75,7 +79,7 @@ export default function useInstitutions() {
     const {primarySchoolId, schoolIds=[]} = useUserSchoolIds();
     const institutions = useLookedupSchools(schoolIds);
     const {user, dispatch} = useStoreon('user');
-    const contactId = user && user.contact && user.contact.salesforceId;
+    const contactId = user?.contact?.salesforceId;
 
     return {
         primarySchoolId,

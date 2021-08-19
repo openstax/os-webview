@@ -9,6 +9,9 @@ import useRouterContext from '~/components/shell/router-context';
 import './article.scss';
 
 function getProgress(el) {
+    if (!el) {
+        return 0;
+    }
     const divRect = el.getBoundingClientRect();
     const viewportBottom = window.innerHeight;
     const visibleHeight = viewportBottom - divRect.top;

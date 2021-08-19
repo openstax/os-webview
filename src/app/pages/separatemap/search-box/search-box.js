@@ -49,7 +49,7 @@ function SearchResults({minimized, map, results=[], selectedSchool}) {
     return (
         <div className="search-results-region" hidden={minimized || resultsHidden}>
             {
-                resultsOrSchool && resultsOrSchool.map((school) =>
+                resultsOrSchool?.map((school) =>
                     <ResultBox
                         model={school} totalCount={resultsOrSchool.length} key={school.pk}
                         theOpenOne={theOpenOne} setTheOpenOne={setTheOpenOne}

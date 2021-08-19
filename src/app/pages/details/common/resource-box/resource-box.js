@@ -67,7 +67,7 @@ export function instructorResourceBoxPermissions(resourceData, userStatus, searc
         return 'locked';
     };
     const encodedLocation = encodeLocation(search);
-    const loginUrl = userStatus.userInfo && userStatus.userInfo.id ?
+    const loginUrl = userStatus.userInfo?.id ?
         `${settings.accountHref}/faculty_access/apply?r=${encodedLocation}` :
         `${settings.apiOrigin}/oxauth/login/?next=${encodedLocation}`;
 

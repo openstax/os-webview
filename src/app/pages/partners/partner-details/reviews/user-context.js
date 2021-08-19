@@ -8,8 +8,8 @@ export default UserContext;
 export function UserContextProvider({children}) {
     const userModel = useUserModel();
     const value = {
-        accountId: userModel && userModel.id,
-        userName: userModel && userModel.last_name &&
+        accountId: userModel?.id,
+        userName: userModel?.last_name &&
             `${userModel.first_name} ${userModel.last_name.substr(0, 1)}.`
     };
 

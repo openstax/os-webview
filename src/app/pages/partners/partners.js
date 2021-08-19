@@ -6,7 +6,7 @@ import Results, {costOptions} from './results/results';
 import './partners.scss';
 
 function Confirmation() {
-    const bookSlug = history.state && history.state.slug;
+    const bookSlug = history.state?.slug;
     const [done, toggleDone] = useToggle();
 
     if (done) {

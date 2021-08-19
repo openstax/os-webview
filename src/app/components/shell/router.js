@@ -134,10 +134,15 @@ function ImportedPage({name}) {
     const [Content, setContent] = React.useState(LoadingPlaceholder);
 
     React.useEffect(() => {
-        import(`~/pages/${name}/${name}`).then((content) => {
-            setContent(<content.default />);
-            window.scrollTo(0, 0);
-        });
+        import(`~/pages/${name}/${name}`).then(
+            (content) => {
+                setContent(<content.default />);
+                window.scrollTo(0, 0);
+            },
+            (cause) => {
+                throw (new Error(`Unable to load page ${name}`, {cause}));
+            }
+        );
         if (!(history.state && history.state.redirect)) {
             analytics.sendPageview();
         }

@@ -164,9 +164,8 @@ function CustomizationDialog({isOpen, toggle}) {
 }
 
 // Adapted from get-this-title interceptLinkClicks
-function interceptLinkClicks(event, model, userInfo) {
+function interceptLinkClicks(event, book, userInfo) {
     const el = linkhelper.validUrlClick(event);
-    const book = model.bookModel.id;
 
     if (!el) {
         return;
@@ -200,8 +199,8 @@ function LeftButton({model}) {
         if (isCompCopy || isCustomization) {
             event.preventDefault();
             toggle();
-        } else {
-            interceptLinkClicks(event, model, userInfo);
+        } else if (model.bookModel) {
+            interceptLinkClicks(event, model.bookModel.id, userInfo);
         }
     }
 
@@ -358,7 +357,7 @@ export function VideoResourceBoxes({models, blogLinkModels, referenceModels}) {
                 )
             }
             {
-                blogLinkModels && blogLinkModels.map((model) =>
+                blogLinkModels?.map((model) =>
                     <ResourceBox model={model} key={model.heading} />
                 )
             }
