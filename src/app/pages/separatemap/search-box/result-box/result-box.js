@@ -35,7 +35,7 @@ function Testimonial({testimonial}) {
 function useFormParameters(hideDialog) {
     const {userModel} = useUserContext();
 
-    if (!userModel.accountsModel) {
+    if (!userModel || !userModel.accountsModel) {
         return null;
     }
 

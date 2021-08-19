@@ -1,5 +1,6 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
+import {UserContextProvider} from '~/contexts/user';
 import {LanguageContextProvider} from '~/contexts/language';
 import ResourceBoxes from '~/pages/details/common/resource-box/resource-boxes';
 import {instructorResourceBoxPermissions, studentResourceBoxPermissions} from '~/pages/details/common/resource-box/resource-box';
@@ -25,9 +26,11 @@ const payload = {
 
 function LangWrapResourceBoxes({...args}) {
     return (
-        <LanguageContextProvider>
-            <ResourceBoxes {...args} />
-        </LanguageContextProvider>
+        <UserContextProvider>
+            <LanguageContextProvider>
+                <ResourceBoxes {...args} />
+            </LanguageContextProvider>
+        </UserContextProvider>
     )
 }
 
