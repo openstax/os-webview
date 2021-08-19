@@ -9,7 +9,7 @@ function BlogItem() {
         'pages?type=news.newsArticle&fields=id&limit=3'
     );
 
-    const shouldDisplay = data && data.items && data.items.length > 0;
+    const shouldDisplay = data?.items?.length > 0;
 
     if (!shouldDisplay) {
         return null;

@@ -25,7 +25,7 @@ function Homepage({data: ungroupedData}) {
         data[sectionName] = sectionKeys.reduce((a, b) => {
             const newKey = uncapitalizeInitial(b.substr(sectionName.length)) || sectionName;
             const value = ungroupedData[b];
-            const imageValue = value && value.meta && value.meta.downloadUrl;
+            const imageValue = value?.meta?.downloadUrl;
 
             a[newKey] = imageValue || value;
             return a;

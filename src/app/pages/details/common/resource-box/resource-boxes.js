@@ -357,7 +357,7 @@ export function VideoResourceBoxes({models, blogLinkModels, referenceModels}) {
                 )
             }
             {
-                blogLinkModels && blogLinkModels.map((model) =>
+                blogLinkModels?.map((model) =>
                     <ResourceBox model={model} key={model.heading} />
                 )
             }

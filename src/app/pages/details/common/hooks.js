@@ -8,7 +8,7 @@ import $ from '~/helpers/$';
 
 export function useTableOfContents(model) {
     const webviewLink = model.webviewRexLink || model.webviewLink;
-    const isTutor = model.webviewRexLink && model.webviewRexLink.includes('tutor');
+    const isTutor = model.webviewRexLink?.includes('tutor');
     const isRex = !isTutor && Boolean(model.webviewRexLink);
     const [tocHtml, setTocHtml] = useState('');
 
@@ -32,10 +32,10 @@ const debouncedDebug = debounce((...args) => console.debug(...args), 100);
 
 function getUserStatusPromise() {
     const isInstructor = (user) => {
-        return user && user.username && 'groups' in user && user.groups.includes('Faculty');
+        return user?.username && user.groups?.includes('Faculty');
     };
     const isStudent = (user) => {
-        return user && user.username && !isInstructor(user);
+        return user?.username && !isInstructor(user);
     };
 
     return userModel.load().then((user) => {

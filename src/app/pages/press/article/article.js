@@ -52,7 +52,7 @@ export function ArticleLoader({slug}) {
     const [data, statusPage] = usePageData({slug, preserveWrapping: true});
     const {fail} = useRouterContext();
 
-    if (data && data.error) {
+    if (data?.error) {
         fail();
         return null;
     }

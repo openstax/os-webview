@@ -52,7 +52,7 @@ export default function Features({data}) {
                 />
                 <div className="feature-list">
                     {
-                        featureList && featureList.map(
+                        featureList?.map(
                             (f) => <Feature key={f} name={f} />
                         )
                     }
