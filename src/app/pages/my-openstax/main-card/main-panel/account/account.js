@@ -6,8 +6,6 @@ import EmailPrefs from './email-prefs/email-prefs';
 import cn from 'classnames';
 import './account.scss';
 
-const accountsHost = 'https://accounts-dev.openstax.org';
-
 function Email({ email }) {
     return (
         <div className={cn('email', { unconfirmed: !email.verified, primary: email.primary })}>
@@ -22,7 +20,7 @@ function AccountSection() {
     return (
         <section>
             <h2>Account</h2>
-            <a className='edit-link' href={accountsHost}>Edit account details</a>
+            <a className='edit-link' href={window.SETTINGS.accountHref}>Edit account details</a>
             <section>
                 <h3>General</h3>
                 <div className='fields general-fields'>
