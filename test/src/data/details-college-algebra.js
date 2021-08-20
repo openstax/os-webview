@@ -17,7 +17,8 @@ const details = {
                 "html_url": "http://cms-dev.openstax.org/subjects/"
             },
             "title": "Subjects"
-        }
+        },
+        locale: "en"
     },
     "title": "College Algebra",
     "created": "2016-03-09T09:54:05.833000-06:00",
@@ -35,6 +36,18 @@ const details = {
             "subject_name": "Math",
             "subject_page_content": "",
             "subject_search_description": "This is math search meta"
+        }
+    ],
+    translations: [
+        {
+            type: "translation",
+            value: [
+                {
+                    locale: "es",
+                    slug: "historia-de-estados-unidos"
+                }
+            ],
+            id: "cadae45d-b960-4d13-97fa-0a444d996329"
         }
     ],
     "is_ap": false,
