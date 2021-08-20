@@ -17,7 +17,8 @@ export default {
                 "html_url": "http://cms-dev.openstax.org/subjects/"
             },
             "title": "Subjects"
-        }
+        },
+        "locale": "en"
     },
     "title": "Biology 2e",
     "created": "2018-03-09T15:06:20.723000-06:00",
@@ -35,6 +36,18 @@ export default {
             "subject_name": "Science",
             "subject_page_content": "",
             "subject_search_description": "This is science search meta"
+        }
+    ],
+    translations: [
+        {
+            type: "translation",
+            value: [
+                {
+                    locale: "es",
+                    slug: "historia-de-estados-unidos"
+                }
+            ],
+            id: "cadae45d-b960-4d13-97fa-0a444d996329"
         }
     ],
     "is_ap": false,

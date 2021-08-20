@@ -3,21 +3,26 @@ import {render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import GetThisTitle from '~/pages/details/common/get-this-title';
 import {TOCContextProvider} from '~/pages/details/common/toc-slideout/context';
-import {LanguageContextProvider} from '~/contexts/language';
+import {DetailsContextProvider} from '~/pages/details/context';
 // College algebra book details
-import details from '../../../data/details';
+import details from '../../../data/details-college-algebra';
 import {transformData} from '~/helpers/controller/cms-mixin';
 import $ from '~/helpers/$';
 
 const model = $.camelCaseKeys(transformData(details));
 
+delete window.location;
+window.location = {
+    pathname: '/details/books/college-algebra'
+};
+
 function GTTinContext() {
     return (
-        <LanguageContextProvider>
+        <DetailsContextProvider>
             <TOCContextProvider>
                 <GetThisTitle model={model} />
             </TOCContextProvider>
-        </LanguageContextProvider>
+        </DetailsContextProvider>
     );
 }
 
@@ -27,8 +32,8 @@ test('handles Print Copy dialog', (done) => {
         const options = screen.getAllByRole('link');
         const printOption = options.filter((opt) => opt.textContent === 'Order a print copy');
 
-        expect(options).toHaveLength(4);
-        expect(printOption).toHaveLength(1);
+        expect(options).toHaveLength(3);
+        expect(printOption).toHaveLength(0);
         done();
     }, 0);
 });
