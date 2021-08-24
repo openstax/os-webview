@@ -162,7 +162,7 @@ function CustomizationDialog({isOpen, toggle}) {
 }
 
 // Adapted from get-this-title interceptLinkClicks
-function interceptLinkClicks(event, book, userInfo) {
+function interceptLinkClicks(event, book, userModel) {
     const el = linkhelper.validUrlClick(event);
 
     if (!el) {
@@ -198,7 +198,7 @@ function LeftButton({model}) {
             event.preventDefault();
             toggle();
         } else if (model.bookModel) {
-            interceptLinkClicks(event, model.bookModel.id, userInfo);
+            interceptLinkClicks(event, model.bookModel.id, userModel);
         }
     }
 
