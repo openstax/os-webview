@@ -7,7 +7,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faExclamationCircle} from '@fortawesome/free-solid-svg-icons/faExclamationCircle';
 import {faDesktop} from '@fortawesome/free-solid-svg-icons/faDesktop';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {useUserStatus, usePartnerFeatures} from '../../common/hooks';
+import {usePartnerFeatures} from '../../common/hooks';
+import useUserContext from '~/contexts/user';
 import './instructor-resource-tab.scss';
 
 function FreeStuff({freeStuffContent, userStatus}) {
@@ -117,6 +118,7 @@ function InstructorResourceTab({model, userStatus}) {
     };
     const freeStuffContent = model.freeStuffInstructor.content;
 
+    console.info('Are we showing the instructor resource tab?', referenceModels);
     return (
         <div className="instructor-resources">
             <div>
@@ -149,8 +151,9 @@ function InstructorResourceTab({model, userStatus}) {
 }
 
 export default function LoadUserStatusThenInstructorTab({model}) {
-    const userStatus = useUserStatus();
+    const {userStatus} = useUserContext();
 
+    console.info('User status should not be null', userStatus);
     if (!userStatus) {
         return null;
     }

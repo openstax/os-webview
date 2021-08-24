@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import {LoadPageAfterSalesforce, salesforce} from '~/models/salesforce';
 
-export const FormSubmitContext = React.createContext();
-
 function HiddenFieldsInternals({leadSource}) {
     return (
         <React.Fragment>

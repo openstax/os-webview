@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
-import {LanguageContextProvider} from '~/models/language-context';
+import {LanguageContextProvider} from '~/contexts/language';
 import LetUsKnow from '~/pages/details/common/let-us-know/let-us-know';
 
 const englishTitle = 'Some book';

@@ -1,9 +1,7 @@
 import {useState, useEffect} from 'react';
-import userModel from '~/models/usermodel';
 import tableOfContentsHtml from '~/models/table-of-contents-html';
 import partnerFeaturePromise, {tooltipText} from '~/models/salesforce-partners';
 import shuffle from 'lodash/shuffle';
-import debounce from 'lodash/debounce';
 import $ from '~/helpers/$';
 
 export function useTableOfContents(model) {
@@ -26,51 +24,6 @@ export function useTableOfContents(model) {
     );
 
     return tocHtml;
-}
-
-const debouncedDebug = debounce((...args) => console.debug(...args), 100);
-
-function getUserStatusPromise() {
-    const isInstructor = (user) => {
-        return user?.username && user.groups?.includes('Faculty');
-    };
-    const isStudent = (user) => {
-        return user?.username && !isInstructor(user);
-    };
-
-    return userModel.load().then((user) => {
-        if (!user || Reflect.ownKeys(user).length === 0) {
-            debouncedDebug('No user info retrieved');
-        } else if (!('pending_verification' in user)) {
-            debouncedDebug('No pending_verification flag set in user info', user);
-        } else {
-            debouncedDebug('User info:', {
-                email: user.email,
-                pendingVerification: user.pending_verification,
-                groups: user.groups
-            });
-        }
-
-        return {
-            isInstructor: isInstructor(user),
-            isStudent: isStudent(user),
-            pendingVerification: user.pending_verification,
-            firstName: user.first_name,
-            lastName: user.last_name,
-            email: user.email,
-            userInfo: user
-        };
-    });
-}
-
-export function useUserStatus() {
-    const [userStatus, updateUserStatus] = useState({});
-
-    useEffect(() => {
-        getUserStatusPromise().then(updateUserStatus);
-    }, []);
-
-    return userStatus;
 }
 
 function toBlurb(partner) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import NavigationContext from './navigation-context';
+import useNavigationContext from './navigation-context';
 import {WalkthroughCookieContextProvider} from './walkthrough/walkthrough-cookie-context';
 import cn from 'classnames';
 import Walkthrough from './walkthrough/walkthrough';
@@ -25,7 +25,7 @@ function useElById(id) {
 
 function SectionTarget({id, index}) {
     const el = useElById(id);
-    const {activeId, setActiveId} = React.useContext(NavigationContext);
+    const {activeId, setActiveId} = useNavigationContext();
     const active = activeId === id;
 
     function clickId(event) {

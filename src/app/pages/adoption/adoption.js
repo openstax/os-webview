@@ -5,12 +5,13 @@ import FormHeader from '~/components/form-header/form-header';
 import RoleSelector from '~/components/role-selector/role-selector';
 import StudentForm from '~/components/student-form/student-form';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
-import {HiddenFields, FormSubmitContext} from '~/components/salesforce-form/salesforce-form';
+import {HiddenFields} from '~/components/salesforce-form/salesforce-form';
 import ContactInfo from '~/components/contact-info/contact-info';
 import BookSelector, {useSelectedBooks} from '~/components/book-selector/book-selector';
 import salesforcePromise from '~/models/salesforce';
 import HowUsing from './how-using/how-using';
 import {afterFormSubmit} from '~/models/books';
+import useSubmitContext, {SubmitContextProvider} from './submit-context';
 import './adoption.scss';
 
 function ContactInfoPage({selectedRole, validatorRef}) {
@@ -56,7 +57,7 @@ function BookSelectorPage({selectedBooksRef}) {
 function FacultyForm({selectedRole, onPageChange}) {
     const contactValidatorRef = useRef();
     const selectedBooksRef = useRef();
-    const [currentBook, setCurrentBook] = useState();
+    const {currentBook, setCurrentBook} = useSubmitContext();
     const formRef = useRef();
     const salesforce = useDataFromPromise(salesforcePromise, {});
 
@@ -107,16 +108,14 @@ function FacultyForm({selectedRole, onPageChange}) {
     }
 
     return (
-        <FormSubmitContext.Provider value={currentBook}>
-            <MultiPageForm
-                validatePage={validatePage} action={salesforce.webtoleadUrl}
-                onPageChange={onPageChange} onSubmit={onSubmit} debug={salesforce.debug}
-                submitting={currentBook}
-            >
-                <ContactInfoPage selectedRole={selectedRole} validatorRef={contactValidatorRef} />
-                <BookSelectorPage selectedBooksRef={selectedBooksRef} />
-            </MultiPageForm>
-        </FormSubmitContext.Provider>
+        <MultiPageForm
+            validatePage={validatePage} action={salesforce.webtoleadUrl}
+            onPageChange={onPageChange} onSubmit={onSubmit} debug={salesforce.debug}
+            submitting={currentBook}
+        >
+            <ContactInfoPage selectedRole={selectedRole} validatorRef={contactValidatorRef} />
+            <BookSelectorPage selectedBooksRef={selectedBooksRef} />
+        </MultiPageForm>
     );
 }
 
@@ -142,7 +141,9 @@ export default function AdoptionForm() {
             <div className="text-content" ref={ref}>
                 <RoleSelector value={selectedRole} setValue={setSelectedRole} hidden={hideRoleSelector}>
                     <StudentForm />
-                    <FacultyForm selectedRole={selectedRole} onPageChange={onPageChange} />
+                    <SubmitContextProvider>
+                        <FacultyForm selectedRole={selectedRole} onPageChange={onPageChange} />
+                    </SubmitContextProvider>
                 </RoleSelector>
             </div>
         </main>

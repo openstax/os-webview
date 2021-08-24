@@ -3,7 +3,7 @@ import Byline from '~/components/byline/byline';
 import ProgressRing from '~/components/progress-ring/progress-ring';
 import {ShareJsx} from '~/components/share/share';
 import React, {useState, useEffect, useRef} from 'react';
-import useWindowContext from '~/models/window-context';
+import useWindowContext from '~/contexts/window';
 import {usePageData} from '~/helpers/controller/cms-mixin';
 import useRouterContext from '~/components/shell/router-context';
 import './article.scss';

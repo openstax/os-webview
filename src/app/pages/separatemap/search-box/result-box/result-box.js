@@ -3,8 +3,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronUp} from '@fortawesome/free-solid-svg-icons/faChevronUp';
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import {faQuoteLeft} from '@fortawesome/free-solid-svg-icons/faQuoteLeft';
-import {useToggle, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {accountsModel} from '~/models/usermodel';
+import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import useUserContext from '~/contexts/user';
 import TestimonialForm from '../../testimonial-form/testimonial-form';
 import Dialog from '~/components/dialog/dialog';
 import './result-box.scss';
@@ -33,11 +33,13 @@ function Testimonial({testimonial}) {
 }
 
 function useFormParameters(hideDialog) {
-    const info = useDataFromPromise(accountsModel.load());
+    const {userModel} = useUserContext();
 
-    if (!info || !info.id) {
+    if (!userModel || !userModel.accountsModel) {
         return null;
     }
+
+    const {accountsModel: info} = userModel;
 
     return {
         role: info.self_reported_role,

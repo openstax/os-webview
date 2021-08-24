@@ -1,6 +1,6 @@
-import React, {useRef, useEffect, useContext} from 'react';
-import {ActiveElementContext} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import useLanguageContext from '~/models/language-context';
+import React, {useRef, useEffect} from 'react';
+import useActiveElementContext from '~/contexts/active-element';
+import useLanguageContext from '~/contexts/language';
 import $ from '~/helpers/$';
 import cn from 'classnames';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -85,7 +85,7 @@ function handleKeysInMenu(event) {
 
 function ThreeDotMenu({slug, details}) {
     const ref = useRef();
-    const activeElement = useContext(ActiveElementContext);
+    const activeElement = useActiveElementContext();
     const active = ref.current?.contains(activeElement);
     const classList = ['ur-menu'];
 

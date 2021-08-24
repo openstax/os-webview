@@ -1,6 +1,6 @@
 import React from 'react';
 import ResourceBoxes from '../resource-box/resource-boxes';
-import useLanguageContext from '~/models/language-context';
+import useLanguageContext from '~/contexts/language';
 import './featured-resources.scss';
 
 function FeaturedResources({headline, resources}) {

@@ -1,12 +1,8 @@
-import React, {createContext} from 'react';
+import buildContext from '~/components/jsx-helpers/build-context';
 import useReviews from '~/models/reviews';
 
-const PartnerContext = createContext();
-
-export default PartnerContext;
-
 // eslint-disable-next-line complexity
-function usePartnerContext(partnerId) {
+function useContextValue(partnerId) {
     const [ratings, postRating] = useReviews(partnerId);
     const [partnerName, summary, reviews] = ratings ?
         [
@@ -33,10 +29,9 @@ function usePartnerContext(partnerId) {
     };
 }
 
-export function PartnerContextProvider({partnerId, children}) {
-    return (
-        <PartnerContext.Provider value={usePartnerContext(partnerId)}>
-            {children}
-        </PartnerContext.Provider>
-    );
-}
+const {useContext, ContextProvider} = buildContext({useContextValue});
+
+export {
+    useContext as default,
+    ContextProvider as PartnerContextProvider
+};

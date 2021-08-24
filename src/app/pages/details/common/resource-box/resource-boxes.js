@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './resource-box.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -13,11 +13,9 @@ import analytics from '~/helpers/analytics';
 import CompCopyRequestForm from './request-form/request-form';
 import CustomizationForm from '../customization-form/customization-form';
 import useDetailsContext from '../../context';
-import {useUserStatus} from '../hooks';
+import useUserContext from '~/contexts/user';
 import linkhelper from '~/helpers/link';
 import cn from 'classnames';
-
-const UserContext = React.createContext({});
 
 function CommonsHubBox({model}) {
     return (
@@ -164,21 +162,21 @@ function CustomizationDialog({isOpen, toggle}) {
 }
 
 // Adapted from get-this-title interceptLinkClicks
-function interceptLinkClicks(event, book, userInfo) {
+function interceptLinkClicks(event, book, userModel) {
     const el = linkhelper.validUrlClick(event);
 
     if (!el) {
         return;
     }
-    const trackThis = userInfo.accounts_id && el.dataset.track;
+    const trackThis = userModel.accounts_id && el.dataset.track;
 
     if (trackThis) {
         /* eslint-disable camelcase */
         event.trackingInfo = {
             book,
-            account_id: userInfo.accounts_id,
+            account_id: userModel.accounts_id,
             resource_name: el.dataset.track,
-            contact_id: userInfo.salesforce_contact_id
+            contact_id: userModel.salesforce_contact_id
         };
         /* eslint-enable camelcase */
     }
@@ -193,14 +191,14 @@ function LeftButton({model}) {
         'download': faDownload,
         'external-link-alt': faExternalLinkAlt
     })[model.iconType] || faExclamationTriangle;
-    const {userInfo} = useContext(UserContext);
+    const {userModel} = useUserContext();
 
     function openDialog(event) {
         if (isCompCopy || isCustomization) {
             event.preventDefault();
             toggle();
         } else if (model.bookModel) {
-            interceptLinkClicks(event, model.bookModel.id, userInfo);
+            interceptLinkClicks(event, model.bookModel.id, userModel);
         }
     }
 
@@ -223,7 +221,7 @@ function LeftButton({model}) {
 }
 
 function LeftContent({model}) {
-    const userStatus = useContext(UserContext);
+    const {userStatus} = useUserContext();
 
     if (!model.link) {
         return (<AccessPending />);
@@ -283,10 +281,8 @@ function ResourceBox({model}) {
 }
 
 export default function ResourceBoxes({models, communityResource}) {
-    const userStatus = useUserStatus();
-
     return (
-        <UserContext.Provider value={userStatus}>
+        <React.Fragment>
             {
                 communityResource &&
                     <CommonsHubBox model={communityResource} key={communityResource.heading} />
@@ -296,7 +292,7 @@ export default function ResourceBoxes({models, communityResource}) {
                     <ResourceBox model={model} key={model.heading} />
                 )
             }
-        </UserContext.Provider>
+        </React.Fragment>
     );
 }
 
@@ -347,10 +343,8 @@ function ResourceVideoViewer(...args) {
 }
 
 export function VideoResourceBoxes({models, blogLinkModels, referenceModels}) {
-    const userStatus = useUserStatus();
-
     return (
-        <UserContext.Provider value={userStatus}>
+        <React.Fragment>
             {
                 models.map((model) =>
                     <VideoResourceBox {...{model}} key={model.video_file} />
@@ -366,6 +360,6 @@ export function VideoResourceBoxes({models, blogLinkModels, referenceModels}) {
                     <ResourceBox model={model} key={model.heading} />
                 )
             }
-        </UserContext.Provider>
+        </React.Fragment>
     );
 }

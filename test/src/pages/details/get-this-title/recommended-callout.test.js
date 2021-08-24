@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
-import {LanguageContextProvider} from '~/models/language-context';
+import {LanguageContextProvider} from '~/contexts/language';
 import RecommendedCallout from '~/pages/details/common/get-this-title-files/recommended-callout/recommended-callout';
 
 function LangWrapRecommendedCallout({...args}) {

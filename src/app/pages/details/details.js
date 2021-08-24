@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import TOCContext, {useTocState} from './common/toc-slideout/context';
+import useTOCContext, {TOCContextProvider} from './common/toc-slideout/context';
 import TOCSlideout from './common/toc-slideout/toc-slideout';
 import $ from '~/helpers/$';
 import analytics from '~/helpers/analytics';
@@ -73,20 +73,18 @@ function setCardBackground(isShowingCards) {
 }
 
 function TocSlideoutAndContent({children}) {
-    const tocState = useTocState();
+    const {isOpen} = useTOCContext();
     const model = useDetailsContext();
-    const cwClass = cn('content-wrapper', {'drawer-open': tocState.isOpen});
+    const cwClass = cn('content-wrapper', {'drawer-open': isOpen});
     const tocHtml = useTableOfContents(model);
 
     return (
-        <TOCContext.Provider value={tocState}>
-            <div className={cwClass} data-slug={model.slug}>
-                <TOCSlideout html={tocHtml} />
-                <div className="content">
-                    {children}
-                </div>
+        <div className={cwClass} data-slug={model.slug}>
+            <TOCSlideout html={tocHtml} />
+            <div className="content">
+                {children}
             </div>
-        </TOCContext.Provider>
+        </div>
     );
 }
 
@@ -153,16 +151,18 @@ export function BookDetails() {
                     {titleImage && <TitleImage {...{titleImage, bookTitle, titleLogo}} />}
                 </div>
             </div>
-            <TocSlideoutAndContent>
-                <div className="phone-view">
-                    <LinksToTranslations />
-                    <PhoneView />
-                </div>
-                <div className="bigger-view">
-                    <LinksToTranslations />
-                    <DesktopView onContentChange={setCardBackground} />
-                </div>
-            </TocSlideoutAndContent>
+            <TOCContextProvider>
+                <TocSlideoutAndContent>
+                    <div className="phone-view">
+                        <LinksToTranslations />
+                        <PhoneView />
+                    </div>
+                    <div className="bigger-view">
+                        <LinksToTranslations />
+                        <DesktopView onContentChange={setCardBackground} />
+                    </div>
+                </TocSlideoutAndContent>
+            </TOCContextProvider>
         </React.Fragment>
     );
 }

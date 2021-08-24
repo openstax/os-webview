@@ -28,7 +28,7 @@ export default function MainCard() {
 
     return (
         <div className='main-card'>
-            <NavigationContextProvider targetIds={targetIds}>
+            <NavigationContextProvider contextValueParameters={targetIds}>
                 <div className='layout-grid'>
                     <div className='banner'>
                         <Header />

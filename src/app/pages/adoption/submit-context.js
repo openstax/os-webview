@@ -1,15 +1,15 @@
 import buildContext from '~/components/jsx-helpers/build-context';
-import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useState} from 'react';
 
 function useContextValue() {
-    const [showUpdateForm, togglePage] = useToggle(false);
+    const [currentBook, setCurrentBook] = useState();
 
-    return {showUpdateForm, togglePage};
+    return {currentBook, setCurrentBook};
 }
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
 
 export {
     useContext as default,
-    ContextProvider as PageContextProvider
+    ContextProvider as SubmitContextProvider
 };

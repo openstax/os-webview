@@ -1,7 +1,7 @@
 import routerBus from '~/helpers/router-bus';
 import React, {useState, useEffect} from 'react';
 import useSubjectsContext, {SubjectsContextProvider} from './context';
-import useSubjectCategoryContext from '~/models/subject-category-context';
+import useSubjectCategoryContext from '~/contexts/subject-category';
 import {RawHTML, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import BookViewer from './book-viewer/book-viewer';
 import savingsPromise from '~/models/savings';

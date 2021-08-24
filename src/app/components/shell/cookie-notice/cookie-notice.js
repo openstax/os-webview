@@ -1,17 +1,16 @@
 import React from 'react';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FooterDialog} from '~/components/dialog/dialog';
-import accountsModel from '~/models/usermodel';
+import useUserContext from '~/contexts/user';
 import analytics from '~/helpers/analytics';
 import cookie from '~/helpers/cookie';
 import './cookie-notice.scss';
 
 const ACKNOWLEDGEMENT_KEY = 'cookie_notice_acknowledged';
+const FORCE_COOKIE_NOTICE = false; // Set to true ONLY TO TEST
 
 function acknowledged() {
-    // ONLY TO test locally:
-    // return false;
-    return cookie.hash[ACKNOWLEDGEMENT_KEY];
+    return !FORCE_COOKIE_NOTICE && cookie.hash[ACKNOWLEDGEMENT_KEY];
 }
 
 function CookieNoticeBody({onClose}) {
@@ -44,28 +43,32 @@ function CookieNoticeDialog() {
 
 export default function ShowNoticeOrNot() {
     const [showCookieDialog, toggle] = useToggle();
+    const {userModel} = useUserContext();
 
-    React.useEffect(() => {
-        accountsModel.load().then((response) => {
-            // Uncomment these four lines ONLY to test locally:
-            // response.uuid = 'testing';
-            // // eslint-disable-next-line camelcase
-            // response.is_not_gdpr_location = true;
-            // document.cookie = `${ACKNOWLEDGEMENT_KEY}=true; expires=Tue, 19 Jan 2000 03:14:07 GMT`;
+    React.useEffect(() => { // eslint-disable-line complexity
+        if (!userModel) {
+            return;
+        }
+        const {accountsModel} = userModel;
 
-            if (typeof response.id !== 'undefined') {
-                const userid = response.uuid;
+        if (FORCE_COOKIE_NOTICE) {
+            accountsModel.uuid = 'testing';
+            accountsModel.is_not_gdpr_location = true; // eslint-disable-line camelcase
+            document.cookie = `${ACKNOWLEDGEMENT_KEY}=true; expires=Tue, 19 Jan 2000 03:14:07 GMT`;
+        }
 
-                if (!response.is_not_gdpr_location || response.opt_out_of_cookies) {
-                    return;
-                }
-                analytics.setUser(userid);
-                if (!acknowledged()) {
-                    toggle();
-                }
+        if (typeof accountsModel.id !== 'undefined') {
+            const userid = accountsModel.uuid;
+
+            if (!accountsModel.is_not_gdpr_location || accountsModel.opt_out_of_cookies) {
+                return;
             }
-        });
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+            analytics.setUser(userid);
+            if (!acknowledged()) {
+                toggle();
+            }
+        }
+    }, [userModel]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         showCookieDialog ? <CookieNoticeDialog /> : null

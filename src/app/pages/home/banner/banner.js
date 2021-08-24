@@ -1,7 +1,7 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import ClippedImage from '~/components/clipped-image/clipped-image';
-import {useUserModel} from '~/models/usermodel';
+import useUserContext from '~/contexts/user';
 import './banner.scss';
 
 function NotLoggedInButtons({data}) {
@@ -22,7 +22,7 @@ function LoggedInButtons({data}) {
 }
 
 export default function Banner({data}) {
-    const userModel = useUserModel();
+    const userModel = useUserContext();
     const Buttons = userModel?.id ? LoggedInButtons : NotLoggedInButtons;
 
     return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
-import useLanguageContext from '~/models/language-context';
+import useLanguageContext from '~/contexts/language';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUserPlus} from '@fortawesome/free-solid-svg-icons/faUserPlus';
 import './let-us-know.scss';

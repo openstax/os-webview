@@ -1,5 +1,5 @@
 import React from 'react';
-import useSubjectCategoryContext from '~/models/subject-category-context';
+import useSubjectCategoryContext from '~/contexts/subject-category';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
 import LoginMenu from './login-menu';
 import GiveButton from '../give-button/give-button';

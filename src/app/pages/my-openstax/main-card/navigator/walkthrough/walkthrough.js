@@ -1,7 +1,7 @@
 import React from 'react';
 import PutAway from '~/pages/my-openstax/put-away/put-away';
-import NavigationContext from '../navigation-context';
-import WalkthroughCookieContext from './walkthrough-cookie-context';
+import useNavigationContext from '../navigation-context';
+import useWalkthroughCookieContext from './walkthrough-cookie-context';
 import './walkthrough.scss';
 
 // These parallel the section IDs
@@ -27,8 +27,8 @@ const wtStates = [
 ];
 
 export default function Walkthrough({title, active, index}) {
-    const {activeId, setActiveId, targetIds} = React.useContext(NavigationContext);
-    const [showWalkthrough, hideWalkthrough] = React.useContext(WalkthroughCookieContext);
+    const {activeId, setActiveId, targetIds} = useNavigationContext();
+    const [showWalkthrough, hideWalkthrough] = useWalkthroughCookieContext();
     const step = targetIds.indexOf(activeId);
     const wtState = wtStates[step];
     const next = () => {

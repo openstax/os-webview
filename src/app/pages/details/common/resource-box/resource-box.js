@@ -1,5 +1,5 @@
 import React from 'react';
-import useLanguageContext from '~/models/language-context';
+import useLanguageContext from '~/contexts/language';
 
 const settings = window.SETTINGS;
 

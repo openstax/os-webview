@@ -1,7 +1,7 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {studentResourceBoxPermissions} from '../../common/resource-box/resource-box';
-import {useUserStatus} from '../../common/hooks';
+import useUserContext from '~/contexts/user';
 import ResourceBoxes from '../../common/resource-box/resource-boxes';
 import './student-resource-tab.scss';
 
@@ -35,7 +35,7 @@ function StudentResourceTab({model, userStatus}) {
 }
 
 export default function LoadUserStatusThenStudentTab({model}) {
-    const userStatus = useUserStatus();
+    const {userStatus} = useUserContext();
 
     if (!userStatus) {
         return null;
