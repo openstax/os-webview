@@ -36,7 +36,7 @@ export default function GetThisTitle({model}) {
         if (!el) {
             return;
         }
-        const trackThis = userInfo.accounts_id && el.dataset.track;
+        const trackThis = userInfo && userInfo.accounts_id && el.dataset.track;
 
         if (trackThis) {
             /* eslint-disable camelcase */

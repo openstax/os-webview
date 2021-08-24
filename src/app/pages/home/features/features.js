@@ -52,7 +52,9 @@ export default function Features({data}) {
                 />
                 <div className="feature-list">
                     {
-                        featureList.map((f) => <Feature key={f} name={f} />)
+                        featureList?.map(
+                            (f) => <Feature key={f} name={f} />
+                        )
                     }
                     <a className="feature explore" href={exploreLink}>
                         <span>Explore now</span>&nbsp;

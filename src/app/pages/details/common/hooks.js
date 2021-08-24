@@ -5,9 +5,9 @@ import shuffle from 'lodash/shuffle';
 import $ from '~/helpers/$';
 
 export function useTableOfContents(model) {
-    const isTutor = model.webviewRexLink.includes('tutor');
-    const isRex = !isTutor && Boolean(model.webviewRexLink);
     const webviewLink = model.webviewRexLink || model.webviewLink;
+    const isTutor = model.webviewRexLink?.includes('tutor');
+    const isRex = !isTutor && Boolean(model.webviewRexLink);
     const [tocHtml, setTocHtml] = useState('');
 
     tableOfContentsHtml({

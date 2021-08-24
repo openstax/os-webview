@@ -62,10 +62,7 @@ class Analytics {
     }
 
     sendEvent(fields) {
-        this.send(Object.assign(
-            {hitType: 'event'},
-            fields
-        ));
+        this.send({hitType: 'event', ...fields});
     }
 
     sendPageEvent(category, action, label) {
@@ -105,11 +102,13 @@ class Analytics {
         booksPromise.then((books) => {
             const book = books.find((b) => b.slug === slug);
 
-            this.sendPageEvent(
-                `Webview ${book.title} TOC`,
-                'open',
-                href
-            );
+            if (book) {
+                this.sendPageEvent(
+                    `Webview ${book.title} TOC`,
+                    'open',
+                    href
+                );
+            }
         });
     }
 
@@ -254,15 +253,17 @@ class Analytics {
             const role = accountResponse.self_reported_role;
             const usingOS = accountResponse.using_openstax;
 
-            if (typeof role !== 'undefined') {
-                window.ga('send', 'pageview', {dimension1: role, nonInteraction: true});
-            }
+            waitForAnalytics.then(() => {
+                if (typeof role !== 'undefined') {
+                    window.ga('send', 'pageview', {dimension1: role, nonInteraction: true});
+                }
 
-            if (typeof usingOS !== 'undefined') {
-                const adopter = usingOS === true ? 'Adopter' : 'Not An Adopter';
+                if (typeof usingOS !== 'undefined') {
+                    const adopter = usingOS === true ? 'Adopter' : 'Not An Adopter';
 
-                window.ga('set', {'dimension2': adopter});
-            }
+                    window.ga('set', {'dimension2': adopter});
+                }
+            });
         });
     }
 

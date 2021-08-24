@@ -86,7 +86,7 @@ function handleKeysInMenu(event) {
 function ThreeDotMenu({slug, details}) {
     const ref = useRef();
     const activeElement = useActiveElementContext();
-    const active = ref.current && ref.current.contains(activeElement);
+    const active = ref.current?.contains(activeElement);
     const classList = ['ur-menu'];
 
     useEffect(() => {

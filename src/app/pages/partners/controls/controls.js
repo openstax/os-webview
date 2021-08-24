@@ -56,7 +56,7 @@ export function BaseButton({label, openButton, setOpenButton, children, size, fu
 }
 
 function preSelectBooks() {
-    if (history.state && history.state.book) {
+    if (history.state?.book) {
         for (const book of [].concat(history.state.book)) {
             books.toggle(book);
         }

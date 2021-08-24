@@ -42,7 +42,7 @@ function useCategoryTiedToPath() {
         if (!categoryEntry && categories.length > 0) {
             setCategory(categories[0].value);
         } else {
-            document.title = (categoryEntry && categoryEntry.title) || title;
+            document.title = (categoryEntry?.title) || title;
         }
     }, [category, categories, title]);
 

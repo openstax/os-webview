@@ -45,7 +45,12 @@ function ImportedComponent({name}) {
 
     React.useEffect(
         () => import(`./${name}/${name}`)
-            .then((content) => setContent(<content.default />)),
+            .then(
+                (content) => setContent(<content.default />),
+                (cause) => {
+                    throw (new Error(`Lazy load failed for ${name}`, {cause}));
+                }
+            ),
         [name]
     );
 

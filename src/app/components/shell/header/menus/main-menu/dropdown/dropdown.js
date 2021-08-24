@@ -69,13 +69,15 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
             if (document.activeElement === topRef.current) {
                 dropdownRef.current.firstChild.focus();
             } else {
-                document.activeElement.nextSibling.focus();
+                const focusOn = document.activeElement.nextElementSibling;
+
+                focusOn && focusOn.focus();
             }
             break;
         case 'ArrowUp':
             event.preventDefault();
             if (document.activeElement !== topRef.current) {
-                const focusOn = document.activeElement.previousSibling || topRef.current;
+                const focusOn = document.activeElement.previousElementSibling || topRef.current;
 
                 focusOn.focus();
             }
