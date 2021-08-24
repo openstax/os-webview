@@ -11,21 +11,7 @@ import {faLaptop} from '@fortawesome/free-solid-svg-icons/faLaptop';
 import useDialog from '~/pages/my-openstax/dialog/dialog';
 import $ from '~/helpers/$';
 import ClippedImage from '~/components/clipped-image/clipped-image';
-import analytics from '~/helpers/analytics';
 import './book-details.scss';
-
-const CATEGORY = 'My OpenStax - My Collection';
-
-function sendEvent(action, label) {
-    analytics.sendPageEvent(CATEGORY, action, label);
-}
-
-function trackLinkClicks(event) {
-    const link = event.currentTarget;
-
-    sendEvent('open', link.href);
-}
-
 
 function useAdoptionStatus(book) {
     const {adoptions} = useAdoptions();
@@ -74,7 +60,6 @@ function InstructorResources({detailData}) {
                 <a
                     href={`/details/${detailData.meta.slug}?Instructor%20resources`}
                     className="btn primary"
-                    onClick={trackLinkClicks}
                 >
                     Get resources
                 </a>
@@ -105,7 +90,6 @@ function TutorResources({detailData}) {
                 <a
                     href="/openstax-tutor"
                     className="btn primary"
-                    onClick={trackLinkClicks}
                 >
                     Learn more
                 </a>
@@ -162,7 +146,6 @@ export default function BookDetails({book}) {
     }
 
     function goToPartners(e) {
-        trackLinkClicks(e);
         e.preventDefault();
         routerBus.emit('navigate', '/partners', {
             book: book.value,
@@ -190,18 +173,13 @@ export default function BookDetails({book}) {
                 <div className="summary">
                     <h2>{book.title}</h2>
                     <img className="cover" src={book.coverUrl} />
-                    <a
-                        className="btn primary" href={book.viewLink}
-                        onClick={trackLinkClicks}
-                    >
+                    <a className="btn primary" href={book.viewLink}>
                         <span className="icon-and-text">
                             View online book
                             <FontAwesomeIcon icon={faLaptop} />
                         </span>
                     </a>
-                    <a href={`/details/${book.slug}`} onClick={trackLinkClicks}>
-                        View more book details
-                    </a>
+                    <a href={`/details/${book.slug}`}>View more book details</a>
                     <div className="text-block">
                         <h3>Summary</h3>
                         <RawHTML className="summary-text" html={summaryText} />

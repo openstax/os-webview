@@ -59,7 +59,7 @@ export function Singleselect({
     onUpdateFilter = null,
     ...otherInputProps
 }) {
-    const [value, inputProps, setValue] = useValue(initialValue?.label);
+    const [value, inputProps, setValue] = useValue(initialValue && initialValue.label);
     const [accepted, setAccepted] = useState(Boolean(initialValue));
     const filteredOptions = filterOptions(options, value);
     const accept = (item) => {

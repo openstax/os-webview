@@ -1,23 +1,6 @@
 import { useStoreon } from 'storeon/preact';
 import {sfApiPost} from './sfapi';
 import useAccount from '~/pages/my-openstax/store/use-account';
-import analytics from '~/helpers/analytics';
-
-const CATEGORY = 'My OpenStax - Adoptions';
-
-function sendEvent(action, label) {
-    analytics.sendPageEvent(CATEGORY, action, label);
-}
-
-function sendUpdateEvent(isUpdate, adoptionStatus, book) {
-    if (adoptionStatus.startsWith('Previous')) {
-        sendEvent('remove', book);
-    } else if (isUpdate) {
-        sendEvent('update', book);
-    } else {
-        sendEvent('add', book);
-    }
-}
 
 /*
     TODO: iron out correct values for stage_name for adoption vs. interest
@@ -77,7 +60,6 @@ export default function useAdoptions() {
             )
         );
 
-        sendEvent('add', book);
         Promise.all(promises).then(() => dispatch('user/fetch'));
     }
 
@@ -87,7 +69,6 @@ export default function useAdoptions() {
         const promises = schools.map((s, i) => {
             const isUpdate = adoption.find((a) => a.schoolId === s);
 
-            sendUpdateEvent(isUpdate, adoptionStatus, book);
             /* eslint-disable camelcase */
             return isUpdate ?
                 sfApiPost(

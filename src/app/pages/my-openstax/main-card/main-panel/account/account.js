@@ -3,7 +3,6 @@ import useAccount from '~/pages/my-openstax/store/use-account';
 import LabeledData from '~/pages/my-openstax/labeled-data/labeled-data';
 import ProfileSection from './profile-section/profile-section';
 import EmailPrefs from './email-prefs/email-prefs';
-import analytics from '~/helpers/analytics';
 import cn from 'classnames';
 import './account.scss';
 
@@ -17,19 +16,13 @@ function Email({ email }) {
     );
 }
 
-function TrackEditClick() {
-    analytics.sendPageEvent('My OpenStax - My Account', 'open', 'Accounts');
-}
-
 function AccountSection() {
     const {firstName, lastName, emails=[]} = useAccount();
 
     return (
         <section>
             <h2>Account</h2>
-            <a className='edit-link' href={accountsHost} onClick={TrackEditClick}>
-                Edit account details
-            </a>
+            <a className='edit-link' href={accountsHost}>Edit account details</a>
             <section>
                 <h3>General</h3>
                 <div className='fields general-fields'>
