@@ -1,4 +1,6 @@
+import React from 'react';
 import sfApiFetch from './sfapi';
+import useFlagContext from '~/components/shell/flag-context';
 import $ from '~/helpers/$';
 
 export async function fetchUser() {
@@ -8,6 +10,15 @@ export async function fetchUser() {
         user.error = 'no contact';
     }
     return $.camelCaseKeys(user);
+}
+
+export function useMyOpenStaxIsAvailable() {
+    const [user, setUser] = React.useState({error: 'not loaded'});
+    const isEnabled = useFlagContext();
+
+    React.useEffect(() => fetchUser().then(setUser), []);
+
+    return !(user.error || !isEnabled);
 }
 
 export default function (store) {

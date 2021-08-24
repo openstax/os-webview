@@ -3,6 +3,7 @@ import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {useLocation} from 'react-router-dom';
 import useUserContext from '~/contexts/user';
 import linkHelper from '~/helpers/link';
+import {useMyOpenStaxIsAvailable} from '~/pages/my-openstax/store/user';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
 
 const settings = window.SETTINGS;
@@ -45,6 +46,16 @@ function TutorMenuItemIfUser({userModel}) {
     return isTutorUser ? <TutorMenuItem /> : null;
 }
 
+function AccountItem() {
+    const mosIsAvailable = useMyOpenStaxIsAvailable();
+
+    return (
+        mosIsAvailable ?
+            <MenuItem label="Account Dashboard" url="/#account" /> :
+            <MenuItem label="Account Profile" url={`${settings.accountHref}/profile`} />
+    );
+}
+
 // eslint-disable-next-line complexity
 function LoginMenuWithDropdown() {
     const {userModel} = useUserContext();
@@ -61,7 +72,7 @@ function LoginMenuWithDropdown() {
 
     return (
         <Dropdown className="login-menu nav-menu-item rightmost dropdown" label={label} excludeWrapper>
-            <MenuItem label="Account Profile" url={`${settings.accountHref}/profile`} />
+            <AccountItem />
             <TutorMenuItemIfUser userModel={userModel} />
             {incomplete && <MenuItem label="Finish signing up" url={facultySignupStep4} />}
             {
