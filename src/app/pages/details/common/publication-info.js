@@ -17,7 +17,11 @@ const localizedTexts = {
         },
         pub: {
             pub: 'Publish Date:',
-            web: 'Web Version Last Updated:'
+            web: 'Web Version Last Updated:',
+            hard: 'Hardcover',
+            paper: 'Paperback',
+            dig: 'Digital',
+            part: 'Part'
         }
     },
     'es': {
@@ -28,11 +32,7 @@ const localizedTexts = {
         },
         license: {
             heading: 'Licencia',
-            byline: 'por OpenStax tiene licencia bajo',
-            hard: 'Hardcover',
-            paper: 'Paperback',
-            dig: 'Digital',
-            part: 'Part'
+            byline: 'por OpenStax tiene licencia bajo'
         },
         pub: {
             pub: 'Fecha de publicación:',
