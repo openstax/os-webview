@@ -1,6 +1,5 @@
 import React from 'react';
 import useCollectionContext from '../collection-context';
-import routerBus from '~/helpers/router-bus';
 import useAdoptions from '~/pages/my-openstax/store/use-adoptions';
 import {RawHTML, useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {EditBookForm} from '../add-book-form/add-book-form';
@@ -9,6 +8,7 @@ import {faChevronLeft} from '@fortawesome/free-solid-svg-icons/faChevronLeft';
 import {faBookOpen} from '@fortawesome/free-solid-svg-icons/faBookOpen';
 import {faLaptop} from '@fortawesome/free-solid-svg-icons/faLaptop';
 import useDialog from '~/pages/my-openstax/dialog/dialog';
+import {useHistory} from 'react-router-dom';
 import $ from '~/helpers/$';
 import ClippedImage from '~/components/clipped-image/clipped-image';
 import './book-details.scss';
@@ -134,6 +134,7 @@ export default function BookDetails({book}) {
     const detailData = $.camelCaseKeys(useDataFromSlug(book.slug)) || {};
     const adoptionStatus = useAdoptionStatus(book);
     const summaryText = detailData.description;
+    const history = useHistory();
 
     function goBack(e) {
         e.preventDefault();
@@ -147,10 +148,10 @@ export default function BookDetails({book}) {
 
     function goToPartners(e) {
         e.preventDefault();
-        routerBus.emit('navigate', '/partners', {
+        history.push('/partners', {
             book: book.value,
             redirect: true
-        }, true);
+        });
     }
 
     return (

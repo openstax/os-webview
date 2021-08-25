@@ -118,7 +118,6 @@ function InstructorResourceTab({model, userStatus}) {
     };
     const freeStuffContent = model.freeStuffInstructor.content;
 
-    console.info('Are we showing the instructor resource tab?', referenceModels);
     return (
         <div className="instructor-resources">
             <div>

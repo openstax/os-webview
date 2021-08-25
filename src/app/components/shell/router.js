@@ -7,7 +7,6 @@ import {
 import Error404 from '~/pages/404/404';
 import linkHelper from '~/helpers/link';
 import analytics from '~/helpers/analytics';
-import routerBus from '~/helpers/router-bus';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 import useFlagContext from './flag-context';
 import $ from '~/helpers/$';
@@ -90,7 +89,6 @@ function handleExternalLink(href, el) {
 
 function navigateTo(path, state = {x: 0, y: 0}) {
     history.pushState(state, '', linkHelper.stripOpenStaxDomain(path));
-    window.dispatchEvent(new window.PopStateEvent('popstate', {state}));
 }
 
 // eslint-disable-next-line complexity
@@ -232,8 +230,3 @@ export default function Router() {
         </RouterContextProvider>
     );
 }
-
-routerBus.on('navigate', (...args) => {
-    navigateTo(...args);
-    window.dispatchEvent(new window.CustomEvent('navigate'));
-});

@@ -1,5 +1,4 @@
 import cmsFetch from './cmsFetch';
-import routerBus from '~/helpers/router-bus';
 
 const fetchBooks = cmsFetch('books?format=json')
     .then((r) => r.books.filter((b) => b.book_state !== 'retired'));
@@ -35,7 +34,7 @@ export function subjects(sfTitles) {
         .reduce((a, b) => a.includes(b) ? a : a.concat(b), []);
 }
 
-export function afterFormSubmit(preselectedTitle, selectedBooks) {
+export function afterFormSubmit(history, preselectedTitle, selectedBooks) {
     fetchBooks.then((b) => {
         const liveBooks = b.filter((entry) => ['live', 'new_edition_available'].includes(entry.book_state));
         const backTo = liveBooks.find((entry) => entry.salesforce_abbreviation === preselectedTitle);
@@ -43,10 +42,10 @@ export function afterFormSubmit(preselectedTitle, selectedBooks) {
         /* Send to Tech Scout with books pre-selected */
         const scoutBooks = selectedBooks.map((sfBook) => sfBook.value);
 
-        routerBus.emit('navigate', '/partners', {
-            confirmation: 'adoption',
+        history.push('/partners', {
+            confirmation: true,
             book: scoutBooks,
-            slug: backTo && backTo.slug
+            slug: backTo?.slug
         });
     });
 }
