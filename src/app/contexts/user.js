@@ -41,12 +41,12 @@ function useContextValue() {
     const userStatus = getUserStatus(model);
 
     useEffect(() => {
-        if (model?.id) {
+        if (model && model.id) {
             pi('identify_client', model.id);
         }
     }, [model]);
 
-    return (model?.last_name) ? {
+    return (model && model.last_name) ? {
         accountId: model.id,
         userName: `${model.first_name} ${model.last_name.substr(0, 1)}.`,
         userModel: model,

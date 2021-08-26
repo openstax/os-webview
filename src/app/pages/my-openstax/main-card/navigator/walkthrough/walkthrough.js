@@ -26,9 +26,8 @@ const wtStates = [
     }
 ];
 
-export default function Walkthrough({title, active, index}) {
+function Walkthrough({title, index, hideWalkthrough}) {
     const {activeId, setActiveId, targetIds} = useNavigationContext();
-    const [showWalkthrough, hideWalkthrough] = useWalkthroughCookieContext();
     const step = targetIds.indexOf(activeId);
     const wtState = wtStates[step];
     const next = () => {
@@ -42,10 +41,6 @@ export default function Walkthrough({title, active, index}) {
     React.useEffect(() => {
         setActiveId(targetIds[0]);
     }, [setActiveId, targetIds]);
-
-    if (!showWalkthrough || !active) {
-        return null;
-    }
 
     return (
         <div className="walkthrough-dialog" data-index={index}>
@@ -69,5 +64,16 @@ export default function Walkthrough({title, active, index}) {
                 </div>
             </dialog>
         </div>
+    );
+}
+
+export default function MaybeWalkthrough({title, active, index}) {
+    const [showWalkthrough, hideWalkthrough] = useWalkthroughCookieContext();
+
+    if (!showWalkthrough || !active) {
+        return null;
+    }
+    return (
+        <Walkthrough title={title} index={index} hideWalkthrough={hideWalkthrough} />
     );
 }

@@ -1,24 +1,7 @@
 import React from 'react';
 import ClippedImage from '~/components/clipped-image/clipped-image';
 import useAccount from '~/pages/my-openstax/store/use-account';
-import analytics from '~/helpers/analytics';
 import './assistant.scss';
-
-const CATEGORY = 'My OpenStax - My Assistant';
-
-function sendEvent(action, label) {
-    analytics.sendPageEvent(CATEGORY, action, label);
-}
-
-function trackLinkClicks(event) {
-    const link = event.currentTarget;
-
-    if (link.textContent === 'Download') {
-        sendEvent('download', 'Instructor Getting Started Guide');
-    } else {
-        sendEvent('open', link.href);
-    }
-}
 
 function Card({data}) {
     return (
@@ -28,13 +11,13 @@ function Card({data}) {
                 <ClippedImage src={data.img} alt="" />
                 <div className="text-block">
                     <div className="title">{data.title}</div>
-                    <a className="btn" href={data.url} onClick={trackLinkClicks}>{data.linkText}</a>
+                    <a className="btn" href={data.url}>{data.linkText}</a>
                 </div>
             </div>
             <div className="questions">
                 {
                     data.questions.map((q) =>
-                        <a href={q.url} key={q.text} onClick={trackLinkClicks}>{q.text}</a>
+                        <a href={q.url} key={q.text}>{q.text}</a>
                     )
                 }
             </div>

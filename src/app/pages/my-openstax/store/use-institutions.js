@@ -2,14 +2,6 @@ import { useStoreon } from 'storeon/preact';
 import {useState, useEffect} from 'react';
 import {sfApiPost} from './sfapi';
 import uniq from 'lodash/uniq';
-import analytics from '~/helpers/analytics';
-import orderBy from 'lodash/orderBy';
-
-const CATEGORY = 'My OpenStax - My Account';
-
-function sendEvent(action, label) {
-    analytics.sendPageEvent(CATEGORY, action, label);
-}
 
 function useUserSchoolIds() {
     const {user} = useStoreon('user');
@@ -17,15 +9,12 @@ function useUserSchoolIds() {
 
     useEffect(() => {
         const {schools} = user;
-        const primarySchoolId = schools.filter((s) => s.primary).map((s) => s.schoolId)[0];
-        const schoolIds = schools ?
-            orderBy(
-                uniq(schools.map((s) => s.schoolId)),
-                (id) => id === primarySchoolId, ['desc']
-            ) :
-            [];
+        const schoolIds = schools ? schools.map((s) => s.schoolId) : [];
 
-        setData({primarySchoolId, schoolIds});
+        setData({
+            primarySchoolId: schools.filter((s) => s.primary).map((s) => s.schoolId)[0],
+            schoolIds: uniq(schoolIds)
+        });
     }, [user]);
 
     return data;
@@ -45,7 +34,6 @@ function saveSchools(contactId, oldSchoolIds, newSchoolIds) {
             {contact_id: contactId, school_id: id}
         ));
 
-    sendEvent('update', 'schools');
     return Promise.all([...deletePromises, ...insertPromises]);
 }
 
@@ -79,7 +67,7 @@ export default function useInstitutions() {
     const {primarySchoolId, schoolIds=[]} = useUserSchoolIds();
     const institutions = useLookedupSchools(schoolIds);
     const {user, dispatch} = useStoreon('user');
-    const contactId = user?.contact?.salesforceId;
+    const contactId = user && user.contact && user.contact.salesforceId;
 
     return {
         primarySchoolId,
