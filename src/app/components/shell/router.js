@@ -2,7 +2,9 @@ import React from 'react';
 import {
     Switch,
     Route,
-    Redirect
+    Redirect,
+    useLocation,
+    useHistory
 } from 'react-router-dom';
 import Error404 from '~/pages/404/404';
 import linkHelper from '~/helpers/link';
@@ -87,49 +89,57 @@ function handleExternalLink(href, el) {
     }
 }
 
-function navigateTo(path, state = {x: 0, y: 0}) {
-    history.pushState(state, '', linkHelper.stripOpenStaxDomain(path));
-}
+function useLinkHandler() {
+    const history = useHistory();
 
-// eslint-disable-next-line complexity
-function linkHandler(e) {
-    // Only handle left-clicks on links
-    const el = linkHelper.validUrlClick(e);
-
-    if (!el || e.button !== 0) {
-        return;
-    }
-    e.preventDefault();
-
-    const fullyQualifiedHref = el.href;
-    const followLink = (el.target || linkHelper.isExternal(fullyQualifiedHref)) ?
-        () => handleExternalLink(fullyQualifiedHref, el) :
-        () => navigateTo(fullyQualifiedHref);
-
-    // Pardot tracking
-    if ('piTracker' in window) {
-        piTracker(fullyQualifiedHref.split('#')[0]);
+    function navigateTo(path, state = {x: 0, y: 0}) {
+        history.push(linkHelper.stripOpenStaxDomain(path), state);
     }
 
-    if (e.trackingInfo) {
-        fetch(
-            `${$.apiOriginAndOldPrefix}/salesforce/download-tracking/`,
-            {
-                method: 'POST',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(e.trackingInfo)
-            }
-        ).finally(followLink);
-    } else {
-        followLink();
+    // eslint-disable-next-line complexity
+    function linkHandler(e) {
+        // Only handle left-clicks on links
+        const el = linkHelper.validUrlClick(e);
+
+        if (!el || e.button !== 0) {
+            return;
+        }
+        e.preventDefault();
+
+        const fullyQualifiedHref = el.href;
+        const followLink = (el.target || linkHelper.isExternal(fullyQualifiedHref)) ?
+            () => handleExternalLink(fullyQualifiedHref, el) :
+            () => navigateTo(fullyQualifiedHref);
+
+        // Pardot tracking
+        if ('piTracker' in window) {
+            piTracker(fullyQualifiedHref.split('#')[0]);
+        }
+
+        if (e.trackingInfo) {
+            fetch(
+                `${$.apiOriginAndOldPrefix}/salesforce/download-tracking/`,
+                {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(e.trackingInfo)
+                }
+            ).finally(followLink);
+        } else {
+            followLink();
+        }
     }
+
+    return linkHandler;
 }
 
 function ImportedPage({name}) {
     const [Content, setContent] = React.useState(LoadingPlaceholder);
+    const history = useHistory();
+    const isRedirect = history.location.state?.redirect;
 
     React.useEffect(() => {
         import(`~/pages/${name}/${name}`).then(
@@ -141,19 +151,12 @@ function ImportedPage({name}) {
                 throw (new Error(`Unable to load page ${name}`, {cause}));
             }
         );
-        if (!(history.state && history.state.redirect)) {
+        if (!isRedirect) {
             analytics.sendPageview();
         }
-    }, [name]);
+    }, [name, isRedirect]);
 
     return Content;
-}
-
-function canonicalUrl() {
-    const loc = window.location;
-    const path = loc.pathname;
-
-    return `${loc.origin}${path}`;
 }
 
 function useHomeOrMyOpenStax() {
@@ -213,16 +216,22 @@ function Routes() {
 }
 
 export default function Router() {
+    const linkHandler = useLinkHandler();
+    const {origin, pathname} = useLocation();
+    const canonicalUrl = `${origin}${pathname}`;
+
     React.useEffect(() => {
         document.addEventListener('click', linkHandler);
 
+        return () => document.removeEventListener('click', linkHandler);
+    }, [linkHandler]);
+
+    React.useEffect(() => {
         // Track initial page view in Pardot
         if ('piTracker' in window) {
-            piTracker(canonicalUrl());
+            piTracker(canonicalUrl);
         }
-
-        return () => document.removeEventListener('click', linkHandler);
-    }, []);
+    }, [canonicalUrl]);
 
     return (
         <RouterContextProvider>

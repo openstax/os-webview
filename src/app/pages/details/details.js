@@ -143,7 +143,6 @@ export function BookDetails() {
         analytics.addResourcesToLookupTable(model);
     }, [model]);
 
-
     return (
         <React.Fragment>
             <div className={cn('hero', {'reverse-gradient': reverseGradient})}>

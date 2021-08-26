@@ -152,7 +152,6 @@ function InstructorResourceTab({model, userStatus}) {
 export default function LoadUserStatusThenInstructorTab({model}) {
     const {userStatus} = useUserContext();
 
-    console.info('User status should not be null', userStatus);
     if (!userStatus) {
         return null;
     }
