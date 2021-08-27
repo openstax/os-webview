@@ -1,6 +1,6 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import useLanguageContext from '~/models/language-context';
+import useDetailsContext from '~/pages/details/context';
 import {Authors, PublicationInfo, ErrataSection} from '../../common/common';
 import GetThisTitle from '../../common/get-this-title';
 import LetUsKnow from '../../common/let-us-know/let-us-know';
@@ -38,7 +38,7 @@ const localizedHeading = {
 };
 
 function EnglishTab({model}) {
-    const {language} = useLanguageContext();
+    const {language} = useDetailsContext();
 
     return (
         <div className="details-tab">

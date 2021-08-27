@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
 import fetchRexRelease from '~/models/rex-release';
-import useLanguageContext from '~/models/language-context';
+import useDetailsContext from '~/pages/details/context';
 
 const localizedTexts = {
     'en': {
@@ -46,7 +46,7 @@ const localizedTexts = {
 };
 
 function PdfUpdateInfo({updateDate, url}) {
-    const {language} = useLanguageContext();
+    const {language} = useDetailsContext();
     const texts = localizedTexts[language].pdf;
 
     if (!updateDate) {
@@ -111,7 +111,7 @@ function LicenseIcon({name}) {
 }
 
 function LicenseInfo({name, text, title, version}) {
-    const {language} = useLanguageContext();
+    const {language} = useDetailsContext();
     const texts = localizedTexts[language].license;
 
     if (!name) {
@@ -210,7 +210,7 @@ function LabeledDate({label, date, className}) {
 
 export default function PublicationInfo({model, url, polish}) {
     const [webUpdate, setWebUpdate] = useState(model.lastUpdatedWeb);
-    const {language} = useLanguageContext();
+    const {language} = useDetailsContext();
     const texts = localizedTexts[language].pub;
 
     useEffect(() => {

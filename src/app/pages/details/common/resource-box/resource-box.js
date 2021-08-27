@@ -1,5 +1,5 @@
 import React from 'react';
-import useLanguageContext from '~/models/language-context';
+import useDetailsContext from '~/pages/details/context';
 
 const settings = window.SETTINGS;
 
@@ -19,7 +19,7 @@ const localizedText = {
     of hooks became unworkable. So I made a component that returns text.
 */
 function LocalizedText() {
-    const {language} = useLanguageContext();
+    const {language} = useDetailsContext();
 
     return (
         localizedText[language]
