@@ -344,14 +344,39 @@ export function CheggOption({model}) {
     );
 }
 
+function useExpanderText(optionCount) {
+    const {language} = useDetailsContext();
+    const optionOptions = {
+        en: {
+            option: 'option',
+            options: 'options'
+        },
+        es: {
+            option: 'opción',
+            options: 'opciones'
+        }
+    };
+    const options = optionOptions[language][optionCount > 1 ? 'options' : 'option'];
+    const localizedExpanderTexts = {
+        en: {
+            fewer: `See ${optionCount} fewer ${options}`,
+            more: `+ ${optionCount} more ${options}...`
+        },
+        es: {
+            fewer: `ver ${optionCount} ${options} menos`,
+            more: `+ ${optionCount} más ${options}...`
+        }
+    };
+
+    return localizedExpanderTexts[language];
+}
+
 export function OptionExpander({expanded, additionalOptions, toggle}) {
+    const text = useExpanderText(additionalOptions)[expanded ? 'fewer' : 'more'];
+
     if (additionalOptions < 1) {
         return null;
     }
-    const s = additionalOptions > 1 ? 's' : '';
-    const text = expanded ?
-        `See ${additionalOptions} fewer options` :
-        `+ ${additionalOptions} more option${s}...`;
 
     function onClick(event) {
         toggle();
