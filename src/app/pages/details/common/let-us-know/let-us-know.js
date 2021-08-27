@@ -1,7 +1,7 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
-import useLanguageContext from '~/contexts/language';
+import useDetailsContext from '~/pages/details/context';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUserPlus} from '@fortawesome/free-solid-svg-icons/faUserPlus';
 import './let-us-know.scss';
@@ -18,7 +18,7 @@ const localizedTexts = {
 };
 
 function useDataStuffFor(title) {
-    const {language} = useLanguageContext();
+    const {language} = useDetailsContext();
 
     if ($.isPolish(title)) {
         return {

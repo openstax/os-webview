@@ -1,6 +1,6 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import useLanguageContext from '~/contexts/language';
+import useDetailsContext from '~/pages/details/context';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
 import './recommended-callout.scss';
@@ -11,7 +11,7 @@ const localizedText = {
 };
 
 export default function RecommendedCallout({title, blurb, onPutAway}) {
-    const {language} = useLanguageContext();
+    const {language} = useDetailsContext();
     const titleToUse = title || localizedText[language];
 
     return (

@@ -1,29 +1,43 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
-import {LanguageContextProvider} from '~/contexts/language';
+import {DetailsContextProvider} from '~/pages/details/context';
 import RecommendedCallout from '~/pages/details/common/get-this-title-files/recommended-callout/recommended-callout';
+
+delete window.location;
+window.location = {
+    pathname: '/details/books/college-algebra'
+};
 
 function LangWrapRecommendedCallout({...args}) {
     return (
-        <LanguageContextProvider>
+        <DetailsContextProvider>
             <RecommendedCallout {...args} />
-        </LanguageContextProvider>
+        </DetailsContextProvider>
     );
 }
 
-test('defaults to "Recommended" and no blurb', () => {
+test('defaults to "Recommended" and no blurb', (done) => {
     render(<LangWrapRecommendedCallout />);
-    expect(screen.getByText('Recommended')).toBeTruthy();
-    expect(screen.getByRole('button').nextSibling).toBeNull();
+    setTimeout(() => {
+        expect(screen.getByText('Recommended')).toBeTruthy();
+        expect(screen.getByRole('button').nextSibling).toBeNull();
+        done();
+    }, 0);
 });
-test('displays custom title', () => {
+test('displays custom title', (done) => {
     render(<LangWrapRecommendedCallout title="custom title" />)
-    expect(screen.getByText('custom title')).toBeTruthy();
+    setTimeout(() => {
+        expect(screen.getByText('custom title')).toBeTruthy();
+        done();
+    }, 0);
 });
 test('displays custom blurb', () => {
     const blurbHtml = '<b>some text</b>';
 
     render(<LangWrapRecommendedCallout blurb={blurbHtml} />)
-    expect(screen.getByRole('button').nextSibling).not.toBeNull();
-    expect(screen.getByText('some text')).toBeTruthy();
+    setTimeout(() => {
+        expect(screen.getByRole('button').nextSibling).not.toBeNull();
+        expect(screen.getByText('some text')).toBeTruthy();
+        done();
+    }, 0);
 })
