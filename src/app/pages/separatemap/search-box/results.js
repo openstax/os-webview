@@ -28,7 +28,7 @@ function useSchoolsPromise(searchString, filters, institution) {
 
 // eslint-disable-next-line complexity
 export default function useResults(searchString, selectedFilters, institution) {
-    const nothingSelected = searchString === '' && institution === '' &&
+    const nothingSelected = searchString === '' &&
         Array.from(selectedFilters.values()).length === 0;
     const schoolsPromise = useSchoolsPromise(searchString, selectedFilters, institution);
     const results = useDataFromPromise(schoolsPromise);
