@@ -1,4 +1,5 @@
 import React from 'react';
+import {useHistory, useLocation} from 'react-router-dom';
 import buildContextLoader from '~/components/jsx-helpers/context-loader';
 import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
@@ -36,7 +37,8 @@ function useLimit() {
 }
 
 function useContextValue() {
-    const [location, setLocation] = React.useState(window.location);
+    const location = useLocation();
+    const history = useHistory();
     const {limit, moreStories, fewerStories} = useLimit();
     const lsData = useDataFromSlug(
         `pages?type=news.newsArticle&fields=${fields}` +
@@ -49,21 +51,10 @@ function useContextValue() {
     );
     const pinnedStory = pinnedData && $.camelCaseKeys(pinnedData.items[0]);
 
-    function syncLocation() {
-        setLocation({...window.location});
-    }
-
-    React.useEffect(() => {
-        // The router refers to history state, to see if it's changing pages
-        history.replaceState(stayHere, '');
-        window.addEventListener('popstate', syncLocation);
-
-        return () => window.removeEventListener('popstate', syncLocation);
-    }, []);
-
     function setPath(href) {
-        history.pushState(stayHere, '', href);
-        syncLocation();
+        const {pathname, search, hash} = new window.URL(href);
+
+        history.push(`${pathname}${search}${hash}`, stayHere);
         window.scrollTo(0, 0);
     }
 

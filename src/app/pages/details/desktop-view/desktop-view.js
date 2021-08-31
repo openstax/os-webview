@@ -7,6 +7,7 @@ import StudentResourceTab from './student-resource-tab/student-resource-tab';
 import VideoTab from './videos-tab/videos-tab';
 import useDetailsContext from '../context';
 import {GiveLink} from '../common/common';
+import {useHistory} from 'react-router-dom';
 import $ from '~/helpers/$';
 import './desktop-view.scss';
 
@@ -46,17 +47,18 @@ function useLabelsFromModel(model, polish) {
 
 function useSelectedLabelTiedToSearchString(labels) {
     const [selectedLabel, setSelectedLabel] = useState($.findSelectedTab(labels));
+    const history = useHistory();
+    const selectedTab = $.findSelectedTab(labels);
 
     useEffect(() => {
-        setSelectedLabel($.findSelectedTab(labels));
-    }, [labels]);
+        setSelectedLabel(selectedTab);
+    }, [selectedTab]);
 
     function updateSelectedLabel(newValue) {
         const newSearchString = $.replaceSearchTerm(labels, selectedLabel, newValue);
 
         setSelectedLabel(newValue);
-        window.history.replaceState({}, '', newSearchString);
-        window.dispatchEvent(new window.CustomEvent('navigate'));
+        history.replace(newSearchString);
     }
 
     return [selectedLabel, updateSelectedLabel];

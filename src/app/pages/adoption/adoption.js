@@ -12,6 +12,7 @@ import salesforcePromise from '~/models/salesforce';
 import HowUsing from './how-using/how-using';
 import {afterFormSubmit} from '~/models/books';
 import useSubmitContext, {SubmitContextProvider} from './submit-context';
+import {useHistory} from 'react-router-dom';
 import './adoption.scss';
 
 function ContactInfoPage({selectedRole, validatorRef}) {
@@ -60,6 +61,7 @@ function FacultyForm({selectedRole, onPageChange}) {
     const {currentBook, setCurrentBook} = useSubmitContext();
     const formRef = useRef();
     const salesforce = useDataFromPromise(salesforcePromise, {});
+    const history = useHistory();
 
     function validatePage(page) {
         const validateContactInfo = contactValidatorRef.current;
@@ -96,7 +98,7 @@ function FacultyForm({selectedRole, onPageChange}) {
             } else if (iframe) {
                 setCurrentBook(null);
                 iframe.removeEventListener('load', submitAfterDelay);
-                afterFormSubmit(preselectedTitle, selectedBooks);
+                afterFormSubmit(history, preselectedTitle, selectedBooks);
             }
         }
 

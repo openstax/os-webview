@@ -19,6 +19,10 @@ function EnglishButtonGroup({title}) {
     const {language} = useDetailsContext();
     const texts = localizedTexts[language];
 
+    if (language === 'es') {
+        return null;
+    }
+
     return (
         <div className="button-group">
             <a

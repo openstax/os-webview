@@ -6,7 +6,7 @@ import FileUploader from './FileUploader';
 import managedInvalidMessage from './InvalidMessage.js';
 import $ from '~/helpers/$';
 import Dialog from '~/components/dialog/dialog';
-import routerBus from '~/helpers/router-bus';
+import {useHistory} from 'react-router-dom';
 import cn from 'classnames';
 import './form.scss';
 
@@ -147,6 +147,7 @@ export default function ErrataForm({
     const formRef = useRef();
     const initialSource = source && sourceNames[source.toLowerCase()];
     const [bannedText, setBannedText] = useState();
+    const history = useHistory();
 
     function validate() {
         const invalid = formRef.current.querySelector(':invalid');
@@ -176,7 +177,7 @@ export default function ErrataForm({
                 .then(
                     (json) => {
                         if (json.id) {
-                            routerBus.emit('navigate', `/confirmation/errata?id=${json.id}`);
+                            history.push(`/confirmation/errata?id=${json.id}`);
                         } else if (json.submitted_by_account_id) {
                             setBannedText(json.submitted_by_account_id[0]);
                         }
@@ -187,7 +188,7 @@ export default function ErrataForm({
                     }
                 );
         }
-    }, [submitting]);
+    }, [submitting, history]);
 
     return (
         <React.Fragment>

@@ -38,8 +38,10 @@ function About({data: {
             <LazyLoad>
                 <section className="what">
                     <div className="content">
-                        <h1>{whatHeading}</h1>
-                        <div dangerouslySetInnerHTML={{__html: whatParagraph}} />
+                        <div className="text-content">
+                            <h1>{whatHeading}</h1>
+                            <div dangerouslySetInnerHTML={{__html: whatParagraph}} />
+                        </div>
                         <div className="cards">
                             {
                                 cards.map((card) =>

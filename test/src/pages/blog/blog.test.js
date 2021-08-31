@@ -1,5 +1,6 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
+import {BrowserRouter, Route} from 'react-router-dom';
 import {BlogContextProvider} from '~/pages/blog/blog-context';
 import {BlogPage, DefaultPage, ArticlePage} from '~/pages/blog/blog';
 
@@ -18,9 +19,13 @@ test('blog default page', (done) => {
     };
 
     render(
-        <BlogContextProvider>
-            <DefaultPage />
-        </BlogContextProvider>
+        <BrowserRouter>
+            <Route>
+                <BlogContextProvider>
+                    <DefaultPage />
+                </BlogContextProvider>
+            </Route>
+        </BrowserRouter>
     );
     setTimeout(() => {
         expect(screen.queryAllByText('read more')).toHaveLength(13);
@@ -44,9 +49,13 @@ test('blog Article page', () => {
     };
 
     render(
-        <BlogContextProvider>
-            <ArticlePage slug="blog-article" />
-        </BlogContextProvider>
+        <BrowserRouter>
+            <Route>
+                <BlogContextProvider>
+                    <ArticlePage slug="blog-article" />
+                </BlogContextProvider>
+            </Route>
+        </BrowserRouter>
     );
     setTimeout(() => {
         expect(screen.queryAllByText('read more')).toHaveLength(12);

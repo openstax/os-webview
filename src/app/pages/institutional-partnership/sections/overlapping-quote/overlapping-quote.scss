@@ -37,7 +37,7 @@
         color: text-color(normal);
         display: grid;
         grid-gap: 1rem;
-        grid-template-columns: auto auto;
+        grid-template-columns: auto 1fr;
         min-height: 16rem;
         padding: 4rem;
         pointer-events: none;
@@ -47,7 +47,11 @@
         }
 
         .quote {
-            margin-bottom: 4rem;
+            margin-bottom: 2rem;
+        }
+
+        .text-block {
+            max-width: $text-content-max;
         }
 
         .name {

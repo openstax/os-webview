@@ -6,7 +6,7 @@ import { StoreContext } from 'storeon/preact';
 import user from '~/pages/my-openstax/store/user';
 import useAccount from '~/pages/my-openstax/store/use-account';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import routerBus from '~/helpers/router-bus';
+import {useHistory} from 'react-router-dom';
 import useFlagContext from '../flag-context';
 import './welcome.scss';
 
@@ -30,10 +30,12 @@ import './welcome.scss';
 // }
 
 function WalkthroughButtons({welcomeDone}) {
+    const history = useHistory();
+
     function goToMyOpenStax() {
         welcomeDone();
         window.setTimeout(() => {
-            routerBus.emit('navigate', '/my-openstax');
+            history.push('/');
         }, 100);
     }
 
