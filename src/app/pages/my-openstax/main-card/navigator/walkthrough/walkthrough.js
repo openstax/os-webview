@@ -27,20 +27,18 @@ const wtStates = [
 ];
 
 function Walkthrough({title, index, hideWalkthrough}) {
-    const {activeId, setActiveId, targetIds} = useNavigationContext();
-    const step = targetIds.indexOf(activeId);
-    const wtState = wtStates[step];
-    const next = () => {
-        if (step < targetIds.length - 1) {
-            setActiveId(targetIds[step + 1]);
+    console.info('Active index (step?)', index);
+
+    const wtState = wtStates[index];
+    const {setActiveId, targetIds} = useNavigationContext();
+
+    function next() {
+        if (index < targetIds.length - 1) {
+            setActiveId(targetIds[index + 1]);
         } else {
             hideWalkthrough();
         }
-    };
-
-    React.useEffect(() => {
-        setActiveId(targetIds[0]);
-    }, [setActiveId, targetIds]);
+    }
 
     return (
         <div className="walkthrough-dialog" data-index={index}>

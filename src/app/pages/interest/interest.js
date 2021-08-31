@@ -11,6 +11,7 @@ import BookSelector, {useSelectedBooks} from '~/components/book-selector/book-se
 import FormInput from '~/components/form-input/form-input';
 import FormCheckboxgroup from '~/components/form-checkboxgroup/form-checkboxgroup';
 import salesforcePromise from '~/models/salesforce';
+import {useHistory} from 'react-router-dom';
 import {afterFormSubmit} from '~/models/books';
 import './interest.scss';
 
@@ -92,6 +93,7 @@ function FacultyForm({selectedRole, onPageChange}) {
     const selectedBooksRef = useRef();
     const [currentBook, setCurrentBook] = useState();
     const formRef = useRef();
+    const history = useHistory();
 
     function validatePage(page) {
         return Boolean(page !== 1 || contactValidatorRef.current());
@@ -123,7 +125,7 @@ function FacultyForm({selectedRole, onPageChange}) {
             } else if (iframe) {
                 setCurrentBook(null);
                 iframe.removeEventListener('load', submitAfterDelay);
-                afterFormSubmit(preselectedTitle, selectedBooks);
+                afterFormSubmit(history, preselectedTitle, selectedBooks);
             }
         }
 

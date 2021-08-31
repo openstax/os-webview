@@ -43,7 +43,7 @@
     }
 
     .hero {
-        background-color: os-color(green);
+        background-color: darken(os-color(green), 8%); // Accessibility
         color: text-color(white);
         padding: 6rem 1.5rem;
 
@@ -78,8 +78,12 @@
     }
 
     .btn {
+        @include button();
+        @extend %primary;
+
         float: none;
         margin: 0;
+        padding: 0 5rem;
     }
 
     address {

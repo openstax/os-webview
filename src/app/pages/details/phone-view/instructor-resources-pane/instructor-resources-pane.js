@@ -1,7 +1,7 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons/faSignOutAlt';
-import routerBus from '~/helpers/router-bus';
+import {useHistory} from 'react-router-dom';
 import {instructorResourceBoxPermissions} from '../../common/resource-box/resource-box';
 import FeaturedResourcesSection from '../../common/featured-resources/featured-resources.js';
 import ResourceBoxes, {VideoResourceBoxes} from '../../common/resource-box/resource-boxes';
@@ -43,13 +43,14 @@ export function InstructorResourcesPane({model, userStatus}) {
             r.linkText !== 'View resources'
         )
         .map((res) => resourceBoxModel(res, userStatus, bookId));
+    const history = useHistory();
 
     function goToPartners(event) {
         event.preventDefault();
-        routerBus.emit('navigate', '/partners', {
+        history.push('/partners', {
             book: model.salesforceAbbreviation,
             redirect: true
-        }, true);
+        });
     }
 
     return (

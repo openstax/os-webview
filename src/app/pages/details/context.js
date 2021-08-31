@@ -1,12 +1,13 @@
 import React from 'react';
+import {useLocation} from 'react-router-dom';
 import buildContextLoader from '~/components/jsx-helpers/context-loader';
 import buildContext from '~/components/jsx-helpers/build-context';
 
 /*
     Managing the slug requires a Context
 */
-function getSlugFromLocation() {
-    const bookTitle = window.location.pathname.replace(/.*details\//, '');
+function getSlugFromLocation(pathname) {
+    const bookTitle = pathname.replace(/.*details\//, '');
     let slug;
 
     if ((/^books/).test(bookTitle)) {
@@ -23,19 +24,10 @@ function getSlugFromLocation() {
 }
 
 function useSlugContextValue() {
-    const [slug, setSlug] = React.useState(getSlugFromLocation());
+    const {pathname} = useLocation();
+    const slug = getSlugFromLocation(pathname);
 
-    React.useEffect(() => {
-        const updateSlug = () => {
-            setSlug(getSlugFromLocation());
-        };
-
-        window.addEventListener('popstate', updateSlug);
-
-        return () => window.removeEventListener('popstate', updateSlug);
-    });
-
-    return {slug, setSlug};
+    return {slug};
 }
 
 const {
