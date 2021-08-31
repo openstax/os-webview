@@ -1,7 +1,7 @@
 import React from 'react';
 import {usePageData} from '~/helpers/controller/cms-mixin';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import Form from './form.jsx';
+import Form from './form';
 import './contact.scss';
 
 const slug = 'pages/contact';

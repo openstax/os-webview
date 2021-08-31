@@ -166,18 +166,6 @@ $.scrollToFrame = ({divEl, newFrameNumber, oldFrameNumber, unit='vw'}) => {
     window.requestAnimationFrame(takeStep);
 };
 
-$.hashClick = (event, options = {doHistory: true}) => {
-    const node = event.delegateTarget || event.currentTarget;
-    const destUrl = `${node.pathname}${node.hash}`;
-    const targetEl = document.getElementById(node.hash.substr(1));
-
-    $.scrollTo(targetEl);
-    if (options.doHistory) {
-        history.pushState({}, '', destUrl);
-    }
-    event.preventDefault();
-};
-
 $.setPageDescription = (description) => {
     const descriptionEl = document.querySelector('head meta[name="description"]');
     const defaultDescription = 'Access our free college textbooks and low-cost learning materials.';
