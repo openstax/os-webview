@@ -1,6 +1,7 @@
 import React from 'react';
 import useNavigationContext from './navigation-context';
-import {WalkthroughCookieContextProvider} from './walkthrough/walkthrough-cookie-context';
+import useWalkthroughCookieContext, {WalkthroughCookieContextProvider}
+    from './walkthrough/walkthrough-cookie-context';
 import cn from 'classnames';
 import Walkthrough from './walkthrough/walkthrough';
 import './navigator.scss';
@@ -47,11 +48,30 @@ function SectionTarget({id, index}) {
     );
 }
 
+function StepWrapper({children}) {
+    const [showWalkthrough] = useWalkthroughCookieContext();
+    const {setActiveId, targetIds} = useNavigationContext();
+
+    // If we're going to show the walkthrough, reset to the first navigation item
+    // Delayed, so hash-navigation can be finished first
+    React.useEffect(() => {
+        if (showWalkthrough) {
+            window.requestAnimationFrame(() => {
+                setActiveId(targetIds[0]);
+            });
+        }
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    return children;
+}
+
 export default function Navigator({targetIds}) {
     return (
         <nav>
             <WalkthroughCookieContextProvider>
-                {targetIds.map((id, index) => <SectionTarget id={id} key={id} index={index} />)}
+                <StepWrapper>
+                    {targetIds.map((id, index) => <SectionTarget id={id} key={id} index={index} />)}
+                </StepWrapper>
             </WalkthroughCookieContextProvider>
         </nav>
     );
