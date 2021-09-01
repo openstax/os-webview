@@ -1,50 +1,107 @@
 @import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/triangle';
 
-.errata-page .hero {
-    background-color: os-color(light-blue);
+$baby-blue: #dbf3f8;
+
+.errata-summary .hero {
+    background-color: $baby-blue;
     display: grid;
     justify-content: center;
     min-height: 22rem;
-    padding: 3rem;
+    padding: 3.5rem $normal-margin 6rem;
 
-    @include wider-than($tablet-max) {
-        padding: 0;
-    }
-
-    &.padded {
-        margin-bottom: 2rem;
+    .text-area {
+        max-width: $content-max;
     }
 
     h1 {
-        color: os-color(blue);
-
-        @include width-up-to($phone-max) {
-            @include set-font(h1);
-        }
+        @include set-font(h1);
     }
 
-    .instructions {
-        color: text-color(white);
+    .header {
+        @include set-font(body-large);
+
+        font-weight: bold;
         margin-top: 1rem;
     }
 
     .with-tooltip {
-        color: os-color(blue);
+        color: text-color(link);
+        display: inline-flex;
+        flex-direction: column;
         margin-bottom: 3rem;
         margin-top: 0.5rem;
 
-        .tooltip {
-            > p:first-child {
-                margin-top: 0;
+        &.active,
+        &:hover {
+            margin-bottom: -3rem;
+            padding-bottom: 3rem;
+
+            .poptip-attachment {
+                height: 3rem;
+                left: 0;
+                position: relative;
+                top: 2rem;
+                width: 1rem;
+                z-index: 5;
+
+                $triangle-size: 2rem;
+
+                transform: translateX(calc(-50% + .85rem));
+
+                &::after {
+                    @include triangle(
+                        $direction: top,
+                        $position: left calc(50% - #{$triangle-size}) bottom 100%,
+                        $color: text-color(link),
+                        $size: $triangle-size
+                    );
+
+                    transform: none;
+                }
+            }
+
+            .poptip {
+                box-shadow: 0 1rem 2rem rgba(ui-color(black), 0.2);
+                position: relative;
+                width: 30rem;
+
+                > p:first-child {
+                    margin-top: 0;
+                }
+
+                .title-bar {
+                    @include set-font(body-large);
+
+                    align-items: center;
+                    background-color: text-color(link);
+                    display: flex;
+                    color: white;
+                    font-weight: bold;
+                    height: 5rem;
+                    padding: 0 3rem;
+                }
+
+                .body {
+                    background-color: ui-color(white);
+                    color: text-color(normal);
+                    padding: 3rem 2.5rem;
+                    text-align: left;
+
+                    > :first-child {
+                        margin-top: 0;
+                    }
+
+                    > :last-child {
+                        margin-bottom: 0;
+                    }
+                }
             }
         }
 
-        &:hover {
-            margin-bottom: 0;
-            padding-bottom: 3rem;
-
-            .tooltip {
-                padding: 3rem;
+        &:not(.active) {
+            .poptip {
+                display: none;
             }
         }
     }

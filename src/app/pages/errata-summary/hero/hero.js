@@ -1,16 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import cmsFetch from '~/models/cmsFetch';
+import {RawHTML, LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faInfoCircle} from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import bookPromise from '~/models/book-titles';
 import useRouterContext from '~/components/shell/router-context';
-
-const instructions = 'Errata submissions are displayed below until a new PDF is published online.';
-const moreAbout = 'More about our correction schedule';
-const correctionScheduleKeyFromBookState = {
-    'live': 'correction_schedule',
-    'deprecated': 'deprecated_errata_message',
-    'new_edition_available': 'new_edition_errata_message'
-};
+import cn from 'classnames';
+import './hero.scss';
 
 function useBookInfo(book) {
     const [info, setInfo] = useState([]);
@@ -34,29 +29,80 @@ function useBookInfo(book) {
     return info;
 }
 
-function useErrataHoverHtml(slug) {
-    const [html, setHtml] = useState('<p>...loading...</p>');
+const middle = '-135';
+
+function shiftIntoView(ref, leftOffset, setLeftOffset) {
+    const {left, right} = ref.current.getBoundingClientRect();
+    const {right: pageRight} = ref.current.closest('.page').getBoundingClientRect();
+    const overRight = right - pageRight - 15;
+    const overLeft = 15 - left;
+    const rightWants = Math.min(middle, leftOffset - overRight);
+    const leftWants = Math.max(rightWants, leftOffset + overLeft);
+
+    setLeftOffset(leftWants);
+}
+
+function usePopTipStyle(isOpen) {
+    const ref = React.useRef();
+    const [leftOffset, setLeftOffset] = React.useState(middle);
 
     useEffect(() => {
-        async function fetchData() {
-            if (!slug) {
-                return;
-            }
-            const [bookData, errataPageData] = await Promise.all([cmsFetch(slug), cmsFetch('pages/errata')]);
-            const k = correctionScheduleKeyFromBookState[bookData.book_state];
-            const errataMessage = errataPageData[k] || `Book in unknown state: ${bookData.book_state}`;
+        shiftIntoView(ref, leftOffset, setLeftOffset);
+    }, [isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
-            setHtml(errataMessage);
-        }
-        fetchData();
-    }, [slug]);
+    return {ref, style: {left: leftOffset}};
+}
 
-    return html;
+function PopTip({html, isOpen}) {
+    const {ref, style} = usePopTipStyle(isOpen);
+
+    return (
+        <div className="poptip-attachment">
+            <div className="poptip" ref={ref} style={style} role="tooltip" aria-hidden={!isOpen}>
+                <div className="title-bar">
+                    More information
+                </div>
+                <RawHTML className="body" html={html} />
+            </div>
+        </div>
+    );
+}
+
+function usePopTipState() {
+    const [isOpen, setIsOpen] = React.useState(false);
+
+    return {
+        isOpen,
+        activate() {setIsOpen(true);},
+        deactivate() {setIsOpen(false);}
+    };
+}
+
+function HeroContent({data}) {
+    const {isOpen, activate, deactivate} = usePopTipState();
+
+    return (
+        <div>
+            <div className="header">{data.aboutHeader}</div>
+            <div className="about">
+                <RawHTML Tag="span" className="about-text" html={data.aboutText} />
+                {' '}
+                <span
+                    className={cn('with-tooltip', {active: isOpen})}
+                    tabIndex="0"
+                    onMouseEnter={activate} onMouseLeave={deactivate}
+                    onFocus={activate} onBlur={deactivate}
+                >
+                    <FontAwesomeIcon icon={faInfoCircle} />
+                    <PopTip html={data.aboutPopup} isOpen={isOpen} />
+                </span>
+            </div>
+        </div>
+    );
 }
 
 export default function Hero({book}) {
     const [slug, title] = useBookInfo(book);
-    const errataHoverHtml = useErrataHoverHtml(slug);
 
     if (!slug) {
         return null;
@@ -65,13 +111,7 @@ export default function Hero({book}) {
         <div className="hero">
             <div className="text-area">
                 <h1>{title} Errata</h1>
-                <div>
-                    <div className="instructions">{instructions}</div>
-                    <div className="with-tooltip">
-                        {moreAbout}
-                        <RawHTML className="tooltip" html={errataHoverHtml} />
-                    </div>
-                </div>
+                <LoaderPage slug="pages/errata" Child={HeroContent} />
             </div>
         </div>
     );
