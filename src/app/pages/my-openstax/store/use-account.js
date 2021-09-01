@@ -38,7 +38,7 @@ export default function useAccount() {
         const emails = extractEmails(accountsModel);
         const {firstName, lastName, createdAt, salesforceId: contactId} = user.contact;
         const facultyVerified = accountsModel.faculty_status === 'confirmed_faculty';
-        const role = facultyRoleLookup[accountsModel.faculty_status] || 'Student';
+        const role = facultyRoleLookup[accountsModel.faculty_status] || 'No instructor information';
 
         setValue({
             accountsId: accountsModel.id,

@@ -1,4 +1,3 @@
-import routerBus from '~/helpers/router-bus';
 import React, {useState, useEffect} from 'react';
 import useSubjectsContext, {SubjectsContextProvider} from './context';
 import useSubjectCategoryContext from '~/contexts/subject-category';
@@ -9,6 +8,7 @@ import useSavingsDataIn, {linkClickTracker} from '~/helpers/savings-blurb';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
 import {forceCheck} from 'react-lazyload';
 import LanguageSelector from '~/components/language-selector/language-selector';
+import {useLocation, useHistory} from 'react-router-dom';
 import './subjects.scss';
 import $ from '~/helpers/$';
 
@@ -22,11 +22,13 @@ function useCategoryTiedToPath() {
     const [category, setCategory] = useState(categoryFromPath());
     const categories = useSubjectCategoryContext();
     const {title} = useSubjectsContext();
+    const {pathname} = useLocation();
+    const history = useHistory();
 
     useEffect(() => {
         const path = category === 'view-all' ? pagePath : `${pagePath}/${category}`;
 
-        routerBus.emit('navigate', path, {
+        history.push(path, {
             filter: category,
             path: pagePath
         });
@@ -34,7 +36,7 @@ function useCategoryTiedToPath() {
         const linkController = $.setCanonicalLink();
 
         return () => linkController.remove();
-    }, [category]);
+    }, [category, history]);
 
     useEffect(() => {
         const categoryEntry = categories.find((e) => e.value === category);
@@ -47,13 +49,8 @@ function useCategoryTiedToPath() {
     }, [category, categories, title]);
 
     useEffect(() => {
-        const handlePopState = () => {
-            setCategory(categoryFromPath());
-        };
-
-        window.addEventListener('popstate', handlePopState);
-        return () => window.removeEventListener('popstate', handlePopState);
-    });
+        setCategory(categoryFromPath());
+    }, [pathname]);
 
     return {category, setCategory, categories};
 }

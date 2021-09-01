@@ -8,6 +8,13 @@ $offset-bottom-section: 12rem;
         @extend %content;
     }
 
+    .text-content {
+        align-items: flex-start;
+        margin: 0;
+        padding: 1rem 0 4rem;
+        text-align: left;
+    }
+
     .who {
         background-color: rgb(191, 222, 251);
         display: grid;
@@ -77,7 +84,7 @@ $offset-bottom-section: 12rem;
         grid-gap: 2rem;
         grid-template-columns: repeat(4, 26rem);
         overflow-x: auto;
-        padding: 4rem 0 2rem;
+        padding: 0 0 2rem;
 
         @include width-between($phone-max, $tablet-max) {
             grid-template-columns: 26rem 26rem;
@@ -107,13 +114,7 @@ $offset-bottom-section: 12rem;
 
     .where {
         align-items: flex-start;
-        padding: 0 0 $offset-bottom-section;
-
-        .text-content {
-            align-items: flex-start;
-            margin: 0;
-            text-align: left;
-        }
+        padding-bottom: $offset-bottom-section;
 
         h1 {
             @include set-font(h2);

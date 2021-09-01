@@ -1,6 +1,7 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-dialog {
+dialog,
+[role="dialog"] {
     background-color: ui-color(white);
     border: 0;
     border-radius: 0.4rem;

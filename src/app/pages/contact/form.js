@@ -2,7 +2,7 @@ import React, {useState, useRef, useEffect} from 'react';
 import SalesforceForm from '~/components/salesforce-form/salesforce-form';
 import {useSalesforceLoadedState, salesforce} from '~/models/salesforce';
 import Select from '~/components/select/select.jsx';
-import routerBus from '~/helpers/router-bus';
+import {useHistory} from 'react-router-dom';
 
 const subjects = [
     'General',
@@ -49,6 +49,7 @@ function ContactForm({defaultPostTo}) {
     const [postTo, setPostTo] = useState(defaultPostTo);
     const [showInvalidMessages, setShowInvalidMessages] = useState(false);
     const selectRef = useRef();
+    const history = useHistory();
 
     function onChangeSubject(event) {
         const isPolish = event.target.value === 'OpenStax Polska';
@@ -59,7 +60,7 @@ function ContactForm({defaultPostTo}) {
         setShowInvalidMessages(true);
     }
     function afterSubmit() {
-        routerBus.emit('navigate', '/confirmation/contact');
+        history.push('/confirmation/contact');
     }
 
     return (
