@@ -1,6 +1,6 @@
 import React from 'react';
 import ResourceBoxes from '../resource-box/resource-boxes';
-import useLanguageContext from '~/contexts/language';
+import useDetailsContext from '~/pages/details/context';
 import './featured-resources.scss';
 
 function FeaturedResources({headline, resources}) {
@@ -38,7 +38,7 @@ const localizedText = {
 };
 
 export default function FeaturedResourcesSection({header, models}) {
-    const {language} = useLanguageContext();
+    const {language} = useDetailsContext();
 
     return (
         <div>

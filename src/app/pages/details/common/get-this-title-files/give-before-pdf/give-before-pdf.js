@@ -67,8 +67,16 @@ function GiveBeforePdfAfterConditionals({onThankYouClick, link, data}) {
 }
 
 function GiveBeforePdf({
-    link, showThankYou, setShowThankYou, doneDownloading, close, data
+    link, close, data
 }) {
+    const [showThankYou, setShowThankYou] = React.useState(false);
+    const [doneDownloading, setDoneDownloading] = React.useState(false);
+
+    React.useEffect(
+        () => window.setTimeout(() => setDoneDownloading(true), 700),
+        []
+    );
+
     if (!data.download_ready || !doneDownloading) {
         return <Downloading data={data} />;
     }
@@ -94,21 +102,9 @@ export default function useGiveDialog() {
     const data = (data1?.length > 0) ? data1[0] : {};
 
     function GiveDialog({link}) {
-        const [showThankYou, setShowThankYou] = React.useState(false);
-        const [doneDownloading, setDoneDownloading] = React.useState(false);
-
-        React.useEffect(
-            () => window.setTimeout(() => setDoneDownloading(true), 700),
-            []
-        );
-
         return (
             <Dialog>
-                <GiveBeforePdf
-                    {...{
-                        link, showThankYou, setShowThankYou,
-                        doneDownloading, close, data
-                    }} />
+                <GiveBeforePdf {...{link, close, data}} />
             </Dialog>
         );
     }

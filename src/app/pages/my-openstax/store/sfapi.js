@@ -1,4 +1,6 @@
-const server = 'https://dev.salesforce.openstax.org'; // 'http://localhost:4004'
+const subdomains = ['dev.', 'qa.', 'staging.'];
+const subdomain = subdomains.find((sd) => window.SETTINGS.accountHref.includes(sd)) || '';
+const server = `https://${subdomain}salesforce.openstax.org`; // 'http://localhost:4004'
 //  /api/v1/opportunities/0060v000008WUp1AAG
 
 export async function sfApiPost(objectType, data, method = 'POST') {

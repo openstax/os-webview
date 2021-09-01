@@ -103,14 +103,12 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
             }
 
             .top-padding {
-                background-image: linear-gradient(to bottom, $gradient-sequence);
                 display: flex;
                 justify-content: flex-end;
                 top: 0;
             }
 
             .bottom-padding {
-                background-image: linear-gradient(to top, $gradient-sequence);
                 bottom: 0;
             }
         }

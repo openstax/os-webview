@@ -11,7 +11,7 @@ import {faAmazon} from '@fortawesome/free-brands-svg-icons/faAmazon';
 import {faApple} from '@fortawesome/free-brands-svg-icons/faApple';
 import $ from '~/helpers/$';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
-import useLanguageContext from '~/contexts/language';
+import useDetailsContext from '~/pages/details/context';
 import useAmazonAssociatesLink from './amazon-associates-link';
 import StudyEdge from './study-edge/study-edge';
 import useTOCContext from '../toc-slideout/context';
@@ -101,7 +101,7 @@ const localizedTexts = {
 export function TocOption({model}) {
     const {toggle, isOpen} = useTOCContext();
     const includeTOC = ['live', 'new_edition_available'].includes(model.bookState);
-    const {language} = useLanguageContext();
+    const {language} = useDetailsContext();
     const text = $.isPolish(model.title) ? 'Spis treści' : localizedTexts[language].toc;
 
     if (!includeTOC) {
@@ -152,7 +152,7 @@ function useCalloutCounter(slug) {
 // eslint-disable-next-line complexity
 export function WebviewOption({model}) {
     const [showCallout, hideForever] = useCalloutCounter(model.slug);
-    const {language} = useLanguageContext();
+    const {language} = useDetailsContext();
     const texts = localizedTexts[language].webview;
     const isTutor = model.webviewRexLink.includes('tutor');
     const isRex = !isTutor && Boolean(model.webviewRexLink);
@@ -191,7 +191,7 @@ export function WebviewOption({model}) {
 
 export function StudyEdgeOption({model}) {
     const [Dialog, open] = useDialog();
-    const {language} = useLanguageContext();
+    const {language} = useDetailsContext();
     const text = localizedTexts[language].app;
 
     function onClick(event) {
@@ -213,7 +213,7 @@ export function StudyEdgeOption({model}) {
 
 export function PdfOption({model}) {
     const polish = $.isPolish(model.title);
-    const {language} = useLanguageContext();
+    const {language} = useDetailsContext();
     const texts = localizedTexts[language].pdf;
     const pdfText = polish ? ' Pobierz PDF' : texts.download;
     const sampleText = polish ? ' przykład' : texts.sample;
@@ -247,7 +247,7 @@ function isRealPrintLink(url) {
 export function PrintOption({model}) {
     const slug = (model.slug || '').replace('books/', '');
     const amazonDataLink = useAmazonAssociatesLink(slug);
-    const {language} = useLanguageContext();
+    const {language} = useDetailsContext();
     const printText = localizedTexts[language].print;
     const text = $.isPolish(model.title) ? 'Zamów egzemplarz drukowany' : printText;
     const [Dialog, open, close] = useDialog();
@@ -279,7 +279,7 @@ export function BookshareOption({model}) {
 }
 
 export function Ibooks2Volumes({model}) {
-    const {language} = useLanguageContext();
+    const {language} = useDetailsContext();
     const texts = localizedTexts[language].ibooks;
 
     return (
@@ -298,7 +298,7 @@ export function Ibooks2Volumes({model}) {
 }
 
 export function IbooksOption({model}) {
-    const {language} = useLanguageContext();
+    const {language} = useDetailsContext();
     const texts = localizedTexts[language].ibooks;
 
     return (
@@ -316,7 +316,7 @@ export function IbooksOption({model}) {
 }
 
 export function KindleOption({model}) {
-    const {language} = useLanguageContext();
+    const {language} = useDetailsContext();
     const texts = localizedTexts[language].kindle;
 
     return (
@@ -344,14 +344,39 @@ export function CheggOption({model}) {
     );
 }
 
+function useExpanderText(optionCount) {
+    const {language} = useDetailsContext();
+    const optionOptions = {
+        en: {
+            option: 'option',
+            options: 'options'
+        },
+        es: {
+            option: 'opción',
+            options: 'opciones'
+        }
+    };
+    const options = optionOptions[language][optionCount > 1 ? 'options' : 'option'];
+    const localizedExpanderTexts = {
+        en: {
+            fewer: `See ${optionCount} fewer ${options}`,
+            more: `+ ${optionCount} more ${options}...`
+        },
+        es: {
+            fewer: `ver ${optionCount} ${options} menos`,
+            more: `+ ${optionCount} más ${options}...`
+        }
+    };
+
+    return localizedExpanderTexts[language];
+}
+
 export function OptionExpander({expanded, additionalOptions, toggle}) {
+    const text = useExpanderText(additionalOptions)[expanded ? 'fewer' : 'more'];
+
     if (additionalOptions < 1) {
         return null;
     }
-    const s = additionalOptions > 1 ? 's' : '';
-    const text = expanded ?
-        `See ${additionalOptions} fewer options` :
-        `+ ${additionalOptions} more option${s}...`;
 
     function onClick(event) {
         toggle();
