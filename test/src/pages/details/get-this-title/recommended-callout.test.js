@@ -1,18 +1,16 @@
 import React from 'react';
+import {MemoryRouter} from 'react-router-dom';
 import {render, screen} from '@testing-library/preact';
 import {DetailsContextProvider} from '~/pages/details/context';
 import RecommendedCallout from '~/pages/details/common/get-this-title-files/recommended-callout/recommended-callout';
 
-delete window.location;
-window.location = {
-    pathname: '/details/books/college-algebra'
-};
-
 function LangWrapRecommendedCallout({...args}) {
     return (
-        <DetailsContextProvider>
-            <RecommendedCallout {...args} />
-        </DetailsContextProvider>
+        <MemoryRouter initialEntries={["/details/books/college-algebra"]}>
+            <DetailsContextProvider>
+                <RecommendedCallout {...args} />
+            </DetailsContextProvider>
+        </MemoryRouter>
     );
 }
 

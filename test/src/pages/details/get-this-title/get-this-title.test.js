@@ -1,4 +1,5 @@
 import React from 'react';
+import {MemoryRouter} from 'react-router-dom';
 import {render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import GetThisTitle from '~/pages/details/common/get-this-title';
@@ -11,18 +12,15 @@ import $ from '~/helpers/$';
 
 const model = $.camelCaseKeys(transformData(details));
 
-delete window.location;
-window.location = {
-    pathname: '/details/books/college-algebra'
-};
-
 function GTTinContext() {
     return (
-        <DetailsContextProvider>
-            <TOCContextProvider>
-                <GetThisTitle model={model} />
-            </TOCContextProvider>
-        </DetailsContextProvider>
+        <MemoryRouter initialEntries={["/details/books/college-algebra"]}>
+            <DetailsContextProvider>
+                <TOCContextProvider>
+                    <GetThisTitle model={model} />
+                </TOCContextProvider>
+            </DetailsContextProvider>
+        </MemoryRouter>
     );
 }
 

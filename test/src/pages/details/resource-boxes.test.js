@@ -1,14 +1,10 @@
 import React from 'react';
+import {MemoryRouter} from 'react-router-dom';
 import {render, screen} from '@testing-library/preact';
 import {UserContextProvider} from '~/contexts/user';
 import {DetailsContextProvider} from '~/pages/details/context';
 import ResourceBoxes from '~/pages/details/common/resource-box/resource-boxes';
 import {instructorResourceBoxPermissions, studentResourceBoxPermissions} from '~/pages/details/common/resource-box/resource-box';
-
-delete window.location;
-window.location = {
-    pathname: '/details/books/college-algebra'
-};
 
 // Test all the conditions in here:
 // userStatus: isInstructor: true|false
@@ -31,11 +27,13 @@ const payload = {
 
 function LangWrapResourceBoxes({...args}) {
     return (
-        <UserContextProvider>
-            <DetailsContextProvider>
-                <ResourceBoxes {...args} />
-            </DetailsContextProvider>
-        </UserContextProvider>
+        <MemoryRouter initialEntries={["/details/books/college-algebra"]}>
+            <UserContextProvider>
+                <DetailsContextProvider>
+                    <ResourceBoxes {...args} />
+                </DetailsContextProvider>
+            </UserContextProvider>
+        </MemoryRouter>
     )
 }
 
