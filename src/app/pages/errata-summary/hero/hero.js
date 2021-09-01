@@ -21,10 +21,10 @@ function useBookInfo(book) {
 
                 setInfo([slug, title]);
             } else {
-                fail();
+                fail(`Could not find book info for ${book}`);
             }
         });
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [book, fail]);
 
     return info;
 }

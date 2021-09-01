@@ -1,5 +1,6 @@
 import $ from '~/helpers/$';
 import memoize from 'lodash/memoize';
+import retry from '~/helpers/retry';
 
 export function urlFromSlug(initialSlug) {
     const slug = initialSlug === 'news' ? 'pages/openstax-news' : initialSlug;
@@ -13,7 +14,7 @@ export function urlFromSlug(initialSlug) {
 export default async function cmsFetch(path) {
     const url = path.replace(/[^?]+/, urlFromSlug);
 
-    return (await fetch(url)).json();
+    return (await retry(() => fetch(url))).json();
 }
 
 export async function cmsPost(path, payload, method='POST') {

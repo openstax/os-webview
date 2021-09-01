@@ -51,7 +51,7 @@ export function LoaderPage({
         }
     });
     if (data && data.error) {
-        fail();
+        fail(`Could not load ${slug}`);
     }
     if (statusPage) {
         return statusPage;

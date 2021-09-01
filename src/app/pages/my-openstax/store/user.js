@@ -6,7 +6,7 @@ import $ from '~/helpers/$';
 export async function fetchUser() {
     const user = await sfApiFetch('users');
 
-    if (!user.contact) {
+    if (!user?.contact) {
         user.error = 'no contact';
     }
     return $.camelCaseKeys(user);
