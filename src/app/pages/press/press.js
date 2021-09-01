@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
+import {useLocation} from 'react-router-dom';
 import usePageContext, {PageContextProvider} from './page-context';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {ArticleLoader} from './article/article';
@@ -189,25 +190,12 @@ function MainPage() {
     );
 }
 
-function articleSlugFromPath() {
-    const slugMatch = window.location.pathname.match(/\/(press\/.+)/);
-
-    return slugMatch ? slugMatch[1] : null;
-}
-
 function useArticleSlugFromPath() {
-    const [slug, setSlug] = useState(articleSlugFromPath());
+    const location = useLocation();
+    const slugMatch = location.pathname.match(/\/(press\/.+)/);
 
-    useEffect(() => {
-        function setIt() {
-            setSlug(articleSlugFromPath());
-        }
-
-        window.addEventListener('popstate', setIt);
-        return () => window.removeEventListener('popstate', setIt);
-    });
-
-    return slug;
+    window.scrollTo(0, 0);
+    return slugMatch ? slugMatch[1] : null;
 }
 
 export default function PressWrapper() {

@@ -6,7 +6,7 @@
     }
 
     @include wider-than($phone-max) {
-        padding: 3rem $normal-margin 0;
+        padding: 3rem $normal-margin;
     }
 
     .boxed {
@@ -21,6 +21,7 @@
         border: thin solid ui-color(form-border);
         border-radius: 0.3rem;
         line-height: 2.4rem;
+        max-width: $text-content-max;
         padding: $normal-margin;
         padding-left: 5rem;
         position: relative;
