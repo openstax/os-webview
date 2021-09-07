@@ -85,17 +85,21 @@ function useLinkHandler() {
         }
 
         if (e.trackingInfo) {
-            fetch(
-                `${$.apiOriginAndOldPrefix}/salesforce/download-tracking/`,
-                {
-                    method: 'POST',
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(e.trackingInfo)
-                }
-            ).finally(followLink);
+            retry(
+                () => fetch(
+                    `${$.apiOriginAndOldPrefix}/salesforce/download-tracking/`,
+                    {
+                        method: 'POST',
+                        mode: 'cors',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(e.trackingInfo)
+                    }
+                )
+            )
+                .catch((err) => {throw new Error(`Unable to download-track: ${err}`);})
+                .finally(followLink);
         } else {
             followLink();
         }

@@ -1,5 +1,5 @@
 // From: https://dev.to/goenning/how-to-retry-when-react-lazy-fails-mb5
-export default function retry(fn, retriesLeft = 2, interval = 300) {
+export default function retry(fn, retriesLeft = 3, interval = 400) {
     return new Promise((resolve, reject) => {
         fn()
             .then(resolve)

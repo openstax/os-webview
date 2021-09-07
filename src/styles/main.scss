@@ -341,9 +341,8 @@ a:not([href]) {
     z-index: 6;
 
     .modal {
-        align-items: center;
+        align-items: left;
         display: flex;
-        height: 100%;
         justify-content: center;
         max-width: 100%;
         outline: 0;

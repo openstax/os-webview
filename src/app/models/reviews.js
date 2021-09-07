@@ -50,7 +50,7 @@ export default function useReviews(partnerId) {
             const postResult = await cmsPost(postUrl, payload, method);
 
             if (typeof postResult === 'string') {
-                throw postResult;
+                throw new Error(`Error posting review: ${postResult}`);
             } else {
                 updateReview($.camelCaseKeys(postResult));
             }

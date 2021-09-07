@@ -31,7 +31,7 @@ export default function useAccount() {
     }
 
     useEffect(() => {
-        if (!userModel) {
+        if (!userModel || !user) {
             return;
         }
         const {accountsModel} = userModel;
