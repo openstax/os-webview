@@ -47,14 +47,14 @@ function Dropdown({urlBase, details}) {
             {
                 details.hasFacultyResources &&
                     <QuickLink
-                        url={`${urlBase}?Instructor%20resources`}
+                        url={`${urlBase}?${labels[1]}`}
                         icon={faChalkboardTeacher} text={labels[1]}
                     />
             }
             {
                 details.hasStudentResources &&
                     <QuickLink
-                        url={`${urlBase}?Student%20resources`}
+                        url={`${urlBase}?${labels[2]}`}
                         icon={faGraduationCap} text={labels[2]} />
             }
         </div>
