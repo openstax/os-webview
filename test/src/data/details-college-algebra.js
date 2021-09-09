@@ -412,7 +412,7 @@ const details = {
     ],
     "community_resource_heading": "OER Commons Hub Resources",
     "community_resource_logo_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/OERC_logo.jpg",
-    "community_resource_url": "https://www.oercommons.org/groups/openstax-college-algebra/1046/?__hub_id=27",
+    "community_resource_url": null,
     "community_resource_cta": "Visit the Hub",
     "community_resource_blurb": "Members of the OpenStax community can join the Hub to share resources they've created to use with our college algebra book. Find resources and submit your own!",
     "community_resource_feature_text": "",

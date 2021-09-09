@@ -17,27 +17,41 @@ import useUserContext from '~/contexts/user';
 import linkhelper from '~/helpers/link';
 import cn from 'classnames';
 
-function CommonsHubBox({model}) {
+function CommonsHubBox() {
+    const {
+        communityResourceHeading: heading,
+        communityResourceLogoUrl: logoUrl,
+        communityResourceUrl: url,
+        communityResourceCta: cta,
+        communityResourceBlurb: blurb,
+        communityResourceFeatureLinkUrl: featureUrl,
+        communityResourceFeatureText: featureText
+    } = useDetailsContext();
+
+    if (!url) {
+        return null;
+    }
+
     return (
         <div className="resource-box double">
             <div className="top-line">
-                <h3>{model.heading}</h3>
-                <img src={model.logoUrl} alt="" />
+                <h3>{heading}</h3>
+                <img src={logoUrl} alt="" />
             </div>
             <div className="blurb">
-                <RawHTML Tag="span" html={model.blurb} />
+                <RawHTML Tag="span" html={blurb} />
                 <br />
-                <a href={model.url}>
-                    {model.cta}{' '}
+                <a href={url}>
+                    {cta}{' '}
                     <FontAwesomeIcon icon={faExternalLinkAlt} />
                 </a>
             </div>
             <div className="bottom">
                 <div className="right">
                     {
-                        model.featureUrl &&
-                            <a href={model.featureUrl}>
-                                {model.featureText}
+                        featureUrl &&
+                            <a href={featureUrl}>
+                                {featureText}
                             </a>
                     }
                 </div>
@@ -280,13 +294,10 @@ function ResourceBox({model}) {
     );
 }
 
-export default function ResourceBoxes({models, communityResource}) {
+export default function ResourceBoxes({models}) {
     return (
         <React.Fragment>
-            {
-                communityResource &&
-                    <CommonsHubBox model={communityResource} key={communityResource.heading} />
-            }
+            <CommonsHubBox />
             {
                 models.map((model) =>
                     <ResourceBox model={model} key={model.heading} />

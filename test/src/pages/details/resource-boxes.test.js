@@ -25,12 +25,12 @@ const payload = {
     description: 'This is <b>a description</b> in HTML',
 }
 
-function LangWrapResourceBoxes({...args}) {
+function LangWrapResourceBoxes({models}) {
     return (
         <MemoryRouter initialEntries={["/details/books/college-algebra"]}>
             <UserContextProvider>
                 <DetailsContextProvider>
-                    <ResourceBoxes {...args} />
+                    <ResourceBoxes models={models} />
                 </DetailsContextProvider>
             </UserContextProvider>
         </MemoryRouter>
