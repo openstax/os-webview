@@ -9,9 +9,9 @@ const localizedTexts = {
         list: 'Errata list'
     },
     'es': {
-        header: 'Erratas',
+        header: 'Fe de errata',
         suggest: 'Sugerir una corrección',
-        list: 'Lista de erratas'
+        list: 'Listado de erratas'
     }
 };
 

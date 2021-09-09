@@ -7,7 +7,7 @@ import './recommended-callout.scss';
 
 const localizedText = {
     'en': 'Recommended',
-    'es': 'Se recomienda'
+    'es': 'Recomendado'
 };
 
 export default function RecommendedCallout({title, blurb, onPutAway}) {

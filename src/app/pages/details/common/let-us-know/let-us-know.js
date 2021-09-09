@@ -12,8 +12,8 @@ const localizedTexts = {
         text2: 'Using this book? Let us know.'
     },
     'es': {
-        text1: 'Regístrese en <br> aprender más',
-        text2: '¿Utiliza este libro? Haznos saber.'
+        text1: 'Suscríbase<br>para más información',
+        text2: '¿Utiliza este libro? Háganoslo saber.'
     }
 };
 
