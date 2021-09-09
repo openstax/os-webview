@@ -23,7 +23,7 @@ function Authors({heading, className, authors=[], CustomTag='div'}) {
 
 const localizedHeadings = {
     'en': ['Senior Contributing Authors', 'Contributing Authors'],
-    'es': ['Autores colaboradores principales', 'Autores colaboradores']
+    'es': ['Autores principales', 'Autores colaboradores']
 };
 
 export default function AuthorsSection({model, polish}) {

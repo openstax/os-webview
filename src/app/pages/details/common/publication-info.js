@@ -13,6 +13,7 @@ const localizedTexts = {
         },
         license: {
             heading: 'License',
+            beforeTitle: '',
             byline: 'by OpenStax is licensed under'
         },
         pub: {
@@ -27,19 +28,20 @@ const localizedTexts = {
     'es': {
         pdf: {
             heading: 'Última actualización de la versión PDF:',
-            see: 'Ver cambios en las',
-            notes: 'Notas de Revisión'
+            see: 'Ver las modificaciones en las',
+            notes: 'Notas de revisión'
         },
         license: {
             heading: 'Licencia',
-            byline: 'por OpenStax tiene licencia bajo'
+            beforeTitle: 'El libro',
+            byline: 'de OpenStax tiene la licencia'
         },
         pub: {
             pub: 'Fecha de publicación:',
             web: 'Última actualización de la versión web:',
             hard: 'Tapa dura',
-            paper: 'Tapa blanda',
-            dig: 'Digital',
+            paper: 'Edición de bolsillo',
+            dig: 'Edición digital',
             part: 'Parte'
         }
     }
@@ -127,6 +129,7 @@ function LicenseInfo({name, text, title, version}) {
                     text ?
                         <RawHTML html={text} /> :
                         <div>
+                            {texts.beforeTitle}{texts.beforeTitle ? ' ' : ''}
                             <RawHTML Tag="span" html={title} />
                             {texts.byline}{' '}
                             <span className="text">{name} v{version}</span>

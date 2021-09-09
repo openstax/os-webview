@@ -11,7 +11,7 @@ function encodeLocation(search) {
 
 const localizedText = {
     'en': 'Login to unlock',
-    'es': 'Inicia sesión para desbloquear'
+    'es': 'Inicie sesión para desbloquear'
 };
 
 /*

@@ -34,7 +34,7 @@ function FeaturedResources({headline, resources}) {
 
 const localizedText = {
     'en': 'see additional resources below',
-    'es': 'ver recursos adicionales a continuación'
+    'es': 'ver los recursos adicionales a continuación'
 };
 
 export default function FeaturedResourcesSection({header, models}) {

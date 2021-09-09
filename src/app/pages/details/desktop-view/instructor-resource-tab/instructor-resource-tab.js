@@ -9,6 +9,7 @@ import {faDesktop} from '@fortawesome/free-solid-svg-icons/faDesktop';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {usePartnerFeatures} from '../../common/hooks';
 import useUserContext from '~/contexts/user';
+import useDetailsContext from '~/pages/details/context';
 import './instructor-resource-tab.scss';
 
 function FreeStuff({freeStuffContent, userStatus}) {
@@ -34,7 +35,17 @@ function FreeStuff({freeStuffContent, userStatus}) {
     );
 }
 
-function Webinar({url, text, blurb}) {
+function Webinar() {
+    const {webinarContent} = useDetailsContext();
+
+    if (!webinarContent.content) {
+        return null;
+    }
+
+    const text = webinarContent.content.heading;
+    const url = webinarContent.link;
+    const blurb = webinarContent.content.content;
+
     return (
         <a href={url} className="webinars">
             <div className="icon-cell">
@@ -92,12 +103,6 @@ function InstructorResourceTab({model, userStatus}) {
         )
         .map((res) => resourceBoxModel(res, userStatus, model));
 
-    const webinarContent = model.webinarContent.content;
-    const webinar = {
-        text: webinarContent.heading,
-        url: model.webinarContent.link,
-        blurb: webinarContent.content
-    };
     const communityResource = {
         heading: model.communityResourceHeading,
         logoUrl: model.communityResourceLogoUrl,
@@ -144,7 +149,7 @@ function InstructorResourceTab({model, userStatus}) {
                     />
                 </div>
             </div>
-            <Webinar {...webinar} />
+            <Webinar />
         </div>
     );
 }

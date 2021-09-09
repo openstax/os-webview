@@ -32,9 +32,15 @@ function PolishTab({model}) {
     );
 }
 
-const localizedHeading = {
-    'en': 'Summary',
-    'es': 'Resumen'
+const localizedTexts = {
+    getTheBook: {
+        en: 'Get the book',
+        es: 'Obtener el libro'
+    },
+    summary: {
+        en: 'Summary',
+        es: 'Resumen'
+    }
 };
 
 function EnglishTab({model}) {
@@ -44,7 +50,7 @@ function EnglishTab({model}) {
         <div className="details-tab">
             <div className="sidebar">
                 <div>
-                    <h3>Get the book</h3>
+                    <h3>{localizedTexts.getTheBook[language]}</h3>
                     <GetThisTitle model={model} />
                 </div>
                 <div className="let-us-know-region">
@@ -53,7 +59,7 @@ function EnglishTab({model}) {
             </div>
             <div className="main">
                 <div className="loc-summary-text">
-                    <h3>{localizedHeading[language]}</h3>
+                    <h3>{localizedTexts.summary[language]}</h3>
                     <RawHTML html={model.description} />
                 </div>
                 <Authors model={model} />
