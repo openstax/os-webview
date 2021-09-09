@@ -104,7 +104,9 @@ export default function FormInput({label, longLabel, inputProps, suggestions}) {
             otherOnChange(event);
         }
         setValue(event.target.value);
-        setAccepted(false);
+        // Fields without suggestions should be considered accepted
+        // Empty suggestion lists will still be unaccepted
+        setAccepted(!suggestions);
     }
     function onKeyDown(event) {
         if (handleKeyDown(event)) {
